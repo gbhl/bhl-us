@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result><Name><NameBankID>2475527</NameBankID><EOLID>11017315</EOLID><NameFound>Hyla</NameFound><NameConfirmed>Hyla</NameConfirmed></Name><Name><NameBankID/><EOLID/><NameFound>Hyla shrevei</NameFound><NameConfirmed>Hyla shrevei</NameConfirmed></Name><Name><NameBankID>3002212</NameBankID><EOLID/><NameFound>Lonia</NameFound><NameConfirmed>Lonia</NameConfirmed></Name></Result></Response>

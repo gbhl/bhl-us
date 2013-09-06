@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
+    <add key="SMTPHost" value="smtp host name"/>
+    <add key="UseRemoteFileAccessProvider" value="true"/>
+    <add key="DBCommandTimeout" value="1800"/>
+
+    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
+    <add key="NameFinderService" value="GNRD"/>
+
+    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
+    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+
+    <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
+    <add key="UsePreferredNameResults" value="true"/>
+
+    <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
+    <add key="MaxReadAttempts" value="60" />
+
+  </appSettings>
+  <connectionStrings>
+    <remove name="BHL"/>
+    <add name="BHL" connectionString="database connection string" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <system.web>
+    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" />
+    <!-- 
+            Set compilation debug="true" to insert debugging 
+            symbols into the compiled page. Because this 
+            affects performance, set this value to true only 
+            during development.
+        -->
+    <compilation debug="true" targetFramework="4.0"/>
+    <!--
+            The <authentication> section enables configuration 
+            of the security authentication mode used by 
+            ASP.NET to identify an incoming user. 
+        -->
+    <authentication mode="Windows"/>
+    <!--
+            The <customErrors> section enables configuration 
+            of what to do if/when an unhandled error occurs 
+            during the execution of a request. Specifically, 
+            it enables developers to configure html error pages 
+            to be displayed in place of a error stack trace.
+
+        <customErrors mode="RemoteOnly" defaultRedirect="GenericErrorPage.htm">
+            <error statusCode="403" redirect="NoAccess.htm" />
+            <error statusCode="404" redirect="FileNotFound.htm" />
+        </customErrors>
+        -->
+    <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"/>
+  </system.web>
+</configuration>

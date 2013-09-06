@@ -1,0 +1,656 @@
+﻿#book-master header
+{
+ height:75px;
+ overflow:hidden;
+ 
+}
+
+#book-master #page-title h1
+{
+	color:#fff;
+}
+
+#book-master
+{
+	background:#222;
+	overflow-x:hidden;
+}
+
+#book-master #logo h1
+{
+ 
+        background: url("../images/bhl-logo-main.png") no-repeat scroll 0px -7px transparent;
+
+}
+
+#book-master header nav 
+{
+    padding: 0px 0 0;
+    line-height:75px;
+}
+
+#book-master header #searchbar
+{
+    padding:5px 0 0;
+}
+
+#book-master header #searchbar a
+{
+    color: #7194b4;
+    text-decoration: underline;
+    text-shadow: 0 0 0;
+    }
+
+
+#book-master header #searchbar .field
+{
+    top: 25px;
+    }
+
+
+#book-master header #searchbar .button
+{
+    top: 25px;
+    }
+    
+#book-master #page-title
+{
+    line-height:50px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    background: #394551;
+}
+
+#book-master #page-title a
+{
+    text-decoration: underline;
+    color: #FFFFFF;
+    float: left;
+    font-size: 21px;
+    margin-left: 30px;
+    margin-right: 15px;
+  
+}
+#book-master #page-title a.report
+{
+
+ font-size: 12px;
+ color: #bcc3c9;    
+ float: right;
+ margin-right: 35px;
+ margin-left: 5px;
+ margin-top: 5px;
+}
+
+a.MendeleyButton
+{
+ float: right !important;
+ margin-right: 5px !important;
+ margin-left: 5px !important;
+ margin-top: 1px;
+ line-height: 53px;
+}
+
+
+#book-master #page-title .button.download
+{
+    float:right;
+    margin-top: 15px;
+    padding: 4px 15px;
+}
+
+
+#book-master #right-panel
+{
+  width: 300px;   
+
+  
+}
+
+#book-master #left-panel
+{
+    width: 300px;
+ position: absolute;
+  top:150px;
+  bottom:0;
+  background: #293038;
+
+}
+
+#book-master #right-panel
+{
+  width: 520px;
+  position: fixed;
+  top:150px;
+  bottom:0;
+  right:-500px;
+  background: #293038;
+
+}
+
+
+#book-master .pagelist
+{
+    height:300px;   
+}
+
+#left-panel-content_removeme
+{
+    width:260px;
+   /* height:100%; */
+    position:absolute;
+    left:0;
+    padding:10px;
+}
+
+#left-panel-tab
+{
+    width:20px;
+    top:0;
+    left:280px;
+    bottom:0;
+    position: absolute;
+}
+
+#left-panel-tab a
+{
+    height: 100%;  
+    background:#293038; 
+    display:block;
+}
+
+#right-panel-content_removeme
+{
+    width:500px;
+    height:100%;
+    position:absolute;
+    left:20px;
+   
+}
+
+#right-panel-tab_removeme
+{
+    width:20px;
+    top:0;
+    left:0;
+    bottom:0;
+    position: absolute;
+}
+
+#right-panel-tab a
+{
+    height: 100%;  
+    background:#293038; 
+    display:block;
+}
+
+
+#book-master #bookcontent_removeme
+{
+   bottom: 0;
+   position: absolute;
+   top: 140px;
+   left:300px;
+   right:20px;
+}
+
+#book-master #toolbar-top
+{
+    display:none;
+}
+
+/*names panel*/
+
+#names-wrapper
+{
+    background: #404853;
+}
+
+#names-panel
+{
+    background: #fff;
+    height: 200px;
+    overflow: auto;
+    margin: 20px 0px 0px;
+    font-size:12px;
+    color: #000;
+    
+}
+
+
+
+#names-panel .ubio-links
+{
+    display:block;
+}
+#names-panel .ubio-linksa
+{
+   color:#000;
+}
+
+
+/* OCR Panel */
+
+#pageOCR-panel_removeme
+{
+   position:absolute;
+   top:0px;
+    bottom:20px;
+    overflow:hidden;
+    display:block;
+    width:500px;
+   
+}
+#pageOCR-panel_removeme .header
+{
+    position:relative;
+    background-color: #455666;
+    padding:1px 10px 1px 20px;
+    height:95px;
+    
+}
+
+
+#pageOCR-panel_removeme .header a
+{
+    float:right;
+    margin-top: 5px;
+    margin-right: 0px;
+}
+
+#pageOCR-panel_removeme .header h5
+{
+   font-size: 16px;
+   color: #fff;
+   margin-top: 15px;
+   display:block;
+  
+}
+
+#pageOCR-panel_removeme .header em
+{
+    font-style:italic;
+}
+
+#pageOCR-panel_removeme .text 
+{
+    overflow:auto;
+    padding: 10px 20px;
+   
+     bottom: 10px;
+
+    position: absolute;
+    top: 98px;
+    width: 460px;
+}
+
+/*Darwin Annotations Panel */
+
+#pageAnnotations-panel
+{
+  display:block;   
+  
+}
+
+ #AnnotationBox
+        {
+            border:thin solid #000000;
+            font-size:12px;
+            font-family:Trebuchet MS;
+            padding:2px;position:relative;float:right;background-color:White;left:-2.4%;
+            display:none;
+            overflow:hidden;
+            height:auto;
+            width:300px;            
+            opacity:1.00;
+            color:#000;
+            bottom: 0;
+         }
+         
+         #page-characteristics
+         {
+             color:purple;
+             background-color:transparent;
+             font-family:Trebuchet MS;
+             font-size:10px;
+             font-style:italic;
+             margin:2px;
+             padding:2px;
+         }
+         
+        #no-annotations-stub
+        {
+            text-align:center;
+            /*top:5.5%;*/
+        }
+        
+        #AnnotationBox .active
+         {
+             height:90% !important;/**/
+         }
+        
+        #AnnotationBox .inactive
+         {
+             height:auto !important;/**/
+         }
+         
+         .rolledUp
+         {
+            height:auto;
+         }
+         
+         #AnnotationBox #content
+         {
+            height:69%;
+            padding-bottom:0px;
+         }
+         
+         #AnnotationBox #content #header
+         {
+             /*background-color:#000000;*/
+             /*background-image:url(../OlBookReader/BookReader/images/Darwin_Logo.png);*/
+             background-repeat:no-repeat;
+             color:#FFFFFF;
+             font-size:large;
+             text-align:center;
+             width:300px;
+             height:70px;
+             vertical-align:bottom;
+             padding:0px;
+             margin:0px;
+         }
+         
+
+         #legend-items
+         {
+             background-color:#CCCCCC;
+             padding:1px;
+             vertical-align:top;
+             height:auto;
+             font-size:10px;
+         }
+         
+        #legend-items .left-column
+        {
+            padding-left:3px;
+            font-size:16px;
+        }
+        
+        #legend-items .right-column
+        {
+            padding-left:0px;
+            font-size:16px;
+        }
+        
+        #legend-items .special-char
+        {
+            font-size:16px;
+        }
+        
+        #toggle_legend {font-size:10px;}
+        
+        .page-header {font-size:12px; font-style:normal;}
+         
+         #AnnotationBox #content #indicator
+         {
+             font-size:12px;
+             color:#AAAAAA;
+             border-bottom:thin inset;
+         }
+         
+         #AnnotationBox #notes
+         {
+             height:93%;   
+             clear:both;
+             font-style:italic;
+             font-size:11px;
+             
+             overflow:auto; /* Added back in by MWL */
+         }
+         
+         #phantom-legend
+         {
+             display:none;             
+         }
+         
+         #AnnotationBox #copyright
+         {
+             background-color:transparent;
+             border-top:solid thin #000000;
+             text-align:center;
+             margin-top:1px;
+             /*height:10px;*/
+             height:auto;   /* Added back in by MWL */
+             font-size:12px;
+         }
+         
+         #AnnotationBox #pageScroller
+         {
+             text-align:center;
+             font-size:10px;
+         }
+         
+         #AnnotationBox #toggleAnnotationBox
+         {
+             float:left;
+         }
+         
+         #AnnotationBox #stub
+         {
+             text-align:center;
+             font-variant:small-caps;
+             font-weight:bold;             
+         }
+         
+         .separator {border-top:thin thin #000000;clear:both;}
+         
+         .toggler
+         {
+             background:url('images/up.gif');
+             width:11px;
+             height:7px;
+         }
+         
+         .toggler .rolledUp
+         {
+             background:url('images/down.gif');
+         }
+        
+        .countup {font-style: normal;}
+        
+        .line-count {font-weight:normal; margin-bottom:2px; }
+        
+        .line-position {background-color:transparent;}
+        
+        .page-data {display:none;} 
+        
+        .subject-list, .concept-list
+        {
+            padding-top:3px;
+            padding-bottom:3px;
+            margin-top:2px;
+            margin-bottom:2px;
+            font-size:10px;
+            font-style:normal;
+        }
+        
+        .subject-list .title, .concept-list .title, #related-annotations
+        {
+            font-style:italic;
+            font-size:10px;
+        }
+        
+        .subject-list .target-section, .concept-list .target-section, #related-annotations
+        {
+            font-variant:small-caps;
+            font-weight:bolder;
+            padding-top:2px;
+            margin-top:2px;
+        }
+        
+        .subject-item, .concept-item, .related-annotation-item
+        {
+            font-variant:normal;
+            font-weight:normal;
+            font-style:normal;
+        }
+        
+        .target-section
+        {
+            /*display:none;*/
+        }
+        
+        .tnote
+        {
+            font-family:Trebuchet MS;
+            margin-top:5px;
+            cursor:default;
+        }
+
+        .tnote-hover 
+        {
+            color:blue;
+            font-style:italic;
+        }
+        
+        .tnote-ref
+        {
+            font-size:10px;
+        }
+        
+        .pgcharvolume 
+        {
+            display:none;
+            color:Red;
+        }
+        
+        .word-block {color:#000000; border-bottom:1px; font-style:normal; font-size:12px}
+        .faint {color:#000000;}
+        
+        #annotation-not-available
+        {
+            position:absolute;
+            background:#CCCCCC;
+            font-weight:bold;
+            padding:10px;
+            border:1px solid #000000;
+            display:none;
+        }
+
+
+/*icon details from AU BookReader stylesheet */
+
+.BRicon {
+    width:30px;
+    height:30px;
+    text-indent:-9999px;
+    display:block;
+    background:url(../images/bg_book_icons.png) no-repeat;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin:0 10px 0 0;
+	cursor:pointer;
+	-webkit-user-select:none;
+	-khtml-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+}
+.BRicon:hover, .BRicon.active:hover
+{	
+	
+}
+.BRicon.active, .BRicon.active:active
+{
+	border:0;
+}
+
+.BRicon.one_page_mode:hover, .BRicon.one_page_mode.active:hover { background-position:0 -30px; }
+.BRicon.one_page_mode:active, .BRicon.one_page_mode.active:active { background-position:0 -60px; }
+.BRicon.one_page_mode.active { background-position:0 -90px; }
+
+.BRicon.two_page_mode {	background-position:-30px 0; }
+.BRicon.two_page_mode:hover, .BRicon.two_page_mode.active:hover { background-position:-30px -30px; }
+.BRicon.two_page_mode:active, .BRicon.two_page_mode.active:active { background-position:-30px -60px; }
+.BRicon.two_page_mode.active { background-position:-30px -90px; }
+
+.BRicon.thumbnail_mode { background-position:-60px 0; }
+.BRicon.thumbnail_mode:hover, .BRicon.thumbnail_mode.active:hover { background-position:-60px -30px; }
+.BRicon.thumbnail_mode:active, .BRicon.thumbnail_mode.active:active { background-position:-60px -60px; }
+.BRicon.thumbnail_mode.active { background-position:-60px -90px; }
+
+.BRicon.zoom_out { background-position:-90px 0; }
+.BRicon.zoom_out:hover { background-position:-90px -30px; }
+.BRicon.zoom_out:active { background-position:-90px -60px; }
+
+.BRicon.zoom_in { background-position:-120px 0; }
+.BRicon.zoom_in:hover { background-position:-120px -30px; }
+.BRicon.zoom_in:active { background-position:-120px -60px; }
+
+.BRicon.book_leftmost { display:none;background-position:-150px 0; }
+.BRicon.book_leftmost:hover { background-position:-150px -30px; }
+.BRicon.book_leftmost:active { background-position:-150px -60px; }
+
+.BRicon.book_left { background-position:-180px 0; }
+.BRicon.book_left:hover { background-position:-180px -30px; }
+.BRicon.book_left:active { background-position:-180px -60px; }
+
+.BRicon.book_right { background-position:-210px 0; }
+.BRicon.book_right:hover { background-position:-210px -30px; }
+.BRicon.book_right:active { background-position:-210px -60px; }
+
+.BRicon.book_rightmost { display:none;background-position:-240px 0; }
+.BRicon.book_rightmost:hover { background-position:-240px -30px; }
+.BRicon.book_rightmost:active { background-position:-240px -60px; }
+
+.BRicon.book_top { display:none;background-position:-270px 0; }
+.BRicon.book_top:hover { background-position:-270px -30px; }
+.BRicon.book_top:active { background-position:-270px -60px; }
+
+.BRicon.book_up { background-position:-330px 0; }
+.BRicon.book_up:hover { background-position:-330px -30px; }
+.BRicon.book_up:active { background-position:-330px -60px; }
+
+.BRicon.book_down { background-position:-300px 0; }
+.BRicon.book_down:hover { background-position:-300px -30px; }
+.BRicon.book_down:active { background-position:-300px -60px; }
+
+.BRicon.book_bottom { display:none;background-position:-360px 0; }
+.BRicon.book_bottom:hover { background-position:-360px -30px; }
+.BRicon.book_bottom:active { background-position:-360px -60px; }
+
+.BRicon.page_ocr { background-position:-390px 0; }
+.BRicon.page_ocr:hover, .BRicon.page_ocr.active:hover { background-position:-390px -30px; }
+.BRicon.page_ocr:active, .BRicon.page_ocr.active:active { background-position:-390px -60px; }
+.BRicon.page_ocr.active { background-position:-390px -90px; }
+
+.BRicon.page_names { background-position:-420px 0; }
+.BRicon.page_names:hover, .BRicon.page_names.active:hover { background-position:-420px -30px; }
+.BRicon.page_names:active, .BRicon.page_names.active:active { background-position:-420px -60px; }
+.BRicon.page_names.active { background-position:-420px -90px; }
+
+.BRicon.add_to_pdf { background-position:-450px 0; }
+.BRicon.add_to_pdf:hover, .BRicon.add_to_pdf.active:hover { background-position:-450px -30px; }
+.BRicon.add_to_pdf:active, .BRicon.add_to_pdf.active:active { background-position:-450px -60px; }
+.BRicon.add_to_pdf.active { background-position:-450px -90px; }
+
+.BRicon.page_link { background-position:-480px 0; }
+.BRicon.page_link:hover, .BRicon.page_link.active:hover { background-position:-480px -30px; }
+.BRicon.page_link:active, .BRicon.page_link.active:active { background-position:-480px -60px; }
+.BRicon.page_link.active { background-position:-480px -90px; }
+
+.BRicon.page_print { background-position:-510px 0; }
+.BRicon.page_print:hover, .BRicon.page_print.active:hover { background-position:-510px -30px; }
+.BRicon.page_print:active, .BRicon.page_print.active:active { background-position:-510px -60px; }
+.BRicon.page_print.active { background-position:-510px -90px; }
+
+.BRicon.pop_ocr { background-position:-540px 0; }
+.BRicon.pop_ocr:hover { background-position:-540px -30px; }
+.BRicon.pop_ocr:active { background-position:-540px -60px; }
+
+.BRicon.loading, .BRicon.loading:hover, .BRicon.loading:active
+{
+	background:#455667 url(../images/bg_loading_bricon.gif) center center no-repeat;
+}

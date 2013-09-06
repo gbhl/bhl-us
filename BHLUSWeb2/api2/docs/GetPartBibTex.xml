@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result>@article{bhlpart1000,
+	title = {Fusion of cervical vertebrae in the Erethizontidae and Dinomyidae},
+	journal = {Breviora},
+	volume = {97},
+	url = {http://www.biodiversitylibrary.org/part/1000},
+	publisher = {Cambridge, Mass.,Museum of Comparative Zoology, Harvard University.},
+	author = {Ray, C E},
+	year = {1958},
+	pages = {11},
+}
+
+</Result></Response>

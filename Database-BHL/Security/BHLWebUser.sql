@@ -1,0 +1,2 @@
+﻿CREATE USER [BHLWebUser] FOR LOGIN [BHLWebUser];
+

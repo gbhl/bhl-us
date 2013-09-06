@@ -1,0 +1,315 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SectionPage.aspx.cs" Inherits="MOBOT.BHL.Web2.SectionPage" %>
+<%@ Import Namespace="MOBOT.BHL.DataObjects" %>
+<%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
+<%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
+<%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
+<uc:NavBar runat="server" />
+<div id="page-title">
+    <div class="column-wrap">
+        <div class="ellipsis bibtitle"><%: BhlSegment.GenreName%>: <%: BhlSegment.Title %></div>
+        <div class="bibtitleicons">
+            <uc:Mendeley id="mendeley" runat="server" />
+            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+        </div>
+    </div>
+</div>
+<div id="content" class="column-wrap clearfix" itemscope itemtype="<%: SchemaType %>">
+<section>
+
+    <div class="tabs js-hide">
+        <ul class="tab-nav no-js-hide">
+            <li class="summary first-child"><a href="#/summary">Summary</a></li>
+            <li class="details"><a href="#/details">Details</a></li>
+            <li class="mods"><a href="#/mods">MODS</a></li>
+            <li class="bibtex"><a href="#/bibtex">BibTeX</a></li>
+            <li class="endnote last-child"><a href="#/endnote">Endnote</a></li>
+        </ul>            
+        <uc:COinS ID="COinS" runat="server" />
+        <div id="summary" class="tab-body">
+
+            <div class="segmentdetails"><h3>Title</h3> 
+            <span itemprop="url" style="display:none"><%: String.Format(ConfigurationManager.AppSettings["PartPageUrl"], BhlSegment.SegmentID.ToString()) %></span>
+            <p><span itemprop="name"><%: BhlSegment.Title %></p></span></div>
+            <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
+                <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
+            <% } %>
+            <% if (BhlSegment.AuthorList.Count > 0) { %>
+                <h3>By</h3>
+                <p>
+                    <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
+                    { %>
+                        <span itemprop="author" itemscope itemtype='http://schema.org/Person'>
+                        <a href="/creator/<%: author.AuthorID %>">
+							<span itemprop="name"><%: author.FullName%></span>
+						</a>
+                        <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
+                        </span>
+                        <br />
+                    <% } %>
+                </p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
+            <div class="segmentdetails"><h3>Genre</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
+            <div class="segmentdetails"><h3>Date of Publication</h3> <p><span itemprop="datePublished"><%: BhlSegment.Date%></span></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.ContainerTitle)) { %>
+            <div class="segmentdetails"><h3>Original Publication</h3> <p><%: BhlSegment.ContainerTitle %></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Volume)) { %>
+            <div class="segmentdetails"><h3>Volume</h3> <p><%: BhlSegment.Volume%></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Series) || !String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>
+                <div class="segmentdetails"><h3>Series / Issue</h3> 
+                    <p><% if (!String.IsNullOrWhiteSpace(BhlSegment.Series)) { %>Series: <%: BhlSegment.Series%><br /> <% } %>
+                    <% if (!String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>Issue: <%: BhlSegment.Issue%> <% } %>
+                    </p>
+                </div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.PageRange)) { %>
+            <div class="segmentdetails"><h3>Pages</h3> <p><%: BhlSegment.PageRange%></p></div>
+            <% } %>
+            <% if (BhlSegment.KeywordList.Count > 0) { %>
+                <h3>Subjects</h3>
+                <p><span itemprop="keywords">
+                <% for (int i = 0; i < BhlSegment.KeywordList.Count; i++)
+                    { %>
+                    <a href="/subject/<%: Server.UrlPathEncode(BhlSegment.KeywordList[i].Keyword) %>">
+                        <%: BhlSegment.KeywordList[i].Keyword%>
+                    </a>
+                    <%: (i < BhlSegment.KeywordList.Count - 1) ? ", " : string.Empty%>
+                <% } %>
+                </span></p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
+            <div class="segmentdetails"><h3>Contributed by</h3> <p><%: BhlSegment.ContributorName%></p></div>
+            <% } %>
+            <% if (DOI != string.Empty) { %>
+            <h3>DOI</h3>
+            <p>
+                <a href="<%= DOI%>" title="DOI"><span itemprop="DOI"><%= DOI%></span></a>
+            </p>
+            <% } %>
+
+        </div>
+        <div id="details" class="tab-body">
+
+            <div class="segmentdetails"><h3>Title</h3> <p><%: BhlSegment.Title %></p></div>
+            <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
+                <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
+            <% } %>
+            <% if (BhlSegment.AuthorList.Count > 0) { %>
+                <h3>By</h3>
+                <p>
+                    <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
+                       { %>
+                        <a href="/creator/<%: author.AuthorID %>">
+							<%: author.FullName%>
+						</a>
+                        <br />
+                    <% } %>
+                </p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
+            <div class="segmentdetails"><h3>Genre</h3> <p><%: BhlSegment.GenreName %></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
+            <div class="segmentdetails"><h3>Date of Publication</h3> <p><%: BhlSegment.Date%></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.ContainerTitle)) { %>
+            <div class="segmentdetails"><h3>Original Publication</h3> <p><%: BhlSegment.ContainerTitle %></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Volume)) { %>
+            <div class="segmentdetails"><h3>Volume</h3> <p><%: BhlSegment.Volume%></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Series) || !String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>
+                <div class="segmentdetails"><h3>Series / Issue</h3> 
+                    <p><% if (!String.IsNullOrWhiteSpace(BhlSegment.Series)) { %>Series: <%: BhlSegment.Series%><br /> <% } %>
+                    <% if (!String.IsNullOrWhiteSpace(BhlSegment.Issue)) { %>Issue: <%: BhlSegment.Issue%> <% } %>
+                    </p>
+                </div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.PageRange)) { %>
+            <div class="segmentdetails"><h3>Pages</h3> <p><%: BhlSegment.PageRange%></p></div>
+            <% } %>
+            <% if (BhlSegment.KeywordList.Count > 0) { %>
+                <h3>Subjects</h3>
+                <p>
+                <% for (int i = 0; i < BhlSegment.KeywordList.Count; i++)
+                    { %>
+                    <a href="/subject/<%: Server.UrlPathEncode(BhlSegment.KeywordList[i].Keyword) %>">
+                        <%: BhlSegment.KeywordList[i].Keyword%>
+                    </a>
+                    <%: (i < BhlSegment.KeywordList.Count - 1) ? ", " : string.Empty%>
+                <% } %>
+                </p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
+            <div class="segmentdetails"><h3>Contributed by</h3> <p><%: BhlSegment.ContributorName%></p></div>
+            <% } %>
+            <% if (DOI != string.Empty) { %>
+            <h3>DOI</h3>
+            <p>
+                <a href="<%= DOI%>" title="DOI"><span><%= DOI%></span></a>
+            </p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.Notes)) { %>
+            <div class="segmentdetails"><h3>Notes / Abstract</h3> <p><%: BhlSegment.Notes%></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.LanguageName)) { %>
+            <div class="segmentdetails"><h3>Language</h3> <p><span itemprop="inLanguage"><%: BhlSegment.LanguageName%></span></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.PublicationDetails) ||
+                   !String.IsNullOrEmpty(BhlSegment.PublisherName) ||
+                   !String.IsNullOrEmpty(BhlSegment.PublisherPlace)) { %>
+                <div class="segmentdetails"><h3>Published by</h3> 
+                <p>
+                    <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">
+                    <%if (!String.IsNullOrEmpty(BhlSegment.PublicationDetails)) { %>
+                    <%: BhlSegment.PublicationDetails%>
+                    <%} else { %>
+                    <%: BhlSegment.PublisherPlace%> <%: BhlSegment.PublisherName %>
+                    <%} %>
+                    </span></span>
+                </p>
+                </div>
+            <% } %>
+            <% if (BhlSegment.IdentifierList.Count > 0) { %>
+                <h3>Identifiers</h3><p>
+                <% foreach (SegmentIdentifier segmentIdentifier in BhlSegment.IdentifierList) { %>
+                    <%: segmentIdentifier.IdentifierLabel %>: <span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span><br />
+                <% } %>
+                </p>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
+            <div class="segmentdetails"><h3>Rights Status</h3> <p><%: BhlSegment.RightsStatus%></p></div> 
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
+            <div class="segmentdetails"><h3>Rights Statement</h3> <p><%: BhlSegment.RightsStatement%></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseName)) { %>
+            <div class="segmentdetails"><h3>Rights License Name</h3><p><a><%: BhlSegment.LicenseName%></a></p></div>
+            <% } %>
+            <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
+            <div class="segmentdetails"><h3>Rights License URL</h3><p><a><%: BhlSegment.LicenseName%></a></p></div>
+            <% } %>
+
+        </div>
+        <div id="mods" class="tab-body">                                
+            <p>
+                <a class="button" href="/handlers/modsdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download MODS</a>
+            </p>
+            <p class="header">
+                <asp:Literal ID="litMods" runat="server"></asp:Literal>
+            </p>
+        </div>
+        <div id="bibtex" class="tab-body">
+            <% if (!string.IsNullOrEmpty(litBibTeX.Text)) { %>
+            <p>
+                <a class="button" href="/handlers/bibtexdownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download BibTeX citation</a>
+            </p>                
+            <p class="header">
+                <asp:Literal ID="litBibTeX" runat="server"></asp:Literal>
+            </p>
+            <% } %>
+        </div>
+        <div id="endnote" class="tab-body">
+            <% if (!string.IsNullOrEmpty(litEndNote.Text)) { %>
+            <p>
+                <a class="button" href="/handlers/endnotedownload.ashx?pid=<%: BhlSegment.SegmentID %>">Download EndNote citation</a>
+            </p>
+            <p class="header">
+                <asp:Literal ID="litEndNote" runat="server"></asp:Literal>
+            </p>
+            <% } %>
+        </div>
+
+    </div>
+</section>
+<aside>
+    <h3></h3>
+    <div class="volumes">
+        <div class="volume js-hide">
+            <h4 class="title">
+                    <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                    <span class="text"><%: BhlSegment.GenreName%> links</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
+                <div class="partlinks">
+
+                    <% if ((BhlSegment.StartPageID != null) && BhlSegment.StartPageID > 0)
+                    { %>
+                        <a href="/page/<%: BhlSegment.StartPageID %>">View <%: BhlSegment.GenreName%></a> <br />
+                    <% } %>
+
+                    <% if (! string.IsNullOrEmpty(BhlSegment.Url))
+                    { %>
+                        <a href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />
+                    <% } %>
+
+                    <% if (! string.IsNullOrEmpty(BhlSegment.DownloadUrl))
+                    { %>
+                        <a href="<%: BhlSegment.DownloadUrl %>">Download  <%: BhlSegment.GenreName%></a> <br />
+                    <% } %>
+                </div>
+                    <% if (!string.IsNullOrWhiteSpace(BhlSegment.DownloadUrl))
+                       { %>
+                    <div class="download">
+                        Download book:
+                        <% if (BhlSegment.SegmentID.ToString().Trim() == "1")
+                           { %>
+                        <a class="icon all" href="<%: BhlSegment.DownloadUrl %>">All</a>
+                        <a class="icon jp2" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_jp2.zip", BhlSegment.SegmentID) %>">JP2</a>
+                        <a class="icon ocr" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", BhlSegment.SegmentID) %>">OCR</a>
+                        <a class="icon pdf" href="<%: string.Format("http://www.archive.org/download/{0}/{0}.pdf", BhlSegment.SegmentID) %>">PDF</a>
+                        <% } else { %>
+                            <a class="icon pdf" href="<%: BhlSegment.DownloadUrl %>">PDF</a>
+                        <% } %>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+</aside>
+</asp:Content>
+<asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
+<script src="/js/libs/jquery.history.min.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+    $(document).ready(function () {
+        var tabBodys = $('.tab-body').hide();
+
+        // Navigate to the default sub-section if no hash
+        if (!location.hash) {
+            $.History.go('/summary');
+        }
+
+        $.History.bind(function (state) {
+            if (!$('.tabs').is(':visible')) {
+                $('.tabs').show();
+            };
+            var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+            var tabBody = $('#' + stateName);
+
+            tabBodys.hide();
+
+            // Highlight selected link
+            $('.tab-nav li').removeClass('active');
+            $('.tab-nav .' + stateName).addClass('active').blur();
+
+            // If no default sub-section found then head on to the default otherwise show selected sub-section
+            if (!tabBody.length) {
+                $.History.go('/summary');
+                return false;
+            } else {
+                tabBody.show();
+            }
+        });
+    });
+//]]>
+</script>
+</asp:Content>

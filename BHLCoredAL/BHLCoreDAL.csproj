@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOBOT.BHL.DAL</RootNamespace>
+    <AssemblyName>BHLCoreDAL</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>mobot.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>http://localhost/BHLCoreDAL/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnnotatedItemDAL.cs" />
+    <Compile Include="AnnotatedPageCharacteristicDAL.cs" />
+    <Compile Include="AnnotatedPageDAL.cs" />
+    <Compile Include="AnnotatedPageTypeDAL.cs" />
+    <Compile Include="AnnotatedTitleDAL.cs" />
+    <Compile Include="AnnotationConceptDAL.cs" />
+    <Compile Include="AnnotationDAL.cs" />
+    <Compile Include="AnnotationMarkDAL.cs" />
+    <Compile Include="AnnotationNoteDAL.cs" />
+    <Compile Include="AnnotationPolygonDAL.cs" />
+    <Compile Include="AnnotationRelationDAL.cs" />
+    <Compile Include="AnnotationSubjectCategoryDAL.cs" />
+    <Compile Include="AnnotationSubjectDAL.cs" />
+    <Compile Include="Annotation_AnnotationConceptDAL.cs" />
+    <Compile Include="APIKeyDAL.cs" />
+    <Compile Include="AuthorDAL.cs" />
+    <Compile Include="AuthorIdentifierDAL.cs" />
+    <Compile Include="AuthorNameDAL.cs" />
+    <Compile Include="AuthorRoleDAL.cs" />
+    <Compile Include="AuthorTypeDAL.cs" />
+    <Compile Include="BibliographicLevelDAL.cs" />
+    <Compile Include="CollectionDAL.cs" />
+    <Compile Include="ConfigurationDAL.cs" />
+    <Compile Include="DOIDAL.cs" />
+    <Compile Include="Generated\AnnotatedItemDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotatedPageCharacteristicDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotatedPageDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotatedPageTypeDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotatedTitleDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationConceptDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationMarkDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationNoteDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationPolygonDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationRelationDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationSubjectCategoryDAL.Auto.cs" />
+    <Compile Include="Generated\AnnotationSubjectDAL.Auto.cs" />
+    <Compile Include="Generated\Annotation_AnnotationConceptDAL.Auto.cs" />
+    <Compile Include="Generated\APIKeyDAL.Auto.cs" />
+    <Compile Include="Generated\AuthorDAL.Auto.cs" />
+    <Compile Include="Generated\AuthorIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\AuthorNameDAL.Auto.cs" />
+    <Compile Include="Generated\AuthorRoleDAL.Auto.cs" />
+    <Compile Include="Generated\AuthorTypeDAL.Auto.cs" />
+    <Compile Include="Generated\BibliographicLevelDAL.Auto.cs" />
+    <Compile Include="Generated\CollectionDAL.Auto.cs" />
+    <Compile Include="Generated\ConfigurationDAL.Auto.cs" />
+    <Compile Include="Generated\DOIDAL.Auto.cs" />
+    <Compile Include="Generated\IdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\ItemCollectionDAL.Auto.cs" />
+    <Compile Include="Generated\ItemLanguageDAL.Auto.cs" />
+    <Compile Include="Generated\ItemNameFileLogDAL.Auto.cs" />
+    <Compile Include="Generated\KeywordDAL.Auto.cs" />
+    <Compile Include="Generated\MarcControlDAL.Auto.cs" />
+    <Compile Include="Generated\MarcDAL.Auto.cs" />
+    <Compile Include="Generated\MarcDataFieldDAL.Auto.cs" />
+    <Compile Include="Generated\MarcImportBatchDAL.Auto.cs" />
+    <Compile Include="Generated\MarcSubFieldDAL.Auto.cs" />
+    <Compile Include="Generated\MonthlyStatsDAL.Auto.cs" />
+    <Compile Include="Generated\NameDAL.Auto.cs" />
+    <Compile Include="Generated\NameIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\NamePageDAL.Auto.cs" />
+    <Compile Include="Generated\NameResolvedDAL.Auto.cs" />
+    <Compile Include="Generated\NameSegmentDAL.Auto.cs" />
+    <Compile Include="Generated\NameSourceDAL.Auto.cs" />
+    <Compile Include="Generated\PageAnnotationDAL.Auto.cs" />
+    <Compile Include="Generated\PageFlickrDAL.Auto.cs" />
+    <Compile Include="Generated\PDFDAL.Auto.cs" />
+    <Compile Include="Generated\PDFPageDAL.Auto.cs" />
+    <Compile Include="Generated\PDFStatusDAL.Auto.cs" />
+    <Compile Include="Generated\ScanningRequestDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentAuthorDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentClusterDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentClusterSegmentDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentGenreDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentKeywordDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentPageDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentResolutionLogDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentStatusDAL.Auto.cs" />
+    <Compile Include="Generated\TitleAuthorDAL.Auto.cs" />
+    <Compile Include="Generated\TitleCollectionDAL.Auto.cs" />
+    <Compile Include="Generated\TitleKeywordDAL.Auto.cs" />
+    <Compile Include="Generated\TitleLanguageDAL.Auto.cs" />
+    <Compile Include="Generated\TitleVariantDAL.Auto.cs" />
+    <Compile Include="Generated\Title_IdentifierDAL.Auto.cs" />
+    <Compile Include="IdentifierDAL.cs" />
+    <Compile Include="ItemCOinSDAL.cs" />
+    <Compile Include="ItemCollectionDAL.cs" />
+    <Compile Include="ItemLanguageDAL.cs" />
+    <Compile Include="ItemNameFileLogDAL.cs" />
+    <Compile Include="ItemSourceDAL.cs" />
+    <Compile Include="KeywordDAL.cs" />
+    <Compile Include="MarcControlDAL.cs" />
+    <Compile Include="MarcDAL.cs" />
+    <Compile Include="MarcDataFieldDAL.cs" />
+    <Compile Include="MarcImportBatchDAL.cs" />
+    <Compile Include="MarcSubFieldDAL.cs" />
+    <Compile Include="MonthlyStatsDAL.cs" />
+    <Compile Include="NameDAL.cs" />
+    <Compile Include="NameIdentifierDAL.cs" />
+    <Compile Include="NamePageDAL.cs" />
+    <Compile Include="NameResolvedDAL.cs" />
+    <Compile Include="NameSegmentDAL.cs" />
+    <Compile Include="NameSourceDAL.cs" />
+    <Compile Include="OAIIdentifierDAL.cs" />
+    <Compile Include="OpenUrlCitationDAL.cs" />
+    <Compile Include="Generated\TitleAssociationDAL.Auto.cs" />
+    <Compile Include="Generated\TitleAssociationTypeDAL.Auto.cs" />
+    <Compile Include="Generated\TitleAssociation_TitleIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\TitleItemDAL.Auto.cs" />
+    <Compile Include="PageAnnotationDAL.cs" />
+    <Compile Include="PageFlickrDAL.cs" />
+    <Compile Include="PDFDAL.cs" />
+    <Compile Include="PDFPageDAL.cs" />
+    <Compile Include="PDFStatsDAL.cs" />
+    <Compile Include="PDFStatusDAL.cs" />
+    <Compile Include="ScanningRequestDAL.cs" />
+    <Compile Include="SearchDAL.cs" />
+    <Compile Include="SegmentAuthorDAL.cs" />
+    <Compile Include="SegmentClusterDAL.cs" />
+    <Compile Include="SegmentClusterSegmentDAL.cs" />
+    <Compile Include="SegmentCOinSDAL.cs" />
+    <Compile Include="SegmentDAL.cs" />
+    <Compile Include="SegmentGenreDAL.cs" />
+    <Compile Include="SegmentIdentifierDAL.cs" />
+    <Compile Include="SegmentKeywordDAL.cs" />
+    <Compile Include="SegmentPageDAL.cs" />
+    <Compile Include="SegmentResolutionLogDAL.cs" />
+    <Compile Include="SegmentStatusDAL.cs" />
+    <Compile Include="TitleAssociationDAL.cs" />
+    <Compile Include="TitleAssociationTypeDAL.cs" />
+    <Compile Include="TitleAssociation_TitleIdentifierDAL.cs" />
+    <Compile Include="TitleAuthorDAL.cs" />
+    <Compile Include="TitleCollectionDAL.cs" />
+    <Compile Include="TitleItemDAL.cs" />
+    <Compile Include="TitleKeywordDAL.cs" />
+    <Compile Include="TitleLanguageDAL.cs" />
+    <Compile Include="TitleVariantDAL.cs" />
+    <Compile Include="Title_IdentifierDAL.cs" />
+    <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />
+    <Compile Include="Generated\InstitutionDAL.Auto.cs" />
+    <Compile Include="Generated\ItemDAL.Auto.cs" />
+    <Compile Include="Generated\ItemStatusDAL.Auto.cs" />
+    <Compile Include="IndicatedPageDAL.cs" />
+    <Compile Include="InstitutionDAL.cs" />
+    <Compile Include="ItemStatusDAL.cs" />
+    <Compile Include="ItemSummaryDAL.cs" />
+    <Compile Include="PageSummaryDAL.cs" />
+    <Compile Include="Generated\VaultDAL.Auto.cs" />
+    <Compile Include="ItemDAL.cs" />
+    <Compile Include="Generated\LanguageDAL.Auto.cs" />
+    <Compile Include="LanguageDAL.cs" />
+    <Compile Include="Generated\PageDAL.Auto.cs" />
+    <Compile Include="PageDAL.cs" />
+    <Compile Include="Generated\PageTypeDAL.Auto.cs" />
+    <Compile Include="PageTypeDAL.cs" />
+    <Compile Include="Generated\Page_PageTypeDAL.Auto.cs" />
+    <Compile Include="Page_PageTypeDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generated\TitleDAL.Auto.cs" />
+    <Compile Include="StatsDAL.cs" />
+    <Compile Include="TitleDAL.cs" />
+    <Compile Include="TransactionController.cs" />
+    <Compile Include="VaultDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
+      <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
+      <Name>BHLDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
+      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
+      <Name>CustomDataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mobot.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

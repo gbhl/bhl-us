@@ -1,0 +1,1074 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{107F9C1A-12AB-42D5-AD12-333BC5B2DBDA}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOBOT.BHL.Web2</RootNamespace>
+    <AssemblyName>BHLUSWeb2</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CounterSoft.Gemini.Commons, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="CounterSoft.Gemini.Services, Version=1.0.2760.20207, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="CounterSoft.Gemini.WebServices, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.WebServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft3.6.4\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\Default.html" />
+    <Content Include="AdvancedSearch.aspx" />
+    <Content Include="alertmsg.txt" />
+    <Content Include="api2\docs\AuthorSearch.xml" />
+    <Content Include="api2\docs\BookSearch.xml" />
+    <Content Include="api2\docs\docs.html" />
+    <Content Include="api2\docs\docs.txt" />
+    <Content Include="api2\docs\GetAuthorParts.xml" />
+    <Content Include="api2\docs\GetAuthorTitles.xml" />
+    <Content Include="api2\docs\GetCollections.xml" />
+    <Content Include="api2\docs\GetItemByIdentifier.xml" />
+    <Content Include="api2\docs\GetItemMetadata.xml" />
+    <Content Include="api2\docs\GetItemPages.xml" />
+    <Content Include="api2\docs\GetItemParts.xml" />
+    <Content Include="api2\docs\GetLanguages.xml" />
+    <Content Include="api2\docs\GetPageMetadata.xml" />
+    <Content Include="api2\docs\GetPageNames.xml" />
+    <Content Include="api2\docs\GetPageOcrText.xml" />
+    <Content Include="api2\docs\GetPartBibTex.xml" />
+    <Content Include="api2\docs\GetPartByIdentifier.xml" />
+    <Content Include="api2\docs\GetPartEndNote.xml" />
+    <Content Include="api2\docs\GetPartMetadata.xml" />
+    <Content Include="api2\docs\GetPartNames.xml" />
+    <Content Include="api2\docs\GetSubjectParts.xml" />
+    <Content Include="api2\docs\GetSubjectTitles.xml" />
+    <Content Include="api2\docs\GetTitleBibTex.xml" />
+    <Content Include="api2\docs\GetTitleByIdentifier.xml" />
+    <Content Include="api2\docs\GetTitleEndNote.xml" />
+    <Content Include="api2\docs\GetTitleItems.xml" />
+    <Content Include="api2\docs\GetTitleMetadata.xml" />
+    <Content Include="api2\docs\GetUnpublishedItems.xml" />
+    <Content Include="api2\docs\GetUnpublishedParts.xml" />
+    <Content Include="api2\docs\GetUnpublishedTitles.xml" />
+    <Content Include="api2\docs\NameCount.xml" />
+    <Content Include="api2\docs\NameGetDetailName.xml" />
+    <Content Include="api2\docs\NameGetDetailNameBank.xml" />
+    <Content Include="api2\docs\NameList.xml" />
+    <Content Include="api2\docs\NameSearch.xml" />
+    <Content Include="api2\docs\PartSearch.xml" />
+    <Content Include="api2\docs\SubjectSearch.xml" />
+    <Content Include="api2\docs\TitleSearchSimple.xml" />
+    <Content Include="api2\soap.asmx" />
+    <Content Include="apikeymsg.txt" />
+    <Content Include="api\docs\docs.html" />
+    <Content Include="api\docs\docs.txt" />
+    <Content Include="api\docs\NameCount.xml" />
+    <Content Include="api\docs\NameGetDetail.xml" />
+    <Content Include="api\docs\NameList.xml" />
+    <Content Include="api\docs\NameSearch.xml" />
+    <Content Include="api\soap.asmx" />
+    <Content Include="AuthorNotFound.aspx" />
+    <Content Include="Bibliography.aspx" />
+    <Content Include="BiblioSelect.aspx" />
+    <Content Include="BrowseByTitleTag.aspx" />
+    <Content Include="BrowseByYear.aspx" />
+    <Content Include="BrowseCollections.aspx" />
+    <Content Include="CollectionDetails.aspx" />
+    <Content Include="CollectionPage.aspx" />
+    <Content Include="controls\BookBrowseControl.ascx" />
+    <Content Include="controls\COinSControl.ascx" />
+    <Content Include="controls\CollectionListControl.ascx" />
+    <Content Include="controls\MendeleyShareControl.ascx" />
+    <Content Include="controls\NavBar.ascx" />
+    <Content Include="controls\SectionBrowseControl.ascx" />
+    <Content Include="controls\SocialLinksPanel.ascx" />
+    <Content Include="controls\TwitterFeedControl.ascx" />
+    <Content Include="controls\ucFeatureBox.ascx" />
+    <Content Include="CreatorList.aspx" />
+    <Content Include="CreatorPage.aspx" />
+    <Content Include="css\bhlaustylereference.css" />
+    <Content Include="css\BookReader.css" />
+    <Content Include="css\bookviewer.css" />
+    <Content Include="css\bookviewer_extra.css" />
+    <Content Include="css\jqgridtheme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_flat_100_ccd4d8_40x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_flat_75_5caa46_40x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_flat_75_f9f5f1_40x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_glass_55_7b0fff_1x400.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_glass_75_008dd1_1x400.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_highlight-soft_75_e60000_1x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_222222_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_2b3c4d_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_454545_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_888888_256x240.png" />
+    <Content Include="css\jqgridtheme\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="css\jqgridtheme\jquery-ui-1.8.10.custom.css" />
+    <Content Include="css\jqgridtheme\ui.jqgrid.css" />
+    <Content Include="css\style.css" />
+    <Content Include="css\ui.jqgrid.css" />
+    <Content Include="dlconcepts.aspx" />
+    <Content Include="dlindexbrowse.aspx" />
+    <Content Include="dlsearch.aspx" />
+    <Content Include="EmailGeneratePdfReceived.ascx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Feedback.aspx" />
+    <Content Include="feedbackmsg.txt" />
+    <Content Include="GetApiKey.aspx" />
+    <Content Include="images\01_home_pic_img.png" />
+    <Content Include="images\02_home_pic_img.png" />
+    <Content Include="images\03_home_pic_img.png" />
+    <Content Include="images\04_home_pic_img.png" />
+    <Content Include="images\05_home_pic_img.png" />
+    <Content Include="images\06_home_pic_img.png" />
+    <Content Include="images\07_home_pic_img.png" />
+    <Content Include="images\08_home_pic_img.png" />
+    <Content Include="images\author_icon-home.png" />
+    <Content Include="images\bg_book_icons.png" />
+    <Content Include="images\bg_browse_button.png" />
+    <Content Include="images\bg_searchbar_button.png" />
+    <Content Include="images\bg_searchhome_button.png" />
+    <Content Include="images\bg_tab_button.png" />
+    <Content Include="images\bg_volume_arrow.png" />
+    <Content Include="images\bg_volume_expand.png" />
+    <Content Include="images\bhl-logo-main.png" />
+    <Content Include="images\BHLAU Images\bg_bib_arrow.png" />
+    <Content Include="images\BHLAU Images\bg_body.png" />
+    <Content Include="images\BHLAU Images\bg_book_button.png" />
+    <Content Include="images\BHLAU Images\bg_book_icons.png" />
+    <Content Include="images\BHLAU Images\bg_browser_close.png" />
+    <Content Include="images\BHLAU Images\bg_browse_button.png" />
+    <Content Include="images\BHLAU Images\bg_br_slider_handle.png" />
+    <Content Include="images\BHLAU Images\bg_example_button.png" />
+    <Content Include="images\BHLAU Images\bg_form_button.png" />
+    <Content Include="images\BHLAU Images\bg_large_close.png" />
+    <Content Include="images\BHLAU Images\bg_loading_blue.gif" />
+    <Content Include="images\BHLAU Images\bg_loading_bricon.gif" />
+    <Content Include="images\BHLAU Images\bg_message_arrow.png" />
+    <Content Include="images\BHLAU Images\bg_pdf_button.png" />
+    <Content Include="images\BHLAU Images\bg_pdf_review_icons.png" />
+    <Content Include="images\BHLAU Images\bg_searchbar_button.png" />
+    <Content Include="images\BHLAU Images\bg_searchhome_button.png" />
+    <Content Include="images\BHLAU Images\bg_select_blue.png" />
+    <Content Include="images\BHLAU Images\bg_select_brown.png" />
+    <Content Include="images\BHLAU Images\bg_select_dark.png" />
+    <Content Include="images\BHLAU Images\bg_small_close.png" />
+    <Content Include="images\BHLAU Images\bg_small_delete.png" />
+    <Content Include="images\BHLAU Images\bg_tab_button.png" />
+    <Content Include="images\BHLAU Images\bg_titlelink_button.png" />
+    <Content Include="images\BHLAU Images\bg_volume_arrow.png" />
+    <Content Include="images\BHLAU Images\bg_volume_button.png" />
+    <Content Include="images\BHLAU Images\bg_volume_expand.png" />
+    <Content Include="images\BHLAU Images\bg_year_slider_handle.png" />
+    <Content Include="images\BHLAU Images\browse_authors.png" />
+    <Content Include="images\BHLAU Images\browse_authors_small.png" />
+    <Content Include="images\BHLAU Images\browse_keywords.png" />
+    <Content Include="images\BHLAU Images\browse_keywords_small.png" />
+    <Content Include="images\BHLAU Images\browse_map.png" />
+    <Content Include="images\BHLAU Images\browse_map_small.png" />
+    <Content Include="images\BHLAU Images\browse_names.png" />
+    <Content Include="images\BHLAU Images\browse_names_small.png" />
+    <Content Include="images\BHLAU Images\browse_titles.png" />
+    <Content Include="images\BHLAU Images\browse_titles_small.png" />
+    <Content Include="images\BHLAU Images\browse_year.png" />
+    <Content Include="images\BHLAU Images\browse_year_small.png" />
+    <Content Include="images\BHLAU Images\btn_advanced.png" />
+    <Content Include="images\BHLAU Images\favicon.png" />
+    <Content Include="images\BHLAU Images\featured_13332.jpg" />
+    <Content Include="images\BHLAU Images\featured_19520.jpg" />
+    <Content Include="images\BHLAU Images\featured_23766.jpg" />
+    <Content Include="images\BHLAU Images\featured_25555.jpg" />
+    <Content Include="images\BHLAU Images\featured_4821.jpg" />
+    <Content Include="images\BHLAU Images\featured_8223.jpg" />
+    <Content Include="images\BHLAU Images\header.png" />
+    <Content Include="images\BHLAU Images\hero_rosellas.png" />
+    <Content Include="images\BHLAU Images\icon_all.png" />
+    <Content Include="images\BHLAU Images\icon_chrome.png" />
+    <Content Include="images\BHLAU Images\icon_firefox.png" />
+    <Content Include="images\BHLAU Images\icon_iexplorer.png" />
+    <Content Include="images\BHLAU Images\icon_jp2.png" />
+    <Content Include="images\BHLAU Images\icon_ocr.png" />
+    <Content Include="images\BHLAU Images\icon_pdf.png" />
+    <Content Include="images\BHLAU Images\icon_safari.png" />
+    <Content Include="images\BHLAU Images\icon_xml.png" />
+    <Content Include="images\BHLAU Images\image_about.jpg" />
+    <Content Include="images\BHLAU Images\image_book.jpg" />
+    <Content Include="images\BHLAU Images\image_browser_message.png" />
+    <Content Include="images\BHLAU Images\image_contact.jpg" />
+    <Content Include="images\BHLAU Images\image_copyright.jpg" />
+    <Content Include="images\BHLAU Images\image_email_logo.gif" />
+    <Content Include="images\BHLAU Images\image_general.jpg" />
+    <Content Include="images\BHLAU Images\image_not_found.jpg" />
+    <Content Include="images\BHLAU Images\image_resources.jpg" />
+    <Content Include="images\BHLAU Images\large_icon_all.png" />
+    <Content Include="images\BHLAU Images\large_icon_jp2.png" />
+    <Content Include="images\BHLAU Images\large_icon_ocr.png" />
+    <Content Include="images\BHLAU Images\large_icon_pdf.png" />
+    <Content Include="images\BHLAU Images\left_edges.png" />
+    <Content Include="images\BHLAU Images\logo_ala.png" />
+    <Content Include="images\BHLAU Images\logo_mv.png" />
+    <Content Include="images\BHLAU Images\marker_aqua.png" />
+    <Content Include="images\BHLAU Images\marker_blue.png" />
+    <Content Include="images\BHLAU Images\marker_lime.png" />
+    <Content Include="images\BHLAU Images\marker_purple.png" />
+    <Content Include="images\BHLAU Images\marker_red.png" />
+    <Content Include="images\BHLAU Images\marker_shadow.png" />
+    <Content Include="images\BHLAU Images\right_edges.png" />
+    <Content Include="images\BHLAU Images\transparent.png" />
+    <Content Include="images\bib_minus.gif" />
+    <Content Include="images\bib_plus.GIF" />
+    <Content Include="images\blank.gif" />
+    <Content Include="images\browse_authors_small.png" />
+    <Content Include="images\browse_map_small.png" />
+    <Content Include="images\browse_titles_small.png" />
+    <Content Include="images\browse_year_small.png" />
+    <Content Include="images\collection_icon-home.png" />
+    <Content Include="images\cul-logo.gif" />
+    <Content Include="images\darwinHeaderLong.jpg" />
+    <Content Include="images\darwinHeaderMini.jpg" />
+    <Content Include="images\darwinHeaderSmall.jpg" />
+    <Content Include="images\darwin_book_header.png" />
+    <Content Include="images\date_icon-home.png" />
+    <Content Include="images\DMP-Logo2.png" />
+    <Content Include="images\down.gif" />
+    <Content Include="images\envelope_icon.png" />
+    <Content Include="images\eol_11px.png" />
+    <Content Include="images\facebook-icon-normal.png" />
+    <Content Include="images\facebook-icon-over.png" />
+    <Content Include="images\facebook_like_normal.png" />
+    <Content Include="images\facebook_like_over.png" />
+    <Content Include="images\flickr-icon-normal.png" />
+    <Content Include="images\flickr-icon-over.png" />
+    <Content Include="images\flickrthumbs\Default\10535931.jpg" />
+    <Content Include="images\flickrthumbs\Default\1203798.jpg" />
+    <Content Include="images\flickrthumbs\Default\1203991.jpg" />
+    <Content Include="images\flickrthumbs\Default\12042246.jpg" />
+    <Content Include="images\flickrthumbs\Default\12232608.jpg" />
+    <Content Include="images\flickrthumbs\Default\306998.jpg" />
+    <Content Include="images\flickrthumbs\Default\3894920.jpg" />
+    <Content Include="images\flickrthumbs\Default\6307518.jpg" />
+    <Content Include="images\flickrthumbs\Default\7360249.jpg" />
+    <Content Include="images\flickrthumbs\Default\8448711.jpg" />
+    <Content Include="images\flickrthumbs\Default\flickrthumbs.txt" />
+    <Content Include="images\home_pic_img.png" />
+    <Content Include="images\home_shadow_search.png" />
+    <Content Include="images\howToGraphic.png" />
+    <Content Include="images\icon_all.png" />
+    <Content Include="images\icon_jp2.png" />
+    <Content Include="images\icon_ocr.png" />
+    <Content Include="images\icon_pdf.png" />
+    <Content Include="images\image_about.jpg" />
+    <Content Include="images\image_contact.jpg" />
+    <Content Include="images\image_general.jpg" />
+    <Content Include="images\image_not_found.jpg" />
+    <Content Include="images\image_not_found_thumb.jpg" />
+    <Content Include="images\jisc-logo.png" />
+    <Content Include="images\magnify-icon-normal.png" />
+    <Content Include="images\magnify-icon-over.png" />
+    <Content Include="images\mendeley.png" />
+    <Content Include="images\NEH-Logo-bkgd.jpg" />
+    <Content Include="images\nhm-official-logo.png" />
+    <Content Include="images\pin-icon-normal.png" />
+    <Content Include="images\pin-icon-over.png" />
+    <Content Include="images\rpterror.png" />
+    <Content Include="images\rss.png" />
+    <Content Include="images\support.png" />
+    <Content Include="images\title_icon-home.png" />
+    <Content Include="images\tweet_like_normal.png" />
+    <Content Include="images\tweet_like_over.png" />
+    <Content Include="images\twitter-icon-normal.png" />
+    <Content Include="images\twitter-icon-over.png" />
+    <Content Include="images\up.gif" />
+    <Content Include="images\view_page.gif" />
+    <Content Include="ItemNotFound.aspx" />
+    <Content Include="ItemPage.aspx" />
+    <Content Include="ItemUnavailable.aspx" />
+    <Content Include="js\jMyCarousel\credits.txt" />
+    <Content Include="js\jMyCarousel\img\arrow_down.gif" />
+    <Content Include="js\jMyCarousel\img\arrow_left.gif" />
+    <Content Include="js\jMyCarousel\img\arrow_right.gif" />
+    <Content Include="js\jMyCarousel\img\arrow_up.gif" />
+    <Content Include="js\jMyCarousel\img\left.png" />
+    <Content Include="js\jMyCarousel\img\left_bhl.png" />
+    <Content Include="js\jMyCarousel\img\left_hover_bhl.png" />
+    <Content Include="js\jMyCarousel\img\right.png" />
+    <Content Include="js\jMyCarousel\img\right_bhl.png" />
+    <Content Include="js\jMyCarousel\img\right_hover_bhl.png" />
+    <Content Include="js\jMyCarousel\jMyCarousel.css" />
+    <Content Include="js\jMyCarousel\jMyCarousel.js" />
+    <Content Include="js\jMyCarousel\jMyCarousel.min.js" />
+    <Content Include="js\jMyCarousel\jMyCarousel.pack.js" />
+    <Content Include="js\jMyCarousel\license.txt" />
+    <Content Include="js\jMyCarousel\README.txt" />
+    <Content Include="js\libs\BookReader.js" />
+    <Content Include="js\libs\dragscrollable.js" />
+    <Content Include="js\libs\FlickrUpload.js" />
+    <Content Include="js\libs\grid.locale-en.js" />
+    <Content Include="js\libs\jqModal.min.js" />
+    <Content Include="js\libs\jquery-1.4.4.min.js" />
+    <Content Include="js\libs\jquery-ui-1.8.11.custom.min.js" />
+    <Content Include="js\libs\jquery.bt.min.js" />
+    <Content Include="js\libs\jquery.easing.1.3.js" />
+    <Content Include="js\libs\jquery.history.min.js" />
+    <Content Include="js\libs\jquery.hoverintent.min.js" />
+    <Content Include="js\libs\jquery.jqGrid.min.js" />
+    <Content Include="js\libs\jquery.jscrollpane.min.js" />
+    <Content Include="js\libs\jquery.mousewheel.min.js" />
+    <Content Include="js\libs\jquery.printElement.min.js" />
+    <Content Include="js\libs\jquery.text-overflow.min.js" />
+    <Content Include="js\libs\jquery.validate.min.js" />
+    <Content Include="js\libs\jquery.xcolor.min.js" />
+    <Content Include="js\libs\modernizr-1.6.min.js" />
+    <Content Include="js\plugins.js" />
+    <Content Include="js\script.js" />
+    <Content Include="js\webtrends.js" />
+    <Content Include="Monitor.aspx" />
+    <Content Include="NameList.aspx" />
+    <Content Include="OpenUrlHelp.aspx" />
+    <Content Include="OpenURLMultiple.aspx" />
+    <Content Include="OpenURLNone.aspx" />
+    <Content Include="PageNotFound.aspx" />
+    <Content Include="Recent.aspx" />
+    <Content Include="RecentRss.aspx" />
+    <Content Include="SectionPage.aspx" />
+    <None Include="Remoting.config.template" />
+    <None Include="services\Name\Web.config.template" />
+    <None Include="Web.config.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\Beta - BHL.pubxml" />
+    <None Include="Properties\PublishProfiles\Production - BHL.pubxml" />
+    <None Include="Service References\BHLWebService\BHLWS.disco" />
+    <None Include="Service References\BHLWebService\configuration91.svcinfo" />
+    <None Include="Service References\BHLWebService\configuration.svcinfo" />
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedPage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedPageCharacteristic.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedTitle.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Annotation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationNote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationRelation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationSubject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Annotation_AnnotationConcept.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.DOI.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.FindItItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Institution.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Item.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Page.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageFlickr.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageSummaryView.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PDF.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Segment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Title.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.TitleBibTeX.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.TitleEndNote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Vault.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWebService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="services\Name\NameService.asmx" />
+    <Content Include="services\PageSummaryService.asmx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="TitleList.aspx" />
+    <Content Include="TitleNotFound.aspx" />
+    <Content Include="TitlePage.aspx" />
+    <Content Include="Search.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <None Include="Service References\BHLWebService\BHLWS.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvancedSearch.aspx.cs">
+      <DependentUpon>AdvancedSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdvancedSearch.aspx.designer.cs">
+      <DependentUpon>AdvancedSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api2\httpQuery.ashx.cs">
+      <DependentUpon>httpQuery.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="api2\soap.asmx.cs">
+      <DependentUpon>soap.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="api\httpQuery.ashx.cs">
+      <DependentUpon>httpQuery.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="api\soap.asmx.cs">
+      <DependentUpon>soap.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AuthorNotFound.aspx.cs">
+      <DependentUpon>AuthorNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuthorNotFound.aspx.designer.cs">
+      <DependentUpon>AuthorNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Bibliography.aspx.cs">
+      <DependentUpon>Bibliography.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Bibliography.aspx.designer.cs">
+      <DependentUpon>Bibliography.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BiblioSelect.aspx.cs">
+      <DependentUpon>BiblioSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BiblioSelect.aspx.designer.cs">
+      <DependentUpon>BiblioSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Book.Master.cs">
+      <DependentUpon>Book.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Book.Master.designer.cs">
+      <DependentUpon>Book.Master</DependentUpon>
+    </Compile>
+    <Compile Include="BrowseByTitleTag.aspx.cs">
+      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseByTitleTag.aspx.designer.cs">
+      <DependentUpon>BrowseByTitleTag.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BrowseByYear.aspx.cs">
+      <DependentUpon>BrowseByYear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseByYear.aspx.designer.cs">
+      <DependentUpon>BrowseByYear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BrowseCollections.aspx.cs">
+      <DependentUpon>BrowseCollections.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseCollections.aspx.designer.cs">
+      <DependentUpon>BrowseCollections.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BrowsePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollectionDetails.aspx.cs">
+      <DependentUpon>CollectionDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollectionDetails.aspx.designer.cs">
+      <DependentUpon>CollectionDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionPage.aspx.cs">
+      <DependentUpon>CollectionPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollectionPage.aspx.designer.cs">
+      <DependentUpon>CollectionPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\BookBrowseControl.ascx.cs">
+      <DependentUpon>BookBrowseControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\BookBrowseControl.ascx.designer.cs">
+      <DependentUpon>BookBrowseControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\COinSControl.ascx.cs">
+      <DependentUpon>COinSControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\COinSControl.ascx.designer.cs">
+      <DependentUpon>COinSControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\CollectionListControl.ascx.cs">
+      <DependentUpon>CollectionListControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\CollectionListControl.ascx.designer.cs">
+      <DependentUpon>CollectionListControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\MendeleyShareControl.ascx.cs">
+      <DependentUpon>MendeleyShareControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\MendeleyShareControl.ascx.designer.cs">
+      <DependentUpon>MendeleyShareControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\NavBar.ascx.cs">
+      <DependentUpon>NavBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\NavBar.ascx.designer.cs">
+      <DependentUpon>NavBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\SectionBrowseControl.ascx.cs">
+      <DependentUpon>SectionBrowseControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\SectionBrowseControl.ascx.designer.cs">
+      <DependentUpon>SectionBrowseControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\SocialLinksPanel.ascx.cs">
+      <DependentUpon>SocialLinksPanel.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\SocialLinksPanel.ascx.designer.cs">
+      <DependentUpon>SocialLinksPanel.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TwitterFeedControl.ascx.cs">
+      <DependentUpon>TwitterFeedControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\TwitterFeedControl.ascx.designer.cs">
+      <DependentUpon>TwitterFeedControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ucFeatureBox.ascx.cs">
+      <DependentUpon>ucFeatureBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\ucFeatureBox.ascx.designer.cs">
+      <DependentUpon>ucFeatureBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CreatorList.aspx.cs">
+      <DependentUpon>CreatorList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreatorList.aspx.designer.cs">
+      <DependentUpon>CreatorList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreatorPage.aspx.cs">
+      <DependentUpon>CreatorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreatorPage.aspx.designer.cs">
+      <DependentUpon>CreatorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CustomGenericListExtensions.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dlconcepts.aspx.cs">
+      <DependentUpon>dlconcepts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dlconcepts.aspx.designer.cs">
+      <DependentUpon>dlconcepts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dlindexbrowse.aspx.cs">
+      <DependentUpon>dlindexbrowse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dlindexbrowse.aspx.designer.cs">
+      <DependentUpon>dlindexbrowse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="dlsearch.aspx.cs">
+      <DependentUpon>dlsearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="dlsearch.aspx.designer.cs">
+      <DependentUpon>dlsearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmailGeneratePdfReceived.ascx.cs">
+      <DependentUpon>EmailGeneratePdfReceived.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmailGeneratePdfReceived.ascx.designer.cs">
+      <DependentUpon>EmailGeneratePdfReceived.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.aspx.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Feedback.aspx.designer.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GetApiKey.aspx.cs">
+      <DependentUpon>GetApiKey.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GetApiKey.aspx.designer.cs">
+      <DependentUpon>GetApiKey.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\BibTeXDownload.ashx.cs">
+      <DependentUpon>BibTeXDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\EndNoteDownload.ashx.cs">
+      <DependentUpon>EndNoteDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPageImage.ashx.cs">
+      <DependentUpon>GetPageImage.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPageOcr.ashx.cs">
+      <DependentUpon>GetPageOcr.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPageThumb.ashx.cs">
+      <DependentUpon>GetPageThumb.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\ITunesRSS.ashx.cs">
+      <DependentUpon>ITunesRSS.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\MODSDownload.ashx.cs">
+      <DependentUpon>MODSDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemNotFound.aspx.cs">
+      <DependentUpon>ItemNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemNotFound.aspx.designer.cs">
+      <DependentUpon>ItemNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemPage.aspx.cs">
+      <DependentUpon>ItemPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemPage.aspx.designer.cs">
+      <DependentUpon>ItemPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemUnavailable.aspx.cs">
+      <DependentUpon>ItemUnavailable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemUnavailable.aspx.designer.cs">
+      <DependentUpon>ItemUnavailable.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitor.aspx.cs">
+      <DependentUpon>Monitor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitor.aspx.designer.cs">
+      <DependentUpon>Monitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NameList.aspx.cs">
+      <DependentUpon>NameList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NameList.aspx.designer.cs">
+      <DependentUpon>NameList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenUrlHelp.aspx.cs">
+      <DependentUpon>OpenUrlHelp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenUrlHelp.aspx.designer.cs">
+      <DependentUpon>OpenUrlHelp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenURLMultiple.aspx.cs">
+      <DependentUpon>OpenURLMultiple.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenURLMultiple.aspx.designer.cs">
+      <DependentUpon>OpenURLMultiple.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenURLNone.aspx.cs">
+      <DependentUpon>OpenURLNone.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenURLNone.aspx.designer.cs">
+      <DependentUpon>OpenURLNone.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageNotFound.aspx.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageNotFound.aspx.designer.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recent.aspx.cs">
+      <DependentUpon>Recent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recent.aspx.designer.cs">
+      <DependentUpon>Recent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecentRss.aspx.cs">
+      <DependentUpon>RecentRss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecentRss.aspx.designer.cs">
+      <DependentUpon>RecentRss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SectionPage.aspx.cs">
+      <DependentUpon>SectionPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SectionPage.aspx.designer.cs">
+      <DependentUpon>SectionPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\BHLWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="services\DOIService.ashx.cs">
+      <DependentUpon>DOIService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\GeneratePdf.ashx.cs">
+      <DependentUpon>GeneratePdf.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\NameListDownloadService.ashx.cs">
+      <DependentUpon>NameListDownloadService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\NameListService.ashx.cs">
+      <DependentUpon>NameListService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Name\NameService.ashx.cs">
+      <DependentUpon>NameService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\Name\NameService.asmx.cs">
+      <DependentUpon>NameService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="services\oai2.ashx.cs">
+      <DependentUpon>oai2.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\OpenUrlResolver.ashx.cs">
+      <DependentUpon>OpenUrlResolver.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\PageSummaryService.ashx.cs">
+      <DependentUpon>PageSummaryService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="services\PageSummaryService.asmx.cs">
+      <DependentUpon>PageSummaryService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="services\SearchDownloadService.ashx.cs">
+      <DependentUpon>SearchDownloadService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TitleList.aspx.cs">
+      <DependentUpon>TitleList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleList.aspx.designer.cs">
+      <DependentUpon>TitleList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleNotFound.aspx.cs">
+      <DependentUpon>TitleNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleNotFound.aspx.designer.cs">
+      <DependentUpon>TitleNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitlePage.aspx.cs">
+      <DependentUpon>TitlePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitlePage.aspx.designer.cs">
+      <DependentUpon>TitlePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Search.aspx.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search.aspx.designer.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Site.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLApiDALTest\BHLApiDALTest.csproj">
+      <Project>{D26F8B49-9AC0-41A2-B832-B46E5A43AD9C}</Project>
+      <Name>BHLApiDALTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
+      <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
+      <Name>BHLApiDataObjects2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApi\BHLApi.csproj">
+      <Project>{1C2EAD88-F194-4DF0-A82B-3D402F7ABC21}</Project>
+      <Name>BHLApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLCoreDALTest\BHLCoreDALTest.csproj">
+      <Project>{23523F13-E173-4B26-9E6B-A09E226E02B6}</Project>
+      <Name>BHLCoreDALTest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj">
+      <Project>{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}</Project>
+      <Name>BHLCoreDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
+      <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
+      <Name>BHLDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLOpenUrlProvider\BHLOpenUrlProvider.csproj">
+      <Project>{9BDC2629-FF28-4E60-B5BE-DFE071E621D6}</Project>
+      <Name>BHLOpenUrlProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLServer\BHLServer.csproj">
+      <Project>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</Project>
+      <Name>BHLServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLService\BHLWebService.csproj">
+      <Project>{B33B346A-953D-45FB-B76F-68E12346C9B3}</Project>
+      <Name>BHLWebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
+      <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
+      <Name>BHLWebUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
+      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
+      <Name>CustomDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
+      <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>
+      <Name>BHLApiDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NameServiceDataObjects\BHLApiDataObjects.csproj">
+      <Project>{EF8580AD-4BF2-4143-AAC8-03B8136BF151}</Project>
+      <Name>BHLApiDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAI2\OAI2.csproj">
+      <Project>{01E14D33-194F-4583-BAE4-0AF91A7BE756}</Project>
+      <Name>OAI2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAIDC\OAIDC.csproj">
+      <Project>{307A963A-42B0-490F-B634-1F66BD43AEB2}</Project>
+      <Name>OAIDC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAIMODS\OAIMODS.csproj">
+      <Project>{FB23E2B6-AA57-46E0-BB71-BB215E783CF2}</Project>
+      <Name>OAIMODS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenUrlUtilities\OpenUrlUtilities.csproj">
+      <Project>{DFD7C2B7-C26C-4ECC-865B-FD1AC8B4E9F1}</Project>
+      <Name>OpenUrlUtilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Book.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Handlers\BibTeXDownload.ashx" />
+    <Content Include="Handlers\EndNoteDownload.ashx" />
+    <Content Include="Handlers\GetPageImage.ashx" />
+    <Content Include="Handlers\GetPageOcr.ashx" />
+    <Content Include="Handlers\GetPageThumb.ashx" />
+    <Content Include="Handlers\ITunesRSS.ashx" />
+    <Content Include="Handlers\MODSDownload.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="services\DOIService.ashx" />
+    <Content Include="services\NameListDownloadService.ashx" />
+    <Content Include="services\NameListService.ashx" />
+    <Content Include="services\oai2.ashx" />
+    <Content Include="services\OpenUrlResolver.ashx" />
+    <Content Include="services\PageSummaryService.ashx" />
+    <Content Include="services\SearchDownloadService.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="api\httpQuery.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="api2\httpQuery.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Remoting.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="services\GeneratePdf.ashx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="services\Name\NameService.ashx" />
+    <Content Include="services\Name\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BHLWebService\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49673</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

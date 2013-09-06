@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Status>ok</Status>
+  <Result>
+    <Collection>
+      <CollectionID>4</CollectionID>
+      <CollectionName>Darwin's Library</CollectionName>
+      <CollectionDescription>Books that were a part of Charles Darwin's personal collection.</CollectionDescription>
+      <CanContainTitles>0</CanContainTitles>
+      <CanContainItems>1</CanContainItems>
+    </Collection>
+    <Collection>
+      <CollectionID>2</CollectionID>
+      <CollectionName>Ex Libris Linnaeus</CollectionName>
+      <CollectionDescription>Titles referenced in Linnaeus' Species Plantarum, 1753.</CollectionDescription>
+      <CanContainTitles>1</CanContainTitles>
+      <CanContainItems>0</CanContainItems>
+    </Collection>
+    <Collection>
+      <CollectionID>3</CollectionID>
+      <CollectionName>Latin American Periodical</CollectionName>
+      <CollectionDescription>Lists of periodicals from Latin American countries, produced in-country.</CollectionDescription>
+      <CanContainTitles>1</CanContainTitles>
+      <CanContainItems>0</CanContainItems>
+    </Collection>
+    <Collection>
+      <CollectionID>1</CollectionID>
+      <CollectionName>Rare Books</CollectionName>
+      <CollectionDescription>A volume scanned as part of MBG's Rare Books Website.</CollectionDescription>
+      <CanContainTitles>1</CanContainTitles>
+      <CanContainItems>0</CanContainItems>
+    </Collection>
+  </Result>
+</Response>

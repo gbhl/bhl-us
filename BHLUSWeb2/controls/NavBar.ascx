@@ -1,0 +1,21 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NavBar.ascx.cs" Inherits="MOBOT.BHL.Web2.NavBar" %>
+<nav id="content-nav">
+    <div class="column-wrap">        
+        <div id="browsebar">
+            <h3>Browse Our Collection by:</h3>
+            <ul>
+                <li class="titles first-child"><a class="png_bg" href="/browse/titles/a">Titles</a></li>
+                <li class="authors"><a class="png_bg" href="/browse/authors/a">Authors</a></li>
+                <li class="year"><a class="png_bg" href="/browse/year">Date</a></li>
+                <li class="collection last-child"><a class="png_bg" href="/browse/collections">Collection</a></li>
+			</ul>
+        </div>
+        <div id="searchbar">
+            <a href="/advsearch" title="Advanced Search">advanced search</a>
+        	<asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />
+            <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
+            <!--[if lt IE 9 ]> <asp:TextBox runat="server" class="hidden"></asp:TextBox> <![endif]-->
+        </div>
+
+    </div>
+</nav>

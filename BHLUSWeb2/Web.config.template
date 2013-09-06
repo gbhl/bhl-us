@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="MOBOT.BHL.Web2.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+    </sectionGroup>
+  </configSections>
+  <appSettings>
+    <!-- ############# SETTINGS THAT DIFFER BETWEEN BETA AND PRODUCTION ############# -->
+
+    <add key="IsProduction" value="false"/>
+    <add key="BaseUrl" value="http://beta.biodiversitylibrary.org"/>
+    <add key="BibPageUrl" value="http://beta.biodiversitylibrary.org/bibliography/{0}"/>
+    <add key="ItemPageUrl" value="http://beta.biodiversitylibrary.org/item/{0}"/>
+    <add key="PagePageUrl" value="http://beta.biodiversitylibrary.org/page/{0}"/>
+    <add key="PartPageUrl" value="http://beta.biodiversitylibrary.org/part/{0}"/>
+    <add key="AuthorPageUrl" value="http://beta.biodiversitylibrary/creator/{0}"/>
+
+    <add key="ImageNotFoundPath" value="http://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
+    <add key="ImageNotFoundThumbPath" value="http://beta.biodiversitylibrary.org/images/image_not_found_thumb.jpg"/>
+
+    <!-- OAI Settings -->
+    <add key="OAIBaseUrl" value="http://beta.biodiversitylibrary.org/oai"/>
+
+    <!-- ###################################################################### -->
+
+    <add key="UseRemoteFileAccessProvider" value="true"/>
+    <add key="DoRemoteNameLookup" value="false"/>
+    <add key="ShowAnnotations" value="true"/>
+    <add key="EnableFullTextSearch" value="true"/>
+
+    <!-- OAI Settings -->
+    <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
+    <add key="OAIAdminEmail" value="bhl.oai@gmail.com"/>
+    <add key="OAIIdentifierNamespace" value="biodiversitylibrary.org"/>
+    <add key="OAIMaxListSets" value="500"/>
+    <add key="OAIMaxListRecords" value="100"/>
+    <add key="OAIMaxListIdentifiers" value="200"/>
+    <!-- OAI Metadata formats that the repository supports.
+		    Enter each metadata format on a separate line for each metadata format, with 
+        each element (prefix, namespace, schema, handler) separated by the '|' character
+		
+		    To add additional metadata formats, add the items like so:		     
+        marc | http://www.loc.gov/MARC21/slim | http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd | MOBOT.BHL.MARC
+        oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
+		-->
+    <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS"/>
+
+    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
+    <add key="NameFinderService" value="GNRD"/>
+
+    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
+    <add key="NameServiceSourceName" value="GlobalNames"/>
+
+    <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
+    <add key="UsePreferredNameResults" value="true"/>
+
+    <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
+    <add key="MaxReadAttempts" value="5" />
+
+    <!-- begin Default Year Browse  Dates -->
+    <add key="browseByYearDefaultStart" value="1450"/>
+    <add key="browseByYearDefaultEnd" value="1580"/>   
+    <!-- End Default Year Browse Dates-->
+    <add key="PageTitle" value="{0} - Biodiversity Heritage Library" />
+    <add key="TweetMessage" value="{0} @BioDivLibrary" />
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <add key="DOIResolverURL" value="http://dx.doi.org/"/>
+
+    <add key="TwitterConsumerKey" value="your twitter consumer key goes here"/>
+    <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
+    <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>
+
+    <add key="WikiPageAbout" value="http://biodivlib.wikispaces.com/About"/>
+    <add key="WikiPagePermissions" value="http://biodivlib.wikispaces.com/Permissions"/>
+    <add key="projectUpdatesFeedLocation" value="http://blog.biodiversitylibrary.org/feeds/posts/default?alt=rss"/>
+    <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
+    <add key="PdfGenDownloadIA" value="http://www.archive.org/download/{0}/{1}.pdf"/>
+    <!-- jQuery libraries -->
+    <add key="jQueryPath" value="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"/>
+    <add key="jQueryUIPath" value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"/>
+    <add key="jQueryUICSSPath" value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css"/>
+    <add key="jqGridCSSPath" value="/css/jqgridtheme/ui.jqgrid.css"/>
+    <add key="jqGridLocalePath" value="/js/libs/grid.locale-en.js"/>
+    <add key="jqGridPath" value="/js/libs/jquery.jqGrid.min.js"/>
+    <!-- begin attribution div properties -->
+    <!-- Maximum age in days of Page Names before they are refreshed -->
+    <add key="MaximumPageNameAge" value="45"/>
+    <!-- Maximum time in minutes that the list of languages is cached -->
+    <add key="LanguageListQueryCacheTime" value="1440"/>
+    <!-- Maximum time in minutes that the list of collections is cached -->
+    <add key="CollectionListQueryCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the featured collection is cached -->
+    <add key="FeaturedCollectionCacheTime" value="5"/>
+    <!-- Maximum time in minutes that the twitter feed is cached -->
+    <add key="TwitterFeedCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the statistics are cached -->
+    <add key="StatsSelectQueryCacheTime" value="20"/>
+    <!-- Maximum time in minutes that browse results (title lists, authors lists, etc) are cached -->
+    <add key="BrowseQueryCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the flickr thumbnail list is cached -->
+    <add key="FlickrThumbListCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the alert message is cached -->
+    <add key="AlertMessageCacheTime" value="1"/>
+    <!-- Search results settings -->
+    <add key="MaximumDefaultResults" value="100"/>
+    <add key="MaximumExpandedResults" value="500"/>
+    <!-- Gemini settings for feedback page -->
+    <add key="GeminiURL" value="issue tracking service URL"/>
+    <add key="GeminiUser" value="issue tracking service username"/>
+    <add key="GeminiPassword" value="issue tracking service password"/>
+    <add key="GeminiProjectId" value="7"/>
+    <add key="GeminiDesc" value="A new issue from the web"/>
+
+    <!-- Required for forms with large numbers of fields -->
+    <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
+  </appSettings>
+  <connectionStrings>
+    <remove name="BHL" />
+    <remove name="Admin" />
+    <add name="BHL"  connectionString="connection string for main database"  providerName="System.Data.SqlClient" />
+    <add name="Admin" connectionString="optional connection string for API logging database" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <location path="feedback.aspx">
+    <system.web>
+      <pages validateRequest="false" />
+      <httpRuntime requestValidationMode="2.0" />
+    </system.web>
+  </location>
+  <system.web>
+    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" />
+    <!-- 
+            Set compilation debug="true" to insert debugging 
+            symbols into the compiled page. Because this 
+            affects performance, set this value to true only 
+            during development.
+        -->
+    <!-- REF: http://aspadvice.com/blogs/joteke/archive/2006/02/02/15011.aspx -->
+    <pages enableEventValidation="false" viewStateEncryptionMode="Never" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" />
+    <compilation debug="true">
+      <assemblies>
+        <add assembly="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+        <add assembly="System.Xml.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+      </assemblies>
+    </compilation>
+    <globalization requestEncoding="utf-8" responseEncoding="utf-8"/>
+     <customErrors mode="Off"/>
+  </system.web>
+  <system.web.extensions>
+    <scripting>
+      <webServices>
+        <jsonSerialization maxJsonLength="5000000">
+          <!-- Uncomment this line to add a custom converter -->
+          <!--
+          <converters>
+            <add name="ConvertMe" type="Acme.SubAcme.ConvertMeTypeConverter"/>
+          </converters>
+          -->
+        </jsonSerialization>
+        <!-- Uncomment this line to enable the authentication service. Include requireSSL="true" if appropriate. -->
+        <!--
+        <authenticationService enabled="true" requireSSL = "true|false"/>
+      -->
+        <!-- Uncomment these lines to enable the profile service. To allow profile properties to be retrieved
+           and modified in ASP.NET AJAX applications, you need to add each property name to the readAccessProperties and
+           writeAccessProperties attributes. -->
+        <!--
+      <profileService enabled="true"
+                      readAccessProperties="propertyname1,propertyname2"
+                      writeAccessProperties="propertyname1,propertyname2" />
+      -->
+      </webServices>
+      <!--
+      <scriptResourceHandler enableCompression="true" enableCaching="true" />
+      -->
+    </scripting>
+  </system.web.extensions>
+  <system.net>
+    <mailSettings>
+      <smtp>
+        <network host="mail server address" port="25" userName="mail username" password="mail password"/>
+      </smtp>
+    </mailSettings>
+  </system.net>
+  <system.webServer>
+    <httpErrors>
+      <remove statusCode="404" subStatusCode="-1" />
+      <error statusCode="404" prefixLanguageFilePath="" path="/404.aspx" responseMode="ExecuteURL" />
+    </httpErrors>
+      <security>
+          <requestFiltering allowDoubleEscaping="true" />
+      </security>
+  </system.webServer>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
+          receiveTimeout="00:10:00" sendTimeout="00:01:00" allowCookies="false"
+          bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
+          maxBufferPoolSize="524288" maxBufferSize="65536" maxReceivedMessageSize="65536"
+          textEncoding="utf-8" transferMode="Buffered" useDefaultWebProxy="true"
+          messageEncoding="Text">
+          <readerQuotas maxDepth="32" maxStringContentLength="8192" maxArrayLength="16384"
+            maxBytesPerRead="4096" maxNameTableCharCount="16384" />
+          <security mode="None">
+            <transport clientCredentialType="None" proxyCredentialType="None"
+              realm="" />
+            <message clientCredentialType="UserName" algorithmSuite="Default" />
+          </security>
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="internal BHLWebService URL" binding="basicHttpBinding"
+        bindingConfiguration="BHLWSSoap" contract="BHLWebService.BHLWSSoap"
+        name="BHLWSSoap" />
+    </client>
+  </system.serviceModel>
+</configuration>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="993bb20e-a8e9-4098-b468-ad619899db48" ChangeDateTime="08/22/2013 16:26:46">
+    <Property Name="ElementName" Value="[dbo].[SegmentResolutionLog].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SegmentResolutionLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SegmentResolutionLogID" />
+  </Operation>
+</Operations>

@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{65499E9E-4829-469E-8B5E-3F96012649AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOBOT.BHL.DataObjects</RootNamespace>
+    <AssemblyName>BHLDataObjects</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>mobot.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>http://localhost/BHLDataObjects/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Concrete\AnnotatedItem.cs" />
+    <Compile Include="Concrete\AnnotatedPage.cs" />
+    <Compile Include="Concrete\AnnotatedPageCharacteristic.cs" />
+    <Compile Include="Concrete\AnnotatedPageType.cs" />
+    <Compile Include="Concrete\AnnotatedTitle.cs" />
+    <Compile Include="Concrete\Annotation.cs" />
+    <Compile Include="Concrete\AnnotationConcept.cs" />
+    <Compile Include="Concrete\AnnotationMark.cs" />
+    <Compile Include="Concrete\AnnotationNote.cs" />
+    <Compile Include="Concrete\AnnotationPolygon.cs" />
+    <Compile Include="Concrete\AnnotationRelation.cs" />
+    <Compile Include="Concrete\AnnotationSubject.cs" />
+    <Compile Include="Concrete\AnnotationSubjectCategory.cs" />
+    <Compile Include="Concrete\Annotation_AnnotationConcept.cs" />
+    <Compile Include="Concrete\APIKey.cs" />
+    <Compile Include="Concrete\Author.cs" />
+    <Compile Include="Concrete\AuthorIdentifier.cs" />
+    <Compile Include="Concrete\AuthorName.cs" />
+    <Compile Include="Concrete\AuthorRole.cs" />
+    <Compile Include="Concrete\AuthorType.cs" />
+    <Compile Include="Concrete\BibliographicLevel.cs" />
+    <Compile Include="Concrete\BioStorHarvestItem.cs" />
+    <Compile Include="Concrete\Collection.cs" />
+    <Compile Include="Concrete\Configuration.cs" />
+    <Compile Include="Concrete\IAHarvestItem.cs" />
+    <Compile Include="Concrete\DOI.cs" />
+    <Compile Include="Concrete\DOIStatus.cs" />
+    <Compile Include="Concrete\Identifier.cs" />
+    <Compile Include="Concrete\ItemCOinSView.cs" />
+    <Compile Include="Concrete\ItemCollection.cs" />
+    <Compile Include="Concrete\ItemLanguage.cs" />
+    <Compile Include="Concrete\ItemNameFileLog.cs" />
+    <Compile Include="Concrete\ItemSource.cs" />
+    <Compile Include="Concrete\Keyword.cs" />
+    <Compile Include="Concrete\Marc.cs" />
+    <Compile Include="Concrete\MarcControl.cs" />
+    <Compile Include="Concrete\MarcDataField.cs" />
+    <Compile Include="Concrete\MarcImportBatch.cs" />
+    <Compile Include="Concrete\MarcSubField.cs" />
+    <Compile Include="Concrete\MonthlyStats.cs" />
+    <Compile Include="Concrete\Name.cs" />
+    <Compile Include="Concrete\NameIdentifier.cs" />
+    <Compile Include="Concrete\NamePage.cs" />
+    <Compile Include="Concrete\NameResolved.cs" />
+    <Compile Include="Concrete\NameSegment.cs" />
+    <Compile Include="Concrete\NameSource.cs" />
+    <Compile Include="Concrete\OAIIdentifier.cs" />
+    <Compile Include="Concrete\OpenUrlCitation.cs" />
+    <Compile Include="Concrete\PageAnnotation.cs" />
+    <Compile Include="Concrete\PageFlickr.cs" />
+    <Compile Include="Concrete\PDF.cs" />
+    <Compile Include="Concrete\PDFPage.cs" />
+    <Compile Include="Concrete\PDFStats.cs" />
+    <Compile Include="Concrete\PDFStatus.cs" />
+    <Compile Include="Concrete\ScanningRequest.cs" />
+    <Compile Include="Concrete\Segment.cs" />
+    <Compile Include="Concrete\SegmentAuthor.cs" />
+    <Compile Include="Concrete\SegmentCluster.cs" />
+    <Compile Include="Concrete\SegmentClusterSegment.cs" />
+    <Compile Include="Concrete\SegmentCOinSView.cs" />
+    <Compile Include="Concrete\SegmentGenre.cs" />
+    <Compile Include="Concrete\SegmentIdentifier.cs" />
+    <Compile Include="Concrete\SegmentKeyword.cs" />
+    <Compile Include="Concrete\SegmentPage.cs" />
+    <Compile Include="Concrete\SegmentResolutionLog.cs" />
+    <Compile Include="Concrete\SegmentStatus.cs" />
+    <Compile Include="Concrete\TitleAssociation.cs" />
+    <Compile Include="Concrete\TitleAssociationType.cs" />
+    <Compile Include="Concrete\TitleAssociation_TitleIdentifier.cs" />
+    <Compile Include="Concrete\TitleAuthor.cs" />
+    <Compile Include="Concrete\TitleBibTeX.cs" />
+    <Compile Include="Concrete\TitleCollection.cs" />
+    <Compile Include="Concrete\TitleEndNote.cs" />
+    <Compile Include="Concrete\TitleItem.cs" />
+    <Compile Include="Concrete\TitleKeyword.cs" />
+    <Compile Include="Concrete\TitleLanguage.cs" />
+    <Compile Include="Concrete\TitleVariant.cs" />
+    <Compile Include="Concrete\TitleVariantType.cs" />
+    <Compile Include="Concrete\Title_Identifier.cs" />
+    <Compile Include="Concrete\IndicatedPage.cs" />
+    <Compile Include="Concrete\Institution.cs" />
+    <Compile Include="Concrete\Item.cs" />
+    <Compile Include="Concrete\ItemStatus.cs" />
+    <Compile Include="Concrete\ItemStatusEnumeration.cs" />
+    <Compile Include="Concrete\Language.cs" />
+    <Compile Include="Concrete\NameSearchItem.cs" />
+    <Compile Include="Concrete\NameSearchPage.cs" />
+    <Compile Include="Concrete\NameSearchResult.cs" />
+    <Compile Include="Concrete\NameSearchTitle.cs" />
+    <Compile Include="Concrete\Page.cs" />
+    <Compile Include="Concrete\PageSummaryView.cs" />
+    <Compile Include="Concrete\PageType.cs" />
+    <Compile Include="Concrete\Page_PageType.cs" />
+    <Compile Include="Concrete\PaginationStatus.cs" />
+    <Compile Include="Concrete\Stats.cs" />
+    <Compile Include="Concrete\Title.cs" />
+    <Compile Include="Concrete\Vault.cs" />
+    <Compile Include="Concrete\vwMarcDataField.cs" />
+    <Compile Include="Generated\__AnnotatedItem.cs" />
+    <Compile Include="Generated\__AnnotatedPage.cs" />
+    <Compile Include="Generated\__AnnotatedPageCharacteristic.cs" />
+    <Compile Include="Generated\__AnnotatedPageType.cs" />
+    <Compile Include="Generated\__AnnotatedTitle.cs" />
+    <Compile Include="Generated\__Annotation.cs" />
+    <Compile Include="Generated\__AnnotationConcept.cs" />
+    <Compile Include="Generated\__AnnotationMark.cs" />
+    <Compile Include="Generated\__AnnotationNote.cs" />
+    <Compile Include="Generated\__AnnotationPolygon.cs" />
+    <Compile Include="Generated\__AnnotationRelation.cs" />
+    <Compile Include="Generated\__AnnotationSubject.cs" />
+    <Compile Include="Generated\__AnnotationSubjectCategory.cs" />
+    <Compile Include="Generated\__Annotation_AnnotationConcept.cs" />
+    <Compile Include="Generated\__APIKey.cs" />
+    <Compile Include="Generated\__Author.cs" />
+    <Compile Include="Generated\__AuthorIdentifier.cs" />
+    <Compile Include="Generated\__AuthorName.cs" />
+    <Compile Include="Generated\__AuthorRole.cs" />
+    <Compile Include="Generated\__AuthorType.cs" />
+    <Compile Include="Generated\__BibliographicLevel.cs" />
+    <Compile Include="Generated\__Collection.cs" />
+    <Compile Include="Generated\__DOI.cs" />
+    <Compile Include="Generated\__DOIStatus.cs" />
+    <Compile Include="Generated\__Identifier.cs" />
+    <Compile Include="Generated\__ItemCOinSView.cs" />
+    <Compile Include="Generated\__ItemCollection.cs" />
+    <Compile Include="Generated\__ItemLanguage.cs" />
+    <Compile Include="Generated\__ItemNameFileLog.cs" />
+    <Compile Include="Generated\__ItemSource.cs" />
+    <Compile Include="Generated\__Keyword.cs" />
+    <Compile Include="Generated\__Marc.cs" />
+    <Compile Include="Generated\__MarcControl.cs" />
+    <Compile Include="Generated\__MarcDataField.cs" />
+    <Compile Include="Generated\__MarcImportBatch.cs" />
+    <Compile Include="Generated\__MarcSubField.cs" />
+    <Compile Include="Generated\__MonthlyStats.cs" />
+    <Compile Include="Generated\__Name.cs" />
+    <Compile Include="Generated\__NameIdentifier.cs" />
+    <Compile Include="Generated\__NamePage.cs" />
+    <Compile Include="Generated\__NameResolved.cs" />
+    <Compile Include="Generated\__NameSegment.cs" />
+    <Compile Include="Generated\__NameSource.cs" />
+    <Compile Include="Generated\__PageAnnotation.cs" />
+    <Compile Include="Generated\__PageFlickr.cs" />
+    <Compile Include="Generated\__PDF.cs" />
+    <Compile Include="Generated\__PDFPage.cs" />
+    <Compile Include="Generated\__PDFStatus.cs" />
+    <Compile Include="Generated\__ScanningRequest.cs" />
+    <Compile Include="Generated\__Segment.cs" />
+    <Compile Include="Generated\__SegmentAuthor.cs" />
+    <Compile Include="Generated\__SegmentCluster.cs" />
+    <Compile Include="Generated\__SegmentClusterSegment.cs" />
+    <Compile Include="Generated\__SegmentCOinSView.cs" />
+    <Compile Include="Generated\__SegmentGenre.cs" />
+    <Compile Include="Generated\__SegmentIdentifier.cs" />
+    <Compile Include="Generated\__SegmentKeyword.cs" />
+    <Compile Include="Generated\__SegmentPage.cs" />
+    <Compile Include="Generated\__SegmentResolutionLog.cs" />
+    <Compile Include="Generated\__SegmentStatus.cs" />
+    <Compile Include="Generated\__TitleAssociation.cs" />
+    <Compile Include="Generated\__TitleAssociationType.cs" />
+    <Compile Include="Generated\__TitleAssociation_TitleIdentifier.cs" />
+    <Compile Include="Generated\__TitleAuthor.cs" />
+    <Compile Include="Generated\__TitleCollection.cs" />
+    <Compile Include="Generated\__TitleItem.cs" />
+    <Compile Include="Generated\__TitleKeyword.cs" />
+    <Compile Include="Generated\__TitleLanguage.cs" />
+    <Compile Include="Generated\__TitleVariant.cs" />
+    <Compile Include="Generated\__TitleVariantType.cs" />
+    <Compile Include="Generated\__Title_Identifier.cs" />
+    <Compile Include="Generated\__vwMarcDataField.cs" />
+    <Compile Include="ItemSuspectCharacter.cs" />
+    <Compile Include="KeywordSuspectCharacter.cs" />
+    <Compile Include="NonMemberMonograph.cs" />
+    <Compile Include="NamePageComparer.cs" />
+    <Compile Include="PageComparer.cs" />
+    <Compile Include="CreatorTitle.cs" />
+    <Compile Include="Enum\TitleSearchOrderBy.cs" />
+    <Compile Include="NameFinderResponse.cs" />
+    <Compile Include="Generated\__Configuration.cs" />
+    <Compile Include="Generated\__IndicatedPage.cs" />
+    <Compile Include="Generated\__Institution.cs" />
+    <Compile Include="Generated\__Item.cs" />
+    <Compile Include="Generated\__ItemStatus.cs" />
+    <Compile Include="Generated\__Language.cs" />
+    <Compile Include="Generated\__Page.cs" />
+    <Compile Include="Generated\__PageSummaryView.cs" />
+    <Compile Include="Generated\__PageType.cs" />
+    <Compile Include="Generated\__Page_PageType.cs" />
+    <Compile Include="Generated\__Title.cs" />
+    <Compile Include="Generated\__Vault.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ItemComparer.cs" />
+    <Compile Include="SearchAnnotationResult.cs" />
+    <Compile Include="SearchBookResult.cs" />
+    <Compile Include="SearchBookResultComparer.cs" />
+    <Compile Include="SearchCriteria\TitleSearchCriteria.cs" />
+    <Compile Include="SegmentAuthorComparer.cs" />
+    <Compile Include="SegmentComparer.cs" />
+    <Compile Include="SegmentPageComparer.cs" />
+    <Compile Include="TitleAssociationSuspectCharacter.cs" />
+    <Compile Include="AuthorSuspectCharacter.cs" />
+    <Compile Include="TitleItemComparer.cs" />
+    <Compile Include="TitleSuspectCharacter.cs" />
+    <Compile Include="Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mobot.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
+      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
+      <Name>CustomDataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

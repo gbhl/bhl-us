@@ -1,0 +1,118 @@
+﻿Biodiversity Heritage Library
+API v1 Documentation
+Created: April 6, 2010
+Revised: 
+
+The methods documented here map directly to the Biodiversity Heritage Library (BHL) "Name Services" 
+(which are documented at http://docs.google.com/Doc?id=dgvjvvkz_1x5qbm3); they accept exactly the same 
+parameters and return exactly the same information.  The "Name Services" endpoints should now be 
+considered deprecated, and if you wish to continue using those methods you should instead use the 
+endpoints documented below.
+
+These methods also exist in version 2 of the BHL API, though their signatures and return values have
+changed slightly.  If possible, please migrate your applications to version 2 of the API.
+
+----------------------------------------------------------------------------------------------------
+
+*** HTTP QUERY INTERFACE ***
+
+The HTTP query interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting
+data using HTTP GET requests.
+
+AUTHENTICATION
+
+No authentication is required for version 1 of the BHL API.
+
+OUTPUT TYPES
+
+Results can be returned in either XML or JSON format.  To return XML, append &format=xml to the method 
+call.  To return JSON, append &format=json to the method call.  If a format is not specified, XML is 
+returned.
+
+An example of returning XML is http://www.biodiversitylibrary.org/api/httpquery.ashx?op=<method>...&format=xml
+
+An example of returning JSON is http://www.biodiversitylibrary.org/api/httpquery.ashx?op=<method>...&format=json
+
+CALLBACKS
+
+If you need to capture the results of a method call with a callback function, specific the name of the 
+callback function by appending &callback=<function name> to the method call.
+
+For example, http://www.biodiversitylibrary.org/api/httpquery.ashx?op=<method>...&callback=<function name>
+
+STATUS CODE
+
+Each method response contains a status code that indicates the success or failure of the method call.  
+This code is contained in the "Status" field of the response.  The valid status codes are:
+
+	ok - the method executed successfully
+	error - an error occurred while executing the method; check the ErrorMessage field for details
+
+METHODS
+
+Specify the name of the API method being called with the "op=<method name>" argument.  For example, 
+http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method name>
+
+NameCount:
+
+	Return the number of unique names (that have been assigned NameBank identifiers) found on pages in BHL.  
+
+	Example - http://www.biodiversitylibrary.org/api/httpquery.ashx?op=NameCount&startdate=10/15/2009&enddate=10/31/2009
+
+	startdate - (optional) start date of range between which to count names
+	enddate - (optional) end date of range between which to count names
+
+NameList:
+
+	List the unique names (that have been assigned NameBank identifiers).  By using the startrow and 
+	batchsize parameters appropriately, you can pull the list all at once, or in batches (i.e. 1000 
+	names at a time).
+
+	Example - http://www.biodiversitylibrary.org/api/httpquery.ashx?op=NameList&startrow=1&batchsize=1000&startdate=10/15/2009&enddate=10/31/2009
+
+	startrow - first name to return (if are returning names in batches of 100, specify startrow=1
+				for the first batch, startrow=101 for the second batch, and so on
+	batchsize - number of names to return
+	startdate - (optional) start date of range between which to count names
+	enddate - (optional) end date of range between which to count names
+
+NameGetDetail:
+
+	Get basic title, item, and page metadata for each page on which the specified name appears.
+
+	Example - http://www.biodiversitylibrary.org/api/httpquery.ashx?op=NameGetDetail&namebankid=3501464
+
+	namebankid - NameBank identifier for a name
+
+NameSearch:
+
+	Search for a particular name.  Only names that have been assigned NameBank identifiers are returned.
+
+	Example - http://www.biodiversitylibrary.org/api/httpquery.ashx?op=NameSearch&name=poa+annua
+
+	name - a partial or complete name string
+
+----------------------------------------------------------------------------------------------------
+
+*** SOAP INTERFACE ***
+
+The SOAP interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting
+data using SOAP requests.  The WSDL document for the API is available at this location:
+http://www.biodiversitylibrary.org/api/soap.asmx?wsdl
+
+AUTHENTICATION
+
+No authentication is required for version 1 of the BHL API.
+
+METHODS
+
+The SOAP methods that are available generally map to the methods exposed by the HTTP query interface.
+The methods names are listed below, and a complete description of each method can be found by browsing
+the information found at http://www.biodiversitylibrary.org/api/soap.asmx.
+
+NameCount
+NameCountBetweenDates
+NameGetDetail
+NameList
+NameListBetweenDates
+NameSearch

@@ -1,0 +1,14 @@
+﻿CREATE TABLE [dbo].[PDFPage] (
+    [PdfPageID] INT IDENTITY (1, 1) NOT NULL,
+    [PdfID]     INT NOT NULL,
+    [PageID]    INT NOT NULL,
+    CONSTRAINT [PK_PDFPage] PRIMARY KEY CLUSTERED ([PdfPageID] ASC),
+    CONSTRAINT [FK_PDFPage_PDF] FOREIGN KEY ([PdfID]) REFERENCES [dbo].[PDF] ([PdfID])
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_PdfPage_PdfID]
+    ON [dbo].[PDFPage]([PdfID] ASC)
+    INCLUDE([PageID]);
+

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+    <system.web>
+		<webServices>
+			<protocols>
+				<remove name="HttpPost"/>
+				<add name="HttpPost"/>
+			</protocols>
+		</webServices>
+	</system.web>
+</configuration>

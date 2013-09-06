@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[PageNameCount] (
+    [NameConfirmed] NVARCHAR (100) NOT NULL,
+    [Qty]           INT            NOT NULL,
+    [RefreshDate]   DATETIME       NOT NULL
+);
+

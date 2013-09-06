@@ -1,0 +1,9 @@
+﻿{contact},
+
+Your BHL API key is: {key}
+
+Please include this key when invoking API methods.
+
+Thank you,
+
+The Biodiversity Heritage Library

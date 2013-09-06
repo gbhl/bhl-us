@@ -1,0 +1,91 @@
+/**********************************************/
+/* @name: style.css                           */
+/* @date: 19/11/07                            */
+/* @desc: JMyCarousel css                     */
+/* @auth: kevin@enova-tech.net                */
+/**********************************************/
+/** General Elements && arrows description  ***/
+
+
+div.jMyCarousel .prev{
+	background: url('img/left_bhl.png') center center no-repeat;
+	width:47px;
+	height:61px;
+	border:0px;
+}
+div.jMyCarousel .prev:hover{
+	background: url('img/left_hover_bhl.png') center center no-repeat;
+}
+div.jMyCarousel .next{
+	background: url('img/right_bhl.png') center center no-repeat;
+	width:40px;
+	height:61px;
+	border:0px;
+}
+div.jMyCarousel .next:hover{
+	background: url('img/right_hover_bhl.png') center center no-repeat;
+}
+
+div.jMyCarousel .next, div.jMyCarousel .prev 
+{
+    width: 20px;
+    height: 180px;
+    background-color: #E2E2E2;
+    top: 0;
+    opacity: 1 !important;
+    border: none;
+}
+div.jMyCarousel .next:hover, div.jMyCarousel .prev:hover 
+{
+    background-color: #DBDBDB;
+}
+
+
+div.jMyCarousel .up{
+	background: url('img/up.png') center center no-repeat;
+	width:61px;
+	height:40px;
+	border:0px;
+}
+
+div.jMyCarousel .down{
+	background: url('img/down.png') center center no-repeat;
+	width:47px;
+	height:61px;
+	border:0px;
+}
+
+
+div.jMyCarousel{
+	/* border:1px solid #1c6f8e;   removed by MWL */
+	/*border:1px solid #E0E2DC; removed by AR*/	/* added by MWL */
+	width: auto;
+}
+
+div.jMyCarousel ul{
+	
+}
+
+div.jMyCarousel ul li{
+	margin:0px;
+	border-right:1px solid #ccc;
+	border-left:1px solid #ccc;
+	line-height:0px;
+	padding:0px;
+	width:256px;    /* added by MWL */
+	background: #F2F2F2; 
+}
+
+div.jMyCarousel ul li a{ /* in case of link */
+	display:block;
+	width:256px;    /* added by MWL */
+}
+
+div.jMyCarousel ul li img{
+	display:block;
+	border:0px;
+	margin-top: 10px;  /* added by MWL */
+	margin-left: auto;  /* added by MWL */
+	margin-bottom: 10px;  /* added by MWL */
+	margin-right: auto;  /* added by MWL */
+}

@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[NamebankEOL] (
+    [NameBankID] INT NOT NULL,
+    [EOLID]      INT NOT NULL,
+    CONSTRAINT [PK_NameBankEOL] PRIMARY KEY CLUSTERED ([NameBankID] ASC, [EOLID] ASC)
+);
+
