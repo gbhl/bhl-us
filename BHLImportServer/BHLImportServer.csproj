@@ -55,10 +55,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CustomDataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CustomDataAccess\bin\Release\CustomDataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -85,6 +81,10 @@
     <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj">
       <Project>{D936AD4D-99F3-4095-B538-A097B23ACCD8}</Project>
       <Name>BHLImportDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
+      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
+      <Name>CustomDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
