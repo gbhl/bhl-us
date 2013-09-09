@@ -69,15 +69,10 @@
     <Folder Include="Properties" />
     <Folder Include="audit\" />
     <Folder Include="audit\Tables\" />
-    <Folder Include="Security\" />
     <Folder Include="audit\Synonyms\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="audit\Tables\AuditBasic.sql" />
-    <Build Include="Security\BotanicusService.sql" />
-    <Build Include="Security\BotanicusService_1.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
-    <Build Include="Security\audit.sql" />
     <Build Include="audit\Synonyms\AuditBasicArchive.sql" />
   </ItemGroup>
 </Project>

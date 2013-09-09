@@ -75,7 +75,6 @@
     <Folder Include="dbo\Views\" />
     <Folder Include="annotation\Views\" />
     <Folder Include="Storage\" />
-    <Folder Include="Security\" />
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="annotation\Stored Procedures\" />
@@ -194,17 +193,6 @@
     <Build Include="Storage\BHLSearchCatalog.sql" />
     <Build Include="FullTextIndexes.sql" />
     <Build Include="Storage\ftfg_BHLSearchCatalog.sql" />
-    <Build Include="Security\db_webuser.sql" />
-    <Build Include="Security\db_executor.sql" />
-    <Build Include="Security\BotanicusUserReader.sql" />
-    <Build Include="Security\BotanicusUser.sql" />
-    <Build Include="Security\BotanicusService.sql" />
-    <Build Include="Security\BotanicusService_1.sql" />
-    <Build Include="Security\BHLWebUser.sql" />
-    <Build Include="Security\BHLWebUser_1.sql" />
-    <Build Include="Security\TropicosReadWrite.sql" />
-    <Build Include="Security\TropicosReadWrite_1.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
     <Build Include="dbo\Functions\fnCOinSGetFirstAuthorNameForSegment.sql" />
     <Build Include="dbo\Functions\fnKeywordStringForTitle.sql" />
     <Build Include="dbo\Functions\fnAuthorStringForTitle.sql" />
@@ -884,8 +872,6 @@
     <Build Include="dbo\Stored Procedures\ApiTitleVariantSelectByTitleID.sql" />
     <Build Include="annotation\Stored Procedures\AnnotationSubjectDeleteByAnnotationID.sql" />
     <Build Include="dbo\Stored Procedures\IndicatedPageSelectByPageID.sql" />
-    <Build Include="Security\annotation.sql" />
-    <Build Include="Security\audit.sql" />
     <Build Include="audit\Synonyms\AuditBasicArchive.sql" />
     <Build Include="dbo\Synonyms\MOBOTSecuritySecUserSyn.sql" />
     <Build Include="dbo\Synonyms\MOBOTAdminRequestLog.sql" />
