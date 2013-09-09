@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Database_BHLImport</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{a5e8067c-b53e-4c0d-a9f6-3480de693727}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Database_BHLImport</RootNamespace>
+    <AssemblyName>Database_BHLImport</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Synonyms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\IAItemStatus.sql" />
+    <Build Include="dbo\Tables\ItemLanguage.sql" />
+    <Build Include="dbo\Tables\Title.sql" />
+    <Build Include="dbo\Tables\ImportSource.sql" />
+    <Build Include="dbo\Tables\ImportSourceItemSource.sql" />
+    <Build Include="dbo\Tables\Title_Creator.sql" />
+    <Build Include="dbo\Tables\IAScanCenterInstitution.sql" />
+    <Build Include="dbo\Tables\SegmentAuthor.sql" />
+    <Build Include="dbo\Tables\IAAnalysisHarvestLog.sql" />
+    <Build Include="dbo\Tables\Creator.sql" />
+    <Build Include="dbo\Tables\PageName.sql" />
+    <Build Include="dbo\Tables\Title_TitleIdentifier.sql" />
+    <Build Include="dbo\Tables\BSItemStatus.sql" />
+    <Build Include="dbo\Tables\IAFileFormat.sql" />
+    <Build Include="dbo\Tables\BSSegment.sql" />
+    <Build Include="dbo\Tables\TitleAssociation.sql" />
+    <Build Include="dbo\Tables\IADCMetadata.sql" />
+    <Build Include="dbo\Tables\ImportLog.sql" />
+    <Build Include="dbo\Tables\IAMarc.sql" />
+    <Build Include="dbo\Tables\MarcCountryCode.sql" />
+    <Build Include="dbo\Tables\TitleAssociation_TitleIdentifier.sql" />
+    <Build Include="dbo\Tables\BSSegmentPage.sql" />
+    <Build Include="dbo\Tables\BSItem.sql" />
+    <Build Include="dbo\Tables\IAMarcDataField.sql" />
+    <Build Include="dbo\Tables\Page.sql" />
+    <Build Include="dbo\Tables\ImportError.sql" />
+    <Build Include="dbo\Tables\IAScandataAltPageNumber.sql" />
+    <Build Include="dbo\Tables\TitleTag.sql" />
+    <Build Include="dbo\Tables\IAItemError.sql" />
+    <Build Include="dbo\Tables\IAScandataAltPageType.sql" />
+    <Build Include="dbo\Tables\IAItem.sql" />
+    <Build Include="dbo\Tables\IASet.sql" />
+    <Build Include="dbo\Tables\Page_PageType.sql" />
+    <Build Include="dbo\Tables\IAFile.sql" />
+    <Build Include="dbo\Tables\IndicatedPage.sql" />
+    <Build Include="dbo\Tables\IAScandata.sql" />
+    <Build Include="dbo\Tables\BotanicusHarvestLog.sql" />
+    <Build Include="dbo\Tables\IAItemSet.sql" />
+    <Build Include="dbo\Tables\IAMarcControl.sql" />
+    <Build Include="dbo\Tables\TitleVariant.sql" />
+    <Build Include="dbo\Tables\Item.sql" />
+    <Build Include="dbo\Tables\IAMarcSubField.sql" />
+    <Build Include="dbo\Tables\ImportStatus.sql" />
+    <Build Include="dbo\Tables\IAScandataPageType.sql" />
+    <Build Include="dbo\Tables\TitleLanguage.sql" />
+    <Build Include="dbo\Tables\IAPage.sql" />
+    <Build Include="dbo\Views\vwIAPage.sql" />
+    <Build Include="dbo\Views\vwIAMarcControl.sql" />
+    <Build Include="dbo\Views\vwIAMarcDataField.sql" />
+    <Build Include="dbo\Functions\fnFilterString.sql" />
+    <Build Include="dbo\Functions\vwSplitLanguage.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemPublishToImportTables.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectForXMLDownload.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogSelectRecent.sql" />
+    <Build Include="dbo\Stored Procedures\StatsSelectReadyForProductionBySource.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemErrorSelectRecent.sql" />
+    <Build Include="dbo\Stored Procedures\StatsCountIAItemPendingApproval.sql" />
+    <Build Include="dbo\Stored Procedures\ImportLogSelectRecent.sql" />
+    <Build Include="dbo\Stored Procedures\StatsSelectIAItemPendingApprovalGroupByAge.sql" />
+    <Build Include="dbo\Stored Procedures\ImportErrorSelectRecent.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectPendingApproval.sql" />
+    <Build Include="dbo\Stored Procedures\StatsSelectIAItemGroupByStatus.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemInsertFromIAAnalysis.sql" />
+    <Build Include="dbo\Stored Procedures\CreatorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSetSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CreatorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSetInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CreatorUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSetUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CreatorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSetDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IndicatedPageSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IndicatedPageInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PublishToProduction.sql" />
+    <Build Include="dbo\Stored Procedures\IndicatedPageUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemErrorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IndicatedPageDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemErrorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemErrorUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemErrorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDataFieldSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDataFieldInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDataFieldUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDataFieldDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_TitleIdentifierUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_TitleIdentifierDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemUpdateThumbnailPageID.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_TitleIdentifierSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_TitleIdentifierInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageNameSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAPageSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageNameInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAPageInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemFixProductionAssociatedTitles.sql" />
+    <Build Include="dbo\Stored Procedures\PageNameUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAPageUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\PageNameDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAPageDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectOKToPublish.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASetSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASetInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASetUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemResetForDownload.sql" />
+    <Build Include="dbo\Stored Procedures\IASetDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleTagSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleTagInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectByItemAndFormat.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemDeleteAllSegments.sql" />
+    <Build Include="dbo\Stored Procedures\TitleTagUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataSelectByItemAndSequence.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemAvailabilityCheck.sql" />
+    <Build Include="dbo\Stored Procedures\TitleTagDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataDeleteByItem.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemSetStatus.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentPublishToProduction.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentResolveAuthors.sql" />
+    <Build Include="dbo\Stored Procedures\IASetSelectForDownload.sql" />
+    <Build Include="dbo\Stored Procedures\IASetSelectBySetSpecification.sql" />
+    <Build Include="dbo\Stored Procedures\Title_TitleIdentifierSelectByKeyNameAndValue.sql" />
+    <Build Include="dbo\Stored Procedures\CreatorSelectNewByCreatorNameAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAPageDeleteByItem.sql" />
+    <Build Include="dbo\Stored Procedures\TitleSelectNewByKeyAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\ItemSelectNewByBarCodeAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSelectByItem.sql" />
+    <Build Include="dbo\Stored Procedures\Title_CreatorSelectNewByKeyCreatorAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\PageSelectNewByKeyValuesAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcDataFieldDeleteByMarcID.sql" />
+    <Build Include="dbo\Stored Procedures\TitleTagSelectNewByKeyTagTextAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IndicatedPageSelectNewByKeyValuesAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcControlDeleteByMarcID.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeSelectNewByKeyValuesAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSetDeleteByItem.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataSelectByItem.sql" />
+    <Build Include="dbo\Stored Procedures\PageNameSelectNewByKeyValuesAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectForDownload.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberSelectByScandataAndSequence.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectByRemoteFileName.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeDeleteByScandataID.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectByItem.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataSelectByItemElementNameAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IADCMetadataDeleteForItemAndSource.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageNumberDeleteByScandataID.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentSelectByItem.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemStatusSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeSelectByScandataAndPageType.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemStatusDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAScandataAltPageTypeUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\StatsSelectBSItemGroupByStatus.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemStatusSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemStatusInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemStatusUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_CreatorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_CreatorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_CreatorUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\Title_CreatorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSSegmentSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BSItemSelectByStatus.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAFileSelectByItemAndRemoteFileName.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectByIAIdentifier.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectForPublishToImportTables.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociationUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociationSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectByKey.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BotanicusHarvestLogSelectLatestEndDate.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociationSelectByKey.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociationInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleAssociationDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcControlSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\TitleUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcControlInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcControlUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcControlDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSubFieldSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSubFieldInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSubFieldUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAMarcSubFieldDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\BuildSynonyms.sql" />
+    <Build Include="dbo\Stored Procedures\ItemPublishToProductionIA.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemStatusSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemSelectByStatus.sql" />
+    <Build Include="dbo\Synonyms\BHLItem.sql" />
+    <Build Include="dbo\Synonyms\BHLIdentifier.sql" />
+    <Build Include="dbo\Synonyms\BHLPage.sql" />
+    <Build Include="dbo\Synonyms\BHLTitle_Identifier.sql" />
+    <Build Include="dbo\Synonyms\BHLPagePageType.sql" />
+    <Build Include="dbo\Synonyms\BHLIndicatedPage.sql" />
+    <Build Include="dbo\Synonyms\BHLPageName.sql" />
+    <Build Include="dbo\Synonyms\BHLKeyword.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleKeyword.sql" />
+    <Build Include="dbo\Synonyms\BHLAuthor.sql" />
+    <Build Include="dbo\Synonyms\BHLAuthorName.sql" />
+    <Build Include="dbo\Synonyms\BHLAuthorRole.sql" />
+    <Build Include="dbo\Synonyms\BHLAuthorType.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleAuthor.sql" />
+    <Build Include="dbo\Synonyms\BHLItemLanguage.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleLanguage.sql" />
+    <Build Include="dbo\Synonyms\BHLVault.sql" />
+    <Build Include="dbo\Synonyms\IAAnalysisItem.sql" />
+    <Build Include="dbo\Synonyms\IAAnalysisrptCombined.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleAssociation.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleAssociation_TitleIdentifier.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleAssociationType.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleItem.sql" />
+    <Build Include="dbo\Synonyms\BHLBibliographicLevel.sql" />
+    <Build Include="dbo\Synonyms\BHLAuthorIdentifier.sql" />
+    <Build Include="dbo\Synonyms\BHLDOI.sql" />
+    <Build Include="dbo\Synonyms\BHLDOIEntityType.sql" />
+    <Build Include="dbo\Synonyms\BHLDOIStatus.sql" />
+    <Build Include="dbo\Synonyms\BHLSegment.sql" />
+    <Build Include="dbo\Synonyms\BHLSegmentAuthor.sql" />
+    <Build Include="dbo\Synonyms\BHLSegmentGenre.sql" />
+    <Build Include="dbo\Synonyms\BHLSegmentIdentifier.sql" />
+    <Build Include="dbo\Synonyms\BHLSegmentPage.sql" />
+    <Build Include="dbo\Synonyms\BHLLanguage.sql" />
+    <Build Include="dbo\Synonyms\IAAnalysisItemCollection.sql" />
+    <Build Include="dbo\Synonyms\IAAnalysisCollection.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleVariantType.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleVariant.sql" />
+    <Build Include="dbo\Synonyms\BHLCollection.sql" />
+    <Build Include="dbo\Synonyms\BHLTitleCollection.sql" />
+    <Build Include="dbo\Synonyms\BHLItemCollection.sql" />
+    <Build Include="dbo\Synonyms\BHLTitle.sql" />
+    <Build Include="dbo\Synonyms\BHLConfiguration.sql" />
+  </ItemGroup>
+</Project>

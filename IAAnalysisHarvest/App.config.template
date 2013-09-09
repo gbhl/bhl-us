@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<configSections>
+		<section name="log4net" type="System.Configuration.IgnoreSectionHandler" />
+		<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+			<section name="IAAnalysisHarvest.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+		</sectionGroup>
+	</configSections>
+	<connectionStrings>
+		<add name ="IAAnalysis" connectionString ="DATABASE CONNECTION STRING" providerName ="System.Data.SqlClient"/>
+	</connectionStrings>
+	<appSettings>
+		<add key="SMTPHost" value="SMTP HOST ADDRESS"/>
+		<add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+		<add key="EmailToAddress" value="EMAIL RECIPIENTS"/>
+		<!-- DownloadIDs indicates whether or not to get a list of identifiers from Internet Archive -->
+		<add key="DownloadIDs" value="false"/>
+		<!-- GetXML indicates whether or not to get the data for the identifiers -->
+		<add key="GetXML" value="true"/>
+
+		<!-- ####################################################### -->
+		<!--              Internet Archive service URLs              -->
+		<add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q=-collection:biodiversity+AND-collection:usfederalcourts+AND+mediatype:texts+AND+oai_updatedate:[{0}+TO+{1}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=2000000&amp;fmt=xml&amp;xmlsearch=Search" />
+		<!-- ####################################################### -->
+		<!--              Internet Archive files and file extensions           -->
+		<add key="MetadataExtension" value="_meta.xml"/>
+		<add key="MarcExtension" value="_marc.xml"/>
+		<!-- ####################################################### -->
+
+	</appSettings>
+	<log4net>
+		<!-- Define some output appenders -->
+		<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+			<file value="\\SERVERNAME\${COMPUTERNAME}-IAAnalysisHarvest-log.txt" />
+			<appendToFile value="true" />
+			<maxSizeRollBackups value="10" />
+			<maximumFileSize value="5000000" />
+			<rollingStyle value="Size" />
+			<staticLogFileName value="true" />
+			<layout type="log4net.Layout.PatternLayout">
+				<header value="[Header]&#xD;&#xA;" />
+				<footer value="[Footer]&#xD;&#xA;" />
+				<conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline" />
+			</layout>
+		</appender>
+		<!-- Setup the root category, add the appenders and set the default level -->
+		<root>
+			<level value="ALL" />
+			<appender-ref ref="RollingLogFileAppender" />
+		</root>
+	</log4net>
+</configuration>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+    <!-- log4net -->
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <section name="MOBOT.BHL.BHLMETSUpload.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+    </sectionGroup>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </configSections>
+  <appSettings>
+    <add key="SMTPHost" value="SMTP SERVER NAME"/>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+
+    <!-- Valid values for "Mode" are:
+      "SINCE" (process all items updated since a specific date) 
+      "ITEM" (process a specific item)
+      "FILE" (process a file) -->
+    <add key="Mode" value="SINCE"/>
+    <!-- The "SinceDate" key should be set if the Mode value is "SINCE".  Format for the date value is YYYY-MM-DD.  -->
+    <add key="SinceDate" value="2013-08-23" />
+    <!-- The "ItemID" key should be set if the Mode value is "ITEM"-->
+    <add key="BHLItemID" value="43787"/>
+    <!-- The "File" key should be set if the Mode value is "FILE".  Value should be a fully-qualified file path. -->
+    <add key="File" value=""/>
+
+    <!-- BHLImport database value for the BioStor ImportSource -->
+    <add key="ImportSourceID" value="3"/>
+
+    <!-- Indicates whether the process should get new items from BioStor (false), or just harvest articles for items already in the log (true).-->
+    <add key="NoDownload" value="true"/>
+
+    <!-- Indicates whether segments should be published to the production database -->
+    <add key="NoPublish" value="true"/>
+
+    <!-- Indicates whether segments published to production should also be clustered with similar segments -->
+    <add key="NoCluster" value="false"/>
+
+    <!-- Configurable settings for JSON file names and storage location-->
+    <add key="JsonFolder" value="json/"/>
+    <add key="JsonFileFormat" value="biostoritemarticles{0}.json"/>
+    
+    <!-- URL of BioStor service used to get all articles for a given BHL ItemID -->
+    <add key="BioStorItemArticlesUrl" value="http://biostor.org/itemarticles.php?item={0}"/>
+    <!-- <add key="BioStorItemArticlesUrl" value="http://biostor.org/items/{0}.json"/> -->
+    <!-- URL of BioStor service used to get all items changed since a given date -->
+    <add key="BioStorItemsChangedSinceUrl" value="http://biostor.org/itemsince.php?since={0}" />
+    <!-- CrossRef URL for retreive DOI metadata -->
+    <add key="CrossRefOpenUrlDOIGet" value="http://www.crossref.org/openurl?pid=sbhl:sbhl1018&amp;id=doi:{0}&amp;noredirect=true"/>
+  </appSettings>
+  <connectionStrings>
+    <remove name="BHL"/>
+    <add name="BHLImportEntities" connectionString="metadata=res://*/BHLImportModel.csdl|res://*/BHLImportModel.ssdl|res://*/BHLImportModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=DBSERVER;initial catalog=BHLIMPORTDATABASENAME;persist security info=True;user id=DBUSERNAME;password=DBPASSWORD;multipleactiveresultsets=True;enlist=False;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+    <add name="BHL" connectionString="CONNECTION STRING FOR BHL DATABASE" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <!-- This section contains the log4net configuration settings -->
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-BHLBioStorHarvest-log.txt"/>
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="20"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]&#xD;&#xA;" />
+        <footer value="[Footer]&#xD;&#xA;" />
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+  <!-- This section contains the Entity Framework configuration settings-->
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True" />
+      </parameters>
+    </defaultConnectionFactory>
+  </entityFramework>
+  <startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup>
+</configuration>

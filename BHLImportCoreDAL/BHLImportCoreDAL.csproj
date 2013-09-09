@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBD99822-F1A3-43C1-A242-686F807DBE33}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOBOT.BHLImport.DAL</RootNamespace>
+    <AssemblyName>MOBOT.BHLImport.DAL</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>http://localhost/MOBOT.BHLImport.DAL/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CustomDataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CustomDataAccess\bin\Release\CustomDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BotanicusHarvestLogDAL.cs" />
+    <Compile Include="BSItemDAL.cs" />
+    <Compile Include="BSItemStatusDAL.cs" />
+    <Compile Include="BSSegmentDAL.cs" />
+    <Compile Include="CreatorDAL.cs" />
+    <Compile Include="Generated\BotanicusHarvestLogDAL.Auto.cs" />
+    <Compile Include="Generated\BSItemDAL.Auto.cs" />
+    <Compile Include="Generated\BSItemStatusDAL.Auto.cs" />
+    <Compile Include="Generated\BSSegmentDAL.Auto.cs" />
+    <Compile Include="Generated\CreatorDAL.Auto.cs" />
+    <Compile Include="Generated\IADCMetadataDAL.Auto.cs" />
+    <Compile Include="Generated\IAFileDAL.Auto.cs" />
+    <Compile Include="Generated\IAItemDAL.Auto.cs" />
+    <Compile Include="Generated\IAItemErrorDAL.Auto.cs" />
+    <Compile Include="Generated\IAItemSetDAL.Auto.cs" />
+    <Compile Include="Generated\IAItemStatusDAL.Auto.cs" />
+    <Compile Include="Generated\IAMarcControlDAL.Auto.cs" />
+    <Compile Include="Generated\IAMarcDAL.Auto.cs" />
+    <Compile Include="Generated\IAMarcDataFieldDAL.Auto.cs" />
+    <Compile Include="Generated\IAMarcSubFieldDAL.Auto.cs" />
+    <Compile Include="Generated\IAPageDAL.Auto.cs" />
+    <Compile Include="Generated\IAScandataAltPageNumberDAL.Auto.cs" />
+    <Compile Include="Generated\IAScandataAltPageTypeDAL.Auto.cs" />
+    <Compile Include="Generated\IAScandataDAL.Auto.cs" />
+    <Compile Include="Generated\IASetDAL.Auto.cs" />
+    <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />
+    <Compile Include="Generated\ItemDAL.Auto.cs" />
+    <Compile Include="Generated\PageDAL.Auto.cs" />
+    <Compile Include="Generated\PageNameDAL.Auto.cs" />
+    <Compile Include="Generated\Page_PageTypeDAL.Auto.cs" />
+    <Compile Include="Generated\TitleAssociationDAL.Auto.cs" />
+    <Compile Include="Generated\TitleAssociation_TitleIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\TitleDAL.Auto.cs" />
+    <Compile Include="Generated\TitleTagDAL.Auto.cs" />
+    <Compile Include="Generated\Title_CreatorDAL.Auto.cs" />
+    <Compile Include="Generated\Title_TitleIdentifierDAL.Auto.cs" />
+    <Compile Include="IADCMetadataDAL.cs" />
+    <Compile Include="IAFileDAL.cs" />
+    <Compile Include="IAItemDAL.cs" />
+    <Compile Include="IAItemErrorDAL.cs" />
+    <Compile Include="IAItemSetDAL.cs" />
+    <Compile Include="IAItemStatusDAL.cs" />
+    <Compile Include="IAMarcControlDAL.cs" />
+    <Compile Include="IAMarcDAL.cs" />
+    <Compile Include="IAMarcDataFieldDAL.cs" />
+    <Compile Include="IAMarcSubFieldDAL.cs" />
+    <Compile Include="IAPageDAL.cs" />
+    <Compile Include="IAScandataAltPageNumberDAL.cs" />
+    <Compile Include="IAScandataAltPageTypeDAL.cs" />
+    <Compile Include="ImportErrorDAL.cs" />
+    <Compile Include="ImportLogDAL.cs" />
+    <Compile Include="IndicatedPageDAL.cs" />
+    <Compile Include="ItemDAL.cs" />
+    <Compile Include="PageDAL.cs" />
+    <Compile Include="PageNameDAL.cs" />
+    <Compile Include="Page_PageTypeDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IAScandataDAL.cs" />
+    <Compile Include="IASetDAL.cs" />
+    <Compile Include="StatsDAL.cs" />
+    <Compile Include="TitleAssociationDAL.cs" />
+    <Compile Include="TitleAssociation_TitleIdentifierDAL.cs" />
+    <Compile Include="TitleDAL.cs" />
+    <Compile Include="TitleTagDAL.cs" />
+    <Compile Include="Title_CreatorDAL.cs" />
+    <Compile Include="Title_TitleIdentifierDAL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj">
+      <Project>{D936AD4D-99F3-4095-B538-A097B23ACCD8}</Project>
+      <Name>BHLImportDataObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

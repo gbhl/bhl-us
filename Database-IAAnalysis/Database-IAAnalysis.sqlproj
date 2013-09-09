@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Database_IAAnalysis</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{2543a23f-b305-4881-84bd-1994a5b654f3}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Database_IAAnalysis</RootNamespace>
+    <AssemblyName>Database_IAAnalysis</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Synonyms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Collection.sql" />
+    <Build Include="dbo\Tables\ItemCollection.sql" />
+    <Build Include="dbo\Tables\MarcControl.sql" />
+    <Build Include="dbo\Tables\MarcDataField.sql" />
+    <Build Include="dbo\Tables\MarcSubField.sql" />
+    <Build Include="dbo\Tables\ExportScanListAuthor.sql" />
+    <Build Include="dbo\Tables\ExportScanListOCLC.sql" />
+    <Build Include="dbo\Tables\SubjectSample.sql" />
+    <Build Include="dbo\Tables\RptByCategory.sql" />
+    <Build Include="dbo\Tables\RptBySubject.sql" />
+    <Build Include="dbo\Tables\RptCombined.sql" />
+    <Build Include="dbo\Tables\ExportScanListDates.sql" />
+    <Build Include="dbo\Tables\ExportScanListItem.sql" />
+    <Build Include="dbo\Tables\SubjectExclusion.sql" />
+    <Build Include="dbo\Tables\Item.sql" />
+    <Build Include="dbo\Views\vwMarcControl.sql" />
+    <Build Include="dbo\Views\vwMarcDataField.sql" />
+    <Build Include="dbo\Views\vwMarcDetail.sql" />
+    <Build Include="dbo\Functions\fnFilterString.sql" />
+    <Build Include="dbo\Functions\fnMarcStringForMarcDataField.sql" />
+    <Build Include="dbo\Stored Procedures\ItemSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\GetNewSubjectSample.sql" />
+    <Build Include="dbo\Stored Procedures\ItemSelectForXMLDownload.sql" />
+    <Build Include="dbo\Stored Procedures\DoAnalysis.sql" />
+    <Build Include="dbo\Stored Procedures\ExportScanList.sql" />
+    <Build Include="dbo\Stored Procedures\ItemCollectionSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemCollectionInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemCollectionUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\ItemCollectionDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcControlSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcControlInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcControlUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcControlDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcDataFieldInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcDataFieldUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcDataFieldDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcSubFieldSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcSubFieldInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcSubFieldUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\MarcSubFieldDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CollectionSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CollectionInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CollectionUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CollectionDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\CollectionSelectByCollectionName.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Stored Procedures\ItemSelectByIdentifier.sql">
+      <QuotedIdentifier>Off</QuotedIdentifier>
+    </Build>
+    <Build Include="dbo\Synonyms\BHLItem.sql" />
+  </ItemGroup>
+</Project>

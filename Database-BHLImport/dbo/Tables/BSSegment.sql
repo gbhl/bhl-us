@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[BSSegment] (
+    [SegmentID]                   INT             IDENTITY (1, 1) NOT NULL,
+    [ItemID]                      INT             NOT NULL,
+    [BioStorReferenceID]          NVARCHAR (100)  CONSTRAINT [DF_Table_1_BioStorSegmentID] DEFAULT ('') NOT NULL,
+    [SequenceOrder]               SMALLINT        CONSTRAINT [DF_BSSegment_SequenceOrder] DEFAULT ((0)) NOT NULL,
+    [Genre]                       NVARCHAR (50)   CONSTRAINT [DF_BSSegment_Genre] DEFAULT ('') NOT NULL,
+    [Title]                       NVARCHAR (2000) CONSTRAINT [DF_BSSegment_Title] DEFAULT ('') NOT NULL,
+    [ContainerTitle]              NVARCHAR (2000) CONSTRAINT [DF_BSSegment_ContainerTitle] DEFAULT ('') NOT NULL,
+    [Volume]                      NVARCHAR (100)  CONSTRAINT [DF_BSSegment_Volume] DEFAULT ('') NOT NULL,
+    [Series]                      NVARCHAR (100)  CONSTRAINT [DF_BSSegment_Series] DEFAULT ('') NOT NULL,
+    [Issue]                       NVARCHAR (100)  CONSTRAINT [DF_BSSegment_Issue] DEFAULT ('') NOT NULL,
+    [Year]                        NVARCHAR (20)   CONSTRAINT [DF_BSSegment_Year] DEFAULT ('') NOT NULL,
+    [Date]                        NVARCHAR (20)   CONSTRAINT [DF_BSSegment_Date] DEFAULT ('') NOT NULL,
+    [ISSN]                        NVARCHAR (125)  CONSTRAINT [DF_BSSegment_ISSN] DEFAULT ('') NOT NULL,
+    [DOI]                         NVARCHAR (50)   CONSTRAINT [DF_BSSegment_DOI] DEFAULT ('') NOT NULL,
+    [StartPageNumber]             NVARCHAR (20)   CONSTRAINT [DF_BSSegment_StartPageNumber] DEFAULT ('') NOT NULL,
+    [EndPageNumber]               NVARCHAR (20)   CONSTRAINT [DF_BSSegment_EndPageNumber] DEFAULT ('') NOT NULL,
+    [StartPageID]                 INT             NULL,
+    [ContributorCreationDate]     DATETIME        NULL,
+    [ContributorLastModifiedDate] DATETIME        NULL,
+    [BHLSegmentID]                INT             NULL,
+    [CreationDate]                DATETIME        CONSTRAINT [DF_BSSegment_CreationDate] DEFAULT (getdate()) NOT NULL,
+    [LastModifiedDate]            DATETIME        CONSTRAINT [DF_BSSegment_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
+    CONSTRAINT [PK_BSSegment] PRIMARY KEY CLUSTERED ([SegmentID] ASC),
+    CONSTRAINT [FK_BSSegment_BSItem] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[BSItem] ([ItemID])
+);
+

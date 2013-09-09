@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <connectionStrings>
+    <add name="BHLImportEntities" connectionString="metadata=res://*/BHLImportModel.csdl|res://*/BHLImportModel.ssdl|res://*/BHLImportModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=SERVERNAME;initial catalog=DATABASENAME;persist security info=True;user id=DBUSERNAME;password=DBPASSWORD;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+</configuration>

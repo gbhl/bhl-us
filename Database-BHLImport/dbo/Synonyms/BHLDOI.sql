@@ -1,0 +1,2 @@
+﻿CREATE SYNONYM [dbo].[BHLDOI] FOR [BHL].[dbo].[DOI];
+

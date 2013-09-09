@@ -1,0 +1,24 @@
+﻿CREATE TABLE [dbo].[Title_Creator] (
+    [TitleCreatorID]           INT            IDENTITY (1, 1) NOT NULL,
+    [CreatorName]              NVARCHAR (255) NOT NULL,
+    [CreatorRoleTypeID]        INT            NOT NULL,
+    [ImportKey]                NVARCHAR (50)  CONSTRAINT [DF_Title_Creator_ImportKey] DEFAULT ('') NOT NULL,
+    [ImportStatusID]           INT            NOT NULL,
+    [ImportSourceID]           INT            NULL,
+    [ExternalCreationDate]     DATETIME       NULL,
+    [ExternalLastModifiedDate] DATETIME       NULL,
+    [ExternalCreationUser]     INT            CONSTRAINT [DF_Title_Creator_ExternalCreationUser] DEFAULT ((1)) NULL,
+    [ExternalLastModifiedUser] INT            CONSTRAINT [DF_Title_Creator_ExternalLastModifiedUser] DEFAULT ((1)) NULL,
+    [ProductionDate]           DATETIME       NULL,
+    [CreatedDate]              DATETIME       CONSTRAINT [DF_Title_Creator_CreatedDate] DEFAULT (getdate()) NOT NULL,
+    [LastModifiedDate]         DATETIME       CONSTRAINT [DF_Title_Creator_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
+    [MARCCreator_a]            NVARCHAR (450) NULL,
+    [MARCCreator_b]            NVARCHAR (450) NULL,
+    [MARCCreator_c]            NVARCHAR (450) NULL,
+    [MARCCreator_d]            NVARCHAR (450) NULL,
+    [MARCCreator_q]            NVARCHAR (450) NULL,
+    CONSTRAINT [PK_Title_Creator] PRIMARY KEY CLUSTERED ([TitleCreatorID] ASC),
+    CONSTRAINT [FK_Title_Creator_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
+    CONSTRAINT [FK_Title_Creator_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])
+);
+
