@@ -15,6 +15,57 @@ build/
 [Bb]in/
 [Oo]bj/
 
+# BHL solution files
+BHLAdmin.sln
+BHLImport.sln
+BHLUtility.sln
+
+# BHL .config files - create .config.template files to check in instead
+[Ww]eb.[Cc]onfig
+[Ww]eb.[Dd]ebug.[Cc]onfig
+[Ww]eb.[Rr]elease.[Cc]onfig
+[Rr]emoting.[Cc]onfig
+[Aa]pp.[Cc]onfig
+
+# BHL projects
+BHLAdminWeb/
+BHLAuditExport/
+BHLBibTeXExport/
+BHLBioStorHarvest/
+BHLDOIService/
+BHLEndNoteExport/
+BHLFileAccessService/
+BHLFlickrThumbGrab/
+BHLImportCoreDAL/
+BHLImportDataObjects/
+BHLImportEFDataModel/
+BHLImportEFDataService/
+BHLImportServer/
+BHLImportService/
+BHLMETSUpload/
+BHLMODSExport/
+BHLNameFileGenerator/
+BHLPageNameRefresh/
+BHLPDFGenerator/
+BHLSegmentClusterer/
+BotanicusHarvest/
+Database-BHLImport/
+Database-IAAnalysis/
+DOIDeposit/
+EOL Data Export/
+ExportIAIdentifiers/
+ExportScanList/
+FlickrUtility/
+IAAnalysisCoreDAL/
+IAAnalysisDataObjects/
+IAAnalysisHarvest/
+IAAnalysisServer/
+IAFileGenerator/
+IAFileGeneratorCmd/
+IAFileGeneratorSetup/
+IAHarvest/
+IAUtilities/
+
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 
@@ -41,10 +92,12 @@ build/
 *.log
 *.vspscc
 *.vssscc
+*.vsmdi
 .builds
 *.pidb
 *.log
 *.scc
+*.testsettings
 
 # Visual C++ cache files
 ipch/
