@@ -1,0 +1,261 @@
+﻿BODY 
+{
+	font-size:12px;
+	font-family: Helvetica, Verdana, Times, serif;
+	color:#000000;
+}
+
+img
+{
+	border: 0;
+}
+
+hr
+{
+	border: solid 1px #27638C;
+}
+
+table td 
+{
+	font-size:12px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+P
+{
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+LI
+{
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+a
+{
+	text-decoration: underline;
+	color: #27638C;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+A.HeaderLinks:link {
+	text-decoration: none;
+	font-size: 12px;
+	color: #27638C;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.HeaderLinks:visited {
+	text-decoration: none;
+	font-size: 12px;
+	color: #27638C;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.HeaderLinks:hover {
+	text-decoration: underline;
+	color: #27638C;
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+A.HeaderLinks:active {
+	text-decoration: none;
+	font-size: 12px;
+	color: #27638C;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+.BlackHeading {
+	font-family: Helvetica, Verdana, Times, serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+
+.TitleText {
+	font-family: Helvetica, Verdana, Times, serif;
+	font-size: 11px;
+	color: #000000;
+	font-style: italic;
+}
+
+.ErrorText {
+	font-family: Helvetica, Verdana, Times, serif;
+	font-size: 12px;
+	color: Red;
+}
+
+.AdminAlertText 
+{
+	font-family: Helvetica, Verdana, Times, serif;
+	font-size: 12px;
+    background-color:White; 
+    color:Red; 
+    font-weight:bold;
+}
+
+.TextBox
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	height: 21px;
+	color: #000000;
+	background-color: #ffffff;
+}
+
+.pageheader
+{
+	font-size: 18px;
+	color: #666666;
+	font-family: Verdana, Helvetica, Times, serif;
+	background-color: transparent;
+	text-decoration: none;
+	margin-top:0px;
+	padding-top:10px;
+}
+
+.pagesubheader
+{
+	font-size: 14px;
+	color: #666666;
+	font-family: Verdana, Helvetica, Times, serif;
+	background-color: transparent;
+	text-decoration: none;
+	margin-top:0px;
+	padding-top:10px;
+}
+
+a.large
+{
+	font-size: 16px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+a.small
+{
+	font-size: 10px;
+	font-family: Helvetica, Verdana, Times, serif;
+}
+
+a.TitleTag
+{
+	font-size: 12px;
+	color: #27638C;
+	text-decoration: none;
+}
+
+a.TitleTag:hover
+{
+	font-size: 12px;
+	color: #27638C;
+	text-decoration: underline;
+}
+
+.liveData
+{
+	color: Blue;
+}
+
+.dataHeader
+{
+	font-family: Helvetica, Verdana, Times, serif;
+	font-size: 12px;
+	color: black;
+}
+
+.pageHeader
+{
+	font-size: 18px;
+	color: black;
+	font-family: Verdana, Helvetica, Times, serif;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+.box
+{
+	border: solid 2px #51748C;
+	background-color: #F7FAFB;
+}
+
+.boxTable
+{
+	border: solid 1px #808080;
+}
+
+.boxHeader
+{
+	font-family: Arial, Sans-Serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	background-color: #27638C;
+	padding:3px;
+	margin:0px;
+}
+
+.tableHeader
+{
+	font-family: Arial, Sans-Serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: white;
+	white-space:nowrap;
+	background-color: #27638C;
+}
+
+.tableHeader a
+{
+	color: White;
+}
+
+.SearchResultsHeader
+{
+	background-color: #E4E2D5;
+	font-weight: bold;
+	color: #8E2800;
+	text-decoration: none;
+}
+
+.overlay {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 999;
+	 background-image:url(/images/maskbg.png);
+}
+
+.overlay div {
+     width:550px;
+     margin: 100px auto;
+     background-color: #ffffff;
+     border:1px solid #000000;
+     padding:15px;
+     text-align:center;
+     position:absolute;
+     top:600px;
+     left:150px;
+     z-index:1000;
+}
+
+.overlay div .selectPageButton {
+    position:inherit;
+    display:inline;
+    border-style:solid;
+    border-color:#bbb #888 #666 #aaa;
+    border-width:1px;
+    padding:1px;
+    background:#ccc;
+    color:#333;
+    text-align:center;
+    cursor:pointer
+}
+
