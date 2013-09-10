@@ -15,10 +15,6 @@ build/
 [Bb]in/
 [Oo]bj/
 
-# BHL solution files
-BHLAdmin.sln
-BHLUtility.sln
-
 # BHL .config files - create .config.template files to check in instead
 [Ww]eb.[Cc]onfig
 [Ww]eb.[Dd]ebug.[Cc]onfig
@@ -27,28 +23,9 @@ BHLUtility.sln
 [Aa]pp.[Cc]onfig
 
 # BHL projects
-BHLAdminWeb/
-BHLAuditExport/
-BHLBibTeXExport/
-BHLDOIService/
-BHLEndNoteExport/
-BHLFileAccessService/
-BHLFlickrThumbGrab/
-BHLMETSUpload/
-BHLMODSExport/
-BHLNameFileGenerator/
-BHLPageNameRefresh/
-BHLPDFGenerator/
-BotanicusHarvest/
-DOIDeposit/
 EOL Data Export/
 ExportIAIdentifiers/
 ExportScanList/
-FlickrUtility/
-IAFileGenerator/
-IAFileGeneratorCmd/
-IAFileGeneratorSetup/
-IAUtilities/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

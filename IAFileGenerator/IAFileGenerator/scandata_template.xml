@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book>
+  <bookData>
+    <bookId>{0}</bookId>
+    <leafCount>{1}</leafCount>
+    <dpi>{2}</dpi>
+{3}  </bookData>
+  <pageData>
+{4}  </pageData>
+</book>

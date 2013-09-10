@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<configuration>
+    <configSections>
+		<section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
+		<sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+            <section name="MOBOT.BHL.PageNameRefresh.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+        </sectionGroup>
+    </configSections>
+	<appSettings>
+		<add key="OCRTextPath" value="{0}\{1}\{2}\"/>
+		<add key="OCRTextLocation" value="NO LONGER USED"/>
+    <add key="SMTPHost" value="SMTP SERVER NAME"/>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <!-- Maximum age in days of Page Names before they are refreshed -->
+		<add key="MaximumPageNameAge" value="365"/>
+		<!-- Number of seconds between UBIO web service calls -->
+		<add key="ExternalWebServiceInterval" value="0"/>
+    <!-- Source name of the name service -->
+    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+    <!-- "true" to process pages asynchronously, "false" for synchronous processing -->
+    <add key="DoAsync" value="true"/>
+    <!-- Maximum allowed number of concurrent calls to the finding service.  Only valid if DoAsync is 'true'.-->
+    <add key="MaxConcurrent" value="2"/>
+    <!-- Valid values for "Mode" are:
+			  "NEW" (process new items)
+			  "OLD" (process existing items)
+			  "ITEM" (process a specific item) -->
+		<add key="Mode" value="NEW"/>
+		<!-- The "Item" key should be added if the Mode value is "ITEM"-->
+		<add key="Item" value="10622"/>
+  </appSettings>
+	<!-- This section contains the log4net configuration settings -->
+	<log4net>
+		<!-- Define some output appenders -->
+		<appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+			<file value="\\SERVER\${COMPUTERNAME}-BHLPageNameRefresh-log.txt"/>
+			<appendToFile value="true"/>
+			<maxSizeRollBackups value="20"/>
+			<maximumFileSize value="5000000"/>
+			<rollingStyle value="Size"/>
+			<staticLogFileName value="true"/>
+			<layout type="log4net.Layout.PatternLayout">
+				<header value="[Header]&#xD;&#xA;" />
+				<footer value="[Footer]&#xD;&#xA;" />
+				<conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+			</layout>
+		</appender>
+		<!-- Setup the root category, add the appenders and set the default level -->
+		<root>
+			<level value="ALL"/>
+			<appender-ref ref="RollingLogFileAppender"/>
+		</root>
+	</log4net>
+	<applicationSettings>
+        <MOBOT.BHL.PageNameRefresh.Properties.Settings>
+               <setting name="BHLPageNameRefresh_BHLWS_BHLWS" serializeAs="String">
+                      <value>http://localhost:26504/BHLWS.asmx</value>
+               </setting>
+        </MOBOT.BHL.PageNameRefresh.Properties.Settings>
+    </applicationSettings>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="AccessKey" value="INTERNET ARCHVIE ACCESS KEY"/>
+    <add key="SecretKey" value="INTERNET ARCHIVE SECRET KEY"/>
+    <!-- List of collections must be delimited with the '|' character -->
+    <add key="Collections" value="biodiversity|botanicus|citebank|darwinslibrary"/>
+  </appSettings>
+</configuration>

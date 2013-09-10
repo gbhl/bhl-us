@@ -1,0 +1,13 @@
+<curlpath>curl --location --header "authorization: LOW <accesskey>:<secretkey>" --header "x-archive-auto-make-bucket:1" --header "x-archive-queue-derive:0" --header "x-archive-meta-mediatype:texts" --header "x-archive-meta-sponsor:<sponsor>" --header "x-archive-meta-contributor:<contributor>" --header "x-archive-meta-title:<title>" --header "x-archive-meta-curation:[curator]biodiversitylibrary.org[/curator][date]<curationdate>[/date][state]approved[/state]" <otherheaders> --upload-file "<marcfile>" "http://s3.us.archive.org/<iaidentifier>/<iaidentifier>_marc.xml" --output output.txt
+
+ping 1.0.0.0 -n 1 -w 5000 > NUL
+
+<curlpath>curl --location --header "authorization: LOW <accesskey>:<secretkey>" --header "x-archive-queue-derive:0" --upload-file "<dcfile>" "http://s3.us.archive.org/<iaidentifier>/<iaidentifier>_dc.xml" --output output.txt
+
+ping 1.0.0.0 -n 1 -w 5000 > NUL
+
+<curlpath>curl --location --header "authorization: LOW <accesskey>:<secretkey>" --header "x-archive-queue-derive:0" --upload-file "<scandatafile>" "http://s3.us.archive.org/<iaidentifier>/<iaidentifier>_scandata.xml" --output output.txt
+
+ping 1.0.0.0 -n 1 -w 5000 > NUL
+
+<curlpath>curl --location --header "authorization: LOW <accesskey>:<secretkey>" --upload-file "<imagezipfile>" "http://s3.us.archive.org/<iaidentifier>/<iaidentifier>_<imageformat>.zip" --output output.txt
