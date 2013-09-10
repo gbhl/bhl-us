@@ -93,10 +93,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\Json.NET3.5.0.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RssToolkit, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\RssToolkit1.0.0.1\RssToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
