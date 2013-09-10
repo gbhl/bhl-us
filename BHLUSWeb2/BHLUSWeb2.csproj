@@ -183,7 +183,6 @@
     <Content Include="dlconcepts.aspx" />
     <Content Include="dlindexbrowse.aspx" />
     <Content Include="dlsearch.aspx" />
-    <Content Include="EmailGeneratePdfReceived.ascx" />
     <Content Include="Error.aspx" />
     <Content Include="Feedback.aspx" />
     <Content Include="feedbackmsg.txt" />
@@ -705,13 +704,6 @@
     </Compile>
     <Compile Include="dlsearch.aspx.designer.cs">
       <DependentUpon>dlsearch.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="EmailGeneratePdfReceived.ascx.cs">
-      <DependentUpon>EmailGeneratePdfReceived.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EmailGeneratePdfReceived.ascx.designer.cs">
-      <DependentUpon>EmailGeneratePdfReceived.ascx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>

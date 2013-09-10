@@ -62,26 +62,17 @@ namespace MOBOT.BHL.Web2.services
         private bool SendEmail(string toEmail, int pdfId)
         {
             /*
-             * REMOVED April 5, 2013.  SendMessage() method doesn't work (needs to submit to BHL
-             * Web service to send mail), but we decided the email was not needed anyway.
+             * REMOVED April 5, 2013.  We decided the email was not needed. 
             try
             {
-                //String[] recipients = new String[1];
-                //recipients[0] = toEmail;
-                //MOBOT.BHL.Web.BHLWebService.BHLWS service = new MOBOT.BHL.Web.BHLWebService.BHLWS();
-                //service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
-                //    "BHL PDF Generation request #" + pdfId.ToString(), GetEmailBody(pdfId));
-
-                System.Web.UI.Page page = new System.Web.UI.Page();
-                EmailGeneratePdfReceived generatePdfReceived = (EmailGeneratePdfReceived)page.LoadControl("~/EmailGeneratePdfReceived.ascx");
-                generatePdfReceived.PdfID = pdfId; 
-                SendHtmlMessage(toEmail, "BHL PDF Generation request #" + pdfId, generatePdfReceived.RenderControlToString()); 
-
+                String[] recipients = new String[1];
+                recipients[0] = toEmail;
+                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
+                    "BHL PDF Generation request #" + pdfId.ToString(), GetEmailBody(pdfId));
             }
             catch (Exception ex)
             {
-                //LogException(ex, "GeneratePdf.SendEmail");
-
                 return false;
             }
              */
@@ -97,8 +88,7 @@ namespace MOBOT.BHL.Web2.services
             sb.Append("Your PDF generation request has been received and will be processed shortly.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            sb.Append("When the PDF has been created, a message will be sent to this address and to any email addresses that you chose to share this PDF with. ");
-            sb.Append("That message will contain a link to download your PDF.");
+            sb.Append("When the PDF has been created, an email containing a link to download your PDF, will be sent to this address.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
             sb.Append("If you have questions or need to report a problem, please contact us via our Feedback page: http://www.biodiversitylibrary.org/contact");
@@ -107,46 +97,6 @@ namespace MOBOT.BHL.Web2.services
             sb.Append("Thank you for your interest.");
 
             return sb.ToString();
-        }
-
-        public static void SendHtmlMessage(string toAddress, string toDisplayName, string subject, string body)
-        {
-            SendMessage(toAddress, toDisplayName, null, null, subject, body, true);
-        }
-
-        public static void SendHtmlMessage(string toAddress, string subject, string body)
-        {
-            SendMessage(toAddress, toAddress, null, null, subject, body, true);
-        }
-
-        public static void SendMessage(string toAddress, string toDisplayName, string from, string fromDisplayName, string subject, string body, bool isBodyHtml)
-        {
-            try
-            {
-            MailMessage msg = new MailMessage();
-            msg.Subject = subject;
-            msg.Body = body;
-            msg.IsBodyHtml = isBodyHtml;
-            msg.To.Add(new MailAddress(toAddress, toDisplayName));
-
-            if (!string.IsNullOrEmpty(from))
-            {
-                msg.From = new MailAddress(from, fromDisplayName ?? string.Empty);
-            }
-
-            using (SmtpClient smtpClient = new SmtpClient("MBGMail01.mobot.org"))
-            {
-                //NetworkCredential basicCredential = new NetworkCredential("bhl@ala.org.au", "bhl4ever!");
-                //smtpClient.EnableSsl = true;
-                //smtpClient.UseDefaultCredentials = false;
-                //smtpClient.Credentials = basicCredential;
-                smtpClient.Send(msg);
-            }
-            }
-            catch (Exception ex)
-            {
-                //LogException(ex, "GeneratePdf.SendMessage");
-            }
         }
 
         public bool IsReusable
