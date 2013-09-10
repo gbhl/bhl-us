@@ -45,6 +45,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BHLCoreDAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLCoreDAL\bin\Release\BHLCoreDAL.dll</HintPath>
+    </Reference>
+    <Reference Include="BHLDataObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLDataObjects\bin\Release\BHLDataObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomDataAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\CustomDataAccess\bin\Release\CustomDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="FredCK.FCKeditorV2, Version=2.6.5.26992, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\FCKEditorV2\FredCK.FCKeditorV2.dll</HintPath>
@@ -54,8 +66,36 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="MOBOT.BHL.Server, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLServer\bin\Release\MOBOT.BHL.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="MOBOT.BHL.Utility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLUtility\bin\Release\MOBOT.BHL.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="MOBOT.BHL.Web.Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLWebUtilities\bin\Release\MOBOT.BHL.Web.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="MOBOT.FileAccess, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLFileAccess\bin\Release\MOBOT.FileAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="MOBOT.FileAccess.RemotingUtilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\BHLFileAccessRemotingUtilities\bin\Release\MOBOT.FileAccess.RemotingUtilities.dll</HintPath>
+    </Reference>
     <Reference Include="MOBOT.Security.Client">
       <HintPath>..\..\SharedLibraries\MOBOT.Security.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\Json.NET3.5.0.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RssToolkit, Version=1.0.0.1, Culture=neutral, PublicKeyToken=b3a5714f1fd001b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\RssToolkit1.0.0.1\RssToolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
@@ -988,26 +1028,6 @@
     <Content Include="WebStatsUser.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
-      <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
-      <Name>BHLDataObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
-      <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
-      <Name>BHLFileAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BHLServer\BHLServer.csproj">
-      <Project>{20fc0f67-c32a-46fe-9ff2-ba5fc74725af}</Project>
-      <Name>BHLServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
-      <Project>{7e1631e8-f28a-4f9e-97e4-f8a69522d9dd}</Project>
-      <Name>BHLWebUtilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
-      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
-      <Name>CustomDataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FlickrUtility\FlickrUtility.csproj">
       <Project>{f9d69fa5-9ee0-43fb-aba3-dc443ace3f18}</Project>
       <Name>FlickrUtility</Name>
