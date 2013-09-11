@@ -70,9 +70,12 @@
     <Folder Include="audit\" />
     <Folder Include="audit\Tables\" />
     <Folder Include="audit\Synonyms\" />
+    <Folder Include="Security" />
+    <Folder Include="Security\Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="audit\Tables\AuditBasic.sql" />
     <Build Include="audit\Synonyms\AuditBasicArchive.sql" />
+    <None Include="Security\Schemas\audit.sql" />
   </ItemGroup>
 </Project>

@@ -81,6 +81,8 @@
     <Folder Include="audit\Stored Procedures\" />
     <Folder Include="audit\Synonyms\" />
     <Folder Include="dbo\Synonyms\" />
+    <Folder Include="Security" />
+    <Folder Include="Security\Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Keyword.sql" />
@@ -884,6 +886,8 @@
     <Build Include="dbo\Stored Procedures\SegmentResolutionLogUpdateAuto.sql" />
     <Build Include="dbo\Stored Procedures\SegmentResolutionLogDeleteAuto.sql" />
     <Build Include="dbo\Stored Procedures\SegmentSelectRecentlyClustered.sql" />
+    <None Include="Security\Schemas\audit.sql" />
+    <None Include="Security\Schemas\annotation.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
