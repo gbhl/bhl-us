@@ -21,6 +21,7 @@ namespace MOBOT.BHL.DataObjects
         private string _classificationPathIDs = string.Empty;
         private string _taxonID = string.Empty;
         private string _localID = string.Empty;
+        private string _globalID = string.Empty;
         private string _currentTaxonID = string.Empty;
         private string _currentNameString = string.Empty;
         private string _url = string.Empty;
@@ -85,6 +86,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _localID; }
             set { _localID = value; }
+        }
+
+        public string GlobalID
+        {
+            get { return _globalID; }
+            set { _globalID = value; }
         }
 
         public string CurrentTaxonID

@@ -20,11 +20,30 @@
             <div id="namedetails" class="content">
                 <section>
                     
-                    <p><a href="/name/<%=NameParam %>">Browse the bibliography</a> for "<%= NameClean %>"</p>
-                    <p>
-                        More Information:
+                    <p><a href="/name/<%=NameParam %>">Browse the bibliography</a> for "<%= NameClean %>".</p>
+                    <asp:Repeater runat="server" ID="rptNameDetails">
+                        <ItemTemplate>
+                            <li class="titlelisting">
+                                <div class="titledetails">Data Source: 
+                                    <%# Eval("Url") == string.Empty ? "" : "<a target=\"_blank\" href=\"" + Eval("Url")  + "\">" %>
+                                        <%# Eval("DataSourceTitle") %>
+                                    <%# Eval("Url") == string.Empty ? "" : "</a>" %>
+                                </div>
+                                <div class="titledetails">Name: <%# Eval("NameString") %></div>
+                                <div class="titledetails">Canonical Form: <%# Eval("CanonicalForm") %></div>
+                                <%# Eval("ClassificationPath") == string.Empty ? "" : "<div class=\"titledetails\">Classification Path: " + Eval("ClassificationPath").ToString().Replace("|", " | ") + "</div>" %>
+                                <%# Eval("ClassificationPathRanks") == string.Empty ? "" : "<div class=\"titledetails\">Classification Path: " + Eval("ClassificationPathRanks").ToString().Replace("|", " | ") + "</div>" %>
+                                <%# Eval("LocalID") == string.Empty ? "" : "<div class=\"titledetails\">Local Identifier: " + Eval("LocalID") + "</div>"%>
+                            </li>
+                        </ItemTemplate>
+	                    <HeaderTemplate>
+		                    <ol  class="data titles">
+	                    </HeaderTemplate>
+	                    <FooterTemplate>
+		                    </ol>
+	                    </FooterTemplate>
 
-                    </p>
+                    </asp:Repeater>
 
                 </section>
             </div>

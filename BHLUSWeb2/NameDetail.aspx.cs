@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -25,6 +26,13 @@ namespace MOBOT.BHL.Web2
             // Example service calls
             // http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua+ssp.+exilis+(Tomm.+ex+Freyn)+Asch.+%26+Graebn.
             // http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua
+
+            if (!string.IsNullOrWhiteSpace(NameClean))
+            {
+                List<GNResolverResponse> nameDetails = bhlProvider.GetNameDetailFromGNResolver(NameClean);
+                rptNameDetails.DataSource = nameDetails;
+                rptNameDetails.DataBind();
+            }
         }
     }
 }
