@@ -24,15 +24,15 @@
                     <asp:Repeater runat="server" ID="rptNameDetails">
                         <ItemTemplate>
                             <li class="titlelisting">
-                                <div class="titledetails">Data Source: 
+                                <div class="titledetails">
+                                    <h3><%# Eval("DataSourceTitle") %></h3>
+                                </div>
+                                <div class="titledetails">Name: 
                                     <%# Eval("Url") == string.Empty ? "" : "<a target=\"_blank\" href=\"" + Eval("Url")  + "\">" %>
-                                        <%# Eval("DataSourceTitle") %>
+                                        <%# Eval("NameString") %>
                                     <%# Eval("Url") == string.Empty ? "" : "</a>" %>
                                 </div>
-                                <div class="titledetails">Name: <%# Eval("NameString") %></div>
-                                <div class="titledetails">Canonical Form: <%# Eval("CanonicalForm") %></div>
                                 <%# Eval("ClassificationPath") == string.Empty ? "" : "<div class=\"titledetails\">Classification Path: " + Eval("ClassificationPath").ToString().Replace("|", " | ") + "</div>" %>
-                                <%# Eval("ClassificationPathRanks") == string.Empty ? "" : "<div class=\"titledetails\">Classification Path: " + Eval("ClassificationPathRanks").ToString().Replace("|", " | ") + "</div>" %>
                                 <%# Eval("LocalID") == string.Empty ? "" : "<div class=\"titledetails\">Local Identifier: " + Eval("LocalID") + "</div>"%>
                             </li>
                         </ItemTemplate>
@@ -45,6 +45,7 @@
 
                     </asp:Repeater>
 
+                    <asp:Literal runat="server" ID="litDetails"></asp:Literal>
                 </section>
             </div>
         </asp:Panel>

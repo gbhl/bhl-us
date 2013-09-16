@@ -30,8 +30,78 @@ namespace MOBOT.BHL.Web2
             if (!string.IsNullOrWhiteSpace(NameClean))
             {
                 List<GNResolverResponse> nameDetails = bhlProvider.GetNameDetailFromGNResolver(NameClean);
-                rptNameDetails.DataSource = nameDetails;
-                rptNameDetails.DataBind();
+                List<GNResolverResponse> displayNames = new List<GNResolverResponse>();
+
+                var distinctSource = from n in nameDetails 
+                                      group n by n.DataSourceTitle into g
+                                      let MatchType = g.Min(n => n.MatchType)
+                                      orderby MatchType, g.Key
+                                      select new {DataSourceTitle = g.Key, MatchType};
+
+                foreach (var dataSourceTitle in distinctSource)
+                {
+                    var sourceNames = from n in nameDetails where n.DataSourceTitle == dataSourceTitle.DataSourceTitle orderby n.MatchType, n.Score select n;
+
+                    foreach (GNResolverResponse nameDetail in sourceNames)
+                    {
+                        displayNames.Add(nameDetail);
+                    }
+                }
+
+                //rptNameDetails.DataSource = displayNames;
+                //rptNameDetails.DataBind();
+
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                sb.Append("<ol>");
+                string currentSourceName = string.Empty;
+                foreach (GNResolverResponse nameDetail in displayNames)
+                {
+                    sb.Append("<li class=\"titlelisting\">");
+
+                    if (currentSourceName != nameDetail.DataSourceTitle)
+                    {
+                        sb.Append("<div class=\"titledetails\">");
+                        sb.Append("<h3>");
+                        sb.Append(nameDetail.DataSourceTitle);
+                        sb.Append("</h3>");
+                        sb.Append("</div>");
+                        sb.Append("</li>");
+                        sb.Append("<li class=\"titlelisting\">");
+                        currentSourceName = nameDetail.DataSourceTitle;
+                    }
+
+                    sb.Append("<div class=\"titledetails\">");
+                    sb.Append("<span>Name: </span>");
+                    sb.Append("<span style=\"position:relative; left:150px\">");
+                    bool hasUrl = !string.IsNullOrWhiteSpace(nameDetail.Url);
+                    if (hasUrl) sb.Append("<a target=\"_blank\" href=\"" + nameDetail.Url + "\">");
+                    sb.Append(nameDetail.NameString);
+                    if (hasUrl) sb.Append("</a>");
+                    sb.Append("</span>");
+                    sb.Append("</div>");
+
+                    if (!string.IsNullOrWhiteSpace(nameDetail.LocalID))
+                    {
+                        sb.Append("<div class=\"titledetails\">");
+                        sb.Append("<span>Local ID: </span><span style=\"position:relative;left:150px\">" + nameDetail.LocalID + "</span>");
+                        sb.Append("</div>");
+                    }
+
+                    // Example for formatting classification path: http://eol.org/pages/8914335/overview
+                    if (!string.IsNullOrWhiteSpace(nameDetail.ClassificationPath))
+                    {
+                        string classPath = nameDetail.ClassificationPath;
+                        if (classPath.StartsWith("|")) classPath = classPath.Substring(1);
+                        sb.Append("<div class=\"titledetails\">");
+                        sb.Append("<span>Classification: </span><span style=\"position:relative;left:150px\">" + classPath.Replace("|", "<br/>") + "</span>");
+                        sb.Append("</div>");
+                    }
+
+                    sb.Append("</li>");
+                }
+                sb.Append("</ol>");
+                litDetails.Text = sb.ToString();
+
             }
         }
     }
