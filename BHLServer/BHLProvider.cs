@@ -475,6 +475,15 @@ namespace MOBOT.BHL.Server
             return (nameResponseList);
         }
 
+        /// <summary>
+        /// Get details about the specified name from the Global Names resolver service.
+        /// </summary>
+        /// <example>
+        /// http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua+ssp.+exilis+(Tomm.+ex+Freyn)+Asch.+%26+Graebn.
+        /// http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua
+        /// </example>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public List<GNResolverResponse> GetNameDetailFromGNResolver(string name)
         {
             List<GNResolverResponse> nameDetails = new List<GNResolverResponse>();

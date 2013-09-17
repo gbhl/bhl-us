@@ -101,6 +101,8 @@
     <add key="BrowseQueryCacheTime" value="10"/>
     <!-- Maximum time in minutes that the flickr thumbnail list is cached -->
     <add key="FlickrThumbListCacheTime" value="10"/>
+    <!-- Maximum time in minutes that the name detail is cached -->
+    <add key="NameDetailCacheTime" value="10"/>
     <!-- Maximum time in minutes that the alert message is cached -->
     <add key="AlertMessageCacheTime" value="1"/>
     <!-- Search results settings -->

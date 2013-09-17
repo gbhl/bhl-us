@@ -19,32 +19,9 @@
 	    <asp:Panel ID="titles" Visible="true" runat="server" ClientIDMode="Static">	
             <div id="namedetails" class="content">
                 <section>
-                    
+                    <p><h2>Find In BHL</h2></p>
                     <p><a href="/name/<%=NameParam %>">Browse the bibliography</a> for "<%= NameClean %>".</p>
-                    <asp:Repeater runat="server" ID="rptNameDetails">
-                        <ItemTemplate>
-                            <li class="titlelisting">
-                                <div class="titledetails">
-                                    <h3><%# Eval("DataSourceTitle") %></h3>
-                                </div>
-                                <div class="titledetails">Name: 
-                                    <%# Eval("Url") == string.Empty ? "" : "<a target=\"_blank\" href=\"" + Eval("Url")  + "\">" %>
-                                        <%# Eval("NameString") %>
-                                    <%# Eval("Url") == string.Empty ? "" : "</a>" %>
-                                </div>
-                                <%# Eval("ClassificationPath") == string.Empty ? "" : "<div class=\"titledetails\">Classification Path: " + Eval("ClassificationPath").ToString().Replace("|", " | ") + "</div>" %>
-                                <%# Eval("LocalID") == string.Empty ? "" : "<div class=\"titledetails\">Local Identifier: " + Eval("LocalID") + "</div>"%>
-                            </li>
-                        </ItemTemplate>
-	                    <HeaderTemplate>
-		                    <ol  class="data titles">
-	                    </HeaderTemplate>
-	                    <FooterTemplate>
-		                    </ol>
-	                    </FooterTemplate>
-
-                    </asp:Repeater>
-
+                    <p><h2>Data Sources</h2></p>
                     <asp:Literal runat="server" ID="litDetails"></asp:Literal>
                 </section>
             </div>
