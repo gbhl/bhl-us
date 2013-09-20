@@ -305,6 +305,7 @@
     <Content Include="images\down.gif" />
     <Content Include="images\envelope_icon.png" />
     <Content Include="images\eol_11px.png" />
+    <Content Include="images\eol_15px.png" />
     <Content Include="images\facebook-icon-normal.png" />
     <Content Include="images\facebook-icon-over.png" />
     <Content Include="images\facebook_like_normal.png" />

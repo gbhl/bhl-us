@@ -546,11 +546,7 @@
 
                                                 if(name.EOLID > 0) {
                                                     ubioLink.append(
-                                                        $('<a/>', { 
-                                                            'href' : 'http://www.eol.org/pages/' + name.EOLID,
-                                                            'text' : '[EOL]',
-                                                            'class' : 'eol'
-                                                        }))
+                                                        " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
                                                 }
                                             });
 

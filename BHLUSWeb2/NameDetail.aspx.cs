@@ -114,12 +114,24 @@ namespace MOBOT.BHL.Web2
                             sb.Append("<div style=\"float:left; margin:0; width:25%;\">Classification: </div>");
                             sb.Append("<div style=\"float:left; margin:0;\">");
 
+                            string classRank = nameDetail.ClassificationPathRanks;
+                            if (classRank.StartsWith("|")) classRank = classRank.Substring(1);
+
                             // Add the formatted classification path
                             System.Text.StringBuilder sbClass = new System.Text.StringBuilder();
                             string[] classes = classPath.Split('|');
+                            string[] ranks = classRank.Split('|');
                             for (int x = classes.Length - 1; x >= 0; x--)
                             {
-                                sbClass.Insert(0, "<ul class=\"classificationList\"><li" + (x==0 ? " style=\"padding-left:0px;\">" : ">") + classes[x]);
+                                string className = classes[x];
+
+                                // Include the rank, if it was supplied
+                                if (ranks.Length == classes.Length)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(ranks[x])) className += " (" + ranks[x] + ")";
+                                }
+
+                                sbClass.Insert(0, "<ul class=\"classificationList\"><li" + (x==0 ? " style=\"padding-left:0px;\">" : ">") + className);
                                 sbClass.Append("</li></ul>");
                             }
                             sb.Append(sbClass.ToString());
