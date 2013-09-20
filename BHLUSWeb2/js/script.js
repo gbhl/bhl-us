@@ -119,6 +119,19 @@ $(document).ready(function () {
         });
     });
 
+    // See Also section collapsing on part Bibliography page
+    $('.partalso:first').addClass('active');
+    $('.partalso .body').not(':first').hide();
+    $('.partalso').show();
+    $('.partalso .title').click(function () {
+        var volume = $(this).parent();
+        var volumeBody = $('.body', volume);
+
+        volumeBody.stop(true, true).slideToggle(function () {
+            volume.toggleClass('active');
+        });
+    });
+
     // Auto-Ellipsis for browsers that dont support it
     if (typeof $().textOverflow == 'function') {
         $('.ellipsis').textOverflow();

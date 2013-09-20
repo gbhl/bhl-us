@@ -248,10 +248,10 @@
 </section>
 <aside>
     <h3></h3>
-    <div class="volumes">
-        <div class="volume js-hide">
+    <div class="partlinks">
+        <div class="partlink js-hide">
             <h4 class="title">
-                    <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                    <!--<a class="expand no-js-hide" title="expand or collapse volume description">expand</a>-->
                     <span class="text"><%: BhlSegment.GenreName%> links</span>
             </h4>
             <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
@@ -272,27 +272,12 @@
                         <a href="<%: BhlSegment.DownloadUrl %>">Download  <%: BhlSegment.GenreName%></a> <br />
                     <% } %>
                 </div>
-                    <% if (!string.IsNullOrWhiteSpace(BhlSegment.DownloadUrl))
-                       { %>
-                    <div class="download">
-                        Download book:
-                        <% if (BhlSegment.SegmentID.ToString().Trim() == "1")
-                           { %>
-                        <a class="icon all" href="<%: BhlSegment.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_jp2.zip", BhlSegment.SegmentID) %>">JP2</a>
-                        <a class="icon ocr" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", BhlSegment.SegmentID) %>">OCR</a>
-                        <a class="icon pdf" href="<%: string.Format("http://www.archive.org/download/{0}/{0}.pdf", BhlSegment.SegmentID) %>">PDF</a>
-                        <% } else { %>
-                            <a class="icon pdf" href="<%: BhlSegment.DownloadUrl %>">PDF</a>
-                        <% } %>
-                    </div>
-                    <% } %>
             </div>
         </div>
     </div>
 
-    <div class="volumes">
-        <div class="volume js-hide">
+    <div class="partalsos" <%if (BhlSegment.RelatedSegmentList.Count == 0) { %>  style="display:none" <% } %>>
+        <div class="partalso js-hide">
             <h4 class="title">
                     <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
                     <span class="text">See Also</span>
