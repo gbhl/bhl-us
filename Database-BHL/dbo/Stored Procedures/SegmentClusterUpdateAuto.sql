@@ -1,13 +1,14 @@
 ﻿
 -- SegmentClusterUpdateAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
+-- Generated 9/20/2013 4:40:05 PM
 -- Do not modify the contents of this procedure.
 -- Update Procedure for SegmentCluster
 
 CREATE PROCEDURE SegmentClusterUpdateAuto
 
 @SegmentClusterID INT,
-@LastModifiedUserID INT
+@LastModifiedUserID INT,
+@SegmentClusterTypeID INT
 
 AS 
 
@@ -18,7 +19,8 @@ UPDATE [dbo].[SegmentCluster]
 SET
 
 	[LastModifiedDate] = getdate(),
-	[LastModifiedUserID] = @LastModifiedUserID
+	[LastModifiedUserID] = @LastModifiedUserID,
+	[SegmentClusterTypeID] = @SegmentClusterTypeID
 
 WHERE
 	[SegmentClusterID] = @SegmentClusterID
@@ -36,7 +38,8 @@ ELSE BEGIN
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
-		[LastModifiedUserID]
+		[LastModifiedUserID],
+		[SegmentClusterTypeID]
 
 	FROM [dbo].[SegmentCluster]
 	

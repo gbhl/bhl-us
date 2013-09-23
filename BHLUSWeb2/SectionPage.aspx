@@ -102,6 +102,22 @@
             <% if (!String.IsNullOrEmpty(BhlSegment.TranslatedTitle)) { %>
                 <div class="segmentdetails"><h3>Translated Title</h3> <p><%: BhlSegment.TranslatedTitle%></p></div>
             <% } %>
+            <% if (BhlSegment.RelatedSegmentList.Count > 0) { %>
+                <h3>Related To</h3>
+                <p>
+                    <%foreach (Segment segment in BhlSegment.RelatedSegmentList)
+                    { %>
+                        <%: segment.SegmentClusterTypeLabel %> :
+                        <a href="/part/<%: segment.SegmentID %>">
+                            <%: segment.Title %>
+                        </a>
+                    <% if (!string.IsNullOrWhiteSpace(segment.Authors)) { %> - <%: segment.Authors %> <% } %> 
+                    <% if (!string.IsNullOrWhiteSpace(segment.ContainerTitle)) { %> - <%: segment.ContainerTitle%> <% } %> 
+                    <% if (!string.IsNullOrWhiteSpace(segment.Date)) { %> - <%: segment.Date%> <% } %> 
+                    <% if (!string.IsNullOrWhiteSpace(segment.PageRange)) { %> - p.<%: segment.PageRange%> <br /> <% } %> 
+                    <% } %>
+                </p>
+            <% } %>
             <% if (BhlSegment.AuthorList.Count > 0) { %>
                 <h3>By</h3>
                 <p>
@@ -232,10 +248,10 @@
 </section>
 <aside>
     <h3></h3>
-    <div class="volumes">
-        <div class="volume js-hide">
+    <div class="partlinks">
+        <div class="partlink js-hide">
             <h4 class="title">
-                    <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                    <!--<a class="expand no-js-hide" title="expand or collapse volume description">expand</a>-->
                     <span class="text"><%: BhlSegment.GenreName%> links</span>
             </h4>
             <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
@@ -256,24 +272,41 @@
                         <a href="<%: BhlSegment.DownloadUrl %>">Download  <%: BhlSegment.GenreName%></a> <br />
                     <% } %>
                 </div>
-                    <% if (!string.IsNullOrWhiteSpace(BhlSegment.DownloadUrl))
-                       { %>
-                    <div class="download">
-                        Download book:
-                        <% if (BhlSegment.SegmentID.ToString().Trim() == "1")
-                           { %>
-                        <a class="icon all" href="<%: BhlSegment.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_jp2.zip", BhlSegment.SegmentID) %>">JP2</a>
-                        <a class="icon ocr" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", BhlSegment.SegmentID) %>">OCR</a>
-                        <a class="icon pdf" href="<%: string.Format("http://www.archive.org/download/{0}/{0}.pdf", BhlSegment.SegmentID) %>">PDF</a>
-                        <% } else { %>
-                            <a class="icon pdf" href="<%: BhlSegment.DownloadUrl %>">PDF</a>
-                        <% } %>
-                    </div>
-                    <% } %>
             </div>
         </div>
     </div>
+
+    <div class="partalsos" <%if (BhlSegment.RelatedSegmentList.Count == 0) { %>  style="display:none" <% } %>>
+        <div class="partalso js-hide">
+            <h4 class="title">
+                    <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
+                    <span class="text">See Also</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0;">
+                <div class="partlinks">
+
+                    <% if (BhlSegment.RelatedSegmentList.Count > 0) { %>
+                        <p>
+                            <%foreach (Segment segment in BhlSegment.RelatedSegmentList)
+                            { %>
+                                <%: segment.SegmentClusterTypeLabel %> :
+                                <a href="/part/<%: segment.SegmentID %>">
+                                    <%: segment.Title %>
+                                </a>
+                            <% if (!string.IsNullOrWhiteSpace(segment.Authors)) { %> - <%: segment.Authors %> <% } %> 
+                            <% if (!string.IsNullOrWhiteSpace(segment.ContainerTitle)) { %> - <%: segment.ContainerTitle%> <% } %> 
+                            <% if (!string.IsNullOrWhiteSpace(segment.Date)) { %> - <%: segment.Date%> <% } %> 
+                            <% if (!string.IsNullOrWhiteSpace(segment.PageRange)) { %> - p.<%: segment.PageRange%> <% } %> 
+                            <br /><br />
+                            <% } %>
+                        </p>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 </aside>
 </asp:Content>
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">

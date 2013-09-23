@@ -1,6 +1,6 @@
 ﻿
 -- SegmentClusterInsertAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
+-- Generated 9/20/2013 4:40:05 PM
 -- Do not modify the contents of this procedure.
 -- Insert Procedure for SegmentCluster
 
@@ -8,7 +8,8 @@ CREATE PROCEDURE SegmentClusterInsertAuto
 
 @SegmentClusterID INT OUTPUT,
 @CreationUserID INT,
-@LastModifiedUserID INT
+@LastModifiedUserID INT,
+@SegmentClusterTypeID INT
 
 AS 
 
@@ -19,14 +20,16 @@ INSERT INTO [dbo].[SegmentCluster]
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
-	[LastModifiedUserID]
+	[LastModifiedUserID],
+	[SegmentClusterTypeID]
 )
 VALUES
 (
 	getdate(),
 	getdate(),
 	@CreationUserID,
-	@LastModifiedUserID
+	@LastModifiedUserID,
+	@SegmentClusterTypeID
 )
 
 SET @SegmentClusterID = Scope_Identity()
@@ -44,7 +47,8 @@ ELSE BEGIN
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
-		[LastModifiedUserID]	
+		[LastModifiedUserID],
+		[SegmentClusterTypeID]	
 
 	FROM [dbo].[SegmentCluster]
 	
@@ -53,4 +57,3 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
-

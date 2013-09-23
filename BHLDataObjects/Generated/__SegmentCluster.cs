@@ -1,5 +1,5 @@
 
-// Generated 9/18/2012 12:12:30 PM
+// Generated 9/20/2013 4:40:05 PM
 // Do not modify the contents of this code file.
 // This abstract class __SegmentCluster is based upon SegmentCluster.
 
@@ -50,17 +50,20 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentClusterTypeID"></param>
 		public __SegmentCluster(int segmentClusterID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			int segmentClusterTypeID) : this()
 		{
 			_SegmentClusterID = segmentClusterID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			SegmentClusterTypeID = segmentClusterTypeID;
 		}
 		
 		#endregion Constructors
@@ -110,6 +113,11 @@ namespace MOBOT.BHL.DataObjects
 					case "LastModifiedUserID" :
 					{
 						_LastModifiedUserID = (int)column.Value;
+						break;
+					}
+					case "SegmentClusterTypeID" :
+					{
+						_SegmentClusterTypeID = (int)column.Value;
 						break;
 					}
 				}
@@ -257,6 +265,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region SegmentClusterTypeID
+		
+		private int _SegmentClusterTypeID = default(int);
+		
+		/// <summary>
+		/// Column: SegmentClusterTypeID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("SegmentClusterTypeID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10)]
+		public int SegmentClusterTypeID
+		{
+			get
+			{
+				return _SegmentClusterTypeID;
+			}
+			set
+			{
+				if (_SegmentClusterTypeID != value)
+				{
+					_SegmentClusterTypeID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentClusterTypeID
 			
 		#endregion Properties
 				
@@ -305,7 +340,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.SegmentClusterTypeID == SegmentClusterTypeID 
 				)
 				{
 					o = null;
@@ -410,7 +446,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string SegmentClusterTypeID = "SegmentClusterTypeID";
 		}
 				
 		#endregion SortColumn

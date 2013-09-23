@@ -1,6 +1,5 @@
-﻿
--- SegmentClusterSelectAuto PROCEDURE
--- Generated 9/18/2012 12:12:30 PM
+﻿-- SegmentClusterSelectAuto PROCEDURE
+-- Generated 9/20/2013 4:40:05 PM
 -- Do not modify the contents of this procedure.
 -- Select Procedure for SegmentCluster
 
@@ -18,7 +17,8 @@ SELECT
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
-	[LastModifiedUserID]
+	[LastModifiedUserID],
+	[SegmentClusterTypeID]
 
 FROM [dbo].[SegmentCluster]
 
@@ -34,4 +34,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
 

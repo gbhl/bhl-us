@@ -2212,12 +2212,14 @@ ul.data.collections li .collectiontitle
 	margin:30px 0 18px;
 }
 
-.volumes
+.volumes, .partlinks, .partalsos
 {
 	margin:0 0 30px 0;
 }
 
-.volumes div:first-child .title
+.volumes div:first-child .title,
+.partlinks div:first-child .title,
+.partalsos div:first-child .title
 {
     -webkit-border-top-left-radius: 5px;
 	-webkit-border-top-right-radius: 5px;
@@ -2229,7 +2231,8 @@ ul.data.collections li .collectiontitle
 	border-top: 1px solid #000;
 }
 
-.volume .title
+.volume .title,
+.partalso .title
 {
 	color:#fff;
 	background:#5f6f80;
@@ -2249,7 +2252,21 @@ ul.data.collections li .collectiontitle
 	
 	border-top: none;
 }
-.volume .title .text
+.partlink .title
+{
+	color:#fff;
+	background:#5f6f80;
+	height:40px;
+	line-height:40px;
+	margin:0;
+	padding:0 0 0 15px;
+	font-style:normal;
+	border: 1px solid #000;
+	border-top: none;
+}
+.volume .title .text,
+.partlink .title .text,
+.partalso .title .text
 {
 	overflow:hidden;
 	width:239px;
@@ -2257,8 +2274,9 @@ ul.data.collections li .collectiontitle
 	height:40px;
 	display:block;
 }
-.volume .title .viewbook
-
+.volume .title .viewbook,
+.partlink .title .viewbook,
+.partalso .title .viewbook
 {
     float:right;
     display:block;
@@ -2269,7 +2287,9 @@ ul.data.collections li .collectiontitle
 	margin:12px 7px 0 0;
 }
 
-.volume .title .expand
+.volume .title .expand,
+.partlink .title .expand,
+.partalso .title .expand
 {
 	background:url(../images/bg_volume_expand.png) 0 0 no-repeat;
 	display:block;
@@ -2284,27 +2304,39 @@ ul.data.collections li .collectiontitle
 	border-radius: 5px;
 }
 
-.volume .title:hover .expand
+.volume .title:hover .expand,
+.partlink .title:hover .expand,
+.partalso .title:hover .expand
 {
 	background-position:0 -26px;
 }
-.volume .title:active .expand
+.volume .title:active .expand,
+.partlink .title:active .expand,
+.partalso .title:active .expand
 {
 	background-position:0 -52px;
 }
-.volume.active .title .expand
+.volume.active .title .expand,
+.partlink.active .title .expand,
+.partalso.active .title .expand
 {
 	background-position:-27px 0;
 }
-.volume.active .title:hover .expand
+.volume.active .title:hover .expand,
+.partlink.active .title:hover .expand,
+.partalso.active .title:hover .expand
 {
 	background-position:-27px -26px;
 }
-.volume.active .title:active .expand
+.volume.active .title:active .expand,
+.partlink.active .title:active .expand,
+.partalso.active .title:active .expand
 {
 	background-position:-27px -52px;
 }
-.volume .body
+.volume .body,
+.partlink .body,
+.partalso .body
 {
 	background:#f9f5f1;
 	border-left:1px solid #c5ced3;
@@ -2343,7 +2375,9 @@ ul.data.collections li .collectiontitle
 {
 	margin:0;
 }
-.volume p
+.volume p,
+.partlink p,
+.partalso p
 {
 	margin:0 0 15px;
 	font-size:12px;
@@ -2373,12 +2407,17 @@ ul.data.collections li .collectiontitle
     margin: 30px 0px 0px 0px;
     line-height: 22px;
 }
-.volume .partlinks
+.volume .partlinks,
+.partlink .partlinks,
+.partalso .partlinks
 {
     margin: 0px 0px 20px 20px;
     line-height: 22px;
 }
-.volumes a 
+
+.volumes a, 
+.partlink a,
+.partalso a 
 {
     color: #607890; 
 }

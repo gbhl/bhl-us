@@ -1,5 +1,5 @@
 
-// Generated 9/18/2012 12:12:30 PM
+// Generated 9/20/2013 4:40:05 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentClusterDAL is based upon SegmentCluster.
@@ -138,14 +138,16 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentClusterTypeID"></param>
 		/// <returns>Object of type SegmentCluster.</returns>
 		public SegmentCluster SegmentClusterInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int segmentClusterTypeID)
 		{
-			return SegmentClusterInsertAuto( sqlConnection, sqlTransaction, "BHL", creationUserID, lastModifiedUserID );
+			return SegmentClusterInsertAuto( sqlConnection, sqlTransaction, "BHL", creationUserID, lastModifiedUserID, segmentClusterTypeID );
 		}
 		
 		/// <summary>
@@ -156,13 +158,15 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentClusterTypeID"></param>
 		/// <returns>Object of type SegmentCluster.</returns>
 		public SegmentCluster SegmentClusterInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int segmentClusterTypeID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -170,7 +174,8 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("SegmentClusterID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("SegmentClusterTypeID", SqlDbType.Int, null, false, segmentClusterTypeID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<SegmentCluster> helper = new CustomSqlHelper<SegmentCluster>())
@@ -221,7 +226,8 @@ namespace MOBOT.BHL.DAL
 		{
 			return SegmentClusterInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.SegmentClusterTypeID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -293,14 +299,16 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentClusterTypeID"></param>
 		/// <returns>Object of type SegmentCluster.</returns>
 		public SegmentCluster SegmentClusterUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentClusterID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int segmentClusterTypeID)
 		{
-			return SegmentClusterUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentClusterID, lastModifiedUserID);
+			return SegmentClusterUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentClusterID, lastModifiedUserID, segmentClusterTypeID);
 		}
 		
 		/// <summary>
@@ -311,20 +319,23 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentClusterID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentClusterTypeID"></param>
 		/// <returns>Object of type SegmentCluster.</returns>
 		public SegmentCluster SegmentClusterUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int segmentClusterID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int segmentClusterTypeID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentClusterUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("SegmentClusterID", SqlDbType.Int, null, false, segmentClusterID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("SegmentClusterTypeID", SqlDbType.Int, null, false, segmentClusterTypeID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<SegmentCluster> helper = new CustomSqlHelper<SegmentCluster>())
@@ -375,7 +386,8 @@ namespace MOBOT.BHL.DAL
 		{
 			return SegmentClusterUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.SegmentClusterID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.SegmentClusterTypeID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -421,7 +433,8 @@ namespace MOBOT.BHL.DAL
 				value.LastModifiedUserID = userId;
 				SegmentCluster returnValue = SegmentClusterInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.SegmentClusterTypeID);
 				
 				return new CustomDataAccessStatus<SegmentCluster>(
 					CustomDataAccessContext.Insert, 
@@ -448,7 +461,8 @@ namespace MOBOT.BHL.DAL
 				value.LastModifiedUserID = userId;
 				SegmentCluster returnValue = SegmentClusterUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.SegmentClusterID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.SegmentClusterTypeID);
 					
 				return new CustomDataAccessStatus<SegmentCluster>(
 					CustomDataAccessContext.Update, 
