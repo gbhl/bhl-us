@@ -99,6 +99,7 @@ namespace MOBOT.BHL.Web2.Services
                 using (WebClient client = new WebClient())
                 {
                     //ocrText = client.DownloadString("http://www.biodiversitylibrary.org/pageocr/" + pageID);
+                    client.Encoding = System.Text.Encoding.UTF8; 
                     ocrText = client.DownloadString(ConfigurationManager.AppSettings["BaseUrl"] + "/pageocr/" + pageID);
                 }
 
