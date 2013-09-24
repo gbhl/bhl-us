@@ -305,6 +305,7 @@
     <Content Include="images\down.gif" />
     <Content Include="images\envelope_icon.png" />
     <Content Include="images\eol_11px.png" />
+    <Content Include="images\eol_15px.png" />
     <Content Include="images\facebook-icon-normal.png" />
     <Content Include="images\facebook-icon-over.png" />
     <Content Include="images\facebook_like_normal.png" />
@@ -395,6 +396,7 @@
     <Content Include="js\script.js" />
     <Content Include="js\webtrends.js" />
     <Content Include="Monitor.aspx" />
+    <Content Include="NameDetail.aspx" />
     <Content Include="NameList.aspx" />
     <Content Include="OpenUrlHelp.aspx" />
     <Content Include="OpenURLMultiple.aspx" />
@@ -777,6 +779,13 @@
     </Compile>
     <Compile Include="Monitor.aspx.designer.cs">
       <DependentUpon>Monitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NameDetail.aspx.cs">
+      <DependentUpon>NameDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NameDetail.aspx.designer.cs">
+      <DependentUpon>NameDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="NameList.aspx.cs">
       <DependentUpon>NameList.aspx</DependentUpon>

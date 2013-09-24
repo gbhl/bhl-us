@@ -217,6 +217,10 @@ namespace BHLUSWeb2
             routes.Add("NameList",
                 new Route("namelist", new HttpHandlerRouteHandler<NameListService>()));
 
+            routes.MapPageRoute("NameDetail",
+                "namedetail/{name}",
+                "~/NameDetail.aspx");
+
             routes.Add("PageSummary",
                 new Route("pagesummary", new HttpHandlerRouteHandler<PageSummaryService1>()));
             

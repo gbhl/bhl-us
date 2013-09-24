@@ -2626,7 +2626,17 @@ section .column3
 }
 
 .tabbed{margin: -1em 1em 20px 150px;}
-    
+
+/* Names Detail */
+.classificationList {
+    margin: 0px; 
+    padding: 0px;
+}
+
+.classificationList li {
+    margin: 0px;
+    padding-left: 10px;
+}
     
 /** START SELECT styles **/
 #content section.search select, #content section .form select {

@@ -475,6 +475,109 @@ namespace MOBOT.BHL.Server
             return (nameResponseList);
         }
 
+        /// <summary>
+        /// Get details about the specified name from the Global Names resolver service.
+        /// </summary>
+        /// <example>
+        /// http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua+ssp.+exilis+(Tomm.+ex+Freyn)+Asch.+%26+Graebn.
+        /// http://resolver.globalnames.org/name_resolvers.xml?names=Poa+annua
+        /// </example>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public List<GNResolverResponse> GetNameDetailFromGNResolver(string name)
+        {
+            List<GNResolverResponse> nameDetails = new List<GNResolverResponse>();
+
+            // Get the name finding service url
+            string webServiceUrl = string.Format("http://resolver.globalnames.org/name_resolvers.json?names={0}", name);
+
+            try
+            {
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
+                req.Method = "GET";
+                req.Timeout = 60000;
+
+                JObject jsonResponse = null;
+                using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                {
+                    using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                    {
+                        jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                    }
+                }
+                req = null;
+
+                // Did the service successfully evaluate the name?
+                string status = (string)jsonResponse.SelectToken("status");
+                if (status == "success")
+                {
+                    JToken data = jsonResponse["data"];
+
+                    // Read the name details from the JSON response
+                    if (data != null)
+                    {
+                        JObject results = (JObject)data[0];
+                        foreach (JToken result in results["results"])
+                        {
+                            int matchType = (int)(result["match_type"] ?? "0");
+
+                            // Possible match_type values
+                            // 1 - exact string match
+                            // 2 - exact string match of canonical form
+                            // 3 - fuzzy match of canonical form
+                            // 4 - partial match on trinomial (perhaps bionomial portion matched; mostly good results here)
+                            // 5 - fuzzy partial match on trinomial
+                            // 6 - exact match on genus, but no match on species (binomial) part  (most questionable results here... usually IS a name, but maybe not the identified name)
+                            if (matchType != 6)  // Don't use questionable matches
+                            {
+                                int dataSourceID = (int)(result["data_source_id"] ?? "0");
+                                string dataSourceTitle = (string)(result["data_source_title"] ?? string.Empty);
+                                string gniUUID = (string)(result["gni_uuid"] ?? string.Empty);
+                                string nameString = (string)(result["name_string"] ?? string.Empty);
+                                string canonicalForm = (string)(result["canonical_form"] ?? string.Empty);
+                                string classificationPath = (string)(result["classification_path"] ?? string.Empty);
+                                string classificationPathRanks = (string)(result["classification_path_ranks"] ?? string.Empty);
+                                string classificationPathIDs = (string)(result["classification_path_ids"] ?? string.Empty);
+                                string taxonID = (string)(result["taxon_id"] ?? string.Empty);
+                                string localID = (string)(result["local_id"] ?? string.Empty);
+                                string globalID = (string)(result["global_id"] ?? string.Empty);
+                                string url = (string)(result["url"] ?? string.Empty);
+                                double score = (double)(result["score"] ?? "0");
+
+                                GNResolverResponse nameDetail = new GNResolverResponse();
+                                nameDetail.DataSourceID = dataSourceID;
+                                nameDetail.DataSourceTitle = dataSourceTitle;
+                                nameDetail.GniUUID = gniUUID;
+                                nameDetail.NameString = nameString;
+                                nameDetail.CanonicalForm = canonicalForm;
+                                nameDetail.ClassificationPath = classificationPath;
+                                nameDetail.ClassificationPathRanks = classificationPathRanks;
+                                nameDetail.ClassificationPathIDs = classificationPathIDs;
+                                nameDetail.TaxonID = taxonID;
+                                nameDetail.LocalID = localID;
+                                nameDetail.GlobalID = globalID;
+                                nameDetail.Url = url;
+                                nameDetail.MatchType = matchType;
+                                nameDetail.Score = score;
+                                nameDetails.Add(nameDetail);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Service failed.  Throw an error.
+                    throw new Exception("No response received from GNI name resolution service.");
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return nameDetails;
+        }
+
         [Serializable]
         public class ViewerPage
         {

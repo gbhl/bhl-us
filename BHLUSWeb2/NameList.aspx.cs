@@ -38,17 +38,8 @@ namespace MOBOT.BHL.Web2
                 if (nameIdentifier.IdentifierName == "NameBank") nameBankID = nameIdentifier.IdentifierValue;
             }
 
-            TitleLink = (!string.IsNullOrEmpty(EOLID)) ? string.Format("<a class=\"name\" target=\"_blank\" href=\"http://www.eol.org/pages/{0}\">{1}</a>", EOLID, name) : name;
-
-            // Build the link to NameBank
-            if (nameBankID != string.Empty)
-            {
-                lnkNamebank.NavigateUrl = "http://names.ubio.org/browser/details.php?namebankID=" + nameBankID;
-            }
-            else
-            {
-                lnkNamebank.Visible = false;
-            }
+            litEOLLink.Text = (!string.IsNullOrEmpty(EOLID)) ? string.Format("<a class=\"button\" target=\"_blank\" href=\"http://www.eol.org/pages/{0}\">View in <img src='/images/eol_15px.png' style='position:relative;top:2px'></a>", EOLID) : string.Empty;
+            TitleLink = name;
         }
     
     }

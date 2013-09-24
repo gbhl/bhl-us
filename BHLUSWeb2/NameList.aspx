@@ -5,7 +5,8 @@
 <div id="page-title">    
     <h1 class="column-wrap">
         <span class="links">
-            <asp:HyperLink ID="lnkNamebank" runat="server" Target="_blank" Text="View Namebank record" class="button"></asp:HyperLink>
+            <asp:Literal runat="server" ID="litEOLLink"></asp:Literal>&nbsp;&nbsp;
+            <a class="button" href="/namedetail/<%= NameParam %>">View Name Sources</a>
             <a class="button" href="/namelistdownload/?type=c&name=<%= NameParam %>">Download CSV</a>
             <a class="button" href="/namelistdownload/?type=b&name=<%= NameParam %>">Download BibTeX</a>
             <a class="button" href="/namelistdownload/?type=e&name=<%= NameParam %>">Download EndNote</a>
