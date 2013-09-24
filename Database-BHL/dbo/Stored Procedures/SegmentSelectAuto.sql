@@ -1,6 +1,6 @@
 ﻿
 -- SegmentSelectAuto PROCEDURE
--- Generated 4/12/2013 11:25:53 AM
+-- Generated 9/24/2013 2:29:04 PM
 -- Do not modify the contents of this procedure.
 -- Select Procedure for Segment
 
@@ -49,7 +49,8 @@ SELECT
 	[LastModifiedDate],
 	[CreationUserID],
 	[LastModifiedUserID],
-	[SortTitle]
+	[SortTitle],
+	[RedirectSegmentID]
 
 FROM [dbo].[Segment]
 

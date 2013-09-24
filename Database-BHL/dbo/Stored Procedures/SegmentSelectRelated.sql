@@ -45,6 +45,7 @@ FROM	dbo.SegmentClusterSegment scs1
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	scs1.SegmentID = @SegmentID
 AND		s.SegmentID <> @SegmentID
+AND		s.SegmentStatusID IN (10, 20)
 ORDER BY
 		sct.DisplaySequence,
 		s.Title

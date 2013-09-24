@@ -1,5 +1,5 @@
 
-// Generated 4/12/2013 11:25:53 AM
+// Generated 9/24/2013 2:29:04 PM
 // Do not modify the contents of this code file.
 // This abstract class __Segment is based upon Segment.
 
@@ -81,6 +81,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="sortTitle"></param>
+		/// <param name="redirectSegmentID"></param>
 		public __Segment(int segmentID, 
 			int? itemID, 
 			int segmentStatusID, 
@@ -116,7 +117,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
 			int? lastModifiedUserID, 
-			string sortTitle) : this()
+			string sortTitle, 
+			int? redirectSegmentID) : this()
 		{
 			_SegmentID = segmentID;
 			ItemID = itemID;
@@ -154,6 +156,7 @@ namespace MOBOT.BHL.DataObjects
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
 			SortTitle = sortTitle;
+			RedirectSegmentID = redirectSegmentID;
 		}
 		
 		#endregion Constructors
@@ -358,6 +361,11 @@ namespace MOBOT.BHL.DataObjects
 					case "SortTitle" :
 					{
 						_SortTitle = (string)column.Value;
+						break;
+					}
+					case "RedirectSegmentID" :
+					{
+						_RedirectSegmentID = (int?)column.Value;
 						break;
 					}
 				}
@@ -1366,6 +1374,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion SortTitle
+		
+		#region RedirectSegmentID
+		
+		private int? _RedirectSegmentID = null;
+		
+		/// <summary>
+		/// Column: RedirectSegmentID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("RedirectSegmentID", DbTargetType=SqlDbType.Int, Ordinal=37, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
+		public int? RedirectSegmentID
+		{
+			get
+			{
+				return _RedirectSegmentID;
+			}
+			set
+			{
+				if (_RedirectSegmentID != value)
+				{
+					_RedirectSegmentID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion RedirectSegmentID
 			
 		#endregion Properties
 				
@@ -1445,7 +1480,8 @@ namespace MOBOT.BHL.DataObjects
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
 					o.LastModifiedUserID == LastModifiedUserID &&
-					GetComparisonString(o.SortTitle) == GetComparisonString(SortTitle) 
+					GetComparisonString(o.SortTitle) == GetComparisonString(SortTitle) &&
+					o.RedirectSegmentID == RedirectSegmentID 
 				)
 				{
 					o = null;
@@ -1581,7 +1617,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
 			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string SortTitle = "SortTitle";
+			public const string SortTitle = "SortTitle";	
+			public const string RedirectSegmentID = "RedirectSegmentID";
 		}
 				
 		#endregion SortColumn

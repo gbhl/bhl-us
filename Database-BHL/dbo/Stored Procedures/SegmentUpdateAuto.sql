@@ -1,6 +1,6 @@
 ﻿
 -- SegmentUpdateAuto PROCEDURE
--- Generated 4/12/2013 11:25:53 AM
+-- Generated 9/24/2013 2:29:04 PM
 -- Do not modify the contents of this procedure.
 -- Update Procedure for Segment
 
@@ -38,7 +38,8 @@ CREATE PROCEDURE SegmentUpdateAuto
 @ContributorCreationDate DATETIME,
 @ContributorLastModifiedDate DATETIME,
 @LastModifiedUserID INT,
-@SortTitle NVARCHAR(2000)
+@SortTitle NVARCHAR(2000),
+@RedirectSegmentID INT
 
 AS 
 
@@ -80,7 +81,8 @@ SET
 	[ContributorLastModifiedDate] = @ContributorLastModifiedDate,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID,
-	[SortTitle] = @SortTitle
+	[SortTitle] = @SortTitle,
+	[RedirectSegmentID] = @RedirectSegmentID
 
 WHERE
 	[SegmentID] = @SegmentID
@@ -129,7 +131,8 @@ ELSE BEGIN
 		[LastModifiedDate],
 		[CreationUserID],
 		[LastModifiedUserID],
-		[SortTitle]
+		[SortTitle],
+		[RedirectSegmentID]
 
 	FROM [dbo].[Segment]
 	

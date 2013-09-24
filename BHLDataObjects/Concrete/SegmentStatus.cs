@@ -11,4 +11,12 @@ namespace MOBOT.BHL.DataObjects
 	public class SegmentStatus : __SegmentStatus
 	{
 	}
+
+    public enum SegmentStatusValue : int
+    {
+        New = 10,
+        Published = 20,
+        Removed = 30,
+        Inappropriate = 40
+    }
 }

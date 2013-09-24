@@ -35,6 +35,23 @@ namespace MOBOT.BHL.Web2
                 {
                     Response.Redirect("~/pagenotfound");
                 }
+                else
+                {
+                    // Check to make sure this title hasn't been replaced.  If it has, redirect
+                    // to the appropriate titleid.
+                    if (BhlSegment.RedirectSegmentID != null)
+                    {
+                        Response.Redirect("~/part/" + BhlSegment.RedirectSegmentID);
+                    }
+
+                    // Make sure the title is published.
+                    if (BhlSegment.SegmentStatusID != (int)SegmentStatusValue.New && 
+                        BhlSegment.SegmentStatusID != (int)SegmentStatusValue.Published)
+                    {
+                        Response.Redirect("~/itemunavailable");
+                    }
+                }
+
 
                 COinS.SegmentID = SegmentID;
 

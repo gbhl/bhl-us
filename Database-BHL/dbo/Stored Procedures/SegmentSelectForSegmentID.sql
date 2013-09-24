@@ -55,7 +55,8 @@ SELECT	s.SegmentID,
 		s.LastModifiedDate,
 		s.CreationUserID,
 		s.LastModifiedUserID,
-		dbo.fnAuthorStringForSegment(s.SegmentID, ' ') AS Authors
+		dbo.fnAuthorStringForSegment(s.SegmentID, ' ') AS Authors,
+		s.RedirectSegmentID
 FROM	dbo.Segment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID

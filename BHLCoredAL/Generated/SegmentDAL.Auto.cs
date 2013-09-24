@@ -1,5 +1,5 @@
 
-// Generated 4/12/2013 11:25:53 AM
+// Generated 9/24/2013 2:29:04 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon Segment.
@@ -169,6 +169,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="sortTitle"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -205,9 +206,10 @@ namespace MOBOT.BHL.DAL
 			DateTime? contributorLastModifiedDate,
 			int? creationUserID,
 			int? lastModifiedUserID,
-			string sortTitle)
+			string sortTitle,
+			int? redirectSegmentID)
 		{
-			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle );
+			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
 		}
 		
 		/// <summary>
@@ -249,6 +251,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="sortTitle"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
@@ -286,7 +289,8 @@ namespace MOBOT.BHL.DAL
 			DateTime? contributorLastModifiedDate,
 			int? creationUserID,
 			int? lastModifiedUserID,
-			string sortTitle)
+			string sortTitle,
+			int? redirectSegmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -325,7 +329,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle), 
+					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
+					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -407,7 +412,8 @@ namespace MOBOT.BHL.DAL
 				value.ContributorLastModifiedDate,
 				value.CreationUserID,
 				value.LastModifiedUserID,
-				value.SortTitle);
+				value.SortTitle,
+				value.RedirectSegmentID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -510,6 +516,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="sortTitle"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -546,9 +553,10 @@ namespace MOBOT.BHL.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? lastModifiedUserID,
-			string sortTitle)
+			string sortTitle,
+			int? redirectSegmentID)
 		{
-			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle);
+			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
 		}
 		
 		/// <summary>
@@ -590,6 +598,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="contributorLastModifiedDate"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="sortTitle"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -627,7 +636,8 @@ namespace MOBOT.BHL.DAL
 			DateTime? contributorCreationDate,
 			DateTime? contributorLastModifiedDate,
 			int? lastModifiedUserID,
-			string sortTitle)
+			string sortTitle,
+			int? redirectSegmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -665,7 +675,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ContributorCreationDate", SqlDbType.DateTime, null, true, contributorCreationDate),
 					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle), 
+					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
+					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -747,7 +758,8 @@ namespace MOBOT.BHL.DAL
 				value.ContributorCreationDate,
 				value.ContributorLastModifiedDate,
 				value.LastModifiedUserID,
-				value.SortTitle);
+				value.SortTitle,
+				value.RedirectSegmentID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -824,7 +836,8 @@ namespace MOBOT.BHL.DAL
 						value.ContributorLastModifiedDate,
 						value.CreationUserID,
 						value.LastModifiedUserID,
-						value.SortTitle);
+						value.SortTitle,
+						value.RedirectSegmentID);
 				
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Insert, 
@@ -882,7 +895,8 @@ namespace MOBOT.BHL.DAL
 						value.ContributorCreationDate,
 						value.ContributorLastModifiedDate,
 						value.LastModifiedUserID,
-						value.SortTitle);
+						value.SortTitle,
+						value.RedirectSegmentID);
 					
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Update, 

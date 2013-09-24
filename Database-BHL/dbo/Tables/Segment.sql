@@ -35,12 +35,14 @@
     [CreationUserID]              INT             CONSTRAINT [DF_Segment_CreationUserID] DEFAULT ((1)) NULL,
     [LastModifiedUserID]          INT             CONSTRAINT [DF_Segment_LastModifiedUserID] DEFAULT ((1)) NULL,
     [SortTitle]                   NVARCHAR (2000) CONSTRAINT [DF_Segment_SortTitle] DEFAULT ('') NOT NULL,
+    [RedirectSegmentID] INT NULL, 
     CONSTRAINT [PK_Segment] PRIMARY KEY CLUSTERED ([SegmentID] ASC),
     CONSTRAINT [FK_Segment_Institution] FOREIGN KEY ([ContributorCode]) REFERENCES [dbo].[Institution] ([InstitutionCode]),
     CONSTRAINT [FK_Segment_Language] FOREIGN KEY ([LanguageCode]) REFERENCES [dbo].[Language] ([LanguageCode]),
     CONSTRAINT [FK_Segment_Page] FOREIGN KEY ([StartPageID]) REFERENCES [dbo].[Page] ([PageID]),
     CONSTRAINT [FK_Segment_SegmentGenre] FOREIGN KEY ([SegmentGenreID]) REFERENCES [dbo].[SegmentGenre] ([SegmentGenreID]),
-    CONSTRAINT [FK_Segment_SegmentStatus] FOREIGN KEY ([SegmentStatusID]) REFERENCES [dbo].[SegmentStatus] ([SegmentStatusID])
+    CONSTRAINT [FK_Segment_SegmentStatus] FOREIGN KEY ([SegmentStatusID]) REFERENCES [dbo].[SegmentStatus] ([SegmentStatusID]),
+	CONSTRAINT [FK_Segment_Segment] FOREIGN KEY ([RedirectSegmentID]) REFERENCES [dbo].[Segment] ([SegmentID])
 );
 
 
