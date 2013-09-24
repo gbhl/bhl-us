@@ -491,6 +491,11 @@
                             <a href="ReportItemsByContributor.aspx">Items By Contributor</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td align="center">
+                            <a href="ReportRecentlyClusteredSegments.aspx">Recently Clustered Segments</a>
+                        </td>
+                    </tr>
 				</table>
             </td>
             <td>&nbsp;</td>
