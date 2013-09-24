@@ -374,6 +374,10 @@
 				<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="StatusName" DataValueField="SegmentStatusID" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Replaced By (Segment ID):</td>
+				<td><asp:TextBox ID="replacedByTextBox" runat="server" Width="200px"></asp:TextBox></td>
+			</tr>
+			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Contributor:</td>
 				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlContributor" DataTextField="InstitutionName" DataValueField="InstitutionCode" runat="server"></asp:DropDownList></td>
 			</tr>

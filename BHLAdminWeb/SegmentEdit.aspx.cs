@@ -318,6 +318,7 @@ namespace MOBOT.BHL.AdminWeb
                     itemIDLabel.Text = segment.ItemID.ToString();
                     itemDescLabel.Text = segment.TitleShortTitle + " " + segment.ItemVolume;
                 }
+                replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
                 lblDOIName.Text = segment.DOIName;
                 contributorSegmentIDTextBox.Text = segment.ContributorSegmentID;
                 titleTextBox.Text = segment.Title;
@@ -1141,6 +1142,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Gather up data on form
                 bool isItemChanged = (segment.ItemID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
                 segment.ItemID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
+                segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
                 segment.ContributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
@@ -1236,6 +1238,27 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Pages has an edit pending");
+            }
+
+            // If a "replaced by" identifer was specified, make sure that it is a valid id
+            if (replacedByTextBox.Text.Trim().Length > 0)
+            {
+                int segmentID;
+                if (Int32.TryParse(replacedByTextBox.Text, out segmentID))
+                {
+                    // Look up the specified ID to ensure that it exists
+                    if (new BHLProvider().SegmentSelectAuto(segmentID) == null)
+                    {
+                        flag = true;
+                        errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Segment ID.");
+                    }
+                }
+                else
+                {
+                    // Specified ID is not a valid integer value
+                    flag = true;
+                    errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Segment ID.");
+                }
             }
 
             // If a BHL Page identifier was specified, make sure that it is a valid id
