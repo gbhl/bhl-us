@@ -10,6 +10,7 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	scs2.SegmentClusterID,
+		sct.SegmentClusterTypeID,
 		sct.SegmentClusterTypeLabel,
 		scs2.IsPrimary, 
 		g.GenreName,

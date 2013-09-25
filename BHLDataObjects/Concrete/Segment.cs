@@ -27,6 +27,14 @@ namespace MOBOT.BHL.DataObjects
             set { _segmentClusterId = value; }
         }
 
+        private int? _segmentClusterTypeId = null;
+
+        public int? SegmentClusterTypeId
+        {
+            get { return _segmentClusterTypeId; }
+            set { _segmentClusterTypeId = value; }
+        }
+
         private string _segmentClusterTypeLabel = string.Empty;
 
         public string SegmentClusterTypeLabel
@@ -172,6 +180,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "SegmentClusterID")
                 {
                     _segmentClusterId = Utility.ZeroIfNull(column.Value);
+                }
+                if (column.Name == "SegmentClusterTypeID")
+                {
+                    _segmentClusterTypeId = Utility.ZeroIfNull(column.Value);
                 }
                 if (column.Name == "SegmentClusterTypeLabel")
                 {
