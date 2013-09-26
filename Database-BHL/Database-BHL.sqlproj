@@ -889,6 +889,8 @@
     <None Include="Security\Schemas\audit.sql" />
     <None Include="Security\Schemas\annotation.sql" />
     <Build Include="dbo\Tables\SegmentClusterType.sql" />
+    <Build Include="dbo\Stored Procedures\SegmentClusterSegmentInsert.sql" />
+    <Build Include="dbo\Stored Procedures\SegmentClusterSegmentDeleteForSegment.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

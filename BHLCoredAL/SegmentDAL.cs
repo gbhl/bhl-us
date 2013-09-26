@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 
@@ -557,29 +558,57 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                if (segment.RelatedSegmentList.Count > 0)
+                // See if any related segments have been modified (added/updated/deleted)
+                bool isRelatedChanged = false;
+                foreach (Segment relatedSegment in segment.RelatedSegmentList)
+                {
+                    if (relatedSegment.IsDirty ||
+                        relatedSegment.IsNew ||
+                        relatedSegment.IsDeleted)
+                    {
+                        isRelatedChanged = true;
+                        break;
+                    }
+                }
+
+                if (isRelatedChanged)
                 {
                     SegmentClusterSegmentDAL clusterDAL = new SegmentClusterSegmentDAL();
-                    foreach (Segment relatedSegment in segment.RelatedSegmentList)
-                    {
-                        if (relatedSegment.IsDeleted)
-                        {
-                            clusterDAL.SegmentClusterSegmentDeleteAuto(connection, transaction, relatedSegment.SegmentID);
-                        }
-                        else if (relatedSegment.IsNew || relatedSegment.IsDirty)
-                        {
-                            SegmentClusterSegment segmentCluster = 
-                                clusterDAL.SegmentClusterSegmentUpdate(connection, transaction, relatedSegment.SegmentID, 
-                                segment.SegmentClusterId, relatedSegment.IsPrimary, userId);
 
-                            // Grab from just-affected record, in case the cluster ID for the segments has changed
-                            segment.SegmentClusterId = segmentCluster.SegmentClusterID;
+                    // Delete the existing records
+                    clusterDAL.SegmentClusterSegmentDeleteForSegment(connection, transaction, segment.SegmentID);
+
+                    // Add new records
+                    foreach (SegmentClusterTypes type in Enum.GetValues(typeof(SegmentClusterTypes)))
+                    {
+                        var relatedSegments = from s in segment.RelatedSegmentList.Cast<Segment>()
+                                              where s.SegmentClusterTypeId == (int?)type && !s.IsDeleted
+                                              select s;
+
+                        int? segmentClusterID = null;
+                        foreach (Segment relatedSegment in relatedSegments)
+                        {
+                            // Each part-of relationship contains only two segments, so
+                            // reset the cluster ID for each pair saved.  Other relationships
+                            // may contain multiple segments, so reuse the same cluster ID.
+                            if (type == SegmentClusterTypes.PartOf) segmentClusterID = null;
+
+                            SegmentClusterSegment segmentCluster =
+                                clusterDAL.SegmentClusterSegmentInsert(connection, transaction, relatedSegment.SegmentID,
+                                segmentClusterID, relatedSegment.IsPrimary, relatedSegment.SegmentClusterTypeId, userId);
+
+                            // Get the SegmentClusterID from the just-affected record
+                            if (segmentClusterID == null)
+                            {
+                                segmentClusterID = segmentCluster.SegmentClusterID;
+
+                                // Insert/Update the SegmentClusterSegment record for the current segment
+                                clusterDAL.SegmentClusterSegmentInsert(connection, transaction, segment.SegmentID,
+                                    segmentClusterID, segment.IsPrimary, relatedSegment.SegmentClusterTypeId,
+                                    userId);
+                            }
                         }
                     }
-
-                    // Insert/Update the SegmentClusterSegment record for the current segment
-                    clusterDAL.SegmentClusterSegmentUpdate(connection, transaction, segment.SegmentID, 
-                        segment.SegmentClusterId, segment.IsPrimary, userId);
                 }
 
                 CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
