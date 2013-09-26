@@ -9,13 +9,16 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT DISTINCT
-		scs.SegmentClusterID, x.CreationDate, s.SegmentID, s.ItemID,
+		scs.SegmentClusterID, ct.SegmentClusterTypeLabel, x.CreationDate, 
+		scs.CreationUserID, s.SegmentID, s.ItemID,
 		g.GenreName, s.Title, s.ContainerTitle, s.Volume, s.Date, 
 		cat.Authors, d.DOIName, s.StartPageNumber, s.EndPageNumber, s.PageRange,
 		s.StartPageID
 FROM	dbo.SegmentClusterSegment scs 
 		INNER JOIN dbo.Segment s ON scs.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
+		INNER JOIN dbo.SegmentCluster sc ON scs.SegmentClusterID = sc.SegmentClusterID
+		INNER JOIN dbo.SegmentClusterType ct ON sc.SegmentClusterTypeID = ct.SegmentClusterTypeID
 		LEFT JOIN dbo.SearchCatalogSegment cat ON s.SegmentID = cat.SegmentID
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
 		INNER JOIN (
