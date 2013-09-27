@@ -40,6 +40,7 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 WHERE 	nr.ResolvedNameString LIKE LTRIM(RTRIM(@Name)) + '%'
 AND		n.IsActive = 1
 GROUP BY nr.NameResolvedID, nr.ResolvedNameString
+ORDER BY nr.ResolvedNameString
 
 -- For performance reasons, add the NameBankID after the initial select
 UPDATE	#tmpName
