@@ -252,9 +252,13 @@
         function addRelatedSegments() {
             var checkboxes; var x = 0;
 
+            var ddlClustType = document.getElementById('selClusterType');
+            var selectedType = ddlClustType.options[ddlClustType.selectedIndex].value;
+            var selectedTypeLabel = ddlClustType.options[ddlClustType.selectedIndex].text;
+
             checkboxes = document.getElementsByName('addRelatedSegmentCheckbox');
             for (x = 0; x < checkboxes.length; x++) {
-                if (checkboxes[x].checked) selectRelatedSegment(checkboxes[x].value);
+                if (checkboxes[x].checked) selectRelatedSegment(checkboxes[x].value, selectedType, selectedTypeLabel);
             }
 
             overlay(); __doPostBack('', '');
@@ -611,14 +615,14 @@
             <asp:CheckBox ID="chkPrimary" runat="server" Text="Make segment above the Primary segment in the group" Visible="false" AutoPostBack="true"  OnCheckedChanged="chkPrimary_Click "/>
             </p>
 			<asp:GridView ID="relatedSegmentsList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
-			    AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
+			    AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white" OnRowDataBound="relatedSegmentsList_RowDataBound"
 				Width="800px" CssClass="boxTable" OnRowCancelingEdit="relatedSegmentsList_RowCancelingEdit" OnRowEditing="relatedSegmentsList_RowEditing"
 				OnRowUpdating="relatedSegmentsList_RowUpdating" OnRowCommand="relatedSegmentsList_RowCommand" DataKeyNames="SegmentID">
                 <Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Top" />
 				    <asp:BoundField DataField="SegmentID" HeaderText="ID" ItemStyle-Width="35px" ReadOnly="true" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top"/>
 				    <asp:HyperLinkField HeaderText="Title" DataNavigateUrlFields="SegmentID" DataNavigateUrlFormatString="/SegmentEdit.aspx?id={0}" 
-						ItemStyle-Width="350px" DataTextField="Title" NavigateUrl="/SegmentEdit.aspx" ItemStyle-VerticalAlign="Top" 
+						ItemStyle-Width="250px" DataTextField="Title" NavigateUrl="/SegmentEdit.aspx" ItemStyle-VerticalAlign="Top" 
                         HeaderStyle-HorizontalAlign="Left"/>
 					<asp:TemplateField HeaderText="Vol" ItemStyle-Width="50px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
 						<ItemTemplate>
@@ -635,6 +639,19 @@
 							<%# Eval( "Authors" ) %>
 						</ItemTemplate>
 					</asp:TemplateField>
+                    <asp:TemplateField HeaderText="Type" ItemStyle-Width="100px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+                        <ItemTemplate>
+                            <%# Eval( "SegmentClusterTypeLabel" ) %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:DropDownList ID="ddlClusterType" runat="server">
+                                <asp:ListItem Text="Same as" Value="10"></asp:ListItem>
+                                <asp:ListItem Text="Continued in" Value="20"></asp:ListItem>
+                                <asp:ListItem Text="Related to" Value="30"></asp:ListItem>
+                                <asp:ListItem Text="Contains" Value="40"></asp:ListItem>
+                            </asp:DropDownList>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
 					<asp:TemplateField HeaderText="Primary" ItemStyle-Width="70px" HeaderStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
 						<ItemTemplate>
 						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled="false" Checked='<%# (short)Eval("IsPrimary") == 1 %>' runat="server" />
@@ -861,10 +878,23 @@
                         </div>
         	        </td>
 	            </tr>
+                <tr>
+                    <td colspan="6" align="left">
+                        Select the type of relationship for these segments:
+                        <select id="selClusterType">
+                            <option value="10">Same as</option>
+                            <option value="20">Continued in</option>
+                            <option value="30">Related to</option>
+                            <option value="40">Contains</option>
+                        </select>
+                    </td>
+                </tr>
             </table>
+            <br />
 	        <a id="hypRelatedSegmentDone" href="#" onclick="addRelatedSegments();">Done</a>&nbsp;&nbsp;
 	        <a id="hypRelatedSegmentCancel" href="#" onclick="clearRelatedSegment('');">Cancel</a>
 	        <input type="hidden" id="selectedRelatedSegments" value="" runat="server" />
+            <input type="hidden" id="selectedClusterType" value="" runat="server" />
         </div>
     </div>
 </asp:Content>

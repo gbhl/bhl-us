@@ -33,6 +33,20 @@ namespace MOBOT.BHL.AdminWeb
                 sb.Append("</a>");
                 sb.Append("</td>");
 
+                sb.Append("<td align='left' valign='top'>");
+                if (prevClusterID != (int)segment.SegmentClusterId) sb.Append(segment.SegmentClusterTypeLabel);
+                sb.Append("</td>");
+
+                sb.Append("<td align='left' valign='top'>");
+                if (prevClusterID != (int)segment.SegmentClusterId)
+                {
+                    if (segment.CreationUserID == 1)
+                        sb.Append("System");
+                    else
+                        sb.Append("User");
+                }
+                sb.Append("</td>");
+
                 sb.Append("<td align='right' valign='top'>");
                 sb.Append(segment.ItemID.ToString());
                 sb.Append("</td>");

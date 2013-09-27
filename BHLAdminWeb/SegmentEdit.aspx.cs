@@ -29,8 +29,8 @@ namespace MOBOT.BHL.AdminWeb
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectAuthor", "<script language='javascript'>function selectAuthor(authorId) { document.getElementById('" + selectedAuthor.ClientID + "').value=authorId; overlayAuthorSearch(); __doPostBack('',''); }</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptCancelPage", "<script language='javascript'>function cancelPages() { __doPostBack('',''); }</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectPage", "<script language='javascript'>function selectPage(pageId) { document.getElementById('" + selectedPage.ClientID + "').value+=pageId+'|';}</script>");
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearRelatedSegment", "<script language='javascript'>function clearRelatedSegment() { document.getElementById('" + selectedRelatedSegments.ClientID + "').value=''; __doPostBack('', '');}</script>");
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectRelatedSegment", "<script language='javascript'>function selectRelatedSegment(segmentId) { document.getElementById('" + selectedRelatedSegments.ClientID + "').value+=segmentId+'|';}</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearRelatedSegment", "<script language='javascript'>function clearRelatedSegment() { document.getElementById('" + selectedRelatedSegments.ClientID + "').value=''; document.getElementById('" + selectedClusterType.ClientID + "').value=''; __doPostBack('', '');}</script>");
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectRelatedSegment", "<script language='javascript'>function selectRelatedSegment(segmentId, clusterType, typeLabel) { document.getElementById('" + selectedRelatedSegments.ClientID + "').value+=segmentId+'|'; document.getElementById('" + selectedClusterType.ClientID + "').value=clusterType+'|'+typeLabel;}</script>");
 
             litMessage.Text = "";
             errorControl.Visible = false;
@@ -131,6 +131,14 @@ namespace MOBOT.BHL.AdminWeb
                     if (selectedRelatedSegmentIds.EndsWith("|")) selectedRelatedSegmentIds = selectedRelatedSegmentIds.Substring(0, selectedRelatedSegmentIds.Length - 1);
                     String[] selectedRelatedSegmentsList = selectedRelatedSegmentIds.Split('|');
 
+                    string selectedTypeID = "10";
+                    string selectedTypeLabel = "Same as";
+                    if (!string.IsNullOrWhiteSpace(selectedClusterType.Value))
+                    {
+                        selectedTypeID = selectedClusterType.Value.Split('|')[0];
+                        selectedTypeLabel = selectedClusterType.Value.Split('|')[1];
+                    }
+
                     foreach (String selectedSegmentId in selectedRelatedSegmentsList)
                     {
                         // Make sure the selected segment isn't already related to this segment
@@ -149,6 +157,8 @@ namespace MOBOT.BHL.AdminWeb
                             Segment newRelatedSegment = provider.SegmentSelectForSegmentID(Convert.ToInt32(selectedSegmentId));
 
                             newRelatedSegment.SegmentClusterId = segment.SegmentClusterId;
+                            newRelatedSegment.SegmentClusterTypeId = Convert.ToInt32(selectedTypeID);
+                            newRelatedSegment.SegmentClusterTypeLabel = selectedTypeLabel;
                             newRelatedSegment.IsPrimary = 0;
                             newRelatedSegment.IsNew = true;
                             segment.RelatedSegmentList.Add(newRelatedSegment);
@@ -1029,16 +1039,48 @@ namespace MOBOT.BHL.AdminWeb
             bindRelatedSegmentData();
         }
 
+        protected void relatedSegmentsList_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Segment segment = (Segment)Session["Segment" + idLabel.Text];
+
+                DropDownList dropDownList = e.Row.FindControl("ddlClusterType") as DropDownList;
+                if (dropDownList != null)
+                {
+                    Segment currentSegment = findRelatedSegment(segment.RelatedSegmentList,
+                        (int)relatedSegmentsList.DataKeys[e.Row.RowIndex].Values[0]);
+
+                    dropDownList.SelectedValue = currentSegment.SegmentClusterTypeId.ToString();
+                }
+            }
+        }
+
         protected void relatedSegmentsList_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             GridViewRow row = relatedSegmentsList.Rows[e.RowIndex];
 
             if (row != null)
             {
+                Segment segment = (Segment)Session["Segment" + idLabel.Text];
+
+                DropDownList dropDownList = row.FindControl("ddlClusterType") as DropDownList;
+                if (dropDownList != null)
+                {
+                    Segment currentSegment = findRelatedSegment(segment.RelatedSegmentList,
+                        (int)relatedSegmentsList.DataKeys[e.RowIndex].Values[0]);
+
+                    if (currentSegment.SegmentClusterTypeId != Convert.ToInt32(dropDownList.SelectedValue))
+                    {
+                        currentSegment.SegmentClusterTypeId = Convert.ToInt32(dropDownList.SelectedValue);
+                        currentSegment.SegmentClusterTypeLabel = dropDownList.Items[dropDownList.SelectedIndex].Text;
+                        currentSegment.LastModifiedDate = DateTime.Now;
+                    }
+                }
+
                 CheckBox checkBox = row.FindControl("isPrimaryCheckBoxEdit") as CheckBox;
                 if (checkBox != null)
                 {
-                    Segment segment = (Segment)Session["Segment" + idLabel.Text];
                     CustomGenericList<Segment> relatedSegments = segment.RelatedSegmentList;
                     
                     short isPrimary = (short)(checkBox.Checked ? 1 : 0);

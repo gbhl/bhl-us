@@ -11,6 +11,8 @@
         <tr class="SearchResultsHeader" align="left">
             <th align="left">Add/Update Date</th>
             <th align="right">Segment ID</th>
+            <th align="left">Relationship</th>
+            <th align="left">Edit By</th>
             <th align="right">Item ID</th>
             <th align="right">Start Page ID</th>
             <th align="left">Segment Detail</th>

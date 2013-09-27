@@ -70,7 +70,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"ClusterID\",\"Date\",\"SegmentID\",\"ItemID\",\"StartPageID\",\"Genre\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Authors\",\"DOI\",\"StartPage\",\"EndPage\",\"PageRange\"");
+            csvString.AppendLine("\"ClusterID\",\"Date\",\"SegmentID\",\"Relationship\",\"Edit By\",\"ItemID\",\"StartPageID\",\"Genre\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Authors\",\"DOI\",\"StartPage\",\"EndPage\",\"PageRange\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
@@ -81,6 +81,11 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Append("\"" + segment.SegmentClusterId.ToString() + "\",");
                 csvString.Append("\"" + segment.CreationDate.ToString() + "\",");
                 csvString.Append("\"" + segment.SegmentID.ToString() + "\",");
+                csvString.Append("\"" + segment.SegmentClusterTypeLabel.ToString() + "\",");
+                if (segment.CreationUserID == 1)
+                    csvString.Append("\"System\",");
+                else 
+                    csvString.Append("\"User\",");
                 csvString.Append("\"" + segment.ItemID.ToString() + "\",");
                 csvString.Append("\"" + segment.StartPageID.ToString() + "\",");
                 csvString.Append("\"" + segment.GenreName + "\",");
