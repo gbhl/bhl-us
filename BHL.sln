@@ -60,6 +60,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccess", "BHLFileAcc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFileAccessRemotingUtilities", "BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj", "{C4C907E6-860C-4684-AFF3-26269BF193F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAIOLEF", "OAIOLEF\OAIOLEF.csproj", "{4EDB0375-9817-474B-9C3D-01A0867FCCD2}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = BHL.vsmdi
@@ -337,6 +339,16 @@ Global
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
