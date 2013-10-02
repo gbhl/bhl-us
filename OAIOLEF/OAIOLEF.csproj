@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,10 @@
     <ProjectReference Include="..\OAI2\OAI2.csproj">
       <Project>{01e14d33-194f-4583-bae4-0af91a7be756}</Project>
       <Name>OAI2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OAIMODS\OAIMODS.csproj">
+      <Project>{fb23e2b6-aa57-46e0-bb71-bb215e783cf2}</Project>
+      <Name>OAIMODS</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

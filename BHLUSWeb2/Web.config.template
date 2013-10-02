@@ -45,7 +45,8 @@
         oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
 		-->
     <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
-       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS"/>
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS
+       olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
     <add key="NameFinderService" value="GNRD"/>
