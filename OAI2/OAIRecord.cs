@@ -9,14 +9,27 @@ namespace MOBOT.BHL.OAI2
 {
     public class OAIRecord
     {
+        bool _includeExtraDetail = false;
+
         #region Constructors
 
         public OAIRecord()
         {
         }
 
+        public OAIRecord(bool includeExtraDetail)
+        {
+            _includeExtraDetail = includeExtraDetail;
+        }
+
         public OAIRecord(String identifier)
         {
+            this.Load(identifier);
+        }
+
+        public OAIRecord(String identifier, bool includeExtraDetail)
+        {
+            _includeExtraDetail = includeExtraDetail;
             this.Load(identifier);
         }
 
@@ -123,6 +136,14 @@ namespace MOBOT.BHL.OAI2
             set { _titleVariants = value; }
         }
 
+        List<KeyValuePair<string, OAIRecord.Page>> _pages = new List<KeyValuePair<string, Page>>();
+
+        public List<KeyValuePair<string, OAIRecord.Page>> Pages
+        {
+            get { return _pages; }
+            set { _pages = value; }
+        }
+
         List<String> _languages = new List<string>();
 
         public List<String> Languages
@@ -211,6 +232,14 @@ namespace MOBOT.BHL.OAI2
         {
             get { return _url; }
             set { _url = value; }
+        }
+
+        String _parentUrl = String.Empty;
+
+        public String ParentUrl
+        {
+            get { return _parentUrl; }
+            set { _parentUrl = value; }
         }
 
         List<String> _oclcNumbers = new List<string>();
@@ -454,8 +483,25 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.Url = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
+                this.ParentUrl = "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
 
                 this.Types.Add("text");
+
+                if (_includeExtraDetail)
+                {
+                    CustomGenericList<DataObjects.Page> pages = provider.PageMetadataSelectByItemID(item.ItemID);
+
+                    foreach (DataObjects.Page page in pages)
+                    {
+                        OAIRecord.Page oaiPage = new OAIRecord.Page();
+                        oaiPage.Url = "http://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
+                        oaiPage.ImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
+                        oaiPage.Sequence = (int)page.SequenceOrder;
+                        oaiPage.PageType = page.PageTypes.Split(',')[0];
+                        oaiPage.PageLabel = page.IndicatedPages;
+                        this.Pages.Add(new KeyValuePair<string, OAIRecord.Page>(page.PageID.ToString(), oaiPage));
+                    }
+                }
 
                 Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
                 if (title != null)
@@ -775,6 +821,7 @@ namespace MOBOT.BHL.OAI2
 
                 this.Title = segment.Title;
                 this.Url = "http://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
+                if (segment.ItemID != null) this.ParentUrl = "http://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
                 this.Types.Add(segment.GenreName);
                 this.Types.Add("text");
                 this.NumberOfPages = segment.PageList.Count.ToString();
@@ -988,6 +1035,89 @@ namespace MOBOT.BHL.OAI2
             {
                 get { return _partName; }
                 set { _partName = value; }
+            }
+        }
+
+        public class Page
+        {
+            public Page() { }
+
+            public Page(int sequence, string pageType, string pageLabel, string url, string imageUrl,
+                List<KeyValuePair<string, OAIRecord.Name>> names)
+            {
+                _sequence = sequence;
+                _pageType = pageType;
+                _pageLabel = pageLabel;
+                _url = url;
+                _imageUrl = imageUrl;
+                _names = names;
+            }
+
+            private int _sequence;
+            public int Sequence
+            {
+                get { return _sequence; }
+                set { _sequence = value; }
+            }
+
+            private string _pageType;
+            public string PageType
+            {
+                get { return _pageType; }
+                set { _pageType = value; }
+            }
+
+            private string _pageLabel;
+            public string PageLabel
+            {
+                get { return _pageLabel; }
+                set { _pageLabel = value; }
+            }
+
+            private string _url;
+            public string Url
+            {
+                get { return _url; }
+                set { _url = value; }
+            }
+
+            private string _imageUrl;
+            public string ImageUrl
+            {
+                get { return _imageUrl; }
+                set { _imageUrl = value; }
+            }
+
+            List<KeyValuePair<String, OAIRecord.Name>> _names = new List<KeyValuePair<string, OAIRecord.Name>>();
+            public List<KeyValuePair<String, OAIRecord.Name>> Names
+            {
+                get { return _names; }
+                set { _names = value; }
+            }
+        }
+
+        public class Name
+        {
+            public Name() { }
+
+            public Name(string source, string scientificName)
+            {
+                _source = source;
+                _scientificName = scientificName;
+            }
+
+            private string _source;
+            public string Source
+            {
+                get { return _source; }
+                set { _source = value; }
+            }
+
+            private string _scientificName;
+            public string ScientificName
+            {
+                get { return _scientificName; }
+                set { _scientificName = value; }
             }
         }
 

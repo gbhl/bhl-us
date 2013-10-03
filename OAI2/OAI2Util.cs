@@ -317,6 +317,15 @@ namespace MOBOT.BHL.OAI2
             return false;
         }
 
+        public static bool IncludeExtraDetail(string prefix, List<OAIMetadataFormat> metadataFormats)
+        {
+            foreach (OAIMetadataFormat metadataFormat in metadataFormats)
+            {
+                if (metadataFormat.MetadataFormat == prefix) return metadataFormat.IncludeExtraDetail;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Make sure that the identifier is correctly formatted and points to a valid item in the database.
         /// </summary>

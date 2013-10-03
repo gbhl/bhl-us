@@ -38,15 +38,17 @@
     <add key="OAIMaxListIdentifiers" value="200"/>
     <!-- OAI Metadata formats that the repository supports.
 		    Enter each metadata format on a separate line for each metadata format, with 
-        each element (prefix, namespace, schema, handler) separated by the '|' character
+        each element (prefix, namespace, schema, handler, includeExtraDetail) separated 
+        by the '|' character
 		
 		    To add additional metadata formats, add the items like so:		     
-        marc | http://www.loc.gov/MARC21/slim | http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd | MOBOT.BHL.MARC
-        oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
+        marc | http://www.loc.gov/MARC21/slim | http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd | MOBOT.BHL.MARC | false
+        oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false
+        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true
 		-->
-    <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC
-       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS
-       olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF"/>
+    <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS | false
+       olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
     <add key="NameFinderService" value="GNRD"/>

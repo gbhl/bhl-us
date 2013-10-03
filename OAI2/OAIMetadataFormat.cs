@@ -38,5 +38,13 @@ namespace MOBOT.BHL.OAI2
             get { return _metadataHandler; }
             set { _metadataHandler = value; }
         }
+
+        private bool _includeExtraDetail = false;
+
+        public bool IncludeExtraDetail
+        {
+            get { return _includeExtraDetail; }
+            set { _includeExtraDetail = value; }
+        }
     }
 }

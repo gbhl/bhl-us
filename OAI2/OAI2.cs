@@ -99,6 +99,7 @@ namespace MOBOT.BHL.OAI2
                 metadataFormat.MetadataNamespace = formatSpecs[1].Trim();
                 metadataFormat.MetadataSchema = formatSpecs[2].Trim();
                 metadataFormat.MetadataHandler = formatSpecs[3].Trim();
+                metadataFormat.IncludeExtraDetail = (formatSpecs[4].Trim() == "true");
                 _metadataFormats.Add(metadataFormat);
             }
         }
@@ -262,7 +263,7 @@ namespace MOBOT.BHL.OAI2
 
                     // Add the record metadata to the output
                     response.Append("\t\t<metadata>\n");
-                    OAIRecord oaiRecord = new OAIRecord();
+                    OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                     if (oaiRecord.Load(identifier))
                     {
                         response.Append(new OAIMetadataFactory(metadataPrefix, _metadataFormats).GetMetadata(oaiRecord));
@@ -676,7 +677,7 @@ namespace MOBOT.BHL.OAI2
                         recordList.Append("\t\t</header>\n");
 
                         recordList.Append("\t\t<metadata>\n");
-                        OAIRecord oaiRecord = new OAIRecord();
+                        OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                         if (oaiRecord.Load(oaiIDString))
                         {
                             recordList.Append(metadataFactory.GetMetadata(oaiRecord));

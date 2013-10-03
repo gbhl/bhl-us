@@ -30,6 +30,7 @@ namespace MOBOT.BHL.OAIOLEF
 
             sb.Append(this.GetBibliographicInformationElement());
             sb.Append(this.GetItemInformationElement());
+            sb.Append(this.GetIprElement());
             sb.Append(this.GetGuidElement());
             sb.Append(this.GetLevelElement());
             sb.Append(this.GetParentGuidElement());
@@ -58,6 +59,31 @@ namespace MOBOT.BHL.OAIOLEF
             metadata = metadata.Replace("mods:/", "/mods:");
 
             return "\t<olef:bibliographicInformation>" + metadata + "\t</olef:bibliographicInformation>\n";
+        }
+
+        public string GetItemInformationElement()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("\t<olef:itemInformation>\n");
+            sb.Append("\t\t<olef:files>\n");
+
+
+            
+            // TODO: Add information about files, pages, and names here
+
+
+
+            sb.Append("\t\t</olef:files>\n");
+            sb.Append("\t</olef:itemInformation>\n");
+
+            return sb.ToString();
+        }
+
+        public string GetIprElement()
+        {
+            // IPR information is included in the bibliographic information (mods:AccessCondition)
+            return "\t<olef:ipr />\n";
         }
 
         public string GetLevelElement()
@@ -98,25 +124,6 @@ namespace MOBOT.BHL.OAIOLEF
             return sb.ToString();
         }
 
-        public string GetItemInformationElement()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("\t<olef:itemInformation>\n");
-            sb.Append("\t\t<olef:files>\n");
-
-
-            
-            // TODO: Add information about files, pages, and names here
-
-
-
-            sb.Append("\t\t</olef:files>\n");
-            sb.Append("\t</olef:itemInformation>\n");
-
-            return sb.ToString();
-        }
-
         public string GetGuidElement()
         {
             return "\t<olef:guid>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</olef:guid>\n";
@@ -124,11 +131,13 @@ namespace MOBOT.BHL.OAIOLEF
 
         public string GetParentGuidElement()
         {
+            string parentElement = string.Empty;
 
-            // TODO: Check if parent Guid is available (item and segments only), and output the olef:parentGUID element if necessary
-
-
-            return string.Empty;
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.ParentUrl))
+            {
+                parentElement = "\t<olef:parentGUID>" + HttpUtility.HtmlEncode(_oaiRecord.ParentUrl) + "</olef:parentGUID>\n";
+            }
+            return parentElement;
         }
 
         #endregion Elements
