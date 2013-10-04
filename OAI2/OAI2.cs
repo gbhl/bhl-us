@@ -100,6 +100,7 @@ namespace MOBOT.BHL.OAI2
                 metadataFormat.MetadataSchema = formatSpecs[2].Trim();
                 metadataFormat.MetadataHandler = formatSpecs[3].Trim();
                 metadataFormat.IncludeExtraDetail = (formatSpecs[4].Trim() == "true");
+                metadataFormat.MaxListRecords = Convert.ToInt32(formatSpecs[5].Trim());
                 _metadataFormats.Add(metadataFormat);
             }
         }
@@ -616,14 +617,14 @@ namespace MOBOT.BHL.OAI2
                     {
                         case OAI2Util.SetSpecification.ITEMSET:
                             // Select items
-                            oaiIDs = provider.OAIIdentifierSelectItems(_maxListRecords,
+                            oaiIDs = provider.OAIIdentifierSelectItems(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
                             break;
                         case OAI2Util.SetSpecification.TITLESET:
                             // Select titles
-                            oaiIDs = provider.OAIIdentifierSelectTitles(_maxListRecords,
+                            oaiIDs = provider.OAIIdentifierSelectTitles(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
@@ -631,7 +632,7 @@ namespace MOBOT.BHL.OAI2
                         /*
                         case OAI2Util.SetSpecification.ARTICLESET:
                             // Select pdfs
-                            oaiIDs = provider.OAIIdentifierSelectPDFs(_maxListRecords,
+                            oaiIDs = provider.OAIIdentifierSelectPDFs(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
@@ -639,14 +640,14 @@ namespace MOBOT.BHL.OAI2
                          */
                         case OAI2Util.SetSpecification.SEGMENTSET:
                             // Select segments
-                            oaiIDs = provider.OAIIdentifierSelectSegments(_maxListRecords,
+                            oaiIDs = provider.OAIIdentifierSelectSegments(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
                             break;
                         default:
                             // Select full list
-                            oaiIDs = provider.OAIIdentifierSelectAll(_maxListRecords,
+                            oaiIDs = provider.OAIIdentifierSelectAll(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (startAtSet ?? String.Empty),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
@@ -692,7 +693,7 @@ namespace MOBOT.BHL.OAI2
                     }
 
                     // Produce a resumption token if not all records were presented
-                    if (oaiIDs.Count == _maxListRecords)
+                    if (oaiIDs.Count == OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats))
                     {
                         string nextStartAtID = oaiIDs[oaiIDs.Count - 1].Id.ToString();
                         string nextStartAtSet = oaiIDs[oaiIDs.Count - 1].SetSpec;

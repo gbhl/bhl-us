@@ -891,6 +891,7 @@
     <Build Include="dbo\Tables\SegmentClusterType.sql" />
     <Build Include="dbo\Stored Procedures\SegmentClusterSegmentInsert.sql" />
     <Build Include="dbo\Stored Procedures\SegmentClusterSegmentDeleteForSegment.sql" />
+    <Build Include="dbo\Stored Procedures\NameMetadataSelectByItemID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

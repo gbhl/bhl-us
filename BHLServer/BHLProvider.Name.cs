@@ -17,5 +17,10 @@ namespace MOBOT.BHL.Server
         {
             return new NameDAL().NameSelectByNameID(null, null, nameId);
         }
+
+        public CustomGenericList<CustomDataRow> NameMetadataSelectByItemID(int itemId)
+        {
+            return new NameDAL().NameMetadataSelectByItemID(null, null, itemId);
+        }
     }
 }

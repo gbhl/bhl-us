@@ -34,21 +34,21 @@
     <add key="OAIAdminEmail" value="bhl.oai@gmail.com"/>
     <add key="OAIIdentifierNamespace" value="biodiversitylibrary.org"/>
     <add key="OAIMaxListSets" value="500"/>
-    <add key="OAIMaxListRecords" value="100"/>
+    <add key="OAIMaxListRecords" value="100"/>  <!-- this value is now overridden by the maxListRecords portion of the OAIMetadataformats (below) -->
     <add key="OAIMaxListIdentifiers" value="200"/>
     <!-- OAI Metadata formats that the repository supports.
 		    Enter each metadata format on a separate line for each metadata format, with 
-        each element (prefix, namespace, schema, handler, includeExtraDetail) separated 
+        each element (prefix, namespace, schema, handler, includeExtraDetail, maxListRecords) separated 
         by the '|' character
 		
 		    To add additional metadata formats, add the items like so:		     
-        marc | http://www.loc.gov/MARC21/slim | http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd | MOBOT.BHL.MARC | false
-        oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false
-        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true
+        marc | http://www.loc.gov/MARC21/slim | http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd | MOBOT.BHL.MARC | false | 100
+        oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false | 100
+        olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10
 		-->
-    <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false
-       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS | false
-       olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true"/>
+    <add key="OAIMetadataFormats" value="oai_dc | http://www.openarchives.org/OAI/2.0/ | http://www.openarchives.org/OAI/2.0/oai_dc.xsd | MOBOT.BHL.OAIDC | false | 100
+       mods | http://www.loc.gov/mods/v3 | http://www.loc.gov/standards/mods/v3/mods-3-0.xsd | MOBOT.BHL.OAIMODS | false | 100
+       olef | http://www.bhle.eu/bhl-schema/v1/ | http://www.bhle.eu/bhl-schema/v1/OLEF_v1.0.xsd | MOBOT.BHL.OAIOLEF | true | 10"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
     <add key="NameFinderService" value="GNRD"/>

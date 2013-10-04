@@ -46,5 +46,13 @@ namespace MOBOT.BHL.OAI2
             get { return _includeExtraDetail; }
             set { _includeExtraDetail = value; }
         }
+
+        private int _maxListRecords = 100;
+
+        public int MaxListRecords
+        {
+            get { return _maxListRecords; }
+            set { _maxListRecords = value; }
+        }
     }
 }

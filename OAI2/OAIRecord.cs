@@ -489,18 +489,33 @@ namespace MOBOT.BHL.OAI2
 
                 if (_includeExtraDetail)
                 {
-                    CustomGenericList<DataObjects.Page> pages = provider.PageMetadataSelectByItemID(item.ItemID);
+                    CustomGenericList<CustomDataRow> pages = provider.NameMetadataSelectByItemID(item.ItemID);
 
-                    foreach (DataObjects.Page page in pages)
+                    OAIRecord.Page oaiPage = null;
+                    int currentPageID = 0;
+                    foreach (CustomDataRow page in pages)
                     {
-                        OAIRecord.Page oaiPage = new OAIRecord.Page();
-                        oaiPage.Url = "http://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
-                        oaiPage.ImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                        oaiPage.Sequence = (int)page.SequenceOrder;
-                        oaiPage.PageType = page.PageTypes.Split(',')[0];
-                        oaiPage.PageLabel = page.IndicatedPages;
-                        this.Pages.Add(new KeyValuePair<string, OAIRecord.Page>(page.PageID.ToString(), oaiPage));
+                        if (currentPageID != (int)page["PageID"].Value)
+                        {
+                            if (oaiPage != null) this.Pages.Add(new KeyValuePair<string, OAIRecord.Page>(currentPageID.ToString(), oaiPage));
+                            currentPageID = (int)page["PageID"].Value;
+
+                            oaiPage = new OAIRecord.Page();
+                            oaiPage.Url = "http://www.biodiversitylibrary.org/page/" + currentPageID.ToString();
+                            oaiPage.ImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + currentPageID.ToString();
+                            oaiPage.Sequence = (int)page["SequenceOrder"].Value;
+                            oaiPage.PageType = page["PageTypes"].Value.ToString().Split(',')[0];
+                            oaiPage.PageLabel = page["IndicatedPages"].Value.ToString();
+                        }
+
+                        if (!page["NameResolvedID"].IsDbNull)
+                        {
+                            OAIRecord.Name oaiName = new OAIRecord.Name();
+                            oaiName.ScientificName = page["ResolvedNameString"].Value.ToString();
+                            oaiPage.Names.Add(new KeyValuePair<string, OAIRecord.Name>(page["ResolvedNameString"].Value.ToString(), oaiName));
+                        }
                     }
+                    if (oaiPage != null) this.Pages.Add(new KeyValuePair<string, OAIRecord.Page>(currentPageID.ToString(), oaiPage));
                 }
 
                 Title title = provider.TitleSelectAuto(item.PrimaryTitleID);

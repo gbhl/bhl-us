@@ -68,11 +68,28 @@ namespace MOBOT.BHL.OAIOLEF
             sb.Append("\t<olef:itemInformation>\n");
             sb.Append("\t\t<olef:files>\n");
 
+            foreach (KeyValuePair<string, OAIRecord.Page> page in _oaiRecord.Pages)
+            {
+                sb.Append("\t\t\t<olef:file>\n");
+                sb.AppendFormat("\t\t\t\t<olef:reference olef:type=\"url\">{0}</olef:reference>\n", page.Value.ImageUrl);
+                sb.Append("\t\t\t\t<olef:pages>\n");
+                sb.AppendFormat("\t\t\t\t\t<olef:page olef:sequence=\"{0}\" olef:pageType=\"{1}\">\n", 
+                    page.Value.Sequence.ToString(), HttpUtility.HtmlEncode(GetOlefPageType(page.Value.PageType)));
+                if (!string.IsNullOrWhiteSpace(page.Value.PageLabel)) {
+                    sb.AppendFormat("\t\t\t\t\t\t<olef:name>{0}</olef:name>\n", HttpUtility.HtmlEncode(page.Value.PageLabel));
+                }
 
-            
-            // TODO: Add information about files, pages, and names here
+                foreach (KeyValuePair<string, OAIRecord.Name> name in page.Value.Names)
+                {
+                    sb.Append("\t\t\t\t\t\t<olef:taxon>\n");
+                    sb.AppendFormat("\t\t\t\t\t\t\t<dwc:scientificName>{0}</dwc:scientificName>\n", HttpUtility.HtmlEncode(name.Value.ScientificName));
+                    sb.Append("\t\t\t\t\t\t</olef:taxon>\n");
+                }
 
-
+                sb.Append("\t\t\t\t\t</olef:page>\n");
+                sb.Append("\t\t\t\t</olef:pages>\n");
+                sb.Append("\t\t\t</olef:file>\n");
+            }
 
             sb.Append("\t\t</olef:files>\n");
             sb.Append("\t</olef:itemInformation>\n");
@@ -176,12 +193,52 @@ namespace MOBOT.BHL.OAIOLEF
             return type;
         }
 
+        private string GetOlefPageType(string typeDescription)
+        {
+            // Default to "page"
+            string pageType = Enum.GetName(typeof(PageType), PageType.page);
+
+            typeDescription = typeDescription.ToLower();
+            if (Enum.IsDefined(typeof(PageType), typeDescription))
+            {
+                // Use the string exactly as supplied (it matches an OLEF page type)
+                pageType = typeDescription;
+            }
+            else
+            {
+                // Determine if we have a variation on an OLEF page type
+                if (typeDescription.Contains("title")) pageType = Enum.GetName(typeof(PageType), PageType.title);
+                else if (typeDescription.Contains("illustration")) pageType = Enum.GetName(typeof(PageType), PageType.figure);
+                else if (typeDescription.Contains("map")) pageType = Enum.GetName(typeof(PageType), PageType.figure);
+                else if (typeDescription.Contains("index")) pageType = Enum.GetName(typeof(PageType), PageType.index);
+                else if (typeDescription.Contains("blank")) pageType = Enum.GetName(typeof(PageType), PageType.blank);
+                else if (typeDescription.Contains("foldout")) pageType = Enum.GetName(typeof(PageType), PageType.foldout);
+            }
+
+            return pageType;
+        }
+
         private enum ItemType
         {
             Article,
             Monograph,
             MultivolumeMonograph,
             Serial
+        }
+
+        private enum PageType
+        {
+            cover,
+            frontcover,
+            backcover,
+            imprint,
+            index,
+            title,
+            halftitle,
+            blank,
+            figure,
+            foldout,
+            page
         }
 
         #endregion Utils
