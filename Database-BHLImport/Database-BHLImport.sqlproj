@@ -351,5 +351,12 @@
     <Build Include="dbo\Synonyms\BHLItemCollection.sql" />
     <Build Include="dbo\Synonyms\BHLTitle.sql" />
     <Build Include="dbo\Synonyms\BHLConfiguration.sql" />
+    <Build Include="dbo\Tables\OAIRepository.sql" />
+    <Build Include="dbo\Tables\OAIFormat.sql" />
+    <Build Include="dbo\Tables\OAIRepositoryFormat.sql" />
+    <Build Include="dbo\Tables\OAISet.sql" />
+    <Build Include="dbo\Tables\OAIHarvestSet.sql" />
+    <Build Include="dbo\Tables\OAIHarvestLog.sql" />
+    <Build Include="dbo\Views\vwOAIHarvestSet.sql" />
   </ItemGroup>
 </Project>
