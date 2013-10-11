@@ -87,6 +87,7 @@
     <Compile Include="Generated\IASetDAL.Auto.cs" />
     <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />
     <Compile Include="Generated\ItemDAL.Auto.cs" />
+    <Compile Include="Generated\OAIHarvestLogDAL.Auto.cs" />
     <Compile Include="Generated\PageDAL.Auto.cs" />
     <Compile Include="Generated\PageNameDAL.Auto.cs" />
     <Compile Include="Generated\Page_PageTypeDAL.Auto.cs" />
@@ -113,6 +114,8 @@
     <Compile Include="ImportLogDAL.cs" />
     <Compile Include="IndicatedPageDAL.cs" />
     <Compile Include="ItemDAL.cs" />
+    <Compile Include="OAIHarvestLogDAL.cs" />
+    <Compile Include="OAIHarvestSetDAL.cs" />
     <Compile Include="PageDAL.cs" />
     <Compile Include="PageNameDAL.cs" />
     <Compile Include="Page_PageTypeDAL.cs" />

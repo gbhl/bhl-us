@@ -358,5 +358,10 @@
     <Build Include="dbo\Tables\OAIHarvestSet.sql" />
     <Build Include="dbo\Tables\OAIHarvestLog.sql" />
     <Build Include="dbo\Views\vwOAIHarvestSet.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestLogSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestLogInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestLogUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestLogDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestSetSelectAll.sql" />
   </ItemGroup>
 </Project>

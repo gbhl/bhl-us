@@ -8,7 +8,8 @@ SELECT	hs.HarvestSetID,
 		s.SetSpec,
 		f.Prefix,
 		rf.[Namespace],
-		rf.[Schema]
+		rf.[Schema],
+		f.AssemblyName
 FROM	dbo.OAIHarvestSet hs
 		LEFT JOIN dbo.OAISet s ON hs.SetID = s.SetID
 		INNER JOIN dbo.OAIRepositoryFormat rf ON hs.RepositoryFormatID = rf.RepositoryFormatID
