@@ -363,5 +363,6 @@
     <Build Include="dbo\Stored Procedures\OAIHarvestLogUpdateAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIHarvestLogDeleteAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIHarvestSetSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\OAIHarvestLogSelectLastDateForHarvestSet.sql" />
   </ItemGroup>
 </Project>
