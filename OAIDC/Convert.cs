@@ -61,6 +61,26 @@ namespace MOBOT.BHL.OAIDC
             _oaiRecord = oaiRecord;
         }
 
+        public Convert(string dcRecord)
+        {
+            _oaiRecord = new OAIRecord();
+
+            // TODO: Parse the supplied Dublin Core and store the values in _oaiRecord
+
+            throw new NotImplementedException();
+        }
+
+        #region ToOAIRecord
+
+        public OAIRecord ToOAIRecord()
+        {
+            return _oaiRecord;
+        }
+
+        #endregion ToOAIRecord
+
+        #region ToString
+
         public new String ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -142,5 +162,7 @@ namespace MOBOT.BHL.OAIDC
 
             return sb.ToString();
         }
+
+        #endregion ToString
     }
 }

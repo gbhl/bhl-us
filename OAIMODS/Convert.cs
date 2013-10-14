@@ -15,6 +15,24 @@ namespace MOBOT.BHL.OAIMODS
             _oaiRecord = oaiRecord;
         }
 
+        public Convert(string modsRecord)
+        {
+            _oaiRecord = new OAIRecord();
+
+            // TODO: Parse the supplied MODS and store the values in _oaiRecord
+
+            throw new NotImplementedException();
+        }
+
+        #region ToOAIRecord
+
+        public OAIRecord ToOAIRecord()
+        {
+            return _oaiRecord;
+        }
+
+        #endregion ToOAIRecord
+
         #region ToString
 
         public new String ToString()
