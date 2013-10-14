@@ -301,7 +301,7 @@ BEGIN TRY
 	-- Get the MARC leader and unique MARC BIB ID (this will change when 
 	-- Internet Archive can provide us with a "real" unique title identifier)
 	UPDATE	#tmpTitle
-	SET		MARCBibID = REPLACE(m.Leader, ' ', 'x'),
+	SET		MARCBibID = REPLACE(REPLACE(m.Leader, ' ', 'x'), '|', 'x'),
 			MARCLeader = m.Leader
 	FROM	#tmpTitle t INNER JOIN dbo.IAMarc m
 				ON t.ItemID = m.ItemID
