@@ -31,6 +31,7 @@ namespace MOBOT.BHL.OAIOLEF
             sb.Append(this.GetBibliographicInformationElement());
             sb.Append(this.GetItemInformationElement());
             sb.Append(this.GetIprElement());
+            sb.Append(this.GetSequenceElement());
             sb.Append(this.GetGuidElement());
             sb.Append(this.GetLevelElement());
             sb.Append(this.GetParentGuidElement());
@@ -101,6 +102,11 @@ namespace MOBOT.BHL.OAIOLEF
         {
             // IPR information is included in the bibliographic information (mods:AccessCondition)
             return "\t<olef:ipr />\n";
+        }
+
+        public string GetSequenceElement()
+        {
+            return "\t<olef:sequence>" + _oaiRecord.Sequence + "</olef:sequence>\n";
         }
 
         public string GetLevelElement()

@@ -242,6 +242,14 @@ namespace MOBOT.BHL.OAI2
             set { _parentUrl = value; }
         }
 
+        String _sequence = String.Empty;
+
+        public String Sequence
+        {
+            get { return _sequence; }
+            set { _sequence = value; }
+        }
+
         List<String> _oclcNumbers = new List<string>();
 
         public List<String> oclcNumbers
@@ -482,6 +490,13 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
+                this.Sequence = "1";
+                CustomGenericList<TitleItem> titleItems = provider.TitleItemSelectByItem(item.ItemID);
+                foreach (TitleItem titleItem in titleItems)
+                {
+                    if (titleItem.TitleID == item.PrimaryTitleID) this.Sequence = titleItem.ItemSequence.ToString();
+                }
+
                 this.Url = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 this.ParentUrl = "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
 
@@ -626,6 +641,7 @@ namespace MOBOT.BHL.OAI2
                 if (String.IsNullOrEmpty(this.Date) && title.StartYear != null) this.Date = title.StartYear.ToString();
                 this.Url = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                 this.Date = title.StartYear.ToString() + (String.IsNullOrEmpty(title.EndYear.ToString()) ? "" : "-" + title.EndYear.ToString());
+                this.Sequence = "1";
 
                 switch (title.BibliographicLevelID)
                 {
@@ -836,7 +852,14 @@ namespace MOBOT.BHL.OAI2
 
                 this.Title = segment.Title;
                 this.Url = "http://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
-                if (segment.ItemID != null) this.ParentUrl = "http://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
+                this.Sequence = "1";
+
+                if (segment.ItemID != null)
+                {
+                    this.ParentUrl = "http://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
+                    this.Sequence = segment.SequenceOrder.ToString();
+                }
+
                 this.Types.Add(segment.GenreName);
                 this.Types.Add("text");
                 this.NumberOfPages = segment.PageList.Count.ToString();
