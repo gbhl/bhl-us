@@ -61,9 +61,13 @@
   <ItemGroup>
     <Compile Include="OAI2.cs" />
     <Compile Include="OAI2Util.cs" />
+    <Compile Include="OAIHarvestResult.cs" />
+    <Compile Include="OAIIdentifier.cs" />
+    <Compile Include="OAIIdentity.cs" />
     <Compile Include="OAIMetadataFactory.cs" />
     <Compile Include="OAIMetadataFormat.cs" />
     <Compile Include="OAIRecord.cs" />
+    <Compile Include="OAISet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
