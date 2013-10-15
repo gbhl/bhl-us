@@ -66,6 +66,10 @@
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OAI2\OAI2.csproj">
+      <Project>{01e14d33-194f-4583-bae4-0af91a7be756}</Project>
+      <Name>OAI2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

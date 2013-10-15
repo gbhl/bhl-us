@@ -48,6 +48,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
+using System.Xml.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
@@ -1004,10 +1006,15 @@ namespace MOBOT.BHL.OAI2
 
         private OAIHarvestResult ListRecords(string metadataFormat, string set, string from, string until, string resumptionToken)
         {
-            throw new NotImplementedException();
-
             OAIHarvestResult harvestResult = new OAIHarvestResult();
             string url = string.Empty;
+            DateTime responseDate = DateTime.Now;
+            string responseMessage = "ok";
+            string newResumptionToken = string.Empty;
+            DateTime resumptionExpiration = DateTime.Now;
+            int completeListSize = 0;
+            int cursor = 0;
+            List<OAIRecord> content = new List<OAIRecord>();
 
             // 1. Build the URL
             if (!string.IsNullOrWhiteSpace(resumptionToken))
@@ -1025,30 +1032,59 @@ namespace MOBOT.BHL.OAI2
             // 2. Make the request
             try
             {
-                string response = SubmitRequest(url);
+                XDocument response = SubmitRequest(url);
 
                 // 3. Parse the response metadata (date, resumption token, list size, etc)
-
-
+                if (response.Element("error") != null) responseMessage = response.Element("error").Value;
+                responseDate = Convert.ToDateTime(response.Element("responseDate").Value);
+                XElement resumptionTokenElement = response.Element("resumptionToken");
+                if (resumptionTokenElement != null)
+                {
+                    newResumptionToken = resumptionTokenElement.Value;
+                    if (resumptionTokenElement.Attribute("expirationDate") != null)
+                    {
+                        resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate"));
+                    }
+                    if (resumptionTokenElement.Attribute("completeListSize") != null)
+                    {
+                        completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize"));
+                    }
+                    if (resumptionTokenElement.Attribute("cursor") != null)
+                    {
+                        cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor"));
+                    }
+                }
 
                 // 4. Parse the returned records
+                IEnumerable<XElement> records = from r in response.Elements("metadata") 
+                                                select r;
 
-
-
-
+                foreach (XElement record in records)
+                {
+                    string metadataString = record.FirstNode.ToString();
+                    OAIRecord oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
+                    content.Add(oaiRecord);
+                }
             }
             catch (Exception ex)
             {
-                harvestResult.CompleteListSize = 0;
-                harvestResult.Cursor = 0;
-                harvestResult.Content = null;
-                harvestResult.ResponseDate = DateTime.Now;
-                harvestResult.ResponseMessage = ex.Message;
-                harvestResult.ResumptionExpiration = DateTime.Now;
-                harvestResult.ResumptionToken = string.Empty;
+                completeListSize = 0;
+                cursor = 0;
+                content = null;
+                responseDate = DateTime.Now;
+                responseMessage = ex.Message;
+                resumptionExpiration = DateTime.Now;
+                resumptionToken = string.Empty;
             }
 
             // 5. Return the OAIHarvestResult
+            harvestResult.CompleteListSize = completeListSize;
+            harvestResult.Cursor = cursor;
+            harvestResult.Content = content;
+            harvestResult.ResponseDate = responseDate;
+            harvestResult.ResponseMessage = responseMessage;
+            harvestResult.ResumptionExpiration = resumptionExpiration;
+            harvestResult.ResumptionToken = newResumptionToken;
             return harvestResult;
         }
 
@@ -1071,7 +1107,7 @@ namespace MOBOT.BHL.OAI2
         /// Submit the OAI request, retrying up to three times on failure.
         /// </summary>
         /// <param name="url"></param>
-        private string SubmitRequest(string url)
+        private XDocument SubmitRequest(string url)
         {
             int retryLimit = 3;
             string response = string.Empty;
@@ -1090,7 +1126,7 @@ namespace MOBOT.BHL.OAI2
                 retry++;
             }
 
-            return response;
+            return XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(response)));
         }
 
         private string HttpRequest(string url, string method)
@@ -1119,15 +1155,14 @@ namespace MOBOT.BHL.OAI2
                     {
                         // Read the response
                         reader = new StreamReader((Stream)response.GetResponseStream());
-                        /*
-                        char[] read = char[256];
+
+                        Char[] read = new Char[256];
                         int count = reader.Read(read, 0, 256);
                         while (count > 0)
                         {
                             sb.Append(new string(read, 0, count));
                             count = reader.Read(read, 0, 256);
                         }
-                         */
                     }
                 }
             }

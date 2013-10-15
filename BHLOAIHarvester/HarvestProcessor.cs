@@ -8,6 +8,7 @@ using CustomDataAccess;
 using System.Net;
 using System.IO;
 using System.Xml;
+using MOBOT.BHL.OAI2;
 
 namespace BHLOAIHarvester
 {
@@ -50,9 +51,12 @@ namespace BHLOAIHarvester
 
                 // Process each OAI set
                 CustomGenericList<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll();
+
+                Dictionary<string, string> formats = new Dictionary<string, string>();
+                foreach (vwOAIHarvestSet set in sets) formats.Add(set.Prefix, set.AssemblyName);
                 foreach(vwOAIHarvestSet set in sets)
                 {
-                    HarvestSet(set);
+                    HarvestSet(set, formats);
                 }
             }
 
@@ -62,12 +66,49 @@ namespace BHLOAIHarvester
             this.LogMessage("BHLOAIHarvester Processing Complete");
         }
 
-        private void HarvestSet(vwOAIHarvestSet set)
+        private void HarvestSet(vwOAIHarvestSet set, Dictionary<string, string> formats)
         {
             this.LogMessage(string.Format("Begin harvesting of {0} ({1})", set.RepositoryName, set.SetName));
 
             try
             {
+                OAI2Harvester harvester = new OAI2Harvester(set.BaseUrl, 
+                    "BHL OAI Harvester", "biodiversitylibrary@gmail.com", formats);
+
+                DateTime responseDate;
+                string resumptionToken = string.Empty;
+                do
+                {
+                    // 0. Get the from and until dates for this harvest set
+
+                    
+
+
+                    // 1. Make an OAI GetRecords request
+                    OAIHarvestResult oaiResults = harvester.ListRecords(set.Prefix, set.SetSpec, "", "");
+
+                    // 2. Save the records returned from the OAI service to the database
+                    if (oaiResults.ResponseMessage == "ok")
+                    {
+                        foreach (OAIRecord oaiRecord in (List<OAIRecord>)oaiResults.Content)
+                        {
+
+
+                            // TODO: Save the information obtained from the OAI service
+
+
+                        }
+                    }
+
+
+                    // 3. Continue until we have no more resumption tokens
+                    responseDate = oaiResults.ResponseDate;
+                    resumptionToken = oaiResults.ResumptionToken;
+
+                } while (!string.IsNullOrWhiteSpace(resumptionToken));
+
+
+                // 4. Log the OAI results
 
 
 
@@ -77,6 +118,8 @@ namespace BHLOAIHarvester
             catch (Exception ex)
             {
                 LogMessage(string.Format("Error harvesting {0} ({1})", set.RepositoryName, set.SetName), ex);
+
+                // TODO: Clear out just-harvested records if failure due to OAI service error
             }
 
             this.LogMessage(string.Format("Finished harvesting of {0} ({1})", set.RepositoryName, set.SetName));
