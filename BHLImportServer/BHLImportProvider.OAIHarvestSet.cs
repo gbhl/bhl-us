@@ -6,9 +6,9 @@ namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public CustomGenericList<vwOAIHarvestSet> OAIHarvestSetSelectAll()
+        public CustomGenericList<vwOAIHarvestSet> OAIHarvestSetSelectAll(bool onlyActive = true)
         {
-            return new OAIHarvestSetDAL().OAIHarvestSetSelectAll(null, null);
+            return new OAIHarvestSetDAL().OAIHarvestSetSelectAll(null, null, (onlyActive ? 1 : 0));
         }
     }
 }

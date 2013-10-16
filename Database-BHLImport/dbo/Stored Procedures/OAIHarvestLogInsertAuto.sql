@@ -6,7 +6,8 @@
 @FromDateTime DATETIME = null,
 @UntilDateTime DATETIME = null,
 @ResponseDateTime DATETIME = null,
-@Result NVARCHAR(200)
+@Result NVARCHAR(200),
+@NumberHarvested INT
 
 AS 
 
@@ -20,6 +21,7 @@ INSERT INTO [dbo].[OAIHarvestLog]
 	[UntilDateTime],
 	[ResponseDateTime],
 	[Result],
+	[NumberHarvested],
 	[CreationDate],
 	[LastModifiedDate]
 )
@@ -31,6 +33,7 @@ VALUES
 	@UntilDateTime,
 	@ResponseDateTime,
 	@Result,
+	@NumberHarvested,
 	getdate(),
 	getdate()
 )
@@ -53,6 +56,7 @@ ELSE BEGIN
 		[UntilDateTime],
 		[ResponseDateTime],
 		[Result],
+		[NumberHarvested],
 		[CreationDate],
 		[LastModifiedDate]	
 
@@ -63,4 +67,3 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
-

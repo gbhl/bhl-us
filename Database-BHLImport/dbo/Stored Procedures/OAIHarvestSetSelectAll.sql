@@ -1,5 +1,7 @@
 ﻿CREATE PROCEDURE dbo.OAIHarvestSetSelectAll
 
+@OnlyActive smallint = 0
+
 AS
 
 BEGIN
@@ -17,5 +19,7 @@ SELECT	HarvestSetID,
 		[Schema],
 		AssemblyName
 FROM	vwOAIHarvestSet
+WHERE	IsActive = 1 
+OR		@OnlyActive = 0
 
 END

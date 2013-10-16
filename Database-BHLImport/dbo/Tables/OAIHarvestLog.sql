@@ -6,6 +6,7 @@
 	[UntilDateTime] [datetime] NULL,
 	[ResponseDateTime] [datetime] NULL,
 	[Result] [nvarchar](200) NOT NULL,
+	[NumberHarvested] [int] NOT NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[LastModifiedDate] [datetime] NOT NULL,
 CONSTRAINT PK_OAIHarvestLog PRIMARY KEY CLUSTERED 
@@ -17,6 +18,9 @@ CONSTRAINT PK_OAIHarvestLog PRIMARY KEY CLUSTERED
 GO
 
 ALTER TABLE [dbo].[OAIHarvestLog] ADD  DEFAULT ('') FOR [Result]
+GO
+
+ALTER TABLE [dbo].[OAIHarvestLog] ADD DEFAULT (0) FOR [NumberHarvested]
 GO
 
 ALTER TABLE [dbo].[OAIHarvestLog] ADD  DEFAULT (getdate()) FOR [CreationDate]

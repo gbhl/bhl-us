@@ -6,7 +6,8 @@
 @FromDateTime DATETIME,
 @UntilDateTime DATETIME,
 @ResponseDateTime DATETIME,
-@Result NVARCHAR(200)
+@Result NVARCHAR(200),
+@NumberHarvested INT
 
 AS 
 
@@ -22,6 +23,7 @@ SET
 	[UntilDateTime] = @UntilDateTime,
 	[ResponseDateTime] = @ResponseDateTime,
 	[Result] = @Result,
+	[NumberHarvested] = @NumberHarvested,
 	[LastModifiedDate] = getdate()
 
 WHERE
@@ -43,6 +45,7 @@ ELSE BEGIN
 		[UntilDateTime],
 		[ResponseDateTime],
 		[Result],
+		[NumberHarvested],
 		[CreationDate],
 		[LastModifiedDate]
 
@@ -53,4 +56,3 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
-

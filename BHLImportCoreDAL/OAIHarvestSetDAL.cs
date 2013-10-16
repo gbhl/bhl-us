@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using MOBOT.BHLImport.DataObjects;
 using CustomDataAccess;
+using System.Data;
 
 namespace MOBOT.BHLImport.DAL
 {
@@ -18,12 +19,14 @@ namespace MOBOT.BHLImport.DAL
         /// <returns>List of objects of type vwOAIHarvestSet.</returns>
         public CustomGenericList<vwOAIHarvestSet> OAIHarvestSetSelectAll(
             SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction)
+            SqlTransaction sqlTransaction,
+            int onlyActive)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectNewByKeyValuesAndSource", connection, transaction))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIHarvestSetSelectAll", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("OnlyActive", SqlDbType.SmallInt, null, false, onlyActive)))
             {
                 using (CustomSqlHelper<vwOAIHarvestSet> helper = new CustomSqlHelper<vwOAIHarvestSet>())
                 {

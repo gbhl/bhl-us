@@ -1,5 +1,5 @@
 
-// Generated 10/11/2013 1:38:31 PM
+// Generated 10/16/2013 3:40:53 PM
 // Do not modify the contents of this code file.
 // This abstract class __OAIHarvestLog is based upon OAIHarvestLog.
 
@@ -52,6 +52,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="untilDateTime"></param>
 		/// <param name="responseDateTime"></param>
 		/// <param name="result"></param>
+		/// <param name="numberHarvested"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		public __OAIHarvestLog(int harvestLogID, 
@@ -61,6 +62,7 @@ namespace MOBOT.BHLImport.DataObjects
 			DateTime? untilDateTime, 
 			DateTime? responseDateTime, 
 			string result, 
+			int numberHarvested, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate) : this()
 		{
@@ -71,6 +73,7 @@ namespace MOBOT.BHLImport.DataObjects
 			UntilDateTime = untilDateTime;
 			ResponseDateTime = responseDateTime;
 			Result = result;
+			NumberHarvested = numberHarvested;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 		}
@@ -132,6 +135,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "Result" :
 					{
 						_Result = (string)column.Value;
+						break;
+					}
+					case "NumberHarvested" :
+					{
+						_NumberHarvested = (int)column.Value;
 						break;
 					}
 					case "CreationDate" :
@@ -345,6 +353,33 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Result
 		
+		#region NumberHarvested
+		
+		private int _NumberHarvested = default(int);
+		
+		/// <summary>
+		/// Column: NumberHarvested;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("NumberHarvested", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10)]
+		public int NumberHarvested
+		{
+			get
+			{
+				return _NumberHarvested;
+			}
+			set
+			{
+				if (_NumberHarvested != value)
+				{
+					_NumberHarvested = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion NumberHarvested
+		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -353,7 +388,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
 		public DateTime CreationDate
 		{
 			get
@@ -380,7 +415,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -449,6 +484,7 @@ namespace MOBOT.BHLImport.DataObjects
 					o.UntilDateTime == UntilDateTime &&
 					o.ResponseDateTime == ResponseDateTime &&
 					GetComparisonString(o.Result) == GetComparisonString(Result) &&
+					o.NumberHarvested == NumberHarvested &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate 
 				)
@@ -558,6 +594,7 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string UntilDateTime = "UntilDateTime";	
 			public const string ResponseDateTime = "ResponseDateTime";	
 			public const string Result = "Result";	
+			public const string NumberHarvested = "NumberHarvested";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";
 		}

@@ -15,6 +15,7 @@ SELECT
 	[UntilDateTime],
 	[ResponseDateTime],
 	[Result],
+	[NumberHarvested],
 	[CreationDate],
 	[LastModifiedDate]
 
@@ -32,4 +33,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

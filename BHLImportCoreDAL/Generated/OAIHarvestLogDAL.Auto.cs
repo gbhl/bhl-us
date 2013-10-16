@@ -1,5 +1,5 @@
 
-// Generated 10/11/2013 1:38:31 PM
+// Generated 10/16/2013 3:40:53 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIHarvestLogDAL is based upon OAIHarvestLog.
@@ -142,6 +142,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="untilDateTime"></param>
 		/// <param name="responseDateTime"></param>
 		/// <param name="result"></param>
+		/// <param name="numberHarvested"></param>
 		/// <returns>Object of type OAIHarvestLog.</returns>
 		public OAIHarvestLog OAIHarvestLogInsertAuto(
 			SqlConnection sqlConnection, 
@@ -151,9 +152,10 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? fromDateTime,
 			DateTime? untilDateTime,
 			DateTime? responseDateTime,
-			string result)
+			string result,
+			int numberHarvested)
 		{
-			return OAIHarvestLogInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestSetID, harvestStartDateTime, fromDateTime, untilDateTime, responseDateTime, result );
+			return OAIHarvestLogInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestSetID, harvestStartDateTime, fromDateTime, untilDateTime, responseDateTime, result, numberHarvested );
 		}
 		
 		/// <summary>
@@ -168,6 +170,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="untilDateTime"></param>
 		/// <param name="responseDateTime"></param>
 		/// <param name="result"></param>
+		/// <param name="numberHarvested"></param>
 		/// <returns>Object of type OAIHarvestLog.</returns>
 		public OAIHarvestLog OAIHarvestLogInsertAuto(
 			SqlConnection sqlConnection, 
@@ -178,7 +181,8 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? fromDateTime,
 			DateTime? untilDateTime,
 			DateTime? responseDateTime,
-			string result)
+			string result,
+			int numberHarvested)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -190,7 +194,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("FromDateTime", SqlDbType.DateTime, null, true, fromDateTime),
 					CustomSqlHelper.CreateInputParameter("UntilDateTime", SqlDbType.DateTime, null, true, untilDateTime),
 					CustomSqlHelper.CreateInputParameter("ResponseDateTime", SqlDbType.DateTime, null, true, responseDateTime),
-					CustomSqlHelper.CreateInputParameter("Result", SqlDbType.NVarChar, 200, false, result), 
+					CustomSqlHelper.CreateInputParameter("Result", SqlDbType.NVarChar, 200, false, result),
+					CustomSqlHelper.CreateInputParameter("NumberHarvested", SqlDbType.Int, null, false, numberHarvested), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
@@ -245,7 +250,8 @@ namespace MOBOT.BHLImport.DAL
 				value.FromDateTime,
 				value.UntilDateTime,
 				value.ResponseDateTime,
-				value.Result);
+				value.Result,
+				value.NumberHarvested);
 		}
 		
 		#endregion ===== INSERT =====
@@ -322,6 +328,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="untilDateTime"></param>
 		/// <param name="responseDateTime"></param>
 		/// <param name="result"></param>
+		/// <param name="numberHarvested"></param>
 		/// <returns>Object of type OAIHarvestLog.</returns>
 		public OAIHarvestLog OAIHarvestLogUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -332,9 +339,10 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? fromDateTime,
 			DateTime? untilDateTime,
 			DateTime? responseDateTime,
-			string result)
+			string result,
+			int numberHarvested)
 		{
-			return OAIHarvestLogUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, harvestSetID, harvestStartDateTime, fromDateTime, untilDateTime, responseDateTime, result);
+			return OAIHarvestLogUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, harvestSetID, harvestStartDateTime, fromDateTime, untilDateTime, responseDateTime, result, numberHarvested);
 		}
 		
 		/// <summary>
@@ -350,6 +358,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="untilDateTime"></param>
 		/// <param name="responseDateTime"></param>
 		/// <param name="result"></param>
+		/// <param name="numberHarvested"></param>
 		/// <returns>Object of type OAIHarvestLog.</returns>
 		public OAIHarvestLog OAIHarvestLogUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -361,7 +370,8 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? fromDateTime,
 			DateTime? untilDateTime,
 			DateTime? responseDateTime,
-			string result)
+			string result,
+			int numberHarvested)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -373,7 +383,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("FromDateTime", SqlDbType.DateTime, null, true, fromDateTime),
 					CustomSqlHelper.CreateInputParameter("UntilDateTime", SqlDbType.DateTime, null, true, untilDateTime),
 					CustomSqlHelper.CreateInputParameter("ResponseDateTime", SqlDbType.DateTime, null, true, responseDateTime),
-					CustomSqlHelper.CreateInputParameter("Result", SqlDbType.NVarChar, 200, false, result), 
+					CustomSqlHelper.CreateInputParameter("Result", SqlDbType.NVarChar, 200, false, result),
+					CustomSqlHelper.CreateInputParameter("NumberHarvested", SqlDbType.Int, null, false, numberHarvested), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIHarvestLog> helper = new CustomSqlHelper<OAIHarvestLog>())
@@ -429,7 +440,8 @@ namespace MOBOT.BHLImport.DAL
 				value.FromDateTime,
 				value.UntilDateTime,
 				value.ResponseDateTime,
-				value.Result);
+				value.Result,
+				value.NumberHarvested);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -479,7 +491,8 @@ namespace MOBOT.BHLImport.DAL
 						value.FromDateTime,
 						value.UntilDateTime,
 						value.ResponseDateTime,
-						value.Result);
+						value.Result,
+						value.NumberHarvested);
 				
 				return new CustomDataAccessStatus<OAIHarvestLog>(
 					CustomDataAccessContext.Insert, 
@@ -511,7 +524,8 @@ namespace MOBOT.BHLImport.DAL
 						value.FromDateTime,
 						value.UntilDateTime,
 						value.ResponseDateTime,
-						value.Result);
+						value.Result,
+						value.NumberHarvested);
 					
 				return new CustomDataAccessStatus<OAIHarvestLog>(
 					CustomDataAccessContext.Update, 

@@ -23,7 +23,6 @@ namespace BHLOAIHarvester
 
         private ConfigParms configParms = new ConfigParms();
         private List<string> itemsHarvested = new List<string>();
-        private List<string> itemsPublished = new List<string>();
         private List<string> errorMessages = new List<string>();
 
         public void Harvest()
@@ -68,27 +67,64 @@ namespace BHLOAIHarvester
 
         private void HarvestSet(vwOAIHarvestSet set, Dictionary<string, string> formats)
         {
-            this.LogMessage(string.Format("Begin harvesting of {0} ({1})", set.RepositoryName, set.SetName));
+            this.LogMessage(string.Format("Begin harvesting of \"{0} ({1})\"", set.RepositoryName, set.SetName));
+
+            DateTime harvestStartTime = DateTime.Now;
+            DateTime responseDate;
+            string responseMessage = string.Empty;
+            DateTime fromDate;
+            DateTime untilDate;
 
             try
             {
-                OAI2Harvester harvester = new OAI2Harvester(set.BaseUrl, 
+                OAI2Harvester harvester = new OAI2Harvester(set.BaseUrl,
                     "BHL OAI Harvester", "biodiversitylibrary@gmail.com", formats);
 
-                DateTime responseDate;
                 string resumptionToken = string.Empty;
+                DateTime resumptionExpiration = DateTime.Now.AddHours(1);
                 do
                 {
+                    // TODO: Allow for dates passed on the command line.
+
+
                     // 0. Get the from and until dates for this harvest set
 
-                    
+                    // Get the latest harvested end date for this harvest set, and use it as the start date for 
+                    // this harvest.  If for some reason it is later than the current date, then use the current 
+                    // date instead.  
+                    fromDate = new BHLImportProvider().OAIHarvestLogSelectLastDateForHarvestSet(set.HarvestSetID);
+                    if (fromDate.CompareTo(DateTime.Now) > 0) fromDate = DateTime.Now;
+
+                    // The OAI specs recommend overlapping harvests to ensure that nothing is missed, so subtract
+                    // one day from the start date. 
+                    fromDate.Subtract(new TimeSpan(1, 0, 0, 0));
+
+                    untilDate = DateTime.Now;
+
+
+                    // TODO:  Adjust date formats to account for repository granularity
 
 
                     // 1. Make an OAI GetRecords request
-                    OAIHarvestResult oaiResults = harvester.ListRecords(set.Prefix, set.SetSpec, "", "");
+                    OAIHarvestResult oaiResults = null;
+                    if (!string.IsNullOrWhiteSpace(resumptionToken))
+                    {
+                        // Check resumption expiration date
+                        if (DateTime.Now.ToUniversalTime().CompareTo(resumptionExpiration) > 0)
+                            throw new Exception(string.Format("resumptionToken \"{0}\" has expired", resumptionToken));
+
+                        oaiResults = harvester.ListRecords(set.Prefix, resumptionToken);
+                    }
+                    else
+                    {
+                        // TODO:  Don't forget to add "from" and "until" dates here
+                        oaiResults = harvester.ListRecords(set.Prefix, set.SetSpec, "", "");
+                        responseDate = oaiResults.ResponseDate;
+                    }
 
                     // 2. Save the records returned from the OAI service to the database
-                    if (oaiResults.ResponseMessage == "ok")
+                    responseMessage = oaiResults.ResponseMessage;
+                    if (responseMessage == "ok")
                     {
                         foreach (OAIRecord oaiRecord in (List<OAIRecord>)oaiResults.Content)
                         {
@@ -97,32 +133,47 @@ namespace BHLOAIHarvester
                             // TODO: Save the information obtained from the OAI service
 
 
+                            // TODO:  Make sure to account for repositories that track deleted records!
+
+
+                            itemsHarvested.Add(oaiRecord.Type.ToString());
                         }
                     }
-
+                    else
+                    {
+                        throw new Exception(responseMessage);
+                    }
 
                     // 3. Continue until we have no more resumption tokens
-                    responseDate = oaiResults.ResponseDate;
                     resumptionToken = oaiResults.ResumptionToken;
+                    resumptionExpiration = oaiResults.ResumptionExpiration;
 
                 } while (!string.IsNullOrWhiteSpace(resumptionToken));
-
-
-                // 4. Log the OAI results
-
-
-
-
-
             }
             catch (Exception ex)
             {
-                LogMessage(string.Format("Error harvesting {0} ({1})", set.RepositoryName, set.SetName), ex);
+                LogMessage(string.Format("Error harvesting \"{0} ({1})\"", set.RepositoryName, set.SetName), ex);
 
                 // TODO: Clear out just-harvested records if failure due to OAI service error
             }
+            finally
+            {
+                try
+                {
+                    // 4. Log the OAI results
 
-            this.LogMessage(string.Format("Finished harvesting of {0} ({1})", set.RepositoryName, set.SetName));
+
+                    // TODO:  Log OAI results
+
+
+                }
+                catch (Exception ex)
+                {
+                    LogMessage(string.Format("Error logging harvesting results for \"{0} ({1})\"", set.RepositoryName, set.SetName), ex);
+                }
+            }
+
+            this.LogMessage(string.Format("Finished harvesting of \"{0} ({1})\"", set.RepositoryName, set.SetName));
         }
 
         #region Utility methods
@@ -186,7 +237,7 @@ namespace BHLOAIHarvester
             {
                 // Send email if PDFS were deleted, or if an error occurred.
                 // Don't send an email each time a PDF is generated.
-                if (itemsHarvested.Count > 0 || itemsPublished.Count > 0 || errorMessages.Count > 0)
+                if (itemsHarvested.Count > 0 || errorMessages.Count > 0)
                 {
                     String subject = String.Empty;
                     String thisComputer = Environment.MachineName;
@@ -231,10 +282,6 @@ namespace BHLOAIHarvester
             if (this.itemsHarvested.Count > 0)
             {
                 sb.Append(endOfLine + this.itemsHarvested.Count.ToString() + " Items were Harvested" + endOfLine);
-            }
-            if (this.itemsPublished.Count > 0)
-            {
-                sb.Append(endOfLine + this.itemsPublished.Count.ToString() + " Items were Published to Production" + endOfLine);
             }
             if (this.errorMessages.Count > 0)
             {

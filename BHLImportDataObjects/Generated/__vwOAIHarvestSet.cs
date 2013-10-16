@@ -1,5 +1,5 @@
 
-// Generated 10/11/2013 2:13:08 PM
+// Generated 10/16/2013 11:35:24 AM
 // Do not modify the contents of this code file.
 // This abstract class __vwOAIHarvestSet is based upon vwOAIHarvestSet.
 
@@ -55,6 +55,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="namespace"></param>
 		/// <param name="schema"></param>
 		/// <param name="assemblyName"></param>
+		/// <param name="isActive"></param>
 		public __vwOAIHarvestSet(int harvestSetID, 
 			string repositoryName, 
 			string baseUrl, 
@@ -62,9 +63,10 @@ namespace MOBOT.BHLImport.DataObjects
 			string setName, 
 			string setSpec, 
 			string prefix, 
-			string formatNamespace, 
+			string oainamespace, 
 			string schema, 
-			string assemblyName) : this()
+			string assemblyName, 
+			short isActive) : this()
 		{
 			HarvestSetID = harvestSetID;
 			RepositoryName = repositoryName;
@@ -73,9 +75,10 @@ namespace MOBOT.BHLImport.DataObjects
 			SetName = setName;
 			SetSpec = setSpec;
 			Prefix = prefix;
-			Namespace = formatNamespace;
+			Namespace = oainamespace;
 			Schema = schema;
 			AssemblyName = assemblyName;
+			IsActive = isActive;
 		}
 		
 		#endregion Constructors
@@ -150,6 +153,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "AssemblyName" :
 					{
 						_AssemblyName = (string)column.Value;
+						break;
+					}
+					case "IsActive" :
+					{
+						_IsActive = (short)column.Value;
 						break;
 					}
 				}
@@ -440,6 +448,33 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion AssemblyName
+		
+		#region IsActive
+		
+		private short _IsActive = default(short);
+		
+		/// <summary>
+		/// Column: IsActive;
+		/// DBMS data type: smallint;
+		/// </summary>
+		[ColumnDefinition("IsActive", DbTargetType=SqlDbType.SmallInt, Ordinal=11, NumericPrecision=5)]
+		public short IsActive
+		{
+			get
+			{
+				return _IsActive;
+			}
+			set
+			{
+				if (_IsActive != value)
+				{
+					_IsActive = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion IsActive
 			
 		#endregion Properties
 				
@@ -493,7 +528,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Prefix) == GetComparisonString(Prefix) &&
 					GetComparisonString(o.Namespace) == GetComparisonString(Namespace) &&
 					GetComparisonString(o.Schema) == GetComparisonString(Schema) &&
-					GetComparisonString(o.AssemblyName) == GetComparisonString(AssemblyName) 
+					GetComparisonString(o.AssemblyName) == GetComparisonString(AssemblyName) &&
+					o.IsActive == IsActive 
 				)
 				{
 					o = null;
@@ -603,7 +639,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Prefix = "Prefix";	
 			public const string Namespace = "Namespace";	
 			public const string Schema = "Schema";	
-			public const string AssemblyName = "AssemblyName";
+			public const string AssemblyName = "AssemblyName";	
+			public const string IsActive = "IsActive";
 		}
 				
 		#endregion SortColumn

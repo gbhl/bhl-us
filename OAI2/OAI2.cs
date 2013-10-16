@@ -999,9 +999,9 @@ namespace MOBOT.BHL.OAI2
         /// </summary>
         /// <param name="resumptionToken"></param>
         /// <returns>An OAIHarvestResult object containing a list of OAIRecords</returns>
-        public OAIHarvestResult ListRecords(string resumptionToken)
+        public OAIHarvestResult ListRecords(string metadataFormat, string resumptionToken)
         {
-            return ListRecords(string.Empty, string.Empty, string.Empty, string.Empty, resumptionToken);
+            return ListRecords(metadataFormat, string.Empty, string.Empty, string.Empty, resumptionToken);
         }
 
         private OAIHarvestResult ListRecords(string metadataFormat, string set, string from, string until, string resumptionToken)
@@ -1011,7 +1011,7 @@ namespace MOBOT.BHL.OAI2
             DateTime responseDate = DateTime.Now;
             string responseMessage = "ok";
             string newResumptionToken = string.Empty;
-            DateTime resumptionExpiration = DateTime.Now;
+            DateTime resumptionExpiration = DateTime.Now.AddHours(1);
             int completeListSize = 0;
             int cursor = 0;
             List<OAIRecord> content = new List<OAIRecord>();
@@ -1023,7 +1023,7 @@ namespace MOBOT.BHL.OAI2
             }
             else
             {
-                url = string.Format("{0}?verb=ListRecords&metadataFormat={1}", _baseUrl, HttpUtility.UrlEncode(metadataFormat));
+                url = string.Format("{0}?verb=ListRecords&metadataPrefix={1}", _baseUrl, HttpUtility.UrlEncode(metadataFormat));
                 if (!string.IsNullOrWhiteSpace(set)) url += "&set=" + HttpUtility.UrlEncode(set);
                 if (!string.IsNullOrWhiteSpace(from)) url += "&from=" + HttpUtility.UrlEncode(from);
                 if (!string.IsNullOrWhiteSpace(until)) url += "&until=" + HttpUtility.UrlEncode(until);
@@ -1033,37 +1033,51 @@ namespace MOBOT.BHL.OAI2
             try
             {
                 XDocument response = SubmitRequest(url);
+                XElement root = response.Root;
+                XNamespace ns = root.Name.Namespace;
 
                 // 3. Parse the response metadata (date, resumption token, list size, etc)
-                if (response.Element("error") != null) responseMessage = response.Element("error").Value;
-                responseDate = Convert.ToDateTime(response.Element("responseDate").Value);
-                XElement resumptionTokenElement = response.Element("resumptionToken");
-                if (resumptionTokenElement != null)
+                XElement error = root.Element(ns + "error");
+                responseDate = Convert.ToDateTime(root.Element(ns + "responseDate").Value);
+                if (error != null)
                 {
-                    newResumptionToken = resumptionTokenElement.Value;
-                    if (resumptionTokenElement.Attribute("expirationDate") != null)
-                    {
-                        resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate"));
-                    }
-                    if (resumptionTokenElement.Attribute("completeListSize") != null)
-                    {
-                        completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize"));
-                    }
-                    if (resumptionTokenElement.Attribute("cursor") != null)
-                    {
-                        cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor"));
-                    }
+                    XAttribute errorCode = error.Attribute("code");
+                    responseMessage = (errorCode != null) ? errorCode.Value + ": " : string.Empty;
+                    responseMessage += error.Value;
                 }
-
-                // 4. Parse the returned records
-                IEnumerable<XElement> records = from r in response.Elements("metadata") 
-                                                select r;
-
-                foreach (XElement record in records)
+                else
                 {
-                    string metadataString = record.FirstNode.ToString();
-                    OAIRecord oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
-                    content.Add(oaiRecord);
+                    // Change the "root" of the document we're evaluating to be the "ListRecords" element
+                    root = root.Element(ns + "ListRecords");
+
+                    XElement resumptionTokenElement = root.Element(ns + "resumptionToken");
+                    if (resumptionTokenElement != null)
+                    {
+                        newResumptionToken = resumptionTokenElement.Value;
+                        if (resumptionTokenElement.Attribute("expirationDate") != null)
+                        {
+                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate"));
+                        }
+                        if (resumptionTokenElement.Attribute("completeListSize") != null)
+                        {
+                            completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize"));
+                        }
+                        if (resumptionTokenElement.Attribute("cursor") != null)
+                        {
+                            cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor"));
+                        }
+                    }
+
+                    // 4. Parse the returned records
+                    IEnumerable<XElement> records = from r in root.Descendants(ns + "metadata")
+                                                    select r;
+
+                    foreach (XElement record in records)
+                    {
+                        string metadataString = record.FirstNode.ToString();
+                        OAIRecord oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
+                        content.Add(oaiRecord);
+                    }
                 }
             }
             catch (Exception ex)
@@ -1073,8 +1087,8 @@ namespace MOBOT.BHL.OAI2
                 content = null;
                 responseDate = DateTime.Now;
                 responseMessage = ex.Message;
-                resumptionExpiration = DateTime.Now;
-                resumptionToken = string.Empty;
+                resumptionExpiration = DateTime.Now.AddHours(1);
+                newResumptionToken = string.Empty;
             }
 
             // 5. Return the OAIHarvestResult
@@ -1118,6 +1132,7 @@ namespace MOBOT.BHL.OAI2
                 try
                 {
                     response = HttpRequest(url, "GET");
+                    break;
                 }
                 catch
                 {
@@ -1140,7 +1155,7 @@ namespace MOBOT.BHL.OAI2
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.Method = method;
                 req.Timeout = 300000;    // 5 minutes
-                req.Headers.Add("User-Agent", _userAgent);
+                req.UserAgent = _userAgent;
                 req.Headers.Add("From", _fromEmail);
 
                 // Make sure we were successful
