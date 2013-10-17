@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using MOBOT.BHLImport.DataObjects;
@@ -22,7 +23,7 @@ namespace BHLOAIHarvester
         // needing to edit the code.
 
         private ConfigParms configParms = new ConfigParms();
-        private List<string> itemsHarvested = new List<string>();
+        private Dictionary<string, List<string>> itemsHarvested = new Dictionary<string ,List<string>>();
         private List<string> errorMessages = new List<string>();
 
         public void Harvest()
@@ -48,14 +49,22 @@ namespace BHLOAIHarvester
                 // Validate config values
                 if (!this.ValidateConfiguration()) return;
 
-                // Process each OAI set
-                CustomGenericList<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll();
+                // Get the sets to be processed.  If a particular harvest set was specified for processing,
+                // return all sets (both active and inactive).  This allows us (in the next step) to select
+                // the specified set from the list, whether it is active or not.  If no set was specified,
+                // only select the active sets.
+                CustomGenericList<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll(string.IsNullOrWhiteSpace(configParms.HarvestSetID));
 
                 Dictionary<string, string> formats = new Dictionary<string, string>();
-                foreach (vwOAIHarvestSet set in sets) formats.Add(set.Prefix, set.AssemblyName);
                 foreach(vwOAIHarvestSet set in sets)
                 {
-                    HarvestSet(set, formats);
+                    // If a particular set was specified for harvesting, only process that set.  Otherwise do them all.
+                    if (set.HarvestSetID == Convert.ToInt32(configParms.HarvestSetID) || 
+                        string.IsNullOrWhiteSpace(configParms.HarvestSetID))
+                    {
+                        if (!formats.ContainsKey(set.Prefix)) formats.Add(set.Prefix, set.AssemblyName);
+                        HarvestSet(set, formats);
+                    }
                 }
             }
 
@@ -67,13 +76,13 @@ namespace BHLOAIHarvester
 
         private void HarvestSet(vwOAIHarvestSet set, Dictionary<string, string> formats)
         {
-            this.LogMessage(string.Format("Begin harvesting of \"{0} ({1})\"", set.RepositoryName, set.SetName));
+            this.LogMessage(string.Format("Begin harvesting of \"{0}\"", set.HarvestSetName));
 
             DateTime harvestStartTime = DateTime.Now;
-            DateTime responseDate;
+            DateTime? responseDate = null;
             string responseMessage = string.Empty;
-            DateTime fromDate;
-            DateTime untilDate;
+            string fromDate = string.Empty;
+            string untilDate = string.Empty;
 
             try
             {
@@ -81,31 +90,14 @@ namespace BHLOAIHarvester
                     "BHL OAI Harvester", "biodiversitylibrary@gmail.com", formats);
 
                 string resumptionToken = string.Empty;
-                DateTime resumptionExpiration = DateTime.Now.AddHours(1);
+                DateTime resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
+
+                // Get the from and until dates for this harvest set
+                GetHarvestDates(set.HarvestSetID, set.Granularity, out fromDate, out untilDate);
+
                 do
                 {
-                    // TODO: Allow for dates passed on the command line.
-
-
-                    // 0. Get the from and until dates for this harvest set
-
-                    // Get the latest harvested end date for this harvest set, and use it as the start date for 
-                    // this harvest.  If for some reason it is later than the current date, then use the current 
-                    // date instead.  
-                    fromDate = new BHLImportProvider().OAIHarvestLogSelectLastDateForHarvestSet(set.HarvestSetID);
-                    if (fromDate.CompareTo(DateTime.Now) > 0) fromDate = DateTime.Now;
-
-                    // The OAI specs recommend overlapping harvests to ensure that nothing is missed, so subtract
-                    // one day from the start date. 
-                    fromDate.Subtract(new TimeSpan(1, 0, 0, 0));
-
-                    untilDate = DateTime.Now;
-
-
-                    // TODO:  Adjust date formats to account for repository granularity
-
-
-                    // 1. Make an OAI GetRecords request
+                    // Make an OAI GetRecords request
                     OAIHarvestResult oaiResults = null;
                     if (!string.IsNullOrWhiteSpace(resumptionToken))
                     {
@@ -117,12 +109,11 @@ namespace BHLOAIHarvester
                     }
                     else
                     {
-                        // TODO:  Don't forget to add "from" and "until" dates here
-                        oaiResults = harvester.ListRecords(set.Prefix, set.SetSpec, "", "");
+                        oaiResults = harvester.ListRecords(set.Prefix, set.SetSpec, fromDate, untilDate);
                         responseDate = oaiResults.ResponseDate;
                     }
 
-                    // 2. Save the records returned from the OAI service to the database
+                    // Save the records returned from the OAI service to the database
                     responseMessage = oaiResults.ResponseMessage;
                     if (responseMessage == "ok")
                     {
@@ -136,7 +127,7 @@ namespace BHLOAIHarvester
                             // TODO:  Make sure to account for repositories that track deleted records!
 
 
-                            itemsHarvested.Add(oaiRecord.Type.ToString());
+                            UpdateHarvestCount(set.HarvestSetName, oaiRecord.Type.ToString());
                         }
                     }
                     else
@@ -144,7 +135,7 @@ namespace BHLOAIHarvester
                         throw new Exception(responseMessage);
                     }
 
-                    // 3. Continue until we have no more resumption tokens
+                    // Continue until we have no more resumption tokens
                     resumptionToken = oaiResults.ResumptionToken;
                     resumptionExpiration = oaiResults.ResumptionExpiration;
 
@@ -152,28 +143,33 @@ namespace BHLOAIHarvester
             }
             catch (Exception ex)
             {
-                LogMessage(string.Format("Error harvesting \"{0} ({1})\"", set.RepositoryName, set.SetName), ex);
+                LogMessage(string.Format("Error harvesting \"{0}\"", set.HarvestSetName), ex);
+                responseMessage = ex.Message;
+
 
                 // TODO: Clear out just-harvested records if failure due to OAI service error
+
+
             }
             finally
             {
                 try
                 {
-                    // 4. Log the OAI results
+                    // Log the OAI results
+                    var numberHarvested = (from r in itemsHarvested
+                                select r.Value.Count).Sum();
 
-
-                    // TODO:  Log OAI results
-
-
+                    new BHLImportProvider().OAIHarvestLogInsert(set.HarvestSetID, harvestStartTime, 
+                        Convert.ToDateTime(fromDate), Convert.ToDateTime(untilDate),
+                        ((DateTime)responseDate).ToLocalTime(), responseMessage, numberHarvested);
                 }
                 catch (Exception ex)
                 {
-                    LogMessage(string.Format("Error logging harvesting results for \"{0} ({1})\"", set.RepositoryName, set.SetName), ex);
+                    LogMessage(string.Format("Error logging harvesting results for \"{0}\"", set.HarvestSetName), ex);
                 }
             }
 
-            this.LogMessage(string.Format("Finished harvesting of \"{0} ({1})\"", set.RepositoryName, set.SetName));
+            this.LogMessage(string.Format("Finished harvesting of \"{0}\"", set.HarvestSetName));
         }
 
         #region Utility methods
@@ -185,6 +181,24 @@ namespace BHLOAIHarvester
         /// <returns>True if the arguments were in a valid format, false otherwise</returns>
         private bool ReadCommandLineArguments()
         {
+            string[] args = System.Environment.GetCommandLineArgs();
+
+            if (args.Length == 1) return true;
+
+            for (int x = 1; x < args.Length; x++)
+            {
+                string[] split = args[x].Split(':');
+                if (split.Length != 2)
+                {
+                    this.LogMessage("Invalid command line format.  Format is BHLOAIHarvester.exe [/HARVESTSET:N [/FROMDATE:YYYY-MM-DD] [/UNTILDATE:YYYY-MM-DD]]");
+                    return false;
+                }
+
+                if (String.Compare(split[0], "/HARVESTSET", true) == 0) configParms.HarvestSetID = split[1];
+                if (String.Compare(split[0], "/FROMDATE", true) == 0) configParms.FromDate = split[1];
+                if (String.Compare(split[0], "/UNTILDATE", true) == 0) configParms.UntilDate = split[1];
+            }
+
             return true;
         }
 
@@ -194,7 +208,112 @@ namespace BHLOAIHarvester
         /// <returns>True if arguments valid, false otherwise</returns>
         private bool ValidateConfiguration()
         {
+            DateTime tempDate;
+
+            if (string.IsNullOrWhiteSpace(configParms.HarvestSetID) &&
+                (!string.IsNullOrWhiteSpace(configParms.FromDate) ||
+                 !string.IsNullOrWhiteSpace(configParms.UntilDate)))
+            {
+                this.LogMessage("No Harvest Set specified. Use /HARVESTSET to identify the set to be harvested.");
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(configParms.HarvestSetID))
+            {
+                int tempHarvestSetID;
+                if (!(Int32.TryParse(configParms.HarvestSetID, out tempHarvestSetID)))
+                {
+                    this.LogMessage("Invalid HarvestSet.  Specify the integer identifier for the HarvestSet (from the OAIHarvestSet database table).");
+                    return false;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(configParms.FromDate))
+            {
+                if (!(DateTime.TryParse(configParms.FromDate, out tempDate)))
+                {
+                    this.LogMessage("Invalid From Date format.  Use YYYY-MM-DD.");
+                    return false;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(configParms.UntilDate))
+            {
+                if (!(DateTime.TryParse(configParms.UntilDate, out tempDate)))
+                {
+                    this.LogMessage("Invalid Until Date format.  Use YYYY-MM-DD.");
+                    return false;
+                }
+            }
+
             return true;
+        }
+
+        /// <summary>
+        /// Get the FromDate and UntilDate string for the specified harvest set.  The date format and precision 
+        /// will match the specified granularity.
+        /// </summary>
+        /// <param name="harvestSetID"></param>
+        /// <param name="granularity"></param>
+        /// <param name="fromDate"></param>
+        /// <param name="untilDate"></param>
+        private void GetHarvestDates(int harvestSetID, string granularity, out string fromDate, out string untilDate)
+        {
+            DateTime from;
+            DateTime until;
+
+            if (string.IsNullOrWhiteSpace(configParms.FromDate))
+            {
+                // Get the latest harvested end date for this harvest set, and use it as the "from" date for 
+                // this harvest.  If for some reason it is later than the current date, then use the current 
+                // date instead.  
+                from = new BHLImportProvider().OAIHarvestLogSelectLastDateForHarvestSet(harvestSetID);
+                if (from.CompareTo(DateTime.Now) > 0) from = DateTime.Now;
+
+                // The OAI specs recommend overlapping harvests to ensure that nothing is missed, so subtract
+                // one day from the "from" date. 
+                from = from.Subtract(new TimeSpan(1, 0, 0, 0));
+            }
+            else
+            {
+                // Use FromDate specified on the command line
+                from = Convert.ToDateTime(configParms.FromDate);
+            }
+
+            if (string.IsNullOrWhiteSpace(configParms.UntilDate))
+            {
+                until = DateTime.Now;
+            }
+            else
+            {
+                // Use UntilDate specified on the command line.  If it is later than the current date, use
+                // the current date instead.
+                until = Convert.ToDateTime(configParms.UntilDate);
+                if (until.CompareTo(DateTime.Now) > 0) until = DateTime.Now;
+            }
+
+            // Convert to UTC dates of the specified granularity.
+            fromDate = from.ToUniversalTime().ToString(granularity);
+            untilDate = until.ToUniversalTime().ToString(granularity);
+        }
+
+        /// <summary>
+        /// Updates the count of harvested records for the specified harvest set.
+        /// </summary>
+        /// <param name="harvestSetName"></param>
+        /// <param name="addedRecordInfo"></param>
+        private void UpdateHarvestCount(string harvestSetName, string addedRecordInfo)
+        {
+            if (itemsHarvested.ContainsKey(harvestSetName))
+            {
+                itemsHarvested[harvestSetName].Add(addedRecordInfo);
+            }
+            else
+            {
+                List<string> insertedList = new List<string>();
+                insertedList.Add(addedRecordInfo);
+                itemsHarvested.Add(harvestSetName, insertedList);
+            }
         }
 
         #endregion Utility methods
@@ -278,14 +397,20 @@ namespace BHLOAIHarvester
 
             string thisComputer = Environment.MachineName;
 
-            sb.Append("BHLOAIHarvester: OAI harvesting on " + thisComputer + " complete." + endOfLine);
+            sb.Append(string.Format("BHLOAIHarvester: OAI harvesting on {0} complete.{1}{2}", thisComputer, endOfLine, endOfLine));
             if (this.itemsHarvested.Count > 0)
             {
-                sb.Append(endOfLine + this.itemsHarvested.Count.ToString() + " Items were Harvested" + endOfLine);
+                foreach (KeyValuePair<string, List<string>> kvp in itemsHarvested)
+                {
+                    sb.Append(string.Format("{0} Items were Harvested from \"{1}\"{2}", 
+                        kvp.Value.Count.ToString(), kvp.Key, endOfLine));
+                }
+                sb.Append(endOfLine);
             }
             if (this.errorMessages.Count > 0)
             {
-                sb.Append(endOfLine + this.errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine + endOfLine);
+                sb.Append(string.Format("{0} Errors Occurred {1}See the log file for details{2}{3}", 
+                    this.errorMessages.Count.ToString(), endOfLine, endOfLine, endOfLine));
                 foreach (string message in errorMessages)
                 {
                     sb.Append(message + endOfLine);

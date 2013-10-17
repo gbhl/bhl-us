@@ -1,5 +1,5 @@
 
-// Generated 10/16/2013 11:35:24 AM
+// Generated 10/17/2013 9:54:16 AM
 // Do not modify the contents of this code file.
 // This abstract class __vwOAIHarvestSet is based upon vwOAIHarvestSet.
 
@@ -52,6 +52,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="setName"></param>
 		/// <param name="setSpec"></param>
 		/// <param name="prefix"></param>
+		/// <param name="deletedRecord"></param>
+		/// <param name="granularity"></param>
 		/// <param name="namespace"></param>
 		/// <param name="schema"></param>
 		/// <param name="assemblyName"></param>
@@ -63,6 +65,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string setName, 
 			string setSpec, 
 			string prefix, 
+			string deletedRecord, 
+			string granularity, 
 			string oainamespace, 
 			string schema, 
 			string assemblyName, 
@@ -75,6 +79,8 @@ namespace MOBOT.BHLImport.DataObjects
 			SetName = setName;
 			SetSpec = setSpec;
 			Prefix = prefix;
+			DeletedRecord = deletedRecord;
+			Granularity = granularity;
 			Namespace = oainamespace;
 			Schema = schema;
 			AssemblyName = assemblyName;
@@ -138,6 +144,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "Prefix" :
 					{
 						_Prefix = (string)column.Value;
+						break;
+					}
+					case "DeletedRecord" :
+					{
+						_DeletedRecord = (string)column.Value;
+						break;
+					}
+					case "Granularity" :
+					{
+						_Granularity = (string)column.Value;
 						break;
 					}
 					case "Namespace" :
@@ -365,6 +381,62 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Prefix
 		
+		#region DeletedRecord
+		
+		private string _DeletedRecord = string.Empty;
+		
+		/// <summary>
+		/// Column: DeletedRecord;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("DeletedRecord", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=20)]
+		public string DeletedRecord
+		{
+			get
+			{
+				return _DeletedRecord;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_DeletedRecord != value)
+				{
+					_DeletedRecord = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion DeletedRecord
+		
+		#region Granularity
+		
+		private string _Granularity = string.Empty;
+		
+		/// <summary>
+		/// Column: Granularity;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("Granularity", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=20)]
+		public string Granularity
+		{
+			get
+			{
+				return _Granularity;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_Granularity != value)
+				{
+					_Granularity = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Granularity
+		
 		#region Namespace
 		
 		private string _Namespace = string.Empty;
@@ -373,7 +445,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Namespace;
 		/// DBMS data type: nvarchar(150);
 		/// </summary>
-		[ColumnDefinition("Namespace", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=150)]
+		[ColumnDefinition("Namespace", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=150)]
 		public string Namespace
 		{
 			get
@@ -401,7 +473,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Schema;
 		/// DBMS data type: nvarchar(150);
 		/// </summary>
-		[ColumnDefinition("Schema", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=150)]
+		[ColumnDefinition("Schema", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=150)]
 		public string Schema
 		{
 			get
@@ -429,7 +501,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: AssemblyName;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("AssemblyName", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=100)]
+		[ColumnDefinition("AssemblyName", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=100)]
 		public string AssemblyName
 		{
 			get
@@ -457,7 +529,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IsActive;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("IsActive", DbTargetType=SqlDbType.SmallInt, Ordinal=11, NumericPrecision=5)]
+		[ColumnDefinition("IsActive", DbTargetType=SqlDbType.SmallInt, Ordinal=13, NumericPrecision=5)]
 		public short IsActive
 		{
 			get
@@ -526,6 +598,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.SetName) == GetComparisonString(SetName) &&
 					GetComparisonString(o.SetSpec) == GetComparisonString(SetSpec) &&
 					GetComparisonString(o.Prefix) == GetComparisonString(Prefix) &&
+					GetComparisonString(o.DeletedRecord) == GetComparisonString(DeletedRecord) &&
+					GetComparisonString(o.Granularity) == GetComparisonString(Granularity) &&
 					GetComparisonString(o.Namespace) == GetComparisonString(Namespace) &&
 					GetComparisonString(o.Schema) == GetComparisonString(Schema) &&
 					GetComparisonString(o.AssemblyName) == GetComparisonString(AssemblyName) &&
@@ -637,6 +711,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string SetName = "SetName";	
 			public const string SetSpec = "SetSpec";	
 			public const string Prefix = "Prefix";	
+			public const string DeletedRecord = "DeletedRecord";	
+			public const string Granularity = "Granularity";	
 			public const string Namespace = "Namespace";	
 			public const string Schema = "Schema";	
 			public const string AssemblyName = "AssemblyName";	

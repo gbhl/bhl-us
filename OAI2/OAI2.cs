@@ -1008,10 +1008,10 @@ namespace MOBOT.BHL.OAI2
         {
             OAIHarvestResult harvestResult = new OAIHarvestResult();
             string url = string.Empty;
-            DateTime responseDate = DateTime.Now;
+            DateTime responseDate = DateTime.Now.ToUniversalTime();
             string responseMessage = "ok";
             string newResumptionToken = string.Empty;
-            DateTime resumptionExpiration = DateTime.Now.AddHours(1);
+            DateTime resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
             int completeListSize = 0;
             int cursor = 0;
             List<OAIRecord> content = new List<OAIRecord>();
@@ -1085,9 +1085,9 @@ namespace MOBOT.BHL.OAI2
                 completeListSize = 0;
                 cursor = 0;
                 content = null;
-                responseDate = DateTime.Now;
+                responseDate = DateTime.Now.ToUniversalTime();
                 responseMessage = ex.Message;
-                resumptionExpiration = DateTime.Now.AddHours(1);
+                resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
                 newResumptionToken = string.Empty;
             }
 

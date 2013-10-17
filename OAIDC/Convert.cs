@@ -46,8 +46,11 @@ Updated:        Mike Lichtenberg
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 using MOBOT.BHL.OAI2;
 
 namespace MOBOT.BHL.OAIDC
@@ -66,6 +69,13 @@ namespace MOBOT.BHL.OAIDC
             _oaiRecord = new OAIRecord();
 
             // TODO: Parse the supplied Dublin Core and store the values in _oaiRecord
+
+            XDocument xml = XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(dcRecord)));
+            XElement root = xml.Root;
+            XNamespace ns = root.Name.Namespace;
+
+
+
 
             throw new NotImplementedException();
         }

@@ -11,6 +11,10 @@ namespace BHLOAIHarvester
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
 
+        public string HarvestSetID { get; set; }
+        public string FromDate { get; set; }
+        public string UntilDate { get; set; }
+
         public void LoadAppConfig()
         {
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];

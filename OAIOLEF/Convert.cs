@@ -22,7 +22,10 @@ namespace MOBOT.BHL.OAIOLEF
         {
             _oaiRecord = new OAIRecord();
 
-            // TODO: Parse the supplied OLEF and store the values in _oaiRecord
+            // Parse the supplied OLEF and store the values in _oaiRecord
+
+
+
 
             throw new NotImplementedException();
         }

@@ -15,6 +15,8 @@ SELECT	HarvestSetID,
 		SetName,
 		SetSpec, 
 		Prefix, 
+		DeletedRecord,
+		Granularity,
 		[Namespace],
 		[Schema],
 		AssemblyName

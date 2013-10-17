@@ -16,7 +16,7 @@ namespace MOBOT.BHLImport.DAL
             int harvestSetID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIHarvestLogSelectLastDateForHarvestSet", connection, transaction,
