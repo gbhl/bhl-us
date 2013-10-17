@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
 using MOBOT.BHL.OAI2;
 
 namespace MOBOT.BHL.OAIMODS
@@ -19,7 +22,15 @@ namespace MOBOT.BHL.OAIMODS
         {
             _oaiRecord = new OAIRecord();
 
-            // TODO: Parse the supplied MODS and store the values in _oaiRecord
+            // Parse the supplied MODS and store the values in _oaiRecord
+            XDocument xml = XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(modsRecord)));
+            XElement root = xml.Root;
+            XNamespace ns = root.Name.Namespace;
+
+
+
+
+
 
             throw new NotImplementedException();
         }
