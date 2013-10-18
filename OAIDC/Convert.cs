@@ -71,7 +71,8 @@ namespace MOBOT.BHL.OAIDC
             // Parse the supplied Dublin Core and store the values in _oaiRecord
             XDocument xml = XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(dcRecord)));
             XElement root = xml.Root;
-            XNamespace ns = root.Name.Namespace;
+            XNamespace ns = root.GetNamespaceOfPrefix(root.Name.LocalName);
+            if (ns == null) ns = root.Name.Namespace;
 
             XElement title = root.Element(ns + "title");
             if (title != null) _oaiRecord.Title = title.Value;

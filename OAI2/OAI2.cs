@@ -1056,15 +1056,15 @@ namespace MOBOT.BHL.OAI2
                         newResumptionToken = resumptionTokenElement.Value;
                         if (resumptionTokenElement.Attribute("expirationDate") != null)
                         {
-                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate"));
+                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate").Value);
                         }
                         if (resumptionTokenElement.Attribute("completeListSize") != null)
                         {
-                            completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize"));
+                            completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize").Value);
                         }
                         if (resumptionTokenElement.Attribute("cursor") != null)
                         {
-                            cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor"));
+                            cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor").Value);
                         }
                     }
 

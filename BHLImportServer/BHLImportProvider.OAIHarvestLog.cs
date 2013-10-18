@@ -18,5 +18,12 @@ namespace MOBOT.BHLImport.Server
             return new OAIHarvestLogDAL().OAIHarvestLogInsertAuto(null, null, harvestSetID, harvestStartDateTime, fromDate, 
                 untilDate, responseDateTime, result, numberHarvested);
         }
+
+        public void OAIHarvestLogUpdate(int harvestLogID, int harvestSetID, DateTime? harvestStartDateTime, 
+            DateTime? fromDate, DateTime? untilDate, DateTime? responseDateTime, string result, int numberHarvested)
+        {
+            new OAIHarvestLogDAL().OAIHarvestLogUpdateAuto(null, null, harvestLogID, harvestSetID, harvestStartDateTime,
+                fromDate, untilDate, responseDateTime, result, numberHarvested);
+        }
     }
 }

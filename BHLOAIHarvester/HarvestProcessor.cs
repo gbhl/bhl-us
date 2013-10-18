@@ -83,6 +83,7 @@ namespace BHLOAIHarvester
             string responseMessage = string.Empty;
             string fromDate = string.Empty;
             string untilDate = string.Empty;
+            int harvestLogID = 0;
 
             try
             {
@@ -94,6 +95,11 @@ namespace BHLOAIHarvester
 
                 // Get the from and until dates for this harvest set
                 GetHarvestDates(set.HarvestSetID, set.Granularity, out fromDate, out untilDate);
+
+                // Add a log record to indicate that the harvest has started
+                OAIHarvestLog log = new BHLImportProvider().OAIHarvestLogInsert(set.HarvestSetID, harvestStartTime,
+                    Convert.ToDateTime(fromDate), Convert.ToDateTime(untilDate), responseDate, "processing", 0);
+                harvestLogID = log.HarvestLogID;
 
                 do
                 {
@@ -147,25 +153,27 @@ namespace BHLOAIHarvester
                 responseMessage = ex.Message;
 
 
-                // TODO: Clear out just-harvested records if failure due to OAI service error
+                // TODO: Clear out just-harvested records if failure due to OAI service error (use harvestLogID)
 
 
             }
             finally
             {
-                try
+                if (harvestLogID > 0)   // Make sure there is a log record to update
                 {
-                    // Log the OAI results
-                    var numberHarvested = (from r in itemsHarvested
-                                select r.Value.Count).Sum();
+                    try
+                    {
+                        // Log the OAI results
+                        var numberHarvested = (from r in itemsHarvested select r.Value.Count).Sum();
 
-                    new BHLImportProvider().OAIHarvestLogInsert(set.HarvestSetID, harvestStartTime, 
-                        Convert.ToDateTime(fromDate), Convert.ToDateTime(untilDate),
-                        ((DateTime)responseDate).ToLocalTime(), responseMessage, numberHarvested);
-                }
-                catch (Exception ex)
-                {
-                    LogMessage(string.Format("Error logging harvesting results for \"{0}\"", set.HarvestSetName), ex);
+                        new BHLImportProvider().OAIHarvestLogUpdate(harvestLogID, set.HarvestSetID, 
+                            harvestStartTime, Convert.ToDateTime(fromDate), Convert.ToDateTime(untilDate), 
+                            ((DateTime)responseDate).ToLocalTime(), responseMessage, numberHarvested);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogMessage(string.Format("Error logging harvesting results for \"{0}\"", set.HarvestSetName), ex);
+                    }
                 }
             }
 
