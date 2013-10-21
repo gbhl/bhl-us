@@ -53,6 +53,7 @@ INTO	#tmpTitle
 FROM	CONTAINSTABLE(SearchCatalog, (SearchText), @Search) x
 		INNER JOIN SearchCatalog c WITH (NOLOCK) ON c.SearchCatalogID = x.[KEY]
 		INNER JOIN #tmpActiveTitle tmp ON c.TitleID = tmp.TitleID AND c.ItemID = tmp.ItemID
+		INNER JOIN Item i WITH (NOLOCK) on tmp.TitleID = i.PrimaryTitleID and tmp.ItemID = i.ItemID
 UNION
 SELECT TitleID, ItemSequence, ItemID, 0 FROM #tmpActiveTitle WHERE @Search = '"**"'
 
