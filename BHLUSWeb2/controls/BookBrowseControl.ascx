@@ -12,7 +12,7 @@
             <%# Eval("InstitutionName") == string.Empty ? "" : "<div class=\"titledetails\">Contributed by: " + Eval("InstitutionName") + "</div>"%>
             <%# Eval("Subjects") == string.Empty ? "" : "<div class=\"titledetails\">Subjects: " + Eval("Subjects").ToString().Replace("|", "&nbsp;&nbsp;") + "</div>"%>
             <%# Eval("Collections") == string.Empty ? "" : "<div class=\"titledetails\">BHL Collections: " + Eval("Collections") + "</div>"%>
-             <a class="titleviewbook" href="/item/<%# Eval("ItemID ")%>">View Book<%# Eval("ExternalUrl") == string.Empty ? "" : " (External)" %></a>
+             <a class="titleviewbook" target="<%# Eval("ExternalUrl") == string.Empty ? "_self" : "_blank" %>" href="/item/<%# Eval("ItemID ")%>">View Book<%# Eval("ExternalUrl") == string.Empty ? "" : " (External)" %></a>
             </li>
 	</ItemTemplate>
 	<HeaderTemplate>

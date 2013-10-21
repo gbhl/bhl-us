@@ -264,7 +264,7 @@
 
                     <% if (! string.IsNullOrEmpty(BhlSegment.Url))
                     { %>
-                        <a href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />
+                        <a target="_blank" href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />
                     <% } %>
 
                     <% if (! string.IsNullOrEmpty(BhlSegment.DownloadUrl))

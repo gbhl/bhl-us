@@ -13,7 +13,7 @@
             <%# Eval("PageRange") == string.Empty ? "" : "<div class=\"titledetails\">Page Range: " + Eval("PageRange") + "</div>"%>
             <%# Eval("PublicationDetails") == string.Empty ? "" : "<div class=\"titledetails\">Publication info: " + Eval("PublicationDetails") + "</div>"%>
             <%# Eval("StartPageID") == null ? "":"<a class=\"titleviewbook\" href=\"/page/" + Eval("StartPageID")+ "\">View "+  Eval("GenreName")+ "</a> "%>
-            <%# Eval("URL") == string.Empty ? "":"<a class=\"titleviewbook\" href=\"" + Eval("URL")+ "\">View "+  Eval("GenreName")+ " (External)</a>" %>
+            <%# Eval("URL") == string.Empty ? "":"<a target=\"_blank\" class=\"titleviewbook\" href=\"" + Eval("URL")+ "\">View "+  Eval("GenreName")+ " (External)</a>" %>
             <%# Eval("DownloadURL") == string.Empty ? "":"<a class=\"titleviewbook\" href=\"" + Eval("DownloadURL")+ "\">Download "+  Eval("GenreName")+ "</a>" %>
         </li>
 	</ItemTemplate>

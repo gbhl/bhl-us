@@ -309,7 +309,7 @@
                         <% } %>
 
                         <div class="booklinks">
-                            <a href="/item/<%: bibliographyItem.Item.ItemID %>">View Book<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write(" (External)"); %></a>
+                            <a target="<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write("_blank"); else Response.Write("_self"); %>" href="/item/<%: bibliographyItem.Item.ItemID %>">View Book<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write(" (External)"); %></a>
                             <% if (bibliographyItem.Item.NumberOfSegments > 0)
                                 { %>
                                 <br />
