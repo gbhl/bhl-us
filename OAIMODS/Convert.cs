@@ -27,12 +27,177 @@ namespace MOBOT.BHL.OAIMODS
             XElement root = xml.Root;
             XNamespace ns = root.Name.Namespace;
 
+            // Title
+            XElement title = null;
+            XElement titleInfo = root.Element(ns + "titleInfo");
+            if (titleInfo != null) title = titleInfo.Element(ns + "title");
+            if (title != null) _oaiRecord.Title = title.Value;
+
+            // Genre/Type
+            XElement genre = root.Element(ns + "genre");
+            if (genre != null)
+            {
+                switch (genre.Value)
+                {
+                    case "book":
+                    case "journal":
+                        _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
+                        break;
+                    case "issue":
+                        _oaiRecord.Type = OAIRecord.RecordType.Issue;
+                        break;
+                    case "article":
+                        _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                        break;
+                    default:
+                        _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                        break;
+                }
+            }
+            else
+            {
+                _oaiRecord.Type = OAIRecord.RecordType.Segment;
+            }
+
+            // Subjects
+            var subjects = from s in root.Elements(ns + "subject") select s;
+            foreach (XElement s in subjects)
+            {
+                foreach (XElement e in s.Elements())
+                {
+                    _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(e.Value, e.Value));
+                }
+            }
+
+            // Authors
+            var authors = from a in root.Elements(ns + "name") select a;
+            foreach (XElement author in authors)
+            {
+                OAIRecord.Creator creator = new OAIRecord.Creator();
+
+                var nameList = from n in authors.Elements(ns + "namePart") select n;
+
+                string familyName = string.Empty;
+                string givenName = string.Empty;
+                foreach (XElement nameInfo in nameList)
+                {
+                    XAttribute type = nameInfo.Attribute("type");
+                    if (type == null)
+                    {
+                        creator.FullName = nameInfo.Value;
+                    }
+                    else
+                    {
+                        switch (type.Value)
+                        {
+                            case "date":
+                                creator.Dates = nameInfo.Value;
+                                break;
+                            case "family":
+                                familyName = nameInfo.Value;
+                                break;
+                            case "given":
+                                givenName = nameInfo.Value;
+                                break;
+                            case "termsOfAddress":
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(familyName) || !string.IsNullOrWhiteSpace(givenName))
+                {
+                    creator.FullName = string.Format("{0}, {1}", familyName, givenName);
+                }
+
+                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(creator.FullName, creator));
+            }
+
+            // Language
+            XElement language = root.Element(ns + "language");
+            if (language != null)
+            {
+                XElement languageTerm = language.Element(ns + "languageTerm");
+                if (languageTerm != null) _oaiRecord.Languages.Add(languageTerm.Value);
+            }
+
+            // Publisher info
+            var publisherInfoList = from p in root.Elements(ns + "originInfo") select p;
+            foreach (XElement publisherInfo in publisherInfoList)
+            {
+                if (publisherInfo.Element(ns + "dateIssued") != null)
+                    _oaiRecord.PublicationDates = publisherInfo.Element(ns + "dateIssued").Value;
+                if (publisherInfo.Element(ns + "publisher") != null)
+                    _oaiRecord.Publisher = publisherInfo.Element(ns + "publisher").Value;
+                if (publisherInfo.Element(ns + "edition") != null)
+                    _oaiRecord.Edition = publisherInfo.Element(ns + "edition").Value;
+                if (publisherInfo.Element(ns + "place") != null)
+                {
+                    XElement place = publisherInfo.Element(ns + "place");
+                    if (place.Element(ns + "placeTerm") != null)
+                        _oaiRecord.PublicationPlace = place.Element(ns + "placeTerm").Value;
+                }
+            }
+
+            // Copyright info
+            var accessConditionList = from a in root.Elements(ns + "accessCondition") select a;
+            foreach (XElement accessCondition in accessConditionList) _oaiRecord.Rights.Add(accessCondition.Value);
+
+            // Book/journal/issue volume
+            if (_oaiRecord.Type == OAIRecord.RecordType.BookJournal || _oaiRecord.Type == OAIRecord.RecordType.Issue)
+            {
+                XElement holdingSimple = null;
+                XElement copyInformation = null;
+                XElement enumerationAndChronology = null;
+                XElement location = root.Element(ns + "location");
+                if (location != null) holdingSimple = location.Element(ns + "holdingSimple");
+                if (holdingSimple != null) copyInformation = holdingSimple.Element(ns + "copyInformation");
+                if (copyInformation != null) enumerationAndChronology = copyInformation.Element(ns + "enumerationAndChronology");
+                if (enumerationAndChronology != null) _oaiRecord.JournalVolume = enumerationAndChronology.Value;
+            }
+
+            // TODO: Get identifiers (including URI)
 
 
 
+            // TODO: Get container info (title, volume, pages, issue, date) for articles from relatedItem(@type="host")
+            if (_oaiRecord.Type == OAIRecord.RecordType.Segment)
+            {
+                XElement relatedItem = (from r in root.Elements(ns + "relatedItem") 
+                                        where r.Attribute("type").Value == "host"
+                                        select r).First();
 
+                if (relatedItem != null)
+                {
+                    XElement containerTitle = null;
+                    XElement containerTitleInfo = relatedItem.Element(ns + "titleInfo");
+                    if (containerTitleInfo != null) title = containerTitleInfo.Element(ns + "title");
+                    if (containerTitle != null) _oaiRecord.JournalTitle = containerTitle.Value;
 
-            throw new NotImplementedException();
+                    XElement part = relatedItem.Element(ns + "part");
+                    if (part != null)
+                    {
+                        XElement volume = (from v in part.Elements(ns + "detail") where v.Attribute("type").Value == "volume" select v).First();
+                        if (volume != null) _oaiRecord.JournalVolume = volume.Value;
+
+                        XElement issue = (from i in part.Elements(ns + "detail") where i.Attribute("type").Value == "issue" select i).First();
+                        if (issue != null) _oaiRecord.JournalIssue = issue.Value;
+
+                        XElement pages = (from p in part.Elements(ns + "extent") where p.Attribute("unit").Value == "pages" select p).First();
+                        if (pages != null)
+                        {
+                            XElement start = pages.Element(ns + "start");
+                            XElement end = pages.Element(ns + "end");
+                            if (start != null) _oaiRecord.ArticleStartPage = start.Value;
+                            if (end != null) _oaiRecord.ArticleEndPage = start.Value;
+                        }
+
+                        
+                    }
+                }                
+            }
         }
 
         #region ToOAIRecord
