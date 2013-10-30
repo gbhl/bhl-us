@@ -1069,13 +1069,34 @@ namespace MOBOT.BHL.OAI2
                     }
 
                     // 4. Parse the returned records
-                    IEnumerable<XElement> records = from r in root.Descendants(ns + "metadata")
-                                                    select r;
+                    IEnumerable<XElement> records = from r in root.Descendants(ns + "record") select r;
 
                     foreach (XElement record in records)
                     {
-                        string metadataString = record.FirstNode.ToString();
-                        OAIRecord oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
+                        XElement header = record.Element(ns + "header");
+
+                        string oaiStatus = string.Empty;
+                        if (header.Attribute("status") != null) oaiStatus = header.Attribute("status").Value;
+
+                        OAIRecord oaiRecord = null;
+                        if (oaiStatus == "deleted")
+                        {
+                            // No metadata exists for deleted records, so just create an empty
+                            // OAIRecord object to hold the OAI header information
+                            oaiRecord = new OAIRecord();
+                        }
+                        else
+                        {
+                            // Harvest the metadata for this record
+                            string metadataString = record.Element(ns + "metadata").FirstNode.ToString();
+                            oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
+                        }
+
+                        // Capture the OAI header info
+                        oaiRecord.OaiStatus = oaiStatus;
+                        oaiRecord.OaiIdentifier = header.Element(ns + "identifier").Value;
+                        oaiRecord.OaiDateStamp = header.Element(ns + "datestamp").Value;
+
                         content.Add(oaiRecord);
                     }
                 }

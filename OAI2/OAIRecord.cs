@@ -48,6 +48,30 @@ namespace MOBOT.BHL.OAI2
             set { _errorMessage = value; }
         }
 
+        String _oaiStatus = String.Empty;
+
+        public String OaiStatus
+        {
+            get { return _oaiStatus; }
+            set { _oaiStatus = value; }
+        }
+
+        String _oaiIdentifier = String.Empty;
+
+        public String OaiIdentifier
+        {
+            get { return _oaiIdentifier; }
+            set { _oaiIdentifier = value; }
+        }
+
+        String _oaiDateStamp = String.Empty;
+
+        public String OaiDateStamp
+        {
+            get { return _oaiDateStamp; }
+            set { _oaiDateStamp = value; }
+        }
+
         private RecordType _type = RecordType.BookJournal;
 
         public RecordType Type
