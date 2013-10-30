@@ -298,6 +298,14 @@ namespace MOBOT.BHL.OAI2
             set { _nlm = value; }
         }
 
+        String _doi = String.Empty;
+
+        public String Doi
+        {
+            get { return _doi; }
+            set { _doi = value; }
+        }
+
         List<String> _formats = new List<string>();
 
         public List<String> Formats

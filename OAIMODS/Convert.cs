@@ -75,7 +75,7 @@ namespace MOBOT.BHL.OAIMODS
             {
                 OAIRecord.Creator creator = new OAIRecord.Creator();
 
-                var nameList = from n in authors.Elements(ns + "namePart") select n;
+                var nameList = from n in author.Elements(ns + "namePart") select n;
 
                 string familyName = string.Empty;
                 string givenName = string.Empty;
@@ -158,45 +158,77 @@ namespace MOBOT.BHL.OAIMODS
                 if (enumerationAndChronology != null) _oaiRecord.JournalVolume = enumerationAndChronology.Value;
             }
 
-            // TODO: Get identifiers (including URI)
-
-
-
-            // TODO: Get container info (title, volume, pages, issue, date) for articles from relatedItem(@type="host")
+            // Article container info (title, volume, pages, issue
             if (_oaiRecord.Type == OAIRecord.RecordType.Segment)
             {
-                XElement relatedItem = (from r in root.Elements(ns + "relatedItem") 
+                var relatedItem = from r in root.Elements(ns + "relatedItem") 
                                         where r.Attribute("type").Value == "host"
-                                        select r).First();
+                                        select r;
 
-                if (relatedItem != null)
+                if (relatedItem.Count() > 0)
                 {
                     XElement containerTitle = null;
-                    XElement containerTitleInfo = relatedItem.Element(ns + "titleInfo");
+                    XElement containerTitleInfo = relatedItem.First().Element(ns + "titleInfo");
                     if (containerTitleInfo != null) title = containerTitleInfo.Element(ns + "title");
                     if (containerTitle != null) _oaiRecord.JournalTitle = containerTitle.Value;
 
-                    XElement part = relatedItem.Element(ns + "part");
+                    XElement part = relatedItem.First().Element(ns + "part");
                     if (part != null)
                     {
-                        XElement volume = (from v in part.Elements(ns + "detail") where v.Attribute("type").Value == "volume" select v).First();
-                        if (volume != null) _oaiRecord.JournalVolume = volume.Value;
+                        var volume = from v in part.Elements(ns + "detail") where v.Attribute("type").Value == "volume" select v;
+                        if (volume.Count() > 0) _oaiRecord.JournalVolume = volume.First().Value;
 
-                        XElement issue = (from i in part.Elements(ns + "detail") where i.Attribute("type").Value == "issue" select i).First();
-                        if (issue != null) _oaiRecord.JournalIssue = issue.Value;
+                        var issue = from i in part.Elements(ns + "detail") where i.Attribute("type").Value == "issue" select i;
+                        if (issue.Count() > 0) _oaiRecord.JournalIssue = issue.First().Value;
 
-                        XElement pages = (from p in part.Elements(ns + "extent") where p.Attribute("unit").Value == "pages" select p).First();
-                        if (pages != null)
+                        var pages = from p in part.Elements(ns + "extent") where p.Attribute("unit").Value == "pages" select p;
+                        if (pages.Count() > 0)
                         {
-                            XElement start = pages.Element(ns + "start");
-                            XElement end = pages.Element(ns + "end");
+                            XElement start = pages.First().Element(ns + "start");
+                            XElement end = pages.First().Element(ns + "end");
                             if (start != null) _oaiRecord.ArticleStartPage = start.Value;
-                            if (end != null) _oaiRecord.ArticleEndPage = start.Value;
-                        }
-
-                        
+                            if (end != null) _oaiRecord.ArticleEndPage = end.Value;
+                        }                        
                     }
-                }                
+                }
+
+                // Identifiers
+                var doi = from d in root.Elements(ns + "identifier")
+                          where d.Attribute("type").Value == "doi"
+                          select d;
+                if (doi.Count() > 0) _oaiRecord.Doi = doi.First().Value;
+
+                var isbn = from d in root.Elements(ns + "identifier")
+                          where d.Attribute("type").Value == "isbn"
+                          select d;
+                if (isbn.Count() > 0) _oaiRecord.Isbn = isbn.First().Value;
+
+                var issn = from d in root.Elements(ns + "identifier")
+                           where d.Attribute("type").Value == "issn"
+                          select d;
+                if (issn.Count() > 0) _oaiRecord.Doi = issn.First().Value;
+
+                var lccn = from d in root.Elements(ns + "identifier")
+                           where d.Attribute("type").Value == "lccn"
+                           select d;
+                if (lccn.Count() > 0) _oaiRecord.Doi = lccn.First().Value;
+
+                var uris = from d in root.Elements(ns + "identifier")
+                           where d.Attribute("type").Value == "uri"
+                           select d;
+                foreach (XElement uri in uris)
+                {
+                    // See if a DOI is embedded within the URI
+                    string uriValue = uri.Value;
+                    if (uriValue.Contains("http://dx.doi.org/"))
+                    {
+                        _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
+                    }
+                    else
+                    {
+                        _oaiRecord.Url = uriValue;
+                    }
+                }
             }
         }
 
