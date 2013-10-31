@@ -123,7 +123,7 @@ namespace BHLOAIHarvester
                     responseMessage = oaiResults.ResponseMessage;
                     if (responseMessage == "ok")
                     {
-                        foreach (OAIRecord oaiRecord in (List<OAIRecord>)oaiResults.Content)
+                        foreach (MOBOT.BHL.OAI2.OAIRecord oaiRecord in (List<MOBOT.BHL.OAI2.OAIRecord>)oaiResults.Content)
                         {
 
 

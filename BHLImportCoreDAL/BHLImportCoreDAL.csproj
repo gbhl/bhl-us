@@ -88,6 +88,12 @@
     <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />
     <Compile Include="Generated\ItemDAL.Auto.cs" />
     <Compile Include="Generated\OAIHarvestLogDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordCreatorDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordDCTypeDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordRightDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordStatusDAL.Auto.cs" />
+    <Compile Include="Generated\OAIRecordSubjectDAL.Auto.cs" />
     <Compile Include="Generated\PageDAL.Auto.cs" />
     <Compile Include="Generated\PageNameDAL.Auto.cs" />
     <Compile Include="Generated\Page_PageTypeDAL.Auto.cs" />
@@ -116,6 +122,12 @@
     <Compile Include="ItemDAL.cs" />
     <Compile Include="OAIHarvestLogDAL.cs" />
     <Compile Include="OAIHarvestSetDAL.cs" />
+    <Compile Include="OAIRecordCreatorDAL.cs" />
+    <Compile Include="OAIRecordDAL.cs" />
+    <Compile Include="OAIRecordDCTypeDAL.cs" />
+    <Compile Include="OAIRecordRightDAL.cs" />
+    <Compile Include="OAIRecordStatusDAL.cs" />
+    <Compile Include="OAIRecordSubjectDAL.cs" />
     <Compile Include="PageDAL.cs" />
     <Compile Include="PageNameDAL.cs" />
     <Compile Include="Page_PageTypeDAL.cs" />

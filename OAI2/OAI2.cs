@@ -268,7 +268,7 @@ namespace MOBOT.BHL.OAI2
 
                     // Add the record metadata to the output
                     response.Append("\t\t<metadata>\n");
-                    OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
+                    OAI2.OAIRecord oaiRecord = new OAI2.OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                     if (oaiRecord.Load(identifier))
                     {
                         response.Append(new OAIMetadataFactory(metadataPrefix, _metadataFormats).GetMetadata(oaiRecord));
@@ -682,7 +682,7 @@ namespace MOBOT.BHL.OAI2
                         recordList.Append("\t\t</header>\n");
 
                         recordList.Append("\t\t<metadata>\n");
-                        OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
+                        OAI2.OAIRecord oaiRecord = new OAI2.OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                         if (oaiRecord.Load(oaiIDString))
                         {
                             recordList.Append(metadataFactory.GetMetadata(oaiRecord));
@@ -1014,7 +1014,7 @@ namespace MOBOT.BHL.OAI2
             DateTime resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
             int completeListSize = 0;
             int cursor = 0;
-            List<OAIRecord> content = new List<OAIRecord>();
+            List<OAI2.OAIRecord> content = new List<OAI2.OAIRecord>();
 
             // 1. Build the URL
             if (!string.IsNullOrWhiteSpace(resumptionToken))
@@ -1078,12 +1078,12 @@ namespace MOBOT.BHL.OAI2
                         string oaiStatus = string.Empty;
                         if (header.Attribute("status") != null) oaiStatus = header.Attribute("status").Value;
 
-                        OAIRecord oaiRecord = null;
+                        OAI2.OAIRecord oaiRecord = null;
                         if (oaiStatus == "deleted")
                         {
                             // No metadata exists for deleted records, so just create an empty
                             // OAIRecord object to hold the OAI header information
-                            oaiRecord = new OAIRecord();
+                            oaiRecord = new OAI2.OAIRecord();
                         }
                         else
                         {
