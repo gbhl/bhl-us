@@ -370,5 +370,29 @@
     <Build Include="dbo\Tables\OAIRecordSubject.sql" />
     <Build Include="dbo\Tables\OAIRecordRight.sql" />
     <Build Include="dbo\Tables\OAIRecordDCType.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordCreatorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordCreatorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordCreatorUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordCreatorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDCTypeSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDCTypeInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDCTypeUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDCTypeDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRightSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRightInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRightUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRightDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordStatusSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordStatusInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordStatusUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordStatusDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSubjectSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSubjectInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSubjectUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSubjectDeleteAuto.sql" />
   </ItemGroup>
 </Project>
