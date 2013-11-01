@@ -130,8 +130,6 @@ namespace BHLOAIHarvester
                             // TODO: Save the information obtained from the OAI service
 
 
-                            // TODO:  Make sure to account for repositories that track deleted records!
-
 
                             UpdateHarvestCount(set.HarvestSetName, oaiRecord.Type.ToString());
                         }
@@ -150,12 +148,18 @@ namespace BHLOAIHarvester
             catch (Exception ex)
             {
                 LogMessage(string.Format("Error harvesting \"{0}\"", set.HarvestSetName), ex);
-                responseMessage = ex.Message;
+                responseMessage = ex.Message.Substring(0, 200);
 
-
-                // TODO: Clear out just-harvested records if failure due to OAI service error (use harvestLogID)
-
-
+                // Clear out just-harvested records
+                try
+                {
+                    BHLImportProvider provider = new BHLImportProvider();
+                    if (harvestLogID > 0) provider.OAIRecordDeleteForHarvestLogID(harvestLogID);
+                }
+                catch (Exception ex2)
+                {
+                    LogMessage(string.Format("Error clearing just-harvested records and updating the log for \"{0}\"", set.HarvestSetName), ex2);
+                }
             }
             finally
             {
@@ -167,8 +171,11 @@ namespace BHLOAIHarvester
                         var numberHarvested = (from r in itemsHarvested select r.Value.Count).Sum();
 
                         new BHLImportProvider().OAIHarvestLogUpdate(harvestLogID, set.HarvestSetID, 
-                            harvestStartTime, Convert.ToDateTime(fromDate), Convert.ToDateTime(untilDate), 
-                            ((DateTime)responseDate).ToLocalTime(), responseMessage, numberHarvested);
+                            harvestStartTime, 
+                            (string.IsNullOrWhiteSpace(fromDate) ? Convert.ToDateTime(null) : Convert.ToDateTime(fromDate)),
+                            (string.IsNullOrWhiteSpace(untilDate) ? Convert.ToDateTime(null) : Convert.ToDateTime(untilDate)),
+                            (responseDate == null ? responseDate : ((DateTime)responseDate).ToLocalTime()), 
+                            responseMessage, numberHarvested);
                     }
                     catch (Exception ex)
                     {

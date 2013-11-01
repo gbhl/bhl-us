@@ -394,5 +394,9 @@
     <Build Include="dbo\Stored Procedures\OAIRecordSubjectInsertAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordSubjectUpdateAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordSubjectDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDeleteForOAIRecordID.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordDeleteForHarvestLogID.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSelectForOAIIdentifierAndStatus.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordSelectForOAIIdentifierAndDateStamp.sql" />
   </ItemGroup>
 </Project>
