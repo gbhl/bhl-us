@@ -81,7 +81,7 @@ namespace MOBOT.BHL.OAIDC
             foreach (XElement c in creators)
             {
                 OAIRecord.Creator creator = new OAIRecord.Creator();
-                creator.Name = c.Value;
+                creator.FullName = c.Value;
                 _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(c.Value, creator));
             }
 

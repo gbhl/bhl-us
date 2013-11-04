@@ -40,6 +40,7 @@ namespace MOBOT.BHL.OAIMODS
                 switch (genre.Value)
                 {
                     case "book":
+                    case "monograph":
                     case "journal":
                         _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
                         break;

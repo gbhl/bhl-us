@@ -123,13 +123,15 @@ namespace BHLOAIHarvester
                     responseMessage = oaiResults.ResponseMessage;
                     if (responseMessage == "ok")
                     {
+                        BHLImportProvider provider = new BHLImportProvider();
                         foreach (MOBOT.BHL.OAI2.OAIRecord oaiRecord in (List<MOBOT.BHL.OAI2.OAIRecord>)oaiResults.Content)
                         {
+                            // Convert the OAI metadata to a DAL data object
+                            MOBOT.BHLImport.DataObjects.OAIRecord oaiDataRecord = ConvertToOAIDataObject(oaiRecord);
+                            oaiDataRecord.HarvestLogID = harvestLogID;
 
-
-                            // TODO: Save the information obtained from the OAI service
-
-
+                            // Save the OAI metadata
+                            provider.Save(oaiDataRecord);
 
                             UpdateHarvestCount(set.HarvestSetName, oaiRecord.Type.ToString());
                         }
@@ -148,7 +150,7 @@ namespace BHLOAIHarvester
             catch (Exception ex)
             {
                 LogMessage(string.Format("Error harvesting \"{0}\"", set.HarvestSetName), ex);
-                responseMessage = ex.Message.Substring(0, 200);
+                responseMessage = ex.Message;
 
                 // Clear out just-harvested records
                 try
@@ -185,6 +187,69 @@ namespace BHLOAIHarvester
             }
 
             this.LogMessage(string.Format("Finished harvesting of \"{0}\"", set.HarvestSetName));
+        }
+
+        /// <summary>
+        /// Convert the OAI2 OAIRecord object to a BHL DataObjects OAIRecord object.
+        /// </summary>
+        /// <param name="oaiRecord"></param>
+        /// <returns></returns>
+        public MOBOT.BHLImport.DataObjects.OAIRecord ConvertToOAIDataObject(MOBOT.BHL.OAI2.OAIRecord oaiRecord)
+        {
+            MOBOT.BHLImport.DataObjects.OAIRecord oaiDataRecord = new MOBOT.BHLImport.DataObjects.OAIRecord();
+
+            oaiDataRecord.OAIIdentifier = oaiRecord.OaiIdentifier;
+            oaiDataRecord.OAIDateStamp = oaiRecord.OaiDateStamp;
+            oaiDataRecord.OAIStatus = oaiRecord.OaiStatus;
+            oaiDataRecord.RecordType = oaiRecord.Type.ToString();
+            oaiDataRecord.Title = oaiRecord.Title;
+            oaiDataRecord.ContainerTitle = oaiRecord.JournalTitle;
+            oaiDataRecord.Volume = oaiRecord.JournalVolume;
+            oaiDataRecord.Issue = oaiRecord.JournalIssue;
+            oaiDataRecord.Edition = oaiRecord.Edition;
+            oaiDataRecord.StartPage = oaiRecord.ArticleStartPage;
+            oaiDataRecord.EndPage = oaiRecord.ArticleEndPage;
+            oaiDataRecord.Date = oaiRecord.Date;
+            oaiDataRecord.Language = oaiRecord.Languages.Count > 0 ? oaiRecord.Languages[0] : string.Empty;
+            oaiDataRecord.Publisher = oaiRecord.Publisher;
+            oaiDataRecord.PublicationPlace = oaiRecord.PublicationPlace;
+            oaiDataRecord.PublicationDate = oaiRecord.PublicationDates;
+            oaiDataRecord.Issn = oaiRecord.Issn;
+            oaiDataRecord.Isbn = oaiRecord.Isbn;
+            oaiDataRecord.Doi = oaiRecord.Doi;
+            oaiDataRecord.Url = oaiRecord.Url;
+            oaiDataRecord.Contributor = oaiRecord.Contributor;
+
+            foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord.Creator> creator in oaiRecord.Creators)
+            {
+                OAIRecordCreator oaiRecordCreator = new OAIRecordCreator();
+                oaiRecordCreator.FullName = creator.Value.FullName ?? string.Empty;
+                oaiRecordCreator.Dates = creator.Value.Dates ?? string.Empty;
+                oaiDataRecord.Creators.Add(oaiRecordCreator);
+            }
+
+            foreach (KeyValuePair<string, string> subject in oaiRecord.Subjects)
+            {
+                OAIRecordSubject oaiRecordSubject = new OAIRecordSubject();
+                oaiRecordSubject.Keyword = subject.Value ?? string.Empty;
+                oaiDataRecord.Subjects.Add(oaiRecordSubject);
+            }
+
+            foreach(string dcType in oaiRecord.Types)
+            {
+                OAIRecordDCType oaiRecordDCType = new OAIRecordDCType();
+                oaiRecordDCType.DCType = dcType ?? string.Empty;
+                oaiDataRecord.DcTypes.Add(oaiRecordDCType);
+            }
+
+            foreach (string right in oaiRecord.Rights)
+            {
+                OAIRecordRight oaiRecordRight = new OAIRecordRight();
+                oaiRecordRight.Right = right ?? string.Empty;
+                oaiDataRecord.Rights.Add(oaiRecordRight);
+            }
+
+            return oaiDataRecord;
         }
 
         #region Utility methods

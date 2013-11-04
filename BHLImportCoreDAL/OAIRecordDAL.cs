@@ -15,18 +15,11 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            try
+            using (SqlCommand command =
+                CustomSqlHelper.CreateCommand("OAIRecordDeleteForOAIRecordID", connection, sqlTransaction,
+                CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oaiRecordID)))
             {
-                using (SqlCommand command =
-                    CustomSqlHelper.CreateCommand("OAIRecordDeleteForOAIRecordID", connection, sqlTransaction,
-                    CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oaiRecordID)))
-                {
-                    CustomSqlHelper.ExecuteNonQuery(command);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -37,18 +30,11 @@ namespace MOBOT.BHLImport.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            try
+            using (SqlCommand command =
+                CustomSqlHelper.CreateCommand("OAIRecordDeleteForHarvestLogID", connection, sqlTransaction,
+                CustomSqlHelper.CreateInputParameter("HarvestLogID", SqlDbType.Int, null, false, HarvestLogID)))
             {
-                using (SqlCommand command =
-                    CustomSqlHelper.CreateCommand("OAIRecordDeleteForHarvestLogID", connection, sqlTransaction,
-                    CustomSqlHelper.CreateInputParameter("HarvestLogID", SqlDbType.Int, null, false, HarvestLogID)))
-                {
-                    CustomSqlHelper.ExecuteNonQuery(command);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
+                CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
 
@@ -100,6 +86,87 @@ namespace MOBOT.BHLImport.DAL
                     {
                         return null;
                     }
+                }
+            }
+        }
+
+        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, OAIRecord oaiRecord)
+        {
+            SqlConnection connection = sqlConnection;
+            SqlTransaction transaction = sqlTransaction;
+
+            // Only proceed with the save if we don't already have a record for this exact identifier and datestamp
+            if (OAIRecordSelectForOAIIdentifierAndDateStamp(connection, transaction, oaiRecord.OAIIdentifier, oaiRecord.OAIDateStamp) == null)
+            {
+                if (connection == null)
+                {
+                    connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHLImport"));
+                }
+
+                bool isTransactionCoordinator = CustomSqlHelper.IsTransactionCoordinator(transaction);
+
+                try
+                {
+                    transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
+
+                    // Delete any existing record for this identifier that has a "New" status
+                    OAIRecord existingRecord = OAIRecordSelectForOAIIdentifierAndStatus(connection, transaction, oaiRecord.OAIIdentifier, 10);
+                    if (existingRecord != null) OAIRecordDeleteForOAIRecordID(connection, transaction, existingRecord.OAIRecordID);
+
+                    oaiRecord.OAIRecordStatusID = 10;   // Set record status to "New"
+                    OAIRecord newOaiRecord = OAIRecordInsertAuto(connection, transaction, oaiRecord);
+
+                    if (oaiRecord.Creators.Count > 0)
+                    {
+                        OAIRecordCreatorDAL creatorDAL = new OAIRecordCreatorDAL();
+                        foreach (OAIRecordCreator creator in oaiRecord.Creators)
+                        {
+                            creator.OAIRecordID = newOaiRecord.OAIRecordID;
+                            creatorDAL.OAIRecordCreatorInsertAuto(connection, transaction, creator);
+                        }
+                    }
+
+                    if (oaiRecord.DcTypes.Count > 0)
+                    {
+                        OAIRecordDCTypeDAL typeDAL = new OAIRecordDCTypeDAL();
+                        foreach (OAIRecordDCType dcType in oaiRecord.DcTypes)
+                        {
+                            dcType.OAIRecordID = newOaiRecord.OAIRecordID;
+                            typeDAL.OAIRecordDCTypeInsertAuto(connection, transaction, dcType);
+                        }
+                    }
+
+                    if (oaiRecord.Rights.Count > 0)
+                    {
+                        OAIRecordRightDAL rightDAL = new OAIRecordRightDAL();
+                        foreach (OAIRecordRight right in oaiRecord.Rights)
+                        {
+                            right.OAIRecordID = newOaiRecord.OAIRecordID;
+                            rightDAL.OAIRecordRightInsertAuto(connection, transaction, right);
+                        }
+                    }
+
+                    if (oaiRecord.Subjects.Count > 0)
+                    {
+                        OAIRecordSubjectDAL subjectDAL = new OAIRecordSubjectDAL();
+                        foreach (OAIRecordSubject subject in oaiRecord.Subjects)
+                        {
+                            subject.OAIRecordID = newOaiRecord.OAIRecordID;
+                            subjectDAL.OAIRecordSubjectInsertAuto(connection, transaction, subject);
+                        }
+                    }
+
+                    CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
+                }
+                catch
+                {
+                    CustomSqlHelper.RollbackTransaction(transaction, isTransactionCoordinator);
+
+                    throw;
+                }
+                finally
+                {
+                    CustomSqlHelper.CloseConnection(connection, isTransactionCoordinator);
                 }
             }
         }
