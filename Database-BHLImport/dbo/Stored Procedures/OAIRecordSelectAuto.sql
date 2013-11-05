@@ -27,6 +27,7 @@ SELECT
 	[Issue],
 	[StartPage],
 	[EndPage],
+	[CallNumber],
 	[Issn],
 	[Isbn],
 	[Lccn],
@@ -52,3 +53,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

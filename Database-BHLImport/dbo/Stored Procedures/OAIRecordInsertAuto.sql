@@ -19,6 +19,7 @@
 @Issue NVARCHAR(100),
 @StartPage NVARCHAR(20),
 @EndPage NVARCHAR(20),
+@CallNumber NVARCHAR(100),
 @Issn NVARCHAR(125),
 @Isbn NVARCHAR(125),
 @Lccn NVARCHAR(125),
@@ -52,6 +53,7 @@ INSERT INTO [dbo].[OAIRecord]
 	[Issue],
 	[StartPage],
 	[EndPage],
+	[CallNumber],
 	[Issn],
 	[Isbn],
 	[Lccn],
@@ -83,6 +85,7 @@ VALUES
 	@Issue,
 	@StartPage,
 	@EndPage,
+	@CallNumber,
 	@Issn,
 	@Isbn,
 	@Lccn,
@@ -125,6 +128,7 @@ ELSE BEGIN
 		[Issue],
 		[StartPage],
 		[EndPage],
+		[CallNumber],
 		[Issn],
 		[Isbn],
 		[Lccn],
@@ -143,3 +147,5 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
+
+GO

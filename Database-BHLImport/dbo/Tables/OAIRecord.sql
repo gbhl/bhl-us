@@ -19,6 +19,7 @@
 	Issue nvarchar(100) NOT NULL DEFAULT(''),
 	StartPage nvarchar(20) NOT NULL DEFAULT(''),
 	EndPage nvarchar(20) NOT NULL DEFAULT(''),
+	CallNumber nvarchar(100) NOT NULL DEFAULT(''),
 	Issn nvarchar(125) NOT NULL DEFAULT(''),
 	Isbn nvarchar(125) NOT NULL DEFAULT(''),
 	Lccn nvarchar(125) NOT NULL DEFAULT(''),

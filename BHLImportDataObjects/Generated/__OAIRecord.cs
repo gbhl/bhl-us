@@ -1,5 +1,5 @@
 
-// Generated 10/31/2013 4:01:46 PM
+// Generated 11/5/2013 11:13:30 AM
 // Do not modify the contents of this code file.
 // This abstract class __OAIRecord is based upon OAIRecord.
 
@@ -64,6 +64,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="issue"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="callNumber"></param>
 		/// <param name="issn"></param>
 		/// <param name="isbn"></param>
 		/// <param name="lccn"></param>
@@ -93,6 +94,7 @@ namespace MOBOT.BHLImport.DataObjects
 			string issue, 
 			string startPage, 
 			string endPage, 
+			string callNumber, 
 			string issn, 
 			string isbn, 
 			string lccn, 
@@ -123,6 +125,7 @@ namespace MOBOT.BHLImport.DataObjects
 			Issue = issue;
 			StartPage = startPage;
 			EndPage = endPage;
+			CallNumber = callNumber;
 			Issn = issn;
 			Isbn = isbn;
 			Lccn = lccn;
@@ -252,6 +255,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "EndPage" :
 					{
 						_EndPage = (string)column.Value;
+						break;
+					}
+					case "CallNumber" :
+					{
+						_CallNumber = (string)column.Value;
 						break;
 					}
 					case "Issn" :
@@ -845,6 +853,34 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion EndPage
 		
+		#region CallNumber
+		
+		private string _CallNumber = string.Empty;
+		
+		/// <summary>
+		/// Column: CallNumber;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=100)]
+		public string CallNumber
+		{
+			get
+			{
+				return _CallNumber;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_CallNumber != value)
+				{
+					_CallNumber = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CallNumber
+		
 		#region Issn
 		
 		private string _Issn = string.Empty;
@@ -853,7 +889,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Issn;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("Issn", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=125)]
+		[ColumnDefinition("Issn", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=125)]
 		public string Issn
 		{
 			get
@@ -881,7 +917,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Isbn;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("Isbn", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=125)]
+		[ColumnDefinition("Isbn", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=125)]
 		public string Isbn
 		{
 			get
@@ -909,7 +945,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Lccn;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("Lccn", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=125)]
+		[ColumnDefinition("Lccn", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=125)]
 		public string Lccn
 		{
 			get
@@ -937,7 +973,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Doi;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("Doi", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=50)]
+		[ColumnDefinition("Doi", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=50)]
 		public string Doi
 		{
 			get
@@ -965,7 +1001,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Url;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("Url", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=200)]
+		[ColumnDefinition("Url", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=200)]
 		public string Url
 		{
 			get
@@ -993,7 +1029,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: OAIRecordStatusID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("OAIRecordStatusID", DbTargetType=SqlDbType.Int, Ordinal=25, NumericPrecision=10, IsInForeignKey=true)]
+		[ColumnDefinition("OAIRecordStatusID", DbTargetType=SqlDbType.Int, Ordinal=26, NumericPrecision=10, IsInForeignKey=true)]
 		public int OAIRecordStatusID
 		{
 			get
@@ -1020,7 +1056,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionEntityType;
 		/// DBMS data type: nvarchar(5); Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionEntityType", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=5, IsNullable=true)]
+		[ColumnDefinition("ProductionEntityType", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=5, IsNullable=true)]
 		public string ProductionEntityType
 		{
 			get
@@ -1048,7 +1084,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionEntityID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionEntityID", DbTargetType=SqlDbType.Int, Ordinal=27, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ProductionEntityID", DbTargetType=SqlDbType.Int, Ordinal=28, NumericPrecision=10, IsNullable=true)]
 		public int? ProductionEntityID
 		{
 			get
@@ -1075,7 +1111,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=28)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=29)]
 		public DateTime CreationDate
 		{
 			get
@@ -1102,7 +1138,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=29)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=30)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -1183,6 +1219,7 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
 					GetComparisonString(o.StartPage) == GetComparisonString(StartPage) &&
 					GetComparisonString(o.EndPage) == GetComparisonString(EndPage) &&
+					GetComparisonString(o.CallNumber) == GetComparisonString(CallNumber) &&
 					GetComparisonString(o.Issn) == GetComparisonString(Issn) &&
 					GetComparisonString(o.Isbn) == GetComparisonString(Isbn) &&
 					GetComparisonString(o.Lccn) == GetComparisonString(Lccn) &&
@@ -1312,6 +1349,7 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Issue = "Issue";	
 			public const string StartPage = "StartPage";	
 			public const string EndPage = "EndPage";	
+			public const string CallNumber = "CallNumber";	
 			public const string Issn = "Issn";	
 			public const string Isbn = "Isbn";	
 			public const string Lccn = "Lccn";	

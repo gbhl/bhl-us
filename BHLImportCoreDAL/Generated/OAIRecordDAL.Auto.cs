@@ -1,5 +1,5 @@
 
-// Generated 10/31/2013 4:01:46 PM
+// Generated 11/5/2013 11:13:30 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIRecordDAL is based upon OAIRecord.
@@ -154,6 +154,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="issue"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="callNumber"></param>
 		/// <param name="issn"></param>
 		/// <param name="isbn"></param>
 		/// <param name="lccn"></param>
@@ -184,6 +185,7 @@ namespace MOBOT.BHLImport.DAL
 			string issue,
 			string startPage,
 			string endPage,
+			string callNumber,
 			string issn,
 			string isbn,
 			string lccn,
@@ -193,7 +195,7 @@ namespace MOBOT.BHLImport.DAL
 			string productionEntityType,
 			int? productionEntityID)
 		{
-			return OAIRecordInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID );
+			return OAIRecordInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID );
 		}
 		
 		/// <summary>
@@ -220,6 +222,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="issue"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="callNumber"></param>
 		/// <param name="issn"></param>
 		/// <param name="isbn"></param>
 		/// <param name="lccn"></param>
@@ -251,6 +254,7 @@ namespace MOBOT.BHLImport.DAL
 			string issue,
 			string startPage,
 			string endPage,
+			string callNumber,
 			string issn,
 			string isbn,
 			string lccn,
@@ -283,6 +287,7 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
+					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, false, callNumber),
 					CustomSqlHelper.CreateInputParameter("Issn", SqlDbType.NVarChar, 125, false, issn),
 					CustomSqlHelper.CreateInputParameter("Isbn", SqlDbType.NVarChar, 125, false, isbn),
 					CustomSqlHelper.CreateInputParameter("Lccn", SqlDbType.NVarChar, 125, false, lccn),
@@ -358,6 +363,7 @@ namespace MOBOT.BHLImport.DAL
 				value.Issue,
 				value.StartPage,
 				value.EndPage,
+				value.CallNumber,
 				value.Issn,
 				value.Isbn,
 				value.Lccn,
@@ -454,6 +460,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="issue"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="callNumber"></param>
 		/// <param name="issn"></param>
 		/// <param name="isbn"></param>
 		/// <param name="lccn"></param>
@@ -485,6 +492,7 @@ namespace MOBOT.BHLImport.DAL
 			string issue,
 			string startPage,
 			string endPage,
+			string callNumber,
 			string issn,
 			string isbn,
 			string lccn,
@@ -494,7 +502,7 @@ namespace MOBOT.BHLImport.DAL
 			string productionEntityType,
 			int? productionEntityID)
 		{
-			return OAIRecordUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID);
+			return OAIRecordUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID);
 		}
 		
 		/// <summary>
@@ -522,6 +530,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="issue"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
+		/// <param name="callNumber"></param>
 		/// <param name="issn"></param>
 		/// <param name="isbn"></param>
 		/// <param name="lccn"></param>
@@ -554,6 +563,7 @@ namespace MOBOT.BHLImport.DAL
 			string issue,
 			string startPage,
 			string endPage,
+			string callNumber,
 			string issn,
 			string isbn,
 			string lccn,
@@ -586,6 +596,7 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
+					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, false, callNumber),
 					CustomSqlHelper.CreateInputParameter("Issn", SqlDbType.NVarChar, 125, false, issn),
 					CustomSqlHelper.CreateInputParameter("Isbn", SqlDbType.NVarChar, 125, false, isbn),
 					CustomSqlHelper.CreateInputParameter("Lccn", SqlDbType.NVarChar, 125, false, lccn),
@@ -662,6 +673,7 @@ namespace MOBOT.BHLImport.DAL
 				value.Issue,
 				value.StartPage,
 				value.EndPage,
+				value.CallNumber,
 				value.Issn,
 				value.Isbn,
 				value.Lccn,
@@ -732,6 +744,7 @@ namespace MOBOT.BHLImport.DAL
 						value.Issue,
 						value.StartPage,
 						value.EndPage,
+						value.CallNumber,
 						value.Issn,
 						value.Isbn,
 						value.Lccn,
@@ -784,6 +797,7 @@ namespace MOBOT.BHLImport.DAL
 						value.Issue,
 						value.StartPage,
 						value.EndPage,
+						value.CallNumber,
 						value.Issn,
 						value.Isbn,
 						value.Lccn,

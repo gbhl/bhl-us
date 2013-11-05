@@ -214,15 +214,26 @@ namespace BHLOAIHarvester
             oaiDataRecord.Publisher = oaiRecord.Publisher;
             oaiDataRecord.PublicationPlace = oaiRecord.PublicationPlace;
             oaiDataRecord.PublicationDate = oaiRecord.PublicationDates;
+            oaiDataRecord.CallNumber = oaiRecord.CallNumber;
             oaiDataRecord.Issn = oaiRecord.Issn;
             oaiDataRecord.Isbn = oaiRecord.Isbn;
+            oaiDataRecord.Lccn = oaiRecord.Llc;
             oaiDataRecord.Doi = oaiRecord.Doi;
             oaiDataRecord.Url = oaiRecord.Url;
             oaiDataRecord.Contributor = oaiRecord.Contributor;
 
+            foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord> relatedTitle in oaiRecord.RelatedTitles)
+            {
+                OAIRecordRelatedTitle oaiRecordRelatedTitle = new OAIRecordRelatedTitle();
+                oaiRecordRelatedTitle.TitleType = relatedTitle.Key;
+                oaiRecordRelatedTitle.Title = relatedTitle.Value.Title ?? string.Empty;
+                oaiDataRecord.RelatedTitles.Add(oaiRecordRelatedTitle);
+            }
+
             foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord.Creator> creator in oaiRecord.Creators)
             {
                 OAIRecordCreator oaiRecordCreator = new OAIRecordCreator();
+                oaiRecordCreator.CreatorType = creator.Key;
                 oaiRecordCreator.FullName = creator.Value.FullName ?? string.Empty;
                 oaiRecordCreator.Dates = creator.Value.Dates ?? string.Empty;
                 oaiDataRecord.Creators.Add(oaiRecordCreator);

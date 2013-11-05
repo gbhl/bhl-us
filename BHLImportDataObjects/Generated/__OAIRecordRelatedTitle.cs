@@ -1,7 +1,7 @@
 
 // Generated 11/5/2013 11:13:30 AM
 // Do not modify the contents of this code file.
-// This abstract class __OAIRecordCreator is based upon OAIRecordCreator.
+// This abstract class __OAIRecordRelatedTitle is based upon OAIRecordRelatedTitle.
 
 #region How To Implement
 
@@ -13,7 +13,7 @@
 // namespace MOBOT.BHLImport.DataObjects
 // {
 //		[Serializable]
-// 		public class OAIRecordCreator : __OAIRecordCreator
+// 		public class OAIRecordRelatedTitle : __OAIRecordRelatedTitle
 //		{
 //		}
 // }
@@ -31,43 +31,40 @@ using CustomDataAccess;
 namespace MOBOT.BHLImport.DataObjects
 {	
 	[Serializable]
-	public abstract class __OAIRecordCreator : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
+	public abstract class __OAIRecordRelatedTitle : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
 		#region Constructors
 		
 		/// <summary>
 		/// Default constructor.
 		/// </summary>
-		public __OAIRecordCreator()
+		public __OAIRecordRelatedTitle()
 		{
 		}
 
 		/// <summary>
 		/// Overloaded constructor specifying each column value.
 		/// </summary>
-		/// <param name="oAIRecordCreatorID"></param>
+		/// <param name="oAIRecordRelatedTitleID"></param>
 		/// <param name="oAIRecordID"></param>
-		/// <param name="creatorType"></param>
-		/// <param name="fullName"></param>
-		/// <param name="dates"></param>
-		/// <param name="productionAuthorID"></param>
+		/// <param name="titleType"></param>
+		/// <param name="title"></param>
+		/// <param name="productionTitleAssociationID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
-		public __OAIRecordCreator(int oAIRecordCreatorID, 
+		public __OAIRecordRelatedTitle(int oAIRecordRelatedTitleID, 
 			int oAIRecordID, 
-			string creatorType, 
-			string fullName, 
-			string dates, 
-			int? productionAuthorID, 
+			string titleType, 
+			string title, 
+			int? productionTitleAssociationID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate) : this()
 		{
-			_OAIRecordCreatorID = oAIRecordCreatorID;
+			_OAIRecordRelatedTitleID = oAIRecordRelatedTitleID;
 			OAIRecordID = oAIRecordID;
-			CreatorType = creatorType;
-			FullName = fullName;
-			Dates = dates;
-			ProductionAuthorID = productionAuthorID;
+			TitleType = titleType;
+			Title = title;
+			ProductionTitleAssociationID = productionTitleAssociationID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 		}
@@ -79,7 +76,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <summary>
 		///
 		/// </summary>
-		~__OAIRecordCreator()
+		~__OAIRecordRelatedTitle()
 		{
 		}
 		
@@ -96,9 +93,9 @@ namespace MOBOT.BHLImport.DataObjects
 			{
 				switch (column.Name)
 				{
-					case "OAIRecordCreatorID" :
+					case "OAIRecordRelatedTitleID" :
 					{
-						_OAIRecordCreatorID = (int)column.Value;
+						_OAIRecordRelatedTitleID = (int)column.Value;
 						break;
 					}
 					case "OAIRecordID" :
@@ -106,24 +103,19 @@ namespace MOBOT.BHLImport.DataObjects
 						_OAIRecordID = (int)column.Value;
 						break;
 					}
-					case "CreatorType" :
+					case "TitleType" :
 					{
-						_CreatorType = (string)column.Value;
+						_TitleType = (string)column.Value;
 						break;
 					}
-					case "FullName" :
+					case "Title" :
 					{
-						_FullName = (string)column.Value;
+						_Title = (string)column.Value;
 						break;
 					}
-					case "Dates" :
+					case "ProductionTitleAssociationID" :
 					{
-						_Dates = (string)column.Value;
-						break;
-					}
-					case "ProductionAuthorID" :
-					{
-						_ProductionAuthorID = (int?)column.Value;
+						_ProductionTitleAssociationID = (int?)column.Value;
 						break;
 					}
 					case "CreationDate" :
@@ -146,20 +138,20 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#region Properties		
 		
-		#region OAIRecordCreatorID
+		#region OAIRecordRelatedTitleID
 		
-		private int _OAIRecordCreatorID = default(int);
+		private int _OAIRecordRelatedTitleID = default(int);
 		
 		/// <summary>
-		/// Column: OAIRecordCreatorID;
+		/// Column: OAIRecordRelatedTitleID;
 		/// DBMS data type: int; Auto key;
 		/// </summary>
-		[ColumnDefinition("OAIRecordCreatorID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
-		public int OAIRecordCreatorID
+		[ColumnDefinition("OAIRecordRelatedTitleID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
+		public int OAIRecordRelatedTitleID
 		{
 			get
 			{
-				return _OAIRecordCreatorID;
+				return _OAIRecordRelatedTitleID;
 			}
 			set
 			{
@@ -172,7 +164,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 		}
 		
-		#endregion OAIRecordCreatorID
+		#endregion OAIRecordRelatedTitleID
 		
 		#region OAIRecordID
 		
@@ -201,116 +193,88 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion OAIRecordID
 		
-		#region CreatorType
+		#region TitleType
 		
-		private string _CreatorType = string.Empty;
+		private string _TitleType = string.Empty;
 		
 		/// <summary>
-		/// Column: CreatorType;
+		/// Column: TitleType;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("CreatorType", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
-		public string CreatorType
+		[ColumnDefinition("TitleType", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
+		public string TitleType
 		{
 			get
 			{
-				return _CreatorType;
+				return _TitleType;
 			}
 			set
 			{
 				if (value != null) value = CalibrateValue(value, 50);
-				if (_CreatorType != value)
+				if (_TitleType != value)
 				{
-					_CreatorType = value;
+					_TitleType = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion CreatorType
+		#endregion TitleType
 		
-		#region FullName
+		#region Title
 		
-		private string _FullName = string.Empty;
+		private string _Title = string.Empty;
 		
 		/// <summary>
-		/// Column: FullName;
+		/// Column: Title;
 		/// DBMS data type: nvarchar(300);
 		/// </summary>
-		[ColumnDefinition("FullName", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=300)]
-		public string FullName
+		[ColumnDefinition("Title", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=300)]
+		public string Title
 		{
 			get
 			{
-				return _FullName;
+				return _Title;
 			}
 			set
 			{
 				if (value != null) value = CalibrateValue(value, 300);
-				if (_FullName != value)
+				if (_Title != value)
 				{
-					_FullName = value;
+					_Title = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion FullName
+		#endregion Title
 		
-		#region Dates
+		#region ProductionTitleAssociationID
 		
-		private string _Dates = string.Empty;
-		
-		/// <summary>
-		/// Column: Dates;
-		/// DBMS data type: nvarchar(50);
-		/// </summary>
-		[ColumnDefinition("Dates", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=50)]
-		public string Dates
-		{
-			get
-			{
-				return _Dates;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 50);
-				if (_Dates != value)
-				{
-					_Dates = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Dates
-		
-		#region ProductionAuthorID
-		
-		private int? _ProductionAuthorID = null;
+		private int? _ProductionTitleAssociationID = null;
 		
 		/// <summary>
-		/// Column: ProductionAuthorID;
+		/// Column: ProductionTitleAssociationID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10, IsNullable=true)]
-		public int? ProductionAuthorID
+		[ColumnDefinition("ProductionTitleAssociationID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsNullable=true)]
+		public int? ProductionTitleAssociationID
 		{
 			get
 			{
-				return _ProductionAuthorID;
+				return _ProductionTitleAssociationID;
 			}
 			set
 			{
-				if (_ProductionAuthorID != value)
+				if (_ProductionTitleAssociationID != value)
 				{
-					_ProductionAuthorID = value;
+					_ProductionTitleAssociationID = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion ProductionAuthorID
+		#endregion ProductionTitleAssociationID
 		
 		#region CreationDate
 		
@@ -320,7 +284,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
 		public DateTime CreationDate
 		{
 			get
@@ -347,7 +311,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -371,17 +335,17 @@ namespace MOBOT.BHLImport.DataObjects
 		#region From Array serialization
 		
 		/// <summary>
-		/// Deserializes the byte array and returns an instance of <see cref="__OAIRecordCreator"/>.
+		/// Deserializes the byte array and returns an instance of <see cref="__OAIRecordRelatedTitle"/>.
 		/// </summary>
-		/// <returns>If the byte array can be deserialized and cast to an instance of <see cref="__OAIRecordCreator"/>, 
-		/// returns an instance of <see cref="__OAIRecordCreator"/>; otherwise returns null.</returns>
-		public static new __OAIRecordCreator FromArray(byte[] byteArray)
+		/// <returns>If the byte array can be deserialized and cast to an instance of <see cref="__OAIRecordRelatedTitle"/>, 
+		/// returns an instance of <see cref="__OAIRecordRelatedTitle"/>; otherwise returns null.</returns>
+		public static new __OAIRecordRelatedTitle FromArray(byte[] byteArray)
 		{
-			__OAIRecordCreator o = null;
+			__OAIRecordRelatedTitle o = null;
 			
 			try
 			{
-				o = (__OAIRecordCreator) CustomObjectBase.FromArray(byteArray);
+				o = (__OAIRecordRelatedTitle) CustomObjectBase.FromArray(byteArray);
 			}
 			catch (Exception e)
 			{
@@ -396,25 +360,24 @@ namespace MOBOT.BHLImport.DataObjects
 		#region CompareTo
 		
 		/// <summary>
-		/// Compares this instance with a specified object. Throws an ArgumentException if the specified object is not of type <see cref="__OAIRecordCreator"/>.
+		/// Compares this instance with a specified object. Throws an ArgumentException if the specified object is not of type <see cref="__OAIRecordRelatedTitle"/>.
 		/// </summary>
-		/// <param name="obj">An <see cref="__OAIRecordCreator"/> object to compare with this instance.</param>
+		/// <param name="obj">An <see cref="__OAIRecordRelatedTitle"/> object to compare with this instance.</param>
 		/// <returns>0 if the specified object equals this instance; -1 if the specified object does not equal this instance.</returns>
 		public virtual int CompareTo(Object obj)
 		{
-			if (obj is __OAIRecordCreator)
+			if (obj is __OAIRecordRelatedTitle)
 			{
-				__OAIRecordCreator o = (__OAIRecordCreator) obj;
+				__OAIRecordRelatedTitle o = (__OAIRecordRelatedTitle) obj;
 				
 				if (
 					o.IsNew == IsNew &&
 					o.IsDeleted == IsDeleted &&
-					o.OAIRecordCreatorID == OAIRecordCreatorID &&
+					o.OAIRecordRelatedTitleID == OAIRecordRelatedTitleID &&
 					o.OAIRecordID == OAIRecordID &&
-					GetComparisonString(o.CreatorType) == GetComparisonString(CreatorType) &&
-					GetComparisonString(o.FullName) == GetComparisonString(FullName) &&
-					GetComparisonString(o.Dates) == GetComparisonString(Dates) &&
-					o.ProductionAuthorID == ProductionAuthorID &&
+					GetComparisonString(o.TitleType) == GetComparisonString(TitleType) &&
+					GetComparisonString(o.Title) == GetComparisonString(Title) &&
+					o.ProductionTitleAssociationID == ProductionTitleAssociationID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate 
 				)
@@ -430,7 +393,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			else
 			{
-				throw new ArgumentException("Argument is not of type __OAIRecordCreator");
+				throw new ArgumentException("Argument is not of type __OAIRecordRelatedTitle");
 			}
 		}
  		
@@ -441,10 +404,10 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <summary>
 		/// Equality operator (==) returns true if the values of its operands are equal, false otherwise.
 		/// </summary>
-		/// <param name="a">The first <see cref="__OAIRecordCreator"/> object to compare.</param>
-		/// <param name="b">The second <see cref="__OAIRecordCreator"/> object to compare.</param>
+		/// <param name="a">The first <see cref="__OAIRecordRelatedTitle"/> object to compare.</param>
+		/// <param name="b">The second <see cref="__OAIRecordRelatedTitle"/> object to compare.</param>
 		/// <returns>true if values of operands are equal, false otherwise.</returns>
-		public static bool operator == (__OAIRecordCreator a, __OAIRecordCreator b)
+		public static bool operator == (__OAIRecordRelatedTitle a, __OAIRecordRelatedTitle b)
 		{
 			if (((Object) a) == null || ((Object) b) == null)
 			{
@@ -473,10 +436,10 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <summary>
 		/// Inequality operator (!=) returns false if its operands are equal, true otherwise.
 		/// </summary>
-		/// <param name="a">The first <see cref="__OAIRecordCreator"/> object to compare.</param>
-		/// <param name="b">The second <see cref="__OAIRecordCreator"/> object to compare.</param>
+		/// <param name="a">The first <see cref="__OAIRecordRelatedTitle"/> object to compare.</param>
+		/// <param name="b">The second <see cref="__OAIRecordRelatedTitle"/> object to compare.</param>
 		/// <returns>false if values of operands are equal, false otherwise.</returns>
-		public static bool operator !=(__OAIRecordCreator a, __OAIRecordCreator b)
+		public static bool operator !=(__OAIRecordRelatedTitle a, __OAIRecordRelatedTitle b)
 		{
 			return !(a == b);
 		}
@@ -484,16 +447,16 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <summary>
 		/// Returns true the specified object is equal to this object instance, false otherwise.
 		/// </summary>
-		/// <param name="obj">The <see cref="__OAIRecordCreator"/> object to compare with the current <see cref="__OAIRecordCreator"/>.</param>
+		/// <param name="obj">The <see cref="__OAIRecordRelatedTitle"/> object to compare with the current <see cref="__OAIRecordRelatedTitle"/>.</param>
 		/// <returns>true if specified object is equal to the instance of this object, false otherwise.</returns>
 		public override bool Equals(Object obj)
 		{
-			if (!(obj is __OAIRecordCreator))
+			if (!(obj is __OAIRecordRelatedTitle))
 			{
 				return false;
 			}
 			
-			return this == (__OAIRecordCreator) obj;
+			return this == (__OAIRecordRelatedTitle) obj;
 		}
 	
         /// <summary>
@@ -512,17 +475,16 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
 		/// For example where list is a instance of <see cref="CustomGenericList">, 
-		/// list.Sort(SortOrder.Ascending, __OAIRecordCreator.SortColumn.OAIRecordCreatorID);
+		/// list.Sort(SortOrder.Ascending, __OAIRecordRelatedTitle.SortColumn.OAIRecordRelatedTitleID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn
 		{	
-			public const string OAIRecordCreatorID = "OAIRecordCreatorID";	
+			public const string OAIRecordRelatedTitleID = "OAIRecordRelatedTitleID";	
 			public const string OAIRecordID = "OAIRecordID";	
-			public const string CreatorType = "CreatorType";	
-			public const string FullName = "FullName";	
-			public const string Dates = "Dates";	
-			public const string ProductionAuthorID = "ProductionAuthorID";	
+			public const string TitleType = "TitleType";	
+			public const string Title = "Title";	
+			public const string ProductionTitleAssociationID = "ProductionTitleAssociationID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";
 		}

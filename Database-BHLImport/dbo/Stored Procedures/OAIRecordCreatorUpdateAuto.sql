@@ -2,6 +2,7 @@
 
 @OAIRecordCreatorID INT,
 @OAIRecordID INT,
+@CreatorType NVARCHAR(50),
 @FullName NVARCHAR(300),
 @Dates NVARCHAR(50),
 @ProductionAuthorID INT
@@ -15,6 +16,7 @@ UPDATE [dbo].[OAIRecordCreator]
 SET
 
 	[OAIRecordID] = @OAIRecordID,
+	[CreatorType] = @CreatorType,
 	[FullName] = @FullName,
 	[Dates] = @Dates,
 	[ProductionAuthorID] = @ProductionAuthorID,
@@ -34,6 +36,7 @@ ELSE BEGIN
 	
 		[OAIRecordCreatorID],
 		[OAIRecordID],
+		[CreatorType],
 		[FullName],
 		[Dates],
 		[ProductionAuthorID],
@@ -48,3 +51,5 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 
+GO
+ 

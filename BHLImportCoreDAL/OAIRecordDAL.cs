@@ -156,6 +156,16 @@ namespace MOBOT.BHLImport.DAL
                         }
                     }
 
+                    if (oaiRecord.RelatedTitles.Count > 0)
+                    {
+                        OAIRecordRelatedTitleDAL relatedTitleDAL = new OAIRecordRelatedTitleDAL();
+                        foreach (OAIRecordRelatedTitle relatedTitle in oaiRecord.RelatedTitles)
+                        {
+                            relatedTitle.OAIRecordID = newOaiRecord.OAIRecordID;
+                            relatedTitleDAL.OAIRecordRelatedTitleInsertAuto(connection, transaction, relatedTitle);
+                        }
+                    }
+
                     CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
                 }
                 catch

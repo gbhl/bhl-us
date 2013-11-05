@@ -28,10 +28,36 @@ namespace MOBOT.BHL.OAIMODS
             XNamespace ns = root.Name.Namespace;
 
             // Title
+            XElement nonSort = null;
             XElement title = null;
-            XElement titleInfo = root.Element(ns + "titleInfo");
-            if (titleInfo != null) title = titleInfo.Element(ns + "title");
-            if (title != null) _oaiRecord.Title = title.Value;
+            XElement subTitle = null;
+
+            var titleInfoList = from t in root.Elements(ns + "titleInfo") select t;
+            foreach (XElement titleInfo in titleInfoList)
+            {
+                XAttribute typeAttribute = titleInfo.Attribute("type");
+
+                string titleString = string.Empty;
+                nonSort = titleInfo.Element(ns + "nonSort");
+                title = titleInfo.Element(ns + "title");
+                subTitle = titleInfo.Element(ns + "subTitle");
+
+                if (nonSort != null) titleString = nonSort.Value + " ";
+                if (title != null) titleString += title.Value + " ";
+                if (subTitle != null) titleString += subTitle.Value + " ";
+                titleString = titleString.Trim();
+
+                if (typeAttribute == null)
+                {
+                    _oaiRecord.Title = titleString;
+                }
+                else
+                {
+                    OAIRecord relatedTitle = new OAIRecord();
+                    relatedTitle.Title = titleString;
+                    _oaiRecord.RelatedTitles.Add(new KeyValuePair<string, OAIRecord>(typeAttribute.Value, relatedTitle));
+                }
+            }
 
             // Genre/Type
             XElement genre = root.Element(ns + "genre");
@@ -42,6 +68,7 @@ namespace MOBOT.BHL.OAIMODS
                     case "book":
                     case "monograph":
                     case "journal":
+                    case "series":
                         _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
                         break;
                     case "issue":
@@ -75,6 +102,10 @@ namespace MOBOT.BHL.OAIMODS
             foreach (XElement author in authors)
             {
                 OAIRecord.Creator creator = new OAIRecord.Creator();
+
+                string authorType = "personal";
+                XAttribute typeAttribute = author.Attribute("type");
+                if (typeAttribute != null) authorType = typeAttribute.Value;
 
                 var nameList = from n in author.Elements(ns + "namePart") select n;
 
@@ -113,7 +144,7 @@ namespace MOBOT.BHL.OAIMODS
                     creator.FullName = string.Format("{0}, {1}", familyName, givenName);
                 }
 
-                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(creator.FullName, creator));
+                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(authorType, creator));
             }
 
             // Language
@@ -142,24 +173,20 @@ namespace MOBOT.BHL.OAIMODS
                 }
             }
 
+            // Call number
+            XAttribute authorityAttribute = null;
+            XElement callNumber = root.Element(ns + "classification");
+            if (callNumber != null) authorityAttribute = callNumber.Attribute("authority");
+            if (authorityAttribute != null)
+            {
+                if (authorityAttribute.Value == "lcc") _oaiRecord.CallNumber = callNumber.Value;
+            }
+
             // Copyright info
             var accessConditionList = from a in root.Elements(ns + "accessCondition") select a;
             foreach (XElement accessCondition in accessConditionList) _oaiRecord.Rights.Add(accessCondition.Value);
 
-            // Book/journal/issue volume
-            if (_oaiRecord.Type == OAIRecord.RecordType.BookJournal || _oaiRecord.Type == OAIRecord.RecordType.Issue)
-            {
-                XElement holdingSimple = null;
-                XElement copyInformation = null;
-                XElement enumerationAndChronology = null;
-                XElement location = root.Element(ns + "location");
-                if (location != null) holdingSimple = location.Element(ns + "holdingSimple");
-                if (holdingSimple != null) copyInformation = holdingSimple.Element(ns + "copyInformation");
-                if (copyInformation != null) enumerationAndChronology = copyInformation.Element(ns + "enumerationAndChronology");
-                if (enumerationAndChronology != null) _oaiRecord.JournalVolume = enumerationAndChronology.Value;
-            }
-
-            // Article container info (title, volume, pages, issue
+            // Article container info (title, volume, pages, issue)
             if (_oaiRecord.Type == OAIRecord.RecordType.Segment)
             {
                 var relatedItem = from r in root.Elements(ns + "relatedItem") 
@@ -192,44 +219,64 @@ namespace MOBOT.BHL.OAIMODS
                         }                        
                     }
                 }
+            }
 
-                // Identifiers
-                var doi = from d in root.Elements(ns + "identifier")
-                          where d.Attribute("type").Value == "doi"
-                          select d;
-                if (doi.Count() > 0) _oaiRecord.Doi = doi.First().Value;
+            // Identifiers
+            var doi = from d in root.Elements(ns + "identifier")
+                        where d.Attribute("type").Value == "doi"
+                        select d;
+            if (doi.Count() > 0) _oaiRecord.Doi = doi.First().Value;
 
-                var isbn = from d in root.Elements(ns + "identifier")
-                          where d.Attribute("type").Value == "isbn"
-                          select d;
-                if (isbn.Count() > 0) _oaiRecord.Isbn = isbn.First().Value;
+            var isbn = from d in root.Elements(ns + "identifier")
+                        where d.Attribute("type").Value == "isbn"
+                        select d;
+            if (isbn.Count() > 0) _oaiRecord.Isbn = isbn.First().Value;
 
-                var issn = from d in root.Elements(ns + "identifier")
-                           where d.Attribute("type").Value == "issn"
-                          select d;
-                if (issn.Count() > 0) _oaiRecord.Doi = issn.First().Value;
+            var issn = from d in root.Elements(ns + "identifier")
+                        where d.Attribute("type").Value == "issn"
+                        select d;
+            if (issn.Count() > 0) _oaiRecord.Doi = issn.First().Value;
 
-                var lccn = from d in root.Elements(ns + "identifier")
-                           where d.Attribute("type").Value == "lccn"
-                           select d;
-                if (lccn.Count() > 0) _oaiRecord.Doi = lccn.First().Value;
+            var lccn = from d in root.Elements(ns + "identifier")
+                        where d.Attribute("type").Value == "lccn"
+                        select d;
+            if (lccn.Count() > 0) _oaiRecord.Llc = lccn.First().Value;
 
-                var uris = from d in root.Elements(ns + "identifier")
-                           where d.Attribute("type").Value == "uri"
-                           select d;
-                foreach (XElement uri in uris)
+            var uris = from d in root.Elements(ns + "identifier")
+                        where d.Attribute("type").Value == "uri"
+                        select d;
+            foreach (XElement uri in uris)
+            {
+                // See if a DOI is embedded within the URI
+                string uriValue = uri.Value;
+                if (uriValue.Contains("http://dx.doi.org/"))
                 {
-                    // See if a DOI is embedded within the URI
-                    string uriValue = uri.Value;
-                    if (uriValue.Contains("http://dx.doi.org/"))
-                    {
-                        _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
-                    }
-                    else
-                    {
-                        _oaiRecord.Url = uriValue;
-                    }
+                    _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
                 }
+                else
+                {
+                    _oaiRecord.Url = uriValue;
+                }
+            }
+
+            // Volume and Url
+            XElement location = root.Element(ns + "location");
+            if (location != null)
+            {
+                // Book/journal/issue volume
+                if (_oaiRecord.Type == OAIRecord.RecordType.BookJournal || _oaiRecord.Type == OAIRecord.RecordType.Issue)
+                {
+                    XElement copyInformation = null;
+                    XElement enumerationAndChronology = null;
+                    XElement holdingSimple = location.Element(ns + "holdingSimple");
+                    if (holdingSimple != null) copyInformation = holdingSimple.Element(ns + "copyInformation");
+                    if (copyInformation != null) enumerationAndChronology = copyInformation.Element(ns + "enumerationAndChronology");
+                    if (enumerationAndChronology != null) _oaiRecord.JournalVolume = enumerationAndChronology.Value;
+                }
+
+                // Url (this overrides any Uri values we previously identified)
+                XElement url = location.Element(ns + "url");
+                if (url != null) _oaiRecord.Url = url.Value;
             }
         }
 

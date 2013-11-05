@@ -37,5 +37,13 @@ namespace MOBOT.BHLImport.DataObjects
             get { return _subjects; }
             set { _subjects = value; }
         }
+
+        private CustomGenericList<OAIRecordRelatedTitle> _relatedTitles = new CustomGenericList<OAIRecordRelatedTitle>();
+
+        public CustomGenericList<OAIRecordRelatedTitle> RelatedTitles
+        {
+            get { return _relatedTitles; }
+            set { _relatedTitles = value; }
+        }
 	}
 }

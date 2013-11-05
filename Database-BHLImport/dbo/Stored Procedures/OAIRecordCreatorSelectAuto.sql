@@ -10,6 +10,7 @@ SELECT
 
 	[OAIRecordCreatorID],
 	[OAIRecordID],
+	[CreatorType],
 	[FullName],
 	[Dates],
 	[ProductionAuthorID],
@@ -30,3 +31,5 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO

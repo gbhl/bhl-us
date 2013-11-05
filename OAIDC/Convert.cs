@@ -82,7 +82,7 @@ namespace MOBOT.BHL.OAIDC
             {
                 OAIRecord.Creator creator = new OAIRecord.Creator();
                 creator.FullName = c.Value;
-                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(c.Value, creator));
+                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator));
             }
 
             var keywords = from k in root.Elements(ns + "subject") select k;

@@ -398,5 +398,10 @@
     <Build Include="dbo\Stored Procedures\OAIRecordDeleteForHarvestLogID.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordSelectForOAIIdentifierAndStatus.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordSelectForOAIIdentifierAndDateStamp.sql" />
+    <Build Include="dbo\Tables\OAIRecordRelatedTitle.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleDeleteAuto.sql" />
   </ItemGroup>
 </Project>

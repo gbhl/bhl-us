@@ -11,6 +11,7 @@ SET NOCOUNT ON
 BEGIN TRY
 	BEGIN TRAN
 
+	DELETE dbo.OAIRecordRelatedTitle WHERE OAIRecordID = @OAIRecordID
 	DELETE dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 	DELETE dbo.OAIRecordDCType WHERE OAIRecordID = @OAIRecordID
 	DELETE dbo.OAIRecordRight WHERE OAIRecordID = @OAIRecordID

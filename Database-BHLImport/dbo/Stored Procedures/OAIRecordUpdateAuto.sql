@@ -19,6 +19,7 @@
 @Issue NVARCHAR(100),
 @StartPage NVARCHAR(20),
 @EndPage NVARCHAR(20),
+@CallNumber NVARCHAR(100),
 @Issn NVARCHAR(125),
 @Isbn NVARCHAR(125),
 @Lccn NVARCHAR(125),
@@ -54,6 +55,7 @@ SET
 	[Issue] = @Issue,
 	[StartPage] = @StartPage,
 	[EndPage] = @EndPage,
+	[CallNumber] = @CallNumber,
 	[Issn] = @Issn,
 	[Isbn] = @Isbn,
 	[Lccn] = @Lccn,
@@ -95,6 +97,7 @@ ELSE BEGIN
 		[Issue],
 		[StartPage],
 		[EndPage],
+		[CallNumber],
 		[Issn],
 		[Isbn],
 		[Lccn],
@@ -113,3 +116,5 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
+
+GO

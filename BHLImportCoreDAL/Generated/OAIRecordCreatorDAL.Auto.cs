@@ -1,5 +1,5 @@
 
-// Generated 10/31/2013 4:01:46 PM
+// Generated 11/5/2013 11:13:30 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIRecordCreatorDAL is based upon OAIRecordCreator.
@@ -137,6 +137,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="oAIRecordID"></param>
+		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
 		/// <param name="productionAuthorID"></param>
@@ -145,11 +146,12 @@ namespace MOBOT.BHLImport.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int oAIRecordID,
+			string creatorType,
 			string fullName,
 			string dates,
 			int? productionAuthorID)
 		{
-			return OAIRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, fullName, dates, productionAuthorID );
+			return OAIRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, creatorType, fullName, dates, productionAuthorID );
 		}
 		
 		/// <summary>
@@ -159,6 +161,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="oAIRecordID"></param>
+		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
 		/// <param name="productionAuthorID"></param>
@@ -168,6 +171,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int oAIRecordID,
+			string creatorType,
 			string fullName,
 			string dates,
 			int? productionAuthorID)
@@ -178,6 +182,7 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIRecordCreatorInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("OAIRecordCreatorID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oAIRecordID),
+					CustomSqlHelper.CreateInputParameter("CreatorType", SqlDbType.NVarChar, 50, false, creatorType),
 					CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 300, false, fullName),
 					CustomSqlHelper.CreateInputParameter("Dates", SqlDbType.NVarChar, 50, false, dates),
 					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID), 
@@ -231,6 +236,7 @@ namespace MOBOT.BHLImport.DAL
 		{
 			return OAIRecordCreatorInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.OAIRecordID,
+				value.CreatorType,
 				value.FullName,
 				value.Dates,
 				value.ProductionAuthorID);
@@ -305,6 +311,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="oAIRecordCreatorID"></param>
 		/// <param name="oAIRecordID"></param>
+		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
 		/// <param name="productionAuthorID"></param>
@@ -314,11 +321,12 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int oAIRecordCreatorID,
 			int oAIRecordID,
+			string creatorType,
 			string fullName,
 			string dates,
 			int? productionAuthorID)
 		{
-			return OAIRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordCreatorID, oAIRecordID, fullName, dates, productionAuthorID);
+			return OAIRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordCreatorID, oAIRecordID, creatorType, fullName, dates, productionAuthorID);
 		}
 		
 		/// <summary>
@@ -329,6 +337,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="oAIRecordCreatorID"></param>
 		/// <param name="oAIRecordID"></param>
+		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
 		/// <param name="productionAuthorID"></param>
@@ -339,6 +348,7 @@ namespace MOBOT.BHLImport.DAL
 			string connectionKeyName,
 			int oAIRecordCreatorID,
 			int oAIRecordID,
+			string creatorType,
 			string fullName,
 			string dates,
 			int? productionAuthorID)
@@ -349,6 +359,7 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("OAIRecordCreatorUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("OAIRecordCreatorID", SqlDbType.Int, null, false, oAIRecordCreatorID),
 					CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oAIRecordID),
+					CustomSqlHelper.CreateInputParameter("CreatorType", SqlDbType.NVarChar, 50, false, creatorType),
 					CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 300, false, fullName),
 					CustomSqlHelper.CreateInputParameter("Dates", SqlDbType.NVarChar, 50, false, dates),
 					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID), 
@@ -403,6 +414,7 @@ namespace MOBOT.BHLImport.DAL
 			return OAIRecordCreatorUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.OAIRecordCreatorID,
 				value.OAIRecordID,
+				value.CreatorType,
 				value.FullName,
 				value.Dates,
 				value.ProductionAuthorID);
@@ -451,6 +463,7 @@ namespace MOBOT.BHLImport.DAL
 				
 				OAIRecordCreator returnValue = OAIRecordCreatorInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.OAIRecordID,
+						value.CreatorType,
 						value.FullName,
 						value.Dates,
 						value.ProductionAuthorID);
@@ -481,6 +494,7 @@ namespace MOBOT.BHLImport.DAL
 				OAIRecordCreator returnValue = OAIRecordCreatorUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.OAIRecordCreatorID,
 						value.OAIRecordID,
+						value.CreatorType,
 						value.FullName,
 						value.Dates,
 						value.ProductionAuthorID);
