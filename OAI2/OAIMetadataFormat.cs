@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MOBOT.BHL.OAI2
 {
-    internal class OAIMetadataFormat
+    public class OAIMetadataFormat
     {
         private String _metadataFormat = String.Empty;
 

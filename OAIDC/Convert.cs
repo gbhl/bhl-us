@@ -46,8 +46,11 @@ Updated:        Mike Lichtenberg
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 using MOBOT.BHL.OAI2;
 
 namespace MOBOT.BHL.OAIDC
@@ -60,6 +63,100 @@ namespace MOBOT.BHL.OAIDC
         {
             _oaiRecord = oaiRecord;
         }
+
+        public Convert(string dcRecord)
+        {
+            _oaiRecord = new OAIRecord();
+
+            // Parse the supplied Dublin Core and store the values in _oaiRecord
+            XDocument xml = XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(dcRecord)));
+            XElement root = xml.Root;
+            XNamespace ns = root.GetNamespaceOfPrefix(root.Name.LocalName);
+            if (ns == null) ns = root.Name.Namespace;
+
+            XElement title = root.Element(ns + "title");
+            if (title != null) _oaiRecord.Title = title.Value;
+
+            var creators = from c in root.Elements(ns + "creator") select c;
+            foreach (XElement c in creators)
+            {
+                OAIRecord.Creator creator = new OAIRecord.Creator();
+                creator.FullName = c.Value;
+                _oaiRecord.Creators.Add(new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator));
+            }
+
+            var keywords = from k in root.Elements(ns + "subject") select k;
+            foreach (XElement k in keywords)
+            {
+                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(k.Value, k.Value));
+            }
+
+            XElement publisher = root.Element(ns + "publisher");
+            if (publisher != null) _oaiRecord.PublicationDetails = publisher.Value;
+
+            XElement contributor = root.Element(ns + "contributor");
+            if (contributor != null) _oaiRecord.Contributor = contributor.Value;
+
+            var languages = from l in root.Elements(ns + "language") select l;
+            foreach (XElement l in languages)
+            {
+                _oaiRecord.Languages.Add(l.Value);
+            }
+
+            XElement date = root.Element(ns + "date");
+            if (date != null) _oaiRecord.Date = date.Value;
+
+            var descriptions = from d in root.Elements(ns + "description") select d;
+            foreach (XElement d in descriptions)
+            {
+                _oaiRecord.Descriptions.Add(d.Value);
+            }
+
+            var types = from t in root.Elements(ns + "type") select t;
+            foreach (XElement t in types)
+            {
+                _oaiRecord.Types.Add(t.Value);
+            }
+
+            // Set the type for the record.
+            _oaiRecord.Type = OAIRecord.RecordType.Unknown;
+            if ((from t in _oaiRecord.Types where t.ToLower() != "text" select t).Count() > 0)
+            {
+                // We have something other than the basic value of "text".  Assume it indicates "segment"
+                // unless we find a known "book/journal" dublin core type value.
+                _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                if ((from t in _oaiRecord.Types
+                     where t == "book" || t == "journal" || t == "monograph" || t == "series"
+                     select t).Count() > 0)
+                    _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
+            }
+
+            var identifier = root.Element(ns + "identifier");
+            if (identifier != null) _oaiRecord.Url = identifier.Value;
+
+            var formats = from f in root.Elements(ns + "format") select f;
+            foreach (XElement f in formats)
+            {
+                _oaiRecord.Formats.Add(f.Value);
+            }
+
+            var rights = from r in root.Elements(ns + "rights") select r;
+            foreach (XElement r in rights)
+            {
+                _oaiRecord.Rights.Add(r.Value);
+            }
+        }
+
+        #region ToOAIRecord
+
+        public OAIRecord ToOAIRecord()
+        {
+            return _oaiRecord;
+        }
+
+        #endregion ToOAIRecord
+
+        #region ToString
 
         public new String ToString()
         {
@@ -142,5 +239,7 @@ namespace MOBOT.BHL.OAIDC
 
             return sb.ToString();
         }
+
+        #endregion ToString
     }
 }

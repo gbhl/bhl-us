@@ -1,0 +1,11 @@
+﻿CREATE TABLE dbo.OAIRecordRight
+	(
+	OAIRecordRightID int IDENTITY(1,1) NOT NULL CONSTRAINT PK_OAIRecordRight PRIMARY KEY CLUSTERED,
+	OAIRecordID int NOT NULL,
+	[Right] nvarchar(MAX) NOT NULL DEFAULT(''),
+	CreationDate datetime NOT NULL DEFAULT(GETDATE()),
+	LastModifiedDate datetime NOT NULL DEFAULT(GETDATE()),
+	CONSTRAINT FK_OAIRecordRight_OAIRecord
+		FOREIGN KEY (OAIRecordID) REFERENCES dbo.OAIRecord(OAIRecordID)
+	)
+GO

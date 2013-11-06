@@ -47,6 +47,10 @@ Updated:        Mike Lichtenberg
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using MOBOT.BHL.Server;
@@ -264,7 +268,7 @@ namespace MOBOT.BHL.OAI2
 
                     // Add the record metadata to the output
                     response.Append("\t\t<metadata>\n");
-                    OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
+                    OAI2.OAIRecord oaiRecord = new OAI2.OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                     if (oaiRecord.Load(identifier))
                     {
                         response.Append(new OAIMetadataFactory(metadataPrefix, _metadataFormats).GetMetadata(oaiRecord));
@@ -377,7 +381,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
 
-                CustomDataAccess.CustomGenericList<OAIIdentifier> oaiIDs = null;
+                CustomDataAccess.CustomGenericList<DataObjects.OAIIdentifier> oaiIDs = null;
 
                 if (String.IsNullOrEmpty(errorMessage))
                 {
@@ -432,7 +436,7 @@ namespace MOBOT.BHL.OAI2
                 }
                 else if (String.IsNullOrEmpty(errorMessage))
                 {
-                    foreach (OAIIdentifier oaiID in oaiIDs)
+                    foreach (DataObjects.OAIIdentifier oaiID in oaiIDs)
                     {
                         string date = OAI2Util.GetDate(oaiID.LastModifiedDate.ToString());
 
@@ -607,7 +611,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
 
-                CustomDataAccess.CustomGenericList<OAIIdentifier> oaiIDs = null;
+                CustomDataAccess.CustomGenericList<DataObjects.OAIIdentifier> oaiIDs = null;
 
                 if (String.IsNullOrEmpty(errorMessage))
                 {
@@ -664,7 +668,7 @@ namespace MOBOT.BHL.OAI2
                 {
                     OAIMetadataFactory metadataFactory = new OAIMetadataFactory(metadataPrefix, _metadataFormats);
 
-                    foreach (OAIIdentifier oaiID in oaiIDs)
+                    foreach (DataObjects.OAIIdentifier oaiID in oaiIDs)
                     {
                         String date = OAI2Util.GetDate(oaiID.LastModifiedDate.ToString());
                         String oaiIDString = "oai:" + _identifierNamespace + ":" + oaiID.SetSpec + "/" + oaiID.Id.ToString();
@@ -678,7 +682,7 @@ namespace MOBOT.BHL.OAI2
                         recordList.Append("\t\t</header>\n");
 
                         recordList.Append("\t\t<metadata>\n");
-                        OAIRecord oaiRecord = new OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
+                        OAI2.OAIRecord oaiRecord = new OAI2.OAIRecord(OAI2Util.IncludeExtraDetail(metadataPrefix, _metadataFormats));
                         if (oaiRecord.Load(oaiIDString))
                         {
                             recordList.Append(metadataFactory.GetMetadata(oaiRecord));
@@ -869,6 +873,345 @@ namespace MOBOT.BHL.OAI2
             error.Append("\t" + message + "\n");
             error.Append("</ApplicationError>\n");
             return error.ToString();
+        }
+
+        #endregion Supporting methods
+    }
+
+    public class OAI2Harvester
+    {
+        private string _baseUrl = string.Empty;
+        private string _userAgent = string.Empty; // BHL OAI Harvester
+        private string _fromEmail = string.Empty; // biodiversitylibrary@gmail.com
+        private List<OAIMetadataFormat> _metadataFormats = new List<OAIMetadataFormat>();
+
+        #region Constructors
+
+        public OAI2Harvester(string baseUrl, string userAgent, string fromEmail, Dictionary<string, string> formats)
+        {
+            InitializeMetadataFormats(formats);
+
+            _baseUrl = baseUrl;
+            _userAgent = userAgent;
+            _fromEmail = fromEmail;
+        }
+
+        private void InitializeMetadataFormats(Dictionary<string, string> formats)
+        {
+            // Set up the metadata formats
+            foreach (KeyValuePair<string, string> format in formats)
+            {
+                OAIMetadataFormat metadataFormat = new OAIMetadataFormat();
+                metadataFormat.MetadataFormat = format.Key;     // prefix
+                metadataFormat.MetadataHandler = format.Value;  // assembly name
+                _metadataFormats.Add(metadataFormat);
+            }
+        }
+
+        #endregion Constructors
+
+        #region OAI requests
+
+        /// <summary>
+        /// Submits a Identify command to the OAI repository
+        /// </summary>
+        /// <returns>An OAIHarvestResult object containing a OAIIdentity object</returns>
+        public OAIHarvestResult Identify()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListSets command to the OAI repository.
+        /// </summary>
+        /// <returns>An OAIHarvestResult object containing a list of OAISet objects</returns>
+        public OAIHarvestResult ListSets()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListSets command to the OAI repository.
+        /// </summary>
+        /// <param name="resumptionToken"></param>
+        /// <returns>An OAIHarvestResult object containing a list of OAISet objects</returns>
+        public OAIHarvestResult ListSets(string resumptionToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListMetadataFormats command to the OAI repository.
+        /// </summary>
+        /// <returns>An OAIHarvestResult object containing a list of OAIMetadataFormats</returns>
+        public OAIHarvestResult ListMetadataFormats()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListMetadataFormats command to the OAI repository.
+        /// </summary>
+        /// <returns>An OAIHarvestResult object containing a list of OAIMetadataFormats</returns>
+        public OAIHarvestResult ListMetadataFormats(string identifier)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListIdentifiers command to the OAI repository.
+        /// </summary>
+        /// <param name="metadataFormat"></param>
+        /// <param name="set"></param>
+        /// <param name="from"></param>
+        /// <param name="until"></param>
+        /// <returns>An OAIHarvestResult class containing a list of OAIIdentifiers</returns>
+        public OAIHarvestResult ListIdentifiers(string metadataFormat, string set = "", string from = "", string until = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListIdentifiers command to the OAI repository.
+        /// </summary>
+        /// <param name="resumptionToken"></param>
+        /// <returns>An OAIHarvestResult class containing a list of OAIIdentifiers</returns>
+        public OAIHarvestResult ListIdentifiers(string resumptionToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Submits a ListRecords command to the OAI repository.
+        /// </summary>
+        /// <param name="metadataFormat"></param>
+        /// <param name="set"></param>
+        /// <param name="from"></param>
+        /// <param name="until"></param>
+        /// <returns>An OAIHarvestResult object containing a list of OAIRecords</returns>
+        public OAIHarvestResult ListRecords(string metadataFormat, string set = "", string from = "", string until = "")
+        {
+            return ListRecords(metadataFormat, set, from, until, string.Empty);
+        }
+
+        /// <summary>
+        /// Submits a ListRecords command to the OAI repository.
+        /// </summary>
+        /// <param name="resumptionToken"></param>
+        /// <returns>An OAIHarvestResult object containing a list of OAIRecords</returns>
+        public OAIHarvestResult ListRecords(string metadataFormat, string resumptionToken)
+        {
+            return ListRecords(metadataFormat, string.Empty, string.Empty, string.Empty, resumptionToken);
+        }
+
+        private OAIHarvestResult ListRecords(string metadataFormat, string set, string from, string until, string resumptionToken)
+        {
+            OAIHarvestResult harvestResult = new OAIHarvestResult();
+            string url = string.Empty;
+            DateTime responseDate = DateTime.Now.ToUniversalTime();
+            string responseMessage = "ok";
+            string newResumptionToken = string.Empty;
+            DateTime resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
+            int completeListSize = 0;
+            int cursor = 0;
+            List<OAI2.OAIRecord> content = new List<OAI2.OAIRecord>();
+
+            // 1. Build the URL
+            if (!string.IsNullOrWhiteSpace(resumptionToken))
+            {
+                url = string.Format("{0}?verb=ListRecords&resumptionToken={1}", _baseUrl, HttpUtility.UrlEncode(resumptionToken));
+            }
+            else
+            {
+                url = string.Format("{0}?verb=ListRecords&metadataPrefix={1}", _baseUrl, HttpUtility.UrlEncode(metadataFormat));
+                if (!string.IsNullOrWhiteSpace(set)) url += "&set=" + HttpUtility.UrlEncode(set);
+                if (!string.IsNullOrWhiteSpace(from)) url += "&from=" + HttpUtility.UrlEncode(from);
+                if (!string.IsNullOrWhiteSpace(until)) url += "&until=" + HttpUtility.UrlEncode(until);
+            }
+
+            // 2. Make the request
+            try
+            {
+                XDocument response = SubmitRequest(url);
+                XElement root = response.Root;
+                XNamespace ns = root.Name.Namespace;
+
+                // 3. Parse the response metadata (date, resumption token, list size, etc)
+                XElement error = root.Element(ns + "error");
+                responseDate = Convert.ToDateTime(root.Element(ns + "responseDate").Value);
+                if (error != null)
+                {
+                    XAttribute errorCode = error.Attribute("code");
+                    responseMessage = (errorCode != null) ? errorCode.Value + ": " : string.Empty;
+                    responseMessage += error.Value;
+                }
+                else
+                {
+                    // Change the "root" of the document we're evaluating to be the "ListRecords" element
+                    root = root.Element(ns + "ListRecords");
+
+                    XElement resumptionTokenElement = root.Element(ns + "resumptionToken");
+                    if (resumptionTokenElement != null)
+                    {
+                        newResumptionToken = resumptionTokenElement.Value;
+                        if (resumptionTokenElement.Attribute("expirationDate") != null)
+                        {
+                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate").Value);
+                        }
+                        if (resumptionTokenElement.Attribute("completeListSize") != null)
+                        {
+                            completeListSize = Convert.ToInt32(resumptionTokenElement.Attribute("completeListSize").Value);
+                        }
+                        if (resumptionTokenElement.Attribute("cursor") != null)
+                        {
+                            cursor = Convert.ToInt32(resumptionTokenElement.Attribute("cursor").Value);
+                        }
+                    }
+
+                    // 4. Parse the returned records
+                    IEnumerable<XElement> records = from r in root.Descendants(ns + "record") select r;
+
+                    foreach (XElement record in records)
+                    {
+                        XElement header = record.Element(ns + "header");
+
+                        string oaiStatus = string.Empty;
+                        if (header.Attribute("status") != null) oaiStatus = header.Attribute("status").Value;
+
+                        OAI2.OAIRecord oaiRecord = null;
+                        if (oaiStatus == "deleted")
+                        {
+                            // No metadata exists for deleted records, so just create an empty
+                            // OAIRecord object to hold the OAI header information
+                            oaiRecord = new OAI2.OAIRecord();
+                        }
+                        else
+                        {
+                            // Harvest the metadata for this record
+                            string metadataString = record.Element(ns + "metadata").FirstNode.ToString();
+                            oaiRecord = new OAIMetadataFactory(metadataFormat, _metadataFormats).GetMetadata(metadataString);
+                        }
+
+                        // Capture the OAI header info
+                        oaiRecord.OaiStatus = oaiStatus;
+                        oaiRecord.OaiIdentifier = header.Element(ns + "identifier").Value;
+                        oaiRecord.OaiDateStamp = header.Element(ns + "datestamp").Value;
+
+                        content.Add(oaiRecord);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                completeListSize = 0;
+                cursor = 0;
+                content = null;
+                responseDate = DateTime.Now.ToUniversalTime();
+                responseMessage = ex.Message;
+                resumptionExpiration = DateTime.Now.ToUniversalTime().AddHours(1);
+                newResumptionToken = string.Empty;
+            }
+
+            // 5. Return the OAIHarvestResult
+            harvestResult.CompleteListSize = completeListSize;
+            harvestResult.Cursor = cursor;
+            harvestResult.Content = content;
+            harvestResult.ResponseDate = responseDate;
+            harvestResult.ResponseMessage = responseMessage;
+            harvestResult.ResumptionExpiration = resumptionExpiration;
+            harvestResult.ResumptionToken = newResumptionToken;
+            return harvestResult;
+        }
+
+        /// <summary>
+        /// Submits a GetRecord command to the OAI respository.
+        /// </summary>
+        /// <param name="metadataFormat"></param>
+        /// <param name="identifier"></param>
+        /// <returns>An OAIHarvestResult object containing an OAIRecord object</returns>
+        public OAIHarvestResult GetRecord(string metadataFormat, string identifier)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion OAI requests
+
+        #region Supporting methods
+
+        /// <summary>
+        /// Submit the OAI request, retrying up to three times on failure.
+        /// </summary>
+        /// <param name="url"></param>
+        private XDocument SubmitRequest(string url)
+        {
+            int retryLimit = 3;
+            string response = string.Empty;
+
+            int retry = 1;
+            while (retry <= retryLimit)
+            {
+                try
+                {
+                    response = HttpRequest(url, "GET");
+                    break;
+                }
+                catch
+                {
+                    if (retry >= retryLimit) throw;
+                }
+                retry++;
+            }
+
+            return XDocument.Load(new MemoryStream(Encoding.UTF8.GetBytes(response)));
+        }
+
+        private string HttpRequest(string url, string method)
+        {
+            StringBuilder sb = new StringBuilder();
+            StreamReader reader = null;
+
+            try
+            {
+                // Prepare the web request
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.Method = method;
+                req.Timeout = 300000;    // 5 minutes
+                req.UserAgent = _userAgent;
+                req.Headers.Add("From", _fromEmail);
+
+                // Make sure we were successful
+                using (WebResponse webresponse = req.GetResponse())
+                {
+                    HttpWebResponse response = (HttpWebResponse)webresponse;
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        throw new Exception("Error getting response from " + url + ".  HTTP status: " + response.StatusCode.ToString() + "\r\n");
+                    }
+                    else
+                    {
+                        // Read the response
+                        reader = new StreamReader((Stream)response.GetResponseStream());
+
+                        Char[] read = new Char[256];
+                        int count = reader.Read(read, 0, 256);
+                        while (count > 0)
+                        {
+                            sb.Append(new string(read, 0, count));
+                            count = reader.Read(read, 0, 256);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                if (reader != null) reader.Close();
+            }
+
+            return sb.ToString();
         }
 
         #endregion Supporting methods

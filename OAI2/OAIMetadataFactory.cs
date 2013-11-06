@@ -38,5 +38,19 @@ namespace MOBOT.BHL.OAI2
 
             return metadata;
         }
+
+        public OAIRecord GetMetadata(string record)
+        {
+            OAIRecord metadata;
+
+            Type formatType = _formatAssembly.GetType(_handler + ".Convert");
+            object[] args = new object[1];
+            args[0] = record;
+            object formatInstance = Activator.CreateInstance(formatType, args);
+            metadata = (OAIRecord)formatType.InvokeMember("ToOAIRecord", System.Reflection.BindingFlags.InvokeMethod | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public,
+                null, formatInstance, null);
+
+            return metadata;
+        }
     }
 }

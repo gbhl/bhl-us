@@ -84,6 +84,14 @@
     <Compile Include="Concrete\ImportLog.cs" />
     <Compile Include="Concrete\IndicatedPage.cs" />
     <Compile Include="Concrete\Item.cs" />
+    <Compile Include="Concrete\OAIHarvestLog.cs" />
+    <Compile Include="Concrete\OAIRecord.cs" />
+    <Compile Include="Concrete\OAIRecordCreator.cs" />
+    <Compile Include="Concrete\OAIRecordDCType.cs" />
+    <Compile Include="Concrete\OAIRecordRelatedTitle.cs" />
+    <Compile Include="Concrete\OAIRecordRight.cs" />
+    <Compile Include="Concrete\OAIRecordStatus.cs" />
+    <Compile Include="Concrete\OAIRecordSubject.cs" />
     <Compile Include="Concrete\Page.cs" />
     <Compile Include="Concrete\PageName.cs" />
     <Compile Include="Concrete\Page_PageType.cs" />
@@ -94,6 +102,7 @@
     <Compile Include="Concrete\TitleTag.cs" />
     <Compile Include="Concrete\Title_Creator.cs" />
     <Compile Include="Concrete\Title_TitleIdentifier.cs" />
+    <Compile Include="Concrete\vwOAIHarvestSet.cs" />
     <Compile Include="Generated\__BotanicusHarvestLog.cs" />
     <Compile Include="Generated\__BSItem.cs" />
     <Compile Include="Generated\__BSItemStatus.cs" />
@@ -118,6 +127,14 @@
     <Compile Include="Generated\__ImportLog.cs" />
     <Compile Include="Generated\__IndicatedPage.cs" />
     <Compile Include="Generated\__Item.cs" />
+    <Compile Include="Generated\__OAIHarvestLog.cs" />
+    <Compile Include="Generated\__OAIRecord.cs" />
+    <Compile Include="Generated\__OAIRecordCreator.cs" />
+    <Compile Include="Generated\__OAIRecordDCType.cs" />
+    <Compile Include="Generated\__OAIRecordRelatedTitle.cs" />
+    <Compile Include="Generated\__OAIRecordRight.cs" />
+    <Compile Include="Generated\__OAIRecordStatus.cs" />
+    <Compile Include="Generated\__OAIRecordSubject.cs" />
     <Compile Include="Generated\__Page.cs" />
     <Compile Include="Generated\__PageName.cs" />
     <Compile Include="Generated\__Page_PageType.cs" />
@@ -127,6 +144,7 @@
     <Compile Include="Generated\__TitleTag.cs" />
     <Compile Include="Generated\__Title_Creator.cs" />
     <Compile Include="Generated\__Title_TitleIdentifier.cs" />
+    <Compile Include="Generated\__vwOAIHarvestSet.cs" />
     <Compile Include="OAI-PMH.cs">
       <DependentUpon>OAI-PMH.xsd</DependentUpon>
     </Compile>

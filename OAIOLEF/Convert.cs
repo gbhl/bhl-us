@@ -18,6 +18,27 @@ namespace MOBOT.BHL.OAIOLEF
             _oaiRecord = oaiRecord;
         }
 
+        public Convert(string olefRecord)
+        {
+            _oaiRecord = new OAIRecord();
+
+            // Parse the supplied OLEF and store the values in _oaiRecord
+
+
+
+
+            throw new NotImplementedException();
+        }
+
+        #region ToOAIRecord
+
+        public OAIRecord ToOAIRecord()
+        {
+            return _oaiRecord;
+        }
+
+        #endregion ToOAIRecord
+
         #region ToString
 
         public new String ToString()
