@@ -118,6 +118,19 @@ namespace MOBOT.BHL.OAIDC
                 _oaiRecord.Types.Add(t.Value);
             }
 
+            // Set the type for the record.
+            _oaiRecord.Type = OAIRecord.RecordType.Unknown;
+            if ((from t in _oaiRecord.Types where t.ToLower() != "text" select t).Count() > 0)
+            {
+                // We have something other than the basic value of "text".  Assume it indicates "segment"
+                // unless we find a known "book/journal" dublin core type value.
+                _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                if ((from t in _oaiRecord.Types
+                     where t == "book" || t == "journal" || t == "monograph" || t == "series"
+                     select t).Count() > 0)
+                    _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
+            }
+
             var identifier = root.Element(ns + "identifier");
             if (identifier != null) _oaiRecord.Url = identifier.Value;
 

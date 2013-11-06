@@ -1200,7 +1200,8 @@ namespace MOBOT.BHL.OAI2
             BookJournal,
             Issue,
             Article,
-            Segment
+            Segment,
+            Unknown
         }
 
         #endregion Enums

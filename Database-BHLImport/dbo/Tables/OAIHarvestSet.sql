@@ -3,6 +3,7 @@
 	[HarvestSetName] [nvarchar](150) NOT NULL,
 	[SetID] [int] NULL,
 	[RepositoryFormatID] [int] NOT NULL,
+	[DefaultRecordType] [nvarchar](20) NOT NULL,
 	[IsActive] [smallint] NOT NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[LastModifiedDate] [datetime] NOT NULL,
@@ -15,6 +16,9 @@
 GO
 
 ALTER TABLE [dbo].[OAIHarvestSet] ADD  CONSTRAINT [DF__OAIHarves__Harve__18B7765F]  DEFAULT ('') FOR [HarvestSetName]
+GO
+
+ALTER TABLE [dbo].[OAIHarvestSet] ADD CONSTRAINT [DF__OAIHarvestSet__DefaultRecordType] DEFAULT ('') FOR [DefaultRecordType]
 GO
 
 ALTER TABLE [dbo].[OAIHarvestSet] ADD CONSTRAINT [DF_OAIHarvestSet_IsActive] DEFAULT (1) FOR [IsActive]
