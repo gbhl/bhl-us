@@ -38,7 +38,8 @@ SELECT	s.SegmentID,
 		s.RightsStatement,
 		s.LicenseName,
 		s.LicenseUrl,
-		scs.Authors
+		scs.Authors,
+		scs.Subjects
 FROM	dbo.Keyword k
 		INNER JOIN dbo.SegmentKeyword sk ON k.KeywordID = sk.KeywordID
 		INNER JOIN dbo.Segment s ON sk.SegmentID = s.SegmentID

@@ -107,6 +107,14 @@ namespace MOBOT.BHL.DataObjects
             set { _authors = value; }
         }
 
+        private string _keywords = string.Empty;
+
+        public string Keywords
+        {
+            get { return _keywords; }
+            set { _keywords = value; }
+        }
+
         private short _isPrimary = 0;
 
         public short IsPrimary
@@ -220,6 +228,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "Authors")
                 {
                     _authors = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "Subjects")
+                {
+                    _keywords = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "IsPrimary")
                 {
