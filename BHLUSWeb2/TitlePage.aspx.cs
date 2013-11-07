@@ -51,6 +51,17 @@ namespace MOBOT.BHL.Web2
                     {
                         PageSummary = bhlProvider.PageSummarySelectByPageId(pageid, true);
                         getFirstPage = false;
+
+                        // Check to make sure this item hasn't been replaced.  If it has, redirect
+                        // to the appropriate itemid.  That won't find the correct page, but at
+                        // least puts the user in the correct item... better than "not found".
+                        if (PageSummary != null)
+                        {
+                            if (PageSummary.RedirectItemID != null)
+                            {
+                                Response.Redirect("~/item/" + PageSummary.RedirectItemID);
+                            }
+                        }
                     }
                 }
                 else if (RouteData.Values["titleid"] != null)
