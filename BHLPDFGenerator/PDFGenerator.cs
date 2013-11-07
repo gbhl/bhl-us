@@ -316,13 +316,11 @@ namespace MOBOT.BHL.BHLPDFGenerator
             }
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            sb.Append("Attention Mac OS X Users:  Preview (the default application for displaying images and PDFs) may not correctly display the images contained in this PDF.  To ensure proper rendering of the PDF, please use Adobe Reader.");
+            sb.Append("Having Problems Viewing Your PDF? Depending on your browser, you may experience trouble using the built-in PDF viewer, which may not correctly display the images contained in this PDF. If you experience viewing problems in your browser, open the PDF in an alternative viewer.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            sb.Append("If you have questions or need to report a problem, please contact us via our Feedback page: http://www.biodiversitylibrary.org/feedback.aspx");
+            sb.Append("If you have questions or need to report an error, please contact us via our Feedback page: http://www.biodiversitylibrary.org/feedback.aspx");
             sb.Append(endOfLine);
-            sb.Append(endOfLine);
-            sb.Append("Thank you for your interest.");
 
             return sb.ToString();
         }
