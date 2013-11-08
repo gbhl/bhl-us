@@ -32,20 +32,6 @@ namespace MOBOT.BHL.Web2
 
             main.Page.Title = string.Format("{0} - Biodiversity Heritage Library", Author.FullName);
 
-            // Build Lifespan literal
-            if (!string.IsNullOrEmpty(Author.StartDate) && !string.IsNullOrEmpty(Author.EndDate))
-            {
-                litLifespan.Text = string.Format(" ({0} - {1})", Author.StartDate, Author.EndDate);
-            }
-            else if (!string.IsNullOrEmpty(Author.StartDate))
-            {
-                litLifespan.Text = string.Format(" (Born - {0})", Author.StartDate);
-            }
-            else if (!string.IsNullOrEmpty(Author.EndDate))
-            {
-                litLifespan.Text = string.Format(" (Died - {0})", Author.EndDate);
-            }
-
             // Find & Bind Author Titles
             CustomGenericList<SearchBookResult> SearchBookResultList = bhlProvider.TitleSelectByAuthor(creatorId);
             BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;

@@ -12,7 +12,7 @@
     <nav id="sub-nav-tabs" class="no-js-hide">
         <div class="column-wrap">
             <div id="linkbar">
-            <h3>By "<%= Author.FullName %><%= (!string.IsNullOrWhiteSpace(Author.Numeration)) ? " " + Author.Numeration : string.Empty %><asp:Literal ID="litLifespan" runat="server"></asp:Literal>"</h3>
+            <h3>By "<%= Author.NameExtended %>"</h3>
             <ul>
                 <li runat="server" id="spanTitleSummary" class="titles">
                     <a href="#/titles" title="Books">Books/Journals (<%=count%>)</a>

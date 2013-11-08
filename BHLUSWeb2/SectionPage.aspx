@@ -43,7 +43,7 @@
                     { %>
                         <span itemprop="author" itemscope itemtype='http://schema.org/Person'>
                         <a href="/creator/<%: author.AuthorID %>">
-							<span itemprop="name"><%: author.FullName%></span>
+							<span itemprop="name"><%: author.NameExtended%></span>
 						</a>
                         <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
                         </span>
@@ -124,7 +124,7 @@
                     <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
                        { %>
                         <a href="/creator/<%: author.AuthorID %>">
-							<%: author.FullName%>
+							<%: author.NameExtended%>
 						</a>
                         <br />
                     <% } %>

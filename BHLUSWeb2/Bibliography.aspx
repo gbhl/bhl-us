@@ -58,7 +58,7 @@
                     <% foreach (Author author in Authors) { %>
                         <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
-							<span itemprop="name"><%: author.FullName %></span>
+							<span itemprop="name"><%: author.NameExtended %></span>
 						</a>
                         <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
                         <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
@@ -73,7 +73,7 @@
                     <% foreach (Author author in AdditionalAuthors) { %>
                         <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
-							<span itemprop="name"><%: author.FullName %></span>
+							<span itemprop="name"><%: author.NameExtended %></span>
 						</a>
                         <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
                         <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
@@ -169,13 +169,13 @@
                 <p>
                     <% foreach (Author author in Authors) { %>
                         <a href="/creator/<%: author.AuthorID %>">
-							<%: author.FullName %>
+							<%: author.NameExtended %>
 						</a>
                         <br />
                     <% } %>
                     <% foreach (Author author in AdditionalAuthors) { %>
                         <a href="/creator/<%: author.AuthorID %>">
-							<%: author.FullName %>
+							<%: author.NameExtended %>
 						</a>
                         <br />
                     <% } %>
