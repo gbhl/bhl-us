@@ -219,7 +219,7 @@
       </basicHttpBinding>
     </bindings>
     <client>
-      <endpoint address="internal BHLWebService URL" binding="basicHttpBinding"
+      <endpoint address="http://localhost:26504/BHLWS.asmx" binding="basicHttpBinding"
         bindingConfiguration="BHLWSSoap" contract="BHLWebService.BHLWSSoap"
         name="BHLWSSoap" />
     </client>
