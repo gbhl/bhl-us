@@ -1,0 +1,395 @@
+Prerequisites
+=============
+
+- SQL Express 2012
+- Visual Studio 2012 or later
+
+Notes
+=====
+
+- The folder holding the bhl-us source code is referred to throughout this document as <BHLRoot>.
+- These instructions assume that the databases will be named "BHL", "BHLImport", "BHLAuditArchive", and "IAAnalysis".
+
+Setup
+=====
+
+After downloading the bhl-us source code, do the following to get the web sites and utility applications running.
+
+Database Creation
+-----------------
+
+1) Open a Windows command prompt.
+
+2) Make sure that the sqlcmd utility, which is part of the SQL Server client tools, is included in your path.  More information can be found at http://technet.microsoft.com/en-us/library/ms162773.aspx.
+
+3) Navigate to the <BHLRoot>\Database-BHL folder.
+
+4) Run the BHLDBBuildScript.bat batch file.  This will build the primary database.
+
+	Usage:
+
+	BHLDBBuildScript SERVERNAME DATABASENAME FULLTEXTCATALOGFILEPATH ISPRODUCTION DATAORSTRUCTURE
+
+	where 
+
+	SERVERNAME is the name of the database server
+	DATABASENAME is the name of the database.  It is recommended that "BHL" be used as the database name.
+	FULLTEXTCATALOGFILEPATH is the path in which to place the full-text catalog file.  Use quotes around this value if the path contains spaces.
+	ISPRODUCTION is true for a production database, and false for a development database.  Auditing triggers are removed from development databases.
+	DATAORSTRUCTURE is "structure" to build the empty database (no data), "data" to add data to an existing database, or "all" to build the structure and add the data.
+
+	Example: 
+
+	BHLDBBuildScript localhost BHL "C:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA" false all
+
+5) In the new BHL database, create roles named db_executor and db_webuser.
+
+	USE [BHL];
+	CREATE ROLE db_executor;
+	GRANT EXECUTE TO db_executor;
+
+	CREATE ROLE db_webuser;
+	GRANT INSERT ON dbo.PDF TO db_webuser;
+	GRANT INSERT ON dbo.PDFPage TO db_webuser;
+	GRANT UPDATE ON dbo.Page TO db_webuser;
+
+6) Navigate to the <BHLRoot>\Database-BHLImport folder.
+
+7) Run the BHLImportDBBuildScript.bat batch file.  This will build the database used as a staging area for new material.
+
+	Usage:
+
+	BHLImportDBBuildScript SERVERNAME DATABASENAME DATAORSTRUCTURE
+
+	SERVERNAME is the name of the database server
+	DATABASENAME is the name of the database.  It is recommended that "BHLImport" be used as the database name.
+	DATAORSTRUCTURE is "structure" to build the empty database (no data), "data" to add data to an existing database, or "all" to build the structure and add the data.
+
+	Example: 
+
+	BHLImportDBBuildScript localhost BHLImport all
+
+8) Navigate to the <BHLRoot>\Database-BHLAuditArchive folder.
+
+9) Run the BHLAuditArchiveDBBuildScript.bat batch file.  This will build the auditing database.
+
+	Usage:
+
+	BHLAuditArchiveDBBuildScript SERVERNAME DATABASENAME
+
+	where
+
+	SERVERNAME is the name of the database server
+	DATABASENAME is the name of the database.  It is recommended that "BHLAuditArchive" be used as the database name.
+
+	Example: 
+
+	BHLAuditArchiveDBBuildScript localhost BHLAuditArchive
+
+10) Navigate to the <BHLRoot>\Database-IAAnalysis folder.
+
+11) Run the IAAnalysisDBBuildScript.bat batch file.  This will build the database used to ingest non-biodiversity-collection items from Internet Archive.
+
+	Usage:
+
+	IAAnalysisDBBuildScript SERVERNAME DATABASENAME DATAORSTRUCTURE
+
+	where
+
+	SERVERNAME is the name of the database server
+	DATABASENAME is the name of the database.  It is recommended that "IAAnalysis" be used as the database name.
+	DATAORSTRUCTURE is "structure" to build the empty database (no data), "data" to add data to an existing database, or "all" to build the structure and add the data.
+
+	Example: 
+
+	IAAnalysisDBBuildScript localhost IAAnalysis all
+
+12) Create a new SQL Server login named BHLWebUser.  Map it to a user named BHLWebUser in the new BHL database, and assign it to the "db_executor" and "db_webuser" database roles.
+
+	USE [master];
+	CREATE LOGIN [BHLWebUser] WITH PASSWORD=N'BHLWebUser';
+
+	USE [BHL];
+	CREATE USER [BHLWebUser] FOR LOGIN [BHLWebUser] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_executor] ADD MEMBER [BHLWebUser];
+	ALTER ROLE [db_webuser] ADD MEMBER [BHLWebUser];
+
+13) Create a new SQL Server login named BHLService.  Map it to a user named BHLService in the BHL, BHLAuditArchive, BHLImport, and IAAnalysis databases.  In each database, assign the new user to the "db_datareader", "db_datawriter", and "db_owner" database roles.
+
+	USE [master];
+	CREATE LOGIN [BHLService] WITH PASSWORD=N'BHLService';
+
+	USE [BHL];
+	CREATE USER [BHLService] FOR LOGIN [BHLService] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_datareader] ADD MEMBER [BHLService];
+	ALTER ROLE [db_datawriter] ADD MEMBER [BHLService];
+	ALTER ROLE [db_owner] ADD MEMBER [BHLService];
+
+	USE [BHLAuditArchive];
+	CREATE USER [BHLService] FOR LOGIN [BHLService] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_datareader] ADD MEMBER [BHLService];
+	ALTER ROLE [db_datawriter] ADD MEMBER [BHLService];
+	ALTER ROLE [db_owner] ADD MEMBER [BHLService];
+
+	USE [BHLImport];
+	CREATE USER [BHLService] FOR LOGIN [BHLService] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_datareader] ADD MEMBER [BHLService];
+	ALTER ROLE [db_datawriter] ADD MEMBER [BHLService];
+	ALTER ROLE [db_owner] ADD MEMBER [BHLService];
+
+	USE [IAAnalysis];
+	CREATE USER [BHLService] FOR LOGIN [BHLService] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_datareader] ADD MEMBER [BHLService];
+	ALTER ROLE [db_datawriter] ADD MEMBER [BHLService];
+	ALTER ROLE [db_owner] ADD MEMBER [BHLService];
+
+	
+Application Configuration
+-------------------------
+
+1) Make copies of the config files as indicated in the following list:
+
+**Original File**													**Copy To**
+
+<BHLRoot>\BHLApi3Web\Web.config.template							<BHLRoot>\BHLApi3Web\Web.config
+<BHLRoot>\BHLApi3WebTest\App.config.template						<BHLRoot>\BHLApi3WebTest\App.config
+<BHLRoot>\BHLApiDALTest\App.config.template							<BHLRoot>\BHLApiDALTest\App.config
+<BHLRoot>\BHLAuditExport\app.config.template						<BHLRoot>\BHLAuditExport\app.config
+<BHLRoot>\BHLBibTeXExport\App.config.template						<BHLRoot>\BHLBibTeXExport\App.config
+<BHLRoot>\BHLBioStorHarvest\app.config.template						<BHLRoot>\BHLBioStorHarvest\app.config
+<BHLRoot>\BHLCoreDALTest\App.config.template						<BHLRoot>\BHLCoreDALTest\App.config
+<BHLRoot>\BHLDOIService\app.config.template							<BHLRoot>\BHLDOIService\app.config
+<BHLRoot>\BHLEndNoteExport\app.config.template						<BHLRoot>\BHLEndNoteExport\app.config
+<BHLRoot>\BHLFileAccessRemotingUtilities\Remoting.config.template	<BHLRoot>\BHLFileAccessRemotingUtilities\Remoting.config
+<BHLRoot>\BHLFileAccessService\App.config.template					<BHLRoot>\BHLFileAccessService\App.config
+<BHLRoot>\BHLFlickrThumbGrab\app.config.template					<BHLRoot>\BHLFlickrThumbGrab\app.config
+<BHLRoot>\BHLImportEFDataModel\App.Config.template					<BHLRoot>\BHLImportEFDataModel\App.Config
+<BHLRoot>\BHLImportService\Web.config.template						<BHLRoot>\BHLImportService\Web.config
+<BHLRoot>\BHLMETSUpload\app.config.template							<BHLRoot>\BHLMETSUpload\app.config
+<BHLRoot>\BHLMODSExport\app.config.template							<BHLRoot>\BHLMODSExport\app.config
+<BHLRoot>\BHLNameFileGenerator\app.config.template					<BHLRoot>\BHLNameFileGenerator\app.config
+<BHLRoot>\BHLNameFileGenerator\Remoting.config.template				<BHLRoot>\BHLNameFileGenerator\Remoting.config
+<BHLRoot>\BHLPageNameRefresh\app.config.template					<BHLRoot>\BHLPageNameRefresh\app.config
+<BHLRoot>\BHLPDFGenerator\app.config.template						<BHLRoot>\BHLPDFGenerator\app.config
+<BHLRoot>\BHLService\Remoting.config.template						<BHLRoot>\BHLService\Remoting.config
+<BHLRoot>\BHLService\Web.config.template							<BHLRoot>\BHLService\Web.config
+<BHLRoot>\BHLUSWeb2\Remoting.config.template						<BHLRoot>\BHLUSWeb2\Remoting.config
+<BHLRoot>\BHLUSWeb2\Web.config.template								<BHLRoot>\BHLUSWeb2\Web.config
+<BHLRoot>\BHLUSWeb2\services\Name\Web.config.template				<BHLRoot>\BHLUSWeb2\services\Name\Web.config
+<BHLRoot>\IAAnalysisHarvest\App.config.template						<BHLRoot>\IAAnalysisHarvest\App.config
+<BHLRoot>\IAFileGenerator\IAFileGeneratorGUI\App.config.template	<BHLRoot>\IAFileGenerator\IAFileGeneratorGUI\App.config
+<BHLRoot>\IAHarvest\App.config.template								<BHLRoot>\IAHarvest\App.config
+
+2) Make the specified modifications to each of the config files in the following list:
+
+\# = denotes optional modifications that are not required for development installations
+
+
+**WWW.BIODIVERSITYLIBRARY.ORG**
+
+**File: <BHLRoot>\BHLService\Web.config**
+
+*Element to Update*							*Value*
+\# appSettings/SMTPHost						SMTP host address
+appSettings/UseRemoteFileAccessProvider	false
+connectionStrings/BHL						Connection string for BHL database
+
+**File: <BHLRoot>\BHLUSWeb2\Web.config**
+
+*Element to Update*								*Value*
+appSettings/UseRemoteFileAccessProvider		false
+\# appSettings/TwitterConsumerKey				Consumer Key for Twitter API
+\# appSettings/TwitterConsumerSecret			Consumer Secret for Twitter API
+\# appSettings/GeminiURL						Issue tracking service URL
+\# appSettings/GeminiUser						Issue tracking service username
+\# appSettings/GeminiPassword					Issue tracking service password
+connectionStrings/BHL							Connection string for BHL database
+\# system.net/mailSettings/smtp/network			STMP host address, username, and password
+
+
+**API3.BIODIVERSITYLIBRARY.ORG**
+
+**File: <BHLRoot>\BHLApi3Web\Web.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHL				Connection string for BHL database
+
+
+**DATA IMPORT APPS**
+
+**File: <BHLRoot>\BHLBioStorHarvest\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+connectionStrings/BHLImportEntities	Connection string for BHLImport database
+connectionStrings/BHL				Connection string for BHL database
+
+**File: <BHLRoot>\BHLImportEFDataModel\App.Config**
+
+*Element to Update*					*Value*
+connectionStrings/BHLImportEntities	Connection string for BHLImport database
+
+**File: <BHLRoot>\BHLImportService\Web.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHLImport			Connection string for BHLImport database
+
+**File: <BHLRoot>\IAAnalysisHarvest\App.config**
+
+*Element to Update*					*Value*
+connectionStrings/IAAnalysis		Connection string for IAAnalysis database
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+
+**File: <BHLRoot>\IAHarvest\App.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHLImport			Connection string for BHLImport database
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/LocalFileFolder			Local folder to hold downloaded files
+
+
+**UTILITY APPS**
+
+**File: <BHLRoot>\BHLAuditExport\app.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHL				Connection string for BHL database
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+
+**File: <BHLRoot>\BHLBibTeXExport\App.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/BibTeXTitleTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXTitleFile			Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXTitleZipFile		Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXItemTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXItemFile			Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXItemZipFile		Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXSegmentTempFile	Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXSegmentFile		Replace \\SERVER\FOLDER with valid path
+appSettings/BibTeXSegmentZipFile	Replace \\SERVER\FOLDER with valid path
+
+**File: <BHLRoot>\BHLDOIService\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/CrossRefDepositorName	Depositor name associated with CrossRef account
+appSettings/CrossRefDepositorEmail	Depositor email associated with CrossRef account
+appSettings/CrossRefLogin			Login for CrossRef account
+appSettings/CrossRefPassword		Password for CrossRef account
+
+**File: <BHLRoot>\BHLEndNoteExport\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/EndNoteTitleTempFile	Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteTitleFile		Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteTitleZipFile		Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteItemTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteItemFile			Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteItemZipFile		Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteSegmentTempFile	Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteSegmentFile		Replace \\SERVER\FOLDER with valid path
+appSettings/EndNoteSegmentZipFile	Replace \\SERVER\FOLDER with valid path		
+
+**File: <BHLRoot>\BHLFlickrThumbGrab\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/FlickrAPIKey			Flickr API key
+appSettings/ImageFileName			Replace \\SERVER\FOLDER with valid path
+appSettings/ImageFolder				Replace \\SERVER\FOLDER with valid path
+appSettings/ImageListFilePath		Replace \\SERVER\FOLDER with valid path
+appSettings/DefaultFilesFolder		Replace \\SERVER\FOLDER with valid path
+
+**File: <BHLRoot>\BHLMETSUpload\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/METSEmail				Organization email address to place in METS files
+appSettings/IAS3AccessKey			Internet Archive access key
+appSettings/IAS3SecretKey			Internet Archive secret key
+
+**File: <BHLRoot>\BHLMODSExport\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/MODSTitleTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/MODSTitleFile			Replace \\SERVER\FOLDER with valid path
+appSettings/MODSTitleZipFile		Replace \\SERVER\FOLDER with valid path
+appSettings/MODSItemTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/MODSItemFile			Replace \\SERVER\FOLDER with valid path
+appSettings/MODSItemZipFile			Replace \\SERVER\FOLDER with valid path
+appSettings/MODSSegmentTempFile		Replace \\SERVER\FOLDER with valid path
+appSettings/MODSSegmentFile			Replace \\SERVER\FOLDER with valid path
+appSettings/MODSSegmentZipFile		Replace \\SERVER\FOLDER with valid path
+
+**File: <BHLRoot>\BHLNameFileGenerator\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/IAS3AccessKey			Internet Archive access key
+appSettings/IAS3SecretKey			Internet Archive secret key
+
+**File: <BHLRoot>\BHLPageNameRefresh\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+
+**File: <BHLRoot>\BHLPDFGenerator\app.config**
+
+*Element to Update*					*Value*
+\# appSettings/SMTPHost				SMTP host address
+\# appSettings/EmailFromAddress		"From" address for emails sent by the process
+\# appSettings/EmailToAddress		Recipient of emails sent by the process
+appSettings/PdfFilePath				Replace \\SERVER\FOLDER with valid path
+
+**File: <BHLRoot>\IAFileGenerator\IAFileGeneratorGUI\App.config**
+
+*Element to Update*					*Value*
+appSettings/AccessKey				Internet Archive access key
+appSettings/SecretKey				Internet Archive secret key
+
+
+**TEST PROJECTS**
+
+**File: <BHLRoot>\BHLApi3WebTest\App.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHL				Connection string for BHL database
+
+**File: <BHLRoot>\BHLApiDALTest\App.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHL				Connection string for BHL database
+
+**File: <BHLRoot>\BHLCoreDALTest\App.config**
+
+*Element to Update*					*Value*
+connectionStrings/BHL				Connection string for BHL database
+
