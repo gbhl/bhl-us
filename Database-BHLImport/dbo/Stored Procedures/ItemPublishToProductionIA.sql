@@ -689,8 +689,11 @@ BEGIN TRY
 	UPDATE	#tmpTitle_Creator
 	SET		ProductionAuthorID = c.ProductionAuthorID
 	FROM	#tmpTitle_Creator t INNER JOIN #tmpCreator c
-				ON t.CreatorName = c.CreatorName
-
+				ON ISNULL(t.[MARCCreator_a], '') = ISNULL(c.[MARCCreator_a], '')
+				AND ISNULL(t.[MARCCreator_b], '') = ISNULL(c.[MARCCreator_b], '')
+				AND ISNULL(t.[MARCCreator_c], '') = ISNULL(c.[MARCCreator_c], '')
+				AND ISNULL(t.[MARCCreator_d], '') = ISNULL(c.[MARCCreator_d], '')
+				AND ISNULL(t.[MARCCreator_q], '') = ISNULL(c.[MARCCreator_q], '')
 
 	-- =======================================================================
 	-- =======================================================================
@@ -1127,7 +1130,11 @@ BEGIN TRY
 		UPDATE	#tmpTitle_Creator
 		SET		ProductionAuthorID = c.ProductionAuthorID
 		FROM	#tmpTitle_Creator t INNER JOIN #tmpCreator c
-					ON t.CreatorName = c.CreatorName
+					ON ISNULL(t.[MARCCreator_a], '') = ISNULL(c.[MARCCreator_a], '')
+					AND ISNULL(t.[MARCCreator_b], '') = ISNULL(c.[MARCCreator_b], '')
+					AND ISNULL(t.[MARCCreator_c], '') = ISNULL(c.[MARCCreator_c], '')
+					AND ISNULL(t.[MARCCreator_d], '') = ISNULL(c.[MARCCreator_d], '')
+					AND ISNULL(t.[MARCCreator_q], '') = ISNULL(c.[MARCCreator_q], '')
 		WHERE	t.ProductionAuthorID IS NULL
 
 		-- =======================================================================
@@ -1780,7 +1787,4 @@ END CATCH
 SET NOCOUNT OFF
 
 END
-
-
-
 
