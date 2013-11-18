@@ -1649,6 +1649,7 @@ namespace MOBOT.BHL.AdminWeb
                 ix++;
             }
 
+            /*
             br = false;
             ix = 0;
             foreach (TitleAuthor tc in title.TitleAuthors)
@@ -1679,6 +1680,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 ix++;
             }
+             */
 
             errorControl.Visible = flag;
             Page.MaintainScrollPositionOnPostBack = !flag;
