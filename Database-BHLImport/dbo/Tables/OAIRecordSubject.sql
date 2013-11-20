@@ -2,7 +2,7 @@
 	(
 	OAIRecordSubjectID int IDENTITY(1,1) NOT NULL CONSTRAINT PK_OAIRecordSubject PRIMARY KEY CLUSTERED,
 	OAIRecordID int NOT NULL,
-	Keyword nvarchar(50) NOT NULL DEFAULT(''),
+	Keyword nvarchar(50) COLLATE SQL_Latin1_General_CP1_CI_AI NOT NULL DEFAULT(''),
 	ProductionKeywordID int NULL,
 	CreationDate datetime NOT NULL DEFAULT(GETDATE()),
 	LastModifiedDate datetime NOT NULL DEFAULT(GETDATE()),

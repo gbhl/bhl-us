@@ -5,6 +5,8 @@
 @CreatorType NVARCHAR(50),
 @FullName NVARCHAR(300),
 @Dates NVARCHAR(50),
+@StartDate NVARCHAR(25),
+@EndDate NVARCHAR(25),
 @ProductionAuthorID INT
 
 AS 
@@ -19,6 +21,8 @@ SET
 	[CreatorType] = @CreatorType,
 	[FullName] = @FullName,
 	[Dates] = @Dates,
+	[StartDate] = @StartDate,
+	[EndDate] = @EndDate,
 	[ProductionAuthorID] = @ProductionAuthorID,
 	[LastModifiedDate] = getdate()
 
@@ -39,6 +43,8 @@ ELSE BEGIN
 		[CreatorType],
 		[FullName],
 		[Dates],
+		[StartDate],
+		[EndDate],
 		[ProductionAuthorID],
 		[CreationDate],
 		[LastModifiedDate]

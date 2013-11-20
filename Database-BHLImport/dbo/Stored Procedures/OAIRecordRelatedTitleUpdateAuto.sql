@@ -4,7 +4,8 @@
 @OAIRecordID INT,
 @TitleType NVARCHAR(50),
 @Title NVARCHAR(300),
-@ProductionTitleAssociationID INT
+@ProductionEntityType NVARCHAR(15),
+@ProductionEntityID INT
 
 AS 
 
@@ -17,7 +18,8 @@ SET
 	[OAIRecordID] = @OAIRecordID,
 	[TitleType] = @TitleType,
 	[Title] = @Title,
-	[ProductionTitleAssociationID] = @ProductionTitleAssociationID,
+	[ProductionEntityType] = @ProductionEntityType,
+	[ProductionEntityID] = @ProductionEntityID,
 	[LastModifiedDate] = getdate()
 
 WHERE
@@ -36,7 +38,8 @@ ELSE BEGIN
 		[OAIRecordID],
 		[TitleType],
 		[Title],
-		[ProductionTitleAssociationID],
+		[ProductionEntityType],
+		[ProductionEntityID],
 		[CreationDate],
 		[LastModifiedDate]
 

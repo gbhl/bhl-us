@@ -34,8 +34,9 @@ SELECT
 	[Doi],
 	[Url],
 	[OAIRecordStatusID],
-	[ProductionEntityType],
-	[ProductionEntityID],
+	[ProductionTitleID],
+	[ProductionItemID],
+	[ProductionSegmentID],
 	[CreationDate],
 	[LastModifiedDate]
 

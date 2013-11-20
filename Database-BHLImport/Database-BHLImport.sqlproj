@@ -403,5 +403,24 @@
     <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleInsertAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleUpdateAuto.sql" />
     <Build Include="dbo\Stored Procedures\OAIRecordRelatedTitleDeleteAuto.sql" />
+    <Build Include="dbo\Tables\OAIRecordLanguage.sql" />
+    <Build Include="dbo\Functions\fnReverseAuthorName.sql" />
+    <Build Include="dbo\Tables\OAIRecordRelatedTitleTypeAssociation.sql" />
+    <Build Include="dbo\Tables\OAIRecordRelatedTitleTypeVariant.sql" />
+    <Build Include="dbo\Synonyms\BHLSegmentKeyword.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishSetProductionIDs.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishInsertSegment.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishUpdateTitle.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishInsertTitle.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishInsertItem.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishInsertTitleAndItem.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishUpdateSegment.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishUpdateItem.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishUpdateTitleAndItem.sql" />
+    <Build Include="dbo\Tables\OAIPublishError.sql" />
+    <Build Include="dbo\Tables\OAIPublishLog.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishDeleteSegment.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishDeleteTitleAndItem.sql" />
+    <Build Include="dbo\Stored Procedures\OAIRecordPublishToProduction.sql" />
   </ItemGroup>
 </Project>

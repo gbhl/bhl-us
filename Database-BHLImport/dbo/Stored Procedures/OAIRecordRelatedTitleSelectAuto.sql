@@ -12,7 +12,8 @@ SELECT
 	[OAIRecordID],
 	[TitleType],
 	[Title],
-	[ProductionTitleAssociationID],
+	[ProductionEntityType],
+	[ProductionEntityID],
 	[CreationDate],
 	[LastModifiedDate]
 

@@ -5,6 +5,8 @@
 	CreatorType nvarchar(50) NOT NULL DEFAULT(''),
 	FullName nvarchar(300) NOT NULL DEFAULT(''),
 	Dates nvarchar(50) NOT NULL DEFAULT(''),
+	StartDate nvarchar(25) NOT NULL DEFAULT(''),
+	EndDate nvarchar(25) NOT NULL DEFAULT(''),
 	ProductionAuthorID int NULL,
 	CreationDate datetime NOT NULL DEFAULT(GETDATE()),
 	LastModifiedDate datetime NOT NULL DEFAULT(GETDATE()),

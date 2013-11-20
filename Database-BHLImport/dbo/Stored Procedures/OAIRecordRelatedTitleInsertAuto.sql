@@ -4,7 +4,8 @@
 @OAIRecordID INT,
 @TitleType NVARCHAR(50),
 @Title NVARCHAR(300),
-@ProductionTitleAssociationID INT = null
+@ProductionEntityType NVARCHAR(15) = null,
+@ProductionEntityID INT = null
 
 AS 
 
@@ -15,7 +16,8 @@ INSERT INTO [dbo].[OAIRecordRelatedTitle]
 	[OAIRecordID],
 	[TitleType],
 	[Title],
-	[ProductionTitleAssociationID],
+	[ProductionEntityType],
+	[ProductionEntityID],
 	[CreationDate],
 	[LastModifiedDate]
 )
@@ -24,7 +26,8 @@ VALUES
 	@OAIRecordID,
 	@TitleType,
 	@Title,
-	@ProductionTitleAssociationID,
+	@ProductionEntityType,
+	@ProductionEntityID,
 	getdate(),
 	getdate()
 )
@@ -44,7 +47,8 @@ ELSE BEGIN
 		[OAIRecordID],
 		[TitleType],
 		[Title],
-		[ProductionTitleAssociationID],
+		[ProductionEntityType],
+		[ProductionEntityID],
 		[CreationDate],
 		[LastModifiedDate]	
 

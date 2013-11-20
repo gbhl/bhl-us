@@ -67,6 +67,7 @@ namespace MOBOT.BHL.OAIMODS
                 {
                     case "book":
                     case "monograph":
+                    case "multivolume monograph":
                     case "journal":
                     case "series":
                         _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
@@ -186,37 +187,55 @@ namespace MOBOT.BHL.OAIMODS
             var accessConditionList = from a in root.Elements(ns + "accessCondition") select a;
             foreach (XElement accessCondition in accessConditionList) _oaiRecord.Rights.Add(accessCondition.Value);
 
-            // Article container info (title, volume, pages, issue)
-            if (_oaiRecord.Type == OAIRecord.RecordType.Segment)
+            // Related items (article containers and associated titles)
+            var relatedItems = from r in root.Elements(ns + "relatedItem") 
+                               where r.Attribute("type") != null
+                               select r;
+
+            foreach(XElement relatedItem in relatedItems)
             {
-                var relatedItem = from r in root.Elements(ns + "relatedItem") 
-                                        where r.Attribute("type").Value == "host"
-                                        select r;
-
-                if (relatedItem.Count() > 0)
+                if (_oaiRecord.Type == OAIRecord.RecordType.Segment)
                 {
-                    XElement containerTitle = null;
-                    XElement containerTitleInfo = relatedItem.First().Element(ns + "titleInfo");
-                    if (containerTitleInfo != null) title = containerTitleInfo.Element(ns + "title");
-                    if (containerTitle != null) _oaiRecord.JournalTitle = containerTitle.Value;
-
-                    XElement part = relatedItem.First().Element(ns + "part");
-                    if (part != null)
+                    if (relatedItem.Attribute("type").Value == "host")
                     {
-                        var volume = from v in part.Elements(ns + "detail") where v.Attribute("type").Value == "volume" select v;
-                        if (volume.Count() > 0) _oaiRecord.JournalVolume = volume.First().Value;
+                        // Article container info (title, volume, pages, issue)
+                        XElement containerTitle = null;
+                        XElement containerTitleInfo = relatedItem.Element(ns + "titleInfo");
+                        if (containerTitleInfo != null) containerTitle = containerTitleInfo.Element(ns + "title");
+                        if (containerTitle != null) _oaiRecord.JournalTitle = containerTitle.Value;
 
-                        var issue = from i in part.Elements(ns + "detail") where i.Attribute("type").Value == "issue" select i;
-                        if (issue.Count() > 0) _oaiRecord.JournalIssue = issue.First().Value;
-
-                        var pages = from p in part.Elements(ns + "extent") where p.Attribute("unit").Value == "pages" select p;
-                        if (pages.Count() > 0)
+                        XElement part = relatedItem.Element(ns + "part");
+                        if (part != null)
                         {
-                            XElement start = pages.First().Element(ns + "start");
-                            XElement end = pages.First().Element(ns + "end");
-                            if (start != null) _oaiRecord.ArticleStartPage = start.Value;
-                            if (end != null) _oaiRecord.ArticleEndPage = end.Value;
-                        }                        
+                            var volume = from v in part.Elements(ns + "detail") where v.Attribute("type").Value == "volume" select v;
+                            if (volume.Count() > 0) _oaiRecord.JournalVolume = volume.First().Value;
+
+                            var issue = from i in part.Elements(ns + "detail") where i.Attribute("type").Value == "issue" select i;
+                            if (issue.Count() > 0) _oaiRecord.JournalIssue = issue.First().Value;
+
+                            var pages = from p in part.Elements(ns + "extent") where p.Attribute("unit").Value == "pages" select p;
+                            if (pages.Count() > 0)
+                            {
+                                XElement start = pages.First().Element(ns + "start");
+                                XElement end = pages.First().Element(ns + "end");
+                                if (start != null) _oaiRecord.ArticleStartPage = start.Value;
+                                if (end != null) _oaiRecord.ArticleEndPage = end.Value;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Associated titles
+                    OAIRecord relatedTitle = new OAIRecord();
+
+                    XElement relatedItemTitle = null;
+                    XElement relatedItemInfo = relatedItem.Element(ns + "titleInfo");
+                    if (relatedItemInfo != null) relatedItemTitle = relatedItemInfo.Element(ns + "title");
+                    if (relatedItemTitle != null)
+                    {
+                        relatedTitle.Title = relatedItemTitle.Value;
+                        _oaiRecord.RelatedTitles.Add(new KeyValuePair<string, OAIRecord>(relatedItem.Attribute("type").Value, relatedTitle));
                     }
                 }
             }

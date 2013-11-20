@@ -1,5 +1,5 @@
 
-// Generated 11/5/2013 11:13:30 AM
+// Generated 11/20/2013 3:49:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIRecordCreatorDAL is based upon OAIRecordCreator.
@@ -140,6 +140,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
 		/// <param name="productionAuthorID"></param>
 		/// <returns>Object of type OAIRecordCreator.</returns>
 		public OAIRecordCreator OAIRecordCreatorInsertAuto(
@@ -149,9 +151,11 @@ namespace MOBOT.BHLImport.DAL
 			string creatorType,
 			string fullName,
 			string dates,
+			string startDate,
+			string endDate,
 			int? productionAuthorID)
 		{
-			return OAIRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, creatorType, fullName, dates, productionAuthorID );
+			return OAIRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, creatorType, fullName, dates, startDate, endDate, productionAuthorID );
 		}
 		
 		/// <summary>
@@ -164,6 +168,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
 		/// <param name="productionAuthorID"></param>
 		/// <returns>Object of type OAIRecordCreator.</returns>
 		public OAIRecordCreator OAIRecordCreatorInsertAuto(
@@ -174,6 +180,8 @@ namespace MOBOT.BHLImport.DAL
 			string creatorType,
 			string fullName,
 			string dates,
+			string startDate,
+			string endDate,
 			int? productionAuthorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -185,6 +193,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CreatorType", SqlDbType.NVarChar, 50, false, creatorType),
 					CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 300, false, fullName),
 					CustomSqlHelper.CreateInputParameter("Dates", SqlDbType.NVarChar, 50, false, dates),
+					CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
+					CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate),
 					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -239,6 +249,8 @@ namespace MOBOT.BHLImport.DAL
 				value.CreatorType,
 				value.FullName,
 				value.Dates,
+				value.StartDate,
+				value.EndDate,
 				value.ProductionAuthorID);
 		}
 		
@@ -314,6 +326,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
 		/// <param name="productionAuthorID"></param>
 		/// <returns>Object of type OAIRecordCreator.</returns>
 		public OAIRecordCreator OAIRecordCreatorUpdateAuto(
@@ -324,9 +338,11 @@ namespace MOBOT.BHLImport.DAL
 			string creatorType,
 			string fullName,
 			string dates,
+			string startDate,
+			string endDate,
 			int? productionAuthorID)
 		{
-			return OAIRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordCreatorID, oAIRecordID, creatorType, fullName, dates, productionAuthorID);
+			return OAIRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordCreatorID, oAIRecordID, creatorType, fullName, dates, startDate, endDate, productionAuthorID);
 		}
 		
 		/// <summary>
@@ -340,6 +356,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
 		/// <param name="productionAuthorID"></param>
 		/// <returns>Object of type OAIRecordCreator.</returns>
 		public OAIRecordCreator OAIRecordCreatorUpdateAuto(
@@ -351,6 +369,8 @@ namespace MOBOT.BHLImport.DAL
 			string creatorType,
 			string fullName,
 			string dates,
+			string startDate,
+			string endDate,
 			int? productionAuthorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -362,6 +382,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CreatorType", SqlDbType.NVarChar, 50, false, creatorType),
 					CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 300, false, fullName),
 					CustomSqlHelper.CreateInputParameter("Dates", SqlDbType.NVarChar, 50, false, dates),
+					CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
+					CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate),
 					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -417,6 +439,8 @@ namespace MOBOT.BHLImport.DAL
 				value.CreatorType,
 				value.FullName,
 				value.Dates,
+				value.StartDate,
+				value.EndDate,
 				value.ProductionAuthorID);
 		}
 		
@@ -466,6 +490,8 @@ namespace MOBOT.BHLImport.DAL
 						value.CreatorType,
 						value.FullName,
 						value.Dates,
+						value.StartDate,
+						value.EndDate,
 						value.ProductionAuthorID);
 				
 				return new CustomDataAccessStatus<OAIRecordCreator>(
@@ -497,6 +523,8 @@ namespace MOBOT.BHLImport.DAL
 						value.CreatorType,
 						value.FullName,
 						value.Dates,
+						value.StartDate,
+						value.EndDate,
 						value.ProductionAuthorID);
 					
 				return new CustomDataAccessStatus<OAIRecordCreator>(

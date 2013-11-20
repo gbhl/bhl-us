@@ -1,5 +1,5 @@
 
-// Generated 11/5/2013 11:13:30 AM
+// Generated 11/20/2013 3:49:07 PM
 // Do not modify the contents of this code file.
 // This abstract class __OAIRecordRelatedTitle is based upon OAIRecordRelatedTitle.
 
@@ -49,14 +49,16 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="oAIRecordID"></param>
 		/// <param name="titleType"></param>
 		/// <param name="title"></param>
-		/// <param name="productionTitleAssociationID"></param>
+		/// <param name="productionEntityType"></param>
+		/// <param name="productionEntityID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		public __OAIRecordRelatedTitle(int oAIRecordRelatedTitleID, 
 			int oAIRecordID, 
 			string titleType, 
 			string title, 
-			int? productionTitleAssociationID, 
+			string productionEntityType, 
+			int? productionEntityID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate) : this()
 		{
@@ -64,7 +66,8 @@ namespace MOBOT.BHLImport.DataObjects
 			OAIRecordID = oAIRecordID;
 			TitleType = titleType;
 			Title = title;
-			ProductionTitleAssociationID = productionTitleAssociationID;
+			ProductionEntityType = productionEntityType;
+			ProductionEntityID = productionEntityID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 		}
@@ -113,9 +116,14 @@ namespace MOBOT.BHLImport.DataObjects
 						_Title = (string)column.Value;
 						break;
 					}
-					case "ProductionTitleAssociationID" :
+					case "ProductionEntityType" :
 					{
-						_ProductionTitleAssociationID = (int?)column.Value;
+						_ProductionEntityType = (string)column.Value;
+						break;
+					}
+					case "ProductionEntityID" :
+					{
+						_ProductionEntityID = (int?)column.Value;
 						break;
 					}
 					case "CreationDate" :
@@ -249,32 +257,60 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Title
 		
-		#region ProductionTitleAssociationID
+		#region ProductionEntityType
 		
-		private int? _ProductionTitleAssociationID = null;
+		private string _ProductionEntityType = null;
 		
 		/// <summary>
-		/// Column: ProductionTitleAssociationID;
-		/// DBMS data type: int; Nullable;
+		/// Column: ProductionEntityType;
+		/// DBMS data type: nvarchar(15); Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionTitleAssociationID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsNullable=true)]
-		public int? ProductionTitleAssociationID
+		[ColumnDefinition("ProductionEntityType", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=15, IsNullable=true)]
+		public string ProductionEntityType
 		{
 			get
 			{
-				return _ProductionTitleAssociationID;
+				return _ProductionEntityType;
 			}
 			set
 			{
-				if (_ProductionTitleAssociationID != value)
+				if (value != null) value = CalibrateValue(value, 15);
+				if (_ProductionEntityType != value)
 				{
-					_ProductionTitleAssociationID = value;
+					_ProductionEntityType = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion ProductionTitleAssociationID
+		#endregion ProductionEntityType
+		
+		#region ProductionEntityID
+		
+		private int? _ProductionEntityID = null;
+		
+		/// <summary>
+		/// Column: ProductionEntityID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("ProductionEntityID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10, IsNullable=true)]
+		public int? ProductionEntityID
+		{
+			get
+			{
+				return _ProductionEntityID;
+			}
+			set
+			{
+				if (_ProductionEntityID != value)
+				{
+					_ProductionEntityID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ProductionEntityID
 		
 		#region CreationDate
 		
@@ -284,7 +320,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
 		public DateTime CreationDate
 		{
 			get
@@ -311,7 +347,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -377,7 +413,8 @@ namespace MOBOT.BHLImport.DataObjects
 					o.OAIRecordID == OAIRecordID &&
 					GetComparisonString(o.TitleType) == GetComparisonString(TitleType) &&
 					GetComparisonString(o.Title) == GetComparisonString(Title) &&
-					o.ProductionTitleAssociationID == ProductionTitleAssociationID &&
+					GetComparisonString(o.ProductionEntityType) == GetComparisonString(ProductionEntityType) &&
+					o.ProductionEntityID == ProductionEntityID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate 
 				)
@@ -484,7 +521,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string OAIRecordID = "OAIRecordID";	
 			public const string TitleType = "TitleType";	
 			public const string Title = "Title";	
-			public const string ProductionTitleAssociationID = "ProductionTitleAssociationID";	
+			public const string ProductionEntityType = "ProductionEntityType";	
+			public const string ProductionEntityID = "ProductionEntityID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";
 		}

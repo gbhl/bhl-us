@@ -5,6 +5,8 @@
 @CreatorType NVARCHAR(50),
 @FullName NVARCHAR(300),
 @Dates NVARCHAR(50),
+@StartDate NVARCHAR(25),
+@EndDate NVARCHAR(25),
 @ProductionAuthorID INT = null
 
 AS 
@@ -17,6 +19,8 @@ INSERT INTO [dbo].[OAIRecordCreator]
 	[CreatorType],
 	[FullName],
 	[Dates],
+	[StartDate],
+	[EndDate],
 	[ProductionAuthorID],
 	[CreationDate],
 	[LastModifiedDate]
@@ -27,6 +31,8 @@ VALUES
 	@CreatorType,
 	@FullName,
 	@Dates,
+	@StartDate,
+	@EndDate,
 	@ProductionAuthorID,
 	getdate(),
 	getdate()
@@ -48,6 +54,8 @@ ELSE BEGIN
 		[CreatorType],
 		[FullName],
 		[Dates],
+		[StartDate],
+		[EndDate],
 		[ProductionAuthorID],
 		[CreationDate],
 		[LastModifiedDate]	

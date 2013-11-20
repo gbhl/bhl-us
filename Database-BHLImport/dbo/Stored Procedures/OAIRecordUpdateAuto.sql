@@ -26,8 +26,9 @@
 @Doi NVARCHAR(50),
 @Url NVARCHAR(200),
 @OAIRecordStatusID INT,
-@ProductionEntityType NVARCHAR(5),
-@ProductionEntityID INT
+@ProductionTitleID INT,
+@ProductionItemID INT,
+@ProductionSegmentID INT
 
 AS 
 
@@ -62,8 +63,9 @@ SET
 	[Doi] = @Doi,
 	[Url] = @Url,
 	[OAIRecordStatusID] = @OAIRecordStatusID,
-	[ProductionEntityType] = @ProductionEntityType,
-	[ProductionEntityID] = @ProductionEntityID,
+	[ProductionTitleID] = @ProductionTitleID,
+	[ProductionItemID] = @ProductionItemID,
+	[ProductionSegmentID] = @ProductionSegmentID,
 	[LastModifiedDate] = getdate()
 
 WHERE
@@ -104,8 +106,9 @@ ELSE BEGIN
 		[Doi],
 		[Url],
 		[OAIRecordStatusID],
-		[ProductionEntityType],
-		[ProductionEntityID],
+		[ProductionTitleID],
+		[ProductionItemID],
+		[ProductionSegmentID],
 		[CreationDate],
 		[LastModifiedDate]
 

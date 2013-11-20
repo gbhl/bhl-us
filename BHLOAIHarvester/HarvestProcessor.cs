@@ -10,6 +10,7 @@ using System.Net;
 using System.IO;
 using System.Xml;
 using MOBOT.BHL.OAI2;
+using System.Text.RegularExpressions;
 
 namespace BHLOAIHarvester
 {
@@ -236,6 +237,16 @@ namespace BHLOAIHarvester
                 oaiRecordCreator.CreatorType = creator.Key;
                 oaiRecordCreator.FullName = creator.Value.FullName ?? string.Empty;
                 oaiRecordCreator.Dates = creator.Value.Dates ?? string.Empty;
+
+                // Parse the start and end dates
+                if (oaiRecordCreator.Dates != string.Empty)
+                {
+                    Regex regex = new Regex("[0-9]{4}", RegexOptions.IgnoreCase);
+                    MatchCollection matches = regex.Matches(creator.Value.Dates);
+                    if (matches.Count > 0 && matches.Count <= 2) oaiRecordCreator.StartDate = matches[0].Value;
+                    if (matches.Count == 2) oaiRecordCreator.EndDate = matches[1].Value;
+                }
+
                 oaiDataRecord.Creators.Add(oaiRecordCreator);
             }
 

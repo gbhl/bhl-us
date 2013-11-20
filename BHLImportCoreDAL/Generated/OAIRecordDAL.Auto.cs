@@ -1,5 +1,5 @@
 
-// Generated 11/5/2013 11:13:30 AM
+// Generated 11/20/2013 3:49:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIRecordDAL is based upon OAIRecord.
@@ -161,8 +161,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="doi"></param>
 		/// <param name="url"></param>
 		/// <param name="oAIRecordStatusID"></param>
-		/// <param name="productionEntityType"></param>
-		/// <param name="productionEntityID"></param>
+		/// <param name="productionTitleID"></param>
+		/// <param name="productionItemID"></param>
+		/// <param name="productionSegmentID"></param>
 		/// <returns>Object of type OAIRecord.</returns>
 		public OAIRecord OAIRecordInsertAuto(
 			SqlConnection sqlConnection, 
@@ -192,10 +193,11 @@ namespace MOBOT.BHLImport.DAL
 			string doi,
 			string url,
 			int oAIRecordStatusID,
-			string productionEntityType,
-			int? productionEntityID)
+			int? productionTitleID,
+			int? productionItemID,
+			int? productionSegmentID)
 		{
-			return OAIRecordInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID );
+			return OAIRecordInsertAuto( sqlConnection, sqlTransaction, "BHLImport", harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionTitleID, productionItemID, productionSegmentID );
 		}
 		
 		/// <summary>
@@ -229,8 +231,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="doi"></param>
 		/// <param name="url"></param>
 		/// <param name="oAIRecordStatusID"></param>
-		/// <param name="productionEntityType"></param>
-		/// <param name="productionEntityID"></param>
+		/// <param name="productionTitleID"></param>
+		/// <param name="productionItemID"></param>
+		/// <param name="productionSegmentID"></param>
 		/// <returns>Object of type OAIRecord.</returns>
 		public OAIRecord OAIRecordInsertAuto(
 			SqlConnection sqlConnection, 
@@ -261,8 +264,9 @@ namespace MOBOT.BHLImport.DAL
 			string doi,
 			string url,
 			int oAIRecordStatusID,
-			string productionEntityType,
-			int? productionEntityID)
+			int? productionTitleID,
+			int? productionItemID,
+			int? productionSegmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -294,8 +298,9 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Doi", SqlDbType.NVarChar, 50, false, doi),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("OAIRecordStatusID", SqlDbType.Int, null, false, oAIRecordStatusID),
-					CustomSqlHelper.CreateInputParameter("ProductionEntityType", SqlDbType.NVarChar, 5, true, productionEntityType),
-					CustomSqlHelper.CreateInputParameter("ProductionEntityID", SqlDbType.Int, null, true, productionEntityID), 
+					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID),
+					CustomSqlHelper.CreateInputParameter("ProductionItemID", SqlDbType.Int, null, true, productionItemID),
+					CustomSqlHelper.CreateInputParameter("ProductionSegmentID", SqlDbType.Int, null, true, productionSegmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIRecord> helper = new CustomSqlHelper<OAIRecord>())
@@ -370,8 +375,9 @@ namespace MOBOT.BHLImport.DAL
 				value.Doi,
 				value.Url,
 				value.OAIRecordStatusID,
-				value.ProductionEntityType,
-				value.ProductionEntityID);
+				value.ProductionTitleID,
+				value.ProductionItemID,
+				value.ProductionSegmentID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -467,8 +473,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="doi"></param>
 		/// <param name="url"></param>
 		/// <param name="oAIRecordStatusID"></param>
-		/// <param name="productionEntityType"></param>
-		/// <param name="productionEntityID"></param>
+		/// <param name="productionTitleID"></param>
+		/// <param name="productionItemID"></param>
+		/// <param name="productionSegmentID"></param>
 		/// <returns>Object of type OAIRecord.</returns>
 		public OAIRecord OAIRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -499,10 +506,11 @@ namespace MOBOT.BHLImport.DAL
 			string doi,
 			string url,
 			int oAIRecordStatusID,
-			string productionEntityType,
-			int? productionEntityID)
+			int? productionTitleID,
+			int? productionItemID,
+			int? productionSegmentID)
 		{
-			return OAIRecordUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionEntityType, productionEntityID);
+			return OAIRecordUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, harvestLogID, oAIIdentifier, oAIDateStamp, oAIStatus, recordType, title, containerTitle, contributor, date, language, publisher, publicationPlace, publicationDate, edition, volume, issue, startPage, endPage, callNumber, issn, isbn, lccn, doi, url, oAIRecordStatusID, productionTitleID, productionItemID, productionSegmentID);
 		}
 		
 		/// <summary>
@@ -537,8 +545,9 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="doi"></param>
 		/// <param name="url"></param>
 		/// <param name="oAIRecordStatusID"></param>
-		/// <param name="productionEntityType"></param>
-		/// <param name="productionEntityID"></param>
+		/// <param name="productionTitleID"></param>
+		/// <param name="productionItemID"></param>
+		/// <param name="productionSegmentID"></param>
 		/// <returns>Object of type OAIRecord.</returns>
 		public OAIRecord OAIRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -570,8 +579,9 @@ namespace MOBOT.BHLImport.DAL
 			string doi,
 			string url,
 			int oAIRecordStatusID,
-			string productionEntityType,
-			int? productionEntityID)
+			int? productionTitleID,
+			int? productionItemID,
+			int? productionSegmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -603,8 +613,9 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Doi", SqlDbType.NVarChar, 50, false, doi),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("OAIRecordStatusID", SqlDbType.Int, null, false, oAIRecordStatusID),
-					CustomSqlHelper.CreateInputParameter("ProductionEntityType", SqlDbType.NVarChar, 5, true, productionEntityType),
-					CustomSqlHelper.CreateInputParameter("ProductionEntityID", SqlDbType.Int, null, true, productionEntityID), 
+					CustomSqlHelper.CreateInputParameter("ProductionTitleID", SqlDbType.Int, null, true, productionTitleID),
+					CustomSqlHelper.CreateInputParameter("ProductionItemID", SqlDbType.Int, null, true, productionItemID),
+					CustomSqlHelper.CreateInputParameter("ProductionSegmentID", SqlDbType.Int, null, true, productionSegmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIRecord> helper = new CustomSqlHelper<OAIRecord>())
@@ -680,8 +691,9 @@ namespace MOBOT.BHLImport.DAL
 				value.Doi,
 				value.Url,
 				value.OAIRecordStatusID,
-				value.ProductionEntityType,
-				value.ProductionEntityID);
+				value.ProductionTitleID,
+				value.ProductionItemID,
+				value.ProductionSegmentID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -751,8 +763,9 @@ namespace MOBOT.BHLImport.DAL
 						value.Doi,
 						value.Url,
 						value.OAIRecordStatusID,
-						value.ProductionEntityType,
-						value.ProductionEntityID);
+						value.ProductionTitleID,
+						value.ProductionItemID,
+						value.ProductionSegmentID);
 				
 				return new CustomDataAccessStatus<OAIRecord>(
 					CustomDataAccessContext.Insert, 
@@ -804,8 +817,9 @@ namespace MOBOT.BHLImport.DAL
 						value.Doi,
 						value.Url,
 						value.OAIRecordStatusID,
-						value.ProductionEntityType,
-						value.ProductionEntityID);
+						value.ProductionTitleID,
+						value.ProductionItemID,
+						value.ProductionSegmentID);
 					
 				return new CustomDataAccessStatus<OAIRecord>(
 					CustomDataAccessContext.Update, 

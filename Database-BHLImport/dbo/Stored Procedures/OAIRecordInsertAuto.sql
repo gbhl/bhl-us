@@ -26,8 +26,9 @@
 @Doi NVARCHAR(50),
 @Url NVARCHAR(200),
 @OAIRecordStatusID INT,
-@ProductionEntityType NVARCHAR(5) = null,
-@ProductionEntityID INT = null
+@ProductionTitleID INT = null,
+@ProductionItemID INT = null,
+@ProductionSegmentID INT = null
 
 AS 
 
@@ -60,8 +61,9 @@ INSERT INTO [dbo].[OAIRecord]
 	[Doi],
 	[Url],
 	[OAIRecordStatusID],
-	[ProductionEntityType],
-	[ProductionEntityID],
+	[ProductionTitleID],
+	[ProductionItemID],
+	[ProductionSegmentID],
 	[CreationDate],
 	[LastModifiedDate]
 )
@@ -92,8 +94,9 @@ VALUES
 	@Doi,
 	@Url,
 	@OAIRecordStatusID,
-	@ProductionEntityType,
-	@ProductionEntityID,
+	@ProductionTitleID,
+	@ProductionItemID,
+	@ProductionSegmentID,
 	getdate(),
 	getdate()
 )
@@ -135,8 +138,9 @@ ELSE BEGIN
 		[Doi],
 		[Url],
 		[OAIRecordStatusID],
-		[ProductionEntityType],
-		[ProductionEntityID],
+		[ProductionTitleID],
+		[ProductionItemID],
+		[ProductionSegmentID],
 		[CreationDate],
 		[LastModifiedDate]	
 

@@ -1,5 +1,5 @@
 
-// Generated 11/5/2013 11:13:30 AM
+// Generated 11/20/2013 3:49:07 PM
 // Do not modify the contents of this code file.
 // This abstract class __OAIRecordCreator is based upon OAIRecordCreator.
 
@@ -50,6 +50,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="creatorType"></param>
 		/// <param name="fullName"></param>
 		/// <param name="dates"></param>
+		/// <param name="startDate"></param>
+		/// <param name="endDate"></param>
 		/// <param name="productionAuthorID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
@@ -58,6 +60,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string creatorType, 
 			string fullName, 
 			string dates, 
+			string startDate, 
+			string endDate, 
 			int? productionAuthorID, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate) : this()
@@ -67,6 +71,8 @@ namespace MOBOT.BHLImport.DataObjects
 			CreatorType = creatorType;
 			FullName = fullName;
 			Dates = dates;
+			StartDate = startDate;
+			EndDate = endDate;
 			ProductionAuthorID = productionAuthorID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
@@ -119,6 +125,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "Dates" :
 					{
 						_Dates = (string)column.Value;
+						break;
+					}
+					case "StartDate" :
+					{
+						_StartDate = (string)column.Value;
+						break;
+					}
+					case "EndDate" :
+					{
+						_EndDate = (string)column.Value;
 						break;
 					}
 					case "ProductionAuthorID" :
@@ -285,6 +301,62 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Dates
 		
+		#region StartDate
+		
+		private string _StartDate = string.Empty;
+		
+		/// <summary>
+		/// Column: StartDate;
+		/// DBMS data type: nvarchar(25);
+		/// </summary>
+		[ColumnDefinition("StartDate", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=25)]
+		public string StartDate
+		{
+			get
+			{
+				return _StartDate;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 25);
+				if (_StartDate != value)
+				{
+					_StartDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartDate
+		
+		#region EndDate
+		
+		private string _EndDate = string.Empty;
+		
+		/// <summary>
+		/// Column: EndDate;
+		/// DBMS data type: nvarchar(25);
+		/// </summary>
+		[ColumnDefinition("EndDate", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=25)]
+		public string EndDate
+		{
+			get
+			{
+				return _EndDate;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 25);
+				if (_EndDate != value)
+				{
+					_EndDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndDate
+		
 		#region ProductionAuthorID
 		
 		private int? _ProductionAuthorID = null;
@@ -293,7 +365,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ProductionAuthorID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10, IsNullable=true)]
 		public int? ProductionAuthorID
 		{
 			get
@@ -320,7 +392,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
 		public DateTime CreationDate
 		{
 			get
@@ -347,7 +419,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=10)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -414,6 +486,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.CreatorType) == GetComparisonString(CreatorType) &&
 					GetComparisonString(o.FullName) == GetComparisonString(FullName) &&
 					GetComparisonString(o.Dates) == GetComparisonString(Dates) &&
+					GetComparisonString(o.StartDate) == GetComparisonString(StartDate) &&
+					GetComparisonString(o.EndDate) == GetComparisonString(EndDate) &&
 					o.ProductionAuthorID == ProductionAuthorID &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate 
@@ -522,6 +596,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string CreatorType = "CreatorType";	
 			public const string FullName = "FullName";	
 			public const string Dates = "Dates";	
+			public const string StartDate = "StartDate";	
+			public const string EndDate = "EndDate";	
 			public const string ProductionAuthorID = "ProductionAuthorID";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";

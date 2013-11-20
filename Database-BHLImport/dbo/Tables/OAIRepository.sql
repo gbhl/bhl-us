@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[OAIRepository](
 	[RepositoryID] [int] IDENTITY(1,1) NOT NULL,
 	[ImportSourceID] [int] NOT NULL,
+	[BHLInstitutionCode] [nvarchar](10) NOT NULL,
 	[RepositoryName] [nvarchar](100) NOT NULL,
 	[BaseUrl] [nvarchar](150) NOT NULL,
 	[ProtocolVersion] [nvarchar](10) NOT NULL,
@@ -15,6 +16,9 @@
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+GO
+
+ALTER TABLE [dbo].[OAIRepository] ADD  CONSTRAINT [DF__OAIRepository_InstitutionCode]  DEFAULT('UNKNOWN') FOR [BHLInstitutionCode]
 GO
 
 ALTER TABLE [dbo].[OAIRepository] ADD  CONSTRAINT [DF__OAIReposi__Respo__1B93E30A]  DEFAULT ('') FOR [RepositoryName]

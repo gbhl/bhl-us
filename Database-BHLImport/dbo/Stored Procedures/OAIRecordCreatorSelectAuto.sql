@@ -13,6 +13,8 @@ SELECT
 	[CreatorType],
 	[FullName],
 	[Dates],
+	[StartDate],
+	[EndDate],
 	[ProductionAuthorID],
 	[CreationDate],
 	[LastModifiedDate]

@@ -1,5 +1,5 @@
 
-// Generated 11/5/2013 11:13:30 AM
+// Generated 11/20/2013 3:49:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class OAIRecordRelatedTitleDAL is based upon OAIRecordRelatedTitle.
@@ -139,7 +139,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="oAIRecordID"></param>
 		/// <param name="titleType"></param>
 		/// <param name="title"></param>
-		/// <param name="productionTitleAssociationID"></param>
+		/// <param name="productionEntityType"></param>
+		/// <param name="productionEntityID"></param>
 		/// <returns>Object of type OAIRecordRelatedTitle.</returns>
 		public OAIRecordRelatedTitle OAIRecordRelatedTitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -147,9 +148,10 @@ namespace MOBOT.BHLImport.DAL
 			int oAIRecordID,
 			string titleType,
 			string title,
-			int? productionTitleAssociationID)
+			string productionEntityType,
+			int? productionEntityID)
 		{
-			return OAIRecordRelatedTitleInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, titleType, title, productionTitleAssociationID );
+			return OAIRecordRelatedTitleInsertAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordID, titleType, title, productionEntityType, productionEntityID );
 		}
 		
 		/// <summary>
@@ -161,7 +163,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="oAIRecordID"></param>
 		/// <param name="titleType"></param>
 		/// <param name="title"></param>
-		/// <param name="productionTitleAssociationID"></param>
+		/// <param name="productionEntityType"></param>
+		/// <param name="productionEntityID"></param>
 		/// <returns>Object of type OAIRecordRelatedTitle.</returns>
 		public OAIRecordRelatedTitle OAIRecordRelatedTitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -170,7 +173,8 @@ namespace MOBOT.BHLImport.DAL
 			int oAIRecordID,
 			string titleType,
 			string title,
-			int? productionTitleAssociationID)
+			string productionEntityType,
+			int? productionEntityID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -180,7 +184,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oAIRecordID),
 					CustomSqlHelper.CreateInputParameter("TitleType", SqlDbType.NVarChar, 50, false, titleType),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 300, false, title),
-					CustomSqlHelper.CreateInputParameter("ProductionTitleAssociationID", SqlDbType.Int, null, true, productionTitleAssociationID), 
+					CustomSqlHelper.CreateInputParameter("ProductionEntityType", SqlDbType.NVarChar, 15, true, productionEntityType),
+					CustomSqlHelper.CreateInputParameter("ProductionEntityID", SqlDbType.Int, null, true, productionEntityID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIRecordRelatedTitle> helper = new CustomSqlHelper<OAIRecordRelatedTitle>())
@@ -233,7 +238,8 @@ namespace MOBOT.BHLImport.DAL
 				value.OAIRecordID,
 				value.TitleType,
 				value.Title,
-				value.ProductionTitleAssociationID);
+				value.ProductionEntityType,
+				value.ProductionEntityID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -307,7 +313,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="oAIRecordID"></param>
 		/// <param name="titleType"></param>
 		/// <param name="title"></param>
-		/// <param name="productionTitleAssociationID"></param>
+		/// <param name="productionEntityType"></param>
+		/// <param name="productionEntityID"></param>
 		/// <returns>Object of type OAIRecordRelatedTitle.</returns>
 		public OAIRecordRelatedTitle OAIRecordRelatedTitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -316,9 +323,10 @@ namespace MOBOT.BHLImport.DAL
 			int oAIRecordID,
 			string titleType,
 			string title,
-			int? productionTitleAssociationID)
+			string productionEntityType,
+			int? productionEntityID)
 		{
-			return OAIRecordRelatedTitleUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordRelatedTitleID, oAIRecordID, titleType, title, productionTitleAssociationID);
+			return OAIRecordRelatedTitleUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", oAIRecordRelatedTitleID, oAIRecordID, titleType, title, productionEntityType, productionEntityID);
 		}
 		
 		/// <summary>
@@ -331,7 +339,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="oAIRecordID"></param>
 		/// <param name="titleType"></param>
 		/// <param name="title"></param>
-		/// <param name="productionTitleAssociationID"></param>
+		/// <param name="productionEntityType"></param>
+		/// <param name="productionEntityID"></param>
 		/// <returns>Object of type OAIRecordRelatedTitle.</returns>
 		public OAIRecordRelatedTitle OAIRecordRelatedTitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -341,7 +350,8 @@ namespace MOBOT.BHLImport.DAL
 			int oAIRecordID,
 			string titleType,
 			string title,
-			int? productionTitleAssociationID)
+			string productionEntityType,
+			int? productionEntityID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -351,7 +361,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("OAIRecordID", SqlDbType.Int, null, false, oAIRecordID),
 					CustomSqlHelper.CreateInputParameter("TitleType", SqlDbType.NVarChar, 50, false, titleType),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 300, false, title),
-					CustomSqlHelper.CreateInputParameter("ProductionTitleAssociationID", SqlDbType.Int, null, true, productionTitleAssociationID), 
+					CustomSqlHelper.CreateInputParameter("ProductionEntityType", SqlDbType.NVarChar, 15, true, productionEntityType),
+					CustomSqlHelper.CreateInputParameter("ProductionEntityID", SqlDbType.Int, null, true, productionEntityID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<OAIRecordRelatedTitle> helper = new CustomSqlHelper<OAIRecordRelatedTitle>())
@@ -405,7 +416,8 @@ namespace MOBOT.BHLImport.DAL
 				value.OAIRecordID,
 				value.TitleType,
 				value.Title,
-				value.ProductionTitleAssociationID);
+				value.ProductionEntityType,
+				value.ProductionEntityID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -453,7 +465,8 @@ namespace MOBOT.BHLImport.DAL
 					value.OAIRecordID,
 						value.TitleType,
 						value.Title,
-						value.ProductionTitleAssociationID);
+						value.ProductionEntityType,
+						value.ProductionEntityID);
 				
 				return new CustomDataAccessStatus<OAIRecordRelatedTitle>(
 					CustomDataAccessContext.Insert, 
@@ -483,7 +496,8 @@ namespace MOBOT.BHLImport.DAL
 						value.OAIRecordID,
 						value.TitleType,
 						value.Title,
-						value.ProductionTitleAssociationID);
+						value.ProductionEntityType,
+						value.ProductionEntityID);
 					
 				return new CustomDataAccessStatus<OAIRecordRelatedTitle>(
 					CustomDataAccessContext.Update, 
