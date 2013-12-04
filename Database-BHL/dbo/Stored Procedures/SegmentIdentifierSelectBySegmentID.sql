@@ -1,7 +1,7 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentIdentifierSelectBySegmentID]
+﻿CREATE PROCEDURE [dbo].[SegmentIdentifierSelectBySegmentID]
 
-@SegmentID int
+@SegmentID int,
+@Display SMALLINT = NULL
 
 AS
 
@@ -21,6 +21,7 @@ SELECT	si.SegmentIdentifierID,
 FROM	dbo.SegmentIdentifier si INNER JOIN dbo.Identifier i
 			ON si.IdentifierID = i.IdentifierID
 WHERE	SegmentID = @SegmentID
+AND		i.Display = ISNULL(@Display, i.Display)
 ORDER BY 
 		i.IdentifierLabel, si.IdentifierValue
 

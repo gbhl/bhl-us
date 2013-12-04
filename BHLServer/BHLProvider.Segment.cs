@@ -262,5 +262,15 @@ namespace MOBOT.BHL.Server
         {
             return new SegmentDAL().SegmentSelectRecentlyClustered(null, null, numberOfClusters);
         }
+
+        /// <summary>
+        /// Select only those identifiers for a given segment that have been designated for display
+        /// </summary>
+        /// <param name="titleID"></param>
+        /// <returns></returns>
+        public CustomGenericList<SegmentIdentifier> SegmentIdentifierSelectForDisplayBySegmentID(int segmentID)
+        {
+            return (new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(null, null, segmentID, 1));
+        }
     }
 }

@@ -77,7 +77,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 970;
-            CustomGenericList<SegmentIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            CustomGenericList<SegmentIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID, null);
             Assert.IsTrue(actual.Count > 0);
         }
     }

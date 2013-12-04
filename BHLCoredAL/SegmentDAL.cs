@@ -45,7 +45,7 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segmentId);
+                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segmentId, null);
                 segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segmentId);
                 segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segmentId);
                 segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segmentId);
