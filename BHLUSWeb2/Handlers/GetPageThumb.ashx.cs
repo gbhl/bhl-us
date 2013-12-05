@@ -46,17 +46,25 @@ namespace MOBOT.BHL.Web2
                     String pageUrlSuffix = "_w" + width.ToString() + ".jpg";
                     imageUrl = page.AltExternalURL.Replace(".jpg", "") + pageUrlSuffix;
                 }
-                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundThumbPath"];
 
                 System.Net.WebClient client = new System.Net.WebClient();
                 context.Response.ContentType = "image/jpeg";
                 try
                 {
+                    if (imageUrl == String.Empty)
+                    {
+                        imageUrl = ConfigurationManager.AppSettings["ImageNotFoundThumbPath"];
+                        context.Response.StatusCode = 404;
+                    }
                     context.Response.BinaryWrite(client.DownloadData(imageUrl));
                 }
                 catch (System.Net.WebException wex)
                 {
-                    if (wex.Message.Contains("404")) context.Response.BinaryWrite(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundThumbPath"]));
+                    if (wex.Message.Contains("404"))
+                    {
+                        context.Response.BinaryWrite(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundThumbPath"]));
+                        context.Response.StatusCode = 404;
+                    }
                 }
             }
         }

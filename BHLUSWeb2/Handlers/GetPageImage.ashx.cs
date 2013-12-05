@@ -35,17 +35,25 @@ namespace MOBOT.BHL.Web2
                     // Use the IA URL to get a JPG from the JP2
                     imageUrl = page.AltExternalURL.Replace(".jp2", ".jpg");
                 }
-                if (imageUrl == String.Empty) imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
 
                 System.Net.WebClient client = new System.Net.WebClient();
                 context.Response.ContentType = "image/jpeg";
                 try
                 {
+                    if (imageUrl == String.Empty)
+                    {
+                        imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
+                        context.Response.StatusCode = 404;
+                    }
                     context.Response.BinaryWrite(client.DownloadData(imageUrl));
                 }
                 catch (System.Net.WebException wex)
                 {
-                    if (wex.Message.Contains("404")) context.Response.BinaryWrite(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundPath"]));
+                    if (wex.Message.Contains("404"))
+                    {
+                        context.Response.BinaryWrite(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundPath"]));
+                        context.Response.StatusCode = 404;
+                    }
                 }
             }
         }

@@ -198,6 +198,7 @@
     <Content Include="images\author_icon-home.png" />
     <Content Include="images\bg_book_icons.png" />
     <Content Include="images\bg_browse_button.png" />
+    <Content Include="images\bg_message_arrow.png" />
     <Content Include="images\bg_searchbar_button.png" />
     <Content Include="images\bg_searchhome_button.png" />
     <Content Include="images\bg_tab_button.png" />
