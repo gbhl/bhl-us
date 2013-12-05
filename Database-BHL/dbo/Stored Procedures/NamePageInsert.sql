@@ -1,9 +1,9 @@
-﻿
-CREATE PROCEDURE [dbo].[NamePageInsert]
+﻿CREATE PROCEDURE [dbo].[NamePageInsert]
 
 @PageID int,
 @NameString nvarchar(100),
 @ResolvedNameString nvarchar(100),
+@CanonicalNameString nvarchar(100),
 @IdentifierString nvarchar(2000),
 @SourceName nvarchar(50),
 @IsFirstOccurrence smallint = 0,
@@ -47,8 +47,8 @@ BEGIN
 
 	IF (@NameResolvedID IS NULL)
 	BEGIN
-		INSERT dbo.NameResolved (ResolvedNameString, CreationUserID, LastModifiedUserID)
-		VALUES (@ResolvedNameString, @CreationUserID, @LastModifiedUserID)
+		INSERT dbo.NameResolved (ResolvedNameString, CanonicalNameString, CreationUserID, LastModifiedUserID)
+		VALUES (@ResolvedNameString, @CanonicalNameString, @CreationUserID, @LastModifiedUserID)
 
 		SET @NameResolvedID = SCOPE_IDENTITY()
 	END
@@ -164,5 +164,4 @@ FROM	dbo.NamePage
 WHERE	NamePageID = @NamePageID
 
 END
-
 

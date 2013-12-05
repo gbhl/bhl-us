@@ -336,7 +336,8 @@ namespace MOBOT.BHL.Server
                 // Data source identifiers listed at http://resolver.globalnames.org/data_sources
                 // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
                 // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
-                webServiceUrl = "http://gnrd.globalnames.org/name_finder.json";
+                //webServiceUrl = "http://gnrd.globalnames.org/name_finder.json";
+                webServiceUrl = "http://128.128.164.213/name_finder.json";
                 ocrText = string.Format("text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169", System.Web.HttpUtility.UrlEncode(ocrText));
 
                 try

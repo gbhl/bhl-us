@@ -49,8 +49,8 @@ BEGIN
 
 	IF (@NameResolvedID IS NULL)
 	BEGIN
-		INSERT dbo.NameResolved (ResolvedNameString, CreationUserID, LastModifiedUserID)
-		VALUES (@ResolvedNameString, @CreationUserID, @LastModifiedUserID)
+		INSERT dbo.NameResolved (ResolvedNameString, CanonicalNameString, CreationUserID, LastModifiedUserID)
+		VALUES (@ResolvedNameString, @ResolvedNameString, @CreationUserID, @LastModifiedUserID)
 
 		SET @NameResolvedID = SCOPE_IDENTITY()
 	END
@@ -141,5 +141,4 @@ BEGIN
 END
 
 END
-
 

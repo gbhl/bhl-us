@@ -66,8 +66,8 @@ namespace MOBOT.BHL.DAL
         }
 
         public NamePage NamePageInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            int pageID, string nameString, string resolvedNameString, string identifierList, string sourceName,
-            short isFirstOccurrence, int userID)
+            int pageID, string nameString, string resolvedNameString, string canonicalNameString, 
+            string identifierList, string sourceName, short isFirstOccurrence, int userID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -76,6 +76,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
                     CustomSqlHelper.CreateInputParameter("NameString", SqlDbType.NVarChar, 100, false, nameString),
                     CustomSqlHelper.CreateInputParameter("ResolvedNameString", SqlDbType.NVarChar, 100, false, resolvedNameString),
+                    CustomSqlHelper.CreateInputParameter("CanonicalNameString", SqlDbType.NVarChar, 100, false, canonicalNameString),
                     CustomSqlHelper.CreateInputParameter("IdentifierString", SqlDbType.NVarChar, 2000, false, identifierList),
                     CustomSqlHelper.CreateInputParameter("SourceName", SqlDbType.NVarChar, 50, false, sourceName),
                     CustomSqlHelper.CreateInputParameter("IsFirstOccurrence", SqlDbType.TinyInt, null, false, isFirstOccurrence),

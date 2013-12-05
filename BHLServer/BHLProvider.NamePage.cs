@@ -29,18 +29,19 @@ namespace MOBOT.BHL.Server
             return new NamePageDAL().NamePageDeleteAuto(null, null, namePageID);
         }
 
-        public NamePage NamePageInsert(int PageID, string nameString, string resolvedNameString,
+        public NamePage NamePageInsert(int PageID, string nameString, string resolvedNameString, string canonicalNameString,
             string identifierList, string sourceName)
         {
-            return this.NamePageInsert(null, null, PageID, nameString, resolvedNameString, identifierList, sourceName, 0, 1);
+            return this.NamePageInsert(null, null, 
+                PageID, nameString, resolvedNameString, canonicalNameString, identifierList, sourceName, 0, 1);
         }
 
         public NamePage NamePageInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int PageID, 
-            string nameString, string resolvedNameString, string identifierList, string sourceName, 
-            short isFirstOccurrence, int userId)
+            string nameString, string resolvedNameString, string canonicalNameString, string identifierList, 
+            string sourceName, short isFirstOccurrence, int userId)
         {
             return new NamePageDAL().NamePageInsert(sqlConnection, sqlTransaction, 
-                PageID, nameString, resolvedNameString, identifierList, sourceName, isFirstOccurrence, userId);
+                PageID, nameString, resolvedNameString, canonicalNameString, identifierList, sourceName, isFirstOccurrence, userId);
         }
 
         public void NamePageUpdate(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int namePageID, 
@@ -76,8 +77,8 @@ namespace MOBOT.BHL.Server
                         if (!string.IsNullOrEmpty(namePage.EOLID)) identifierList += (identifierList.Length > 0 ? "^" : "") + "EOL|" + namePage.EOLID;
 
                         this.NamePageInsert(transactionController.Connection, transactionController.Transaction,
-                            namePage.PageID, namePage.NameString, namePage.ResolvedNameString, identifierList, 
-                            "User Reported", namePage.IsFirstOccurrence, userId);
+                            namePage.PageID, namePage.NameString, namePage.ResolvedNameString, namePage.ResolvedNameString,
+                            identifierList, "User Reported", namePage.IsFirstOccurrence, userId);
                     }
                     else if (namePage.IsDirty && !namePage.IsDeleted)
                     {
@@ -124,7 +125,7 @@ namespace MOBOT.BHL.Server
                 if (name.Identifiers.Count > 0) identifierList = string.Join("^", name.Identifiers.ToArray());
 
                 NamePage newNamePage = this.NamePageInsert(
-                    pageID, name.Name, name.NameResolved, identifierList, sourceName);
+                    pageID, name.Name, name.NameResolved, name.CanonicalName, identifierList, sourceName);
 
                 if (newNamePage != null)
                     updateStats[0]++; // number inserted
