@@ -16,7 +16,7 @@
             </asp:RadioButtonList>
         </td>
         <td align="right">
-            <asp:CheckBox ID="chkShow" runat="server" Checked="false" Text="Show Only BHL Member Libraries" TextAlign="Right" Font-Bold="true" />
+            <asp:CheckBox ID="chkShow" runat="server" Checked="false" Text="Show Only BHL Libraries" TextAlign="Right" Font-Bold="true" />
         </td>
     </tr>
     </table>

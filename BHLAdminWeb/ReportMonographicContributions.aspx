@@ -12,11 +12,11 @@
     </tr>
     <tr>
         <td>
-            <input type="radio" id="rdoAllNonMembers" class="ContribFrom" clientidmode="Static" runat="server" checked />All non-BHL Members<br />
-            <input type="radio" id="rdoNonMember" class="ContribFrom" clientidmode="Static" runat="server" />A selected non-BHL member<br />
+            <input type="radio" id="rdoAllNonMembers" class="ContribFrom" clientidmode="Static" runat="server" checked />All non-BHL libraries<br />
+            <input type="radio" id="rdoNonMember" class="ContribFrom" clientidmode="Static" runat="server" />A selected non-BHL library<br />
             <asp:DropDownList runat="server" ID="ddlNonMembers" ClientIDMode="Static" Enabled="false" style="position:relative; left:20px;"></asp:DropDownList><br />
-            <input type="radio" id="rdoAllMembers" class="ContribFrom" clientidmode="Static" runat="server" />All BHL members<br />
-            <input type="radio" id="rdoMember" class="ContribFrom" clientidmode="Static" runat="server" />A selected BHL member<br />
+            <input type="radio" id="rdoAllMembers" class="ContribFrom" clientidmode="Static" runat="server" />All BHL libraries<br />
+            <input type="radio" id="rdoMember" class="ContribFrom" clientidmode="Static" runat="server" />A selected BHL library<br />
             <asp:DropDownList runat="server" ID="ddlMembers" ClientIDMode="Static" Enabled="false" style="position:relative; left:20px;"></asp:DropDownList><br />
         </td>
     </tr>

@@ -51,7 +51,7 @@
 			</tr>
 			<tr>
 			    <td style="white-space: nowrap" align="right">
-			        Is BHL Member Library:
+			        Is BHL Library:
 			    </td>
 			    <td>
 			        <asp:CheckBox ID="chkIsMemberLibrary" runat="server" />
