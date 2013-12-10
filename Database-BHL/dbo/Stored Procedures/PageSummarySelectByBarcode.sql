@@ -1,12 +1,12 @@
-﻿
-CREATE PROCEDURE [dbo].[PageSummarySelectByBarcode]
+﻿CREATE PROCEDURE [dbo].[PageSummarySelectByBarcode]
 @Barcode	nvarchar(40)
 AS 
 
 SET NOCOUNT ON
 
 	SELECT MARCBibID, TitleID, RedirectTitleID, FullTitle, PartNumber, PartName, RareBooks, 
-		ItemStatusID, ItemID, RedirectItemID, BarCode, PageID, FileNamePrefix, PageDescription, SequenceOrder, 
+		ItemStatusID, ItemID, RedirectItemID, PrimaryTitleID, BarCode, 
+		PageID, FileNamePrefix, PageDescription, SequenceOrder, 
 		Illustration, PDFSize, ShortTitle, Volume, WebVirtualDirectory,
 		OCRFolderShare, ExternalURL, AltExternalURL, DownloadUrl, ImageServerUrlFormat,
 		FileRootFolder
@@ -23,5 +23,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
