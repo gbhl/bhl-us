@@ -892,6 +892,14 @@
     <Build Include="dbo\Stored Procedures\SegmentClusterSegmentInsert.sql" />
     <Build Include="dbo\Stored Procedures\SegmentClusterSegmentDeleteForSegment.sql" />
     <Build Include="dbo\Stored Procedures\NameMetadataSelectByItemID.sql" />
+    <Build Include="dbo\Tables\PageDetailStatus.sql" />
+    <Build Include="dbo\Tables\PageDetail.sql" />
+    <Build Include="dbo\Tables\PageIllustration.sql" />
+    <Build Include="dbo\Functions\fnGeographicKeywordStringForTitle.sql" />
+    <Build Include="dbo\Stored Procedures\PageDetailInsert.sql" />
+    <Build Include="dbo\Stored Procedures\PageIllustrationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\PageDetailSelectForClassifierExport.sql" />
+    <Build Include="dbo\Stored Procedures\PageDetailUpdateStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
