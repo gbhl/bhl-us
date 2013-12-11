@@ -1,5 +1,4 @@
-﻿
-CREATE FUNCTION [dbo].[fnGetFullTextSearchString](
+﻿CREATE FUNCTION [dbo].[fnGetFullTextSearchString](
 	 @String nvarchar (4000)
 	 )
 RETURNS nvarchar(4000)
@@ -162,6 +161,15 @@ BEGIN
 	-- CLEAN UP THE SEARCH WORDS/PHRASES AND ADD FULL-TEXT SEARCH TOKENS
 
 	UPDATE @ValueTable2 SET Value = LTRIM(RTRIM(Value))	-- trim spaces
+
+	-- Remove parentheses from around single words
+	UPDATE	@ValueTable2 
+	SET		Value = SUBSTRING(Value, 2, LEN(Value) - 2)
+	WHERE	LEFT(Value, 1) = '(' 
+	AND		RIGHT(Value, 1) = ')' 
+	AND		CHARINDEX(' and ', Value) = 0
+	AND		CHARINDEX(' or ', Value) = 0
+
 	DELETE @ValueTable2 WHERE Value = ''	-- remove empty strings
 	DELETE @ValueTable2 WHERE Value = '&'	-- remove ampersands, as they are not indexed
 	DELETE @ValueTable2 WHERE LEN(Value) = 1	-- remove single letters; full-text search doesn't always handle them well
@@ -186,6 +194,4 @@ BEGIN
 
 	RETURN @ReturnString
 END
-
-
 
