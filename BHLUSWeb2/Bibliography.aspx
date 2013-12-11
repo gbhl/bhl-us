@@ -326,13 +326,32 @@
                                 Not specified
                             <% } else { %>
                                 <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
-                                    License Type: <%: bibliographyItem.Item.LicenseUrl%><br />
+                                    License Type:
+                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                        <a target="_blank" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
+                                    <% } else {%>
+                                        <%: bibliographyItem.Item.LicenseUrl%>
+                                    <% } %>
+                                    <br />
                                 <% } %>
                                 <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
-                                    Rights: <%: bibliographyItem.Item.Rights%><br />
+                                    Rights:
+                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                        <a target="_blank" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
+                                    <% } else { %>
+                                        <%: bibliographyItem.Item.Rights%>
+                                    <% } %>
+                                    <br />
                                 <% } %>
                                 <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.DueDiligence)) { %>
-                                    Due Diligence: <%: bibliographyItem.Item.DueDiligence%><br />
+                                    Due Diligence: 
+                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                      { %>
+                                        <a target="_blank" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
+                                    <% } else { %>
+                                        <%: bibliographyItem.Item.DueDiligence%>
+                                    <% } %>
+                                    <br />
                                 <% } %>
                                 <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightStatus)) { %>
                                     Copyright Status: <%: bibliographyItem.Item.CopyrightStatus%><br />
