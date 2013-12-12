@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
+﻿CREATE PROCEDURE [dbo].[IAItemPublishToImportTables]
 
 @ItemID int
 
@@ -1297,6 +1296,13 @@ BEGIN TRY
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
+	-- Use the AddedDate as the ScanningDate if no Scan Date was specified
+	UPDATE	#tmpItem
+	SET		ScanningDate = i.IAAddedDate
+	FROM	#tmpItem t INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+	WHERE	t.ScanningDate IS NULL
+	AND		i.IAAddedDate IS NOT NULL
+	
 	-- Add the ItemSequence by ordering each title by the item volume
 	UPDATE	#tmpItem
 	SET		ItemSequence = x.Sequence
@@ -1795,8 +1801,4 @@ END CATCH
 SET NOCOUNT OFF
 
 END
-
-
-
-
 
