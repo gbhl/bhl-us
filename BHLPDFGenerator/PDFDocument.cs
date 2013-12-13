@@ -520,9 +520,9 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // Add text
                 this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, bhlAnchor);
                 this.AddSpace(doc, standardFont);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, largeFont, pages[0].FullTitle);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, title.PublicationDetails);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, titleAnchor);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, largeFont, pages[0].FullTitle, 60, 60);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, title.PublicationDetails, 60, 60);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, titleAnchor, 60, 60);
                 this.AddSpace(doc, standardFont);
 
                 // Include the volume
@@ -536,7 +536,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     volumeInfo.Add(new Chunk(pages[0].Volume + ": ", largeFont));
                 }
                 volumeInfo.Add(itemAnchor);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, volumeInfo);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, volumeInfo, 60, 60);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, " ");
+
+                // Add article metadata, if it is available
+                if (this.PdfRecord.ArticleTitle.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Article/Chapter Title: " + this.PdfRecord.ArticleTitle.Trim(), 60, 60);
+                if (this.PdfRecord.ArticleCreators.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Author(s): " + this.PdfRecord.ArticleCreators.Trim(), 60, 60);
+                if (this.PdfRecord.ArticleTags.Trim() != string.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Subject(s): " + this.PdfRecord.ArticleTags.Trim(), 60, 60);
 
                 // Include the list of pages
                 Paragraph pageInfo = new Paragraph();
@@ -553,27 +559,27 @@ namespace MOBOT.BHL.BHLPDFGenerator
                     }
                 }
                 pageInfo.Add(pageList);
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, pageInfo);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, pageInfo, 60, 60);
                 this.AddSpace(doc, standardFont);
 
                 Item item = service.ItemSelectAuto(pages[0].ItemID);
                 if (item != null)
                 {
                     Institution institution = service.InstitutionSelectAuto(item.InstitutionCode);
-                    if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, "Contributed by: " + institution.InstitutionName);
-                    if (item.Sponsor != String.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, standardFont, "Sponsored by: " + item.Sponsor);
+                    if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Contributed by: " + institution.InstitutionName, 60, 60);
+                    if (item.Sponsor != String.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Sponsored by: " + item.Sponsor, 60, 60);
                     this.AddSpace(doc, standardFont);
                 }
 
                 // Add the page footer information
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, smallFont,
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, smallFont,
                     "Generated " +
                     DateTime.Now.Day.ToString() + " " +
                     System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month) + " " +
                     DateTime.Now.Year.ToString() + " " +
-                    DateTime.Now.ToShortTimeString());
+                    DateTime.Now.ToShortTimeString(), 60, 60);
 
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, smallFont, pdfAnchor);
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, smallFont, pdfAnchor, 60, 60);
 
                 // ---------------- Second page ----------------
 
@@ -610,19 +616,21 @@ namespace MOBOT.BHL.BHLPDFGenerator
             return pageDescription;
         }
 
-        private void AddParagraph(Document doc, int alignment, iTextSharp.text.Font font, object content)
+        private void AddParagraph(Document doc, int alignment, iTextSharp.text.Font font, object content, 
+            float indentationRight = 0, float indentationLeft = 0)
         {
             Paragraph paragraph = new Paragraph();
             paragraph.SetLeading(0f, 1.2f);
             paragraph.Alignment = alignment;
             paragraph.Font = font;
+            paragraph.IndentationLeft = indentationLeft;
+            paragraph.IndentationRight = indentationRight;
             paragraph.Add(content);
             doc.Add(paragraph);
         }
 
         private void AddSpace(Document doc, iTextSharp.text.Font font)
         {
-            this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, font, " ");
             this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, font, " ");
             this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_CENTER, font, " ");
         }

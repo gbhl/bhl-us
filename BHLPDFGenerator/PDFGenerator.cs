@@ -145,7 +145,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                                 // Send email to the PDF requestor
                                 String emailBody = this.GetRequestorEmailBody(pdf.PdfID, pdfDoc.FileUrl,
-                                    ((pdf.ArticleTitle + pdf.ArticleCreators + pdf.ArticleTags).Trim() == String.Empty));
+                                    pdf.ArticleTitle, pdf.ArticleCreators, pdf.ArticleTags);
                                 this.SendEmail("BHL PDF Generation request #" + pdf.PdfID.ToString() + " - Complete",
                                     emailBody, "noreply@biodiversitylibrary.org", pdf.EmailAddress,
                                     pdf.ShareWithEmailAddresses);
@@ -299,14 +299,25 @@ namespace MOBOT.BHL.BHLPDFGenerator
         /// Constructs the body of an email message to be sent
         /// </summary>
         /// <returns>Body of email message to be sent</returns>
-        private String GetRequestorEmailBody(int pdfId, String fileLocation, bool willDelete)
+        private String GetRequestorEmailBody(int pdfId, String fileLocation, string articleTitle, 
+            string articleCreators, string articleTags)
         {
+            bool willDelete = (articleTitle + articleCreators + articleTags).Trim() == String.Empty;
+
             StringBuilder sb = new StringBuilder();
             const string endOfLine = "\r\n";
 
             sb.Append("Your PDF generation request has been completed.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
+            if (!willDelete)
+            {
+                sb.Append("The following metadata was supplied with this request:" + endOfLine + endOfLine);
+                if (articleTitle.Trim() != string.Empty) sb.Append("Article/Chapter Title - " + articleTitle.Trim() + endOfLine);
+                if (articleCreators.Trim() != string.Empty) sb.Append("Author(s) - " + articleCreators.Trim() + endOfLine);
+                if (articleTags.Trim() != string.Empty) sb.Append("Subjects(s) - " + articleTags.Trim() + endOfLine);
+                sb.Append(endOfLine);
+            }
             sb.Append("The PDF can be downloaded from the following location: " + fileLocation);
             if (willDelete)
             {
