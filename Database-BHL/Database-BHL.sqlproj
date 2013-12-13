@@ -896,7 +896,7 @@
     <Build Include="dbo\Tables\PageDetail.sql" />
     <Build Include="dbo\Tables\PageIllustration.sql" />
     <Build Include="dbo\Functions\fnGeographicKeywordStringForTitle.sql" />
-    <Build Include="dbo\Stored Procedures\PageDetailInsert.sql" />
+    <Build Include="dbo\Stored Procedures\PageDetailInsertUpdate.sql" />
     <Build Include="dbo\Stored Procedures\PageIllustrationInsert.sql" />
     <Build Include="dbo\Stored Procedures\PageDetailSelectForClassifierExport.sql" />
     <Build Include="dbo\Stored Procedures\PageDetailUpdateStatus.sql" />

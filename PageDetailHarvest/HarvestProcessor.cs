@@ -113,10 +113,10 @@ namespace PageDetailHarvest
                     else
                     {
                         // Write image information to the database
-                        //if (SavePageDetail(pageDetail))
+                        if (SavePageDetail(pageDetail))
                             loadedPagesList.Add(pageDetail.Id);
-                        //else
-                        //    errorSaveList.Add(pageDetail.Id);
+                        else
+                            errorSaveList.Add(pageDetail.Id);
                     }
                 }
 
@@ -310,7 +310,7 @@ namespace PageDetailHarvest
 
                 try
                 {
-                    int pageDetailID = PageDetailInsert(sqlConnection, sqlTransaction, pageImage);
+                    int pageDetailID = PageDetailInsertUpdate(sqlConnection, sqlTransaction, pageImage);
 
                     foreach (PageIllustration block in pageImage.Illustrations)
                     {
@@ -427,12 +427,12 @@ namespace PageDetailHarvest
 
         #region DAL
 
-        private int PageDetailInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction, PageDetail pageImage)
+        private int PageDetailInsertUpdate(SqlConnection sqlConnection, SqlTransaction sqlTransaction, PageDetail pageImage)
         {
             SqlCommand sqlCommand = null;
             int pageDetailID = 0;
 
-            string sql = string.Format("exec dbo.PageDetailInsert @PageID={0}, @PageDetailStatusID={1}, @Height={2}, @Width={3}, @PixelDepth={4}, @AbbyyHasImage={5}, @ContrastHasImage={6}, @PercentCoverage={7}", 
+            string sql = string.Format("exec dbo.PageDetailInsertUpdate @PageID={0}, @PageDetailStatusID={1}, @Height={2}, @Width={3}, @PixelDepth={4}, @AbbyyHasImage={5}, @ContrastHasImage={6}, @PercentCoverage={7}", 
                 pageImage.PageID, (int)pageImage.PageDetailStatus, pageImage.Height, pageImage.Width, pageImage.PixelDepth,
                 pageImage.AbbyHasImage ? 1: 0, pageImage.ContrastHasImage ? 1: 0, pageImage.PercentCoverage);
 
