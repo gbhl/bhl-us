@@ -72,7 +72,7 @@ namespace MOBOT.BHL.Web2.Services
                 {
                     response.Append("<row id='" + searchResult.Pages[x].TitleID.ToString() + "'>");
                     response.Append("<cell> " + searchResult.Pages[x].BibliographicLevelName + " </cell>");
-                    response.Append("<cell> <![CDATA[<a title=\"Info\" href=\"/bibliography/" + searchResult.Pages[x].TitleID.ToString() + "\">" + searchResult.Pages[x].ShortTitle + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Info\" href=\"/bibliography/" + searchResult.Pages[x].TitleID.ToString() + "\">" + searchResult.Pages[x].FullTitle + "</a>]]> </cell>");
                     response.Append("<cell> <![CDATA[" + searchResult.Pages[x].Authors.Replace("|", "<br>") + "]]> </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"View Book\" href=\"/item/" + searchResult.Pages[x].ItemID.ToString() + "\">");
                     if (string.IsNullOrEmpty(searchResult.Pages[x].Volume))

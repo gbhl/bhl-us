@@ -61,8 +61,7 @@ namespace MOBOT.BHL.Web2
                 if (!String.IsNullOrEmpty(item.CopyrightEvidence)) description += "<b>Copyright Evidence:</b><br/>" + item.CopyrightEvidence + "<br/>";
 
                 WriteLine("<item>");
-                WriteLine("<title>" + Server.HtmlEncode(item.ShortTitle + " " + item.Volume) +
-" (added: " + DateTime.Parse(item.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
+                WriteLine("<title>" + Server.HtmlEncode(item.FullTitle + " " + item.PartNumber + " " + item.PartName + " " + item.Volume) + " (added: " + DateTime.Parse(item.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
                 WriteLine("<link>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");
                 WriteLine("<pubDate>" + item.CreationDate.ToString() + "</pubDate>");

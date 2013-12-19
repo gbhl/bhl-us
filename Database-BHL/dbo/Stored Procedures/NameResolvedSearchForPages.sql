@@ -156,6 +156,7 @@ SELECT TOP (@NumRows)
 		p.ItemID,
 		p.PageID,
 		BibliographicLevelName,
+		sc.FullTitle,
 		ShortTitle,
 		PartNumber,
 		PartName,
@@ -170,7 +171,4 @@ FROM	#Step2 p LEFT JOIN dbo.IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.Page
 WHERE	RowNumber > (@PageNum - 1) * @NumRows
 ORDER BY 
 		RowNumber
-
-
-
 

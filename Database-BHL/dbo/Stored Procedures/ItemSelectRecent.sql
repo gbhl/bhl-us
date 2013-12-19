@@ -20,7 +20,8 @@ BEGIN
 	SET @Institution = @InstitutionCode
 
 	SELECT DISTINCT TOP (@NumRows) t.TitleID, 
-			i.ItemID, t.ShortTitle, i.Volume, i.ScanningDate, 
+			i.ItemID, t.FullTitle, t.ShortTitle, t.PartNumber, 
+			t.PartName, i.Volume, i.ScanningDate, 
 			i.CreationDate,	i.Sponsor, inst.InstitutionName, 
 			i.LicenseUrl, i.Rights, i.DueDiligence, 
 			i.CopyrightStatus, i.CopyrightRegion,
@@ -42,7 +43,10 @@ BEGIN
 			@Language = '')
 	ORDER BY i.CreationDate DESC
 
-	SELECT	t.ItemID, t.ShortTitle, t.Volume, t.ScanningDate, 
+	SELECT	t.ItemID, t.FullTitle, t.ShortTitle, 
+			ISNULL(t.PartNumber, '') AS PartNumber,
+			ISNULL(t.PartName, '') AS PartName, 
+			t.Volume, t.ScanningDate, 
 			t.CreationDate, t.Sponsor, t.InstitutionName, 
 			t.LicenseUrl, t.Rights, t.DueDiligence, 
 			t.CopyrightStatus, t.CopyrightRegion,
@@ -55,6 +59,5 @@ BEGIN
 			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND t.ItemID = c.ItemID
 	ORDER BY CreationDate DESC
 END
-
 
 

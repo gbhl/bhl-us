@@ -8,6 +8,7 @@ namespace MOBOT.BHL.DataObjects
 	{
 		private int titleID = 0;
 		private string marcBibID = "";
+        private string fullTitle = "";
 		private string shortTitle = "";
 		private string sortTitle = "";
 		private int totalPageCount = 0;
@@ -37,6 +38,17 @@ namespace MOBOT.BHL.DataObjects
 			}
 		}
 
+        public string FullTitle
+        {
+            get
+            {
+                return fullTitle;
+            }
+            set
+            {
+                fullTitle = value;
+            }
+        }
 		public string ShortTitle
 		{
 			get

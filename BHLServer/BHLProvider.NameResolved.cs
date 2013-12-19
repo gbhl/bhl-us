@@ -35,6 +35,7 @@ namespace MOBOT.BHL.Server
                 page.PageID = (int)row["PageID"].Value;
                 page.ItemID = (int)row["ItemID"].Value;
                 page.BibliographicLevelName = (string)row["BibliographicLevelName"].Value;
+                page.FullTitle = (string)row["FullTitle"].Value + " " + (string)row["PartNumber"].Value + " " + (string)row["PartName"].Value;
                 page.ShortTitle = (string)row["ShortTitle"].Value + " " + (string)row["PartNumber"].Value + " " + (string)row["PartName"].Value;
                 page.Authors = (string)row["Authors"].Value;
                 page.Volume = (string)row["Volume"].Value;
@@ -62,7 +63,7 @@ namespace MOBOT.BHL.Server
                 page.PageID = (int)row["PageID"].Value;
                 page.ItemID = (int)row["ItemID"].Value;
                 page.BibliographicLevelName = (string)row["BibliographicLevelName"].Value;
-                page.FullTitle = (string)row["FullTitle"].Value;
+                page.FullTitle = (string)row["FullTitle"].Value + " " + (string)row["PartNumber"].Value + " " + (string)row["PartName"].Value;
                 page.ShortTitle = (string)row["ShortTitle"].Value + " " + (string)row["PartNumber"].Value + " " + (string)row["PartName"].Value;
                 page.PublisherPlace = (string)row["PublisherPlace"].Value;
                 page.Publisher = (string)row["Publisher"].Value;

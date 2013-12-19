@@ -9,7 +9,10 @@ namespace MOBOT.BHL.DataObjects
 		#region Properties
 
 		private string _titleName;
+        private string _fullTitle;
         private string _shortTitle;
+        private string _partNumber;
+        private string _partName;
 		private string _paginationStatusName;
 		private string _paginationUserName;
 		private string _downloadUrl;
@@ -83,10 +86,28 @@ namespace MOBOT.BHL.DataObjects
 			set { this._titleName = value; }
 		}
 
+        public string FullTitle
+        {
+            get { return this._fullTitle; }
+            set { this._fullTitle = value; }
+        }
+
         public string ShortTitle
         {
             get { return this._shortTitle; }
             set { this._shortTitle = value; }
+        }
+
+        public string PartNumber
+        {
+            get { return _partNumber; }
+            set { _partNumber = value; }
+        }
+
+        public string PartName
+        {
+            get { return _partName; }
+            set { _partName = value; }
         }
 
         public string PaginationStatusName
@@ -243,9 +264,24 @@ namespace MOBOT.BHL.DataObjects
 							_titleName = Utility.EmptyIfNull( column.Value );
 							break;
 						}
+                    case "FullTitle":
+                        {
+                            _fullTitle = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "ShortTitle":
                         {
                             _shortTitle = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "PartNumber":
+                        {
+                            _partNumber = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "PartName":
+                        {
+                            _partName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
 					case "PaginationStatusName":
