@@ -60,6 +60,35 @@ CREATE TABLE #tmpOpenUrlCitation
 	Abbreviation nvarchar(125) NOT NULL DEFAULT('')
 	)
 
+CREATE TABLE #tmpOpenUrlCitationPage
+	(
+	PageID int NULL DEFAULT(0),
+	ItemID int NULL DEFAULT(0),
+	TitleID int NULL DEFAULT(0),
+	SegmentID int NULL DEFAULT(0),
+	FullTitle nvarchar(2000) NOT NULL DEFAULT(''),
+	SegmentTitle nvarchar(2000) NOT NULL DEFAULT(''),
+	ContainerTitle nvarchar(2000) NOT NULL DEFAULT(''),
+	PublisherPlace nvarchar(150) NOT NULL DEFAULT(''),
+	PublisherName nvarchar(255) NOT NULL DEFAULT(''),
+	Date nvarchar(20) NOT NULL DEFAULT(''),
+	LanguageName nvarchar(20) NOT NULL DEFAULT(''),
+	Volume nvarchar(100) NOT NULL DEFAULT(''),
+	EditionStatement nvarchar(450) NOT NULL DEFAULT(''),
+	CurrentPublicationFrequency nvarchar(100) NOT NULL DEFAULT(''),
+	Genre nvarchar(20) NOT NULL DEFAULT(''),
+	Authors nvarchar(2000) NOT NULL DEFAULT(''),
+	Subjects nvarchar(1000) NOT NULL DEFAULT(''),
+	StartPage nvarchar(40) NOT NULL DEFAULT(''),
+	EndPage nvarchar(40) NOT NULL DEFAULT(''),
+	Pages nvarchar(40) NOT NULL DEFAULT(''),
+	ISSN nvarchar(125) NOT NULL DEFAULT(''),
+	ISBN nvarchar(125) NOT NULL DEFAULT(''),
+	LCCN nvarchar(125) NOT NULL DEFAULT(''),
+	OCLC nvarchar(125) NOT NULL DEFAULT(''),
+	Abbreviation nvarchar(125) NOT NULL DEFAULT('')
+	)
+
 -- Make sure that search criteria were specified
 IF (@ArticleTitle <> '' OR
 	@AuthorLast <> '' OR
@@ -119,6 +148,11 @@ BEGIN
 	OPTION (RECOMPILE)
 
 	-- Find the specified page
+	INSERT INTO #tmpOpenUrlCitationPage (
+		PageID, ItemID, TitleID, SegmentID, FullTitle, SegmentTitle, ContainerTitle, PublisherPlace, 
+		PublisherName, Date, LanguageName, Volume, EditionStatement, CurrentPublicationFrequency, 
+		Genre, Authors, Subjects, StartPage, EndPage, Pages, ISSN, ISBN, LCCN, OCLC, Abbreviation
+		)
 	SELECT	p.PageID,
 			t.ItemID,
 			t.TitleID,
@@ -144,7 +178,6 @@ BEGIN
 			t.LCCN,
 			t.OCLC,
 			t.Abbreviation
-	INTO	#tmpOpenUrlCitationPage
 	FROM	#tmpOpenUrlCitation t
 			INNER JOIN dbo.Segment s ON t.SegmentID = s.SegmentID
 			INNER JOIN dbo.SegmentPage sp ON s.SegmentID = sp.SegmentID
@@ -165,8 +198,4 @@ BEGIN
 END
 
 END
-
-
-
-
 

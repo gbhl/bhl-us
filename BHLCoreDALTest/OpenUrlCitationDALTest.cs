@@ -75,6 +75,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int titleID = 1000;
             int itemID = 0;
+            string doi = string.Empty;
             string title = string.Empty;
             string articleTitle = string.Empty;
             string authorLast = string.Empty;
@@ -84,7 +85,7 @@ namespace BHLCoreDALTest
             string year = string.Empty;
             string startPage = string.Empty;
             CustomGenericList<OpenUrlCitation> actual;
-            actual = target.OpenUrlCitationSelectByCitationDetails(sqlConnection, sqlTransaction, titleID, itemID, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
+            actual = target.OpenUrlCitationSelectByCitationDetails(sqlConnection, sqlTransaction, titleID, itemID, doi, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -100,6 +101,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int titleID = 1000;
             int itemID = 0;
+            string doi = string.Empty;
             string title = string.Empty;
             string articleTitle = string.Empty;
             string authorLast = string.Empty;
@@ -109,7 +111,7 @@ namespace BHLCoreDALTest
             string year = string.Empty;
             string startPage = string.Empty;
             CustomGenericList<OpenUrlCitation> actual;
-            actual = target.OpenUrlCitationSelectByCitationDetailsFT(sqlConnection, sqlTransaction, titleID, itemID, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
+            actual = target.OpenUrlCitationSelectByCitationDetailsFT(sqlConnection, sqlTransaction, titleID, itemID, doi, title, articleTitle, authorLast, authorFirst, volume, issue, year, startPage);
             Assert.IsTrue(actual.Count > 0);
         }
 

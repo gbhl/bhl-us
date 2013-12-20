@@ -3,6 +3,7 @@ CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByCitationDetailFT]
 
 @TitleID int = 0,
 @ItemID int = 0,
+@DOIName nvarchar(50) = '',
 @Title nvarchar(2000) = '',
 @ArticleTitle nvarchar(2000) = '',
 @AuthorLast nvarchar(150) = '',
@@ -106,9 +107,17 @@ CREATE TABLE #tmpOpenUrlCitation
 
 
 -- ***************************************************************
+-- Try searching by DOI
+
+IF (@DOIName <> '') INSERT INTO #tmpOpenUrlCitation EXEC dbo.OpenUrlCitationSelectByDOI @DOIName
+
+-- ***************************************************************
 -- Try searching by ItemID
 
-IF (@ItemID <> 0) INSERT INTO #tmpOpenUrlCitation EXEC dbo.OpenUrlCitationSelectByItem @ItemID
+IF NOT EXISTS(Select TitleID FROM #tmpOpenUrlCitation) AND (@ItemID <> 0) 
+BEGIN
+	INSERT INTO #tmpOpenUrlCitation EXEC dbo.OpenUrlCitationSelectByItem @ItemID
+END
 
 -- ***************************************************************
 -- Try searching by TitleID
@@ -469,8 +478,5 @@ FROM #tmpOpenUrlCitation t LEFT JOIN dbo.TitleItem ti WITH (NOLOCK)
 ORDER BY s.SortTitle, title.SortTitle, ti.ItemSequence, t.Date, t.StartPage
 
 END
-
-
-
 
 

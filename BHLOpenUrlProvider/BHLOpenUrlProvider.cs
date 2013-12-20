@@ -113,11 +113,13 @@ namespace MOBOT.BHL.OpenUrlProvider
                     {
                         // Get DOI, if specified
                         doi = this.GetIDFromIdentifierList(query, "doi");
+                        /*
                         if (!string.IsNullOrEmpty(doi))
                         {
                             citations = ouDAL.OpenUrlCitationSelectByDOI(null, null, doi);
                             if (citations.Count > 0) foundCitation = true;
                         }
+                         */
                     }
 
                     // If we haven't found a citation, try finding the title using title, item, and page criteria
@@ -151,14 +153,14 @@ namespace MOBOT.BHL.OpenUrlProvider
                         if (UseFullTextSearch)
                         {
                             citations = ouDAL.OpenUrlCitationSelectByCitationDetailsFT(null, null, titleID, itemID, 
-                                (query.BookTitle != String.Empty ? query.BookTitle : query.JournalTitle),
+                                doi, (query.BookTitle != String.Empty ? query.BookTitle : query.JournalTitle),
                                 query.ArticleTitle, query.AuthorLast, query.AuthorFirst, 
                                 query.Volume, query.Issue, query.Date.Year(), query.StartPage);
                         }
                         else
                         {
                             citations = ouDAL.OpenUrlCitationSelectByCitationDetails(null, null, titleID, itemID, 
-                                (query.BookTitle != String.Empty ? query.BookTitle : query.JournalTitle),
+                                doi, (query.BookTitle != String.Empty ? query.BookTitle : query.JournalTitle),
                                 query.ArticleTitle, query.AuthorLast, query.AuthorFirst, 
                                 query.Volume, query.Issue, query.Date.Year(), query.StartPage);
                         }
