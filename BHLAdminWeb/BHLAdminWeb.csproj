@@ -398,6 +398,7 @@
     <Compile Include="MarcDetails.aspx.designer.cs">
       <DependentUpon>MarcDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="NamePageEdit.aspx.cs">
       <DependentUpon>NamePageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -946,6 +947,8 @@
     <Content Include="Services\RecentlyClusteredSegmentsDownloadService.ashx" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Report\SegmentResolutionLog.cshtml" />
+    <Content Include="Views\Shared\_layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1030,10 +1033,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="App_Start\" />
     <Folder Include="Scripts\" />
     <Folder Include="styles\jqgridtheme\images\" />
-    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BHLImportWebService\" />
