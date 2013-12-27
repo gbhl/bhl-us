@@ -5,9 +5,36 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.PageTitle</title>
     <link href="@Url.Content("~/styles/adminstyle.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/favicon.ico")" rel="icon" type="image/x-icon" />
 </head>
-<body>
-    <div>
+<body id="body">
+
+	<div id="firefoxKludge" style="position: absolute; margin: 0; padding: 0; border: none; top: 0px; left: 0px; bottom: 0px; right: 0px; visibility: hidden; overflow: hidden;"></div>
+
+    <div style="left: 0px; top: 0px; position: absolute; width:100%">
+	<table style="width:100%; padding:0px; border-spacing:0px;" border="0">
+		<tr>
+			<td style="width: 250px; padding:0px">
+				<a href="@Url.Content("~/")"><img src="@Url.Content("~/images/BHLlogo.png")" width="195" height="70" style="border: 0; margin-left:15px;" /></a></td>
+			<td style="padding:0px">
+				<img src="@Url.Content("~/images/blank.gif")" alt="" height="1" width="15" />
+				&nbsp;
+				<div style="position: absolute; top: 3px; right: 15px;">
+                    <a href="@Url.Content("~/ligustrum.aspx?send=2")" class="HeaderLinks">Logout</a>
+					| <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
+				</div>
+				<div style="position: absolute; top: 40px; right: 15px;">
+					<span class="pageheader">Administration</span>
+				</div>
+			</td>
+		</tr>
+        <tr>
+            <td style="height:4px; background-color:#27638C; text-align:center; padding:0px" colspan="2"><span id="spanAlert" class="AdminAlertText">@ViewBag.AdminAlert</span></td>
+        </tr>
+	</table>
+    </div>
+
+	<div style="position: absolute; top: 75px">
         @RenderBody()
     </div>
 </body>

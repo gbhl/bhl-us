@@ -133,6 +133,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\BHLAuthorizationFilter.cs" />
+    <Compile Include="ActionFilters\DebugModeFilter.cs" />
+    <Compile Include="ActionFilters\FullTextSearchFilter.cs" />
     <Compile Include="Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -836,6 +839,7 @@
     <Content Include="Controls\PagingUserControl.ascx" />
     <Content Include="Controls\WebStatsNavControl.ascx" />
     <Content Include="Error.aspx" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\BHLlogo.png" />
     <Content Include="Images\bib_minus.gif" />

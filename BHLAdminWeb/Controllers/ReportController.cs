@@ -4,9 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MOBOT.BHL.AdminWeb.Models;
+using MOBOT.BHL.AdminWeb.ActionFilters;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
+    [BHLAuthorizationFilter]
+    [DebugModeFilter]
+    [FullTextSearchFilter]
     public class ReportController : Controller
     {
         //
@@ -14,7 +18,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         public ActionResult SegmentResolutionLog()
         {
-            ViewBag.PageTitle = "Segment Resolution Log";
+            ViewBag.PageTitle += "Segment Resolution Log";
 
             SegmentResolutionLogModel model = new SegmentResolutionLogModel();
             model.SegmentResolutionLogs.Add("Log ID: 1, Segment ID: 73279, Matching Segment ID: 69421, Score: 0.8618");
