@@ -25,6 +25,10 @@ namespace PageDetailHarvest
         {
             configParms.LoadAppConfig();
 
+            // Read additional app settings from the command line
+            // Note: Command line arguments override configuration file settings
+            if (!this.ReadCommandLineArguments()) return;
+
             switch (configParms.Mode)
             {
                 case "HARVEST_EXTRACT":
@@ -423,6 +427,32 @@ namespace PageDetailHarvest
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Reads the arguments supplied on the command line and stores them 
+        /// in an instance of the ConfigParms class.
+        /// </summary>
+        /// <returns>True if the arguments were in a valid format, false otherwise</returns>
+        private bool ReadCommandLineArguments()
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+
+            if (args.Length == 1) return true;
+
+            for (int x = 1; x < args.Length; x++)
+            {
+                string[] split = args[x].Split(':');
+                if (split.Length != 2)
+                {
+                    Console.WriteLine("Invalid command line format.  Format is PageDetailHarvest.exe [/MODE:harvest_extract|classifier_export]");
+                    return false;
+                }
+
+                if (String.Compare(split[0], "/MODE", true) == 0) configParms.Mode = split[1];
+            }
+
+            return true;
         }
 
         #region DAL
