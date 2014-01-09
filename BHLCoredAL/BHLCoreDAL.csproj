@@ -115,6 +115,13 @@
     <Compile Include="Generated\ConfigurationDAL.Auto.cs" />
     <Compile Include="Generated\DOIDAL.Auto.cs" />
     <Compile Include="Generated\IdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\ImportFileDAL.Auto.cs" />
+    <Compile Include="Generated\ImportFileStatusDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordCreatorDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordErrorLogDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordKeywordDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordStatusDAL.Auto.cs" />
     <Compile Include="Generated\ItemCollectionDAL.Auto.cs" />
     <Compile Include="Generated\ItemLanguageDAL.Auto.cs" />
     <Compile Include="Generated\ItemNameFileLogDAL.Auto.cs" />
@@ -154,6 +161,20 @@
     <Compile Include="Generated\TitleVariantDAL.Auto.cs" />
     <Compile Include="Generated\Title_IdentifierDAL.Auto.cs" />
     <Compile Include="IdentifierDAL.cs" />
+    <Compile Include="ImportFileDAL.cs" />
+    <Compile Include="ImportFileStatusDAL.cs" />
+    <Compile Include="ImportRecordCreatorDAL.cs" />
+    <Compile Include="ImportRecordDAL.cs" />
+    <Compile Include="ImportRecordErrorLogDAL.cs" />
+    <Compile Include="ImportRecordKeywordDAL.cs" />
+    <Compile Include="ImportRecordStatusDAL.cs" />
+    <Compile Include="Interfaces\IImportFileDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportFileStatusDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportRecordCreatorDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportRecordDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportRecordErrorLogDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportRecordKeywordDAL.Auto.cs" />
+    <Compile Include="Interfaces\IImportRecordStatusDAL.Auto.cs" />
     <Compile Include="ItemCOinSDAL.cs" />
     <Compile Include="ItemCollectionDAL.cs" />
     <Compile Include="ItemLanguageDAL.cs" />
@@ -263,6 +284,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

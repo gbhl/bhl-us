@@ -88,6 +88,7 @@
     <Compile Include="BHLProvider.AuthorType.cs" />
     <Compile Include="BHLProvider.DOI.cs" />
     <Compile Include="BHLProvider.Identifier.cs" />
+    <Compile Include="BHLProvider.ImportRecord.cs" />
     <Compile Include="BHLProvider.IndicatedPage.cs">
     </Compile>
     <Compile Include="BHLProvider.Institution.cs">
@@ -224,6 +225,7 @@
     <Compile Include="BHLProvider.ItemNameFileLog.cs">
     </Compile>
     <Compile Include="Year.cs" />
+    <Compile Include="BHLProvider.ImportFile.cs" />
     <None Include="mobot.snk" />
   </ItemGroup>
   <ItemGroup>
