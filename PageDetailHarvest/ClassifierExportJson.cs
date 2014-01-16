@@ -198,6 +198,7 @@ namespace PageDetailHarvest
             set { _width = value; }
         }
 
+        /*
         [JsonProperty("pixel_depth")]
         private int _pixelDepth = 0;
 
@@ -207,6 +208,7 @@ namespace PageDetailHarvest
             get { return _pixelDepth; }
             set { _pixelDepth = value; }
         }
+         */
 
         [JsonProperty("percent_coverage")]
         private double _percentCoverage = 0;

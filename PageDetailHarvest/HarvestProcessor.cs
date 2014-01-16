@@ -126,6 +126,11 @@ namespace PageDetailHarvest
 
                 // Log the results of the harvest
                 LogResults(inputFileName);
+
+                // Move the file to the "Complete" folder
+                CreateDirectory(configParms.ExtractCompleteFolder);
+                File.Move(inputFileName, configParms.ExtractCompleteFolder + Path.GetFileName(inputFileName));
+                
             }
         }
 
@@ -159,7 +164,7 @@ namespace PageDetailHarvest
                     exportPage.PercentCoverage = pageDetail.PercentCoverage;
                     exportPage.Height = pageDetail.Height;
                     exportPage.Width = pageDetail.Width;
-                    exportPage.PixelDepth = pageDetail.PixelDepth;
+                    //exportPage.PixelDepth = pageDetail.PixelDepth;
                 }
 
                 if (pageDetail.Top != null)
@@ -263,7 +268,8 @@ namespace PageDetailHarvest
             dynamic metadata = JsonConvert.DeserializeObject<Object>(json);
             JToken idToken = metadata._id;
             pageDetail.Id = idToken.Value<string>("$oid").ToString();
-            pageDetail.ProcessingComplete = (metadata.processing_complete == "true");
+            //pageDetail.ProcessingComplete = (metadata.processing_complete == "true");
+            pageDetail.ProcessingComplete = (metadata.abbyy_complete == "true" && metadata.contrast_complete == "true");
             pageDetail.ProcessingError = (metadata.processing_error == "true");
             pageDetail.Barcode = metadata.scan_id;
             pageDetail.Height = metadata.abbyy.height;
@@ -274,7 +280,7 @@ namespace PageDetailHarvest
                 double coverageSum = metadata.abbyy.coverage_sum;
                 pageDetail.PercentCoverage = Math.Round((double)metadata.abbyy.coverage_sum / ((double)pageDetail.Height * (double)pageDetail.Width) * 100, 2);
             }
-            pageDetail.PixelDepth = metadata.pixel_depth;
+            pageDetail.PixelDepth = 0; // metadata.pixel_depth;
             pageDetail.AbbyHasImage = (metadata.has_illustration.abbyy == "true");
             pageDetail.ContrastHasImage = (metadata.has_illustration.contrast == "true");
 

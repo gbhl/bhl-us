@@ -16,6 +16,7 @@ namespace PageDetailHarvest
         public string ExtractInputFolder { get; set; }
         public string ExtractErrorFolder { get; set; }
         public string ExtractLoadedFolder { get; set; }
+        public string ExtractCompleteFolder { get; set; }
         public string ClassifierOutputFolder { get; set; }
 
         public void LoadAppConfig()
@@ -29,6 +30,7 @@ namespace PageDetailHarvest
             ExtractInputFolder = ConfigurationManager.AppSettings["ExtractInputFolder"];
             ExtractErrorFolder = ConfigurationManager.AppSettings["ExtractErrorFolder"];
             ExtractLoadedFolder = ConfigurationManager.AppSettings["ExtractLoadedFolder"];
+            ExtractCompleteFolder = ConfigurationManager.AppSettings["ExtractCompleteFolder"];
             ClassifierOutputFolder = ConfigurationManager.AppSettings["ClassifierOutputFolder"];
         }
     }
