@@ -24,7 +24,7 @@ namespace BHLOAIHarvester
         // needing to edit the code.
 
         private ConfigParms configParms = new ConfigParms();
-        private Dictionary<string, List<string>> itemsHarvested = new Dictionary<string ,List<string>>();
+        private Dictionary<string, List<string>> itemsHarvested = new Dictionary<string, List<string>>();
         private List<string> errorMessages = new List<string>();
 
         public void Harvest()
@@ -57,10 +57,10 @@ namespace BHLOAIHarvester
                 CustomGenericList<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll(string.IsNullOrWhiteSpace(configParms.HarvestSetID));
 
                 Dictionary<string, string> formats = new Dictionary<string, string>();
-                foreach(vwOAIHarvestSet set in sets)
+                foreach (vwOAIHarvestSet set in sets)
                 {
                     // If a particular set was specified for harvesting, only process that set.  Otherwise do them all.
-                    if (set.HarvestSetID == Convert.ToInt32(configParms.HarvestSetID) || 
+                    if (set.HarvestSetID == Convert.ToInt32(configParms.HarvestSetID) ||
                         string.IsNullOrWhiteSpace(configParms.HarvestSetID))
                     {
                         if (!formats.ContainsKey(set.Prefix)) formats.Add(set.Prefix, set.AssemblyName);
@@ -157,7 +157,11 @@ namespace BHLOAIHarvester
                 try
                 {
                     BHLImportProvider provider = new BHLImportProvider();
-                    if (harvestLogID > 0) provider.OAIRecordDeleteForHarvestLogID(harvestLogID);
+                    if (harvestLogID > 0)
+                    {
+                        provider.OAIRecordDeleteForHarvestLogID(harvestLogID);
+                        if (itemsHarvested.ContainsKey(set.HarvestSetName)) itemsHarvested[set.HarvestSetName].Clear();
+                    }
                 }
                 catch (Exception ex2)
                 {
@@ -171,13 +175,14 @@ namespace BHLOAIHarvester
                     try
                     {
                         // Log the OAI results
-                        var numberHarvested = (from r in itemsHarvested select r.Value.Count).Sum();
+                        var numberHarvested = itemsHarvested.ContainsKey(set.HarvestSetName) ? itemsHarvested[set.HarvestSetName].Count : 0;
+                        //var numberHarvested = (from r in itemsHarvested select r.Value.Count).Sum();
 
-                        new BHLImportProvider().OAIHarvestLogUpdate(harvestLogID, set.HarvestSetID, 
-                            harvestStartTime, 
+                        new BHLImportProvider().OAIHarvestLogUpdate(harvestLogID, set.HarvestSetID,
+                            harvestStartTime,
                             (string.IsNullOrWhiteSpace(fromDate) ? Convert.ToDateTime(null) : Convert.ToDateTime(fromDate)),
                             (string.IsNullOrWhiteSpace(untilDate) ? Convert.ToDateTime(null) : Convert.ToDateTime(untilDate)),
-                            (responseDate == null ? responseDate : ((DateTime)responseDate).ToLocalTime()), 
+                            (responseDate == null ? responseDate : ((DateTime)responseDate).ToLocalTime()),
                             responseMessage, numberHarvested);
                     }
                     catch (Exception ex)
@@ -257,7 +262,7 @@ namespace BHLOAIHarvester
                 oaiDataRecord.Subjects.Add(oaiRecordSubject);
             }
 
-            foreach(string dcType in oaiRecord.Types)
+            foreach (string dcType in oaiRecord.Types)
             {
                 OAIRecordDCType oaiRecordDCType = new OAIRecordDCType();
                 oaiRecordDCType.DCType = dcType ?? string.Empty;
@@ -504,14 +509,14 @@ namespace BHLOAIHarvester
             {
                 foreach (KeyValuePair<string, List<string>> kvp in itemsHarvested)
                 {
-                    sb.Append(string.Format("{0} Items were Harvested from \"{1}\"{2}", 
+                    sb.Append(string.Format("{0} Items were Harvested from \"{1}\"{2}",
                         kvp.Value.Count.ToString(), kvp.Key, endOfLine));
                 }
                 sb.Append(endOfLine);
             }
             if (this.errorMessages.Count > 0)
             {
-                sb.Append(string.Format("{0} Errors Occurred {1}See the log file for details{2}{3}", 
+                sb.Append(string.Format("{0} Errors Occurred {1}See the log file for details{2}{3}",
                     this.errorMessages.Count.ToString(), endOfLine, endOfLine, endOfLine));
                 foreach (string message in errorMessages)
                 {
