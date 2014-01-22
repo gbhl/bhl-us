@@ -27,6 +27,6 @@
     <add name="BHL" connectionString="DATABASE CONNECTION STRING" providerName="System.Data.SqlClient" />
   </connectionStrings>
   <startup> 
-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
   </startup>
 </configuration>
