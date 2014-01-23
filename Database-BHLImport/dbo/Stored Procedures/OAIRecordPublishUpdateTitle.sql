@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishUpdateTitle
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishUpdateTitle]
 
 @OAIRecordID int,
 @ProductionTitleID int
@@ -128,8 +128,8 @@ BEGIN
 	BEGIN
 		DELETE FROM dbo.BHLTitleAuthor WHERE TitleID = @ProductionTitleID
 
-		INSERT dbo.BHLTitleAuthor (TitleID, AuthorID) 
-		SELECT @ProductionTitleID, ProductionAuthorID FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
+		INSERT dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID) 
+		SELECT @ProductionTitleID, ProductionAuthorID, 0 FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 	END
 				
 	-- Replace the TitleKeyword records if none have been added/updated by a user
