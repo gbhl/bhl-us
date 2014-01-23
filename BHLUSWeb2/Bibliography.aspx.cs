@@ -143,7 +143,7 @@ namespace MOBOT.BHL.Web2
                 }
 
                 var page = bhlProvider.PageSelectFirstPageForItem(item.ItemID);
-                string externalUrl = string.Format("/pagethumb/{0},100,100", (page == null) ? "0" : page.PageID.ToString());
+                string externalUrl = (page == null) ? "" : string.Format("/pagethumb/{0},100,100", page.PageID.ToString());
                 BibliographyItems.Add(new BibliographyItem(item, externalUrl));
             }
 

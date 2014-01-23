@@ -26,7 +26,8 @@ BEGIN
 			i.LicenseUrl, i.Rights, i.DueDiligence, 
 			i.CopyrightStatus, i.CopyrightRegion,
 			i.CopyrightComment, i.CopyrightEvidence,
-			t.PublicationDetails, t.CallNumber 
+			t.PublicationDetails, t.CallNumber,
+			i.ExternalUrl 
 	INTO	#tmpRecent
 	FROM	dbo.Item i WITH (NOLOCK) INNER JOIN dbo.Title t WITH (NOLOCK)
 				ON t.TitleID = i.PrimaryTitleID
@@ -54,7 +55,8 @@ BEGIN
 			t.PublicationDetails, t.CallNumber, 
 			dbo.fnAuthorStringForTitle(t.TitleID) AS CreatorTextString,
 			c.Subjects AS KeywordString,
-			c.Associations AS AssociationTextString
+			c.Associations AS AssociationTextString,
+			CASE WHEN c.HasLocalContent = 0 AND c.HasExternalContent = 1 THEN t.ExternalUrl ELSE '' END AS ExternalUrl
 	FROM	#tmpRecent t
 			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND t.ItemID = c.ItemID
 	ORDER BY CreationDate DESC
