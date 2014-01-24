@@ -25,7 +25,7 @@ namespace MOBOT.BHL.Web2
 
             Response.ContentType = "text/xml";
             WriteLine("<?xml version='1.0' encoding='UTF-8'?>");
-            WriteLine("<rss version=\"2.0\">");
+            WriteLine("<rss version=\"2.0\" xmlns:bhl=\"http://www.biodiversitylibrary.org/xsd/bhlrss.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
             WriteLine("<channel>");
             WriteLine("<title>BHL Recent Updates</title>");
             WriteLine("<link>http://www.biodiversitylibrary.org/</link>");
@@ -60,7 +60,9 @@ namespace MOBOT.BHL.Web2
                 if (!String.IsNullOrEmpty(item.CopyrightComment)) description += "<b>Copyright Comments:</b><br/>" + item.CopyrightComment + "<br/>";
                 if (!String.IsNullOrEmpty(item.CopyrightEvidence)) description += "<b>Copyright Evidence:</b><br/>" + item.CopyrightEvidence + "<br/>";
 
-                WriteLine("<item>");
+                string itemElement = string.IsNullOrWhiteSpace(item.ExternalUrl) ? "<item>" : "<item bhl:externalcontent=\"true\">";
+
+                WriteLine(itemElement);
                 WriteLine("<title>" + Server.HtmlEncode(item.FullTitle + " " + item.PartNumber + " " + item.PartName + " " + item.Volume) + " (added: " + DateTime.Parse(item.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
                 WriteLine("<link>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");

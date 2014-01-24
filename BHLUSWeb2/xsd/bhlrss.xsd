@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="bhlrss" attributeFormDefault="unqualified"  elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:attribute name="externalcontent" type="xs:boolean" />
+</xs:schema>

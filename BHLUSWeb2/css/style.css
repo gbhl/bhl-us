@@ -221,6 +221,20 @@ a.MendeleyButton
  float: left;
 }
 
+a.ExtLink
+{
+    padding-right:10px;
+    background-image: url("/images/extlnk.gif");
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-position-y: center;
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+    background-color: transparent;
+}
+
 #headersocial
 {
     margin-top:38px;

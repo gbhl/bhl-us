@@ -149,6 +149,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
+        private string _ExternalUrl = null;
+        public string ExternalUrl
+        {
+            get { return _ExternalUrl; }
+            set { _ExternalUrl = value; }
+        }
+
         private string _ItemUrl = null;
         public string ItemUrl
         {
@@ -275,6 +282,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                     case "CopyrightRegion":
                         {
                             _CopyrightRegion = (string)column.Value;
+                            break;
+                        }
+                    case "ExternalUrl":
+                        {
+                            _ExternalUrl = (string)column.Value;
                             break;
                         }
                 }

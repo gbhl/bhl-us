@@ -307,6 +307,7 @@
     <Content Include="images\envelope_icon.png" />
     <Content Include="images\eol_11px.png" />
     <Content Include="images\eol_15px.png" />
+    <Content Include="images\extlnk.gif" />
     <Content Include="images\facebook-icon-normal.png" />
     <Content Include="images\facebook-icon-over.png" />
     <Content Include="images\facebook_like_normal.png" />
@@ -510,6 +511,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <None Include="Service References\BHLWebService\BHLWS.wsdl" />
+    <None Include="xsd\bhlrss.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedSearch.aspx.cs">

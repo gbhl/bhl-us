@@ -217,7 +217,9 @@ namespace BHLOAIHarvester
             oaiDataRecord.EndPage = oaiRecord.ArticleEndPage;
             oaiDataRecord.Date = oaiRecord.Date;
             oaiDataRecord.Language = oaiRecord.Languages.Count > 0 ? oaiRecord.Languages[0] : string.Empty;
-            oaiDataRecord.Publisher = oaiRecord.Publisher;
+            oaiDataRecord.Publisher = string.IsNullOrWhiteSpace(oaiRecord.Publisher) && 
+                                        !string.IsNullOrWhiteSpace(oaiRecord.PublicationDetails) ? 
+                                        oaiRecord.PublicationDetails : oaiRecord.Publisher;
             oaiDataRecord.PublicationPlace = oaiRecord.PublicationPlace;
             oaiDataRecord.PublicationDate = oaiRecord.PublicationDates;
             oaiDataRecord.CallNumber = oaiRecord.CallNumber;

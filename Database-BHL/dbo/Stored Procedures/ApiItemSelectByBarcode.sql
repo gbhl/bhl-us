@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiItemSelectByBarcode]
+﻿CREATE PROCEDURE [dbo].[ApiItemSelectByBarcode]
 @Barcode nvarchar(40)
 AS 
 
@@ -26,7 +25,8 @@ ELSE
 			ISNULL(i.Rights, '') AS Rights,
 			ISNULL(i.DueDiligence, '') AS DueDiligence,
 			ISNULL(i.CopyrightStatus, '') AS CopyrightStatus,
-			ISNULL(i.CopyrightRegion, '') AS CopyrightRegion
+			ISNULL(i.CopyrightRegion, '') AS CopyrightRegion,
+			ISNULL(i.ExternalUrl, '') AS ExternalUrl
 	FROM	dbo.Item i LEFT JOIN dbo.Institution inst
 				ON i.InstitutionCode = inst.InstitutionCode
 			LEFT JOIN dbo.Language l
@@ -35,6 +35,3 @@ ELSE
 				ON i.ItemSourceID = s.ItemSourceID
 	WHERE	i.Barcode = @Barcode
 	AND		i.ItemStatusID = 40
-
-
-

@@ -523,6 +523,7 @@ Item/DueDiligence				URL to information about the rights/permissions			NA
 								asserted on the book
 Item/CopyrightStatus			Copyright statement for the book						NA
 Item/CopyrightRegion			Country issuing the copyright on the book				NA
+Item/ExternalUrl				Non-BHL address for the item							NA
 Item/ItemUrl					BHL address for the item								NA
 Item/TitleUrl					BHL address for the title								NA
 Item/ItemThumbUrl				BHL address for the item thumbnail image				NA
@@ -631,6 +632,10 @@ Variant/Title					The variant title										Location depends on the type
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+January 24, 2014 - version 2.5.1
+
+- Enhancement: Added ExternalUrl to the information returned about Items
 
 January 1, 2013 - version 2.5
 
