@@ -19,4 +19,9 @@
     [HasExternalContent]     SMALLINT        CONSTRAINT [DF_SearchCatalogSegment_HasExternalContent] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_SearchCatalogSegment] PRIMARY KEY CLUSTERED ([SearchCatalogSegmentID] ASC)
 );
+GO
 
+CREATE NONCLUSTERED INDEX [IX_SearchCatalogSegment_SegmentID]
+ON [dbo].[SearchCatalogSegment] ([SegmentID])
+INCLUDE ([Subjects],[Authors],[ItemID],[HasLocalContent],[HasExternalContent])
+GO

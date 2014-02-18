@@ -11,4 +11,11 @@
     CONSTRAINT [FK_SegmentAuthor_Author] FOREIGN KEY ([AuthorID]) REFERENCES [dbo].[Author] ([AuthorID]),
     CONSTRAINT [FK_SegmentAuthor_Segment] FOREIGN KEY ([SegmentID]) REFERENCES [dbo].[Segment] ([SegmentID])
 );
+GO
+
+CREATE NONCLUSTERED INDEX [IX_SegmentAuthor_SegmentID]
+ON [dbo].[SegmentAuthor] ([SegmentID])
+INCLUDE ([AuthorID], [SequenceOrder]);
+GO
+
 

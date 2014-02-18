@@ -49,4 +49,11 @@
 GO
 CREATE NONCLUSTERED INDEX [IX_Segment_ItemID]
     ON [dbo].[Segment]([ItemID] ASC);
+GO
+
+CREATE NONCLUSTERED INDEX [IX_Segment_SegmentStatusID]
+ON [dbo].[Segment] ([SegmentStatusID])
+INCLUDE ([ItemID], [SegmentID]);
+GO
+
 

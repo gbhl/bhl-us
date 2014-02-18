@@ -10,4 +10,13 @@
     CONSTRAINT [FK_SegmentKeyword_Keyword] FOREIGN KEY ([KeywordID]) REFERENCES [dbo].[Keyword] ([KeywordID]),
     CONSTRAINT [FK_SegmentKeyword_Segment] FOREIGN KEY ([SegmentID]) REFERENCES [dbo].[Segment] ([SegmentID])
 );
+GO
 
+CREATE NONCLUSTERED INDEX [IX_SegmentKeyword_KeywordID]
+ON [dbo].[SegmentKeyword] ([KeywordID])
+INCLUDE ([SegmentID]);
+GO
+
+CREATE NONCLUSTERED INDEX [IX_SegmentKeyword_SegmentID]
+ON [dbo].[SegmentKeyword] ([SegmentID]);
+GO
