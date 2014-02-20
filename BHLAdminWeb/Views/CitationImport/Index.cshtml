@@ -1,0 +1,61 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportModel
+
+@{
+    ViewBag.Title = "Import Citations - Select File";
+}
+
+<p><a href="/">&lt; Return to Dashboard</a></p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+<div class="citeImport">
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new {enctype="multipart/form-data"})) {
+
+    <div style="margin-bottom:10px">
+        <div><div class="label">Contributor:</div><div class="field">@Html.DropDownList("Contributor")</div></div>
+        <div><div class="label">Data source:</div><div class="field">@Html.DropDownList("DataSourceType")</div></div>
+    </div>
+    <div><div class="label">File name:</div><div class="field"><input type="file" id="FileName" name="FileName" style="width:450px" accept="text/plain" /></div></div>
+    <div style="margin:10px 0px">
+        <input type="submit" name="btnNext" id="btnNext" value="Next >" />
+        <input type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+    </div>
+
+}
+
+</div>
+
+<span id="Loading" style="display:none"><img src="~/images/loading.gif" /> Uploading file... please wait</span>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#DataSourceType").change(function(){
+            $("#DataSourceType option:selected").each(function () {
+                resetFormElement($("#FileName"));
+                $("#FileName").attr("accept", $(this).attr("value"));
+            });
+        }).change();
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/";
+        });
+
+        $("form").submit(function () {
+            if ($("#FileName").val() !== "") {
+                $(".citeImport").hide();
+                $("#Loading").show();
+            }
+            else {
+                alert("Select a file to upload");
+                event.preventDefault();
+            }
+        });
+
+    });
+
+    function resetFormElement(e) {
+        e.wrap("<form>").closest("form").get(0).reset();
+        e.unwrap();
+    }
+</script>

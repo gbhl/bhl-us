@@ -1,0 +1,93 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportModel
+
+@{
+    ViewBag.Title = "Import Citations - Preview";
+}
+
+<p>&nbsp;</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+<div class="citeImport" style="width:100%">
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+
+    @Html.HiddenFor(m => m.Contributor)
+    @Html.HiddenFor(m => m.DataSourceType)
+    @Html.HiddenFor(m => m.FilePath)
+    @Html.HiddenFor(m => m.FileName)
+    @Html.HiddenFor(m => m.CodePage)
+    @Html.HiddenFor(m => m.ColumnDelimiter)
+    @Html.HiddenFor(m => m.ColumnNamesInFirstRow)
+    @Html.HiddenFor(m => m.HeaderRowsToSkip)
+    @Html.HiddenFor(m => m.RowDelimiter)
+    @Html.HiddenFor(m => m.TextQualifier)
+
+    <p>Preview a sample of the data being imported.  Clicking "Next" will copy the data from the file into a temporary space in the database.  From there, you will be able to review ALL of the data before making it "live" in BHL.</p>
+    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+
+    <table>
+        <thead>
+            <tr>
+                @for (int x = 0; x < Model.Columns.Count; x++)
+                {
+                    if (Model.Columns[x].MappedColumn != null)
+                    {
+                        <th>@Html.DisplayTextFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)</th>
+                    }
+                    else
+                    {
+                        @Html.HiddenFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].MappedColumn) @Html.HiddenFor(m => m.Columns[x].ValueDelimiter)                        
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int x = 0; x < Model.Rows.Count; x++)
+            {
+                <tr>
+                @for (int y = 0; y < Model.Rows[x].Count; y++)
+                {
+                    if (Model.Columns[y].MappedColumn != null)
+                    {
+                        <td>@Model.Rows[x][y]</td>
+                    }
+                }
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    
+    
+    <div style="margin:10px 0px">
+        <input type="submit" name="btnBack" id="btnBack" value="< Back" />
+        <input type="submit" name="btnNext" id="btnNext" value="Next >" />
+        <input type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+    </div>
+
+}
+
+</div>
+
+<span id="Loading" style="display:none"><img src="~/images/loading.gif" /> Importing data... please wait</span>
+
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/";
+        });
+
+        $("form").submit(function () {
+            $(".citeImport").hide();
+            $("#Loading").show();
+        });
+
+    });
+
+</script>
+
+

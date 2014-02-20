@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.PageTitle</title>
     <link href="@Url.Content("~/styles/adminstyle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUICSSPath"])" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/favicon.ico")" rel="icon" type="image/x-icon" />
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryPath"])" type="text/javascript"></script>
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUIPath"])" type="text/javascript"></script>
+    @RenderSection("Javascript", required: false)
+    @RenderSection("CSS", required: false)
 </head>
 <body id="body">
 
@@ -34,7 +39,7 @@
 	</table>
     </div>
 
-	<div style="position: absolute; top: 75px">
+	<div style="position: absolute; top: 75px; width:90%">
         @RenderBody()
     </div>
 </body>

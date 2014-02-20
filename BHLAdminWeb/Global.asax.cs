@@ -74,22 +74,13 @@ namespace MOBOT.BHL.AdminWeb
             routes.Ignore("{resource}.axd/{*pathInfo}");
             //routes.Ignore("{resource}.aspx/{*pathInfo}");
 
-            routes.MapPageRoute("Default",
-                "",
-                "~/dashboard.aspx");
+            // Routes for original WebForms pages
+            routes.MapRoute("Default", "", new { controller = "Home", action = "Index" });
+            routes.MapRoute("Login", "login", new { controller = "Home", action = "Login" });
+            routes.MapRoute("Error-General", "error", new { controller = "Home", action = "Error" });
+            routes.MapRoute("PageNotFound", "pagenotfound", new { controller = "Home", action = "PageNotFound" });
 
-            routes.MapPageRoute("Login",
-                "login",
-                "~/login.aspx");
-
-            routes.MapPageRoute("Error-General",
-                "error",
-                "~/Error.aspx");
-
-            routes.MapPageRoute("PageNotFound",
-                "pagenotfound",
-                "~/PageNotFound.aspx");
-
+            // Routes for MVC pages
             routes.MapRoute("MVCDefault", "{controller}/{action}/{id}", new { controller = "Home", action = "Index", id = "" });
 
             routes.MapRoute("CatchAll",

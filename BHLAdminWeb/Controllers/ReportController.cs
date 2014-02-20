@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.ActionFilters;
+using MOBOT.BHL.AdminWeb.MVCServices;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -14,8 +11,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     public class ReportController : Controller
     {
         //
-        // GET: /Report/
-
+        // GET: /Report/SegmentResolutionLog
         public ActionResult SegmentResolutionLog()
         {
             ViewBag.PageTitle += "Segment Resolution Log";
@@ -27,5 +23,57 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Report/CitationImportHistory
+        [HttpGet]
+        public ActionResult CitationImportHistory()
+        {
+            /*
+            CitationService service = new CitationService();
+            ViewBag.PageTitle += "Citation Import History";
+            ViewBag.ContributorList = service.InstitutionList();
+            ViewBag.ImportFileStatusList = service.ImportFileStatusList();
+            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
+
+             */
+            CitationImportHistoryModel model = new CitationImportHistoryModel();
+            model.Institution = string.Empty;
+            model.ImportFileStatus = string.Empty;
+            model.ReportDateRange = "30";
+
+            CitationImportHistoryInit(model);
+
+            return View(model);
+        }
+
+        //
+        // POST: /Report/CitationImportHistory
+        [HttpPost]
+        public ActionResult CitationImportHistory(CitationImportHistoryModel model)
+        {   
+            /*
+            CitationService service = new CitationService();
+            ViewBag.PageTitle += "Citation Import History";
+            ViewBag.ContributorList = service.InstitutionList();
+            ViewBag.ImportFileStatusList = service.ImportFileStatusList();
+            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
+
+            model.GetImportFileList();
+             */
+            CitationImportHistoryInit(model);
+
+            return View(model);
+        }
+
+        private void CitationImportHistoryInit(CitationImportHistoryModel model)
+        {
+            CitationService service = new CitationService();
+            ViewBag.PageTitle += "Citation Import History";
+            ViewBag.ContributorList = service.InstitutionList();
+            ViewBag.ImportFileStatusList = service.ImportFileStatusList();
+            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
+
+            model.GetImportFileList();
+        }
     }
 }

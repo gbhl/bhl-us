@@ -1,0 +1,126 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportModel
+@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryJEditablePath"])" type="text/javascript"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			
+			var oTable = $('#recordlist').dataTable( {
+				"bProcessing": true,
+				"bServerSide": true,
+				"bFilter": false,
+				"bLengthChange": false,
+				"iDisplayLength": 100,
+                "sDom": '<"H"lfrip>t<"F"ip>',
+				"sPaginationType": "full_numbers",
+				"sAjaxSource": '/CitationImport/GetRecords?importFileID=@Model.ImportFileID'
+					
+				,"aoColumns": [
+					{"bVisible": false}, /* ID column */
+					null,
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false, "sClass": "editCol" }
+				]						
+				,"fnDrawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/CitationImport/UpdateRecordStatus', { 
+					"callback": function (sValue, settings) {
+						var aPos = oTable.fnGetPosition(this);
+						oTable.fnUpdate( sValue, aPos[0], aPos[2], false );
+					},					
+					"submitdata": function (value, settings) {
+						return {
+						    "importRecordID": oTable.fnGetData(oTable.fnGetPosition(this)[0], 0),
+                            "originalValue": this.revert
+						};
+					},
+					"height": "14px", 
+					"width": "100%",
+					"data" : $(".importRecordStatus").html(),
+					"type" : "select"
+					} ); 
+				}
+			} );
+		} );
+	</script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
+@{
+    ViewBag.Title = "Import Citations - Review";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+    <a href="/report/citationimporthistory">< View Citation Import History</a>
+</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+
+    @Html.HiddenFor(m => m.ImportFileID)
+
+    <div class="importRecordStatus" style="display:none">@Html.Raw(ViewBag.ImportRecordStatuses)</div>
+
+    <p style="color:red">Put instructions for using this page here!!!</p>
+    <p style="color:red">Probably should show which Genre (Title/Item or Segment) will be applied to each row.</p>
+    <p style="color:red">TODO: FINISH IMPORT OPERATION</p>
+    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+
+    <div style="margin-bottom:20px">
+        <input type="submit" name="btnImport" id="btnImport" value="Import File" />
+        <input type="submit" name="btnReject" id="btnReject" value="Reject File" />
+    </div>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
+	    <thead>
+		    <tr>
+			    <th></th>
+			    <th width="40%">Title</th>
+			    <th width="30%">Journal</th>
+			    <th width="5%">Volume</th>
+			    <th width="5%">Series</th>
+			    <th width="5%">Issue</th>
+			    <th width="5%">Year</th>
+			    <th width="10%">Status</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+					
+	    </tbody>
+	    <tfoot>
+		    <tr>
+			    <th></th>
+			    <th>Title</th>
+			    <th>Journal</th>
+			    <th>Volume</th>
+			    <th>Series</th>
+			    <th>Issue</th>
+			    <th>Year</th>
+			    <th>Status</th>
+		    </tr>
+	    </tfoot>
+    </table>
+
+}
+
+<span id="Loading" style="display:none"><img src="~/images/loading.gif" /> Processing data... please wait</span>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("form").submit(function () {
+            $("form").hide();
+            $("#Loading").show();
+        });
+
+    });
+
+</script>
+
