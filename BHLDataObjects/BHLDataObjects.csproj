@@ -96,6 +96,13 @@
     <Compile Include="Concrete\DOI.cs" />
     <Compile Include="Concrete\DOIStatus.cs" />
     <Compile Include="Concrete\Identifier.cs" />
+    <Compile Include="Concrete\ImportFile.cs" />
+    <Compile Include="Concrete\ImportFileStatus.cs" />
+    <Compile Include="Concrete\ImportRecord.cs" />
+    <Compile Include="Concrete\ImportRecordCreator.cs" />
+    <Compile Include="Concrete\ImportRecordErrorLog.cs" />
+    <Compile Include="Concrete\ImportRecordKeyword.cs" />
+    <Compile Include="Concrete\ImportRecordStatus.cs" />
     <Compile Include="Concrete\ItemCOinSView.cs" />
     <Compile Include="Concrete\ItemCollection.cs" />
     <Compile Include="Concrete\ItemLanguage.cs" />
@@ -191,6 +198,13 @@
     <Compile Include="Generated\__DOI.cs" />
     <Compile Include="Generated\__DOIStatus.cs" />
     <Compile Include="Generated\__Identifier.cs" />
+    <Compile Include="Generated\__ImportFile.cs" />
+    <Compile Include="Generated\__ImportFileStatus.cs" />
+    <Compile Include="Generated\__ImportRecord.cs" />
+    <Compile Include="Generated\__ImportRecordCreator.cs" />
+    <Compile Include="Generated\__ImportRecordErrorLog.cs" />
+    <Compile Include="Generated\__ImportRecordKeyword.cs" />
+    <Compile Include="Generated\__ImportRecordStatus.cs" />
     <Compile Include="Generated\__ItemCOinSView.cs" />
     <Compile Include="Generated\__ItemCollection.cs" />
     <Compile Include="Generated\__ItemLanguage.cs" />
