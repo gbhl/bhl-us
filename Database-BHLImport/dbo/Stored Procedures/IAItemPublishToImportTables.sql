@@ -337,9 +337,8 @@ BEGIN TRY
 
 	-- Full Title
 	UPDATE	#tmpTitle
-	SET		FullTitle = dfA.SubFieldValue + ' ' + 
-							ISNULL(dfB.SubFieldValue, '')-- + ' ' + 
---							ISNULL(dfC.SubFieldValue, '')
+	SET		FullTitle = LTRIM(RTRIM(dfA.SubFieldValue + ' ' + 
+							ISNULL(dfB.SubFieldValue, '')))
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField dfA
 				ON t.ItemID = dfA.ItemID
 				AND dfA.DataFieldTag = '245' 
@@ -348,10 +347,6 @@ BEGIN TRY
 				ON t.ItemID = dfB.ItemID
 				AND dfB.DataFieldTag = '245'
 				AND dfB.Code = 'b'
---			LEFT JOIN dbo.vwIAMarcDataField dfC
---				ON t.ItemID = dfC.ItemID
---				AND dfC.DataFieldTag = '245'
---				AND dfC.Code = 'c'
 
 	-- Part Number and Part Name
 	UPDATE	#tmpTitle
@@ -513,7 +508,8 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'language'
-	WHERE	t.MARCBibID = ''
+	WHERE	t.LanguageCode = ''
+	AND		m.DCElementValue <> ''
 
 	UPDATE	#tmpTitle
 	SET		FullTitle = m.DCElementValue,
@@ -521,7 +517,8 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'title'
-	WHERE	t.MARCBibID = ''
+	WHERE	CONVERT(nvarchar(max), t.FullTitle) = ''
+	AND		m.DCElementValue <> ''
 
 	UPDATE	#tmpTitle
 	SET		PublicationDetails = SUBSTRING(m.DCElementValue, 1, 255),
@@ -529,7 +526,8 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'publisher'
-	WHERE	t.MARCBibID = ''
+	WHERE	t.PublicationDetails = ''
+	AND		m.DCElementValue <> ''
 
 	UPDATE	#tmpTitle
 	SET		StartYear = CASE WHEN ISNUMERIC(SUBSTRING(m.DCElementValue, 1, 4)) = 1 
@@ -537,7 +535,8 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'date'
-	WHERE	t.MARCBibID = ''
+	WHERE	t.StartYear = ''
+	AND		m.DCElementValue <> ''
 			
 	UPDATE	#tmpTitle
 	SET		MARCBibID = IAIdentifier
@@ -1801,4 +1800,3 @@ END CATCH
 SET NOCOUNT OFF
 
 END
-
