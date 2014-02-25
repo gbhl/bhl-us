@@ -599,7 +599,7 @@ namespace PageDetailHarvest
                         if (!reader.IsDBNull(reader.GetOrdinal("PageYear"))) row.PageYear = reader.GetString(reader.GetOrdinal("PageYear"));
                         if (!reader.IsDBNull(reader.GetOrdinal("ItemYear"))) row.ItemYear = reader.GetString(reader.GetOrdinal("ItemYear"));
                         if (!reader.IsDBNull(reader.GetOrdinal("Volume"))) row.Volume = reader.GetString(reader.GetOrdinal("Volume"));
-                        row.StartYear = reader.GetInt16(reader.GetOrdinal("StartYear"));
+                        row.StartYear = reader.IsDBNull(reader.GetOrdinal("StartYear")) ? row.StartYear : reader.GetInt16(reader.GetOrdinal("StartYear"));
                         row.Keywords = reader.GetString(reader.GetOrdinal("Keywords"));
                         row.InstitutionName = reader.GetString(reader.GetOrdinal("InstitutionName"));
                         row.BhlMemberLibrary = reader.GetBoolean(reader.GetOrdinal("BHLMemberLibrary")) ? 1 : 0;
