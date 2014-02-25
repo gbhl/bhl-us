@@ -295,6 +295,9 @@ namespace PageDetailHarvest
                 pageDetail.Illustrations.Add(block);
             }
 
+            // Update the page detail status based on the algorithm results
+            if (!(pageDetail.AbbyHasImage || pageDetail.ContrastHasImage)) pageDetail.PageDetailStatus = PageDetailStatus.NoImageFound;
+
             // Get the Page ID related to this scan_id and page_num
             pageDetail.PageID = PageSelectByBarCodeAndSequence(pageDetail.Barcode, (int)metadata.page_num);
 

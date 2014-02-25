@@ -119,6 +119,7 @@ namespace PageDetailHarvest
         Classifying = 20,
         Classified = 30,
         Describing = 40,
-        Described = 50
+        Described = 50,
+        NoImageFound = 60
     }
 }

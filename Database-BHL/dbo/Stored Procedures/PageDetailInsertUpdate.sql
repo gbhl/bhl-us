@@ -52,7 +52,10 @@ ELSE
 BEGIN
 	-- Update the existing record
 	UPDATE	dbo.PageDetail
-	SET		PageDetailStatusID = 10,	-- Extracted
+	SET		PageDetailStatusID = CASE WHEN @AbbyyHasImage = 1 OR @ContrastHasImage = 1 
+								THEN 10 -- Extracted
+								ELSE 60 -- NoImageFound
+								END,
 			Height = @Height,
 			Width = @Width,
 			PixelDepth = @PixelDepth,
@@ -86,6 +89,4 @@ FROM	dbo.PageDetail
 WHERE	PageDetailID = @PageDetailID
 
 END
-
-GO
 
