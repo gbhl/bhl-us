@@ -176,7 +176,8 @@ namespace MOBOT.BHL.Web2
 
             try
             {
-                if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz"))  // ignore spam from kelev.biz
+                if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
+                    !emailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
                 {
                     data = serviceManager.IssuesService.CreateIssue(data);
                     if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, "BHL Feedback Received", Server.HtmlDecode(issueLongDesc));
@@ -235,7 +236,8 @@ namespace MOBOT.BHL.Web2
 
             try
             {
-                if (!srEmailTextBox.Text.Trim().ToLower().Contains("kelev.biz"))  // ignore spam from kelev.biz
+                if (!srEmailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
+                    !srEmailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
                 {
                     data = serviceManager.IssuesService.CreateIssue(data);
                     if (srEmailTextBox.Text.Trim().Length > 0) this.SendEmail(srEmailTextBox.Text, "BHL Scanning Request (# " + data.IssueID.ToString() + ") Received", Server.HtmlDecode(issueLongDesc));
