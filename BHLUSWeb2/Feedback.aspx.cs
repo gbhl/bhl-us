@@ -13,9 +13,11 @@ using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
-using CounterSoft.Gemini.Commons.Entity;
-using CounterSoft.Gemini.WebServices;
-using CounterSoft.Gemini.Commons;
+using Countersoft.Gemini.Commons.Entity;
+using Countersoft.Gemini.Commons;
+using Countersoft.Gemini.Api;
+using RestSharp;
+using Countersoft.Gemini.Commons.Dto;
 
 namespace MOBOT.BHL.Web2
 {
@@ -155,31 +157,27 @@ namespace MOBOT.BHL.Web2
             string issueLongDesc = getComment();
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
-            UserEN user = serviceManager.UsersService.WhoAmI();
-            IssueEN data = new IssueEN();
+            UserDto user = serviceManager.Admin.WhoAmI();
+            Issue data = new Issue();
 
-            IssueComponentEN[] iceComps = new IssueComponentEN[1];
-            iceComps[0] = new IssueComponentEN();
-            iceComps[0].ComponentID = 56;	// Web-Other
-            data.Components = iceComps;
-
-            data.IssueLongDesc = issueLongDesc;
-            data.IssuePriority = 1;		    // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
-            data.IssueResolution = 1;	    // 1=Unresolved
-            data.IssueStatus = 1;			// 1=Unassigned
-            data.IssueSeverity = 1;
-            data.IssueSummary = issueSummary;
-            data.IssueType = int.Parse(ddlList.SelectedValue); // 1=Technical Issues, 5=Suggestion, 6=Bibliographic Issues
-            data.ReportedBy = user.UserID;
-            data.RiskLevel = 1;
-            data.ProjectID = projectId;
+            data.AddComponent(56);  // Web-Other
+            data.Description = issueLongDesc;
+            data.PriorityId = 1;		// 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper, 5=Low, 6=Medium, 7=High
+            data.ResolutionId = 1;	    // 1=Unresolved
+            data.StatusId = 1;			// 1=Unassigned
+            data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
+            data.Title = issueSummary;
+            data.TypeId = int.Parse(ddlList.SelectedValue); // 1=Technical Issues, 5=Suggestion, 6=Bibliographic Issues
+            data.ReportedBy = user.Entity.Id;
+            //data.RiskLevel = 1;
+            data.ProjectId = projectId;
 
             try
             {
                 if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
                     !emailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
                 {
-                    data = serviceManager.IssuesService.CreateIssue(data);
+                    serviceManager.Item.Create(data);
                     if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, "BHL Feedback Received", Server.HtmlDecode(issueLongDesc));
                 }
 
@@ -215,36 +213,32 @@ namespace MOBOT.BHL.Web2
             string issueLongDesc = getScanRequest();
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
-            UserEN user = serviceManager.UsersService.WhoAmI();
-            IssueEN data = new IssueEN();
+            UserDto user = serviceManager.Admin.WhoAmI();
+            Issue data = new Issue();
 
-            IssueComponentEN[] iceComps = new IssueComponentEN[1];
-            iceComps[0] = new IssueComponentEN();
-            iceComps[0].ComponentID = 78;	// Collections
-            data.Components = iceComps;
-
-            data.IssueLongDesc = issueLongDesc;
-            data.IssuePriority = 1;		    // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
-            data.IssueResolution = 1;	    // 1=Unresolved
-            data.IssueStatus = 1;			// 1=Unassigned
-            data.IssueSeverity = 1;
-            data.IssueSummary = issueSummary;
-            data.IssueType = 6;             // 6=Bibliographic Issue
-            data.ReportedBy = user.UserID;
-            data.RiskLevel = 1;
-            data.ProjectID = projectId;
+            data.AddComponent(78);  // Collections
+            data.Description = issueLongDesc;
+            data.PriorityId = 1;		// 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper, 5=Low, 6=Medium, 7=High
+            data.ResolutionId = 1;      // 1=Unresolved
+            data.StatusId = 1;			// 1=Unassigned
+            data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
+            data.Title = issueSummary;
+            data.TypeId = 6;             // 6=Bibliographic Issue
+            data.ReportedBy = user.Entity.Id;
+            //data.RiskLevel = 1;
+            data.ProjectId = projectId;
 
             try
             {
                 if (!srEmailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
                     !srEmailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
                 {
-                    data = serviceManager.IssuesService.CreateIssue(data);
-                    if (srEmailTextBox.Text.Trim().Length > 0) this.SendEmail(srEmailTextBox.Text, "BHL Scanning Request (# " + data.IssueID.ToString() + ") Received", Server.HtmlDecode(issueLongDesc));
+                    IssueDto newIssue = serviceManager.Item.Create(data);
+                    if (srEmailTextBox.Text.Trim().Length > 0) this.SendEmail(srEmailTextBox.Text, "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received", Server.HtmlDecode(issueLongDesc));
 
                     try
                     {
-                        new BHLProvider().ScanRequestInsertAuto(data.IssueID, srTitleTextBox.Text.Trim(),
+                        new BHLProvider().ScanRequestInsertAuto(newIssue.Id, srTitleTextBox.Text.Trim(),
                             srYearTextBox.Text.Trim(), srTypeList.SelectedValue, srVolumeTextBox.Text.Trim(),
                             srEditionTextBox.Text.Trim(), srOCLCTextBox.Text.Trim(), srISBNTextBox.Text.Trim(),
                             srISSNTextBox.Text.Trim(), srAuthorTextBox.Text.Trim(), srPublisherTextBox.Text.Trim(),
