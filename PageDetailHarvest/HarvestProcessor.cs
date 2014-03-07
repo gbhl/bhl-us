@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,13 @@ namespace PageDetailHarvest
 {
     internal class HarvestProcessor
     {
+        // Create a logger for use in this class
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        // NOTE that using System.Reflection.MethodBase.GetCurrentMethod().DeclaringType
+        // is equivalent to typeof(LoggingExample) but is more portable
+        // i.e. you can copy the code directly into another class without
+        // needing to edit the code.
+
         private ConfigParms configParms = new ConfigParms();
 
         private List<string> processingIncompleteList = new List<string>();
@@ -21,9 +29,24 @@ namespace PageDetailHarvest
         private List<string> errorSaveList = new List<string>();
         private List<string> loadedPagesList = new List<string>();
 
+        private List<string> errorMessages = new List<string>();
+        private int numFilesHarvested = 0;
+        private int numRecordsExported = 0;
+
         public void Process()
         {
-            configParms.LoadAppConfig();
+            this.LogMessage("PageDetailHarvest Processing Start");
+
+            try 
+            {
+                // Load app settings from the configuration file
+                configParms.LoadAppConfig();
+            }
+            catch (Exception e)
+            {
+                this.LogMessage("LoadAppConfig Error: " + e.Message, true);
+            }
+
 
             // Read additional app settings from the command line
             // Note: Command line arguments override configuration file settings
@@ -42,7 +65,10 @@ namespace PageDetailHarvest
                     break;
             }
 
-            Console.WriteLine("Done");
+            // Report the results
+            this.ProcessResults();
+
+            this.LogMessage("PageDetailHarvest Processing Complete");
         }
 
         /// <summary>
@@ -56,10 +82,13 @@ namespace PageDetailHarvest
             // Read files to be processed from the input directory
             string[] inputFileNames = Directory.GetFiles(configParms.ExtractInputFolder);
 
+            LogMessage(string.Format("Beginning harvest of {0} files", inputFileNames.Count()));
+
             foreach (string inputFileName in inputFileNames)
             {
                 if (HasBeenProcessed(inputFileName))
                 {
+                    LogMessage(string.Format("Skipping previously harvested file \"{0}\"", inputFileName));
                     File.Delete(inputFileName);
                     continue;
                 }
@@ -147,16 +176,23 @@ namespace PageDetailHarvest
                     // Move the file to the "Complete" folder
                     CreateDirectory(configParms.ExtractCompleteFolder);
                     File.Move(inputFileName, configParms.ExtractCompleteFolder + Path.GetFileName(inputFileName));
+
+                    LogMessage(string.Format("Done harvesting \"{0}\"", inputFileName));
                 }
-                catch
+                catch (Exception ex)
                 {
                     // Move the file to the Error folder
                     CreateDirectory(configParms.ExtractErrorFolder);
                     string errorFileName = configParms.ExtractErrorFolder + Path.GetFileName(inputFileName);
                     if (File.Exists(errorFileName)) File.Delete(errorFileName);
                     File.Move(inputFileName, errorFileName);
+
+                    LogMessage(string.Format("Error harvesting \"{0}\"", inputFileName), ex);
                 }
             }
+
+            numFilesHarvested = inputFileNames.Count();
+            LogMessage(string.Format("Done harvesting {0} files", numFilesHarvested));
         }
 
         /// <summary>
@@ -164,88 +200,100 @@ namespace PageDetailHarvest
         /// </summary>
         private void ClassifierExport()
         {
-            List<PageClassifierExport> pageDetailList = PageDetailSelectForClassifierExport();
+            LogMessage("Beginning export for Classifier");
 
-            // Accumulate the list to be serialized as JSON
-            ClassifierExportJson export = new ClassifierExportJson();
-            ClassifierExportItem exportItem = null;
-            ClassifierExportPage exportPage = null;
-            int prevItemID = 0;
-            int prevPageID = 0;
-            foreach (PageClassifierExport pageDetail in pageDetailList)
+            try
             {
-                int itemID = pageDetail.ItemID;
-                int pageID = pageDetail.PageID;
+                List<PageClassifierExport> pageDetailList = PageDetailSelectForClassifierExport();
 
-                if (pageID != prevPageID)
+                // Accumulate the list to be serialized as JSON
+                ClassifierExportJson export = new ClassifierExportJson();
+                ClassifierExportItem exportItem = null;
+                ClassifierExportPage exportPage = null;
+                int prevItemID = 0;
+                int prevPageID = 0;
+                foreach (PageClassifierExport pageDetail in pageDetailList)
                 {
-                    if (exportPage != null) exportItem.Pages.Add(exportPage);
-                    exportPage = new ClassifierExportPage();
+                    int itemID = pageDetail.ItemID;
+                    int pageID = pageDetail.PageID;
 
-                    exportPage.PageUrl = string.Format(configParms.PageUrlFormat, pageID.ToString());
-                    exportPage.SequenceOrder = pageDetail.SequenceOrder;
-                    exportPage.AbbyyHasIllustration = (pageDetail.AbbyyHasImage == 1);
-                    exportPage.ContrastHasIllustration = (pageDetail.ContrastHasImage == 1);
-                    exportPage.PercentCoverage = pageDetail.PercentCoverage;
-                    exportPage.Height = pageDetail.Height;
-                    exportPage.Width = pageDetail.Width;
-                    //exportPage.PixelDepth = pageDetail.PixelDepth;
-                }
-
-                if (pageDetail.Top != null)
-                {
-                    ClassifierExportIllustration illustration = new ClassifierExportIllustration();
-                    illustration.Top = (int)pageDetail.Top;
-                    illustration.Bottom = (int)pageDetail.Bottom;
-                    illustration.Left = (int)pageDetail.Left;
-                    illustration.Right = (int)pageDetail.Right;
-                    exportPage.Illustrations.Add(illustration);
-                }
-
-                if (itemID != prevItemID)
-                {
-                    if (exportItem != null) export.Items.Add(exportItem);
-                    exportItem = new ClassifierExportItem();
-
-                    exportItem.ItemUrl = string.Format(configParms.ItemUrlFormat, itemID.ToString());
-                    exportItem.Barcode = pageDetail.BarCode ?? string.Empty;
-                    exportItem.Author = pageDetail.Authors.Split('|')[0] ?? string.Empty;
-                    exportItem.Title = pageDetail.ShortTitle ?? string.Empty;
-                    exportItem.PublicationDetails = pageDetail.PublicationDetails ?? string.Empty;
-                    exportItem.Volume = pageDetail.Volume ?? string.Empty;
-                    exportItem.Copyright = pageDetail.CopyrightStatus ?? string.Empty;
-                    exportItem.Date = (string.IsNullOrWhiteSpace(pageDetail.ItemYear) ? pageDetail.StartYear.ToString() : pageDetail.ItemYear);
-
-                    string[] keywords = pageDetail.Keywords.Split('|');
-                    foreach (string keyword in keywords)
+                    if (pageID != prevPageID)
                     {
-                        if (!string.IsNullOrWhiteSpace(keyword)) exportItem.Subjects.Add(keyword);
+                        if (exportPage != null) exportItem.Pages.Add(exportPage);
+                        exportPage = new ClassifierExportPage();
+
+                        exportPage.PageUrl = string.Format(configParms.PageUrlFormat, pageID.ToString());
+                        exportPage.SequenceOrder = pageDetail.SequenceOrder;
+                        exportPage.AbbyyHasIllustration = (pageDetail.AbbyyHasImage == 1);
+                        exportPage.ContrastHasIllustration = (pageDetail.ContrastHasImage == 1);
+                        exportPage.PercentCoverage = pageDetail.PercentCoverage;
+                        exportPage.Height = pageDetail.Height;
+                        exportPage.Width = pageDetail.Width;
+                        //exportPage.PixelDepth = pageDetail.PixelDepth;
                     }
 
-                    exportItem.Contributor.ContributingLibrary = pageDetail.InstitutionName ?? string.Empty;
-                    exportItem.Contributor.MemberLibrary = (pageDetail.BhlMemberLibrary == 1);
+                    if (pageDetail.Top != null)
+                    {
+                        ClassifierExportIllustration illustration = new ClassifierExportIllustration();
+                        illustration.Top = (int)pageDetail.Top;
+                        illustration.Bottom = (int)pageDetail.Bottom;
+                        illustration.Left = (int)pageDetail.Left;
+                        illustration.Right = (int)pageDetail.Right;
+                        exportPage.Illustrations.Add(illustration);
+                    }
+
+                    if (itemID != prevItemID)
+                    {
+                        if (exportItem != null) export.Items.Add(exportItem);
+                        exportItem = new ClassifierExportItem();
+
+                        exportItem.ItemUrl = string.Format(configParms.ItemUrlFormat, itemID.ToString());
+                        exportItem.Barcode = pageDetail.BarCode ?? string.Empty;
+                        exportItem.Author = pageDetail.Authors.Split('|')[0] ?? string.Empty;
+                        exportItem.Title = pageDetail.ShortTitle ?? string.Empty;
+                        exportItem.PublicationDetails = pageDetail.PublicationDetails ?? string.Empty;
+                        exportItem.Volume = pageDetail.Volume ?? string.Empty;
+                        exportItem.Copyright = pageDetail.CopyrightStatus ?? string.Empty;
+                        exportItem.Date = (string.IsNullOrWhiteSpace(pageDetail.ItemYear) ? pageDetail.StartYear.ToString() : pageDetail.ItemYear);
+
+                        string[] keywords = pageDetail.Keywords.Split('|');
+                        foreach (string keyword in keywords)
+                        {
+                            if (!string.IsNullOrWhiteSpace(keyword)) exportItem.Subjects.Add(keyword);
+                        }
+
+                        exportItem.Contributor.ContributingLibrary = pageDetail.InstitutionName ?? string.Empty;
+                        exportItem.Contributor.MemberLibrary = (pageDetail.BhlMemberLibrary == 1);
+                    }
+
+                    prevItemID = itemID;
+                    prevPageID = pageID;
                 }
 
-                prevItemID = itemID;
-                prevPageID = pageID;
-            }
+                // Add the last page/item to the export
+                if (exportItem != null)
+                {
+                    if (exportPage != null) exportItem.Pages.Add(exportPage);
+                    export.Items.Add(exportItem);
+                }
 
-            // Add the last page/item to the export
-            if (exportItem != null)
+
+                // Serialize everything to JSON
+                CreateDirectory(configParms.ClassifierOutputFolder);
+                string json = JsonConvert.SerializeObject(export);
+                string outputFileName = string.Format("{0}classifierout{1}.json", configParms.ClassifierOutputFolder, DateTime.Now.ToString("yyyyMMddHHmmss"));
+                File.WriteAllText(outputFileName, json);
+
+                // Update the status of the records that were just exported
+                UpdatePageDetailStatus(pageDetailList, PageDetailStatus.Classifying);
+
+                numRecordsExported = pageDetailList.Count();
+                LogMessage(string.Format("Done exporting {0} records for Classifier", numRecordsExported));
+            }
+            catch (Exception ex)
             {
-                if (exportPage != null) exportItem.Pages.Add(exportPage);
-                export.Items.Add(exportItem);
+                LogMessage("Error exporting for Classifier", ex);
             }
-
-
-            // Serialize everything to JSON
-            CreateDirectory(configParms.ClassifierOutputFolder);
-            string json = JsonConvert.SerializeObject(export);
-            string outputFileName = string.Format("{0}classifierout{1}.json", configParms.ClassifierOutputFolder, DateTime.Now.ToString("yyyyMMddHHmmss"));
-            File.WriteAllText(outputFileName, json);
-            
-            // Update the status of the record that were just exported
-            UpdatePageDetailStatus(pageDetailList, PageDetailStatus.Classifying);
         }
 
         /// <summary>
@@ -676,6 +724,135 @@ namespace PageDetailHarvest
         }
 
         #endregion DAL
+
+        #region Logging
+
+        private void LogMessage(string message)
+        {
+            this.LogMessage(message, false);
+        }
+
+        private void LogMessage(string message, bool isError)
+        {
+            // logger automatically adds date/time
+            if (log.IsInfoEnabled) log.Info(message);
+            Console.Write(message + "\r\n");
+
+            // If this is an error message, add it to the in-memory list of error messages
+            if (isError) errorMessages.Add(message);
+        }
+
+        private void LogMessage(string message, Exception ex)
+        {
+            // Get the innermost exception
+            while (ex.InnerException != null) ex = ex.InnerException;
+            LogMessage(message + " - " + ex.Message, true);
+        }
+
+        #endregion Logging
+
+        #region Process results
+
+        /// <summary>
+        /// Examine the results of the item/page processing and take the appropriate 
+        /// actions (log, send email, do nothing).
+        /// </summary>
+        private void ProcessResults()
+        {
+            try
+            {
+                // Send email if PDFS were deleted, or if an error occurred.
+                // Don't send an email each time a PDF is generated.
+                if (numFilesHarvested > 0 || numRecordsExported > 0 || errorMessages.Count > 0)
+                {
+                    String subject = String.Empty;
+                    String thisComputer = Environment.MachineName;
+                    if (this.errorMessages.Count == 0)
+                    {
+                        subject = "PageDetailHarvest: Harvesting on " + thisComputer + " completed successfully.";
+                    }
+                    else
+                    {
+                        subject = "PageDetailHarvest: Harvesting on " + thisComputer + " completed with errors.";
+                    }
+
+                    this.LogMessage("Sending Email....");
+                    String message = this.GetCompletionEmailBody();
+                    this.LogMessage(message);
+                    this.SendEmail(subject, message, configParms.EmailFromAddress, configParms.EmailToAddress, "");
+                }
+                else
+                {
+                    this.LogMessage("Nothing to do.  Email not sent.");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Exception sending email.", ex);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Constructs the body of an email message to be sent
+        /// </summary>
+        /// <returns>Body of email message to be sent</returns>
+        private String GetCompletionEmailBody()
+        {
+            StringBuilder sb = new StringBuilder();
+            const string endOfLine = "\r\n";
+
+            string thisComputer = Environment.MachineName;
+
+            sb.Append(string.Format("PageDetailHarvest: Harvesting on {0} complete.{1}{2}", thisComputer, endOfLine, endOfLine));
+            if (numFilesHarvested > 0)
+            {
+                sb.Append(string.Format("{0} files were harvested{1}", numFilesHarvested, endOfLine));
+            }
+            if (numRecordsExported > 0)
+            {
+                sb.Append(string.Format("{0} records were exported{1}", numRecordsExported, endOfLine));
+            }
+            if (this.errorMessages.Count > 0)
+            {
+                sb.Append(string.Format("{0} Errors Occurred {1}See the log file for details{2}{3}",
+                    this.errorMessages.Count.ToString(), endOfLine, endOfLine, endOfLine));
+                foreach (string message in errorMessages)
+                {
+                    sb.Append(message + endOfLine);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Send the specified email message 
+        /// </summary>
+        /// <param name="message">Body of the message to be sent</param>
+        private void SendEmail(String subject, String message, String fromAddress,
+            String toAddress, String ccAddresses)
+        {
+            try
+            {
+                MailMessage mailMessage = new MailMessage();
+                MailAddress mailAddress = new MailAddress(fromAddress);
+                mailMessage.From = mailAddress;
+                mailMessage.To.Add(toAddress);
+                if (ccAddresses != String.Empty) mailMessage.CC.Add(ccAddresses);
+                mailMessage.Subject = subject;
+                mailMessage.Body = message;
+
+                SmtpClient smtpClient = new SmtpClient(configParms.SMTPHost);
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                LogMessage("Email Exception.", ex);
+            }
+        }
+
+        #endregion Process results
 
     }
 }
