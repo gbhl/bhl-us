@@ -267,6 +267,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOI.name.ToString(), Models.CitationImportModel.MappedColumn.DOI.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOWNLOADURL.name.ToString(), Models.CitationImportModel.MappedColumn.DOWNLOADURL.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name.ToString(), Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.GENRE.name.ToString(), Models.CitationImportModel.MappedColumn.GENRE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISBN.name.ToString(), Models.CitationImportModel.MappedColumn.ISBN.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSN.name.ToString(), Models.CitationImportModel.MappedColumn.ISSN.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSUE.name.ToString(), Models.CitationImportModel.MappedColumn.ISSUE.name);
