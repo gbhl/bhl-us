@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportCoreDAL", "BHLImportCoreDAL\BHLImportCoreDAL.csproj", "{BBD99822-F1A3-43C1-A242-686F807DBE33}"
@@ -210,7 +212,6 @@ Global
 		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{A5E8067C-B53E-4C0D-A9F6-3480DE693727}.Release|x86.ActiveCfg = Release|Any CPU
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -223,7 +224,6 @@ Global
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{2543A23F-B305-4881-84BD-1994A5B654F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{229A9CF3-AB1D-4307-883E-66D7B6E7EBAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -286,7 +286,6 @@ Global
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{28227DF3-62E5-46B2-BABB-C21684EA7425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

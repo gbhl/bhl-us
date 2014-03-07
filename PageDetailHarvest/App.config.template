@@ -21,6 +21,10 @@
     <add key="ExtractCompleteFolder" value="ExtractComplete\"/>
     <add key="ClassifierOutputFolder" value="ClassifierOut\"/>
 
+    <add key="FtpIncomingFolder" value="FTP URL, IN THE FORM 'FTP://DOMAIN/%2F/PATH/', OR SIMPLY 'FTP://DOMAIN' IF DOWNLOADING FROM THE DEFAULT FOLDER"/>
+    <add key="FtpUsername" value="FTP USERNAME"/>
+    <add key="FtpPassword" value="FTP PASSWORD"/>
+
   </appSettings>
   <connectionStrings>
     <remove name="BHL"/>

@@ -19,6 +19,10 @@ namespace PageDetailHarvest
         public string ExtractCompleteFolder { get; set; }
         public string ClassifierOutputFolder { get; set; }
 
+        public string FtpIncomingFolder { get; set; }
+        public string FtpUsername { get; set; }
+        public string FtpPassword { get; set; }
+
         public void LoadAppConfig()
         {
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
@@ -32,6 +36,9 @@ namespace PageDetailHarvest
             ExtractLoadedFolder = ConfigurationManager.AppSettings["ExtractLoadedFolder"];
             ExtractCompleteFolder = ConfigurationManager.AppSettings["ExtractCompleteFolder"];
             ClassifierOutputFolder = ConfigurationManager.AppSettings["ClassifierOutputFolder"];
+            FtpIncomingFolder = ConfigurationManager.AppSettings["FtpIncomingFolder"];
+            FtpUsername = ConfigurationManager.AppSettings["FtpUsername"];
+            FtpPassword = ConfigurationManager.AppSettings["FtpPassword"];
         }
     }
 }

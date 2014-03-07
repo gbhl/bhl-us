@@ -50,87 +50,112 @@ namespace PageDetailHarvest
         /// </summary>
         private void HarvestExtract()
         {
+            // Get new algorithm extracts
+            GetNewExtracts();            
+
             // Read files to be processed from the input directory
             string[] inputFileNames = Directory.GetFiles(configParms.ExtractInputFolder);
 
             foreach (string inputFileName in inputFileNames)
             {
-                // Read the page details from the data file
-                List<PageDetail> pageDetailList = GetPageDetails(inputFileName);
-
-                // Get the items with incomplete pages
-                List<string> incompleteItems = (from i in pageDetailList where i.ProcessingComplete == false
-                                                group i by i.Barcode into g select g.Key.ToString()).ToList();
-
-                // Get the items with pages in error
-                List<string> errorItems = (from i in pageDetailList where i.ProcessingError == true
-                                          group i by i.Barcode into g select g.Key.ToString()).ToList();
-
-                // Get the items with pages not found in the database
-                var missingItems = (from i in pageDetailList where i.PageID == 0
-                                   group i by i.Barcode into g select g.Key.ToString()).ToList();
-
-                // Get the number of pages processed for each item
-                var pageCounts = from i in pageDetailList
-                                 group i by i.Barcode into g
-                                 select new { Barcode = g.Key, TotalPages = g.Count() };
-
-                // Get the number of pages for each item from the database
-                Dictionary<string, int> dbPageCounts = ItemSelectPageCounts();
-
-                // Accumulate a list of items where the number of pages in the database do not agree 
-                // with the number of pages being harvested
-                List<string> itemsMissingPages = new List<string>();
-                foreach (var i in pageCounts)
+                if (HasBeenProcessed(inputFileName))
                 {
-                    bool countsMatch = false;
-                    if (dbPageCounts.ContainsKey(i.Barcode)) countsMatch = (dbPageCounts[i.Barcode] == i.TotalPages);
-                    if (!countsMatch) itemsMissingPages.Add(i.Barcode);
+                    File.Delete(inputFileName);
+                    continue;
                 }
 
-
-                // Write the metadata to the database
-                foreach (PageDetail pageDetail in pageDetailList)
+                try
                 {
-                    if (incompleteItems.Contains(pageDetail.Barcode))
+                    // Read the page details from the data file
+                    List<PageDetail> pageDetailList = GetPageDetails(inputFileName);
+
+                    // Get the items with incomplete pages
+                    List<string> incompleteItems = (from i in pageDetailList
+                                                    where i.ProcessingComplete == false
+                                                    group i by i.Barcode into g
+                                                    select g.Key.ToString()).ToList();
+
+                    // Get the items with pages in error
+                    List<string> errorItems = (from i in pageDetailList
+                                               where i.ProcessingError == true
+                                               group i by i.Barcode into g
+                                               select g.Key.ToString()).ToList();
+
+                    // Get the items with pages not found in the database
+                    var missingItems = (from i in pageDetailList
+                                        where i.PageID == 0
+                                        group i by i.Barcode into g
+                                        select g.Key.ToString()).ToList();
+
+                    // Get the number of pages processed for each item
+                    var pageCounts = from i in pageDetailList
+                                     group i by i.Barcode into g
+                                     select new { Barcode = g.Key, TotalPages = g.Count() };
+
+                    // Get the number of pages for each item from the database
+                    Dictionary<string, int> dbPageCounts = ItemSelectPageCounts();
+
+                    // Accumulate a list of items where the number of pages in the database do not agree 
+                    // with the number of pages being harvested
+                    List<string> itemsMissingPages = new List<string>();
+                    foreach (var i in pageCounts)
                     {
-                        processingIncompleteList.Add(pageDetail.Id);    // This page is part of an item with incompletely processed pages
+                        bool countsMatch = false;
+                        if (dbPageCounts.ContainsKey(i.Barcode)) countsMatch = (dbPageCounts[i.Barcode] == i.TotalPages);
+                        if (!countsMatch) itemsMissingPages.Add(i.Barcode);
                     }
-                    else if (errorItems.Contains(pageDetail.Barcode))
+
+
+                    // Write the metadata to the database
+                    foreach (PageDetail pageDetail in pageDetailList)
                     {
-                        processingErrorList.Add(pageDetail.Id); // This page is part of an item with pages in error
-                    }
-                    else if (missingItems.Contains(pageDetail.Barcode))
-                    {
-                        notInDBList.Add(pageDetail.Id); // This page is part of an item with pages not found in the database
-                    }
-                    // IMPORTANT:
-                    // Only do this check if it is confirmed that there are not expected to be pages missing 
-                    // from the harvested data.  
-                    // If it *IS* valid/normal for pages to be missing from the harvested data, then this 
-                    // check is useless... and that means that in isolated cases we might end up attaching 
-                    // the image metadata to the wrong page in BHL.
-                    else if (itemsMissingPages.Contains(pageDetail.Barcode))
-                    {
-                        invalidCountList.Add(pageDetail.Id);    // This page is part of an item with invalid # of total pages
-                    }
-                    else
-                    {
-                        // Write image information to the database
-                        if (SavePageDetail(pageDetail))
-                            loadedPagesList.Add(pageDetail.Id);
+                        if (incompleteItems.Contains(pageDetail.Barcode))
+                        {
+                            processingIncompleteList.Add(pageDetail.Id);    // This page is part of an item with incompletely processed pages
+                        }
+                        else if (errorItems.Contains(pageDetail.Barcode))
+                        {
+                            processingErrorList.Add(pageDetail.Id); // This page is part of an item with pages in error
+                        }
+                        else if (missingItems.Contains(pageDetail.Barcode))
+                        {
+                            notInDBList.Add(pageDetail.Id); // This page is part of an item with pages not found in the database
+                        }
+                        // IMPORTANT:
+                        // Only do this check if it is confirmed that there are not expected to be pages missing 
+                        // from the harvested data.  
+                        // If it *IS* valid/normal for pages to be missing from the harvested data, then this 
+                        // check is useless... and that means that in isolated cases we might end up attaching 
+                        // the image metadata to the wrong page in BHL.
+                        else if (itemsMissingPages.Contains(pageDetail.Barcode))
+                        {
+                            invalidCountList.Add(pageDetail.Id);    // This page is part of an item with invalid # of total pages
+                        }
                         else
-                            errorSaveList.Add(pageDetail.Id);
+                        {
+                            // Write image information to the database
+                            if (SavePageDetail(pageDetail))
+                                loadedPagesList.Add(pageDetail.Id);
+                            else
+                                errorSaveList.Add(pageDetail.Id);
+                        }
                     }
+
+                    // Log the results of the harvest
+                    LogResults(inputFileName);
+
+                    // Move the file to the "Complete" folder
+                    CreateDirectory(configParms.ExtractCompleteFolder);
+                    File.Move(inputFileName, configParms.ExtractCompleteFolder + Path.GetFileName(inputFileName));
                 }
-
-                // Log the results of the harvest
-                LogResults(inputFileName);
-
-                // Move the file to the "Complete" folder
-                CreateDirectory(configParms.ExtractCompleteFolder);
-                File.Move(inputFileName, configParms.ExtractCompleteFolder + Path.GetFileName(inputFileName));
-                
+                catch
+                {
+                    // Move the file to the Error folder
+                    CreateDirectory(configParms.ExtractErrorFolder);
+                    string errorFileName = configParms.ExtractErrorFolder + Path.GetFileName(inputFileName);
+                    if (File.Exists(errorFileName)) File.Delete(errorFileName);
+                    File.Move(inputFileName, errorFileName);
+                }
             }
         }
 
@@ -221,6 +246,26 @@ namespace PageDetailHarvest
             
             // Update the status of the record that were just exported
             UpdatePageDetailStatus(pageDetailList, PageDetailStatus.Classifying);
+        }
+
+        /// <summary>
+        /// Look for new algorithm extracts.  If any are found, move them to the Extract Input folder.
+        /// </summary>
+        private void GetNewExtracts()
+        {
+            FtpFileSystemWatcher ftp = new FtpFileSystemWatcher(configParms.FtpIncomingFolder, configParms.ExtractInputFolder,
+                1, configParms.FtpUsername, configParms.FtpPassword, true, true);
+            ftp.Download();
+        }
+
+        /// <summary>
+        /// Check the Extract Complete folder to see if a file with this name has already been processed.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private bool HasBeenProcessed(string fileName)
+        {
+            return File.Exists(configParms.ExtractCompleteFolder + Path.GetFileName(fileName));
         }
 
         /// <summary>
