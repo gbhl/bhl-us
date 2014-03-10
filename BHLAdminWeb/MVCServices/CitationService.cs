@@ -258,6 +258,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORLASTNAME.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORLASTNAME.name);
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORSTARTDATE.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORSTARTDATE.name);
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORTYPE.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORTYPE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLETITLE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLETITLE.name);

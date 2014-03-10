@@ -174,6 +174,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             public static readonly MappedColumn AUTHORNAMES = new MappedColumn(4, "Author Name(s)");
             //public static readonly MappedColumn AUTHORSTARTDATE = new MappedColumn(5, "Author Start Date");
             //public static readonly MappedColumn AUTHORTYPE = new MappedColumn(6, "Author Type");
+            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(6, "Article Page Range");
             public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(7, "Article End Page");
             public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(8, "Article Start Page");
             public static readonly MappedColumn ARTICLETITLE = new MappedColumn(9, "Article Title");
@@ -767,6 +768,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 // Accumulate all of the data to be saved
                 CitationImportColumn column = this.Columns[x];
 
+                if (column.MappedColumn == MappedColumn.ARTICLEPAGERANGE.name) citation.PageRange = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEENDPAGE.name) citation.EndPage = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLESTARTPAGE.name) citation.StartPage = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLETITLE.name) articleTitle = row[x];
