@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE import.ImportRecordSelectByImportFileID
+﻿CREATE PROCEDURE [import].[ImportRecordSelectByImportFileID]
 
 @ImportFileID int,
 @NumRows int,
@@ -38,7 +38,10 @@ SELECT TOP (@NumRows)
 		t.ImportRecordID,
 		r.ImportRecordStatusID, 
 		s.StatusName,
-		r.Genre,
+		CASE 
+		WHEN g.SegmentGenreID IS NULL AND r.Genre NOT IN ('Book', 'BookJournal', 'Journal', 'Monograph', 'Serial') 
+		THEN 'Article' 
+		ELSE r.Genre END AS Genre,
 		r.Title, 
 		r.JournalTitle, 
 		r.Volume, 
@@ -48,6 +51,8 @@ SELECT TOP (@NumRows)
 		r.Year
 FROM	#tmpRecord t INNER JOIN import.ImportRecord r 
 			ON t.ImportRecordID = r.ImportRecordID
+		LEFT JOIN dbo.SegmentGenre g
+			ON r.Genre = g.GenreName
 		INNER JOIN import.ImportRecordStatus s
 			ON r.ImportRecordStatusID = s.ImportRecordStatusID
 WHERE	t.RowNumber >= @StartRow
