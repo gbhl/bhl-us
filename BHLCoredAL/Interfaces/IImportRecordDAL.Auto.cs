@@ -1,5 +1,5 @@
 	
-// Generated 1/15/2014 9:26:48 AM
+// Generated 3/10/2014 11:37:20 AM
 // Do not modify the contents of this code file.
 // Interface IImportRecordDAL based upon ImportRecord.
 
@@ -44,6 +44,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -84,6 +85,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -97,7 +99,9 @@ namespace MOBOT.BHL.DAL
 
 		ImportRecord ImportRecordUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecord value);
 
-        void ImportRecordSave(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecord citation, int userID);
+		CustomDataAccessStatus<ImportRecord> ImportRecordManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecord value, int userID);
+
+		
 	}
 }
 // end of source generation

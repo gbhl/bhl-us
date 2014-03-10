@@ -22,6 +22,7 @@
 	CopyrightStatus nvarchar(max) NOT NULL CONSTRAINT DF_ImportRecord_CopyrightStatus DEFAULT(''),
 	License nvarchar(max) NOT NULL CONSTRAINT DF_ImportRecord_License DEFAULT(''),
 	LicenseUrl nvarchar(200) NOT NULL CONSTRAINT DF_ImportRecord_LicenseUrl DEFAULT(''),
+	PageRange nvarchar(50) NOT NULL CONSTRAINT DF_ImportRecord_PageRange DEFAULT(''),
 	StartPage nvarchar(20) NOT NULL CONSTRAINT DF_ImportRecord_StartPage DEFAULT(''),
 	EndPage nvarchar(20) NOT NULL CONSTRAINT DF_ImportRecord_EndPage DEFAULT(''),
 	Url nvarchar(200) NOT NULL CONSTRAINT DF_ImportRecord_Url DEFAULT(''),

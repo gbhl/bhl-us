@@ -1,5 +1,5 @@
 
-// Generated 1/15/2014 9:26:48 AM
+// Generated 3/10/2014 11:37:20 AM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecord is based upon ImportRecord.
 
@@ -67,6 +67,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="copyrightStatus"></param>
 		/// <param name="license"></param>
 		/// <param name="licenseUrl"></param>
+		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
 		/// <param name="url"></param>
@@ -102,6 +103,7 @@ namespace MOBOT.BHL.DataObjects
 			string copyrightStatus, 
 			string license, 
 			string licenseUrl, 
+			string pageRange, 
 			string startPage, 
 			string endPage, 
 			string url, 
@@ -138,6 +140,7 @@ namespace MOBOT.BHL.DataObjects
 			CopyrightStatus = copyrightStatus;
 			License = license;
 			LicenseUrl = licenseUrl;
+			PageRange = pageRange;
 			StartPage = startPage;
 			EndPage = endPage;
 			Url = url;
@@ -285,6 +288,11 @@ namespace MOBOT.BHL.DataObjects
 					case "LicenseUrl" :
 					{
 						_LicenseUrl = (string)column.Value;
+						break;
+					}
+					case "PageRange" :
+					{
+						_PageRange = (string)column.Value;
 						break;
 					}
 					case "StartPage" :
@@ -974,6 +982,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion LicenseUrl
 		
+		#region PageRange
+		
+		private string _PageRange = string.Empty;
+		
+		/// <summary>
+		/// Column: PageRange;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("PageRange", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=50)]
+		public string PageRange
+		{
+			get
+			{
+				return _PageRange;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_PageRange != value)
+				{
+					_PageRange = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PageRange
+		
 		#region StartPage
 		
 		private string _StartPage = string.Empty;
@@ -982,7 +1018,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: StartPage;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("StartPage", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=20)]
+		[ColumnDefinition("StartPage", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=20)]
 		public string StartPage
 		{
 			get
@@ -1010,7 +1046,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: EndPage;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("EndPage", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=20)]
+		[ColumnDefinition("EndPage", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=20)]
 		public string EndPage
 		{
 			get
@@ -1038,7 +1074,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Url;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("Url", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=200)]
+		[ColumnDefinition("Url", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=200)]
 		public string Url
 		{
 			get
@@ -1066,7 +1102,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: DownloadUrl;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=200)]
+		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=200)]
 		public string DownloadUrl
 		{
 			get
@@ -1094,7 +1130,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: DOI;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("DOI", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=125)]
+		[ColumnDefinition("DOI", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=125)]
 		public string DOI
 		{
 			get
@@ -1122,7 +1158,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ISSN;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("ISSN", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=125)]
+		[ColumnDefinition("ISSN", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=125)]
 		public string ISSN
 		{
 			get
@@ -1150,7 +1186,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ISBN;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("ISBN", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=125)]
+		[ColumnDefinition("ISBN", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=125)]
 		public string ISBN
 		{
 			get
@@ -1178,7 +1214,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: OCLC;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("OCLC", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=125)]
+		[ColumnDefinition("OCLC", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=125)]
 		public string OCLC
 		{
 			get
@@ -1206,7 +1242,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LCCN;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("LCCN", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=125)]
+		[ColumnDefinition("LCCN", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=125)]
 		public string LCCN
 		{
 			get
@@ -1234,7 +1270,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=32)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=33)]
 		public DateTime CreationDate
 		{
 			get
@@ -1261,7 +1297,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=33)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=34)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -1288,7 +1324,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=34, NumericPrecision=10)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=35, NumericPrecision=10)]
 		public int CreationUserID
 		{
 			get
@@ -1315,7 +1351,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=35, NumericPrecision=10)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=36, NumericPrecision=10)]
 		public int LastModifiedUserID
 		{
 			get
@@ -1399,6 +1435,7 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.CopyrightStatus) == GetComparisonString(CopyrightStatus) &&
 					GetComparisonString(o.License) == GetComparisonString(License) &&
 					GetComparisonString(o.LicenseUrl) == GetComparisonString(LicenseUrl) &&
+					GetComparisonString(o.PageRange) == GetComparisonString(PageRange) &&
 					GetComparisonString(o.StartPage) == GetComparisonString(StartPage) &&
 					GetComparisonString(o.EndPage) == GetComparisonString(EndPage) &&
 					GetComparisonString(o.Url) == GetComparisonString(Url) &&
@@ -1534,6 +1571,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string CopyrightStatus = "CopyrightStatus";	
 			public const string License = "License";	
 			public const string LicenseUrl = "LicenseUrl";	
+			public const string PageRange = "PageRange";	
 			public const string StartPage = "StartPage";	
 			public const string EndPage = "EndPage";	
 			public const string Url = "Url";	

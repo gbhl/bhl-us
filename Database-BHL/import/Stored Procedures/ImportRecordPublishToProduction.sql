@@ -301,7 +301,9 @@ BEGIN TRY
 				Series,
 				Issue,
 				[Year] AS [Date],
-				CASE WHEN StartPage <> '' THEN StartPage + '-' + EndPage ELSE EndPage END AS PageRange,
+				CASE WHEN PageRange <> '' THEN PageRange 
+					ELSE CASE WHEN StartPage <> '' THEN StartPage + '-' + EndPage ELSE EndPage END 
+					END AS PageRange,
 				StartPage AS StartPageNumber,
 				EndPage AS EndPageNumber,
 				Url,

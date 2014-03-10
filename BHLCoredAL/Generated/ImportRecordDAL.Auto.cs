@@ -1,5 +1,5 @@
 
-// Generated 1/15/2014 9:26:48 AM
+// Generated 3/10/2014 11:37:20 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ImportRecordDAL is based upon ImportRecord.
@@ -119,8 +119,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectAuto", connection, transaction,
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectAuto", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID)))
 			{
 				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
@@ -157,6 +157,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightStatus"></param>
 		/// <param name="license"></param>
 		/// <param name="licenseUrl"></param>
+		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
 		/// <param name="url"></param>
@@ -193,6 +194,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -205,7 +207,7 @@ namespace MOBOT.BHL.DAL
 			int creationUserID,
 			int lastModifiedUserID)
 		{
-			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID );
+			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -235,6 +237,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightStatus"></param>
 		/// <param name="license"></param>
 		/// <param name="licenseUrl"></param>
+		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
 		/// <param name="url"></param>
@@ -272,6 +275,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -286,8 +290,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordInsertAuto", connection, transaction, 
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("ImportRecordID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
@@ -310,6 +314,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("License", SqlDbType.NVarChar, 1073741823, false, license),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
+					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
@@ -391,6 +396,7 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightStatus,
 				value.License,
 				value.LicenseUrl,
+				value.PageRange,
 				value.StartPage,
 				value.EndPage,
 				value.Url,
@@ -439,8 +445,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordDeleteAuto", connection, transaction, 
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordDeleteAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -493,6 +499,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightStatus"></param>
 		/// <param name="license"></param>
 		/// <param name="licenseUrl"></param>
+		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
 		/// <param name="url"></param>
@@ -529,6 +536,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -540,7 +548,7 @@ namespace MOBOT.BHL.DAL
 			string lCCN,
 			int lastModifiedUserID)
 		{
-			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID);
+			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -571,6 +579,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightStatus"></param>
 		/// <param name="license"></param>
 		/// <param name="licenseUrl"></param>
+		/// <param name="pageRange"></param>
 		/// <param name="startPage"></param>
 		/// <param name="endPage"></param>
 		/// <param name="url"></param>
@@ -608,6 +617,7 @@ namespace MOBOT.BHL.DAL
 			string copyrightStatus,
 			string license,
 			string licenseUrl,
+			string pageRange,
 			string startPage,
 			string endPage,
 			string url,
@@ -621,8 +631,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-			
-			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordUpdateAuto", connection, transaction, 
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
@@ -645,6 +655,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("License", SqlDbType.NVarChar, 1073741823, false, license),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
+					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, false, startPage),
 					CustomSqlHelper.CreateInputParameter("EndPage", SqlDbType.NVarChar, 20, false, endPage),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
@@ -726,6 +737,7 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightStatus,
 				value.License,
 				value.LicenseUrl,
+				value.PageRange,
 				value.StartPage,
 				value.EndPage,
 				value.Url,
@@ -801,6 +813,7 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightStatus,
 						value.License,
 						value.LicenseUrl,
+						value.PageRange,
 						value.StartPage,
 						value.EndPage,
 						value.Url,
@@ -859,6 +872,7 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightStatus,
 						value.License,
 						value.LicenseUrl,
+						value.PageRange,
 						value.StartPage,
 						value.EndPage,
 						value.Url,
