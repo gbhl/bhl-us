@@ -17,7 +17,8 @@
 				"sAjaxSource": '/CitationImport/GetRecords?importFileID=@Model.ImportFileID'
 					
 				,"aoColumns": [
-					{"bVisible": false}, /* ID column */
+					{ "bVisible": false }, /* ID column */
+                    { "bSortable": false },
 					null,
 					{ "bSortable": false },
 					{ "bSortable": false },
@@ -69,8 +70,6 @@
     <div class="importRecordStatus" style="display:none">@Html.Raw(ViewBag.ImportRecordStatuses)</div>
 
     <p style="color:red">Put instructions for using this page here!!!</p>
-    <p style="color:red">Probably should show which Genre (Title/Item or Segment) will be applied to each row.</p>
-    <p style="color:red">TODO: FINISH IMPORT OPERATION</p>
     <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
 
     <div style="margin-bottom:20px">
@@ -82,8 +81,9 @@
 	    <thead>
 		    <tr>
 			    <th></th>
-			    <th width="40%">Title</th>
-			    <th width="30%">Journal</th>
+                <th width="10%">Genre</th>
+			    <th width="35%">Title</th>
+			    <th width="25%">Journal</th>
 			    <th width="5%">Volume</th>
 			    <th width="5%">Series</th>
 			    <th width="5%">Issue</th>
@@ -97,6 +97,7 @@
 	    <tfoot>
 		    <tr>
 			    <th></th>
+                <th>Genre</th>
 			    <th>Title</th>
 			    <th>Journal</th>
 			    <th>Volume</th>

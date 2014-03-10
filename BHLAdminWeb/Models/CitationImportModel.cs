@@ -364,8 +364,9 @@ namespace MOBOT.BHL.AdminWeb.Models
             string[][] aaData = new string[records.Count][];
             for(int x = 0; x < records.Count; x++)
             {
-                aaData[x] = new string[8]{
+                aaData[x] = new string[9]{
                     records[x].ImportRecordID.ToString(),
+                    records[x].Genre,
                     records[x].Title,
                     records[x].JournalTitle,
                     records[x].Volume,
