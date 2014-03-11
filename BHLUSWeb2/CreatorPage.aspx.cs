@@ -29,6 +29,7 @@ namespace MOBOT.BHL.Web2
             // Author = bhlProvider.AuthorSelectAuto(creatorId);
             Author = bhlProvider.AuthorSelectWithNameByAuthorId(creatorId);
             if (Author == null) Response.Redirect("~/authornotfound");
+            if (Author.RedirectAuthorID != null) Response.Redirect("~/creator/" + Author.RedirectAuthorID);
 
             main.Page.Title = string.Format("{0} - Biodiversity Heritage Library", Author.FullName);
 
