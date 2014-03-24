@@ -28,6 +28,7 @@
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
+    <add key="MonitorThreshold" value="15"/>
 
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
