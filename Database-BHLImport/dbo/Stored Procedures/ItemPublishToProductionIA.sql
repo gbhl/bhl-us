@@ -192,7 +192,9 @@ BEGIN TRY
 		[MARCCreator_b] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_c] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_d] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
+		[MARCCreator_e] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_q] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
+		[MARCCreator_t] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[CreatorRoleTypeID] [int] NOT NULL,
 		[ExternalCreationDate] [datetime] NULL,
 		[ExternalLastModifiedDate] [datetime] NULL,
@@ -552,7 +554,9 @@ BEGIN TRY
 			tc.[MARCCreator_b],
 			tc.[MARCCreator_c],
 			tc.[MARCCreator_d],
+			tc.[MARCCreator_e],
 			tc.[MARCCreator_q],
+			tc.[MARCCreator_t],
 			tc.[CreatorRoleTypeID],
 			tc.[ExternalCreationDate],
 			tc.[ExternalLastModifiedDate],
@@ -1072,21 +1076,26 @@ BEGIN TRY
 		DECLARE @DOB nvarchar(50)
 		DECLARE @DOD nvarchar(50)
 		DECLARE @MARCDataFieldTag nvarchar(3)
+		DECLARE @CreatorName nvarchar(255)
 		DECLARE @MARCCreator_b nvarchar(450)
 		DECLARE @MARCCreator_c nvarchar(450)
+		DECLARE @MARCCreator_d nvarchar(450)
+		DECLARE @MARCCreator_q nvarchar(450)
 		DECLARE @ExternalCreationDate datetime
 		DECLARE @ExternalLastModifiedDate datetime
 		SET @CreatorInsert = 0
 
 		DECLARE	curInsert CURSOR 
-		FOR SELECT	CreatorID, MARCDataFieldTag, DOB, DOD, MarcCreator_b, 
-					MarcCreator_c, ExternalCreationDate, ExternalLastModifiedDate 
+		FOR SELECT DISTINCT
+					MIN(MARCDataFieldTag), DOB, DOD, CreatorName, MarcCreator_b, 
+					MarcCreator_c, MarcCreator_d, MarcCreator_q
 			FROM	#tmpCreator
 			WHERE	ProductionAuthorID IS NULL
+			GROUP BY DOB, DOD, CreatorName, MarcCreator_b, MarcCreator_c, MarcCreator_d, MarcCreator_q
 		
 		OPEN curInsert
-		FETCH NEXT FROM curInsert INTO @CreatorID, @MARCDataFieldTag, @DOB, @DOD, 
-			@MarcCreator_b, @MarcCreator_c, @ExternalCreationDate, @ExternalLastModifiedDate
+		FETCH NEXT FROM curInsert INTO @MARCDataFieldTag, @DOB, @DOD, @CreatorName,
+			@MarcCreator_b, @MarcCreator_c, @MarcCreator_d, @MarcCreator_q
 
 		WHILE (@@fetch_status <> -1)
 		BEGIN
@@ -1106,8 +1115,8 @@ BEGIN TRY
 						CASE WHEN @MARCDataFieldTag IN ('110', '710') THEN ISNULL(@MarcCreator_b, '') ELSE '' END,
 						CASE WHEN @MARCDataFieldTag IN ('110', '710', '111', '711') THEN ISNULL(@MarcCreator_c, '') ELSE '' END,
 						1,
-						@ExternalCreationDate,
-						@ExternalLastModifiedDate,
+						GETDATE(),
+						GETDATE(),
 						1, 1)
 						
 				-- Save the ID of the newly inserted author record
@@ -1115,12 +1124,17 @@ BEGIN TRY
 				
 				UPDATE	#tmpCreator
 				SET		ProductionAuthorID = @NewAuthorID
-				WHERE	CreatorID = @CreatorID
+				WHERE	ISNULL(CreatorName, '') = ISNULL(@CreatorName, '')
+				AND		ISNULL(MARCCreator_b, '') = ISNULL(@MarcCreator_b, '')
+				AND		ISNULL(MARCCreator_c, '') = ISNULL(@MarcCreator_c, '')
+				AND		ISNULL(MARCCreator_d, '') = ISNULL(@MarcCreator_d, '')
+				AND		ISNULL(MARCCreator_q, '') = ISNULL(@MarcCreator_q, '')
 
 				SET @CreatorInsert = @CreatorInsert + 1
 			END
-			FETCH NEXT FROM curInsert INTO @CreatorID, @MARCDataFieldTag, @DOB, @DOD, 
-				@MarcCreator_b, @MarcCreator_c, @ExternalCreationDate, @ExternalLastModifiedDate
+
+			FETCH NEXT FROM curInsert INTO @MARCDataFieldTag, @DOB, @DOD, @CreatorName,
+				@MarcCreator_b, @MarcCreator_c, @MarcCreator_d, @MarcCreator_q
 		END
 
 		CLOSE curInsert
@@ -1142,12 +1156,13 @@ BEGIN TRY
 		-- Insert new AuthorName records into the production database
 		INSERT INTO dbo.BHLAuthorName (AuthorID, FullName, FullerForm, IsPreferredName,
 			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
-		SELECT	ProductionAuthorID,
+		SELECT DISTINCT
+				ProductionAuthorID,
 				CreatorName,
 				CASE WHEN MARCDataFieldTag IN ('100', '700') THEN ISNULL(MarcCreator_q, '') ELSE '' END AS FullerForm,
 				1,
-				ExternalCreationDate,
-				ExternalLastModifiedDate,
+				GETDATE(),
+				GETDATE(),
 				1, 1
 		FROM	#tmpCreator
 		WHERE	ProductionAuthorNameID IS NULL
@@ -1155,11 +1170,17 @@ BEGIN TRY
 		-- =======================================================================
 
 		-- Insert new TitleAuthor records into the production database
-		INSERT INTO dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, CreationDate,
-			LastModifiedDate, CreationUserID, LastModifiedUserID)
+		INSERT INTO dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, Relationship, 
+			TitleOfWork, CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
 		SELECT	t.TitleID, 
 				tmpC.ProductionAuthorID, 
 				tmpC.CreatorRoleTypeID,
+				ISNULL(CASE WHEN RIGHT(MARCCreator_e, 1) = '.' 
+					THEN LEFT(MARCCreator_e, LEN(MARCCreator_e) - 1) 
+					ELSE MARCCreator_e END, ''),
+				ISNULL(CASE WHEN RIGHT(MARCCreator_t, 1) = '.' 
+					THEN LEFT(MARCCreator_t, LEN(MARCCreator_t) - 1) 
+					ELSE MARCCreator_t END, ''),
 				tmpC.ExternalCreationDate,
 				tmpC.ExternalLastModifiedDate,
 				tmpC.ExternalCreationUser,
@@ -1787,4 +1808,3 @@ END CATCH
 SET NOCOUNT OFF
 
 END
-

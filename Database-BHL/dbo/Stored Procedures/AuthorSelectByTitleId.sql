@@ -17,6 +17,8 @@ SELECT	a.AuthorID,
 		a.Location,
 		n.FullerForm,
 		ta.AuthorRoleID,
+		ta.Relationship,
+		ta.TitleOfWork,
 		r.MARCDataFieldTag
 FROM	dbo.Author a INNER JOIN dbo.AuthorName n
 			ON a.AuthorID = n.AuthorID
@@ -29,7 +31,6 @@ FROM	dbo.Author a INNER JOIN dbo.AuthorName n
 WHERE	t.TitleID = @TitleID
 AND		a.IsActive = 1
 AND		n.IsPreferredName = 1
-ORDER BY n.FullName + a.Numeration + a.Unit + a.Title + a.Location + n.FullerForm
+ORDER BY MARCDataFieldTag, n.FullName + a.Numeration + a.Unit + a.Title + a.Location + n.FullerForm + ta.Relationship + ta.TitleOfWork
 
-
-
+GO

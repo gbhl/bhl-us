@@ -12,7 +12,9 @@ SELECT	TA.TitleAuthorID,
 		TA.AuthorID,
 		N.FullName,
 		TA.AuthorRoleID,
-		R.RoleDescription 
+		R.RoleDescription,
+		TA.Relationship,
+		TA.TitleOfWork 
 FROM	dbo.TitleAuthor TA
 		INNER JOIN AuthorRole R ON TA.AuthorRoleID = R.AuthorRoleID
 		INNER JOIN Author A ON A.AuthorID = TA.AuthorID
@@ -20,7 +22,5 @@ FROM	dbo.TitleAuthor TA
 WHERE	TA.TitleID = @TitleID
 AND		A.IsActive = 1
 AND		N.IsPreferredName = 1
-ORDER BY N.FullName
-
-
+ORDER BY N.FullName, R.MARCDataFieldTag
 

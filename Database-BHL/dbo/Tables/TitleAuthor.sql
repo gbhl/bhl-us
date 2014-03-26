@@ -3,6 +3,8 @@
     [TitleID]            INT      NOT NULL,
     [AuthorID]           INT      NOT NULL,
     [AuthorRoleID]       INT      NULL,
+	[Relationship]       NVARCHAR(150)  NOT NULL CONSTRAINT [DF_TitleAuthor_Relationship] DEFAULT(''),
+	[TitleOfWork]        NVARCHAR(500)  NOT NULL CONSTRAINT [DF_TitleAuthor_TitleOfWork] DEFAULT(''),
     [CreationDate]       DATETIME CONSTRAINT [DF_TitleAuthor_CreationDate] DEFAULT (getdate()) NOT NULL,
     [LastModifiedDate]   DATETIME CONSTRAINT [DF_TitleAuthor_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
     [CreationUserID]     INT      CONSTRAINT [DF_TitleAuthor_CreationUserID] DEFAULT ((1)) NULL,

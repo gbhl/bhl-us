@@ -10,6 +10,8 @@ namespace MOBOT.BHL.DataObjects
 		int _titleID;
 		string _fullTitle;
 		string _roleDescription;
+        string _relationship;
+        string _titleOfWork;
 
 		public int TitleID
 		{
@@ -28,6 +30,18 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._roleDescription; }
 			set { this._roleDescription = value; }
 		}
+
+        public string Relationship
+        {
+            get { return this._relationship; }
+            set { this._relationship = value; }
+        }
+
+        public string TitleOfWork
+        {
+            get { return this._titleOfWork; }
+            set { this._titleOfWork = value; }
+        }
 
 		
 		#region ISetValues Members
@@ -53,6 +67,16 @@ namespace MOBOT.BHL.DataObjects
 							RoleDescription = (string)column.Value;
 							break;
 						}
+                    case "Relationship":
+                        {
+                            Relationship = (string)column.Value;
+                            break;
+                        }
+                    case "TitleOfWork":
+                        {
+                            TitleOfWork = (string)column.Value;
+                            break;
+                        }
 				}
 			}
 		}

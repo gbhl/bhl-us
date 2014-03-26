@@ -1,6 +1,6 @@
 ﻿
 -- TitleAuthorInsertAuto PROCEDURE
--- Generated 5/29/2012 12:59:27 PM
+-- Generated 3/27/2014 11:56:11 AM
 -- Do not modify the contents of this procedure.
 -- Insert Procedure for TitleAuthor
 
@@ -10,6 +10,8 @@ CREATE PROCEDURE TitleAuthorInsertAuto
 @TitleID INT,
 @AuthorID INT,
 @AuthorRoleID INT = null,
+@Relationship NVARCHAR(150),
+@TitleOfWork NVARCHAR(500),
 @CreationUserID INT = null,
 @LastModifiedUserID INT = null
 
@@ -22,6 +24,8 @@ INSERT INTO [dbo].[TitleAuthor]
 	[TitleID],
 	[AuthorID],
 	[AuthorRoleID],
+	[Relationship],
+	[TitleOfWork],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
@@ -32,6 +36,8 @@ VALUES
 	@TitleID,
 	@AuthorID,
 	@AuthorRoleID,
+	@Relationship,
+	@TitleOfWork,
 	getdate(),
 	getdate(),
 	@CreationUserID,
@@ -53,6 +59,8 @@ ELSE BEGIN
 		[TitleID],
 		[AuthorID],
 		[AuthorRoleID],
+		[Relationship],
+		[TitleOfWork],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
@@ -65,5 +73,4 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
-
 

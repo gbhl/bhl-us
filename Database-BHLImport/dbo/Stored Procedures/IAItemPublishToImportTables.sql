@@ -208,7 +208,10 @@ BEGIN TRY
 		[MARCCreator_b] [nvarchar](450) NULL,
 		[MARCCreator_c] [nvarchar](450) NULL,
 		[MARCCreator_d] [nvarchar](450) NULL,
+		[MARCCreator_e] [nvarchar](450) NULL,
 		[MARCCreator_q] [nvarchar](450) NULL,
+		[MARCCreator_t] [nvarchar](450) NULL,
+		[MARCCreator_5] [nvarchar](450) NULL,
 		[MARCCreator_Full] [nvarchar](450) NULL
 		)
 
@@ -1142,6 +1145,15 @@ BEGIN TRY
 				AND t.MarcDataFieldTag = m.DataFieldTag
 				AND m.Code = 'd'
 
+	-- Get creator MARC subfield 'e'
+	UPDATE	#tmpCreator
+	SET		MARCCreator_e = m.SubFieldValue
+	FROM	#tmpCreator t INNER JOIN dbo.vwIAMarcDataField m
+				ON t.ItemID = m.ItemID
+				AND t.MarcDataFieldID = m.MarcDataFieldID
+				AND t.MarcDataFieldTag = m.DataFieldTag
+				AND m.Code = 'e'
+
 	-- Get creator MARC subfield 'q'
 	UPDATE	#tmpCreator
 	SET		MARCCreator_q = m.SubFieldValue
@@ -1150,6 +1162,24 @@ BEGIN TRY
 				AND t.MarcDataFieldID = m.MarcDataFieldID
 				AND t.MarcDataFieldTag = m.DataFieldTag
 				AND m.Code = 'q'
+
+	-- Get creator MARC subfield 't'
+	UPDATE	#tmpCreator
+	SET		MARCCreator_t = m.SubFieldValue
+	FROM	#tmpCreator t INNER JOIN dbo.vwIAMarcDataField m
+				ON t.ItemID = m.ItemID
+				AND t.MarcDataFieldID = m.MarcDataFieldID
+				AND t.MarcDataFieldTag = m.DataFieldTag
+				AND m.Code = 't'
+
+	-- Get creator MARC subfield '5'
+	UPDATE	#tmpCreator
+	SET		MARCCreator_5 = m.SubFieldValue
+	FROM	#tmpCreator t INNER JOIN dbo.vwIAMarcDataField m
+				ON t.ItemID = m.ItemID
+				AND t.MarcDataFieldID = m.MarcDataFieldID
+				AND t.MarcDataFieldTag = m.DataFieldTag
+				AND m.Code = '5'
 
 	-- Get the creator DOB and DOD values
 	SELECT	ItemID,
@@ -1616,16 +1646,19 @@ BEGIN TRY
 					AND ISNULL(t.MARCCreator_d, '') = ISNULL(c.MARCCreator_d, '')
 					AND ISNULL(t.MARCCreator_q, '') = ISNULL(c.MARCCreator_q, '')
 		WHERE	c.CreatorID IS NULL
+		AND		t.MARCCreator_5 IS NULL
 
 		-- Insert new title_creator records into the import tables
 		INSERT INTO dbo.Title_Creator (CreatorName, MARCCreator_a, 
-			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_q,
-			CreatorRoleTypeID, ImportStatusID, ImportSourceID, ImportKey)
+			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_e,
+			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, 
+			ImportStatusID, ImportSourceID, ImportKey)
 		SELECT	c.CreatorName, c.MARCCreator_a, c.MARCCreator_b, 
-				c.MARCCreator_c, c.MARCCreator_d, c.MARCCreator_q, 
-				c.CreatorRoleTypeID, 10, @ImportSourceID, 
-				CONVERT(nvarchar(50), c.ItemID)
+				c.MARCCreator_c, c.MARCCreator_d, c.MARCCreator_e,
+				c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
+				10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
 		FROM	#tmpCreator c
+		WHERE	c.MARCCreator_5 IS NULL
 
 		-- =======================================================================
 

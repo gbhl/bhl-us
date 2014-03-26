@@ -478,6 +478,8 @@ Creator/Unit					Corporate unit											100/110/111/700/710/711/720b
 Creator/Title					Personal title											100/110/111/700/710/711/720c
 Creator/Location				Corporate/meeting location								100/110/111/700/710/711/720c
 Creator/FullerForm				Fuller form of name										100/700q
+Creator/Relationship			Relationship of person to work (editor, illustrator)	700e
+Creator/TitleOfWork				Title page title or serial title related to person		700t
 Creator/Dates					Date of birth/death or Corp/Meeting dates				100/110/111/700/710/711/720d
 Creator/CreatorUrl				BHL address for the author								NA
 Subject/SubjectText				Subject term											Various 6XX fields.  Most BHL 

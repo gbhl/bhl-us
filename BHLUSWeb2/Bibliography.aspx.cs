@@ -26,6 +26,8 @@ namespace MOBOT.BHL.Web2
         protected IList<Title_Identifier> TitleIdentifiers { get; set; }
         protected IList<Author> Authors { get; set; }
         protected IList<Author> AdditionalAuthors { get; set; }
+        protected IList<Author> AuthorsDetail { get; set; }
+        protected IList<Author> AdditionalAuthorsDetail { get; set; }
         protected IList<BibliographyItem> BibliographyItems { get; set; }
         protected IList<Collection> Collections { get; set; }
 
@@ -97,16 +99,21 @@ namespace MOBOT.BHL.Web2
 
             // Assign Authors
             Authors = new List<Author>();
+            AuthorsDetail = new List<Author>();
             AdditionalAuthors = new List<Author>();
+            AdditionalAuthorsDetail = new List<Author>();
             foreach (Author author in bhlProvider.AuthorSelectByTitleId(titleId))
             {
                 if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
                 {
-                    Authors.Add(author);
+                    AuthorsDetail.Add(author);
+                    if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship)) Authors.Add(author);
                 }
                 else
                 {
-                    AdditionalAuthors.Add(author);
+                    AdditionalAuthorsDetail.Add(author);
+                    if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship) &&
+                        !ListContainsAuthor(AdditionalAuthors, author.AuthorID, author.Relationship)) AdditionalAuthors.Add(author);
                 }
             }
 
@@ -214,6 +221,22 @@ namespace MOBOT.BHL.Web2
             {
                 litEndNote.Text = string.Empty;
             }
+        }
+
+        private bool ListContainsAuthor(IList<Author> list, int authorID, string relationship)
+        {
+            bool containsAuthor = false;
+
+            foreach (Author author in list)
+            {
+                if (author.AuthorID == authorID && author.Relationship == relationship)
+                {
+                    containsAuthor = true;
+                    break;
+                }
+            }
+
+            return containsAuthor;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 -- TitleAuthorUpdateAuto PROCEDURE
--- Generated 5/29/2012 12:59:27 PM
+-- Generated 3/27/2014 11:56:11 AM
 -- Do not modify the contents of this procedure.
 -- Update Procedure for TitleAuthor
 
@@ -10,6 +10,8 @@ CREATE PROCEDURE TitleAuthorUpdateAuto
 @TitleID INT,
 @AuthorID INT,
 @AuthorRoleID INT,
+@Relationship NVARCHAR(150),
+@TitleOfWork NVARCHAR(500),
 @LastModifiedUserID INT
 
 AS 
@@ -23,6 +25,8 @@ SET
 	[TitleID] = @TitleID,
 	[AuthorID] = @AuthorID,
 	[AuthorRoleID] = @AuthorRoleID,
+	[Relationship] = @Relationship,
+	[TitleOfWork] = @TitleOfWork,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID
 
@@ -42,6 +46,8 @@ ELSE BEGIN
 		[TitleID],
 		[AuthorID],
 		[AuthorRoleID],
+		[Relationship],
+		[TitleOfWork],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
@@ -54,5 +60,4 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
-
 

@@ -16,7 +16,9 @@
     [MARCCreator_b]            NVARCHAR (450) NULL,
     [MARCCreator_c]            NVARCHAR (450) NULL,
     [MARCCreator_d]            NVARCHAR (450) NULL,
+	[MARCCreator_e]            NVARCHAR (450) NULL,
     [MARCCreator_q]            NVARCHAR (450) NULL,
+	[MARCCreator_t]            NVARCHAR (450) NULL,
     CONSTRAINT [PK_Title_Creator] PRIMARY KEY CLUSTERED ([TitleCreatorID] ASC),
     CONSTRAINT [FK_Title_Creator_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Title_Creator_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])
