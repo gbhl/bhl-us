@@ -1151,7 +1151,7 @@ namespace IAHarvest
                                     // Possible network error has occurred, so halt publishing
                                     log.Error("Publishing of information to import tables HALTED due to error fixing file locations");
                                     errorMessages.Add("Publishing of information to import tables HALTED due to error fixing file locations");
-                                    continuePublishing = false;
+                                    //continuePublishing = false;
                                 }
                             }
                             else
