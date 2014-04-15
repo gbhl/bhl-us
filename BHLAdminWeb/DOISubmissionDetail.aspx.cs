@@ -52,7 +52,7 @@ namespace MOBOT.BHL.AdminWeb
                 catch (Exception ex)
                 {
                     string message = "Error retrieving File.<br><br>;";
-                    if (DebugUtility.IsDebugMode(Response, Request))
+                    if (new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request))
                     {
                         message += ex.Message + "<br><br>";
                         if (ex.StackTrace != null) message += ex.StackTrace;

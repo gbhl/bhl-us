@@ -19,7 +19,7 @@ namespace MOBOT.BHL.AdminWeb
 	{
 		protected void Page_Load( object sender, EventArgs e )
 		{
-            bool debugMode = DebugUtility.IsDebugMode(Response, Request);
+            bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);
             if (debugMode) Page.Title = "***DEBUG MODE*** " + Page.Title;
 
 			Response.Cookies[ "CallingUrl" ].Value = Request.Url.ToString();

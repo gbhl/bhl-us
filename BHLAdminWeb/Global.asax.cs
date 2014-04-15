@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using MOBOT.BHL.Web.Utilities;
+using System.Configuration;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -24,7 +25,7 @@ namespace MOBOT.BHL.AdminWeb
             // Log the exception.            
             Exception exception = Server.GetLastError();
 
-            if (!HttpContext.Current.IsDebuggingEnabled && !DebugUtility.IsDebugMode(Response, Request))
+            if (!HttpContext.Current.IsDebuggingEnabled && !(new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request)))
             {
                 Response.Clear();
 

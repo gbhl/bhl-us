@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Configuration;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.ActionFilters
@@ -16,7 +17,7 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
             bool isValueSet = false;
             string cookieKey = "IsDebugMode";
             string requestKey = "directive";
-            string expectedValue = "debug";
+            string expectedValue = ConfigurationManager.AppSettings["DebugValue"];
 
             //first check to see if debug mode is set in a cookie
             isValueSet = (request.Cookies[cookieKey] != null && request.Cookies[cookieKey].Value == "true");
