@@ -56,7 +56,7 @@ namespace MOBOT.BHL.Web2.Services
 			}
 			catch ( Exception ex )
 			{
-				return DebugUtility.GetErrorInfo( this.Context.Request, ex );
+                return new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).GetErrorInfo(this.Context.Request, ex);
 			}
 		}
 

@@ -5,8 +5,15 @@ namespace MOBOT.BHL.Web.Utilities
 {
     public class DebugUtility
     {
-        protected DebugUtility()
+        private string _debugValue = string.Empty;
+
+        /// <summary>
+        /// Class for checking the debugging status of the site and for providing detailed error messages.
+        /// </summary>
+        /// <param name="debugValue">The value portion of the "directive=[value]" querystring.  If the querystring value matches the string supplied here, the site is in debug mode.</param>
+        public DebugUtility(string debugValue)
         {
+            _debugValue = debugValue;
         }
 
         /// <summary>
@@ -16,7 +23,7 @@ namespace MOBOT.BHL.Web.Utilities
         /// <param name="response"></param>
         /// <param name="request"></param>
         /// <param name="exception"></param>
-        public static void WriteErrorInfo(HttpResponse response, HttpRequest request, Exception exception)
+        public void WriteErrorInfo(HttpResponse response, HttpRequest request, Exception exception)
         {
             if (IsDebugMode(response, request))
             {
@@ -32,7 +39,7 @@ namespace MOBOT.BHL.Web.Utilities
         /// <param name="request"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public static string GetErrorInfo(HttpRequest request, Exception exception)
+        public string GetErrorInfo(HttpRequest request, Exception exception)
         {
             if (IsDebugMode(request))
                 return "<b>Message:</b> " + exception.Message + "\n\n<b>Stack Trace:</b> " + exception.StackTrace;
@@ -40,22 +47,17 @@ namespace MOBOT.BHL.Web.Utilities
                 return "";
         }
 
-        public static bool IsDebugMode(HttpRequest request)
+        public bool IsDebugMode(HttpRequest request)
         {
             return IsDebugMode(null, request);
         }
 
-        public static bool IsDebugMode(HttpResponse response, HttpRequest request)
+        public bool IsDebugMode(HttpResponse response, HttpRequest request)
         {
-            return IsValueSet(response, request, "directive", "debug", "IsDebugMode", "debugmode.asmx");
+            return IsValueSet(response, request, "directive", _debugValue, "IsDebugMode", "debugmode.asmx");
         }
 
-        public static bool AlwaysReplaceDropdownsWithDivs(HttpResponse response, HttpRequest request)
-        {
-            return IsValueSet(response, request, "replacedropdowns", "1", "ReplaceDropDowns", null);
-        }
-
-        private static bool IsValueSet(HttpResponse response, HttpRequest request, string requestKey, string expectedValue, string cookieKey, string webServiceNameSuffix)
+        private bool IsValueSet(HttpResponse response, HttpRequest request, string requestKey, string expectedValue, string cookieKey, string webServiceNameSuffix)
         {
             bool isValueSet = false;
             //first check to see if debug mode is set in a cookie

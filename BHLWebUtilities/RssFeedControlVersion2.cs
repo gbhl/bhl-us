@@ -221,19 +221,10 @@ namespace MOBOT.BHL.Web.Utilities
                 results.Text = HTMLResults.ToString();
                 this.Controls.Add(results);
             }
-            catch (Exception ex)
+            catch
             {
                 Literal messageLiteral = new Literal();
-                if (DebugUtility.IsDebugMode(Response, Request))
-                {
-                    messageLiteral.Text = "The following error occurred while checking the rss feed:<br /><br />";
-                    messageLiteral.Text += "<b>Message:</b> " + ex.Message + "<br /><br />" +
-                        "<b>Stack Trace:</b> " + ex.StackTrace.Replace("\n", "<br />");
-                }
-                else
-                {
-                    messageLiteral.Text = NoItemsFoundText;
-                }
+                messageLiteral.Text = "An error occurred while checking the rss feed";
                 this.Controls.Add(messageLiteral);
             }
         }

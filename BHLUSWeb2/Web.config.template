@@ -29,6 +29,7 @@
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
     <add key="MonitorThreshold" value="15"/>
+    <add key="DebugValue" value="debug"/>
 
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
@@ -225,4 +226,15 @@
         name="BHLWSSoap" />
     </client>
   </system.serviceModel>
+  <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
+    <!-- 
+          For more information on how to configure Glimpse, please visit http://getglimpse.com/Help/Configuration
+          or access {your site}/Glimpse.axd for even more details and a Configuration Tool to support you. 
+      -->
+    <runtimePolicies>
+      <ignoredTypes>
+        <add type="Glimpse.AspNet.Policy.LocalPolicy, Glimpse.AspNet"/>
+      </ignoredTypes>
+    </runtimePolicies>
+  </glimpse>
 </configuration>

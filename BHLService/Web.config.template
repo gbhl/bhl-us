@@ -6,6 +6,7 @@
     <add key="SMTPHost" value="smtp host name"/>
     <add key="UseRemoteFileAccessProvider" value="true"/>
     <add key="DBCommandTimeout" value="1800"/>
+    <add key="DebugValue" value="debug"/>
 
     <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
     <add key="NameFinderService" value="GNRD"/>

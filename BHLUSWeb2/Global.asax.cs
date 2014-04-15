@@ -56,7 +56,7 @@ namespace BHLUSWeb2
           //      ILog log = LogManager.GetLogger(exception.TargetSite.ReflectedType);
             //    log.Error("An Application Error occurred", exception);
 
-                if (!HttpContext.Current.IsDebuggingEnabled && !DebugUtility.IsDebugMode(Response, Request))
+                if (!HttpContext.Current.IsDebuggingEnabled && !(new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request)))
                 {
                     Response.Clear();
 
@@ -90,6 +90,8 @@ namespace BHLUSWeb2
 
         void RegisterRoutes(RouteCollection routes)
         {
+            routes.Ignore("glimpse.axd");
+
             routes.MapPageRoute("Default",
                 "",
                 "~/default.aspx");
