@@ -31,6 +31,9 @@
     <add key="MonitorThreshold" value="15"/>
     <add key="DebugValue" value="debug"/>
 
+    <!-- Glimpse settings -->
+    <add key="Glimpse:DisableAsyncSupport" value="true" />
+    
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
     <add key="OAIAdminEmail" value="bhl.oai@gmail.com"/>
