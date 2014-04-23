@@ -805,10 +805,14 @@ namespace MOBOT.BHL.AdminWeb
 			if ( row != null )
 			{
 				DropDownList ddlCreatorRole = row.FindControl( "ddlCreatorRole" ) as DropDownList;
-				if ( ddlCreatorRole != null )
+                TextBox txtRelationship = row.FindControl("txtRelationship") as TextBox;
+                TextBox txtTitleOfWork = row.FindControl("txtTitleOfWork") as TextBox;
+                if (ddlCreatorRole != null)
 				{
                     Title title = (Title)Session["Title" + idLabel.Text];
 					int authorRoleId = int.Parse( ddlCreatorRole.SelectedValue );
+                    String relationship = txtRelationship.Text;
+                    String titleOfWork = txtTitleOfWork.Text;
 
                     SecUser secUser = getSecUser();
                     TitleAuthor titleAuthor = findTitleAuthor(title.TitleAuthors,
@@ -824,6 +828,8 @@ namespace MOBOT.BHL.AdminWeb
                     }
 					titleAuthor.AuthorRoleID = authorRoleId;
 					titleAuthor.RoleDescription = ddlCreatorRole.SelectedItem.Text;
+                    titleAuthor.Relationship = relationship;
+                    titleAuthor.TitleOfWork = titleOfWork;
 				}
 			}
 

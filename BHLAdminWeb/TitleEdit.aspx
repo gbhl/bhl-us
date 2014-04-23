@@ -398,16 +398,16 @@
 			<legend class="dataHeader">Creators (MARC 1XX and 70X-75X)</legend>
 			<asp:GridView ID="creatorsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
-				Width="800px" CssClass="boxTable" OnRowCancelingEdit="creatorsList_RowCancelingEdit" OnRowEditing="creatorsList_RowEditing"
+				Width="1000px" CssClass="boxTable" OnRowCancelingEdit="creatorsList_RowCancelingEdit" OnRowEditing="creatorsList_RowEditing"
 				OnRowUpdating="creatorsList_RowUpdating" OnRowCommand="creatorsList_RowCommand" DataKeyNames="TitleAuthorID,AuthorID,AuthorRoleID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
-					<asp:TemplateField HeaderText="Name" ItemStyle-Width="350px">
+					<asp:TemplateField HeaderText="Name" ItemStyle-Width="300px">
 						<ItemTemplate>
 							<%# Eval( "FullName" ) %>
 						</ItemTemplate>
 					</asp:TemplateField>
-					<asp:TemplateField HeaderText="Role" ItemStyle-Width="270px">
+					<asp:TemplateField HeaderText="Role" ItemStyle-Width="300px">
 						<ItemTemplate>
 							<%# Eval( "RoleDescription" ) %>
 						</ItemTemplate>
@@ -416,6 +416,22 @@
 								DataSource="<%# GetAuthorRoles() %>" SelectedIndex="<%# GetAuthorRoleIndex( Container.DataItem ) %>" />
 						</EditItemTemplate>
 					</asp:TemplateField>
+                    <asp:TemplateField HeaderText="Relationship" ItemStyle-Width="75">
+                        <ItemTemplate>
+                            <%# Eval("Relationship") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+						    <asp:TextBox ID="txtRelationship" runat="server" Text='<%# Eval( "Relationship") %>' Width="75" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Title Of Work" ItemStyle-Width="225">
+                        <ItemTemplate>
+                            <%# Eval("TitleOfWork") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+						    <asp:TextBox ID="txtTitleOfWork" runat="server" Text='<%# Eval( "TitleOfWork") %>' Width="225"/>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
 					<asp:TemplateField ItemStyle-Width="130px">
 						<ItemTemplate>
 							<asp:LinkButton ID="editTitleCreatorButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>

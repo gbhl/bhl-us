@@ -19,6 +19,8 @@
 		    <asp:BoundField HeaderText="ID" DataField="TitleID" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
 		    <asp:BoundField HeaderText="Title" DataField="FullTitle" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
 		    <asp:BoundField HeaderText="Role" DataField="RoleDescription" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField HeaderText="Relationship" DataField="Relationship" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
+            <asp:BoundField HeaderText="Title&nbsp;of&nbsp;Work" DataField="TitleOfWork" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
 		    </Columns>
         </asp:GridView>    
     </div>
