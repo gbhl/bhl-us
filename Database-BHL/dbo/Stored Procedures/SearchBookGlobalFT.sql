@@ -130,6 +130,7 @@ FROM	#tmpTitleFinal tmp
 		LEFT JOIN dbo.Institution inst WITH (NOLOCK) ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK)ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 
+/*
 -- Find any duplicated items
 SELECT	ItemID
 INTO	#tmpDups
@@ -153,7 +154,23 @@ SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.Sor
 FROM	#tmpMayContainDups m INNER JOIN #tmpDups d
 			ON m.ItemID = d.ItemID
 WHERE	m.TitleID = PrimaryTitleID
+*/
 
+-- Find any duplicated titles
+SELECT	TitleID, MIN(ItemID) AS ItemID
+INTO	#tmpDups
+FROM	#tmpMayContainDups
+GROUP BY TitleID HAVING COUNT(*) > 1
+
+-- Show all non-duplicate title information
+SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.SortTitle, m.PartNumber, m.PartName,
+		m.EditionStatement, m.PublicationDetails, m.Datafield_260_a, m.Datafield_260_b, m.Datafield_260_c, m.Volume,
+		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionName, CONVERT(decimal(7, 2), 
+		m.[Rank]) AS [Rank]
+INTO	#tmpSortable
+FROM	#tmpMayContainDups m LEFT JOIN #tmpDups d
+			ON m.TitleID = d.TitleID AND m.ItemID <> d.ItemID
+WHERE	d.ItemID IS NULL
 
 -- De-emphasize ranking of any items contributed by Canadiana.org.
 UPDATE	#tmpSortable
@@ -289,5 +306,4 @@ END
 END
 
 GO
-
 
