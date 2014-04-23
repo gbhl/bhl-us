@@ -15,6 +15,8 @@ SELECT      a.AuthorID ,
             a.Title,
             a.Location,
             FullerForm,
+			ta.Relationship,
+			ta.TitleOfWork,
             a.StartDate + CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate AS Dates
 FROM  dbo. Author a INNER JOIN dbo. TitleAuthor ta
                    ON a. AuthorID = ta .AuthorID
@@ -28,7 +30,5 @@ FROM  dbo. Author a INNER JOIN dbo. TitleAuthor ta
                    AND t. PublishReady = 1
 WHERE t. TitleID = @TitleID
 AND		a.IsActive = 1
-ORDER BY n.FullName
-
-
+ORDER BY n.FullName, a.Numeration, a.Unit, a.Title, a.Location, n.FullerForm, ta.Relationship, ta.TitleOfWork
 

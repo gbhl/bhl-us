@@ -1,5 +1,5 @@
 
-// Generated 5/29/2012 12:59:27 PM
+// Generated 3/27/2014 11:56:11 AM
 // Do not modify the contents of this code file.
 // This abstract class __TitleAuthor is based upon TitleAuthor.
 
@@ -49,6 +49,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="relationship"></param>
+		/// <param name="titleOfWork"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
@@ -57,6 +59,8 @@ namespace MOBOT.BHL.DataObjects
 			int titleID, 
 			int authorID, 
 			int? authorRoleID, 
+			string relationship, 
+			string titleOfWork, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
@@ -66,6 +70,8 @@ namespace MOBOT.BHL.DataObjects
 			TitleID = titleID;
 			AuthorID = authorID;
 			AuthorRoleID = authorRoleID;
+			Relationship = relationship;
+			TitleOfWork = titleOfWork;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
@@ -114,6 +120,16 @@ namespace MOBOT.BHL.DataObjects
 					case "AuthorRoleID" :
 					{
 						_AuthorRoleID = (int?)column.Value;
+						break;
+					}
+					case "Relationship" :
+					{
+						_Relationship = (string)column.Value;
+						break;
+					}
+					case "TitleOfWork" :
+					{
+						_TitleOfWork = (string)column.Value;
 						break;
 					}
 					case "CreationDate" :
@@ -255,6 +271,62 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion AuthorRoleID
 		
+		#region Relationship
+		
+		private string _Relationship = string.Empty;
+		
+		/// <summary>
+		/// Column: Relationship;
+		/// DBMS data type: nvarchar(150);
+		/// </summary>
+		[ColumnDefinition("Relationship", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=150)]
+		public string Relationship
+		{
+			get
+			{
+				return _Relationship;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 150);
+				if (_Relationship != value)
+				{
+					_Relationship = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Relationship
+		
+		#region TitleOfWork
+		
+		private string _TitleOfWork = string.Empty;
+		
+		/// <summary>
+		/// Column: TitleOfWork;
+		/// DBMS data type: nvarchar(500);
+		/// </summary>
+		[ColumnDefinition("TitleOfWork", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=500)]
+		public string TitleOfWork
+		{
+			get
+			{
+				return _TitleOfWork;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_TitleOfWork != value)
+				{
+					_TitleOfWork = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion TitleOfWork
+		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -263,7 +335,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=5)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
 		public DateTime CreationDate
 		{
 			get
@@ -290,7 +362,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=6)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -317,7 +389,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=7, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
 		public int? CreationUserID
 		{
 			get
@@ -344,7 +416,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
 		public int? LastModifiedUserID
 		{
 			get
@@ -410,6 +482,8 @@ namespace MOBOT.BHL.DataObjects
 					o.TitleID == TitleID &&
 					o.AuthorID == AuthorID &&
 					o.AuthorRoleID == AuthorRoleID &&
+					GetComparisonString(o.Relationship) == GetComparisonString(Relationship) &&
+					GetComparisonString(o.TitleOfWork) == GetComparisonString(TitleOfWork) &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
@@ -518,6 +592,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string TitleID = "TitleID";	
 			public const string AuthorID = "AuthorID";	
 			public const string AuthorRoleID = "AuthorRoleID";	
+			public const string Relationship = "Relationship";	
+			public const string TitleOfWork = "TitleOfWork";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	

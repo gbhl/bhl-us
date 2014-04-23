@@ -14,7 +14,9 @@ BEGIN
 					a.Numeration + ' ' + a.Unit + ' ' +
 					a.Title + ' ' + a.Location + ' ' + 
 					n.FullerForm + ' ' + a.StartDate + 
-					CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate)
+					CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate +
+					CASE WHEN ta.Relationship <> '' THEN ' , ' ELSE '' END + ta.Relationship + 
+					CASE WHEN ta.TitleOfWork <> '' THEN ' , ' ELSE '' END + ta.TitleOfWork)
 		FROM	Title t
 				INNER JOIN TitleAuthor ta ON t.TitleID = ta.TitleID
 				INNER JOIN Author a ON ta.AuthorID = a.AuthorID

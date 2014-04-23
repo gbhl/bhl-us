@@ -605,7 +605,8 @@ namespace MOBOT.BHL.OAI2
                     foreach (DataObjects.Author author in authors)
                     {
                         OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration), 
-                            (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.FullerForm, author.NameExtended);
+                            (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.Relationship, author.FullerForm, 
+                            author.TitleOfWork, author.NameExtended);
                         KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(author.MarcDataFieldTag, creator);
                         this.Creators.Add(authorData);
                     }
@@ -697,7 +698,8 @@ namespace MOBOT.BHL.OAI2
                 foreach (DataObjects.Author author in authors)
                 {
                     OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration),
-                        (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.FullerForm, author.NameExtended);
+                        (string.IsNullOrEmpty(author.Title) ? author.Location : author.Title), author.Dates, author.Relationship, author.FullerForm, 
+                        author.TitleOfWork, author.NameExtended);
                     KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(author.MarcDataFieldTag, creator);
                     this.Creators.Add(authorData);
                 }
@@ -781,7 +783,7 @@ namespace MOBOT.BHL.OAI2
                     foreach (String author in authors)
                     {
                         OAIRecord.Creator creator = new OAIRecord.Creator(string.Empty, string.Empty, string.Empty,
-                            string.Empty, string.Empty, author);
+                            string.Empty, string.Empty, string.Empty, string.Empty, author);
                         KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator);
                         this.Creators.Add(authorData);
                     }
@@ -918,7 +920,7 @@ namespace MOBOT.BHL.OAI2
                 foreach (SegmentAuthor author in segment.AuthorList)
                 {
                     OAIRecord.Creator creator = new OAIRecord.Creator(string.Empty, string.Empty, string.Empty,
-                        string.Empty, string.Empty, author.FullName);
+                        string.Empty, string.Empty, string.Empty, string.Empty, author.FullName);
                     KeyValuePair<string, OAIRecord.Creator> authorData = new KeyValuePair<string, OAIRecord.Creator>(string.Empty, creator);
                     this.Creators.Add(authorData);
                 }
@@ -1018,13 +1020,15 @@ namespace MOBOT.BHL.OAI2
         {
             public Creator() {   }
 
-            public Creator(string name, string numeration, string location, string dates, string fullerName, string fullName)
+            public Creator(string name, string numeration, string location, string dates, string relationship, string fullerName, string titleOfWork, string fullName)
             {
                 _name = name;
                 _numeration = numeration;
                 _location = location;
                 _dates = dates;
+                _relationship = relationship;
                 _fullerForm = fullerName;
+                _titleOfWork = titleOfWork;
                 _fullName = fullName;
             }
 
@@ -1056,11 +1060,25 @@ namespace MOBOT.BHL.OAI2
                 set { _dates = value; }
             }
 
+            private string _relationship;   // MARC attribute e
+            public string Relationship
+            {
+                get { return _relationship; }
+                set { _relationship = value; }
+            }
+
             private string _fullerForm; // MARC attribute q
             public string FullerForm
             {
                 get { return _fullerForm; }
                 set { _fullerForm = value; }
+            }
+
+            private string _titleOfWork;    // MARC attribute t
+            public string TitleOfWork
+            {
+                get { return _titleOfWork; }
+                set { _titleOfWork = value; }
             }
 
             private string _fullName;   // Contatenation of all MARC fields

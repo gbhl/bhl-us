@@ -54,6 +54,22 @@ namespace MOBOT.BHL.DataObjects
             set { _marcDataFieldTag = value; }
         }
 
+        private string _relationship;
+
+        public string Relationship
+        {
+            get { return _relationship; }
+            set { _relationship = value; }
+        }
+
+        private string _titleOfWork;
+
+        public string TitleOfWork
+        {
+            get { return _titleOfWork; }
+            set { _titleOfWork = value; }
+        }
+
         private CustomGenericList<AuthorName> _authorNames;
 
         public CustomGenericList<AuthorName> AuthorNames
@@ -87,6 +103,12 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "MARCDataFieldTag":
                         MarcDataFieldTag = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Relationship":
+                        Relationship = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "TitleOfWork":
+                        TitleOfWork = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

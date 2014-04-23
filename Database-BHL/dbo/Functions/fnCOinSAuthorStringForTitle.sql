@@ -12,18 +12,21 @@ BEGIN
 	SET @CurrentRecord = 1
 
 	SELECT	@AuthorString = COALESCE(@AuthorString, '') +
-					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE '|' END) +  n.FullName,
+					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE '|' END) +  x.FullName,
 			@CurrentRecord = @CurrentRecord + 1
-	FROM	Title t INNER JOIN TitleAuthor ta ON t.TitleID = ta.TitleID
-			INNER JOIN Author a ON ta.AuthorID = a.AuthorID
-			INNER JOIN AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
-			INNER JOIN AuthorName n ON a.AuthorID = n.AuthorID
-	WHERE	t.TitleID = @TitleID
-	AND		a.IsActive = 1
-	AND		n.IsPreferredName = 1
-	ORDER BY r.MarcDataFieldTag, n.FullName ASC
+	FROM	(
+			SELECT	MIN(r.MarcDataFieldTag) AS MarcDataFieldTag, n.FullName
+			FROM	Title t INNER JOIN TitleAuthor ta ON t.TitleID = ta.TitleID
+					INNER JOIN Author a ON ta.AuthorID = a.AuthorID
+					INNER JOIN AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
+					INNER JOIN AuthorName n ON a.AuthorID = n.AuthorID
+			WHERE	t.TitleID = @TitleID
+			AND		a.IsActive = 1
+			AND		n.IsPreferredName = 1
+			GROUP BY n.FullName
+			) x
+	ORDER BY x.MarcDataFieldTag, x.FullName ASC
 
 	RETURN LTRIM(RTRIM(COALESCE(@AuthorString, '')))
 END
-
 

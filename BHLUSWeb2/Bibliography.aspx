@@ -59,7 +59,7 @@
                         <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
 							<span itemprop="name"><%: author.NameExtended %></span>
-						</a>
+						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
                         <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
                         <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
                               <span itemprop='birthDate' style='display:none'><%: author.StartDate %></span>
@@ -70,11 +70,12 @@
                         </span>
                         <br />
                     <% } %>
+                    <% if (AdditionalAuthors.Count > 0) Response.Write("<br .>"); %>
                     <% foreach (Author author in AdditionalAuthors) { %>
                         <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
 							<span itemprop="name"><%: author.NameExtended %></span>
-						</a>
+						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
                         <span itemprop='url' style='display:none'><%: string.Format(ConfigurationManager.AppSettings["AuthorPageUrl"], author.AuthorID.ToString()) %></span>
                         <%if (!string.IsNullOrWhiteSpace(author.StartDate)) { %>
                               <span itemprop='birthDate' style='display:none'><%: author.StartDate %></span>
@@ -167,16 +168,17 @@
                 <% } %>
                 <h3>By</h3>
                 <p>
-                    <% foreach (Author author in Authors) { %>
+                    <% foreach (Author author in AuthorsDetail) { %>
                         <a href="/creator/<%: author.AuthorID %>">
 							<%: author.NameExtended %>
-						</a>
+						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %><%if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) Response.Write(", " + author.TitleOfWork); %>
                         <br />
                     <% } %>
-                    <% foreach (Author author in AdditionalAuthors) { %>
+                    <% if (AdditionalAuthorsDetail.Count > 0) Response.Write("<br .>"); %>
+                    <% foreach (Author author in AdditionalAuthorsDetail) { %>
                         <a href="/creator/<%: author.AuthorID %>">
 							<%: author.NameExtended %>
-						</a>
+						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %><%if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) Response.Write(", " + author.TitleOfWork); %>
                         <br />
                     <% } %>
                 </p>

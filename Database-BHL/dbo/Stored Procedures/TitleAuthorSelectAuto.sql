@@ -1,6 +1,6 @@
 ﻿
 -- TitleAuthorSelectAuto PROCEDURE
--- Generated 5/29/2012 12:59:27 PM
+-- Generated 3/27/2014 11:56:11 AM
 -- Do not modify the contents of this procedure.
 -- Select Procedure for TitleAuthor
 
@@ -18,6 +18,8 @@ SELECT
 	[TitleID],
 	[AuthorID],
 	[AuthorRoleID],
+	[Relationship],
+	[TitleOfWork],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
@@ -37,5 +39,4 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
 

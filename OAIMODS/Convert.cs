@@ -552,9 +552,13 @@ namespace MOBOT.BHL.OAIMODS
                     creatorData.Value.Location + ' ' + creatorData.Value.FullerForm).Trim();
                 name = String.IsNullOrEmpty(name) ? creatorData.Value.FullName : name;
                 string date = creatorData.Value.Dates;
+                string titleOfWork = creatorData.Value.TitleOfWork;
+                string role = creatorData.Value.Relationship;
                 sb.Append("<name" + type + ">\n");  // Add "type" attribute here
                 sb.Append("\t<namePart>" + HttpUtility.HtmlEncode(name) + "</namePart>\n");
                 if (date != string.Empty) sb.Append("\t<namePart type=\"date\">" + HttpUtility.HtmlEncode(date) + "</namePart>\n");
+                if (titleOfWork != string.Empty) sb.Append("\t<affiliation>" + HttpUtility.HtmlEncode(titleOfWork) + "</affiliation>\n");
+                if (role != string.Empty) sb.Append("\t<role>\t\t<roleTerm type=\"text\">" + HttpUtility.HtmlEncode(role) + "</roleTerm>\n</role>\n");
                 sb.Append("</name>\n");
             }
 

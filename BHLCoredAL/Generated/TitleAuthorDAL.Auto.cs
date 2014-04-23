@@ -1,5 +1,5 @@
 
-// Generated 5/29/2012 12:59:27 PM
+// Generated 3/27/2014 11:56:11 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleAuthorDAL is based upon TitleAuthor.
@@ -139,6 +139,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="relationship"></param>
+		/// <param name="titleOfWork"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
@@ -148,10 +150,12 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			string relationship,
+			string titleOfWork,
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
-			return TitleAuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", titleID, authorID, authorRoleID, creationUserID, lastModifiedUserID );
+			return TitleAuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", titleID, authorID, authorRoleID, relationship, titleOfWork, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -163,6 +167,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="relationship"></param>
+		/// <param name="titleOfWork"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
@@ -173,6 +179,8 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			string relationship,
+			string titleOfWork,
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
@@ -184,6 +192,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
 					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID),
 					CustomSqlHelper.CreateInputParameter("AuthorRoleID", SqlDbType.Int, null, true, authorRoleID),
+					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 150, false, relationship),
+					CustomSqlHelper.CreateInputParameter("TitleOfWork", SqlDbType.NVarChar, 500, false, titleOfWork),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
@@ -238,6 +248,8 @@ namespace MOBOT.BHL.DAL
 				value.TitleID,
 				value.AuthorID,
 				value.AuthorRoleID,
+				value.Relationship,
+				value.TitleOfWork,
 				value.CreationUserID,
 				value.LastModifiedUserID);
 		}
@@ -313,6 +325,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="relationship"></param>
+		/// <param name="titleOfWork"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorUpdateAuto(
@@ -322,9 +336,11 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			string relationship,
+			string titleOfWork,
 			int? lastModifiedUserID)
 		{
-			return TitleAuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleAuthorID, titleID, authorID, authorRoleID, lastModifiedUserID);
+			return TitleAuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleAuthorID, titleID, authorID, authorRoleID, relationship, titleOfWork, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -337,6 +353,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="titleID"></param>
 		/// <param name="authorID"></param>
 		/// <param name="authorRoleID"></param>
+		/// <param name="relationship"></param>
+		/// <param name="titleOfWork"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TitleAuthor.</returns>
 		public TitleAuthor TitleAuthorUpdateAuto(
@@ -347,6 +365,8 @@ namespace MOBOT.BHL.DAL
 			int titleID,
 			int authorID,
 			int? authorRoleID,
+			string relationship,
+			string titleOfWork,
 			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -357,6 +377,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
 					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID),
 					CustomSqlHelper.CreateInputParameter("AuthorRoleID", SqlDbType.Int, null, true, authorRoleID),
+					CustomSqlHelper.CreateInputParameter("Relationship", SqlDbType.NVarChar, 150, false, relationship),
+					CustomSqlHelper.CreateInputParameter("TitleOfWork", SqlDbType.NVarChar, 500, false, titleOfWork),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -411,6 +433,8 @@ namespace MOBOT.BHL.DAL
 				value.TitleID,
 				value.AuthorID,
 				value.AuthorRoleID,
+				value.Relationship,
+				value.TitleOfWork,
 				value.LastModifiedUserID);
 		}
 		
@@ -459,6 +483,8 @@ namespace MOBOT.BHL.DAL
 					value.TitleID,
 						value.AuthorID,
 						value.AuthorRoleID,
+						value.Relationship,
+						value.TitleOfWork,
 						value.CreationUserID,
 						value.LastModifiedUserID);
 				
@@ -490,6 +516,8 @@ namespace MOBOT.BHL.DAL
 						value.TitleID,
 						value.AuthorID,
 						value.AuthorRoleID,
+						value.Relationship,
+						value.TitleOfWork,
 						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<TitleAuthor>(

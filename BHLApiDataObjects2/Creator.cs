@@ -104,6 +104,20 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _FullerForm = value; }
         }
 
+        private string _relationship = null;
+        public string Relationship
+        {
+            get { return _relationship; }
+            set { _relationship = value; }
+        }
+
+        private string _titleOfWork = null;
+        public string TitleOfWork
+        {
+            get { return _titleOfWork; }
+            set { _titleOfWork = value; }
+        }
+
         private string _Dates = null;
         public string Dates
         {
@@ -170,6 +184,16 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                     case "FullerForm":
                         {
                             _FullerForm = (string)column.Value;
+                            break;
+                        }
+                    case "Relationship":
+                        {
+                            _relationship = (string)column.Value;
+                            break;
+                        }
+                    case "TitleOfWork":
+                        {
+                            _titleOfWork = (string)column.Value;
                             break;
                         }
                     case "Dates":
