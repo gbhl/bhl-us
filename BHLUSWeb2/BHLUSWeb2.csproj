@@ -65,14 +65,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.WebServices.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.AspNet">
-      <HintPath>..\packages\Glimpse.AspNet.1.8.1\lib\net40\Glimpse.AspNet.dll</HintPath>
+    <Reference Include="Glimpse.AspNet, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Glimpse.AspNet.1.9.0\lib\net40\Glimpse.AspNet.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.AspNetCache">
       <HintPath>..\packages\Glimpse.AspNetCache.0.9.9.35094\lib\net35\Glimpse.AspNetCache.dll</HintPath>
     </Reference>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\packages\Glimpse.1.8.4\lib\net40\Glimpse.Core.dll</HintPath>
+    <Reference Include="Glimpse.Core, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Glimpse.1.8.5\lib\net40\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">

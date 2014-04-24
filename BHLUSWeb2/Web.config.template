@@ -4,6 +4,7 @@
     <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <section name="MOBOT.BHL.Web2.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
     </sectionGroup>
+  <section name="glimpse" type="Glimpse.Core.Configuration.Section, Glimpse.Core" />
   </configSections>
   <appSettings>
     <!-- ############# SETTINGS THAT DIFFER BETWEEN BETA AND PRODUCTION ############# -->
@@ -28,7 +29,7 @@
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
-    <add key="MonitorThreshold" value="15"/>
+    <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
 
     <!-- Glimpse settings -->
@@ -59,7 +60,7 @@
     <add key="NameFinderService" value="GNRD"/>
 
     <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
-    <add key="NameServiceSourceName" value="GlobalNames"/>
+    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
 
     <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
     <add key="UsePreferredNameResults" value="true"/>
@@ -156,9 +157,14 @@
         <add assembly="System.Data.DataSetExtensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
       </assemblies>
     </compilation>
-    <globalization requestEncoding="utf-8" responseEncoding="utf-8"/>
-     <customErrors mode="Off"/>
-  </system.web>
+    <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
+     <customErrors mode="Off" />
+  <!-- Glimpse: This can be commented in to add additional data to the Trace tab when using WebForms -->
+        <trace writeToDiagnosticsTrace="true" enabled="true" pageOutput="false"/> <httpModules>
+            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" />
+        </httpModules><httpHandlers>
+            <add path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" />
+        </httpHandlers></system.web>
   <system.web.extensions>
     <scripting>
       <webServices>
@@ -203,7 +209,11 @@
       <security>
           <requestFiltering allowDoubleEscaping="true" />
       </security>
-  </system.webServer>
+  <validation validateIntegratedModeConfiguration="false" /><modules>
+            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
+        </modules><handlers>
+            <add name="Glimpse" path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" preCondition="integratedMode" />
+        </handlers></system.webServer>
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
