@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDataObjects", "BHLDataObjects\BHLDataObjects.csproj", "{65499E9E-4829-469E-8B5E-3F96012649AF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLCoreDAL", "BHLCoreDAL\BHLCoreDAL.csproj", "{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}"
@@ -20,6 +22,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLBibTeXExport", "BHLBibTeXExport\BHLBibTeXExport.csproj", "{44BC53EB-700E-48AE-9D72-BA23E081106A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLDOIService", "BHLDOIService\BHLDOIService.csproj", "{166D6CEE-D383-4FAA-B4F7-EB1587C13C7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLEndNoteExport", "BHLEndNoteExport\BHLEndNoteExport.csproj", "{FA6E58FB-27FC-4041-BDD7-7BFF887FE237}"
 EndProject

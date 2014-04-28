@@ -21,8 +21,8 @@
     <MetadataSource Address="http://localhost:26504/BHLWS.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BHLWS.disco" MetadataType="Disco" ID="f66e2cc7-da24-4ef2-8201-8df7484701d2" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?disco" />
-    <MetadataFile FileName="BHLWS.wsdl" MetadataType="Wsdl" ID="3e0699a1-9e62-4b4e-88a8-6e0efb0c362d" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?wsdl" />
+    <MetadataFile FileName="BHLWS.disco" MetadataType="Disco" ID="1cccce0c-dafd-477b-9192-84d3e505b471" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?disco" />
+    <MetadataFile FileName="BHLWS.wsdl" MetadataType="Wsdl" ID="42312c6d-7629-49fe-a746-3ace2b7bd9e9" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

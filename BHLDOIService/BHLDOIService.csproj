@@ -110,9 +110,6 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.FindItItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -120,6 +117,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Page.datasource">
@@ -135,6 +135,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.PDF.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Title.datasource">
