@@ -133,9 +133,6 @@
     <None Include="Web References\BHLWS\DOI.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\BHLWS\FindItItem.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
     <None Include="Web References\BHLWS\Institution.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -143,6 +140,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\ItemNameFileLog.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\BHLWS\NameFinderResponse.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\Page.datasource">
@@ -163,6 +163,9 @@
     <None Include="Web References\BHLWS\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\BHLWS\Segment.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\Title.datasource">
       <DependentUpon>Reference.map</DependentUpon>

@@ -130,9 +130,6 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.FindItItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -140,6 +137,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Page.datasource">
@@ -155,6 +155,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PDF.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Title.datasource">
