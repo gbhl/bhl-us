@@ -394,7 +394,16 @@ namespace MOBOT.BHL.OAI2
                             oaiIDs = provider.OAIIdentifierSelectItems(_maxListIdentifiers,
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                1, 0);
+                            break;
+                        case OAI2Util.SetSpecification.ITEMEXTSET:
+                            // Select external items
+                            oaiIDs = provider.OAIIdentifierSelectItems(_maxListIdentifiers,
+                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
+                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                0, 1);
                             break;
                         case OAI2Util.SetSpecification.TITLESET:
                             // Select titles
@@ -403,21 +412,21 @@ namespace MOBOT.BHL.OAI2
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
                             break;
-                        /*
-                        case OAI2Util.SetSpecification.ARTICLESET:
-                            // Select pdfs
-                            oaiIDs = provider.OAIIdentifierSelectPDFs(_maxListIdentifiers,
-                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
-                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
-                            break;
-                         */
                         case OAI2Util.SetSpecification.SEGMENTSET:
                             // Select segments
                             oaiIDs = provider.OAIIdentifierSelectSegments(_maxListIdentifiers,
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                1, 0);
+                            break;
+                        case OAI2Util.SetSpecification.SEGMENTEXTSET:
+                            // Select external segments
+                            oaiIDs = provider.OAIIdentifierSelectSegments(_maxListIdentifiers,
+                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
+                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                0, 1);
                             break;
                         default:
                             // Select full list
@@ -624,7 +633,16 @@ namespace MOBOT.BHL.OAI2
                             oaiIDs = provider.OAIIdentifierSelectItems(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                1, 0);
+                            break;
+                        case OAI2Util.SetSpecification.ITEMEXTSET:
+                            // Select external items
+                            oaiIDs = provider.OAIIdentifierSelectItems(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
+                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
+                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                0, 1);
                             break;
                         case OAI2Util.SetSpecification.TITLESET:
                             // Select titles
@@ -633,21 +651,21 @@ namespace MOBOT.BHL.OAI2
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
                                 (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
                             break;
-                        /*
-                        case OAI2Util.SetSpecification.ARTICLESET:
-                            // Select pdfs
-                            oaiIDs = provider.OAIIdentifierSelectPDFs(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
-                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
-                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
-                            break;
-                         */
                         case OAI2Util.SetSpecification.SEGMENTSET:
                             // Select segments
                             oaiIDs = provider.OAIIdentifierSelectSegments(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
                                 (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
                                 (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
-                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)));
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                1, 0);
+                            break;
+                        case OAI2Util.SetSpecification.SEGMENTEXTSET:
+                            // Select external segments
+                            oaiIDs = provider.OAIIdentifierSelectSegments(OAI2Util.GetMaxListRecords(metadataPrefix, _metadataFormats),
+                                (String.IsNullOrEmpty(startAtID) ? 1 : Convert.ToInt32(startAtID)),
+                                (String.IsNullOrEmpty(fromDate) ? nullDate : Convert.ToDateTime(fromDate)),
+                                (String.IsNullOrEmpty(untilDate) ? nullDate : Convert.ToDateTime(untilDate)),
+                                0, 1);
                             break;
                         default:
                             // Select full list
@@ -813,19 +831,68 @@ namespace MOBOT.BHL.OAI2
                     // HARDCODE sets for now  (Feb 18 1010)
                     response.Append("\t<set>\n");
                     response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.ITEMSET + "</setSpec>\n");
-                    response.Append("\t\t<setName>Volumes</setName>\n");
+                    response.Append("\t\t<setName>BHL-hosted volumes</setName>\n");
+                    response.Append("\t\t<setDescription>\n");
+                    response.Append("\t\t\t<oai_dc:dc\n"); 
+                    response.Append("\t\t\t\txmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n");
+                    response.Append("\t\t\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+                    response.Append("\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+                    response.Append("\t\t\t\txsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n");
+                    response.Append("\t\t\t\t<dc:description>This set contains individual volumes hosted by BHL.  The content is viewable in BHL.</dc:description>\n");
+                    response.Append("\t\t\t</oai_dc:dc>\n");
+                    response.Append("\t\t</setDescription>\n");
                     response.Append("\t</set>\n");
-                    //response.Append("\t<set>\n");
-                    //response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.ARTICLESET + "</setSpec>\n");
-                    //response.Append("\t\t<setName>Article PDF collection</setName>\n");
-                    //response.Append("\t</set>\n");
+                    response.Append("\t<set>\n");
+                    response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.ITEMEXTSET + "</setSpec>\n");
+                    response.Append("\t\t<setName>External volumes</setName>\n");
+                    response.Append("\t\t<setDescription>\n");
+                    response.Append("\t\t\t<oai_dc:dc\n");
+                    response.Append("\t\t\t\txmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n");
+                    response.Append("\t\t\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+                    response.Append("\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+                    response.Append("\t\t\t\txsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n");
+                    response.Append("\t\t\t\t<dc:description>This set contains individual volumes not hosted by BHL.  The content must be viewed on a site not maintained by BHL.</dc:description>\n");
+                    response.Append("\t\t\t</oai_dc:dc>\n");
+                    response.Append("\t\t</setDescription>\n");
+                    response.Append("\t</set>\n");
                     response.Append("\t<set>\n");
                     response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.TITLESET + "</setSpec>\n");
                     response.Append("\t\t<setName>Monographs/Journals</setName>\n");
+                    response.Append("\t\t<setDescription>\n");
+                    response.Append("\t\t\t<oai_dc:dc\n");
+                    response.Append("\t\t\t\txmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n");
+                    response.Append("\t\t\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+                    response.Append("\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+                    response.Append("\t\t\t\txsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n");
+                    response.Append("\t\t\t\t<dc:description>This set contains the monographs and journals represented in BHL.</dc:description>\n");
+                    response.Append("\t\t\t</oai_dc:dc>\n");
+                    response.Append("\t\t</setDescription>\n");
                     response.Append("\t</set>\n");
                     response.Append("\t<set>\n");
                     response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.SEGMENTSET + "</setSpec>\n");
-                    response.Append("\t\t<setName>Articles/chapters/treatments/etc</setName>\n");
+                    response.Append("\t\t<setName>BHL-hosted articles/chapters/treatments/etc</setName>\n");
+                    response.Append("\t\t<setDescription>\n");
+                    response.Append("\t\t\t<oai_dc:dc\n");
+                    response.Append("\t\t\t\txmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n");
+                    response.Append("\t\t\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+                    response.Append("\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+                    response.Append("\t\t\t\txsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n");
+                    response.Append("\t\t\t\t<dc:description>This set contains articles/chapters/treatments/etc hosted by BHL.  The content is viewable in BHL.</dc:description>\n");
+                    response.Append("\t\t\t</oai_dc:dc>\n");
+                    response.Append("\t\t</setDescription>\n");
+                    response.Append("\t</set>\n");
+                    response.Append("\t<set>\n");
+                    response.Append("\t\t<setSpec>" + OAI2Util.SetSpecification.SEGMENTEXTSET + "</setSpec>\n");
+                    response.Append("\t\t<setName>External articles/chapters/treatments/etc</setName>\n");
+                    response.Append("\t\t<setDescription>\n");
+                    response.Append("\t\t\t<oai_dc:dc\n");
+                    response.Append("\t\t\t\txmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\"\n");
+                    response.Append("\t\t\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n");
+                    response.Append("\t\t\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n");
+                    response.Append("\t\t\t\txsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n");
+                    response.Append("\t\t\t\t<dc:description>This set contains articles/chapters/treatments/etc not hosted by BHL.  The content must be viewed on a site not maintained by BHL.</dc:description>\n");
+                    response.Append("\t\t\t</oai_dc:dc>\n");
+                    response.Append("\t\t</setDescription>\n");
                     response.Append("\t</set>\n");
 
                     response.Append("</ListSets>");

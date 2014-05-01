@@ -60,9 +60,11 @@ namespace MOBOT.BHL.OAI2
         public class SetSpecification
         {
             public const String ITEMSET = "item";
+            public const String ITEMEXTSET = "itemexternal";
             public const String TITLESET = "title";
             public const String ARTICLESET = "articlepdf";
             public const String SEGMENTSET = "part";
+            public const String SEGMENTEXTSET = "partexternal";
         }
 
         public class IDPrefix
@@ -549,9 +551,11 @@ namespace MOBOT.BHL.OAI2
                     errorMessage += @"<error code=""badArgument"">Content of argument 'set' is missing.</error>";
                 }
                 if (setSpec != OAI2Util.SetSpecification.TITLESET && 
-                    setSpec != OAI2Util.SetSpecification.ITEMSET && 
+                    setSpec != OAI2Util.SetSpecification.ITEMSET &&
+                    setSpec != OAI2Util.SetSpecification.ITEMEXTSET &&
                     setSpec != OAI2Util.SetSpecification.ARTICLESET &&
-                    setSpec != OAI2Util.SetSpecification.SEGMENTSET)
+                    setSpec != OAI2Util.SetSpecification.SEGMENTSET &&
+                    setSpec != OAI2Util.SetSpecification.SEGMENTEXTSET)
                 {
                     errorMessage += @"<error code=""badArgument"">Invalid value for argument 'set'.</error>";
                 }

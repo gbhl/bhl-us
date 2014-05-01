@@ -96,8 +96,10 @@ namespace BHLCoreDALTest
             int startId = 1;
             Nullable<DateTime> fromDate = new Nullable<DateTime>();
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
+            Int16 includeLocalContent = 1;
+            Int16 includeExternalContent = 0;
             CustomGenericList<OAIIdentifier> actual;
-            actual = target.OAIIdentifierSelectItems(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate);
+            actual = target.OAIIdentifierSelectItems(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate, includeLocalContent, includeExternalContent);
             Assert.IsTrue(actual.Count == 10);
         }
 
@@ -150,7 +152,9 @@ namespace BHLCoreDALTest
             int startId = 1;
             Nullable<DateTime> fromDate = new Nullable<DateTime>();
             Nullable<DateTime> untilDate = new Nullable<DateTime>();
-            CustomGenericList<OAIIdentifier> actual = target.OAIIdentifierSelectSegments(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate);
+            Int16 includeLocalContent = 1;
+            Int16 includeExternalContent = 0;
+            CustomGenericList<OAIIdentifier> actual = target.OAIIdentifierSelectSegments(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate, includeLocalContent, includeExternalContent);
             Assert.IsTrue(actual.Count == 10);
         }
     }

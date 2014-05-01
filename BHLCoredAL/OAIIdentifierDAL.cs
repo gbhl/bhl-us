@@ -20,7 +20,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="untilDate"></param>
         /// <returns></returns>
         public CustomGenericList<OAIIdentifier> OAIIdentifierSelectItems(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate)
+            int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate, Int16 includeLocalContent, Int16 includeExternalContent)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -29,7 +29,9 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("MaxIdentifiers", SqlDbType.Int, null, false, maxIdentifiers),
                 CustomSqlHelper.CreateInputParameter("StartID", SqlDbType.Int, null, false, startId),
                 CustomSqlHelper.CreateInputParameter("FromDate", SqlDbType.DateTime, null, true, fromDate),
-                CustomSqlHelper.CreateInputParameter("UntilDate", SqlDbType.DateTime, null, true, untilDate)))
+                CustomSqlHelper.CreateInputParameter("UntilDate", SqlDbType.DateTime, null, true, untilDate),
+                CustomSqlHelper.CreateInputParameter("IncludeLocalContent", SqlDbType.SmallInt, null, false, includeLocalContent),
+                CustomSqlHelper.CreateInputParameter("IncludeExternalContent", SqlDbType.SmallInt, null, false, includeExternalContent)))
             {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
@@ -113,7 +115,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="untilDate"></param>
         /// <returns></returns>
         public CustomGenericList<OAIIdentifier> OAIIdentifierSelectSegments(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate)
+            int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate, Int16 includeLocalContent, Int16 includeExternalContent)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -122,8 +124,10 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("MaxIdentifiers", SqlDbType.Int, null, false, maxIdentifiers),
                 CustomSqlHelper.CreateInputParameter("StartID", SqlDbType.Int, null, false, startId),
                 CustomSqlHelper.CreateInputParameter("FromDate", SqlDbType.DateTime, null, true, fromDate),
-                CustomSqlHelper.CreateInputParameter("UntilDate", SqlDbType.DateTime, null, true, untilDate)))
-            {
+                CustomSqlHelper.CreateInputParameter("UntilDate", SqlDbType.DateTime, null, true, untilDate),
+                CustomSqlHelper.CreateInputParameter("IncludeLocalContent", SqlDbType.SmallInt, null, false, includeLocalContent),
+                CustomSqlHelper.CreateInputParameter("IncludeExternalContent", SqlDbType.SmallInt, null, false, includeExternalContent)))
+           {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
                     CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
