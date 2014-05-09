@@ -68,7 +68,7 @@
         <ol>
             <div class="tabbed">
                 <li><span id="srSpanErrorText" class="ErrorText" style="display:block !important"></span></li>
-                <li>Please see our <a href="http://biodivlib.wikispaces.com/Tutorials#View%20the%20preliminary%20results%20of%20our%20recent%20user%20survey!-Guidelines%20for%20Submitting%20Scanning%20Requests)" target="_blank" title="Guidelines">guidelines</a> for submitting requests.</li>
+                <li>Please see our <a href="http://biodivlib.wikispaces.com/Guidelines%20for%20Submitting%20Scanning%20Requests" target="_blank" title="Guidelines">guidelines</a> for submitting requests.</li>
                 <li>* = required field</li>
             </div>
             <li>
