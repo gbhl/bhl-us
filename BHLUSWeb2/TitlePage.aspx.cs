@@ -195,9 +195,11 @@ namespace MOBOT.BHL.Web2
                     // Set Volume drop down list
                     IList<Item> items = bhlProvider
                         .ItemSelectByTitleId(PageSummary.TitleID)
-                        .ToList()
-                        .Where(x => !string.IsNullOrWhiteSpace(x.Volume))
+                        //.ToList()
+                        //.Where(x => !string.IsNullOrWhiteSpace(x.Volume))
                         .ToList();
+
+                    foreach (Item item in items) if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "(no volume description)";
 
                     ddlVolumes.DataSource = items;
                     ddlVolumes.DataTextField = "DisplayedShortVolume";
