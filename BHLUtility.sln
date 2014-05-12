@@ -65,6 +65,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAuditImport", "BHLAuditImport\BHLAuditImport.csproj", "{4C512369-20F4-4D21-A18A-32018850B698}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -335,6 +337,16 @@ Global
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C4C907E6-860C-4684-AFF3-26269BF193F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C512369-20F4-4D21-A18A-32018850B698}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Debug|x86.ActiveCfg = Debug|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Debug|x86.Build.0 = Debug|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Release|Any CPU.ActiveCfg = Release|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Release|x86.ActiveCfg = Release|x86
+		{4C512369-20F4-4D21-A18A-32018850B698}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
