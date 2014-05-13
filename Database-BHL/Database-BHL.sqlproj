@@ -1051,6 +1051,11 @@
     <Build Include="import\Stored Procedures\ImportFileSelectByFileName.sql" />
     <Build Include="dbo\Functions\fnReverseAuthorName.sql" />
     <Build Include="import\Stored Procedures\ImportRecordPublishToProduction.sql" />
+    <Build Include="dbo\Stored Procedures\PageDetailUpdateColor.sql" />
+    <Build Include="dbo\Stored Procedures\ItemSelectByPageID.sql" />
+    <Build Include="dbo\Stored Procedures\PageSelectCurrentUpdateHistory.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeInsert.sql" />
+    <Build Include="dbo\Stored Procedures\Page_PageTypeDeleteAutoAssignedImages.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

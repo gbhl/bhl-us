@@ -16,17 +16,32 @@
     Valid values for Mode are:
     HARVEST_EXTRACT
     CLASSIFIER_EXPORT
+    CLASSIFIER_IMPORT
     -->
     <add key="Mode" value="CLASSIFIER_EXPORT"/>
 
-    <add key="itemUrlFormat" value="http://beta.biodiversitylibrary.org/item/{0}"/>
-    <add key="pageUrlFormat" value="http://beta.biodiversitylibrary.org/page/{0}"/>
+    <add key="itemUrlPrefix" value="http://beta.biodiversitylibrary.org/item/"/>
+    <add key="pageUrlPrefix" value="http://beta.biodiversitylibrary.org/page/"/>
 
-    <add key="ExtractInputFolder" value="c:\temp\ExtractIn\"/>
+    <add key="ExtractInputFolder" value="ExtractIn\"/>
     <add key="ExtractErrorFolder" value="ExtractError\"/>
     <add key="ExtractLoadedFolder" value="ExtractLoaded\"/>
     <add key="ExtractCompleteFolder" value="ExtractComplete\"/>
     <add key="ClassifierOutputFolder" value="ClassifierOut\"/>
+    <add key="ClassifierInputFolder" value="ClassifierIn\"/>
+    <add key="ClassifierCompleteFolder" value="ClassifierComplete\"/>
+    <add key="ClassifierErrorFolder" value="ClassifierError\"/>
+
+    <!-- User IDs that represent various BHL processes -->
+    <add key="DefaultUserID" value="1"/>
+    <add key="ExtractionUserID" value="50000"/>
+    <add key="ClassifierUserID" value="50001"/>
+    <add key="DescriptorUserID" value="50002"/>
+
+    <!-- BHL/Classifier Page Type names-->
+    <add key="PageTypeIllustration" value="Illustration"/>
+
+    <add key="ClassifierIncomingFolder" value="c:\"/>
 
     <add key="FtpIncomingFolder" value="FTP URL, IN THE FORM 'FTP://DOMAIN/%2F/PATH/', OR SIMPLY 'FTP://DOMAIN' IF DOWNLOADING FROM THE DEFAULT FOLDER"/>
     <add key="FtpUsername" value="FTP USERNAME"/>

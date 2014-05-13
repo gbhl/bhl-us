@@ -10,6 +10,7 @@
         AbbyyHasImage smallint NOT NULL DEFAULT (0),
         ContrastHasImage smallint NOT NULL DEFAULT (0),
         PercentCoverage decimal (5, 2) NOT NULL DEFAULT( 0),
+		Color nvarchar(40) NOT NULL DEFAULT(''),
         CreationDate datetime NOT NULL DEFAULT (GETDATE()),
         LastModifiedDate datetime NOT NULL DEFAULT (GETDATE()),
         CreationUserID int DEFAULT( 1),
