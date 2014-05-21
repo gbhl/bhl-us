@@ -32,6 +32,7 @@ namespace PageDetailHarvest
         private List<string> errorMessages = new List<string>();
         private int numFilesHarvested = 0;
         private int numRecordsExported = 0;
+        private int numClassifierFilesHarvested = 0;
 
         public void Process()
         {
@@ -47,7 +48,6 @@ namespace PageDetailHarvest
                 this.LogMessage("LoadAppConfig Error: " + e.Message, true);
             }
 
-
             // Read additional app settings from the command line
             // Note: Command line arguments override configuration file settings
             if (!this.ReadCommandLineArguments()) return;
@@ -59,6 +59,9 @@ namespace PageDetailHarvest
                     break;
                 case "CLASSIFIER_EXPORT":
                     ClassifierExport();
+                    break;
+                case "CLASSIFIER_IMPORT":
+                    ClassifierImport();
                     break;
                 default:
                     Console.WriteLine("Unknown Mode");
@@ -222,7 +225,7 @@ namespace PageDetailHarvest
                         if (exportPage != null) exportItem.Pages.Add(exportPage);
                         exportPage = new ClassifierExportPage();
 
-                        exportPage.PageUrl = string.Format(configParms.PageUrlFormat, pageID.ToString());
+                        exportPage.PageUrl = configParms.PageUrlPrefix + pageID.ToString();
                         exportPage.SequenceOrder = pageDetail.SequenceOrder;
                         exportPage.AbbyyHasIllustration = (pageDetail.AbbyyHasImage == 1);
                         exportPage.ContrastHasIllustration = (pageDetail.ContrastHasImage == 1);
@@ -247,7 +250,7 @@ namespace PageDetailHarvest
                         if (exportItem != null) export.Items.Add(exportItem);
                         exportItem = new ClassifierExportItem();
 
-                        exportItem.ItemUrl = string.Format(configParms.ItemUrlFormat, itemID.ToString());
+                        exportItem.ItemUrl = configParms.ItemUrlPrefix + itemID.ToString();
                         exportItem.Barcode = pageDetail.BarCode ?? string.Empty;
                         exportItem.Author = pageDetail.Authors.Split('|')[0] ?? string.Empty;
                         exportItem.Title = pageDetail.ShortTitle ?? string.Empty;
@@ -297,6 +300,54 @@ namespace PageDetailHarvest
         }
 
         /// <summary>
+        /// Harvest the data imported from the Classifier application (Macaw).
+        /// </summary>
+        private void ClassifierImport()
+        {
+            // Get new files from the Classifier
+            GetNewClassifierImports();            
+
+            // Read files to be processed from the input directory
+            string[] inputFileNames = Directory.GetFiles(configParms.ClassifierInputFolder);
+
+            LogMessage(string.Format("Beginning import of {0} Classifier files", inputFileNames.Count()));
+
+            foreach (string inputFileName in inputFileNames)
+            {
+                try
+                {
+                    // Parse the item and page details from the file
+                    List<PageClassifierImport> pageDetails = ParseClassifierFile(inputFileName);
+
+                    // Update the database
+                    foreach (PageClassifierImport pageDetail in pageDetails)
+                    {
+                        SaveClassifierPageDetail(pageDetail);
+                    }
+
+                    // Move the file to the "Complete" folder
+                    CreateDirectory(configParms.ClassifierCompleteFolder);
+                    File.Move(inputFileName, configParms.ClassifierCompleteFolder + Path.GetFileName(inputFileName));
+
+                    LogMessage(string.Format("Done importing \"{0}\"", inputFileName));
+                }
+                catch (Exception ex)
+                {
+                    // Move the file to the Error folder
+                    CreateDirectory(configParms.ClassifierErrorFolder);
+                    string errorFileName = configParms.ClassifierErrorFolder + Path.GetFileName(inputFileName);
+                    if (File.Exists(errorFileName)) File.Delete(errorFileName);
+                    File.Move(inputFileName, errorFileName);
+
+                    LogMessage(string.Format("Error importing \"{0}\"", inputFileName), ex);
+                }
+            }
+
+            numFilesHarvested = inputFileNames.Count();
+            LogMessage(string.Format("Done importing {0} Classifier files", numClassifierFilesHarvested));
+        }
+
+        /// <summary>
         /// Look for new algorithm extracts.  If any are found, move them to the Extract Input folder.
         /// </summary>
         private void GetNewExtracts()
@@ -304,6 +355,20 @@ namespace PageDetailHarvest
             FtpFileSystemWatcher ftp = new FtpFileSystemWatcher(configParms.FtpIncomingFolder, configParms.ExtractInputFolder,
                 1, configParms.FtpUsername, configParms.FtpPassword, true, true);
             ftp.Download();
+        }
+
+        /// <summary>
+        /// Look for new files from the Classifier.  If any are found, move them to the Classifier Input folder.
+        /// </summary>
+        private void GetNewClassifierImports()
+        {
+            string[] fileNames = Directory.GetFiles(configParms.ClassifierIncomingFolder);
+            foreach(string fileName in fileNames)
+            {
+                // Move the file to the Input folder
+                CreateDirectory(configParms.ClassifierInputFolder);
+                File.Move(fileName, configParms.ClassifierInputFolder + Path.GetFileName(fileName));
+            }
         }
 
         /// <summary>
@@ -341,7 +406,7 @@ namespace PageDetailHarvest
             {
                 while ((line = fileReader.ReadLine()) != null)
                 {
-                    PageDetail pageDetail = ParseJson(line);
+                    PageDetail pageDetail = ParseExtractJson(line);
                     pageDetailList.Add(pageDetail);
                 }
             }
@@ -354,7 +419,7 @@ namespace PageDetailHarvest
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        private PageDetail ParseJson(string json)
+        private PageDetail ParseExtractJson(string json)
         {
             PageDetail pageDetail = new PageDetail();
 
@@ -398,7 +463,45 @@ namespace PageDetailHarvest
         }
 
         /// <summary>
-        /// Save the specified page details to the database
+        /// Parse the Classifier-added details contained in the specified file
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private List<PageClassifierImport> ParseClassifierFile(string fileName)
+        {
+            List<PageClassifierImport> imports = new List<PageClassifierImport>();
+
+            string json = File.ReadAllText(fileName);
+
+            dynamic metadata = JsonConvert.DeserializeObject<Object>(json);
+
+            dynamic items = metadata.items;
+            foreach (dynamic item in items)
+            {
+                dynamic pages = item.pages;
+                foreach (dynamic page in pages)
+                {
+                    PageClassifierImport import = new PageClassifierImport();
+                    import.ItemID = Convert.ToInt32(((string)item.itemid).Replace(configParms.ItemUrlPrefix, ""));
+                    import.PageID = Convert.ToInt32(((string)page.pageid).Replace(configParms.PageUrlPrefix, ""));
+                    import.BwColor = page.color_or_bw;
+                    import.NoImage = (page.no_image_found != null);
+
+                    dynamic pageTypes = page.page_type;
+                    foreach (string pageType in pageTypes)
+                    {
+                        import.PageTypes.Add(pageType);
+                    }
+
+                    imports.Add(import);
+                }
+            }
+
+            return imports;
+        }
+
+        /// <summary>
+        /// Save the specified page details to the database.  If necessary, add an "Illustration" page type to the page.
         /// </summary>
         /// <param name="pageImage"></param>
         /// <returns></returns>
@@ -423,26 +526,107 @@ namespace PageDetailHarvest
                         PageIllustrationInsert(sqlConnection, sqlTransaction, pageDetailID, block);
                     }
 
+                    // Add the "Illustration" page type to the page record if both algorithms indicate an image.
+                    if (pageImage.AbbyHasImage && pageImage.ContrastHasImage)
+                    {
+                        int paginationStatus = ItemSelectPaginationStatus(sqlConnection, sqlTransaction, pageImage.PageID);
+
+                        // Make sure the item is not "Pagination Complete"
+                        if (paginationStatus != (int)PaginationStatus.Complete)
+                        {
+                            // Make sure this page has not been edited by a BHL staff user
+                            List<Tuple<DateTime, int>> pageHistory = PageSelectCurrentUpdateHistory(sqlConnection, sqlTransaction, pageImage.PageID);
+
+                            bool edited = false;
+                            foreach(Tuple<DateTime, int> history in pageHistory)
+                            {
+                                if (history.Item2 != configParms.DefaultUserID && 
+                                    history.Item2 != configParms.ExtractionUserID &&
+                                    history.Item2 != configParms.ClassifierUserID)
+                                {
+                                    edited = true;
+                                    break;
+                                }                                
+                            }
+
+                            if (!edited)
+                            {
+                                // Add the "Illustration" page type
+                                PagePageTypeInsert(sqlConnection, sqlTransaction, pageImage.PageID, 
+                                    configParms.PageTypeIllustration, configParms.ExtractionUserID);
+                            }
+                        }
+                    }
+
                     sqlTransaction.Commit();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    // Log errors
-
-                    try
-                    {
-                        sqlTransaction.Rollback();
-                    }
-                    catch (Exception ex2)
-                    {
-                        // Log errors
-                    }
-                    success = false;
+                    sqlTransaction.Rollback();
+                    throw;
                 }
                 finally
                 {
                     sqlTransaction.Dispose();
                 }            
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Save page details from the Classifier to the database
+        /// </summary>
+        /// <param name="pageImport"></param>
+        /// <returns></returns>
+        private bool SaveClassifierPageDetail(PageClassifierImport pageImport)
+        {
+            bool success = true;
+
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+
+            using (sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["BHL"].ToString()))
+            {
+                sqlConnection.Open();
+                sqlTransaction = sqlConnection.BeginTransaction();
+
+                try
+                {
+                    PageDetailUpdateColor(sqlConnection, sqlTransaction, pageImport.PageID, pageImport.BwColor);
+
+                    // Make sure the item is not "Pagination Complete"
+                    int paginationStatus = ItemSelectPaginationStatus(sqlConnection, sqlTransaction, pageImport.PageID);
+                    if (paginationStatus != (int)PaginationStatus.Complete)
+                    {
+                        // Remove any image page types not assigned by a BHL staff user
+                        PagePageTypeDeleteAutoAssignedImages(sqlConnection, sqlTransaction, pageImport.PageID);
+
+                        // Don't add page types if the NoImage flag is set
+                        if (!pageImport.NoImage)
+                        {
+                            foreach (string pageType in pageImport.PageTypes)
+                            {
+                                // Add the new page type
+                                PagePageTypeInsert(sqlConnection, sqlTransaction, pageImport.PageID, pageType, configParms.ClassifierUserID);
+                            }
+                        }
+                    }
+
+                    PageDetailStatus newStatus = (pageImport.NoImage ? PageDetailStatus.NoImageFound : PageDetailStatus.Classified);
+                    PageDetailUpdateStatus(sqlConnection, sqlTransaction, pageImport.PageID, (int)newStatus);
+
+                    sqlTransaction.Commit();
+                }
+                catch
+                {
+                    sqlTransaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    sqlTransaction.Dispose();
+                }
             }
 
             return success;
@@ -456,14 +640,14 @@ namespace PageDetailHarvest
         private void UpdatePageDetailStatus(List<PageClassifierExport> pageDetailList, PageDetailStatus status)
         {
             // Get the unique PageDetail identifiers
-            var pageDetailIDs = from d in pageDetailList
-                                group d by d.PageDetailID into g
-                                select new { PageDetailID = g.Key };
+            var pageIDs = from d in pageDetailList
+                        group d by d.PageID into g
+                        select new { PageID = g.Key };
 
-            foreach (var pageDetailID in pageDetailIDs)
+            foreach (var pageID in pageIDs)
             {
                 // Mark the record as exported to the classifier
-                PageDetailUpdateStatus(Convert.ToInt32(pageDetailID.PageDetailID), (int)status);
+                PageDetailUpdateStatus(Convert.ToInt32(pageID.PageID), (int)status);
             }
         }
 
@@ -599,6 +783,63 @@ namespace PageDetailHarvest
             return pageIllustrationID;
         }
 
+        /// <summary>
+        /// Get the pagination status of the item associated with the specified PageID.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="pageID"></param>
+        /// <returns></returns>
+        private int ItemSelectPaginationStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlCommand sqlCommand = null;
+            int paginationStatusID = 0;
+
+            string sql = string.Format("exec dbo.ItemSelectByPageID @PageID={0}", pageID.ToString());
+
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                {
+                    if (reader.Read()) paginationStatusID = reader.GetInt32(reader.GetOrdinal("PaginationStatusID"));
+                }
+            }
+
+            return paginationStatusID;
+        }
+
+        /// <summary>
+        /// Get a list of the dates and users for the most recent updates to the Page record and all 
+        /// related records (Page_PageType and IndicatedPage).
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="pageID"></param>
+        /// <returns></returns>
+        private List<Tuple<DateTime, int>> PageSelectCurrentUpdateHistory(SqlConnection sqlConnection, 
+            SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlCommand sqlCommand = null;
+            List<Tuple<DateTime, int>> history = new List<Tuple<DateTime, int>>();
+
+            string sql = string.Format("exec dbo.PageSelectCurrentUpdateHistory @PageID={0}", pageID.ToString());
+
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime lastModifiedDate = reader.GetDateTime(reader.GetOrdinal("LastModifiedDate"));
+                        int lastModifiedUserID = reader.GetInt32(reader.GetOrdinal("LastModifiedUserID"));
+                        history.Add(new Tuple<DateTime, int>(lastModifiedDate, lastModifiedUserID));
+                    }
+                }
+            }
+
+            return history;
+        }
+
         private int PageSelectByBarCodeAndSequence(string barcode, int sequence)
         {
             SqlConnection sqlConnection = null;
@@ -705,7 +946,19 @@ namespace PageDetailHarvest
             return pageDetail;
         }
 
-        private void PageDetailUpdateStatus(int pageDetailID, int pageDetailStatusID)
+        private void PageDetailUpdateColor(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            int pageID, string color)
+        {
+            SqlCommand sqlCommand = null;
+
+            string sql = string.Format("exec dbo.PageDetailUpdateColor @PageID={0}, @Color='{1}'", pageID, color);
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
+
+        private void PageDetailUpdateStatus(int pageID, int pageDetailStatusID)
         {
             SqlConnection sqlConnection = null;
             SqlCommand sqlCommand = null;
@@ -713,14 +966,68 @@ namespace PageDetailHarvest
             using (sqlConnection = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["BHL"].ToString()))
             {
                 sqlConnection.Open();
-                string sql = string.Format("exec dbo.PageDetailUpdateStatus @PageDetailID={0}, @PageDetailStatusID={1}",
-                    pageDetailID, pageDetailStatusID);
+                string sql = string.Format("exec dbo.PageDetailUpdateStatus @PageID={0}, @PageDetailStatusID={1}",
+                    pageID, pageDetailStatusID);
 
                 using (sqlCommand = new SqlCommand(sql, sqlConnection))
                 {
                     sqlCommand.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void PageDetailUpdateStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            int pageID, int pageDetailStatusID)
+        {
+            SqlCommand sqlCommand = null;
+
+            string sql = string.Format("exec dbo.PageDetailUpdateStatus @PageID={0}, @PageDetailStatusID={1}",
+                pageID, pageDetailStatusID);
+
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
+
+        private void PagePageTypeInsert(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID, 
+            string pageTypeName, int userID)
+        {
+            SqlCommand sqlCommand = null;
+
+            string sql = string.Format("exec dbo.Page_PageTypeInsert @PageID={0}, @PageTypeName='{1}', @UserID={2}", 
+                pageID, pageTypeName, userID);
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Removed all image page types assigned by the Art Of Life processes or by the BHL data ingest processes.
+        /// Page types assigned via the Paginator tool are not affected.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="pageID"></param>
+        private void PagePageTypeDeleteAutoAssignedImages(SqlConnection sqlConnection, 
+            SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlCommand sqlCommand = null;
+
+            string sql = string.Format("exec dbo.Page_PageTypeDeleteAutoAssignedImages @PageID={0}", pageID);
+            using (sqlCommand = new SqlCommand(sql, sqlConnection, sqlTransaction))
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
+
+        enum PaginationStatus
+        {
+            New = 5,
+            Incomplete = 10,
+            InProgress = 20,
+            Complete = 30
         }
 
         #endregion DAL
@@ -763,7 +1070,7 @@ namespace PageDetailHarvest
             {
                 // Send email if PDFS were deleted, or if an error occurred.
                 // Don't send an email each time a PDF is generated.
-                if (numFilesHarvested > 0 || numRecordsExported > 0 || errorMessages.Count > 0)
+                if (numFilesHarvested > 0 || numRecordsExported > 0 || numClassifierFilesHarvested > 0 || errorMessages.Count > 0)
                 {
                     String subject = String.Empty;
                     String thisComputer = Environment.MachineName;
@@ -812,6 +1119,10 @@ namespace PageDetailHarvest
             if (numRecordsExported > 0)
             {
                 sb.Append(string.Format("{0} records were exported{1}", numRecordsExported, endOfLine));
+            }
+            if (numClassifierFilesHarvested > 0)
+            {
+                sb.Append(string.Format("{0} files were imported from the Classifier{1}", numClassifierFilesHarvested, endOfLine));
             }
             if (this.errorMessages.Count > 0)
             {

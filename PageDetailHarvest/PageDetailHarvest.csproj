@@ -59,6 +59,7 @@
     <Compile Include="FtpFileSystemWatcher.cs" />
     <Compile Include="HarvestProcessor.cs" />
     <Compile Include="PageClassifierExport.cs" />
+    <Compile Include="PageClassifierImport.cs" />
     <Compile Include="PageDetail.cs" />
     <Compile Include="PageIllustration.cs" />
     <Compile Include="Program.cs" />
