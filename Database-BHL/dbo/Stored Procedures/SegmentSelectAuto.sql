@@ -1,10 +1,4 @@
-﻿
--- SegmentSelectAuto PROCEDURE
--- Generated 9/24/2013 2:29:04 PM
--- Do not modify the contents of this procedure.
--- Select Procedure for Segment
-
-CREATE PROCEDURE SegmentSelectAuto
+﻿CREATE PROCEDURE SegmentSelectAuto
 
 @SegmentID INT
 
@@ -28,9 +22,11 @@ SELECT
 	[PublisherName],
 	[PublisherPlace],
 	[Notes],
+	[Summary],
 	[Volume],
 	[Series],
 	[Issue],
+	[Edition],
 	[Date],
 	[PageRange],
 	[StartPageNumber],

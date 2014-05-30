@@ -1,5 +1,5 @@
 
-// Generated 9/24/2013 2:29:04 PM
+// Generated 5/30/2014 11:29:00 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon Segment.
@@ -149,9 +149,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
 		/// <param name="notes"></param>
+		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="date"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
@@ -187,9 +189,11 @@ namespace MOBOT.BHL.DAL
 			string publisherName,
 			string publisherPlace,
 			string notes,
+			string summary,
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string date,
 			string pageRange,
 			string startPageNumber,
@@ -209,7 +213,7 @@ namespace MOBOT.BHL.DAL
 			string sortTitle,
 			int? redirectSegmentID)
 		{
-			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
+			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
 		}
 		
 		/// <summary>
@@ -231,9 +235,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
 		/// <param name="notes"></param>
+		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="date"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
@@ -270,9 +276,11 @@ namespace MOBOT.BHL.DAL
 			string publisherName,
 			string publisherPlace,
 			string notes,
+			string summary,
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string date,
 			string pageRange,
 			string startPageNumber,
@@ -310,9 +318,11 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
 					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 400, false, edition),
 					CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
@@ -393,9 +403,11 @@ namespace MOBOT.BHL.DAL
 				value.PublisherName,
 				value.PublisherPlace,
 				value.Notes,
+				value.Summary,
 				value.Volume,
 				value.Series,
 				value.Issue,
+				value.Edition,
 				value.Date,
 				value.PageRange,
 				value.StartPageNumber,
@@ -497,9 +509,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
 		/// <param name="notes"></param>
+		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="date"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
@@ -535,9 +549,11 @@ namespace MOBOT.BHL.DAL
 			string publisherName,
 			string publisherPlace,
 			string notes,
+			string summary,
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string date,
 			string pageRange,
 			string startPageNumber,
@@ -556,7 +572,7 @@ namespace MOBOT.BHL.DAL
 			string sortTitle,
 			int? redirectSegmentID)
 		{
-			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, volume, series, issue, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
+			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
 		}
 		
 		/// <summary>
@@ -579,9 +595,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
 		/// <param name="notes"></param>
+		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="date"></param>
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
@@ -618,9 +636,11 @@ namespace MOBOT.BHL.DAL
 			string publisherName,
 			string publisherPlace,
 			string notes,
+			string summary,
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string date,
 			string pageRange,
 			string startPageNumber,
@@ -657,9 +677,11 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
 					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 400, false, edition),
 					CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
@@ -740,9 +762,11 @@ namespace MOBOT.BHL.DAL
 				value.PublisherName,
 				value.PublisherPlace,
 				value.Notes,
+				value.Summary,
 				value.Volume,
 				value.Series,
 				value.Issue,
+				value.Edition,
 				value.Date,
 				value.PageRange,
 				value.StartPageNumber,
@@ -817,9 +841,11 @@ namespace MOBOT.BHL.DAL
 						value.PublisherName,
 						value.PublisherPlace,
 						value.Notes,
+						value.Summary,
 						value.Volume,
 						value.Series,
 						value.Issue,
+						value.Edition,
 						value.Date,
 						value.PageRange,
 						value.StartPageNumber,
@@ -877,9 +903,11 @@ namespace MOBOT.BHL.DAL
 						value.PublisherName,
 						value.PublisherPlace,
 						value.Notes,
+						value.Summary,
 						value.Volume,
 						value.Series,
 						value.Issue,
+						value.Edition,
 						value.Date,
 						value.PageRange,
 						value.StartPageNumber,

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectForSegmentID]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectForSegmentID]
 
 @SegmentID int
 
@@ -28,9 +27,11 @@ SELECT	s.SegmentID,
 		s.PublisherName,
 		s.PublisherPlace,
 		s.Notes,
+		s.Summary,
 		s.Volume,
 		s.Series,
 		s.Issue,
+		s.Edition,
 		s.[Date],
 		CASE
 		WHEN s.PageRange <> '' THEN s.PageRange 

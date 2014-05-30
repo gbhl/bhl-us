@@ -174,7 +174,7 @@
             </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Notes)) { %>
-            <div class="segmentdetails"><h3>Notes / Abstract</h3> <p><%: BhlSegment.Notes%></p></div>
+            <div class="segmentdetails"><h3>Notes</h3> <p><%: BhlSegment.Notes%></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.LanguageName)) { %>
             <div class="segmentdetails"><h3>Language</h3> <p><span itemprop="inLanguage"><%: BhlSegment.LanguageName%></span></p></div>

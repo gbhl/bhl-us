@@ -1,10 +1,4 @@
-﻿
--- SegmentInsertAuto PROCEDURE
--- Generated 9/24/2013 2:29:04 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Segment
-
-CREATE PROCEDURE SegmentInsertAuto
+﻿CREATE PROCEDURE SegmentInsertAuto
 
 @SegmentID INT OUTPUT,
 @ItemID INT = null,
@@ -20,9 +14,11 @@ CREATE PROCEDURE SegmentInsertAuto
 @PublisherName NVARCHAR(250),
 @PublisherPlace NVARCHAR(150),
 @Notes NVARCHAR(MAX),
+@Summary NVARCHAR(MAX),
 @Volume NVARCHAR(100),
 @Series NVARCHAR(100),
 @Issue NVARCHAR(100),
+@Edition NVARCHAR(400),
 @Date NVARCHAR(20),
 @PageRange NVARCHAR(50),
 @StartPageNumber NVARCHAR(20),
@@ -61,9 +57,11 @@ INSERT INTO [dbo].[Segment]
 	[PublisherName],
 	[PublisherPlace],
 	[Notes],
+	[Summary],
 	[Volume],
 	[Series],
 	[Issue],
+	[Edition],
 	[Date],
 	[PageRange],
 	[StartPageNumber],
@@ -100,9 +98,11 @@ VALUES
 	@PublisherName,
 	@PublisherPlace,
 	@Notes,
+	@Summary,
 	@Volume,
 	@Series,
 	@Issue,
+	@Edition,
 	@Date,
 	@PageRange,
 	@StartPageNumber,
@@ -150,9 +150,11 @@ ELSE BEGIN
 		[PublisherName],
 		[PublisherPlace],
 		[Notes],
+		[Summary],
 		[Volume],
 		[Series],
 		[Issue],
+		[Edition],
 		[Date],
 		[PageRange],
 		[StartPageNumber],

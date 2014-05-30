@@ -1,5 +1,5 @@
 
-// Generated 3/10/2014 11:37:20 AM
+// Generated 5/30/2014 11:29:00 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ImportRecordDAL is based upon ImportRecord.
@@ -32,7 +32,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ImportRecordDAL : IImportRecordDAL
+	partial class ImportRecordDAL 
 	{
  		#region ===== SELECT =====
 
@@ -119,8 +119,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectAuto", connection, transaction,
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordSelectAuto", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID)))
 			{
 				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
@@ -145,6 +145,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
@@ -152,6 +153,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="startYear"></param>
 		/// <param name="endYear"></param>
 		/// <param name="language"></param>
+		/// <param name="summary"></param>
+		/// <param name="notes"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
 		/// <param name="copyrightStatus"></param>
@@ -182,6 +185,7 @@ namespace MOBOT.BHL.DAL
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
@@ -189,6 +193,8 @@ namespace MOBOT.BHL.DAL
 			short? startYear,
 			short? endYear,
 			string language,
+			string summary,
+			string notes,
 			string rights,
 			string dueDiligence,
 			string copyrightStatus,
@@ -207,7 +213,7 @@ namespace MOBOT.BHL.DAL
 			int creationUserID,
 			int lastModifiedUserID)
 		{
-			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID );
+			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -225,6 +231,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
@@ -232,6 +239,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="startYear"></param>
 		/// <param name="endYear"></param>
 		/// <param name="language"></param>
+		/// <param name="summary"></param>
+		/// <param name="notes"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
 		/// <param name="copyrightStatus"></param>
@@ -263,6 +272,7 @@ namespace MOBOT.BHL.DAL
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
@@ -270,6 +280,8 @@ namespace MOBOT.BHL.DAL
 			short? startYear,
 			short? endYear,
 			string language,
+			string summary,
+			string notes,
 			string rights,
 			string dueDiligence,
 			string copyrightStatus,
@@ -290,8 +302,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordInsertAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("ImportRecordID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
@@ -302,6 +314,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 400, false, edition),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
@@ -309,6 +322,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.SmallInt, null, true, startYear),
 					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.SmallInt, null, true, endYear),
 					CustomSqlHelper.CreateInputParameter("Language", SqlDbType.NVarChar, 30, true, language),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
 					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, false, rights),
 					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, false, dueDiligence),
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
@@ -384,6 +399,7 @@ namespace MOBOT.BHL.DAL
 				value.Volume,
 				value.Series,
 				value.Issue,
+				value.Edition,
 				value.PublicationDetails,
 				value.PublisherName,
 				value.PublisherPlace,
@@ -391,6 +407,8 @@ namespace MOBOT.BHL.DAL
 				value.StartYear,
 				value.EndYear,
 				value.Language,
+				value.Summary,
+				value.Notes,
 				value.Rights,
 				value.DueDiligence,
 				value.CopyrightStatus,
@@ -445,8 +463,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordDeleteAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordDeleteAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -487,6 +505,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
@@ -494,6 +513,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="startYear"></param>
 		/// <param name="endYear"></param>
 		/// <param name="language"></param>
+		/// <param name="summary"></param>
+		/// <param name="notes"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
 		/// <param name="copyrightStatus"></param>
@@ -524,6 +545,7 @@ namespace MOBOT.BHL.DAL
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
@@ -531,6 +553,8 @@ namespace MOBOT.BHL.DAL
 			short? startYear,
 			short? endYear,
 			string language,
+			string summary,
+			string notes,
 			string rights,
 			string dueDiligence,
 			string copyrightStatus,
@@ -548,7 +572,7 @@ namespace MOBOT.BHL.DAL
 			string lCCN,
 			int lastModifiedUserID)
 		{
-			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID);
+			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -567,6 +591,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
+		/// <param name="edition"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
@@ -574,6 +599,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="startYear"></param>
 		/// <param name="endYear"></param>
 		/// <param name="language"></param>
+		/// <param name="summary"></param>
+		/// <param name="notes"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
 		/// <param name="copyrightStatus"></param>
@@ -605,6 +632,7 @@ namespace MOBOT.BHL.DAL
 			string volume,
 			string series,
 			string issue,
+			string edition,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
@@ -612,6 +640,8 @@ namespace MOBOT.BHL.DAL
 			short? startYear,
 			short? endYear,
 			string language,
+			string summary,
+			string notes,
 			string rights,
 			string dueDiligence,
 			string copyrightStatus,
@@ -631,8 +661,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordUpdateAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportRecordUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID),
 					CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID),
 					CustomSqlHelper.CreateInputParameter("ImportRecordStatusID", SqlDbType.Int, null, false, importRecordStatusID),
@@ -643,6 +673,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
+					CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 400, false, edition),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
@@ -650,6 +681,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.SmallInt, null, true, startYear),
 					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.SmallInt, null, true, endYear),
 					CustomSqlHelper.CreateInputParameter("Language", SqlDbType.NVarChar, 30, true, language),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
 					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, false, rights),
 					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, false, dueDiligence),
 					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
@@ -725,6 +758,7 @@ namespace MOBOT.BHL.DAL
 				value.Volume,
 				value.Series,
 				value.Issue,
+				value.Edition,
 				value.PublicationDetails,
 				value.PublisherName,
 				value.PublisherPlace,
@@ -732,6 +766,8 @@ namespace MOBOT.BHL.DAL
 				value.StartYear,
 				value.EndYear,
 				value.Language,
+				value.Summary,
+				value.Notes,
 				value.Rights,
 				value.DueDiligence,
 				value.CopyrightStatus,
@@ -801,6 +837,7 @@ namespace MOBOT.BHL.DAL
 						value.Volume,
 						value.Series,
 						value.Issue,
+						value.Edition,
 						value.PublicationDetails,
 						value.PublisherName,
 						value.PublisherPlace,
@@ -808,6 +845,8 @@ namespace MOBOT.BHL.DAL
 						value.StartYear,
 						value.EndYear,
 						value.Language,
+						value.Summary,
+						value.Notes,
 						value.Rights,
 						value.DueDiligence,
 						value.CopyrightStatus,
@@ -860,6 +899,7 @@ namespace MOBOT.BHL.DAL
 						value.Volume,
 						value.Series,
 						value.Issue,
+						value.Edition,
 						value.PublicationDetails,
 						value.PublisherName,
 						value.PublisherPlace,
@@ -867,6 +907,8 @@ namespace MOBOT.BHL.DAL
 						value.StartYear,
 						value.EndYear,
 						value.Language,
+						value.Summary,
+						value.Notes,
 						value.Rights,
 						value.DueDiligence,
 						value.CopyrightStatus,
