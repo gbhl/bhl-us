@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE import.ImportRecordPublishToProduction
+﻿CREATE PROCEDURE [import].[ImportRecordPublishToProduction]
 
 @ImportRecordID int,
 @UserID int
@@ -274,6 +274,9 @@ BEGIN TRY
 				Volume,
 				Series,
 				Issue,
+				Edition,
+				Notes,
+				Summary,
 				[Date],
 				PageRange,
 				StartPageNumber,
@@ -300,6 +303,9 @@ BEGIN TRY
 				Volume,
 				Series,
 				Issue,
+				Edition,
+				Notes,
+				Summary,
 				[Year] AS [Date],
 				CASE WHEN PageRange <> '' THEN PageRange 
 					ELSE CASE WHEN StartPage <> '' THEN StartPage + '-' + EndPage ELSE EndPage END 
@@ -483,6 +489,7 @@ BEGIN TRY
 					Datafield_260_a,
 					Datafield_260_b,
 					Datafield_260_c,
+					EditionStatement,
 					LanguageCode,
 					InstitutionCode,
 					PublishReady,
@@ -523,6 +530,7 @@ BEGIN TRY
 					PublisherPlace AS Datafield_260_a,
 					PublisherName AS Datafield_260_b,
 					[Year] AS Datafield_260_c,
+					Edition,
 					ISNULL(l1.LanguageCode, l2.LanguageCode) AS LanguageCode,
 					@ContributorCode AS InstitutionCode,
 					1 AS PublishReady,
