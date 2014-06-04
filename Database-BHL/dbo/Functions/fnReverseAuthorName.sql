@@ -31,7 +31,6 @@ BEGIN
 			END
 	END
 
-	RETURN @FullNameReversed
+	RETURN LTRIM(RTRIM(@FullNameReversed))
 END
-
 
