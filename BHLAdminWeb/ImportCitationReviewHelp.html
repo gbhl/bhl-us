@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Import Citations Review Help</title>
+    <link rel="stylesheet" type="text/css" runat="server" id="link1" href="styles/adminstyle.css" />
+    <style>
+        table 
+        {
+            border-collapse:collapse;
+            margin: 5px 5px 20px 5px;
+        }
+        
+        table tr
+        {
+            vertical-align:top;
+        }
+
+        table td
+        {
+            border: 1px solid Black;
+            padding: 3px 3px 3px 3px;
+        }
+    </style>
+</head>
+<body>
+    <p class="BlackHeading">Using The Import Citations Review Page</p>
+    <p>The "Import Citations - Review" page allows the contents of an import file to be reviewed.  Individual rows or the entire file can be imported or rejected.</p>
+    <p>The status of each row controls the action that will be taken on the row.</p>
+    <p>
+        <ul>
+            <li>Rows with a status of "New" are ready to be imported.</li>
+            <li>A row with a "Rejected" status will not be imported for a business reason.  For example, the row may duplicate data already in BHL.</li>
+            <li>A row with an "Error" status will not be imported due to problems with the data.</li>
+            <li>Rows with a status of "Imported" have been imported, and cannot be changed.</li>
+        </ul>
+    </p>
+    <p>Change the status of any row by clicking on the status of the row.  A dropdown of available status values will appear.  Pick the desired new status from the list.</p>
+    <p>When the statuses of all rows have been set, take one of the following actions:</p>
+    <p>
+        <ul>
+            <li>Import all "New" rows by clicking the "Import File" button.</li>
+            <li>Reject all "New" rows by clicking the "Reject File" button.</li>
+            <li>Leave the page without taking any action on the "New" rows by clicking "Return to Dashboard" or "View Citation Import History" links in the upper left.</li>
+        </ul>
+    </p>
+</body>
+</html>

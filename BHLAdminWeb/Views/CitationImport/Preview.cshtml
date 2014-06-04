@@ -46,12 +46,18 @@
         <tbody>
             @for (int x = 0; x < Model.Rows.Count; x++)
             {
-                <tr>
+                <tr class="@((x % 2 > 0) ? "evenrow" : "oddrow")" >
                 @for (int y = 0; y < Model.Rows[x].Count; y++)
                 {
                     if (Model.Columns[y].MappedColumn != null)
                     {
-                        <td>@Model.Rows[x][y]</td>
+                        if (!string.IsNullOrWhiteSpace(Model.Columns[y].ValueDelimiter))
+                        {
+                            <td white-space: nowrap">@Html.Raw(@Model.Rows[x][y].Replace(Model.Columns[y].ValueDelimiter, "<br/>"))</td>
+                        }
+                        else{
+                            <td>@Html.Raw(@Model.Rows[x][y])</td>
+                        }
                     }
                 }
                 </tr>

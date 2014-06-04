@@ -69,12 +69,16 @@
 
     <div class="importRecordStatus" style="display:none">@Html.Raw(ViewBag.ImportRecordStatuses)</div>
 
-    <p style="color:red">Put instructions for using this page here!!!</p>
     <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
 
     <div style="margin-bottom:20px">
-        <input type="submit" name="btnImport" id="btnImport" value="Import File" />
-        <input type="submit" name="btnReject" id="btnReject" value="Reject File" />
+        <div style="display:inline">
+            <input type="submit" name="btnImport" id="btnImport" value="Import File" />
+            <input type="submit" name="btnReject" id="btnReject" value="Reject File" />
+        </div>
+        <div style="float:right">
+            <a href="#" title="About Library Stats" onclick="window.open('/ImportCitationReviewHelp.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');">How To Use This Page</a>
+        </div>
     </div>
 
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">

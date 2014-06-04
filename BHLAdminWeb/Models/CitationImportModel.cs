@@ -168,32 +168,35 @@ namespace MOBOT.BHL.AdminWeb.Models
             public int value { get; private set; }
 
             public static readonly MappedColumn NONE = new MappedColumn(0, "");
+            public static readonly MappedColumn ABSTRACT = new MappedColumn(1, "Abstract");
             //public static readonly MappedColumn AUTHORENDDATE = new MappedColumn(1, "Author End Date");
             //public static readonly MappedColumn AUTHORFIRSTNAME = new MappedColumn(2, "Author First Name");
             //public static readonly MappedColumn AUTHORLASTNAME = new MappedColumn(3, "Author Last Name");
-            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(4, "Author Name(s)");
+            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(2, "Author Name(s)");
             //public static readonly MappedColumn AUTHORSTARTDATE = new MappedColumn(5, "Author Start Date");
             //public static readonly MappedColumn AUTHORTYPE = new MappedColumn(6, "Author Type");
-            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(6, "Article Page Range");
-            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(7, "Article End Page");
-            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(8, "Article Start Page");
-            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(9, "Article Title");
-            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(10, "Book/Journal Title");
-            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(11, "Copyright Status");
-            public static readonly MappedColumn DOI = new MappedColumn(12, "DOI");
-            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(13, "Download Url");
-            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(14, "Due Diligence");
-            public static readonly MappedColumn GENRE = new MappedColumn(15, "Genre");
-            public static readonly MappedColumn ISBN = new MappedColumn(16, "ISBN");
-            public static readonly MappedColumn ISSN = new MappedColumn(17, "ISSN");
-            public static readonly MappedColumn ISSUE = new MappedColumn(18, "Issue");
-            public static readonly MappedColumn JOURNALENDYEAR = new MappedColumn(19, "Journal End Year");
-            public static readonly MappedColumn JOURNALSTARTYEAR = new MappedColumn(20, "Journal Start Year");
-            public static readonly MappedColumn KEYWORDS = new MappedColumn(21, "Keyword(s)");
-            public static readonly MappedColumn LANGUAGE = new MappedColumn(22, "Language");
-            public static readonly MappedColumn LCCN = new MappedColumn(23, "LCCN");
-            public static readonly MappedColumn LICENSE = new MappedColumn(24, "License");
-            public static readonly MappedColumn LICENSEURL = new MappedColumn(25, "License Url");
+            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(3, "Article Page Range");
+            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(4, "Article End Page");
+            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(5, "Article Start Page");
+            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(6, "Article Title");
+            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(7, "Book/Journal Title");
+            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(8, "Copyright Status");
+            public static readonly MappedColumn DOI = new MappedColumn(9, "DOI");
+            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(10, "Download Url");
+            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(11, "Due Diligence");
+            public static readonly MappedColumn EDITION = new MappedColumn(12, "Edition");
+            public static readonly MappedColumn GENRE = new MappedColumn(13, "Genre");
+            public static readonly MappedColumn ISBN = new MappedColumn(14, "ISBN");
+            public static readonly MappedColumn ISSN = new MappedColumn(15, "ISSN");
+            public static readonly MappedColumn ISSUE = new MappedColumn(16, "Issue");
+            public static readonly MappedColumn JOURNALENDYEAR = new MappedColumn(17, "Journal End Year");
+            public static readonly MappedColumn JOURNALSTARTYEAR = new MappedColumn(18, "Journal Start Year");
+            public static readonly MappedColumn KEYWORDS = new MappedColumn(19, "Keyword(s)");
+            public static readonly MappedColumn LANGUAGE = new MappedColumn(20, "Language");
+            public static readonly MappedColumn LCCN = new MappedColumn(21, "LCCN");
+            public static readonly MappedColumn LICENSE = new MappedColumn(22, "License");
+            public static readonly MappedColumn LICENSEURL = new MappedColumn(23, "License Url");
+            public static readonly MappedColumn NOTES = new MappedColumn(24, "Notes");
             public static readonly MappedColumn OCLC = new MappedColumn(26, "OCLC");
             public static readonly MappedColumn PUBLICATIONDETAILS = new MappedColumn(27, "Publication Details");
             public static readonly MappedColumn PUBLISHERNAME = new MappedColumn(28, "Publisher Name");
@@ -769,6 +772,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 // Accumulate all of the data to be saved
                 CitationImportColumn column = this.Columns[x];
 
+                if (column.MappedColumn == MappedColumn.ABSTRACT.name) citation.Summary = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEPAGERANGE.name) citation.PageRange = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEENDPAGE.name) citation.EndPage = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLESTARTPAGE.name) citation.StartPage = row[x];
@@ -791,6 +795,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.DOI.name) citation.DOI = row[x];
                 if (column.MappedColumn == MappedColumn.DOWNLOADURL.name) citation.DownloadUrl = row[x];
                 if (column.MappedColumn == MappedColumn.DUEDILIGENCE.name) citation.DueDiligence = row[x];
+                if (column.MappedColumn == MappedColumn.EDITION.name) citation.Edition = row[x];
                 if (column.MappedColumn == MappedColumn.GENRE.name) citation.Genre = row[x];
                 if (column.MappedColumn == MappedColumn.ISBN.name) citation.ISBN = row[x];
                 if (column.MappedColumn == MappedColumn.ISSN.name) citation.ISSN = row[x];
@@ -822,6 +827,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.LCCN.name) citation.LCCN = row[x];
                 if (column.MappedColumn == MappedColumn.LICENSE.name) citation.License = row[x];
                 if (column.MappedColumn == MappedColumn.LICENSEURL.name) citation.LicenseUrl = row[x];
+                if (column.MappedColumn == MappedColumn.NOTES.name) citation.Notes = row[x];
                 if (column.MappedColumn == MappedColumn.OCLC.name) citation.OCLC = row[x];
                 if (column.MappedColumn == MappedColumn.PUBLICATIONDETAILS.name) citation.PublicationDetails = row[x];
                 if (column.MappedColumn == MappedColumn.PUBLISHERNAME.name) citation.PublisherName = row[x];

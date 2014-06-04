@@ -895,6 +895,7 @@
     <Content Include="Images\report1_16x16.gif" />
     <Content Include="Images\textpage.png" />
     <Content Include="Images\up.gif" />
+    <Content Include="ImportCitationReviewHelp.html" />
     <Content Include="js\FlickrUpload.js" />
     <Content Include="js\grid.locale-en.js" />
     <Content Include="js\jquery.dataTables.min.js" />

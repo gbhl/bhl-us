@@ -345,3 +345,13 @@ a.TitleTag:hover
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4490c2', endColorstr='#3885b8',GradientType=0 );
 }
 
+.oddrow
+{
+    background:rgb(226, 228, 255);
+}
+
+.evenrow
+{
+    background-color:rgb(255, 255, 255);
+}
+
