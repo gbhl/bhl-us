@@ -23,6 +23,11 @@ CREATE NONCLUSTERED INDEX [IX_DOI_TypeIDEntityID]
 
 
 GO
+CREATE NONCLUSTERED INDEX [IX_DOI_EntityIsValid]
+    ON [dbo].[DOI]([EntityID] ASC, [IsValid] ASC);
+
+
+GO
 CREATE TRIGGER dbo.DOI_AuditBasic_Insert ON [dbo].[DOI]
  AFTER Insert
  NOT FOR REPLICATION

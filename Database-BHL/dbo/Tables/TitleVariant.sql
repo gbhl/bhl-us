@@ -17,6 +17,11 @@
 
 
 GO
+CREATE NONCLUSTERED INDEX [IX_TitleVariant_TitleID]
+    ON [dbo].[TitleVariant]([TitleID] ASC);
+
+
+GO
 CREATE TRIGGER dbo.TitleVariant_AuditBasic_Insert ON [dbo].[TitleVariant]
  AFTER Insert
  NOT FOR REPLICATION

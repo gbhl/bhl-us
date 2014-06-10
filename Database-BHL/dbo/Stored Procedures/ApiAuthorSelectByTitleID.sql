@@ -17,7 +17,7 @@ SELECT      a.AuthorID ,
             FullerForm,
 			ta.Relationship,
 			ta.TitleOfWork,
-            a.StartDate + CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate AS Dates
+            a.StartDate + CASE WHEN a.StartDate <> '' THEN N'-' ELSE N'' END + a.EndDate AS Dates
 FROM  dbo. Author a INNER JOIN dbo. TitleAuthor ta
                    ON a. AuthorID = ta .AuthorID
              INNER JOIN dbo.AuthorName n
