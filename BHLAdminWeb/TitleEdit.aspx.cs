@@ -175,15 +175,18 @@ namespace MOBOT.BHL.AdminWeb
 
             CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
 
+            /*
             Institution emptyInstitution = new Institution();
             emptyInstitution.InstitutionCode = string.Empty;
             emptyInstitution.InstitutionName = string.Empty;
             institutions.Insert(0, emptyInstitution);
+             */
 
             ddlInst.DataSource = institutions;
             ddlInst.DataTextField = "InstitutionName";
             ddlInst.DataValueField = "InstitutionCode";
             ddlInst.DataBind();
+            ddlInst.SelectedValue = "UNKNOWN";
 
             CustomGenericList<Language> languages = bp.LanguageSelectAll();
 
@@ -230,7 +233,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             else
             {
-                ddlInst.SelectedIndex = 0;
+                ddlInst.SelectedValue = "UNKNOWN";
             }
 
 			if ( title.LanguageCode != null && title.LanguageCode.Length > 0 )
