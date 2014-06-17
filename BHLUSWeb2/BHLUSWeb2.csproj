@@ -339,6 +339,7 @@
     <Content Include="images\flickrthumbs\Default\7360249.jpg" />
     <Content Include="images\flickrthumbs\Default\8448711.jpg" />
     <Content Include="images\flickrthumbs\Default\flickrthumbs.txt" />
+    <Content Include="images\GNA_revised_icon_14.png" />
     <Content Include="images\home_pic_img.png" />
     <Content Include="images\home_shadow_search.png" />
     <Content Include="images\howToGraphic.png" />

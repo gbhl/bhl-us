@@ -105,7 +105,7 @@
           </h3>
           <div id="names-panel"></div>
         </div>
-        <span class="ubiolink">Powered by <a href="http://www.ubio.org/">uBio</a></span>
+        <span class="ubiolink">Indexed by <a href="http://www.globalnames.org/">Global Names</a> <a href="http://www.globalnames.org/"><img src="/images/GNA_revised_icon_14.png" /></a></span>
       </div>
     </div> <!-- left-panel2 -->
 
