@@ -43,9 +43,9 @@
                 <label class="caption">Subject:</label>
 			    <asp:DropDownList runat="server" ID="ddlList">
 			        <asp:ListItem Text="" Value=""></asp:ListItem>
-				    <asp:ListItem Text="Technical Issues" Value="1"></asp:ListItem>
-					<asp:ListItem Text="Suggestion" Value="5"></asp:ListItem>
-					<asp:ListItem Text="Bibliographic Issues" Value="6"></asp:ListItem>
+				    <asp:ListItem Text="Technical Issues" Value="22"></asp:ListItem>
+					<asp:ListItem Text="Suggestion" Value="36"></asp:ListItem>
+					<asp:ListItem Text="Bibliographic Issues" Value="55"></asp:ListItem>
 			    </asp:DropDownList> *
             </li>
             <li>

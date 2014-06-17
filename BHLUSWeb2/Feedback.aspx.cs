@@ -162,12 +162,12 @@ namespace MOBOT.BHL.Web2
 
             data.AddComponent(56);  // Web-Other
             data.Description = issueLongDesc;
-            data.PriorityId = 1;		// 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper, 5=Low, 6=Medium, 7=High
+            data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
             data.ResolutionId = 1;	    // 1=Unresolved
             data.StatusId = 1;			// 1=Unassigned
             data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
             data.Title = issueSummary;
-            data.TypeId = int.Parse(ddlList.SelectedValue); // 1=Technical Issues, 5=Suggestion, 6=Bibliographic Issues
+            data.TypeId = int.Parse(ddlList.SelectedValue); // 22=Technical Issues, 36=Suggestion, 55=Bibliographic Issues
             data.ReportedBy = user.Entity.Id;
             //data.RiskLevel = 1;
             data.ProjectId = projectId;
@@ -218,12 +218,12 @@ namespace MOBOT.BHL.Web2
 
             data.AddComponent(78);  // Collections
             data.Description = issueLongDesc;
-            data.PriorityId = 1;		// 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper, 5=Low, 6=Medium, 7=High
+            data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
             data.ResolutionId = 1;      // 1=Unresolved
             data.StatusId = 1;			// 1=Unassigned
             data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
             data.Title = issueSummary;
-            data.TypeId = 6;             // 6=Bibliographic Issue
+            data.TypeId = 55;             // 55=Bibliographic Issue
             data.ReportedBy = user.Entity.Id;
             //data.RiskLevel = 1;
             data.ProjectId = projectId;
