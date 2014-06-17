@@ -53,17 +53,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CounterSoft.Gemini.Commons, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.Commons.dll</HintPath>
+    <Reference Include="Countersoft.Foundation.Commons">
+      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Foundation.Commons.dll</HintPath>
     </Reference>
-    <Reference Include="CounterSoft.Gemini.Services, Version=1.0.2760.20207, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.Services.dll</HintPath>
+    <Reference Include="Countersoft.Gemini.Api">
+      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Gemini.Api.dll</HintPath>
     </Reference>
-    <Reference Include="CounterSoft.Gemini.WebServices, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+    <Reference Include="Countersoft.Gemini.Commons, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft3.6.4\CounterSoft.Gemini.WebServices.dll</HintPath>
+      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Gemini.Commons.dll</HintPath>
     </Reference>
     <Reference Include="Glimpse.AspNet, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,9 +75,12 @@
       <HintPath>..\packages\Glimpse.1.8.5\lib\net40\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft3.6.4\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\SharedLibraries\CounterSoft5.0.0\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -137,9 +137,9 @@
 			<br />
 			<asp:Label ID="errorLabel" runat="server" ForeColor="red" Text="Label"></asp:Label>
 		</asp:Panel>
-        </section>
-        <aside></aside>
-		</div>
+    </section>
+    <aside></aside>
+</div>
 </asp:Content>
 
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
