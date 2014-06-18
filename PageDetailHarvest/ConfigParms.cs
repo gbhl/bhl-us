@@ -36,6 +36,8 @@ namespace PageDetailHarvest
         public string FtpUsername { get; set; }
         public string FtpPassword { get; set; }
 
+        public int ClassifierOutputFilePageLimit { get; set; }
+
         public void LoadAppConfig()
         {
             SMTPHost = ConfigurationManager.AppSettings["SMTPHost"];
@@ -61,6 +63,7 @@ namespace PageDetailHarvest
             FtpIncomingFolder = ConfigurationManager.AppSettings["FtpIncomingFolder"];
             FtpUsername = ConfigurationManager.AppSettings["FtpUsername"];
             FtpPassword = ConfigurationManager.AppSettings["FtpPassword"];
+            ClassifierOutputFilePageLimit = Convert.ToInt32(ConfigurationManager.AppSettings["ClassifierOutputFilePageLimit"]);
         }
     }
 }

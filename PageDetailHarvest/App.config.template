@@ -47,6 +47,8 @@
     <add key="FtpUsername" value="FTP USERNAME"/>
     <add key="FtpPassword" value="FTP PASSWORD"/>
 
+    <add key="ClassifierOutputFilePageLimit" value="50000"/>
+
   </appSettings>
   <connectionStrings>
     <remove name="BHL"/>

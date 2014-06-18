@@ -209,12 +209,15 @@ namespace PageDetailHarvest
             {
                 List<PageClassifierExport> pageDetailList = PageDetailSelectForClassifierExport();
 
+                CreateDirectory(configParms.ClassifierOutputFolder);
+
                 // Accumulate the list to be serialized as JSON
                 ClassifierExportJson export = new ClassifierExportJson();
                 ClassifierExportItem exportItem = null;
                 ClassifierExportPage exportPage = null;
                 int prevItemID = 0;
                 int prevPageID = 0;
+                List<int> processedPages = new List<int>();
                 foreach (PageClassifierExport pageDetail in pageDetailList)
                 {
                     int itemID = pageDetail.ItemID;
@@ -232,7 +235,8 @@ namespace PageDetailHarvest
                         exportPage.PercentCoverage = pageDetail.PercentCoverage;
                         exportPage.Height = pageDetail.Height;
                         exportPage.Width = pageDetail.Width;
-                        //exportPage.PixelDepth = pageDetail.PixelDepth;
+
+                        processedPages.Add(pageID);
                     }
 
                     if (pageDetail.Top != null)
@@ -248,6 +252,20 @@ namespace PageDetailHarvest
                     if (itemID != prevItemID)
                     {
                         if (exportItem != null) export.Items.Add(exportItem);
+
+                        if (processedPages.Count > configParms.ClassifierOutputFilePageLimit)
+                        {
+                            // Serialize the export to JSON and write it to a file
+                            WriteClassifierExport(export);
+
+                            // Update the status of the records that were just exported
+                            UpdatePageDetailStatus(processedPages, PageDetailStatus.Classifying);
+
+                            // Reset objects and counts
+                            export = new ClassifierExportJson();
+                            processedPages.Clear();
+                        }
+
                         exportItem = new ClassifierExportItem();
 
                         exportItem.ItemUrl = configParms.ItemUrlPrefix + itemID.ToString();
@@ -280,15 +298,11 @@ namespace PageDetailHarvest
                     export.Items.Add(exportItem);
                 }
 
-
-                // Serialize everything to JSON
-                CreateDirectory(configParms.ClassifierOutputFolder);
-                string json = JsonConvert.SerializeObject(export);
-                string outputFileName = string.Format("{0}classifierout{1}.json", configParms.ClassifierOutputFolder, DateTime.Now.ToString("yyyyMMddHHmmss"));
-                File.WriteAllText(outputFileName, json);
+                // Serialize the final set of records to JSON
+                WriteClassifierExport(export);
 
                 // Update the status of the records that were just exported
-                UpdatePageDetailStatus(pageDetailList, PageDetailStatus.Classifying);
+                UpdatePageDetailStatus(processedPages, PageDetailStatus.Classifying);
 
                 numRecordsExported = pageDetailList.Count();
                 LogMessage(string.Format("Done exporting {0} records for Classifier", numRecordsExported));
@@ -368,6 +382,20 @@ namespace PageDetailHarvest
                 // Move the file to the Input folder
                 CreateDirectory(configParms.ClassifierInputFolder);
                 File.Move(fileName, configParms.ClassifierInputFolder + Path.GetFileName(fileName));
+            }
+        }
+
+        /// <summary>
+        /// Serialize the export object to json and write it to a file.
+        /// </summary>
+        /// <param name="export"></param>
+        private void WriteClassifierExport(ClassifierExportJson export)
+        {
+            if (export.Items.Count > 0)
+            {
+                string json = JsonConvert.SerializeObject(export);
+                string outputFileName = string.Format("{0}classifierout{1}.json", configParms.ClassifierOutputFolder, DateTime.Now.ToString("yyyyMMddHHmmss"));
+                File.WriteAllText(outputFileName, json);
             }
         }
 
@@ -637,17 +665,12 @@ namespace PageDetailHarvest
         /// </summary>
         /// <param name="pageDetailList"></param>
         /// <param name="status"></param>
-        private void UpdatePageDetailStatus(List<PageClassifierExport> pageDetailList, PageDetailStatus status)
+        private void UpdatePageDetailStatus(List<int> pages, PageDetailStatus status)
         {
-            // Get the unique PageDetail identifiers
-            var pageIDs = from d in pageDetailList
-                        group d by d.PageID into g
-                        select new { PageID = g.Key };
-
-            foreach (var pageID in pageIDs)
+            foreach (var pageID in pages)
             {
                 // Mark the record as exported to the classifier
-                PageDetailUpdateStatus(Convert.ToInt32(pageID.PageID), (int)status);
+                PageDetailUpdateStatus(Convert.ToInt32(pageID), (int)status);
             }
         }
 
@@ -902,6 +925,7 @@ namespace PageDetailHarvest
 
                 using (sqlCommand = new SqlCommand(sql, sqlConnection))
                 {
+                    sqlCommand.CommandTimeout = 1200;   // 20 minutes
                     SqlDataReader reader = sqlCommand.ExecuteReader();
                     while (reader.Read())
                     {
