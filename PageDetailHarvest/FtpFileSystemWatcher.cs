@@ -168,9 +168,11 @@ namespace PageDetailHarvest
                 {
                     using (FileStream fs = new FileStream(Path.Combine(FileSystemLocation, FileName), FileMode.CreateNew, FileAccess.ReadWrite))
                     {
-                        while (s.Read(Buffer, 0, BufferSize) != -1)
+                        while (true)
                         {
-                            fs.Write(Buffer, 0, BufferSize);
+                            int bytesRead = s.Read(Buffer, 0, BufferSize);
+                            if (bytesRead == 0) break;
+                            fs.Write(Buffer, 0, bytesRead);
                         }
                     }
                 }
