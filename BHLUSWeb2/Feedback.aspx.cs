@@ -163,9 +163,9 @@ namespace MOBOT.BHL.Web2
             data.AddComponent(56);  // Web-Other
             data.Description = issueLongDesc;
             data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
-            data.ResolutionId = 1;	    // 1=Unresolved
-            data.StatusId = 1;			// 1=Unassigned
-            data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
+            data.ResolutionId = 15;	    // 15=Unresolved
+            data.StatusId = 28;			// 28=Unassigned
+            data.SeverityId = 19;        // 19=Null
             data.Title = issueSummary;
             data.TypeId = int.Parse(ddlList.SelectedValue); // 22=Technical Issues, 36=Suggestion, 55=Bibliographic Issues
             data.ReportedBy = user.Entity.Id;
@@ -219,9 +219,9 @@ namespace MOBOT.BHL.Web2
             data.AddComponent(78);  // Collections
             data.Description = issueLongDesc;
             data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
-            data.ResolutionId = 1;      // 1=Unresolved
-            data.StatusId = 1;			// 1=Unassigned
-            data.SeverityId = 1;        // 1=Trivial, 2=Minor, 3=Major, 4=Show Stopper
+            data.ResolutionId = 15;      // 15=Unresolved
+            data.StatusId = 28;			// 28=Unassigned
+            data.SeverityId = 19;        // 19=Null
             data.Title = issueSummary;
             data.TypeId = 55;             // 55=Bibliographic Issue
             data.ReportedBy = user.Entity.Id;
