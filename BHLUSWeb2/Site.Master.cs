@@ -13,6 +13,7 @@ using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
+using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
@@ -20,7 +21,6 @@ namespace MOBOT.BHL.Web2
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
         public string bodyID {get; set;}
-        private int titlesOnlineCount = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);
@@ -31,31 +31,30 @@ namespace MOBOT.BHL.Web2
                 DisplayAlertMessage();
             }
 
-            Stats stats = this.GetStats();
-            titlesOnlineCount = stats.TitleCount;
-            titlesOnlineLiteral.Text = stats.TitleCount.ToString("0,0");
-            volumesOnlineLiteral.Text = stats.VolumeCount.ToString("0,0");
-            pagesOnlineLiteral.Text = stats.PageCount.ToString("0,0");
-
+            CustomGenericList<EntityCount> stats = this.GetStats();
+            foreach (EntityCount stat in stats)
+            {
+                if (stat.EntityCountTypeID == EntityCount.EntityType.ActiveTitles) titlesOnlineLiteral.Text = stat.CountValue.ToString("0,0");
+                if (stat.EntityCountTypeID == EntityCount.EntityType.ActiveItems) volumesOnlineLiteral.Text = stat.CountValue.ToString("0,0");
+                if (stat.EntityCountTypeID == EntityCount.EntityType.ActivePages) pagesOnlineLiteral.Text = stat.CountValue.ToString("0,0");
+            }
         }
 
-
-
-        private Stats GetStats()
+        private CustomGenericList<EntityCount> GetStats()
         {
-            Stats stats = null;
+            CustomGenericList<EntityCount> stats = new CustomGenericList<EntityCount>();
 
             // Cache the results of the institutions query for 24 hours
             String cacheKey = "StatsSelect";
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                stats = (Stats)Cache[cacheKey];
+                stats = (CustomGenericList<EntityCount>)Cache[cacheKey];
             }
             else
             {
                 // Refresh cache
-                stats = new BHLProvider().StatsSelect();
+                stats = new BHLProvider().EntityCountSelectLatest();
                 Cache.Add(cacheKey, stats, null, DateTime.Now.AddMinutes(
                     Convert.ToDouble(ConfigurationManager.AppSettings["StatsSelectQueryCacheTime"])),
                     System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);

@@ -173,6 +173,7 @@
     <Compile Include="Concrete\Title.cs" />
     <Compile Include="Concrete\Vault.cs" />
     <Compile Include="Concrete\vwMarcDataField.cs" />
+    <Compile Include="EntityCount.cs" />
     <Compile Include="Generated\__AnnotatedItem.cs" />
     <Compile Include="Generated\__AnnotatedPage.cs" />
     <Compile Include="Generated\__AnnotatedPageCharacteristic.cs" />

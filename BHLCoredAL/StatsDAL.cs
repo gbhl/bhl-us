@@ -121,5 +121,31 @@ namespace MOBOT.BHL.DAL
             }
         }
     
+        public CustomGenericList<EntityCount> EntityCountSelectLatest(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction)
+        {
+            CustomGenericList<EntityCount> counts = new CustomGenericList<EntityCount>();
+
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.EntityCountSelectLatest", connection, transaction))
+            {
+                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                foreach(CustomDataRow row in list)
+                {
+                    EntityCount count = new EntityCount();
+                    count.EntityCountTypeID = (EntityCount.EntityType)row["EntityCountTypeID"].Value;
+                    count.FullName = row["FullName"].Value.ToString();
+                    count.DisplayName = row["DisplayName"].Value.ToString();
+                    count.CountValue = (int)row["CountValue"].Value;
+                    counts.Add(count);
+                }
+            }
+
+            return counts;
+        }
     }
 }

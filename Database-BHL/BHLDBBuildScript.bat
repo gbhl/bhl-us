@@ -50,6 +50,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BibliographicLevel.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Configuration.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOIEntityType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOIStatus.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\EntityCountType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Identifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Institution.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\ItemSource.sql"
@@ -74,6 +75,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\AuthorIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\AuthorName.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Collection.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\DOI.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\EntityCount.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Keyword.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Title.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\TitleAssociation.sql"
@@ -237,6 +239,7 @@ sqlcmd -E -S %1 -d %2 -i "data\dbo.BibliographicLevel.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.Configuration.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.DOIEntityType.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.DOIStatus.Table.sql"
+sqlcmd -E -S %1 -d %2 -i "data\dbo.EntityCountType.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.ItemSource.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.ItemStatus.Table.sql"
 sqlcmd -E -S %1 -d %2 -i "data\dbo.NameSource.Table.sql"
@@ -335,6 +338,12 @@ REM  Populate SearchCatalog Tables
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SearchCatalogRefresh.sql"
 sqlcmd -E -S %1 -d %2 -Q "exec dbo.SearchCatalogRefresh ''"
+
+REM --------------------------------------
+REM  Populate EntityCount Table
+REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EntityCountRefresh.sql"
+sqlcmd -E -S %1 -d %2 -Q "exec dbo.EntityCountRefresh"
 
 :RESUMESTRUCTURE
 
@@ -557,6 +566,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOISelectValidForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOISelectValidForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIStatusSelectAll.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EntityCountSelectLatest.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ExportIAIdentifiers.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\Find_Text_In_SP.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\IdentifierDeleteAuto.sql"
