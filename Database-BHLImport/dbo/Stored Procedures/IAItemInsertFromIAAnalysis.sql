@@ -55,8 +55,11 @@ BEGIN TRY
 
 	SELECT @HarvestDate = MAX(CreationDate) FROM #tmpItem
 
+	-- Insert new identifiers
 	INSERT INTO dbo.IAItem (IAIdentifier, ItemStatusID, LocalFileFolder, IADateStamp)
-	SELECT IAIdentifier, ItemStatusID, LocalFileFolder, IADateStamp FROM #tmpItem
+	SELECT	t.IAIdentifier, t.ItemStatusID, t.LocalFileFolder, t.IADateStamp 
+	FROM	#tmpItem t LEFT JOIN dbo.IAItem i ON t.IAIdentifier = i.IAIdentifier
+	WHERE	i.ItemID IS NULL
 
 	SET @ItemCount = @@ROWCOUNT
 	SET @SuccessfulHarvest = 1
