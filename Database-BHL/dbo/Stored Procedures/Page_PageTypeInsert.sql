@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.Page_PageTypeInsert
+﻿CREATE PROCEDURE [dbo].[Page_PageTypeInsert]
 
 @PageID int,
 @PageTypeName nvarchar(30),
@@ -9,6 +9,9 @@ AS
 BEGIN
 
 SET NOCOUNT ON
+
+IF @PageTypeName = 'Painting/Drawing/Diagram' SET @PageTypeName = 'Drawing'
+IF @PageTypeName = 'Chart/Table' SET @PageTypeName = 'Table'
 
 -- Add the page type if it is not already there
 IF NOT EXISTS (	SELECT	ppt.PageID 
@@ -22,3 +25,4 @@ BEGIN
 END
 
 END
+

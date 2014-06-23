@@ -241,6 +241,10 @@ namespace MOBOT.BHL.Web2
                     lstPages.DataBind();
                     PageCount = pages.Count;
 
+                    // Add text to display when hovering over a listbox row
+                    foreach (ListItem item in lstPages.Items)
+                        item.Attributes["title"] = item.Text;
+
                     Segments = bhlProvider.SegmentSelectByItemID(PageSummary.ItemID);
                     SegmentCount = Segments.Count;
 
