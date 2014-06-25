@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.EntityCountSelectLatest
+﻿CREATE PROCEDURE [dbo].[EntityCountSelectLatest]
 
 AS
 
@@ -7,7 +7,7 @@ BEGIN
 SET NOCOUNT ON
 
 -- Select the most recent stats from the table
-SELECT	c.EntityCountID, t.FullName, t.DisplayName, c.CountValue, c.CreationDate
+SELECT	c.EntityCountID, c.EntityCountTypeID, t.FullName, t.DisplayName, c.CountValue, c.CreationDate
 FROM	dbo.EntityCount c 
 		INNER JOIN (	SELECT	EntityCountTypeID, MAX(EntityCountID) AS EntityCountID
 						FROM	dbo.EntityCount
@@ -18,3 +18,4 @@ FROM	dbo.EntityCount c
 ORDER BY t.Sequence
 
 END
+

@@ -14,7 +14,8 @@ namespace MOBOT.BHL.DAL
 	public partial class ImportRecordDAL
 	{
         public CustomGenericList<ImportRecord> ImportRecordSelectByImportFileID(SqlConnection sqlConnection, 
-            SqlTransaction sqlTransaction, int importFileID, int numRows, int startRow, string sortColumn, string sortDirection)
+            SqlTransaction sqlTransaction, int importFileID, int numRows, int startRow, string sortColumn, string sortDirection,
+            int extended = 0)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -24,7 +25,8 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
                     CustomSqlHelper.CreateInputParameter("StartRow", SqlDbType.Int, null, false, startRow),
                     CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
-                    CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection)))
+                    CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection),
+                    CustomSqlHelper.CreateInputParameter("Extended", SqlDbType.Int, null, false, extended)))
             {
                 using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
                 {

@@ -15,6 +15,8 @@ namespace MOBOT.BHL.DataObjects
 
         private int _totalRecords = 0;
         private string _statusName = string.Empty;
+        private string _authorString = string.Empty;
+        private string _keywordString = string.Empty;
         private CustomGenericList<ImportRecordCreator> _authors = new CustomGenericList<ImportRecordCreator>();
         private CustomGenericList<ImportRecordKeyword> _keywords = new CustomGenericList<ImportRecordKeyword>();
 
@@ -28,6 +30,18 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _statusName; }
             set { _statusName = value; }
+        }
+
+        public string AuthorString
+        {
+            get { return _authorString; }
+            set { _authorString = value; }
+        }
+
+        public string KeywordString
+        {
+            get { return _keywordString; }
+            set { _keywordString = value; }
         }
 
         public CustomGenericList<ImportRecordCreator> Authors
@@ -55,6 +69,12 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "StatusName":
                         StatusName = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Authors":
+                        AuthorString = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Keywords":
+                        KeywordString = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

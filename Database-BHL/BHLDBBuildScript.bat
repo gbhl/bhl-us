@@ -189,6 +189,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnTropicosCheckVolumeExists.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnVariantStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnVolumeStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fn_Split.sql"
+sqlcmd -E -S %1 -d %2 -i "import\Functions\fnAuthorStringForImportRecord.sql"
+sqlcmd -E -S %1 -d %2 -i "import\Functions\fnKeywordStringForImportRecord.sql"
 
 REM --------------------------------------
 REM  Build Views
@@ -342,6 +344,7 @@ sqlcmd -E -S %1 -d %2 -Q "exec dbo.SearchCatalogRefresh ''"
 REM --------------------------------------
 REM  Populate EntityCount Table
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\StatsSelect.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EntityCountRefresh.sql"
 sqlcmd -E -S %1 -d %2 -Q "exec dbo.EntityCountRefresh"
 
@@ -937,7 +940,6 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentStatusSelectAll.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentStatusSelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentStatusUpdateAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\SegmentUpdateAuto.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\StatsSelect.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\StatsSelectForCollection.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\TitleAssociationDeleteAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\TitleAssociationInsertAuto.sql"

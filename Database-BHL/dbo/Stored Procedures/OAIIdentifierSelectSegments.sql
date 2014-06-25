@@ -1,7 +1,4 @@
 ﻿
-DROP PROCEDURE [dbo].[OAIIdentifierSelectSegments]
-GO
-
 CREATE PROCEDURE [dbo].[OAIIdentifierSelectSegments]
 
 @MaxIdentifiers int = 100,

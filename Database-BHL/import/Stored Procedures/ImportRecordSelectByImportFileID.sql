@@ -4,7 +4,8 @@
 @NumRows int,
 @StartRow int,
 @SortColumn nvarchar(150) = 'Title',
-@SortDirection nvarchar(4) = 'asc'
+@SortDirection nvarchar(4) = 'asc',
+@Extended int = 0
 
 AS
 
@@ -43,12 +44,38 @@ SELECT TOP (@NumRows)
 		THEN 'Article' 
 		ELSE r.Genre END AS Genre,
 		r.Title, 
+		r.TranslatedTitle,
 		r.JournalTitle, 
 		r.Volume, 
 		r.Series, 
 		r.Issue, 
+		r.Edition,
 		r.PublicationDetails,
-		r.Year
+		r.PublisherName,
+		r.PublisherPlace,
+		r.Year,
+		r.StartYear,
+		r.EndYear,
+		ISNULL(r.Language, '') AS Language,
+		r.Rights,
+		r.DueDiligence,
+		r.CopyrightStatus,
+		r.License,
+		r.LicenseUrl,
+		r.PageRange,
+		r.StartPage,
+		r.EndPage,
+		r.Url,
+		r.DownloadUrl,
+		r.DOI,
+		r.ISSN,
+		r.ISBN,
+		r.OCLC,
+		r.LCCN,
+		r.Summary,
+		r.Notes,
+		CASE WHEN @Extended = 1 THEN import.fnAuthorStringForImportRecord(r.ImportRecordID, '+++') ELSE '' END AS Authors,
+		CASE WHEN @Extended = 1 THEN import.fnKeywordStringForImportRecord(r.ImportRecordID, '+++') ELSE '' END AS Keywords
 FROM	#tmpRecord t INNER JOIN import.ImportRecord r 
 			ON t.ImportRecordID = r.ImportRecordID
 		LEFT JOIN dbo.SegmentGenre g

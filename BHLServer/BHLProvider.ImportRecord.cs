@@ -18,10 +18,10 @@ namespace MOBOT.BHL.Server
         }
 
         public CustomGenericList<ImportRecord> ImportRecordSelectByImportFileID(int importFileID, int numRows, int startRow,
-            string sortColumn, string sortDirection)
+            string sortColumn, string sortDirection, int extended = 0)
         {
             return new ImportRecordDAL().ImportRecordSelectByImportFileID(null, null, importFileID, numRows, startRow,
-                sortColumn, sortDirection);
+                sortColumn, sortDirection, extended);
         }
 
         public ImportRecord ImportRecordUpdateRecordStatus(int importRecordID, int importRecordStatusID, int userID)
