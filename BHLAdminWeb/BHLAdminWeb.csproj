@@ -568,6 +568,9 @@
     <Compile Include="Services\AuthorService.ashx.cs">
       <DependentUpon>AuthorService.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CitationImportService.ashx.cs">
+      <DependentUpon>CitationImportService.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Services\DataHarvestService.ashx.cs">
       <DependentUpon>DataHarvestService.ashx</DependentUpon>
     </Compile>
@@ -986,6 +989,7 @@
     <Content Include="Views\CitationImport\Review.cshtml" />
     <None Include="Properties\PublishProfiles\beta.admin.biodiversitylibrary.org.pubxml" />
     <Content Include="Views\Report\CitationImportHistory.cshtml" />
+    <Content Include="Services\CitationImportService.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

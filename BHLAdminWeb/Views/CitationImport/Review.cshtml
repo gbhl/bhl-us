@@ -69,7 +69,10 @@
 
     <div class="importRecordStatus" style="display:none">@Html.Raw(ViewBag.ImportRecordStatuses)</div>
 
-    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+    <div style="margin:10px 0px">
+        <div style="display:inline">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+        <div style="float:right"><a href="/services/citationimportservice.ashx?fid=@Model.ImportFileID"><strong>Download ALL citation details</strong></a></div>
+    </div>
 
     <div style="margin-bottom:20px">
         <div style="display:inline">
