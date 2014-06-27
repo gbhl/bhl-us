@@ -200,15 +200,16 @@ namespace MOBOT.BHL.DataObjects
         {
             get
             {
-                string returnValue = this.IndicatedPages;
-                if (returnValue.Length == 0)
-                {
-                    returnValue = this.PageTypes;
-                    returnValue = returnValue.Replace("Text, ", "");
-                    returnValue = returnValue.Replace(", Text", "");
-                }
+                string returnValue = string.Empty;
+                string volumeInfo = string.Empty;
 
-                if (this.PageTypes.Contains("Issue Start"))
+                string pageNums = this.IndicatedPages;
+
+                string pageTypes = this.PageTypes;
+                pageTypes = pageTypes.Replace("Text, ", "");
+                pageTypes = pageTypes.Replace(", Text", "");
+
+                if (pageTypes.Contains("Issue Start"))
                 {
                     // Get the volume and issue strings
                     string year = (this.Year ?? string.Empty);
@@ -220,11 +221,12 @@ namespace MOBOT.BHL.DataObjects
                     if (year != string.Empty) displayElements.Add(year);
                     if (volume != string.Empty) displayElements.Add(volume);
                     if (issue != string.Empty) displayElements.Add(issue);
-                    string displayString = string.Join(", ", displayElements.ToArray());
-
-                    // Add the year/volume/issue to the return value
-                    if (displayString != string.Empty) returnValue += " (" + displayString + ")";
+                    volumeInfo = string.Join(", ", displayElements.ToArray());
                 }
+
+                if (!string.IsNullOrWhiteSpace(pageTypes) && !string.IsNullOrWhiteSpace(pageNums)) pageTypes = "(" + pageTypes + ")";
+                if (!string.IsNullOrWhiteSpace(volumeInfo)) volumeInfo = "<" + volumeInfo + ">";
+                returnValue = string.Format("{0} {1} {2}", pageNums, pageTypes, volumeInfo).Trim();
 
                 if (returnValue.Length == 0)
                 {
