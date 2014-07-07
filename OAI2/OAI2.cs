@@ -61,7 +61,7 @@ namespace MOBOT.BHL.OAI2
     public class OAI2Publisher
     {
         private String _protocolVersion = "2.0";
-        private String _dateGranularity = "YYYY-MM-DDThh:mm:ssZ";
+        private String _dateGranularity = "YYYY-MM-DD";
 
         private String _baseUrl = String.Empty;
         private String _repositoryName = String.Empty;
@@ -298,7 +298,7 @@ namespace MOBOT.BHL.OAI2
             try
             {
                 // Should read datestamps and identifiers from the database, but hardcode them for now
-                String earliestDatestamp = "2006-01-01T00:00:00Z";
+                String earliestDatestamp = "2006-01-01";
                 String deletedRecord = "no";
                 String sampleIdentifier = "oai:" + _identifierNamespace + ":item/1000";
 
