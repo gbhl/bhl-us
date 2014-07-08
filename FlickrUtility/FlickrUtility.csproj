@@ -35,8 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlickrNet">
-      <HintPath>..\packages\FlickrNet.3.2.4310\lib\FlickrNet.dll</HintPath>
+    <Reference Include="FlickrNet, Version=3.2.4310.0, Culture=neutral, PublicKeyToken=2491df59efa5d132, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BHL\SharedLibraries\FlickrNet3.13\FlickrNet.dll</HintPath>
     </Reference>
     <Reference Include="ImageResizer">
       <HintPath>..\packages\ImageResizer.3.1.2\lib\ImageResizer.dll</HintPath>
