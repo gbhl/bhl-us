@@ -77,6 +77,10 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             StringBuilder csvString = new StringBuilder();
 
+            // Start the response content with a UTF-8 Byte Order Mark
+            context.Response.BinaryWrite(Encoding.UTF8.GetPreamble());
+            context.Response.Flush();
+
             // Write file header
             csvString.AppendLine("\"Status\",\"Genre\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"Summary\",\"Notes\"");
 
