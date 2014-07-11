@@ -498,7 +498,25 @@
                     </tr>
 				</table>
             </td>
-            <td>&nbsp;</td>
+            <td class="box" style="width: 250px;background-color:White" valign="top">
+				<table width="100%" cellspacing="0px" cellpadding="3px">
+					<tr>
+						<td class="boxHeader" align="center">
+							Citations
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<a href="/CitationImport">Import Citations</a>
+						</td>
+					</tr>
+					<tr>
+					    <td align="center">
+					        <a href="Report/CitationImportHistory">Citation Import History</a>
+					    </td>
+					</tr>
+				</table>
+            </td>
         </tr>
 	</table>
 	<script>
