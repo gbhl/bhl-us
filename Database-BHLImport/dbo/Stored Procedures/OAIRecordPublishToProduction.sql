@@ -262,12 +262,12 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 
+	-- Abort any open transactions
+	IF @@TRANCOUNT > 0 ROLLBACK TRAN
+
 	--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Record errors   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	INSERT INTO dbo.OAIPublishError (OAIRecordID, Number, Severity, [State], [Procedure], Line, [Message])
 	SELECT	@OAIRecordID, ERROR_NUMBER(), ERROR_SEVERITY(),ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), ERROR_MESSAGE()
-
-	-- Abort any open transactions
-	IF @@TRANCOUNT > 0 ROLLBACK TRAN
 
 	SET @PublishResult = 'Error'
 
@@ -281,4 +281,7 @@ VALUES (@HarvestLogID, @PublishResult, @TotalInsert, @TotalUpdate, @TotalDelete)
 
 END
 
+
 GO
+
+

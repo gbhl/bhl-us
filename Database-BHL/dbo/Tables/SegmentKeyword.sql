@@ -3,7 +3,7 @@
     [SegmentID]          INT      NOT NULL,
     [KeywordID]          INT      NOT NULL,
     [CreationDate]       DATETIME CONSTRAINT [DF_SegmentKeyword_CreationDate] DEFAULT (getdate()) NOT NULL,
-    [LastModifiedDate]   DATETIME NOT NULL,
+    [LastModifiedDate]   DATETIME CONSTRAINT [DF_SegmentKeyword_LastModifiedDate] DEFAULT (getdate()) NOT NULL,
     [CreationUserID]     INT      CONSTRAINT [DF_SegmentKeyword_CreationUserID] DEFAULT ((1)) NULL,
     [LastModifiedUserID] INT      CONSTRAINT [DF_SegmentKeyword_LastModifiedUserID] DEFAULT ((1)) NULL,
     CONSTRAINT [PK_SegmentKeyword] PRIMARY KEY CLUSTERED ([SegmentKeywordID] ASC),

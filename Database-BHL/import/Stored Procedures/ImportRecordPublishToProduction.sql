@@ -281,6 +281,7 @@ BEGIN TRY
 				PageRange,
 				StartPageNumber,
 				EndPageNumber,
+				LanguageCode,
 				Url,
 				RightsStatus,
 				RightsStatement,
@@ -312,6 +313,7 @@ BEGIN TRY
 					END AS PageRange,
 				StartPage AS StartPageNumber,
 				EndPage AS EndPageNumber,
+				ISNULL(l1.LanguageCode, l2.LanguageCode) AS LanguageCode,
 				Url,
 				CopyrightStatus AS RightsStatus,
 				Rights AS RightsStatement,
@@ -342,7 +344,9 @@ BEGIN TRY
 					WHEN LOWER(LEFT(Title, 4)) = 'the ' THEN LTRIM(RIGHT(Title, LEN(Title) - 4)) 
 					ELSE Title
 				END AS SortTitle
-		FROM	import.ImportRecord
+		FROM	import.ImportRecord r
+				LEFT JOIN dbo.Language l1 ON r.Language = l1.LanguageCode
+				LEFT JOIN dbo.Language l2 ON r.Language = l2.LanguageName
 		WHERE	ImportRecordID = @ImportRecordID
 
 		-- Save the ID of the newly inserted segment record

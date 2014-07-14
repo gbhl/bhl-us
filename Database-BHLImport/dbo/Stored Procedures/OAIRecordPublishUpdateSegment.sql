@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishUpdateSegment
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishUpdateSegment]
 
 @OAIRecordID int
 
@@ -103,8 +103,9 @@ IF NOT EXISTS(	SELECT	SegmentAuthorID
 BEGIN
 	DELETE FROM dbo.BHLSegmentAuthor WHERE SegmentID = @ProductionSegmentID
 
-	INSERT dbo.BHLSegmentAuthor (SegmentID, AuthorID) 
-	SELECT @ProductionSegmentID, ProductionAuthorID FROM dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
+	INSERT dbo.BHLSegmentAuthor (SegmentID, AuthorID, SequenceOrder) 
+	SELECT	@ProductionSegmentID, ProductionAuthorID, ROW_NUMBER() OVER (ORDER BY OAIRecordCreatorID)
+	FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 END
 				
 -- Replace the SegmentKeyword records if none have been added/updated by a user
@@ -153,5 +154,6 @@ WHERE	OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
+
 
 GO
