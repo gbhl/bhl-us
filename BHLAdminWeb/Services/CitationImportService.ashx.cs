@@ -124,8 +124,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Append("\"" + record.ISBN + "\",");
                 csvString.Append("\"" + record.OCLC + "\",");
                 csvString.Append("\"" + record.LCCN + "\",");
-                csvString.Append("\"" + record.Summary + "\",");
-                csvString.AppendLine("\"" + record.Notes + "\",");
+                csvString.Append("\"" + record.Summary.Replace('\n', ' ').Replace('\r', ' ') + "\",");
+                csvString.AppendLine("\"" + record.Notes.Replace('\n', ' ').Replace('\r', ' ') + "\",");
 
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();
