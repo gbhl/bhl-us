@@ -113,6 +113,8 @@ namespace MOBOT.BHL.Web2
             srLanguageList.DataTextField = "LanguageName";
             srLanguageList.DataValueField = "LanguageCode";
             srLanguageList.DataBind();
+
+            srLanguageList.Items.Insert(0, new ListItem("", ""));
         }
 
         /// <summary>
