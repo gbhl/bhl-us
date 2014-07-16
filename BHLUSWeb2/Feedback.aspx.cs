@@ -205,7 +205,11 @@ namespace MOBOT.BHL.Web2
             string geminiUserName = ConfigurationManager.AppSettings.GetValues("GeminiUser")[0];
             string geminiUserPassword = ConfigurationManager.AppSettings.GetValues("GeminiPassword")[0];
             string issueSummary = ConfigurationManager.AppSettings.GetValues("GeminiDesc")[0];
-            if (srEmailTextBox.Text.Trim().Length > 0)
+            if (srTitleTextBox.Text.Trim().Length > 0)
+            {
+                issueSummary = srTitleTextBox.Text.Trim();
+            }
+            else if (srEmailTextBox.Text.Trim().Length > 0)
             {
                 issueSummary = "Scan Request from " + srEmailTextBox.Text.Trim();
             }
@@ -223,7 +227,7 @@ namespace MOBOT.BHL.Web2
             data.StatusId = 28;			// 28=Unassigned
             data.SeverityId = 19;        // 19=Null
             data.Title = issueSummary;
-            data.TypeId = 55;             // 55=Bibliographic Issue
+            data.TypeId = 60;             // 60=Scan Request
             data.ReportedBy = user.Entity.Id;
             //data.RiskLevel = 1;
             data.ProjectId = projectId;
