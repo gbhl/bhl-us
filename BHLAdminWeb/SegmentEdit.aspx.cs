@@ -339,6 +339,7 @@ namespace MOBOT.BHL.AdminWeb
                 publisherPlaceTextBox.Text = segment.PublisherPlace;
                 publisherNameTextBox.Text = segment.PublisherName;
                 notesTextBox.Text = segment.Notes;
+                summaryTextBox.Text = segment.Summary;
                 volumeTextBox.Text = segment.Volume;
                 seriesTextBox.Text = segment.Series;
                 issueTextBox.Text = segment.Issue;
@@ -1212,6 +1213,7 @@ namespace MOBOT.BHL.AdminWeb
                 segment.LicenseName = licenseNameTextBox.Text.Trim();
                 segment.LicenseUrl = licenseUrlTextBox.Text.Trim();
                 segment.Notes = notesTextBox.Text.Trim();
+                segment.Summary = summaryTextBox.Text.Trim();
                 segment.IsPrimary = (short)(chkPrimary.Checked ? 1 : 0);
                 segment.IsNew = (segment.SegmentID == 0);
 

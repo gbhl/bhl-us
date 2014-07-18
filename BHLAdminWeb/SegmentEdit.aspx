@@ -446,6 +446,10 @@
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Notes:</td>
 				<td colspan="4" style="width: 100%"><asp:TextBox ID="notesTextBox" runat="server" MaxLength="8000" Width="100%" TextMode="MultiLine" Height="50px"></asp:TextBox></td>
 			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Summary/Abstract:</td>
+				<td colspan="4" style="width: 100%"><asp:TextBox ID="summaryTextBox" runat="server" Width="100%" TextMode="MultiLine" Height="75px"></asp:TextBox></td>
+			</tr>
 		</table>
         <br />
         <fieldset>
