@@ -4,7 +4,7 @@
     <%@ Register TagPrefix="MOBOT" Assembly="MOBOT.BHL.Web.Utilities" Namespace="MOBOT.BHL.Web.Utilities" %>
     <%@ Register TagPrefix="uc" TagName="FeatureBox" Src="~/controls/ucFeatureBox.ascx" %>
     <asp:Content ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
-    <link href="/js/jMyCarousel/jMyCarousel.css" type="text/css" rel="stylesheet">
+    <link href="/js/jMyCarousel/jMyCarousel.css?v=2" type="text/css" rel="stylesheet">
 
     </asp:Content>
 
@@ -106,7 +106,7 @@
                     eltByElt: true,
                     evtStart: 'mousedown',
                     evtStop: 'mouseup',
-                    height: 180,
+                    height: 210,
                     speed: 200
                 });
             });
