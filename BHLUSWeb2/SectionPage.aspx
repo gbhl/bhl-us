@@ -205,13 +205,25 @@
             <div class="segmentdetails"><h3>Rights Status</h3> <p><%: BhlSegment.RightsStatus%></p></div> 
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
-            <div class="segmentdetails"><h3>Rights Statement</h3> <p><%: BhlSegment.RightsStatement%></p></div>
+            <div class="segmentdetails"><h3>Rights Statement</h3> <p>
+                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.RightsStatement, "^(https?|ftp|file)://.+$")) {%>
+                    <a target="_blank" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
+                <% } else {%>
+                    <%: BhlSegment.RightsStatement%>
+                <% } %>
+            </p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.LicenseName)) { %>
-            <div class="segmentdetails"><h3>Rights License Name</h3><p><a><%: BhlSegment.LicenseName%></a></p></div>
+            <div class="segmentdetails"><h3>Rights License Name</h3><p><%: BhlSegment.LicenseName%></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
-            <div class="segmentdetails"><h3>Rights License URL</h3><p><a><%: BhlSegment.LicenseName%></a></p></div>
+            <div class="segmentdetails"><h3>Rights License URL</h3><p>
+                <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                    <a target="_blank" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
+                <% } else {%>
+                    <%: BhlSegment.LicenseUrl%>
+                <% } %>
+            </p></div>
             <% } %>
 
         </div>
