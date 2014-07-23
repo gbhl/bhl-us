@@ -105,81 +105,68 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
             try
             {
-                // See if another PDF containing the exact same set of pages
-                // has already been generated.  If so, don't generate a new
-                // one.
-                BHLWS.BHLWS service = new BHLWS.BHLWS();
-                PDF[] duplicates = service.PDFSelectDuplicateForPdfID(this.PdfRecord.PdfID);
-                if (duplicates.Length > 0)
+                // Build the filename for the pdf.  Use PDFID and the ItemID
+                // to construct the filename.
+                // ex. 000100000001000.pdf, 000100100023546.pdf
+                fileName = this.PdfRecord.PdfID.ToString().PadLeft(7, '0') +
+                    this.PdfRecord.ItemID.ToString().PadLeft(8, '0');
+
+                // Initialize the PDF document
+                doc = new Document();
+                iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc,
+                    new System.IO.FileStream(String.Format(this.FilePathFormat, fileName), System.IO.FileMode.Create));
+
+                // Add metadata if this is to be the final document
+                if (this.PdfRecord.ImagesOnly)
                 {
-                    this._fileLocation = duplicates[0].FileLocation;
-                    this._fileUrl = duplicates[0].FileUrl;
+                    AddMetadata(doc);
+                    writer.XmpMetadata = this.GetXmpMetadata();
+                }
+
+                // Set margins and page size 
+                SetStandardPageSize(doc);
+
+                // Start writing the PDF
+                doc.Open();
+
+                // Add header pages to the PDF
+                this.AddHeaderPages(doc, fileName);
+
+                // Add the page images to the PDF
+                doc.SetMargins(0, 0, 0, 0);
+                foreach (String pageUrl in PageUrls)
+                {
+                    this.AddImageToPDF(doc, pageUrl.Split('|')[1], retryImageWait);
+                }
+
+                // Add page labels to the PDF
+                int pageNumber = 0;
+                iTextSharp.text.pdf.PdfPageLabels pdfPageLabels = new iTextSharp.text.pdf.PdfPageLabels();
+                foreach (String pageLabel in _pageLabels)
+                {
+                    pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, pageLabel);
+                }
+                writer.PageLabels = pdfPageLabels;
+
+                doc.Close();
+
+                // If requested, add the OCR to the PDF
+                if (!this.PdfRecord.ImagesOnly)
+                {
+                    _pageLabels.Add("OCR");
+                    this.AddOCRToPDF(String.Format(this.FilePathFormat, fileName));
                 }
                 else
                 {
-                    // Build the filename for the pdf.  Use PDFID and the ItemID
-                    // to construct the filename.
-                    // ex. 000100000001000.pdf, 000100100023546.pdf
-                    fileName = this.PdfRecord.PdfID.ToString().PadLeft(7, '0') +
-                        this.PdfRecord.ItemID.ToString().PadLeft(8, '0');
-
-                    // Initialize the PDF document
-                    doc = new Document();
-                    iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc,
-                        new System.IO.FileStream(String.Format(this.FilePathFormat, fileName), System.IO.FileMode.Create));
-
-                    // Add metadata if this is to be the final document
-                    if (this.PdfRecord.ImagesOnly)
-                    {
-                        AddMetadata(doc);
-                        writer.XmpMetadata = this.GetXmpMetadata();
-                    }
-
-                    // Set margins and page size 
-                    SetStandardPageSize(doc);
-
-                    // Start writing the PDF
-                    doc.Open();
-
-                    // Add header pages to the PDF
-                    this.AddHeaderPages(doc, fileName);
-
-                    // Add the page images to the PDF
-                    doc.SetMargins(0, 0, 0, 0);
-                    foreach (String pageUrl in PageUrls)
-                    {
-                        this.AddImageToPDF(doc, pageUrl.Split('|')[1], retryImageWait);
-                    }
-
-                    // Add page labels to the PDF
-                    int pageNumber = 0;
-                    iTextSharp.text.pdf.PdfPageLabels pdfPageLabels = new iTextSharp.text.pdf.PdfPageLabels();
-                    foreach (String pageLabel in _pageLabels)
-                    {
-                        pdfPageLabels.AddPageLabel(++pageNumber, iTextSharp.text.pdf.PdfPageLabels.EMPTY, pageLabel);
-                    }
-                    writer.PageLabels = pdfPageLabels;
-
-                    doc.Close();
-
-                    // If requested, add the OCR to the PDF
-                    if (!this.PdfRecord.ImagesOnly)
-                    {
-                        _pageLabels.Add("OCR");
-                        this.AddOCRToPDF(String.Format(this.FilePathFormat, fileName));
-                    }
-                    else
-                    {
-                        // Add PDF extension to temp file
-                        if (System.IO.File.Exists(String.Format(this.FilePathFormat, fileName + ".pdf"))) System.IO.File.Delete(String.Format(this.FilePathFormat, fileName + ".pdf"));
-                        System.IO.File.Move(String.Format(this.FilePathFormat, fileName), String.Format(this.FilePathFormat, fileName + ".pdf"));
-                    }
-
-                    fileName += ".pdf";
-                    this._fileName = fileName;
-                    this._fileLocation = String.Format(this.FilePathFormat, fileName);
-                    this._fileUrl = String.Format(this.UrlFormat, fileName);
+                    // Add PDF extension to temp file
+                    if (System.IO.File.Exists(String.Format(this.FilePathFormat, fileName + ".pdf"))) System.IO.File.Delete(String.Format(this.FilePathFormat, fileName + ".pdf"));
+                    System.IO.File.Move(String.Format(this.FilePathFormat, fileName), String.Format(this.FilePathFormat, fileName + ".pdf"));
                 }
+
+                fileName += ".pdf";
+                this._fileName = fileName;
+                this._fileLocation = String.Format(this.FilePathFormat, fileName);
+                this._fileUrl = String.Format(this.UrlFormat, fileName);
             }
             catch (Exception ex)
             {

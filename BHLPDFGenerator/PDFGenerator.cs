@@ -302,15 +302,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
         private String GetRequestorEmailBody(int pdfId, String fileLocation, string articleTitle, 
             string articleCreators, string articleTags)
         {
-            bool willDelete = (articleTitle + articleCreators + articleTags).Trim() == String.Empty;
-
             StringBuilder sb = new StringBuilder();
             const string endOfLine = "\r\n";
 
             sb.Append("Your PDF generation request has been completed.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            if (!willDelete)
+            if (!string.IsNullOrWhiteSpace(articleTitle + articleCreators + articleTags))
             {
                 sb.Append("The following metadata was supplied with this request:" + endOfLine + endOfLine);
                 if (articleTitle.Trim() != string.Empty) sb.Append("Article/Chapter Title - " + articleTitle.Trim() + endOfLine);
@@ -319,12 +317,9 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 sb.Append(endOfLine);
             }
             sb.Append("The PDF can be downloaded from the following location: " + fileLocation);
-            if (willDelete)
-            {
-                sb.Append(endOfLine);
-                sb.Append(endOfLine);
-                sb.Append("You have 30 days to complete the download.");
-            }
+            sb.Append(endOfLine);
+            sb.Append(endOfLine);
+            sb.Append("You have 30 days to complete the download.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
             sb.Append("Having Problems Viewing Your PDF? Depending on your browser, you may experience trouble using the built-in PDF viewer, which may not correctly display the images contained in this PDF. If you experience viewing problems in your browser, open the PDF in an alternative viewer.");
