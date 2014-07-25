@@ -165,6 +165,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpPost]
         public ActionResult Review(CitationImportModel model)
         {
+            HttpContext.Server.ScriptTimeout = 600;  // 10 minutes
+
             if (Request.Form["btnImport"] != null)
             {
                 // Create production records for all "New" ImportRecords in the file.  Update statuses to "Imported".
