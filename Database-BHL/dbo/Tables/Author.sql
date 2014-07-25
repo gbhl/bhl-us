@@ -26,6 +26,10 @@ CREATE NONCLUSTERED INDEX [IA_Author_IsActive]
 
 
 GO
+CREATE NONCLUSTERED INDEX IX_Author_StartDateEndDate
+	ON dbo.Author (StartDate, EndDate)
+	INCLUDE (AuthorID)
+GO
 CREATE TRIGGER dbo.Author_AuditBasic_Insert ON [dbo].[Author]
  AFTER Insert
  NOT FOR REPLICATION

@@ -28,6 +28,9 @@ CREATE NONCLUSTERED INDEX [IX_AuthorName_FullName]
 
 
 GO
+CREATE NONCLUSTERED INDEX IX_AuthorName_LastFirst
+	ON dbo.AuthorName (LastName,FirstName)
+GO
 CREATE TRIGGER dbo.AuthorName_AuditBasic_Insert ON [dbo].[AuthorName]
  AFTER Insert
  NOT FOR REPLICATION

@@ -163,7 +163,7 @@ BEGIN TRY
 		BEGIN
 
 			IF NOT EXISTS(	SELECT a.AuthorID FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
-							WHERE (n.FullName = @FullName OR dbo.fnReverseAuthorName(n.FullName) = @FullName OR
+							WHERE (n.FullName = @FullName OR dbo.fnReverseAuthorName(@FullName) = n.FullName OR
 								(n.FirstName = @FirstName AND n.LastName = @LastName AND @FirstName <> '' AND @LastName <> ''))
 							AND a.StartDate = @StartYear AND a.EndDate = @EndYear)
 			BEGIN
