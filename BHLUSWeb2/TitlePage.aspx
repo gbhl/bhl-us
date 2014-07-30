@@ -174,7 +174,7 @@
                         <img src="/images/bhlau images/image_book.jpg" height="170" width="248" alt="Book" />
                         <div class="intro">
                             <p>If you are generating a PDF containing the text of a single journal article or book chapter, please provide title and author information.</p>
-                            <p>BHL stores this information to allow these PDFs to be indexed, searched and retrieved by other users. If you download an article but do not provide title or author information, these articles will be lost.</p>
+                            <p>BHL stores this information to allow these articles to be indexed, searched and retrieved by other users. If you download an article but do not provide title or author information, these articles will be lost.</p>
                         </div>
                         <div class="success">
                             <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
