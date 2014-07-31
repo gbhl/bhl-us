@@ -46,7 +46,8 @@ FROM	dbo.BSSegment s
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 		INNER JOIN dbo.BHLAuthorName an 
 			ON (sa.LastName = an.LastName AND sa.FirstName = an.FirstName)
-			OR an.FullName LIKE sa.LastName + '%' + sa.FirstName
+			OR an.FullName = sa.LastName + ', ' + sa.FirstName
+			OR an.FullName = sa.LastName + ',' + sa.FirstName
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 
