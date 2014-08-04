@@ -18,7 +18,7 @@ CREATE TABLE #Step1
 	DOIID int NOT NULL,
 	DOIEntityTypeName nvarchar(50) NULL,
 	EntityID int NULL,
-	EntityDetail nvarchar(1500) NULL,
+	EntityDetail nvarchar(2500) NULL,
 	SortTitle nvarchar(60) NULL,
 	DOIBatchID nvarchar(50) NULL,
 	DOIName nvarchar(50) NULL,
@@ -79,7 +79,7 @@ CREATE TABLE #Step2
 	DOIID int NOT NULL,
 	DOIEntityTypeName nvarchar(50) NULL,
 	EntityID int NULL,
-	EntityDetail nvarchar(1500) NULL,
+	EntityDetail nvarchar(2500) NULL,
 	SortTitle nvarchar(60) NULL,
 	DOIBatchID nvarchar(50) NULL,
 	DOIName nvarchar(50) NULL,
@@ -206,5 +206,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
