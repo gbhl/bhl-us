@@ -625,6 +625,8 @@ BEGIN TRY
 								'653', '654', '655', '656', '657', '658', '662', '690')
 	AND		m.Indicator2 <> '6'	-- skip non-english-language subjects
 	AND		m.Code <> '2' -- skip sources of tags
+	AND		m.Code <> '0' -- skip authority record control numbers
+
 
 	-- If we don't have a MARC record, then see if there are any subjects in the metadata tables
 	IF NOT EXISTS (SELECT t.ItemID FROM #tmpTitle t INNER JOIN dbo.IAMarc m ON t.ItemID = m.ItemID)
