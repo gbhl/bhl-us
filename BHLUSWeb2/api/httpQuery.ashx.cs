@@ -64,6 +64,7 @@ namespace MOBOT.BHL.Web2.api
                         context.Response.ContentType = "text/xml";
                         break;
                 }
+                context.Response.AppendHeader("Access-Control-Allow-Origin", "*"); 
                 context.Response.Write(response);
             }
         }

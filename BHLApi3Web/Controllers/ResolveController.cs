@@ -57,6 +57,7 @@ namespace BHLApi3Web.Controllers
                 msg = this.ControllerContext.Request.CreateResponse(HttpStatusCode.OK, (IEnumerable<Models.ResolutionResult>)results);
             }
 
+            msg.Headers.Add("Access-Control-Allow-Origin", "*");
             return msg;
         }
 

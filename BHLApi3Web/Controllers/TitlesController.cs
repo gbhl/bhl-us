@@ -49,6 +49,7 @@ namespace BHLApi3Web.Controllers
                 msg = this.ControllerContext.Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            msg.Headers.Add("Access-Control-Allow-Origin", "*");
             return msg;
         }
 
@@ -70,6 +71,7 @@ namespace BHLApi3Web.Controllers
                 msg = this.ControllerContext.Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
+            msg.Headers.Add("Access-Control-Allow-Origin", "*");
             return msg;
         }
 
