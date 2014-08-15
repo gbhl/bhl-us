@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchBookGlobalFT]
+﻿CREATE PROCEDURE [dbo].[SearchBookGlobalFT]
 
 @SearchText		nvarchar(2000) = '',
 @ReturnCount	int = 100,
@@ -16,7 +15,7 @@ DECLARE @CatalogStatus int
 exec @CatalogStatus = dbo.SearchCatalogCheckStatus
 IF (@CatalogStatus = 0)
 BEGIN
-	exec dbo.SearchBook @SearchText, '', '', '', '', '', null, @ReturnCount, @SortBy
+	exec dbo.SearchBook @SearchText, '', '', '', null, '', '', null, @ReturnCount, @SortBy
 	RETURN
 END
 
@@ -304,6 +303,3 @@ ELSE BEGIN
 END
 
 END
-
-GO
-
