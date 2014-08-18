@@ -71,6 +71,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLServerTest", "BHLServerTest\BHLServerTest.csproj", "{D0593A3C-D424-44A1-B3FF-42C20EF53B33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -353,6 +355,16 @@ Global
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4EDB0375-9817-474B-9C3D-01A0867FCCD2}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D0593A3C-D424-44A1-B3FF-42C20EF53B33}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
