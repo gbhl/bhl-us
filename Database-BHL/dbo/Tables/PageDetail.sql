@@ -18,3 +18,9 @@
         CONSTRAINT FK_PageDetail_PageDetailStatus FOREIGN KEY (PageDetailStatusID ) REFERENCES dbo.PageDetailStatus(PageDetailStatusID)
         )
 GO
+CREATE NONCLUSTERED INDEX [IX_PageDetail_PageID] ON [dbo].[PageDetail]
+(
+	[PageID] ASC
+)
+GO
+
