@@ -40,15 +40,6 @@ namespace MOBOT.BHL.Web2 {
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
         
         /// <summary>
-        /// SocialLinksPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::MOBOT.BHL.Web2.SocialLinksPanel SocialLinksPanel;
-        
-        /// <summary>
         /// tbSearchTerm control.
         /// </summary>
         /// <remarks>

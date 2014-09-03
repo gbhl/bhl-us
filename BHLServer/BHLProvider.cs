@@ -579,6 +579,133 @@ namespace MOBOT.BHL.Server
             return nameDetails;
         }
 
+        /// <summary>
+        /// Produce a list of key-value pairs that represent the metadata required to allow the
+        /// specified item to be indexed by Google Scholar.
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForItem(int itemID, string uriFormat)
+        {
+            List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
+
+            BHLProvider service = new BHLProvider();
+            Item item = service.ItemSelectByBarcodeOrItemID(itemID, null);
+
+            if (item != null)
+            {
+                // Return no tags for external segments
+                if (string.IsNullOrWhiteSpace(item.ExternalUrl))
+                {
+                    Title title = service.TitleSelectAuto(item.PrimaryTitleID);
+                    string itemDate = string.IsNullOrWhiteSpace(item.Year) ? title.StartYear.ToString() : item.Year;
+
+                    AddGoogleScholarTag(tags, "citation_title", item.TitleName);
+                    AddGoogleScholarTag(tags, "citation_publication_date", itemDate);
+                    AddGoogleScholarTag(tags, "citation_publisher", title.Datafield_260_b);
+                    AddGoogleScholarTag(tags, "citation_language", item.LanguageCode);
+                    AddGoogleScholarTag(tags, "citation_volume", item.Volume);
+
+                    AddGoogleScholarTag(tags, "DC.title", item.TitleName);
+                    AddGoogleScholarTag(tags, "DC.issued", itemDate);
+                    AddGoogleScholarTag(tags, "DC.publisher", title.Datafield_260_b);
+                    AddGoogleScholarTag(tags, "DC.language", item.LanguageCode);
+                    AddGoogleScholarTag(tags, "DC.citation.volume", item.Volume);
+                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, item.ItemID.ToString()));
+
+                    CustomGenericList<TitleAuthor> authors = service.TitleAuthorSelectByTitle(item.PrimaryTitleID);
+                    foreach (TitleAuthor author in authors)
+                    {
+                        AddGoogleScholarTag(tags, "citation_author", author.FullName);
+                        AddGoogleScholarTag(tags, "DC.creator", author.FullName);
+                    }
+
+                    CustomGenericList<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID(item.PrimaryTitleID);
+                    foreach (Title_Identifier identifier in identifiers)
+                    {
+                        AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
+                    }
+                }
+            }
+
+            return tags;
+        }
+
+        /// <summary>
+        /// Produce a list of key-value pairs that represent the metadata required to allow the
+        /// specified segment to be indexed by Google Scholar.
+        /// </summary>
+        /// <param name="segmentID"></param>
+        /// <returns></returns>
+        public List<KeyValuePair<string, string>> GetGoogleScholarMetadataForSegment(int segmentID, string uriFormat)
+        {
+            List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
+
+            BHLProvider service = new BHLProvider();
+            Segment segment = service.SegmentSelectExtended(segmentID);
+
+            if (segment != null)
+            {
+                // Return no tags for external segments
+                if (segment.StartPageID != null && segment.StartPageID > 0)
+                {
+                    AddGoogleScholarTag(tags, "citation_title", segment.Title);
+                    AddGoogleScholarTag(tags, "citation_publication_date", segment.Date);
+                    AddGoogleScholarTag(tags, "citation_publisher", segment.PublisherName);
+                    AddGoogleScholarTag(tags, "citation_language", segment.LanguageName);
+                    AddGoogleScholarTag(tags, "citation_journal_title", segment.ContainerTitle);
+                    AddGoogleScholarTag(tags, "citation_volume", segment.Volume);
+                    AddGoogleScholarTag(tags, "citation_issue", segment.Issue);
+                    AddGoogleScholarTag(tags, "citation_firstpage", segment.StartPageNumber);
+                    AddGoogleScholarTag(tags, "citation_lastpage", segment.EndPageNumber);
+
+                    AddGoogleScholarTag(tags, "DC.title", segment.Title);
+                    AddGoogleScholarTag(tags, "DC.issued", segment.Date);
+                    AddGoogleScholarTag(tags, "DC.publisher", segment.PublisherName);
+                    AddGoogleScholarTag(tags, "DC.language", segment.LanguageName);
+                    AddGoogleScholarTag(tags, "DC.relation.ispartof", segment.ContainerTitle);
+                    AddGoogleScholarTag(tags, "DC.citation.volume", segment.Volume);
+                    AddGoogleScholarTag(tags, "DC.citation.issue", segment.Issue);
+                    AddGoogleScholarTag(tags, "DC.citation.spage", segment.StartPageNumber);
+                    AddGoogleScholarTag(tags, "DC.citation.epage", segment.EndPageNumber);
+                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, segment.SegmentID.ToString()));
+
+                    foreach (SegmentAuthor author in segment.AuthorList)
+                    {
+                        AddGoogleScholarTag(tags, "citation_author", author.FullName);
+                        AddGoogleScholarTag(tags, "DC.creator", author.FullName);
+                    }
+
+                    foreach (SegmentKeyword keyword in segment.KeywordList)
+                    {
+                        AddGoogleScholarTag(tags, "citation_keywords", keyword.Keyword);
+                        AddGoogleScholarTag(tags, "DC.subject", keyword.Keyword);
+                    }
+
+                    foreach (SegmentIdentifier identifier in segment.IdentifierList)
+                    {
+                        AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
+                    }
+
+                    CustomGenericList<DOI> dois = service.DOISelectValidForSegment(segmentID);
+                    foreach (DOI doi in dois)
+                    {
+                        AddGoogleScholarTag(tags, "citation_doi", doi.DOIName);
+                    }
+                }
+            }
+
+            return tags;
+        }
+
+        private void AddGoogleScholarTag(List<KeyValuePair<string, string>> tags, string key, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                tags.Add(new KeyValuePair<string, string>(key, value));
+            }
+        }
+
         [Serializable]
         public class ViewerPage
         {

@@ -63,33 +63,6 @@ namespace MOBOT.BHL.Web2
             return stats;
         }
 
-        internal void SetTweetMessage(string msg)
-        {
-            // If a SocialLinksPanel control exists, set the message
-            if (this.GetType().GetMember("SocialLinksPanel") != null)
-            {
-                if (this.SocialLinksPanel != null) this.SocialLinksPanel.TweetMessage = msg;
-            }
-        }
-
-        internal void SetTitleID(int titleID)
-        {
-            // If a SocialLinksPanel control exists, set the TitleID
-            if (this.GetType().GetMember("SocialLinksPanel") != null)
-            {
-                if (this.SocialLinksPanel != null) this.SocialLinksPanel.TitleID = titleID;
-            }
-        }
-
-        internal void SetItemID(int itemID)
-        {
-            // If a SocialLinksPanel control exists, set the ItemID
-            if (this.GetType().GetMember("SocialLinksPanel") != null)
-            {
-                if (this.SocialLinksPanel != null) this.SocialLinksPanel.ItemID = itemID;
-            }
-        }
-
         /// <summary>
         /// Reads the alert message from a text file and caches it.  Using the cache
         /// and file system is done for performance reasons (testing showed that file 

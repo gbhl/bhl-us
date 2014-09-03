@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Web.UI.HtmlControls;
 
 namespace MOBOT.BHL.Web2
 {
@@ -53,9 +54,18 @@ namespace MOBOT.BHL.Web2
                     }
                 }
 
+                // Add Google Scholar metadata to the page headers
+                List<KeyValuePair<string, string>> tags = bhlProvider.GetGoogleScholarMetadataForSegment(SegmentID, ConfigurationManager.AppSettings["PartPageUrl"]);
+                foreach (KeyValuePair<string, string> tag in tags)
+                {
+                    HtmlMeta htmlMetaTag = new HtmlMeta();
+                    htmlMetaTag.Name = tag.Key;
+                    htmlMetaTag.Content = Server.HtmlEncode(tag.Value);
+                    this.Page.Header.Controls.Add(htmlMetaTag);
+                }
 
                 COinS.SegmentID = SegmentID;
-
+                
                 // Set up the Mendeley share control
                 mendeley.SegmentID = SegmentID;
 

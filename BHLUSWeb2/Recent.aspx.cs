@@ -63,7 +63,7 @@ namespace MOBOT.BHL.Web2
             rssFeedImageLink.HRef = recentLink;
 
             Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Recent Additions");
-            ((SiteMaster)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Recent Additions"));
+            //((SiteMaster)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Recent Additions"));
 
         }
     }
