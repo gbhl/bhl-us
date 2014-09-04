@@ -1123,7 +1123,7 @@ namespace MOBOT.BHL.OAI2
                         newResumptionToken = resumptionTokenElement.Value;
                         if (resumptionTokenElement.Attribute("expirationDate") != null)
                         {
-                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate").Value);
+                            resumptionExpiration = Convert.ToDateTime(resumptionTokenElement.Attribute("expirationDate").Value).ToUniversalTime();
                         }
                         if (resumptionTokenElement.Attribute("completeListSize") != null)
                         {

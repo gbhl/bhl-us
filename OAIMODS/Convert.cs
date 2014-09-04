@@ -79,13 +79,13 @@ namespace MOBOT.BHL.OAIMODS
                         _oaiRecord.Type = OAIRecord.RecordType.Segment;
                         break;
                     default:
-                        _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                        _oaiRecord.Type = OAIRecord.RecordType.Unknown;
                         break;
                 }
             }
             else
             {
-                _oaiRecord.Type = OAIRecord.RecordType.Segment;
+                _oaiRecord.Type = OAIRecord.RecordType.Unknown;
             }
 
             // Subjects
