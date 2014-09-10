@@ -113,6 +113,11 @@ namespace MOBOT.BHL.AdminWeb.Services
                                 entityUrl = string.Format(ConfigurationManager.AppSettings["PagePageUrl"], searchResult[x].EntityID.ToString());
                                 break;
                             }
+                        case "Segment":
+                            {
+                                entityUrl = string.Format(ConfigurationManager.AppSettings["PartPageUrl"], searchResult[x].EntityID.ToString());
+                                break;
+                            }
                         default:
                             {
                                 entityUrl = string.Empty;
