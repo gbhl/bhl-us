@@ -73,6 +73,13 @@ FROM	#Step1 s INNER JOIN dbo.Page p
 			ON p.PageID = ip.PageID
 			AND	ip.Sequence = 1
 
+UPDATE	#Step1
+SET		EntityDetail = seg.Title,
+		SortTitle = LEFT(seg.SortTitle, 60)
+FROM	#Step1 s INNER JOIN dbo.Segment seg
+			ON s.EntityID = seg.SegmentID
+			AND s.DOIEntityTypeName = 'Segment'
+
 -- Create a temp table for the second step
 CREATE TABLE #Step2
 	(
@@ -206,3 +213,4 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+

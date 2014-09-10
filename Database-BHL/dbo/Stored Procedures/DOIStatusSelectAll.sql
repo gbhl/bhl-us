@@ -13,8 +13,6 @@ SELECT	s.DOIStatusID,
 		SUM(CASE WHEN d.DOIID IS NULL THEN 0 ELSE 1 END) AS NumberDOIs
 FROM	dbo.DOIStatus s LEFT JOIN dbo.DOI d
 			ON s.DOIStatusID = d.DOIStatusID
-WHERE	d.DOIEntityTypeID = 10 -- Title
-OR		d.DOIEntityTypeID IS NULL
 GROUP BY
 		s.DOIStatusID, s.DOIStatusName, s.DOIStatusDescription
 ORDER BY s.DOIStatusID
