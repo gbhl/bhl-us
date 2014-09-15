@@ -5,44 +5,40 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
-	[ItemID],
-	[PrimaryTitleID],
-	[BarCode],
-	[MARCItemID],
-	[CallNumber],
-	[Volume],
-	[InstitutionCode],
-	[LanguageCode],
-	[ItemDescription],
-	[ScannedBy],
-	[PDFSize],
-	[VaultID],
-	[NumberOfFiles],
-	[Note],
-		[CreationDate],
-	[LastModifiedDate],
-	[CreationUserID],
-	[LastModifiedUserID],
-	[ItemStatusID],
-	[ItemSourceID],
-	[ScanningUser],
-	[ScanningDate],
-	[Year],
-	[IdentifierBib],
-	[PaginationCompleteUserID],
-	[PaginationCompleteDate],
-	[PaginationStatusID],
-	[PaginationStatusUserID],
-	[PaginationStatusDate],
-	[LastPageNameLookupDate]
-
-FROM [dbo].[Item]
-
-WHERE
-	[LastPageNameLookupDate] IS NULL
-AND	[ItemStatusID] = 40
+SELECT DISTINCT
+		i.[ItemID],
+		[PrimaryTitleID],
+		[BarCode],
+		[MARCItemID],
+		[CallNumber],
+		i.[Volume],
+		[InstitutionCode],
+		[LanguageCode],
+		CONVERT(nvarchar(MAX), [ItemDescription]) AS ItemDescription,
+		[ScannedBy],
+		[PDFSize],
+		[VaultID],
+		[NumberOfFiles],
+		i.[Note],
+		i.[CreationDate],
+		i.[LastModifiedDate],
+		i.[CreationUserID],
+		i.[LastModifiedUserID],
+		[ItemStatusID],
+		[ItemSourceID],
+		[ScanningUser],
+		[ScanningDate],
+		i.[Year],
+		[IdentifierBib],
+		[PaginationCompleteUserID],
+		[PaginationCompleteDate],
+		[PaginationStatusID],
+		[PaginationStatusUserID],
+		[PaginationStatusDate],
+		i.[LastPageNameLookupDate]
+FROM	[dbo].[Item] i INNER JOIN dbo.Page p ON i.ItemID = p.ItemID
+WHERE	i.[LastPageNameLookupDate] IS NULL
+AND		[ItemStatusID] = 40
 
 IF @@ERROR <> 0
 BEGIN
