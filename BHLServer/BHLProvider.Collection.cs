@@ -57,5 +57,10 @@ namespace MOBOT.BHL.Server
         {
             new CollectionDAL().Save(null, null, collection);
         }
+
+        public void DeleteCollection(int collectionID)
+        {
+            new CollectionDAL().Delete(null, null, collectionID);
+        }
     }
 }

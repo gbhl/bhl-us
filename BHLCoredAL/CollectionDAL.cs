@@ -221,5 +221,40 @@ namespace MOBOT.BHL.DAL
             }
 
         }
+
+        public void Delete (SqlConnection sqlConnection, SqlTransaction sqlTransaction, int collectionID)
+        {
+            SqlConnection connection = sqlConnection;
+            SqlTransaction transaction = sqlTransaction;
+
+            if (connection == null)
+            {
+                connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"));
+            }
+            bool isTransactionCoordinator = CustomSqlHelper.IsTransactionCoordinator(transaction);
+
+            try
+            {
+                transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
+
+                bool success = new ItemCollectionDAL().ItemCollectionDeleteForCollection(sqlConnection, sqlTransaction, collectionID);
+                if (success) success = new TitleCollectionDAL().TitleCollectionDeleteForCollection(sqlConnection, sqlTransaction, collectionID);
+                if (success) success = CollectionDeleteAuto(sqlConnection, sqlTransaction, collectionID);
+
+                if (success)
+                    CustomSqlHelper.CommitTransaction(transaction, isTransactionCoordinator);
+                else
+                    throw new Exception(string.Format("Error deleting collection {0}", collectionID.ToString()));
+            }
+            catch
+            {
+                CustomSqlHelper.RollbackTransaction(transaction, isTransactionCoordinator);
+                throw;
+            }
+            finally
+            {
+                CustomSqlHelper.CloseConnection(connection, isTransactionCoordinator);
+            }
+        }
     }
 }
