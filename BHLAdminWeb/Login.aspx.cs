@@ -11,7 +11,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             // if logged in proceed to dashboard
-            if (Helper.IsAdmin(Request)) Response.Redirect("dashboard.aspx");
+            if (Helper.IsUserAuthorized(Request, Helper.SecurityFunction.BHLAdminLogin)) Response.Redirect("dashboard.aspx");
         }
     }
 }

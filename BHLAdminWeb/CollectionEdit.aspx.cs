@@ -31,17 +31,7 @@ namespace MOBOT.BHL.AdminWeb
                 ddlLanguage.DataBind();
                 ddlLanguage.Items.Insert(0, new ListItem("(select language)", ""));
 
-                CustomGenericList<Collection> collections = bhlProvider.CollectionSelectAll();
-
-                Collection emptyCollection = new Collection();
-                emptyCollection.CollectionID = -1;
-                emptyCollection.CollectionName = "";
-                collections.Insert(0, emptyCollection);
-
-                ddlCollections.DataSource = collections;
-                ddlCollections.DataTextField = "CollectionNameDetail";
-                ddlCollections.DataValueField = "CollectionID";
-                ddlCollections.DataBind();
+                populateCollectionList();
 
                 string idString = Request.QueryString["id"];
                 int id = 0;
@@ -51,6 +41,8 @@ namespace MOBOT.BHL.AdminWeb
                     populateForm();
                 }
             }
+
+            deleteButton.Visible = Helper.IsUserAuthorized(Request, Helper.SecurityFunction.BHLAdminUserAdvanced);
             litMessage.Text = "";
             errorControl.Visible = false;
         }
@@ -145,6 +137,21 @@ namespace MOBOT.BHL.AdminWeb
 
             errorControl.Visible = flag;
             return !flag;
+        }
+
+        private void populateCollectionList()
+        {
+            CustomGenericList<Collection> collections = bhlProvider.CollectionSelectAll();
+
+            Collection emptyCollection = new Collection();
+            emptyCollection.CollectionID = -1;
+            emptyCollection.CollectionName = "";
+            collections.Insert(0, emptyCollection);
+
+            ddlCollections.DataSource = collections;
+            ddlCollections.DataTextField = "CollectionNameDetail";
+            ddlCollections.DataValueField = "CollectionID";
+            ddlCollections.DataBind();
         }
 
         private void populateForm()
@@ -341,27 +348,17 @@ namespace MOBOT.BHL.AdminWeb
 
 
                 // Update the drop-down list of collections
-                CustomGenericList<Collection> collections = bhlProvider.CollectionSelectAll();
+                populateCollectionList();
 
                 // Find the id of the just-inserted collection
                 string selectedValue = string.Empty;
-                foreach (Collection c in collections)
+                foreach (Collection c in (CustomGenericList<Collection>)ddlCollections.DataSource)
                 {
                     if (c.CollectionName == txtCollectionName.Text.Trim() &&
                         c.CanContainTitles == (short)(rdoContents.SelectedValue == "T" ? 1 : 0) &&
                         c.CanContainItems == (short)(rdoContents.SelectedValue == "I" ? 1 : 0))
                         selectedValue = c.CollectionID.ToString();
                 }
-
-                Collection emptyCollection = new Collection();
-                emptyCollection.CollectionID = -1;
-                emptyCollection.CollectionName = "";
-                collections.Insert(0, emptyCollection);
-
-                ddlCollections.DataSource = collections;
-                ddlCollections.DataTextField = "CollectionNameDetail";
-                ddlCollections.DataValueField = "CollectionID";
-                ddlCollections.DataBind();
 
                 lblID.Text = selectedValue;
                 ddlCollections.SelectedValue = selectedValue;
@@ -388,6 +385,15 @@ namespace MOBOT.BHL.AdminWeb
         protected void clearButton_Click(object sender, EventArgs e)
         {
             clearForm(this.Controls);
+        }
+
+        protected void deleteButton_Click(object sender, EventArgs e)
+        {
+            bhlProvider.DeleteCollection(int.Parse(ddlCollections.SelectedValue));
+            populateCollectionList();
+            ddlCollections.SelectedIndex = 0;
+            lblID.Text = "";
+            populateForm();
         }
 
         protected void ddlCollections_SelectedIndexChanged(object sender, EventArgs e)

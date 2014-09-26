@@ -15,27 +15,35 @@ namespace MOBOT.BHL.AdminWeb
     public class Helper
     {
         private static SecProvider _secProvider = null;
-
-        public static bool IsAdmin(HttpRequest request)
+        public sealed class SecurityFunction
         {
-            HttpCookie tokenCookie = request.Cookies["MOBOTSecurityToken"];
+            private readonly String name;
+            private readonly int value;
 
-            if (tokenCookie != null && tokenCookie.Value.Length > 0)
+            public static readonly SecurityFunction BHLAdminUserBasic = new SecurityFunction(7, "BHL_Admin_UserBasic");
+            public static readonly SecurityFunction BHLAdminUserAdvanced = new SecurityFunction(277, "BHL_Admin_UserAdvanced");
+            public static readonly SecurityFunction BHLAdminPortalEditor = new SecurityFunction(8, "BHL_Admin_PortalEditor");
+            public static readonly SecurityFunction BHLAdminSysAdmin = new SecurityFunction(304, "BHL_Admin_SysAdmin");
+            public static readonly SecurityFunction BHLAdminLogin = new SecurityFunction(305, "BHL_Admin_Login");
+
+            private SecurityFunction(int value, String name)
             {
-                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, "BHL_Admin");
-                return (result.ResultStatus == ResultStatusEnum.Success);
+                this.name = name;
+                this.value = value;
             }
 
-            return false;
+            public override String ToString() { return name; }
+            public int Value() { return value; }
         }
 
-        public static bool IsAdminSuperUser(HttpRequest request)
+        public static bool IsUserAuthorized(HttpRequest request, SecurityFunction securityFunction)
         {
             HttpCookie tokenCookie = request.Cookies["MOBOTSecurityToken"];
 
             if (tokenCookie != null && tokenCookie.Value.Length > 0)
             {
-                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, "BHL_Admin_SuperUser");
+                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, securityFunction.Value());
+
                 return (result.ResultStatus == ResultStatusEnum.Success);
             }
 

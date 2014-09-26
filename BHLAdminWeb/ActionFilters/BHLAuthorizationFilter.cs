@@ -24,7 +24,7 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
 
             if (tokenCookie != null && tokenCookie.Value.Length > 0)
             {
-                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, "BHL_Admin");
+                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, Helper.SecurityFunction.BHLAdminLogin.Value());
                 return (result.ResultStatus == ResultStatusEnum.Success);
             }
 

@@ -38,7 +38,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 
 			// Make sure user is an admin
-			if ( Helper.IsAdmin( Request ) == false )
+			if ( Helper.IsUserAuthorized( Request, Helper.SecurityFunction.BHLAdminLogin) == false )
 			{
 				Response.Redirect( "/Login.aspx" );
 			}

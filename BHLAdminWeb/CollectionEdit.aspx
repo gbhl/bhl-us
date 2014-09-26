@@ -42,7 +42,7 @@
 			<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 		</asp:GridView>
 	</asp:Panel>
-	<div class="box" style="padding: 5px;margin-right:5px; width:970px">
+	<div class="box" style="padding: 5px 5px 30px;margin-right:5px; width:970px">
 		<table cellpadding="4" style="width:100%">
 			<tr>
 				<td style="white-space: nowrap; width:100px" align="right">
@@ -158,9 +158,14 @@
 		</table>
 		<br />
 		<br />
-		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
-		<asp:Button ID="clearButton" runat="server" Text="Clear" OnClick="clearButton_Click" />
-		<asp:Button ID="saveAsNewButton" runat="server" Text="Save As New" OnClick="saveAsNewButton_Click" />
+        <div style="float:left">
+		    <asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		    <asp:Button ID="clearButton" runat="server" Text="Clear" OnClick="clearButton_Click" />
+		    <asp:Button ID="saveAsNewButton" runat="server" Text="Save As New" OnClick="saveAsNewButton_Click" />
+        </div>
+        <div style="float:right">
+            <asp:Button ID="deleteButton" runat="server" Text="Delete" OnClick="deleteButton_Click" OnClientClick="return ConfirmDelete()" />
+        </div>
 	</div>
 
     <script type="text/javascript" language="javascript">
@@ -183,6 +188,10 @@
                 return true;
             else
                 return false;
+        }
+
+        function ConfirmDelete() {
+            return confirm("Are you sure that you want to DELETE this collection?  THIS ACTION CANNOT BE UNDONE!");
         }
 
         function checkDescLength(textControl, maxLength) {
