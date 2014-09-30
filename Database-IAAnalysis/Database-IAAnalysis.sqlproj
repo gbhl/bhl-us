@@ -71,60 +71,60 @@
     <Folder Include="dbo\Synonyms\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Collection.sql" />
-    <Build Include="dbo\Tables\ItemCollection.sql" />
-    <Build Include="dbo\Tables\MarcControl.sql" />
-    <Build Include="dbo\Tables\MarcDataField.sql" />
-    <Build Include="dbo\Tables\MarcSubField.sql" />
-    <Build Include="dbo\Tables\ExportScanListAuthor.sql" />
-    <Build Include="dbo\Tables\ExportScanListOCLC.sql" />
-    <Build Include="dbo\Tables\SubjectSample.sql" />
-    <Build Include="dbo\Tables\RptByCategory.sql" />
-    <Build Include="dbo\Tables\RptBySubject.sql" />
-    <Build Include="dbo\Tables\RptCombined.sql" />
-    <Build Include="dbo\Tables\ExportScanListDates.sql" />
-    <Build Include="dbo\Tables\ExportScanListItem.sql" />
-    <Build Include="dbo\Tables\SubjectExclusion.sql" />
-    <Build Include="dbo\Tables\Item.sql" />
-    <Build Include="dbo\Views\vwMarcControl.sql" />
-    <Build Include="dbo\Views\vwMarcDataField.sql" />
-    <Build Include="dbo\Views\vwMarcDetail.sql" />
-    <Build Include="dbo\Functions\fnFilterString.sql" />
-    <Build Include="dbo\Functions\fnMarcStringForMarcDataField.sql" />
-    <Build Include="dbo\Stored Procedures\ItemSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\GetNewSubjectSample.sql" />
-    <Build Include="dbo\Stored Procedures\ItemSelectForXMLDownload.sql" />
-    <Build Include="dbo\Stored Procedures\DoAnalysis.sql" />
-    <Build Include="dbo\Stored Procedures\ExportScanList.sql" />
-    <Build Include="dbo\Stored Procedures\ItemCollectionSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemCollectionInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemCollectionUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\ItemCollectionDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcControlSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcControlInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcControlUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcControlDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcDataFieldInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcDataFieldUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcDataFieldDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcSubFieldSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcSubFieldInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcSubFieldUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\MarcSubFieldDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\CollectionSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\CollectionInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\CollectionUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\CollectionDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\CollectionSelectByCollectionName.sql">
+    <None Include="dbo\Tables\Collection.sql" />
+    <None Include="dbo\Tables\ItemCollection.sql" />
+    <None Include="dbo\Tables\MarcControl.sql" />
+    <None Include="dbo\Tables\MarcDataField.sql" />
+    <None Include="dbo\Tables\MarcSubField.sql" />
+    <None Include="dbo\Tables\ExportScanListAuthor.sql" />
+    <None Include="dbo\Tables\ExportScanListOCLC.sql" />
+    <None Include="dbo\Tables\SubjectSample.sql" />
+    <None Include="dbo\Tables\RptByCategory.sql" />
+    <None Include="dbo\Tables\RptBySubject.sql" />
+    <None Include="dbo\Tables\RptCombined.sql" />
+    <None Include="dbo\Tables\ExportScanListDates.sql" />
+    <None Include="dbo\Tables\ExportScanListItem.sql" />
+    <None Include="dbo\Tables\SubjectExclusion.sql" />
+    <None Include="dbo\Tables\Item.sql" />
+    <None Include="dbo\Views\vwMarcControl.sql" />
+    <None Include="dbo\Views\vwMarcDataField.sql" />
+    <None Include="dbo\Views\vwMarcDetail.sql" />
+    <None Include="dbo\Functions\fnFilterString.sql" />
+    <None Include="dbo\Functions\fnMarcStringForMarcDataField.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\GetNewSubjectSample.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectForXMLDownload.sql" />
+    <None Include="dbo\Stored Procedures\DoAnalysis.sql" />
+    <None Include="dbo\Stored Procedures\ExportScanList.sql" />
+    <None Include="dbo\Stored Procedures\ItemCollectionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemCollectionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemCollectionUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemCollectionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcControlSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcControlInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcControlUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcControlDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcDataFieldInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcDataFieldUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcDataFieldDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcSubFieldSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcSubFieldInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcSubFieldUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\MarcSubFieldDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\CollectionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\CollectionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\CollectionUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\CollectionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\CollectionSelectByCollectionName.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Stored Procedures\ItemSelectByIdentifier.sql">
+    </None>
+    <None Include="dbo\Stored Procedures\ItemSelectByIdentifier.sql">
       <QuotedIdentifier>Off</QuotedIdentifier>
-    </Build>
-    <Build Include="dbo\Synonyms\BHLItem.sql" />
+    </None>
+    <None Include="dbo\Synonyms\BHLItem.sql" />
   </ItemGroup>
 </Project>
