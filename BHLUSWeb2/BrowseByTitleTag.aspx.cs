@@ -28,7 +28,7 @@ namespace MOBOT.BHL.Web2
             Subject = Subject.Replace('+', ' ');
 
             this.Title = (Subject == string.Empty ? this.Title : String.Format(ConfigurationManager.AppSettings["PageTitle"], Subject));
-            ((SiteMaster)Page.Master).SetTweetMessage(Subject == string.Empty ? string.Empty : String.Format(ConfigurationManager.AppSettings["TweetMessage"], Subject));
+            //((SiteMaster)Page.Master).SetTweetMessage(Subject == string.Empty ? string.Empty : String.Format(ConfigurationManager.AppSettings["TweetMessage"], Subject));
 
             CustomGenericList<Data.SearchBookResult> resultList = this.GetTitleList(Subject);
             BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SectionPage.aspx.cs" Inherits="MOBOT.BHL.Web2.SectionPage" %>
+﻿<%@ Page Title="" Language="C#" ViewStateMode="Disabled" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SectionPage.aspx.cs" Inherits="MOBOT.BHL.Web2.SectionPage" %>
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>

@@ -15,9 +15,10 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=3" />
-    <link rel="stylesheet" href="/css/style.css?v=6" />
+    <link rel="stylesheet" href="/css/style.css?v=7" />
     <link rel="Stylesheet" href="/css/bookviewer.css" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
     <asp:ContentPlaceHolder id="PageHeaderIncludesPlaceHolder" runat="server" />
 
@@ -46,15 +47,13 @@
                     <a id="logo" href="/">
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
-		            <nav>
+		            <nav style="width:380px;">
 			     		<a href="http://biodivlib.wikispaces.com/About">About BHL</a>
 			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>				            
+                        <span id="headersocialbook">
+                            <div class="addthis_sharing_toolbox"></div>
+                        </span>
 		            </nav>
-                    <span id="headersocialbook">
-                        
-                        <sl:SocialLinks ID="SocialLinksPanel" runat="server" />
-                    
-                    </span>
                             <div id="searchbar">
             <a href="/advsearch" title="Advanced Search">advanced search</a>
         	<asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />

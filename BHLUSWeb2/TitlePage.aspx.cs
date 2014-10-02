@@ -8,6 +8,7 @@ using MOBOT.BHL.Server;
 using Newtonsoft.Json;
 using System.Text;
 using System.Configuration;
+using System.Web.UI.HtmlControls;
 
 namespace MOBOT.BHL.Web2
 {
@@ -44,9 +45,11 @@ namespace MOBOT.BHL.Web2
                 bool getFirstPage = true;
                 bool titleSearch = false;
 
+                int pageid = int.MinValue;
+                int? segmentid = null;
+
                 if (RouteData.Values["pageid"] != null)
                 {
-                    int pageid;
                     if (int.TryParse((string)RouteData.Values["pageid"], out pageid))
                     {
                         PageSummary = bhlProvider.PageSummarySelectByPageId(pageid, true);
@@ -185,6 +188,7 @@ namespace MOBOT.BHL.Web2
                     {
                         firstPage = bhlProvider.PageSelectFirstPageForItem(PageSummary.ItemID);
                         sequenceOrder = firstPage.SequenceOrder;
+                        pageid = firstPage.PageID;
                     }
 
                     Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(PageSummary.Volume) ? String.Empty : PageSummary.Volume + " - ") + PageSummary.ShortTitle);
@@ -262,10 +266,15 @@ namespace MOBOT.BHL.Web2
                         setAnnotationContent();
                     }
 
-                    CustomGenericList<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
+                    // Get any segment ID associated with the current page
+                    segmentid = GetSegmentID(pages, pageid);
+
+                    // Add Google Scholar metadata to the page headers
+                    SetGoogleScholarTags(PageSummary.ItemID, segmentid);
 
                     // Serialize only the information we need
                     List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
+                    CustomGenericList<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
                     foreach (PageSummaryView pageview in pageviews)
                     {
                         BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage
@@ -300,6 +309,49 @@ namespace MOBOT.BHL.Web2
                 }
             }
         }
+
+        /// <summary>
+        /// Get the segment id associated with the current page
+        /// </summary>
+        /// <param name="pages">List of all pages</param>
+        /// <param name="currentPageID">Identifier of the current page</param>
+        /// <returns>Segment ID associated with the page, or null</returns>
+        private int? GetSegmentID(CustomGenericList<Page> pages, int currentPageID)
+        {
+            int? segmentid = null;
+
+            foreach (Page page in pages)
+            {
+                if (page.PageID == currentPageID)
+                {
+                    segmentid = page.SegmentID;
+                    break;
+                }
+            }
+
+            return segmentid;
+        }
+
+        /// <summary>
+        /// Set the Google Scholar tags for the page
+        /// </summary>
+        private void SetGoogleScholarTags(int itemid, int? segmentid)
+        {
+            List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
+            if (segmentid != null)
+                tags = bhlProvider.GetGoogleScholarMetadataForSegment((int)segmentid, ConfigurationManager.AppSettings["PartPageUrl"]);
+            else
+                tags = bhlProvider.GetGoogleScholarMetadataForItem(itemid, ConfigurationManager.AppSettings["ItemPageUrl"]);
+
+            foreach (KeyValuePair<string, string> tag in tags)
+            {
+                HtmlMeta htmlMetaTag = new HtmlMeta();
+                htmlMetaTag.Name = tag.Key;
+                htmlMetaTag.Content = Server.HtmlEncode(tag.Value);
+                this.Page.Header.Controls.Add(htmlMetaTag);
+            }
+        }
+
         /// <summary>
         /// Get the entire list of annotations for this item
         /// For each page, build the html for its annotations, and write to the page in hidden divs

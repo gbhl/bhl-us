@@ -331,6 +331,14 @@
         pageToolBoxEvent = "tap";
     }
 
+    var addthis_share = { 
+        url: window.location.pathname,
+        title: $(document).find("title").text(),
+        templates: {
+            twitter: "{{title}} {{url}}"
+        }
+    }
+
     // actionMode: either standard reading mode or selecting pages to download
     // actionModeType.Read: default. 
     // actionModeType.Select: triggered when user selects option to download a set of pages.
@@ -987,6 +995,12 @@
             // Update page URL and names
             $("#currentpageURL").text("http://biodiversitylibrary.org/page/" + pages[index].PageID);
             $("#currentpageURL").attr("href", "http://biodiversitylibrary.org/page/" + pages[index].PageID);
+
+            addthis_share = { 
+                url: "http://biodiversitylibrary.org/page/" + pages[index].PageID,
+                title: $(document).find("title").text()
+            }
+
             var showOCRButton = $('#showOCRButton'); 
             if (showOCRButton.attr("title") == "Hide OCR") {
                 updateOCR(index);   // Update OCR if it is visible
