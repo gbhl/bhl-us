@@ -24,30 +24,29 @@ namespace MOBOT.BHL.AdminWeb
 
 			Response.Cookies[ "CallingUrl" ].Value = Request.Url.ToString();
 
-			// if logged in change to logout and vice versa
-			HttpCookie tokenCookie = Request.Cookies[ "MOBOTSecurityToken" ];
+			// Make sure user is logged in
+            if (Helper.IsUserAuthenticated(new HttpRequestWrapper(Request)))
+            {
+                loginLink.Text = "Logout";
+                loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
 
-			if ( tokenCookie == null || tokenCookie.Value.Length == 0 )
-			{
-				Response.Redirect( "/Login.aspx" );
-			}
-			else
-			{
-				loginLink.Text = "Logout";
-				loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
-			}
-
-			// Make sure user is an admin
-			if ( Helper.IsUserAuthorized( Request, Helper.SecurityFunction.BHLAdminLogin) == false )
-			{
-				Response.Redirect( "/Login.aspx" );
-			}
+                // Make sure the user is authorized
+                if (!Helper.IsUserAuthorized(new HttpRequestWrapper(Request)))
+                {
+                    Response.Redirect("/AccessDenied.aspx");
+                }
+            }
+            else
+            {
+                Response.Redirect("/Login.aspx");
+            }
 
             // Make sure that the authorized user is valid for the production site (some are
             // restricted to test)
             String isProduction = ConfigurationManager.AppSettings["IsProduction"] as String;
             if (String.Compare(isProduction, "true", true) == 0)
             {
+                HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
                 SecUser user = Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
                 String userName = user.UserName;
             }
@@ -63,13 +62,8 @@ namespace MOBOT.BHL.AdminWeb
 		protected override void OnInit( EventArgs e )
 		{
 			base.OnInit( e );
-
-			HttpCookie tokenCookie = Request.Cookies[ "MOBOTSecurityToken" ];
-			if ( tokenCookie == null || tokenCookie.Value.Length == 0 )
-			{
-                Response.Cookies["CallingUrl"].Value = Request.Url.ToString();
-                Response.Redirect("login.aspx");
-			}
+            Response.Cookies["CallingUrl"].Value = Request.Url.ToString();
+            if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("login.aspx");
 		}
 	}
 }

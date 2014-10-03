@@ -139,6 +139,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ActionFilters\BHLAuthorizationFilter.cs" />
     <Compile Include="ActionFilters\DebugModeFilter.cs" />
     <Compile Include="ActionFilters\FullTextSearchFilter.cs" />
@@ -718,6 +725,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccessDenied.aspx" />
     <Content Include="Admin.Master" />
     <Content Include="Controls\ErrorControl.ascx" />
     <Content Include="Controls\fckeditor\editor\css\behaviors\disablehandles.htc" />

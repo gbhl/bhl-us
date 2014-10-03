@@ -42,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            deleteButton.Visible = Helper.IsUserAuthorized(Request, Helper.SecurityFunction.BHLAdminUserAdvanced);
+            deleteButton.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityFunction.BHLAdminUserAdvanced);
             litMessage.Text = "";
             errorControl.Visible = false;
         }

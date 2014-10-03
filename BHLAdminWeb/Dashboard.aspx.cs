@@ -134,7 +134,77 @@ namespace MOBOT.BHL.AdminWeb
                         segmentsThisMonth.InnerHtml = stat.StatValue.ToString();
                         break;
                 }
+
+            }
+
+            MenuSetup(Request);
+        }
+
+        protected void MenuSetup(HttpRequest request)
+        {
+            // To disable a menu item, replace the menu anchor control with just the text of the control
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminPortalEditor))
+            {
+                tdTitles.InnerHtml = GetMenuText(tdTitles.InnerHtml);
+                tdItems.InnerHtml = GetMenuText(tdItems.InnerHtml);
+                tdSegments.InnerHtml = GetMenuText(tdSegments.InnerHtml);
+                tdPagination.InnerHtml = GetMenuText(tdPagination.InnerHtml);
+                tdAuthors.InnerHtml = GetMenuText(tdAuthors.InnerHtml);
+                tdNames.InnerHtml = GetMenuText(tdNames.InnerHtml);
+                tdRptItemPagination.InnerHtml = GetMenuText(tdRptItemPagination.InnerHtml);
+                tdRptTitleImportHistory.InnerHtml = GetMenuText(tdRptTitleImportHistory.InnerHtml);
+            }
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminUserBasic))
+            {
+                tdCollections.InnerHtml = GetMenuText(tdCollections.InnerHtml);
+                tdInstitutions.InnerHtml = GetMenuText(tdInstitutions.InnerHtml);
+                tdLanguages.InnerHtml = GetMenuText(tdLanguages.InnerHtml);
+                tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
+                tdPDFRequests.InnerHtml = GetMenuText(tdPDFRequests.InnerHtml);
+                tdSegmentTypes.InnerHtml = GetMenuText(tdSegmentTypes.InnerHtml);
+
+                tdShowNames.InnerHtml = GetMenuText(tdShowNames.InnerHtml);
+                tdShowUniqueNames.InnerHtml = GetMenuText(tdShowUniqueNames.InnerHtml);
+                tdShowVerifiedNames.InnerHtml = GetMenuText(tdShowVerifiedNames.InnerHtml);
+                tdShowEOLNames.InnerHtml = GetMenuText(tdShowEOLNames.InnerHtml);
+                tdShowEOLPages.InnerHtml = GetMenuText(tdShowEOLPages.InnerHtml);
+
+                tdExpandedLibraryStats.InnerHtml = GetMenuText(tdExpandedLibraryStats.InnerHtml);
+                tdExpandedGrowthStats.InnerHtml = GetMenuText(tdExpandedGrowthStats.InnerHtml);
+                tdExpandedPDFStats.InnerHtml = GetMenuText(tdExpandedPDFStats.InnerHtml);
+
+                tdIAPendingItems.InnerHtml = hypNumItems.Text;
+                tdViewUpdateIA.InnerHtml = GetMenuText(tdViewUpdateIA.InnerHtml);
+                tdIAHarvestDash.InnerHtml = GetMenuText(tdIAHarvestDash.InnerHtml);
+                tdViewUpdateBioStor.InnerHtml = GetMenuText(tdViewUpdateBioStor.InnerHtml);
+                tdViewUpdateDoi.InnerHtml = GetMenuText(tdViewUpdateDoi.InnerHtml);
+
+                tdRptCharEncoding.InnerHtml = GetMenuText(tdRptCharEncoding.InnerHtml);
+                tdRptDoiByInstitution.InnerHtml = GetMenuText(tdRptDoiByInstitution.InnerHtml);
+                tdRptMonoContributions.InnerHtml = GetMenuText(tdRptMonoContributions.InnerHtml);
+                tdRptItemsByContributor.InnerHtml = GetMenuText(tdRptItemsByContributor.InnerHtml);
+                tdRptRecentlyClustered.InnerHtml = GetMenuText(tdRptRecentlyClustered.InnerHtml);
+
+                tdImportCitations.InnerHtml = GetMenuText(tdImportCitations.InnerHtml);
+                tdImportCitationHistory.InnerHtml = GetMenuText(tdImportCitationHistory.InnerHtml);
+            }
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminUserAdvanced))
+            {
+                tdAlertMessage.InnerHtml = GetMenuText(tdAlertMessage.InnerHtml);
+                tdApiV2Stats.InnerHtml = apiv2StatsLink.InnerText;
+                tdOpenUrlStats.InnerHtml = openurlStatsLink.InnerText;
+            }
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminSysAdmin))
+            {
+                tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
+                tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);
             }
         }
-	}
+
+        protected string GetMenuText(string html)
+        {
+            string cleanHtml = html.Replace("\n", "").Replace("\r", "").Replace("\t", "");
+            return System.Text.RegularExpressions.Regex.Replace(cleanHtml, "(<[a|A][^>]*>|</[a|A]>)", "");
+        }
+    }
 }

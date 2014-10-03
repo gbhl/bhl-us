@@ -22,6 +22,141 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::MOBOT.BHL.AdminWeb.ContentPanel contentPanel;
         
         /// <summary>
+        /// tdAlertMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdAlertMessage;
+        
+        /// <summary>
+        /// tdImageServer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImageServer;
+        
+        /// <summary>
+        /// tdCollections control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdCollections;
+        
+        /// <summary>
+        /// tdInstitutions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdInstitutions;
+        
+        /// <summary>
+        /// tdLanguages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdLanguages;
+        
+        /// <summary>
+        /// tdPageTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdPageTypes;
+        
+        /// <summary>
+        /// tdPDFRequests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdPDFRequests;
+        
+        /// <summary>
+        /// tdSegmentTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdSegmentTypes;
+        
+        /// <summary>
+        /// tdVaults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdVaults;
+        
+        /// <summary>
+        /// tdTitles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdTitles;
+        
+        /// <summary>
+        /// tdItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdItems;
+        
+        /// <summary>
+        /// tdSegments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdSegments;
+        
+        /// <summary>
+        /// tdPagination control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdPagination;
+        
+        /// <summary>
+        /// tdAuthors control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdAuthors;
+        
+        /// <summary>
+        /// tdNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdNames;
+        
+        /// <summary>
         /// titlesAllCell control.
         /// </summary>
         /// <remarks>
@@ -112,6 +247,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell itemSegmentsActiveCell;
         
         /// <summary>
+        /// tdShowNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowNames;
+        
+        /// <summary>
         /// namesAllCell control.
         /// </summary>
         /// <remarks>
@@ -128,6 +272,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell namesActiveCell;
+        
+        /// <summary>
+        /// tdShowUniqueNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowUniqueNames;
         
         /// <summary>
         /// uniqueAllCell control.
@@ -148,6 +301,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell uniqueActiveCell;
         
         /// <summary>
+        /// tdShowVerifiedNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowVerifiedNames;
+        
+        /// <summary>
         /// verifiedAllCell control.
         /// </summary>
         /// <remarks>
@@ -164,6 +326,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell verifiedActiveCell;
+        
+        /// <summary>
+        /// tdShowEOLNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowEOLNames;
         
         /// <summary>
         /// eolNameAllCell control.
@@ -184,6 +355,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell eolNameActiveCell;
         
         /// <summary>
+        /// tdShowEOLPages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdShowEOLPages;
+        
+        /// <summary>
         /// eolPageAllCell control.
         /// </summary>
         /// <remarks>
@@ -200,6 +380,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell eolPageActiveCell;
+        
+        /// <summary>
+        /// tdExpandedLibraryStats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdExpandedLibraryStats;
         
         /// <summary>
         /// titlesThisYear control.
@@ -292,6 +481,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell segmentsThisMonth;
         
         /// <summary>
+        /// tdExpandedGrowthStats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdExpandedGrowthStats;
+        
+        /// <summary>
         /// gvPDFGeneration control.
         /// </summary>
         /// <remarks>
@@ -299,6 +497,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvPDFGeneration;
+        
+        /// <summary>
+        /// tdExpandedPDFStats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdExpandedPDFStats;
         
         /// <summary>
         /// gvItemStatus control.
@@ -319,6 +526,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.Literal litNumDays;
         
         /// <summary>
+        /// tdIAPendingItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdIAPendingItems;
+        
+        /// <summary>
         /// hypNumItems control.
         /// </summary>
         /// <remarks>
@@ -326,6 +542,24 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hypNumItems;
+        
+        /// <summary>
+        /// tdViewUpdateIA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdViewUpdateIA;
+        
+        /// <summary>
+        /// tdIAHarvestDash control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdIAHarvestDash;
         
         /// <summary>
         /// gvBSItemStatus control.
@@ -337,6 +571,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.GridView gvBSItemStatus;
         
         /// <summary>
+        /// tdViewUpdateBioStor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdViewUpdateBioStor;
+        
+        /// <summary>
         /// gvDOIStatus control.
         /// </summary>
         /// <remarks>
@@ -344,6 +587,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDOIStatus;
+        
+        /// <summary>
+        /// tdViewUpdateDoi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdViewUpdateDoi;
         
         /// <summary>
         /// trafficStatsMenu control.
@@ -355,6 +607,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTable trafficStatsMenu;
         
         /// <summary>
+        /// tdApiV2Stats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdApiV2Stats;
+        
+        /// <summary>
         /// apiv2StatsLink control.
         /// </summary>
         /// <remarks>
@@ -364,6 +625,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor apiv2StatsLink;
         
         /// <summary>
+        /// tdOpenUrlStats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdOpenUrlStats;
+        
+        /// <summary>
         /// openurlStatsLink control.
         /// </summary>
         /// <remarks>
@@ -371,5 +641,86 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor openurlStatsLink;
+        
+        /// <summary>
+        /// tdRptItemPagination control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptItemPagination;
+        
+        /// <summary>
+        /// tdRptTitleImportHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptTitleImportHistory;
+        
+        /// <summary>
+        /// tdRptCharEncoding control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptCharEncoding;
+        
+        /// <summary>
+        /// tdRptDoiByInstitution control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptDoiByInstitution;
+        
+        /// <summary>
+        /// tdRptMonoContributions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptMonoContributions;
+        
+        /// <summary>
+        /// tdRptItemsByContributor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptItemsByContributor;
+        
+        /// <summary>
+        /// tdRptRecentlyClustered control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptRecentlyClustered;
+        
+        /// <summary>
+        /// tdImportCitations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImportCitations;
+        
+        /// <summary>
+        /// tdImportCitationHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImportCitationHistory;
     }
 }

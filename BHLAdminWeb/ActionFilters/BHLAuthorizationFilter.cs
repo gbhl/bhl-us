@@ -12,23 +12,17 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
 
             // Make sure user is logged in and has admin rights
             HttpCookie tokenCookie = filterContext.HttpContext.Request.Cookies["MOBOTSecurityToken"];
-            if (tokenCookie == null || tokenCookie.Value.Length == 0 || !IsAdmin(filterContext.HttpContext.Request))
+            if (!Helper.IsUserAuthenticated(filterContext.HttpContext.Request))
             {
                 filterContext.HttpContext.Response.Redirect("~/login.aspx", true);
             }
-        }
-
-        public static bool IsAdmin(HttpRequestBase request)
-        {
-            HttpCookie tokenCookie = request.Cookies["MOBOTSecurityToken"];
-
-            if (tokenCookie != null && tokenCookie.Value.Length > 0)
+            else
             {
-                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, Helper.SecurityFunction.BHLAdminLogin.Value());
-                return (result.ResultStatus == ResultStatusEnum.Success);
+                if (!Helper.IsUserAuthorized(filterContext.HttpContext.Request))
+                {
+                    filterContext.HttpContext.Response.Redirect("~/AccessDenied.aspx");
+                }
             }
-
-            return false;
         }
     }
 }

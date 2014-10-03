@@ -15,47 +15,47 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdAlertMessage">
 							<a href="/AlertEdit.aspx">Alert Message </a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdImageServer">
 							<a href="/ImageServerEdit.aspx">Image Server</a>
 						</td>
 					</tr>
 					<tr>
-					    <td align="center">
+					    <td align="center" runat="server" id="tdCollections">
 					        <a href="/CollectionEdit.aspx">Collections</a>
 					    </td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdInstitutions">
 							<a href="/InstitutionEdit.aspx">Institutions</a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdLanguages">
 							<a href="/LanguageEdit.aspx">Languages</a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdPageTypes">
 							<a href="/PageTypeEdit.aspx">Page Types</a>
 						</td>
 					</tr>
 					<tr>
-					    <td align="center">
+					    <td align="center" runat="server" id="tdPDFRequests">
 					        <a href="/PdfEdit.aspx">PDF Requests</a>
 					    </td>
 					</tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdSegmentTypes">
                             <a href="/SegmentTypeEdit.aspx">Segment Types</a>
                         </td>
                     </tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdVaults">
 							<a href="/VaultEdit.aspx">Vaults</a>
 						</td>
 					</tr>
@@ -69,27 +69,27 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdTitles">
 							<a href="/TitleSearch.aspx">Titles</a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdItems">
 							<a href="/ItemEdit.aspx">Items</a>
 						</td>
 					</tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdSegments">
                             <a href="/SegmentSearch.aspx">Segments</a>
                         </td>
                     </tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdPagination">
 							<a href="/TitleSearch.aspx?redir=p">Pagination</a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdAuthors">
 							<a href="/AuthorSearch.aspx">Authors</a>
 						</td>
 					</tr>
@@ -103,7 +103,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdNames">
 							<a href="/NamePageEdit.aspx">Names (Taxa) on a Page</a>
 						</td>
 					</tr>
@@ -178,7 +178,7 @@
                                     </td>
                                 </tr>
 								<tr>
-								    <td colspan="3" align="center"><a id="namesShowLink" href="#" onclick="showNames();">Show All Names</a>
+								    <td colspan="3" align="center" runat="server" id="tdShowNames"><a id="namesShowLink" href="#" onclick="showNames();">Show All Names</a>
 								    </td>
 								</tr>
 								<tr>
@@ -194,7 +194,7 @@
 									</td>
 								</tr>
 								<tr>
-								    <td colspan="3" align="center"><a id="uniqueNamesShowLink" href="#" onclick="showUniqueNames();">Show Unique Names</a>
+								    <td colspan="3" align="center" runat="server" id="tdShowUniqueNames"><a id="uniqueNamesShowLink" href="#" onclick="showUniqueNames();">Show Unique Names</a>
 								    </td>
 								</tr>
 								<tr>
@@ -210,7 +210,7 @@
 									</td>
 								</tr>
 								<tr>
-								    <td colspan="3" align="center"><a id="verifiedNamesShowLink" href="#" onclick="showVerifiedNames();">Show Verified Names</a>
+								    <td colspan="3" align="center" runat="server" id="tdShowVerifiedNames"><a id="verifiedNamesShowLink" href="#" onclick="showVerifiedNames();">Show Verified Names</a>
 								    </td>
 								</tr>
 								<tr>
@@ -226,7 +226,7 @@
 									</td>
 								</tr>
 								<tr>
-								    <td colspan="3" align="center"><a id="eolNamesShowLink" href="#" onclick="showEOLNames();">Show EOL Names</a>
+								    <td colspan="3" align="center" runat="server" id="tdShowEOLNames"><a id="eolNamesShowLink" href="#" onclick="showEOLNames();">Show EOL Names</a>
 								    </td>
 								</tr>
 								<tr>
@@ -242,7 +242,7 @@
 									</td>
 								</tr>
 								<tr>
-								    <td colspan="3" align="center"><a id="eolPagesShowLink" href="#" onclick="showEOLPages();">Show Pages with EOL Names</a>
+								    <td colspan="3" align="center" runat="server" id="tdShowEOLPages"><a id="eolPagesShowLink" href="#" onclick="showEOLPages();">Show Pages with EOL Names</a>
 								    </td>
 								</tr>
 								<tr>
@@ -261,7 +261,7 @@
 						</td>
 					</tr>
 					<tr>
-					<td align="center"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
+					<td align="center" runat="server" id="tdExpandedLibraryStats"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
 					</tr>
 				</table>
 			</td>
@@ -314,7 +314,7 @@
 					</tr>
 					<tr><td>&nbsp;</td></tr>
 					<tr>
-					    <td align=center colspan="2">
+					    <td align=center colspan="2" runat="server" id="tdExpandedGrowthStats">
                             <a href="/GrowthStats.aspx">Expanded Growth Stats</a>
                         </td>
                     </tr>
@@ -339,7 +339,7 @@
 					</tr>
 					<tr><td>&nbsp;</td></tr>
 					<tr>
-					    <td align=center colspan="2">
+					    <td align=center colspan="2" runat="server" id="tdExpandedPDFStats">
                             <a href="/PdfStats.aspx">Expanded PDF Stats</a>
                         </td>
                     </tr>
@@ -370,12 +370,16 @@
 					        &nbsp;&nbsp;Items Pending Approval<br />&nbsp;&nbsp;More 
                             Than <asp:Literal ID="litNumDays" runat="server"></asp:Literal> Days
 					    </td>
-					    <td><asp:HyperLink ID="hypNumItems" NavigateUrl="reportiaitemspendingapproval.aspx?age=" runat="server"></asp:HyperLink></td>
+					    <td runat="server" id="tdIAPendingItems"><asp:HyperLink ID="hypNumItems" NavigateUrl="reportiaitemspendingapproval.aspx?age=" runat="server"></asp:HyperLink></td>
 					</tr>
 					<tr><td>&nbsp;</td></tr>
 					<tr>
-					    <td align=center colspan="2">
+					    <td align="center" colspan="2" runat="server" id="tdViewUpdateIA">
                             <a href="/IAHarvestItemList.aspx">View/Update Item Details</a><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="2" runat="server" id="tdIAHarvestDash">
                             <a href="/IAHarvestDashboard.aspx">IA Harvest Dashboard</a>
                         </td>
                     </tr>
@@ -400,7 +404,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="2">
+                        <td align="center" colspan="2" runat="server" id="tdViewUpdateBioStor">
                             <a href="/BioStorHarvestItemList.aspx">View/Update Item Details</a>
                         </td>
                     </tr>
@@ -425,7 +429,7 @@
 					</tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr>
-                        <td align="center" colspan="2">
+                        <td align="center" colspan="2" runat="server" id="tdViewUpdateDoi">
                             <a href="/doilist.aspx">View/Update DOI Details</a>
                         </td>
                     </tr>
@@ -441,12 +445,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdApiV2Stats">
 							<a href="/WebStatsDaily.aspx?id={0}&mid=v2" runat="server" id="apiv2StatsLink">API v2</a>
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdOpenUrlStats">
 							<a href="/WebStatsDaily.aspx?id={0}&mid=ou" runat="server" id="openurlStatsLink">OpenUrl</a>
 						</td>
 					</tr>
@@ -462,37 +466,37 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdRptItemPagination">
 							<a href="ReportItemPagination.aspx">Item Pagination</a>
 						</td>
 					</tr>
 					<tr>
-					    <td align="center">
+					    <td align="center" runat="server" id="tdRptTitleImportHistory">
 					        <a href="TitleImportHistory.aspx">Title Import History</a>
 					    </td>
 					</tr>
 					<tr>
-					    <td align="center">
+					    <td align="center" runat="server" id="tdRptCharEncoding">
 					        <a href="ReportCharacterEncodingProblems.aspx">Character Encoding Problems</a>
 					    </td>
 					</tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdRptDoiByInstitution">
                             <a href="ReportDOIByInstitution.aspx">DOIs By Institution</a>
                         </td>
                     </tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdRptMonoContributions">
                             <a href="ReportMonographicContributions.aspx">Monographic Contributions</a>
                         </td>
                     </tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdRptItemsByContributor">
                             <a href="ReportItemsByContributor.aspx">Items By Contributor</a>
                         </td>
                     </tr>
                     <tr>
-                        <td align="center">
+                        <td align="center" runat="server" id="tdRptRecentlyClustered">
                             <a href="ReportRecentlyClusteredSegments.aspx">Recently Clustered Segments</a>
                         </td>
                     </tr>
@@ -506,12 +510,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center">
+						<td align="center" runat="server" id="tdImportCitations">
 							<a href="/CitationImport">Import Citations</a>
 						</td>
 					</tr>
 					<tr>
-					    <td align="center">
+					    <td align="center" runat="server" id="tdImportCitationHistory">
 					        <a href="Report/CitationImportHistory">Citation Import History</a>
 					    </td>
 					</tr>
