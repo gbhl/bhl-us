@@ -86,9 +86,29 @@ namespace MOBOT.BHL.OAIDC
             }
 
             var keywords = from k in root.Elements(ns + "subject") select k;
+            List<string> subjectStrings = new List<string>();
             foreach (XElement k in keywords)
             {
-                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(k.Value, k.Value));
+                // If this is a subject string of the form "subject1 -- subject2 -- subject 3",
+                // then split this into separate subjects (subject1, subject2, and subject3).
+                // Only keep unique subject terms.
+                if (k.Value.IndexOf("--") >= 0)
+                {
+                    string[] subjectList = k.Value.Replace("--", "~").Split('~');
+                    foreach (string subject in subjectList)
+                    {
+                        if (!subjectStrings.Contains(subject.Trim())) subjectStrings.Add(subject.Trim());
+                    }
+                }
+                else
+                {
+                    if (!subjectStrings.Contains(k.Value)) subjectStrings.Add(k.Value);
+                }
+            }
+            // Save all of the accumulated subjects to the OAIRecord
+            foreach (string subjectString in subjectStrings.Distinct().ToArray())
+            {
+                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(subjectString, subjectString));
             }
 
             XElement publisher = root.Element(ns + "publisher");

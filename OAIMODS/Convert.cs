@@ -90,12 +90,32 @@ namespace MOBOT.BHL.OAIMODS
 
             // Subjects
             var subjects = from s in root.Elements(ns + "subject") select s;
+            List<string> subjectStrings = new List<string>();
             foreach (XElement s in subjects)
             {
                 foreach (XElement e in s.Elements())
                 {
-                    _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(e.Value, e.Value));
+                    // If this is a subject string of the form "subject1 -- subject2 -- subject 3",
+                    // then split this into separate subjects (subject1, subject2, and subject3).
+                    // Only keep unique subject terms.
+                    if (e.Value.IndexOf("--") >= 0)
+                    {
+                        string[] subjectList = e.Value.Replace("--", "~").Split('~');
+                        foreach (string subject in subjectList)
+                        {
+                            if (!subjectStrings.Contains(subject.Trim())) subjectStrings.Add(subject.Trim());
+                        }
+                    }
+                    else
+                    {
+                        if (!subjectStrings.Contains(e.Value)) subjectStrings.Add(e.Value);
+                    }
                 }
+            }
+            // Save all of the accumulated subjects to the OAIRecord
+            foreach(string subjectString in subjectStrings.Distinct().ToArray())
+            {
+                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(subjectString, subjectString));
             }
 
             // Authors
