@@ -14,3 +14,17 @@
 		FOREIGN KEY (OAIRecordID) REFERENCES dbo.OAIRecord(OAIRecordID)
 	)
 GO
+
+CREATE NONCLUSTERED INDEX [IX_OAIRecordCreator_ProductionAuthorID] ON [dbo].[OAIRecordCreator]
+(
+	[ProductionAuthorID] ASC
+)
+GO
+
+CREATE NONCLUSTERED INDEX [IX_OAIRecordCreator_OAIRecordID] ON [dbo].[OAIRecordCreator]
+(
+	[OAIRecordID] ASC
+)
+INCLUDE ([OAIRecordCreatorID]) 
+GO
+

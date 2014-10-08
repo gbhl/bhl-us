@@ -38,3 +38,28 @@
 	)
 GO
 
+CREATE NONCLUSTERED INDEX [IX_OAIRecord_HarvestLogID] ON [dbo].[OAIRecord]
+(
+	[HarvestLogID] ASC
+)
+INCLUDE ([OAIRecordID]) 
+GO
+
+CREATE NONCLUSTERED INDEX [IX_OAIRecord_RecordStatusSegment] ON [dbo].[OAIRecord]
+(
+	[OAIRecordStatusID] ASC,
+	[ProductionSegmentID] ASC,
+	[RecordType] ASC
+)
+INCLUDE ([OAIRecordID], [HarvestLogID]) 
+GO
+
+CREATE NONCLUSTERED INDEX [IX_OAIRecord_RecordStatusTitleItem] ON [dbo].[OAIRecord]
+(
+	[OAIRecordStatusID] ASC,
+	[ProductionTitleID] ASC,
+	[ProductionItemID] ASC,
+	[RecordType] ASC
+)
+INCLUDE ([OAIRecordID], [HarvestLogID]) 
+GO

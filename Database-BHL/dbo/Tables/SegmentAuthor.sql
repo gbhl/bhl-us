@@ -18,4 +18,10 @@ ON [dbo].[SegmentAuthor] ([SegmentID])
 INCLUDE ([AuthorID], [SequenceOrder]);
 GO
 
+CREATE NONCLUSTERED INDEX [IX_SegmentAuthor_AuthorID] ON [dbo].[SegmentAuthor]
+(
+	[AuthorID] ASC
+)
+INCLUDE ([SegmentID])
+GO
 

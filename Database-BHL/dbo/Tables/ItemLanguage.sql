@@ -17,6 +17,13 @@ CREATE NONCLUSTERED INDEX [IX_ItemLanguage_LanguageCode]
 
 
 GO
+
+CREATE NONCLUSTERED INDEX [IX_ItemLanguage_ItemID] ON [dbo].[ItemLanguage]
+(
+	[ItemID] ASC
+)
+GO
+
 CREATE TRIGGER dbo.ItemLanguage_AuditBasic_Insert ON [dbo].[ItemLanguage]
  AFTER Insert
  NOT FOR REPLICATION

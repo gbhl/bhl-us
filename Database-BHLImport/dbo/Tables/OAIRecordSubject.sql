@@ -10,3 +10,9 @@
 		FOREIGN KEY (OAIRecordID) REFERENCES dbo.OAIRecord(OAIRecordID)
 	)
 GO
+CREATE NONCLUSTERED INDEX [IX_OAIRecordSubject_OAIRecordID] ON [dbo].[OAIRecordSubject]
+(
+	[OAIRecordID] ASC
+)
+INCLUDE ([OAIRecordSubjectID], [Keyword]) 
+GO
