@@ -108,7 +108,10 @@ namespace MOBOT.BHL.OAIDC
             // Save all of the accumulated subjects to the OAIRecord
             foreach (string subjectString in subjectStrings.Distinct().ToArray())
             {
-                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(subjectString, subjectString));
+                // Strip off trailing periods
+                string cleanSubject = subjectString;
+                if (cleanSubject.Substring(cleanSubject.Length - 1) == ".") cleanSubject = cleanSubject.Substring(0, cleanSubject.Length - 1);
+                _oaiRecord.Subjects.Add(new KeyValuePair<string, string>(cleanSubject, cleanSubject));
             }
 
             XElement publisher = root.Element(ns + "publisher");
