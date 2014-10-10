@@ -60,6 +60,11 @@ namespace MOBOT.BHL.Server
             return (new SearchDAL().TitleSelectByInstitution(null, null, institutionCode));
         }
 
+        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        {
+            return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+        }
+
         public CustomGenericList<SearchBookResult> TitleSelectByKeywordInstitutionAndLanguage(string keyword, string institutionCode, string languageCode)
         {
             return new SearchDAL().TitleSelectByKeywordInstitutionAndLanguage(null, null, keyword, institutionCode, languageCode);

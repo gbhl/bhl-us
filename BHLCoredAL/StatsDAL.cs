@@ -120,7 +120,30 @@ namespace MOBOT.BHL.DAL
                 return stats;
             }
         }
-    
+
+        public Stats StatsSelectForInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string institutionCode)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("StatsSelectForInstitution", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
+            {
+                command.CommandTimeout = 60;   // Set timeout to 1 minutes (stats can take a while to generate)
+                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                CustomDataRow row = list[0];
+
+                Stats stats = new Stats();
+                stats.TitleCount = (int)row["TitleCount"].Value;
+                stats.VolumeCount = (int)row["VolumeCount"].Value;
+                stats.PageCount = (int)row["PageCount"].Value;
+
+                return stats;
+            }
+        }
+
         public CustomGenericList<EntityCount> EntityCountSelectLatest(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)

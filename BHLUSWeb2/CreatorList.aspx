@@ -43,7 +43,6 @@
 </nav>
 <div id="page-title">    
     <h1 class="column-wrap">
-        <span class="arrow authors"></span>
         <% if (string.IsNullOrEmpty(Start)) { %>
             All <%= BhlAuthorList.Count%> <span class="highlight">Authors</span>
         <% } else { %>

@@ -157,11 +157,14 @@
     <Content Include="BrowseByTitleTag.aspx" />
     <Content Include="BrowseByYear.aspx" />
     <Content Include="BrowseCollections.aspx" />
+    <Content Include="BrowseContributors.aspx" />
     <Content Include="CollectionDetails.aspx" />
     <Content Include="CollectionPage.aspx" />
+    <Content Include="ContributorPage.aspx" />
     <Content Include="controls\BookBrowseControl.ascx" />
     <Content Include="controls\COinSControl.ascx" />
     <Content Include="controls\CollectionListControl.ascx" />
+    <Content Include="controls\ContributorListControl.ascx" />
     <Content Include="controls\MendeleyShareControl.ascx" />
     <Content Include="controls\NavBar.ascx" />
     <Content Include="controls\SectionBrowseControl.ascx" />
@@ -306,10 +309,12 @@
     <Content Include="images\bib_plus.GIF" />
     <Content Include="images\blank.gif" />
     <Content Include="images\browse_authors_small.png" />
+    <Content Include="images\browse_contrib_small.png" />
     <Content Include="images\browse_map_small.png" />
     <Content Include="images\browse_titles_small.png" />
     <Content Include="images\browse_year_small.png" />
     <Content Include="images\collection_icon-home.png" />
+    <Content Include="images\contributor_icon-home.png" />
     <Content Include="images\cul-logo.gif" />
     <Content Include="images\darwinHeaderLong.jpg" />
     <Content Include="images\darwinHeaderMini.jpg" />
@@ -605,6 +610,13 @@
     <Compile Include="BrowseCollections.aspx.designer.cs">
       <DependentUpon>BrowseCollections.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BrowseContributors.aspx.cs">
+      <DependentUpon>BrowseContributors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BrowseContributors.aspx.designer.cs">
+      <DependentUpon>BrowseContributors.aspx</DependentUpon>
+    </Compile>
     <Compile Include="BrowsePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -621,6 +633,13 @@
     </Compile>
     <Compile Include="CollectionPage.aspx.designer.cs">
       <DependentUpon>CollectionPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContributorPage.aspx.cs">
+      <DependentUpon>ContributorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ContributorPage.aspx.designer.cs">
+      <DependentUpon>ContributorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
@@ -642,6 +661,13 @@
     </Compile>
     <Compile Include="controls\CollectionListControl.ascx.designer.cs">
       <DependentUpon>CollectionListControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ContributorListControl.ascx.cs">
+      <DependentUpon>ContributorListControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="controls\ContributorListControl.ascx.designer.cs">
+      <DependentUpon>ContributorListControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="controls\MendeleyShareControl.ascx.cs">
       <DependentUpon>MendeleyShareControl.ascx</DependentUpon>

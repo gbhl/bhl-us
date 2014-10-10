@@ -194,5 +194,10 @@ namespace MOBOT.BHL.Server
         {
             return new ItemDAL().ItemSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
         }
+
+        public int ItemCountByInstitution(string institutionCode)
+        {
+            return new ItemDAL().ItemCountByInstitution(null, null, institutionCode);
+        }
     }
 }

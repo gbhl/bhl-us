@@ -554,5 +554,18 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public int ItemCountByInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionCode)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemCountByInstitution", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
+            {
+                return (int)CustomSqlHelper.ExecuteScalar(command);
+            }
+        }
     }
 }

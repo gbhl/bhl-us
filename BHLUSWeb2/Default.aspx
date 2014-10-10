@@ -42,10 +42,11 @@
     <div id="browsebox-home" class="column-wrap">
         <h2>Browse Our Collection By:</h2>
         <ul>
-            <li class="titles"><a class="png_bg" href="/browse/titles/a">Titles</a></li>
-            <li class="authors"><a class="png_bg" href="/browse/authors/a">Authors</a></li>
+            <li class="titles"><a class="png_bg" href="/browse/titles/a">Title</a></li>
+            <li class="authors"><a class="png_bg" href="/browse/authors/a">Author</a></li>
             <li class="year"><a class="png_bg" href="/browse/year">Date</a></li>
             <li class="collection"><a class="png_bg" href="/browse/collections">Collection</a></li>
+            <li class="contributor"><a class="png_bg" href="/browse/contributors">Contributor</a></li>
         </ul>
     </div>
     </div>
