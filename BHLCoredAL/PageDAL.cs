@@ -322,5 +322,35 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public void PageInsertIntoItem(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            string barCode, int pageID, int numPagesToAdd)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageInsertIntoItem", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+                    CustomSqlHelper.CreateInputParameter("NumPagesToAdd", SqlDbType.Int, null, false, numPagesToAdd)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
+
+        public void PageDeleteFromItem(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string barCode, int pageID, int numPagesToDelete)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageDeleteFromItem", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Barcode", SqlDbType.NVarChar, 40, false, barCode),
+                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+                    CustomSqlHelper.CreateInputParameter("NumPagesToDelete", SqlDbType.Int, null, false, numPagesToDelete)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
     }
 }

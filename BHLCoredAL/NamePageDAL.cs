@@ -126,5 +126,17 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
+
+        public void NamePageDeleteByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("NamePageDeleteByItemID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                CustomSqlHelper.ExecuteNonQuery(command);
+            }
+        }
     }
 }

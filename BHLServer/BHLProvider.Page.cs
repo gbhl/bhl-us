@@ -230,5 +230,15 @@ namespace MOBOT.BHL.Server
         {
             return GetPageDalInstance().PageSelectExternalUrlForPageID(null, null, pageID);
         }
+
+        public void PageInsertIntoItem(string barCode, int pageID, int numPagesToAdd)
+        {
+            new PageDAL().PageInsertIntoItem(null, null, barCode, pageID, numPagesToAdd);
+        }
+
+        public void PageDeleteFromItem(string barCode, int pageID, int numPagesToDelete)
+        {
+            new PageDAL().PageDeleteFromItem(null, null, barCode, pageID, numPagesToDelete);
+        }
     }
 }
