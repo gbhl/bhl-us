@@ -1,0 +1,150 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.LibraryModel
+
+@{
+    ViewBag.Title = "Page-Image-OCR Alignment";
+}
+
+<input type="hidden" id="selectTab" value="@ViewBag.Action" />
+<p><a href="/">&lt; Return to Dashboard</a></p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+<section>
+    <div id="lblMsg" class="ErrorText">@Html.DisplayText("Message")</div>
+
+    <div id="tabs">
+        <ul>
+        <li><a href="#divAdd" title="Add Pages"><span>Add Pages</span></a></li>
+        <li><a href="#divDelete" title="Delete Pages"><span>Remove Pages</span></a></li>
+        <li><a href="#divOcr" title="Update Ocr"><span>Update Ocr</span></a></li>
+        </ul>
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new {enctype="multipart/form-data"})) {
+
+            <div id="divAdd">
+
+                <div>
+                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("AddItemID") (Must supply this or IA Identifier)</div></div>
+                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("AddIAID") (Must supply this or Item ID)</div></div>
+                    <div><div class="label">Insert Before Page ID:</div><div class="field">@Html.TextBox("AddPageID") (Use 0 to insert at end)</div></div>
+                    <div><div class="label">Number of Pages to Add:</div><div class="field">@Html.TextBox("AddNum")</div></div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <input class="formButton" type="submit" name="submit:Add" id="btnAdd" value="Add Pages" />
+                </div>
+                <div id="lblAddErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to add.</div>
+                <div id="lblAddErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                <div id="lblAddErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
+                <div id="lblAddErrNum" class="ErrorText" style="display:none;">Number to Add must be a numeric value.</div>
+
+            </div>
+            <div id="divDelete">
+
+                <div>
+                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("DelItemID") (Must supply this or IA Identifier)</div></div>
+                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("DelIAID") (Must supply this or Item ID)</div></div>
+                    <div><div class="label">Delete Starting With Page ID:</div><div class="field">@Html.TextBox("DelPageID")</div></div>
+                    <div><div class="label">Number of Pages to Delete:</div><div class="field">@Html.TextBox("DelNum")</div></div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <input class="formButton" type="submit" name="submit:Delete" id="btnDelete" value="Remove Pages" />
+                </div>
+                <div id="lblDeleteErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier, a Page ID, and a Number of Pages to remove.</div>
+                <div id="lblDeleteErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+                <div id="lblDeleteErrPageID" class="ErrorText" style="display:none;">Page ID must be a numeric value.</div>
+                <div id="lblDeleteErrNum" class="ErrorText" style="display:none;">Number to Delete must be a numeric value.</div>
+
+            </div>
+            <div id="divOcr">
+
+                <div>
+                    <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("OcrItemID") (Must supply this or IA Identifier)</div></div>
+                    <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or Item ID)</div></div>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update OCR" />
+                </div>
+                <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>
+                <div id="lblOcrErrItemID" class="ErrorText" style="display:none;">Item ID must be a numeric value.</div>
+
+            </div>
+        }
+
+    </div>
+</section>
+
+<script type="text/javascript">
+    // Set up tabs
+    $(document).ready(function () {
+        $("#tabs").tabs();
+        $("#tabs").tabs('select', $("#selectTab").val());    // Default to a specified tab
+    });
+
+    // Validation
+    $("#btnAdd").click(function () {
+        var returnVal = true;
+        resetMessages();
+        if (($.trim($("#AddItemID").val()) == '' &&
+            $.trim($("#AddIAID").val()) == '') ||
+            $.trim($("#AddPageID").val()) == '' ||
+            $.trim($("#AddNum").val()) == '') {
+            $("#lblAddErrMissing").show(); returnVal = false;
+        }
+        if (!isNumeric($.trim($("#AddItemID").val()))) { $("#lblAddErrItemID").show(); returnVal = false; }
+        if (!isNumeric($.trim($("#AddPageID").val()))) { $("#lblAddErrPageID").show(); returnVal = false; }
+        if (!isNumeric($.trim($("#AddNum").val()))) { $("#lblAddErrNum").show(); returnVal = false; }
+
+        return returnVal;
+    });
+
+    $("#btnDelete").click(function () {
+        var returnVal = true;
+        resetMessages();
+        if (($.trim($("#DelItemID").val()) == '' &&
+            $.trim($("#DelIAID").val()) == '') ||
+            $.trim($("#DelPageID").val()) == '' ||
+            $.trim($("#DelNum").val()) == '') {
+            $("#lblDeleteErrMissing").show(); returnVal = false;
+        }
+        if (!isNumeric($.trim($("#DelItemID").val()))) { $("#lblDeleteErrItemID").show(); returnVal = false; }
+        if (!isNumeric($.trim($("#DelPageID").val()))) { $("#lblDeleteErrPageID").show(); returnVal = false; }
+        if (!isNumeric($.trim($("#DelNum").val()))) { $("#lblDeleteErrNum").show(); returnVal = false; }
+
+        return returnVal;
+    });
+
+    $("#btnOcr").click(function () {
+        var returnVal = true;
+        resetMessages();
+        if (($.trim($("#OcrItemID").val()) == '' &&
+            $.trim($("#OcrIAID").val()) == '')) {
+            $("#lblOcrErrMissing").show(); returnVal = false;
+        }
+        if (!isNumeric($.trim($("#OcrItemID").val()))) { $("#lblOcrErrItemID").show(); returnVal = false; }
+
+        return returnVal;
+    });
+
+    // submit form on Enter keypress
+    $("#txtAddItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#txtAddIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#txtAddPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#txtAddNum").keypress(function (event) { if (event.keyCode == '13') $("#btnAdd").click(); });
+    $("#txtDelItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#txtDelIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#txtDelPageID").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#txtDelNum").keypress(function (event) { if (event.keyCode == '13') $("#btnDelete").click(); });
+    $("#txtOcrItemID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
+    $("#txtOcrIAID").keypress(function (event) { if (event.keyCode == '13') $("#btnOcr").click(); });
+
+    function resetMessages() {
+        $("#lblAddErrMissing").hide(); $("#lblAddErrItemID").hide(); $("#lblAddErrPageID").hide(); $("#lblAddErrNum").hide();
+        $("#lblDeleteErrMissing").hide(); $("#lblDeleteErrItemID").hide(); $("#lblDeleteErrPageID").hide(); $("#lblDeleteErrNum").hide();
+        $("#lblOcrErrMissing").hide(); $("#lblOcrErrItemID").hide();
+    }
+
+    function isNumeric(n) {
+        return (!isNaN(parseFloat(n)) && isFinite(n)) || (n === '');
+    }
+
+</script>

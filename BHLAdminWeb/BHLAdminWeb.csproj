@@ -236,6 +236,7 @@
     <Compile Include="ContentPanel.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
@@ -418,6 +419,7 @@
     </Compile>
     <Compile Include="Models\CitationImportHistoryModel.cs" />
     <Compile Include="Models\CitationImportModel.cs" />
+    <Compile Include="Models\LibraryModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="NamePageEdit.aspx.cs">
@@ -998,6 +1000,7 @@
     <None Include="Properties\PublishProfiles\beta.admin.biodiversitylibrary.org.pubxml" />
     <Content Include="Views\Report\CitationImportHistory.cshtml" />
     <Content Include="Services\CitationImportService.ashx" />
+    <Content Include="Views\Library\Align.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

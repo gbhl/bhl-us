@@ -139,6 +139,7 @@ namespace MOBOT.BHL.AdminWeb
             // URLs available to "SysAdmin" users
             else if (path.Contains("imageserveredit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminSysAdmin);
             else if (path.Contains("vaultedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminSysAdmin);
+            else if (path.Contains("library/align")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminSysAdmin);
 
             return authorized;
         }
