@@ -1080,4 +1080,9 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWith.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Stored Procedures\NamePageDeleteByItemID.sql" />
+    <Build Include="dbo\Stored Procedures\PageDeleteFromItem.sql" />
+    <Build Include="dbo\Stored Procedures\PageInsertIntoItem.sql" />
+  </ItemGroup>
 </Project>
