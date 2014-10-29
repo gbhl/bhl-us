@@ -175,6 +175,26 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        String institutionCode,
+                        String startsWith)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByInstitutionAndStartsWith", connection, transaction,
+                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         /// <summary>
         /// Select all values from Title that are related to the specified language.
         /// </summary>

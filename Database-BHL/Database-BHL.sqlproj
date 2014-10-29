@@ -1071,4 +1071,13 @@
     <None Include="BHLDBBuildScript.bat" />
     <None Include="Data\dbo.EntityCountType.Table.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemCountByInstitution.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\StatsSelectForInstitution.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWith.sql" />
+  </ItemGroup>
 </Project>

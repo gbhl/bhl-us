@@ -726,6 +726,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 #browsebar li.titles a { background: url(../images/browse_titles_small.png) 10px 4px no-repeat; }
 #browsebar li.authors a { background: url(../images/browse_authors_small.png) 10px 4px no-repeat; }
 #browsebar li.collection a { background: url(../images/browse_map_small.png) 10px 4px no-repeat; }
+#browsebar li.contributor a { background: url(../images/browse_contrib_small.png) 10px 4px no-repeat; }
 #browsebar li.year a { background: url(../images/browse_year_small.png) 10px 4px no-repeat; }
 
 #searchbar
@@ -1006,7 +1007,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 #browsebar-home li {
 
 	box-shadow:0 2px 2px #B2C5D3;
-	font-size:18px;
+	font-size:16px;
 	width:158px;
 	height:50px;
 	margin:0 0 0 0;
@@ -1029,7 +1030,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {	
 	display:block;
 	height:34px;	
-	padding:16px 0 0 68px;
+	padding:16px 0 0 55px;
 	text-decoration: none;
 	width:90px;
 	color: #266099;
@@ -1046,14 +1047,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	height:50px;
 	width:92px;
 }
-#browsebar-home li.titles {width:152px;}
-#browsebar-home li.authors{width:157px; }
-#browsebar-home li.collection{width:197px;}
-#browsebar-home li.year{width:139px;}
-#browsebar-home li.titles a { background:url(../images/title_icon-home.png) 20px 10px no-repeat;width:152px; }
-#browsebar-home li.authors a { background:url(../images/author_icon-home.png) 20px 10px no-repeat;width:157px;}
-#browsebar-home li.collection a { background:url(../images/collection_icon-home.png) 20px 10px no-repeat;width:197px;  }
-#browsebar-home li.year a { background:url(../images/date_icon-home.png) 20px 10px no-repeat;width:139px; }
+#browsebar-home li.titles {width:117px;}
+#browsebar-home li.authors{width:127px; }
+#browsebar-home li.collection{width:137px;}
+#browsebar-home li.contributor{width:157px;}
+#browsebar-home li.year{width:109px;}
+#browsebar-home li.titles a { background:url(../images/title_icon-home.png) 10px 10px no-repeat;width:117px; }
+#browsebar-home li.authors a { background:url(../images/author_icon-home.png) 10px 10px no-repeat;width:127px;}
+#browsebar-home li.collection a { background:url(../images/collection_icon-home.png) 10px 10px no-repeat;width:137px;  }
+#browsebar-home li.contributor a { background:url(../images/contributor_icon-home.png) 10px 10px no-repeat;width:157px;  }
+#browsebar-home li.year a { background:url(../images/date_icon-home.png) 10px 10px no-repeat;width:109px; }
 #browsebar-home li:first-child 
 {
    border-left:1px solid #a8b7c1;
@@ -1381,6 +1384,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	margin-left: 800px;
     top: -60px;
 }
+
+/*
 .arrow.titles
 {
 	margin-left:40px;
@@ -1397,6 +1402,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {
 	margin-left:329px;
 }
+.arrow.contributors
+{
+	margin-left:329px;
+}
+*/
 
 /*Messages Section */
 section

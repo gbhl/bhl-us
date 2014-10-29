@@ -3,7 +3,6 @@
 
 <div id="page-title">    
     <h1 class="column-wrap">
-        <span class="arrow collections"></span>
         All <asp:Literal ID="litNumCollections" runat="server"></asp:Literal> <span class="highlight">Collections</span>
     </h1>
 </div>

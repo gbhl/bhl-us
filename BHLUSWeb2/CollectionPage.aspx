@@ -46,7 +46,6 @@
 </nav>
 <div id="page-title">    
     <h1 class="column-wrap">
-        <span class="arrow collections"></span>
         <asp:Literal ID="ltlCollectionHeader" runat="server" EnableViewState="false" />
     </h1>
 </div>

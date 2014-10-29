@@ -46,6 +46,11 @@ namespace MOBOT.BHL.Server
             return new StatsDAL().StatsSelectForCollection(null, null, collectionID);
         }
 
+        public Stats StatsSelectForInstitution(string institutionCode)
+        {
+            return new StatsDAL().StatsSelectForInstitution(null, null, institutionCode);
+        }
+
         public CustomGenericList<EntityCount> EntityCountSelectLatest()
         {
             return new StatsDAL().EntityCountSelectLatest(null, null);
