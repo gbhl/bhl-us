@@ -65,7 +65,7 @@ namespace MOBOT.BHL.Web2.Handlers
                     if (!string.IsNullOrEmpty(collection.ITunesImageURL)) feed.ImageUrl = new Uri(collection.ITunesImageURL);
                     feed.Categories.Add(new SyndicationCategory("Literature"));
                     feed.Categories.Add(new SyndicationCategory("Natural Sciences"));
-                    feed.Authors.Add(new SyndicationPerson("biodiversitylibrary.gmail.com", "Biodiversity Heritage Library", domainRoot));
+                    feed.Authors.Add(new SyndicationPerson("biodiversitylibrary@gmail.com", "Biodiversity Heritage Library", domainRoot));
 
                     // Add a custom attribute for the iTunes namespace
                     XmlQualifiedName key = new XmlQualifiedName("itunes", "http://www.w3.org/2000/xmlns/");
@@ -90,7 +90,7 @@ namespace MOBOT.BHL.Web2.Handlers
                     feedSubElement.InnerText = "Biodiversity Heritage Library";
                     feedElement.AppendChild(feedSubElement);
                     feedSubElement = doc.CreateElement("itunes", "email", _itunesNamespace);
-                    feedSubElement.InnerText = "biodiversitylibrary.gmail.com";
+                    feedSubElement.InnerText = "biodiversitylibrary@gmail.com";
                     feedElement.AppendChild(feedSubElement);
                     feed.ElementExtensions.Add(feedElement);
 
