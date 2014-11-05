@@ -256,6 +256,15 @@ footer nav a:hover
 	line-height:48px;
 	position:relative;	
 }
+#page-title-contribs
+{
+    background:#2865a0;
+    height:35px;
+    line-height:35px;
+    border-bottom:1px solid #124a7d;
+    color:#FFFFFF;
+    font-size:16px;
+}
 #page-title-authors, #page-title-subjects, #page-title-names, #page-title-annotations, #page-title-annosubjects, #page-title-annoconcepts
 {
     background:#F1E4D7;
@@ -499,6 +508,15 @@ background: #fcfcfc;
 	margin-right:10px;
 }
 #sub-nav .letters li a, #sub-sub-nav .letters li a
+{
+	padding:4px 8px;
+	position:relative;
+}
+#sub-nav .lettersandnumbers li, #sub-sub-nav .lettersandnumbers li
+{
+	margin-right:9px;
+}
+#sub-nav .lettersandnumbers li a, #sub-sub-nav .lettersandnumbers li a
 {
 	padding:4px 8px;
 	position:relative;

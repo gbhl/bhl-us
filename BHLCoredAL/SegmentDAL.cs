@@ -466,6 +466,46 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        String institutionCode,
+                        String startsWith)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWith", connection, transaction,
+                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        String institutionCode,
+                        String startsWith)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectByInstitutionAndStartsWithout", connection, transaction,
+                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                     CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.NVarChar, 1000, false, startsWith)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         /// <summary>
         /// Save the specified segment and all supporting information (including authors, keywords, identifiers, and pages).
         /// </summary>

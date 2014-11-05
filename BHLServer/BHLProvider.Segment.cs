@@ -272,5 +272,15 @@ namespace MOBOT.BHL.Server
         {
             return (new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(null, null, segmentID, 1));
         }
+
+        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        {
+            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
+        }
+
+        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        {
+            return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
+        }
     }
 }

@@ -13,6 +13,15 @@ namespace MOBOT.BHL.Web2 {
     public partial class ContributorPage {
         
         /// <summary>
+        /// litHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litHeader;
+        
+        /// <summary>
         /// ltlContributorHeader control.
         /// </summary>
         /// <remarks>
@@ -20,6 +29,24 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal ltlContributorHeader;
+        
+        /// <summary>
+        /// spanTitleSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanTitleSummary;
+        
+        /// <summary>
+        /// spanSectionSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanSectionSummary;
         
         /// <summary>
         /// ltlContributorStats control.
@@ -31,6 +58,15 @@ namespace MOBOT.BHL.Web2 {
         protected global::System.Web.UI.WebControls.Literal ltlContributorStats;
         
         /// <summary>
+        /// titles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel titles;
+        
+        /// <summary>
         /// BookBrowse control.
         /// </summary>
         /// <remarks>
@@ -38,6 +74,24 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.Web2.BookBrowseControl BookBrowse;
+        
+        /// <summary>
+        /// sections control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel sections;
+        
+        /// <summary>
+        /// SectionBrowse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::MOBOT.BHL.Web2.SectionBrowseControl SectionBrowse;
         
         /// <summary>
         /// FeatureBox1 control.
