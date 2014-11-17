@@ -10,7 +10,7 @@
 <div id="content" class="column-wrap clearfix">
     <section>
         <h2>BHL Participating Institutions</h2>
-        <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" CellPadding="3" Width="100%" ItemStyle-Wrap="true">
+        <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" CellPadding="3" CellSpacing="3" Width="100%" ItemStyle-Wrap="true">
             <ItemTemplate>
                 <%# Eval("InstitutionName")%>
                 <br /><a href='/browse/contributor/<%# Eval("InstitutionCode") %>'>View All</a>
@@ -21,12 +21,11 @@
         </asp:DataList>
 
         <h2>Other Contributors</h2>
-        <asp:DataList ID="dlNonMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" CellPadding="3" Width="100%" ItemStyle-Wrap="true">
+        <asp:DataList ID="dlNonMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" CellPadding="3" CellSpacing="3" Width="100%" ItemStyle-Wrap="true">
             <ItemTemplate>
-                <%# Eval("InstitutionUrl") != string.Empty ? "<a href='" + Eval("InstitutionUrl") + "' target='_blank' class='TitleTag'>" : ""%>
                 <%# Eval("InstitutionName")%>
-                <%# Eval("InstitutionUrl") != string.Empty ? "</a>" : ""%>
                 <br /><a href='/browse/contributor/<%# Eval("InstitutionCode") %>' class='small'>View All</a>
+                <%# Eval("InstitutionUrl") != string.Empty ? "&nbsp;&nbsp;<a href='" + Eval("InstitutionUrl") + "' target='_blank'>More Information</a>" : ""%>
                 <br /><br />
             </ItemTemplate>
             <HeaderStyle CssClass="data contributors" />

@@ -139,6 +139,7 @@ namespace MOBOT.BHL.DAL
                 stats.TitleCount = (int)row["TitleCount"].Value;
                 stats.VolumeCount = (int)row["VolumeCount"].Value;
                 stats.PageCount = (int)row["PageCount"].Value;
+                stats.SegmentCount = (int)row["SegmentCount"].Value;
 
                 return stats;
             }

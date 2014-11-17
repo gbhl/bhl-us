@@ -70,6 +70,24 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<Institution> InstitutionSelectWithPublishedSegments(
+                SqlConnection sqlConnection,
+                SqlTransaction sqlTransaction,
+                bool onlyMemberLibraries)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectWithPublishedSegments", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("OnlyMemberLibraries", SqlDbType.Bit, null, false, onlyMemberLibraries)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public CustomGenericList<Institution> InstitutionSelectDOIStats(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,

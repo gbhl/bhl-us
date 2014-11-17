@@ -32,7 +32,7 @@ namespace MOBOT.BHL.Web2.controls
                     // Refresh cache
 
                     // Get the list of all institutions
-                    allInstitutions = provider.InstitutionSelectWithPublishedItems(false);
+                    allInstitutions = GetInstitutions();
 
                     // Cache the list
                     Cache.Add(cacheKey, allInstitutions, null, DateTime.Now.AddMinutes(
@@ -61,6 +61,32 @@ namespace MOBOT.BHL.Web2.controls
                 dlNonMembers.DataSource = nonMembers;
                 dlNonMembers.DataBind();
             }
+        }
+
+        /// <summary>
+        /// Get a list of all institutions that have contributed either books or segments
+        /// </summary>
+        /// <returns></returns>
+        private CustomGenericList<Institution> GetInstitutions()
+        {
+            CustomGenericList<Institution> institutions = provider.InstitutionSelectWithPublishedItems(false);
+            CustomGenericList<Institution> instWithSegments = provider.InstitutionSelectWithPublishedSegments(false);
+            
+            foreach(Institution instWithSegment in instWithSegments)
+            {
+                bool exists = false;
+                foreach(Institution institution in institutions)
+                {
+                    if (institution.InstitutionCode == instWithSegment.InstitutionCode)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) institutions.Add(instWithSegment);
+            }
+
+            return institutions;
         }
     }
 }

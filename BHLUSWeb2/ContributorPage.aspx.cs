@@ -11,9 +11,11 @@ namespace MOBOT.BHL.Web2
     {
         BHLProvider provider = new BHLProvider();
         protected string Start { get; set; }
+        protected string displayStart { get; set; }
         protected string sortBy { get; set; }
         protected Data.Institution contributor { get; set; }
         protected int count { get; set; }
+        protected int segmentcount { get; set; }
         
         protected override void Page_Load(object sender, EventArgs e)
         {
@@ -23,67 +25,60 @@ namespace MOBOT.BHL.Web2
             Start = (string)RouteData.Values["start"];
             sortBy = (string)RouteData.Values["sort"];
             if (string.IsNullOrWhiteSpace(sortBy)) sortBy = "";
-            if (string.IsNullOrEmpty(Start)) Start = "All";
 
             contributor = provider.InstitutionSelectAuto(institutionCode);
             if (contributor != null)
             {
                 ltlContributorStats.Visible = true;
-
                 Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Browse " + contributor.InstitutionName);
+                Data.Stats stats = this.GetStats(institutionCode);
 
                 // If no start letter was specified, and we're not showing "ALL", then make sure we have no more than 500 books
                 // in the collection.  If we DO, then default to showing books starting with "A".
-                if (Start == "All")
+                if (string.IsNullOrWhiteSpace(Start))
                 {
-                    int contentCount = 0;
-                    contentCount = provider.ItemCountByInstitution(contributor.InstitutionCode);
-                    if (contentCount > 500) Start = "A";
+                    Start = (stats.VolumeCount > 500 || stats.SegmentCount > 500) ? "A" : "All";
                 }
 
-                CustomGenericList<Data.SearchBookResult> list = null;
-                list = GetInstitutionList(contributor, institutionCode, Start);
-                count = list.Count;
+                displayStart = (Start == "0") ? "a number" : "\"" + Start.ToUpper() + "\"";
 
                 //build header
+                /*
                 System.Text.StringBuilder html = new System.Text.StringBuilder();
-                if (Start == "All") html.Append("All ");
-                html.Append(list.Count).
-                    Append(" title").Append(list.Count == 1 ? " " : "s ").
-                    Append(" from ").Append(contributor.InstitutionName.Replace("(archive.org)", "").Trim());
-                if (Start != String.Empty && Start != "All") html.Append(" beginning with ").Append(Start.ToUpper());
+                if (Start.ToLower() == "all") html.Append("All c"); else html.Append("C");
+                html.Append("ontributions").
+                    Append(" from \"").Append(contributor.InstitutionName.Replace("(archive.org)", "").Trim()).Append("\"");
+                if (Start != String.Empty && Start.ToLower() != "all") html.Append(" beginning with ").Append((Start == "0") ? "a number" : Start.ToUpper());
                 ltlContributorHeader.Text = html.ToString();
+                 */
+                litHeader.Text = string.Format(litHeader.Text, contributor.InstitutionName.Replace("(archive.org)", "").Trim());
 
                 // Show the collection statistics
-                Data.Stats stats = this.GetStats(institutionCode);
                 ltlContributorStats.Text = string.Format(ltlContributorStats.Text,
-                    stats.VolumeCount.ToString(), stats.TitleCount.ToString(), stats.PageCount.ToString());
+                    stats.VolumeCount.ToString(), stats.TitleCount.ToString(), stats.PageCount.ToString(),
+                    stats.SegmentCount.ToString());
 
-                if (sortBy != string.Empty)
-                {
-                    Data.SearchBookResultComparer.CompareEnum sortByEnum = Data.SearchBookResultComparer.CompareEnum.Title;
-                    switch (sortBy)
-                    {
-                        case "title": sortByEnum = Data.SearchBookResultComparer.CompareEnum.Title; break;
-                        case "author": sortByEnum = Data.SearchBookResultComparer.CompareEnum.Author; break;
-                        case "year": sortByEnum = Data.SearchBookResultComparer.CompareEnum.Year; break;
-                    }
-                    Data.SearchBookResultComparer comp = new Data.SearchBookResultComparer(sortByEnum, SortOrder.Ascending);
-                    list.Sort(comp);
-                }
+                // Get data
+                CustomGenericList<Data.SearchBookResult> bookList = GetInstitutionBooks(institutionCode, Start);
+                CustomGenericList<Data.Segment> segmentList = GetInstitutionSegments(institutionCode, Start);
 
-                BookBrowse.Data = list;
-                BookBrowse.DataBind();
+                count = bookList.Count;
+                BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
+                BookBrowse.Data = bookList;
+
+                segmentcount = segmentList.Count;
+                SectionBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
+                SectionBrowse.Data = segmentList;
             }
         }
 
-        private CustomGenericList<Data.SearchBookResult> GetInstitutionList(Data.Institution contributor, string institutionCode, string startString)
+        private CustomGenericList<Data.SearchBookResult> GetInstitutionBooks(string institutionCode, string startString)
         {
             CustomGenericList<Data.SearchBookResult> list = new CustomGenericList<Data.SearchBookResult>();
 
             if (startString.ToUpper() == "ALL") startString = String.Empty;
 
-            String cacheKey = "ContributorBrowse" + institutionCode + startString;
+            String cacheKey = "ContributorBookBrowse" + institutionCode + startString;
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
@@ -91,9 +86,51 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-                if (contributor != null)
+                if (!string.IsNullOrWhiteSpace(institutionCode))
                 {
-                    list = provider.TitleSelectByInstitutionAndStartsWith(institutionCode, startString);
+                    if (startString == "0")
+                    {
+                        list = bhlProvider.TitleSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                    }
+                    else
+                    {
+                        list = provider.TitleSelectByInstitutionAndStartsWith(institutionCode, startString);
+                    }
+
+                    // Cache the HTML fragment
+                    Cache.Add(cacheKey, list, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                }
+            }
+
+            return list;
+        }
+
+        private CustomGenericList<Data.Segment> GetInstitutionSegments(string institutionCode, string startString)
+        {
+            CustomGenericList<Data.Segment> list = new CustomGenericList<Data.Segment>();
+
+            if (startString.ToUpper() == "ALL") startString = String.Empty;
+
+            String cacheKey = "ContributorSegmentBrowse" + institutionCode + startString;
+            if (Cache[cacheKey] != null)
+            {
+                // Use cached version
+                list = (CustomGenericList<Data.Segment>)(Cache[cacheKey]);
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(institutionCode))
+                {
+                    if (startString == "0")
+                    {
+                        list = bhlProvider.SegmentSelectByInstitutionAndStartsWithout(institutionCode, "[a-z]");
+                    }
+                    else
+                    {
+                        list = provider.SegmentSelectByInstitutionAndStartsWith(institutionCode, startString);
+                    }
 
                     // Cache the HTML fragment
                     Cache.Add(cacheKey, list, null, DateTime.Now.AddMinutes(
