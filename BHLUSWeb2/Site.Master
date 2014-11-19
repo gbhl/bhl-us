@@ -50,8 +50,9 @@
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
 		            <nav>
-			            <a href="http://biodivlib.wikispaces.com/About">About BHL</a>
-			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>			            
+			            <a href="http://biodivlib.wikispaces.com/About">About</a>
+			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>
+                        <a href="/contact">Feedback</a>
 		            </nav>
                     <span id="headersocial">
                         <div class="addthis_sharing_toolbox"></div>
@@ -106,7 +107,6 @@
                 </div>
             <nav> <div class="column-wrap">
 	          
-                <a href="/contact">Feedback</a>
                 <a href="http://biodivlib.wikispaces.com/Data+Exports">Data Exports</a>
                 <a href="http://biodivlib.wikispaces.com/Developer+Tools+and+API">Developer Tools</a>
 		        <a href="http://biodivlib.wikispaces.com/BHL+Consortium+Membership">Members</a>

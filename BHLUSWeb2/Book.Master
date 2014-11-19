@@ -48,8 +48,9 @@
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
 		            <nav style="width:380px;">
-			     		<a href="http://biodivlib.wikispaces.com/About">About BHL</a>
+			     		<a href="http://biodivlib.wikispaces.com/About">About</a>
 			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>				            
+                        <a href="/contact">Feedback</a>
                         <span id="headersocialbook">
                             <div class="addthis_sharing_toolbox"></div>
                         </span>
