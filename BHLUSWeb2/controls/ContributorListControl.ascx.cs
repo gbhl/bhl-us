@@ -86,6 +86,11 @@ namespace MOBOT.BHL.Web2.controls
                 if (!exists) institutions.Add(instWithSegment);
             }
 
+            InstitutionComparer comp = new InstitutionComparer(
+                InstitutionComparer.CompareEnum.InstitutionName, 
+                SortOrder.Ascending);
+            institutions.Sort(comp);
+
             return institutions;
         }
     }

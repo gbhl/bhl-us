@@ -1081,9 +1081,9 @@
     <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWith.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stored Procedures\NamePageDeleteByItemID.sql" />
-    <Build Include="dbo\Stored Procedures\PageDeleteFromItem.sql" />
-    <Build Include="dbo\Stored Procedures\PageInsertIntoItem.sql" />
+    <None Include="dbo\Stored Procedures\NamePageDeleteByItemID.sql" />
+    <None Include="dbo\Stored Procedures\PageDeleteFromItem.sql" />
+    <None Include="dbo\Stored Procedures\PageInsertIntoItem.sql" />
     <None Include="dbo\Stored Procedures\InstitutionSelectWithPublishedSegments.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWithout.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWith.sql" />

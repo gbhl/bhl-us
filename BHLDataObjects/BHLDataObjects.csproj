@@ -254,6 +254,7 @@
     <Compile Include="Generated\__Title_Identifier.cs" />
     <Compile Include="Generated\__vwMarcDataField.cs" />
     <Compile Include="GNResolverResponse.cs" />
+    <Compile Include="InstitutionComparer.cs" />
     <Compile Include="ItemSuspectCharacter.cs" />
     <Compile Include="KeywordSuspectCharacter.cs" />
     <Compile Include="NonMemberMonograph.cs" />
