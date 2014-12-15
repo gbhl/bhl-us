@@ -199,6 +199,14 @@ namespace MOBOT.BHL.DataObjects
             set { _languageName = value; }
         }
 
+        private String _summary = String.Empty;
+
+        public String Summary
+        {
+            get { return _summary; }
+            set { _summary = value; }
+        }
+
         private String _note = String.Empty;
 
         public String Note
@@ -349,6 +357,11 @@ namespace MOBOT.BHL.DataObjects
                     case "LanguageName":
                         {
                             LanguageName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "Summary":
+                        {
+                            Summary = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "Note":

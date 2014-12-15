@@ -30,6 +30,7 @@ SELECT	'bhlpart' + CONVERT(nvarchar(10), s.SegmentID) AS CitationKey,
 		END AS Volume,
 		s.Series,
 		s.Issue,
+		s.Notes as Note,
 		s.RightsStatus AS CopyrightStatus,
 		CASE 
 			WHEN s.PageRange <> '' THEN s.PageRange
@@ -49,7 +50,6 @@ AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT
 AND		s.SegmentID = @SegmentID
 
 END
-
 
 
 

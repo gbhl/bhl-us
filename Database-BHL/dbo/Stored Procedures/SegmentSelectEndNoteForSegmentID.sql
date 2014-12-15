@@ -46,6 +46,7 @@ SELECT 	s.SegmentID,
 		END AS PageRange,
 		s.StartPageNumber,
 		scs.Subjects AS Keywords,
+		s.Summary,
 		s.Notes AS Note,
 		ISNULL(d.DOIName, '') AS DOI
 FROM	dbo.Segment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID

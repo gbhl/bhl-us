@@ -132,6 +132,26 @@ $(document).ready(function () {
         });
     });
 
+    // Abstractsection collapsing on part Bibliography page
+    $('.partabstract .title').click(function () {
+        var volume = $(this).parent();
+        var volumeBody = $('.body', volume);
+
+        volumeBody.stop(true, true).slideToggle(function () {
+            volume.toggleClass('active');
+        });
+    });
+
+    // Note section collapsing on part Bibliography page
+    $('.partnote .title').click(function () {
+        var volume = $(this).parent();
+        var volumeBody = $('.body', volume);
+
+        volumeBody.stop(true, true).slideToggle(function () {
+            volume.toggleClass('active');
+        });
+    });
+
     // Auto-Ellipsis for browsers that dont support it
     if (typeof $().textOverflow == 'function') {
         $('.ellipsis').textOverflow();

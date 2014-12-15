@@ -164,6 +164,7 @@ namespace MOBOT.BHL.BHLEndNoteExport
             String callNumber = citation.CallNumber;
             String keywords = citation.Keywords;
             String language = citation.LanguageName;
+            String summary = citation.Summary;
             String note = citation.Note;
             String edition = citation.EditionStatement;
             String doi = citation.Doi;
@@ -202,6 +203,7 @@ namespace MOBOT.BHL.BHLEndNoteExport
             if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
             if (keywords != String.Empty) elements.Add(EndNoteRefElementName.KEYWORDS, keywords);
             if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
+            if (summary != String.Empty) elements.Add(EndNoteRefElementName.ABSTRACT, summary);
             if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note);
             if (edition != String.Empty) elements.Add(EndNoteRefElementName.EDITION, edition);
             if (doi != String.Empty) elements.Add(EndNoteRefElementName.DOI, doi);

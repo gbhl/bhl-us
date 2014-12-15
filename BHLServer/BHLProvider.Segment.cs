@@ -103,7 +103,7 @@ namespace MOBOT.BHL.Server
                 if (volume != String.Empty) elements.Add(BibTeXRefElementName.VOLUME, volume);
                 if (copyrightStatus != String.Empty) elements.Add(BibTeXRefElementName.COPYRIGHT, copyrightStatus);
                 if (url != String.Empty) elements.Add(BibTeXRefElementName.URL, url);
-                if (note != String.Empty) elements.Add(BibTeXRefElementName.NOTE, note);
+                if (note != String.Empty) elements.Add(BibTeXRefElementName.NOTE, note.Replace("\n", " ").Replace("\r", " "));
                 elements.Add(BibTeXRefElementName.PUBLISHER, citation.Publisher);
                 elements.Add(BibTeXRefElementName.AUTHOR, citation.Authors.Replace("|", " and "));
                 elements.Add(BibTeXRefElementName.YEAR, citation.Year);
@@ -137,6 +137,7 @@ namespace MOBOT.BHL.Server
                 String callNumber = citation.CallNumber;
                 String keywords = citation.Keywords;
                 String language = citation.LanguageName;
+                String summary = citation.Summary;
                 String note = citation.Note;
                 String edition = citation.EditionStatement;
                 String url = String.Format(segmentUrl, citation.SegmentID.ToString());
@@ -157,7 +158,8 @@ namespace MOBOT.BHL.Server
                 if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
                 if (keywords != String.Empty) elements.Add(EndNoteRefElementName.KEYWORDS, keywords);
                 if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
-                if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note);
+                if (summary != String.Empty) elements.Add(EndNoteRefElementName.ABSTRACT, summary.Replace("\n", " ").Replace("\r", " "));
+                if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note.Replace("\n", " ").Replace("\r", " "));
                 if (edition != String.Empty) elements.Add(EndNoteRefElementName.EDITION, edition);
                 if (url != String.Empty) elements.Add(EndNoteRefElementName.URL, url);
                 if (doi != String.Empty) elements.Add(EndNoteRefElementName.DOI, doi);

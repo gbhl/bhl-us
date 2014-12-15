@@ -10,7 +10,7 @@ CREATE TABLE #tmpSegment
 	SegmentID int NOT NULL,
 	CitationKey nvarchar(20) NOT NULL,
 	Url nvarchar(50) NOT NULL,
-	Note nvarchar(50) NOT NULL,
+	Note nvarchar(MAX) NOT NULL,
 	[Type] nvarchar(50) NOT NULL,
 	Title nvarchar(2000) NOT NULL,
 	Journal nvarchar(2000) NOT NULL,
@@ -30,7 +30,7 @@ INSERT INTO #tmpSegment
 SELECT	s.SegmentID,
 		'bhlpart' + CONVERT(nvarchar(10), s.SegmentID) AS CitationKey,
 		'http://www.biodiversitylibrary.org/part/' + CONVERT(nvarchar(20), s.SegmentID) AS Url,
-		'' AS Note,
+		s.Notes AS Note,
 		g.GenreName AS [Type],
 		s.Title,
 		s.ContainerTitle AS Journal,
@@ -76,7 +76,6 @@ SELECT	CitationKey, Url, Note, [Type], Title, Journal, Publisher, [Year],
 FROM	#tmpSegment
 
 END
-
 
 
 

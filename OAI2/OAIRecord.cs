@@ -136,6 +136,22 @@ namespace MOBOT.BHL.OAI2
             set { _callNumber = value; }
         }
 
+        String _abstract = String.Empty;
+
+        public String Abstract
+        {
+            get { return _abstract; }
+            set { _abstract = value; }
+        }
+
+        List<KeyValuePair<String, String>> _notes = new List<KeyValuePair<String, String>>();
+
+        public List<KeyValuePair<String, String>> Notes
+        {
+            get { return _notes; }
+            set { _notes = value; }
+        }
+
         List<KeyValuePair<String, OAIRecord.Creator>> _creators = new List<KeyValuePair<string, OAIRecord.Creator>>();
 
         public List<KeyValuePair<String, OAIRecord.Creator>> Creators
@@ -909,6 +925,8 @@ namespace MOBOT.BHL.OAI2
                 this.JournalTitle = segment.ContainerTitle;
                 this.Publisher = segment.PublisherName;
                 this.PublicationPlace = segment.PublisherPlace;
+                this.Abstract = segment.Summary;
+                if (!string.IsNullOrWhiteSpace(segment.Notes)) this.Notes.Add(new KeyValuePair<string, string>("", segment.Notes));
 
                 if (segment.PublicationDetails != string.Empty ||
                     segment.PublisherPlace != string.Empty ||

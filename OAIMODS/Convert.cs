@@ -179,6 +179,20 @@ namespace MOBOT.BHL.OAIMODS
                 if (languageTerm != null) _oaiRecord.Languages.Add(languageTerm.Value);
             }
 
+            // Abstract
+            XElement itemAbstract = root.Element(ns + "abstract");
+            if (itemAbstract != null) _oaiRecord.Abstract = itemAbstract.Value;
+
+            // Notes
+            var notesList = from p in root.Elements(ns + "note") select p;
+            foreach (XElement note in notesList)
+            {
+                string noteType = string.Empty;
+                XAttribute noteTypeAttribute = note.Attribute("type");
+                if (noteTypeAttribute != null) noteType = noteTypeAttribute.Value;
+                _oaiRecord.Notes.Add(new KeyValuePair<string, string>(noteType, note.Value));
+            }
+
             // Publisher info
             var publisherInfoList = from p in root.Elements(ns + "originInfo") select p;
             foreach (XElement publisherInfo in publisherInfoList)
@@ -474,6 +488,12 @@ namespace MOBOT.BHL.OAIMODS
             // Language
             sb.Append(this.GetLanguageElement());
 
+            // Abstract
+            sb.Append(this.GetAbstractElement());
+
+            // Note
+            sb.Append(this.GetNoteElement());
+
             // Subject
             sb.Append(this.GetSubjectElement());
 
@@ -721,6 +741,40 @@ namespace MOBOT.BHL.OAIMODS
                 sb.Append("<language>\n");
                 sb.Append("\t<languageTerm authority=\"iso639-2b\" type=\"text\">" + HttpUtility.HtmlEncode(language) + "</languageTerm>\n");
                 sb.Append("</language>\n");
+            }
+
+            return sb.ToString();
+        }
+
+
+        /// <summary>
+        /// Build the abstract element
+        /// </summary>
+        /// <returns></returns>
+        private String GetAbstractElement()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (!String.IsNullOrEmpty(_oaiRecord.Abstract))
+            {
+                sb.Append("<abstract>" + HttpUtility.HtmlEncode(_oaiRecord.Abstract) + "</abstract>\n");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Build the note element
+        /// </summary>
+        /// <returns></returns>
+        private String GetNoteElement()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach(KeyValuePair<string, string> note in _oaiRecord.Notes)
+            {
+                string noteTypeAttrib = string.IsNullOrWhiteSpace(note.Key) ? string.Empty : " type=\"" + HttpUtility.HtmlEncode(note.Key) + "\"";
+                sb.Append("<note" + noteTypeAttrib + ">" + HttpUtility.HtmlEncode(note.Value) + "</note>\n");
             }
 
             return sb.ToString();

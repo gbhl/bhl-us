@@ -1425,9 +1425,11 @@
               <s:element minOccurs="0" maxOccurs="1" name="PublisherName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PublisherPlace" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Summary" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Series" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Issue" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Edition" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PageRange" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="StartPageNumber" type="s:string" />
@@ -1903,6 +1905,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="CallNumber" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="LanguageName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Summary" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Note" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="EditionStatement" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Doi" type="s:string" />

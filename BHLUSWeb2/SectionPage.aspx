@@ -319,6 +319,38 @@
         </div>
     </div>
 
+    <div class="partabstracts" <%if (string.IsNullOrWhiteSpace(BhlSegment.Summary)) { %> style="display:none" <% } %>>
+        <div class="partabstract js-hide">
+            <h4 class="title">
+                <a class="expand no-js-hide" title="expand or collapse abstract">expand</a>
+                <span class="text">Abstract</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0; display:none">
+                <div class="partlinks">
+                    <p>
+                        <%=BhlSegment.Summary%>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="partnotes" <%if (string.IsNullOrWhiteSpace(BhlSegment.Notes)) { %> style="display:none" <% } %>>
+        <div class="partnote js-hide">
+            <h4 class="title">
+                <a class="expand no-js-hide" title="expand or collapse abstract">expand</a>
+                <span class="text">Notes</span>
+            </h4>
+            <div class="body" style="border-bottom: 1px solid #C5CED3; padding: 20px 0 0; display:none">
+                <div class="partlinks">
+                    <p>
+                        <%=BhlSegment.Notes%>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </aside>
 </asp:Content>
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
