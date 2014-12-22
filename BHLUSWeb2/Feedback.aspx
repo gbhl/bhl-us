@@ -31,6 +31,7 @@
         <ol>
             <div class="tabbed">
                 <li><span id="spanErrorText" class="ErrorText" style="display:block !important"></span></li>
+                <li>Try our <a href="http://biodivlib.wikispaces.com/Help" target="_blank" title="Help">Help</a> page for answers to common questions.</li>
                 <li>* = required field</li>
             </div>
             <li>
