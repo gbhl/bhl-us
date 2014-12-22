@@ -23,7 +23,7 @@ INSERT	#Books
 SELECT	ti.TitleID, i.ItemID
 FROM	dbo.Item i
 		INNER JOIN dbo.TitleItem ti ON i.ItemID = ti.ItemID
-		INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
+		INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID AND t.TitleID = i.PrimaryTitleID
 WHERE	i.InstitutionCode = @InstitutionCode
 AND		i.ItemStatusID = 40
 

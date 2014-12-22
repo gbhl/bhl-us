@@ -11,6 +11,27 @@ SET NOCOUNT ON
 -- have related items which are associated with the specified institution
 SELECT DISTINCT
 		t.TitleID,
+		t.FullTitle,
+		t.SortTitle,
+		ISNULL(t.PartNumber, '') AS PartNumber,
+		ISNULL(t.PartName, '') AS PartName,
+		t.PublicationDetails,
+		t.StartYear,
+		t.EditionStatement,
+		t.InstitutionCode
+INTO	#Titles
+FROM	dbo.Title t  WITH (NOLOCK)
+		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON t.TitleID = ti.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
+		LEFT OUTER JOIN Institution ins WITH (NOLOCK) ON ins.InstitutionCode = t.InstitutionCode
+		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
+WHERE	i.ItemStatusID = 40
+AND		(t.InstitutionCode = ISNULL(@InstitutionCode, t.InstitutionCode) OR
+		 i.InstitutionCode = ISNULL(@InstitutionCode, i.InstitutionCode) )
+AND		t.SortTitle LIKE @StartsWith + '%'
+
+SELECT DISTINCT
+		t.TitleID,
 		i.ItemID,
 		t.FullTitle,
 		t.SortTitle,
@@ -24,7 +45,7 @@ SELECT DISTINCT
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections,
 		i.ExternalUrl
-FROM	dbo.Title t  WITH (NOLOCK)
+FROM	#Titles t  WITH (NOLOCK)
 		INNER JOIN (
 				-- Get the first item for each title
 				SELECT	TitleID, MIN(ItemSequence) MinSeq
@@ -39,8 +60,8 @@ FROM	dbo.Title t  WITH (NOLOCK)
 		LEFT OUTER JOIN Institution ins WITH (NOLOCK) ON ins.InstitutionCode = t.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 WHERE	i.ItemStatusID = 40
-AND		(t.InstitutionCode = ISNULL(@InstitutionCode, t.InstitutionCode) OR
-		 i.InstitutionCode = ISNULL(@InstitutionCode, i.InstitutionCode) )
-AND		t.SortTitle LIKE @StartsWith + '%'
 ORDER BY 
 		t.SortTitle
+
+DROP TABLE #Titles
+
