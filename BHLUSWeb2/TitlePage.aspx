@@ -121,18 +121,6 @@
 
         <div id="bookcontent">
             <div id="toolbar-top" class="column-wrap">
-                <!--
-                <div style="float: right; ">
-                    <div id='BRtoolbar-zoombuttons'>
-                        <a class='BRicon zoom_out' title='Zoom Out'>zoom out</a>
-                        <span class='label'><span id='BRzoom_pdf'>4 columns</span></span>
-                        <a class='BRicon zoom_in' title='Zoom In'>zoom in</a>
-                    </div>
-                    <div id='BRtoolbar-navbuttons'>
-                        <div class='BRtoolbarmode3' style='display: block'><a class='BRicon book_top' title='First Page'>first page</a><a class='BRicon rollover book_up' title='Page Up'>page up</a><a class='BRicon rollover book_down' title='Page Down'>page down</a><a class='BRicon rollover book_bottom' title='Last Page'>last page</a></div>
-                    </div>
-                </div>
-                -->
                 <div id="mypdfbar" class="disabled">
                     <div style="position: absolute; top: 15px; left: 440px; font-size:13px;"> Click pages to select/de-select for download </div>
 
@@ -150,6 +138,7 @@
                 <div class="jqmWindow" id="review-dialog">
                     <div class="head">
                         <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                        <a class="button generate modal">Generate My PDF</a>
                         <h2>Review My PDF</h2>
                         <span id="page-count"></span>
                         <a class='dicon list-view' title='List View'>List View</a>
@@ -160,20 +149,18 @@
                         <ul>
                         </ul>
                     </div>
-                    <div class="footer">
-                        <a class="button generate modal">Generate My PDF</a>
-                    </div>
                 </div>
                 <div class="jqmWindow" id="generate-dialog">
                     <div class="head">
                         <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                        <a class="button finish">Finish</a>
+                        <a class="button review modal">Review My PDF</a>
                         <h2>Generate My PDF</h2>
                         <hr />
                     </div>
                     <div class="body form">
-                        <img src="/images/bhlau images/image_book.jpg" height="170" width="248" alt="Book" />
                         <div class="intro">
-                            <p>If you are generating a PDF containing the text of a single journal article or book chapter, please provide title and author information.</p>
+                            <p>If you are generating a PDF of a journal article or book chapter, please provide title and author information.</p>
                             <p>BHL stores this information to allow these articles to be indexed, searched and retrieved by other users. If you download an article but do not provide title or author information, these articles will be lost.</p>
                         </div>
                         <div class="success">
@@ -221,10 +208,6 @@
                                 <input class="field" type="text" id="tbSubjects" name="tbSubjects" /><span class="example">Example: Birds, Classification, Mammals</span>
                             </div>
                         </fieldset>
-                    </div>
-                    <div class="footer">
-                        <a class="button finish">Finish</a>
-                        <a class="button review modal">Review My PDF</a>
                     </div>
                 </div>
             </div>
@@ -307,7 +290,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=2" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=2" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -393,7 +376,7 @@
 
             function resetGenerate() {
                 $('#generate-dialog fieldset, #generate-dialog .footer').show();
-                $('#generate-dialog').css('height', '660px');
+                $('#generate-dialog').css('height', '520px');
                 $('#generate-dialog .intro').show();
                 $('#generate-dialog .success').hide();
                 $('#generate-dialog .failure').hide();
@@ -860,13 +843,17 @@
                         if(data.isSuccess) {
                             $('#pdfId').text(data.pdfId);
 
-                            $('#generate-dialog fieldset, #generate-dialog .footer').fadeOut(function() {
-                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
-                            });
-
                             $('#generate-dialog .intro').fadeOut(function() {
                                 $('#generate-dialog .success').fadeIn();
                                 finishButton.removeClass('loading').removeAttr('style');
+                            });
+
+                            $('#generate-dialog fieldset, #generate-dialog .finish').fadeOut(function() {
+                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
+                            });
+
+                            $('#generate-dialog fieldset, #generate-dialog .review').fadeOut(function() {
+                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
                             });
 
                             // close off the PDF selection stuff.

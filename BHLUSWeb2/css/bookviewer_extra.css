@@ -588,7 +588,7 @@ a.BRButton:hover, a.BRButton:active
 }
 
 #download-dialog .head a { float: right !important; }
-.jqmWindow .head { padding-bottom: 10px; }
+.jqmWindow .head { padding-bottom: 1px; }
 .jqmWindow .delete { background: url("../images/bhlau images/bg_small_delete.png") no-repeat scroll 0 0 transparent } 
 .jqmClose { background: url("../images/bhlau images/bg_large_close.png") no-repeat scroll 0 0 transparent; }
 .large-icon.pdf { background: url("../images/bhlau images/large_icon_pdf.png") no-repeat scroll 0 0 transparent }
