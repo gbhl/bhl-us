@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishDeleteTitleAndItem
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishDeleteTitleAndItem]
 
 @OAIRecordID int
 
@@ -16,6 +16,9 @@ SELECT	@ProductionTitleID = ProductionTitleID,
 FROM	dbo.OAIRecord 
 WHERE	OAIRecordID = @OAIRecordID
 
+-- Start a new transaction while we perform the updates
+BEGIN TRAN
+
 UPDATE	dbo.BHLItem
 SET		ItemStatusID = 5 -- Removed
 WHERE	ItemID = @ProductionItemID
@@ -31,8 +34,14 @@ BEGIN
 	WHERE	TitleID = @ProductionTitleID
 END
 
+-- Update the OAIRecordStatus of the just-deleted record
+UPDATE	OAIRecord
+SET		OAIRecordStatusID = 20,
+		LastModifiedDate = GETDATE()
+WHERE	OAIRecordID = @OAIRecordID
+
+COMMIT TRAN
+
 END
 
 GO
-
-
