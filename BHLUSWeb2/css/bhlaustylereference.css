@@ -2696,10 +2696,10 @@ ul.creator-titles li
 }
 #review-dialog, #generate-dialog
 {
-	height:660px;
+	height:520px;
 	width:760px;
 	margin-left:-380px;
-    margin-top:-330px;
+    margin-top:-260px;
     background:#f5f1ee;
 }
 .jqmWindow .head
@@ -2747,8 +2747,8 @@ ul.creator-titles li
 }
 #review-dialog .body, #generate-dialog .body
 {
-	height:528px;
-	margin:10px 20px 0 20px;
+	height:450px;
+	margin:1px 20px 0 20px;
 	overflow:hidden;
 }
 #generate-dialog .success, #generate-dialog .failure
@@ -2784,7 +2784,7 @@ ul.creator-titles li
 }
 .jqmWindow li.iconpage
 {
-	margin:30px 10px 0 30px;
+	margin:20px 10px 0 30px;
 	color:#2b3c4d;
 	float:left;
 	width:100px;
@@ -2830,7 +2830,7 @@ ul.creator-titles li
 	text-decoration:none;
 	padding:0 10px;
 	float:right;
-	margin:10px 20px 0 0;
+	margin:14px 20px 0 0;
 	cursor:pointer;
 	-webkit-user-select:none;
 	-khtml-user-select:none;
@@ -2872,7 +2872,7 @@ ul.creator-titles li
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
 	border-radius:5px;
-	padding:15px;
+	padding:10px;
 }
 .jqmWindow fieldset.required
 {
