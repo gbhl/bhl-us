@@ -481,7 +481,7 @@ BEGIN TRY
 
 	-- Get the Edition Statement
 	UPDATE	#tmpTitle
-	SET		EditionStatement = m.SubFieldValue
+	SET		EditionStatement = SUBSTRING(m.SubFieldValue, 1, 450)
 	FROM	#tmpTitle t INNER JOIN (
 					SELECT	ItemID, MarcDataFieldID, 
 							LTRIM(ISNULL(MIN([a]), '') + ' ' + ISNULL(MIN([b]), '')) AS SubFieldValue
