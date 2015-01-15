@@ -2718,6 +2718,10 @@ ul.creator-titles li
 	margin:18px 20px 0 30px;
 	float:left;
 }
+#download-dialog h2
+{
+	margin:8px 20px 0 30px;
+}
 .jqmWindow #page-count
 {
 	color:#a6aeb6;
