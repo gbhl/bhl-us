@@ -56,7 +56,7 @@ SELECT @VolumeCount = COUNT(DISTINCT ItemID) FROM #Books
 
 -- Get Page count
 SELECT	@PageCount = COUNT(p.PageID) 
-FROM	Page p INNER JOIN #Books b ON p.ItemID = b.ItemID 
+FROM	Page p INNER JOIN (SELECT DISTINCT ItemID FROM #Books) b ON p.ItemID = b.ItemID 
 WHERE	p.Active=1
 
 -- Return final result set
@@ -64,5 +64,4 @@ SELECT	ISNULL(@TitleCount, 0) AS TitleCount,
 		ISNULL(@VolumeCount, 0) AS VolumeCount,
 		ISNULL(@PageCount, 0) AS [PageCount]
 END
-
 

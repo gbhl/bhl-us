@@ -23,9 +23,10 @@ INSERT	#Books
 SELECT	ti.TitleID, i.ItemID
 FROM	dbo.Item i
 		INNER JOIN dbo.TitleItem ti ON i.ItemID = ti.ItemID
-		INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID AND t.TitleID = i.PrimaryTitleID
+		INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
 WHERE	i.InstitutionCode = @InstitutionCode
 AND		i.ItemStatusID = 40
+AND		t.PublishReady = 1
 
 -- Get Title and Item counts
 SELECT @TitleCount = COUNT(DISTINCT TitleID) FROM #Books
@@ -39,7 +40,7 @@ AND		ContributorCode = @InstitutionCode
 
 -- Get Page count
 SELECT	@PageCount = COUNT(p.PageID) 
-FROM	Page p INNER JOIN #Books b ON p.ItemID = b.ItemID 
+FROM	Page p INNER JOIN (SELECT DISTINCT ItemID FROM #Books) b ON p.ItemID = b.ItemID 
 WHERE	p.Active=1
 
 -- Return final result set
@@ -48,3 +49,4 @@ SELECT	ISNULL(@TitleCount, 0) AS TitleCount,
 		ISNULL(@PageCount, 0) AS [PageCount],
 		ISNULL(@SegmentCount, 0) AS SegmentCount
 END
+
