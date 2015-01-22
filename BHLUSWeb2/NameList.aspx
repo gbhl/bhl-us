@@ -36,6 +36,9 @@
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/grid.locale-en.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.jqGrid.min.js" type="text/javascript"></script>
+<style>
+.ui-jqgrid tr.ui-row-ltr td {  border-left: 1px solid #b6c1cc;  }
+</style>
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {
@@ -43,12 +46,11 @@
             url: '/namelist/?name=<%= NameParam %>', // tells where to get the data
             datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
             mtype: 'GET',   // specify if AJAX call is a GET or POST
-            colNames: ['Type', 'Title', 'Authors', 'Volume', 'Date', 'Page #', 'View'],    // column names
+            colNames: ['Title', 'Authors', 'Volume', 'Date', 'Page #', 'View'],    // column names
             colModel: [
-              { name: 'BibliographicLevelName', index: 'BibliographicLevelName', width: 70 },
               { name: 'ShortTitle', index: 'ShortTitle' },
               { name: 'Authors', index: 'Authors', sortable: false },
-              { name: 'Volume', index: 'Volume', sortable: false, width: 50 },
+              { name: 'Volume', index: 'Volume', sortable: false, width: 120 },
               { name: 'Date', index: 'Date', width: 30 },
               { name: 'IndicatedPages', index: 'IndicatedPages', sortable: false, width: 60 },
               { name: 'ShowPreview', index: 'ShowPreview', align: 'center', sortable: false, width: 20 }

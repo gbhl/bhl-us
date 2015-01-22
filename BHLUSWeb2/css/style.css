@@ -238,8 +238,9 @@ a.ExtLink
 #headersocialbook
 {
     padding-left:10%;
-    line-height: 100px;
+    line-height: 50px;
     float:right;
+    margin-top:18px;
 }
 #headersocialbook img
 {
@@ -1516,7 +1517,7 @@ aside
 #content .ui-state-default, #content .ui-widget-content .ui-state-default, #content .ui-widget-header .ui-state-default 
 {
     background: #4897ca; 
-    border: 1px solid #4897ca;
+    border-left: 1px solid #b6c1cc;
 }
 #content .ui-state-active, #content .ui-widget-content .ui-state-active, #content .ui-widget-header .ui-state-active 
 {
