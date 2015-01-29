@@ -846,11 +846,13 @@ namespace IAHarvest
                         System.IO.Directory.CreateDirectory(localFileFolder + iaIdentifier + "\\" + iaIdentifier);
                     }
 
+                    /*
                     // Set up the XSL resolver that we'll use to extract the text from the xml
                     XmlUrlResolver resolver = new XmlUrlResolver();
                     resolver.Credentials = System.Net.CredentialCache.DefaultCredentials;
                     System.Xml.Xsl.XslTransform xslTransform = new System.Xml.Xsl.XslTransform();
                     xslTransform.Load("djvu2text.xslt", resolver);
+                     */
 
                     // Read the DJVU.XML file line-by-line, extracting the pages as we go
                     using (System.IO.StreamReader reader = new System.IO.StreamReader(localFileName))
@@ -892,8 +894,22 @@ namespace IAHarvest
                                     try
                                     {
                                         // Create the text file for the page
-                                        output = new System.IO.StreamWriter(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName);
-                                        xslTransform.Transform(xml, null, output, resolver);
+                                        //output = new System.IO.StreamWriter(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName);
+                                        //xslTransform.Transform(xml, null, output, resolver);
+
+                                        StringBuilder text = new StringBuilder();
+
+                                        System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(pageText);
+
+                                        IEnumerable<System.Xml.Linq.XElement> xmlLines = ocrXml.Root.Descendants("LINE");
+                                        foreach (System.Xml.Linq.XElement xmlLine in xmlLines)
+                                        {
+                                            IEnumerable<System.Xml.Linq.XElement> words = xmlLine.Descendants("WORD");
+                                            foreach (System.Xml.Linq.XElement word in words) text.Append(word.Value + " ");
+                                            text.AppendLine();
+                                        }
+
+                                        System.IO.File.WriteAllText(localFileFolder + iaIdentifier + "\\" + iaIdentifier + "\\" + textFileName, text.ToString());
 
                                         // Get the external Url for the page
                                         String externalUrl = this.GetPageExternalUrl(itemID, iaIdentifier, pageCounter);

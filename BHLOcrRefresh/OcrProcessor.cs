@@ -238,12 +238,21 @@ namespace MOBOT.BHL.BHLOcrRefresh
             {
                 if (File.Exists(xmlFile + ".txt")) File.Delete(xmlFile + ".txt");
 
-                XmlUrlResolver resolver = new XmlUrlResolver();
-                resolver.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                XslTransform xslTransform = new XslTransform();
-                xslTransform.Load(@"djvu2text.xslt", resolver);
-                xslTransform.Transform(xmlFile, xmlFile.Replace(".xml", ".txt"), resolver);
-                File.Delete(xmlFile);   // Remove the XML file
+                StringBuilder pageText = new StringBuilder();
+
+                string ocr = File.ReadAllText(xmlFile);
+                System.Xml.Linq.XDocument ocrXml = System.Xml.Linq.XDocument.Parse(ocr);
+
+                IEnumerable<System.Xml.Linq.XElement> lines = ocrXml.Root.Descendants("LINE");
+                foreach (System.Xml.Linq.XElement line in lines)
+                {
+                    IEnumerable<System.Xml.Linq.XElement> words = line.Descendants("WORD");
+                    foreach (System.Xml.Linq.XElement word in words) pageText.Append(word.Value + " ");
+                    pageText.AppendLine();
+                }
+
+                File.WriteAllText(xmlFile.Replace(".xml", ".txt"), pageText.ToString());
+                File.Delete(xmlFile);
             }
         }
 
