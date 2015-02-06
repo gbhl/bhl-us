@@ -77,6 +77,7 @@ namespace BHLUSWeb2
                 Response.TrySkipIisCustomErrors = true;
 
                 Response.Redirect(redirect);
+                Response.End();
             }
         }
 

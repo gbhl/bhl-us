@@ -6,8 +6,8 @@
 <uc:NavBar runat="server" />
 <div id="message" class="column-wrap">
     <section>
-        <h1>Internal Server Error</h1>
-        <p>We're sorry, but an unexpected error has occurred. Please try your request again shortly.</p>
+        <h1>Sorry!</h1>
+        <p>Something unexpected has occurred. Please try your request again shortly.</p>
         <span class="arrow message"></span>
     </section>
     <aside>
