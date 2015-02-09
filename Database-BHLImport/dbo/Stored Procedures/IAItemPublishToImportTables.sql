@@ -366,27 +366,27 @@ BEGIN TRY
 	AND		df.DataFieldTag = '245'
 	AND		df.Code = 'p'
 
-	-- Get datafield 260 information
+	-- Get datafield 260/264 information
 	UPDATE	#tmpTitle
 	SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
-	WHERE	df.DataFieldTag = '260'
-	AND		df.Code = 'a'
+	WHERE	(df.DataFieldTag = '260' AND df.Code = 'a')
+	OR		(df.DataFieldTag = '264' AND df.Code = 'a' AND df.Indicator2 = '1')
 
 	UPDATE	#tmpTitle
 	SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
-	WHERE	df.DataFieldTag = '260'
-	AND		df.Code = 'b'
+	WHERE	(df.DataFieldTag = '260' AND df.Code = 'b')
+	OR		(df.DataFieldTag = '264' AND df.Code = 'b' AND df.Indicator2 = '1')
 
 	UPDATE	#tmpTitle
 	SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
-	WHERE	df.DataFieldTag = '260'
-	AND		df.Code = 'c'
+	WHERE	(df.DataFieldTag = '260' AND df.Code = 'c')
+	OR		(df.DataFieldTag = '264' AND df.Code = 'c' AND df.Indicator2 = '1')
 
 	-- Remove start and end brackets ( [ ] ) from publication information
 	UPDATE	#tmpTitle
