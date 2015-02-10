@@ -323,7 +323,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Publication Place (MARC 260a):
+					Publication Place (MARC 260/264a):
 				</td>
 				<td colspan="4" style="width: 100%">
 					<asp:TextBox ID="publicationPlaceTextBox" runat="server" MaxLength="150" Width="100%"></asp:TextBox>
@@ -331,7 +331,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Publisher Name (MARC 260b):
+					Publisher Name (MARC 260/264b):
 				</td>
 				<td colspan="4" style="width: 100%">
 					<asp:TextBox ID="publisherNameTextBox" runat="server" MaxLength="255" Width="100%"></asp:TextBox>
@@ -339,7 +339,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Publication Date (MARC 260c):
+					Publication Date (MARC 260/264c):
 				</td>
 				<td colspan="4" style="width: 100%">
 					<asp:TextBox ID="publicationDateTextBox" runat="server" MaxLength="100" Width="100%"></asp:TextBox>
