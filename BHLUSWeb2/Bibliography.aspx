@@ -29,15 +29,21 @@
                 <h3>Title</h3>
                 <span itemprop="url" style="display:none"><%: String.Format(ConfigurationManager.AppSettings["BibPageUrl"], BhlTitle.TitleID.ToString()) %></span>
                 <p><span itemprop="name"><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></span></p>
-                <% if (TitleVariants.Count > 0) { %>
+                <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
                     <h3>Title Variants:</h3>
                     <% foreach (TitleVariant titleVariant in TitleVariants) { %>
                     <p>
                         <i><%: titleVariant.TitleVariantLabel %>:</i>
                         <%: titleVariant.Title %> <%: titleVariant.TitleRemainder %> <%: titleVariant.PartNumber %> <%: titleVariant.PartName %>
                     </p>
-                    <% } %>
-                <% } %>
+                    <% } 
+                    if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
+                    {%>
+                      <p>
+                          <i>Uniform: </i><%: BhlTitle.UniformTitle %>
+                      </p>  
+                    <%}
+                } %>
                 <% if(TitleAssociations.Count > 0) { %>                    
                     <h3>Related Titles</h3>
                     <% foreach (TitleAssociation titleAssociation in TitleAssociations) { %>
@@ -142,15 +148,21 @@
             <div id="details" class="tab-body">
                 <h3>Title</h3>
                 <p><%: BhlTitle.FullTitle %> <%: BhlTitle.PartNumber %> <%: BhlTitle.PartName %></p>
-                <% if (TitleVariants.Count > 0) { %>
+                <% if (TitleVariants.Count > 0 || !string.IsNullOrWhiteSpace(BhlTitle.UniformTitle)) { %>
                     <h3>Title Variants:</h3>
                     <% foreach (TitleVariant titleVariant in TitleVariants) { %>
                     <p>
                         <i><%: titleVariant.TitleVariantLabel %>:</i>
                         <%: titleVariant.Title %> <%: titleVariant.TitleRemainder %> <%: titleVariant.PartNumber %> <%: titleVariant.PartName %>
                     </p>
-                    <% } %>
-                <% } %>
+                    <% } 
+                    if (!string.IsNullOrWhiteSpace(BhlTitle.UniformTitle))
+                    {%>
+                      <p>
+                          <i>Uniform: </i><%: BhlTitle.UniformTitle %>
+                      </p>  
+                    <%}
+                } %>
                 <% if(TitleAssociations.Count > 0) { %>                    
                     <h3>Related Titles</h3>
                     <% foreach (TitleAssociation titleAssociation in TitleAssociations) { %>

@@ -119,25 +119,25 @@ WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'p'
 AND		df.MarcID = @MarcID
 
--- Get datafield 260 information
+-- Get datafield 260/264 information
 UPDATE	#tmpTitle
 SET		Datafield_260_a = df.SubFieldValue
 FROM	dbo.vwMarcDataField df
-WHERE	df.DataFieldTag = '260'
+WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'a'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
 SET		Datafield_260_b = df.SubFieldValue
 FROM	dbo.vwMarcDataField df
-WHERE	df.DataFieldTag = '260'
+WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'b'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
 SET		Datafield_260_c = df.SubFieldValue
 FROM	dbo.vwMarcDataField df
-WHERE	df.DataFieldTag = '260'
+WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'c'
 AND		df.MarcID = @MarcID
 
@@ -269,6 +269,3 @@ SELECT	[MARCBibID],
 FROM	#tmpTitle
 
 END
-
-
-
