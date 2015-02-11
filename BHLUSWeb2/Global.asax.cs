@@ -117,6 +117,15 @@ namespace BHLUSWeb2
                 "search",
                 "~/Search.aspx");
 
+            routes.MapPageRoute("Advanced-Search-Tab",
+                "advsearch/{searchtype}",
+                "~/AdvancedSearch.aspx", false,
+                new RouteValueDictionary
+                        {
+                            {"searchtype","book"}
+                        }
+                );
+
             routes.MapPageRoute("Advanced-Search",
                 "advsearch",
                 "~/AdvancedSearch.aspx");

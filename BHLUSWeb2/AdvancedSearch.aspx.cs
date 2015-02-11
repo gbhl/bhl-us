@@ -29,7 +29,7 @@ namespace MOBOT.BHL.Web2
         public enum TabName
         {
             Book,
-            Citation,
+            Part,
             Author,
             Subject,
             Name,
@@ -90,24 +90,24 @@ namespace MOBOT.BHL.Web2
                 ddlBookCollection.Items.Insert(0, new System.Web.UI.WebControls.ListItem("(Any Collection)", ""));
 
                 // Set the starting tab
-                if (!string.IsNullOrEmpty(Request.QueryString["searchType"]))
+                if (!string.IsNullOrEmpty((string)RouteData.Values["searchtype"]))
                 {
-                    switch (Request.QueryString["searchType"])
+                    switch (((string)RouteData.Values["searchtype"]).ToLower())
                     {
-                        case "b":
+                        case "book":
                             startTabDiv = "divBookSearch";
                             break;
-                        case "a":
+                        case "author":
                             startTabDiv = "divAuthorSearch";
                             break;
-                        case "s":
+                        case "subject":
                             startTabDiv = "divSubjectSearch";
                             break;
-                        case "n":
+                        case "name":
                             startTabDiv = "divNameSearch";
                             break;
-                        case "c":
-                            startTabDiv = "divCitationSearch";
+                        case "part":
+                            startTabDiv = "divArticleSearch";
                             break;
                         default:
                             startTabDiv = "divBookSearch";
