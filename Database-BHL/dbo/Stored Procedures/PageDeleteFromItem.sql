@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.PageDeleteFromItem
+﻿CREATE PROCEDURE [dbo].[PageDeleteFromItem]
 
 @Barcode nvarchar(40),
 @PageID int,
@@ -40,7 +40,7 @@ BEGIN
 		UPDATE	dbo.Page
 		SET		SequenceOrder = SequenceOrder - @NumPagesToDelete,
 				FileNamePrefix = @Barcode + '_' + right('000' + convert(varchar(4), (SequenceOrder - @NumPagesToDelete)), 4),
-				AltExternalUrl = '/download/' + @Barcode + '/page/n' + convert(varchar(4), (SequenceOrder - (@NumPagesToDelete - 1)))
+				AltExternalUrl = '/download/' + @Barcode + '/page/n' + convert(varchar(4), (SequenceOrder - @NumPagesToDelete - 1))
 		WHERE	ItemID = @ItemID and Active = 1 and SequenceOrder >= (@SequenceOrder + @NumPagesToDelete)
 
 		-- Clear the name records for this book, as they are probably attached to the wrong pages
