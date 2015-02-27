@@ -202,6 +202,14 @@
                 <p>
                     <%: BhlTitle.PublicationDetails %>
                 </p>
+                <% if (TitleNotes != null && TitleNotes.Count > 0) { %>
+                    <h3>Notes:</h3>
+                    <% foreach (TitleNote titleNote in TitleNotes) { %>
+                    <p>
+                        <i><%: titleNote.NoteTypeDisplay %><%: (string.IsNullOrWhiteSpace(titleNote.NoteTypeDisplay) ? "" : ": ") %></i><%: titleNote.NoteText %>
+                    </p>
+                    <% } 
+                } %>
                 <% if (TitleKeywords != null && TitleKeywords.Count > 0)
                    { %>
                     <h3>Subjects</h3>

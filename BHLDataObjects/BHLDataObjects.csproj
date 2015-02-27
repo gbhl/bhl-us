@@ -121,6 +121,7 @@
     <Compile Include="Concrete\NameResolved.cs" />
     <Compile Include="Concrete\NameSegment.cs" />
     <Compile Include="Concrete\NameSource.cs" />
+    <Compile Include="Concrete\NoteType.cs" />
     <Compile Include="Concrete\OAIIdentifier.cs" />
     <Compile Include="Concrete\OpenUrlCitation.cs" />
     <Compile Include="Concrete\PageAnnotation.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Concrete\TitleItem.cs" />
     <Compile Include="Concrete\TitleKeyword.cs" />
     <Compile Include="Concrete\TitleLanguage.cs" />
+    <Compile Include="Concrete\TitleNote.cs" />
     <Compile Include="Concrete\TitleVariant.cs" />
     <Compile Include="Concrete\TitleVariantType.cs" />
     <Compile Include="Concrete\Title_Identifier.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="Generated\__NameResolved.cs" />
     <Compile Include="Generated\__NameSegment.cs" />
     <Compile Include="Generated\__NameSource.cs" />
+    <Compile Include="Generated\__NoteType.cs" />
     <Compile Include="Generated\__PageAnnotation.cs" />
     <Compile Include="Generated\__PageFlickr.cs" />
     <Compile Include="Generated\__PDF.cs" />
@@ -249,6 +252,7 @@
     <Compile Include="Generated\__TitleItem.cs" />
     <Compile Include="Generated\__TitleKeyword.cs" />
     <Compile Include="Generated\__TitleLanguage.cs" />
+    <Compile Include="Generated\__TitleNote.cs" />
     <Compile Include="Generated\__TitleVariant.cs" />
     <Compile Include="Generated\__TitleVariantType.cs" />
     <Compile Include="Generated\__Title_Identifier.cs" />
@@ -286,6 +290,7 @@
     <Compile Include="SegmentPageComparer.cs" />
     <Compile Include="TitleAssociationSuspectCharacter.cs" />
     <Compile Include="AuthorSuspectCharacter.cs" />
+    <Compile Include="TitleNoteComparer.cs" />
     <Compile Include="TitleItemComparer.cs" />
     <Compile Include="TitleSuspectCharacter.cs" />
     <Compile Include="Utility.cs" />

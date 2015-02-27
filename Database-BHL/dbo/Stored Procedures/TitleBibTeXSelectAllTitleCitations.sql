@@ -11,6 +11,7 @@ SELECT	DISTINCT
 		t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title, 
 		ISNULL(t.Datafield_260_a, '') + ISNULL(t.Datafield_260_b, '') AS Publisher,
 		CASE WHEN ISNULL(t.Datafield_260_c, '') = '' THEN ISNULL(CONVERT(NVARCHAR(20), StartYear), '') ELSE ISNULL(t.Datafield_260_c, '') END [Year],
+		dbo.fnNoteStringForTitle(t.TitleID, '') AS Note,
 		c.Authors,
 		c.Subjects AS Keywords
 FROM	dbo.Title t WITH (NOLOCK)

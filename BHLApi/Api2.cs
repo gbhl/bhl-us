@@ -299,6 +299,8 @@ namespace MOBOT.BHL.API.BHLApi
                 title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                 title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                 title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
+                title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
+                
                 if (items)
                 {
                     title.Items = this.GetTitleItems(title.TitleID.ToString());
@@ -355,6 +357,7 @@ namespace MOBOT.BHL.API.BHLApi
                             title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                             title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                             title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
+                            title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
                         }
 
                         break;
@@ -370,6 +373,7 @@ namespace MOBOT.BHL.API.BHLApi
                             title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                             title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                             title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
+                            title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
                         }
 
                         break;

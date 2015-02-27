@@ -46,6 +46,8 @@ namespace MOBOT.BHL.DAL
                 title.TitleVariants = new TitleVariantDAL().TitleVariantSelectByTitleID(connection, transaction, titleId);
 
                 title.TitleLanguages = new TitleLanguageDAL().TitleLanguageSelectByTitleID(connection, transaction, titleId);
+
+                title.TitleNotes = new TitleNoteDAL().TitleNoteSelectByTitleID(connection, transaction, titleId);
 			}
 
 			return title;
@@ -477,6 +479,16 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
+                if (title.TitleNotes.Count > 0)
+                {
+                    TitleNoteDAL titleNoteDAL = new TitleNoteDAL();
+                    foreach(TitleNote titleNote in title.TitleNotes)
+                    {
+                        if (titleNote.TitleID == 0) titleNote.TitleID = updatedTitle.ReturnObject.TitleID;
+                        titleNoteDAL.TitleNoteManageAuto(connection, transaction, titleNote, userId);
+                    }
+                }
+
 				if ( title.TitleCollections.Count > 0 )
 				{
 					TitleCollectionDAL titleCollectionDAL = new TitleCollectionDAL();
@@ -503,7 +515,7 @@ namespace MOBOT.BHL.DAL
 
 				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}
-			catch ( Exception ex )
+			catch
 			{
 				CustomSqlHelper.RollbackTransaction( transaction, isTransactionCoordinator );
 

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
+﻿CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
 
 @BarCode nvarchar(40) = NULL
 
@@ -10,7 +9,7 @@ BEGIN
 ------------------------------------------------------------------------------
 --
 --	NOTES: This script reads from the Import tables (Title, Keyword, TitleKeyword,
---	Creator, Title_Creator, Title_Identifier, Item, Page, IndicatedPage, 
+--	Creator, Title_Creator, Title_Identifier, TitleNote, Item, Page, IndicatedPage, 
 --	Page_PageType) and performs INSERTs and limited UPDATEs on the production
 --  (biodiversity.org) database.
 --
@@ -159,6 +158,16 @@ BEGIN TRY
 		[PartNumber] [nvarchar](255) NOT NULL,
 		[PartName] [nvarchar](255) NOT NULL,
 		[ImportKey] [nvarchar](50) NULL
+		)
+
+	CREATE TABLE #tmpTitleNote (
+		[TitleNoteID] [int] NOT NULL,
+		[ImportSourceID] [int] NULL,
+		[NoteText] [nvarchar](max) NOT NULL,
+		[MarcDataFieldTag] [nvarchar](5) NULL,
+		[MarcIndicator1] [nvarchar](5) NULL,
+		[NoteSequence] [smallint] NULL,
+		[ImportKey] [nvarchar](50) NOT NULL
 		)
 
 	CREATE TABLE #tmpCreator (
@@ -520,6 +529,23 @@ BEGIN TRY
 	WHERE	v.ImportStatusID = 10
 	AND		v.ImportKey = @ImportKey
 	AND		v.ImportSourceID = @ImportSourceID
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Title Notes
+	INSERT INTO #tmpTitleNote
+	SELECT	TitleNoteID,
+			ImportSourceID,
+			NoteText,
+			MarcDataFieldTag,
+			MarcIndicator1,
+			NoteSequence,
+			@ImportKey
+	FROM	dbo.TitleNote
+	WHERE	ImportStatusID = 10
+	AND		ImportKey = @ImportKey
+	AND		ImportSourceID = @ImportSourceID
 
 	-- =======================================================================
 	-- =======================================================================
@@ -1317,6 +1343,24 @@ BEGIN TRY
 
 		-- =======================================================================
 
+		-- Insert new titlenote records into the production database
+		INSERT INTO dbo.BHLTitleNote (TitleID, NoteTypeID, NoteText, NoteSequence)
+		SELECT DISTINCT t.TitleID, nt.NoteTypeID, tmp.NoteText, tmp.NoteSequence
+		FROM	#tmpTitleNote tmp INNER JOIN #tmpTitle tmpT
+					ON tmp.ImportKey = tmpT.ImportKey
+				INNER JOIN dbo.BHLTitle t
+					ON tmpT.ProductionTitleID = t.TitleID
+				INNER JOIN dbo.BHLNoteType nt
+					ON tmp.MarcDataFieldTag = nt.MarcDataFieldTag
+					AND tmp.MarcIndicator1 = nt.MarcIndicator1
+				LEFT JOIN dbo.BHLTitleNote n
+					ON t.TitleID = n.TitleID
+					AND nt.NoteTypeID = n.NoteTypeID
+					AND tmp.NoteText = n.NoteText
+		WHERE	n.TitleNoteID IS NULL
+
+		-- =======================================================================
+
 		-- Insert new Keywords into the production database
 		INSERT	dbo.BHLKeyword (Keyword, CreationDate, LastModifiedDate)
 		SELECT	DISTINCT tmp.Keyword, tmp.ExternalCreationDate, tmp.ExternalLastModifiedDate
@@ -1650,6 +1694,11 @@ BEGIN TRY
 		FROM	dbo.TitleVariant v INNER JOIN #tmpTitleVariant t
 					ON v.TitleVariantID = t.TitleVariantID
 
+		UPDATE	dbo.TitleNote
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.TitleNote n INNER JOIN #tmpTitleNote t
+					ON n.TitleNoteID = t.TitleNoteID
+
 		UPDATE	dbo.TitleLanguage
 		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
 		FROM	dbo.TitleLanguage l INNER JOIN #tmpTitleLanguage t
@@ -1750,6 +1799,7 @@ BEGIN TRY
 	SELECT * FROM #tmpTitleAssociation
 	SELECT * FROM #tmpTitleAssociation_TitleIdentifier
 	SELECT * FROM #tmpTitleVariant
+	SELECT * FROM #tmpTitleNote
 	SELECT * FROM #tmpCreator
 	SELECT * FROM #tmpTitle_Creator
 	SELECT * FROM #tmpItem
@@ -1766,6 +1816,7 @@ BEGIN TRY
 	DROP TABLE #tmpTitleAssociation
 	DROP TABLE #tmpTitleAssociation_TitleIdentifier
 	DROP TABLE #tmpTitleVariant
+	DROP TABLE #tmpTitleNote
 	DROP TABLE #tmpCreator
 	DROP TABLE #tmpTitle_Creator
 	DROP TABLE #tmpItem

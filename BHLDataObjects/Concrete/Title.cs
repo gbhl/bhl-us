@@ -22,6 +22,7 @@ namespace MOBOT.BHL.DataObjects
         private CustomGenericList<TitleAssociation> _titleAssociations = new CustomGenericList<TitleAssociation>();
         private CustomGenericList<TitleVariant> _titleVariants = new CustomGenericList<TitleVariant>();
         private CustomGenericList<TitleLanguage> _titleLanguages = new CustomGenericList<TitleLanguage>();
+        private CustomGenericList<TitleNote> _titleNotes = new CustomGenericList<TitleNote>();
 		private long _rowNum;
 		private string _institutionName;
 
@@ -77,6 +78,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _titleLanguages; }
             set { _titleLanguages = value; }
+        }
+
+        public CustomGenericList<TitleNote> TitleNotes
+        {
+            get { return _titleNotes; }
+            set { _titleNotes = value; }
         }
 
         public string InstitutionName

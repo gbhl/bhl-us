@@ -30,7 +30,7 @@ SELECT 	DISTINCT
 		t.CallNumber,
 		c.Subjects AS Keywords,
 		l.LanguageName,
-		t.Note,
+		ISNULL(t.Note, '') + CASE WHEN ISNULL(t.Note, '') = '' THEN dbo.fnNoteStringForTitle(t.TitleID, '') ELSE dbo.fnNoteStringForTitle(t.TitleID, ' --- ') END AS Note,
 		t.EditionStatement,
 		d.DOIName AS DOI
 FROM	dbo.Title t WITH (NOLOCK) 
@@ -50,7 +50,4 @@ FROM	dbo.Title t WITH (NOLOCK)
 WHERE	PublishReady = 1
 
 END
-
-
-
 

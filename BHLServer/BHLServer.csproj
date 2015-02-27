@@ -102,6 +102,7 @@
     <Compile Include="BHLProvider.NameIdentifier.cs" />
     <Compile Include="BHLProvider.NamePage.cs" />
     <Compile Include="BHLProvider.NameResolved.cs" />
+    <Compile Include="BHLProvider.NoteType.cs" />
     <Compile Include="BHLProvider.Page.cs">
     </Compile>
     <Compile Include="BHLProvider.PageSummary.cs">
@@ -123,6 +124,7 @@
     </Compile>
     <Compile Include="BHLProvider.TitleAuthor.cs" />
     <Compile Include="BHLProvider.TitleKeyword.cs" />
+    <Compile Include="BHLProvider.TitleNote.cs" />
     <Compile Include="BHLProvider.TitleVariant.cs" />
     <Compile Include="BHLProvider.Title_Identifier.cs" />
     <Compile Include="BHLProvider.Vault.cs">

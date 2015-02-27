@@ -220,6 +220,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _Items = value; }
         }
 
+        CustomGenericList<TitleNote> _Notes;
+        public CustomGenericList<TitleNote> Notes
+        {
+            get { return _Notes; }
+            set { _Notes = value; }
+        }
+
 		#endregion Properties
 
         #region ISetValues Members
