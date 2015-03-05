@@ -83,6 +83,12 @@ namespace MOBOT.BHL.AdminWeb
                             titleLanguage.IsNew = true;
                             title.TitleLanguages.Add(titleLanguage);
                         }
+                        CustomGenericList<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
+                        foreach(TitleNote titleNote in titleNotes)
+                        {
+                            titleNote.IsNew = true;
+                            title.TitleNotes.Add(titleNote);
+                        }
                         CustomGenericList<TitleAuthor> titleAuthors = provider.MarcSelectAuthorsByMarcID(marc.MarcID);
                         foreach (TitleAuthor titleAuthor in titleAuthors)
                         {
@@ -190,6 +196,20 @@ namespace MOBOT.BHL.AdminWeb
                             titleLanguage.IsNew = true;
                             titleLanguage.TitleID = title.TitleID;
                             title.TitleLanguages.Add(titleLanguage);
+                        }
+
+                        // Replace all notes associated with this title
+                        foreach(TitleNote titleNote in title.TitleNotes)
+                        {
+                            titleNote.IsDeleted = true;
+                        }
+
+                        CustomGenericList<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
+                        foreach (TitleNote titleNote in titleNotes)
+                        {
+                            titleNote.IsNew = true;
+                            titleNote.TitleID = title.TitleID;
+                            title.TitleNotes.Add(titleNote);
                         }
 
                         // Replace all title authors associated with this title
