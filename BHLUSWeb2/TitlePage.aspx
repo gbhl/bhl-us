@@ -979,6 +979,10 @@
                 }
             }
 
+            // Update the Altmetric badge
+            $(".altmetric-embed").attr("data-uri", "http://www.biodiversitylibrary.org/item/" + "<%: CurrentItemID %>");
+            _altmetric_embed_init();
+
             // Update page URL and names
             $("#currentpageURL").text("http://biodiversitylibrary.org/page/" + pages[index].PageID);
             $("#currentpageURL").attr("href", "http://biodiversitylibrary.org/page/" + pages[index].PageID);

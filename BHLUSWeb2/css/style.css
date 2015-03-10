@@ -196,7 +196,7 @@ header nav
 header nav a, footer nav a
 {
     color:#3e5f82;
-	margin:0 0 0 30px;
+	margin:0 0 0 3px;
 	text-decoration:none;
 }
 header nav a:hover
@@ -226,6 +226,31 @@ a.ExtLink
     background-clip: border-box;
     background-color: transparent;
 }
+#altmetricbadge
+{
+    margin-top:38px;
+    margin-left:10px;
+    float:right
+}
+#altmetricbadge img
+{
+    height:32px;
+    width:32px;
+}
+#altmetricbadgebook
+{
+    margin-top:8px;
+    float:right
+}
+#altmetricbadgebook img
+{
+    height:32px;
+    width:32px;
+}
+.altmetric_container
+{
+    color:#000;
+}
 #headersocial
 {
     margin-top:38px;
@@ -237,7 +262,7 @@ a.ExtLink
 }
 #headersocialbook
 {
-    padding-left:10%;
+    padding-left: 40px;
     line-height: 50px;
     float:right;
     margin-top:18px;
@@ -411,6 +436,26 @@ background: #fcfcfc;
     position: absolute;
     top: 5px;
     left: 10px;
+}
+.socialcolumn .community
+{
+    padding:7px 15px 7px 15px;
+    border:1px solid #3e5d77;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius: 3px;
+    /*Final size 158px x 32px */
+    height: 16px;
+    width: 155px;
+    font: 14px Georgia;
+    color:#fff;
+    background:#5989b1;
+    background:-moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+	text-decoration:none;
+	display:block;
+	position: relative; 
 }
 .socialcolumn h3
 {
@@ -1221,7 +1266,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	text-decoration:none;
 	display:block;
 }
-.featurebutton-home:hover, .socialcolumn .subscribe:hover
+.featurebutton-home:hover, .socialcolumn .subscribe:hover, .socialcolumn .community:hover
 {
     background:-moz-linear-gradient(top, #507ea4 0%, #2c5b83 100%);
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#507ea4), color-stop(100%,#2c5b83));
