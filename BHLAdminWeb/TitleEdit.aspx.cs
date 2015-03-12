@@ -262,6 +262,9 @@ namespace MOBOT.BHL.AdminWeb
             subjectsList.DataSource = title.TitleKeywords;
             subjectsList.DataBind();
 
+            notesList.DataSource = title.TitleNotes;
+            notesList.DataBind();
+
             identifiersList.DataSource = title.TitleIdentifiers;
             identifiersList.DataBind();
 
@@ -422,6 +425,96 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion TitleKeyword methods
+
+        #region TitleNote methods
+
+        private void bindNotesData()
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+
+            // filter out deleted items
+            CustomGenericList<TitleNote> titleNotes = new CustomGenericList<TitleNote>();
+            foreach (TitleNote tn in title.TitleNotes)
+            {
+                if (tn.IsDeleted == false)
+                {
+                    titleNotes.Add(tn);
+                }
+            }
+
+            TitleNoteComparer comp = new TitleNoteComparer(TitleNoteComparer.CompareEnum.NoteSequence, _sortOrder);
+            titleNotes.Sort(comp);
+            notesList.DataSource = titleNotes;
+            notesList.DataBind();
+        }
+
+        private TitleNote findTitleNote(CustomGenericList<TitleNote> titleNotes,
+            int titleNoteId, int noteTypeID, string noteText)
+        {
+            foreach (TitleNote tn in titleNotes)
+            {
+                if (tn.IsDeleted)
+                {
+                    continue;
+                }
+                if (titleNoteId == tn.TitleNoteID &&
+                    noteTypeID == tn.NoteTypeID &&
+                    noteText == tn.NoteText)
+                {
+                    return tn;
+                }
+            }
+
+            return null;
+        }
+
+        protected short? GetMaxNoteSequence()
+        {
+            short? maxSeq = 0;
+
+            Title title = (Title)Session["Title" + idLabel.Text];
+            foreach (TitleNote titleNote in title.TitleNotes)
+            {
+                if (!titleNote.IsDeleted)
+                {
+                    if ((titleNote.NoteSequence ?? 0) > maxSeq) maxSeq = titleNote.NoteSequence;
+                }
+            }
+
+            return maxSeq;
+        }
+
+        CustomGenericList<NoteType> _noteTypes = null;
+        protected CustomGenericList<NoteType> GetNoteTypes()
+        {
+            BHLProvider bp = new BHLProvider();
+            _noteTypes = bp.NoteTypeSelectAll();
+
+            return _noteTypes;
+        }
+
+        protected int GetNoteTypeIndex(object dataItem)
+        {
+            string noteTypeIdString = DataBinder.Eval(dataItem, "NoteTypeID").ToString();
+
+            if (!noteTypeIdString.Equals("0"))
+            {
+                int noteTypeId = int.Parse(noteTypeIdString);
+                int ix = 0;
+                foreach (NoteType noteType in _noteTypes)
+                {
+                    if (noteType.NoteTypeID == noteTypeId)
+                    {
+                        return ix;
+                    }
+                    ix++;
+                }
+            }
+
+            return 0;
+        }
+
+        #endregion
 
         #region TitleVariant methods
 
@@ -940,6 +1033,120 @@ namespace MOBOT.BHL.AdminWeb
 
         #endregion TitleKeyword event handlers
 
+        #region TitleNote event handlers
+
+        protected void notesList_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            notesList.EditIndex = e.NewEditIndex;
+            bindNotesData();
+        }
+
+        protected void notesList_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = notesList.Rows[e.RowIndex];
+
+            if (row != null)
+            {
+                TextBox txtNoteText = row.FindControl("txtNoteText") as TextBox;
+                TextBox txtNoteSequence = row.FindControl("txtNoteSequence") as TextBox;
+                DropDownList ddlNoteType = row.FindControl("ddlNoteType") as DropDownList;
+                if (txtNoteText != null)
+                {
+                    short noteSequence = 0;
+                    Title title = (Title)Session["Title" + idLabel.Text];
+
+                    String noteText = txtNoteText.Text;
+                    String noteSequenceText = txtNoteSequence.Text;
+                    if (!short.TryParse(noteSequenceText, out noteSequence)) noteSequence = 0;
+                    int? noteTypeID = Convert.ToInt32(ddlNoteType.Text);
+
+                    TitleNote titleNote = findTitleNote(title.TitleNotes,
+                        (int)notesList.DataKeys[e.RowIndex].Values[0],
+                        (int)notesList.DataKeys[e.RowIndex].Values[1],
+                        notesList.DataKeys[e.RowIndex].Values[2].ToString());
+
+                    // Update the sequences of all notes if necessary
+                    short oldNoteSeq = titleNote.NoteSequence ?? 0;
+
+                    // If sequence has been decreased
+                    if (noteSequence < oldNoteSeq)
+                    {
+                        // Increment all note sequences between the old and new sequence values
+                        foreach (TitleNote note in title.TitleNotes)
+                        {
+                            if (note.NoteSequence >= noteSequence && note.NoteSequence < oldNoteSeq) note.NoteSequence++;
+                        }
+                    }
+
+                    // If sequence has been increased
+                    if (noteSequence > oldNoteSeq)
+                    {
+                        // Decrement all note sequences between the old and new sequence values
+                        foreach (TitleNote note in title.TitleNotes)
+                        {
+                            if (note.NoteSequence <= noteSequence && note.NoteSequence > oldNoteSeq)
+                            {
+                                note.NoteSequence--;
+                            }
+                        }
+                    }
+
+                    // Update the note being edited
+                    NoteType noteType = new BHLProvider().NoteTypeSelectAuto(Convert.ToInt32(ddlNoteType.SelectedValue));
+
+                    titleNote.TitleID = title.TitleID;
+                    titleNote.NoteTypeID = (noteTypeID == 0 ? null : noteTypeID);
+                    titleNote.NoteText = noteText;
+                    titleNote.NoteSequence = noteSequence;
+                    titleNote.NoteTypeName = noteType.NoteTypeName;
+                    titleNote.NoteTypeDisplay = noteType.NoteTypeDisplay;
+                    titleNote.MarcDataFieldTag = noteType.MarcDataFieldTag;
+                    titleNote.MarcIndicator1 = noteType.MarcIndicator1;
+                }
+            }
+
+            notesList.EditIndex = -1;
+            bindNotesData();        
+        }
+
+        protected void notesList_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            notesList.EditIndex = -1;
+            bindNotesData();
+        }
+
+        protected void notesList_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("RemoveButton"))
+            {
+                int rowNum = int.Parse(e.CommandArgument.ToString());
+                Title title = (Title)Session["Title" + idLabel.Text];
+
+                TitleNote titleNote = findTitleNote(title.TitleNotes,
+                    (int)notesList.DataKeys[rowNum].Values[0],
+                    (int)notesList.DataKeys[rowNum].Values[1],
+                    notesList.DataKeys[rowNum].Values[2].ToString());
+
+                titleNote.IsDeleted = true;
+                bindNotesData();
+            }
+        }
+
+        protected void addTitleNoteButton_Click(object sender, EventArgs e)
+        {
+            Title title = (Title)Session["Title" + idLabel.Text];
+            TitleNote titleNote = new TitleNote();
+            titleNote.TitleID = title.TitleID;
+            titleNote.NoteTypeID = 0;
+            titleNote.NoteSequence = GetMaxNoteSequence();
+            titleNote.NoteSequence++;
+            title.TitleNotes.Add(titleNote);
+            notesList.EditIndex = notesList.Rows.Count;
+            bindNotesData();
+        }
+
+        #endregion TitleNote event handlers
+
         #region TitleVariant event handlers
 
         protected void variantsList_RowEditing(object sender, GridViewEditEventArgs e)
@@ -1354,16 +1561,6 @@ namespace MOBOT.BHL.AdminWeb
 
                             // Change the old sequence value to the new sequence value
                             changedItem.ItemSequence = newItemSeq;
-                            /*
-                            foreach ( TitleItem item in title.TitleItems )
-                            {
-                                if ( item.ItemID == itemId )
-                                {
-                                    item.ItemSequence = newItemSeq;
-                                    break;
-                                }
-                            }
-                            */
                         }
 					}
 				}

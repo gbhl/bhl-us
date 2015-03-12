@@ -494,6 +494,55 @@
 		</fieldset>
 		<br />
 		<fieldset>
+			<legend class="dataHeader">Notes (MARC 5XX)</legend>
+			<asp:GridView ID="notesList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
+			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
+				Width="1000px" CssClass="boxTable" OnRowCancelingEdit="notesList_RowCancelingEdit" OnRowEditing="notesList_RowEditing"
+				OnRowUpdating="notesList_RowUpdating" OnRowCommand="notesList_RowCommand" DataKeyNames="TitleNoteID,NoteTypeID,NoteText">
+				<Columns>
+					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+					<asp:TemplateField HeaderText="Type" ItemStyle-Width="300px">
+						<ItemTemplate>
+							<%# Eval( "NoteTypeNameExtended" ) %>
+						</ItemTemplate>
+						<EditItemTemplate>
+							<asp:DropDownList ID="ddlNoteType" runat="server" DataTextField="NoteTypeNameExtended" DataValueField="NoteTypeID"
+								DataSource="<%# GetNoteTypes() %>" SelectedIndex="<%# GetNoteTypeIndex( Container.DataItem ) %>" />
+						</EditItemTemplate>
+					</asp:TemplateField>
+                    <asp:TemplateField HeaderText="Note" ItemStyle-Width="225px">
+                        <ItemTemplate>
+                            <%# Eval("NoteText") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+						    <asp:TextBox ID="txtNoteText" TextMode="MultiLine" Rows="3" runat="server" Text='<%# Eval( "NoteText") %>' Width="225" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Seq #" ItemStyle-Width="50px">
+                        <ItemTemplate>
+                            <%# Eval("NoteSequence") %>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+						    <asp:TextBox ID="txtNoteSequence" runat="server" Text='<%# Eval( "NoteSequence") %>' Width="50"/>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+					<asp:TemplateField ItemStyle-Width="130px">
+						<ItemTemplate>
+							<asp:LinkButton ID="editTitleNoteButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
+						</ItemTemplate>
+						<EditItemTemplate>
+							<asp:LinkButton ID="updateTitleNoteButton" runat="server" CommandName="Update" Text="Update"></asp:LinkButton>
+							<asp:LinkButton ID="cancelTitleNoteButton" runat="server" CommandName="Cancel" Text="Cancel"></asp:LinkButton>
+						</EditItemTemplate>
+					</asp:TemplateField>
+				</Columns>
+				<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
+			</asp:GridView>
+			<br />
+			<asp:Button ID="addTitleNoteButton" runat="server" Text="Add Note" OnClick="addTitleNoteButton_Click" />
+		</fieldset>
+		<br />
+		<fieldset>
 			<legend class="dataHeader">Title Identifiers (various MARC fields)</legend>
 			<asp:GridView ID="identifiersList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
