@@ -39,6 +39,11 @@
 							<a href="/LanguageEdit.aspx">Languages</a>
 						</td>
 					</tr>
+                    <tr>
+                        <td align="center" runat="server" id="tdNoteTypes">
+                            <a href="/NoteTypeEdit.aspx">Note Types</a>
+                        </td>
+                    </tr>
 					<tr>
 						<td align="center" runat="server" id="tdPageTypes">
 							<a href="/PageTypeEdit.aspx">Page Types</a>
