@@ -178,6 +178,7 @@ OR		SUBSTRING(REPLACE(SubFieldValue, ' ', ''), 1, 3) LIKE 'QE7%'
 OR		SUBSTRING(REPLACE(SubFieldValue, ' ', ''), 1, 3) LIKE 'QE8%'
 OR		SUBSTRING(REPLACE(SubFieldValue, ' ', ''), 1, 3) LIKE 'QE9%')
 AND		DataFieldTag IN ('050', '090')
+AND		SubFieldValue <> 'SHELVED BY TITLE'
 
 -- Look for items in the appropriate categories (Dewey Numbers)
 INSERT INTO #tmpItem2
@@ -615,4 +616,3 @@ DROP TABLE #tmpByCategory
 DROP TABLE #tmpBySubject
 
 END
-
