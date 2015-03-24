@@ -22,7 +22,7 @@
 <div id="intro-home" class="column-wrap">
 
 <p class="intro-home-tagline">Inspiring discovery through free access to biodiversity knowledge.</p>
-<p>The Biodiversity Heritage Library works collaboratively to make biodiversity literature openly<br />available to the world as part of a global biodiversity community.</p>
+<p>The Biodiversity Heritage Library improves research methodology by collaboratively making biodiversity literature openly available to the world as part of a global biodiversity community.</p>
 <p>BHL also serves as the foundational literature component of the Encyclopedia of Life (<a href="http://www.eol.org" target="_blank" title="EOL"><img src="/images/eol_11px.png" /></a>).</p>
 
 </div>
