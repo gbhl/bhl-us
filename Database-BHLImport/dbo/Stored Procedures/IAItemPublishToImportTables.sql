@@ -616,7 +616,7 @@ BEGIN TRY
 	INSERT INTO #tmpTitleTag
 	SELECT	t.ItemID,
 			0,
-			m.SubFieldValue,
+			SUBSTRING(m.SubFieldValue, 1, 200),
 			m.DataFieldTag,
 			m.Code
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
