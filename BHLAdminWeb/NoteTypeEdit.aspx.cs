@@ -61,11 +61,6 @@ namespace MOBOT.BHL.AdminWeb
 				flag = true;
 				errorControl.AddErrorText( "Note Type Name is missing" );
 			}
-			if ( noteTypeDisplayTextBox.Text.Trim().Length == 0 )
-			{
-				flag = true;
-				errorControl.AddErrorText( "Note Type Display is missing" );
-			}
 
 			errorControl.Visible = flag;
 
