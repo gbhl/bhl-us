@@ -101,6 +101,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("collectionbulkadd")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
             else if (path.Contains("institutionedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
             else if (path.Contains("languageedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
+            else if (path.Contains("notetypeedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
             else if (path.Contains("pagetypeedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
             else if (path.Contains("pdfedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);
             else if (path.Contains("segmenttypeedit")) authorized = IsUserAuthorized(request, SecurityFunction.BHLAdminUserBasic);

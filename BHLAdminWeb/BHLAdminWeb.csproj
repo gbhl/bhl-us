@@ -678,6 +678,13 @@
     <Compile Include="TitleSearch.aspx.designer.cs">
       <DependentUpon>TitleSearch.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NoteTypeEdit.aspx.cs">
+      <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoteTypeEdit.aspx.designer.cs">
+      <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="VaultEdit.aspx.cs">
       <DependentUpon>VaultEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -965,6 +972,7 @@
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />
     <Content Include="styles\ui.jqdatatable.css" />
     <Content Include="styles\ui.jqgrid.css" />
+    <Content Include="NoteTypeEdit.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

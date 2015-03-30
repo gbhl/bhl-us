@@ -159,6 +159,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdCollections.InnerHtml = GetMenuText(tdCollections.InnerHtml);
                 tdInstitutions.InnerHtml = GetMenuText(tdInstitutions.InnerHtml);
                 tdLanguages.InnerHtml = GetMenuText(tdLanguages.InnerHtml);
+                tdNoteTypes.InnerHtml = GetMenuText(tdNoteTypes.InnerHtml);
                 tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 tdPDFRequests.InnerHtml = GetMenuText(tdPDFRequests.InnerHtml);
                 tdSegmentTypes.InnerHtml = GetMenuText(tdSegmentTypes.InnerHtml);
