@@ -130,7 +130,7 @@ namespace MOBOT.BHLImport.Server
             {
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.Method = "GET";
-                req.Timeout = 60000;    // 60 seconds
+                req.Timeout = 300000;    // 5 minutes
                 if (modifiedSince != null) req.IfModifiedSince = (DateTime)modifiedSince;
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                 lastModified = resp.LastModified;
