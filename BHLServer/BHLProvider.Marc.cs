@@ -44,6 +44,11 @@ namespace MOBOT.BHL.Server
             return new MarcDAL().MarcSelectTitleKeywordsByMarcID(null, null, marcID);
         }
 
+        public CustomGenericList<TitleNote> MarcSelectTitleNotesByMarcID(int marcID)
+        {
+            return new MarcDAL().MarcSelectTitleNotesByMarcID(null, null, marcID);
+        }
+
         public CustomGenericList<TitleLanguage> MarcSelectTitleLanguagesByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectTitleLanguagesByMarcID(null, null, marcID);

@@ -190,6 +190,15 @@ BEGIN TRY
 		[PartName] [nvarchar](255) NOT NULL DEFAULT('')
 		)
 
+	CREATE TABLE #tmpTitleNote (
+		[ItemID] int NOT NULL,
+		[MARCDataFieldID] int NOT NULL,
+		[NoteText] nvarchar(max) NOT NULL,
+		[MarcDataFieldTag] nvarchar(5) NULL,
+		[MarcIndicator1] nvarchar(5) NULL,
+		[NoteSequence] smallint NULL,
+	)
+
 	CREATE TABLE #tmpTitleLanguage(
 		[ItemID] [int] NOT NULL,
 		[LanguageCode] [nvarchar](10) NOT NULL DEFAULT('')
@@ -643,7 +652,48 @@ BEGIN TRY
 		FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
 					ON t.ItemID = m.ItemID
 					AND m.DCElementName = 'subject'
-	END
+	END;
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Title Notes
+
+	WITH basetable AS
+	(
+		-- Select all note fields, excluding those with a code '5'
+		SELECT	ROW_NUMBER() OVER (PARTITION BY MarcDataFieldID ORDER BY t.ItemID, MarcDataFieldID) AS RowNum,
+				COUNT(*) OVER (PARTITION BY MarcDataFieldID) NumRows,
+				t.ItemID, MarcDataFieldID, MarcSubFieldID, DataFieldTag, Indicator1, Code, 
+				CAST(SubFieldValue AS NVARCHAR(MAX)) SubFieldValue
+		FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m ON t.ItemID = m.ItemID
+		WHERE	m.DataFieldTag IN ('500','502','505','510','515','520','525','545','546','547','550','580')
+		AND		m.SubFieldValue <> ''
+		AND		m.MarcDataFieldID NOT IN (
+					SELECT	DISTINCT v.MarcDataFieldID
+					FROM	dbo.vwIAMarcDataField v INNER JOIN #tmpTitle tt ON v.ItemID = tt.ItemID
+					WHERE	v.DataFieldTag IN ('500','502','505','510','515','520','525','545','546','547','550','580')
+					AND		v.Code = '5'
+					)
+	),
+	rCTE AS (
+		SELECT	RowNum, NumRows, ItemID, MarcDataFieldID, MarcSubFieldID, DataFieldTag, Indicator1, SubFieldValue
+		FROM	basetable
+		WHERE	RowNum = 1
+		UNION ALL
+		SELECT	r.RowNum + 1, b.NumRows, r.ItemID, r.MarcDataFieldID, r.MarcSubFieldID, r.DataFieldTag, 
+				r.Indicator1, r.SubFieldValue + ' | ' + b.SubFieldValue AS SubFieldValue
+		FROM	basetable b 
+				INNER JOIN rCTE r ON b.ItemID = r.ItemID
+				AND b.MarcDataFieldID = r.MarcDataFieldID
+				AND b.RowNum = r.RowNum + 1
+	)
+	INSERT #tmpTitleNote
+	SELECT	ItemID, MarcDataFieldID, SubFieldValue AS NoteText, DataFieldTag, Indicator1, 
+			ROW_NUMBER() OVER (PARTITION BY ItemID ORDER BY MarcSubFieldID) AS NoteSequence
+	FROM	rCTE
+	WHERE	NumRows = RowNum
+	ORDER BY ItemID, MarcDataFieldID, RowNum
 
 	-- =======================================================================
 	-- =======================================================================
@@ -1559,6 +1609,15 @@ BEGIN TRY
 
 		-- =======================================================================
 
+		-- Insert new title notes into the import tables
+		INSERT INTO dbo.TitleNote (NoteText, ImportStatusID, ImportSourceID,
+				MarcDataFieldTag, MarcIndicator1, NoteSequence, ImportKey)
+		SELECT	LTRIM(RTRIM(NoteText)), 10, @ImportSourceID, MarcDataFieldTag, 
+				MarcIndicator1, NoteSequence, CONVERT(nvarchar(50), ItemID)
+		FROM	#tmpTitleNote
+
+		-- =======================================================================
+
 		-- Insert new title identifiers into the import tables
 		INSERT INTO dbo.Title_TitleIdentifier (ImportStatusID, ImportSourceID,
 			IdentifierName, IdentifierValue, ImportKey)
@@ -1790,6 +1849,7 @@ BEGIN TRY
 	SELECT * FROM #tmpTitleIdentifier
 	SELECT * FROM #tmpTitleAssociation
 	SELECT * FROM #tmpTitleVariant
+	SELECT * FROM #tmpTitleNote
 	SELECT * FROM #tmpCreator
 	SELECT * FROM #tmpItem ORDER BY MARCBIBId, ItemSequence
 	SELECT * FROM #tmpPage
@@ -1803,6 +1863,7 @@ BEGIN TRY
 	DROP TABLE #tmpTitleIdentifier
 	DROP TABLE #tmpTitleAssociation
 	DROP TABLE #tmpTitleVariant
+	DROP TABLE #tmpTitleNote
 	DROP TABLE #tmpCreator
 	DROP TABLE #tmpItem
 	DROP TABLE #tmpPage

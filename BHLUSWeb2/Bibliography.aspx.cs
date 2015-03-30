@@ -24,6 +24,7 @@ namespace MOBOT.BHL.Web2
         protected IList<TitleAssociation> TitleAssociations { get; set; }
         protected CustomGenericList<TitleKeyword> TitleKeywords { get; set; }
         protected IList<Title_Identifier> TitleIdentifiers { get; set; }
+        protected IList<TitleNote> TitleNotes { get; set; }
         protected IList<Author> Authors { get; set; }
         protected IList<Author> AdditionalAuthors { get; set; }
         protected IList<Author> AuthorsDetail { get; set; }
@@ -86,6 +87,10 @@ namespace MOBOT.BHL.Web2
             {
                 Response.Redirect("~/titlenotfound");
             }
+            if (Items.Count == 0)
+            {
+                Response.Redirect("~/titlenotfound");
+            }
             else
             {
                 Barcode = Items[0].BarCode;
@@ -122,6 +127,7 @@ namespace MOBOT.BHL.Web2
             TitleIdentifiers = bhlProvider.Title_IdentifierSelectForDisplayByTitleID(titleId).ToList();
             TitleVariants = bhlProvider.TitleVariantSelectByTitleID(titleId).ToList();
             TitleAssociations = bhlProvider.TitleAssociationSelectByTitleId(titleId, true).ToList();
+            TitleNotes = bhlProvider.TitleNoteSelectByTitleID(titleId).ToList();
             Collections = bhlProvider.CollectionSelectAllForTitle(titleId).ToList();
             if (!string.IsNullOrEmpty(BhlTitle.LanguageCode)) LanguageName = bhlProvider.LanguageSelectAuto(BhlTitle.LanguageCode).LanguageName;
 

@@ -42,6 +42,8 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Language', 'LanguageCode', NULL, 
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'BibliographicLevel', 'BibliographicLevelID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleVariantType', 'TitleVariantTypeID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociationType', 'TitleAssociationTypeID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NoteType', 'NoteTypeID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleNote', 'TitleNoteID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOI', 'DOIID', NULL, NULL, 'I'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOI', 'DOIID', NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIEntityType', 'DOIEntityTypeID', NULL, NULL

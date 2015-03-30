@@ -1063,6 +1063,7 @@
     <None Include="dbo\Stored Procedures\EntityCountSelectLatest.sql" />
     <None Include="import\Functions\fnAuthorStringForImportRecord.sql" />
     <None Include="import\Functions\fnKeywordStringForImportRecord.sql" />
+    <None Include="Data\dbo.NoteType.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1088,5 +1089,27 @@
     <None Include="dbo\Stored Procedures\TitleSelectByInstitutionAndStartsWithout.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWith.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByInstitutionAndStartsWithout.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\NoteType.sql" />
+    <None Include="dbo\Tables\TitleNote.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\TitleNoteUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\NoteTypeDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\NoteTypeInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\NoteTypeSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\NoteTypeUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleNoteDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleNoteInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleNoteSelectAuto.sql" />
+    <None Include="Data\dbo.TitleNote.Table.sql" />
+    <None Include="dbo\Stored Procedures\TitleNoteSelectByTitleID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnNoteStringForTitle.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\NoteTypeSelectAll.sql" />
   </ItemGroup>
 </Project>

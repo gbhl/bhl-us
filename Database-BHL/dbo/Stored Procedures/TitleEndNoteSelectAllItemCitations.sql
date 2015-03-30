@@ -32,7 +32,7 @@ SELECT 	t.TitleID,
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber ELSE i.CallNumber END AS CallNumber,
 		c.Subjects AS Keywords,
 		l.LanguageName,
-		i.Note
+		ISNULL(i.Note, '') + CASE WHEN ISNULL(i.Note, '') = '' THEN dbo.fnNoteStringForTitle(t.TitleID, '') ELSE dbo.fnNoteStringForTitle(t.TitleID, ' --- ') END AS Note
 FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK)
 			ON t.TitleID = isbn.TitleID
@@ -51,6 +51,4 @@ FROM	dbo.Title t WITH (NOLOCK)
 WHERE	PublishReady = 1
 
 END
-
-
 

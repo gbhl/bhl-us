@@ -138,6 +138,7 @@
     <Compile Include="Generated\NameResolvedDAL.Auto.cs" />
     <Compile Include="Generated\NameSegmentDAL.Auto.cs" />
     <Compile Include="Generated\NameSourceDAL.Auto.cs" />
+    <Compile Include="Generated\NoteTypeDAL.Auto.cs" />
     <Compile Include="Generated\PageAnnotationDAL.Auto.cs" />
     <Compile Include="Generated\PageFlickrDAL.Auto.cs" />
     <Compile Include="Generated\PDFDAL.Auto.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Generated\TitleCollectionDAL.Auto.cs" />
     <Compile Include="Generated\TitleKeywordDAL.Auto.cs" />
     <Compile Include="Generated\TitleLanguageDAL.Auto.cs" />
+    <Compile Include="Generated\TitleNoteDAL.Auto.cs" />
     <Compile Include="Generated\TitleVariantDAL.Auto.cs" />
     <Compile Include="Generated\Title_IdentifierDAL.Auto.cs" />
     <Compile Include="IdentifierDAL.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="Interfaces\IImportRecordErrorLogDAL.Auto.cs" />
     <Compile Include="Interfaces\IImportRecordKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IImportRecordStatusDAL.Auto.cs" />
+    <Compile Include="Interfaces\INoteTypeDAL.Auto.cs" />
+    <Compile Include="Interfaces\ITitleNoteDAL.Auto.cs" />
     <Compile Include="ItemCOinSDAL.cs" />
     <Compile Include="ItemCollectionDAL.cs" />
     <Compile Include="ItemLanguageDAL.cs" />
@@ -193,6 +197,7 @@
     <Compile Include="NameResolvedDAL.cs" />
     <Compile Include="NameSegmentDAL.cs" />
     <Compile Include="NameSourceDAL.cs" />
+    <Compile Include="NoteTypeDAL.cs" />
     <Compile Include="OAIIdentifierDAL.cs" />
     <Compile Include="OpenUrlCitationDAL.cs" />
     <Compile Include="Generated\TitleAssociationDAL.Auto.cs" />
@@ -226,6 +231,7 @@
     <Compile Include="TitleItemDAL.cs" />
     <Compile Include="TitleKeywordDAL.cs" />
     <Compile Include="TitleLanguageDAL.cs" />
+    <Compile Include="TitleNoteDAL.cs" />
     <Compile Include="TitleVariantDAL.cs" />
     <Compile Include="Title_IdentifierDAL.cs" />
     <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />

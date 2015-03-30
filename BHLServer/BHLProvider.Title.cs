@@ -118,6 +118,8 @@ namespace MOBOT.BHL.Server
             CustomGenericList<TitleBibTeX> citations = this.TitleBibTeXSelectForTitleID(titleID);
             foreach (TitleBibTeX citation in citations)
             {
+                CustomGenericList<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);
+
                 String volume = citation.Volume;
                 String copyrightStatus = citation.CopyrightStatus;
                 String url = citation.Url;
@@ -130,6 +132,11 @@ namespace MOBOT.BHL.Server
                 if (volume != String.Empty) elements.Add(BibTeXRefElementName.VOLUME, volume);
                 if (copyrightStatus != String.Empty) elements.Add(BibTeXRefElementName.COPYRIGHT, copyrightStatus);
                 if (url != String.Empty) elements.Add(BibTeXRefElementName.URL, url);
+                foreach (TitleNote titleNote in titleNotes)
+                {
+                    if (note != string.Empty) note += " --- ";
+                    note += titleNote.NoteText;
+                }
                 if (note != String.Empty) elements.Add(BibTeXRefElementName.NOTE, note);
                 elements.Add(BibTeXRefElementName.PUBLISHER, citation.Publisher);
                 elements.Add(BibTeXRefElementName.AUTHOR, citation.Authors.Replace("|", " and "));
@@ -149,6 +156,8 @@ namespace MOBOT.BHL.Server
             CustomGenericList<TitleEndNote> citations = this.TitleEndNoteSelectForTitleID(titleID);
             foreach (TitleEndNote citation in citations)
             {
+                CustomGenericList<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);
+
                 String type = citation.PublicationType;
                 String authors = citation.Authors;
                 String year = citation.Year;
@@ -182,6 +191,11 @@ namespace MOBOT.BHL.Server
                 if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
                 if (keywords != String.Empty) elements.Add(EndNoteRefElementName.KEYWORDS, keywords);
                 if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
+                foreach (TitleNote titleNote in titleNotes)
+                {
+                    if (note != string.Empty) note += " --- ";
+                    note += titleNote.NoteText;
+                }
                 if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note);
                 if (edition != String.Empty) elements.Add(EndNoteRefElementName.EDITION, edition);
                 if (url != String.Empty) elements.Add(EndNoteRefElementName.URL, url);

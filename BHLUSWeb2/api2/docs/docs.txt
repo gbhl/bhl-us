@@ -505,6 +505,9 @@ TitleIdentifier/IdentifierValue	Value of an identifier assigned to the title			L
 																							070 (IdentifierName = nal)
 																							060 (IdentifierName = nlm)
 																							030 (IdentifierName = coden)
+TitleNote/NoteText				Text of a note associated with a title					Various 5XX fields.
+TitleNote/NoteSequence			Numerical position of the note							NA
+TitleNote/NoteTypeName			Description of the note									NA
 Item/ItemID						BHL identifier for the item								NA
 Item/PrimaryTitleID				BHL identifier for the title related to the item		NA
 Item/ThumbnailPageID			BHL identifier of the page that produces the item		NA
@@ -634,6 +637,11 @@ Variant/Title					The variant title										Location depends on the type
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+March 24, 2015 - version 2.5.2
+
+- Enhancement: Added TitleNotes to the GetTitleMetadata response
+- Enhancement: Added TitleNotes to the GetTitleByIdentifier response
 
 January 24, 2014 - version 2.5.1
 

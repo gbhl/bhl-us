@@ -83,6 +83,7 @@
     <Compile Include="Title.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TitleNote.cs" />
     <Compile Include="TitleIdentifier.cs">
       <SubType>Code</SubType>
     </Compile>

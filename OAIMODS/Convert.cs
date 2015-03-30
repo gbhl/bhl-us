@@ -400,6 +400,9 @@ namespace MOBOT.BHL.OAIMODS
             // Language
             sb.Append(this.GetLanguageElement());
 
+            // Note
+            sb.Append(this.GetNoteElement());
+
             // Subject
             sb.Append(this.GetSubjectElement());
 

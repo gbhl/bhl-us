@@ -710,6 +710,12 @@ namespace MOBOT.BHL.OAI2
                     this.Subjects.Add(new KeyValuePair<string, string>(subject.MarcDataFieldTag + "|" + subject.MarcSubFieldCode, subject.Keyword));
                 }
 
+                CustomGenericList<TitleNote> notes = provider.TitleNoteSelectByTitleID(title.TitleID);
+                foreach(TitleNote note in notes)
+                {
+                    this.Notes.Add(new KeyValuePair<string, string>(this.GetNoteType(note.MarcDataFieldTag), note.NoteText));
+                }
+
                 CustomGenericList<DataObjects.Author> authors = provider.AuthorSelectByTitleId(title.TitleID);
                 foreach (DataObjects.Author author in authors)
                 {
@@ -1025,6 +1031,44 @@ namespace MOBOT.BHL.OAI2
                     record.Nlm = identifierValue;
                     break;
             }
+        }
+
+        /// <summary>
+        /// Return the MODS note type for the specified MARC tag
+        /// </summary>
+        /// <param name="marcTag"></param>
+        /// <returns></returns>
+        private string GetNoteType(string marcTag)
+        {
+            string noteType = string.Empty;
+
+            switch (marcTag)
+            {
+                case "502": noteType = "thesis"; break;
+                case "504": noteType = "biography"; break;
+                case "506": noteType = "reproduction"; break;
+                case "508": noteType = "creation/production credits"; break;
+                case "510": noteType = "citation/reference"; break;
+                case "511": noteType = "performers"; break;
+                case "515": noteType = "numbering"; break;
+                case "524": noteType = "preferred citation"; break;
+                case "530": noteType = "additional physical form"; break;
+                case "534": noteType = "original version"; break;
+                case "535": noteType = "original location"; break;
+                case "536": noteType = "funding"; break;
+                case "538": noteType = "system details"; break;
+                case "541": noteType = "acquisition"; break;
+                case "545": noteType = "biographical/historical"; break;
+                case "546": noteType = "language"; break;
+                case "561": noteType = "ownership"; break;
+                case "562": noteType = "version identification"; break;
+                case "581": noteType = "publications"; break;
+                case "583": noteType = "action"; break;
+                case "585": noteType = "exhibitions"; break;
+                default: break;
+            }
+
+            return noteType;
         }
 
         #endregion Methods
