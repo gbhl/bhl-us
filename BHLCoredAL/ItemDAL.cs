@@ -567,5 +567,23 @@ namespace MOBOT.BHL.DAL
                 return (int)CustomSqlHelper.ExecuteScalar(command);
             }
         }
+
+        public CustomGenericList<Item> ItemSelectBarcodes(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ExportIAIdentifiers", connection, transaction))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> barcodes = helper.ExecuteReader(command);
+                    return barcodes;
+                }
+            }
+        }
+
+
     }
 }

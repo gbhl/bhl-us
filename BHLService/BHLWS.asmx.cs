@@ -203,6 +203,20 @@ namespace MOBOT.BHL.WebService
             return bhlServer.ItemSelectRecentlyChanged(startDate);
         }
 
+        [WebMethod]
+        public List<string> ExportIAIdentifiers()
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            CustomGenericList<Item> items = bhlServer.ItemSelectBarcodes();
+
+            List<string> barcodes = new List<string>();
+            foreach(Item item in items)
+            {
+                barcodes.Add(item.BarCode);
+            }
+            return barcodes;
+        }
+
         #endregion Item Methods
 
         #region Segment Methods

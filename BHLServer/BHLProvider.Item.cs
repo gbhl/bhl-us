@@ -199,5 +199,10 @@ namespace MOBOT.BHL.Server
         {
             return new ItemDAL().ItemCountByInstitution(null, null, institutionCode);
         }
+
+        public CustomGenericList<Item> ItemSelectBarcodes()
+        {
+            return new ItemDAL().ItemSelectBarcodes(null, null);
+        }
     }
 }
