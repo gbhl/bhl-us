@@ -24,6 +24,7 @@ CREATE TABLE #tmpAuthor (
 	[MARCCreator_c] [nvarchar](200),
 	[MARCCreator_d] [nvarchar](450),
 	[MARCCreator_q] [nvarchar](150),
+	[MARCCreator_5] [nvarchar](450) NULL,
 	[AuthorID] [int] NULL
 	)
 
@@ -82,6 +83,14 @@ FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
 			AND t.MarcDataFieldTag = m.DataFieldTag
 			AND m.Code = 'q'
 
+-- Get creator MARC subfield '5'
+UPDATE	#tmpAuthor
+SET		MARCCreator_5 = m.SubFieldValue
+FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
+			ON t.MarcDataFieldID = m.MarcDataFieldID
+			AND t.MarcDataFieldTag = m.DataFieldTag
+			AND m.Code = '5'
+
 -- Get the creator role type identifier
 UPDATE	#tmpAuthor
 SET		AuthorRoleID = r.AuthorRoleID
@@ -115,6 +124,10 @@ FROM	#tmpAuthor c INNER JOIN #tmpAuthorDates d
 			AND ISNULL(c.MARCCreator_d, '') = ISNULL(d.MARCCreator_d, '')
 
 DROP TABLE #tmpAuthorDates
+
+-- Delete any authors where subfield 5 is NOT null
+DELETE	#tmpAuthor
+WHERE	MARCCreator_5 IS NOT NULL
 
 -- =======================================================================
 -- Add new author and authorname records, if necessary
@@ -180,7 +193,7 @@ BEGIN TRY
 			INSERT INTO dbo.AuthorName (AuthorID, FullName, FullerForm, IsPreferredName)
 			VALUES (@AuthID, @FullName, @FullerForm, 1)
 		END
-		FETCH NEXT FROM curNew INTO @FullName, @TypeID, @Start, @End
+		FETCH NEXT FROM curNew INTO @FullName, @TypeID, @Start, @End, @NumUnit, @TitleLoc, @FullerForm
 	END
 
 	CLOSE curNew
@@ -222,5 +235,3 @@ DROP TABLE #tmpAuthor
 SET NOCOUNT OFF
 
 END
-
-
