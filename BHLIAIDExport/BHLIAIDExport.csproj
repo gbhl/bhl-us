@@ -60,6 +60,7 @@
   <ItemGroup>
     <None Include="App.config.template" />
     <None Include="App.config" />
+    <None Include="ExportIAIdentifiers.bat" />
     <None Include="Service References\BHLWS\bhlws.wsdl" />
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLIAIDExport.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
