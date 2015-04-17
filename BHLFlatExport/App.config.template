@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler" />
+    <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+      <section name="MOBOT.BHL.BHLBibTeXExport.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+      <section name="BHLBibTeXExport.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING"/>
+  </connectionStrings>
+  <appSettings>
+    <add key="SMTPHost" value="SMTP SERVER NAME"/>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <add key="FileFolder" value="data" />
+    <add key="DoiFile" value="doi.txt" />
+    <add key="AuthorFile" value="creator.txt" />
+    <add key="ItemFile" value="item.txt" />
+    <add key="PageFile" value="page.txt" />
+    <add key="PageNameFile" value="pagename.txt" />
+    <add key="PartFile" value="part.txt" />
+    <add key="PartAuthorFile" value="partcreator.txt" />
+    <add key="KeywordFile" value="subject.txt" />
+    <add key="TitleFile" value="title.txt" />
+    <add key="TitleIdentifierFile" value="titleidentifier.txt" />
+    <add key="ItemURLFormat" value="http://www.biodiversitylibrary.org/item/{0} "/>
+  </appSettings>
+  <!-- This section contains the log4net configuration settings -->
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-BHLFlatExport-rolling-log.txt"/>
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="20"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]&#xD;&#xA;"
+ />
+        <footer value="[Footer]&#xD;&#xA;"
+ />
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+  <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
+    </startup>
+</configuration>

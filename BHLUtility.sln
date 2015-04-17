@@ -74,6 +74,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLOcrRefresh", "BHLOcrRefr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLIAIDExport", "BHLIAIDExport\BHLIAIDExport.csproj", "{E514FB13-F168-448D-86B8-7F5B8BDC204E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFlatExport", "BHLFlatExport\BHLFlatExport.csproj", "{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -374,6 +376,16 @@ Global
 		{E514FB13-F168-448D-86B8-7F5B8BDC204E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E514FB13-F168-448D-86B8-7F5B8BDC204E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E514FB13-F168-448D-86B8-7F5B8BDC204E}.Release|x86.ActiveCfg = Release|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D9CF20B8-8BA5-4FF8-8969-2AC431ABB696}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
