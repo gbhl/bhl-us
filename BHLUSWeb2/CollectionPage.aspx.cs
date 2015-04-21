@@ -99,11 +99,11 @@ namespace MOBOT.BHL.Web2
 
                     //build header
                     System.Text.StringBuilder html = new System.Text.StringBuilder();
-                    if (Start == "All") html.Append("All ");
+                    if (Start.ToLower() == "all") html.Append("All ");
                     html.Append(list.Count).
                         Append((collection.CanContainTitles == 1) ? " title" : " item").Append(list.Count == 1 ? " " : "s ").
                         Append(" in ").Append(collection.CollectionName);
-                    if (Start != String.Empty) html.Append(" beginning with ").Append(Start.ToUpper());
+                    if (Start != String.Empty && Start.ToLower() != "all") html.Append(" beginning with ").Append(Start.ToUpper());
                     ltlCollectionHeader.Text = html.ToString();
 
                     // Show the collection statistics

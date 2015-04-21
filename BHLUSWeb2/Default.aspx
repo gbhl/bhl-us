@@ -40,7 +40,7 @@
 
     <div id="browsebar-home">
     <div id="browsebox-home" class="column-wrap">
-        <h2>Browse Our Collection By:</h2>
+        <h2>Browse by:</h2>
         <ul>
             <li class="titles"><a class="png_bg" href="/browse/titles/a">Title</a></li>
             <li class="authors"><a class="png_bg" href="/browse/authors/a">Author</a></li>

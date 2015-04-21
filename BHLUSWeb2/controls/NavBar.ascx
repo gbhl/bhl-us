@@ -2,7 +2,7 @@
 <nav id="content-nav">
     <div class="column-wrap">        
         <div id="browsebar">
-            <h3>Browse Our Collection by:</h3>
+            <h3>Browse by:</h3>
             <ul>
                 <li class="titles first-child"><a class="png_bg" href="/browse/titles/a">Title</a></li>
                 <li class="authors"><a class="png_bg" href="/browse/authors/a">Author</a></li>
