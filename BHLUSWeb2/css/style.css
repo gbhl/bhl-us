@@ -1699,7 +1699,7 @@ ul.data.collections li
 ul.data.collections li p
 {
     margin:5px 0;
-    line-height:normal;
+    line-height:20px;
     width: 400px;
 }
 ul.data.collections li .collectiontitle
