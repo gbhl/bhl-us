@@ -912,21 +912,18 @@ BEGIN TRY
 	-- =======================================================================
 	-- Resolve titles.  
 
-	-- Titles are unique by institution.  That is, a given title may only 
-	-- appear more than once if it is contributed by more than one institution.
 	-- Multiple attempts are made to find a matching title in production.  In
 	-- order, the following criteria are used to find a match:
 	--
 	--	1) OCLC
 	--	2) WonderFetch TitleID
-	--	3) MARC 001 value
-	--	4) MARC Bib ID + Short Title
+	--	3) MARC 001 value + Institution Code
 	--
 	-- After titles have been resolved, any records remaining in the #tmpTitle 
 	-- table without a value in the ProductionTitleID column will be inserted
 	-- into the production database as new titles.
 
-	-- Match on OCLC + Institution Code
+	-- Match on OCLC
 	UPDATE	#tmpTitle
 	SET		ProductionTitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitle_TitleIdentifier tti
@@ -939,11 +936,9 @@ BEGIN TRY
 				AND tti.IdentifierName = bti.IdentifierName
 			INNER JOIN dbo.BHLTitle bt
 				ON btti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
---				AND 1 = bt.PublishReady
 	WHERE	t.ProductionTitleID IS NULL
 
-	-- Match on WonderFetch Title ID + Institution Code
+	-- Match on WonderFetch Title ID
 	UPDATE	#tmpTitle
 	SET		ProductionTitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitle_TitleIdentifier tti
@@ -956,8 +951,6 @@ BEGIN TRY
 				AND tti.IdentifierName = bti.IdentifierName
 			INNER JOIN dbo.BHLTitle bt
 				ON btti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
---				AND 1 = bt.PublishReady
 	WHERE	t.ProductionTitleID IS NULL
 
 	-- Match on MARC 001 Value + Institution Code
@@ -974,9 +967,10 @@ BEGIN TRY
 			INNER JOIN dbo.BHLTitle bt
 				ON btti.TitleID = bt.TitleID
 				AND t.InstitutionCode = bt.InstitutionCode
---				AND 1 = bt.PublishReady
 	WHERE	t.ProductionTitleID IS NULL
 
+	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
+	/*
 	-- Match on MARC Bib ID + Short Title
 	UPDATE	#tmpTitle
 	SET		ProductionTitleID = bt.TitleID
@@ -984,7 +978,7 @@ BEGIN TRY
 				ON t.MARCBibID = bt.MARCBibID
 				AND t.ShortTitle = bt.ShortTitle
 	WHERE	t.ProductionTitleID IS NULL
-
+	*/
 
 	-- If the selected production title has been redirected to a different 
 	-- title, then use that title instead.  Follow the "redirect" chain up 
@@ -992,12 +986,6 @@ BEGIN TRY
 	UPDATE	#tmpTitle
 	SET		ProductionTitleID = COALESCE(bt10.TitleID, bt9.TitleID, bt8.TitleiD, bt7.TitleID, bt6.TitleID,
 										bt5.TitleID, bt4.TitleID, bt3.TitleID, bt2.TitleID, bt1.TitleID),
-/*			MarcBibID = CASE WHEN COALESCE(bt10.TitleID, bt9.TitleID, bt8.TitleiD, bt7.TitleID, bt6.TitleID,
-								bt5.TitleID, bt4.TitleID, bt3.TitleID, bt2.TitleID, bt1.TitleID) <> ProductionTitleID
-							THEN COALESCE(bt10.MarcBibID, bt9.MarcBibID, bt8.MarcBibID, bt7.MarcBibID, bt6.MarcBibID,
-								bt5.MarcBibID, bt4.MarcBibID, bt3.MarcBibID, bt2.MarcBibID, bt1.MarcBibID)
-							ELSE t.MarcBibID END
-*/
 			MarcBibID = COALESCE(bt10.MarcBibID, bt9.MarcBibID, bt8.MarcBibID, bt7.MarcBibID, bt6.MarcBibID,
 								bt5.MarcBibID, bt4.MarcBibID, bt3.MarcBibID, bt2.MarcBibID, bt1.MarcBibID)
 	FROM	#tmpTitle t INNER JOIN dbo.BHLTitle bt1

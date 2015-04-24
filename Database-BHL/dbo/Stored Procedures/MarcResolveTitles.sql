@@ -157,22 +157,16 @@ BEGIN TRY
 	-- =======================================================================
 	-- =======================================================================
 	-- Resolve titles.  
-
-	-- Titles are unique by institution.  That is, a given title may only 
-	-- appear more than once if it is contributed by more than one institution.
+	--
 	-- Multiple attempts are made to find a matching title in production.  In
 	-- order, the following criteria are used to find a match:
 	--
 	--	1) OCLC
-	--	2) Library of Congress Control number
-	--	3) ISBN
-	--	4) ISSN
-	--	5) WonderFetch TitleID
-	--	6) MARC 001 value
-	--	7) MARC Bib ID + Short Title
+	--	2) WonderFetch TitleID
+	--	3) MARC 001 value
 	--
 
-	-- Match on OCLC + Institution Code
+	-- Match on OCLC
 	UPDATE	#tmpTitle
 	SET		TitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
@@ -185,62 +179,9 @@ BEGIN TRY
 				AND tti.IdentifierName = bi.IdentifierName
 			INNER JOIN dbo.Title bt
 				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
 	WHERE	t.TitleID IS NULL
 
-	-- Match on Lib of Cong Control # + Institution Code
-	UPDATE	#tmpTitle
-	SET		TitleID = bt.TitleID
-	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
-				ON t.MarcID = tti.MarcID
-				AND 'DLC' = tti.IdentifierName
-			INNER JOIN dbo.Title_Identifier bti
-				ON tti.IdentifierValue = bti.IdentifierValue
-			INNER JOIN dbo.Identifier bi
-				ON bti.IdentifierID = bi.IdentifierID
-				AND tti.IdentifierName = bi.IdentifierName
-			INNER JOIN dbo.Title bt
-				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
-	WHERE	t.TitleID IS NULL
-
-	-- Match on ISBN + Institution Code
-	UPDATE	#tmpTitle
-	SET		TitleID = bt.TitleID
-	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
-				ON t.MarcID = tti.MarcID
-				AND 'ISBN' = tti.IdentifierName
-			INNER JOIN dbo.Title_Identifier bti
-				ON tti.IdentifierValue = bti.IdentifierValue
-			INNER JOIN dbo.Identifier bi
-				ON bti.IdentifierID = bi.IdentifierID
-				AND tti.IdentifierName = bi.IdentifierName
-			INNER JOIN dbo.Title bt
-				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
-	WHERE	t.TitleID IS NULL
-
-	-- Match on ISSN + Institution Code
-	UPDATE	#tmpTitle
-	SET		TitleID = bt.TitleID
-	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
-				ON t.MarcID = tti.MarcID
-				AND 'ISSN' = tti.IdentifierName
-			INNER JOIN dbo.Title_Identifier bti
-				ON tti.IdentifierValue = bti.IdentifierValue
-			INNER JOIN dbo.Identifier bi
-				ON bti.IdentifierID = bi.IdentifierID
-				AND tti.IdentifierName = bi.IdentifierName
-			INNER JOIN dbo.Title bt
-				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
-	WHERE	t.TitleID IS NULL
-
-	-- Match on WonderFetch Title ID + Institution Code
+	-- Match on WonderFetch Title ID
 	UPDATE	#tmpTitle
 	SET		TitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
@@ -253,8 +194,6 @@ BEGIN TRY
 				AND tti.IdentifierName = bi.IdentifierName
 			INNER JOIN dbo.Title bt
 				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
 	WHERE	t.TitleID IS NULL
 
 	-- Match on MARC 001 Value + Institution Code
@@ -271,9 +210,10 @@ BEGIN TRY
 			INNER JOIN dbo.Title bt
 				ON bti.TitleID = bt.TitleID
 				AND t.InstitutionCode = bt.InstitutionCode
-				AND 1 = bt.PublishReady
 	WHERE	t.TitleID IS NULL
 
+	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
+	/*
 	-- Match on MARC Bib ID + Short Title
 	UPDATE	#tmpTitle
 	SET		TitleID = bt.TitleID
@@ -281,10 +221,28 @@ BEGIN TRY
 				ON t.MARCBibID = bt.MARCBibID
 				AND t.ShortTitle = bt.ShortTitle
 	WHERE	t.TitleID IS NULL
+	*/
 
-	-- DEBUG STATEMENTS
-	--select * from #tmpTitle
-	--select * from #tmpTitleIdentifier
+	-- If the selected production title has been redirected to a different 
+	-- title, then use that title instead.  Follow the "redirect" chain up 
+	-- to ten levels.
+	UPDATE	#tmpTitle
+	SET		TitleID = COALESCE(bt10.TitleID, bt9.TitleID, bt8.TitleiD, bt7.TitleID, bt6.TitleID,
+										bt5.TitleID, bt4.TitleID, bt3.TitleID, bt2.TitleID, bt1.TitleID),
+			MarcBibID = COALESCE(bt10.MarcBibID, bt9.MarcBibID, bt8.MarcBibID, bt7.MarcBibID, bt6.MarcBibID,
+								bt5.MarcBibID, bt4.MarcBibID, bt3.MarcBibID, bt2.MarcBibID, bt1.MarcBibID)
+	FROM	#tmpTitle t INNER JOIN dbo.Title bt1
+				ON t.TitleID = bt1.TitleID
+			LEFT JOIN dbo.Title bt2 ON bt1.RedirectTitleID = bt2.TitleID
+			LEFT JOIN dbo.Title bt3 ON bt2.RedirectTitleID = bt3.TitleID
+			LEFT JOIN dbo.Title bt4 ON bt3.RedirectTitleID = bt4.TitleID
+			LEFT JOIN dbo.Title bt5 ON bt4.RedirectTitleID = bt5.TitleID
+			LEFT JOIN dbo.Title bt6 ON bt5.RedirectTitleID = bt6.TitleID
+			LEFT JOIN dbo.Title bt7 ON bt6.RedirectTitleID = bt7.TitleID
+			LEFT JOIN dbo.Title bt8 ON bt7.RedirectTitleID = bt8.TitleID
+			LEFT JOIN dbo.Title bt9 ON bt8.RedirectTitleID = bt9.TitleID
+			LEFT JOIN dbo.Title bt10 ON bt9.RedirectTitleID = bt10.TitleID
+	WHERE	t.TitleID IS NOT NULL
 
 	-- =======================================================================
 	-- =======================================================================
@@ -324,5 +282,4 @@ DROP TABLE #tmpTitle
 DROP TABLE #tmpTitleIdentifier
 
 END
-
 
