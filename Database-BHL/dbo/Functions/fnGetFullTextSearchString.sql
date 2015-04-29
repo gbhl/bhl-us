@@ -174,6 +174,9 @@ BEGIN
 	DELETE @ValueTable2 WHERE Value = '&'	-- remove ampersands, as they are not indexed
 	DELETE @ValueTable2 WHERE LEN(Value) = 1	-- remove single letters; full-text search doesn't always handle them well
 
+	-- Remove single letters followed by a period (i.e. 'A.'); full-text search doesn't handle them well
+	DELETE @ValueTable2 WHERE LEN(Value) = 2 AND SUBSTRING(Value, 2, 1) = '.'
+
 	-- Bracket each word with full-text search tokens
 	UPDATE @ValueTable2 
 	SET Value = '"*' + Value + '*"' 
@@ -194,4 +197,3 @@ BEGIN
 
 	RETURN @ReturnString
 END
-
