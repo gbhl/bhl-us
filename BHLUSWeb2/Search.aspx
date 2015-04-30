@@ -115,7 +115,7 @@
 					<asp:Repeater ID="authorRepeater" runat="server">
 						<ItemTemplate>
 							<li><a href="/creator/<%# Eval("AuthorID")%>" title="Author">
-								<%# Eval("FullName")%> <%# Eval("StartDate") == null ? "" : (Eval("StartDate").ToString().Trim() == "" ? "" : Eval("StartDate") + "-") %><%# Eval("EndDate") %>
+                                <%# Eval("NameExtended") %>
 							</a></li>
 						</ItemTemplate>
 						<HeaderTemplate>
