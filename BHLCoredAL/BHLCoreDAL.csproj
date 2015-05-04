@@ -144,6 +144,8 @@
     <Compile Include="Generated\PDFDAL.Auto.cs" />
     <Compile Include="Generated\PDFPageDAL.Auto.cs" />
     <Compile Include="Generated\PDFStatusDAL.Auto.cs" />
+    <Compile Include="Generated\RequestLog.ApplicationDAL.Auto.cs" />
+    <Compile Include="Generated\RequestLog.RequestLogDAL.Auto.cs" />
     <Compile Include="Generated\ScanningRequestDAL.Auto.cs" />
     <Compile Include="Generated\SegmentAuthorDAL.Auto.cs" />
     <Compile Include="Generated\SegmentClusterDAL.Auto.cs" />
@@ -210,6 +212,8 @@
     <Compile Include="PDFPageDAL.cs" />
     <Compile Include="PDFStatsDAL.cs" />
     <Compile Include="PDFStatusDAL.cs" />
+    <Compile Include="RequestLog.ApplicationDAL.cs" />
+    <Compile Include="RequestLog.RequestLogDAL.cs" />
     <Compile Include="ScanningRequestDAL.cs" />
     <Compile Include="SearchDAL.cs" />
     <Compile Include="SegmentAuthorDAL.cs" />
