@@ -123,9 +123,9 @@ namespace IAHarvest
                     bool fullDownload = true;
                     if (startDate != null)
                     {
-                        // If the last full download was less than 30 days ago, then just do a 
+                        // If the last full download was less than 90 days ago, then just do a 
                         // partial download.  Otherwise, do a full download (startDate = null).
-                        if ((DateTime.Now - (DateTime)startDate).Days < 30)
+                        if ((DateTime.Now - (DateTime)startDate).Days < 90)
                         {
                             startDate = set.LastDownloadDate;
                             fullDownload = false;
