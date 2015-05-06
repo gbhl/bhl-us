@@ -130,6 +130,10 @@
     <Compile Include="Concrete\PDFPage.cs" />
     <Compile Include="Concrete\PDFStats.cs" />
     <Compile Include="Concrete\PDFStatus.cs" />
+    <Compile Include="Concrete\RequestLog.Application.cs" />
+    <Compile Include="Concrete\RequestLog.GenericStat.cs" />
+    <Compile Include="Concrete\RequestLog.HistoryStat.cs" />
+    <Compile Include="Concrete\RequestLog.RequestLog.cs" />
     <Compile Include="Concrete\ScanningRequest.cs" />
     <Compile Include="Concrete\Segment.cs" />
     <Compile Include="Concrete\SegmentAuthor.cs" />
@@ -176,6 +180,8 @@
     <Compile Include="Concrete\Vault.cs" />
     <Compile Include="Concrete\vwMarcDataField.cs" />
     <Compile Include="EntityCount.cs" />
+    <Compile Include="Generated\RequestLog.__Application.cs" />
+    <Compile Include="Generated\RequestLog.__RequestLog.cs" />
     <Compile Include="Generated\__AnnotatedItem.cs" />
     <Compile Include="Generated\__AnnotatedPage.cs" />
     <Compile Include="Generated\__AnnotatedPageCharacteristic.cs" />
@@ -284,6 +290,7 @@
     <Compile Include="SearchAnnotationResult.cs" />
     <Compile Include="SearchBookResult.cs" />
     <Compile Include="SearchBookResultComparer.cs" />
+    <Compile Include="SearchCriteria\RequestLog.RequestLogSearchOrderBy.cs" />
     <Compile Include="SearchCriteria\TitleSearchCriteria.cs" />
     <Compile Include="SegmentAuthorComparer.cs" />
     <Compile Include="SegmentComparer.cs" />

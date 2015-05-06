@@ -88,6 +88,9 @@
     <Folder Include="Data" />
     <Folder Include="import\Stored Procedures" />
     <Folder Include="import\Functions" />
+    <Folder Include="reqlog" />
+    <Folder Include="reqlog\Tables" />
+    <Folder Include="reqlog\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Keyword.sql" />
@@ -1141,5 +1144,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ExportTitleIdentifier.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="reqlog\Tables\Application.sql" />
+    <None Include="reqlog\Tables\RequestHistory.sql" />
+    <None Include="reqlog\Tables\RequestHistoryByTopUsers.sql" />
+    <None Include="reqlog\Tables\RequestHistoryByType.sql" />
+    <None Include="reqlog\Tables\RequestLog.sql" />
+    <None Include="reqlog\Tables\RequestLogArchive.sql" />
+    <None Include="reqlog\Tables\RequestType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\reqlog.Application.Table.sql" />
+    <None Include="Data\reqlog.RequestHistory.Table.sql" />
+    <None Include="Data\reqlog.RequestHistoryByType.Table.sql" />
+    <None Include="Data\reqlog.RequestLog.Table.sql" />
+    <None Include="Data\reqlog.RequestType.Table.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="reqlog\Stored Procedures\ApplicationSelectAuto.sql" />
+    <None Include="reqlog\Stored Procedures\DailyTasks.sql" />
+    <None Include="reqlog\Stored Procedures\RequestHistorySelectByDateRangeAndRequestType.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogArchiveDeleteOld.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogDeleteAuto.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogInsertAuto.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogMoveRecordsToArchive.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogMoveRecordsToHistory.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectAuto.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectDateTotal.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectDetails.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectHourTotal.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectTopIP.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectTopUser.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogSelectTypesByDate.sql" />
+    <None Include="reqlog\Stored Procedures\RequestLogUpdateAuto.sql" />
+    <None Include="reqlog\Stored Procedures\RequestTypeSelectByApplication.sql" />
   </ItemGroup>
 </Project>
