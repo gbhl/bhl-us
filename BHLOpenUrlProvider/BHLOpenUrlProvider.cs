@@ -345,7 +345,7 @@ namespace MOBOT.BHL.OpenUrlProvider
             // Log the request.  
             // First argument "3" corresponds to "BHL OpenUrl".  
             // Fourth argument "230" corresponds to "OpenUrl Endpoint Request"
-            RequestLog requestLog = new RequestLog();
+            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
             requestLog.SaveRequestLog(3, this.IpAddress, null, 230, detail);
         }
 

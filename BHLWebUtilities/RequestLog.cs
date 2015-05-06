@@ -16,9 +16,18 @@ namespace MOBOT.BHL.Web.Utilities
     /// </summary>
     public class RequestLog
     {
-        private const string _adminDALName = "MOBOT.Admin.DAL";
-        private const string _adminDataObjectsName = "MOBOT.Admin.DataObjects";
-        private const string _dataAccessName = "MOBOT.DataAccess";
+        private const string _adminDALName = "BHLCoreDAL";
+        private const string _adminDataObjectsName = "BHLDataObjects";
+        private const string _dataAccessName = "CustomDataAccess";
+
+        private const string _requestLogDataobjectClassName = "MOBOT.BHL.RequestLog.DataObjects.RequestLog";
+        private const string _requestTypeDataobjectClassName = "MOBOT.BHL.RequestLog.DataObjects.RequestType";
+        private const string _genericStatDataobjectClassName = "MOBOT.BHL.RequestLog.DataObjects.GenericStat";
+        private const string _historyStatDataobjectClassName = "MOBOT.BHL.RequestLog.DataObjects.HistoryStat";
+        private const string _applicationDataobjectClassName = "MOBOT.BHL.RequestLog.DataObjects.Application";
+        private const string _requestLogDALClassName = "MOBOT.BHL.RequestLog.DAL.RequestLogDAL";
+        private const string _applicationDALClassName = "MOBOT.BHL.RequestLog.DAL.ApplicationDAL";
+
         private Assembly _adminDAL = null;
         private Assembly _adminDataObjects = null;
         private Assembly _dataAccess = null;
@@ -163,7 +172,8 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLog object and set the properties
-                    Type requestLogType = _adminDataObjects.GetType(_adminDataObjectsName + ".RequestLog");
+                    Type requestLogType = _adminDataObjects.GetType(_requestLogDataobjectClassName);
+
                     object requestLogInstance = Activator.CreateInstance(requestLogType);
 
                     PropertyInfo propAppID = requestLogType.GetProperty("ApplicationID");
@@ -179,7 +189,7 @@ namespace MOBOT.BHL.Web.Utilities
                     propDetail.SetValue(requestLogInstance, detail, null);
 
                     // Create an instance of a RequestLogDAL object and invoke the SaveRequestLog method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     requestLogDALType.InvokeMember("SaveRequestLog",
@@ -212,7 +222,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectDateRangeTotal method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     total = (int) requestLogDALType.InvokeMember("SelectDateRangeTotal",
@@ -247,7 +257,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -256,19 +266,19 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestLogDALInstance, new object[] { null, null, startDate, endDate, applicationID });
                     
                     // Build the list of stats to return.
-                    Type genericStatType = _adminDataObjects.GetType(_adminDataObjectsName + ".GenericStat");
+                    Type genericStatType = _adminDataObjects.GetType(_genericStatDataobjectClassName);
                     PropertyInfo propInt01 = genericStatType.GetProperty("IntColumn01");
                     PropertyInfo propInt02 = genericStatType.GetProperty("IntColumn02");
                     PropertyInfo propString01 = genericStatType.GetProperty("StringColumn01");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogStat requestLogStat = new RequestLogStat();
                         requestLogStat.IntColumn01 = (int)propInt01.GetValue(stat, null);
                         requestLogStat.IntColumn02 = (int)propInt02.GetValue(stat, null);
                         requestLogStat.StringColumn01 = propString01.GetValue(stat, null).ToString();
                         stats.Add(requestLogStat);
-                    }                    
+                    } 
 
                     SelectTypeByDateRangeSuccess = true;
                 }
@@ -297,7 +307,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -306,13 +316,13 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestLogDALInstance, new object[] { null, null, date, applicationID });
 
                     // Build the list of stats to return.
-                    Type genericStatType = _adminDataObjects.GetType(_adminDataObjectsName + ".GenericStat");
+                    Type genericStatType = _adminDataObjects.GetType(_genericStatDataobjectClassName);
                     PropertyInfo propInt01 = genericStatType.GetProperty("IntColumn01");
                     PropertyInfo propInt02 = genericStatType.GetProperty("IntColumn02");
                     PropertyInfo propString01 = genericStatType.GetProperty("StringColumn01");
                     PropertyInfo propString02 = genericStatType.GetProperty("StringColumn02");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogStat requestLogStat = new RequestLogStat();
                         requestLogStat.IntColumn01 = (int)propInt01.GetValue(stat, null);
@@ -348,7 +358,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -357,11 +367,11 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestLogDALInstance, new object[] { null, null, startDate, endDate, applicationID });
 
                     // Build the list of stats to return.
-                    Type genericStatType = _adminDataObjects.GetType(_adminDataObjectsName + ".GenericStat");
+                    Type genericStatType = _adminDataObjects.GetType(_genericStatDataobjectClassName);
                     PropertyInfo propInt01 = genericStatType.GetProperty("IntColumn01");
                     PropertyInfo propString01 = genericStatType.GetProperty("StringColumn01");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogStat requestLogStat = new RequestLogStat();
                         requestLogStat.IntColumn01 = (int)propInt01.GetValue(stat, null);
@@ -397,7 +407,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -406,13 +416,13 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestLogDALInstance, new object[] { null, null, startDate, endDate, applicationID });
 
                     // Build the list of stats to return.
-                    Type genericStatType = _adminDataObjects.GetType(_adminDataObjectsName + ".GenericStat");
+                    Type genericStatType = _adminDataObjects.GetType(_genericStatDataobjectClassName);
                     PropertyInfo propInt01 = genericStatType.GetProperty("IntColumn01");
                     PropertyInfo propInt02 = genericStatType.GetProperty("IntColumn02");
                     PropertyInfo propString01 = genericStatType.GetProperty("StringColumn01");
                     PropertyInfo propString02 = genericStatType.GetProperty("StringColumn02");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogStat requestLogStat = new RequestLogStat();
                         requestLogStat.IntColumn01 = (int)propInt01.GetValue(stat, null);
@@ -451,7 +461,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.HistoryStat>
@@ -460,13 +470,13 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestLogDALInstance, new object[] { null, null, startDate, endDate, applicationID, requestTypeID });
 
                     // Build the list of stats to return.
-                    Type historyStatType = _adminDataObjects.GetType(_adminDataObjectsName + ".HistoryStat");
+                    Type historyStatType = _adminDataObjects.GetType(_historyStatDataobjectClassName);
                     PropertyInfo propDay = historyStatType.GetProperty("Day");
                     PropertyInfo propMonth = historyStatType.GetProperty("Month");
                     PropertyInfo propNumRequests = historyStatType.GetProperty("NumRequests");
                     PropertyInfo propYear = historyStatType.GetProperty("Year");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogHistoryStat requestLogStat = new RequestLogHistoryStat();
                         requestLogStat.Day = (int)propDay.GetValue(stat, null);
@@ -510,7 +520,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestLogDALType = _adminDAL.GetType(_adminDALName + ".RequestLogDAL");
+                    Type requestLogDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestLogDALInstance = Activator.CreateInstance(requestLogDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.RequestLog>
@@ -520,7 +530,7 @@ namespace MOBOT.BHL.Web.Utilities
                         new object[] { null, null, startDate, endDate, requestTypeID, ipAddress, userID, orderBy, applicationID });
 
                     // Build the list of stats to return.
-                    Type requestLogType = _adminDataObjects.GetType(_adminDataObjectsName + ".RequestLog");
+                    Type requestLogType = _adminDataObjects.GetType(_requestLogDataobjectClassName);
                     PropertyInfo propCreationDate = requestLogType.GetProperty("CreationDate");
                     PropertyInfo propDetail = requestLogType.GetProperty("Detail");
                     PropertyInfo propIPAddress = requestLogType.GetProperty("IPAddress");
@@ -530,7 +540,7 @@ namespace MOBOT.BHL.Web.Utilities
                     PropertyInfo propRequestTypeName = requestLogType.GetProperty("RequestTypeName");
                     PropertyInfo propUserName= requestLogType.GetProperty("UserName");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestLogRecord requestLogRecord = new RequestLogRecord();
                         requestLogRecord.CreationDate = (DateTime)propCreationDate.GetValue(stat, null);
@@ -570,7 +580,7 @@ namespace MOBOT.BHL.Web.Utilities
                 try
                 {
                     // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type requestTypeDALType = _adminDAL.GetType(_adminDALName + ".RequestTypeDAL");
+                    Type requestTypeDALType = _adminDAL.GetType(_requestLogDALClassName);
                     object requestTypeDALInstance = Activator.CreateInstance(requestTypeDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -579,11 +589,11 @@ namespace MOBOT.BHL.Web.Utilities
                         null, requestTypeDALInstance, new object[] { null, null, applicationID });
 
                     // Build the list of stats to return.
-                    Type requestTypeType = _adminDataObjects.GetType(_adminDataObjectsName + ".RequestType");
+                    Type requestTypeType = _adminDataObjects.GetType(_requestTypeDataobjectClassName);
                     PropertyInfo propID = requestTypeType.GetProperty("RequestTypeID");
                     PropertyInfo propName = requestTypeType.GetProperty("RequestTypeName");
 
-                    foreach (object stat in (IEnumerable<object>)statList)
+                    foreach (object stat in (System.Collections.IEnumerable)statList)
                     {
                         RequestType requestType = new RequestType();
                         requestType.RequestTypeID = (int)propID.GetValue(stat, null);
@@ -610,8 +620,8 @@ namespace MOBOT.BHL.Web.Utilities
             {
                 try
                 {
-                    // Create an instance of a RequestLogDAL object and invoke the SelectTypeByDateRange method
-                    Type applicationDALType = _adminDAL.GetType(_adminDALName + ".ApplicationDAL");
+                    // Create an instance of a ApplicationDAL object and invoke the ApplicationSelectAuto method
+                    Type applicationDALType = _adminDAL.GetType(_applicationDALClassName);
                     object applicationDALInstance = Activator.CreateInstance(applicationDALType);
 
                     // statList is of type MOBOT.DataAccess.DataCollection<MOBOT.Admin.DataObjects.GenericStat>
@@ -620,7 +630,7 @@ namespace MOBOT.BHL.Web.Utilities
                         null, applicationDALInstance, new object[] { null, null, applicationID });
 
                     // Build the list of stats to return.
-                    Type applicationType = _adminDataObjects.GetType(_adminDataObjectsName + ".Application");
+                    Type applicationType = _adminDataObjects.GetType(_applicationDataobjectClassName);
                     PropertyInfo propName = applicationType.GetProperty("ApplicationName");
 
                     if (application != null)

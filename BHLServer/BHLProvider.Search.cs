@@ -193,7 +193,7 @@ namespace MOBOT.BHL.Server
             // Log the request.  
             // First argument "3" corresponds to "BHL OpenUrl".  
             // Fourth argument "231" corresponds to "Citation Finder"
-            RequestLog requestLog = new RequestLog();
+            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
             requestLog.SaveRequestLog(3, ipAddress, null, 231, detail);
         }
     }
