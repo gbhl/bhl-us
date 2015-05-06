@@ -59,7 +59,7 @@ namespace MOBOT.BHL.AdminWeb
                 requestTypeID = (int.Parse(RequestTypeList.SelectedValue));
             }
 
-            List<RequestLogHistoryStat> stats = new RequestLog().RequestHistorySelectByDateRangeAndRequestType(applicationID,
+            List<RequestLogHistoryStat> stats = new BHL.Web.Utilities.RequestLog().RequestHistorySelectByDateRangeAndRequestType(applicationID,
                 startDate, endDate, requestTypeID);
 
             Page.ClientScript.RegisterStartupScript(typeof(WebHistory), "WebHistoryJS", createInitJS(stats));
@@ -67,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void fillRequestTypeCombo(int applicationID)
         {
-            RequestLog requestLog = new RequestLog();
+            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
 
             List<RequestType> requestTypes = requestLog.RequestTypeSelectByApplication(applicationID);
 

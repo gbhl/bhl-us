@@ -75,7 +75,7 @@ namespace MOBOT.BHL.AdminWeb
             ViewState["OrderBy"] = _orderBy;
             ViewState["SortOrder"] = _sortOrder;
 
-            List<RequestLogRecord> rlList = new RequestLog().SelectStatDetails(applicationID, startDate, endDate, requestTypeId, 
+            List<RequestLogRecord> rlList = new BHL.Web.Utilities.RequestLog().SelectStatDetails(applicationID, startDate, endDate, requestTypeId, 
                 ipAddress, userId, (int)_orderBy * (_sortOrder == RequestLogSortOrder.Descending ? -1 : 1));
 
             // Get the CustomGenericList of APIKeys and convert it to a "regular" List

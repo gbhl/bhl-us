@@ -63,7 +63,7 @@ namespace MOBOT.BHL.AdminWeb
             DateTime startDate = DateTime.Parse(startDateTextBox.Text.Trim());
             DateTime endDate = DateTime.Parse(endDateTextBox.Text.Trim());
 
-            RequestLog requestLog = new RequestLog();
+            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
 
             _total = requestLog.SelectDateRangeTotal(applicationID, startDate, endDate);
 

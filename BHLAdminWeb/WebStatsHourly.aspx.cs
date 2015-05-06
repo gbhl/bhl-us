@@ -84,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             DateTime date = DateTime.Parse(dateTextBox.Text.Trim());
 
-            RequestLog requestLog = new RequestLog();
+            BHL.Web.Utilities.RequestLog requestLog = new BHL.Web.Utilities.RequestLog();
 
             _total = requestLog.SelectDateRangeTotal(applicationID, date, date.AddDays(1));
 

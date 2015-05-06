@@ -33,7 +33,7 @@ namespace MOBOT.BHL.AdminWeb.Controls
             if (!IsPostBack)
             {
                 // Set the menu title
-                litTitle.Text = new RequestLog().SelectApplicationName(ApplicationID);
+                litTitle.Text = new BHL.Web.Utilities.RequestLog().SelectApplicationName(ApplicationID);
 
                 // Set all navigation links
                 dailyLink.NavigateUrl = string.Format(dailyLink.NavigateUrl, ApplicationID.ToString(), Menu);
