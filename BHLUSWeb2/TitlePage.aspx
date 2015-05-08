@@ -375,7 +375,7 @@
             }
 
             function resetGenerate() {
-                $('#generate-dialog fieldset, #generate-dialog .footer').show();
+                $('#generate-dialog fieldset, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
                 $('#generate-dialog').css('height', '520px');
                 $('#generate-dialog .intro').show();
                 $('#generate-dialog .success').hide();
