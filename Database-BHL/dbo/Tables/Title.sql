@@ -43,7 +43,7 @@
 
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Title_BibIDShortTitle]
+CREATE NONCLUSTERED INDEX [IX_Title_BibIDShortTitle]
     ON [dbo].[Title]([MARCBibID] ASC, [ShortTitle] ASC);
 
 
