@@ -789,6 +789,10 @@
   <ItemGroup>
     <Content Include="AccessDenied.aspx" />
     <Content Include="Admin.Master" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Controls\ErrorControl.ascx" />
     <Content Include="Controls\fckeditor\editor\css\behaviors\disablehandles.htc" />
     <Content Include="Controls\fckeditor\editor\css\behaviors\showtableborders.htc" />
@@ -924,7 +928,9 @@
     <Content Include="Controls\WebStatsNavControl.ascx" />
     <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Icon.png" />
     <Content Include="Images\BHLlogo.png" />
     <Content Include="Images\bib_minus.gif" />
     <Content Include="Images\bib_plus.GIF" />
@@ -981,6 +987,18 @@
     <Content Include="ReportItemsByContributorCSV.ashx" />
     <Content Include="ReportNonMemberMonographsCSV.ashx" />
     <Content Include="ReportRecentlyClusteredSegments.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Service References\BHLImportWebService\BHLImportWS.disco" />
     <Content Include="Service References\BHLImportWebService\configuration91.svcinfo" />
     <Content Include="Service References\BHLImportWebService\configuration.svcinfo" />
@@ -1062,6 +1080,7 @@
     <Content Include="Views\Report\CitationImportHistory.cshtml" />
     <Content Include="Services\CitationImportService.ashx" />
     <Content Include="Views\Library\Align.cshtml" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1147,7 +1166,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Start\" />
-    <Folder Include="Scripts\" />
     <Folder Include="styles\jqgridtheme\images\" />
   </ItemGroup>
   <ItemGroup>
