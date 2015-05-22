@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using MOBOT.BHL.Web.Utilities;
 using System.Configuration;
+using System.Web.Optimization;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -12,7 +13,8 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
          protected void Application_BeginRequest(object sender, EventArgs e)
@@ -68,25 +70,6 @@ namespace MOBOT.BHL.AdminWeb
         protected void Session_End(object sender, EventArgs e)
         {
 
-        }
-
-        void RegisterRoutes(RouteCollection routes)
-        {
-            routes.Ignore("{resource}.axd/{*pathInfo}");
-            //routes.Ignore("{resource}.aspx/{*pathInfo}");
-
-            // Routes for original WebForms pages
-            routes.MapRoute("Default", "", new { controller = "Home", action = "Index" });
-            routes.MapRoute("Login", "login", new { controller = "Home", action = "Login" });
-            routes.MapRoute("Error-General", "error", new { controller = "Home", action = "Error" });
-            routes.MapRoute("PageNotFound", "pagenotfound", new { controller = "Home", action = "PageNotFound" });
-
-            // Routes for MVC pages
-            routes.MapRoute("MVCDefault", "{controller}/{action}/{id}", new { controller = "Home", action = "Index", id = "" });
-
-            routes.MapRoute("CatchAll",
-                "{*url}",
-                "~/PageNotFound.aspx");
         }
     }
 }

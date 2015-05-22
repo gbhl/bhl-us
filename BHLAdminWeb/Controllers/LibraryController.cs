@@ -27,7 +27,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             model.AddPagesToItem();
             ResetModelForAlign(model, model.AddItemID, model.AddIAID);
-            ViewBag.Action = "#divAdd";
+            ViewBag.Action = "0"; // "#divAdd";
             return View("Align", model);
         }
 
@@ -38,7 +38,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             model.DeletePagesFromItem();
             ResetModelForAlign(model, model.DelItemID, model.DelIAID);
-            ViewBag.Action = "#divDelete";
+            ViewBag.Action = "1"; // "#divDelete";
             return View("Align", model);
         }
 
@@ -50,7 +50,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             model.OcrJobPath = ConfigurationManager.AppSettings["OCRJobNewPath"];
             model.CreateNewOCRJobFile();
             ResetModelForAlign(model, model.OcrItemID, model.OcrIAID);
-            ViewBag.Action = "#divOcr";
+            ViewBag.Action = "2"; // "#divOcr";
             return View("Align", model);
         }
 

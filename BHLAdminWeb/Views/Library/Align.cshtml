@@ -80,7 +80,7 @@
     // Set up tabs
     $(document).ready(function () {
         $("#tabs").tabs();
-        $("#tabs").tabs('select', $("#selectTab").val());    // Default to a specified tab
+        $("#tabs").tabs('option', 'active', $("#selectTab").val());  // Default to a specified tab
     });
 
     // Validation
