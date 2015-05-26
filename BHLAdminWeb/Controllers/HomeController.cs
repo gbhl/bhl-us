@@ -18,7 +18,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         public RedirectResult Login()
         {
-            return new RedirectResult("~/login.aspx");
+            return new RedirectResult("/account/login");
         }
 
         public RedirectResult Error()

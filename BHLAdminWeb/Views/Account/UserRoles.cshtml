@@ -4,7 +4,8 @@
     ViewBag.Title = "User Roles";
 }
 
-<h2>Roles for user @Html.DisplayFor(model => model.UserName)</h2>
+<br/>
+<span class="pageHeader">Roles for user @Html.DisplayFor(model => model.UserName)</span>
 <hr />
 
 @using (Html.BeginForm("UserRoles", "Account", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
@@ -19,14 +20,13 @@
             </div>
         </div>
 
-        <h4>Select Role Assignments</h4>
+        <!--<h4>Select Role Assignments</h4>
         <br />
-        <hr />
+        <hr />-->
 
         <table>
             <tr>
-                <th>
-                    Select
+                <th style="padding:15px">
                 </th>
                 <th>
                     Role
@@ -36,7 +36,6 @@
             @Html.EditorFor(model => model.Roles)
         </table>
         <br />
-        <hr />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

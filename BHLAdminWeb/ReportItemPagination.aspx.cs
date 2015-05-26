@@ -163,7 +163,7 @@ namespace MOBOT.BHL.AdminWeb
                 default:
                     break;
                 case PAGINATIONSTATUS_INPROGRESS:
-                    if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityFunction.BHLAdminUserAdvanced)) // Only members of the BHL.Admin.SuperUser role can unlock items
+                    if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced)) // Only members of the BHL.Admin.SuperUser role can unlock items
                     {
                         spanStatusChange.Visible = true;
                         ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(PAGINATIONSTATUS_INCOMPLETE).Text, PAGINATIONSTATUS_INCOMPLETE));

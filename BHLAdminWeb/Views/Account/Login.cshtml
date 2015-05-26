@@ -4,7 +4,9 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
+<br />
+<span class="pageHeader">You must log in to administer content of the Biodiversity Heritage Library.</span><br /><br />
+
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
@@ -42,6 +44,8 @@
                     </div>
                 </div>
                 <p>
+                    @Html.ActionLink("Forgot", "Forgot") your password?
+                    <br />
                     @Html.ActionLink("Register", "Register") if you don't have a local account.
                 </p>
             }

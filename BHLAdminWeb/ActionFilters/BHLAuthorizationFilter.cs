@@ -14,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
             HttpCookie tokenCookie = filterContext.HttpContext.Request.Cookies["MOBOTSecurityToken"];
             if (!Helper.IsUserAuthenticated(filterContext.HttpContext.Request))
             {
-                filterContext.HttpContext.Response.Redirect("~/login.aspx", true);
+                filterContext.HttpContext.Response.Redirect("/account/login", true);
             }
             else
             {

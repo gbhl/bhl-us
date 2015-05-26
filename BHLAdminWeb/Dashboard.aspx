@@ -59,6 +59,11 @@
                             <a href="/SegmentTypeEdit.aspx">Segment Types</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td align="center" runat="server" id="tdUserAccounts">
+                            <a href="/account/">User Accounts</a>
+                        </td>
+                    </tr>
 					<tr>
 						<td align="center" runat="server" id="tdVaults">
 							<a href="/VaultEdit.aspx">Vaults</a>

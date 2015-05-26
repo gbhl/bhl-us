@@ -143,7 +143,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void MenuSetup(HttpRequest request)
         {
             // To disable a menu item, replace the menu anchor control with just the text of the control
-            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminPortalEditor))
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminPortalEditor))
             {
                 tdTitles.InnerHtml = GetMenuText(tdTitles.InnerHtml);
                 tdItems.InnerHtml = GetMenuText(tdItems.InnerHtml);
@@ -154,7 +154,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdRptItemPagination.InnerHtml = GetMenuText(tdRptItemPagination.InnerHtml);
                 tdRptTitleImportHistory.InnerHtml = GetMenuText(tdRptTitleImportHistory.InnerHtml);
             }
-            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminUserBasic))
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminUserBasic))
             {
                 tdCollections.InnerHtml = GetMenuText(tdCollections.InnerHtml);
                 tdInstitutions.InnerHtml = GetMenuText(tdInstitutions.InnerHtml);
@@ -189,13 +189,14 @@ namespace MOBOT.BHL.AdminWeb
                 tdImportCitations.InnerHtml = GetMenuText(tdImportCitations.InnerHtml);
                 tdImportCitationHistory.InnerHtml = GetMenuText(tdImportCitationHistory.InnerHtml);
             }
-            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminUserAdvanced))
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminUserAdvanced))
             {
                 tdAlertMessage.InnerHtml = GetMenuText(tdAlertMessage.InnerHtml);
                 tdApiV2Stats.InnerHtml = apiv2StatsLink.InnerText;
                 tdOpenUrlStats.InnerHtml = openurlStatsLink.InnerText;
+                tdUserAccounts.InnerHtml = GetMenuText(tdUserAccounts.InnerHtml);
             }
-            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityFunction.BHLAdminSysAdmin))
+            if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminSysAdmin))
             {
                 tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
                 tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);

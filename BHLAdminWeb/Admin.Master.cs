@@ -27,8 +27,10 @@ namespace MOBOT.BHL.AdminWeb
 			// Make sure user is logged in
             if (Helper.IsUserAuthenticated(new HttpRequestWrapper(Request)))
             {
-                loginLink.Text = "Logout";
-                loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
+                accountlink.Text = string.Format(accountlink.Text, Context.GetOwinContext().Request.User.Identity.Name);
+
+                //loginLink.Text = "Logout";
+                //loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
 
                 // Make sure the user is authorized
                 if (!Helper.IsUserAuthorized(new HttpRequestWrapper(Request)))
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             else
             {
-                Response.Redirect("/Login.aspx");
+                Response.Redirect("/account/Login");
             }
 
             // Make sure that the authorized user is valid for the production site (some are
@@ -63,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			base.OnInit( e );
             Response.Cookies["CallingUrl"].Value = Request.Url.ToString();
-            if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("login.aspx");
+            if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("/account/login");
 		}
 	}
 }
