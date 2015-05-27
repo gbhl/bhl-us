@@ -22,6 +22,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+
+            /*
+            // Use this to enforce stronger password rules
+            UserManager.PasswordValidator = new PasswordValidator
+            {
+                RequireDigit = true,
+                RequiredLength = 8,
+                //RequireLowercase = true,
+                //RequireNonLetterOrDigit = true,
+                RequireUppercase = true
+            };
+             */
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }

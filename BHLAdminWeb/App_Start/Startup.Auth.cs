@@ -13,6 +13,8 @@ namespace MOBOT.BHL.AdminWeb
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                SlidingExpiration = true,
+                ExpireTimeSpan = System.TimeSpan.FromHours(10),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
@@ -47,6 +49,8 @@ namespace MOBOT.BHL.AdminWeb
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                SlidingExpiration = true,
+                ExpireTimeSpan = System.TimeSpan.FromHours(10),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
