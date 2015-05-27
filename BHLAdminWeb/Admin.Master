@@ -7,6 +7,7 @@
 	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </head>
 <body id="body" runat="server">
+    <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"></form>
 	<form id="form1" runat="server">
 		<div id="firefoxKludge" style="position: absolute; margin: 0; padding: 0; border: none; top: 0px; left: 0px; bottom: 0px; right: 0px;
 			visibility: hidden; overflow: hidden;">
@@ -24,14 +25,12 @@
 						&nbsp;
 						<div style="position: absolute; top: 3px; right: 15px;">
 
-                            <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post">
-                                <!--<input name="__RequestVerificationToken" type="hidden" value="a5q_uP1n1Pzh2SiJWESI00IoiqYAqZGJ2grXDdhZc42HJYaAj33r2ypIXFOBgGsk-pLINF4AkeZC-Pfo31bf91SYD6Lya515xQYHH-uPTc2iDbdAfpafzw6n33Fi7JOcBSRybApZOG2Wcoen9Q5eRg2" />-->
                                 <asp:HyperLink ID="accountlink" CssClass="HeaderLinks" runat="server" NavigateUrl="/account/manage">Hello {0}!</asp:HyperLink>
                                 |
                                 <a class="HeaderLinks" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
 							    <!--<asp:HyperLink ID="loginLink" CssClass="HeaderLinks" runat="server">Login</asp:HyperLink>-->
 							    | <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
-                            </form>
+
 						</div>
 						<div style="position: absolute; top: 40px; right: 15px;">
 							<span class="pageheader">Administration</span>
