@@ -8,7 +8,7 @@
 
 @if (ViewBag.EmailSent ?? false)
 {
-    <p>Check your email for a link to complete the password reset process.  When done, click @Html.ActionLink("here", "Login") here to log in.</p>
+    <p>Check your email for a link to complete the password reset process.  When done, @Html.ActionLink("click here", "Login") to log in.</p>
 }
 else
 {

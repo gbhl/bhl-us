@@ -35,9 +35,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 RequireUppercase = true
             };
 
-            // Set up a user token provider for use when replacing forgotten passwords
+            // Set up a user token provider for use when replacing forgotten passwords.
+            // Token will expire 24 hours after being issued.
             var provider = new DpapiDataProtectionProvider("BhlAdmin");
-            UserManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(provider.Create("PasswordChange"));
+            UserManager.UserTokenProvider =
+                new DataProtectorTokenProvider<ApplicationUser>(
+                    provider.Create("PasswordChange"))
+                    {
+                        TokenLifespan = TimeSpan.FromHours(24)
+                    };
+
 
             // Set up an email service
             UserManager.EmailService = new MVCServices.EmailService();
@@ -483,13 +490,48 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     // Generate a password reset token
                     string resetToken = await UserManager.GeneratePasswordResetTokenAsync(userId);
 
-                    var callbackUrl = Url.Action("ResetPassword", "Account", new { UserId = user.Id, token = resetToken}, protocol: Request.Url.Scheme);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { id = user.Id, token = resetToken}, protocol: Request.Url.Scheme);
                     string emailBody = "Reset your password by navigating to " + callbackUrl + ".\n\rIf you did not initiate this request, then please ignore this message.";
  
                     // Send the email
                     await UserManager.SendEmailAsync(userId, "Reset your BHL password", emailBody);
                 }
                 ViewBag.EmailSent = true;
+            }
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(string id, string token)
+        {
+            ViewBag.PasswordReset = false;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewBag.PasswordReset = true;
+
+                // Verify the id
+                var user = await UserManager.FindByIdAsync(model.Id);
+
+                // Make sure we have a valid user; if not, just act like we do (to prevent malicious use)
+                if (user != null)
+                {
+                    // Reset the password
+                    var result = await UserManager.ResetPasswordAsync(user.Id, model.Token, model.Password);
+
+                    if (!result.Succeeded)
+                    {
+                        AddErrors(result);
+                        ViewBag.PasswordReset = false;
+                    }
+                }
             }
             return View(model);
         }

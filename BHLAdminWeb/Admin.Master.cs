@@ -29,9 +29,6 @@ namespace MOBOT.BHL.AdminWeb
             {
                 accountlink.Text = string.Format(accountlink.Text, Context.GetOwinContext().Request.User.Identity.Name);
 
-                //loginLink.Text = "Logout";
-                //loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
-
                 // Make sure the user is authorized
                 if (!Helper.IsUserAuthorized(new HttpRequestWrapper(Request)))
                 {
