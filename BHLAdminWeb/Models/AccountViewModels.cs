@@ -73,7 +73,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public string Email { get; set; }
 
-        // Return a pre-poulated instance of AppliationUser:
+        // Return a pre-poulated instance of ApplicationUser:
         public ApplicationUser GetUser()
         {
             var user = new ApplicationUser()
@@ -111,6 +111,15 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        public string Email { get; set; }
+    }
+
+
+    public class ForgotViewModel
+    {
+        public ForgotViewModel() { }
+
+        [Required]
         public string Email { get; set; }
     }
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
 using MOBOT.BHL.AdminWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -23,17 +25,22 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             UserManager = userManager;
 
-            /*
             // Use this to enforce stronger password rules
             UserManager.PasswordValidator = new PasswordValidator
             {
-                RequireDigit = true,
-                RequiredLength = 8,
+                //RequireDigit = true,
+                RequiredLength = 10,
                 //RequireLowercase = true,
-                //RequireNonLetterOrDigit = true,
+                RequireNonLetterOrDigit = true,
                 RequireUppercase = true
             };
-             */
+
+            // Set up a user token provider for use when replacing forgotten passwords
+            var provider = new DpapiDataProtectionProvider("BhlAdmin");
+            UserManager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(provider.Create("PasswordChange"));
+
+            // Set up an email service
+            UserManager.EmailService = new MVCServices.EmailService();
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -451,6 +458,41 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult Forgot()
+        {
+            ViewBag.EmailSent = false;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Forgot(ForgotViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Verify the email address
+                var user = await UserManager.FindByEmailAsync(model.Email);
+
+                // Make sure we have a valid user; if not, just act like we do (to prevent malicious use)
+                if (user != null)
+                {
+                    string userId = user.Id;
+
+                    // Generate a password reset token
+                    string resetToken = await UserManager.GeneratePasswordResetTokenAsync(userId);
+
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { UserId = user.Id, token = resetToken}, protocol: Request.Url.Scheme);
+                    string emailBody = "Reset your password by navigating to " + callbackUrl + ".\n\rIf you did not initiate this request, then please ignore this message.";
+ 
+                    // Send the email
+                    await UserManager.SendEmailAsync(userId, "Reset your BHL password", emailBody);
+                }
+                ViewBag.EmailSent = true;
+            }
+            return View(model);
+        }
 
         #region Helpers
         // Used for XSRF protection when adding external logins

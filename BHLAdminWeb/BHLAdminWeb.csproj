@@ -491,6 +491,7 @@
     <Compile Include="Models\LibraryModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
+    <Compile Include="MVCServices\EmailService.cs" />
     <Compile Include="NamePageEdit.aspx.cs">
       <DependentUpon>NamePageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1115,6 +1116,7 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\Forgot.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
