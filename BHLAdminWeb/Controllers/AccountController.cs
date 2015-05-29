@@ -30,7 +30,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 //RequireDigit = true,
                 RequiredLength = 10,
-                //RequireLowercase = true,
+                RequireLowercase = true,
                 RequireNonLetterOrDigit = true,
                 RequireUppercase = true
             };
@@ -360,12 +360,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult Index()
         {
+            // Only users in the SysAdmin role are allowed to delete user accounts
+            bool canDelete = Request.GetOwinContext().Authentication.User.IsInRole(MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin.ToString());
+
             var Db = new ApplicationDbContext();
             var users = Db.Users;
             var model = new List<EditUserViewModel>();
             foreach (var user in users)
             {
                 var u = new EditUserViewModel(user);
+                u.AllowDelete = canDelete;
                 model.Add(u);
             }
             return View(model);
@@ -405,7 +409,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
 
-        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        [Authorize(Roles = "BHL.Admin.SysAdmin")]
         public ActionResult Delete(string id = null)
         {
             var Db = new ApplicationDbContext();
@@ -421,7 +425,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        [Authorize(Roles = "BHL.Admin.SysAdmin")]
         public ActionResult DeleteConfirmed(string id)
         {
             var Db = new ApplicationDbContext();
