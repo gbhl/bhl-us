@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -10,6 +11,8 @@ namespace MOBOT.BHL.AdminWeb.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public bool Disabled { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -21,6 +24,45 @@ namespace MOBOT.BHL.AdminWeb.Models
         }
     }
 
+    /// <summary>
+    /// BHLUserManager extends UserManager with additional BHL functionality
+    /// </summary>
+    /// <typeparam name="TUser"></typeparam>
+    public class BHLUserManager<TUser> : UserManager<TUser> where TUser : class, IUser
+    {
+        public BHLUserManager(IUserStore<TUser> store)
+            : base(store)
+        {
+        }
+
+        public new MVCServices.IBHLIdentityMessageService EmailService 
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Allow emails to user to include copies or blind copies
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="bcc"></param>
+        /// <param name="subject"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        public async Task SendEmailAsync(string userId, List<string> ccList, List<string> bccList, string subject, string body)
+        {
+            if (this.EmailService != null)
+            {
+                IdentityMessage message = new IdentityMessage
+                {
+                    Destination = await this.GetEmailAsync(userId),
+                    Subject = subject,
+                    Body = body
+                };
+                await this.EmailService.SendAsync(message, ccList, bccList);
+            }
+        }
+    }
 
     public class IdentityManager
     {

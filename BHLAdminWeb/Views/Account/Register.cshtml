@@ -10,6 +10,9 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
+    <div>
+        <p><h5>After a new user account is registered, a BHL administrator will need to assign the appropriate permissions to the account before it is able to access restricted BHL functionality.</h5></p>
+    </div>
     <div class="form-group">
         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">

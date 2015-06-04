@@ -25,6 +25,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasRoles)
+        </th>
         <th></th>
     </tr>
 
@@ -41,6 +47,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HasRoles)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |

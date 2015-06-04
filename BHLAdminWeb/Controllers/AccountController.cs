@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.DataProtection;
 using MOBOT.BHL.AdminWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,11 +18,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new BHLUserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+//            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        //public AccountController(UserManager<ApplicationUser> userManager)
+        public AccountController(BHLUserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
 
@@ -50,7 +53,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             UserManager.EmailService = new MVCServices.EmailService();
         }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+        //public UserManager<ApplicationUser> UserManager { get; private set; }
+        public BHLUserManager<ApplicationUser> UserManager { get; private set; }
 
         //
         // GET: /Account/Login
@@ -73,8 +77,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if (!user.Disabled)
+                    {
+
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Please contact an administrator for access to this site.");
+                    }
                 }
                 else
                 {
@@ -101,6 +113,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            // If a user is already authenticated, then we know this is a BHL admin adding a new user account
+            bool authenticated = Request.GetOwinContext().Authentication.User.Identity.IsAuthenticated;
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.UserName };
@@ -110,8 +125,32 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    if (authenticated)
+                    {
+                        return RedirectToAction("Index", "Account");
+                    }
+                    else
+                    {
+                        await SignInAsync(user, isPersistent: false);
+
+                        // Send the user an email letting them know that an administrator will assign
+                        // roles to the new account.  Copy the BHL user administrator on the message.
+                        string userId = user.Id;
+                        string emailBody = string.Format(
+                            "Your new user account has been registered successfully.\n\r" +
+                            "Username: {0}\r" +
+                            "First Name: {1}\r" +
+                            "Last Name: {2}\r" +
+                            "Email Address: {3}\n\r" +
+                            "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
+                            "The administrator will be notify you by email when the permissions have been assigned. Thank you for your patience.",
+                            user.UserName, user.FirstName, user.LastName, user.Email);
+                        List<string> bccList = new List<string>();
+                        bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
+                        await UserManager.SendEmailAsync(userId, new List<string>(), bccList, "Your new BHL user account", emailBody);
+
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -370,6 +409,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 var u = new EditUserViewModel(user);
                 u.AllowDelete = canDelete;
+                u.HasRoles = (user.Roles.ToArray().Count() > 0);
+
                 model.Add(u);
             }
             return View(model);
@@ -399,6 +440,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
+                user.Disabled = model.Disabled;
                 Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 await Db.SaveChangesAsync();
                 return RedirectToAction("Index");

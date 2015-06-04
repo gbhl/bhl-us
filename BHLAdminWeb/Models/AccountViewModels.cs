@@ -71,6 +71,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
         // Return a pre-poulated instance of ApplicationUser:
@@ -99,6 +100,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.FirstName = user.FirstName;
             this.LastName = user.LastName;
             this.Email = user.Email;
+            this.Disabled = user.Disabled;
         }
 
         [Required]
@@ -111,9 +113,15 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Required]
         public string Email { get; set; }
 
+        public bool Disabled { get; set; }
+
         public bool AllowDelete = false;
+
+        [Display(Name = "Has Assigned Roles")]
+        public bool HasRoles { get; set; }
     }
 
 

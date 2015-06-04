@@ -8,9 +8,26 @@ using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.MVCServices
 {
-    public class EmailService : IIdentityMessageService
+    public interface IBHLIdentityMessageService : IIdentityMessageService
+    {
+        Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList);
+    }
+
+    public class EmailService : IBHLIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
+        {
+            return this.SendAsync(message, new List<string>(), new List<string>());
+        }
+
+        /// <summary>
+        /// SendAsync overload that allows for the message to be copied or blind copied to additional recipeients
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="ccList"></param>
+        /// <param name="bccList"></param>
+        /// <returns></returns>
+        public Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList)
         {
             // Credentials:
             var credentialUserName = ConfigurationManager.AppSettings["EmailFromName"];
@@ -21,6 +38,9 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
             // Create the message:
             var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
+
+            foreach(string cc in ccList) mail.CC.Add(cc);
+            foreach (string bcc in bccList) mail.Bcc.Add(bcc);
 
             mail.Subject = message.Subject;
             mail.Body = message.Body;
