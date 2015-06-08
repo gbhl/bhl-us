@@ -333,6 +333,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new ApplicationUser() { UserName = model.UserName };
+                user.Email = model.Email;
 
                 try
                 {
@@ -344,6 +345,21 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         if (result.Succeeded)
                         {
                             await SignInAsync(user, isPersistent: false);
+
+                            // Send the user an email letting them know that an administrator will assign
+                            // roles to the new account.  Copy the BHL user administrator on the message.
+                            string userId = user.Id;
+                            string emailBody = string.Format(
+                                "Your new user account has been registered successfully.\n\r" +
+                                "Username: {0}\r" +
+                                "Email Address: {1}\n\r" +
+                                "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
+                                "The administrator will be notify you by email when the permissions have been assigned. Thank you for your patience.",
+                                user.UserName, user.Email);
+                            List<string> bccList = new List<string>();
+                            bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
+                            await UserManager.SendEmailAsync(userId, new List<string>(), bccList, "Your new BHL user account", emailBody);
+
                             return RedirectToLocal(returnUrl);
                         }
                     }
@@ -540,7 +556,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     string emailBody = "Reset your password by navigating to " + callbackUrl + ".\n\rIf you did not initiate this request, then please ignore this message.";
  
                     // Send the email
-                    await UserManager.SendEmailAsync(userId, "Reset your BHL password", emailBody);
+                    await UserManager.SendEmailAsync(userId, null, null, "Reset your BHL password", emailBody);
                 }
                 ViewBag.EmailSent = true;
             }

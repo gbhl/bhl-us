@@ -39,8 +39,8 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             // Create the message:
             var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
 
-            foreach(string cc in ccList) mail.CC.Add(cc);
-            foreach (string bcc in bccList) mail.Bcc.Add(bcc);
+            if (ccList != null) foreach(string cc in ccList) mail.CC.Add(cc);
+            if (bccList != null) foreach (string bcc in bccList) mail.Bcc.Add(bcc);
 
             mail.Subject = message.Subject;
             mail.Body = message.Body;

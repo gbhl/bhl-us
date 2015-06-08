@@ -10,6 +10,9 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+
+        [Required]
+        public string Email { get; set; }
     }
 
     public class ManageUserViewModel
