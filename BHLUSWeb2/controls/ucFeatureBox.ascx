@@ -25,12 +25,12 @@
 </asp:Panel>
 <asp:Panel ID="panCollection" runat="server"  Visible="false">
     <div class="<%= SpecialClass %>"  id="<%= specialID %>" >
-        <h3>Featured Collection</h3>
+        <h3>Featured Content</h3>
         <h4><%= title %></h4>
          <span class="content">
          <a id="lnkFeaturedCollectionImage" title="" href="{0}/collection/{1}" runat="server">
 <img id="imgFeaturedCollection" alt="Shark Week Collection" src=""  runat="server"/>
 </a></span>
-         <a id="lnkCollectionButton" class="featurebutton-home" href="{0}/collection/{1}" runat="server">View the Collection</a>
+         <a id="lnkCollectionButton" class="featurebutton-home" href="{0}/collection/{1}" runat="server">Explore</a>
         </div>
 </asp:Panel>

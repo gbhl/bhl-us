@@ -4,18 +4,32 @@ AS
 
 SET NOCOUNT ON
 
-SELECT	[CollectionID],
-		[CollectionName],
-		[CollectionDescription],
-		[CollectionURL],
-		[CanContainTitles],
-		[CanContainItems],
-		[Active],
-		[HtmlContent]
-FROM	[dbo].[Collection]
-WHERE	[Active] = 1
-AND		[CollectionTarget] IN ('BHL', 'All')
-ORDER BY 
-		[CollectionName]
+-- Only include collections that have content
+SELECT	c.[CollectionID],
+		c.[CollectionName],
+		c.[CollectionDescription],
+		c.[CollectionURL],
+		c.[CanContainTitles],
+		c.[CanContainItems],
+		c.[Active],
+		c.[HtmlContent]
+FROM	[dbo].[Collection] c INNER JOIN [dbo].[TitleCollection] tc ON c.CollectionID = tc.CollectionID
+WHERE	c.[Active] = 1
+AND		c.[CollectionTarget] IN ('BHL', 'All')
 
+UNION
+
+SELECT	c.[CollectionID],
+		c.[CollectionName],
+		c.[CollectionDescription],
+		c.[CollectionURL],
+		c.[CanContainTitles],
+		c.[CanContainItems],
+		c.[Active],
+		c.[HtmlContent]
+FROM	[dbo].[Collection] c INNER JOIN [dbo].[ItemCollection] ic ON c.CollectionID = ic.CollectionID
+WHERE	c.[Active] = 1
+AND		c.[CollectionTarget] IN ('BHL', 'All')
+ORDER BY 
+		c.[CollectionName]
 
