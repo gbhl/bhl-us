@@ -250,20 +250,20 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="persist">If true, rows will be saved to the database.</param>
         /// <param name="securityToken"></param>
         /// <returns></returns>
-        public void GetRows(bool isPreview, bool persist, string securityToken)
+        public void GetRows(bool isPreview, bool persist, int userId)
         {
             List<List<string>> rows = new List<List<string>>();
 
             switch (this.DataSourceType)
             {
                 case "text/plain":
-                    rows = GetRowsFromTextFile(isPreview, persist, securityToken);
+                    rows = GetRowsFromTextFile(isPreview, persist, userId);
                     break;
                 case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-                    rows = GetRowsFromExcel(ExcelType.Xlsx, isPreview, persist, securityToken);
+                    rows = GetRowsFromExcel(ExcelType.Xlsx, isPreview, persist, userId);
                     break;
                 case "application/vnd.ms-excel":
-                    rows = GetRowsFromExcel(ExcelType.Xls, isPreview, persist, securityToken);
+                    rows = GetRowsFromExcel(ExcelType.Xls, isPreview, persist, userId);
                     break;
             }
 
@@ -275,7 +275,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// </summary>
         /// <param name="securityToken"></param>
         /// <returns>Identifier of the ImportFile record.</returns>
-        public void ImportFile(string securityToken)
+        public void ImportFile(int userId)
         {
             BHLProvider service = new BHLProvider();
 
@@ -291,11 +291,11 @@ namespace MOBOT.BHL.AdminWeb.Models
                 {
                     // Insert a new ImportFile record.
                     ImportFile importFile = service.ImportFileInsertAuto((int)FileStatus.Loading, this.FileName, this.Contributor,
-                        GetUserID(securityToken));
+                        userId);
                     this.ImportFileID = importFile.ImportFileID;
 
                     // Read and save all of the rows from the file
-                    GetRows(false, true, securityToken);
+                    GetRows(false, true, userId);
 
                     // Update the status of the ImportFile record.
                     importFile.ImportFileStatusID = (int)FileStatus.New;
@@ -318,18 +318,18 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// Publish the metadata for all "New" records in the file into the production tables, and set the status of the records to "Imported".
         /// </summary>
         /// <param name="securityToken"></param>
-        public void PublishFile(string securityToken)
+        public void PublishFile(int userId)
         {
-            new BHLProvider().ImportFilePublishToProduction((int)this.ImportFileID, GetUserID(securityToken));
+            new BHLProvider().ImportFilePublishToProduction((int)this.ImportFileID, userId);
         }
 
         /// <summary>
         /// Set the status of the file and all "New" records in the file to "Rejected".
         /// </summary>
         /// <param name="securityToken"></param>
-        public void RejectFile(string securityToken)
+        public void RejectFile(int userId)
         {
-            new BHLProvider().ImportFileRejectFile((int)this.ImportFileID, GetUserID(securityToken));
+            new BHLProvider().ImportFileRejectFile((int)this.ImportFileID, userId);
         }
 
         /// <summary>
@@ -390,10 +390,10 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="importRecordStatusID"></param>
         /// <param name="securityToken"></param>
         /// <returns>The name of the new status.</returns>
-        public string UpdateRecordStatus(int importRecordID, int importRecordStatusID, string securityToken)
+        public string UpdateRecordStatus(int importRecordID, int importRecordStatusID, int userId)
         {
             BHLProvider bhlService = new BHLProvider();
-            ImportRecord updatedRecord = bhlService.ImportRecordUpdateRecordStatus(importRecordID, importRecordStatusID, GetUserID(securityToken));
+            ImportRecord updatedRecord = bhlService.ImportRecordUpdateRecordStatus(importRecordID, importRecordStatusID, userId);
             return bhlService.ImportRecordStatusSelectAuto(updatedRecord.ImportRecordStatusID).StatusName;
         }
 
@@ -520,7 +520,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="isPreview">If true, only 50 rows of data are returned.  Otherwise, all rows are returned.</param>
         /// <param name="persist">If true, rows will be saved to the database.</param>
         /// <returns></returns>
-        private List<List<string>> GetRowsFromTextFile(bool isPreview, bool persist, string securityToken)
+        private List<List<string>> GetRowsFromTextFile(bool isPreview, bool persist, int userId)
         {
             List<List<string>> importRows = new List<List<string>>();
 
@@ -562,7 +562,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     }
 
                     if (persist)
-                        this.SaveCitation(row, securityToken);
+                        this.SaveCitation(row, userId);
                     else
                         importRows.Add(row);
                     count++;
@@ -579,7 +579,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="isPreview">If true, only 50 rows of data are returned.  Otherwise, all rows are returned.</param>
         /// <param name="persist">If true, rows will be saved to the database.</param>
         /// <returns></returns>
-        private List<List<string>> GetRowsFromExcel(ExcelType excelType, bool isPreview, bool persist, string securityToken)
+        private List<List<string>> GetRowsFromExcel(ExcelType excelType, bool isPreview, bool persist, int userId)
         {
             List<List<string>> importRows = new List<List<string>>();
 
@@ -616,7 +616,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                         // Save the row
                         if (persist)
-                            this.SaveCitation(row, securityToken);
+                            this.SaveCitation(row, userId);
                         else
                             importRows.Add(row);
                     }
@@ -738,17 +738,6 @@ namespace MOBOT.BHL.AdminWeb.Models
             return importRecordKeyword;
         }
 
-        /// <summary>
-        /// Get the ID of the user associated with the specified security token
-        /// </summary>
-        /// <param name="securityToken"></param>
-        /// <returns></returns>
-        private int GetUserID(string securityToken)
-        {
-            SecUser user = Helper.GetSecProvider().SecUserSelect(securityToken);
-            return (user == null) ? 1 : user.UserID;
-        }
- 
         #endregion Private Methods
 
         #region Database interactions
@@ -758,7 +747,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// </summary>
         /// <param name="row"></param>
         /// <param name="securityToken"></param>
-        private void SaveCitation(List<string> row, string securityToken)
+        private void SaveCitation(List<string> row, int userId)
         {
             ImportRecord citation = new ImportRecord();
             citation.ImportFileID = (int)this.ImportFileID;
@@ -852,7 +841,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             // Save the citation to the database
-            new BHLProvider().ImportRecordSave(citation, GetUserID(securityToken));
+            new BHLProvider().ImportRecordSave(citation, userId);
         }
 
         #endregion Database interactions

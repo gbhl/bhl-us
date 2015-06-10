@@ -71,6 +71,7 @@ namespace MOBOT.BHL.AdminWeb
                     Item item = (Item)Session["Item" + itemIdTextBox.Text];
 
                     // Make sure the selected segment isn't already associated with this item
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                     bool segmentExists = false;
                     foreach (Segment existingSegment in item.Segments)
                     {
@@ -88,7 +89,7 @@ namespace MOBOT.BHL.AdminWeb
                                         segment.SegmentID != existingSegment.SegmentID)
                                     {
                                         segment.SequenceOrder++;
-                                        segment.LastModifiedUserID = getSecUser().UserID;
+                                        segment.LastModifiedUserID = userId;
                                     }
                                 }
                             }
@@ -322,12 +323,6 @@ namespace MOBOT.BHL.AdminWeb
             CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
             titleList.DataSource = itemTitles;
             titleList.DataBind();
-        }
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
         }
 
         private bool validate(Item item)
@@ -731,8 +726,7 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void addLanguageButton_Click(object sender, EventArgs e)
         {
-            SecUser secUser = this.getSecUser();
-            int userId = secUser.UserID;
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
             Item item = (Item)Session["Item" + itemIdTextBox.Text];
             ItemLanguage il = new ItemLanguage(0, item.ItemID, "", DateTime.Now, userId);
@@ -844,7 +838,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     Item item = (Item)Session["Item" + itemIdTextBox.Text];
 
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                     string newSeqString = sequenceTextBox.Text.Trim();
                     short newSeq = 0;
@@ -869,7 +863,7 @@ namespace MOBOT.BHL.AdminWeb
                                     if (segment.SequenceOrder >= newSeq && segment.SequenceOrder < oldSeq)
                                     {
                                         segment.SequenceOrder++;
-                                        segment.LastModifiedUserID = secUser.UserID;
+                                        segment.LastModifiedUserID = userId;
                                     }
                                 }
                             }
@@ -883,13 +877,13 @@ namespace MOBOT.BHL.AdminWeb
                                     if (segment.SequenceOrder <= newSeq && segment.SequenceOrder > oldSeq)
                                     {
                                         segment.SequenceOrder--;
-                                        segment.LastModifiedUserID = secUser.UserID;
+                                        segment.LastModifiedUserID = userId;
                                     }
                                 }
                             }
 
                             changedSegment.SequenceOrder = newSeq;
-                            changedSegment.LastModifiedUserID = secUser.UserID;
+                            changedSegment.LastModifiedUserID = userId;
                         }
                     }
                 }
@@ -918,12 +912,13 @@ namespace MOBOT.BHL.AdminWeb
                 currentSegment.ItemID = null;
 
                 // Adjust the sequence order of all segments "after" the one being "deleted"
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 foreach (Segment segment in item.Segments)
                 {
                     if (segment.SequenceOrder > currentSegment.SequenceOrder)
                     {
                         segment.SequenceOrder--;
-                        segment.LastModifiedUserID = getSecUser().UserID;
+                        segment.LastModifiedUserID = userId;
                     }
                 }
                 Session["Item" + itemIdTextBox.Text] = item;
@@ -1128,8 +1123,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( validate( item ) )
 			{
                 int? i = null;
-                SecUser secUser = this.getSecUser();
-                int? userId = secUser.UserID;
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 // Gather up data on form
                 item.RedirectItemID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));

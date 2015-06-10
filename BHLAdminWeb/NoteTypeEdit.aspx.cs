@@ -67,12 +67,6 @@ namespace MOBOT.BHL.AdminWeb
 			return !flag;
 		}
 
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-        }
-
 		#region Event handlers
 
 		protected void saveButton_Click( object sender, EventArgs e )
@@ -87,8 +81,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 
                 // Set the id of the editing user
-                SecUser secUser = this.getSecUser();
-                int? userId = secUser.UserID;
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 NoteType noteType = new BHLProvider().NoteTypeSelectAuto(int.Parse(idLabel.Text));
                 noteType.NoteTypeName = noteTypeNameTextBox.Text.Trim();
@@ -114,8 +107,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( validate( true ) )
 			{
                 // Set the id of the editing user
-                SecUser secUser = this.getSecUser();
-                int? userId = secUser.UserID;
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 NoteType noteType = new NoteType();
                 noteType.NoteTypeName = noteTypeNameTextBox.Text.Trim();

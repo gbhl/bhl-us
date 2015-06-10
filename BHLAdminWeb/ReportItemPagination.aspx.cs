@@ -99,8 +99,7 @@ namespace MOBOT.BHL.AdminWeb
             string updateMsg = string.Empty;
             litUpdateResult.Text = string.Empty;
 
-            SecUser secUser = this.getSecUser();
-            int userId = secUser.UserID;
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
             try
             {
@@ -200,12 +199,6 @@ namespace MOBOT.BHL.AdminWeb
         private void SetMessage(string message)
         {
             litUpdateResult.Text = "<font color='red'>" + message + "</font>";
-        }
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
         }
     }
 }

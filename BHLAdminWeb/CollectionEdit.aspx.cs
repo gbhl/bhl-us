@@ -326,7 +326,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 if (imageUpload.HasFile)
                 {
-                    string imagePath = string.Format(ConfigurationManager.AppSettings["CollectionImageUploadPath"], imageUpload.FileName);
+                    string imagePath = string.Format(ConfigurationManager.AppSettings["CollectionImagePath"], imageUpload.FileName);
                     string imageUploadPath = string.Format(ConfigurationManager.AppSettings["CollectionImageUploadPath"], imageUpload.FileName);
                     collection.ImageURL = imagePath;
                     lblImageUrl.Text = imagePath;

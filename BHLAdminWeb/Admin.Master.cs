@@ -40,16 +40,6 @@ namespace MOBOT.BHL.AdminWeb
                 Response.Redirect("/account/Login");
             }
 
-            // Make sure that the authorized user is valid for the production site (some are
-            // restricted to test)
-            String isProduction = ConfigurationManager.AppSettings["IsProduction"] as String;
-            if (String.Compare(isProduction, "true", true) == 0)
-            {
-                HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-                SecUser user = Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-                String userName = user.UserName;
-            }
-
             // Set an alert message if the full-text catalog is offline
             if (ConfigurationManager.AppSettings["EnableFullTextSearch"] == "true") // full-text search is enable site-wide
             {

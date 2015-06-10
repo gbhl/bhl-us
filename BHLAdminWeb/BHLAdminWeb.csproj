@@ -463,20 +463,6 @@
     <Compile Include="LanguageEdit.aspx.designer.cs">
       <DependentUpon>LanguageEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Ligustrum.aspx.cs">
-      <DependentUpon>Ligustrum.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Ligustrum.aspx.designer.cs">
-      <DependentUpon>Ligustrum.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="MarcDetails.aspx.cs">
       <DependentUpon>MarcDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -998,7 +984,6 @@
     <Content Include="js\jquery.easing.1.3.js" />
     <Content Include="js\jquery.jeditable.1.7.3.min.js" />
     <Content Include="js\jquery.jqGrid.min.js" />
-    <Content Include="Ligustrum.aspx" />
     <Content Include="PageNotFound.aspx" />
     <Content Include="ReportCharacterEncodingProblems.aspx" />
     <Content Include="ReportItemsByContributorCSV.ashx" />
@@ -1057,20 +1042,19 @@
     <Content Include="styles\adminstyle.css" />
     <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_flat_10_000000_40x100.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_100_f6f6f6_1x400.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_222222_256x240.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_228ef1_256x240.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_ef8c08_256x240.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_ffd27a_256x240.png" />
-    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_454545_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_888888_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="styles\jquery-ui-1.11.4\jquery-ui.min.css" />
     <Content Include="styles\jquery.dataTables.css" />
     <Content Include="styles\ui.jqdatatable.css" />
@@ -1134,6 +1118,9 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <None Include="Web.config.template">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1170,7 +1157,6 @@
     <Content Include="ItemStatusEdit.aspx" />
     <Content Include="LanguageEdit.aspx" />
     <Content Include="LibraryStatsAbout.html" />
-    <Content Include="Login.aspx" />
     <Content Include="MarcDetails.aspx" />
     <Content Include="NamePageEdit.aspx" />
     <Content Include="OpenUrlResultDetail.aspx" />

@@ -271,12 +271,6 @@ namespace MOBOT.BHL.AdminWeb
 			return !flag;
 		}
 
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-        }
-
 		#region Event handlers
 
 		protected void namePageList_RowEditing( object sender, GridViewEditEventArgs e )
@@ -492,9 +486,8 @@ namespace MOBOT.BHL.AdminWeb
 				}
 
                 // Save the names
-                SecUser secUser = this.getSecUser();
-                int? userId = secUser.UserID;
-				bp.NamePageSave( namePages, (int)userId);
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                bp.NamePageSave(namePages, (int)userId);
 
                 // After a successful save operation, reload the data
                 Session["NamePages" + pageIdTextBox.Text] = bp.NamePageSelectByPageID(ps.PageID);

@@ -127,9 +127,9 @@ namespace MOBOT.BHL.AdminWeb
 					if ( item.PaginationStatusID == (int)PaginationStatus.InProgress )
 					{
 						// Look up userid based on token string
-						SecUser secUser = getSecUser();
-						configurePaginationStatusButtons( item, ( item.PaginationStatusUserID == secUser.UserID ) );
-						toggleButtons( item.PaginationStatusUserID == secUser.UserID );
+                        int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                        configurePaginationStatusButtons( item, ( item.PaginationStatusUserID == userId ) );
+						toggleButtons( item.PaginationStatusUserID == userId );
 					}
 					else
 					{
@@ -193,12 +193,6 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			bp.ItemUpdatePaginationStatus( itemId, paginationStatusId, userId );
 			checkPaginationStatus();
-		}
-
-		private SecUser getSecUser()
-		{
-			HttpCookie tokenCookie = Request.Cookies[ "MOBOTSecurityToken" ];
-			return Helper.GetSecProvider().SecUserSelect( tokenCookie.Value );
 		}
 
 		#region Event handlers
@@ -456,10 +450,10 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				SecUser secUser = getSecUser();
-				int[] arrPages = new int[ pages.Count ];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), secUser.UserID );
+				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -492,10 +486,10 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				SecUser secUser = getSecUser();
-				int[] arrPages = new int[ pages.Count ];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), secUser.UserID );
+				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -528,11 +522,11 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				SecUser secUser = getSecUser();
-				int[] arrPages = new int[ pages.Count ];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), secUser.UserID );
-				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), secUser.UserID );
+				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), userId );
+				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -566,10 +560,10 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				SecUser secUser = getSecUser();
-				int[] arrPages = new int[ pages.Count ];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                int[] arrPages = new int[pages.Count];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateIssue( arrPages, issuePrefixCombo.SelectedItem.Text, issueTextBox.Text.Trim(), secUser.UserID );
+				bp.PageUpdateIssue( arrPages, issuePrefixCombo.SelectedItem.Text, issueTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -665,13 +659,13 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void clearIndicatedPageButton_Click( object sender, EventArgs e )
 		{
-			SecUser secUser = getSecUser();
-			List<int> pages = getSelectedPageIds();
+			int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+            List<int> pages = getSelectedPageIds();
 			if ( pages.Count > 0 )
 			{
 				int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.IndicatedPageDeleteAllForPage( arrPages, secUser.UserID );
+				bp.IndicatedPageDeleteAllForPage( arrPages, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -702,10 +696,10 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				SecUser secUser = getSecUser();
-				int[] arrPages = new int[ pages.Count ];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.Page_PageTypeSave( arrPages, int.Parse( pageTypeCombo.SelectedValue ), secUser.UserID );
+				bp.Page_PageTypeSave( arrPages, int.Parse( pageTypeCombo.SelectedValue ), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -745,11 +739,11 @@ namespace MOBOT.BHL.AdminWeb
             }
             else
             {
-                SecUser secUser = getSecUser();
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[pages.Count];
                 pages.CopyTo(arrPages);
-                bp.Page_PageTypeDeleteAllForPage(arrPages, secUser.UserID);
-                bp.Page_PageTypeSave(arrPages, int.Parse(pageTypeCombo.SelectedValue), secUser.UserID);
+                bp.Page_PageTypeDeleteAllForPage(arrPages, userId);
+                bp.Page_PageTypeSave(arrPages, int.Parse(pageTypeCombo.SelectedValue), userId);
                 int itemId = int.Parse(itemDropDownList.SelectedValue);
                 //fillPageList(itemId);
 
@@ -773,13 +767,13 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void clearPageTypeButton_Click( object sender, EventArgs e )
 		{
-			SecUser secUser = getSecUser();
-			List<int> pages = getSelectedPageIds();
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+            List<int> pages = getSelectedPageIds();
 			if ( pages.Count > 0 )
 			{
 				int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.Page_PageTypeDeleteAllForPage( arrPages, secUser.UserID );
+				bp.Page_PageTypeDeleteAllForPage( arrPages, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -805,7 +799,7 @@ namespace MOBOT.BHL.AdminWeb
 			int itemId = int.Parse( itemDropDownList.SelectedValue );
 			Item item = bp.ItemSelectPagination( itemId );
 			string paginationStatus = lockButton.Text;
-			SecUser secUser = getSecUser();
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
 			if ( item.PaginationStatusID.HasValue == false || 
                 item.PaginationStatusID.Value == PaginationStatus.New ||
@@ -818,20 +812,20 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				// If the status is "In Progress", validate that the action will set it to "Pending"
 				// also make sure that the logged in user has rights to unlock this item
-				if ( paginationStatus.Equals( _unlockStatus ) == false || item.PaginationStatusUserID != secUser.UserID )
+				if ( paginationStatus.Equals( _unlockStatus ) == false || item.PaginationStatusUserID != userId )
 				{
 					displayPaginationStatusInvalid();
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
@@ -843,7 +837,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
 				}
 			}
 		}
@@ -854,7 +848,7 @@ namespace MOBOT.BHL.AdminWeb
 			int itemId = int.Parse( itemDropDownList.SelectedValue );
 			Item item = bp.ItemSelectPagination( itemId );
 			string paginationStatus = statusButton.Text;
-			SecUser secUser = getSecUser();
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
 			if ( item.PaginationStatusID.HasValue == false || item.PaginationStatusID.Value == PaginationStatus.Pending )
 			{
@@ -865,20 +859,20 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				// If the status is "In Progress", validate that the action will set it to "Complete"
 				// also make sure that the logged in user has rights to unlock this item
-				if ( paginationStatus.Equals( _completeStatus ) == false || item.PaginationStatusUserID != secUser.UserID )
+				if ( paginationStatus.Equals( _completeStatus ) == false || item.PaginationStatusUserID != userId )
 				{
 					displayPaginationStatusInvalid();
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
 				}
 			}
 			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
@@ -890,7 +884,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, secUser.UserID );
+					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
 				}
 			}
 		}
@@ -969,12 +963,12 @@ namespace MOBOT.BHL.AdminWeb
 
                 if (!flag)
                 {
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                     int[] arrPages = new int[pages.Count];
                     pages.CopyTo(arrPages);
-                    if (replace) bp.IndicatedPageDeleteAllForPage(arrPages, secUser.UserID);
+                    if (replace) bp.IndicatedPageDeleteAllForPage(arrPages, userId);
                     bp.IndicatedPageSave(arrPages, prefixTextBox.Text.Trim(), style, start, i, impliedCheckBox.Checked,
-                        secUser.UserID);
+                        userId);
                     int itemId = int.Parse(itemDropDownList.SelectedValue);
                     //fillPageList(itemId);
 

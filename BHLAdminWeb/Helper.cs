@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -15,28 +16,6 @@ namespace MOBOT.BHL.AdminWeb
     public class Helper
     {
         private static SecProvider _secProvider = null;
-        /*
-        public sealed class SecurityFunction
-        {
-            private readonly String name;
-            private readonly int value;
-
-            public static readonly SecurityFunction BHLAdminUserBasic = new SecurityFunction(7, "BHL_Admin_UserBasic");
-            public static readonly SecurityFunction BHLAdminUserAdvanced = new SecurityFunction(277, "BHL_Admin_UserAdvanced");
-            public static readonly SecurityFunction BHLAdminPortalEditor = new SecurityFunction(8, "BHL_Admin_PortalEditor");
-            public static readonly SecurityFunction BHLAdminSysAdmin = new SecurityFunction(304, "BHL_Admin_SysAdmin");
-            public static readonly SecurityFunction BHLAdminLogin = new SecurityFunction(305, "BHL_Admin_Login");
-
-            private SecurityFunction(int value, String name)
-            {
-                this.name = name;
-                this.value = value;
-            }
-
-            public override String ToString() { return name; }
-            public int Value() { return value; }
-        }
-         */
 
         public sealed class SecurityRole
         {
@@ -58,26 +37,7 @@ namespace MOBOT.BHL.AdminWeb
         public static bool IsUserAuthenticated(HttpRequestBase request)
         {
             return request.GetOwinContext().Authentication.User.Identity.IsAuthenticated;
-
-            //HttpCookie tokenCookie = request.Cookies["MOBOTSecurityToken"];
-            //return (tokenCookie != null && tokenCookie.Value.Length > 0);
         }
-
-        /*
-        public static bool IsUserAuthorized(HttpRequestBase request, SecurityFunction securityFunction)
-        {
-            bool authorized = false;
-            HttpCookie tokenCookie = request.Cookies["MOBOTSecurityToken"];
-
-            if (tokenCookie != null && tokenCookie.Value.Length > 0)
-            {
-                MethodResult result = Helper.GetSecProvider().IsUserAuthorized(tokenCookie.Value, securityFunction.Value());
-                authorized = (result.ResultStatus == ResultStatusEnum.Success);
-            }
-
-            return authorized;
-        }
-         */
 
         public static bool IsUserAuthorized(HttpRequestBase request, SecurityRole securityRole)
         {
@@ -175,15 +135,12 @@ namespace MOBOT.BHL.AdminWeb
             return authorized;
         }
 
-        public static SecProvider GetSecProvider()
+        public static int GetCurrentUserUID(HttpRequestBase request)
         {
-            if (_secProvider == null)
-            {
-                string url = ConfigurationManager.AppSettings["MOBOTSecurityWSUrl"];
-                _secProvider = new SecProvider(url, false);
-            }
-
-            return _secProvider;
+            string userName = request.GetOwinContext().Authentication.User.Identity.Name;
+            var Db = new MOBOT.BHL.AdminWeb.Models.ApplicationDbContext();
+            var uid = (from u in Db.Users where u.UserName == userName select u.uid).Single();
+            return uid;
         }
     }
 }

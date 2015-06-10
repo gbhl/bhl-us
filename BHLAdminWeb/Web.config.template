@@ -11,47 +11,47 @@
 
     <!-- ############# SETTINGS TO OVERRIDE IN WEB.RELEASE.CONFIG ############# -->
     <!-- Default URLs -->
-    <add key="BaseUrl" value="http://beta.biodiversitylibrary.org" />
-    <add key="BibPageUrl" value="http://beta.biodiversitylibrary.org/bibliography/{0}" />
-    <add key="ItemPageUrl" value="http://beta.biodiversitylibrary.org/item/{0}" />
-    <add key="PagePageUrl" value="http://beta.biodiversitylibrary.org/page/{0}" />
-    <add key="PartPageUrl" value="http://beta.biodiversitylibrary.org/part/{0}" />
-    <add key="AuthorPageUrl" value="http://beta.biodiversitylibrary.org/creator/{0}" />
-    <add key="CollectionPageUrl" value="http://beta.biodiversitylibrary.org/collection/{0}" />
+    <add key="BaseUrl" value="http://www.biodiversitylibrary.org" />
+    <add key="BibPageUrl" value="http://www.biodiversitylibrary.org/bibliography/{0}" />
+    <add key="ItemPageUrl" value="http://www.biodiversitylibrary.org/item/{0}" />
+    <add key="PagePageUrl" value="http://www.biodiversitylibrary.org/page/{0}" />
+    <add key="PartPageUrl" value="http://www.biodiversitylibrary.org/part/{0}" />
+    <add key="AuthorPageUrl" value="http://www.biodiversitylibrary.org/creator/{0}" />
+    <add key="CollectionPageUrl" value="http://www.biodiversitylibrary.org/collection/{0}" />
     <!-- Upload path for collection images -->
-    <add key="CollectionImageUploadPath" value="\\cbiwebserver\web\beta.biodiversitylibrary.org\images\collection\{0}" />
+    <add key="CollectionImageUploadPath" value="SITE_ROOT_FOLDER\images\collection\{0}" />
     <!-- Collection image path -->
-    <add key="CollectionImagePath" value="http://beta.biodiversitylibrary.org/images/collection/{0}" />
+    <add key="CollectionImagePath" value="http://www.biodiversitylibrary.org/images/collection/{0}" />
     <!-- Upload path for iTunes images -->
-    <add key="iTunesImageUploadPath" value="\\cbiwebserver\web\beta.biodiversitylibrary.org\images\itunes\{0}" />
+    <add key="iTunesImageUploadPath" value="SITE_ROOT_FOLDER\images\itunes\{0}" />
     <!-- iTunes image path -->
-    <add key="iTunesImagePath" value="http://beta.biodiversitylibrary.org/images/itunes/{0}" />
+    <add key="iTunesImagePath" value="http://www.biodiversitylibrary.org/images/itunes/{0}" />
     <!-- Path to the alertmsg.txt file -->
-    <add key="AlertMsgPath" value="\\cbiwebserver\web\beta.biodiversitylibrary.org\alertmsg.txt" />
+    <add key="AlertMsgPath" value="SITE_ROOT_FOLDER\alertmsg.txt" />
     <!-- Value of "directive" querystring parameter that indicates the site is in debug mode -->
     <add key="DebugValue" value="debug" />
     <!-- Full upload path for MARC files -->
-    <add key="MarcUploadPath" value="C:\MOBOT\BHLAdmin\BHLAdminWeb\upload\{0}.{1}" />
+    <add key="MarcUploadPath" value="SITE_ROOT_FOLDER\upload\{0}.{1}" />
     <!-- Drive letter of upload path for MARC files  (use server if no drive letter assigned) -->
-    <add key="MarcUploadDrive" value="C:" />
+    <add key="MarcUploadDrive" value="SITE_DRIVE_LETTER_OR_SERVER" />
     <!-- Server name of upload path for MARC files -->
-    <add key="MarcUploadServer" value="\\cbiwebserver" />
+    <add key="MarcUploadServer" value="\\SITE_SERVER" />
     <!-- File paths for Citation file uploads -->
-    <add key="CitationNewPath" value="C:\MOBOT\BHLAdmin\BHLAdminWeb\Upload\Citation\New\" />
-    <add key="CitationCompletePath" value="C:\MOBOT\BHLAdmin\BHLAdminWeb\Upload\Citation\Complete\" />
-    <add key="CitationErrorPath" value="C:\MOBOT\BHLAdmin\BHLAdminWeb\Upload\Citation\Error\" />
+    <add key="CitationNewPath" value="SITE_ROOT_FOLDER\Upload\Citation\New\" />
+    <add key="CitationCompletePath" value="SITE_ROOT_FOLDER\Upload\Citation\Complete\" />
+    <add key="CitationErrorPath" value="SITE_ROOT_FOLDER\Upload\Citation\Error\" />
     <!-- File path for OCR generation -->
-    <add key="OCRJobNewPath" value="C:\MOBOT\BHLAdmin\BHLAdminWeb\ocrjob\new\" />
-    <add key="FlickrUserId" value="" />
+    <add key="OCRJobNewPath" value="SITE_ROOT_FOLDER\ocrjob\new\" />
+    <add key="FlickrUserId" value="FLICKR_USER_ID" />
     <!-- OWIN and Identity configuration -->
     <add key="owin:appStartup" value="DevelopmentConfiguration" />
     <!-- ###################################################################### -->
 
     <!-- Email settings-->
-    <add key="SMTPHost" value="mbgcas01.mobot.org"/>
-    <add key="EmailFromName" value="Biodiversity Heritage Library"/>
-    <add key="EmailFromAddress" value="biodiversitylibrary@gmail.com"/>
-    <add key="BHLUserAdminEmailAddress" value="mike.lichtenberg@mobot.org"/>
+    <add key="SMTPHost" value="MAIL_SERVER_ADDRESS"/>
+    <add key="EmailFromName" value="EMAIL_FROM_NAME"/>
+    <add key="EmailFromAddress" value="EMAIL_FROM_ADDRESS"/>
+    <add key="BHLUserAdminEmailAddress" value="ADMINISTRATOR_EMAIL_ADDRESS"/>
     <!-- Indicates if full-text search is enabled on the BHL web site -->
     <add key="EnableFullTextSearch" value="true" />
     <!-- Indicates whether to use the remote file access services -->
@@ -59,10 +59,10 @@
     <!-- Path to OCR files -->
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->
-    <add key="LocalFileFolder" value="\\mbgserv14\bhl4\" />
+    <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
     <!-- DOI file locations -->
-    <add key="DOIDepositFileLocation" value="\\mbgserv09\d$\Services\BHLDOIService\deposit\{0}.xml" />
-    <add key="DOISubmitLogFileLocation" value="\\mbgserv09\d$\Services\BHLDOIService\submitlog\{0}.log.xml" />
+    <add key="DOIDepositFileLocation" value="DOI_SERVICE_ROOT_FOLDER\deposit\{0}.xml" />
+    <add key="DOISubmitLogFileLocation" value="DOI_SERVICE_ROOT_FOLDER\submitlog\{0}.log.xml" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
     <add key="jQueryUIPath" value="/Scripts/jquery-ui-1.11.4/jquery-ui.min.js" />
@@ -83,10 +83,8 @@
     <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml" />
     <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID" />
     <!-- Flickr settings -->
-    <add key="FlickrKey" value="fc9a4526f94dddc63c76f1eeee7bbc88" />
-    <!-- 637fee3a858a0d0a9d384227488124c8-->
-    <add key="FlickrSecret" value="232c9138d3ef6d4b" />
-    <!-- 1396046c830c177d-->
+    <add key="FlickrKey" value="FLICKR_API_KEY_VALUE" />
+    <add key="FlickrSecret" value="FLICKR_API_SECRET_VALUE" />
     <add key="FlickrImageCredit" value="Image courtesy of BHL" />
     <add key="FlickrImageSource" value="http://biodiversitylibrary.org" />
     <add key="FlickrImageRights" value="Public Domain" />
@@ -118,8 +116,8 @@
   </appSettings>
   <connectionStrings>
     <remove name="BHL" />
-    <add name="BHL" connectionString="Data Source=localhost\sqlexpress2012;Initial Catalog=BHL;user=BHLService;password=BHLService; Connection Timeout = 600; Application Name=BHLAdmin" providerName="System.Data.SqlClient" />
-    <add name="BHLUser" connectionString="Data Source=localhost\sqlexpress2012;Initial Catalog=BHL;user=BHLService;password=BHLService; Connection Timeout = 600; Application Name=BHLAdmin; MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
+    <add name="BHL" connectionString="BHL_DATABASE_CONNECTION_STRING" providerName="System.Data.SqlClient" />
+    <add name="BHLUser" connectionString="BHL_USER_DATABASE_CONNECTION_STRING; MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
   </connectionStrings>
   <!--
     For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.

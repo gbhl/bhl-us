@@ -13,6 +13,8 @@ namespace MOBOT.BHL.AdminWeb.Models
         public string LastName { get; set; }
 
         public bool Disabled { get; set; }
+
+        public int uid { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

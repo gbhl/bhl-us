@@ -19,7 +19,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     {
         public AccountController()
             : this(new BHLUserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
-//            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
         }
 
@@ -53,7 +52,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             UserManager.EmailService = new MVCServices.EmailService();
         }
 
-        //public UserManager<ApplicationUser> UserManager { get; private set; }
         public BHLUserManager<ApplicationUser> UserManager { get; private set; }
 
         //

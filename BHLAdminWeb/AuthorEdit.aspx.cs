@@ -381,8 +381,7 @@ namespace MOBOT.BHL.AdminWeb
             if (validate(author))
             {
                 // Set the id of the editing user
-                SecUser secUser = this.getSecUser();
-                userId = secUser.UserID;
+                userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 // Gather up data on form
                 author.IsActive = (short)(chkIsActive.Checked ? 1 : 0);
@@ -417,12 +416,6 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion Event Handlers
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-        }
 
         private bool validate(Author author)
         {
