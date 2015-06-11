@@ -417,7 +417,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             bool canDelete = Request.GetOwinContext().Authentication.User.IsInRole(MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin.ToString());
 
             var Db = new ApplicationDbContext();
-            var users = Db.Users.OrderBy(r => r.UserName);
+            var users = Db.Users.Where(r => r.uid != 1).OrderBy(r => r.UserName);
             var model = new List<EditUserViewModel>();
             foreach (var user in users)
             {
