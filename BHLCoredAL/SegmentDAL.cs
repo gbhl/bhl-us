@@ -32,7 +32,12 @@ namespace MOBOT.BHL.DAL
                     segment.ItemVolume = item.Volume;
 
                     Title title = new TitleDAL().TitleSelectAuto(connection, transaction, item.PrimaryTitleID);
+                    segment.TitleId = title.TitleID;
+                    segment.TitleFullTitle = title.FullTitle;
                     segment.TitleShortTitle = title.ShortTitle;
+                    segment.TitlePublicationPlace = title.Datafield_260_a;
+                    segment.TitlePublisherName = title.Datafield_260_b;
+                    segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
                 }
 
                 segment.AuthorList = new SegmentAuthorDAL().SegmentAuthorSelectBySegmentID(connection, transaction, segmentId);
@@ -667,5 +672,21 @@ namespace MOBOT.BHL.DAL
             return segmentID;
         }
 
+        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int numberToReturn)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectWithoutSubmittedDOI",
+                connection, transaction,
+                CustomSqlHelper.CreateInputParameter("NumberToReturn", SqlDbType.Int, null, false, numberToReturn)))
+            {
+                using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
+                {
+                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
     }
 }

@@ -15,306 +15,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusRejected", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        bool PDFUpdatePdfStatusRejected(int pdfid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedTitleSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedItemSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicDeleteByPageID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSelectAuto", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSelectAuto(int annotationID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSaveText", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationClear", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void AnnotationClear(int annotationId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationRelationSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationNoteSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Annotation_AnnotationConceptSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSubjectSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetNamesFromOcr", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectAllPublished", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Title[] TitleSelectAllPublished();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectByTitleID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectDetailByTitleID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectDetailByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllTitleCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllItemCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllBibTeXCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllEndNoteCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllTitleCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllItemCitations", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByBarCode", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectByBarCode(string barCode);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByTitleID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdatePaginationStatus", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectAuto", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectAuto(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithoutPageNames", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithoutPageNames();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateLastPageNameLookupDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemCheckForOcrText", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        bool ItemCheckForOcrText(int itemID, string ocrTextPath);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        string ItemGetNamesXMLByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectPublished", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectPublished();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectRecentlyChanged", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectPublished", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectPublished();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogRefreshSinceDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void ItemNameFileLogRefreshSinceDate(System.DateTime startDate);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForCreate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForUpload", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateCreateDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void ItemNameFileLogUpdateCreateDate(int logID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateUploadDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void ItemNameFileLogUpdateUploadDate(int logID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/VaultSelect", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Vault VaultSelect(int vaultID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/InstitutionSelectAuto", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Institution InstitutionSelectAuto(string institutionCode);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SendEmail", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForTitle", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        string GetMODSRecordForTitle(int titleId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForItem", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        string GetMODSRecordForItem(int itemId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForSegment", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        string GetMODSRecordForSegment(int segmentId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOISelectSubmitted", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectWithoutSubmittedDOI", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIInsertAuto", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid);
-        
-        // CODEGEN: Parameter 'setValid' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateStatus", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse DOIUpdateStatus(MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateDOIName", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateBatchID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageDeleteAllForPage", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectFileNameByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectFileNameByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageMetadataSelectByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageMetadataSelectByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNamesByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
@@ -440,2349 +140,384 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool PDFUpdatePdfStatusError(int pdfid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusRejected", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        bool PDFUpdatePdfStatusRejected(int pdfid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedTitleSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedItemSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicDeleteByPageID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSelectAuto", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSelectAuto(int annotationID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSaveText", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationClear", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void AnnotationClear(int annotationId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationRelationSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationNoteSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Annotation_AnnotationConceptSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSubjectSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetNamesFromOcr", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectAllPublished", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Title[] TitleSelectAllPublished();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectByTitleID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectByTitleID(int titleID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectDetailByTitleID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectDetailByTitleID(int titleID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllTitleCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllItemCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllBibTeXCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllEndNoteCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllTitleCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllItemCitations", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Title_IdentifierSelectByTitleID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier[] Title_IdentifierSelectByTitleID(int titleID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByBarCode", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectByBarCode(string barCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByTitleID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectByTitleID(int titleID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdatePaginationStatus", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectAuto", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectAuto(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithoutPageNames", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithoutPageNames();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateLastPageNameLookupDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemCheckForOcrText", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        bool ItemCheckForOcrText(int itemID, string ocrTextPath);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        string ItemGetNamesXMLByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectPublished", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectPublished();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectRecentlyChanged", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ExportIAIdentifiers", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        string[] ExportIAIdentifiers();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectPublished", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectPublished();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectExtended", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectExtended(int segmentID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogRefreshSinceDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void ItemNameFileLogRefreshSinceDate(System.DateTime startDate);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForCreate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForUpload", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateCreateDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void ItemNameFileLogUpdateCreateDate(int logID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateUploadDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void ItemNameFileLogUpdateUploadDate(int logID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/VaultSelect", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Vault VaultSelect(int vaultID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/InstitutionSelectAuto", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Institution InstitutionSelectAuto(string institutionCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SendEmail", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForTitle", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        string GetMODSRecordForTitle(int titleId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForItem", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        string GetMODSRecordForItem(int itemId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForSegment", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        string GetMODSRecordForSegment(int segmentId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOISelectSubmitted", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectWithoutSubmittedDOI", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectWithoutSubmittedDOI", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIInsertAuto", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid);
+        
+        // CODEGEN: Parameter 'setValid' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateStatus", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse DOIUpdateStatus(MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateDOIName", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateBatchID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageDeleteAllForPage", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectFileNameByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectFileNameByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageMetadataSelectByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageMetadataSelectByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class AnnotatedTitle : @__AnnotatedTitle {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__AnnotatedTitle : CustomObjectBase {
+    public partial class Page : @__Page {
         
-        private int annotatedTitleIDField;
+        private string indicatedPagesField;
         
-        private int annotationSourceIDField;
-        
-        private System.Nullable<int> titleIDField;
-        
-        private string externalIdentifierField;
-        
-        private string authorField;
-        
-        private string titleField;
-        
-        private string editionField;
-        
-        private string volumeField;
-        
-        private string publicationDetailsField;
-        
-        private string dateField;
-        
-        private string locationField;
-        
-        private string isBeagleEraField;
-        
-        private string inscriptionField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int AnnotatedTitleID {
-            get {
-                return this.annotatedTitleIDField;
-            }
-            set {
-                this.annotatedTitleIDField = value;
-                this.RaisePropertyChanged("AnnotatedTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int AnnotationSourceID {
-            get {
-                return this.annotationSourceIDField;
-            }
-            set {
-                this.annotationSourceIDField = value;
-                this.RaisePropertyChanged("AnnotationSourceID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
-        public System.Nullable<int> TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string ExternalIdentifier {
-            get {
-                return this.externalIdentifierField;
-            }
-            set {
-                this.externalIdentifierField = value;
-                this.RaisePropertyChanged("ExternalIdentifier");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Author {
-            get {
-                return this.authorField;
-            }
-            set {
-                this.authorField = value;
-                this.RaisePropertyChanged("Author");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Edition {
-            get {
-                return this.editionField;
-            }
-            set {
-                this.editionField = value;
-                this.RaisePropertyChanged("Edition");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string PublicationDetails {
-            get {
-                return this.publicationDetailsField;
-            }
-            set {
-                this.publicationDetailsField = value;
-                this.RaisePropertyChanged("PublicationDetails");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string Date {
-            get {
-                return this.dateField;
-            }
-            set {
-                this.dateField = value;
-                this.RaisePropertyChanged("Date");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string Location {
-            get {
-                return this.locationField;
-            }
-            set {
-                this.locationField = value;
-                this.RaisePropertyChanged("Location");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string IsBeagleEra {
-            get {
-                return this.isBeagleEraField;
-            }
-            set {
-                this.isBeagleEraField = value;
-                this.RaisePropertyChanged("IsBeagleEra");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string Inscription {
-            get {
-                return this.inscriptionField;
-            }
-            set {
-                this.inscriptionField = value;
-                this.RaisePropertyChanged("Inscription");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PDF))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Institution))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Vault))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemNameFileLog))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleLanguage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleVariant))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAssociation_TitleIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAssociation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleKeyword))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__NameSegment))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NameSegment))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentPage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentPage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentKeyword))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentKeyword))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentAuthor))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentAuthor))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Segment))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemCollection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemLanguage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleItem))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Item))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleCollection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleCollection))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Title_Identifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title_Identifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AuthorIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AuthorName))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Author))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAuthor))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAuthor))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Title))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationSubject))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationSubject))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Annotation_AnnotationConcept))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation_AnnotationConcept))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationNote))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationNote))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationRelation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationRelation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Annotation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedPageCharacteristic))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPageCharacteristic))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedPage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPage))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedItem))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedTitle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class CustomObjectBase : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleEndNote : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int titleIDField;
-        
-        private int itemIDField;
-        
-        private int segmentIDField;
-        
-        private string publicationTypeField;
-        
-        private string authorsField;
-        
-        private string yearField;
-        
-        private string titleField;
-        
-        private string fullTitleField;
-        
-        private string secondaryTitleField;
-        
-        private string journalField;
-        
-        private string publisherField;
-        
-        private string publisherPlaceField;
-        
-        private string publisherNameField;
-        
-        private string volumeField;
-        
-        private string seriesField;
-        
-        private string issueField;
-        
-        private string pageRangeField;
-        
-        private string startPageField;
-        
-        private string shortTitleField;
-        
-        private string abbreviationField;
-        
-        private string isbnField;
-        
-        private string callNumberField;
-        
-        private string keywordsField;
-        
-        private string languageNameField;
-        
-        private string noteField;
-        
-        private string editionStatementField;
-        
-        private string doiField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string PublicationType {
-            get {
-                return this.publicationTypeField;
-            }
-            set {
-                this.publicationTypeField = value;
-                this.RaisePropertyChanged("PublicationType");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Authors {
-            get {
-                return this.authorsField;
-            }
-            set {
-                this.authorsField = value;
-                this.RaisePropertyChanged("Authors");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Year {
-            get {
-                return this.yearField;
-            }
-            set {
-                this.yearField = value;
-                this.RaisePropertyChanged("Year");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string FullTitle {
-            get {
-                return this.fullTitleField;
-            }
-            set {
-                this.fullTitleField = value;
-                this.RaisePropertyChanged("FullTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string SecondaryTitle {
-            get {
-                return this.secondaryTitleField;
-            }
-            set {
-                this.secondaryTitleField = value;
-                this.RaisePropertyChanged("SecondaryTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string Journal {
-            get {
-                return this.journalField;
-            }
-            set {
-                this.journalField = value;
-                this.RaisePropertyChanged("Journal");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string Publisher {
-            get {
-                return this.publisherField;
-            }
-            set {
-                this.publisherField = value;
-                this.RaisePropertyChanged("Publisher");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string PublisherPlace {
-            get {
-                return this.publisherPlaceField;
-            }
-            set {
-                this.publisherPlaceField = value;
-                this.RaisePropertyChanged("PublisherPlace");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string PublisherName {
-            get {
-                return this.publisherNameField;
-            }
-            set {
-                this.publisherNameField = value;
-                this.RaisePropertyChanged("PublisherName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public string Series {
-            get {
-                return this.seriesField;
-            }
-            set {
-                this.seriesField = value;
-                this.RaisePropertyChanged("Series");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Issue {
-            get {
-                return this.issueField;
-            }
-            set {
-                this.issueField = value;
-                this.RaisePropertyChanged("Issue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string PageRange {
-            get {
-                return this.pageRangeField;
-            }
-            set {
-                this.pageRangeField = value;
-                this.RaisePropertyChanged("PageRange");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public string StartPage {
-            get {
-                return this.startPageField;
-            }
-            set {
-                this.startPageField = value;
-                this.RaisePropertyChanged("StartPage");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public string Abbreviation {
-            get {
-                return this.abbreviationField;
-            }
-            set {
-                this.abbreviationField = value;
-                this.RaisePropertyChanged("Abbreviation");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public string Isbn {
-            get {
-                return this.isbnField;
-            }
-            set {
-                this.isbnField = value;
-                this.RaisePropertyChanged("Isbn");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
-        public string CallNumber {
-            get {
-                return this.callNumberField;
-            }
-            set {
-                this.callNumberField = value;
-                this.RaisePropertyChanged("CallNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public string Keywords {
-            get {
-                return this.keywordsField;
-            }
-            set {
-                this.keywordsField = value;
-                this.RaisePropertyChanged("Keywords");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public string LanguageName {
-            get {
-                return this.languageNameField;
-            }
-            set {
-                this.languageNameField = value;
-                this.RaisePropertyChanged("LanguageName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public string Note {
-            get {
-                return this.noteField;
-            }
-            set {
-                this.noteField = value;
-                this.RaisePropertyChanged("Note");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public string EditionStatement {
-            get {
-                return this.editionStatementField;
-            }
-            set {
-                this.editionStatementField = value;
-                this.RaisePropertyChanged("EditionStatement");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public string Doi {
-            get {
-                return this.doiField;
-            }
-            set {
-                this.doiField = value;
-                this.RaisePropertyChanged("Doi");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleBibTeX : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string citationKeyField;
-        
-        private string urlField;
-        
-        private string noteField;
-        
-        private string typeField;
-        
-        private string titleField;
-        
-        private string journalField;
-        
-        private string publisherField;
-        
-        private string yearField;
-        
-        private string volumeField;
-        
-        private string seriesField;
-        
-        private string issueField;
-        
-        private string copyrightStatusField;
-        
-        private string authorsField;
-        
-        private int pagesField;
-        
-        private string pageRangeField;
-        
-        private string keywordsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string CitationKey {
-            get {
-                return this.citationKeyField;
-            }
-            set {
-                this.citationKeyField = value;
-                this.RaisePropertyChanged("CitationKey");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Url {
-            get {
-                return this.urlField;
-            }
-            set {
-                this.urlField = value;
-                this.RaisePropertyChanged("Url");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string Note {
-            get {
-                return this.noteField;
-            }
-            set {
-                this.noteField = value;
-                this.RaisePropertyChanged("Note");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string Type {
-            get {
-                return this.typeField;
-            }
-            set {
-                this.typeField = value;
-                this.RaisePropertyChanged("Type");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Journal {
-            get {
-                return this.journalField;
-            }
-            set {
-                this.journalField = value;
-                this.RaisePropertyChanged("Journal");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Publisher {
-            get {
-                return this.publisherField;
-            }
-            set {
-                this.publisherField = value;
-                this.RaisePropertyChanged("Publisher");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string Year {
-            get {
-                return this.yearField;
-            }
-            set {
-                this.yearField = value;
-                this.RaisePropertyChanged("Year");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string Series {
-            get {
-                return this.seriesField;
-            }
-            set {
-                this.seriesField = value;
-                this.RaisePropertyChanged("Series");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string Issue {
-            get {
-                return this.issueField;
-            }
-            set {
-                this.issueField = value;
-                this.RaisePropertyChanged("Issue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string CopyrightStatus {
-            get {
-                return this.copyrightStatusField;
-            }
-            set {
-                this.copyrightStatusField = value;
-                this.RaisePropertyChanged("CopyrightStatus");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string Authors {
-            get {
-                return this.authorsField;
-            }
-            set {
-                this.authorsField = value;
-                this.RaisePropertyChanged("Authors");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public int Pages {
-            get {
-                return this.pagesField;
-            }
-            set {
-                this.pagesField = value;
-                this.RaisePropertyChanged("Pages");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public string PageRange {
-            get {
-                return this.pageRangeField;
-            }
-            set {
-                this.pageRangeField = value;
-                this.RaisePropertyChanged("PageRange");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Keywords {
-            get {
-                return this.keywordsField;
-            }
-            set {
-                this.keywordsField = value;
-                this.RaisePropertyChanged("Keywords");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class NameFinderResponse : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string nameField;
-        
-        private string nameResolvedField;
-        
-        private string canonicalNameField;
-        
-        private string[] identifiersField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-                this.RaisePropertyChanged("Name");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string NameResolved {
-            get {
-                return this.nameResolvedField;
-            }
-            set {
-                this.nameResolvedField = value;
-                this.RaisePropertyChanged("NameResolved");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string CanonicalName {
-            get {
-                return this.canonicalNameField;
-            }
-            set {
-                this.canonicalNameField = value;
-                this.RaisePropertyChanged("CanonicalName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
-        public string[] Identifiers {
-            get {
-                return this.identifiersField;
-            }
-            set {
-                this.identifiersField = value;
-                this.RaisePropertyChanged("Identifiers");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageSummaryView : CustomObjectBase {
-        
-        private string mARCBibIDField;
-        
-        private int titleIDField;
-        
-        private System.Nullable<int> redirectTitleIDField;
-        
-        private string fullTitleField;
-        
-        private bool rareBooksField;
-        
-        private string shortTitleField;
-        
-        private string sortTitleField;
-        
-        private string partNumberField;
-        
-        private string partNameField;
-        
-        private int itemStatusIDField;
-        
-        private int itemIDField;
-        
-        private System.Nullable<int> redirectItemIDField;
-        
-        private int primaryTitleIDField;
-        
-        private string barCodeField;
-        
-        private System.Nullable<int> pDFSizeField;
-        
-        private string volumeField;
-        
-        private string fileRootFolderField;
-        
-        private System.Nullable<short> itemSequenceField;
-        
-        private int pageIDField;
-        
-        private string fileNamePrefixField;
-        
-        private string pageDescriptionField;
-        
-        private System.Nullable<int> sequenceOrderField;
-        
-        private bool illustrationField;
-        
-        private bool activeField;
-        
-        private string externalURLField;
-        
-        private string externalBaseURLField;
-        
-        private string altExternalURLField;
-        
-        private string webVirtualDirectoryField;
-        
-        private string oCRFolderShareField;
-        
-        private string downloadUrlField;
-        
-        private string imageServerUrlFormatField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string MARCBibID {
-            get {
-                return this.mARCBibIDField;
-            }
-            set {
-                this.mARCBibIDField = value;
-                this.RaisePropertyChanged("MARCBibID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
-        public System.Nullable<int> RedirectTitleID {
-            get {
-                return this.redirectTitleIDField;
-            }
-            set {
-                this.redirectTitleIDField = value;
-                this.RaisePropertyChanged("RedirectTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string FullTitle {
-            get {
-                return this.fullTitleField;
-            }
-            set {
-                this.fullTitleField = value;
-                this.RaisePropertyChanged("FullTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool RareBooks {
-            get {
-                return this.rareBooksField;
-            }
-            set {
-                this.rareBooksField = value;
-                this.RaisePropertyChanged("RareBooks");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string SortTitle {
-            get {
-                return this.sortTitleField;
-            }
-            set {
-                this.sortTitleField = value;
-                this.RaisePropertyChanged("SortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string PartNumber {
-            get {
-                return this.partNumberField;
-            }
-            set {
-                this.partNumberField = value;
-                this.RaisePropertyChanged("PartNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string PartName {
-            get {
-                return this.partNameField;
-            }
-            set {
-                this.partNameField = value;
-                this.RaisePropertyChanged("PartName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public int ItemStatusID {
-            get {
-                return this.itemStatusIDField;
-            }
-            set {
-                this.itemStatusIDField = value;
-                this.RaisePropertyChanged("ItemStatusID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
-        public System.Nullable<int> RedirectItemID {
-            get {
-                return this.redirectItemIDField;
-            }
-            set {
-                this.redirectItemIDField = value;
-                this.RaisePropertyChanged("RedirectItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public int PrimaryTitleID {
-            get {
-                return this.primaryTitleIDField;
-            }
-            set {
-                this.primaryTitleIDField = value;
-                this.RaisePropertyChanged("PrimaryTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public string BarCode {
-            get {
-                return this.barCodeField;
-            }
-            set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
-        public System.Nullable<int> PDFSize {
-            get {
-                return this.pDFSizeField;
-            }
-            set {
-                this.pDFSizeField = value;
-                this.RaisePropertyChanged("PDFSize");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string FileRootFolder {
-            get {
-                return this.fileRootFolderField;
-            }
-            set {
-                this.fileRootFolderField = value;
-                this.RaisePropertyChanged("FileRootFolder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
-        public System.Nullable<short> ItemSequence {
-            get {
-                return this.itemSequenceField;
-            }
-            set {
-                this.itemSequenceField = value;
-                this.RaisePropertyChanged("ItemSequence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public string FileNamePrefix {
-            get {
-                return this.fileNamePrefixField;
-            }
-            set {
-                this.fileNamePrefixField = value;
-                this.RaisePropertyChanged("FileNamePrefix");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public string PageDescription {
-            get {
-                return this.pageDescriptionField;
-            }
-            set {
-                this.pageDescriptionField = value;
-                this.RaisePropertyChanged("PageDescription");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
-        public System.Nullable<int> SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public bool Illustration {
-            get {
-                return this.illustrationField;
-            }
-            set {
-                this.illustrationField = value;
-                this.RaisePropertyChanged("Illustration");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public bool Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-                this.RaisePropertyChanged("Active");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public string ExternalURL {
-            get {
-                return this.externalURLField;
-            }
-            set {
-                this.externalURLField = value;
-                this.RaisePropertyChanged("ExternalURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public string ExternalBaseURL {
-            get {
-                return this.externalBaseURLField;
-            }
-            set {
-                this.externalBaseURLField = value;
-                this.RaisePropertyChanged("ExternalBaseURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public string AltExternalURL {
-            get {
-                return this.altExternalURLField;
-            }
-            set {
-                this.altExternalURLField = value;
-                this.RaisePropertyChanged("AltExternalURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
-        public string WebVirtualDirectory {
-            get {
-                return this.webVirtualDirectoryField;
-            }
-            set {
-                this.webVirtualDirectoryField = value;
-                this.RaisePropertyChanged("WebVirtualDirectory");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
-        public string OCRFolderShare {
-            get {
-                return this.oCRFolderShareField;
-            }
-            set {
-                this.oCRFolderShareField = value;
-                this.RaisePropertyChanged("OCRFolderShare");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
-        public string DownloadUrl {
-            get {
-                return this.downloadUrlField;
-            }
-            set {
-                this.downloadUrlField = value;
-                this.RaisePropertyChanged("DownloadUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
-        public string ImageServerUrlFormat {
-            get {
-                return this.imageServerUrlFormatField;
-            }
-            set {
-                this.imageServerUrlFormatField = value;
-                this.RaisePropertyChanged("ImageServerUrlFormat");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageSummaryView : @__PageSummaryView {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PDF : CustomObjectBase {
-        
-        private int pdfIDField;
-        
-        private int itemIDField;
-        
-        private string emailAddressField;
-        
-        private string shareWithEmailAddressesField;
-        
-        private bool imagesOnlyField;
-        
-        private string articleTitleField;
-        
-        private string articleCreatorsField;
-        
-        private string articleTagsField;
-        
-        private string fileLocationField;
-        
-        private string fileUrlField;
-        
-        private System.Nullable<System.DateTime> fileGenerationDateField;
-        
-        private System.Nullable<System.DateTime> fileDeletionDateField;
-        
-        private int pdfStatusIDField;
-        
-        private int numberImagesMissingField;
-        
-        private int numberOcrMissingField;
-        
-        private string commentField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PdfID {
-            get {
-                return this.pdfIDField;
-            }
-            set {
-                this.pdfIDField = value;
-                this.RaisePropertyChanged("PdfID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string EmailAddress {
-            get {
-                return this.emailAddressField;
-            }
-            set {
-                this.emailAddressField = value;
-                this.RaisePropertyChanged("EmailAddress");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string ShareWithEmailAddresses {
-            get {
-                return this.shareWithEmailAddressesField;
-            }
-            set {
-                this.shareWithEmailAddressesField = value;
-                this.RaisePropertyChanged("ShareWithEmailAddresses");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool ImagesOnly {
-            get {
-                return this.imagesOnlyField;
-            }
-            set {
-                this.imagesOnlyField = value;
-                this.RaisePropertyChanged("ImagesOnly");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string ArticleTitle {
-            get {
-                return this.articleTitleField;
-            }
-            set {
-                this.articleTitleField = value;
-                this.RaisePropertyChanged("ArticleTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string ArticleCreators {
-            get {
-                return this.articleCreatorsField;
-            }
-            set {
-                this.articleCreatorsField = value;
-                this.RaisePropertyChanged("ArticleCreators");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string ArticleTags {
-            get {
-                return this.articleTagsField;
-            }
-            set {
-                this.articleTagsField = value;
-                this.RaisePropertyChanged("ArticleTags");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string FileLocation {
-            get {
-                return this.fileLocationField;
-            }
-            set {
-                this.fileLocationField = value;
-                this.RaisePropertyChanged("FileLocation");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string FileUrl {
-            get {
-                return this.fileUrlField;
-            }
-            set {
-                this.fileUrlField = value;
-                this.RaisePropertyChanged("FileUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<System.DateTime> FileGenerationDate {
-            get {
-                return this.fileGenerationDateField;
-            }
-            set {
-                this.fileGenerationDateField = value;
-                this.RaisePropertyChanged("FileGenerationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
-        public System.Nullable<System.DateTime> FileDeletionDate {
-            get {
-                return this.fileDeletionDateField;
-            }
-            set {
-                this.fileDeletionDateField = value;
-                this.RaisePropertyChanged("FileDeletionDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public int PdfStatusID {
-            get {
-                return this.pdfStatusIDField;
-            }
-            set {
-                this.pdfStatusIDField = value;
-                this.RaisePropertyChanged("PdfStatusID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public int NumberImagesMissing {
-            get {
-                return this.numberImagesMissingField;
-            }
-            set {
-                this.numberImagesMissingField = value;
-                this.RaisePropertyChanged("NumberImagesMissing");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public int NumberOcrMissing {
-            get {
-                return this.numberOcrMissingField;
-            }
-            set {
-                this.numberOcrMissingField = value;
-                this.RaisePropertyChanged("NumberOcrMissing");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Comment {
-            get {
-                return this.commentField;
-            }
-            set {
-                this.commentField = value;
-                this.RaisePropertyChanged("Comment");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PDF : @__PDF {
-        
-        private int numberOfPagesField;
-        
-        private int minutesToGenerateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int NumberOfPages {
-            get {
-                return this.numberOfPagesField;
-            }
-            set {
-                this.numberOfPagesField = value;
-                this.RaisePropertyChanged("NumberOfPages");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int MinutesToGenerate {
-            get {
-                return this.minutesToGenerateField;
-            }
-            set {
-                this.minutesToGenerateField = value;
-                this.RaisePropertyChanged("MinutesToGenerate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageType : CustomObjectBase {
-        
-        private int pageTypeIDField;
-        
-        private string pageTypeNameField;
-        
-        private string pageTypeDescriptionField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PageTypeID {
-            get {
-                return this.pageTypeIDField;
-            }
-            set {
-                this.pageTypeIDField = value;
-                this.RaisePropertyChanged("PageTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string PageTypeName {
-            get {
-                return this.pageTypeNameField;
-            }
-            set {
-                this.pageTypeNameField = value;
-                this.RaisePropertyChanged("PageTypeName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string PageTypeDescription {
-            get {
-                return this.pageTypeDescriptionField;
-            }
-            set {
-                this.pageTypeDescriptionField = value;
-                this.RaisePropertyChanged("PageTypeDescription");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageType : @__PageType {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageFlickr : CustomObjectBase {
-        
-        private int pageFlickrIDField;
-        
-        private int pageIDField;
-        
-        private string flickrURLField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PageFlickrID {
-            get {
-                return this.pageFlickrIDField;
-            }
-            set {
-                this.pageFlickrIDField = value;
-                this.RaisePropertyChanged("PageFlickrID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string FlickrURL {
-            get {
-                return this.flickrURLField;
-            }
-            set {
-                this.flickrURLField = value;
-                this.RaisePropertyChanged("FlickrURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageFlickr : @__PageFlickr {
-        
-        private string shortTitleField;
-        
-        private string indicatedPageField;
-        
-        private string pageTypeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string IndicatedPage {
-            get {
-                return this.indicatedPageField;
-            }
-            set {
-                this.indicatedPageField = value;
-                this.RaisePropertyChanged("IndicatedPage");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string PageType {
-            get {
-                return this.pageTypeField;
-            }
-            set {
-                this.pageTypeField = value;
-                this.RaisePropertyChanged("PageType");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__DOI : CustomObjectBase {
-        
-        private int dOIIDField;
-        
-        private int dOIEntityTypeIDField;
-        
-        private int entityIDField;
-        
-        private int dOIStatusIDField;
-        
-        private string dOIBatchIDField;
-        
-        private string dOINameField;
-        
-        private System.DateTime statusDateField;
-        
-        private string statusMessageField;
-        
-        private short isValidField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int DOIID {
-            get {
-                return this.dOIIDField;
-            }
-            set {
-                this.dOIIDField = value;
-                this.RaisePropertyChanged("DOIID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int DOIEntityTypeID {
-            get {
-                return this.dOIEntityTypeIDField;
-            }
-            set {
-                this.dOIEntityTypeIDField = value;
-                this.RaisePropertyChanged("DOIEntityTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int EntityID {
-            get {
-                return this.entityIDField;
-            }
-            set {
-                this.entityIDField = value;
-                this.RaisePropertyChanged("EntityID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int DOIStatusID {
-            get {
-                return this.dOIStatusIDField;
-            }
-            set {
-                this.dOIStatusIDField = value;
-                this.RaisePropertyChanged("DOIStatusID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string DOIBatchID {
-            get {
-                return this.dOIBatchIDField;
-            }
-            set {
-                this.dOIBatchIDField = value;
-                this.RaisePropertyChanged("DOIBatchID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string DOIName {
-            get {
-                return this.dOINameField;
-            }
-            set {
-                this.dOINameField = value;
-                this.RaisePropertyChanged("DOIName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public System.DateTime StatusDate {
-            get {
-                return this.statusDateField;
-            }
-            set {
-                this.statusDateField = value;
-                this.RaisePropertyChanged("StatusDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string StatusMessage {
-            get {
-                return this.statusMessageField;
-            }
-            set {
-                this.statusMessageField = value;
-                this.RaisePropertyChanged("StatusMessage");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public short IsValid {
-            get {
-                return this.isValidField;
-            }
-            set {
-                this.isValidField = value;
-                this.RaisePropertyChanged("IsValid");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class DOI : @__DOI {
-        
-        private string dOIEntityTypeNameField;
-        
-        private string entityDetailField;
-        
-        private int totalDOIsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string DOIEntityTypeName {
-            get {
-                return this.dOIEntityTypeNameField;
-            }
-            set {
-                this.dOIEntityTypeNameField = value;
-                this.RaisePropertyChanged("DOIEntityTypeName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string EntityDetail {
-            get {
-                return this.entityDetailField;
-            }
-            set {
-                this.entityDetailField = value;
-                this.RaisePropertyChanged("EntityDetail");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int TotalDOIs {
-            get {
-                return this.totalDOIsField;
-            }
-            set {
-                this.totalDOIsField = value;
-                this.RaisePropertyChanged("TotalDOIs");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__Institution : CustomObjectBase {
-        
-        private string institutionCodeField;
-        
-        private string institutionNameField;
-        
-        private string noteField;
-        
-        private string institutionUrlField;
-        
-        private bool bHLMemberLibraryField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string InstitutionCode {
-            get {
-                return this.institutionCodeField;
-            }
-            set {
-                this.institutionCodeField = value;
-                this.RaisePropertyChanged("InstitutionCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string InstitutionName {
-            get {
-                return this.institutionNameField;
-            }
-            set {
-                this.institutionNameField = value;
-                this.RaisePropertyChanged("InstitutionName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string Note {
-            get {
-                return this.noteField;
-            }
-            set {
-                this.noteField = value;
-                this.RaisePropertyChanged("Note");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string InstitutionUrl {
-            get {
-                return this.institutionUrlField;
-            }
-            set {
-                this.institutionUrlField = value;
-                this.RaisePropertyChanged("InstitutionUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool BHLMemberLibrary {
-            get {
-                return this.bHLMemberLibraryField;
-            }
-            set {
-                this.bHLMemberLibraryField = value;
-                this.RaisePropertyChanged("BHLMemberLibrary");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Institution : @__Institution {
-        
-        private int numberOfDOIsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int NumberOfDOIs {
-            get {
-                return this.numberOfDOIsField;
-            }
-            set {
-                this.numberOfDOIsField = value;
-                this.RaisePropertyChanged("NumberOfDOIs");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__Vault : CustomObjectBase {
-        
-        private int vaultIDField;
-        
-        private string serverField;
+        private string pageTypesField;
         
         private string folderShareField;
         
         private string webVirtualDirectoryField;
         
-        private string oCRFolderShareField;
+        private string barCodeField;
+        
+        private string ocrFolderShareField;
+        
+        private string fileRootFolderField;
+        
+        private string mARCBibIDField;
+        
+        private string shortTitleField;
+        
+        private bool rareBooksField;
+        
+        private System.Nullable<int> segmentIDField;
+        
+        private string webDisplayField;
+        
+        private string flickrURLField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int VaultID {
+        public string IndicatedPages {
             get {
-                return this.vaultIDField;
+                return this.indicatedPagesField;
             }
             set {
-                this.vaultIDField = value;
-                this.RaisePropertyChanged("VaultID");
+                this.indicatedPagesField = value;
+                this.RaisePropertyChanged("IndicatedPages");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Server {
+        public string PageTypes {
             get {
-                return this.serverField;
+                return this.pageTypesField;
             }
             set {
-                this.serverField = value;
-                this.RaisePropertyChanged("Server");
+                this.pageTypesField = value;
+                this.RaisePropertyChanged("PageTypes");
             }
         }
         
@@ -2812,178 +547,18 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string OCRFolderShare {
+        public string BarCode {
             get {
-                return this.oCRFolderShareField;
+                return this.barCodeField;
             }
             set {
-                this.oCRFolderShareField = value;
-                this.RaisePropertyChanged("OCRFolderShare");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Vault : @__Vault {
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-                this.RaisePropertyChanged("Description");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__ItemNameFileLog : CustomObjectBase {
-        
-        private int logIDField;
-        
-        private int itemIDField;
-        
-        private bool doCreateField;
-        
-        private bool doUploadField;
-        
-        private System.Nullable<System.DateTime> lastCreateDateField;
-        
-        private System.Nullable<System.DateTime> lastUploadDateField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int LogID {
-            get {
-                return this.logIDField;
-            }
-            set {
-                this.logIDField = value;
-                this.RaisePropertyChanged("LogID");
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public bool DoCreate {
-            get {
-                return this.doCreateField;
-            }
-            set {
-                this.doCreateField = value;
-                this.RaisePropertyChanged("DoCreate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public bool DoUpload {
-            get {
-                return this.doUploadField;
-            }
-            set {
-                this.doUploadField = value;
-                this.RaisePropertyChanged("DoUpload");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<System.DateTime> LastCreateDate {
-            get {
-                return this.lastCreateDateField;
-            }
-            set {
-                this.lastCreateDateField = value;
-                this.RaisePropertyChanged("LastCreateDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
-        public System.Nullable<System.DateTime> LastUploadDate {
-            get {
-                return this.lastUploadDateField;
-            }
-            set {
-                this.lastUploadDateField = value;
-                this.RaisePropertyChanged("LastUploadDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class ItemNameFileLog : @__ItemNameFileLog {
-        
-        private string ocrFolderShareField;
-        
-        private string fileRootFolderField;
-        
-        private string barCodeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
         public string OcrFolderShare {
             get {
                 return this.ocrFolderShareField;
@@ -2995,7 +570,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
         public string FileRootFolder {
             get {
                 return this.fileRootFolderField;
@@ -3007,3670 +582,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string BarCode {
-            get {
-                return this.barCodeField;
-            }
-            set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleLanguage : CustomObjectBase {
-        
-        private int titleLanguageIDField;
-        
-        private int titleIDField;
-        
-        private string languageCodeField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleLanguageID {
-            get {
-                return this.titleLanguageIDField;
-            }
-            set {
-                this.titleLanguageIDField = value;
-                this.RaisePropertyChanged("TitleLanguageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string LanguageCode {
-            get {
-                return this.languageCodeField;
-            }
-            set {
-                this.languageCodeField = value;
-                this.RaisePropertyChanged("LanguageCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleLanguage : @__TitleLanguage {
-        
-        private string languageNameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string LanguageName {
-            get {
-                return this.languageNameField;
-            }
-            set {
-                this.languageNameField = value;
-                this.RaisePropertyChanged("LanguageName");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleVariant : CustomObjectBase {
-        
-        private int titleVariantIDField;
-        
-        private int titleIDField;
-        
-        private int titleVariantTypeIDField;
-        
-        private string titleField;
-        
-        private string titleRemainderField;
-        
-        private string partNumberField;
-        
-        private string partNameField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleVariantID {
-            get {
-                return this.titleVariantIDField;
-            }
-            set {
-                this.titleVariantIDField = value;
-                this.RaisePropertyChanged("TitleVariantID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int TitleVariantTypeID {
-            get {
-                return this.titleVariantTypeIDField;
-            }
-            set {
-                this.titleVariantTypeIDField = value;
-                this.RaisePropertyChanged("TitleVariantTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string TitleRemainder {
-            get {
-                return this.titleRemainderField;
-            }
-            set {
-                this.titleRemainderField = value;
-                this.RaisePropertyChanged("TitleRemainder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string PartNumber {
-            get {
-                return this.partNumberField;
-            }
-            set {
-                this.partNumberField = value;
-                this.RaisePropertyChanged("PartNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string PartName {
-            get {
-                return this.partNameField;
-            }
-            set {
-                this.partNameField = value;
-                this.RaisePropertyChanged("PartName");
-            }
-        }
-        
-        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public System.DateTime CreationDate {
+        public string MARCBibID {
             get {
-                return this.creationDateField;
+                return this.mARCBibIDField;
             }
             set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
+                this.mARCBibIDField = value;
+                this.RaisePropertyChanged("MARCBibID");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleVariant : @__TitleVariant {
-        
-        private string titleVariantLabelField;
-        
-        private string titleVariantTypeNameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string TitleVariantLabel {
-            get {
-                return this.titleVariantLabelField;
-            }
-            set {
-                this.titleVariantLabelField = value;
-                this.RaisePropertyChanged("TitleVariantLabel");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string TitleVariantTypeName {
-            get {
-                return this.titleVariantTypeNameField;
-            }
-            set {
-                this.titleVariantTypeNameField = value;
-                this.RaisePropertyChanged("TitleVariantTypeName");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleAssociation_TitleIdentifier : CustomObjectBase {
-        
-        private int titleAssociation_TitleIdentifierIDField;
-        
-        private int titleAssociationIDField;
-        
-        private int titleIdentifierIDField;
-        
-        private string identifierValueField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleAssociation_TitleIdentifierID {
-            get {
-                return this.titleAssociation_TitleIdentifierIDField;
-            }
-            set {
-                this.titleAssociation_TitleIdentifierIDField = value;
-                this.RaisePropertyChanged("TitleAssociation_TitleIdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleAssociationID {
-            get {
-                return this.titleAssociationIDField;
-            }
-            set {
-                this.titleAssociationIDField = value;
-                this.RaisePropertyChanged("TitleAssociationID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int TitleIdentifierID {
-            get {
-                return this.titleIdentifierIDField;
-            }
-            set {
-                this.titleIdentifierIDField = value;
-                this.RaisePropertyChanged("TitleIdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string IdentifierValue {
-            get {
-                return this.identifierValueField;
-            }
-            set {
-                this.identifierValueField = value;
-                this.RaisePropertyChanged("IdentifierValue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleAssociation_TitleIdentifier : @__TitleAssociation_TitleIdentifier {
-        
-        private string identifierNameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string IdentifierName {
-            get {
-                return this.identifierNameField;
-            }
-            set {
-                this.identifierNameField = value;
-                this.RaisePropertyChanged("IdentifierName");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleAssociation : CustomObjectBase {
-        
-        private int titleAssociationIDField;
-        
-        private int titleIDField;
-        
-        private int titleAssociationTypeIDField;
-        
-        private string titleField;
-        
-        private string sectionField;
-        
-        private string volumeField;
-        
-        private bool activeField;
-        
-        private System.Nullable<int> associatedTitleIDField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private string headingField;
-        
-        private string publicationField;
-        
-        private string relationshipField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleAssociationID {
-            get {
-                return this.titleAssociationIDField;
-            }
-            set {
-                this.titleAssociationIDField = value;
-                this.RaisePropertyChanged("TitleAssociationID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int TitleAssociationTypeID {
-            get {
-                return this.titleAssociationTypeIDField;
-            }
-            set {
-                this.titleAssociationTypeIDField = value;
-                this.RaisePropertyChanged("TitleAssociationTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Section {
-            get {
-                return this.sectionField;
-            }
-            set {
-                this.sectionField = value;
-                this.RaisePropertyChanged("Section");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public bool Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-                this.RaisePropertyChanged("Active");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> AssociatedTitleID {
-            get {
-                return this.associatedTitleIDField;
-            }
-            set {
-                this.associatedTitleIDField = value;
-                this.RaisePropertyChanged("AssociatedTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string Heading {
-            get {
-                return this.headingField;
-            }
-            set {
-                this.headingField = value;
-                this.RaisePropertyChanged("Heading");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string Publication {
-            get {
-                return this.publicationField;
-            }
-            set {
-                this.publicationField = value;
-                this.RaisePropertyChanged("Publication");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string Relationship {
-            get {
-                return this.relationshipField;
-            }
-            set {
-                this.relationshipField = value;
-                this.RaisePropertyChanged("Relationship");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleAssociation : @__TitleAssociation {
-        
-        private TitleAssociation_TitleIdentifier[] titleAssociationIdentifiersField;
-        
-        private string titleAssociationLabelField;
-        
-        private string titleAssociationNameField;
-        
-        private int marcDataFieldIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
-        public TitleAssociation_TitleIdentifier[] TitleAssociationIdentifiers {
-            get {
-                return this.titleAssociationIdentifiersField;
-            }
-            set {
-                this.titleAssociationIdentifiersField = value;
-                this.RaisePropertyChanged("TitleAssociationIdentifiers");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string TitleAssociationLabel {
-            get {
-                return this.titleAssociationLabelField;
-            }
-            set {
-                this.titleAssociationLabelField = value;
-                this.RaisePropertyChanged("TitleAssociationLabel");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string TitleAssociationName {
-            get {
-                return this.titleAssociationNameField;
-            }
-            set {
-                this.titleAssociationNameField = value;
-                this.RaisePropertyChanged("TitleAssociationName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int MarcDataFieldID {
-            get {
-                return this.marcDataFieldIDField;
-            }
-            set {
-                this.marcDataFieldIDField = value;
-                this.RaisePropertyChanged("MarcDataFieldID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleKeyword : CustomObjectBase {
-        
-        private int titleKeywordIDField;
-        
-        private int titleIDField;
-        
-        private int keywordIDField;
-        
-        private string marcDataFieldTagField;
-        
-        private string marcSubFieldCodeField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleKeywordID {
-            get {
-                return this.titleKeywordIDField;
-            }
-            set {
-                this.titleKeywordIDField = value;
-                this.RaisePropertyChanged("TitleKeywordID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int KeywordID {
-            get {
-                return this.keywordIDField;
-            }
-            set {
-                this.keywordIDField = value;
-                this.RaisePropertyChanged("KeywordID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string MarcDataFieldTag {
-            get {
-                return this.marcDataFieldTagField;
-            }
-            set {
-                this.marcDataFieldTagField = value;
-                this.RaisePropertyChanged("MarcDataFieldTag");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string MarcSubFieldCode {
-            get {
-                return this.marcSubFieldCodeField;
-            }
-            set {
-                this.marcSubFieldCodeField = value;
-                this.RaisePropertyChanged("MarcSubFieldCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleKeyword : @__TitleKeyword {
-        
-        private string keywordField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string Keyword {
-            get {
-                return this.keywordField;
-            }
-            set {
-                this.keywordField = value;
-                this.RaisePropertyChanged("Keyword");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NameSegment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__NameSegment : CustomObjectBase {
-        
-        private int nameSegmentIDField;
-        
-        private int nameIDField;
-        
-        private int segmentIDField;
-        
-        private int nameSourceIDField;
-        
-        private short isFirstOccurrenceField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int NameSegmentID {
-            get {
-                return this.nameSegmentIDField;
-            }
-            set {
-                this.nameSegmentIDField = value;
-                this.RaisePropertyChanged("NameSegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int NameID {
-            get {
-                return this.nameIDField;
-            }
-            set {
-                this.nameIDField = value;
-                this.RaisePropertyChanged("NameID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public int NameSourceID {
-            get {
-                return this.nameSourceIDField;
-            }
-            set {
-                this.nameSourceIDField = value;
-                this.RaisePropertyChanged("NameSourceID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public short IsFirstOccurrence {
-            get {
-                return this.isFirstOccurrenceField;
-            }
-            set {
-                this.isFirstOccurrenceField = value;
-                this.RaisePropertyChanged("IsFirstOccurrence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class NameSegment : @__NameSegment {
-        
-        private System.Nullable<int> nameResolvedIDField;
-        
-        private string nameStringField;
-        
-        private string resolvedNameStringField;
-        
-        private string canonicalNameStringField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
-        public System.Nullable<int> NameResolvedID {
-            get {
-                return this.nameResolvedIDField;
-            }
-            set {
-                this.nameResolvedIDField = value;
-                this.RaisePropertyChanged("NameResolvedID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string NameString {
-            get {
-                return this.nameStringField;
-            }
-            set {
-                this.nameStringField = value;
-                this.RaisePropertyChanged("NameString");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string ResolvedNameString {
-            get {
-                return this.resolvedNameStringField;
-            }
-            set {
-                this.resolvedNameStringField = value;
-                this.RaisePropertyChanged("ResolvedNameString");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string CanonicalNameString {
-            get {
-                return this.canonicalNameStringField;
-            }
-            set {
-                this.canonicalNameStringField = value;
-                this.RaisePropertyChanged("CanonicalNameString");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__SegmentPage : CustomObjectBase {
-        
-        private int segmentPageIDField;
-        
-        private int segmentIDField;
-        
-        private int pageIDField;
-        
-        private short sequenceOrderField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int SegmentPageID {
-            get {
-                return this.segmentPageIDField;
-            }
-            set {
-                this.segmentPageIDField = value;
-                this.RaisePropertyChanged("SegmentPageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public short SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class SegmentPage : @__SegmentPage {
-        
-        private System.Nullable<int> pageSequenceOrderField;
-        
-        private string pageTypesField;
-        
-        private string indicatedPagesField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
-        public System.Nullable<int> PageSequenceOrder {
-            get {
-                return this.pageSequenceOrderField;
-            }
-            set {
-                this.pageSequenceOrderField = value;
-                this.RaisePropertyChanged("PageSequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string PageTypes {
-            get {
-                return this.pageTypesField;
-            }
-            set {
-                this.pageTypesField = value;
-                this.RaisePropertyChanged("PageTypes");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string IndicatedPages {
-            get {
-                return this.indicatedPagesField;
-            }
-            set {
-                this.indicatedPagesField = value;
-                this.RaisePropertyChanged("IndicatedPages");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__SegmentIdentifier : CustomObjectBase {
-        
-        private int segmentIdentifierIDField;
-        
-        private int segmentIDField;
-        
-        private int identifierIDField;
-        
-        private string identifierValueField;
-        
-        private System.Nullable<short> isContainerIdentifierField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int SegmentIdentifierID {
-            get {
-                return this.segmentIdentifierIDField;
-            }
-            set {
-                this.segmentIdentifierIDField = value;
-                this.RaisePropertyChanged("SegmentIdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int IdentifierID {
-            get {
-                return this.identifierIDField;
-            }
-            set {
-                this.identifierIDField = value;
-                this.RaisePropertyChanged("IdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string IdentifierValue {
-            get {
-                return this.identifierValueField;
-            }
-            set {
-                this.identifierValueField = value;
-                this.RaisePropertyChanged("IdentifierValue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<short> IsContainerIdentifier {
-            get {
-                return this.isContainerIdentifierField;
-            }
-            set {
-                this.isContainerIdentifierField = value;
-                this.RaisePropertyChanged("IsContainerIdentifier");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class SegmentIdentifier : @__SegmentIdentifier {
-        
-        private string identifierNameField;
-        
-        private string identifierLabelField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string IdentifierName {
-            get {
-                return this.identifierNameField;
-            }
-            set {
-                this.identifierNameField = value;
-                this.RaisePropertyChanged("IdentifierName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string IdentifierLabel {
-            get {
-                return this.identifierLabelField;
-            }
-            set {
-                this.identifierLabelField = value;
-                this.RaisePropertyChanged("IdentifierLabel");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__SegmentKeyword : CustomObjectBase {
-        
-        private int segmentKeywordIDField;
-        
-        private int segmentIDField;
-        
-        private int keywordIDField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int SegmentKeywordID {
-            get {
-                return this.segmentKeywordIDField;
-            }
-            set {
-                this.segmentKeywordIDField = value;
-                this.RaisePropertyChanged("SegmentKeywordID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int KeywordID {
-            get {
-                return this.keywordIDField;
-            }
-            set {
-                this.keywordIDField = value;
-                this.RaisePropertyChanged("KeywordID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class SegmentKeyword : @__SegmentKeyword {
-        
-        private string keywordField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string Keyword {
-            get {
-                return this.keywordField;
-            }
-            set {
-                this.keywordField = value;
-                this.RaisePropertyChanged("Keyword");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__SegmentAuthor : CustomObjectBase {
-        
-        private int segmentAuthorIDField;
-        
-        private int segmentIDField;
-        
-        private int authorIDField;
-        
-        private short sequenceOrderField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int SegmentAuthorID {
-            get {
-                return this.segmentAuthorIDField;
-            }
-            set {
-                this.segmentAuthorIDField = value;
-                this.RaisePropertyChanged("SegmentAuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int AuthorID {
-            get {
-                return this.authorIDField;
-            }
-            set {
-                this.authorIDField = value;
-                this.RaisePropertyChanged("AuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public short SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class SegmentAuthor : @__SegmentAuthor {
-        
-        private Author authorField;
-        
-        private string fullNameField;
-        
-        private string startDateField;
-        
-        private string endDateField;
-        
-        private string numerationField;
-        
-        private string unitField;
-        
-        private string titleField;
-        
-        private string locationField;
-        
-        private string fullerFormField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public Author Author {
-            get {
-                return this.authorField;
-            }
-            set {
-                this.authorField = value;
-                this.RaisePropertyChanged("Author");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string FullName {
-            get {
-                return this.fullNameField;
-            }
-            set {
-                this.fullNameField = value;
-                this.RaisePropertyChanged("FullName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string StartDate {
-            get {
-                return this.startDateField;
-            }
-            set {
-                this.startDateField = value;
-                this.RaisePropertyChanged("StartDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string EndDate {
-            get {
-                return this.endDateField;
-            }
-            set {
-                this.endDateField = value;
-                this.RaisePropertyChanged("EndDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Numeration {
-            get {
-                return this.numerationField;
-            }
-            set {
-                this.numerationField = value;
-                this.RaisePropertyChanged("Numeration");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Unit {
-            get {
-                return this.unitField;
-            }
-            set {
-                this.unitField = value;
-                this.RaisePropertyChanged("Unit");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string Location {
-            get {
-                return this.locationField;
-            }
-            set {
-                this.locationField = value;
-                this.RaisePropertyChanged("Location");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string FullerForm {
-            get {
-                return this.fullerFormField;
-            }
-            set {
-                this.fullerFormField = value;
-                this.RaisePropertyChanged("FullerForm");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Author : @__Author {
-        
-        private string fullNameField;
-        
-        private string fullerFormField;
-        
-        private int authorRoleIDField;
-        
-        private string marcDataFieldTagField;
-        
-        private string relationshipField;
-        
-        private string titleOfWorkField;
-        
-        private AuthorName[] authorNamesField;
-        
-        private AuthorIdentifier[] authorIdentifiersField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string FullName {
-            get {
-                return this.fullNameField;
-            }
-            set {
-                this.fullNameField = value;
-                this.RaisePropertyChanged("FullName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string FullerForm {
-            get {
-                return this.fullerFormField;
-            }
-            set {
-                this.fullerFormField = value;
-                this.RaisePropertyChanged("FullerForm");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int AuthorRoleID {
-            get {
-                return this.authorRoleIDField;
-            }
-            set {
-                this.authorRoleIDField = value;
-                this.RaisePropertyChanged("AuthorRoleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string MarcDataFieldTag {
-            get {
-                return this.marcDataFieldTagField;
-            }
-            set {
-                this.marcDataFieldTagField = value;
-                this.RaisePropertyChanged("MarcDataFieldTag");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Relationship {
-            get {
-                return this.relationshipField;
-            }
-            set {
-                this.relationshipField = value;
-                this.RaisePropertyChanged("Relationship");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string TitleOfWork {
-            get {
-                return this.titleOfWorkField;
-            }
-            set {
-                this.titleOfWorkField = value;
-                this.RaisePropertyChanged("TitleOfWork");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
-        public AuthorName[] AuthorNames {
-            get {
-                return this.authorNamesField;
-            }
-            set {
-                this.authorNamesField = value;
-                this.RaisePropertyChanged("AuthorNames");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
-        public AuthorIdentifier[] AuthorIdentifiers {
-            get {
-                return this.authorIdentifiersField;
-            }
-            set {
-                this.authorIdentifiersField = value;
-                this.RaisePropertyChanged("AuthorIdentifiers");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class AuthorName : @__AuthorName {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__AuthorName : CustomObjectBase {
-        
-        private int authorNameIDField;
-        
-        private int authorIDField;
-        
-        private string fullNameField;
-        
-        private string lastNameField;
-        
-        private string firstNameField;
-        
-        private string fullerFormField;
-        
-        private short isPreferredNameField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int AuthorNameID {
-            get {
-                return this.authorNameIDField;
-            }
-            set {
-                this.authorNameIDField = value;
-                this.RaisePropertyChanged("AuthorNameID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int AuthorID {
-            get {
-                return this.authorIDField;
-            }
-            set {
-                this.authorIDField = value;
-                this.RaisePropertyChanged("AuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string FullName {
-            get {
-                return this.fullNameField;
-            }
-            set {
-                this.fullNameField = value;
-                this.RaisePropertyChanged("FullName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string LastName {
-            get {
-                return this.lastNameField;
-            }
-            set {
-                this.lastNameField = value;
-                this.RaisePropertyChanged("LastName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string FirstName {
-            get {
-                return this.firstNameField;
-            }
-            set {
-                this.firstNameField = value;
-                this.RaisePropertyChanged("FirstName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string FullerForm {
-            get {
-                return this.fullerFormField;
-            }
-            set {
-                this.fullerFormField = value;
-                this.RaisePropertyChanged("FullerForm");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public short IsPreferredName {
-            get {
-                return this.isPreferredNameField;
-            }
-            set {
-                this.isPreferredNameField = value;
-                this.RaisePropertyChanged("IsPreferredName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class AuthorIdentifier : @__AuthorIdentifier {
-        
-        private string identifierNameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string IdentifierName {
-            get {
-                return this.identifierNameField;
-            }
-            set {
-                this.identifierNameField = value;
-                this.RaisePropertyChanged("IdentifierName");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__AuthorIdentifier : CustomObjectBase {
-        
-        private int authorIdentifierIDField;
-        
-        private int authorIDField;
-        
-        private int identifierIDField;
-        
-        private string identifierValueField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int AuthorIdentifierID {
-            get {
-                return this.authorIdentifierIDField;
-            }
-            set {
-                this.authorIdentifierIDField = value;
-                this.RaisePropertyChanged("AuthorIdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int AuthorID {
-            get {
-                return this.authorIDField;
-            }
-            set {
-                this.authorIDField = value;
-                this.RaisePropertyChanged("AuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int IdentifierID {
-            get {
-                return this.identifierIDField;
-            }
-            set {
-                this.identifierIDField = value;
-                this.RaisePropertyChanged("IdentifierID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string IdentifierValue {
-            get {
-                return this.identifierValueField;
-            }
-            set {
-                this.identifierValueField = value;
-                this.RaisePropertyChanged("IdentifierValue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__Author : CustomObjectBase {
-        
-        private int authorIDField;
-        
-        private System.Nullable<int> authorTypeIDField;
-        
-        private string startDateField;
-        
-        private string endDateField;
-        
-        private string numerationField;
-        
-        private string titleField;
-        
-        private string unitField;
-        
-        private string locationField;
-        
-        private short isActiveField;
-        
-        private System.Nullable<int> redirectAuthorIDField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int AuthorID {
-            get {
-                return this.authorIDField;
-            }
-            set {
-                this.authorIDField = value;
-                this.RaisePropertyChanged("AuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
-        public System.Nullable<int> AuthorTypeID {
-            get {
-                return this.authorTypeIDField;
-            }
-            set {
-                this.authorTypeIDField = value;
-                this.RaisePropertyChanged("AuthorTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string StartDate {
-            get {
-                return this.startDateField;
-            }
-            set {
-                this.startDateField = value;
-                this.RaisePropertyChanged("StartDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string EndDate {
-            get {
-                return this.endDateField;
-            }
-            set {
-                this.endDateField = value;
-                this.RaisePropertyChanged("EndDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Numeration {
-            get {
-                return this.numerationField;
-            }
-            set {
-                this.numerationField = value;
-                this.RaisePropertyChanged("Numeration");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Unit {
-            get {
-                return this.unitField;
-            }
-            set {
-                this.unitField = value;
-                this.RaisePropertyChanged("Unit");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string Location {
-            get {
-                return this.locationField;
-            }
-            set {
-                this.locationField = value;
-                this.RaisePropertyChanged("Location");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public short IsActive {
-            get {
-                return this.isActiveField;
-            }
-            set {
-                this.isActiveField = value;
-                this.RaisePropertyChanged("IsActive");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
-        public System.Nullable<int> RedirectAuthorID {
-            get {
-                return this.redirectAuthorIDField;
-            }
-            set {
-                this.redirectAuthorIDField = value;
-                this.RaisePropertyChanged("RedirectAuthorID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__Segment : CustomObjectBase {
-        
-        private int segmentIDField;
-        
-        private System.Nullable<int> itemIDField;
-        
-        private int segmentStatusIDField;
-        
-        private string contributorCodeField;
-        
-        private string contributorSegmentIDField;
-        
-        private short sequenceOrderField;
-        
-        private int segmentGenreIDField;
-        
-        private string titleField;
-        
-        private string translatedTitleField;
-        
-        private string containerTitleField;
-        
-        private string publicationDetailsField;
-        
-        private string publisherNameField;
-        
-        private string publisherPlaceField;
-        
-        private string notesField;
-        
-        private string volumeField;
-        
-        private string seriesField;
-        
-        private string issueField;
-        
-        private string dateField;
-        
-        private string pageRangeField;
-        
-        private string startPageNumberField;
-        
-        private string endPageNumberField;
-        
-        private System.Nullable<int> startPageIDField;
-        
-        private string languageCodeField;
-        
-        private string urlField;
-        
-        private string downloadUrlField;
-        
-        private string rightsStatusField;
-        
-        private string rightsStatementField;
-        
-        private string licenseNameField;
-        
-        private string licenseUrlField;
-        
-        private System.Nullable<System.DateTime> contributorCreationDateField;
-        
-        private System.Nullable<System.DateTime> contributorLastModifiedDateField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.DateTime lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        private string sortTitleField;
-        
-        private System.Nullable<int> redirectSegmentIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int SegmentID {
-            get {
-                return this.segmentIDField;
-            }
-            set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
-        public System.Nullable<int> ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int SegmentStatusID {
-            get {
-                return this.segmentStatusIDField;
-            }
-            set {
-                this.segmentStatusIDField = value;
-                this.RaisePropertyChanged("SegmentStatusID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string ContributorCode {
-            get {
-                return this.contributorCodeField;
-            }
-            set {
-                this.contributorCodeField = value;
-                this.RaisePropertyChanged("ContributorCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string ContributorSegmentID {
-            get {
-                return this.contributorSegmentIDField;
-            }
-            set {
-                this.contributorSegmentIDField = value;
-                this.RaisePropertyChanged("ContributorSegmentID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public short SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public int SegmentGenreID {
-            get {
-                return this.segmentGenreIDField;
-            }
-            set {
-                this.segmentGenreIDField = value;
-                this.RaisePropertyChanged("SegmentGenreID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string Title {
-            get {
-                return this.titleField;
-            }
-            set {
-                this.titleField = value;
-                this.RaisePropertyChanged("Title");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string TranslatedTitle {
-            get {
-                return this.translatedTitleField;
-            }
-            set {
-                this.translatedTitleField = value;
-                this.RaisePropertyChanged("TranslatedTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string ContainerTitle {
-            get {
-                return this.containerTitleField;
-            }
-            set {
-                this.containerTitleField = value;
-                this.RaisePropertyChanged("ContainerTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string PublicationDetails {
-            get {
-                return this.publicationDetailsField;
-            }
-            set {
-                this.publicationDetailsField = value;
-                this.RaisePropertyChanged("PublicationDetails");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string PublisherName {
-            get {
-                return this.publisherNameField;
-            }
-            set {
-                this.publisherNameField = value;
-                this.RaisePropertyChanged("PublisherName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string PublisherPlace {
-            get {
-                return this.publisherPlaceField;
-            }
-            set {
-                this.publisherPlaceField = value;
-                this.RaisePropertyChanged("PublisherPlace");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public string Notes {
-            get {
-                return this.notesField;
-            }
-            set {
-                this.notesField = value;
-                this.RaisePropertyChanged("Notes");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Series {
-            get {
-                return this.seriesField;
-            }
-            set {
-                this.seriesField = value;
-                this.RaisePropertyChanged("Series");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string Issue {
-            get {
-                return this.issueField;
-            }
-            set {
-                this.issueField = value;
-                this.RaisePropertyChanged("Issue");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public string Date {
-            get {
-                return this.dateField;
-            }
-            set {
-                this.dateField = value;
-                this.RaisePropertyChanged("Date");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public string PageRange {
-            get {
-                return this.pageRangeField;
-            }
-            set {
-                this.pageRangeField = value;
-                this.RaisePropertyChanged("PageRange");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public string StartPageNumber {
-            get {
-                return this.startPageNumberField;
-            }
-            set {
-                this.startPageNumberField = value;
-                this.RaisePropertyChanged("StartPageNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public string EndPageNumber {
-            get {
-                return this.endPageNumberField;
-            }
-            set {
-                this.endPageNumberField = value;
-                this.RaisePropertyChanged("EndPageNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
-        public System.Nullable<int> StartPageID {
-            get {
-                return this.startPageIDField;
-            }
-            set {
-                this.startPageIDField = value;
-                this.RaisePropertyChanged("StartPageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public string LanguageCode {
-            get {
-                return this.languageCodeField;
-            }
-            set {
-                this.languageCodeField = value;
-                this.RaisePropertyChanged("LanguageCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public string Url {
-            get {
-                return this.urlField;
-            }
-            set {
-                this.urlField = value;
-                this.RaisePropertyChanged("Url");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public string DownloadUrl {
-            get {
-                return this.downloadUrlField;
-            }
-            set {
-                this.downloadUrlField = value;
-                this.RaisePropertyChanged("DownloadUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public string RightsStatus {
-            get {
-                return this.rightsStatusField;
-            }
-            set {
-                this.rightsStatusField = value;
-                this.RaisePropertyChanged("RightsStatus");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public string RightsStatement {
-            get {
-                return this.rightsStatementField;
-            }
-            set {
-                this.rightsStatementField = value;
-                this.RaisePropertyChanged("RightsStatement");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
-        public string LicenseName {
-            get {
-                return this.licenseNameField;
-            }
-            set {
-                this.licenseNameField = value;
-                this.RaisePropertyChanged("LicenseName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
-        public string LicenseUrl {
-            get {
-                return this.licenseUrlField;
-            }
-            set {
-                this.licenseUrlField = value;
-                this.RaisePropertyChanged("LicenseUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=29)]
-        public System.Nullable<System.DateTime> ContributorCreationDate {
-            get {
-                return this.contributorCreationDateField;
-            }
-            set {
-                this.contributorCreationDateField = value;
-                this.RaisePropertyChanged("ContributorCreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=30)]
-        public System.Nullable<System.DateTime> ContributorLastModifiedDate {
-            get {
-                return this.contributorLastModifiedDateField;
-            }
-            set {
-                this.contributorLastModifiedDateField = value;
-                this.RaisePropertyChanged("ContributorLastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
-        public System.DateTime LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=33)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=34)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
-        public string SortTitle {
-            get {
-                return this.sortTitleField;
-            }
-            set {
-                this.sortTitleField = value;
-                this.RaisePropertyChanged("SortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
-        public System.Nullable<int> RedirectSegmentID {
-            get {
-                return this.redirectSegmentIDField;
-            }
-            set {
-                this.redirectSegmentIDField = value;
-                this.RaisePropertyChanged("RedirectSegmentID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Segment : @__Segment {
-        
-        private System.Nullable<int> titleIdField;
-        
-        private System.Nullable<int> segmentClusterIdField;
-        
-        private System.Nullable<int> segmentClusterTypeIdField;
-        
-        private string segmentClusterTypeLabelField;
-        
-        private string titleShortTitleField;
-        
-        private string itemVolumeField;
-        
-        private string contributorNameField;
-        
-        private string genreNameField;
-        
-        private string statusNameField;
-        
-        private string languageNameField;
-        
-        private string dOINameField;
-        
-        private string authorsField;
-        
-        private string keywordsField;
-        
-        private short isPrimaryField;
-        
-        private SegmentAuthor[] authorListField;
-        
-        private SegmentKeyword[] keywordListField;
-        
-        private SegmentIdentifier[] identifierListField;
-        
-        private SegmentPage[] pageListField;
-        
-        private NameSegment[] nameListField;
-        
-        private Segment[] relatedSegmentListField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
-        public System.Nullable<int> TitleId {
-            get {
-                return this.titleIdField;
-            }
-            set {
-                this.titleIdField = value;
-                this.RaisePropertyChanged("TitleId");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
-        public System.Nullable<int> SegmentClusterId {
-            get {
-                return this.segmentClusterIdField;
-            }
-            set {
-                this.segmentClusterIdField = value;
-                this.RaisePropertyChanged("SegmentClusterId");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
-        public System.Nullable<int> SegmentClusterTypeId {
-            get {
-                return this.segmentClusterTypeIdField;
-            }
-            set {
-                this.segmentClusterTypeIdField = value;
-                this.RaisePropertyChanged("SegmentClusterTypeId");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string SegmentClusterTypeLabel {
-            get {
-                return this.segmentClusterTypeLabelField;
-            }
-            set {
-                this.segmentClusterTypeLabelField = value;
-                this.RaisePropertyChanged("SegmentClusterTypeLabel");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string TitleShortTitle {
-            get {
-                return this.titleShortTitleField;
-            }
-            set {
-                this.titleShortTitleField = value;
-                this.RaisePropertyChanged("TitleShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string ItemVolume {
-            get {
-                return this.itemVolumeField;
-            }
-            set {
-                this.itemVolumeField = value;
-                this.RaisePropertyChanged("ItemVolume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string ContributorName {
-            get {
-                return this.contributorNameField;
-            }
-            set {
-                this.contributorNameField = value;
-                this.RaisePropertyChanged("ContributorName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string GenreName {
-            get {
-                return this.genreNameField;
-            }
-            set {
-                this.genreNameField = value;
-                this.RaisePropertyChanged("GenreName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string StatusName {
-            get {
-                return this.statusNameField;
-            }
-            set {
-                this.statusNameField = value;
-                this.RaisePropertyChanged("StatusName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public string LanguageName {
-            get {
-                return this.languageNameField;
-            }
-            set {
-                this.languageNameField = value;
-                this.RaisePropertyChanged("LanguageName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string DOIName {
-            get {
-                return this.dOINameField;
-            }
-            set {
-                this.dOINameField = value;
-                this.RaisePropertyChanged("DOIName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string Authors {
-            get {
-                return this.authorsField;
-            }
-            set {
-                this.authorsField = value;
-                this.RaisePropertyChanged("Authors");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string Keywords {
-            get {
-                return this.keywordsField;
-            }
-            set {
-                this.keywordsField = value;
-                this.RaisePropertyChanged("Keywords");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public short IsPrimary {
-            get {
-                return this.isPrimaryField;
-            }
-            set {
-                this.isPrimaryField = value;
-                this.RaisePropertyChanged("IsPrimary");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=14)]
-        public SegmentAuthor[] AuthorList {
-            get {
-                return this.authorListField;
-            }
-            set {
-                this.authorListField = value;
-                this.RaisePropertyChanged("AuthorList");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=15)]
-        public SegmentKeyword[] KeywordList {
-            get {
-                return this.keywordListField;
-            }
-            set {
-                this.keywordListField = value;
-                this.RaisePropertyChanged("KeywordList");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=16)]
-        public SegmentIdentifier[] IdentifierList {
-            get {
-                return this.identifierListField;
-            }
-            set {
-                this.identifierListField = value;
-                this.RaisePropertyChanged("IdentifierList");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=17)]
-        public SegmentPage[] PageList {
-            get {
-                return this.pageListField;
-            }
-            set {
-                this.pageListField = value;
-                this.RaisePropertyChanged("PageList");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=18)]
-        public NameSegment[] NameList {
-            get {
-                return this.nameListField;
-            }
-            set {
-                this.nameListField = value;
-                this.RaisePropertyChanged("NameList");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=19)]
-        public Segment[] RelatedSegmentList {
-            get {
-                return this.relatedSegmentListField;
-            }
-            set {
-                this.relatedSegmentListField = value;
-                this.RaisePropertyChanged("RelatedSegmentList");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__ItemCollection : CustomObjectBase {
-        
-        private int itemCollectionIDField;
-        
-        private int itemIDField;
-        
-        private int collectionIDField;
-        
-        private System.DateTime creationDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int ItemCollectionID {
-            get {
-                return this.itemCollectionIDField;
-            }
-            set {
-                this.itemCollectionIDField = value;
-                this.RaisePropertyChanged("ItemCollectionID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int CollectionID {
-            get {
-                return this.collectionIDField;
-            }
-            set {
-                this.collectionIDField = value;
-                this.RaisePropertyChanged("CollectionID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class ItemCollection : @__ItemCollection {
-        
-        private string collectionNameField;
-        
-        private string collectionDescriptionField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string CollectionName {
-            get {
-                return this.collectionNameField;
-            }
-            set {
-                this.collectionNameField = value;
-                this.RaisePropertyChanged("CollectionName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string CollectionDescription {
-            get {
-                return this.collectionDescriptionField;
-            }
-            set {
-                this.collectionDescriptionField = value;
-                this.RaisePropertyChanged("CollectionDescription");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__ItemLanguage : CustomObjectBase {
-        
-        private int itemLanguageIDField;
-        
-        private int itemIDField;
-        
-        private string languageCodeField;
-        
-        private System.DateTime creationDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int ItemLanguageID {
-            get {
-                return this.itemLanguageIDField;
-            }
-            set {
-                this.itemLanguageIDField = value;
-                this.RaisePropertyChanged("ItemLanguageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string LanguageCode {
-            get {
-                return this.languageCodeField;
-            }
-            set {
-                this.languageCodeField = value;
-                this.RaisePropertyChanged("LanguageCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public System.DateTime CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class ItemLanguage : @__ItemLanguage {
-        
-        private string languageNameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string LanguageName {
-            get {
-                return this.languageNameField;
-            }
-            set {
-                this.languageNameField = value;
-                this.RaisePropertyChanged("LanguageName");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__TitleItem : CustomObjectBase {
-        
-        private int titleItemIDField;
-        
-        private int titleIDField;
-        
-        private int itemIDField;
-        
-        private System.Nullable<short> itemSequenceField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int TitleItemID {
-            get {
-                return this.titleItemIDField;
-            }
-            set {
-                this.titleItemIDField = value;
-                this.RaisePropertyChanged("TitleItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public System.Nullable<short> ItemSequence {
-            get {
-                return this.itemSequenceField;
-            }
-            set {
-                this.itemSequenceField = value;
-                this.RaisePropertyChanged("ItemSequence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class TitleItem : @__TitleItem {
-        
-        private string marcBibIDField;
-        
-        private string shortTitleField;
-        
-        private string barCodeField;
-        
-        private string volumeField;
-        
-        private int primaryTitleIDField;
-        
-        private int itemStatusIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string MarcBibID {
-            get {
-                return this.marcBibIDField;
-            }
-            set {
-                this.marcBibIDField = value;
-                this.RaisePropertyChanged("MarcBibID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string ShortTitle {
             get {
                 return this.shortTitleField;
@@ -6682,57 +606,57 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string BarCode {
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public bool RareBooks {
             get {
-                return this.barCodeField;
+                return this.rareBooksField;
             }
             set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
+                this.rareBooksField = value;
+                this.RaisePropertyChanged("RareBooks");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string Volume {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<int> SegmentID {
             get {
-                return this.volumeField;
+                return this.segmentIDField;
             }
             set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public int PrimaryTitleID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string WebDisplay {
             get {
-                return this.primaryTitleIDField;
+                return this.webDisplayField;
             }
             set {
-                this.primaryTitleIDField = value;
-                this.RaisePropertyChanged("PrimaryTitleID");
+                this.webDisplayField = value;
+                this.RaisePropertyChanged("WebDisplay");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public int ItemStatusID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string FlickrURL {
             get {
-                return this.itemStatusIDField;
+                return this.flickrURLField;
             }
             set {
-                this.itemStatusIDField = value;
-                this.RaisePropertyChanged("ItemStatusID");
+                this.flickrURLField = value;
+                this.RaisePropertyChanged("FlickrURL");
             }
         }
     }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7077,60 +1001,1189 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Institution))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Vault))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemNameFileLog))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleNote))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleNote))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleLanguage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleVariant))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAssociation_TitleIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAssociation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleKeyword))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__NameSegment))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NameSegment))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentPage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentPage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentKeyword))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentKeyword))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__SegmentAuthor))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentAuthor))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Segment))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemCollection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__ItemLanguage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleItem))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Item))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleCollection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleCollection))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Title_Identifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title_Identifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AuthorIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AuthorName))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Author))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleAuthor))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAuthor))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Title))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationSubject))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationSubject))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Annotation_AnnotationConcept))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation_AnnotationConcept))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationNote))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationNote))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotationRelation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationRelation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Annotation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedPageCharacteristic))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPageCharacteristic))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedPage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPage))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedItem))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedTitle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PDF))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Page : @__Page {
+    public abstract partial class CustomObjectBase : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string indicatedPagesField;
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
-        private string pageTypesField;
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleEndNote : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string folderShareField;
+        private int titleIDField;
         
-        private string webVirtualDirectoryField;
+        private int itemIDField;
         
-        private string barCodeField;
+        private int segmentIDField;
         
-        private string ocrFolderShareField;
+        private string publicationTypeField;
         
-        private string fileRootFolderField;
+        private string authorsField;
         
-        private string mARCBibIDField;
+        private string yearField;
+        
+        private string titleField;
+        
+        private string fullTitleField;
+        
+        private string secondaryTitleField;
+        
+        private string journalField;
+        
+        private string publisherField;
+        
+        private string publisherPlaceField;
+        
+        private string publisherNameField;
+        
+        private string volumeField;
+        
+        private string seriesField;
+        
+        private string issueField;
+        
+        private string pageRangeField;
+        
+        private string startPageField;
         
         private string shortTitleField;
         
-        private bool rareBooksField;
+        private string abbreviationField;
         
-        private System.Nullable<int> segmentIDField;
+        private string isbnField;
         
-        private string webDisplayField;
+        private string callNumberField;
         
-        private string flickrURLField;
+        private string keywordsField;
+        
+        private string languageNameField;
+        
+        private string summaryField;
+        
+        private string noteField;
+        
+        private string editionStatementField;
+        
+        private string doiField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string IndicatedPages {
+        public int TitleID {
             get {
-                return this.indicatedPagesField;
+                return this.titleIDField;
             }
             set {
-                this.indicatedPagesField = value;
-                this.RaisePropertyChanged("IndicatedPages");
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string PageTypes {
+        public int ItemID {
             get {
-                return this.pageTypesField;
+                return this.itemIDField;
             }
             set {
-                this.pageTypesField = value;
-                this.RaisePropertyChanged("PageTypes");
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string PublicationType {
+            get {
+                return this.publicationTypeField;
+            }
+            set {
+                this.publicationTypeField = value;
+                this.RaisePropertyChanged("PublicationType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Authors {
+            get {
+                return this.authorsField;
+            }
+            set {
+                this.authorsField = value;
+                this.RaisePropertyChanged("Authors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Year {
+            get {
+                return this.yearField;
+            }
+            set {
+                this.yearField = value;
+                this.RaisePropertyChanged("Year");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string FullTitle {
+            get {
+                return this.fullTitleField;
+            }
+            set {
+                this.fullTitleField = value;
+                this.RaisePropertyChanged("FullTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string SecondaryTitle {
+            get {
+                return this.secondaryTitleField;
+            }
+            set {
+                this.secondaryTitleField = value;
+                this.RaisePropertyChanged("SecondaryTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string Journal {
+            get {
+                return this.journalField;
+            }
+            set {
+                this.journalField = value;
+                this.RaisePropertyChanged("Journal");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Publisher {
+            get {
+                return this.publisherField;
+            }
+            set {
+                this.publisherField = value;
+                this.RaisePropertyChanged("Publisher");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string PublisherPlace {
+            get {
+                return this.publisherPlaceField;
+            }
+            set {
+                this.publisherPlaceField = value;
+                this.RaisePropertyChanged("PublisherPlace");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string PublisherName {
+            get {
+                return this.publisherNameField;
+            }
+            set {
+                this.publisherNameField = value;
+                this.RaisePropertyChanged("PublisherName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string Series {
+            get {
+                return this.seriesField;
+            }
+            set {
+                this.seriesField = value;
+                this.RaisePropertyChanged("Series");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Issue {
+            get {
+                return this.issueField;
+            }
+            set {
+                this.issueField = value;
+                this.RaisePropertyChanged("Issue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string PageRange {
+            get {
+                return this.pageRangeField;
+            }
+            set {
+                this.pageRangeField = value;
+                this.RaisePropertyChanged("PageRange");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public string StartPage {
+            get {
+                return this.startPageField;
+            }
+            set {
+                this.startPageField = value;
+                this.RaisePropertyChanged("StartPage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public string Abbreviation {
+            get {
+                return this.abbreviationField;
+            }
+            set {
+                this.abbreviationField = value;
+                this.RaisePropertyChanged("Abbreviation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public string Isbn {
+            get {
+                return this.isbnField;
+            }
+            set {
+                this.isbnField = value;
+                this.RaisePropertyChanged("Isbn");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public string CallNumber {
+            get {
+                return this.callNumberField;
+            }
+            set {
+                this.callNumberField = value;
+                this.RaisePropertyChanged("CallNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public string Keywords {
+            get {
+                return this.keywordsField;
+            }
+            set {
+                this.keywordsField = value;
+                this.RaisePropertyChanged("Keywords");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public string LanguageName {
+            get {
+                return this.languageNameField;
+            }
+            set {
+                this.languageNameField = value;
+                this.RaisePropertyChanged("LanguageName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public string Summary {
+            get {
+                return this.summaryField;
+            }
+            set {
+                this.summaryField = value;
+                this.RaisePropertyChanged("Summary");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string Note {
+            get {
+                return this.noteField;
+            }
+            set {
+                this.noteField = value;
+                this.RaisePropertyChanged("Note");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string EditionStatement {
+            get {
+                return this.editionStatementField;
+            }
+            set {
+                this.editionStatementField = value;
+                this.RaisePropertyChanged("EditionStatement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string Doi {
+            get {
+                return this.doiField;
+            }
+            set {
+                this.doiField = value;
+                this.RaisePropertyChanged("Doi");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleBibTeX : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string citationKeyField;
+        
+        private string urlField;
+        
+        private string noteField;
+        
+        private string typeField;
+        
+        private string titleField;
+        
+        private string journalField;
+        
+        private string publisherField;
+        
+        private string yearField;
+        
+        private string volumeField;
+        
+        private string seriesField;
+        
+        private string issueField;
+        
+        private string copyrightStatusField;
+        
+        private string authorsField;
+        
+        private int pagesField;
+        
+        private string pageRangeField;
+        
+        private string keywordsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string CitationKey {
+            get {
+                return this.citationKeyField;
+            }
+            set {
+                this.citationKeyField = value;
+                this.RaisePropertyChanged("CitationKey");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Url {
+            get {
+                return this.urlField;
+            }
+            set {
+                this.urlField = value;
+                this.RaisePropertyChanged("Url");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Note {
+            get {
+                return this.noteField;
+            }
+            set {
+                this.noteField = value;
+                this.RaisePropertyChanged("Note");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Type {
+            get {
+                return this.typeField;
+            }
+            set {
+                this.typeField = value;
+                this.RaisePropertyChanged("Type");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Journal {
+            get {
+                return this.journalField;
+            }
+            set {
+                this.journalField = value;
+                this.RaisePropertyChanged("Journal");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Publisher {
+            get {
+                return this.publisherField;
+            }
+            set {
+                this.publisherField = value;
+                this.RaisePropertyChanged("Publisher");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Year {
+            get {
+                return this.yearField;
+            }
+            set {
+                this.yearField = value;
+                this.RaisePropertyChanged("Year");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string Series {
+            get {
+                return this.seriesField;
+            }
+            set {
+                this.seriesField = value;
+                this.RaisePropertyChanged("Series");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Issue {
+            get {
+                return this.issueField;
+            }
+            set {
+                this.issueField = value;
+                this.RaisePropertyChanged("Issue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string CopyrightStatus {
+            get {
+                return this.copyrightStatusField;
+            }
+            set {
+                this.copyrightStatusField = value;
+                this.RaisePropertyChanged("CopyrightStatus");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string Authors {
+            get {
+                return this.authorsField;
+            }
+            set {
+                this.authorsField = value;
+                this.RaisePropertyChanged("Authors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public int Pages {
+            get {
+                return this.pagesField;
+            }
+            set {
+                this.pagesField = value;
+                this.RaisePropertyChanged("Pages");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string PageRange {
+            get {
+                return this.pageRangeField;
+            }
+            set {
+                this.pageRangeField = value;
+                this.RaisePropertyChanged("PageRange");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Keywords {
+            get {
+                return this.keywordsField;
+            }
+            set {
+                this.keywordsField = value;
+                this.RaisePropertyChanged("Keywords");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class NameFinderResponse : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string nameField;
+        
+        private string nameResolvedField;
+        
+        private string canonicalNameField;
+        
+        private string[] identifiersField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+                this.RaisePropertyChanged("Name");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string NameResolved {
+            get {
+                return this.nameResolvedField;
+            }
+            set {
+                this.nameResolvedField = value;
+                this.RaisePropertyChanged("NameResolved");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string CanonicalName {
+            get {
+                return this.canonicalNameField;
+            }
+            set {
+                this.canonicalNameField = value;
+                this.RaisePropertyChanged("CanonicalName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=3)]
+        public string[] Identifiers {
+            get {
+                return this.identifiersField;
+            }
+            set {
+                this.identifiersField = value;
+                this.RaisePropertyChanged("Identifiers");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__DOI : CustomObjectBase {
+        
+        private int dOIIDField;
+        
+        private int dOIEntityTypeIDField;
+        
+        private int entityIDField;
+        
+        private int dOIStatusIDField;
+        
+        private string dOIBatchIDField;
+        
+        private string dOINameField;
+        
+        private System.DateTime statusDateField;
+        
+        private string statusMessageField;
+        
+        private short isValidField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int DOIID {
+            get {
+                return this.dOIIDField;
+            }
+            set {
+                this.dOIIDField = value;
+                this.RaisePropertyChanged("DOIID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int DOIEntityTypeID {
+            get {
+                return this.dOIEntityTypeIDField;
+            }
+            set {
+                this.dOIEntityTypeIDField = value;
+                this.RaisePropertyChanged("DOIEntityTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int EntityID {
+            get {
+                return this.entityIDField;
+            }
+            set {
+                this.entityIDField = value;
+                this.RaisePropertyChanged("EntityID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int DOIStatusID {
+            get {
+                return this.dOIStatusIDField;
+            }
+            set {
+                this.dOIStatusIDField = value;
+                this.RaisePropertyChanged("DOIStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string DOIBatchID {
+            get {
+                return this.dOIBatchIDField;
+            }
+            set {
+                this.dOIBatchIDField = value;
+                this.RaisePropertyChanged("DOIBatchID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string DOIName {
+            get {
+                return this.dOINameField;
+            }
+            set {
+                this.dOINameField = value;
+                this.RaisePropertyChanged("DOIName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public System.DateTime StatusDate {
+            get {
+                return this.statusDateField;
+            }
+            set {
+                this.statusDateField = value;
+                this.RaisePropertyChanged("StatusDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string StatusMessage {
+            get {
+                return this.statusMessageField;
+            }
+            set {
+                this.statusMessageField = value;
+                this.RaisePropertyChanged("StatusMessage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public short IsValid {
+            get {
+                return this.isValidField;
+            }
+            set {
+                this.isValidField = value;
+                this.RaisePropertyChanged("IsValid");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class DOI : @__DOI {
+        
+        private string dOIEntityTypeNameField;
+        
+        private string entityDetailField;
+        
+        private int totalDOIsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string DOIEntityTypeName {
+            get {
+                return this.dOIEntityTypeNameField;
+            }
+            set {
+                this.dOIEntityTypeNameField = value;
+                this.RaisePropertyChanged("DOIEntityTypeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string EntityDetail {
+            get {
+                return this.entityDetailField;
+            }
+            set {
+                this.entityDetailField = value;
+                this.RaisePropertyChanged("EntityDetail");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int TotalDOIs {
+            get {
+                return this.totalDOIsField;
+            }
+            set {
+                this.totalDOIsField = value;
+                this.RaisePropertyChanged("TotalDOIs");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__Institution : CustomObjectBase {
+        
+        private string institutionCodeField;
+        
+        private string institutionNameField;
+        
+        private string noteField;
+        
+        private string institutionUrlField;
+        
+        private bool bHLMemberLibraryField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string InstitutionCode {
+            get {
+                return this.institutionCodeField;
+            }
+            set {
+                this.institutionCodeField = value;
+                this.RaisePropertyChanged("InstitutionCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string InstitutionName {
+            get {
+                return this.institutionNameField;
+            }
+            set {
+                this.institutionNameField = value;
+                this.RaisePropertyChanged("InstitutionName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string Note {
+            get {
+                return this.noteField;
+            }
+            set {
+                this.noteField = value;
+                this.RaisePropertyChanged("Note");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string InstitutionUrl {
+            get {
+                return this.institutionUrlField;
+            }
+            set {
+                this.institutionUrlField = value;
+                this.RaisePropertyChanged("InstitutionUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool BHLMemberLibrary {
+            get {
+                return this.bHLMemberLibraryField;
+            }
+            set {
+                this.bHLMemberLibraryField = value;
+                this.RaisePropertyChanged("BHLMemberLibrary");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class Institution : @__Institution {
+        
+        private int numberOfDOIsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int NumberOfDOIs {
+            get {
+                return this.numberOfDOIsField;
+            }
+            set {
+                this.numberOfDOIsField = value;
+                this.RaisePropertyChanged("NumberOfDOIs");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__Vault : CustomObjectBase {
+        
+        private int vaultIDField;
+        
+        private string serverField;
+        
+        private string folderShareField;
+        
+        private string webVirtualDirectoryField;
+        
+        private string oCRFolderShareField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int VaultID {
+            get {
+                return this.vaultIDField;
+            }
+            set {
+                this.vaultIDField = value;
+                this.RaisePropertyChanged("VaultID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string Server {
+            get {
+                return this.serverField;
+            }
+            set {
+                this.serverField = value;
+                this.RaisePropertyChanged("Server");
             }
         }
         
@@ -7160,18 +2213,178 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string BarCode {
+        public string OCRFolderShare {
             get {
-                return this.barCodeField;
+                return this.oCRFolderShareField;
             }
             set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
+                this.oCRFolderShareField = value;
+                this.RaisePropertyChanged("OCRFolderShare");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class Vault : @__Vault {
+        
+        private string descriptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+                this.RaisePropertyChanged("Description");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__ItemNameFileLog : CustomObjectBase {
+        
+        private int logIDField;
+        
+        private int itemIDField;
+        
+        private bool doCreateField;
+        
+        private bool doUploadField;
+        
+        private System.Nullable<System.DateTime> lastCreateDateField;
+        
+        private System.Nullable<System.DateTime> lastUploadDateField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int LogID {
+            get {
+                return this.logIDField;
+            }
+            set {
+                this.logIDField = value;
+                this.RaisePropertyChanged("LogID");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public bool DoCreate {
+            get {
+                return this.doCreateField;
+            }
+            set {
+                this.doCreateField = value;
+                this.RaisePropertyChanged("DoCreate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public bool DoUpload {
+            get {
+                return this.doUploadField;
+            }
+            set {
+                this.doUploadField = value;
+                this.RaisePropertyChanged("DoUpload");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<System.DateTime> LastCreateDate {
+            get {
+                return this.lastCreateDateField;
+            }
+            set {
+                this.lastCreateDateField = value;
+                this.RaisePropertyChanged("LastCreateDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public System.Nullable<System.DateTime> LastUploadDate {
+            get {
+                return this.lastUploadDateField;
+            }
+            set {
+                this.lastUploadDateField = value;
+                this.RaisePropertyChanged("LastUploadDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class ItemNameFileLog : @__ItemNameFileLog {
+        
+        private string ocrFolderShareField;
+        
+        private string fileRootFolderField;
+        
+        private string barCodeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string OcrFolderShare {
             get {
                 return this.ocrFolderShareField;
@@ -7183,7 +2396,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string FileRootFolder {
             get {
                 return this.fileRootFolderField;
@@ -7195,19 +2408,3927 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string MARCBibID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string BarCode {
             get {
-                return this.mARCBibIDField;
+                return this.barCodeField;
             }
             set {
-                this.mARCBibIDField = value;
-                this.RaisePropertyChanged("MARCBibID");
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleNote))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleNote : CustomObjectBase {
+        
+        private int titleNoteIDField;
+        
+        private int titleIDField;
+        
+        private System.Nullable<int> noteTypeIDField;
+        
+        private string noteTextField;
+        
+        private System.Nullable<short> noteSequenceField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleNoteID {
+            get {
+                return this.titleNoteIDField;
+            }
+            set {
+                this.titleNoteIDField = value;
+                this.RaisePropertyChanged("TitleNoteID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public System.Nullable<int> NoteTypeID {
+            get {
+                return this.noteTypeIDField;
+            }
+            set {
+                this.noteTypeIDField = value;
+                this.RaisePropertyChanged("NoteTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string NoteText {
+            get {
+                return this.noteTextField;
+            }
+            set {
+                this.noteTextField = value;
+                this.RaisePropertyChanged("NoteText");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<short> NoteSequence {
+            get {
+                return this.noteSequenceField;
+            }
+            set {
+                this.noteSequenceField = value;
+                this.RaisePropertyChanged("NoteSequence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleNote : @__TitleNote {
+        
+        private string noteTypeNameField;
+        
+        private string noteTypeDisplayField;
+        
+        private string marcDataFieldTagField;
+        
+        private string marcIndicator1Field;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string NoteTypeName {
+            get {
+                return this.noteTypeNameField;
+            }
+            set {
+                this.noteTypeNameField = value;
+                this.RaisePropertyChanged("NoteTypeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string NoteTypeDisplay {
+            get {
+                return this.noteTypeDisplayField;
+            }
+            set {
+                this.noteTypeDisplayField = value;
+                this.RaisePropertyChanged("NoteTypeDisplay");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string MarcDataFieldTag {
+            get {
+                return this.marcDataFieldTagField;
+            }
+            set {
+                this.marcDataFieldTagField = value;
+                this.RaisePropertyChanged("MarcDataFieldTag");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string MarcIndicator1 {
+            get {
+                return this.marcIndicator1Field;
+            }
+            set {
+                this.marcIndicator1Field = value;
+                this.RaisePropertyChanged("MarcIndicator1");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleLanguage : CustomObjectBase {
+        
+        private int titleLanguageIDField;
+        
+        private int titleIDField;
+        
+        private string languageCodeField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleLanguageID {
+            get {
+                return this.titleLanguageIDField;
+            }
+            set {
+                this.titleLanguageIDField = value;
+                this.RaisePropertyChanged("TitleLanguageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LanguageCode {
+            get {
+                return this.languageCodeField;
+            }
+            set {
+                this.languageCodeField = value;
+                this.RaisePropertyChanged("LanguageCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleLanguage : @__TitleLanguage {
+        
+        private string languageNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string LanguageName {
+            get {
+                return this.languageNameField;
+            }
+            set {
+                this.languageNameField = value;
+                this.RaisePropertyChanged("LanguageName");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleVariant : CustomObjectBase {
+        
+        private int titleVariantIDField;
+        
+        private int titleIDField;
+        
+        private int titleVariantTypeIDField;
+        
+        private string titleField;
+        
+        private string titleRemainderField;
+        
+        private string partNumberField;
+        
+        private string partNameField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleVariantID {
+            get {
+                return this.titleVariantIDField;
+            }
+            set {
+                this.titleVariantIDField = value;
+                this.RaisePropertyChanged("TitleVariantID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int TitleVariantTypeID {
+            get {
+                return this.titleVariantTypeIDField;
+            }
+            set {
+                this.titleVariantTypeIDField = value;
+                this.RaisePropertyChanged("TitleVariantTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string TitleRemainder {
+            get {
+                return this.titleRemainderField;
+            }
+            set {
+                this.titleRemainderField = value;
+                this.RaisePropertyChanged("TitleRemainder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string PartNumber {
+            get {
+                return this.partNumberField;
+            }
+            set {
+                this.partNumberField = value;
+                this.RaisePropertyChanged("PartNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string PartName {
+            get {
+                return this.partNameField;
+            }
+            set {
+                this.partNameField = value;
+                this.RaisePropertyChanged("PartName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleVariant : @__TitleVariant {
+        
+        private string titleVariantLabelField;
+        
+        private string titleVariantTypeNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string TitleVariantLabel {
+            get {
+                return this.titleVariantLabelField;
+            }
+            set {
+                this.titleVariantLabelField = value;
+                this.RaisePropertyChanged("TitleVariantLabel");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string TitleVariantTypeName {
+            get {
+                return this.titleVariantTypeNameField;
+            }
+            set {
+                this.titleVariantTypeNameField = value;
+                this.RaisePropertyChanged("TitleVariantTypeName");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleAssociation_TitleIdentifier : CustomObjectBase {
+        
+        private int titleAssociation_TitleIdentifierIDField;
+        
+        private int titleAssociationIDField;
+        
+        private int titleIdentifierIDField;
+        
+        private string identifierValueField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleAssociation_TitleIdentifierID {
+            get {
+                return this.titleAssociation_TitleIdentifierIDField;
+            }
+            set {
+                this.titleAssociation_TitleIdentifierIDField = value;
+                this.RaisePropertyChanged("TitleAssociation_TitleIdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleAssociationID {
+            get {
+                return this.titleAssociationIDField;
+            }
+            set {
+                this.titleAssociationIDField = value;
+                this.RaisePropertyChanged("TitleAssociationID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int TitleIdentifierID {
+            get {
+                return this.titleIdentifierIDField;
+            }
+            set {
+                this.titleIdentifierIDField = value;
+                this.RaisePropertyChanged("TitleIdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string IdentifierValue {
+            get {
+                return this.identifierValueField;
+            }
+            set {
+                this.identifierValueField = value;
+                this.RaisePropertyChanged("IdentifierValue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleAssociation_TitleIdentifier : @__TitleAssociation_TitleIdentifier {
+        
+        private string identifierNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string IdentifierName {
+            get {
+                return this.identifierNameField;
+            }
+            set {
+                this.identifierNameField = value;
+                this.RaisePropertyChanged("IdentifierName");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleAssociation : CustomObjectBase {
+        
+        private int titleAssociationIDField;
+        
+        private int titleIDField;
+        
+        private int titleAssociationTypeIDField;
+        
+        private string titleField;
+        
+        private string sectionField;
+        
+        private string volumeField;
+        
+        private bool activeField;
+        
+        private System.Nullable<int> associatedTitleIDField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private string headingField;
+        
+        private string publicationField;
+        
+        private string relationshipField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleAssociationID {
+            get {
+                return this.titleAssociationIDField;
+            }
+            set {
+                this.titleAssociationIDField = value;
+                this.RaisePropertyChanged("TitleAssociationID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int TitleAssociationTypeID {
+            get {
+                return this.titleAssociationTypeIDField;
+            }
+            set {
+                this.titleAssociationTypeIDField = value;
+                this.RaisePropertyChanged("TitleAssociationTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Section {
+            get {
+                return this.sectionField;
+            }
+            set {
+                this.sectionField = value;
+                this.RaisePropertyChanged("Section");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public bool Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+                this.RaisePropertyChanged("Active");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> AssociatedTitleID {
+            get {
+                return this.associatedTitleIDField;
+            }
+            set {
+                this.associatedTitleIDField = value;
+                this.RaisePropertyChanged("AssociatedTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Heading {
+            get {
+                return this.headingField;
+            }
+            set {
+                this.headingField = value;
+                this.RaisePropertyChanged("Heading");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string Publication {
+            get {
+                return this.publicationField;
+            }
+            set {
+                this.publicationField = value;
+                this.RaisePropertyChanged("Publication");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string Relationship {
+            get {
+                return this.relationshipField;
+            }
+            set {
+                this.relationshipField = value;
+                this.RaisePropertyChanged("Relationship");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleAssociation : @__TitleAssociation {
+        
+        private TitleAssociation_TitleIdentifier[] titleAssociationIdentifiersField;
+        
+        private string titleAssociationLabelField;
+        
+        private string titleAssociationNameField;
+        
+        private int marcDataFieldIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
+        public TitleAssociation_TitleIdentifier[] TitleAssociationIdentifiers {
+            get {
+                return this.titleAssociationIdentifiersField;
+            }
+            set {
+                this.titleAssociationIdentifiersField = value;
+                this.RaisePropertyChanged("TitleAssociationIdentifiers");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string TitleAssociationLabel {
+            get {
+                return this.titleAssociationLabelField;
+            }
+            set {
+                this.titleAssociationLabelField = value;
+                this.RaisePropertyChanged("TitleAssociationLabel");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string TitleAssociationName {
+            get {
+                return this.titleAssociationNameField;
+            }
+            set {
+                this.titleAssociationNameField = value;
+                this.RaisePropertyChanged("TitleAssociationName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int MarcDataFieldID {
+            get {
+                return this.marcDataFieldIDField;
+            }
+            set {
+                this.marcDataFieldIDField = value;
+                this.RaisePropertyChanged("MarcDataFieldID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleKeyword : CustomObjectBase {
+        
+        private int titleKeywordIDField;
+        
+        private int titleIDField;
+        
+        private int keywordIDField;
+        
+        private string marcDataFieldTagField;
+        
+        private string marcSubFieldCodeField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleKeywordID {
+            get {
+                return this.titleKeywordIDField;
+            }
+            set {
+                this.titleKeywordIDField = value;
+                this.RaisePropertyChanged("TitleKeywordID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int KeywordID {
+            get {
+                return this.keywordIDField;
+            }
+            set {
+                this.keywordIDField = value;
+                this.RaisePropertyChanged("KeywordID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string MarcDataFieldTag {
+            get {
+                return this.marcDataFieldTagField;
+            }
+            set {
+                this.marcDataFieldTagField = value;
+                this.RaisePropertyChanged("MarcDataFieldTag");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string MarcSubFieldCode {
+            get {
+                return this.marcSubFieldCodeField;
+            }
+            set {
+                this.marcSubFieldCodeField = value;
+                this.RaisePropertyChanged("MarcSubFieldCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleKeyword : @__TitleKeyword {
+        
+        private string keywordField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Keyword {
+            get {
+                return this.keywordField;
+            }
+            set {
+                this.keywordField = value;
+                this.RaisePropertyChanged("Keyword");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(NameSegment))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__NameSegment : CustomObjectBase {
+        
+        private int nameSegmentIDField;
+        
+        private int nameIDField;
+        
+        private int segmentIDField;
+        
+        private int nameSourceIDField;
+        
+        private short isFirstOccurrenceField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int NameSegmentID {
+            get {
+                return this.nameSegmentIDField;
+            }
+            set {
+                this.nameSegmentIDField = value;
+                this.RaisePropertyChanged("NameSegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int NameID {
+            get {
+                return this.nameIDField;
+            }
+            set {
+                this.nameIDField = value;
+                this.RaisePropertyChanged("NameID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public int NameSourceID {
+            get {
+                return this.nameSourceIDField;
+            }
+            set {
+                this.nameSourceIDField = value;
+                this.RaisePropertyChanged("NameSourceID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public short IsFirstOccurrence {
+            get {
+                return this.isFirstOccurrenceField;
+            }
+            set {
+                this.isFirstOccurrenceField = value;
+                this.RaisePropertyChanged("IsFirstOccurrence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class NameSegment : @__NameSegment {
+        
+        private System.Nullable<int> nameResolvedIDField;
+        
+        private string nameStringField;
+        
+        private string resolvedNameStringField;
+        
+        private string canonicalNameStringField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public System.Nullable<int> NameResolvedID {
+            get {
+                return this.nameResolvedIDField;
+            }
+            set {
+                this.nameResolvedIDField = value;
+                this.RaisePropertyChanged("NameResolvedID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string NameString {
+            get {
+                return this.nameStringField;
+            }
+            set {
+                this.nameStringField = value;
+                this.RaisePropertyChanged("NameString");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string ResolvedNameString {
+            get {
+                return this.resolvedNameStringField;
+            }
+            set {
+                this.resolvedNameStringField = value;
+                this.RaisePropertyChanged("ResolvedNameString");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string CanonicalNameString {
+            get {
+                return this.canonicalNameStringField;
+            }
+            set {
+                this.canonicalNameStringField = value;
+                this.RaisePropertyChanged("CanonicalNameString");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentPage))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__SegmentPage : CustomObjectBase {
+        
+        private int segmentPageIDField;
+        
+        private int segmentIDField;
+        
+        private int pageIDField;
+        
+        private short sequenceOrderField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int SegmentPageID {
+            get {
+                return this.segmentPageIDField;
+            }
+            set {
+                this.segmentPageIDField = value;
+                this.RaisePropertyChanged("SegmentPageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public short SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class SegmentPage : @__SegmentPage {
+        
+        private System.Nullable<int> pageSequenceOrderField;
+        
+        private string pageTypesField;
+        
+        private string indicatedPagesField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public System.Nullable<int> PageSequenceOrder {
+            get {
+                return this.pageSequenceOrderField;
+            }
+            set {
+                this.pageSequenceOrderField = value;
+                this.RaisePropertyChanged("PageSequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string PageTypes {
+            get {
+                return this.pageTypesField;
+            }
+            set {
+                this.pageTypesField = value;
+                this.RaisePropertyChanged("PageTypes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string IndicatedPages {
+            get {
+                return this.indicatedPagesField;
+            }
+            set {
+                this.indicatedPagesField = value;
+                this.RaisePropertyChanged("IndicatedPages");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentIdentifier))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__SegmentIdentifier : CustomObjectBase {
+        
+        private int segmentIdentifierIDField;
+        
+        private int segmentIDField;
+        
+        private int identifierIDField;
+        
+        private string identifierValueField;
+        
+        private System.Nullable<short> isContainerIdentifierField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int SegmentIdentifierID {
+            get {
+                return this.segmentIdentifierIDField;
+            }
+            set {
+                this.segmentIdentifierIDField = value;
+                this.RaisePropertyChanged("SegmentIdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int IdentifierID {
+            get {
+                return this.identifierIDField;
+            }
+            set {
+                this.identifierIDField = value;
+                this.RaisePropertyChanged("IdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string IdentifierValue {
+            get {
+                return this.identifierValueField;
+            }
+            set {
+                this.identifierValueField = value;
+                this.RaisePropertyChanged("IdentifierValue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<short> IsContainerIdentifier {
+            get {
+                return this.isContainerIdentifierField;
+            }
+            set {
+                this.isContainerIdentifierField = value;
+                this.RaisePropertyChanged("IsContainerIdentifier");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class SegmentIdentifier : @__SegmentIdentifier {
+        
+        private string identifierNameField;
+        
+        private string identifierLabelField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string IdentifierName {
+            get {
+                return this.identifierNameField;
+            }
+            set {
+                this.identifierNameField = value;
+                this.RaisePropertyChanged("IdentifierName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string IdentifierLabel {
+            get {
+                return this.identifierLabelField;
+            }
+            set {
+                this.identifierLabelField = value;
+                this.RaisePropertyChanged("IdentifierLabel");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentKeyword))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__SegmentKeyword : CustomObjectBase {
+        
+        private int segmentKeywordIDField;
+        
+        private int segmentIDField;
+        
+        private int keywordIDField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int SegmentKeywordID {
+            get {
+                return this.segmentKeywordIDField;
+            }
+            set {
+                this.segmentKeywordIDField = value;
+                this.RaisePropertyChanged("SegmentKeywordID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int KeywordID {
+            get {
+                return this.keywordIDField;
+            }
+            set {
+                this.keywordIDField = value;
+                this.RaisePropertyChanged("KeywordID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class SegmentKeyword : @__SegmentKeyword {
+        
+        private string keywordField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string Keyword {
+            get {
+                return this.keywordField;
+            }
+            set {
+                this.keywordField = value;
+                this.RaisePropertyChanged("Keyword");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentAuthor))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__SegmentAuthor : CustomObjectBase {
+        
+        private int segmentAuthorIDField;
+        
+        private int segmentIDField;
+        
+        private int authorIDField;
+        
+        private short sequenceOrderField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int SegmentAuthorID {
+            get {
+                return this.segmentAuthorIDField;
+            }
+            set {
+                this.segmentAuthorIDField = value;
+                this.RaisePropertyChanged("SegmentAuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int AuthorID {
+            get {
+                return this.authorIDField;
+            }
+            set {
+                this.authorIDField = value;
+                this.RaisePropertyChanged("AuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public short SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class SegmentAuthor : @__SegmentAuthor {
+        
+        private Author authorField;
+        
+        private string fullNameField;
+        
+        private string startDateField;
+        
+        private string endDateField;
+        
+        private string numerationField;
+        
+        private string unitField;
+        
+        private string titleField;
+        
+        private string locationField;
+        
+        private string fullerFormField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public Author Author {
+            get {
+                return this.authorField;
+            }
+            set {
+                this.authorField = value;
+                this.RaisePropertyChanged("Author");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FullName {
+            get {
+                return this.fullNameField;
+            }
+            set {
+                this.fullNameField = value;
+                this.RaisePropertyChanged("FullName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string StartDate {
+            get {
+                return this.startDateField;
+            }
+            set {
+                this.startDateField = value;
+                this.RaisePropertyChanged("StartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string EndDate {
+            get {
+                return this.endDateField;
+            }
+            set {
+                this.endDateField = value;
+                this.RaisePropertyChanged("EndDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Numeration {
+            get {
+                return this.numerationField;
+            }
+            set {
+                this.numerationField = value;
+                this.RaisePropertyChanged("Numeration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Unit {
+            get {
+                return this.unitField;
+            }
+            set {
+                this.unitField = value;
+                this.RaisePropertyChanged("Unit");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Location {
+            get {
+                return this.locationField;
+            }
+            set {
+                this.locationField = value;
+                this.RaisePropertyChanged("Location");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string FullerForm {
+            get {
+                return this.fullerFormField;
+            }
+            set {
+                this.fullerFormField = value;
+                this.RaisePropertyChanged("FullerForm");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class Author : @__Author {
+        
+        private string fullNameField;
+        
+        private string fullerFormField;
+        
+        private int authorRoleIDField;
+        
+        private string marcDataFieldTagField;
+        
+        private string relationshipField;
+        
+        private string titleOfWorkField;
+        
+        private AuthorName[] authorNamesField;
+        
+        private AuthorIdentifier[] authorIdentifiersField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string FullName {
+            get {
+                return this.fullNameField;
+            }
+            set {
+                this.fullNameField = value;
+                this.RaisePropertyChanged("FullName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string FullerForm {
+            get {
+                return this.fullerFormField;
+            }
+            set {
+                this.fullerFormField = value;
+                this.RaisePropertyChanged("FullerForm");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int AuthorRoleID {
+            get {
+                return this.authorRoleIDField;
+            }
+            set {
+                this.authorRoleIDField = value;
+                this.RaisePropertyChanged("AuthorRoleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string MarcDataFieldTag {
+            get {
+                return this.marcDataFieldTagField;
+            }
+            set {
+                this.marcDataFieldTagField = value;
+                this.RaisePropertyChanged("MarcDataFieldTag");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Relationship {
+            get {
+                return this.relationshipField;
+            }
+            set {
+                this.relationshipField = value;
+                this.RaisePropertyChanged("Relationship");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string TitleOfWork {
+            get {
+                return this.titleOfWorkField;
+            }
+            set {
+                this.titleOfWorkField = value;
+                this.RaisePropertyChanged("TitleOfWork");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=6)]
+        public AuthorName[] AuthorNames {
+            get {
+                return this.authorNamesField;
+            }
+            set {
+                this.authorNamesField = value;
+                this.RaisePropertyChanged("AuthorNames");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=7)]
+        public AuthorIdentifier[] AuthorIdentifiers {
+            get {
+                return this.authorIdentifiersField;
+            }
+            set {
+                this.authorIdentifiersField = value;
+                this.RaisePropertyChanged("AuthorIdentifiers");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class AuthorName : @__AuthorName {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__AuthorName : CustomObjectBase {
+        
+        private int authorNameIDField;
+        
+        private int authorIDField;
+        
+        private string fullNameField;
+        
+        private string lastNameField;
+        
+        private string firstNameField;
+        
+        private string fullerFormField;
+        
+        private short isPreferredNameField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int AuthorNameID {
+            get {
+                return this.authorNameIDField;
+            }
+            set {
+                this.authorNameIDField = value;
+                this.RaisePropertyChanged("AuthorNameID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int AuthorID {
+            get {
+                return this.authorIDField;
+            }
+            set {
+                this.authorIDField = value;
+                this.RaisePropertyChanged("AuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FullName {
+            get {
+                return this.fullNameField;
+            }
+            set {
+                this.fullNameField = value;
+                this.RaisePropertyChanged("FullName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string LastName {
+            get {
+                return this.lastNameField;
+            }
+            set {
+                this.lastNameField = value;
+                this.RaisePropertyChanged("LastName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string FirstName {
+            get {
+                return this.firstNameField;
+            }
+            set {
+                this.firstNameField = value;
+                this.RaisePropertyChanged("FirstName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string FullerForm {
+            get {
+                return this.fullerFormField;
+            }
+            set {
+                this.fullerFormField = value;
+                this.RaisePropertyChanged("FullerForm");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public short IsPreferredName {
+            get {
+                return this.isPreferredNameField;
+            }
+            set {
+                this.isPreferredNameField = value;
+                this.RaisePropertyChanged("IsPreferredName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class AuthorIdentifier : @__AuthorIdentifier {
+        
+        private string identifierNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string IdentifierName {
+            get {
+                return this.identifierNameField;
+            }
+            set {
+                this.identifierNameField = value;
+                this.RaisePropertyChanged("IdentifierName");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__AuthorIdentifier : CustomObjectBase {
+        
+        private int authorIdentifierIDField;
+        
+        private int authorIDField;
+        
+        private int identifierIDField;
+        
+        private string identifierValueField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int AuthorIdentifierID {
+            get {
+                return this.authorIdentifierIDField;
+            }
+            set {
+                this.authorIdentifierIDField = value;
+                this.RaisePropertyChanged("AuthorIdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int AuthorID {
+            get {
+                return this.authorIDField;
+            }
+            set {
+                this.authorIDField = value;
+                this.RaisePropertyChanged("AuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int IdentifierID {
+            get {
+                return this.identifierIDField;
+            }
+            set {
+                this.identifierIDField = value;
+                this.RaisePropertyChanged("IdentifierID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string IdentifierValue {
+            get {
+                return this.identifierValueField;
+            }
+            set {
+                this.identifierValueField = value;
+                this.RaisePropertyChanged("IdentifierValue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__Author : CustomObjectBase {
+        
+        private int authorIDField;
+        
+        private System.Nullable<int> authorTypeIDField;
+        
+        private string startDateField;
+        
+        private string endDateField;
+        
+        private string numerationField;
+        
+        private string titleField;
+        
+        private string unitField;
+        
+        private string locationField;
+        
+        private short isActiveField;
+        
+        private System.Nullable<int> redirectAuthorIDField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int AuthorID {
+            get {
+                return this.authorIDField;
+            }
+            set {
+                this.authorIDField = value;
+                this.RaisePropertyChanged("AuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public System.Nullable<int> AuthorTypeID {
+            get {
+                return this.authorTypeIDField;
+            }
+            set {
+                this.authorTypeIDField = value;
+                this.RaisePropertyChanged("AuthorTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string StartDate {
+            get {
+                return this.startDateField;
+            }
+            set {
+                this.startDateField = value;
+                this.RaisePropertyChanged("StartDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string EndDate {
+            get {
+                return this.endDateField;
+            }
+            set {
+                this.endDateField = value;
+                this.RaisePropertyChanged("EndDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Numeration {
+            get {
+                return this.numerationField;
+            }
+            set {
+                this.numerationField = value;
+                this.RaisePropertyChanged("Numeration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Unit {
+            get {
+                return this.unitField;
+            }
+            set {
+                this.unitField = value;
+                this.RaisePropertyChanged("Unit");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Location {
+            get {
+                return this.locationField;
+            }
+            set {
+                this.locationField = value;
+                this.RaisePropertyChanged("Location");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public short IsActive {
+            get {
+                return this.isActiveField;
+            }
+            set {
+                this.isActiveField = value;
+                this.RaisePropertyChanged("IsActive");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=9)]
+        public System.Nullable<int> RedirectAuthorID {
+            get {
+                return this.redirectAuthorIDField;
+            }
+            set {
+                this.redirectAuthorIDField = value;
+                this.RaisePropertyChanged("RedirectAuthorID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=12)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=13)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__Segment : CustomObjectBase {
+        
+        private int segmentIDField;
+        
+        private System.Nullable<int> itemIDField;
+        
+        private int segmentStatusIDField;
+        
+        private string contributorCodeField;
+        
+        private string contributorSegmentIDField;
+        
+        private short sequenceOrderField;
+        
+        private int segmentGenreIDField;
+        
+        private string titleField;
+        
+        private string translatedTitleField;
+        
+        private string containerTitleField;
+        
+        private string publicationDetailsField;
+        
+        private string publisherNameField;
+        
+        private string publisherPlaceField;
+        
+        private string notesField;
+        
+        private string summaryField;
+        
+        private string volumeField;
+        
+        private string seriesField;
+        
+        private string issueField;
+        
+        private string editionField;
+        
+        private string dateField;
+        
+        private string pageRangeField;
+        
+        private string startPageNumberField;
+        
+        private string endPageNumberField;
+        
+        private System.Nullable<int> startPageIDField;
+        
+        private string languageCodeField;
+        
+        private string urlField;
+        
+        private string downloadUrlField;
+        
+        private string rightsStatusField;
+        
+        private string rightsStatementField;
+        
+        private string licenseNameField;
+        
+        private string licenseUrlField;
+        
+        private System.Nullable<System.DateTime> contributorCreationDateField;
+        
+        private System.Nullable<System.DateTime> contributorLastModifiedDateField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        private string sortTitleField;
+        
+        private System.Nullable<int> redirectSegmentIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public System.Nullable<int> ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int SegmentStatusID {
+            get {
+                return this.segmentStatusIDField;
+            }
+            set {
+                this.segmentStatusIDField = value;
+                this.RaisePropertyChanged("SegmentStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string ContributorCode {
+            get {
+                return this.contributorCodeField;
+            }
+            set {
+                this.contributorCodeField = value;
+                this.RaisePropertyChanged("ContributorCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string ContributorSegmentID {
+            get {
+                return this.contributorSegmentIDField;
+            }
+            set {
+                this.contributorSegmentIDField = value;
+                this.RaisePropertyChanged("ContributorSegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public short SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public int SegmentGenreID {
+            get {
+                return this.segmentGenreIDField;
+            }
+            set {
+                this.segmentGenreIDField = value;
+                this.RaisePropertyChanged("SegmentGenreID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string TranslatedTitle {
+            get {
+                return this.translatedTitleField;
+            }
+            set {
+                this.translatedTitleField = value;
+                this.RaisePropertyChanged("TranslatedTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string ContainerTitle {
+            get {
+                return this.containerTitleField;
+            }
+            set {
+                this.containerTitleField = value;
+                this.RaisePropertyChanged("ContainerTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string PublicationDetails {
+            get {
+                return this.publicationDetailsField;
+            }
+            set {
+                this.publicationDetailsField = value;
+                this.RaisePropertyChanged("PublicationDetails");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string PublisherName {
+            get {
+                return this.publisherNameField;
+            }
+            set {
+                this.publisherNameField = value;
+                this.RaisePropertyChanged("PublisherName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string PublisherPlace {
+            get {
+                return this.publisherPlaceField;
+            }
+            set {
+                this.publisherPlaceField = value;
+                this.RaisePropertyChanged("PublisherPlace");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string Notes {
+            get {
+                return this.notesField;
+            }
+            set {
+                this.notesField = value;
+                this.RaisePropertyChanged("Notes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string Summary {
+            get {
+                return this.summaryField;
+            }
+            set {
+                this.summaryField = value;
+                this.RaisePropertyChanged("Summary");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string Series {
+            get {
+                return this.seriesField;
+            }
+            set {
+                this.seriesField = value;
+                this.RaisePropertyChanged("Series");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public string Issue {
+            get {
+                return this.issueField;
+            }
+            set {
+                this.issueField = value;
+                this.RaisePropertyChanged("Issue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public string Edition {
+            get {
+                return this.editionField;
+            }
+            set {
+                this.editionField = value;
+                this.RaisePropertyChanged("Edition");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public string Date {
+            get {
+                return this.dateField;
+            }
+            set {
+                this.dateField = value;
+                this.RaisePropertyChanged("Date");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public string PageRange {
+            get {
+                return this.pageRangeField;
+            }
+            set {
+                this.pageRangeField = value;
+                this.RaisePropertyChanged("PageRange");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public string StartPageNumber {
+            get {
+                return this.startPageNumberField;
+            }
+            set {
+                this.startPageNumberField = value;
+                this.RaisePropertyChanged("StartPageNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public string EndPageNumber {
+            get {
+                return this.endPageNumberField;
+            }
+            set {
+                this.endPageNumberField = value;
+                this.RaisePropertyChanged("EndPageNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        public System.Nullable<int> StartPageID {
+            get {
+                return this.startPageIDField;
+            }
+            set {
+                this.startPageIDField = value;
+                this.RaisePropertyChanged("StartPageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public string LanguageCode {
+            get {
+                return this.languageCodeField;
+            }
+            set {
+                this.languageCodeField = value;
+                this.RaisePropertyChanged("LanguageCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string Url {
+            get {
+                return this.urlField;
+            }
+            set {
+                this.urlField = value;
+                this.RaisePropertyChanged("Url");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string DownloadUrl {
+            get {
+                return this.downloadUrlField;
+            }
+            set {
+                this.downloadUrlField = value;
+                this.RaisePropertyChanged("DownloadUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string RightsStatus {
+            get {
+                return this.rightsStatusField;
+            }
+            set {
+                this.rightsStatusField = value;
+                this.RaisePropertyChanged("RightsStatus");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public string RightsStatement {
+            get {
+                return this.rightsStatementField;
+            }
+            set {
+                this.rightsStatementField = value;
+                this.RaisePropertyChanged("RightsStatement");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public string LicenseName {
+            get {
+                return this.licenseNameField;
+            }
+            set {
+                this.licenseNameField = value;
+                this.RaisePropertyChanged("LicenseName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public string LicenseUrl {
+            get {
+                return this.licenseUrlField;
+            }
+            set {
+                this.licenseUrlField = value;
+                this.RaisePropertyChanged("LicenseUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=31)]
+        public System.Nullable<System.DateTime> ContributorCreationDate {
+            get {
+                return this.contributorCreationDateField;
+            }
+            set {
+                this.contributorCreationDateField = value;
+                this.RaisePropertyChanged("ContributorCreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=32)]
+        public System.Nullable<System.DateTime> ContributorLastModifiedDate {
+            get {
+                return this.contributorLastModifiedDateField;
+            }
+            set {
+                this.contributorLastModifiedDateField = value;
+                this.RaisePropertyChanged("ContributorLastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=35)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=37)]
+        public string SortTitle {
+            get {
+                return this.sortTitleField;
+            }
+            set {
+                this.sortTitleField = value;
+                this.RaisePropertyChanged("SortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=38)]
+        public System.Nullable<int> RedirectSegmentID {
+            get {
+                return this.redirectSegmentIDField;
+            }
+            set {
+                this.redirectSegmentIDField = value;
+                this.RaisePropertyChanged("RedirectSegmentID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class Segment : @__Segment {
+        
+        private System.Nullable<int> titleIdField;
+        
+        private System.Nullable<int> segmentClusterIdField;
+        
+        private System.Nullable<int> segmentClusterTypeIdField;
+        
+        private string segmentClusterTypeLabelField;
+        
+        private string titleFullTitleField;
+        
+        private string titleShortTitleField;
+        
+        private string titlePublisherNameField;
+        
+        private string titlePublicationPlaceField;
+        
+        private string titlePublicationDateField;
+        
+        private string itemVolumeField;
+        
+        private string contributorNameField;
+        
+        private string genreNameField;
+        
+        private string statusNameField;
+        
+        private string languageNameField;
+        
+        private string dOINameField;
+        
+        private string authorsField;
+        
+        private string keywordsField;
+        
+        private short isPrimaryField;
+        
+        private SegmentAuthor[] authorListField;
+        
+        private SegmentKeyword[] keywordListField;
+        
+        private SegmentIdentifier[] identifierListField;
+        
+        private SegmentPage[] pageListField;
+        
+        private NameSegment[] nameListField;
+        
+        private Segment[] relatedSegmentListField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public System.Nullable<int> TitleId {
+            get {
+                return this.titleIdField;
+            }
+            set {
+                this.titleIdField = value;
+                this.RaisePropertyChanged("TitleId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=1)]
+        public System.Nullable<int> SegmentClusterId {
+            get {
+                return this.segmentClusterIdField;
+            }
+            set {
+                this.segmentClusterIdField = value;
+                this.RaisePropertyChanged("SegmentClusterId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public System.Nullable<int> SegmentClusterTypeId {
+            get {
+                return this.segmentClusterTypeIdField;
+            }
+            set {
+                this.segmentClusterTypeIdField = value;
+                this.RaisePropertyChanged("SegmentClusterTypeId");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string SegmentClusterTypeLabel {
+            get {
+                return this.segmentClusterTypeLabelField;
+            }
+            set {
+                this.segmentClusterTypeLabelField = value;
+                this.RaisePropertyChanged("SegmentClusterTypeLabel");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string TitleFullTitle {
+            get {
+                return this.titleFullTitleField;
+            }
+            set {
+                this.titleFullTitleField = value;
+                this.RaisePropertyChanged("TitleFullTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string TitleShortTitle {
+            get {
+                return this.titleShortTitleField;
+            }
+            set {
+                this.titleShortTitleField = value;
+                this.RaisePropertyChanged("TitleShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string TitlePublisherName {
+            get {
+                return this.titlePublisherNameField;
+            }
+            set {
+                this.titlePublisherNameField = value;
+                this.RaisePropertyChanged("TitlePublisherName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string TitlePublicationPlace {
+            get {
+                return this.titlePublicationPlaceField;
+            }
+            set {
+                this.titlePublicationPlaceField = value;
+                this.RaisePropertyChanged("TitlePublicationPlace");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string TitlePublicationDate {
+            get {
+                return this.titlePublicationDateField;
+            }
+            set {
+                this.titlePublicationDateField = value;
+                this.RaisePropertyChanged("TitlePublicationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string ItemVolume {
+            get {
+                return this.itemVolumeField;
+            }
+            set {
+                this.itemVolumeField = value;
+                this.RaisePropertyChanged("ItemVolume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string ContributorName {
+            get {
+                return this.contributorNameField;
+            }
+            set {
+                this.contributorNameField = value;
+                this.RaisePropertyChanged("ContributorName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string GenreName {
+            get {
+                return this.genreNameField;
+            }
+            set {
+                this.genreNameField = value;
+                this.RaisePropertyChanged("GenreName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string StatusName {
+            get {
+                return this.statusNameField;
+            }
+            set {
+                this.statusNameField = value;
+                this.RaisePropertyChanged("StatusName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string LanguageName {
+            get {
+                return this.languageNameField;
+            }
+            set {
+                this.languageNameField = value;
+                this.RaisePropertyChanged("LanguageName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string DOIName {
+            get {
+                return this.dOINameField;
+            }
+            set {
+                this.dOINameField = value;
+                this.RaisePropertyChanged("DOIName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Authors {
+            get {
+                return this.authorsField;
+            }
+            set {
+                this.authorsField = value;
+                this.RaisePropertyChanged("Authors");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string Keywords {
+            get {
+                return this.keywordsField;
+            }
+            set {
+                this.keywordsField = value;
+                this.RaisePropertyChanged("Keywords");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public short IsPrimary {
+            get {
+                return this.isPrimaryField;
+            }
+            set {
+                this.isPrimaryField = value;
+                this.RaisePropertyChanged("IsPrimary");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=18)]
+        public SegmentAuthor[] AuthorList {
+            get {
+                return this.authorListField;
+            }
+            set {
+                this.authorListField = value;
+                this.RaisePropertyChanged("AuthorList");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=19)]
+        public SegmentKeyword[] KeywordList {
+            get {
+                return this.keywordListField;
+            }
+            set {
+                this.keywordListField = value;
+                this.RaisePropertyChanged("KeywordList");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=20)]
+        public SegmentIdentifier[] IdentifierList {
+            get {
+                return this.identifierListField;
+            }
+            set {
+                this.identifierListField = value;
+                this.RaisePropertyChanged("IdentifierList");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=21)]
+        public SegmentPage[] PageList {
+            get {
+                return this.pageListField;
+            }
+            set {
+                this.pageListField = value;
+                this.RaisePropertyChanged("PageList");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=22)]
+        public NameSegment[] NameList {
+            get {
+                return this.nameListField;
+            }
+            set {
+                this.nameListField = value;
+                this.RaisePropertyChanged("NameList");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=23)]
+        public Segment[] RelatedSegmentList {
+            get {
+                return this.relatedSegmentListField;
+            }
+            set {
+                this.relatedSegmentListField = value;
+                this.RaisePropertyChanged("RelatedSegmentList");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__ItemCollection : CustomObjectBase {
+        
+        private int itemCollectionIDField;
+        
+        private int itemIDField;
+        
+        private int collectionIDField;
+        
+        private System.DateTime creationDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int ItemCollectionID {
+            get {
+                return this.itemCollectionIDField;
+            }
+            set {
+                this.itemCollectionIDField = value;
+                this.RaisePropertyChanged("ItemCollectionID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int CollectionID {
+            get {
+                return this.collectionIDField;
+            }
+            set {
+                this.collectionIDField = value;
+                this.RaisePropertyChanged("CollectionID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class ItemCollection : @__ItemCollection {
+        
+        private string collectionNameField;
+        
+        private string collectionDescriptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string CollectionName {
+            get {
+                return this.collectionNameField;
+            }
+            set {
+                this.collectionNameField = value;
+                this.RaisePropertyChanged("CollectionName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string CollectionDescription {
+            get {
+                return this.collectionDescriptionField;
+            }
+            set {
+                this.collectionDescriptionField = value;
+                this.RaisePropertyChanged("CollectionDescription");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__ItemLanguage : CustomObjectBase {
+        
+        private int itemLanguageIDField;
+        
+        private int itemIDField;
+        
+        private string languageCodeField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int ItemLanguageID {
+            get {
+                return this.itemLanguageIDField;
+            }
+            set {
+                this.itemLanguageIDField = value;
+                this.RaisePropertyChanged("ItemLanguageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string LanguageCode {
+            get {
+                return this.languageCodeField;
+            }
+            set {
+                this.languageCodeField = value;
+                this.RaisePropertyChanged("LanguageCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class ItemLanguage : @__ItemLanguage {
+        
+        private string languageNameField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string LanguageName {
+            get {
+                return this.languageNameField;
+            }
+            set {
+                this.languageNameField = value;
+                this.RaisePropertyChanged("LanguageName");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__TitleItem : CustomObjectBase {
+        
+        private int titleItemIDField;
+        
+        private int titleIDField;
+        
+        private int itemIDField;
+        
+        private System.Nullable<short> itemSequenceField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int TitleItemID {
+            get {
+                return this.titleItemIDField;
+            }
+            set {
+                this.titleItemIDField = value;
+                this.RaisePropertyChanged("TitleItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<short> ItemSequence {
+            get {
+                return this.itemSequenceField;
+            }
+            set {
+                this.itemSequenceField = value;
+                this.RaisePropertyChanged("ItemSequence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=5)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=6)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class TitleItem : @__TitleItem {
+        
+        private string marcBibIDField;
+        
+        private string shortTitleField;
+        
+        private string barCodeField;
+        
+        private string volumeField;
+        
+        private int primaryTitleIDField;
+        
+        private int itemStatusIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string MarcBibID {
+            get {
+                return this.marcBibIDField;
+            }
+            set {
+                this.marcBibIDField = value;
+                this.RaisePropertyChanged("MarcBibID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string ShortTitle {
             get {
                 return this.shortTitleField;
@@ -7219,57 +6340,57 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public bool RareBooks {
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string BarCode {
             get {
-                return this.rareBooksField;
+                return this.barCodeField;
             }
             set {
-                this.rareBooksField = value;
-                this.RaisePropertyChanged("RareBooks");
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<int> SegmentID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string Volume {
             get {
-                return this.segmentIDField;
+                return this.volumeField;
             }
             set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string WebDisplay {
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public int PrimaryTitleID {
             get {
-                return this.webDisplayField;
+                return this.primaryTitleIDField;
             }
             set {
-                this.webDisplayField = value;
-                this.RaisePropertyChanged("WebDisplay");
+                this.primaryTitleIDField = value;
+                this.RaisePropertyChanged("PrimaryTitleID");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string FlickrURL {
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public int ItemStatusID {
             get {
-                return this.flickrURLField;
+                return this.itemStatusIDField;
             }
             set {
-                this.flickrURLField = value;
-                this.RaisePropertyChanged("FlickrURL");
+                this.itemStatusIDField = value;
+                this.RaisePropertyChanged("ItemStatusID");
             }
         }
     }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7908,7 +7029,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8211,7 +7332,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8235,6 +7356,8 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         private TitleVariant[] titleVariantsField;
         
         private TitleLanguage[] titleLanguagesField;
+        
+        private TitleNote[] titleNotesField;
         
         private string institutionNameField;
         
@@ -8347,7 +7470,19 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=9)]
+        public TitleNote[] TitleNotes {
+            get {
+                return this.titleNotesField;
+            }
+            set {
+                this.titleNotesField = value;
+                this.RaisePropertyChanged("TitleNotes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public string InstitutionName {
             get {
                 return this.institutionNameField;
@@ -8360,7 +7495,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8412,7 +7547,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8561,7 +7696,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8599,7 +7734,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title_Identifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8720,7 +7855,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8758,7 +7893,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8824,7 +7959,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9296,7 +8431,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationSubject))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9403,7 +8538,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9441,7 +8576,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation_AnnotationConcept))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9520,7 +8655,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9530,7 +8665,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationNote))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9651,7 +8786,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9661,7 +8796,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationRelation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9740,7 +8875,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9750,7 +8885,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9927,7 +9062,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9965,7 +9100,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPageCharacteristic))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10072,7 +9207,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10082,7 +9217,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10203,7 +9338,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10213,7 +9348,7 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10320,12 +9455,1220 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.18408")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
     public partial class AnnotatedItem : @__AnnotatedItem {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__AnnotatedTitle : CustomObjectBase {
+        
+        private int annotatedTitleIDField;
+        
+        private int annotationSourceIDField;
+        
+        private System.Nullable<int> titleIDField;
+        
+        private string externalIdentifierField;
+        
+        private string authorField;
+        
+        private string titleField;
+        
+        private string editionField;
+        
+        private string volumeField;
+        
+        private string publicationDetailsField;
+        
+        private string dateField;
+        
+        private string locationField;
+        
+        private string isBeagleEraField;
+        
+        private string inscriptionField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int AnnotatedTitleID {
+            get {
+                return this.annotatedTitleIDField;
+            }
+            set {
+                this.annotatedTitleIDField = value;
+                this.RaisePropertyChanged("AnnotatedTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int AnnotationSourceID {
+            get {
+                return this.annotationSourceIDField;
+            }
+            set {
+                this.annotationSourceIDField = value;
+                this.RaisePropertyChanged("AnnotationSourceID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public System.Nullable<int> TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string ExternalIdentifier {
+            get {
+                return this.externalIdentifierField;
+            }
+            set {
+                this.externalIdentifierField = value;
+                this.RaisePropertyChanged("ExternalIdentifier");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string Author {
+            get {
+                return this.authorField;
+            }
+            set {
+                this.authorField = value;
+                this.RaisePropertyChanged("Author");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string Title {
+            get {
+                return this.titleField;
+            }
+            set {
+                this.titleField = value;
+                this.RaisePropertyChanged("Title");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Edition {
+            get {
+                return this.editionField;
+            }
+            set {
+                this.editionField = value;
+                this.RaisePropertyChanged("Edition");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string PublicationDetails {
+            get {
+                return this.publicationDetailsField;
+            }
+            set {
+                this.publicationDetailsField = value;
+                this.RaisePropertyChanged("PublicationDetails");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string Date {
+            get {
+                return this.dateField;
+            }
+            set {
+                this.dateField = value;
+                this.RaisePropertyChanged("Date");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Location {
+            get {
+                return this.locationField;
+            }
+            set {
+                this.locationField = value;
+                this.RaisePropertyChanged("Location");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string IsBeagleEra {
+            get {
+                return this.isBeagleEraField;
+            }
+            set {
+                this.isBeagleEraField = value;
+                this.RaisePropertyChanged("IsBeagleEra");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string Inscription {
+            get {
+                return this.inscriptionField;
+            }
+            set {
+                this.inscriptionField = value;
+                this.RaisePropertyChanged("Inscription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class AnnotatedTitle : @__AnnotatedTitle {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageSummaryView : CustomObjectBase {
+        
+        private string mARCBibIDField;
+        
+        private int titleIDField;
+        
+        private System.Nullable<int> redirectTitleIDField;
+        
+        private string fullTitleField;
+        
+        private bool rareBooksField;
+        
+        private string shortTitleField;
+        
+        private string sortTitleField;
+        
+        private string partNumberField;
+        
+        private string partNameField;
+        
+        private int itemStatusIDField;
+        
+        private int itemIDField;
+        
+        private System.Nullable<int> redirectItemIDField;
+        
+        private int primaryTitleIDField;
+        
+        private string barCodeField;
+        
+        private System.Nullable<int> pDFSizeField;
+        
+        private string volumeField;
+        
+        private string fileRootFolderField;
+        
+        private System.Nullable<short> itemSequenceField;
+        
+        private int pageIDField;
+        
+        private string fileNamePrefixField;
+        
+        private string pageDescriptionField;
+        
+        private System.Nullable<int> sequenceOrderField;
+        
+        private bool illustrationField;
+        
+        private bool activeField;
+        
+        private string externalURLField;
+        
+        private string externalBaseURLField;
+        
+        private string altExternalURLField;
+        
+        private string webVirtualDirectoryField;
+        
+        private string oCRFolderShareField;
+        
+        private string downloadUrlField;
+        
+        private string imageServerUrlFormatField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string MARCBibID {
+            get {
+                return this.mARCBibIDField;
+            }
+            set {
+                this.mARCBibIDField = value;
+                this.RaisePropertyChanged("MARCBibID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public System.Nullable<int> RedirectTitleID {
+            get {
+                return this.redirectTitleIDField;
+            }
+            set {
+                this.redirectTitleIDField = value;
+                this.RaisePropertyChanged("RedirectTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string FullTitle {
+            get {
+                return this.fullTitleField;
+            }
+            set {
+                this.fullTitleField = value;
+                this.RaisePropertyChanged("FullTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool RareBooks {
+            get {
+                return this.rareBooksField;
+            }
+            set {
+                this.rareBooksField = value;
+                this.RaisePropertyChanged("RareBooks");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string SortTitle {
+            get {
+                return this.sortTitleField;
+            }
+            set {
+                this.sortTitleField = value;
+                this.RaisePropertyChanged("SortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string PartNumber {
+            get {
+                return this.partNumberField;
+            }
+            set {
+                this.partNumberField = value;
+                this.RaisePropertyChanged("PartNumber");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string PartName {
+            get {
+                return this.partNameField;
+            }
+            set {
+                this.partNameField = value;
+                this.RaisePropertyChanged("PartName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public int ItemStatusID {
+            get {
+                return this.itemStatusIDField;
+            }
+            set {
+                this.itemStatusIDField = value;
+                this.RaisePropertyChanged("ItemStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public System.Nullable<int> RedirectItemID {
+            get {
+                return this.redirectItemIDField;
+            }
+            set {
+                this.redirectItemIDField = value;
+                this.RaisePropertyChanged("RedirectItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public int PrimaryTitleID {
+            get {
+                return this.primaryTitleIDField;
+            }
+            set {
+                this.primaryTitleIDField = value;
+                this.RaisePropertyChanged("PrimaryTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string BarCode {
+            get {
+                return this.barCodeField;
+            }
+            set {
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public System.Nullable<int> PDFSize {
+            get {
+                return this.pDFSizeField;
+            }
+            set {
+                this.pDFSizeField = value;
+                this.RaisePropertyChanged("PDFSize");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string FileRootFolder {
+            get {
+                return this.fileRootFolderField;
+            }
+            set {
+                this.fileRootFolderField = value;
+                this.RaisePropertyChanged("FileRootFolder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public System.Nullable<short> ItemSequence {
+            get {
+                return this.itemSequenceField;
+            }
+            set {
+                this.itemSequenceField = value;
+                this.RaisePropertyChanged("ItemSequence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public string FileNamePrefix {
+            get {
+                return this.fileNamePrefixField;
+            }
+            set {
+                this.fileNamePrefixField = value;
+                this.RaisePropertyChanged("FileNamePrefix");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public string PageDescription {
+            get {
+                return this.pageDescriptionField;
+            }
+            set {
+                this.pageDescriptionField = value;
+                this.RaisePropertyChanged("PageDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        public System.Nullable<int> SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public bool Illustration {
+            get {
+                return this.illustrationField;
+            }
+            set {
+                this.illustrationField = value;
+                this.RaisePropertyChanged("Illustration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public bool Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+                this.RaisePropertyChanged("Active");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public string ExternalURL {
+            get {
+                return this.externalURLField;
+            }
+            set {
+                this.externalURLField = value;
+                this.RaisePropertyChanged("ExternalURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string ExternalBaseURL {
+            get {
+                return this.externalBaseURLField;
+            }
+            set {
+                this.externalBaseURLField = value;
+                this.RaisePropertyChanged("ExternalBaseURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string AltExternalURL {
+            get {
+                return this.altExternalURLField;
+            }
+            set {
+                this.altExternalURLField = value;
+                this.RaisePropertyChanged("AltExternalURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string WebVirtualDirectory {
+            get {
+                return this.webVirtualDirectoryField;
+            }
+            set {
+                this.webVirtualDirectoryField = value;
+                this.RaisePropertyChanged("WebVirtualDirectory");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public string OCRFolderShare {
+            get {
+                return this.oCRFolderShareField;
+            }
+            set {
+                this.oCRFolderShareField = value;
+                this.RaisePropertyChanged("OCRFolderShare");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public string DownloadUrl {
+            get {
+                return this.downloadUrlField;
+            }
+            set {
+                this.downloadUrlField = value;
+                this.RaisePropertyChanged("DownloadUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public string ImageServerUrlFormat {
+            get {
+                return this.imageServerUrlFormatField;
+            }
+            set {
+                this.imageServerUrlFormatField = value;
+                this.RaisePropertyChanged("ImageServerUrlFormat");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageSummaryView : @__PageSummaryView {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PDF : CustomObjectBase {
+        
+        private int pdfIDField;
+        
+        private int itemIDField;
+        
+        private string emailAddressField;
+        
+        private string shareWithEmailAddressesField;
+        
+        private bool imagesOnlyField;
+        
+        private string articleTitleField;
+        
+        private string articleCreatorsField;
+        
+        private string articleTagsField;
+        
+        private string fileLocationField;
+        
+        private string fileUrlField;
+        
+        private System.Nullable<System.DateTime> fileGenerationDateField;
+        
+        private System.Nullable<System.DateTime> fileDeletionDateField;
+        
+        private int pdfStatusIDField;
+        
+        private int numberImagesMissingField;
+        
+        private int numberOcrMissingField;
+        
+        private string commentField;
+        
+        private System.DateTime creationDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PdfID {
+            get {
+                return this.pdfIDField;
+            }
+            set {
+                this.pdfIDField = value;
+                this.RaisePropertyChanged("PdfID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string EmailAddress {
+            get {
+                return this.emailAddressField;
+            }
+            set {
+                this.emailAddressField = value;
+                this.RaisePropertyChanged("EmailAddress");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string ShareWithEmailAddresses {
+            get {
+                return this.shareWithEmailAddressesField;
+            }
+            set {
+                this.shareWithEmailAddressesField = value;
+                this.RaisePropertyChanged("ShareWithEmailAddresses");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public bool ImagesOnly {
+            get {
+                return this.imagesOnlyField;
+            }
+            set {
+                this.imagesOnlyField = value;
+                this.RaisePropertyChanged("ImagesOnly");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string ArticleTitle {
+            get {
+                return this.articleTitleField;
+            }
+            set {
+                this.articleTitleField = value;
+                this.RaisePropertyChanged("ArticleTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string ArticleCreators {
+            get {
+                return this.articleCreatorsField;
+            }
+            set {
+                this.articleCreatorsField = value;
+                this.RaisePropertyChanged("ArticleCreators");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string ArticleTags {
+            get {
+                return this.articleTagsField;
+            }
+            set {
+                this.articleTagsField = value;
+                this.RaisePropertyChanged("ArticleTags");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string FileLocation {
+            get {
+                return this.fileLocationField;
+            }
+            set {
+                this.fileLocationField = value;
+                this.RaisePropertyChanged("FileLocation");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public string FileUrl {
+            get {
+                return this.fileUrlField;
+            }
+            set {
+                this.fileUrlField = value;
+                this.RaisePropertyChanged("FileUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<System.DateTime> FileGenerationDate {
+            get {
+                return this.fileGenerationDateField;
+            }
+            set {
+                this.fileGenerationDateField = value;
+                this.RaisePropertyChanged("FileGenerationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public System.Nullable<System.DateTime> FileDeletionDate {
+            get {
+                return this.fileDeletionDateField;
+            }
+            set {
+                this.fileDeletionDateField = value;
+                this.RaisePropertyChanged("FileDeletionDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public int PdfStatusID {
+            get {
+                return this.pdfStatusIDField;
+            }
+            set {
+                this.pdfStatusIDField = value;
+                this.RaisePropertyChanged("PdfStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public int NumberImagesMissing {
+            get {
+                return this.numberImagesMissingField;
+            }
+            set {
+                this.numberImagesMissingField = value;
+                this.RaisePropertyChanged("NumberImagesMissing");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public int NumberOcrMissing {
+            get {
+                return this.numberOcrMissingField;
+            }
+            set {
+                this.numberOcrMissingField = value;
+                this.RaisePropertyChanged("NumberOcrMissing");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string Comment {
+            get {
+                return this.commentField;
+            }
+            set {
+                this.commentField = value;
+                this.RaisePropertyChanged("Comment");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public System.DateTime CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public System.DateTime LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PDF : @__PDF {
+        
+        private int numberOfPagesField;
+        
+        private int minutesToGenerateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int NumberOfPages {
+            get {
+                return this.numberOfPagesField;
+            }
+            set {
+                this.numberOfPagesField = value;
+                this.RaisePropertyChanged("NumberOfPages");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int MinutesToGenerate {
+            get {
+                return this.minutesToGenerateField;
+            }
+            set {
+                this.minutesToGenerateField = value;
+                this.RaisePropertyChanged("MinutesToGenerate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageType : CustomObjectBase {
+        
+        private int pageTypeIDField;
+        
+        private string pageTypeNameField;
+        
+        private string pageTypeDescriptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageTypeID {
+            get {
+                return this.pageTypeIDField;
+            }
+            set {
+                this.pageTypeIDField = value;
+                this.RaisePropertyChanged("PageTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string PageTypeName {
+            get {
+                return this.pageTypeNameField;
+            }
+            set {
+                this.pageTypeNameField = value;
+                this.RaisePropertyChanged("PageTypeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PageTypeDescription {
+            get {
+                return this.pageTypeDescriptionField;
+            }
+            set {
+                this.pageTypeDescriptionField = value;
+                this.RaisePropertyChanged("PageTypeDescription");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageType : @__PageType {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageFlickr : CustomObjectBase {
+        
+        private int pageFlickrIDField;
+        
+        private int pageIDField;
+        
+        private string flickrURLField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageFlickrID {
+            get {
+                return this.pageFlickrIDField;
+            }
+            set {
+                this.pageFlickrIDField = value;
+                this.RaisePropertyChanged("PageFlickrID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FlickrURL {
+            get {
+                return this.flickrURLField;
+            }
+            set {
+                this.flickrURLField = value;
+                this.RaisePropertyChanged("FlickrURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageFlickr : @__PageFlickr {
+        
+        private string shortTitleField;
+        
+        private string indicatedPageField;
+        
+        private string pageTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string IndicatedPage {
+            get {
+                return this.indicatedPageField;
+            }
+            set {
+                this.indicatedPageField = value;
+                this.RaisePropertyChanged("IndicatedPage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PageType {
+            get {
+                return this.pageTypeField;
+            }
+            set {
+                this.pageTypeField = value;
+                this.RaisePropertyChanged("PageType");
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusString", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
+    public partial class GetPaginationStatusStringRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> paginationStatusID;
+        
+        public GetPaginationStatusStringRequest() {
+        }
+        
+        public GetPaginationStatusStringRequest(System.Nullable<int> paginationStatusID) {
+            this.paginationStatusID = paginationStatusID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusStringResponse", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
+    public partial class GetPaginationStatusStringResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
+        public string GetPaginationStatusStringResult;
+        
+        public GetPaginationStatusStringResponse() {
+        }
+        
+        public GetPaginationStatusStringResponse(string GetPaginationStatusStringResult) {
+            this.GetPaginationStatusStringResult = GetPaginationStatusStringResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -10375,41 +10718,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusString", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
-    public partial class GetPaginationStatusStringRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> paginationStatusID;
-        
-        public GetPaginationStatusStringRequest() {
-        }
-        
-        public GetPaginationStatusStringRequest(System.Nullable<int> paginationStatusID) {
-            this.paginationStatusID = paginationStatusID;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusStringResponse", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
-    public partial class GetPaginationStatusStringResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
-        public string GetPaginationStatusStringResult;
-        
-        public GetPaginationStatusStringResponse() {
-        }
-        
-        public GetPaginationStatusStringResponse(string GetPaginationStatusStringResult) {
-            this.GetPaginationStatusStringResult = GetPaginationStatusStringResult;
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface BHLWSSoapChannel : MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap, System.ServiceModel.IClientChannel {
     }
@@ -10435,257 +10743,6 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public BHLWSSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public bool PDFUpdatePdfStatusRejected(int pdfid) {
-            return base.Channel.PDFUpdatePdfStatusRejected(pdfid);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription) {
-            return base.Channel.AnnotatedTitleSave(annotationSourceID, externalIdentifier, author, title, edition, volume, publicationDetails, date, location, isBeagleEra, inscription);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume) {
-            return base.Channel.AnnotatedItemSave(annotatedTitleId, externalIdentifier, volume);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber) {
-            return base.Channel.AnnotatedPageSave(annotatedItemId, externalIdentifier, annotatedPageTypeId, pageNumber);
-        }
-        
-        public bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId) {
-            return base.Channel.AnnotatedPageCharacteristicDeleteByPageID(annotatedPageId);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail) {
-            return base.Channel.AnnotatedPageCharacteristicSave(annotatedPageId, characteristicDetail);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSelectAuto(int annotationID) {
-            return base.Channel.AnnotationSelectAuto(annotationID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit) {
-            return base.Channel.AnnotationSave(annotationSourceID, annotatedPageId, pageColumn, externalIdentifier, sequenceNumber, comment, dataLoadEdit);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit) {
-            return base.Channel.AnnotationSaveText(annotationSourceID, externalIdentifer, textDescription, text, textCorrected, dataLoadEdit);
-        }
-        
-        public void AnnotationClear(int annotationId) {
-            base.Channel.AnnotationClear(annotationId);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note) {
-            return base.Channel.AnnotationRelationSave(annotationId, relatedExternalIdentifier, note);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate) {
-            return base.Channel.AnnotationNoteSave(annotationId, noteText, isAlternate);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId) {
-            return base.Channel.Annotation_AnnotationConceptSave(annotationId, conceptCode, keywordTargetId);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText) {
-            return base.Channel.AnnotationSubjectSave(annotationId, sourceId, categoryName, keywordTargetId, subjectText);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID) {
-            return base.Channel.GetNamesFromOcr(pageID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Title[] TitleSelectAllPublished() {
-            return base.Channel.TitleSelectAllPublished();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectByTitleID(int titleID) {
-            return base.Channel.TitleSelectByTitleID(titleID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectDetailByTitleID(int titleID) {
-            return base.Channel.TitleSelectDetailByTitleID(titleID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations() {
-            return base.Channel.TitleBibTeXSelectAllTitleCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations() {
-            return base.Channel.TitleBibTeXSelectAllItemCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations() {
-            return base.Channel.SegmentSelectAllBibTeXCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations() {
-            return base.Channel.SegmentSelectAllEndNoteCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations() {
-            return base.Channel.TitleEndNoteSelectAllTitleCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations() {
-            return base.Channel.TitleEndNoteSelectAllItemCitations();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectByBarCode(string barCode) {
-            return base.Channel.ItemSelectByBarCode(barCode);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectByTitleID(int titleID) {
-            return base.Channel.ItemSelectByTitleID(titleID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID) {
-            return base.Channel.ItemUpdateStatus(itemID, itemStatusID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID) {
-            return base.Channel.ItemUpdatePaginationStatus(itemID, paginationStatusID, userID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectAuto(int itemID) {
-            return base.Channel.ItemSelectAuto(itemID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge) {
-            return base.Channel.ItemSelectWithExpiredPageNames(maxAge);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithoutPageNames() {
-            return base.Channel.ItemSelectWithoutPageNames();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID) {
-            return base.Channel.ItemUpdateLastPageNameLookupDate(itemID);
-        }
-        
-        public bool ItemCheckForOcrText(int itemID, string ocrTextPath) {
-            return base.Channel.ItemCheckForOcrText(itemID, ocrTextPath);
-        }
-        
-        public string ItemGetNamesXMLByItemID(int itemID) {
-            return base.Channel.ItemGetNamesXMLByItemID(itemID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectPublished() {
-            return base.Channel.ItemSelectPublished();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate) {
-            return base.Channel.ItemSelectRecentlyChanged(startDate);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectPublished() {
-            return base.Channel.SegmentSelectPublished();
-        }
-        
-        public void ItemNameFileLogRefreshSinceDate(System.DateTime startDate) {
-            base.Channel.ItemNameFileLogRefreshSinceDate(startDate);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate() {
-            return base.Channel.ItemNameFileLogSelectForCreate();
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload() {
-            return base.Channel.ItemNameFileLogSelectForUpload();
-        }
-        
-        public void ItemNameFileLogUpdateCreateDate(int logID) {
-            base.Channel.ItemNameFileLogUpdateCreateDate(logID);
-        }
-        
-        public void ItemNameFileLogUpdateUploadDate(int logID) {
-            base.Channel.ItemNameFileLogUpdateUploadDate(logID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Vault VaultSelect(int vaultID) {
-            return base.Channel.VaultSelect(vaultID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Institution InstitutionSelectAuto(string institutionCode) {
-            return base.Channel.InstitutionSelectAuto(institutionCode);
-        }
-        
-        public bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body) {
-            return base.Channel.SendEmail(from, to, cc, bcc, subject, body);
-        }
-        
-        public string GetMODSRecordForTitle(int titleId) {
-            return base.Channel.GetMODSRecordForTitle(titleId);
-        }
-        
-        public string GetMODSRecordForItem(int itemId) {
-            return base.Channel.GetMODSRecordForItem(itemId);
-        }
-        
-        public string GetMODSRecordForSegment(int segmentId) {
-            return base.Channel.GetMODSRecordForSegment(segmentId);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit) {
-            return base.Channel.DOISelectSubmitted(minutesSinceSubmit);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn) {
-            return base.Channel.TitleSelectWithoutSubmittedDOI(numberToReturn);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid) {
-            return base.Channel.DOIInsertAuto(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap.DOIUpdateStatus(MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest request) {
-            return base.Channel.DOIUpdateStatus(request);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, System.Nullable<short> setValid) {
-            MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest inValue = new MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest();
-            inValue.doiID = doiID;
-            inValue.doiStatusId = doiStatusId;
-            inValue.message = message;
-            inValue.setValid = setValid;
-            MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse retVal = ((MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap)(this)).DOIUpdateStatus(inValue);
-            return retVal.DOIUpdateStatusResult;
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName) {
-            return base.Channel.DOIUpdateDOIName(doiID, doiStatusId, doiName);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID) {
-            return base.Channel.DOIUpdateBatchID(doiID, doiStatusId, doiBatchID);
-        }
-        
-        public void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
-            base.Channel.IndicatedPageSave(pageIDs, pagePrefix, style, start, increment, implied, userID);
-        }
-        
-        public void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID) {
-            base.Channel.IndicatedPageDeleteAllForPage(pageIDs, userID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectByItemID(int itemID) {
-            return base.Channel.PageSelectByItemID(itemID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectFileNameByItemID(int itemID) {
-            return base.Channel.PageSelectFileNameByItemID(itemID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageMetadataSelectByItemID(int itemID) {
-            return base.Channel.PageMetadataSelectByItemID(itemID);
-        }
-        
-        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge) {
-            return base.Channel.PageSelectWithExpiredPageNamesByItemID(itemID, maxAge);
         }
         
         public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithoutPageNamesByItemID(int itemID) {
@@ -10794,6 +10851,273 @@ namespace MOBOT.BHL.BHLDOIService.BHLWS {
         
         public bool PDFUpdatePdfStatusError(int pdfid) {
             return base.Channel.PDFUpdatePdfStatusError(pdfid);
+        }
+        
+        public bool PDFUpdatePdfStatusRejected(int pdfid) {
+            return base.Channel.PDFUpdatePdfStatusRejected(pdfid);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription) {
+            return base.Channel.AnnotatedTitleSave(annotationSourceID, externalIdentifier, author, title, edition, volume, publicationDetails, date, location, isBeagleEra, inscription);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume) {
+            return base.Channel.AnnotatedItemSave(annotatedTitleId, externalIdentifier, volume);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber) {
+            return base.Channel.AnnotatedPageSave(annotatedItemId, externalIdentifier, annotatedPageTypeId, pageNumber);
+        }
+        
+        public bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId) {
+            return base.Channel.AnnotatedPageCharacteristicDeleteByPageID(annotatedPageId);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail) {
+            return base.Channel.AnnotatedPageCharacteristicSave(annotatedPageId, characteristicDetail);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSelectAuto(int annotationID) {
+            return base.Channel.AnnotationSelectAuto(annotationID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit) {
+            return base.Channel.AnnotationSave(annotationSourceID, annotatedPageId, pageColumn, externalIdentifier, sequenceNumber, comment, dataLoadEdit);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit) {
+            return base.Channel.AnnotationSaveText(annotationSourceID, externalIdentifer, textDescription, text, textCorrected, dataLoadEdit);
+        }
+        
+        public void AnnotationClear(int annotationId) {
+            base.Channel.AnnotationClear(annotationId);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note) {
+            return base.Channel.AnnotationRelationSave(annotationId, relatedExternalIdentifier, note);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate) {
+            return base.Channel.AnnotationNoteSave(annotationId, noteText, isAlternate);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId) {
+            return base.Channel.Annotation_AnnotationConceptSave(annotationId, conceptCode, keywordTargetId);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText) {
+            return base.Channel.AnnotationSubjectSave(annotationId, sourceId, categoryName, keywordTargetId, subjectText);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID) {
+            return base.Channel.GetNamesFromOcr(pageID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Title[] TitleSelectAllPublished() {
+            return base.Channel.TitleSelectAllPublished();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectByTitleID(int titleID) {
+            return base.Channel.TitleSelectByTitleID(titleID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Title TitleSelectDetailByTitleID(int titleID) {
+            return base.Channel.TitleSelectDetailByTitleID(titleID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations() {
+            return base.Channel.TitleBibTeXSelectAllTitleCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations() {
+            return base.Channel.TitleBibTeXSelectAllItemCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations() {
+            return base.Channel.SegmentSelectAllBibTeXCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations() {
+            return base.Channel.SegmentSelectAllEndNoteCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations() {
+            return base.Channel.TitleEndNoteSelectAllTitleCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations() {
+            return base.Channel.TitleEndNoteSelectAllItemCitations();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier[] Title_IdentifierSelectByTitleID(int titleID) {
+            return base.Channel.Title_IdentifierSelectByTitleID(titleID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectByBarCode(string barCode) {
+            return base.Channel.ItemSelectByBarCode(barCode);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectByTitleID(int titleID) {
+            return base.Channel.ItemSelectByTitleID(titleID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID) {
+            return base.Channel.ItemUpdateStatus(itemID, itemStatusID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID) {
+            return base.Channel.ItemUpdatePaginationStatus(itemID, paginationStatusID, userID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemSelectAuto(int itemID) {
+            return base.Channel.ItemSelectAuto(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge) {
+            return base.Channel.ItemSelectWithExpiredPageNames(maxAge);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectWithoutPageNames() {
+            return base.Channel.ItemSelectWithoutPageNames();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID) {
+            return base.Channel.ItemUpdateLastPageNameLookupDate(itemID);
+        }
+        
+        public bool ItemCheckForOcrText(int itemID, string ocrTextPath) {
+            return base.Channel.ItemCheckForOcrText(itemID, ocrTextPath);
+        }
+        
+        public string ItemGetNamesXMLByItemID(int itemID) {
+            return base.Channel.ItemGetNamesXMLByItemID(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectPublished() {
+            return base.Channel.ItemSelectPublished();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate) {
+            return base.Channel.ItemSelectRecentlyChanged(startDate);
+        }
+        
+        public string[] ExportIAIdentifiers() {
+            return base.Channel.ExportIAIdentifiers();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Segment[] SegmentSelectPublished() {
+            return base.Channel.SegmentSelectPublished();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Segment SegmentSelectExtended(int segmentID) {
+            return base.Channel.SegmentSelectExtended(segmentID);
+        }
+        
+        public void ItemNameFileLogRefreshSinceDate(System.DateTime startDate) {
+            base.Channel.ItemNameFileLogRefreshSinceDate(startDate);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate() {
+            return base.Channel.ItemNameFileLogSelectForCreate();
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload() {
+            return base.Channel.ItemNameFileLogSelectForUpload();
+        }
+        
+        public void ItemNameFileLogUpdateCreateDate(int logID) {
+            base.Channel.ItemNameFileLogUpdateCreateDate(logID);
+        }
+        
+        public void ItemNameFileLogUpdateUploadDate(int logID) {
+            base.Channel.ItemNameFileLogUpdateUploadDate(logID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Vault VaultSelect(int vaultID) {
+            return base.Channel.VaultSelect(vaultID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Institution InstitutionSelectAuto(string institutionCode) {
+            return base.Channel.InstitutionSelectAuto(institutionCode);
+        }
+        
+        public bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body) {
+            return base.Channel.SendEmail(from, to, cc, bcc, subject, body);
+        }
+        
+        public string GetMODSRecordForTitle(int titleId) {
+            return base.Channel.GetMODSRecordForTitle(titleId);
+        }
+        
+        public string GetMODSRecordForItem(int itemId) {
+            return base.Channel.GetMODSRecordForItem(itemId);
+        }
+        
+        public string GetMODSRecordForSegment(int segmentId) {
+            return base.Channel.GetMODSRecordForSegment(segmentId);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit) {
+            return base.Channel.DOISelectSubmitted(minutesSinceSubmit);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn) {
+            return base.Channel.TitleSelectWithoutSubmittedDOI(numberToReturn);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn) {
+            return base.Channel.SegmentSelectWithoutSubmittedDOI(numberToReturn);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid) {
+            return base.Channel.DOIInsertAuto(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap.DOIUpdateStatus(MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest request) {
+            return base.Channel.DOIUpdateStatus(request);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateStatus(int doiID, int doiStatusId, string message, System.Nullable<short> setValid) {
+            MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest inValue = new MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusRequest();
+            inValue.doiID = doiID;
+            inValue.doiStatusId = doiStatusId;
+            inValue.message = message;
+            inValue.setValid = setValid;
+            MOBOT.BHL.BHLDOIService.BHLWS.DOIUpdateStatusResponse retVal = ((MOBOT.BHL.BHLDOIService.BHLWS.BHLWSSoap)(this)).DOIUpdateStatus(inValue);
+            return retVal.DOIUpdateStatusResult;
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName) {
+            return base.Channel.DOIUpdateDOIName(doiID, doiStatusId, doiName);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID) {
+            return base.Channel.DOIUpdateBatchID(doiID, doiStatusId, doiBatchID);
+        }
+        
+        public void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
+            base.Channel.IndicatedPageSave(pageIDs, pagePrefix, style, start, increment, implied, userID);
+        }
+        
+        public void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID) {
+            base.Channel.IndicatedPageDeleteAllForPage(pageIDs, userID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectByItemID(int itemID) {
+            return base.Channel.PageSelectByItemID(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectFileNameByItemID(int itemID) {
+            return base.Channel.PageSelectFileNameByItemID(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageMetadataSelectByItemID(int itemID) {
+            return base.Channel.PageMetadataSelectByItemID(itemID);
+        }
+        
+        public MOBOT.BHL.BHLDOIService.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge) {
+            return base.Channel.PageSelectWithExpiredPageNamesByItemID(itemID, maxAge);
         }
     }
 }

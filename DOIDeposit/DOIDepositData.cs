@@ -14,6 +14,20 @@ namespace MOBOT.BHL.DOIDeposit
 
         #region Deposit Head properties
 
+        private int _entityID;
+        public int EntityID
+        {
+            get { return _entityID; }
+            set { _entityID = value; }
+        }
+
+        private int _entityTypeID;
+        public int EntityTypeID
+        {
+            get { return _entityTypeID; }
+            set { _entityTypeID = value; }
+        }
+
         private string _batchID = string.Empty;
         public string BatchID
         {
@@ -53,11 +67,11 @@ namespace MOBOT.BHL.DOIDeposit
 
         #region Deposit Body properties
 
-        private BookTypeValue _bookType;
-        public BookTypeValue BookType
+        private PublicationTypeValue _publicationType;
+        public PublicationTypeValue PublicationType
         {
-            get { return _bookType; }
-            set { _bookType = value; }
+            get { return _publicationType; }
+            set { _publicationType = value; }
         }
 
         // Optional; use ISO 639 language codes
@@ -146,6 +160,14 @@ namespace MOBOT.BHL.DOIDeposit
         }
 
         // Optional
+        private string _volume = string.Empty;
+        public string Volume
+        {
+            get { return _volume; }
+            set { _volume = value; }
+        }
+
+        // Optional
         private string _coden = string.Empty;
         public string Coden
         {
@@ -159,6 +181,22 @@ namespace MOBOT.BHL.DOIDeposit
         {
             get { return _abbreviatedTitle; }
             set { _abbreviatedTitle = value; }
+        }
+
+        // Required for articles
+        private string _articleTitle = string.Empty;
+        public string ArticleTitle
+        {
+            get { return _articleTitle; }
+            set { _articleTitle = value; }
+        }
+
+        // Optional
+        private string _articlePublicationDate = string.Empty;
+        public string ArticlePublicationDate
+        {
+            get { return _articlePublicationDate; }
+            set { _articlePublicationDate = value; }
         }
 
         // Optional
@@ -179,12 +217,15 @@ namespace MOBOT.BHL.DOIDeposit
 
         #endregion Deposit Body properties
 
-        public enum BookTypeValue
+        public enum PublicationTypeValue
         {
             EditedBook,
             Monograph,
             Reference,
-            Other
+            Journal,
+            Article,
+            Other,
+
         }
 
         public enum PersonNameSequence

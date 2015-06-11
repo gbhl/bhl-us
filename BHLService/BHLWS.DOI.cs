@@ -22,6 +22,12 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
+        {
+            return new BHLProvider().SegmentSelectWithoutSubmittedDOI(numberToReturn);
+        }
+
+        [WebMethod]
         public DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId,
             string doiName, string message, short isValid)
         {

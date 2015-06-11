@@ -149,6 +149,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Vault.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -178,6 +181,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="QueryTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ArticleDepositTemplate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="JournalDepositTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
