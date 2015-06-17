@@ -22,8 +22,6 @@ namespace MOBOT.BHL.AdminWeb
             bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);
             if (debugMode) Page.Title = "***DEBUG MODE*** " + Page.Title;
 
-			Response.Cookies[ "CallingUrl" ].Value = Request.Url.ToString();
-
 			// Make sure user is logged in
             if (Helper.IsUserAuthenticated(new HttpRequestWrapper(Request)))
             {
@@ -51,7 +49,6 @@ namespace MOBOT.BHL.AdminWeb
 		protected override void OnInit( EventArgs e )
 		{
 			base.OnInit( e );
-            Response.Cookies["CallingUrl"].Value = Request.Url.ToString();
             if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("/account/login");
 		}
 	}
