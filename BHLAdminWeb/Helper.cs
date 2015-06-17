@@ -139,7 +139,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             string userName = request.GetOwinContext().Authentication.User.Identity.Name;
             var Db = new MOBOT.BHL.AdminWeb.Models.ApplicationDbContext();
-            var uid = (from u in Db.Users where u.UserName == userName select u.uid).Single();
+            var uid = (from u in Db.Users where u.UserName == userName select u.Id).Single();
             return uid;
         }
     }

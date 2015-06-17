@@ -188,7 +188,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             // which the current user is a member:
             foreach (var userRole in user.Roles)
             {
-                var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
+                var rm = new RoleManager<CustomRole, int>(new CustomRoleStore(new ApplicationDbContext()));
                 var checkUserRole = this.Roles.Find(r => r.RoleName == rm.FindById(userRole.RoleId).Name);
                 checkUserRole.Selected = true;
             }
@@ -204,7 +204,7 @@ namespace MOBOT.BHL.AdminWeb.Models
     public class SelectRoleEditorViewModel
     {
         public SelectRoleEditorViewModel() { }
-        public SelectRoleEditorViewModel(IdentityRole role)
+        public SelectRoleEditorViewModel(CustomRole role)
         {
             this.RoleName = role.Name;
         }

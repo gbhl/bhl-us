@@ -18,12 +18,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new BHLUserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new BHLUserManager(new UserStore<ApplicationUser, CustomRole, int, 
+                CustomUserLogin, CustomUserRole, CustomUserClaim>(new ApplicationDbContext())))
         {
         }
 
         //public AccountController(UserManager<ApplicationUser> userManager)
-        public AccountController(BHLUserManager<ApplicationUser> userManager)
+        public AccountController(BHLUserManager userManager)
         {
             UserManager = userManager;
 
@@ -41,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             // Token will expire 24 hours after being issued.
             var provider = new DpapiDataProtectionProvider("BhlAdmin");
             UserManager.UserTokenProvider =
-                new DataProtectorTokenProvider<ApplicationUser>(
+                new DataProtectorTokenProvider<ApplicationUser, int>(
                     provider.Create("PasswordChange"))
                     {
                         TokenLifespan = TimeSpan.FromHours(24)
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             UserManager.EmailService = new MVCServices.EmailService();
         }
 
-        public BHLUserManager<ApplicationUser> UserManager { get; private set; }
+        public BHLUserManager UserManager { get; private set; }
 
         //
         // GET: /Account/Login
@@ -133,7 +134,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                         // Send the user an email letting them know that an administrator will assign
                         // roles to the new account.  Copy the BHL user administrator on the message.
-                        string userId = user.Id;
+                        int userId = user.Id;
                         string emailBody = string.Format(
                             "Your new user account has been registered successfully.\n\r" +
                             "Username: {0}\r" +
@@ -167,7 +168,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public async Task<ActionResult> Disassociate(string loginProvider, string providerKey)
         {
             ManageMessageId? message = null;
-            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            IdentityResult result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId<int>(), new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 message = ManageMessageId.RemoveLoginSuccess;
@@ -207,7 +208,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                    IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId<int>(), model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
@@ -229,7 +230,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                    IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId<int>(), model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
@@ -302,7 +303,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
             }
-            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+            var result = await UserManager.AddLoginAsync(User.Identity.GetUserId<int>(), loginInfo.Login);
             if (result.Succeeded)
             {
                 return RedirectToAction("Manage");
@@ -346,7 +347,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
                             // Send the user an email letting them know that an administrator will assign
                             // roles to the new account.  Copy the BHL user administrator on the message.
-                            string userId = user.Id;
+                            int userId = user.Id;
                             string emailBody = string.Format(
                                 "Your new user account has been registered successfully.\n\r" +
                                 "Username: {0}\r" +
@@ -395,7 +396,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [ChildActionOnly]
         public ActionResult RemoveAccountList()
         {
-            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
+            var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId<int>());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
@@ -417,7 +418,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             bool canDelete = Request.GetOwinContext().Authentication.User.IsInRole(MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin.ToString());
 
             var Db = new ApplicationDbContext();
-            var users = Db.Users.Where(r => r.uid != 1).OrderBy(r => r.UserName);
+            var users = Db.Users.Where(r => r.Id != 1).OrderBy(r => r.UserName);
             var model = new List<EditUserViewModel>();
             foreach (var user in users)
             {
@@ -545,7 +546,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 // Make sure we have a valid user; if not, just act like we do (to prevent malicious use)
                 if (user != null)
                 {
-                    string userId = user.Id;
+                    int userId = user.Id;
 
                     // Generate a password reset token
                     string resetToken = await UserManager.GeneratePasswordResetTokenAsync(userId);
@@ -578,7 +579,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 ViewBag.PasswordReset = true;
 
                 // Verify the id
-                var user = await UserManager.FindByIdAsync(model.Id);
+                var user = await UserManager.FindByIdAsync(Convert.ToInt32(model.Id));
 
                 // Make sure we have a valid user; if not, just act like we do (to prevent malicious use)
                 if (user != null)
@@ -625,7 +626,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         private bool HasPassword()
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
+            var user = UserManager.FindById(User.Identity.GetUserId<int>());
             if (user != null)
             {
                 return user.PasswordHash != null;

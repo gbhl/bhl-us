@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using MOBOT.BHL.AdminWeb.Models;
 using Owin;
+using System;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -16,7 +19,16 @@ namespace MOBOT.BHL.AdminWeb
                 SlidingExpiration = true,
                 ExpireTimeSpan = System.TimeSpan.FromHours(10),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnValidateIdentity = SecurityStampValidator
+                        .OnValidateIdentity<BHLUserManager, ApplicationUser, int>(
+                            validateInterval: TimeSpan.FromMinutes(30),
+                            regenerateIdentityCallback: (manager, user) =>
+                                user.GenerateUserIdentityAsync(manager),
+                            getUserIdCallback: (id) => (id.GetUserId<int>()))
+                } 
             });
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
@@ -52,7 +64,16 @@ namespace MOBOT.BHL.AdminWeb
                 SlidingExpiration = true,
                 ExpireTimeSpan = System.TimeSpan.FromHours(10),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnValidateIdentity = SecurityStampValidator
+                        .OnValidateIdentity<BHLUserManager, ApplicationUser, int>(
+                            validateInterval: TimeSpan.FromMinutes(30),
+                            regenerateIdentityCallback: (manager, user) =>
+                                user.GenerateUserIdentityAsync(manager),
+                            getUserIdCallback: (id) => (id.GetUserId<int>()))
+                }
             });
             // Use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
