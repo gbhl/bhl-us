@@ -142,7 +142,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             "Last Name: {2}\r" +
                             "Email Address: {3}\n\r" +
                             "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
-                            "The administrator will be notify you by email when the permissions have been assigned. Thank you for your patience.",
+                            "The administrator will notify you by email when the permissions have been assigned. Thank you for your patience.",
                             user.UserName, user.FirstName, user.LastName, user.Email);
                         List<string> bccList = new List<string>();
                         bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
@@ -353,7 +353,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                                 "Username: {0}\r" +
                                 "Email Address: {1}\n\r" +
                                 "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
-                                "The administrator will be notify you by email when the permissions have been assigned. Thank you for your patience.",
+                                "The administrator will notify you by email when the permissions have been assigned. Thank you for your patience.",
                                 user.UserName, user.Email);
                             List<string> bccList = new List<string>();
                             bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
