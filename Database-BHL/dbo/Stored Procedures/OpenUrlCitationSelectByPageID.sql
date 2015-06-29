@@ -63,7 +63,7 @@ FROM	dbo.Page p WITH (NOLOCK) INNER JOIN dbo.Item i WITH (NOLOCK)
 			ON p.ItemID = i.ItemID
 		INNER JOIN dbo.Title t WITH (NOLOCK)
 			ON i.PrimaryTitleID = t.TitleID
-		INNER JOIN dbo.Language l WITH (NOLOCK)
+		LEFT JOIN dbo.Language l WITH (NOLOCK)
 			ON i.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK)
 			ON t.TitleID = c.TitleID
@@ -108,7 +108,5 @@ FROM	#tmpOpenUrlCitation t INNER JOIN Title_Identifier ti WITH (NOLOCK)
 SELECT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, Volume, Date, StartPage
 
 END
-
-
 
 
