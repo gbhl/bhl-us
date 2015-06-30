@@ -6,6 +6,7 @@
   <appSettings>
     <!-- Flags to activate/deactivate various functions of this service -->
     <add key="Service_SubmitTitles" value="true"/>
+    <add key="Service_SubmitSegments" value="true"/>
     <add key="Service_ValidateSubmissions" value="true"/>
     <!-- Email settings -->
     <add key="SMTPHost" value="SMTP SERVER NAME"/>
@@ -28,6 +29,8 @@
     <add key="CrossRefDepositUrlQueryFormat" value="deposit?operation=doMDUpload&amp;login_id={0}&amp;login_passwd={1}&amp;area={2}"/>
     <add key="CrossRefCheckSubmissionUrlFormat" value="http://doi.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/>
     <!-- <add key="CrossRefCheckSubmissionUrlFormat" value="http://test.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/> -->
+    <add key="CrossRefXmlQueryUrlBase" value="http://doi.crossref.org/servlet"/>
+    <add key="CrossRefXmlQueryFormat" value="query?usr={0}&amp;pwd={1}&amp;format=unixsd&amp;qdata={2}"/>
 
     <!-- Number of DOIs to generate and submit to CrossRef during each execution of this app -->
     <add key="NumberToSubmit" value="1"/>
@@ -36,6 +39,9 @@
     <!-- Deposit template file names-->
     <add key="MonographDepositTemplateFile" value="MonographDepositTemplate.xml"/>
     <add key="JournalDepositTemplateFile" value="JournalDepositTemplate.xml"/>
+    <add key="ArticleDepositTemplateFile" value="ArticleDepositTemplate.xml"/>
+    <!-- Query template file name -->
+    <add key="QueryTemplateFile" value="QueryTemplate.xml"/>
     <!-- File name format for the CrossRef deposit files -->
     <add key="DepositFileFormat" value="{0}.xml"></add>
     <add key="DepositFolder" value="deposit/"/>
@@ -45,7 +51,9 @@
     <add key="BHLTitleUrlFormat" value="http://www.biodiversitylibrary.org/bibliography/{0}"/>
     <add key="BHLItemUrlFormat" value="http://www.biodiversitylibrary.org/item/{0}"/>
     <add key="BHLPageUrlFormat" value="http://www.biodiversitylibrary.org/page/{0}"/>
+    <add key="BHLPartUrlFormat" value="http://www.biodiversitylibrary.org/part/{0}"/>
     <!-- DOI Status codes.  These should match the rows in the DOIStatus database table. -->
+    <add key="DOIStatus_Null" value="0"/>
     <add key="DOIStatus_None" value="10"/>
     <add key="DOIStatus_Assigned" value="20"/>
     <add key="DOIStatus_Resubmit" value="30"/>
@@ -56,10 +64,12 @@
     <add key="DOIStatus_CrossRefError" value="80"/>
     <add key="DOIStatus_CrossRefWarning" value="90"/>
     <add key="DOIStatus_Approved" value="100"/>
+    <add key="DOIStatus_External" value="200"/>
     <!-- DOI Entity Types.  These should match the rows in the DOIEntityType database table. -->
     <add key="DOIEntityType_Title" value="10"/>
     <add key="DOIEntityType_Item" value="20"/>
     <add key="DOIEntityType_Page" value="30"/>
+    <add key="DOIEntityType_Segment" value="40"/>
     <!-- Bibliographic Levels.  These should match the rows in the BibliographicLevel database table. -->
     <add key="BibLevel_MonographComponent" value="1"/>
     <add key="BibLevel_SerialComponent" value="2"/>

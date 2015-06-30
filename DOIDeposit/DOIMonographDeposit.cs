@@ -48,18 +48,18 @@ namespace MOBOT.BHL.DOIDeposit
             template = template.Replace("{depositor_email_address}", HttpUtility.HtmlEncode(Data.DepositorEmail));
             template = template.Replace("{registrant}", HttpUtility.HtmlEncode(Data.Registrant));
 
-            switch (Data.BookType)
+            switch (Data.PublicationType)
             {
-                case DOIDepositData.BookTypeValue.Monograph:
+                case DOIDepositData.PublicationTypeValue.Monograph:
                     template = template.Replace("{book_type_value}", "monograph");
                     break;
-                case DOIDepositData.BookTypeValue.EditedBook:
+                case DOIDepositData.PublicationTypeValue.EditedBook:
                     template = template.Replace("{book_type_value}", "edited_book");
                     break;
-                case DOIDepositData.BookTypeValue.Reference:
+                case DOIDepositData.PublicationTypeValue.Reference:
                     template = template.Replace("{book_type_value}", "reference");
                     break;
-                case DOIDepositData.BookTypeValue.Other:
+                case DOIDepositData.PublicationTypeValue.Other:
                     template = template.Replace("{book_type_value}", "other");
                     break;
                 default:

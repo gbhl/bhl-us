@@ -1180,4 +1180,7 @@
     <None Include="reqlog\Stored Procedures\RequestLogUpdateAuto.sql" />
     <None Include="reqlog\Stored Procedures\RequestTypeSelectByApplication.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\SegmentSelectWithoutSubmittedDOI.sql" />
+  </ItemGroup>
 </Project>

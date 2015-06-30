@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MOBOT.BHL.DOIDeposit
 {
-    public class DOIDepositFactory
+    public class DOIXmlQueryFactory
     {
         private DOIDepositData data = null;
         public DOIDepositData Data
@@ -14,7 +14,7 @@ namespace MOBOT.BHL.DOIDeposit
             set { data = value; }
         }
 
-        public enum DOIDepositType
+        public enum DOIQueryType
         {
             Monograph,
             Journal,
@@ -23,39 +23,39 @@ namespace MOBOT.BHL.DOIDeposit
 
         #region Constructors
 
-        public DOIDepositFactory()
+        public DOIXmlQueryFactory()
         {
         }
 
-        public DOIDepositFactory(DOIDepositData data)
+        public DOIXmlQueryFactory(DOIDepositData data)
         {
             Data = data;
         }
 
         #endregion Constructors
 
-        public DOIDeposit GetDOIDeposit(DOIDepositType type)
+        public DOIQuery GetDOIQuery(DOIQueryType type)
         {
-            return GetDOIDeposit(type, Data);
+            return GetDOIQuery(type, Data);
         }
 
-        public DOIDeposit GetDOIDeposit(DOIDepositType type, DOIDepositData data)
+        public DOIQuery GetDOIQuery(DOIQueryType type, DOIDepositData data)
         {
-            DOIDeposit deposit = null;
+            DOIQuery deposit = null;
 
             switch (type)
             {
-                case DOIDepositType.Monograph:
-                    deposit = new DOIMonographDeposit(data);
+                case DOIQueryType.Monograph:
+                    deposit = new DOIMonographXmlQuery(data);
                     break;
-                case DOIDepositType.Journal:
-                    deposit = new DOIJournalDeposit(data);
+                case DOIQueryType.Journal:
+                    throw new NotImplementedException();
                     break;
-                case DOIDepositType.Article:
-                    deposit = new DOIArticleDeposit(data);
+                case DOIQueryType.Article:
+                    deposit = new DOIArticleXmlQuery(data);
                     break;
                 default:
-                    deposit = new DOIMonographDeposit(data);
+                    deposit = new DOIMonographXmlQuery(data);
                     break;
             }
 

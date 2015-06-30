@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MOBOT.BHL.DOIDeposit
 {
-    public abstract class DOIDeposit : iDOIDeposit
+    public abstract class DOIQuery : iDOIQuery
     {
         private DOIDepositData _data;
         public DOIDepositData Data
@@ -14,14 +14,14 @@ namespace MOBOT.BHL.DOIDeposit
             set { _data = value; }
         }
 
-        private string _depositTemplate = string.Empty;
-        public string DepositTemplate
+        private string _queryTemplate = string.Empty;
+        public string QueryTemplate
         {
-            get { return _depositTemplate; }
-            set { _depositTemplate = value; }
+            get { return _queryTemplate; }
+            set { _queryTemplate = value; }
         }
 
-        #region iDOIDeposit Members
+        #region iDOIQuery Members
 
         public new abstract string ToString();
         public abstract string ToString(string template);

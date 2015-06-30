@@ -14,6 +14,13 @@ namespace MOBOT.BHL.BHLDOIService
             set { _submitTitles = value; }
         }
 
+        private bool _submitSegments = true;
+        public bool SubmitSegments
+        {
+            get { return _submitSegments; }
+            set { _submitSegments = value; }
+        }
+
         private bool _validateSubmissions = true;
         public bool ValidateSubmissions
         {
@@ -119,6 +126,21 @@ namespace MOBOT.BHL.BHLDOIService
             set { _crossrefCheckSubmissionUrlFormat = value; }
         }
 
+        private string _crossrefXmlQueryUrlBase = string.Empty;
+        public string CrossrefXmlQueryUrlBase
+        {
+            get { return _crossrefXmlQueryUrlBase; }
+            set { _crossrefXmlQueryUrlBase = value; }
+        }
+
+        private string _crossrefXmlQueryFormat = string.Empty;
+        public string CrossrefXmlQueryFormat
+        {
+            get { return _crossrefXmlQueryFormat; }
+            set { _crossrefXmlQueryFormat = value; }
+        }
+
+
         private int _numberToSubmit = 10;
         public int NumberToSubmit
         {
@@ -145,6 +167,20 @@ namespace MOBOT.BHL.BHLDOIService
         {
             get { return _journalDepositTemplateFile; }
             set { _journalDepositTemplateFile = value; }
+        }
+
+        private string _articleDepositTemplateFile = "ArticleDepositTemplate.xml";
+        public string ArticleDepositTemplateFile
+        {
+            get { return _articleDepositTemplateFile; }
+            set { _articleDepositTemplateFile = value; }
+        }
+
+        private string _queryTemplateFile = "QueryTemplateFile.xml";
+        public string QueryTemplateFile
+        {
+            get { return _queryTemplateFile; }
+            set { _queryTemplateFile = value; }
         }
 
         private string _depositFileFormat = "{0}.xml";
@@ -194,6 +230,20 @@ namespace MOBOT.BHL.BHLDOIService
         {
             get { return _bhlPageUrlFormat; }
             set { _bhlPageUrlFormat = value; }
+        }
+
+        private string _bhlPartUrlFormat = "http://www.biodiversitylibrary.org/part/{0}";
+        public string BhlPartUrlFormat
+        {
+            get { return _bhlPartUrlFormat; }
+            set { _bhlPartUrlFormat = value; }
+        }
+
+        private int _doiStatusNull = 0;
+        public int DoiStatusNull
+        {
+            get { return _doiStatusNull; }
+            set { _doiStatusNull = value; }
         }
 
         private int _doiStatusNone = 10;
@@ -266,6 +316,13 @@ namespace MOBOT.BHL.BHLDOIService
             set { _doiStatusApproved = value; }
         }
 
+        private int _doiStatusExternal = 200;
+        public int DoiStatusExternal
+        {
+            get { return _doiStatusExternal; }
+            set { _doiStatusExternal = value; }
+        }
+
         private int _doiEntityTypeTitle = 10;
         public int DoiEntityTypeTitle
         {
@@ -285,6 +342,13 @@ namespace MOBOT.BHL.BHLDOIService
         {
             get { return _doiEntityTypePage; }
             set { _doiEntityTypePage = value; }
+        }
+
+        private int _doiEntityTypeSegment = 40;
+        public int DoiEntityTypeSegment
+        {
+            get { return _doiEntityTypeSegment; }
+            set { _doiEntityTypeSegment = value; }
         }
 
         private int _bibLevelMonographComponent = 1;
@@ -412,6 +476,10 @@ namespace MOBOT.BHL.BHLDOIService
                     {
                         this.SubmitTitles = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
                     }
+                    if (node.Attributes.GetNamedItem("key").Value == "Service_SubmitSegments")
+                    {
+                        this.SubmitSegments = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
+                    }
                     if (node.Attributes.GetNamedItem("key").Value == "Service_ValidateSubmissions")
                     {
                         this.ValidateSubmissions = (node.Attributes.GetNamedItem("value").Value.ToLower() == "true");
@@ -472,6 +540,14 @@ namespace MOBOT.BHL.BHLDOIService
                     {
                         this.CrossrefCheckSubmissionUrlFormat = node.Attributes.GetNamedItem("value").Value;
                     }
+                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefXmlQueryUrlBase")
+                    {
+                        this.CrossrefXmlQueryUrlBase = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "CrossRefXmlQueryFormat")
+                    {
+                        this.CrossrefXmlQueryFormat = node.Attributes.GetNamedItem("value").Value;
+                    }                    
                     if (node.Attributes.GetNamedItem("key").Value == "NumberToSubmit")
                     {
                         this.NumberToSubmit = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
@@ -487,6 +563,14 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "JournalDepositTemplateFile")
                     {
                         this.JournalDepositTemplateFile = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "ArticleDepositTemplateFile")
+                    {
+                        this.ArticleDepositTemplateFile = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "QueryTemplateFile")
+                    {
+                        this.QueryTemplateFile = node.Attributes.GetNamedItem("value").Value;
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "DepositFileFormat")
                     {
@@ -515,6 +599,14 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "BHLPageUrlFormat")
                     {
                         this.BhlPageUrlFormat = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "BHLPartUrlFormat")
+                    {
+                        this.BhlPartUrlFormat = node.Attributes.GetNamedItem("value").Value;
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_Null")
+                    {
+                        this.DoiStatusNull = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_None")
                     {
@@ -556,6 +648,10 @@ namespace MOBOT.BHL.BHLDOIService
                     {
                         this.DoiStatusApproved = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
+                    if (node.Attributes.GetNamedItem("key").Value == "DOIStatus_External")
+                    {
+                        this.DoiStatusExternal = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
                     if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Title")
                     {
                         this.DoiEntityTypeTitle = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
@@ -567,6 +663,10 @@ namespace MOBOT.BHL.BHLDOIService
                     if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Page")
                     {
                         this.DoiEntityTypePage = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
+                    }
+                    if (node.Attributes.GetNamedItem("key").Value == "DOIEntityType_Segment")
+                    {
+                        this.DoiEntityTypeSegment = Convert.ToInt32(node.Attributes.GetNamedItem("value").Value);
                     }
                     if (node.Attributes.GetNamedItem("key").Value == "BibLevel_MonographComponent")
                     {

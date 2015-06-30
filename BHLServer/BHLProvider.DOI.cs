@@ -27,6 +27,11 @@ namespace MOBOT.BHL.Server
             return new TitleDAL().TitleSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
+        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
+        {
+            return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
+        }
+
         public DOI DOInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, 
             string doiBatchId, string doiName, string message, short isValid)
         {

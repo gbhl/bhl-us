@@ -45,13 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DOIArticleDeposit.cs" />
     <Compile Include="DOIDeposit.cs" />
     <Compile Include="DOIDepositData.cs" />
     <Compile Include="DOIDepositFactory.cs" />
     <Compile Include="DOIJournalDeposit.cs" />
     <Compile Include="DOIMonographDeposit.cs" />
+    <Compile Include="DOIArticleXmlQuery.cs" />
+    <Compile Include="DOIXmlQueryFactory.cs" />
     <Compile Include="iDOIDeposit.cs" />
+    <Compile Include="iDOIQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DOIQuery.cs" />
+    <Compile Include="DOIMonographXmlQuery.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

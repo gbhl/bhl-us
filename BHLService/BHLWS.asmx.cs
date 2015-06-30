@@ -115,6 +115,13 @@ namespace MOBOT.BHL.WebService
             return bhlServer.TitleEndNoteSelectAllItemCitations();
         }
 
+        [WebMethod]
+        public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.Title_IdentifierSelectByTitleID(titleID);
+        }
+
         #endregion Title Methods
 
         #region Item Methods
@@ -226,6 +233,13 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.SegmentSelectPublished();
+        }
+
+        [WebMethod]
+        public Segment SegmentSelectExtended(int segmentID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.SegmentSelectExtended(segmentID);
         }
 
         #endregion Segment Methods

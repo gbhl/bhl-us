@@ -43,12 +43,44 @@ namespace MOBOT.BHL.DataObjects
             set { _segmentClusterTypeLabel = value; }
         }
 
+        private string _titleFullTitle = string.Empty;
+
+        public string TitleFullTitle
+        {
+            get { return _titleFullTitle; }
+            set { _titleFullTitle = value; }
+        }
+
         private string _titleShortTitle = string.Empty;
 
         public string TitleShortTitle
         {
             get { return _titleShortTitle; }
             set { _titleShortTitle = value; }
+        }
+
+        private string _titlePublisherName = string.Empty;
+
+        public string TitlePublisherName
+        {
+            get { return _titlePublisherName; }
+            set { _titlePublisherName = value; }
+        }
+
+        private string _titlePublicationPlace = string.Empty;
+
+        public string TitlePublicationPlace
+        {
+            get { return _titlePublicationPlace; }
+            set { _titlePublicationPlace = value; }
+        }
+
+        private string _titlePublicationDate = string.Empty;
+
+        public string TitlePublicationDate
+        {
+            get { return _titlePublicationDate; }
+            set { _titlePublicationDate = value; }
         }
 
         private string _itemVolume = string.Empty;
