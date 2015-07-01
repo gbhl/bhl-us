@@ -22,5 +22,5 @@ FROM	dbo.TitleAuthor TA
 WHERE	TA.TitleID = @TitleID
 AND		A.IsActive = 1
 AND		N.IsPreferredName = 1
-ORDER BY N.FullName, R.MARCDataFieldTag
+ORDER BY R.MARCDataFieldTag, N.FullName
 

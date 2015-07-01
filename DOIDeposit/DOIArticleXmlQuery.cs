@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
 
 namespace MOBOT.BHL.DOIDeposit
 {
@@ -64,60 +65,66 @@ namespace MOBOT.BHL.DOIDeposit
             StringBuilder content = new StringBuilder();
 
             // Add the header values
-            template = template.Replace("{doi_batch_id}", HttpUtility.UrlEncode(Data.BatchID));
-            template = template.Replace("{depositor_email_address}", HttpUtility.UrlEncode(Data.DepositorEmail));
+            template = template.Replace("{doi_batch_id}", XmlEncode(Data.BatchID));
+            template = template.Replace("{depositor_email_address}", XmlEncode(Data.DepositorEmail));
 
             // Build the query_metadata content
             if (!string.IsNullOrEmpty(Data.Issn))
             {
-                content.Append("<issn match=\"optional\">" + HttpUtility.UrlEncode(Data.Issn) + "</issn>");
+                content.Append("<issn match=\"optional\">" + XmlEncode(Data.Issn) + "</issn>");
             }
 
             if (!string.IsNullOrEmpty(Data.Title))
             {
-                content.Append("<journal_title match=\"fuzzy\">" + HttpUtility.UrlEncode(Data.Title) + "</journal_title>");
+                content.Append("<journal_title match=\"fuzzy\">" + XmlEncode(Data.Title) + "</journal_title>");
             }
 
             if (Data.Contributors.Count() > 0)
             {
-                foreach (DOIDepositData.Contributor contributor in Data.Contributors)
-                {
-                    string lastName = string.Empty;
-                    if (contributor.PersonName.IndexOf(',') >= 0)
-                    {
-                        lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
-                    }
-                    else
-                    {
-                        lastName = contributor.PersonName;
-                    }
+                // The CrossRef query schema allows for only one author name
+                DOIDepositData.Contributor contributor = Data.Contributors[0];
 
-                    content.Append("<author match=\"fuzzy\">" + HttpUtility.UrlEncode(lastName) + "</author>");
+                string lastName = string.Empty;
+                if (contributor.PersonName.IndexOf(',') >= 0)
+                {
+                    lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
                 }
+                else
+                {
+                    lastName = contributor.PersonName;
+                }
+
+                content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(lastName) + "</author>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.Volume))
             {
-                content.Append("<volume match=\"fuzzy\">" + HttpUtility.UrlEncode(Data.Volume) + "</volume>");
+                content.Append("<volume match=\"fuzzy\">" + XmlEncode(Data.Volume) + "</volume>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.FirstPage))
             {
-                content.Append("<first_page match=\"optional\">" + HttpUtility.UrlEncode(Data.FirstPage) + "</first_page>");
+                content.Append("<first_page match=\"optional\">" + XmlEncode(Data.FirstPage) + "</first_page>");
             }
 
             if (!string.IsNullOrEmpty(Data.ArticlePublicationDate))
             {
-                content.Append("<year match=\"optional\">" + HttpUtility.UrlEncode(Data.ArticlePublicationDate) + "</year>");
+                content.Append("<year match=\"optional\">" + XmlEncode(Data.ArticlePublicationDate) + "</year>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.ArticleTitle))
             {
-                content.Append("<article_title match=\"fuzzy\">" + HttpUtility.UrlEncode(Data.ArticleTitle) + "</article_title>");
+                content.Append("<article_title match=\"fuzzy\">" + XmlEncode(Data.ArticleTitle) + "</article_title>");
             }
 
             // Insert the query metadata into the template and return the result
-            return template.Replace("{query_content}", content.ToString());
+            return template.Replace("{query_content}", HttpUtility.UrlEncode(content.ToString()));
+        }
+
+        private string XmlEncode(string content)
+        {
+            content = content.Replace("&", "&amp;").Replace("\"", "&quot;").Replace("'", "&apos;");
+            return content;
         }
     }
 }
