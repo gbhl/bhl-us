@@ -242,16 +242,18 @@ namespace IAHarvest
                         this.HarvestFileList(item);
                         this.DownloadFiles(item);
                         this.DownloadScandata(item);
+
                         // If the item information has not yet moved to production, go ahead and 
                         // harvest the data from the files
                         if (item.ItemStatusID != ITEMSTATUS_COMPLETE)
                         {
-                            this.HarvestDCMetadata(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
-                            this.HarvestMetadataSourceData(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
-                            this.HarvestMetadata(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
-                            this.HarvestDJVUData(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
-                            this.HarvestScandata(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
-                            this.HarvestMarcData(item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate, (item.NoMARCOk == 1));
+                            CustomGenericList<IAFile> fileList = provider.IAFileSelectByItem(item.ItemID);
+                            this.HarvestDCMetadata(GetFile(fileList, configParms.DCMetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                            this.HarvestMetadataSourceData(GetFile(fileList, configParms.MetadataSourceExtension),  item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                            this.HarvestMetadata(GetFile(fileList, configParms.MetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                            this.HarvestDJVUData(GetFile(fileList, configParms.DjvuExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                            this.HarvestScandata(GetFile(fileList, configParms.ScandataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
+                            this.HarvestMarcData(GetFile(fileList, configParms.MarcExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate, (item.NoMARCOk == 1));
                         }
                         provider.IAItemUpdateLastXMLDataHarvestDate(item.ItemID);
                         provider.IAItemUpdateItemStatusIDAfterDataHarvest(item.ItemID,
@@ -380,6 +382,28 @@ namespace IAHarvest
             return inList;
         }
 
+        /// <summary>
+        /// Select the file with the specified extension from the supplied list
+        /// </summary>
+        /// <param name="fileList"></param>
+        /// <param name="fileExtension"></param>
+        /// <returns></returns>
+        private IAFile GetFile(CustomGenericList<IAFile> fileList, string fileExtension)
+        {
+            IAFile file = null;
+
+            foreach (IAFile iaFile in fileList)
+            {
+                if (iaFile.LocalFileName.EndsWith(fileExtension))
+                {
+                    file = iaFile;
+                    break;
+                }
+            }
+
+            return file;
+        }
+
         private void DownloadFiles(IAItem item)
         {
             this.LogMessage("Downloading files for " + item.IAIdentifier);
@@ -496,16 +520,14 @@ namespace IAHarvest
             }
         }
 
-        private void HarvestDCMetadata(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        private void HarvestDCMetadata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
             this.LogMessage("Harvesting Dublin Core metadata for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "/" + iaIdentifier + configParms.DCMetadataExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.DCMetadataExtension);
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // We are simply replacing any previously parsed elements, so delete anything
@@ -513,6 +535,7 @@ namespace IAHarvest
                     provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_DC);
 
                     // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     XmlDocument xml = new XmlDocument();
                     xml.Load(localFileName);
 
@@ -526,16 +549,14 @@ namespace IAHarvest
             }
         }
 
-        private void HarvestMetadata(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        private void HarvestMetadata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
             this.LogMessage("Harvesting metadata for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "/" + iaIdentifier + configParms.MetadataExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.MetadataExtension);
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // We will replace any previously parsed dublin core elements, so delete any
@@ -543,6 +564,7 @@ namespace IAHarvest
                     provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
 
                     // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     XmlDocument xml = new XmlDocument();
                     xml.Load(localFileName);
 
@@ -715,19 +737,18 @@ namespace IAHarvest
             }
         }
 
-        private void HarvestMetadataSourceData(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        private void HarvestMetadataSourceData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
             this.LogMessage("Harvesting metadata source information for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "/" + iaIdentifier + configParms.MetadataSourceExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.MetadataSourceExtension);
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     XmlDocument xml = new XmlDocument();
                     xml.Load(localFileName);
 
@@ -747,21 +768,21 @@ namespace IAHarvest
             }
         }
 
-        private void HarvestMarcData(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate, bool loadWithoutMarc)
+        private void HarvestMarcData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate, bool loadWithoutMarc)
         {
             this.LogMessage("Harvesting MARC data for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "/" + iaIdentifier + configParms.MarcExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.MarcExtension);
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     XmlDocument xml = new XmlDocument();
                     xml.Load(localFileName);
+
                     XmlNamespaceManager nsmgr = new XmlNamespaceManager(xml.NameTable);
                     nsmgr.AddNamespace("marc", "http://www.loc.gov/MARC21/slim");
 
@@ -816,16 +837,14 @@ namespace IAHarvest
             }
         }
 
-        private void HarvestDJVUData(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        private void HarvestDJVUData(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
             this.LogMessage("Harvesting pages from DJVU data for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "\\" + iaIdentifier + configParms.DjvuExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.DjvuExtension);
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // Prepare the file system for the page files
@@ -855,6 +874,7 @@ namespace IAHarvest
                      */
 
                     // Read the DJVU.XML file line-by-line, extracting the pages as we go
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     using (System.IO.StreamReader reader = new System.IO.StreamReader(localFileName))
                     {
                         String line;
@@ -1034,21 +1054,20 @@ namespace IAHarvest
             return externalUrl;
         }
 
-        private void HarvestScandata(int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
+        private void HarvestScandata(IAFile file, int itemID, string iaIdentifier, string localFileFolder, DateTime? lastXmlDataHarvestDate)
         {
             this.LogMessage("Harvesting scandata information for " + iaIdentifier);
 
-            // If the file exists locally
-            String localFileName = localFileFolder + iaIdentifier + "\\" + iaIdentifier + configParms.ScandataExtension;
-            if (System.IO.File.Exists(localFileName))
+            // If the file exists
+            if (file != null)
             {
                 // If the file has changed since we last harvested (check both possible scandata locations)
-                IAFile file = provider.IAFileSelectByRemoteFileName(iaIdentifier + configParms.ScandataExtension);
                 if (file == null) file = provider.IAFileSelectByItemAndRemoteFileName(itemID, configParms.ScandataFile);
 
                 if (DateTime.Compare((DateTime)file.RemoteFileLastModifiedDate, (DateTime)(lastXmlDataHarvestDate ?? DateTime.Parse("1/1/1980"))) > 0)
                 {
                     // Open the file and parse the data within it
+                    String localFileName = localFileFolder + iaIdentifier + "\\" + file.LocalFileName;
                     XmlDocument xml = new XmlDocument();
                     xml.Load(localFileName);
 
