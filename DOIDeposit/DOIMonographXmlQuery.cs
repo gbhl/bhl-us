@@ -73,7 +73,7 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrEmpty(Data.Title))
             {
-                content.Append("<volume_title match=\"fuzzy\">" + XmlEncode(Data.Title) + "</volume_title>");
+                content.Append("<volume_title match=\"fuzzy\">" + XmlEncode(Data.Title.Substring(0, 256)) + "</volume_title>");
             }
 
             if (!string.IsNullOrEmpty(Data.PublicationDate))
@@ -91,17 +91,21 @@ namespace MOBOT.BHL.DOIDeposit
                 // The CrossRef query schema allows for only one author name
                 DOIDepositData.Contributor contributor = Data.Contributors[0];
 
-                string lastName = string.Empty;
-                if (contributor.PersonName.IndexOf(',') >= 0)
+                string authorName = string.Empty;
+                if (string.IsNullOrWhiteSpace(contributor.PersonName))
                 {
-                    lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
+                    authorName = contributor.OrganizationName ?? string.Empty;
+                }
+                else if (contributor.PersonName.IndexOf(',') >= 0)
+                {
+                    authorName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
                 }
                 else
                 {
-                    lastName = contributor.PersonName;
+                    authorName = contributor.PersonName;
                 }
 
-                content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(lastName) + "</author>");
+                content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(authorName) + "</author>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.Edition))

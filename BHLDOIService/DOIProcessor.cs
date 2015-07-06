@@ -135,7 +135,7 @@ namespace MOBOT.BHL.BHLDOIService
                             break;
                         case DOICheckResult.Found:
                             // Add the DOI to the database
-                            wsClient.DOIInsertAuto(doi.DOIEntityTypeID, doi.EntityID, configParms.DoiStatusExternal,
+                            wsClient.DOIInsertAuto(entityTypeId, doi.EntityID, configParms.DoiStatusExternal,
                                 string.Empty, result.DoiList.First(), string.Empty, 1);
                             foundDOIs.Add(result.DoiList.First());
 
@@ -147,7 +147,7 @@ namespace MOBOT.BHL.BHLDOIService
                             // manually assigned.
                             // Once we determine how commonly these occur, a more robust logging mechanism
                             // may be needed.
-                            unresolvedEntities.Add(string.Format("{0}\t{1}", doi.DOIEntityTypeID.ToString(), doi.EntityID.ToString()));
+                            unresolvedEntities.Add(string.Format("{0}\t{1}", entityTypeId.ToString(), doi.EntityID.ToString()));
                             this.LogMessage(string.Format("Entity {0}, Type {1} cound not be resolved", doi.EntityID.ToString(), doi.DOIEntityTypeID.ToString()));
                             foreach(string doiName in result.DoiList)
                             {
@@ -1137,7 +1137,8 @@ namespace MOBOT.BHL.BHLDOIService
                 sb.Append(endOfLine + this.errorMessages.Count.ToString() + " Errors Occurred" + endOfLine + "See the log file for details" + endOfLine + endOfLine);
                 foreach (string message in errorMessages)
                 {
-                    sb.Append(message + endOfLine);
+                    sb.AppendLine(message);
+                    sb.AppendLine();
                 }
             }
 
