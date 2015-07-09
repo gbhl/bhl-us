@@ -139,7 +139,7 @@ namespace MOBOT.BHL.BHLDOIService
                                 string.Empty, result.DoiList.First(), string.Empty, 1);
                             foundDOIs.Add(result.DoiList.First());
 
-                            this.LogMessage("DOI " + result.DoiList + " added");
+                            this.LogMessage("DOI " + result.DoiList.First() + " added");
 
                             break;
                         case DOICheckResult.Unknown:

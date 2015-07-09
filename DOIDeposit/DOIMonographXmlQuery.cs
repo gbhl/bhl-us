@@ -66,17 +66,19 @@ namespace MOBOT.BHL.DOIDeposit
             template = template.Replace("{depositor_email_address}", XmlEncode(Data.DepositorEmail));
 
             // Build the query_metadata content
-            if (!string.IsNullOrEmpty(Data.Isbn))
+            if (!string.IsNullOrWhiteSpace(Data.Isbn))
             {
                 content.Append("<isbn match=\"optional\">" + XmlEncode(Data.Isbn) + "</isbn>");
             }
 
-            if (!string.IsNullOrEmpty(Data.Title))
+            if (!string.IsNullOrWhiteSpace(Data.Title))
             {
-                content.Append("<volume_title match=\"fuzzy\">" + XmlEncode(Data.Title.Substring(0, 256)) + "</volume_title>");
+                content.Append("<volume_title match=\"fuzzy\">" + 
+                    XmlEncode(Data.Title.Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + 
+                    "</volume_title>");
             }
 
-            if (!string.IsNullOrEmpty(Data.PublicationDate))
+            if (!string.IsNullOrWhiteSpace(Data.PublicationDate))
             {
                 content.Append("<year match=\"optional\">" + XmlEncode(Data.PublicationDate) + "</year>");
             }
