@@ -14,16 +14,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.ActionLink("User Name", "Index", new { sort = ViewBag.UNameSort })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.ActionLink("First Name", "Index", new { sort = ViewBag.FNameSort })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.ActionLink("Last Name", "Index", new { sort = ViewBag.LNameSort })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.ActionLink("Email", "Index", new { sort = ViewBag.EmailSort })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Disabled)

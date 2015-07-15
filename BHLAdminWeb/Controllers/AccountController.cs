@@ -136,13 +136,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         // roles to the new account.  Copy the BHL user administrator on the message.
                         int userId = user.Id;
                         string emailBody = string.Format(
-                            "Your new user account has been registered successfully.\n\r" +
+                            "Welcome to the BHL Administrative Dashboard http://admin.biodiversitylibrary.org \n\r" +
                             "Username: {0}\r" +
                             "First Name: {1}\r" +
                             "Last Name: {2}\r" +
                             "Email Address: {3}\n\r" +
-                            "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
-                            "The administrator will notify you by email when the permissions have been assigned. Thank you for your patience.",
+                            "Review documentation for Admin Dashboard functionality via the \"Help\" link in the top right or https://bhl.wikispaces.com/help \n\r" +
+                            "A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.",
                             user.UserName, user.FirstName, user.LastName, user.Email);
                         List<string> bccList = new List<string>();
                         bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
@@ -349,11 +349,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             // roles to the new account.  Copy the BHL user administrator on the message.
                             int userId = user.Id;
                             string emailBody = string.Format(
-                                "Your new user account has been registered successfully.\n\r" +
+                                "Welcome to the BHL Administrative Dashboard http://admin.biodiversitylibrary.org \n\r" +
                                 "Username: {0}\r" +
                                 "Email Address: {1}\n\r" +
-                                "A BHL administrator will now assign the appropriate permissions to your account.  When that is complete, you will have access to expanded BHL functionality.\n\r" +
-                                "The administrator will notify you by email when the permissions have been assigned. Thank you for your patience.",
+                                "Review documentation for Admin Dashboard functionality via the \"Help\" link in the top right or https://bhl.wikispaces.com/help \n\r" +
+                                "A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.",
                                 user.UserName, user.Email);
                             List<string> bccList = new List<string>();
                             bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
@@ -412,13 +412,54 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
-        public ActionResult Index()
+        public ActionResult Index(string sort)
         {
             // Only users in the SysAdmin role are allowed to delete user accounts
             bool canDelete = Request.GetOwinContext().Authentication.User.IsInRole(MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin.ToString());
 
+            // Set up the sort variables
+            string sortBy = String.IsNullOrWhiteSpace(sort) ? "lname" : sort;
+            ViewBag.LNameSort = "lname";
+            ViewBag.FNameSort = "fname";
+            ViewBag.UNameSort = "uname";
+            ViewBag.EmailSort = "email";
+
             var Db = new ApplicationDbContext();
             var users = Db.Users.Where(r => r.Id != 1).OrderBy(r => r.UserName);
+
+            // Sort the list as specified
+            switch (sortBy)
+            {
+                case "lname_desc":
+                    users = users.OrderByDescending(u => u.LastName);
+                    break;
+                case "fname_desc":
+                    users = users.OrderByDescending(u => u.FirstName);
+                    break;
+                case "fname":
+                    users = users.OrderBy(u => u.FirstName);
+                    ViewBag.FNameSort = sortBy + "_desc";
+                    break;
+                case "uname_desc":
+                    users = users.OrderByDescending(u => u.UserName);
+                    break;
+                case "uname":
+                    users = users.OrderBy(u => u.UserName);
+                    ViewBag.UNameSort = sortBy + "_desc";
+                    break;
+                case "email_desc":
+                    users = users.OrderByDescending(u => u.Email);
+                    break;
+                case "email":
+                    users = users.OrderBy(u => u.Email);
+                    ViewBag.EmailSort = sortBy + "_desc";
+                    break;
+                default:    // lname
+                    users = users.OrderBy(u => u.LastName);
+                    ViewBag.LNameSort = sortBy + "_desc";
+                    break;
+            }
+
             var model = new List<EditUserViewModel>();
             foreach (var user in users)
             {

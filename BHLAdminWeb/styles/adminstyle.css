@@ -372,3 +372,9 @@ div .field {
     background-color:rgb(255, 255, 255);
 }
 
+.center 
+{
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}

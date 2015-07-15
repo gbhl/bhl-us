@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -176,7 +177,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             var Db = new ApplicationDbContext();
 
             // Add all available roles to the list of EditorViewModels:
-            var allRoles = Db.Roles;
+            var allRoles = from r in Db.Roles orderby r.DisplaySequence select r;
             foreach (var role in allRoles)
             {
                 // An EditorViewModel will be used by Editor Template:

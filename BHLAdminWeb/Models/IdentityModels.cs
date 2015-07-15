@@ -35,6 +35,8 @@ namespace MOBOT.BHL.AdminWeb.Models
 
     public class CustomRole : IdentityRole<int, CustomUserRole>
     {
+        public int DisplaySequence { get; set; }
+
         public CustomRole() { }
         public CustomRole(string name) { Name = name; }
     }
