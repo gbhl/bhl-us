@@ -338,9 +338,9 @@ namespace MOBOT.BHL.Web2
         private void SetGoogleScholarTags(int itemid, int? segmentid)
         {
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
-            if (segmentid != null)
-                tags = bhlProvider.GetGoogleScholarMetadataForSegment((int)segmentid, ConfigurationManager.AppSettings["PartPageUrl"]);
-            else
+            //if (segmentid != null)
+            //    tags = bhlProvider.GetGoogleScholarMetadataForSegment((int)segmentid, ConfigurationManager.AppSettings["PartPageUrl"]);
+            //else
                 tags = bhlProvider.GetGoogleScholarMetadataForItem(itemid, ConfigurationManager.AppSettings["ItemPageUrl"]);
 
             foreach (KeyValuePair<string, string> tag in tags)
