@@ -17,6 +17,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private int _roleNone = 0;
+        private int _roleAny = -1;
+
         public AccountController()
             : this(new BHLUserManager(new UserStore<ApplicationUser, CustomRole, int, 
                 CustomUserLogin, CustomUserRole, CustomUserClaim>(new ApplicationDbContext())))
@@ -412,17 +415,42 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         }
 
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
-        public ActionResult Index(string sort)
+        public ActionResult Index(string sort,string role)
+        {
+            var model = IndexAction(sort, role);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult Index()
+        {
+            var model = IndexAction(Request["SortBy"], Request["Roles"]);
+            return View(model);
+        }
+
+        /// <summary>
+        /// Action for the account index page (both GET and POST actions)
+        /// </summary>
+        /// <param name="sort"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        private List<EditUserViewModel> IndexAction(string sort, string role)
         {
             // Only users in the SysAdmin role are allowed to delete user accounts
             bool canDelete = Request.GetOwinContext().Authentication.User.IsInRole(MOBOT.BHL.AdminWeb.Helper.SecurityRole.BHLAdminSysAdmin.ToString());
 
             // Set up the sort variables
             string sortBy = String.IsNullOrWhiteSpace(sort) ? "lname" : sort;
+            ViewBag.SortBy = sortBy;
             ViewBag.LNameSort = "lname";
             ViewBag.FNameSort = "fname";
             ViewBag.UNameSort = "uname";
             ViewBag.EmailSort = "email";
+
+            // Set up the filter variable
+            int selectedRole = String.IsNullOrWhiteSpace(role) ? _roleAny : Convert.ToInt32(role);
+            ViewBag.SelectedRole = selectedRole;
 
             var Db = new ApplicationDbContext();
             var users = Db.Users.Where(r => r.Id != 1).OrderBy(r => r.UserName);
@@ -460,18 +488,43 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     break;
             }
 
-            var model = new List<EditUserViewModel>();
+            // Populate the Roles dropdown list
+            List<CustomRole> roleList = Db.Roles.ToList();
+            CustomRole newRole = new CustomRole(" - No Assigned Roles -");
+            newRole.Id = _roleNone;
+            roleList.Insert(0, newRole);
+            newRole = new CustomRole("- Show All Users -");
+            newRole.Id = _roleAny;
+            roleList.Insert(0, newRole);
+            ViewBag.Roles = new SelectList(roleList, "Id", "Name", selectedRole);
+
+            List<EditUserViewModel> model = new List<EditUserViewModel>();
             foreach (var user in users)
             {
+                CustomUserRole[] userRoleList = user.Roles.ToArray();
+
                 var u = new EditUserViewModel(user);
                 u.AllowDelete = canDelete;
-                u.HasRoles = (user.Roles.ToArray().Count() > 0);
+                u.HasRoles = (userRoleList.Count() > 0);
 
-                model.Add(u);
+                if (selectedRole == _roleAny)
+                {
+                    model.Add(u);
+                }
+                else if (selectedRole == _roleNone && !u.HasRoles)
+                {
+                    model.Add(u);
+                }
+                else
+                {
+                    foreach (CustomUserRole userRole in userRoleList)
+                    {
+                        if (userRole.RoleId == selectedRole) model.Add(u);
+                    }
+                }
             }
-            return View(model);
+            return model;
         }
-
 
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult Edit(string id, ManageMessageId? Message = null)
@@ -482,7 +535,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.MessageId = Message;
             return View(model);
         }
-
 
         [HttpPost]
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
