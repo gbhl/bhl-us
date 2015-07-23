@@ -8,3 +8,10 @@
     CONSTRAINT [FK_AnnotationRelation_Annotation] FOREIGN KEY ([AnnotationID]) REFERENCES [annotation].[Annotation] ([AnnotationID])
 );
 
+GO
+CREATE NONCLUSTERED INDEX [IX_AnnotationRelationRelatedExternalID] ON [annotation].[AnnotationRelation]	
+(
+	[RelatedExternalIdentifier]	ASC
+)
+INCLUDE ([AnnotationID])
+GO

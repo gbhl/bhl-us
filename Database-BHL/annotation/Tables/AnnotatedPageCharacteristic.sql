@@ -10,3 +10,10 @@
     CONSTRAINT [FK_AnnotatedPageCharacteristic_AnnotatedPage] FOREIGN KEY ([AnnotatedPageID]) REFERENCES [annotation].[AnnotatedPage] ([AnnotatedPageID])
 );
 
+GO
+CREATE NONCLUSTERED INDEX [IX_AnnotatedPageCharacteristicAnnotatedPageID] ON [annotation].[AnnotatedPageCharacteristic]	
+(
+	[AnnotatedPageID] ASC
+)
+INCLUDE ([AnnotatedPageCharacteristicID], [CharacteristicDetail], [CharacteristicDetailClean], [CreationDate], [LastModifiedDate])
+GO

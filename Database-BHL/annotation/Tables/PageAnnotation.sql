@@ -7,3 +7,10 @@
     CONSTRAINT [FK_PageAnnotation_Annotation] FOREIGN KEY ([AnnotationID]) REFERENCES [annotation].[Annotation] ([AnnotationID])
 );
 
+GO
+CREATE NONCLUSTERED INDEX [IX_PageAnnotationAnnotationID] ON [annotation].[PageAnnotation]
+(
+	[AnnotationID] ASC
+)
+INCLUDE ([AnnotatedPageID])
+GO

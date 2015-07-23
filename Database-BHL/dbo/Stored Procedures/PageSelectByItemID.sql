@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[PageSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[PageSelectByItemID]
 
 @ItemID INT
 
@@ -12,26 +11,14 @@ SELECT
 	[ItemID],
 	[FileNamePrefix],
 	[SequenceOrder],
-	[PageDescription],
 	[Illustration],
-	[Note],
-	[FileSize_Temp],
-	[FileExtension],
-	[CreationDate],
-	[LastModifiedDate],
-	[CreationUserID],
-	[LastModifiedUserID],
 	[Active],
 	[Year],
 	[Series],
 	[Volume],
 	[Issue],
 	[ExternalURL],
-	[AltExternalURL],
 	[IssuePrefix],
-	[LastPageNameLookupDate],
-	[PaginationUserID],
-	[PaginationDate],
 	dbo.fnPageTypeStringForPage(PageID) AS PageTypes,
 	dbo.fnIndicatedPageStringForPage(PageID) AS IndicatedPages
 FROM [dbo].[Page]

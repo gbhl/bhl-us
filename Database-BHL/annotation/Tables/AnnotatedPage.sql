@@ -18,3 +18,10 @@ CREATE NONCLUSTERED INDEX [IX_AnnotatedPagePageID] ON [annotation].[AnnotatedPag
 	[PageID] ASC
 )
 GO
+
+CREATE NONCLUSTERED INDEX [IX_AnnotatedPageAnnotatedItemID] ON [annotation].[AnnotatedPage]	
+(
+	[AnnotatedItemID] ASC
+)
+INCLUDE ([AnnotatedPageID], [PageID])
+GO
