@@ -63,3 +63,8 @@ CREATE NONCLUSTERED INDEX [IX_OAIRecord_RecordStatusTitleItem] ON [dbo].[OAIReco
 )
 INCLUDE ([OAIRecordID], [HarvestLogID]) 
 GO
+
+CREATE NONCLUSTERED INDEX [IX_OAIRecord_OAIIdentifierDateStamp]
+	ON [dbo].[OAIRecord] ([OAIIdentifier], [OAIDateStamp]);
+GO
+

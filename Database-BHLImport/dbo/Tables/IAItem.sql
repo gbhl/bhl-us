@@ -44,3 +44,8 @@
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );
 
+GO
+
+CREATE NONCLUSTERED INDEX [IX_IAItem_IAIdentifier]
+	ON [dbo].[IAItem] ([IAIdentifier]);
+GO

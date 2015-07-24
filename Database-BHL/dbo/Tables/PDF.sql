@@ -22,3 +22,18 @@
     CONSTRAINT [FK_PDF_PDFStatus] FOREIGN KEY ([PdfStatusID]) REFERENCES [dbo].[PDFStatus] ([PdfStatusID])
 );
 
+GO
+
+CREATE NONCLUSTERED INDEX [IX_PDF_PdfStatusID]
+	ON [dbo].[PDF] ([PdfStatusID])
+	INCLUDE ([PdfID]);
+GO
+
+CREATE NONCLUSTERED INDEX [IX_PDF_FileLocation]
+	ON [dbo].[PDF] ([FileLocation])
+	INCLUDE ([FileGenerationDate]);
+GO
+
+CREATE NONCLUSTERED INDEX [IX_PDF_FileDeletionDate]
+	ON [dbo].[PDF] ([FileDeletionDate]);
+GO
