@@ -56,9 +56,9 @@ CREATE NONCLUSTERED INDEX [IX_Page_LastPageNameLookupDate]
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_Page_ItemIDActiveSeqOrder]
-    ON [dbo].[Page]([ItemID] ASC, [Active] ASC, [SequenceOrder] ASC)
-    INCLUDE([PageID], [FileNamePrefix], [Illustration], [Year], [Series], [Volume], [Issue], [ExternalURL], [IssuePrefix]);
+CREATE NONCLUSTERED INDEX [IX_Page_ItemIDActiveSeqOrder] 
+	ON [dbo].[Page]([ItemID] ASC, [Active] ASC, [SequenceOrder] ASC)
+	INCLUDE([PageID], [FileNamePrefix], [Illustration], [Year], [Series], [Volume], [Issue], [ExternalURL], [IssuePrefix], [AltExternalURL]);
 
 
 GO
