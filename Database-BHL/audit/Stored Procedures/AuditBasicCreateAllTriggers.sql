@@ -42,13 +42,12 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Language', 'LanguageCode', NULL, 
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'BibliographicLevel', 'BibliographicLevelID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleVariantType', 'TitleVariantTypeID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociationType', 'TitleAssociationTypeID', NULL, NULL
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NoteType', 'NoteTypeID', NULL, NULL
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleNote', 'TitleNoteID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOI', 'DOIID', NULL, NULL, 'I'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOI', 'DOIID', NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIEntityType', 'DOIEntityTypeID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIStatus', 'DOIStatusID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Institution', 'InstitutionCode', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AspNetUsers', 'Id', NULL, NULL
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Author', 'AuthorID', NULL, NULL, 'I'
@@ -82,6 +81,4 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NameSegment', 'NameSegmentID', NU
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NameSource', 'NameSourceID', NULL, NULL
 
 END
-
-
 

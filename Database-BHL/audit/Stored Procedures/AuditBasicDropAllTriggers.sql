@@ -30,12 +30,11 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'Language'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'BibliographicLevel'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleVariantType'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleAssociationType'
-exec [audit].[AuditBasicDropTrigger] 'dbo', 'NoteType'
-exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleNote'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOI'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOIEntityType'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOIStatus'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Institution'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'AspNetUsers'
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Author'
@@ -67,6 +66,4 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'NameSegment'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'NameSource'
 
 END
-
-
 
