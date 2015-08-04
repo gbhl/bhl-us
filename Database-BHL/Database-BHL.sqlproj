@@ -1067,6 +1067,8 @@
     <None Include="import\Functions\fnAuthorStringForImportRecord.sql" />
     <None Include="import\Functions\fnKeywordStringForImportRecord.sql" />
     <None Include="Data\dbo.NoteType.Table.sql" />
+    <None Include="Data\dbo.AspNetRoles.Table.sql" />
+    <None Include="Data\dbo.AspNetUsers.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1182,5 +1184,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\SegmentSelectWithoutSubmittedDOI.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\AspNetUsers.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\AspNetRoles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\AspNetUserClaims.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\AspNetUserLogins.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\AspNetUserRoles.sql" />
   </ItemGroup>
 </Project>
