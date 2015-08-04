@@ -8,13 +8,10 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            filterContext.HttpContext.Response.Cookies["CallingUrl"].Value = filterContext.HttpContext.Request.Url.ToString();
-
             // Make sure user is logged in and has admin rights
-            HttpCookie tokenCookie = filterContext.HttpContext.Request.Cookies["MOBOTSecurityToken"];
             if (!Helper.IsUserAuthenticated(filterContext.HttpContext.Request))
             {
-                filterContext.HttpContext.Response.Redirect("~/login.aspx", true);
+                filterContext.HttpContext.Response.Redirect("/account/login", true);
             }
             else
             {

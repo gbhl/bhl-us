@@ -236,13 +236,13 @@ namespace MOBOT.BHL.AdminWeb
                         (SegmentPageComparer.CompareEnum)SegmentPageComparer.CompareEnum.PageSequenceOrder, _sortOrder);
                     segment.PageList.Sort(comp);
                     short newSeqOrder = 1;
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                     foreach (SegmentPage segmentPage in segment.PageList)
                     {
                         if (segmentPage.SequenceOrder != newSeqOrder)
                         {
                             segmentPage.SequenceOrder = newSeqOrder;
-                            segmentPage.LastModifiedUserID = secUser.UserID;
+                            segmentPage.LastModifiedUserID = userId;
                         }
                         newSeqOrder++;
                     }
@@ -687,7 +687,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (sequenceTextBox != null)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                     string newSeqString = sequenceTextBox.Text.Trim();
                     short newSeq = 0;
@@ -713,7 +713,7 @@ namespace MOBOT.BHL.AdminWeb
                                     if (author.SequenceOrder >= newSeq && author.SequenceOrder < oldSeq)
                                     {
                                         author.SequenceOrder++;
-                                        author.LastModifiedUserID = secUser.UserID;
+                                        author.LastModifiedUserID = userId;
                                     }
                                 }
                             }
@@ -727,13 +727,13 @@ namespace MOBOT.BHL.AdminWeb
                                     if (author.SequenceOrder <= newSeq && author.SequenceOrder > oldSeq)
                                     {
                                         author.SequenceOrder--;
-                                        author.LastModifiedUserID = secUser.UserID;
+                                        author.LastModifiedUserID = userId;
                                     }
                                 }
                             }
 
                             changedAuthor.SequenceOrder = newSeq;
-                            changedAuthor.LastModifiedUserID = secUser.UserID;
+                            changedAuthor.LastModifiedUserID = userId;
                         }
                     }
                 }
@@ -930,7 +930,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (sequenceTextBox != null)
                 {
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                     string newSeqString = sequenceTextBox.Text.Trim();
                     short newSeq = 0;
@@ -956,7 +956,7 @@ namespace MOBOT.BHL.AdminWeb
                                     if (page.SequenceOrder >= newSeq && page.SequenceOrder < oldSeq)
                                     {
                                         page.SequenceOrder++;
-                                        page.LastModifiedUserID = secUser.UserID;
+                                        page.LastModifiedUserID = userId;
                                     }
                                 }
                             }
@@ -970,13 +970,13 @@ namespace MOBOT.BHL.AdminWeb
                                     if (page.SequenceOrder <= newSeq && page.SequenceOrder > oldSeq)
                                     {
                                         page.SequenceOrder--;
-                                        page.LastModifiedUserID = secUser.UserID;
+                                        page.LastModifiedUserID = userId;
                                     }
                                 }
                             }
 
                             changedPage.SequenceOrder = newSeq;
-                            changedPage.LastModifiedUserID = secUser.UserID;
+                            changedPage.LastModifiedUserID = userId;
                         }
                     }
                 }
@@ -1161,8 +1161,7 @@ namespace MOBOT.BHL.AdminWeb
             if (validate(segment))
             {
                 // Set the id of the editing user
-                SecUser secUser = this.getSecUser();
-                userId = secUser.UserID;
+                userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
                 // Build PublicationDetails and PageRange (if necessary)
                 if (publicationDetailsTextBox.Text.Trim() == string.Empty)
@@ -1248,12 +1247,6 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         #endregion Event Handlers
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-        }
 
         private bool validate(Segment segment)
         {

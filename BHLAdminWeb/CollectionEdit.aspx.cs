@@ -42,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            deleteButton.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityFunction.BHLAdminUserAdvanced);
+            deleteButton.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced);
             litMessage.Text = "";
             errorControl.Visible = false;
         }
@@ -326,7 +326,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 if (imageUpload.HasFile)
                 {
-                    string imagePath = string.Format(ConfigurationManager.AppSettings["CollectionImageUploadPath"], imageUpload.FileName);
+                    string imagePath = string.Format(ConfigurationManager.AppSettings["CollectionImagePath"], imageUpload.FileName);
                     string imageUploadPath = string.Format(ConfigurationManager.AppSettings["CollectionImageUploadPath"], imageUpload.FileName);
                     collection.ImageURL = imagePath;
                     lblImageUrl.Text = imagePath;

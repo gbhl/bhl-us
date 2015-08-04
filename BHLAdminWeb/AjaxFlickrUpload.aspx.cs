@@ -119,17 +119,8 @@ namespace MOBOT.BHL.AdminWeb
             pf.PageID = pageId;
             pf.FlickrURL = flickrImageUrl;
 
-            SecUser secUser = this.getSecUser();
-            int userId = secUser.UserID;
-
-
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
             provider.PageFlickrSave(pf, userId);
-        }
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
         }
     }
 }

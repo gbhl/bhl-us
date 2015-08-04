@@ -910,7 +910,7 @@ namespace MOBOT.BHL.AdminWeb
                     String relationship = txtRelationship.Text;
                     String titleOfWork = txtTitleOfWork.Text;
 
-                    SecUser secUser = getSecUser();
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                     TitleAuthor titleAuthor = findTitleAuthor(title.TitleAuthors,
 						(int)creatorsList.DataKeys[ e.RowIndex ].Values[ 0 ],
 						(int)creatorsList.DataKeys[ e.RowIndex ].Values[ 1 ],
@@ -920,7 +920,7 @@ namespace MOBOT.BHL.AdminWeb
                         titleAuthor.RoleDescription != ddlCreatorRole.SelectedItem.Text)
                     {
                         // Make sure something has actually changed before updating the lastmodifieduserid
-                        titleAuthor.LastModifiedUserID = secUser.UserID;
+                        titleAuthor.LastModifiedUserID = userId;
                     }
 					titleAuthor.AuthorRoleID = authorRoleId;
 					titleAuthor.RoleDescription = ddlCreatorRole.SelectedItem.Text;
@@ -1365,8 +1365,7 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void addLanguageButton_Click(object sender, EventArgs e)
         {
-            SecUser secUser = this.getSecUser();
-            int userId = secUser.UserID;
+            int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
             Title title = (Title)Session["Title" + idLabel.Text];
             TitleLanguage tl = new TitleLanguage(0, title.TitleID, "", DateTime.Now, userId);
@@ -1690,8 +1689,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (ddlBibliographicLevel.SelectedValue != "0") bibLevelID = (int?)Convert.ToInt32(ddlBibliographicLevel.SelectedValue);
 
                 // Set the id of the editing user
-                SecUser secUser = this.getSecUser();
-                userId = secUser.UserID;
+                userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
 				// Gather up data on form
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
@@ -1746,12 +1744,6 @@ namespace MOBOT.BHL.AdminWeb
 		}
 
 		#endregion
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-        }
 
         private bool validate(Title title)
         {

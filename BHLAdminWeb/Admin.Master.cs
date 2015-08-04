@@ -22,13 +22,10 @@ namespace MOBOT.BHL.AdminWeb
             bool debugMode = new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request);
             if (debugMode) Page.Title = "***DEBUG MODE*** " + Page.Title;
 
-			Response.Cookies[ "CallingUrl" ].Value = Request.Url.ToString();
-
 			// Make sure user is logged in
             if (Helper.IsUserAuthenticated(new HttpRequestWrapper(Request)))
             {
-                loginLink.Text = "Logout";
-                loginLink.NavigateUrl = "/Ligustrum.aspx?send=2";
+                accountlink.Text = string.Format(accountlink.Text, Context.GetOwinContext().Request.User.Identity.Name);
 
                 // Make sure the user is authorized
                 if (!Helper.IsUserAuthorized(new HttpRequestWrapper(Request)))
@@ -38,17 +35,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             else
             {
-                Response.Redirect("/Login.aspx");
-            }
-
-            // Make sure that the authorized user is valid for the production site (some are
-            // restricted to test)
-            String isProduction = ConfigurationManager.AppSettings["IsProduction"] as String;
-            if (String.Compare(isProduction, "true", true) == 0)
-            {
-                HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-                SecUser user = Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
-                String userName = user.UserName;
+                Response.Redirect("/account/Login");
             }
 
             // Set an alert message if the full-text catalog is offline
@@ -62,8 +49,7 @@ namespace MOBOT.BHL.AdminWeb
 		protected override void OnInit( EventArgs e )
 		{
 			base.OnInit( e );
-            Response.Cookies["CallingUrl"].Value = Request.Url.ToString();
-            if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("login.aspx");
+            if (!Helper.IsUserAuthenticated(new HttpRequestWrapper(Request))) Response.Redirect("/account/login");
 		}
 	}
 }

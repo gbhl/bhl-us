@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.PageTitle</title>
-    <link href="@Url.Content("~/styles/adminstyle.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
     <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUICSSPath"])" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/favicon.ico")" rel="icon" type="image/x-icon" />
-    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryPath"])" type="text/javascript"></script>
+    @Scripts.Render("~/bundles/jquery")
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryUIPath"])" type="text/javascript"></script>
     @RenderSection("Javascript", required: false)
     @RenderSection("CSS", required: false)
@@ -24,9 +24,8 @@
 			<td style="padding:0px">
 				<img src="@Url.Content("~/images/blank.gif")" alt="" height="1" width="15" />
 				&nbsp;
-				<div style="position: absolute; top: 3px; right: 15px;">
-                    <a href="@Url.Content("~/ligustrum.aspx?send=2")" class="HeaderLinks">Logout</a>
-					| <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
+				<div style="position: absolute; top: 3px; right: 30px;">
+                    @Html.Partial("_LoginPartial")
 				</div>
 				<div style="position: absolute; top: 40px; right: 15px;">
 					<span class="pageheader">Administration</span>
@@ -42,5 +41,8 @@
 	<div style="position: absolute; top: 75px; width:90%">
         @RenderBody()
     </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -120,7 +120,9 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult Preview()
         {
             CitationImportModel model = (CitationImportModel)TempData["Model"] ?? new CitationImportModel();
-            model.GetRows(true, false, Request.Cookies["MOBOTSecurityToken"].Value);
+
+            int userId = Helper.GetCurrentUserUID(Request);//  new HttpRequestWrapper(Request));
+            model.GetRows(true, false, userId);
 
             ViewBag.PageTitle += "Citation Import";
 
@@ -141,7 +143,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             else
             {
                 // Parse the contents of the file and save it to the database.  Pass record ID for the file to the next View.
-                model.ImportFile(Request.Cookies["MOBOTSecurityToken"].Value);
+                int userId = Helper.GetCurrentUserUID(Request);
+                model.ImportFile(userId);
                 return RedirectToAction("Review", new { id = model.ImportFileID });
             }
         }
@@ -167,15 +170,16 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             HttpContext.Server.ScriptTimeout = 600;  // 10 minutes
 
+            int userId = Helper.GetCurrentUserUID(Request);
             if (Request.Form["btnImport"] != null)
             {
                 // Create production records for all "New" ImportRecords in the file.  Update statuses to "Imported".
-                model.PublishFile(Request.Cookies["MOBOTSecurityToken"].Value);
+                model.PublishFile(userId);
             }
             else if (Request.Form["btnReject"] != null)
             {
                 // Reject all "New" ImportRecords in the file.  Update statuses to "Rejected".
-                model.RejectFile(Request.Cookies["MOBOTSecurityToken"].Value);
+                model.RejectFile(userId);
             }
 
             return RedirectToAction("CitationImportHistory", "Report");
@@ -203,17 +207,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             if (Int32.TryParse(value, out importRecordStatusID))
             {
-                newStatus = new CitationImportModel().UpdateRecordStatus(
-                    importRecordID, importRecordStatusID, Request.Cookies["MOBOTSecurityToken"].Value);
+                int userId = Helper.GetCurrentUserUID(Request);
+                newStatus = new CitationImportModel().UpdateRecordStatus(importRecordID, importRecordStatusID, userId);
             }
 
             return Content(newStatus);
-        }
-
-        private SecUser getSecUser()
-        {
-            HttpCookie tokenCookie = Request.Cookies["MOBOTSecurityToken"];
-            return Helper.GetSecProvider().SecUserSelect(tokenCookie.Value);
         }
     }
 }

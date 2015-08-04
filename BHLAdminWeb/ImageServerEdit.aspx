@@ -11,8 +11,6 @@
     </p>
     <asp:RadioButtonList runat="server" ID="rdoListServers" OnSelectedIndexChanged="rdoListServers_SelectedIndexChanged" AutoPostBack="true">
         <asp:ListItem Text="Internet Archive" Value="http://www.archive.org" />
-        <asp:ListItem Text="BHL Cluster (Woods Hole)" Value="http://cluster.biodiversitylibrary.org" />
-        <asp:ListItem Text="Image Load Director (MOBOT)" Value="http://192.104.39.52:443" />
         <asp:ListItem Text="Other" Value="Other" />
     </asp:RadioButtonList>
     <div runat="server" id="divAddress" visible="false"><asp:TextBox runat="server" ID="txtAddress" Columns="30" />&nbsp;Please specify the base domain (i.e. http://cluster.biodiversitylibrary.org)</div>

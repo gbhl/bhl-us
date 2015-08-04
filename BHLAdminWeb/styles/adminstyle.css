@@ -3,6 +3,7 @@
 	font-size:12px;
 	font-family: Helvetica, Verdana, Times, serif;
 	color:#000000;
+    margin: 8px;
 }
 
 img
@@ -13,6 +14,7 @@ img
 hr
 {
 	border: solid 1px #27638C;
+    margin: 5px;
 }
 
 table td 
@@ -265,6 +267,9 @@ div .label {
     width: 175px;
 	font-size:12px;
 	font-family: Helvetica, Verdana, Times, serif;
+    color: black;
+    font-weight: 400;
+    text-align: left;
 }
 
 div .field {
@@ -367,3 +372,9 @@ div .field {
     background-color:rgb(255, 255, 255);
 }
 
+.center 
+{
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}

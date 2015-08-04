@@ -1,0 +1,36 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.ForgotViewModel
+@{
+    ViewBag.Title = "Forgot Password";
+}
+
+<br />
+<span class="pageHeader">Forgot Your Password</span><hr /><br />
+
+@if (ViewBag.EmailSent ?? false)
+{
+    <p>Check your email for a link to complete the password reset process.  When done, @Html.ActionLink("click here", "Login") to log in.</p>
+}
+else
+{
+    <p>To reset your password, enter the email address associated with your user account and click Send.  Then check your email for a link to complete the process.</p>
+    <br />
+
+    using (Html.BeginForm("Forgot", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Send" />
+            </div>
+        </div>
+    }
+}

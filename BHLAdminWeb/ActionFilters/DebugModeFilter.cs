@@ -22,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb.ActionFilters
             //first check to see if debug mode is set in a cookie
             isValueSet = (request.Cookies[cookieKey] != null && request.Cookies[cookieKey].Value == "true");
 
-            //next look for "directive=debug" in the query string
+            //next look for debug setting in the query string
             if (!isValueSet)
             {
                 if ((request.QueryString[requestKey] != null && request.QueryString[requestKey].Trim().ToLower() == expectedValue))
