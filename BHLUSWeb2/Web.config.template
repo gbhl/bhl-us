@@ -37,7 +37,7 @@
     
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
-    <add key="OAIAdminEmail" value="bhl.oai@gmail.com"/>
+    <add key="OAIAdminEmail" value="oai@biodiversitylibrary.org"/>
     <add key="OAIIdentifierNamespace" value="biodiversitylibrary.org"/>
     <add key="OAIMaxListSets" value="500"/>
     <add key="OAIMaxListRecords" value="100"/>  <!-- this value is now overridden by the maxListRecords portion of the OAIMetadataformats (below) -->

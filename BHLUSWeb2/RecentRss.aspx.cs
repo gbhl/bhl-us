@@ -67,7 +67,6 @@ namespace MOBOT.BHL.Web2
                 WriteLine("<link>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");
                 WriteLine("<pubDate>" + item.CreationDate.ToString() + "</pubDate>");
-                WriteLine("<author>webhelp@mobot.org (Biodiversity Heritage Library)</author>");
                 WriteLine("<guid>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</guid>");
                 WriteLine("</item>");
             }
