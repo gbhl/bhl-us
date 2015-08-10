@@ -43,10 +43,10 @@
     <add key="JsonFileFormat" value="biostoritemarticles{0}.json"/>
     
     <!-- URL of BioStor service used to get all articles for a given BHL ItemID -->
-    <add key="BioStorItemArticlesUrl" value="http://biostor.org/itemarticles.php?item={0}"/>
+    <add key="BioStorItemArticlesUrl" value="http://direct.biostor.org/itemarticles.php?item={0}"/>
     <!-- <add key="BioStorItemArticlesUrl" value="http://biostor.org/items/{0}.json"/> -->
     <!-- URL of BioStor service used to get all items changed since a given date -->
-    <add key="BioStorItemsChangedSinceUrl" value="http://biostor.org/itemsince.php?since={0}" />
+    <add key="BioStorItemsChangedSinceUrl" value="http://direct.biostor.org/itemsince.php?since={0}" />
     <!-- CrossRef URL for retreive DOI metadata -->
     <add key="CrossRefOpenUrlDOIGet" value="http://www.crossref.org/openurl?pid=sbhl:sbhl1018&amp;id=doi:{0}&amp;noredirect=true"/>
   </appSettings>
