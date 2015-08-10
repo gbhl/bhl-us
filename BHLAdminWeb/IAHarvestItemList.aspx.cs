@@ -101,7 +101,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         if (ids[x] != "cb_list")    // ignore checkbox "cb_list"
                         {
-                            string id = ids[x].Replace("jqg_", "");
+                            string id = ids[x].Replace("jqg_list_", "");
                             // Call the web service to update the item
                             string[] wsResponse = ws.IAItemUpdateStatus(
                                 Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));

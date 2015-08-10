@@ -102,7 +102,7 @@ namespace MOBOT.BHL.AdminWeb
                         if (ids[x] != "cb_list")    // ignore checkbox "cb_list"
                         {
                             // Update the DOI
-                            string id = ids[x].Replace("jqg_", "");
+                            string id = ids[x].Replace("jqg_list_", "");
                             service.DOIUpdateStatus(Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));
                         }
                     }
