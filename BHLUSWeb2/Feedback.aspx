@@ -25,6 +25,8 @@
             <div style="background-color:#3E90C8;color:white; padding-left:22px; padding-top:5px; padding-bottom:5px; padding-right:22px;">Thank you for submitting your feedback.  If necessary, a staff member will contact you shortly.</div>
         </div>
 
+        <div class="hidden">Leave this empty<asp:TextBox ID="fooTextBox" runat="server"></asp:TextBox></div>
+
 		<!-- Feedback Form -->
         <div class="ui-tabs">
 		<div id="FeedbackForm" style="display:block" class="ui-tabs-panel">

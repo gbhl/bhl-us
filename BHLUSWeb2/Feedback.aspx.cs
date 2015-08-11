@@ -176,8 +176,11 @@ namespace MOBOT.BHL.Web2
 
             try
             {
+                // Ignore spam from kelev.biz and email.tst.
+                // Only a bot can fill Foo with a value, so ignore that as well.
                 if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
-                    !emailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
+                    !emailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
+                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()))
                 {
                     serviceManager.Item.Create(data);
                     if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, "BHL Feedback Received", Server.HtmlDecode(issueLongDesc));
@@ -236,8 +239,11 @@ namespace MOBOT.BHL.Web2
 
             try
             {
+                // Ignore spam from kelev.biz and email.tst.
+                // Only a bot can fill Foo with a value, so ignore that as well.
                 if (!srEmailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
-                    !srEmailTextBox.Text.Trim().ToLower().Contains("email.tst"))  // ignore spam from kelev.biz and email.tst
+                    !srEmailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
+                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()))
                 {
                     IssueDto newIssue = serviceManager.Item.Create(data);
                     if (srEmailTextBox.Text.Trim().Length > 0) this.SendEmail(srEmailTextBox.Text, "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received", Server.HtmlDecode(issueLongDesc));
