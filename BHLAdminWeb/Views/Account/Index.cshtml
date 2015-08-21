@@ -1,0 +1,77 @@
+﻿@model IEnumerable<MOBOT.BHL.AdminWeb.Models.EditUserViewModel>
+
+@{
+    ViewBag.Title = "User Accounts";
+}
+
+<a href="/">&lt; Return to Dashboard</a><br />
+<br />
+<span class="pageHeader">User Accounts</span><hr /><br/>
+
+@using (@Html.BeginForm())
+{ 
+    @Html.Hidden("SortBy", (string)ViewBag.SortBy)
+    <div style="float:left">
+        @Html.ActionLink("Create New", "Register") 
+    </div>
+    <div style="float:right">
+        Show Users In This Role: @Html.DropDownList("Roles") <input type="submit" name="Go" value="Go" class="btn btn-primary btn-xs" />
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("User Name", "Index", new { sort = ViewBag.UNameSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.ActionLink("First Name", "Index", new { sort = ViewBag.FNameSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.ActionLink("Last Name", "Index", new { sort = ViewBag.LNameSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.ActionLink("Email", "Index", new { sort = ViewBag.EmailSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disabled)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HasRoles)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Disabled)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HasRoles)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |
+            @Html.ActionLink("Roles", "UserRoles", new { id = item.UserName })
+            @if (item.AllowDelete)
+            {
+                @Html.Raw(" | ")
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserName })
+            }
+        </td>
+
+    </tr>
+}
+
+</table>

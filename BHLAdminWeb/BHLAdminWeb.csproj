@@ -1,0 +1,1249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{53463F60-2878-46CC-A088-0B09C8F55CC7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOBOT.BHL.AdminWeb</RootNamespace>
+    <AssemblyName>MOBOT.BHL.AdminWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Excel">
+      <HintPath>..\packages\ExcelDataReader.2.1.1\lib\net20\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="FredCK.FCKeditorV2, Version=2.6.5.26992, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\FCKEditorV2\FredCK.FCKeditorV2.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\ExcelDataReader.2.1.1\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ActionFilters\BHLAuthorizationFilter.cs" />
+    <Compile Include="ActionFilters\DebugModeFilter.cs" />
+    <Compile Include="ActionFilters\FullTextSearchFilter.cs" />
+    <Compile Include="Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AjaxFlickrUpload.aspx.cs">
+      <DependentUpon>AjaxFlickrUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AjaxFlickrUpload.aspx.designer.cs">
+      <DependentUpon>AjaxFlickrUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AlertEdit.aspx.cs">
+      <DependentUpon>AlertEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AlertEdit.aspx.designer.cs">
+      <DependentUpon>AlertEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AuthorEdit.aspx.cs">
+      <DependentUpon>AuthorEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuthorEdit.aspx.designer.cs">
+      <DependentUpon>AuthorEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AuthorSearch.aspx.cs">
+      <DependentUpon>AuthorSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuthorSearch.aspx.designer.cs">
+      <DependentUpon>AuthorSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AuthorSegmentsList.aspx.cs">
+      <DependentUpon>AuthorSegmentsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuthorSegmentsList.aspx.designer.cs">
+      <DependentUpon>AuthorSegmentsList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AuthorTitlesList.aspx.cs">
+      <DependentUpon>AuthorTitlesList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuthorTitlesList.aspx.designer.cs">
+      <DependentUpon>AuthorTitlesList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BioStorHarvestItemList.aspx.cs">
+      <DependentUpon>BioStorHarvestItemList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BioStorHarvestItemList.aspx.designer.cs">
+      <DependentUpon>BioStorHarvestItemList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BioStorHarvestItemStatusAbout.aspx.cs">
+      <DependentUpon>BioStorHarvestItemStatusAbout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BioStorHarvestItemStatusAbout.aspx.designer.cs">
+      <DependentUpon>BioStorHarvestItemStatusAbout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BioStorSegmentsForItem.aspx.cs">
+      <DependentUpon>BioStorSegmentsForItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BioStorSegmentsForItem.aspx.designer.cs">
+      <DependentUpon>BioStorSegmentsForItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionBulkAdd.aspx.cs">
+      <DependentUpon>CollectionBulkAdd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollectionBulkAdd.aspx.designer.cs">
+      <DependentUpon>CollectionBulkAdd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CollectionEdit.aspx.cs">
+      <DependentUpon>CollectionEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CollectionEdit.aspx.designer.cs">
+      <DependentUpon>CollectionEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ContentPanel.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CitationImportController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LibraryController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controls\ErrorControl.ascx.cs">
+      <DependentUpon>ErrorControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\ErrorControl.ascx.designer.cs">
+      <DependentUpon>ErrorControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OLBookReader\BookReader.ascx.cs">
+      <DependentUpon>BookReader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\OLBookReader\BookReader.ascx.designer.cs">
+      <DependentUpon>BookReader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OLBookReader\Viewer\print.aspx.cs">
+      <DependentUpon>print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\OLBookReader\Viewer\print.aspx.designer.cs">
+      <DependentUpon>print.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PagingUserControl.ascx.cs">
+      <DependentUpon>PagingUserControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\PagingUserControl.ascx.designer.cs">
+      <DependentUpon>PagingUserControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WebStatsNavControl.ascx.cs">
+      <DependentUpon>WebStatsNavControl.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\WebStatsNavControl.ascx.designer.cs">
+      <DependentUpon>WebStatsNavControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DOIList.aspx.cs">
+      <DependentUpon>DOIList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DOIList.aspx.designer.cs">
+      <DependentUpon>DOIList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DOIStatusAbout.aspx.cs">
+      <DependentUpon>DOIStatusAbout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DOIStatusAbout.aspx.designer.cs">
+      <DependentUpon>DOIStatusAbout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DOISubmissionDetail.aspx.cs">
+      <DependentUpon>DOISubmissionDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DOISubmissionDetail.aspx.designer.cs">
+      <DependentUpon>DOISubmissionDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FlickrLoginRedirect.aspx.cs">
+      <DependentUpon>FlickrLoginRedirect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FlickrLoginRedirect.aspx.designer.cs">
+      <DependentUpon>FlickrLoginRedirect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FlickrUpload.aspx.cs">
+      <DependentUpon>FlickrUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FlickrUpload.aspx.designer.cs">
+      <DependentUpon>FlickrUpload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GrowthStats.aspx.cs">
+      <DependentUpon>GrowthStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrowthStats.aspx.designer.cs">
+      <DependentUpon>GrowthStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GrowthStatsDownload.aspx.cs">
+      <DependentUpon>GrowthStatsDownload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrowthStatsDownload.aspx.designer.cs">
+      <DependentUpon>GrowthStatsDownload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Helper.cs" />
+    <Compile Include="IAHarvestDashboard.aspx.cs">
+      <DependentUpon>IAHarvestDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAHarvestDashboard.aspx.designer.cs">
+      <DependentUpon>IAHarvestDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAHarvestItemList.aspx.cs">
+      <DependentUpon>IAHarvestItemList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAHarvestItemList.aspx.designer.cs">
+      <DependentUpon>IAHarvestItemList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IAHarvestItemStatusAbout.aspx.cs">
+      <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IAHarvestItemStatusAbout.aspx.designer.cs">
+      <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ImageServerEdit.aspx.cs">
+      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImageServerEdit.aspx.designer.cs">
+      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InstitutionEdit.aspx.cs">
+      <DependentUpon>InstitutionEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InstitutionEdit.aspx.designer.cs">
+      <DependentUpon>InstitutionEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemEdit.aspx.cs">
+      <DependentUpon>ItemEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemEdit.aspx.designer.cs">
+      <DependentUpon>ItemEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemStatusEdit.aspx.cs">
+      <DependentUpon>ItemStatusEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemStatusEdit.aspx.designer.cs">
+      <DependentUpon>ItemStatusEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LanguageEdit.aspx.cs">
+      <DependentUpon>LanguageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LanguageEdit.aspx.designer.cs">
+      <DependentUpon>LanguageEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MarcDetails.aspx.cs">
+      <DependentUpon>MarcDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MarcDetails.aspx.designer.cs">
+      <DependentUpon>MarcDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CitationImportHistoryModel.cs" />
+    <Compile Include="Models\CitationImportModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\SegmentResolutionLogModel.cs" />
+    <Compile Include="MVCServices\CitationService.cs" />
+    <Compile Include="MVCServices\EmailService.cs" />
+    <Compile Include="NamePageEdit.aspx.cs">
+      <DependentUpon>NamePageEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NamePageEdit.aspx.designer.cs">
+      <DependentUpon>NamePageEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenUrlResultDetail.aspx.cs">
+      <DependentUpon>OpenUrlResultDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenUrlResultDetail.aspx.designer.cs">
+      <DependentUpon>OpenUrlResultDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenUrlResultStats.aspx.cs">
+      <DependentUpon>OpenUrlResultStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OpenUrlResultStats.aspx.designer.cs">
+      <DependentUpon>OpenUrlResultStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageNotFound.aspx.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageNotFound.aspx.designer.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PageTypeEdit.aspx.cs">
+      <DependentUpon>PageTypeEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PageTypeEdit.aspx.designer.cs">
+      <DependentUpon>PageTypeEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginator.aspx.cs">
+      <DependentUpon>Paginator.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginator.aspx.designer.cs">
+      <DependentUpon>Paginator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PdfEdit.aspx.cs">
+      <DependentUpon>PdfEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PdfEdit.aspx.designer.cs">
+      <DependentUpon>PdfEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PdfStats.aspx.cs">
+      <DependentUpon>PdfStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PdfStats.aspx.designer.cs">
+      <DependentUpon>PdfStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PdfWeeklyStats.aspx.cs">
+      <DependentUpon>PdfWeeklyStats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PdfWeeklyStats.aspx.designer.cs">
+      <DependentUpon>PdfWeeklyStats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueForHarvest.aspx.cs">
+      <DependentUpon>QueueForHarvest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QueueForHarvest.aspx.designer.cs">
+      <DependentUpon>QueueForHarvest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportCharacterEncodingProblems.aspx.cs">
+      <DependentUpon>ReportCharacterEncodingProblems.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportCharacterEncodingProblems.aspx.designer.cs">
+      <DependentUpon>ReportCharacterEncodingProblems.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDOIByInstitution.aspx.cs">
+      <DependentUpon>ReportDOIByInstitution.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportDOIByInstitution.aspx.designer.cs">
+      <DependentUpon>ReportDOIByInstitution.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportIAItemsPendingApproval.aspx.cs">
+      <DependentUpon>ReportIAItemsPendingApproval.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportIAItemsPendingApproval.aspx.designer.cs">
+      <DependentUpon>ReportIAItemsPendingApproval.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportItemPagination.aspx.cs">
+      <DependentUpon>ReportItemPagination.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportItemPagination.aspx.designer.cs">
+      <DependentUpon>ReportItemPagination.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportItemsByContributor.aspx.cs">
+      <DependentUpon>ReportItemsByContributor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportItemsByContributor.aspx.designer.cs">
+      <DependentUpon>ReportItemsByContributor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportItemsByContributorCSV.ashx.cs">
+      <DependentUpon>ReportItemsByContributorCSV.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportMonographicContributions.aspx.cs">
+      <DependentUpon>ReportMonographicContributions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportMonographicContributions.aspx.designer.cs">
+      <DependentUpon>ReportMonographicContributions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportNonMemberMonographsCSV.ashx.cs">
+      <DependentUpon>ReportNonMemberMonographsCSV.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRecentlyClusteredSegments.aspx.cs">
+      <DependentUpon>ReportRecentlyClusteredSegments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportRecentlyClusteredSegments.aspx.designer.cs">
+      <DependentUpon>ReportRecentlyClusteredSegments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SegmentEdit.aspx.cs">
+      <DependentUpon>SegmentEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SegmentEdit.aspx.designer.cs">
+      <DependentUpon>SegmentEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SegmentSearch.aspx.cs">
+      <DependentUpon>SegmentSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SegmentSearch.aspx.designer.cs">
+      <DependentUpon>SegmentSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SegmentTypeEdit.aspx.cs">
+      <DependentUpon>SegmentTypeEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SegmentTypeEdit.aspx.designer.cs">
+      <DependentUpon>SegmentTypeEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\BHLImportWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AuthorService.ashx.cs">
+      <DependentUpon>AuthorService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CitationImportService.ashx.cs">
+      <DependentUpon>CitationImportService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DataHarvestService.ashx.cs">
+      <DependentUpon>DataHarvestService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DOIService.ashx.cs">
+      <DependentUpon>DOIService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ItemPaginationDownloadService.ashx.cs">
+      <DependentUpon>ItemPaginationDownloadService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ItemService.ashx.cs">
+      <DependentUpon>ItemService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\NameService.ashx.cs">
+      <DependentUpon>NameService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\PageService.ashx.cs">
+      <DependentUpon>PageService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\PageSummaryService.ashx.cs">
+      <DependentUpon>PageSummaryService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\RecentlyClusteredSegmentsDownloadService.ashx.cs">
+      <DependentUpon>RecentlyClusteredSegmentsDownloadService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\SegmentService.ashx.cs">
+      <DependentUpon>SegmentService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\StatsService.ashx.cs">
+      <DependentUpon>StatsService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TitleService.ashx.cs">
+      <DependentUpon>TitleService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+    <Compile Include="Stats.aspx.cs">
+      <DependentUpon>Stats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Stats.aspx.designer.cs">
+      <DependentUpon>Stats.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatsDownload.aspx.cs">
+      <DependentUpon>StatsDownload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StatsDownload.aspx.designer.cs">
+      <DependentUpon>StatsDownload.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleAssociationEdit.aspx.cs">
+      <DependentUpon>TitleAssociationEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleAssociationEdit.aspx.designer.cs">
+      <DependentUpon>TitleAssociationEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleEdit.aspx.cs">
+      <DependentUpon>TitleEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleEdit.aspx.designer.cs">
+      <DependentUpon>TitleEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleImport.aspx.cs">
+      <DependentUpon>TitleImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleImport.aspx.designer.cs">
+      <DependentUpon>TitleImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleImportHistory.aspx.cs">
+      <DependentUpon>TitleImportHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleImportHistory.aspx.designer.cs">
+      <DependentUpon>TitleImportHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleImportResults.aspx.cs">
+      <DependentUpon>TitleImportResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleImportResults.aspx.designer.cs">
+      <DependentUpon>TitleImportResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleItemMarc.aspx.cs">
+      <DependentUpon>TitleItemMarc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleItemMarc.aspx.designer.cs">
+      <DependentUpon>TitleItemMarc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleSearch.aspx.cs">
+      <DependentUpon>TitleSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleSearch.aspx.designer.cs">
+      <DependentUpon>TitleSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NoteTypeEdit.aspx.cs">
+      <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoteTypeEdit.aspx.designer.cs">
+      <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VaultEdit.aspx.cs">
+      <DependentUpon>VaultEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VaultEdit.aspx.designer.cs">
+      <DependentUpon>VaultEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebHistory.aspx.cs">
+      <DependentUpon>WebHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebHistory.aspx.designer.cs">
+      <DependentUpon>WebHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebStatsDaily.aspx.cs">
+      <DependentUpon>WebStatsDaily.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebStatsDaily.aspx.designer.cs">
+      <DependentUpon>WebStatsDaily.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebStatsDetail.aspx.cs">
+      <DependentUpon>WebStatsDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebStatsDetail.aspx.designer.cs">
+      <DependentUpon>WebStatsDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebStatsHourly.aspx.cs">
+      <DependentUpon>WebStatsHourly.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebStatsHourly.aspx.designer.cs">
+      <DependentUpon>WebStatsHourly.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebStatsIP.aspx.cs">
+      <DependentUpon>WebStatsIP.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebStatsIP.aspx.designer.cs">
+      <DependentUpon>WebStatsIP.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebStatsUser.aspx.cs">
+      <DependentUpon>WebStatsUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebStatsUser.aspx.designer.cs">
+      <DependentUpon>WebStatsUser.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AccessDenied.aspx" />
+    <Content Include="Admin.Master" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Controls\ErrorControl.ascx" />
+    <Content Include="Controls\fckeditor\editor\css\behaviors\disablehandles.htc" />
+    <Content Include="Controls\fckeditor\editor\css\behaviors\showtableborders.htc" />
+    <Content Include="Controls\fckeditor\editor\css\fck_editorarea.css" />
+    <Content Include="Controls\fckeditor\editor\css\fck_internal.css" />
+    <Content Include="Controls\fckeditor\editor\css\fck_showtableborders_gecko.css" />
+    <Content Include="Controls\fckeditor\editor\css\images\fck_anchor.gif" />
+    <Content Include="Controls\fckeditor\editor\css\images\fck_flashlogo.gif" />
+    <Content Include="Controls\fckeditor\editor\css\images\fck_hiddenfield.gif" />
+    <Content Include="Controls\fckeditor\editor\css\images\fck_pagebreak.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\fcknumericfield.htc" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\fck_dialog_common.css" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\fck_dialog_common.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\images\locked.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\images\reset.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\images\unlocked.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\common\moz-bindings.xml" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_about.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_about\logo_fckeditor.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_about\logo_fredck.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_anchor.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_button.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_checkbox.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_colorselector.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_docprops.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_docprops\fck_document_preview.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_find.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_flash.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_form.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_hiddenfield.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_image.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_image\fck_image.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_image\fck_image_preview.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_link.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_link\fck_link.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_listprop.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_paste.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_radiobutton.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_replace.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_select.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_select\fck_select.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_smiley.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_source.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_specialchar.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\blank.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\controls.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\controlWindow.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\spellchecker.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\spellChecker.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\spellerStyle.css" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\wordWindow.js" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_table.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_tablecell.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_template.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_template\images\template1.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_template\images\template2.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_template\images\template3.gif" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_textarea.html" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_textfield.html" />
+    <Content Include="Controls\fckeditor\editor\fckdebug.html" />
+    <Content Include="Controls\fckeditor\editor\fckdialog.html" />
+    <Content Include="Controls\fckeditor\editor\fckeditor.html" />
+    <Content Include="Controls\fckeditor\editor\fckeditor.original.html" />
+    <Content Include="Controls\fckeditor\editor\images\anchor.gif" />
+    <Content Include="Controls\fckeditor\editor\images\arrow_ltr.gif" />
+    <Content Include="Controls\fckeditor\editor\images\arrow_rtl.gif" />
+    <Content Include="Controls\fckeditor\editor\images\spacer.gif" />
+    <Content Include="Controls\fckeditor\editor\js\fckeditorcode_gecko.js" />
+    <Content Include="Controls\fckeditor\editor\js\fckeditorcode_ie.js" />
+    <Content Include="Controls\fckeditor\editor\lang\en.js" />
+    <Content Include="Controls\fckeditor\editor\lang\_getfontformat.html" />
+    <Content Include="Controls\fckeditor\editor\lang\_translationstatus.txt" />
+    <Content Include="Controls\fckeditor\editor\plugins\autogrow\fckplugin.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\fckplugin.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\fck_placeholder.html" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\lang\de.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\lang\en.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\lang\fr.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\lang\it.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\lang\pl.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\placeholder\placeholder.gif" />
+    <Content Include="Controls\fckeditor\editor\plugins\simplecommands\fckplugin.js" />
+    <Content Include="Controls\fckeditor\editor\plugins\tablecommands\fckplugin.js" />
+    <Content Include="Controls\fckeditor\editor\skins\default\fck_dialog.css" />
+    <Content Include="Controls\fckeditor\editor\skins\default\fck_editor.css" />
+    <Content Include="Controls\fckeditor\editor\skins\default\fck_strip.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.arrowright.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.buttonarrow.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.collapse.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.end.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.expand.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.separator.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\default\images\toolbar.start.gif" />
+    <Content Include="Controls\fckeditor\editor\skins\_fckviewstrips.html" />
+    <Content Include="Controls\fckeditor\fckconfig.js" />
+    <Content Include="Controls\fckeditor\fckeditor.asp" />
+    <Content Include="Controls\fckeditor\fckeditor.js" />
+    <Content Include="Controls\fckeditor\fckpackager.xml" />
+    <Content Include="Controls\fckeditor\fckstyles.xml" />
+    <Content Include="Controls\fckeditor\fcktemplates.xml" />
+    <Content Include="Controls\fckeditor\htaccess.txt" />
+    <Content Include="Controls\fckeditor\license.txt" />
+    <Content Include="Controls\OLBookReader\BookReader.ascx" />
+    <Content Include="Controls\OLBookReader\BookReader\BookReader.css" />
+    <Content Include="Controls\OLBookReader\BookReader\BookReader.js" />
+    <Content Include="Controls\OLBookReader\BookReader\BookReaderEmbed.css" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_bottom_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_down_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_leftmost_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_left_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_rightmost_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_right_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_top_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\book_up_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\control_pause_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\control_play_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\Darwin_Logo.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\embed_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\left_edges.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\logo_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\one_page_mode_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\print_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\right_edges.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\spacer.gif" />
+    <Content Include="Controls\OLBookReader\BookReader\images\transparent.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\two_page_mode_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\zoom_in_icon.png" />
+    <Content Include="Controls\OLBookReader\BookReader\images\zoom_out_icon.png" />
+    <Content Include="Controls\OLBookReader\Viewer\index.html" />
+    <Content Include="Controls\OLBookReader\Viewer\print.aspx" />
+    <Content Include="Controls\PagingUserControl.ascx" />
+    <Content Include="Controls\WebStatsNavControl.ascx" />
+    <Content Include="Error.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\BHLlogo.png" />
+    <Content Include="Images\bib_minus.gif" />
+    <Content Include="Images\bib_plus.GIF" />
+    <Content Include="Images\blank.gif" />
+    <Content Include="Images\blankpage.png" />
+    <Content Include="Images\cover.gif" />
+    <Content Include="Images\down.gif" />
+    <Content Include="Images\firstpage.png" />
+    <Content Include="Images\flickr_sml.png" />
+    <Content Include="Images\help.png" />
+    <Content Include="Images\illustration.png" />
+    <Content Include="Images\image_general.jpg" />
+    <Content Include="Images\jqDataTables\back_disabled.png" />
+    <Content Include="Images\jqDataTables\back_enabled.png" />
+    <Content Include="Images\jqDataTables\back_enabled_hover.png" />
+    <Content Include="Images\jqDataTables\forward_disabled.png" />
+    <Content Include="Images\jqDataTables\forward_enabled.png" />
+    <Content Include="Images\jqDataTables\forward_enabled_hover.png" />
+    <Content Include="Images\jqDataTables\sort_asc.png" />
+    <Content Include="Images\jqDataTables\sort_asc_disabled.png" />
+    <Content Include="Images\jqDataTables\sort_both.png" />
+    <Content Include="Images\jqDataTables\sort_desc.png" />
+    <Content Include="Images\jqDataTables\sort_desc_disabled.png" />
+    <Content Include="Images\lastpage.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\map.png" />
+    <Content Include="Images\maskBG.png" />
+    <Content Include="Images\nextpage.png" />
+    <Content Include="Images\page_white.png" />
+    <Content Include="Images\page_white_text.png" />
+    <Content Include="Images\Panel\bg.gif" />
+    <Content Include="Images\Panel\bottom.gif" />
+    <Content Include="Images\Panel\bottom_left.gif" />
+    <Content Include="Images\Panel\bottom_right.gif" />
+    <Content Include="Images\Panel\left.gif" />
+    <Content Include="Images\Panel\right.gif" />
+    <Content Include="Images\Panel\top.gif" />
+    <Content Include="Images\Panel\top_left.gif" />
+    <Content Include="Images\Panel\top_right.gif" />
+    <Content Include="Images\prevpage.png" />
+    <Content Include="Images\report1_16x16.gif" />
+    <Content Include="Images\textpage.png" />
+    <Content Include="Images\up.gif" />
+    <Content Include="ImportCitationReviewHelp.html" />
+    <Content Include="js\FlickrUpload.js" />
+    <Content Include="js\grid.locale-en.js" />
+    <Content Include="js\jquery.dataTables.min.js" />
+    <Content Include="js\jquery.easing.1.3.js" />
+    <Content Include="js\jquery.jeditable.1.7.3.min.js" />
+    <Content Include="js\jquery.jqGrid.min.js" />
+    <Content Include="PageNotFound.aspx" />
+    <Content Include="ReportCharacterEncodingProblems.aspx" />
+    <Content Include="ReportItemsByContributorCSV.ashx" />
+    <Content Include="ReportNonMemberMonographsCSV.ashx" />
+    <Content Include="ReportRecentlyClusteredSegments.aspx" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Service References\BHLImportWebService\BHLImportWS.disco" />
+    <Content Include="Service References\BHLImportWebService\configuration91.svcinfo" />
+    <Content Include="Service References\BHLImportWebService\configuration.svcinfo" />
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BotanicusHarvestLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSItemStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSSegment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItemError.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItemStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.ImportError.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.ImportLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.Stats.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLImportWebService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="styles\adminstyle.css" />
+    <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
+    <Content Include="styles\jqgridtheme\ui.jqgrid.css" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_222222_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_454545_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_888888_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="styles\jquery-ui-1.11.4\jquery-ui.min.css" />
+    <Content Include="styles\jquery.dataTables.css" />
+    <Content Include="styles\ui.jqdatatable.css" />
+    <Content Include="styles\ui.jqgrid.css" />
+    <Content Include="NoteTypeEdit.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\server-scripts\spellchecker.cfm" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\server-scripts\spellchecker.php" />
+    <Content Include="Controls\fckeditor\editor\dialog\fck_spellerpages\spellerpages\server-scripts\spellchecker.pl" />
+    <Content Include="Services\AuthorService.ashx" />
+    <Content Include="Services\DataHarvestService.ashx" />
+    <Content Include="Services\ItemPaginationDownloadService.ashx" />
+    <Content Include="Services\ItemService.ashx" />
+    <Content Include="Services\NameService.ashx" />
+    <Content Include="Services\PageService.ashx" />
+    <Content Include="Services\SegmentService.ashx" />
+    <Content Include="Services\StatsService.ashx" />
+    <Content Include="Services\TitleService.ashx" />
+    <Content Include="xsl\MARC21transformEnglish.xsl" />
+    <Content Include="xsl\MARC21transformMARC.xsl" />
+    <Content Include="xsl\mods2html.xsl" />
+    <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\admin.biodiversitylibrary.org.pubxml" />
+    <Content Include="Remoting.config" />
+    <Content Include="Services\DOIService.ashx" />
+    <Content Include="Services\PageSummaryService.ashx" />
+    <Content Include="Service References\BHLImportWebService\BHLImportWS.wsdl" />
+    <Content Include="Services\RecentlyClusteredSegmentsDownloadService.ashx" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Report\SegmentResolutionLog.cshtml" />
+    <Content Include="Views\Shared\_layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\CitationImport\FileDetail.cshtml" />
+    <Content Include="Views\CitationImport\Index.cshtml" />
+    <Content Include="Views\CitationImport\Mapping.cshtml" />
+    <Content Include="Views\CitationImport\Preview.cshtml" />
+    <Content Include="Views\CitationImport\Review.cshtml" />
+    <None Include="Properties\PublishProfiles\beta.admin.biodiversitylibrary.org.pubxml" />
+    <Content Include="Views\Report\CitationImportHistory.cshtml" />
+    <Content Include="Services\CitationImportService.ashx" />
+    <Content Include="Views\Library\Align.cshtml" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\Shared\EditorTemplates\SelectRoleEditorViewModel.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\UserRoles.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\_RemoveAccountPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\Forgot.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <None Include="Web.config.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AjaxFlickrUpload.aspx" />
+    <Content Include="AlertEdit.aspx" />
+    <Content Include="AuthorEdit.aspx" />
+    <Content Include="AuthorSearch.aspx" />
+    <Content Include="AuthorSegmentsList.aspx" />
+    <Content Include="AuthorTitlesList.aspx" />
+    <Content Include="BioStorHarvestItemList.aspx" />
+    <Content Include="BioStorHarvestItemStatusAbout.aspx" />
+    <Content Include="BioStorSegmentsForItem.aspx" />
+    <Content Include="CollectionBulkAdd.aspx" />
+    <Content Include="CollectionEdit.aspx" />
+    <Content Include="Dashboard.aspx" />
+    <Content Include="DOIList.aspx" />
+    <Content Include="DOIStatusAbout.aspx" />
+    <Content Include="DOISubmissionDetail.aspx" />
+    <Content Include="FlickrLoginRedirect.aspx" />
+    <Content Include="FlickrUpload.aspx" />
+    <Content Include="GrowthStats.aspx" />
+    <Content Include="GrowthStatsDownload.aspx" />
+    <Content Include="IAHarvestDashboard.aspx" />
+    <Content Include="IAHarvestItemList.aspx" />
+    <Content Include="IAHarvestItemStatusAbout.aspx" />
+    <Content Include="ImageServerEdit.aspx" />
+    <Content Include="InstitutionEdit.aspx" />
+    <Content Include="ItemEdit.aspx" />
+    <Content Include="ItemStatusEdit.aspx" />
+    <Content Include="LanguageEdit.aspx" />
+    <Content Include="LibraryStatsAbout.html" />
+    <Content Include="MarcDetails.aspx" />
+    <Content Include="NamePageEdit.aspx" />
+    <Content Include="OpenUrlResultDetail.aspx" />
+    <Content Include="OpenUrlResultStats.aspx" />
+    <Content Include="PageTypeEdit.aspx" />
+    <Content Include="PaginationStatusAbout.html" />
+    <Content Include="Paginator.aspx" />
+    <Content Include="PdfEdit.aspx" />
+    <Content Include="PdfStats.aspx" />
+    <Content Include="PdfWeeklyStats.aspx" />
+    <Content Include="QueueForHarvest.aspx" />
+    <Content Include="ReportDOIByInstitution.aspx" />
+    <Content Include="ReportIAItemsPendingApproval.aspx" />
+    <Content Include="ReportItemPagination.aspx" />
+    <Content Include="ReportItemsByContributor.aspx" />
+    <Content Include="ReportMonographicContributions.aspx" />
+    <Content Include="SegmentEdit.aspx" />
+    <Content Include="SegmentSearch.aspx" />
+    <Content Include="SegmentTypeEdit.aspx" />
+    <Content Include="Stats.aspx" />
+    <Content Include="StatsDownload.aspx" />
+    <Content Include="TitleAssociationEdit.aspx" />
+    <Content Include="TitleEdit.aspx" />
+    <Content Include="TitleImport.aspx" />
+    <Content Include="TitleImportHistory.aspx" />
+    <Content Include="TitleImportResults.aspx" />
+    <Content Include="TitleItemMarc.aspx" />
+    <Content Include="TitleSearch.aspx" />
+    <Content Include="VaultEdit.aspx" />
+    <Content Include="WebHistory.aspx" />
+    <Content Include="WebStatsDaily.aspx" />
+    <Content Include="WebStatsDetail.aspx" />
+    <Content Include="WebStatsHourly.aspx" />
+    <Content Include="WebStatsIP.aspx" />
+    <Content Include="WebStatsUser.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj">
+      <Project>{96bf5b64-d65d-43f2-a2f3-500f9e28fe53}</Project>
+      <Name>BHLCoreDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
+      <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
+      <Name>BHLDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLFileAccessRemotingUtilities\BHLFileAccessRemotingUtilities.csproj">
+      <Project>{c4c907e6-860c-4684-aff3-26269bf193f3}</Project>
+      <Name>BHLFileAccessRemotingUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
+      <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
+      <Name>BHLFileAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLServer\BHLServer.csproj">
+      <Project>{20fc0f67-c32a-46fe-9ff2-ba5fc74725af}</Project>
+      <Name>BHLServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
+      <Project>{7e1631e8-f28a-4f9e-97e4-f8a69522d9dd}</Project>
+      <Name>BHLWebUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
+      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
+      <Name>CustomDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlickrUtility\FlickrUtility.csproj">
+      <Project>{f9d69fa5-9ee0-43fb-aba3-dc443ace3f18}</Project>
+      <Name>FlickrUtility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="styles\jqgridtheme\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BHLImportWebService\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52399</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:60491/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

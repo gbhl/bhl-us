@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage", @class = "HeaderLinks" })
+        <span> | </span>
+        <a class="HeaderLinks" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+        <span> | </span>
+        <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
+    }
+}
+else
+{
+    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "HeaderLinks" })
+    <span> | </span>
+    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "HeaderLinks" })
+	<span> | </span>
+    <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
+}

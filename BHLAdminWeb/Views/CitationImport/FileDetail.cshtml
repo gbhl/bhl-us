@@ -1,0 +1,59 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportModel
+
+@{
+    ViewBag.Title = "Import Citations - File Details";
+}
+
+<p>&nbsp;</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+<div class="citeImport">
+
+@using (Html.BeginForm(null, null, FormMethod.Post)) {
+    
+    @Html.HiddenFor(m => m.Contributor)
+    @Html.HiddenFor(m => m.DataSourceType)
+    @Html.HiddenFor(m => m.FilePath)
+    @Html.HiddenFor(m => m.FileName)
+
+    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+
+    <div id="fileDetail">
+
+        @if (Model.DataSourceType == "text/plain") {
+            
+            <h3>Text File Details</h3>
+            <div><div class=label>Code page:</div><div class="field">@Html.DropDownList("CodePage")</div></div>
+            <div><div class=label>Text qualifier:</div><div class="field">@Html.TextBox("TextQualifier")</div></div>
+            <div><div class=label>Row delimiter:</div><div class="field">@Html.DropDownList("RowDelimiter")</div></div>
+            <div><div class=label>Column delimiter:</div><div class="field">@Html.DropDownList("ColumnDelimiter")</div></div>
+            <div><div class=label>Header rows to skip:</div><div class="field">@Html.TextBox("HeaderRowsToSkip", Model.HeaderRowsToSkip, new { style = "width:50px" })</div></div>
+            
+        }
+        else {
+            <h3>Excel Details</h3>
+        }
+
+        <div>@Html.CheckBox("ColumnNamesInFirstRow")Column names in the first row</div>
+    </div>
+
+    <div style="margin:10px 0px">
+        <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
+        <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+    </div>
+
+}
+
+</div>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/";
+        });
+
+    });
+
+</script>

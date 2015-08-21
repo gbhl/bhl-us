@@ -1,0 +1,17 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.SegmentResolutionLogModel
+@{
+    ViewBag.Title = "Log Entries";
+    
+    // Turns off the use of the _layout.cshtml page for this view (was activated in _ViewStart.cshtml)
+    //Layout = null; 
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    @foreach (var review in Model.SegmentResolutionLogs) {
+        <tr><td>
+            @review
+        </td></tr>
+    }
+<table>

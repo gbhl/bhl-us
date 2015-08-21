@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Pagination Statuses</title>
+	<link rel="stylesheet" type="text/css" runat="server" id="link1" href="styles/adminstyle.css" />
+</head>
+<body>
+    <div>
+        <h3>Item Pagination Statuses</h3>
+        <table><tr><td><b>Status</b></td><td>&nbsp;</td><td><b>Description</b></td></tr>
+            <tr valign="top"><td nowrap>New</td><td></td><td>Item has not been paginated in BHL.  It may have been paginated in another tool (i.e. Macaw) before being ingested into BHL.</td></tr>
+            <tr valign="top"><td nowrap>Incomplete</td><td></td><td>Item has been partially paginated in BHL.  The item is not locked, so anyone can continue paginating the item.</td></tr>
+            <tr valign="top"><td nowrap>In Progress</td><td></td><td>Item is locked for pagination.  Only the user holding the lock can continue paginating the item.</td></tr>
+            <tr valign="top"><td nowrap>Complete</td><td></td><td>Item has been paginated in BHL.</td></tr>
+        </table>
+    </div>
+</body>
+</html>

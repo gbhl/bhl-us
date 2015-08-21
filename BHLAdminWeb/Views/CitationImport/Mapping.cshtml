@@ -1,0 +1,74 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.CitationImportModel
+
+@{
+    ViewBag.Title = "Import Citations - Data Mapping";
+}
+
+<p>&nbsp;</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+<div class="citeImport">
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+
+    @Html.HiddenFor(m => m.Contributor)
+    @Html.HiddenFor(m => m.DataSourceType)
+    @Html.HiddenFor(m => m.FilePath)
+    @Html.HiddenFor(m => m.FileName)
+    @Html.HiddenFor(m => m.CodePage)
+    @Html.HiddenFor(m => m.ColumnDelimiter)
+    @Html.HiddenFor(m => m.ColumnNamesInFirstRow)
+    @Html.HiddenFor(m => m.HeaderRowsToSkip)
+    @Html.HiddenFor(m => m.RowDelimiter)
+    @Html.HiddenFor(m => m.TextQualifier)
+
+    <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Imported Column</th>
+                <th>Map To</th>
+                <th>Value Delimiter</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int x = 0; x < Model.Columns.Count; x++)
+            {
+                <tr id="column_@Model.Columns[x].Position">
+                    <td>@Html.DisplayTextFor(m => m.Columns[x].Position) @Html.HiddenFor(m => m.Columns[x].Position)</td>
+                    <td>@Html.DisplayTextFor(m => m.Columns[x].ColumnName) @Html.HiddenFor(m => m.Columns[x].ColumnName)</td>
+                    <td>@Html.DropDownListFor(m => m.Columns[x].MappedColumn, new SelectList(ViewBag.MappedColumns, "key", "value", Model.Columns[x].MappedColumn))</td>
+                    <td>@Html.EditorFor(m => m.Columns[x].ValueDelimiter)</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    
+    <div style="margin:10px 0px">
+        <input class="formButton" type="submit" name="btnBack" id="btnBack" value="< Back" />
+        <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
+        <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+    </div>
+
+}
+
+</div>
+    
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#btnCancel").click(function () {
+            window.location.href = "/";
+        });
+
+    });
+
+</script>
+
+

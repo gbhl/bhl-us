@@ -1,0 +1,51 @@
+<%@ Master Language="C#" AutoEventWireup="true" Codebehind="Admin.Master.cs" Inherits="MOBOT.BHL.AdminWeb.Admin" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+	<title>BHL Admin</title>
+	<link rel="stylesheet" type="text/css" runat="server" id="link1" href="/styles/adminstyle.css" />
+	<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+<body id="body" runat="server">
+    <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"></form>
+	<form id="form1" runat="server">
+		<div id="firefoxKludge" style="position: absolute; margin: 0; padding: 0; border: none; top: 0px; left: 0px; bottom: 0px; right: 0px;
+			visibility: hidden; overflow: hidden;">
+		</div>
+		<div id="debugModeDiv" runat="server" style="position: absolute; top: 2px; left: 75px; z-index: 100; color:Blue; font-size:20px" visible="false">
+			<b>DEBUG MODE</b></div>
+		<div style="left: 0px; top: 0px; position: absolute; width:100%">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td style="width: 250px;">
+						<a href="/">
+							<img src="images/BHLlogo.png" width="195" height="70" style="border: 0; margin-left:15px;" /></a></td>
+					<td>
+						<img src="images/blank.gif" alt="" height="1" width="15" />
+						&nbsp;
+						<div style="position: absolute; top: 3px; right: 15px;">
+
+                                <asp:HyperLink ID="accountlink" CssClass="HeaderLinks" runat="server" NavigateUrl="/account/manage">Hello {0}!</asp:HyperLink>
+                                |
+                                <a class="HeaderLinks" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+							    <!--<asp:HyperLink ID="loginLink" CssClass="HeaderLinks" runat="server">Login</asp:HyperLink>-->
+							    | <a href="https://bhl.wikispaces.com/Wiki+Page+for+Guide+Discussion" class="HeaderLinks" target="_blank">Help</a>
+
+						</div>
+						<div style="position: absolute; top: 40px; right: 15px;">
+							<span class="pageheader">Administration</span>
+						</div>
+					</td>
+				</tr>
+                <tr>
+                    <td style="height:4px; background-color:#27638C; text-align:center" colspan="2"><span id="spanAlert" class="AdminAlertText"><asp:Literal runat="server" ID="litAdminAlert"></asp:Literal></span></td>
+                </tr>
+			</table>
+		</div>
+		<div style="position: absolute; top: 75px">
+			<asp:ContentPlaceHolder ID="MainContentPlaceHolder" runat="server">
+			</asp:ContentPlaceHolder>
+		</div>
+	</form>
+</body>
+</html>

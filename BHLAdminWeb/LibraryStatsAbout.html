@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>About the Library Stats</title>
+    <link rel="stylesheet" type="text/css" runat="server" id="link1" href="styles/adminstyle.css" />
+    <style>
+        table 
+        {
+            border-collapse:collapse;
+            margin: 5px 5px 20px 5px;
+        }
+        
+        table tr
+        {
+            vertical-align:top;
+        }
+
+        table td
+        {
+            border-color: Black;
+            border-width: 1px;
+            border-style: solid;
+            padding: 3px 3px 3px 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="BlackHeading">
+        About the Library Stats</p>
+    <p>
+        For each statistic on the administrative dashboard, the &quot;All Records&quot; column shows the total number of 
+        records in the BHL database, and the &quot;Active&quot; column shows the number of records 
+        that are visible to the public.</p>
+    <table>
+        <tr class="tableHeader">
+            <td style="width:150px">
+                Statistic</td>
+            <td>
+                Description</td>
+        </tr>
+        <tr>
+            <td>
+                Titles</td>
+            <td>
+                The number of Titles (ex: &quot;<span class="TitleText">The Origin of Species</span>&quot;, &quot;<span class="TitleText">Annals of the Missouri 
+                Botanical Garden</span>&quot;).</td>
+        </tr>
+        <tr>
+            <td>
+                Items</td>
+            <td>
+                The number of Items (individual books/volumes).</td>
+        </tr>
+        <tr>
+            <td>
+                Pages</td>
+            <td>
+                The number of scanned Pages.</td>
+        </tr>
+        <tr>
+            <td>
+                Segments</td>
+            <td>
+                The number of articles/chapters/treatments/ect.</td>
+        </tr>
+        <tr>
+            <td>
+                Items w/ Segments</td>
+            <td>
+                The number of Items that contain articles/chapters/treatments/ect.</td>
+        </tr>
+        <tr>
+            <td>
+                Names</td>
+            <td>
+                The total number of name strings found.</td>
+        </tr>
+        <tr>
+            <td>
+                Unique Names</td>
+            <td>
+                The number of unique name strings.</td>
+        </tr>
+        <tr>
+            <td>
+                Verified Names</td>
+            <td>
+                The number of unique and verified name strings.&nbsp; A verified name is one 
+                that has been resolved against a name authority (NameBank, Catalogue of Life, 
+                etc).</td>
+        </tr>
+        <tr>
+            <td>
+                EOL Names</td>
+            <td>
+                Total number of name strings that are associated with an EOL ID.</td>
+        </tr>
+        <tr>
+            <td>
+                Pages with EOL Names (EOL Pages)</td>
+            <td>
+                The number of scanned pages that have at least one name string that is 
+                associated with an EOL ID.</td>
+        </tr>
+    </table>
+    <p>
+        The statistics shown on the dashboard are generated in real-time.&nbsp That is
+        why an extra click is required to access all of the Name statistics, and why it takes
+        a minute or two to generate each Name statistic.</p>
+    <p>
+        Note that the statistics shown on the Expanded Library Stats page are NOT generated 
+        in real-time.&nbsp; That page shows statistics that are compiled on a weekly basis, so 
+        they may not exactly match the statistics shown on the dashboard.</p>
+</body>
+</html>
