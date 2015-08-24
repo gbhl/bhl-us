@@ -8,6 +8,9 @@
 </div>
 <div id="content" class="column-wrap clearfix">
     <section>
+        <p>
+            These thematic sub-collections of BHL content have been curated to help users take a closer look into biodiversity related topics of interest.<br /><br />
+        </p>
     <asp:Repeater ID="rptCollections" runat="server">
 	    <ItemTemplate>
 		    <li>
