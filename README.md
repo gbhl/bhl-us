@@ -150,6 +150,7 @@ Application Configuration
 
 <table>
 <tr><th>Original File</th><th>Copy To</th></tr>
+<tr><td>&lt;BHLRoot&gt;\BHLAdminWeb\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLAdminWeb\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLApi3Web\Web.config.template</td><td>&lt;BHLRoot&gt;\BHLApi3Web\Web.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLApi3WebTest\App.config.template</td><td>&lt;BHLRoot&gt;\BHLApi3WebTest\App.config</td></tr>
 <tr><td>&lt;BHLRoot&gt;\BHLApiDALTest\App.config.template</td><td>&lt;BHLRoot&gt;\BHLApiDALTest\App.config</td></tr>
@@ -209,6 +210,37 @@ Application Configuration
 <tr><td># appSettings/GeminiPassword</td><td>Issue tracking service password</td></tr>
 <tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
 <tr><td># system.net/mailSettings/smtp/network</td><td>STMP host address, username, and password</td></tr>
+</table>
+
+&nbsp;  
+**ADMIN.BIODIVERSITYLIBRARY.ORG**
+
+**&lt;BHLRoot&gt;\BHLAdminWeb\Web.config**
+
+<table>
+<tr><th>Element</th><th>Value</th></tr>
+<tr><td>appSettings/CollectionImageUploadPath</td><td>Path in which to place uploaded images.</td></tr>
+<tr><td>appSettings/ItunesImageUploadPath</td><td>Path in which to place uploaded images.</td></tr>
+<tr><td>appSettings/AlertMsgPath</td><td>Path in which to place text file with informational messages.</td></tr>
+<tr><td>appSettings/MARCUploadPath</td><td>Path in which to place uploaded MARC files.</td></tr>
+<tr><td>appSettings/MARCUploadDrive</td><td>Drive letter or server name for MARC uploads.</td></tr>
+<tr><td>appSettings/MARCUploadServer</td><td>Server name for MARC uploads.</td></tr>
+<tr><td>appSettings/CitationNewPath</td><td>Path for new uploads of citation information.</td></tr>
+<tr><td>appSettings/CitationCompletePath</td><td>Path for completed uploads of citation information.</td></tr>
+<tr><td>appSettings/CitationErrorPath</td><td>Path for failed uploads of citation information.</td></tr>
+<tr><td>appSettings/OCRJobNewPath</td><td>Path for OCR job files.</td></tr>
+<tr><td># appSettings/FlickrUserId</td><td>Flickr user identifier.</td></tr>
+<tr><td># appSettings/SMTPHost</td><td>SMTP host address</td></tr>
+<tr><td># appSettings/EmailFromName</td><td>Email sender address to use when sending emails.</td></tr>
+<tr><td># appSettings/EmailFromAddress</td><td>Email sender name to use when sending emails.</td></tr>
+<tr><td># appSettings/BHLUserAdminEmailAddress</td><td>Email address of a BHL user administrator.</td></tr>
+<tr><td>appSettings/LocalFileFolder</td><td>File folder in which to place new data files ingested from Internet Archive.</td></tr>
+<tr><td>appSettings/DOIDepositFileLocation</td><td>Path to CrossRef deposit files.</td></tr>
+<tr><td>appSettings/DOISubmitLogFileLocation</td><td>Path to Crossref log files.</td></tr>
+<tr><td># appSettings/FlickrKey</td><td>Flickr API key</td></tr>
+<tr><td># appSettings/FlickrSecret</td><td>Flickr API secret</td></tr>
+<tr><td>connectionStrings/BHL</td><td>Connection string for BHL database</td></tr>
+<tr><td>connectionStrings/BHLUser</td><td>Connection string for BHL user account database</td></tr>
 </table>
 
 &nbsp;  

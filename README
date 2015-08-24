@@ -151,6 +151,7 @@ Application Configuration
 
 **Original File**													**Copy To**
 
+<BHLRoot>\BHLAdminWeb\Web.config.template							<BHLRoot>\BHLAdminWeb\Web.config
 <BHLRoot>\BHLApi3Web\Web.config.template							<BHLRoot>\BHLApi3Web\Web.config
 <BHLRoot>\BHLApi3WebTest\App.config.template						<BHLRoot>\BHLApi3WebTest\App.config
 <BHLRoot>\BHLApiDALTest\App.config.template							<BHLRoot>\BHLApiDALTest\App.config
@@ -205,6 +206,35 @@ appSettings/UseRemoteFileAccessProvider		false
 \# appSettings/GeminiPassword					Issue tracking service password
 connectionStrings/BHL							Connection string for BHL database
 \# system.net/mailSettings/smtp/network			STMP host address, username, and password
+
+
+**ADMIN.BIODIVERSITYLIBRARY.ORG**
+
+**File: <BHLRoot>\BHLAdminWeb\Web.config**
+
+*Element to Update*								*Value*
+appSettings/CollectionImageUploadPath			Path in which to place uploaded images.
+appSettings/ItunesImageUploadPath				Path in which to place uploaded images.
+appSettings/AlertMsgPath						Path in which to place text file with informational messages.
+appSettings/MARCUploadPath						Path in which to place uploaded MARC files.
+appSettings/MARCUploadDrive						Drive letter or server name for MARC uploads.
+appSettings/MARCUploadServer					Server name for MARC uploads.
+appSettings/CitationNewPath						Path for new uploads of citation information.
+appSettings/CitationCompletePath				Path for completed uploads of citation information.
+appSettings/CitationErrorPath					Path for failed uploads of citation information.
+appSettings/OCRJobNewPath						Path for OCR job files.
+# appSettings/FlickrUserId						Flickr user identifier.
+# appSettings/SMTPHost							SMTP host address
+# appSettings/EmailFromName						Email sender address to use when sending emails.
+# appSettings/EmailFromAddress					Email sender name to use when sending emails.
+# appSettings/BHLUserAdminEmailAddress			Email address of a BHL user administrator.
+appSettings/LocalFileFolder						File folder in which to place new data files ingested from Internet Archive.
+appSettings/DOIDepositFileLocation				Path to CrossRef deposit files.
+appSettings/DOISubmitLogFileLocation			Path to Crossref log files.
+# appSettings/FlickrKey							Flickr API key
+# appSettings/FlickrSecret						Flickr API secret
+connectionStrings/BHL							Connection string for BHL database
+connectionStrings/BHLUser						Connection string for BHL user account database
 
 
 **API3.BIODIVERSITYLIBRARY.ORG**
