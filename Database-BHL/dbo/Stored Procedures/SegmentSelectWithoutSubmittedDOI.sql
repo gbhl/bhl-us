@@ -14,6 +14,9 @@ SET @NumToReturn = @NumberToReturn
 DECLARE @ISSNID int
 SELECT @ISSNID = IdentifierID FROM dbo.Identifier WITH (NOLOCK) WHERE IdentifierName = 'ISSN'
 
+DECLARE @TreatmentID int
+SELECT @TreatmentID = SegmentGenreID FROM dbo.SegmentGenre WITH (NOLOCK) WHERE GenreName = 'Treatment'
+
 SELECT DISTINCT TOP (@NumToReturn)
 		ISNULL(d.DOIID, 0) AS DOIID,
 		ISNULL(d.DOIEntityTypeID, 0) AS DOIEntityTypeID,
@@ -35,6 +38,6 @@ OR		d.DOIID IS NULL)
 AND		c.HasLocalContent = 1 -- Make sure that the segment content is held within BHL
 AND		s.ContributorCode <> 'USER'  -- No user-contributed segments
 AND		(ti.IdentifierValue IS NOT NULL OR si.IdentifierValue IS NOT NULL) -- Make sure that an ISSN exists for the segment container
+AND		s.SegmentGenreID <> @TreatmentID	-- Any segment types except treatments
 
 END
-

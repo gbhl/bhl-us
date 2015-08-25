@@ -747,10 +747,31 @@ namespace MOBOT.BHL.BHLDOIService
                     Element(ns + "body").
                     Elements(ns + "query");
 
+                bool bhlOwned = false;
                 foreach(XElement queryElement in queryElements)
                 {
                     XElement doiElement = queryElement.Element(ns + "doi");
-                    if (doiElement != null) result.DoiList.Add(doiElement.Value);
+                    if (doiElement != null)
+                    {
+                        string doiValue = doiElement.Value;
+                        // Do not include any BHL-owned DOIs found by the query.  
+                        // BHL always assigns new DOIs to unique digital entities.
+                        if (doiValue.StartsWith(configParms.DoiPrefix))
+                            bhlOwned = true;
+                        else
+                            result.DoiList.Add(doiElement.Value);
+                    }
+                }
+
+                // If any BHL-owned DOIs were skipped, adjust the ResultValue accordingly
+                if (bhlOwned)
+                {
+                    switch (result.DoiList.Count)
+                    {
+                        case 0: result.ResultValue = DOICheckResult.NotFound; break;
+                        case 1: result.ResultValue = DOICheckResult.Found; break;
+                        default: result.ResultValue = DOICheckResult.Unknown; break;
+                    }
                 }
             }
             catch (Exception ex)
