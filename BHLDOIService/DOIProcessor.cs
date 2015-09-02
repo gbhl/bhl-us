@@ -155,7 +155,15 @@ namespace MOBOT.BHL.BHLDOIService
                             }
                             break;
                         case DOICheckResult.Error:
-                            // Do nothing; will get picked up and re-tried the next time this process is run
+                            // Report any error messages returned from CrossRef.  Otherwise, do nothing.
+                            // Will get picked up and re-tried the next time this process is run.
+                            if (!string.IsNullOrWhiteSpace(result.Message))
+                            {
+                                string logMessage = string.Format("Error processing {0} {1}: {2}",
+                                    this.GetEntityTypeName(entityTypeId), doi.EntityID, result.Message);
+                                log.Error(logMessage);
+                                errorMessages.Add(logMessage);
+                            }
                             break;
                     }
                 }
@@ -245,6 +253,7 @@ namespace MOBOT.BHL.BHLDOIService
         {
             public DOICheckResult ResultValue = DOICheckResult.Unknown;
             public List<string> DoiList = new List<string>();
+            public string Message = string.Empty;
         }
 
         /// <summary>
@@ -640,7 +649,8 @@ namespace MOBOT.BHL.BHLDOIService
             }
             if (restResponse.StatusCode != HttpStatusCode.OK)
             {
-                throw new Exception("Error querying for DOI: " + restResponse.StatusDescription);
+                throw new Exception(string.Format("Error querying for DOI: {0}\n\r{1}", 
+                    restResponse.StatusDescription, restResponse.Content));
             }
             if (restResponse.Content.Contains("FAILURE"))
             {
@@ -736,6 +746,9 @@ namespace MOBOT.BHL.BHLDOIService
                     case "multiresolved":
                         result.ResultValue = DOICheckResult.Unknown;
                         break;
+                    case "malformed":
+                        result.ResultValue = DOICheckResult.Error;
+                        break;
                     default:
                         throw new Exception("Error response received in query result: " + status);
                 }
@@ -750,16 +763,28 @@ namespace MOBOT.BHL.BHLDOIService
                 bool bhlOwned = false;
                 foreach(XElement queryElement in queryElements)
                 {
-                    XElement doiElement = queryElement.Element(ns + "doi");
-                    if (doiElement != null)
+                    if (result.ResultValue == DOICheckResult.Error)
                     {
-                        string doiValue = doiElement.Value;
-                        // Do not include any BHL-owned DOIs found by the query.  
-                        // BHL always assigns new DOIs to unique digital entities.
-                        if (doiValue.StartsWith(configParms.DoiPrefix))
-                            bhlOwned = true;
-                        else
-                            result.DoiList.Add(doiElement.Value);
+                        XElement msgElement = queryElement.Element(ns + "msg");
+                        if (msgElement != null)
+                        {
+                            result.Message = "Query result - " + msgElement.Value;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        XElement doiElement = queryElement.Element(ns + "doi");
+                        if (doiElement != null)
+                        {
+                            string doiValue = doiElement.Value;
+                            // Do not include any BHL-owned DOIs found by the query.  
+                            // BHL always assigns new DOIs to unique digital entities.
+                            if (doiValue.StartsWith(configParms.DoiPrefix))
+                                bhlOwned = true;
+                            else
+                                result.DoiList.Add(doiElement.Value);
+                        }
                     }
                 }
 

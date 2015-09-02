@@ -74,7 +74,7 @@ namespace MOBOT.BHL.DOIDeposit
             if (!string.IsNullOrWhiteSpace(Data.Title))
             {
                 content.Append("<volume_title match=\"fuzzy\">" + 
-                    XmlEncode(Data.Title.Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + 
+                    XmlEncode(Data.Title.Replace(':', ' ').Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + 
                     "</volume_title>");
             }
 

@@ -76,7 +76,7 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrEmpty(Data.Title))
             {
-                content.Append("<journal_title match=\"fuzzy\">" + XmlEncode(Data.Title) + "</journal_title>");
+                content.Append("<journal_title match=\"fuzzy\">" + XmlEncode(Data.Title.Replace(':', ' ').Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + "</journal_title>");
             }
 
             if (Data.Contributors.Count() > 0)
@@ -114,7 +114,7 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrWhiteSpace(Data.ArticleTitle))
             {
-                content.Append("<article_title match=\"fuzzy\">" + XmlEncode(Data.ArticleTitle) + "</article_title>");
+                content.Append("<article_title match=\"fuzzy\">" + XmlEncode(Data.ArticleTitle.Replace(':', ' ').Substring(0, (Data.ArticleTitle.Length > 256 ? 256 : Data.ArticleTitle.Length))) + "</article_title>");
             }
 
             // Insert the query metadata into the template and return the result
