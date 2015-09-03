@@ -32,9 +32,9 @@ namespace MOBOT.BHL.Server
             return (GetInstitutionDalInstance().InstitutionSelectWithPublishedSegments(null, null, onlyMemberLibraries));
         }
 
-        public CustomGenericList<Institution> InstitutionSelectDOIStats(int sortBy)
+        public CustomGenericList<Institution> InstitutionSelectDOIStats(int sortBy, int bhlOnly)
         {
-            return (GetInstitutionDalInstance().InstitutionSelectDOIStats(null, null, sortBy));
+            return (GetInstitutionDalInstance().InstitutionSelectDOIStats(null, null, sortBy, bhlOnly));
         }
 
 		private InstitutionDAL GetInstitutionDalInstance()

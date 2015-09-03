@@ -28,11 +28,25 @@ namespace MOBOT.BHL.DataObjects
 
         #region Properties
 
-        private int _numberOfDOIs = 0;
-        public int NumberOfDOIs
+        private int _titleDOIs = 0;
+        public int TitleDOIs
         {
-            get { return _numberOfDOIs; }
-            set { _numberOfDOIs = value; }
+            get { return _titleDOIs; }
+            set { _titleDOIs = value; }
+        }
+
+        private int _segmentDOIs = 0;
+        public int SegmentDOIs
+        {
+            get { return _segmentDOIs; }
+            set { _segmentDOIs = value; }
+        }
+
+        private int _totalDOIs = 0;
+        public int TotalDOIs
+        {
+            get { return _totalDOIs; }
+            set { _totalDOIs = value; }
         }
 
         #endregion Properties
@@ -43,9 +57,19 @@ namespace MOBOT.BHL.DataObjects
             {
                 switch (column.Name)
                 {
-                    case "NumberDOIs":
+                    case "TitleDOIs":
                         {
-                            _numberOfDOIs = (int)column.Value;
+                            _titleDOIs = (int)column.Value;
+                            break;
+                        }
+                    case "SegmentDOIs":
+                        {
+                            _segmentDOIs = (int)column.Value;
+                            break;
+                        }
+                    case "TotalDOIs":
+                        {
+                            _totalDOIs = (int)column.Value;
                             break;
                         }
                 }

@@ -4,7 +4,7 @@
 	<br />
 	<span class="pageHeader">DOIs By Institution</span><hr />
 	<p>
-    This report shows the number of titles with DOIs to which each institution has contributed.
+    This report shows the number of DOIs assigned to titles and segments, grouped by the institutions that contributed the titles and segments.
     </p>
     <table cellpadding="0" cellspacing="0" width="700px">
     <tr>
@@ -12,20 +12,27 @@
             <b>Order By:</b>
             <asp:RadioButtonList ID="rblOrderBy" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
                 <asp:ListItem Selected="True" Value="1" Text="Institution Name" />
-                <asp:ListItem Value="2" Text="Number of DOIs" />
+                <asp:ListItem Value="2" Text="Title DOIs" />
+                <asp:ListItem Value="3" Text="Segment DOIs" />
+                <asp:ListItem Value="4" Text="Total DOIs" />
             </asp:RadioButtonList>
         </td>
         <td align="right">
-            <asp:CheckBox ID="chkShow" runat="server" Checked="false" Text="Show Only BHL Libraries" TextAlign="Right" Font-Bold="true" />
+            <asp:Button ID="btnUpdate" runat="server" Text="Update Report" />
         </td>
     </tr>
     </table>
-    <p><asp:Button ID="btnUpdate" runat="server" Text="Update Report" /></p>
+    <p>
+        <asp:CheckBox ID="chkShow" runat="server" Checked="false" Text="Show Only BHL Libraries" TextAlign="Right" Font-Bold="true" /><br />
+        <asp:CheckBox ID="chkIncludeAll" runat="server" Checked="false" Text="Include non-BHL DOIs" TextAlign="Right" Font-Bold="true" />
+    </p>
 	<asp:GridView ID="institutionList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" AlternatingRowStyle-BackColor="#F7FAFB"
 		Width="700px" CssClass="boxTable">
 		<Columns>
 			<asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" HeaderStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" />
-			<asp:BoundField DataField="NumberOfDOIs" HeaderText="# of DOIs" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+			<asp:BoundField DataField="TitleDOIs" HeaderText="Title DOIs" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+			<asp:BoundField DataField="SegmentDOIs" HeaderText="Segment DOIs" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
+			<asp:BoundField DataField="TotalDOIs" HeaderText="Total DOIs" HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" />
 		</Columns>
 		<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 	</asp:GridView>

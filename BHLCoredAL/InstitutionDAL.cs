@@ -91,12 +91,14 @@ namespace MOBOT.BHL.DAL
         public CustomGenericList<Institution> InstitutionSelectDOIStats(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
-            int sortBy)
+            int sortBy,
+            int bhlOnly)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectDOIStats", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("SortBy", SqlDbType.Int, null, false, sortBy)))
+                CustomSqlHelper.CreateInputParameter("SortBy", SqlDbType.Int, null, false, sortBy),
+                CustomSqlHelper.CreateInputParameter("BHLOnly", SqlDbType.Int, null, false, bhlOnly)))
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {

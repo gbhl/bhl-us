@@ -15,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<Institution> institutions = provider.InstitutionSelectDOIStats(Convert.ToInt32(rblOrderBy.SelectedValue));
+            CustomGenericList<Institution> institutions = provider.InstitutionSelectDOIStats(Convert.ToInt32(rblOrderBy.SelectedValue), chkIncludeAll.Checked ? 0 : 1);
 
             if (chkShow.Checked)
             {
