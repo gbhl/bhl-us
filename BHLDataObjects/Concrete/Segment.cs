@@ -91,6 +91,14 @@ namespace MOBOT.BHL.DataObjects
             set { _itemVolume = value; }
         }
 
+        private string _itemYear = string.Empty;
+
+        public string ItemYear
+        {
+            get { return _itemYear;  }
+            set { _itemYear = value; }
+        }
+
         private string _contributorName = string.Empty;
 
         public string ContributorName

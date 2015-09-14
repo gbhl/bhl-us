@@ -452,7 +452,7 @@ namespace MOBOT.BHL.BHLDOIService
                 data.ArticlePublicationDate = segment.Date;
                 data.PublisherName = segment.PublisherName;
                 data.PublisherPlace = segment.PublisherPlace;
-                data.PublicationDate = segment.TitlePublicationDate;
+                data.PublicationDate = this.GetPublicationDate(segment);
                 data.FirstPage = segment.StartPageNumber;
                 data.LastPage = segment.EndPageNumber;
 
@@ -505,6 +505,35 @@ namespace MOBOT.BHL.BHLDOIService
                     if (wsClient.State != System.ServiceModel.CommunicationState.Closed) wsClient.Close();
                 }
             }
+        }
+
+        /// <summary>
+        /// Return the four-digit year publication date (Item.Year or Title.StartDate) for the segment.
+        /// </summary>
+        /// <param name="segment"></param>
+        /// <returns></returns>
+        private string GetPublicationDate(Segment segment)
+        {
+            string publicationDate = segment.TitlePublicationDate;
+
+            // Get item year, without brackets
+            string itemYear = segment.ItemYear.Replace("(", "").Replace(")", "").Replace("[", "").Replace("]", "");
+
+            // Make sure the item year value has at least four characters
+            if (itemYear.Length >= 4)
+            { 
+                double year = 0;
+                itemYear = itemYear.Substring(0, 4);
+
+                // Make sure the value is numeric
+                if (Double.TryParse(itemYear, out year))
+                {
+                    // Make sure the value is between 1400 and the current year
+                    if (year >= 1400 && year <= DateTime.Now.Year + 1) publicationDate = itemYear;
+                }
+            }
+
+            return publicationDate;
         }
 
         /// <summary>

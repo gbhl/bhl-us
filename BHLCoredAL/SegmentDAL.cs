@@ -30,6 +30,7 @@ namespace MOBOT.BHL.DAL
                 {
                     Item item = new ItemDAL().ItemSelectAuto(connection, transaction, (int)segment.ItemID);
                     segment.ItemVolume = item.Volume;
+                    segment.ItemYear = item.Year ?? string.Empty;
 
                     Title title = new TitleDAL().TitleSelectAuto(connection, transaction, item.PrimaryTitleID);
                     segment.TitleId = title.TitleID;
