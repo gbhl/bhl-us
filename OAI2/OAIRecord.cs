@@ -282,6 +282,14 @@ namespace MOBOT.BHL.OAI2
             set { _parentUrl = value; }
         }
 
+        String _thumbnailUrl = String.Empty;
+
+        public String ThumbnailUrl
+        {
+            get { return _thumbnailUrl; }
+            set { _thumbnailUrl = value; }
+        }
+
         String _sequence = String.Empty;
 
         public String Sequence
@@ -547,6 +555,7 @@ namespace MOBOT.BHL.OAI2
 
                 this.Url = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 this.ParentUrl = "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                if (item.ThumbnailPageID != null) this.ThumbnailUrl = "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
                 this.Types.Add("text");
 
@@ -642,6 +651,12 @@ namespace MOBOT.BHL.OAI2
                     CustomGenericList<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(item.PrimaryTitleID);
                     this.LoadIdentifiers(titleIdentifiers, this);
 
+                    CustomGenericList<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
+                    foreach (DOI doi in dois)
+                    {
+                        this.SetIdentifier("doi", doi.DOIName, this);
+                    }
+
                     CustomGenericList<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                     foreach (TitleAssociation titleAssociation in titleAssociations)
                     {
@@ -649,6 +664,10 @@ namespace MOBOT.BHL.OAI2
                         association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " + 
                             titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " + 
                             titleAssociation.Relationship).Trim();
+                        if (titleAssociation.AssociatedTitleID != null)
+                        {
+                            association.Url = "http://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
+                        }
 
                         // Add identifiers associated with the association
                         this.LoadIdentifiers(titleAssociation.TitleAssociationIdentifiers, association);
@@ -763,6 +782,12 @@ namespace MOBOT.BHL.OAI2
                 CustomGenericList<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                 this.LoadIdentifiers(titleIdentifiers, this);
 
+                CustomGenericList<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
+                foreach(DOI doi in dois)
+                {
+                    this.SetIdentifier("doi", doi.DOIName, this);
+                }
+
                 CustomGenericList<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                 foreach (TitleAssociation titleAssociation in titleAssociations)
                 {
@@ -770,6 +795,10 @@ namespace MOBOT.BHL.OAI2
                     association.Title = (titleAssociation.Title + " " + titleAssociation.Section + " " +
                         titleAssociation.Volume + " " + titleAssociation.Heading + " " + titleAssociation.Publication + " " +
                         titleAssociation.Relationship).Trim();
+                    if (titleAssociation.AssociatedTitleID != null)
+                    {
+                        association.Url = "http://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
+                    }
 
                     // Add identifiers associated with the association
                     this.LoadIdentifiers(titleAssociation.TitleAssociationIdentifiers, association);
@@ -955,6 +984,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.LoadIdentifiers(segment.IdentifierList, this);
+                if (!string.IsNullOrWhiteSpace(segment.DOIName)) this.SetIdentifier("doi", segment.DOIName, this);
             }
         }
 
@@ -1029,6 +1059,9 @@ namespace MOBOT.BHL.OAI2
                     break;
                 case "nlm":
                     record.Nlm = identifierValue;
+                    break;
+                case "doi":
+                    record.Doi = identifierValue;
                     break;
             }
         }
