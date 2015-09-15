@@ -334,6 +334,28 @@ namespace MOBOT.BHL.OAIMODS
                 XElement url = location.Element(ns + "url");
                 if (url != null) _oaiRecord.Url = url.Value;
             }
+
+            if (_oaiRecord.Type == OAIRecord.RecordType.BookJournal || _oaiRecord.Type == OAIRecord.RecordType.Issue)
+            {
+                // Book/journal/issue volume ("part" is the preferred location for volume info, so this overrides values read from other locations)
+                XElement rootPart = root.Element(ns + "part");
+                if (rootPart != null)
+                {
+                    XElement partDetail = rootPart.Element(ns + "detail");
+                    if (partDetail != null)
+                    {
+                        XAttribute partType = partDetail.Attribute("type");
+                        if (partType != null)
+                        {
+                            if (partType.Value == "volume")
+                            {
+                                XElement partNumber = partDetail.Element(ns + "number");
+                                if (partNumber != null) _oaiRecord.JournalVolume = partNumber.Value;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         #region ToOAIRecord
@@ -397,6 +419,9 @@ namespace MOBOT.BHL.OAIMODS
             // Publisher
             sb.Append(this.GetOriginInfoElement());
 
+            // Physical Description
+            sb.Append(this.GetPhysicalDescriptionElement());
+
             // Language
             sb.Append(this.GetLanguageElement());
 
@@ -441,8 +466,17 @@ namespace MOBOT.BHL.OAIMODS
             // Genre
             sb.Append(this.GetGenreElement());
 
+            // Note
+            sb.Append(this.GetNoteElement());
+
             // Publisher
             sb.Append(this.GetOriginInfoElement());
+
+            // Part
+            sb.Append(this.GetPartElement());
+
+            // Physical Description
+            sb.Append(this.GetPhysicalDescriptionElement());
 
             // Language
             sb.Append(this.GetLanguageElement());
@@ -461,7 +495,7 @@ namespace MOBOT.BHL.OAIMODS
             sb.Append(this.GetIdentifierElement(_oaiRecord));
 
             // Location
-            sb.Append(this.GetLocationElement());
+            sb.Append(this.GetLocationElement(_oaiRecord));
 
             //  AccessCondition
             sb.Append(this.GetAccessConditionElement());
@@ -505,6 +539,7 @@ namespace MOBOT.BHL.OAIMODS
 
             // Identifier
             sb.Append(this.GetIdentifierUriElement());
+            sb.Append(this.GetIdentifierElement(_oaiRecord));
 
             //  AccessCondition
             sb.Append(this.GetAccessConditionElement());
@@ -594,6 +629,24 @@ namespace MOBOT.BHL.OAIMODS
                         break;
                 }
 
+                String creatorContributorRole = String.Empty;
+                switch (creatorData.Key)
+                {
+                    case "100":
+                    case "110":
+                    case "111":
+                        creatorContributorRole = "\t<role>\t\t<roleTerm type=\"text\">creator</roleTerm>\n</role>\n";
+                        break;
+                    case "700":
+                    case "710":
+                    case "711":
+                    case "720":
+                        creatorContributorRole = "\t<role>\t\t<roleTerm type=\"text\">contributor</roleTerm>\n</role>\n";
+                        break;
+                    default:
+                        break;
+                }
+
                 string name = (creatorData.Value.Name + ' ' + creatorData.Value.Numeration + ' ' + 
                     creatorData.Value.Location + ' ' + creatorData.Value.FullerForm).Trim();
                 name = String.IsNullOrEmpty(name) ? creatorData.Value.FullName : name;
@@ -605,6 +658,7 @@ namespace MOBOT.BHL.OAIMODS
                 if (date != string.Empty) sb.Append("\t<namePart type=\"date\">" + HttpUtility.HtmlEncode(date) + "</namePart>\n");
                 if (titleOfWork != string.Empty) sb.Append("\t<affiliation>" + HttpUtility.HtmlEncode(titleOfWork) + "</affiliation>\n");
                 if (role != string.Empty) sb.Append("\t<role>\t\t<roleTerm type=\"text\">" + HttpUtility.HtmlEncode(role) + "</roleTerm>\n</role>\n");
+                sb.Append(creatorContributorRole);
                 sb.Append("</name>\n");
             }
 
@@ -702,7 +756,9 @@ namespace MOBOT.BHL.OAIMODS
                     sb.Append("\t<dateIssued>" + HttpUtility.HtmlEncode(_oaiRecord.PublicationDates) + "</dateIssued>\n");
                     if (!String.IsNullOrEmpty(_oaiRecord.PublicationStartYear))
                     {
-                        sb.Append("\t<dateIssued encoding=\"marc\" point=\"start\">" + HttpUtility.HtmlEncode(_oaiRecord.PublicationStartYear) + "</dateIssued>\n");
+                        string keyDateAttrib = string.Empty;
+                        if (String.IsNullOrEmpty(_oaiRecord.Date) || _oaiRecord.Type != OAIRecord.RecordType.Issue) keyDateAttrib = " keyDate=\"yes\"";
+                        sb.Append("\t<dateIssued encoding=\"marc\" point=\"start\"" + keyDateAttrib + ">" + HttpUtility.HtmlEncode(_oaiRecord.PublicationStartYear) + "</dateIssued>\n");
                     }
                     if (!String.IsNullOrEmpty(_oaiRecord.PublicationEndYear))
                     {
@@ -712,7 +768,7 @@ namespace MOBOT.BHL.OAIMODS
 
                 if (!String.IsNullOrEmpty(_oaiRecord.Date) && _oaiRecord.Type == OAIRecord.RecordType.Issue)
                 {
-                    sb.Append("\t<dateOther type=\"issueDate\">" + HttpUtility.HtmlEncode(_oaiRecord.Date) + "</dateOther>\n");
+                    sb.Append("\t<dateOther type=\"issueDate\" keyDate=\"yes\">" + HttpUtility.HtmlEncode(_oaiRecord.Date) + "</dateOther>\n");
                 }
 
                 if (!String.IsNullOrEmpty(_oaiRecord.Edition))
@@ -729,6 +785,65 @@ namespace MOBOT.BHL.OAIMODS
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Build the part element
+        /// </summary>
+        /// <returns></returns>
+        private string GetPartElement()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.JournalVolume) ||
+                !string.IsNullOrWhiteSpace(_oaiRecord.JournalIssue) ||
+                !string.IsNullOrWhiteSpace(_oaiRecord.ArticleStartPage) ||
+                !string.IsNullOrWhiteSpace(_oaiRecord.ArticleEndPage) ||
+                !string.IsNullOrWhiteSpace(_oaiRecord.Date))
+            {
+
+                sb.Append("<part>\n");
+
+                if (!String.IsNullOrEmpty(_oaiRecord.JournalVolume))
+                {
+                    sb.Append("\t<detail type=\"volume\">\n");
+                    sb.Append("\t\t<number>" + HttpUtility.HtmlEncode(_oaiRecord.JournalVolume) + "</number>\n");
+                    sb.Append("\t</detail>\n");
+                }
+
+                if (!String.IsNullOrEmpty(_oaiRecord.JournalIssue))
+                {
+                    sb.Append("\t<detail type=\"issue\">\n");
+                    sb.Append("\t\t<number>" + HttpUtility.HtmlEncode(_oaiRecord.JournalIssue) + "</number>\n");
+                    sb.Append("\t</detail>\n");
+                }
+
+                if (!String.IsNullOrEmpty(_oaiRecord.ArticleStartPage) && !String.IsNullOrEmpty(_oaiRecord.ArticleEndPage))
+                {
+                    sb.Append("\t<extent unit=\"pages\">\n");
+                    if (!String.IsNullOrEmpty(_oaiRecord.ArticleStartPage)) sb.Append("\t\t<start>" + HttpUtility.HtmlEncode(_oaiRecord.ArticleStartPage) + "</start>\n");
+                    if (!String.IsNullOrEmpty(_oaiRecord.ArticleEndPage)) sb.Append("\t\t<end>" + HttpUtility.HtmlEncode(_oaiRecord.ArticleEndPage) + "</end>\n");
+                    sb.Append("\t</extent>\n");
+                }
+
+                if (!String.IsNullOrEmpty(_oaiRecord.Date))
+                {
+                    sb.Append("\t<date>" + HttpUtility.HtmlEncode(_oaiRecord.Date) + "</date>\n");
+                }
+
+                sb.Append("</part>\n");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Build the physical description element
+        /// </summary>
+        /// <returns></returns>
+        private string GetPhysicalDescriptionElement()
+        {
+            return "<physicalDescription>\n\t<form authority=\"marcform\">print</form>\n</physicalDescription>";
         }
 
         /// <summary>
@@ -778,6 +893,16 @@ namespace MOBOT.BHL.OAIMODS
             {
                 string noteTypeAttrib = string.IsNullOrWhiteSpace(note.Key) ? string.Empty : " type=\"" + HttpUtility.HtmlEncode(note.Key) + "\"";
                 sb.Append("<note" + noteTypeAttrib + ">" + HttpUtility.HtmlEncode(note.Value) + "</note>\n");
+            }
+
+            if (_oaiRecord.Type == OAIRecord.RecordType.Issue && !String.IsNullOrEmpty(_oaiRecord.Contributor))
+            {
+                sb.Append("<note type=\"ownership\">" + HttpUtility.HtmlEncode(_oaiRecord.Contributor) + "</note>\n");
+            }
+
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.JournalVolume))
+            {
+                sb.Append("<note type=\"content\">" + HttpUtility.HtmlEncode(_oaiRecord.JournalVolume) + "</note>\n");
             }
 
             return sb.ToString();
@@ -864,38 +989,8 @@ namespace MOBOT.BHL.OAIMODS
             sb.Append(this.GetTitleElement(_oaiRecord.JournalTitle, true));
             sb.Append(this.GetOriginInfoElement());
             sb.Append(this.GetClassificationElement(_oaiRecord));
-            sb.Append(this.GetIdentifierElement(_oaiRecord));
+            sb.Append(this.GetPartElement());
 
-            sb.Append("<part>\n");
-
-            if (!String.IsNullOrEmpty(_oaiRecord.JournalVolume))
-            {
-                sb.Append("\t<detail type=\"volume\">\n");
-                sb.Append("\t\t<number>" + HttpUtility.HtmlEncode(_oaiRecord.JournalVolume) + "</number>\n");
-                sb.Append("\t</detail>\n");
-            }
-
-            if (!String.IsNullOrEmpty(_oaiRecord.JournalIssue))
-            {
-                sb.Append("\t<detail type=\"issue\">\n");
-                sb.Append("\t\t<number>" + HttpUtility.HtmlEncode(_oaiRecord.JournalIssue) + "</number>\n");
-                sb.Append("\t</detail>\n");
-            }
-
-            if (!String.IsNullOrEmpty(_oaiRecord.ArticleStartPage) && !String.IsNullOrEmpty(_oaiRecord.ArticleEndPage))
-            {
-                sb.Append("\t<extent unit=\"pages\">\n");
-                if (!String.IsNullOrEmpty(_oaiRecord.ArticleStartPage)) sb.Append("\t\t<start>" + HttpUtility.HtmlEncode(_oaiRecord.ArticleStartPage) + "</start>\n");
-                if (!String.IsNullOrEmpty(_oaiRecord.ArticleEndPage)) sb.Append("\t\t<end>" + HttpUtility.HtmlEncode(_oaiRecord.ArticleEndPage) + "</end>\n");
-                sb.Append("\t</extent>\n");
-            }
-
-            if (!String.IsNullOrEmpty(_oaiRecord.Date))
-            {
-                sb.Append("\t<date>" + HttpUtility.HtmlEncode(_oaiRecord.Date) + "</date>\n");
-            }
-
-            sb.Append("</part>\n");
             sb.Append("</relatedItem>\n");
 
             return sb.ToString();
@@ -917,10 +1012,10 @@ namespace MOBOT.BHL.OAIMODS
                     case "series":
                         typeAttrib = " type=\"series\"";
                         break;
-                    case "preceding":
+                    case "preceded by":
                         typeAttrib = " type=\"preceding\"";
                         break;
-                    case "succeeding":
+                    case "succeeded by":
                         typeAttrib = " type=\"succeeding\"";
                         break;
                     case "contained in":
@@ -942,6 +1037,7 @@ namespace MOBOT.BHL.OAIMODS
 
                 sb.Append("<relatedItem" + typeAttrib + ">\n");
                 sb.Append(this.GetTitleElement(relatedTitle.Value.Title, true));
+                sb.Append(this.GetLocationElement(relatedTitle.Value));
                 sb.Append(this.GetClassificationElement(relatedTitle.Value));
                 sb.Append(this.GetIdentifierElement(relatedTitle.Value));
                 sb.Append("</relatedItem>\n");
@@ -994,6 +1090,10 @@ namespace MOBOT.BHL.OAIMODS
             {
                 sb.Append("<identifier type=\"lccn\">" + HttpUtility.HtmlEncode(title.Llc) + "</identifier>\n");
             }
+            if (!String.IsNullOrWhiteSpace(title.Doi))
+            {
+                sb.Append("<identifier type=\"doi\">" + HttpUtility.HtmlEncode(title.Doi) + "</identifier>\n");
+            }
 
             return sb.ToString();
         }
@@ -1002,32 +1102,39 @@ namespace MOBOT.BHL.OAIMODS
         /// Build the location element
         /// </summary>
         /// <returns></returns>
-        private String GetLocationElement()
+        private String GetLocationElement(OAIRecord oaiRecord)
         {
             StringBuilder sb = new StringBuilder();
 
-            if (!String.IsNullOrEmpty(_oaiRecord.Contributor) || !String.IsNullOrEmpty(_oaiRecord.JournalVolume))
-            {
-                sb.Append("<location>\n");
+            //if (!String.IsNullOrEmpty(_oaiRecord.Contributor) || !String.IsNullOrEmpty(_oaiRecord.JournalVolume))
+            //{
+            //    sb.Append("<location>\n");
 
-                if (!String.IsNullOrEmpty(_oaiRecord.Contributor))
+                if (!String.IsNullOrEmpty(oaiRecord.Contributor))
                 {
-                    sb.Append("\t<physicalLocation>" + HttpUtility.HtmlEncode(_oaiRecord.Contributor) + "</physicalLocation>\n");
+                    sb.Append("\t<physicalLocation>" + HttpUtility.HtmlEncode(oaiRecord.Contributor) + "</physicalLocation>\n");
                 }
 
-                sb.Append("\t<url>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</url>\n");
+                if (!string.IsNullOrWhiteSpace(oaiRecord.Url)) sb.Append("\t<url access=\"raw object\" usage=\"primary\">" + HttpUtility.HtmlEncode(oaiRecord.Url) + "</url>\n");
+                if (!string.IsNullOrWhiteSpace(oaiRecord.ThumbnailUrl)) sb.Append("\t<url access=\"object in context\" usage=\"primary display\">" + HttpUtility.HtmlEncode(oaiRecord.ThumbnailUrl) + "</url>\n");
 
-                if (!String.IsNullOrEmpty(_oaiRecord.JournalVolume))
+                if (!String.IsNullOrEmpty(oaiRecord.JournalVolume))
                 {
                     sb.Append("\t<holdingSimple>\n");
                     sb.Append("\t\t<copyInformation>\n");
-                    sb.Append("\t\t\t<enumerationAndChronology>" + HttpUtility.HtmlEncode(_oaiRecord.JournalVolume) + "</enumerationAndChronology>\n");
+                    sb.Append("\t\t\t<enumerationAndChronology>" + HttpUtility.HtmlEncode(oaiRecord.JournalVolume) + "</enumerationAndChronology>\n");
                     sb.Append("\t\t</copyInformation>\n");
                     sb.Append("\t</holdingSimple>\n");
                 }
 
-                sb.Append("</location>\n");
-            }
+                if (sb.Length > 0)
+                {
+                    sb.Insert(0, "<location>\n");
+                    sb.Append("</location>\n");
+                }
+
+            //    sb.Append("</location>\n");
+            //}
 
             return sb.ToString();
         }

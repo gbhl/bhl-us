@@ -51,6 +51,14 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
+                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segmentId);
+                foreach(DOI doi in dois)
+                {
+                    // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
+                    segment.DOIName = doi.DOIName;
+                    break;
+                }
+
                 segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segmentId, null);
                 segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segmentId);
                 segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segmentId);
