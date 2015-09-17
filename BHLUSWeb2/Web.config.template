@@ -77,6 +77,11 @@
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="DOIResolverURL" value="http://dx.doi.org/"/>
 
+    <!-- disqus comment api keys -->
+    <add key="DisqusSecretKey" value="your disqus secret key goes here"/>
+    <add key="DisqusPublicKey" value="your disqus public key goes here"/>
+    <add key="DisqusAccessToken" value="access token for admin bhl disqus user"/>
+
     <add key="TwitterConsumerKey" value="your twitter consumer key goes here"/>
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
     <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>

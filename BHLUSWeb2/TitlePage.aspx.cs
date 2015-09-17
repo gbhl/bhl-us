@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Configuration;
 using System.Web.UI.HtmlControls;
+using RestSharp;
+using System.Text.RegularExpressions;
 
 namespace MOBOT.BHL.Web2
 {
@@ -23,6 +25,7 @@ namespace MOBOT.BHL.Web2
         protected string Pages = String.Empty;
         protected string PageTitle { get; set; }
         protected int CurrentItemID { get; set; }
+        protected CustomGenericList<Page> pages_comments { get; set; }
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -237,9 +240,34 @@ namespace MOBOT.BHL.Web2
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
 
+                    // Disqus: Create forum for book, list topics
+                    GetPageComments getPageComments = new GetPageComments();
+                    IRestResponse pageComments = getPageComments.GetForumThreads(PageSummary.ItemID.ToString());
+
                     CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
+                    pages_comments = new CustomGenericList<Page>();
+
+                    // Show an indicator on pages that have disqus comments
+                    foreach (Page page in pages) {
+                        if (pageComments.Content.Contains("\"bhl-page-" + page.PageID.ToString() + "\""))
+                        {
+                            //todo: replace with a proper json deserializer, could be brittle
+                            Regex reg = new Regex(@"\[""bhl-page-" + page.PageID.ToString() + @"+""\]\,""posts""\:([0-9]+)\,");
+                            Match match = reg.Match(pageComments.Content);
+                            if (match.Success)
+                            {
+                                page.NumComments = Int32.Parse(match.Groups[1].Value);
+                            }
+                            else
+                            {
+                                page.NumComments = 1;
+                            }
+                        }
+                        pages_comments.Add(page);
+                    }
+
                     //SCS Set the Pages drop down list   
-                    lstPages.DataSource = pages;
+                    lstPages.DataSource = pages_comments;
                     lstPages.DataTextField = "WebDisplay";
                     lstPages.DataValueField = "PageID";
                     lstPages.DataBind();
@@ -289,7 +317,7 @@ namespace MOBOT.BHL.Web2
 
                     viewerPages = bhlProvider.PageGetImageDimensions(viewerPages, PageSummary.ItemID);
 
-                    Pages = JsonConvert.SerializeObject(pages.ToList().Join(viewerPages,
+                    Pages = JsonConvert.SerializeObject(pages_comments.ToList().Join(viewerPages,
                                                     p => p.SequenceOrder,
                                                     vp => vp.SequenceOrder,
                                                     (p, vp) => new
@@ -300,6 +328,7 @@ namespace MOBOT.BHL.Web2
                                                         p.AltExternalURL,
                                                         p.BarCode,
                                                         p.RareBooks,
+                                                        p.NumComments,
                                                         p.Illustration,
                                                         p.SegmentID,
                                                         vp.ExternalBaseUrl,
