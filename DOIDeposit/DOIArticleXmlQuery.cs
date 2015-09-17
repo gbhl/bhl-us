@@ -74,27 +74,40 @@ namespace MOBOT.BHL.DOIDeposit
                 content.Append("<issn match=\"optional\">" + XmlEncode(Data.Issn) + "</issn>");
             }
 
-            if (!string.IsNullOrEmpty(Data.Title))
+            string title = Data.Title;
+            string pubDate = Data.ArticlePublicationDate;
+            string articleTitle = Data.ArticleTitle;
+            if (Data.PublicationType != DOIDepositData.PublicationTypeValue.Article)
             {
-                content.Append("<journal_title match=\"fuzzy\">" + XmlEncode(Data.Title.Replace(':', ' ').Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + "</journal_title>");
+                title = string.Empty;
+                pubDate = Data.PublicationDate;
+                articleTitle = Data.Title;
             }
 
-            if (Data.Contributors.Count() > 0)
+            if (!string.IsNullOrEmpty(title))
             {
-                // The CrossRef query schema allows for only one author name
-                DOIDepositData.Contributor contributor = Data.Contributors[0];
+                content.Append("<journal_title match=\"optional fuzzy\">" + XmlEncode(title.Replace(':', ' ').Substring(0, (title.Length > 256 ? 256 : title.Length))) + "</journal_title>");
+            }
 
-                string lastName = string.Empty;
-                if (contributor.PersonName.IndexOf(',') >= 0)
+            foreach(DOIDepositData.Contributor contributor in Data.Contributors)
+            {
+                if (!string.IsNullOrWhiteSpace(contributor.PersonName))
                 {
-                    lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
-                }
-                else
-                {
-                    lastName = contributor.PersonName;
-                }
+                    string lastName = string.Empty;
+                    if (contributor.PersonName.IndexOf(',') >= 0)
+                    {
+                        lastName = contributor.PersonName.Substring(0, contributor.PersonName.IndexOf(','));
+                    }
+                    else
+                    {
+                        lastName = contributor.PersonName;
+                    }
 
-                content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(lastName) + "</author>");
+                    content.Append("<author match=\"fuzzy\" search-all-authors=\"true\">" + XmlEncode(lastName) + "</author>");
+
+                    // The CrossRef query schema allows for only one author name
+                    break;
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(Data.Volume))
@@ -107,14 +120,14 @@ namespace MOBOT.BHL.DOIDeposit
                 content.Append("<first_page match=\"optional\">" + XmlEncode(Data.FirstPage) + "</first_page>");
             }
 
-            if (!string.IsNullOrEmpty(Data.ArticlePublicationDate))
+            if (!string.IsNullOrEmpty(pubDate))
             {
-                content.Append("<year match=\"optional\">" + XmlEncode(Data.ArticlePublicationDate) + "</year>");
+                content.Append("<year match=\"optional\">" + XmlEncode(pubDate) + "</year>");
             }
 
-            if (!string.IsNullOrWhiteSpace(Data.ArticleTitle))
+            if (!string.IsNullOrWhiteSpace(articleTitle))
             {
-                content.Append("<article_title match=\"fuzzy\">" + XmlEncode(Data.ArticleTitle.Replace(':', ' ').Substring(0, (Data.ArticleTitle.Length > 256 ? 256 : Data.ArticleTitle.Length))) + "</article_title>");
+                content.Append("<article_title match=\"fuzzy\">" + XmlEncode(articleTitle.Replace(':', ' ').Substring(0, (articleTitle.Length > 256 ? 256 : articleTitle.Length))) + "</article_title>");
             }
 
             // Insert the query metadata into the template and return the result

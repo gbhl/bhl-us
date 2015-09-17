@@ -204,7 +204,10 @@ namespace MOBOT.BHL.BHLDOIService
         }
 
         /// <summary>
-        /// Query CrossRef for an existing DOI for the specified entity being considered for deposit
+        /// Query CrossRef for an existing DOI for the specified entity being considered for deposit.
+        /// Both monograph and article queries must be submitted, due to how CrossRef maintains their
+        /// data (some articles may be stored as "reports", which are treated as "monographs" by their
+        /// APIs).
         /// </summary>
         /// <param name="depositData"></param>
         /// <param name="doiStatusId"></param>
@@ -214,7 +217,7 @@ namespace MOBOT.BHL.BHLDOIService
             ExistingDOICheckResult result = new ExistingDOICheckResult();
 
             // If doiStatusID <> 0, then return NotFound, as this entity already has a DOI being processed.
-            // Otherwise, submit a query to CrossRef to see if a DOI exists.
+            // Otherwise, submit queries to CrossRef to see if a DOI exists.
             if (doiStatusId != configParms.DoiStatusNull)
             {
                 result.ResultValue = DOICheckResult.NotFound;
@@ -223,16 +226,30 @@ namespace MOBOT.BHL.BHLDOIService
             {
                 try
                 {
-                    // Prepare the query
+                    // Generate a batch identifier
                     depositData.BatchID = this.GenerateDOIBatchID(depositData.EntityID);
+
+                    // Prepare the first (monograph) query
                     string queryTemplate = this.GetQueryTemplate(depositData);
-                    string doiQuery = this.GenerateDOIQuery(depositData, queryTemplate);
+                    string doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Monograph, depositData, queryTemplate);
 
                     // Send the query
                     string queryResponse = this.SubmitQuery(doiQuery);
 
                     // Process the response
-                    result = this.ProcessQueryResult(queryResponse);
+                    result = this.ProcessQueryResult(queryResponse, result);
+
+                    // Only submit an Article query if no error has occurred and the
+                    // data required for an article query is available
+                    if (result.ResultValue != DOICheckResult.Error &&
+                        !string.IsNullOrWhiteSpace(depositData.Issn))
+                    {
+                        // Prepare, send, and process the second query
+                        queryTemplate = this.GetQueryTemplate(depositData);
+                        doiQuery = this.GenerateDOIQuery(DOIDepositData.PublicationTypeValue.Article, depositData, queryTemplate);
+                        queryResponse = this.SubmitQuery(doiQuery);
+                        result = this.ProcessQueryResult(queryResponse, result);
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -587,19 +604,21 @@ namespace MOBOT.BHL.BHLDOIService
         }
 
         /// <summary>
-        /// Generate a DOI query from the specified deposit data and template
+        /// Generate a DOI query of the specified type from the specified deposit data and template
         /// </summary>
+        /// <param name="publicationType"></param>
         /// <param name="data"></param>
         /// <param name="queryTemplate"></param>
         /// <returns></returns>
-        private string GenerateDOIQuery(DOIDepositData data, string queryTemplate)
+        private string GenerateDOIQuery(DOIDepositData.PublicationTypeValue queryType, DOIDepositData data, 
+            string queryTemplate)
         {
             DOIXmlQueryFactory xmlQueryFactory = new DOIXmlQueryFactory(data);
             DOIDeposit.DOIQuery query;
 
-            if (data.PublicationType == DOIDepositData.PublicationTypeValue.Monograph)
+            if (queryType == DOIDepositData.PublicationTypeValue.Monograph)
                 query = xmlQueryFactory.GetDOIQuery(DOIXmlQueryFactory.DOIQueryType.Monograph);
-            else if (data.PublicationType == DOIDepositData.PublicationTypeValue.Journal)
+            else if (queryType == DOIDepositData.PublicationTypeValue.Journal)
                 query = xmlQueryFactory.GetDOIQuery(DOIXmlQueryFactory.DOIQueryType.Journal);
             else
                 query = xmlQueryFactory.GetDOIQuery(DOIXmlQueryFactory.DOIQueryType.Article);
@@ -693,8 +712,9 @@ namespace MOBOT.BHL.BHLDOIService
         /// Check the status of the response and read any existing DOIs from the response
         /// </summary>
         /// <param name="queryResult"></param>
+        /// <param name="result"></param>
         /// <returns></returns>
-        private ExistingDOICheckResult ProcessQueryResult(string queryResult)
+        private ExistingDOICheckResult ProcessQueryResult(string queryResult, ExistingDOICheckResult result)
         {
             /*
             Query results look something like the following:
@@ -749,8 +769,6 @@ namespace MOBOT.BHL.BHLDOIService
             </crossref_result>
             */
 
-            ExistingDOICheckResult result = new ExistingDOICheckResult();
-
             try
             {
                 XDocument xmlResult = XDocument.Parse(queryResult);
@@ -767,13 +785,9 @@ namespace MOBOT.BHL.BHLDOIService
                 switch (status)
                 {
                     case "resolved":
-                        result.ResultValue = DOICheckResult.Found;
-                        break;
                     case "unresolved":
-                        result.ResultValue = DOICheckResult.NotFound;
-                        break;
                     case "multiresolved":
-                        result.ResultValue = DOICheckResult.Unknown;
+                        // ResultValue will be assigned after DOIs are collected from the query result
                         break;
                     case "malformed":
                         result.ResultValue = DOICheckResult.Error;
@@ -789,7 +803,6 @@ namespace MOBOT.BHL.BHLDOIService
                     Element(ns + "body").
                     Elements(ns + "query");
 
-                bool bhlOwned = false;
                 foreach(XElement queryElement in queryElements)
                 {
                     if (result.ResultValue == DOICheckResult.Error)
@@ -797,6 +810,7 @@ namespace MOBOT.BHL.BHLDOIService
                         XElement msgElement = queryElement.Element(ns + "msg");
                         if (msgElement != null)
                         {
+                            if (!string.IsNullOrWhiteSpace(result.Message)) result.Message += "\n";
                             result.Message = "Query result - " + msgElement.Value;
                             break;
                         }
@@ -809,16 +823,13 @@ namespace MOBOT.BHL.BHLDOIService
                             string doiValue = doiElement.Value;
                             // Do not include any BHL-owned DOIs found by the query.  
                             // BHL always assigns new DOIs to unique digital entities.
-                            if (doiValue.StartsWith(configParms.DoiPrefix))
-                                bhlOwned = true;
-                            else
-                                result.DoiList.Add(doiElement.Value);
+                            if (!doiValue.StartsWith(configParms.DoiPrefix)) result.DoiList.Add(doiElement.Value);
                         }
                     }
                 }
 
-                // If any BHL-owned DOIs were skipped, adjust the ResultValue accordingly
-                if (bhlOwned)
+                // If no errors, set the ResultValue based on the number of non-BHL-owned DOIs
+                if (result.ResultValue != DOICheckResult.Error)
                 {
                     switch (result.DoiList.Count)
                     {
