@@ -155,6 +155,7 @@
     <Content Include="AuthorNotFound.aspx" />
     <Content Include="Bibliography.aspx" />
     <Content Include="BiblioSelect.aspx" />
+    <Content Include="bot_list.txt" />
     <Content Include="BrowseByTitleTag.aspx" />
     <Content Include="BrowseByYear.aspx" />
     <Content Include="BrowseCollections.aspx" />
