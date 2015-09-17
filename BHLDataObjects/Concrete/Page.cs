@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CustomDataAccess;
 
 
@@ -163,6 +163,19 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        private int _numComments = 0;
+        public int NumComments
+        {
+            get
+            {
+                return _numComments;
+            }
+            set
+            {
+                _numComments = value;
+            }
+        }
+
         private int? _segmentID;
         public int? SegmentID
         {
@@ -231,6 +244,11 @@ namespace MOBOT.BHL.DataObjects
                 if (returnValue.Length == 0)
                 {
                     returnValue = "Seq " + this.SequenceOrder.ToString();
+                }
+
+                if (_numComments > 0)
+                {
+                    returnValue = returnValue + " 💬";
                 }
                 return returnValue;
             }
