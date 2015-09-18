@@ -71,16 +71,24 @@ namespace MOBOT.BHL.DOIDeposit
                 content.Append("<isbn match=\"optional\">" + XmlEncode(Data.Isbn) + "</isbn>");
             }
 
-            if (!string.IsNullOrWhiteSpace(Data.Title))
+            string title = Data.Title;
+            string pubDate = Data.PublicationDate;
+            if (Data.PublicationType == DOIDepositData.PublicationTypeValue.Article)
+            {
+                title = Data.ArticleTitle;
+                pubDate = Data.ArticlePublicationDate;
+            }
+
+            if (!string.IsNullOrWhiteSpace(title))
             {
                 content.Append("<volume_title match=\"fuzzy\">" + 
-                    XmlEncode(Data.Title.Replace(':', ' ').Substring(0, (Data.Title.Length > 256 ? 256 : Data.Title.Length))) + 
+                    XmlEncode(title.Replace(':', ' ').Substring(0, (title.Length > 256 ? 256 : title.Length))) + 
                     "</volume_title>");
             }
 
-            if (!string.IsNullOrWhiteSpace(Data.PublicationDate))
+            if (!string.IsNullOrWhiteSpace(pubDate))
             {
-                content.Append("<year match=\"optional\">" + XmlEncode(Data.PublicationDate) + "</year>");
+                content.Append("<year match=\"optional\">" + XmlEncode(pubDate) + "</year>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.Volume))
