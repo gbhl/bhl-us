@@ -804,21 +804,20 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin:
 #segmentstabcontent { display: none }
 
 #commentsbadge {
-   position:relative;
+   position:absolute;
+   left:240px;
+   top:-7px;
 }
 #commentsbadge[data-badge]:after {
    content:attr(data-badge);
-   position:absolute;
    font-size:.7em;
    background:green;
    color:white;
-   left:-10px;
-   top:-15px;
-   width:18px;height:18px;
    text-align:center;
    line-height:18px;
    border-radius:50%;
    box-shadow:0 0 1px #333;
+   padding:4px 6px;
 }
 #commentsbadge[data-badge="0"]:after {
    content: none;
