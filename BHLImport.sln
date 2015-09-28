@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
@@ -71,6 +71,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90CB2D
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageDetailHarvest", "PageDetailHarvest\PageDetailHarvest.csproj", "{CC778148-FE3C-49FB-A11B-78001B6AB929}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFlickrTagHarvest", "BHLFlickrTagHarvest\BHLFlickrTagHarvest.csproj", "{D95AB988-8F69-484A-AF21-79A142A240A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
+		{973367CC-BEEE-4B72-A0B8-DC3E982F500B} = {973367CC-BEEE-4B72-A0B8-DC3E982F500B}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -398,6 +406,30 @@ Global
 		{CC778148-FE3C-49FB-A11B-78001B6AB929}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CC778148-FE3C-49FB-A11B-78001B6AB929}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CC778148-FE3C-49FB-A11B-78001B6AB929}.Release|x86.ActiveCfg = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Debug|x86.Build.0 = Debug|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{D95AB988-8F69-484A-AF21-79A142A240A9}.Release|x86.Build.0 = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|x86.Build.0 = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|x86.ActiveCfg = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
