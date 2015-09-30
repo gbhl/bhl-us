@@ -364,6 +364,7 @@
     <Content Include="images\magnify-icon-over.png" />
     <Content Include="images\mendeley.png" />
     <Content Include="images\NEH-Logo-bkgd.jpg" />
+    <Content Include="images\new-tab.png" />
     <Content Include="images\nhm-official-logo.png" />
     <Content Include="images\pin-icon-normal.png" />
     <Content Include="images\pin-icon-over.png" />

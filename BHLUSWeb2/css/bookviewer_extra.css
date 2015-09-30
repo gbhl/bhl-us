@@ -517,6 +517,17 @@ a.BRButton:hover, a.BRButton:active
     background-color: #3f4040; 
 }
 
+#disquscommunity {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+    padding:6px;
+    text-align:center;
+}
+#disquscommunity a {
+    font-size:13pt;
+    color:white;
+    text-decoration:none;
+}
+
 #pageReaderComments-panel
 {
     position:relative;
@@ -526,6 +537,7 @@ a.BRButton:hover, a.BRButton:active
     display:block;
     width:auto;
     height: 100%;
+    overflow: scroll;
 }
 
 /* OCR Panel */
@@ -804,9 +816,8 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin:
 #segmentstabcontent { display: none }
 
 #commentsbadge {
-   position:absolute;
-   left:240px;
-   top:-7px;
+   position:relative;
+   top:-3px;
 }
 #commentsbadge[data-badge]:after {
    content:attr(data-badge);

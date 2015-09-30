@@ -36,41 +36,47 @@ namespace MOBOT.BHL.Web2
                 // Make sure we found an active page
                 if (p != null)
                 {
-                    CustomGenericList<Title> titles = provider.TitleSelectByItem(p.ItemID);
-                    if (titles == null)
-                    {
-                        return;
-                    }
-                    String title = String.Empty;
-                    foreach(Title t in titles)
-                    {
-                        title = t.ShortTitle;
-                        break;
-                    }
 
                     IRestResponse response;
-                    //first create the forum - doesn't matter if it already exists
                     Dictionary<String, String> APIParameters = new Dictionary<string, string>();
-                    APIParameters.Add("name", title);
-                    APIParameters.Add("short_name", "bhl-item-" + p.ItemID);
-                    APIParameters.Add("website", String.Format(ConfigurationManager.AppSettings["ItemPageUrl"], p.ItemID));
-                    response = this.DiqsusCall("forums/create.json", Method.POST, APIParameters);
+                    if (String.IsNullOrEmpty(HttpContext.Current.Request.QueryString["vote"]))
+                    {
 
-                    //next create the thread for the page
-                    APIParameters = new Dictionary<string, string>();
-                    APIParameters.Add("forum", "bhl-item-" + p.ItemID);
-                    APIParameters.Add("url", String.Format(ConfigurationManager.AppSettings["PagePageUrl"], p.PageID));
-                    APIParameters.Add("identifier", "bhl-page-" + p.PageID);
-                    APIParameters.Add("title", p.WebDisplay);
-                    response = this.DiqsusCall("threads/create.json", Method.POST, APIParameters);
+                        CustomGenericList<Title> titles = provider.TitleSelectByItem(p.ItemID);
+                        if (titles == null)
+                        {
+                            return;
+                        }
+                        String title = String.Empty;
+                        foreach (Title t in titles)
+                        {
+                            title = t.ShortTitle;
+                            break;
+                        }
 
-                    //vote on this thread to add to BHL's disqus curation
-                    APIParameters = new Dictionary<string, string>();
-                    APIParameters.Add("vote", "1");
-                    APIParameters.Add("forum", "bhl-item-" + p.ItemID);
-                    APIParameters.Add("thread:ident", "bhl-page-" + p.PageID);
-                    response = this.DiqsusCall("threads/vote.json", Method.POST, APIParameters);
+                        //first create the forum - doesn't matter if it already exists
+                        APIParameters.Add("name", title);
+                        APIParameters.Add("short_name", "bhl-item-" + p.ItemID);
+                        APIParameters.Add("website", String.Format(ConfigurationManager.AppSettings["ItemPageUrl"], p.ItemID));
+                        response = this.DiqsusCall("forums/create.json", Method.POST, APIParameters);
 
+                        //next create the thread for the page
+                        APIParameters = new Dictionary<string, string>();
+                        APIParameters.Add("forum", "bhl-item-" + p.ItemID);
+                        APIParameters.Add("url", String.Format(ConfigurationManager.AppSettings["PagePageUrl"], p.PageID));
+                        APIParameters.Add("identifier", "bhl-page-" + p.PageID);
+                        APIParameters.Add("title", p.WebDisplay);
+                        response = this.DiqsusCall("threads/create.json", Method.POST, APIParameters);
+
+                    }
+                    else
+                    {
+                        APIParameters = new Dictionary<string, string>();
+                        APIParameters.Add("vote", "1");
+                        APIParameters.Add("forum", "bhl-item-" + p.ItemID);
+                        APIParameters.Add("thread:ident", "bhl-page-" + p.PageID);
+                        response = this.DiqsusCall("threads/vote.json", Method.POST, APIParameters);
+                    }
                     outText = "OK";
                 }
                 else
