@@ -116,7 +116,7 @@
             <!-- <div id="right-panel-tab" title="OCR Text"><a href="#right-panel"><</a></div> -->
             <div id="right-panel-content">
                 <div id="pageOCR-panel"> </div>
-                <div id="pageReaderComments-panel"><a href="#" id="startCommentsButton"><img src="../images/start_comment.png" alt="Leave a comment on this page" /></a><div id="pageReaderComments-panelInner"></div></div>
+                <div id="pageReaderComments-panel"><img src="../images/blank.gif" alt="Blank" style="display:none" /><div id="disquscommunity"><a href="https://disqus.com/by/BioDivLibrary/favorites/" target="_blank">View BHL's Community <img src="../images/new-tab.png" /></a></div><a href="#" id="startCommentsButton"><img src="../images/start_comment.png" alt="Leave a comment on this page" /></a><div id="pageReaderComments-panelInner"></div></div>
             </div>
         </div> <!-- right-panel -->
 
@@ -343,6 +343,8 @@
     {
         $("#lbSegments").hide();
     }
+
+    var trackComment;
 
     $(document).ready(function () {
         br = new BookReader();
@@ -1260,15 +1262,9 @@ BookReader.prototype.scrollUp = function() {
                     type: 'get',
                     url: '/pagecomments/' + pages[br.currentIndex()].PageID,
                     success: function (data) {
-                        pages[br.currentIndex()].NumComments += 1;
-                        pageTitleText = $("#lstPages option:selected").text();
-                        $("#lstPages option:selected").text(pageTitleText + " 💬");
                         updateDisqus(1);
                     },
                     error: function (data) {
-                        pages[br.currentIndex()].NumComments += 1;
-                        pageTitleText = $("#lstPages option:selected").text();
-                        $("#lstPages option:selected").text(pageTitleText + " 💬");
                         updateDisqus(1);
                     }   
                 });
@@ -1280,8 +1276,11 @@ BookReader.prototype.scrollUp = function() {
                 newpageReaderComments.html('');
                 $("#startCommentsButton").hide();
                 if (pages[br.currentIndex()].NumComments > 0 || showDisqus == 1) {
-                disqus += ["<div id=\"disqus_thread\"></div>",
+                    disqus += ["<div id=\"disqus_thread\"></div>",
                         "<script type=\"text/javascript\">",
+                        "function disqus_config() {",
+                        "this.callbacks.onNewComment = [function() { trackComment(); }];",
+                        "}",
                         "var disqus_shortname = 'bhl-item-<%: PageSummary.ItemID %>';",
                         "var disqus_identifier = 'bhl-page-" + pages[br.currentIndex()].PageID + "';",
                         "var disqus_title = '" + br.getPageName(br.currentIndex()) + "';",
@@ -1310,7 +1309,10 @@ BookReader.prototype.scrollUp = function() {
                 }
                 disqus += "</div>";*/
                 newpageReaderComments.append(disqus);
+                updateCommentCount();
+            }
 
+            function updateCommentCount() {
                 if (showReaderCommentsButton.attr("title") == "Show Comments") {
                     showReaderCommentsButton.html("Show Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                 } else {
@@ -1349,6 +1351,29 @@ BookReader.prototype.scrollUp = function() {
             }
 
             updateUIHeights(); 
+        }
+
+        trackComment = function() {
+            $.ajax({
+                type: 'get',
+                url: '/pagecomments/' + pages[br.currentIndex()].PageID + '?vote=1',
+                success: function (data) {
+                    pages[br.currentIndex()].NumComments += 1;
+                    pageTitleText = $("#lstPages option:selected").text();
+                    if (pageTitleText.indexOf("💬") == -1) {
+                        $("#lstPages option:selected").text(pageTitleText + " 💬");
+                    }
+                    updateCommentCount();
+                },
+                error: function (data) {
+                    pages[br.currentIndex()].NumComments += 1;
+                    pageTitleText = $("#lstPages option:selected").text();
+                    if (pageTitleText.indexOf("💬") == -1) {
+                        $("#lstPages option:selected").text(pageTitleText + " 💬");
+                    }
+                    updateCommentCount();
+                }   
+            });
         }
 
 
@@ -1456,8 +1481,6 @@ BookReader.prototype.scrollUp = function() {
             }
         }
     }
-
-
 
 $(document).ready(function(){
 
