@@ -30,7 +30,7 @@ namespace MOBOT.BHL.Web2
             if (Int32.TryParse(pageIDString, out pageID))
             {
                 BHLProvider provider = new BHLProvider();
-                Page p = provider.PageSelectAuto(pageID);
+                Page p = provider.PageMetadataSelectByPageID(pageID);
                 String outText = string.Empty;
 
                 // Make sure we found an active page
