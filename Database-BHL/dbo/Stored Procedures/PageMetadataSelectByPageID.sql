@@ -8,6 +8,7 @@ AS
 SET NOCOUNT ON
 
 SELECT	p.PageID,
+		p.ItemID,
 		p.SequenceOrder,
 		ISNULL(p.Year, i.Year) AS [Year],
 		p.Series,
