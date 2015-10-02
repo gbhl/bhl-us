@@ -24,5 +24,12 @@ namespace MOBOT.BHL.WebService
             return provider.PageNameUpdateList(pageID, items, sourceName);
         }
 
+        [WebMethod]
+        public void NamePageDeleteByItemID(int itemID)
+        {
+            BHLProvider provider = new BHLProvider();
+            provider.NamePageDeleteByItemID(itemID);
+
+        }
     }
 }

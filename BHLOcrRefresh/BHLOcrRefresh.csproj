@@ -135,6 +135,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.TitleEndNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Title_Identifier.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Vault.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
