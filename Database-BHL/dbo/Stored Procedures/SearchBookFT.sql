@@ -146,7 +146,7 @@ FROM	#tmpTitleFilter0 tmp INNER JOIN dbo.Title t WITH (NOLOCK) ON tmp.TitleID = 
 WHERE	(@Year IS NULL OR 
 			ISNULL(t.StartYear, 0) = @Year OR 
 			ISNULL(t.EndYear, 0) = @Year OR 
-			@Year BETWEEN ISNULL(t.StartYear, 0) and ISNULL(t.EndYear, 0))
+			@Year BETWEEN t.StartYear and t.EndYear)
 
 -- Filter by author
 SELECT DISTINCT
@@ -495,4 +495,3 @@ ELSE BEGIN
 END
 
 END
-
