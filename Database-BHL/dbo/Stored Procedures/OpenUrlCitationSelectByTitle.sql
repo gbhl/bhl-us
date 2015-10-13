@@ -9,6 +9,23 @@ BEGIN
 
 SET NOCOUNT ON
 
+-- If the title has been redirected to a different title, then use
+-- that title instead.  Follow the "redirect" chain up to ten levels.
+SELECT	@TitleID = COALESCE(t10.TitleID, t9.TitleID, t8.TitleiD, t7.TitleID, t6.TitleID,
+						t5.TitleID, t4.TitleID, t3.TitleID, t2.TitleID, t1.TitleID)
+FROM	dbo.Title t1
+		LEFT JOIN dbo.Title t2 ON t1.RedirectTitleID = t2.TitleID
+		LEFT JOIN dbo.Title t3 ON t2.RedirectTitleID = t3.TitleID
+		LEFT JOIN dbo.Title t4 ON t3.RedirectTitleID = t4.TitleID
+		LEFT JOIN dbo.Title t5 ON t4.RedirectTitleID = t5.TitleID
+		LEFT JOIN dbo.Title t6 ON t5.RedirectTitleID = t6.TitleID
+		LEFT JOIN dbo.Title t7 ON t6.RedirectTitleID = t7.TitleID
+		LEFT JOIN dbo.Title t8 ON t7.RedirectTitleID = t8.TitleID
+		LEFT JOIN dbo.Title t9 ON t8.RedirectTitleID = t9.TitleID
+		LEFT JOIN dbo.Title t10 ON t9.RedirectTitleID = t10.TitleID
+WHERE	t1.TitleID = @TitleID
+
+
 CREATE TABLE #tmpOpenUrlCitation
 	(
 	PageID int NULL,
@@ -69,8 +86,4 @@ AND		t.TitleID = @TitleID
 SELECT DISTINCT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, Volume, Date, StartPage
 
 END
-
-
-
-
 

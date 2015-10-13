@@ -101,6 +101,18 @@ namespace MOBOT.BHLImport.WebService
             return new BHLImport.Server.BHLImportProvider().BSSegmentSelectByItem(itemId);
         }
 
+        [WebMethod]
+        public CustomGenericList<PageFlickrTag> PageFlickrTagSelectForPageID(int pageID)
+        {
+            return new BHLImportProvider().PageFlickrTagSelectForPageID(pageID);
+        }
+
+        [WebMethod]
+        public void PageFlickrTagUpdateForPageID(int pageID, PageFlickrTag[] tags)
+        {
+            new BHLImportProvider().PageFlickrTagUpdateForPageID(pageID, tags);
+        }
+
         #endregion Dashboard methods
     }
 }

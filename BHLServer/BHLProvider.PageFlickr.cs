@@ -13,6 +13,11 @@ namespace MOBOT.BHL.Server
             new PageFlickrDAL().PageFlickrSave(null, null, pageFlickr, userId);
         }
 
+        public CustomGenericList<PageFlickr> PageFlickrSelectAll()
+        {
+            return new PageFlickrDAL().PageFlickrSelectAll(null, null);
+        }
+
         public PageFlickr PageFlickrSelectByPage(int pageId)
         {
             return new PageFlickrDAL().PageFlickrSelectByPage(null, null, pageId);

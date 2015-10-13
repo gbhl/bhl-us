@@ -42,6 +42,22 @@ namespace MOBOT.BHL.DAL
 
         }
 
+        public CustomGenericList<PageFlickr> PageFlickrSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+              CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrSelectAll", connection, transaction))
+            {
+                using (CustomSqlHelper<PageFlickr> helper = new CustomSqlHelper<PageFlickr>())
+                {
+                    CustomGenericList<PageFlickr> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         public PageFlickr PageFlickrSelectByPage(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int pageId)
         {

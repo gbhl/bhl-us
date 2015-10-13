@@ -77,6 +77,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         public BHLUserManager(IUserStore<ApplicationUser, int> store)
             : base(store)
         {
+            this.UserValidator = new BHLUserValidator(this);
         }
 
         public static BHLUserManager Create(IdentityFactoryOptions<BHLUserManager> options, IOwinContext context)  
@@ -110,6 +111,18 @@ namespace MOBOT.BHL.AdminWeb.Models
                 };
                 await this.EmailService.SendAsync(message, ccList, bccList);
             }
+        }
+    }
+
+    /// <summary>
+    /// Extend the default UserValidator to recognize the integer primary key and to 
+    /// require unique email address for each user account.
+    /// </summary>
+    public class BHLUserValidator : UserValidator<ApplicationUser, int>
+    {
+        public BHLUserValidator(BHLUserManager manager) : base(manager)
+        {
+            this.RequireUniqueEmail = true;
         }
     }
 

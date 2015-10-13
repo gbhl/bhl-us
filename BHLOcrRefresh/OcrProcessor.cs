@@ -37,10 +37,13 @@ namespace MOBOT.BHL.BHLOcrRefresh
             string itemID = string.Empty;
             try
             {
+                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
+
                 itemID = GetNextJobId();
                 while (!string.IsNullOrWhiteSpace(itemID))
                 {
                     string status = this.GetOcrForItem(itemID);
+                    client.NamePageDeleteByItemID(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
                     LogMessage(status);
                     MarkJobComplete(itemID, status);
                     itemID = GetNextJobId();

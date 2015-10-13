@@ -97,5 +97,12 @@ namespace MOBOT.BHL.WebService
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageFlickrSelectRandom(numberToReturn);
         }
+
+        [WebMethod]
+        public CustomGenericList<PageFlickr> PageFlickrSelectAll()
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.PageFlickrSelectAll();
+        }
     }
 }

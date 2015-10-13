@@ -128,7 +128,11 @@ namespace IAHarvest
                         if ((DateTime.Now - (DateTime)startDate).Days < 90)
                         {
                             startDate = set.LastDownloadDate;
-                            fullDownload = false;
+
+                            // 10/12/2015 - Always reset the fullDownloadDate.  Full downloads have 
+                            // become too large (the IA query times out), and of questionable value,
+                            // so they are no longer being used.
+                            //fullDownload = false;
                         }
                         else
                         {

@@ -96,6 +96,7 @@
     <Compile Include="Generated\OAIRecordStatusDAL.Auto.cs" />
     <Compile Include="Generated\OAIRecordSubjectDAL.Auto.cs" />
     <Compile Include="Generated\PageDAL.Auto.cs" />
+    <Compile Include="Generated\PageFlickrTagDAL.Auto.cs" />
     <Compile Include="Generated\PageNameDAL.Auto.cs" />
     <Compile Include="Generated\Page_PageTypeDAL.Auto.cs" />
     <Compile Include="Generated\TitleAssociationDAL.Auto.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="OAIRecordStatusDAL.cs" />
     <Compile Include="OAIRecordSubjectDAL.cs" />
     <Compile Include="PageDAL.cs" />
+    <Compile Include="PageFlickrTagDAL.cs" />
     <Compile Include="PageNameDAL.cs" />
     <Compile Include="Page_PageTypeDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -433,4 +433,14 @@
   <ItemGroup>
     <None Include="dbo\Synonyms\BHLNoteType.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\PageFlickrTag.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\PageFlickrTagDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrTagInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrTagSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrTagUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrTagSelectForPageID.sql" />
+  </ItemGroup>
 </Project>
