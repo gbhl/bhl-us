@@ -54,6 +54,12 @@ namespace MOBOT.BHL.Web2
                             break;
                         }
 
+                        //make sure title is not too long for disqus
+                        if (title.Length > 59)
+                        {
+                            title = title.Substring(0, 56) + "...";
+                        }
+
                         //first create the forum - doesn't matter if it already exists
                         APIParameters.Add("name", title);
                         APIParameters.Add("short_name", "bhl-item-" + p.ItemID);
