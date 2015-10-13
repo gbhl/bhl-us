@@ -416,7 +416,7 @@
             resetPageOCRBox();
             $("#pageReaderComments-panel").hide();
             $("#showReaderCommentsButton").attr("title", "Add Comments");
-            $("#showReaderCommentsButton").html("Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+            $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
             $("#showReaderCommentsButton").removeClass("displayed");
 
             $(".pagetoolbox").show();
@@ -1171,7 +1171,7 @@ BookReader.prototype.scrollUp = function() {
             //$('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show OCR</a></div>");
             var BRtoolbar = $("#BRtoolbar").detach();
             BRtoolbar.appendTo("#BRtoolbarwrapper");
-            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show OCR</a> <a id='showReaderCommentsButton' class='BRButton' title='Add Comments'>Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span></a></div>");
+            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> <a id='showReaderCommentsButton' class='BRButton' title='Add Comments'>Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span></a></div>");
             var PDFtoolbar = $("#toolbar-top").detach();
             PDFtoolbar.prependTo("#BRtoolbar"); 
             $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
@@ -1217,19 +1217,19 @@ BookReader.prototype.scrollUp = function() {
                     $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     $("#pageOCR-panel").show();
                     showOCRButton.attr("title", "Hide OCR");
-                    showOCRButton.text("Hide OCR");
+                    showOCRButton.html("Hide<br/>OCR");
                     showOCRButton.addClass("displayed");
                 } else {
                     $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     showOCRButton.attr("title", "Show OCR");
-                    showOCRButton.text("Show OCR");
+                    showOCRButton.html("Show<br/>OCR");
                     showOCRButton.removeClass("displayed");
                 }
 
                 resetAnnotationsBox();
                 $("#pageReaderComments-panel").hide();
                 $("#showReaderCommentsButton").attr("title", "Add Comments");
-                $("#showReaderCommentsButton").html("Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                 $("#showReaderCommentsButton").removeClass("displayed");
             });
 
@@ -1242,12 +1242,12 @@ BookReader.prototype.scrollUp = function() {
                     $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     $("#pageReaderComments-panel").show();
                     showReaderCommentsButton.attr("title", "Hide Comments");
-                    showReaderCommentsButton.html("Hide Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                    showReaderCommentsButton.html("Hide<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                     showReaderCommentsButton.addClass("displayed");
                 } else {
                     $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     showReaderCommentsButton.attr("title", "Add Comments");
-                    showReaderCommentsButton.html("Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                    showReaderCommentsButton.html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                     showReaderCommentsButton.removeClass("displayed");
                 }
                 
@@ -1314,9 +1314,9 @@ BookReader.prototype.scrollUp = function() {
 
             function updateCommentCount() {
                 if (showReaderCommentsButton.attr("title") == "Add Comments") {
-                    showReaderCommentsButton.html("Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                    showReaderCommentsButton.html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                 } else {
-                    showReaderCommentsButton.html("Hide Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                    showReaderCommentsButton.html("Hide<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                 }
             }
             
@@ -1328,19 +1328,19 @@ BookReader.prototype.scrollUp = function() {
                     $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     $("#AnnotationBox").show();
                     showAnnotationsButton.attr("title", "Hide Annotations");
-                    showAnnotationsButton.text("Hide Annotations");
+                    showAnnotationsButton.html("Hide<br/>Annotations");
                     showAnnotationsButton.addClass("displayed");
                 } else {
                     $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
                     showAnnotationsButton.attr("title", "Show Annotations");
-                    showAnnotationsButton.text("Show Annotations");
+                    showAnnotationsButton.html("Show<br/>Annotations");
                     showAnnotationsButton.removeClass("displayed");
                 }
 
                 resetPageOCRBox();
                 $("#pageReaderComments-panel").hide();
                 $("#showReaderCommentsButton").attr("title", "Add Comments");
-                $("#showReaderCommentsButton").html("Add Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
+                $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
                 $("#showReaderCommentsButton").removeClass("displayed");
             });
             if ($("#AnnotationBox").length == 0) {
@@ -1458,14 +1458,14 @@ BookReader.prototype.scrollUp = function() {
     function resetAnnotationsBox() {
         $("#AnnotationBox").hide();
         $("#showAnnotationsButton").attr("title", "Show Annotations");
-        $("#showAnnotationsButton").text("Show Annotations");
+        $("#showAnnotationsButton").html("Show<br/>Annotations");
         $("#showAnnotationsButton").removeClass("displayed");
     }
 
     function resetPageOCRBox() {
         $("#pageOCR-panel").hide();
         $("#showOCRButton").attr("title", "Show OCR");
-        $("#showOCRButton").text("Show OCR");
+        $("#showOCRButton").html("Show<br/>OCR");
         $("#showOCRButton").removeClass("displayed");
     }
 
