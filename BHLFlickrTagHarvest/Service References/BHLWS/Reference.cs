@@ -15,654 +15,310 @@ namespace BHLFlickrTagHarvest.BHLWS {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://www.mobot.org/", ConfigurationName="BHLWS.BHLWSSoap")]
     public interface BHLWSSoap {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNamesByItemID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNamesByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNamesByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithoutPageNamesByItemIDAsync(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNames", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNames();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNames", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithoutPageNamesAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateYear(int[] pageIDs, string year, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateYearAsync(int[] pageIDs, string year, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void PageUpdateLastPageNameLookupDate(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
-        System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageCheckForOcrText", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        bool PageCheckForOcrText(int pageID, string ocrTextLocation);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageCheckForOcrText", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> PageCheckForOcrTextAsync(int pageID, string ocrTextLocation);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectRandom", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectRandom(int numberToReturn);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectRandom", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageFlickr[]> PageFlickrSelectRandomAsync(int numberToReturn);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectAll", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectAll();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectAll", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageFlickr[]> PageFlickrSelectAllAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageNameUpdateList", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        int[] PageNameUpdateList(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageNameUpdateList", ReplyAction="*")]
-        System.Threading.Tasks.Task<int[]> PageNameUpdateListAsync(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageTypeSelectAll", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PageType[] PageTypeSelectAll();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageTypeSelectAll", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageType[]> PageTypeSelectAllAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeSave", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeSave", ReplyAction="*")]
-        System.Threading.Tasks.Task Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeDeleteAllForPage", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeDeleteAllForPage", ReplyAction="*")]
-        System.Threading.Tasks.Task Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusPending", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        int GetPaginationStatusPending();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusPending", ReplyAction="*")]
-        System.Threading.Tasks.Task<int> GetPaginationStatusPendingAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusInProgress", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        int GetPaginationStatusInProgress();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusInProgress", ReplyAction="*")]
-        System.Threading.Tasks.Task<int> GetPaginationStatusInProgressAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusComplete", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        int GetPaginationStatusComplete();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusComplete", ReplyAction="*")]
-        System.Threading.Tasks.Task<int> GetPaginationStatusCompleteAsync();
-        
-        // CODEGEN: Parameter 'paginationStatusID' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusString", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse GetPaginationStatusString(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusString", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse> GetPaginationStatusStringAsync(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForFileCreation", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForFileCreation();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForFileCreation", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectForFileCreationAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForDeletion", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForDeletion();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForDeletion", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectForDeletionAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectDuplicateForPdfID", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
-        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectDuplicateForPdfID(int pdfId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectDuplicateForPdfID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectDuplicateForPdfIDAsync(int pdfId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFPageSummaryViewSelectByPdfID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.PageSummaryView[] PDFPageSummaryViewSelectByPdfID(int pdfId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFPageSummaryViewSelectByPdfID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageSummaryView[]> PDFPageSummaryViewSelectByPdfIDAsync(int pdfId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdateGenerationInfo", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdateGenerationInfo", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF> PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdateFileDeletion", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.PDF PDFUpdateFileDeletion(int pdfId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdateFileDeletion", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF> PDFUpdateFileDeletionAsync(int pdfId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusProcessing", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool PDFUpdatePdfStatusProcessing(int pdfid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusProcessing", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusProcessingAsync(int pdfid);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusGenerated", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool PDFUpdatePdfStatusGenerated(int pdfid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusGenerated", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusGeneratedAsync(int pdfid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusError", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool PDFUpdatePdfStatusError(int pdfid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusError", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusErrorAsync(int pdfid);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusRejected", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool PDFUpdatePdfStatusRejected(int pdfid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFUpdatePdfStatusRejected", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusRejectedAsync(int pdfid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedTitleSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedTitleSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedTitle> AnnotatedTitleSaveAsync(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedItemSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedItemSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedItem> AnnotatedItemSaveAsync(int annotatedTitleId, string externalIdentifier, string volume);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedPage> AnnotatedPageSaveAsync(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicDeleteByPageID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicDeleteByPageID", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> AnnotatedPageCharacteristicDeleteByPageIDAsync(int annotatedPageId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotatedPageCharacteristicSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedPageCharacteristic> AnnotatedPageCharacteristicSaveAsync(int annotatedPageId, string characteristicDetail);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSelectAuto", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSelectAuto(int annotationID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSelectAuto", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSelectAutoAsync(int annotationID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSaveAsync(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSaveText", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSaveText", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSaveTextAsync(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationClear", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void AnnotationClear(int annotationId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationClear", ReplyAction="*")]
-        System.Threading.Tasks.Task AnnotationClearAsync(int annotationId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationRelationSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationRelationSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationRelation> AnnotationRelationSaveAsync(int annotationId, string relatedExternalIdentifier, string note);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationNoteSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationNoteSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationNote> AnnotationNoteSaveAsync(int annotationId, string noteText, byte isAlternate);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Annotation_AnnotationConceptSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Annotation_AnnotationConceptSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation_AnnotationConcept> Annotation_AnnotationConceptSaveAsync(int annotationId, string conceptCode, int keywordTargetId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSubjectSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/AnnotationSubjectSave", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationSubject> AnnotationSubjectSaveAsync(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetNamesFromOcr", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetNamesFromOcr", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.NameFinderResponse[]> GetNamesFromOcrAsync(int pageID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectAllPublished", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Title[] TitleSelectAllPublished();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectAllPublished", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title[]> TitleSelectAllPublishedAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectByTitleID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Title TitleSelectByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectByTitleID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title> TitleSelectByTitleIDAsync(int titleID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectDetailByTitleID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Title TitleSelectDetailByTitleID(int titleID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectDetailByTitleID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title> TitleSelectDetailByTitleIDAsync(int titleID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllTitleCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllTitleCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> TitleBibTeXSelectAllTitleCitationsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllItemCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleBibTeXSelectAllItemCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> TitleBibTeXSelectAllItemCitationsAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllBibTeXCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllBibTeXCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> SegmentSelectAllBibTeXCitationsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllEndNoteCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectAllEndNoteCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> SegmentSelectAllEndNoteCitationsAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllTitleCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllTitleCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> TitleEndNoteSelectAllTitleCitationsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllItemCitations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleEndNoteSelectAllItemCitations", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> TitleEndNoteSelectAllItemCitationsAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Title_IdentifierSelectByTitleID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Title_Identifier[] Title_IdentifierSelectByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Title_IdentifierSelectByTitleID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title_Identifier[]> Title_IdentifierSelectByTitleIDAsync(int titleID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByBarCode", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item ItemSelectByBarCode(string barCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByBarCode", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemSelectByBarCodeAsync(string barCode);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByTitleID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectByTitleID(int titleID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectByTitleID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectByTitleIDAsync(int titleID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdateStatusAsync(int itemID, int itemStatusID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdatePaginationStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdatePaginationStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdatePaginationStatusAsync(int itemID, int paginationStatusID, int userID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectAuto", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item ItemSelectAuto(int itemID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectAuto", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemSelectAutoAsync(int itemID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithExpiredPageNames", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectWithExpiredPageNamesAsync(int maxAge);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithoutPageNames", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectWithoutPageNames();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectWithoutPageNames", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectWithoutPageNamesAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateLastPageNameLookupDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemUpdateLastPageNameLookupDate", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdateLastPageNameLookupDateAsync(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemCheckForOcrText", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool ItemCheckForOcrText(int itemID, string ocrTextPath);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemCheckForOcrText", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> ItemCheckForOcrTextAsync(int itemID, string ocrTextPath);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string ItemGetNamesXMLByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemGetNamesXMLByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectPublished", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectPublished();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectPublished", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectPublishedAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectRecentlyChanged", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemSelectRecentlyChanged", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectRecentlyChangedAsync(string startDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ExportIAIdentifiers", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string[] ExportIAIdentifiers();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ExportIAIdentifiers", ReplyAction="*")]
-        System.Threading.Tasks.Task<string[]> ExportIAIdentifiersAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectPublished", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Segment[] SegmentSelectPublished();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectPublished", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Segment[]> SegmentSelectPublishedAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectExtended", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Segment SegmentSelectExtended(int segmentID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectExtended", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Segment> SegmentSelectExtendedAsync(int segmentID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogRefreshSinceDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void ItemNameFileLogRefreshSinceDate(System.DateTime startDate);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogRefreshSinceDate", ReplyAction="*")]
-        System.Threading.Tasks.Task ItemNameFileLogRefreshSinceDateAsync(System.DateTime startDate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForCreate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForCreate", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[]> ItemNameFileLogSelectForCreateAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForUpload", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogSelectForUpload", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[]> ItemNameFileLogSelectForUploadAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateCreateDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void ItemNameFileLogUpdateCreateDate(int logID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateCreateDate", ReplyAction="*")]
-        System.Threading.Tasks.Task ItemNameFileLogUpdateCreateDateAsync(int logID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateUploadDate", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void ItemNameFileLogUpdateUploadDate(int logID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ItemNameFileLogUpdateUploadDate", ReplyAction="*")]
-        System.Threading.Tasks.Task ItemNameFileLogUpdateUploadDateAsync(int logID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/VaultSelect", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Vault VaultSelect(int vaultID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/VaultSelect", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Vault> VaultSelectAsync(int vaultID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/InstitutionSelectAuto", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Institution InstitutionSelectAuto(string institutionCode);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/InstitutionSelectAuto", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Institution> InstitutionSelectAutoAsync(string institutionCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SendEmail", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SendEmail", ReplyAction="*")]
-        System.Threading.Tasks.Task<bool> SendEmailAsync(string from, string[] to, string[] cc, string[] bcc, string subject, string body);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForTitle", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string GetMODSRecordForTitle(int titleId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForTitle", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> GetMODSRecordForTitleAsync(int titleId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForItem", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string GetMODSRecordForItem(int itemId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForItem", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> GetMODSRecordForItemAsync(int itemId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForSegment", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string GetMODSRecordForSegment(int segmentId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetMODSRecordForSegment", ReplyAction="*")]
-        System.Threading.Tasks.Task<string> GetMODSRecordForSegmentAsync(int segmentId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOISelectSubmitted", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOISelectSubmitted", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> DOISelectSubmittedAsync(int minutesSinceSubmit);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectWithoutSubmittedDOI", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/TitleSelectWithoutSubmittedDOI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> TitleSelectWithoutSubmittedDOIAsync(int numberToReturn);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectWithoutSubmittedDOI", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/SegmentSelectWithoutSubmittedDOI", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIInsertAuto", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIInsertAuto", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid);
         
         // CODEGEN: Parameter 'setValid' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateStatus", ReplyAction="*")]
@@ -670,72 +326,151 @@ namespace BHLFlickrTagHarvest.BHLWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusResponse DOIUpdateStatus(BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusResponse> DOIUpdateStatusAsync(BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateDOIName", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateDOIName", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateBatchID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/DOIUpdateBatchID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageSave", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageSave", ReplyAction="*")]
-        System.Threading.Tasks.Task IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageDeleteAllForPage", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IndicatedPageDeleteAllForPage", ReplyAction="*")]
-        System.Threading.Tasks.Task IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Page[] PageSelectByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectByItemIDAsync(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectFileNameByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Page[] PageSelectFileNameByItemID(int itemID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectFileNameByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectFileNameByItemIDAsync(int itemID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageMetadataSelectByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Page[] PageMetadataSelectByItemID(int itemID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageMetadataSelectByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageMetadataSelectByItemIDAsync(int itemID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithExpiredPageNamesByItemID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge);
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNamesByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNamesByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageSelectWithoutPageNames", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNames();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateYear", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void PageUpdateYear(int[] pageIDs, string year, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateVolume", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void PageUpdateVolume(int[] pageIDs, string volume, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateIssue", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageUpdateLastPageNameLookupDate", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void PageUpdateLastPageNameLookupDate(int pageID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageCheckForOcrText", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        bool PageCheckForOcrText(int pageID, string ocrTextLocation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectRandom", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectRandom(int numberToReturn);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrSelectAll", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectAll();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageNameUpdateList", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        int[] PageNameUpdateList(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/NamePageDeleteByItemID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void NamePageDeleteByItemID(int itemID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageTypeSelectAll", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PageType[] PageTypeSelectAll();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeSave", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/Page_PageTypeDeleteAllForPage", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusPending", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        int GetPaginationStatusPending();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusInProgress", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        int GetPaginationStatusInProgress();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusComplete", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        int GetPaginationStatusComplete();
+        
+        // CODEGEN: Parameter 'paginationStatusID' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'System.Xml.Serialization.XmlElementAttribute'.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/GetPaginationStatusString", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse GetPaginationStatusString(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForFileCreation", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForFileCreation();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectForDeletion", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForDeletion();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PDFSelectDuplicateForPdfID", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
+        BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectDuplicateForPdfID(int pdfId);
     }
     
     /// <remarks/>
@@ -744,120 +479,82 @@ namespace BHLFlickrTagHarvest.BHLWS {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class Page : @__Page {
-        
-        private string indicatedPagesField;
-        
-        private string pageTypesField;
-        
-        private string folderShareField;
-        
-        private string webVirtualDirectoryField;
-        
-        private string barCodeField;
-        
-        private string ocrFolderShareField;
-        
-        private string fileRootFolderField;
+    public partial class PageSummaryView : @__PageSummaryView {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageSummaryView : CustomObjectBase {
         
         private string mARCBibIDField;
         
-        private string shortTitleField;
+        private int titleIDField;
+        
+        private System.Nullable<int> redirectTitleIDField;
+        
+        private string fullTitleField;
         
         private bool rareBooksField;
         
-        private System.Nullable<int> segmentIDField;
+        private string shortTitleField;
         
-        private string webDisplayField;
+        private string sortTitleField;
         
-        private string flickrURLField;
+        private string partNumberField;
+        
+        private string partNameField;
+        
+        private int itemStatusIDField;
+        
+        private int itemIDField;
+        
+        private System.Nullable<int> redirectItemIDField;
+        
+        private int primaryTitleIDField;
+        
+        private string barCodeField;
+        
+        private System.Nullable<int> pDFSizeField;
+        
+        private string volumeField;
+        
+        private string fileRootFolderField;
+        
+        private System.Nullable<short> itemSequenceField;
+        
+        private int pageIDField;
+        
+        private string fileNamePrefixField;
+        
+        private string pageDescriptionField;
+        
+        private System.Nullable<int> sequenceOrderField;
+        
+        private bool illustrationField;
+        
+        private bool activeField;
+        
+        private string externalURLField;
+        
+        private string externalBaseURLField;
+        
+        private string altExternalURLField;
+        
+        private string webVirtualDirectoryField;
+        
+        private string oCRFolderShareField;
+        
+        private string downloadUrlField;
+        
+        private string imageServerUrlFormatField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string IndicatedPages {
-            get {
-                return this.indicatedPagesField;
-            }
-            set {
-                this.indicatedPagesField = value;
-                this.RaisePropertyChanged("IndicatedPages");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string PageTypes {
-            get {
-                return this.pageTypesField;
-            }
-            set {
-                this.pageTypesField = value;
-                this.RaisePropertyChanged("PageTypes");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string FolderShare {
-            get {
-                return this.folderShareField;
-            }
-            set {
-                this.folderShareField = value;
-                this.RaisePropertyChanged("FolderShare");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string WebVirtualDirectory {
-            get {
-                return this.webVirtualDirectoryField;
-            }
-            set {
-                this.webVirtualDirectoryField = value;
-                this.RaisePropertyChanged("WebVirtualDirectory");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string BarCode {
-            get {
-                return this.barCodeField;
-            }
-            set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string OcrFolderShare {
-            get {
-                return this.ocrFolderShareField;
-            }
-            set {
-                this.ocrFolderShareField = value;
-                this.RaisePropertyChanged("OcrFolderShare");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string FileRootFolder {
-            get {
-                return this.fileRootFolderField;
-            }
-            set {
-                this.fileRootFolderField = value;
-                this.RaisePropertyChanged("FileRootFolder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
         public string MARCBibID {
             get {
                 return this.mARCBibIDField;
@@ -869,19 +566,43 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string ShortTitle {
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int TitleID {
             get {
-                return this.shortTitleField;
+                return this.titleIDField;
             }
             set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
+        public System.Nullable<int> RedirectTitleID {
+            get {
+                return this.redirectTitleIDField;
+            }
+            set {
+                this.redirectTitleIDField = value;
+                this.RaisePropertyChanged("RedirectTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string FullTitle {
+            get {
+                return this.fullTitleField;
+            }
+            set {
+                this.fullTitleField = value;
+                this.RaisePropertyChanged("FullTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
         public bool RareBooks {
             get {
                 return this.rareBooksField;
@@ -893,113 +614,67 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
-        public System.Nullable<int> SegmentID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string ShortTitle {
             get {
-                return this.segmentIDField;
+                return this.shortTitleField;
             }
             set {
-                this.segmentIDField = value;
-                this.RaisePropertyChanged("SegmentID");
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string WebDisplay {
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string SortTitle {
             get {
-                return this.webDisplayField;
+                return this.sortTitleField;
             }
             set {
-                this.webDisplayField = value;
-                this.RaisePropertyChanged("WebDisplay");
+                this.sortTitleField = value;
+                this.RaisePropertyChanged("SortTitle");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public string FlickrURL {
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string PartNumber {
             get {
-                return this.flickrURLField;
+                return this.partNumberField;
             }
             set {
-                this.flickrURLField = value;
-                this.RaisePropertyChanged("FlickrURL");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__Page : CustomObjectBase {
-        
-        private int pageIDField;
-        
-        private int itemIDField;
-        
-        private string fileNamePrefixField;
-        
-        private System.Nullable<int> sequenceOrderField;
-        
-        private string pageDescriptionField;
-        
-        private bool illustrationField;
-        
-        private string noteField;
-        
-        private System.Nullable<int> fileSize_TempField;
-        
-        private string fileExtensionField;
-        
-        private bool activeField;
-        
-        private string yearField;
-        
-        private string seriesField;
-        
-        private string volumeField;
-        
-        private string issueField;
-        
-        private string externalURLField;
-        
-        private string altExternalURLField;
-        
-        private string issuePrefixField;
-        
-        private System.Nullable<System.DateTime> lastPageNameLookupDateField;
-        
-        private System.Nullable<int> paginationUserIDField;
-        
-        private System.Nullable<System.DateTime> paginationDateField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        private System.Nullable<System.DateTime> lastModifiedDateField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<int> lastModifiedUserIDField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
+                this.partNumberField = value;
+                this.RaisePropertyChanged("PartNumber");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string PartName {
+            get {
+                return this.partNameField;
+            }
+            set {
+                this.partNameField = value;
+                this.RaisePropertyChanged("PartName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public int ItemStatusID {
+            get {
+                return this.itemStatusIDField;
+            }
+            set {
+                this.itemStatusIDField = value;
+                this.RaisePropertyChanged("ItemStatusID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public int ItemID {
             get {
                 return this.itemIDField;
@@ -1011,127 +686,55 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string FileNamePrefix {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
+        public System.Nullable<int> RedirectItemID {
             get {
-                return this.fileNamePrefixField;
+                return this.redirectItemIDField;
             }
             set {
-                this.fileNamePrefixField = value;
-                this.RaisePropertyChanged("FileNamePrefix");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public System.Nullable<int> SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string PageDescription {
-            get {
-                return this.pageDescriptionField;
-            }
-            set {
-                this.pageDescriptionField = value;
-                this.RaisePropertyChanged("PageDescription");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public bool Illustration {
-            get {
-                return this.illustrationField;
-            }
-            set {
-                this.illustrationField = value;
-                this.RaisePropertyChanged("Illustration");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string Note {
-            get {
-                return this.noteField;
-            }
-            set {
-                this.noteField = value;
-                this.RaisePropertyChanged("Note");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
-        public System.Nullable<int> FileSize_Temp {
-            get {
-                return this.fileSize_TempField;
-            }
-            set {
-                this.fileSize_TempField = value;
-                this.RaisePropertyChanged("FileSize_Temp");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string FileExtension {
-            get {
-                return this.fileExtensionField;
-            }
-            set {
-                this.fileExtensionField = value;
-                this.RaisePropertyChanged("FileExtension");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public bool Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-                this.RaisePropertyChanged("Active");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public string Year {
-            get {
-                return this.yearField;
-            }
-            set {
-                this.yearField = value;
-                this.RaisePropertyChanged("Year");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
-        public string Series {
-            get {
-                return this.seriesField;
-            }
-            set {
-                this.seriesField = value;
-                this.RaisePropertyChanged("Series");
+                this.redirectItemIDField = value;
+                this.RaisePropertyChanged("RedirectItemID");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public int PrimaryTitleID {
+            get {
+                return this.primaryTitleIDField;
+            }
+            set {
+                this.primaryTitleIDField = value;
+                this.RaisePropertyChanged("PrimaryTitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string BarCode {
+            get {
+                return this.barCodeField;
+            }
+            set {
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
+        public System.Nullable<int> PDFSize {
+            get {
+                return this.pDFSizeField;
+            }
+            set {
+                this.pDFSizeField = value;
+                this.RaisePropertyChanged("PDFSize");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public string Volume {
             get {
                 return this.volumeField;
@@ -1143,19 +746,103 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public string Issue {
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string FileRootFolder {
             get {
-                return this.issueField;
+                return this.fileRootFolderField;
             }
             set {
-                this.issueField = value;
-                this.RaisePropertyChanged("Issue");
+                this.fileRootFolderField = value;
+                this.RaisePropertyChanged("FileRootFolder");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public System.Nullable<short> ItemSequence {
+            get {
+                return this.itemSequenceField;
+            }
+            set {
+                this.itemSequenceField = value;
+                this.RaisePropertyChanged("ItemSequence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public string FileNamePrefix {
+            get {
+                return this.fileNamePrefixField;
+            }
+            set {
+                this.fileNamePrefixField = value;
+                this.RaisePropertyChanged("FileNamePrefix");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public string PageDescription {
+            get {
+                return this.pageDescriptionField;
+            }
+            set {
+                this.pageDescriptionField = value;
+                this.RaisePropertyChanged("PageDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        public System.Nullable<int> SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public bool Illustration {
+            get {
+                return this.illustrationField;
+            }
+            set {
+                this.illustrationField = value;
+                this.RaisePropertyChanged("Illustration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public bool Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+                this.RaisePropertyChanged("Active");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
         public string ExternalURL {
             get {
                 return this.externalURLField;
@@ -1167,7 +854,19 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string ExternalBaseURL {
+            get {
+                return this.externalBaseURLField;
+            }
+            set {
+                this.externalBaseURLField = value;
+                this.RaisePropertyChanged("ExternalBaseURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
         public string AltExternalURL {
             get {
                 return this.altExternalURLField;
@@ -1179,103 +878,59 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string IssuePrefix {
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string WebVirtualDirectory {
             get {
-                return this.issuePrefixField;
+                return this.webVirtualDirectoryField;
             }
             set {
-                this.issuePrefixField = value;
-                this.RaisePropertyChanged("IssuePrefix");
+                this.webVirtualDirectoryField = value;
+                this.RaisePropertyChanged("WebVirtualDirectory");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
-        public System.Nullable<System.DateTime> LastPageNameLookupDate {
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public string OCRFolderShare {
             get {
-                return this.lastPageNameLookupDateField;
+                return this.oCRFolderShareField;
             }
             set {
-                this.lastPageNameLookupDateField = value;
-                this.RaisePropertyChanged("LastPageNameLookupDate");
+                this.oCRFolderShareField = value;
+                this.RaisePropertyChanged("OCRFolderShare");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
-        public System.Nullable<int> PaginationUserID {
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public string DownloadUrl {
             get {
-                return this.paginationUserIDField;
+                return this.downloadUrlField;
             }
             set {
-                this.paginationUserIDField = value;
-                this.RaisePropertyChanged("PaginationUserID");
+                this.downloadUrlField = value;
+                this.RaisePropertyChanged("DownloadUrl");
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
-        public System.Nullable<System.DateTime> PaginationDate {
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public string ImageServerUrlFormat {
             get {
-                return this.paginationDateField;
+                return this.imageServerUrlFormatField;
             }
             set {
-                this.paginationDateField = value;
-                this.RaisePropertyChanged("PaginationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
-        public System.Nullable<System.DateTime> LastModifiedDate {
-            get {
-                return this.lastModifiedDateField;
-            }
-            set {
-                this.lastModifiedDateField = value;
-                this.RaisePropertyChanged("LastModifiedDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
-        public System.Nullable<int> LastModifiedUserID {
-            get {
-                return this.lastModifiedUserIDField;
-            }
-            set {
-                this.lastModifiedUserIDField = value;
-                this.RaisePropertyChanged("LastModifiedUserID");
+                this.imageServerUrlFormatField = value;
+                this.RaisePropertyChanged("ImageServerUrlFormat");
             }
         }
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Institution))]
@@ -1314,6 +969,8 @@ namespace BHLFlickrTagHarvest.BHLWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleItem))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Item))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__TitleCollection))]
@@ -1348,16 +1005,10 @@ namespace BHLFlickrTagHarvest.BHLWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__AnnotatedTitle))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PDF))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__Page))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__PageSummaryView))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -2097,6 +1748,198 @@ namespace BHLFlickrTagHarvest.BHLWS {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageType : CustomObjectBase {
+        
+        private int pageTypeIDField;
+        
+        private string pageTypeNameField;
+        
+        private string pageTypeDescriptionField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageTypeID {
+            get {
+                return this.pageTypeIDField;
+            }
+            set {
+                this.pageTypeIDField = value;
+                this.RaisePropertyChanged("PageTypeID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string PageTypeName {
+            get {
+                return this.pageTypeNameField;
+            }
+            set {
+                this.pageTypeNameField = value;
+                this.RaisePropertyChanged("PageTypeName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PageTypeDescription {
+            get {
+                return this.pageTypeDescriptionField;
+            }
+            set {
+                this.pageTypeDescriptionField = value;
+                this.RaisePropertyChanged("PageTypeDescription");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageType : @__PageType {
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__PageFlickr : CustomObjectBase {
+        
+        private int pageFlickrIDField;
+        
+        private int pageIDField;
+        
+        private string flickrURLField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageFlickrID {
+            get {
+                return this.pageFlickrIDField;
+            }
+            set {
+                this.pageFlickrIDField = value;
+                this.RaisePropertyChanged("PageFlickrID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FlickrURL {
+            get {
+                return this.flickrURLField;
+            }
+            set {
+                this.flickrURLField = value;
+                this.RaisePropertyChanged("FlickrURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class PageFlickr : @__PageFlickr {
+        
+        private string shortTitleField;
+        
+        private string indicatedPageField;
+        
+        private string pageTypeField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string IndicatedPage {
+            get {
+                return this.indicatedPageField;
+            }
+            set {
+                this.indicatedPageField = value;
+                this.RaisePropertyChanged("IndicatedPage");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string PageType {
+            get {
+                return this.pageTypeField;
+            }
+            set {
+                this.pageTypeField = value;
+                this.RaisePropertyChanged("PageType");
             }
         }
     }
@@ -6706,6 +6549,543 @@ namespace BHLFlickrTagHarvest.BHLWS {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public abstract partial class @__Page : CustomObjectBase {
+        
+        private int pageIDField;
+        
+        private int itemIDField;
+        
+        private string fileNamePrefixField;
+        
+        private System.Nullable<int> sequenceOrderField;
+        
+        private string pageDescriptionField;
+        
+        private bool illustrationField;
+        
+        private string noteField;
+        
+        private System.Nullable<int> fileSize_TempField;
+        
+        private string fileExtensionField;
+        
+        private bool activeField;
+        
+        private string yearField;
+        
+        private string seriesField;
+        
+        private string volumeField;
+        
+        private string issueField;
+        
+        private string externalURLField;
+        
+        private string altExternalURLField;
+        
+        private string issuePrefixField;
+        
+        private System.Nullable<System.DateTime> lastPageNameLookupDateField;
+        
+        private System.Nullable<int> paginationUserIDField;
+        
+        private System.Nullable<System.DateTime> paginationDateField;
+        
+        private System.Nullable<System.DateTime> creationDateField;
+        
+        private System.Nullable<System.DateTime> lastModifiedDateField;
+        
+        private System.Nullable<int> creationUserIDField;
+        
+        private System.Nullable<int> lastModifiedUserIDField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public int PageID {
+            get {
+                return this.pageIDField;
+            }
+            set {
+                this.pageIDField = value;
+                this.RaisePropertyChanged("PageID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public int ItemID {
+            get {
+                return this.itemIDField;
+            }
+            set {
+                this.itemIDField = value;
+                this.RaisePropertyChanged("ItemID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FileNamePrefix {
+            get {
+                return this.fileNamePrefixField;
+            }
+            set {
+                this.fileNamePrefixField = value;
+                this.RaisePropertyChanged("FileNamePrefix");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
+        public System.Nullable<int> SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+                this.RaisePropertyChanged("SequenceOrder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string PageDescription {
+            get {
+                return this.pageDescriptionField;
+            }
+            set {
+                this.pageDescriptionField = value;
+                this.RaisePropertyChanged("PageDescription");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public bool Illustration {
+            get {
+                return this.illustrationField;
+            }
+            set {
+                this.illustrationField = value;
+                this.RaisePropertyChanged("Illustration");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string Note {
+            get {
+                return this.noteField;
+            }
+            set {
+                this.noteField = value;
+                this.RaisePropertyChanged("Note");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=7)]
+        public System.Nullable<int> FileSize_Temp {
+            get {
+                return this.fileSize_TempField;
+            }
+            set {
+                this.fileSize_TempField = value;
+                this.RaisePropertyChanged("FileSize_Temp");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string FileExtension {
+            get {
+                return this.fileExtensionField;
+            }
+            set {
+                this.fileExtensionField = value;
+                this.RaisePropertyChanged("FileExtension");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public bool Active {
+            get {
+                return this.activeField;
+            }
+            set {
+                this.activeField = value;
+                this.RaisePropertyChanged("Active");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        public string Year {
+            get {
+                return this.yearField;
+            }
+            set {
+                this.yearField = value;
+                this.RaisePropertyChanged("Year");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string Series {
+            get {
+                return this.seriesField;
+            }
+            set {
+                this.seriesField = value;
+                this.RaisePropertyChanged("Series");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string Volume {
+            get {
+                return this.volumeField;
+            }
+            set {
+                this.volumeField = value;
+                this.RaisePropertyChanged("Volume");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public string Issue {
+            get {
+                return this.issueField;
+            }
+            set {
+                this.issueField = value;
+                this.RaisePropertyChanged("Issue");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public string ExternalURL {
+            get {
+                return this.externalURLField;
+            }
+            set {
+                this.externalURLField = value;
+                this.RaisePropertyChanged("ExternalURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        public string AltExternalURL {
+            get {
+                return this.altExternalURLField;
+            }
+            set {
+                this.altExternalURLField = value;
+                this.RaisePropertyChanged("AltExternalURL");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string IssuePrefix {
+            get {
+                return this.issuePrefixField;
+            }
+            set {
+                this.issuePrefixField = value;
+                this.RaisePropertyChanged("IssuePrefix");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public System.Nullable<System.DateTime> LastPageNameLookupDate {
+            get {
+                return this.lastPageNameLookupDateField;
+            }
+            set {
+                this.lastPageNameLookupDateField = value;
+                this.RaisePropertyChanged("LastPageNameLookupDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
+        public System.Nullable<int> PaginationUserID {
+            get {
+                return this.paginationUserIDField;
+            }
+            set {
+                this.paginationUserIDField = value;
+                this.RaisePropertyChanged("PaginationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
+        public System.Nullable<System.DateTime> PaginationDate {
+            get {
+                return this.paginationDateField;
+            }
+            set {
+                this.paginationDateField = value;
+                this.RaisePropertyChanged("PaginationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
+        public System.Nullable<System.DateTime> CreationDate {
+            get {
+                return this.creationDateField;
+            }
+            set {
+                this.creationDateField = value;
+                this.RaisePropertyChanged("CreationDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
+        public System.Nullable<System.DateTime> LastModifiedDate {
+            get {
+                return this.lastModifiedDateField;
+            }
+            set {
+                this.lastModifiedDateField = value;
+                this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
+        public System.Nullable<int> CreationUserID {
+            get {
+                return this.creationUserIDField;
+            }
+            set {
+                this.creationUserIDField = value;
+                this.RaisePropertyChanged("CreationUserID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
+        public System.Nullable<int> LastModifiedUserID {
+            get {
+                return this.lastModifiedUserIDField;
+            }
+            set {
+                this.lastModifiedUserIDField = value;
+                this.RaisePropertyChanged("LastModifiedUserID");
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
+    public partial class Page : @__Page {
+        
+        private string indicatedPagesField;
+        
+        private string pageTypesField;
+        
+        private string folderShareField;
+        
+        private string webVirtualDirectoryField;
+        
+        private string barCodeField;
+        
+        private string ocrFolderShareField;
+        
+        private string fileRootFolderField;
+        
+        private string mARCBibIDField;
+        
+        private string shortTitleField;
+        
+        private bool rareBooksField;
+        
+        private System.Nullable<int> segmentIDField;
+        
+        private string webDisplayField;
+        
+        private string flickrURLField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
+        public string IndicatedPages {
+            get {
+                return this.indicatedPagesField;
+            }
+            set {
+                this.indicatedPagesField = value;
+                this.RaisePropertyChanged("IndicatedPages");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
+        public string PageTypes {
+            get {
+                return this.pageTypesField;
+            }
+            set {
+                this.pageTypesField = value;
+                this.RaisePropertyChanged("PageTypes");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string FolderShare {
+            get {
+                return this.folderShareField;
+            }
+            set {
+                this.folderShareField = value;
+                this.RaisePropertyChanged("FolderShare");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
+        public string WebVirtualDirectory {
+            get {
+                return this.webVirtualDirectoryField;
+            }
+            set {
+                this.webVirtualDirectoryField = value;
+                this.RaisePropertyChanged("WebVirtualDirectory");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        public string BarCode {
+            get {
+                return this.barCodeField;
+            }
+            set {
+                this.barCodeField = value;
+                this.RaisePropertyChanged("BarCode");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        public string OcrFolderShare {
+            get {
+                return this.ocrFolderShareField;
+            }
+            set {
+                this.ocrFolderShareField = value;
+                this.RaisePropertyChanged("OcrFolderShare");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        public string FileRootFolder {
+            get {
+                return this.fileRootFolderField;
+            }
+            set {
+                this.fileRootFolderField = value;
+                this.RaisePropertyChanged("FileRootFolder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string MARCBibID {
+            get {
+                return this.mARCBibIDField;
+            }
+            set {
+                this.mARCBibIDField = value;
+                this.RaisePropertyChanged("MARCBibID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        public bool RareBooks {
+            get {
+                return this.rareBooksField;
+            }
+            set {
+                this.rareBooksField = value;
+                this.RaisePropertyChanged("RareBooks");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        public System.Nullable<int> SegmentID {
+            get {
+                return this.segmentIDField;
+            }
+            set {
+                this.segmentIDField = value;
+                this.RaisePropertyChanged("SegmentID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        public string WebDisplay {
+            get {
+                return this.webDisplayField;
+            }
+            set {
+                this.webDisplayField = value;
+                this.RaisePropertyChanged("WebDisplay");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        public string FlickrURL {
+            get {
+                return this.flickrURLField;
+            }
+            set {
+                this.flickrURLField = value;
+                this.RaisePropertyChanged("FlickrURL");
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
@@ -10010,459 +10390,6 @@ namespace BHLFlickrTagHarvest.BHLWS {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageSummaryView : CustomObjectBase {
-        
-        private string mARCBibIDField;
-        
-        private int titleIDField;
-        
-        private System.Nullable<int> redirectTitleIDField;
-        
-        private string fullTitleField;
-        
-        private bool rareBooksField;
-        
-        private string shortTitleField;
-        
-        private string sortTitleField;
-        
-        private string partNumberField;
-        
-        private string partNameField;
-        
-        private int itemStatusIDField;
-        
-        private int itemIDField;
-        
-        private System.Nullable<int> redirectItemIDField;
-        
-        private int primaryTitleIDField;
-        
-        private string barCodeField;
-        
-        private System.Nullable<int> pDFSizeField;
-        
-        private string volumeField;
-        
-        private string fileRootFolderField;
-        
-        private System.Nullable<short> itemSequenceField;
-        
-        private int pageIDField;
-        
-        private string fileNamePrefixField;
-        
-        private string pageDescriptionField;
-        
-        private System.Nullable<int> sequenceOrderField;
-        
-        private bool illustrationField;
-        
-        private bool activeField;
-        
-        private string externalURLField;
-        
-        private string externalBaseURLField;
-        
-        private string altExternalURLField;
-        
-        private string webVirtualDirectoryField;
-        
-        private string oCRFolderShareField;
-        
-        private string downloadUrlField;
-        
-        private string imageServerUrlFormatField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string MARCBibID {
-            get {
-                return this.mARCBibIDField;
-            }
-            set {
-                this.mARCBibIDField = value;
-                this.RaisePropertyChanged("MARCBibID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=2)]
-        public System.Nullable<int> RedirectTitleID {
-            get {
-                return this.redirectTitleIDField;
-            }
-            set {
-                this.redirectTitleIDField = value;
-                this.RaisePropertyChanged("RedirectTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string FullTitle {
-            get {
-                return this.fullTitleField;
-            }
-            set {
-                this.fullTitleField = value;
-                this.RaisePropertyChanged("FullTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public bool RareBooks {
-            get {
-                return this.rareBooksField;
-            }
-            set {
-                this.rareBooksField = value;
-                this.RaisePropertyChanged("RareBooks");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
-        public string SortTitle {
-            get {
-                return this.sortTitleField;
-            }
-            set {
-                this.sortTitleField = value;
-                this.RaisePropertyChanged("SortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string PartNumber {
-            get {
-                return this.partNumberField;
-            }
-            set {
-                this.partNumberField = value;
-                this.RaisePropertyChanged("PartNumber");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
-        public string PartName {
-            get {
-                return this.partNameField;
-            }
-            set {
-                this.partNameField = value;
-                this.RaisePropertyChanged("PartName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
-        public int ItemStatusID {
-            get {
-                return this.itemStatusIDField;
-            }
-            set {
-                this.itemStatusIDField = value;
-                this.RaisePropertyChanged("ItemStatusID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
-        public int ItemID {
-            get {
-                return this.itemIDField;
-            }
-            set {
-                this.itemIDField = value;
-                this.RaisePropertyChanged("ItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=11)]
-        public System.Nullable<int> RedirectItemID {
-            get {
-                return this.redirectItemIDField;
-            }
-            set {
-                this.redirectItemIDField = value;
-                this.RaisePropertyChanged("RedirectItemID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
-        public int PrimaryTitleID {
-            get {
-                return this.primaryTitleIDField;
-            }
-            set {
-                this.primaryTitleIDField = value;
-                this.RaisePropertyChanged("PrimaryTitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
-        public string BarCode {
-            get {
-                return this.barCodeField;
-            }
-            set {
-                this.barCodeField = value;
-                this.RaisePropertyChanged("BarCode");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=14)]
-        public System.Nullable<int> PDFSize {
-            get {
-                return this.pDFSizeField;
-            }
-            set {
-                this.pDFSizeField = value;
-                this.RaisePropertyChanged("PDFSize");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
-        public string Volume {
-            get {
-                return this.volumeField;
-            }
-            set {
-                this.volumeField = value;
-                this.RaisePropertyChanged("Volume");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
-        public string FileRootFolder {
-            get {
-                return this.fileRootFolderField;
-            }
-            set {
-                this.fileRootFolderField = value;
-                this.RaisePropertyChanged("FileRootFolder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
-        public System.Nullable<short> ItemSequence {
-            get {
-                return this.itemSequenceField;
-            }
-            set {
-                this.itemSequenceField = value;
-                this.RaisePropertyChanged("ItemSequence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public string FileNamePrefix {
-            get {
-                return this.fileNamePrefixField;
-            }
-            set {
-                this.fileNamePrefixField = value;
-                this.RaisePropertyChanged("FileNamePrefix");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public string PageDescription {
-            get {
-                return this.pageDescriptionField;
-            }
-            set {
-                this.pageDescriptionField = value;
-                this.RaisePropertyChanged("PageDescription");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
-        public System.Nullable<int> SequenceOrder {
-            get {
-                return this.sequenceOrderField;
-            }
-            set {
-                this.sequenceOrderField = value;
-                this.RaisePropertyChanged("SequenceOrder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public bool Illustration {
-            get {
-                return this.illustrationField;
-            }
-            set {
-                this.illustrationField = value;
-                this.RaisePropertyChanged("Illustration");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public bool Active {
-            get {
-                return this.activeField;
-            }
-            set {
-                this.activeField = value;
-                this.RaisePropertyChanged("Active");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public string ExternalURL {
-            get {
-                return this.externalURLField;
-            }
-            set {
-                this.externalURLField = value;
-                this.RaisePropertyChanged("ExternalURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public string ExternalBaseURL {
-            get {
-                return this.externalBaseURLField;
-            }
-            set {
-                this.externalBaseURLField = value;
-                this.RaisePropertyChanged("ExternalBaseURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public string AltExternalURL {
-            get {
-                return this.altExternalURLField;
-            }
-            set {
-                this.altExternalURLField = value;
-                this.RaisePropertyChanged("AltExternalURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
-        public string WebVirtualDirectory {
-            get {
-                return this.webVirtualDirectoryField;
-            }
-            set {
-                this.webVirtualDirectoryField = value;
-                this.RaisePropertyChanged("WebVirtualDirectory");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
-        public string OCRFolderShare {
-            get {
-                return this.oCRFolderShareField;
-            }
-            set {
-                this.oCRFolderShareField = value;
-                this.RaisePropertyChanged("OCRFolderShare");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
-        public string DownloadUrl {
-            get {
-                return this.downloadUrlField;
-            }
-            set {
-                this.downloadUrlField = value;
-                this.RaisePropertyChanged("DownloadUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
-        public string ImageServerUrlFormat {
-            get {
-                return this.imageServerUrlFormatField;
-            }
-            set {
-                this.imageServerUrlFormatField = value;
-                this.RaisePropertyChanged("ImageServerUrlFormat");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageSummaryView : @__PageSummaryView {
-    }
-    
-    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
     [System.SerializableAttribute()]
@@ -10761,233 +10688,6 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
     }
     
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageType : CustomObjectBase {
-        
-        private int pageTypeIDField;
-        
-        private string pageTypeNameField;
-        
-        private string pageTypeDescriptionField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PageTypeID {
-            get {
-                return this.pageTypeIDField;
-            }
-            set {
-                this.pageTypeIDField = value;
-                this.RaisePropertyChanged("PageTypeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string PageTypeName {
-            get {
-                return this.pageTypeNameField;
-            }
-            set {
-                this.pageTypeNameField = value;
-                this.RaisePropertyChanged("PageTypeName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string PageTypeDescription {
-            get {
-                return this.pageTypeDescriptionField;
-            }
-            set {
-                this.pageTypeDescriptionField = value;
-                this.RaisePropertyChanged("PageTypeDescription");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageType : @__PageType {
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public abstract partial class @__PageFlickr : CustomObjectBase {
-        
-        private int pageFlickrIDField;
-        
-        private int pageIDField;
-        
-        private string flickrURLField;
-        
-        private System.Nullable<int> creationUserIDField;
-        
-        private System.Nullable<System.DateTime> creationDateField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int PageFlickrID {
-            get {
-                return this.pageFlickrIDField;
-            }
-            set {
-                this.pageFlickrIDField = value;
-                this.RaisePropertyChanged("PageFlickrID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public int PageID {
-            get {
-                return this.pageIDField;
-            }
-            set {
-                this.pageIDField = value;
-                this.RaisePropertyChanged("PageID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string FlickrURL {
-            get {
-                return this.flickrURLField;
-            }
-            set {
-                this.flickrURLField = value;
-                this.RaisePropertyChanged("FlickrURL");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=3)]
-        public System.Nullable<int> CreationUserID {
-            get {
-                return this.creationUserIDField;
-            }
-            set {
-                this.creationUserIDField = value;
-                this.RaisePropertyChanged("CreationUserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=4)]
-        public System.Nullable<System.DateTime> CreationDate {
-            get {
-                return this.creationDateField;
-            }
-            set {
-                this.creationDateField = value;
-                this.RaisePropertyChanged("CreationDate");
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.mobot.org/")]
-    public partial class PageFlickr : @__PageFlickr {
-        
-        private string shortTitleField;
-        
-        private string indicatedPageField;
-        
-        private string pageTypeField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string IndicatedPage {
-            get {
-                return this.indicatedPageField;
-            }
-            set {
-                this.indicatedPageField = value;
-                this.RaisePropertyChanged("IndicatedPage");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string PageType {
-            get {
-                return this.pageTypeField;
-            }
-            set {
-                this.pageTypeField = value;
-                this.RaisePropertyChanged("PageType");
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusString", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
-    public partial class GetPaginationStatusStringRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> paginationStatusID;
-        
-        public GetPaginationStatusStringRequest() {
-        }
-        
-        public GetPaginationStatusStringRequest(System.Nullable<int> paginationStatusID) {
-            this.paginationStatusID = paginationStatusID;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusStringResponse", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
-    public partial class GetPaginationStatusStringResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
-        public string GetPaginationStatusStringResult;
-        
-        public GetPaginationStatusStringResponse() {
-        }
-        
-        public GetPaginationStatusStringResponse(string GetPaginationStatusStringResult) {
-            this.GetPaginationStatusStringResult = GetPaginationStatusStringResult;
-        }
-    }
-    
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -11035,6 +10735,41 @@ namespace BHLFlickrTagHarvest.BHLWS {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusString", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
+    public partial class GetPaginationStatusStringRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> paginationStatusID;
+        
+        public GetPaginationStatusStringRequest() {
+        }
+        
+        public GetPaginationStatusStringRequest(System.Nullable<int> paginationStatusID) {
+            this.paginationStatusID = paginationStatusID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPaginationStatusStringResponse", WrapperNamespace="http://www.mobot.org/", IsWrapped=true)]
+    public partial class GetPaginationStatusStringResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://www.mobot.org/", Order=0)]
+        public string GetPaginationStatusStringResult;
+        
+        public GetPaginationStatusStringResponse() {
+        }
+        
+        public GetPaginationStatusStringResponse(string GetPaginationStatusStringResult) {
+            this.GetPaginationStatusStringResult = GetPaginationStatusStringResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface BHLWSSoapChannel : BHLFlickrTagHarvest.BHLWS.BHLWSSoap, System.ServiceModel.IClientChannel {
     }
@@ -11062,667 +10797,248 @@ namespace BHLFlickrTagHarvest.BHLWS {
                 base(binding, remoteAddress) {
         }
         
-        public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNamesByItemID(int itemID) {
-            return base.Channel.PageSelectWithoutPageNamesByItemID(itemID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithoutPageNamesByItemIDAsync(int itemID) {
-            return base.Channel.PageSelectWithoutPageNamesByItemIDAsync(itemID);
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNames() {
-            return base.Channel.PageSelectWithoutPageNames();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithoutPageNamesAsync() {
-            return base.Channel.PageSelectWithoutPageNamesAsync();
-        }
-        
-        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
-            base.Channel.PageUpdateYear(pageIDs, year, userID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateYearAsync(int[] pageIDs, string year, int userID) {
-            return base.Channel.PageUpdateYearAsync(pageIDs, year, userID);
-        }
-        
-        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
-            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateVolumeAsync(int[] pageIDs, string volume, int userID) {
-            return base.Channel.PageUpdateVolumeAsync(pageIDs, volume, userID);
-        }
-        
-        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateIssueAsync(int[] pageIDs, string issuePrefix, string issue, int userID) {
-            return base.Channel.PageUpdateIssueAsync(pageIDs, issuePrefix, issue, userID);
-        }
-        
-        public void PageUpdateLastPageNameLookupDate(int pageID) {
-            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
-        }
-        
-        public System.Threading.Tasks.Task PageUpdateLastPageNameLookupDateAsync(int pageID) {
-            return base.Channel.PageUpdateLastPageNameLookupDateAsync(pageID);
-        }
-        
-        public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
-            return base.Channel.PageCheckForOcrText(pageID, ocrTextLocation);
-        }
-        
-        public System.Threading.Tasks.Task<bool> PageCheckForOcrTextAsync(int pageID, string ocrTextLocation) {
-            return base.Channel.PageCheckForOcrTextAsync(pageID, ocrTextLocation);
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectRandom(int numberToReturn) {
-            return base.Channel.PageFlickrSelectRandom(numberToReturn);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageFlickr[]> PageFlickrSelectRandomAsync(int numberToReturn) {
-            return base.Channel.PageFlickrSelectRandomAsync(numberToReturn);
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectAll() {
-            return base.Channel.PageFlickrSelectAll();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageFlickr[]> PageFlickrSelectAllAsync() {
-            return base.Channel.PageFlickrSelectAllAsync();
-        }
-        
-        public int[] PageNameUpdateList(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName) {
-            return base.Channel.PageNameUpdateList(pageID, items, sourceName);
-        }
-        
-        public System.Threading.Tasks.Task<int[]> PageNameUpdateListAsync(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName) {
-            return base.Channel.PageNameUpdateListAsync(pageID, items, sourceName);
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PageType[] PageTypeSelectAll() {
-            return base.Channel.PageTypeSelectAll();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageType[]> PageTypeSelectAllAsync() {
-            return base.Channel.PageTypeSelectAllAsync();
-        }
-        
-        public void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID) {
-            base.Channel.Page_PageTypeSave(pageIDs, pageTypeID, userID);
-        }
-        
-        public System.Threading.Tasks.Task Page_PageTypeSaveAsync(int[] pageIDs, int pageTypeID, int userID) {
-            return base.Channel.Page_PageTypeSaveAsync(pageIDs, pageTypeID, userID);
-        }
-        
-        public void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID) {
-            base.Channel.Page_PageTypeDeleteAllForPage(pageIDs, userID);
-        }
-        
-        public System.Threading.Tasks.Task Page_PageTypeDeleteAllForPageAsync(int[] pageIDs, int userID) {
-            return base.Channel.Page_PageTypeDeleteAllForPageAsync(pageIDs, userID);
-        }
-        
-        public int GetPaginationStatusPending() {
-            return base.Channel.GetPaginationStatusPending();
-        }
-        
-        public System.Threading.Tasks.Task<int> GetPaginationStatusPendingAsync() {
-            return base.Channel.GetPaginationStatusPendingAsync();
-        }
-        
-        public int GetPaginationStatusInProgress() {
-            return base.Channel.GetPaginationStatusInProgress();
-        }
-        
-        public System.Threading.Tasks.Task<int> GetPaginationStatusInProgressAsync() {
-            return base.Channel.GetPaginationStatusInProgressAsync();
-        }
-        
-        public int GetPaginationStatusComplete() {
-            return base.Channel.GetPaginationStatusComplete();
-        }
-        
-        public System.Threading.Tasks.Task<int> GetPaginationStatusCompleteAsync() {
-            return base.Channel.GetPaginationStatusCompleteAsync();
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse BHLFlickrTagHarvest.BHLWS.BHLWSSoap.GetPaginationStatusString(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request) {
-            return base.Channel.GetPaginationStatusString(request);
-        }
-        
-        public string GetPaginationStatusString(System.Nullable<int> paginationStatusID) {
-            BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest inValue = new BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest();
-            inValue.paginationStatusID = paginationStatusID;
-            BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse retVal = ((BHLFlickrTagHarvest.BHLWS.BHLWSSoap)(this)).GetPaginationStatusString(inValue);
-            return retVal.GetPaginationStatusStringResult;
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse> BHLFlickrTagHarvest.BHLWS.BHLWSSoap.GetPaginationStatusStringAsync(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request) {
-            return base.Channel.GetPaginationStatusStringAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse> GetPaginationStatusStringAsync(System.Nullable<int> paginationStatusID) {
-            BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest inValue = new BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest();
-            inValue.paginationStatusID = paginationStatusID;
-            return ((BHLFlickrTagHarvest.BHLWS.BHLWSSoap)(this)).GetPaginationStatusStringAsync(inValue);
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForFileCreation() {
-            return base.Channel.PDFSelectForFileCreation();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectForFileCreationAsync() {
-            return base.Channel.PDFSelectForFileCreationAsync();
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForDeletion() {
-            return base.Channel.PDFSelectForDeletion();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectForDeletionAsync() {
-            return base.Channel.PDFSelectForDeletionAsync();
-        }
-        
-        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectDuplicateForPdfID(int pdfId) {
-            return base.Channel.PDFSelectDuplicateForPdfID(pdfId);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF[]> PDFSelectDuplicateForPdfIDAsync(int pdfId) {
-            return base.Channel.PDFSelectDuplicateForPdfIDAsync(pdfId);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.PageSummaryView[] PDFPageSummaryViewSelectByPdfID(int pdfId) {
             return base.Channel.PDFPageSummaryViewSelectByPdfID(pdfId);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PageSummaryView[]> PDFPageSummaryViewSelectByPdfIDAsync(int pdfId) {
-            return base.Channel.PDFPageSummaryViewSelectByPdfIDAsync(pdfId);
         }
         
         public BHLFlickrTagHarvest.BHLWS.PDF PDFUpdateGenerationInfo(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
             return base.Channel.PDFUpdateGenerationInfo(pdfId, fileLocation, fileUrl, numberImagesMissing, numberOcrMissing);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF> PDFUpdateGenerationInfoAsync(int pdfId, string fileLocation, string fileUrl, int numberImagesMissing, int numberOcrMissing) {
-            return base.Channel.PDFUpdateGenerationInfoAsync(pdfId, fileLocation, fileUrl, numberImagesMissing, numberOcrMissing);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.PDF PDFUpdateFileDeletion(int pdfId) {
             return base.Channel.PDFUpdateFileDeletion(pdfId);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.PDF> PDFUpdateFileDeletionAsync(int pdfId) {
-            return base.Channel.PDFUpdateFileDeletionAsync(pdfId);
         }
         
         public bool PDFUpdatePdfStatusProcessing(int pdfid) {
             return base.Channel.PDFUpdatePdfStatusProcessing(pdfid);
         }
         
-        public System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusProcessingAsync(int pdfid) {
-            return base.Channel.PDFUpdatePdfStatusProcessingAsync(pdfid);
-        }
-        
         public bool PDFUpdatePdfStatusGenerated(int pdfid) {
             return base.Channel.PDFUpdatePdfStatusGenerated(pdfid);
-        }
-        
-        public System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusGeneratedAsync(int pdfid) {
-            return base.Channel.PDFUpdatePdfStatusGeneratedAsync(pdfid);
         }
         
         public bool PDFUpdatePdfStatusError(int pdfid) {
             return base.Channel.PDFUpdatePdfStatusError(pdfid);
         }
         
-        public System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusErrorAsync(int pdfid) {
-            return base.Channel.PDFUpdatePdfStatusErrorAsync(pdfid);
-        }
-        
         public bool PDFUpdatePdfStatusRejected(int pdfid) {
             return base.Channel.PDFUpdatePdfStatusRejected(pdfid);
-        }
-        
-        public System.Threading.Tasks.Task<bool> PDFUpdatePdfStatusRejectedAsync(int pdfid) {
-            return base.Channel.PDFUpdatePdfStatusRejectedAsync(pdfid);
         }
         
         public BHLFlickrTagHarvest.BHLWS.AnnotatedTitle AnnotatedTitleSave(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription) {
             return base.Channel.AnnotatedTitleSave(annotationSourceID, externalIdentifier, author, title, edition, volume, publicationDetails, date, location, isBeagleEra, inscription);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedTitle> AnnotatedTitleSaveAsync(int annotationSourceID, string externalIdentifier, string author, string title, string edition, string volume, string publicationDetails, string date, string location, string isBeagleEra, string inscription) {
-            return base.Channel.AnnotatedTitleSaveAsync(annotationSourceID, externalIdentifier, author, title, edition, volume, publicationDetails, date, location, isBeagleEra, inscription);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.AnnotatedItem AnnotatedItemSave(int annotatedTitleId, string externalIdentifier, string volume) {
             return base.Channel.AnnotatedItemSave(annotatedTitleId, externalIdentifier, volume);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedItem> AnnotatedItemSaveAsync(int annotatedTitleId, string externalIdentifier, string volume) {
-            return base.Channel.AnnotatedItemSaveAsync(annotatedTitleId, externalIdentifier, volume);
         }
         
         public BHLFlickrTagHarvest.BHLWS.AnnotatedPage AnnotatedPageSave(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber) {
             return base.Channel.AnnotatedPageSave(annotatedItemId, externalIdentifier, annotatedPageTypeId, pageNumber);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedPage> AnnotatedPageSaveAsync(int annotatedItemId, string externalIdentifier, int annotatedPageTypeId, string pageNumber) {
-            return base.Channel.AnnotatedPageSaveAsync(annotatedItemId, externalIdentifier, annotatedPageTypeId, pageNumber);
-        }
-        
         public bool AnnotatedPageCharacteristicDeleteByPageID(int annotatedPageId) {
             return base.Channel.AnnotatedPageCharacteristicDeleteByPageID(annotatedPageId);
-        }
-        
-        public System.Threading.Tasks.Task<bool> AnnotatedPageCharacteristicDeleteByPageIDAsync(int annotatedPageId) {
-            return base.Channel.AnnotatedPageCharacteristicDeleteByPageIDAsync(annotatedPageId);
         }
         
         public BHLFlickrTagHarvest.BHLWS.AnnotatedPageCharacteristic AnnotatedPageCharacteristicSave(int annotatedPageId, string characteristicDetail) {
             return base.Channel.AnnotatedPageCharacteristicSave(annotatedPageId, characteristicDetail);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotatedPageCharacteristic> AnnotatedPageCharacteristicSaveAsync(int annotatedPageId, string characteristicDetail) {
-            return base.Channel.AnnotatedPageCharacteristicSaveAsync(annotatedPageId, characteristicDetail);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSelectAuto(int annotationID) {
             return base.Channel.AnnotationSelectAuto(annotationID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSelectAutoAsync(int annotationID) {
-            return base.Channel.AnnotationSelectAutoAsync(annotationID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSave(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit) {
             return base.Channel.AnnotationSave(annotationSourceID, annotatedPageId, pageColumn, externalIdentifier, sequenceNumber, comment, dataLoadEdit);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSaveAsync(int annotationSourceID, int annotatedPageId, string pageColumn, string externalIdentifier, int sequenceNumber, string comment, bool dataLoadEdit) {
-            return base.Channel.AnnotationSaveAsync(annotationSourceID, annotatedPageId, pageColumn, externalIdentifier, sequenceNumber, comment, dataLoadEdit);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Annotation AnnotationSaveText(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit) {
             return base.Channel.AnnotationSaveText(annotationSourceID, externalIdentifer, textDescription, text, textCorrected, dataLoadEdit);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation> AnnotationSaveTextAsync(int annotationSourceID, string externalIdentifer, string textDescription, string text, string textCorrected, bool dataLoadEdit) {
-            return base.Channel.AnnotationSaveTextAsync(annotationSourceID, externalIdentifer, textDescription, text, textCorrected, dataLoadEdit);
         }
         
         public void AnnotationClear(int annotationId) {
             base.Channel.AnnotationClear(annotationId);
         }
         
-        public System.Threading.Tasks.Task AnnotationClearAsync(int annotationId) {
-            return base.Channel.AnnotationClearAsync(annotationId);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.AnnotationRelation AnnotationRelationSave(int annotationId, string relatedExternalIdentifier, string note) {
             return base.Channel.AnnotationRelationSave(annotationId, relatedExternalIdentifier, note);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationRelation> AnnotationRelationSaveAsync(int annotationId, string relatedExternalIdentifier, string note) {
-            return base.Channel.AnnotationRelationSaveAsync(annotationId, relatedExternalIdentifier, note);
         }
         
         public BHLFlickrTagHarvest.BHLWS.AnnotationNote AnnotationNoteSave(int annotationId, string noteText, byte isAlternate) {
             return base.Channel.AnnotationNoteSave(annotationId, noteText, isAlternate);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationNote> AnnotationNoteSaveAsync(int annotationId, string noteText, byte isAlternate) {
-            return base.Channel.AnnotationNoteSaveAsync(annotationId, noteText, isAlternate);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Annotation_AnnotationConcept Annotation_AnnotationConceptSave(int annotationId, string conceptCode, int keywordTargetId) {
             return base.Channel.Annotation_AnnotationConceptSave(annotationId, conceptCode, keywordTargetId);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Annotation_AnnotationConcept> Annotation_AnnotationConceptSaveAsync(int annotationId, string conceptCode, int keywordTargetId) {
-            return base.Channel.Annotation_AnnotationConceptSaveAsync(annotationId, conceptCode, keywordTargetId);
         }
         
         public BHLFlickrTagHarvest.BHLWS.AnnotationSubject AnnotationSubjectSave(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText) {
             return base.Channel.AnnotationSubjectSave(annotationId, sourceId, categoryName, keywordTargetId, subjectText);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.AnnotationSubject> AnnotationSubjectSaveAsync(int annotationId, int sourceId, string categoryName, int keywordTargetId, string subjectText) {
-            return base.Channel.AnnotationSubjectSaveAsync(annotationId, sourceId, categoryName, keywordTargetId, subjectText);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] GetNamesFromOcr(int pageID) {
             return base.Channel.GetNamesFromOcr(pageID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.NameFinderResponse[]> GetNamesFromOcrAsync(int pageID) {
-            return base.Channel.GetNamesFromOcrAsync(pageID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Title[] TitleSelectAllPublished() {
             return base.Channel.TitleSelectAllPublished();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title[]> TitleSelectAllPublishedAsync() {
-            return base.Channel.TitleSelectAllPublishedAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Title TitleSelectByTitleID(int titleID) {
             return base.Channel.TitleSelectByTitleID(titleID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title> TitleSelectByTitleIDAsync(int titleID) {
-            return base.Channel.TitleSelectByTitleIDAsync(titleID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Title TitleSelectDetailByTitleID(int titleID) {
             return base.Channel.TitleSelectDetailByTitleID(titleID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title> TitleSelectDetailByTitleIDAsync(int titleID) {
-            return base.Channel.TitleSelectDetailByTitleIDAsync(titleID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllTitleCitations() {
             return base.Channel.TitleBibTeXSelectAllTitleCitations();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> TitleBibTeXSelectAllTitleCitationsAsync() {
-            return base.Channel.TitleBibTeXSelectAllTitleCitationsAsync();
         }
         
         public BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] TitleBibTeXSelectAllItemCitations() {
             return base.Channel.TitleBibTeXSelectAllItemCitations();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> TitleBibTeXSelectAllItemCitationsAsync() {
-            return base.Channel.TitleBibTeXSelectAllItemCitationsAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.TitleBibTeX[] SegmentSelectAllBibTeXCitations() {
             return base.Channel.SegmentSelectAllBibTeXCitations();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleBibTeX[]> SegmentSelectAllBibTeXCitationsAsync() {
-            return base.Channel.SegmentSelectAllBibTeXCitationsAsync();
         }
         
         public BHLFlickrTagHarvest.BHLWS.TitleEndNote[] SegmentSelectAllEndNoteCitations() {
             return base.Channel.SegmentSelectAllEndNoteCitations();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> SegmentSelectAllEndNoteCitationsAsync() {
-            return base.Channel.SegmentSelectAllEndNoteCitationsAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.TitleEndNote[] TitleEndNoteSelectAllTitleCitations() {
             return base.Channel.TitleEndNoteSelectAllTitleCitations();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> TitleEndNoteSelectAllTitleCitationsAsync() {
-            return base.Channel.TitleEndNoteSelectAllTitleCitationsAsync();
         }
         
         public BHLFlickrTagHarvest.BHLWS.TitleEndNote[] TitleEndNoteSelectAllItemCitations() {
             return base.Channel.TitleEndNoteSelectAllItemCitations();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.TitleEndNote[]> TitleEndNoteSelectAllItemCitationsAsync() {
-            return base.Channel.TitleEndNoteSelectAllItemCitationsAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Title_Identifier[] Title_IdentifierSelectByTitleID(int titleID) {
             return base.Channel.Title_IdentifierSelectByTitleID(titleID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Title_Identifier[]> Title_IdentifierSelectByTitleIDAsync(int titleID) {
-            return base.Channel.Title_IdentifierSelectByTitleIDAsync(titleID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Item ItemSelectByBarCode(string barCode) {
             return base.Channel.ItemSelectByBarCode(barCode);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemSelectByBarCodeAsync(string barCode) {
-            return base.Channel.ItemSelectByBarCodeAsync(barCode);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectByTitleID(int titleID) {
             return base.Channel.ItemSelectByTitleID(titleID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectByTitleIDAsync(int titleID) {
-            return base.Channel.ItemSelectByTitleIDAsync(titleID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Item ItemUpdateStatus(int itemID, int itemStatusID) {
             return base.Channel.ItemUpdateStatus(itemID, itemStatusID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdateStatusAsync(int itemID, int itemStatusID) {
-            return base.Channel.ItemUpdateStatusAsync(itemID, itemStatusID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID) {
             return base.Channel.ItemUpdatePaginationStatus(itemID, paginationStatusID, userID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdatePaginationStatusAsync(int itemID, int paginationStatusID, int userID) {
-            return base.Channel.ItemUpdatePaginationStatusAsync(itemID, paginationStatusID, userID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Item ItemSelectAuto(int itemID) {
             return base.Channel.ItemSelectAuto(itemID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemSelectAutoAsync(int itemID) {
-            return base.Channel.ItemSelectAutoAsync(itemID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectWithExpiredPageNames(int maxAge) {
             return base.Channel.ItemSelectWithExpiredPageNames(maxAge);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectWithExpiredPageNamesAsync(int maxAge) {
-            return base.Channel.ItemSelectWithExpiredPageNamesAsync(maxAge);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectWithoutPageNames() {
             return base.Channel.ItemSelectWithoutPageNames();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectWithoutPageNamesAsync() {
-            return base.Channel.ItemSelectWithoutPageNamesAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Item ItemUpdateLastPageNameLookupDate(int itemID) {
             return base.Channel.ItemUpdateLastPageNameLookupDate(itemID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item> ItemUpdateLastPageNameLookupDateAsync(int itemID) {
-            return base.Channel.ItemUpdateLastPageNameLookupDateAsync(itemID);
         }
         
         public bool ItemCheckForOcrText(int itemID, string ocrTextPath) {
             return base.Channel.ItemCheckForOcrText(itemID, ocrTextPath);
         }
         
-        public System.Threading.Tasks.Task<bool> ItemCheckForOcrTextAsync(int itemID, string ocrTextPath) {
-            return base.Channel.ItemCheckForOcrTextAsync(itemID, ocrTextPath);
-        }
-        
         public string ItemGetNamesXMLByItemID(int itemID) {
             return base.Channel.ItemGetNamesXMLByItemID(itemID);
-        }
-        
-        public System.Threading.Tasks.Task<string> ItemGetNamesXMLByItemIDAsync(int itemID) {
-            return base.Channel.ItemGetNamesXMLByItemIDAsync(itemID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectPublished() {
             return base.Channel.ItemSelectPublished();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectPublishedAsync() {
-            return base.Channel.ItemSelectPublishedAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Item[] ItemSelectRecentlyChanged(string startDate) {
             return base.Channel.ItemSelectRecentlyChanged(startDate);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Item[]> ItemSelectRecentlyChangedAsync(string startDate) {
-            return base.Channel.ItemSelectRecentlyChangedAsync(startDate);
         }
         
         public string[] ExportIAIdentifiers() {
             return base.Channel.ExportIAIdentifiers();
         }
         
-        public System.Threading.Tasks.Task<string[]> ExportIAIdentifiersAsync() {
-            return base.Channel.ExportIAIdentifiersAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Segment[] SegmentSelectPublished() {
             return base.Channel.SegmentSelectPublished();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Segment[]> SegmentSelectPublishedAsync() {
-            return base.Channel.SegmentSelectPublishedAsync();
         }
         
         public BHLFlickrTagHarvest.BHLWS.Segment SegmentSelectExtended(int segmentID) {
             return base.Channel.SegmentSelectExtended(segmentID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Segment> SegmentSelectExtendedAsync(int segmentID) {
-            return base.Channel.SegmentSelectExtendedAsync(segmentID);
-        }
-        
         public void ItemNameFileLogRefreshSinceDate(System.DateTime startDate) {
             base.Channel.ItemNameFileLogRefreshSinceDate(startDate);
-        }
-        
-        public System.Threading.Tasks.Task ItemNameFileLogRefreshSinceDateAsync(System.DateTime startDate) {
-            return base.Channel.ItemNameFileLogRefreshSinceDateAsync(startDate);
         }
         
         public BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForCreate() {
             return base.Channel.ItemNameFileLogSelectForCreate();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[]> ItemNameFileLogSelectForCreateAsync() {
-            return base.Channel.ItemNameFileLogSelectForCreateAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[] ItemNameFileLogSelectForUpload() {
             return base.Channel.ItemNameFileLogSelectForUpload();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.ItemNameFileLog[]> ItemNameFileLogSelectForUploadAsync() {
-            return base.Channel.ItemNameFileLogSelectForUploadAsync();
         }
         
         public void ItemNameFileLogUpdateCreateDate(int logID) {
             base.Channel.ItemNameFileLogUpdateCreateDate(logID);
         }
         
-        public System.Threading.Tasks.Task ItemNameFileLogUpdateCreateDateAsync(int logID) {
-            return base.Channel.ItemNameFileLogUpdateCreateDateAsync(logID);
-        }
-        
         public void ItemNameFileLogUpdateUploadDate(int logID) {
             base.Channel.ItemNameFileLogUpdateUploadDate(logID);
-        }
-        
-        public System.Threading.Tasks.Task ItemNameFileLogUpdateUploadDateAsync(int logID) {
-            return base.Channel.ItemNameFileLogUpdateUploadDateAsync(logID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Vault VaultSelect(int vaultID) {
             return base.Channel.VaultSelect(vaultID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Vault> VaultSelectAsync(int vaultID) {
-            return base.Channel.VaultSelectAsync(vaultID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Institution InstitutionSelectAuto(string institutionCode) {
             return base.Channel.InstitutionSelectAuto(institutionCode);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Institution> InstitutionSelectAutoAsync(string institutionCode) {
-            return base.Channel.InstitutionSelectAutoAsync(institutionCode);
         }
         
         public bool SendEmail(string from, string[] to, string[] cc, string[] bcc, string subject, string body) {
             return base.Channel.SendEmail(from, to, cc, bcc, subject, body);
         }
         
-        public System.Threading.Tasks.Task<bool> SendEmailAsync(string from, string[] to, string[] cc, string[] bcc, string subject, string body) {
-            return base.Channel.SendEmailAsync(from, to, cc, bcc, subject, body);
-        }
-        
         public string GetMODSRecordForTitle(int titleId) {
             return base.Channel.GetMODSRecordForTitle(titleId);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetMODSRecordForTitleAsync(int titleId) {
-            return base.Channel.GetMODSRecordForTitleAsync(titleId);
         }
         
         public string GetMODSRecordForItem(int itemId) {
             return base.Channel.GetMODSRecordForItem(itemId);
         }
         
-        public System.Threading.Tasks.Task<string> GetMODSRecordForItemAsync(int itemId) {
-            return base.Channel.GetMODSRecordForItemAsync(itemId);
-        }
-        
         public string GetMODSRecordForSegment(int segmentId) {
             return base.Channel.GetMODSRecordForSegment(segmentId);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetMODSRecordForSegmentAsync(int segmentId) {
-            return base.Channel.GetMODSRecordForSegmentAsync(segmentId);
         }
         
         public BHLFlickrTagHarvest.BHLWS.DOI[] DOISelectSubmitted(int minutesSinceSubmit) {
             return base.Channel.DOISelectSubmitted(minutesSinceSubmit);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> DOISelectSubmittedAsync(int minutesSinceSubmit) {
-            return base.Channel.DOISelectSubmittedAsync(minutesSinceSubmit);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.DOI[] TitleSelectWithoutSubmittedDOI(int numberToReturn) {
             return base.Channel.TitleSelectWithoutSubmittedDOI(numberToReturn);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> TitleSelectWithoutSubmittedDOIAsync(int numberToReturn) {
-            return base.Channel.TitleSelectWithoutSubmittedDOIAsync(numberToReturn);
         }
         
         public BHLFlickrTagHarvest.BHLWS.DOI[] SegmentSelectWithoutSubmittedDOI(int numberToReturn) {
             return base.Channel.SegmentSelectWithoutSubmittedDOI(numberToReturn);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI[]> SegmentSelectWithoutSubmittedDOIAsync(int numberToReturn) {
-            return base.Channel.SegmentSelectWithoutSubmittedDOIAsync(numberToReturn);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.DOI DOIInsertAuto(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid) {
             return base.Channel.DOIInsertAuto(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIInsertAutoAsync(int doiEntityTypeId, int entityId, int doiStatusId, string doiBatchId, string doiName, string message, short isValid) {
-            return base.Channel.DOIInsertAutoAsync(doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, message, isValid);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -11740,82 +11056,128 @@ namespace BHLFlickrTagHarvest.BHLWS {
             return retVal.DOIUpdateStatusResult;
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusResponse> BHLFlickrTagHarvest.BHLWS.BHLWSSoap.DOIUpdateStatusAsync(BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusRequest request) {
-            return base.Channel.DOIUpdateStatusAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusResponse> DOIUpdateStatusAsync(int doiID, int doiStatusId, string message, System.Nullable<short> setValid) {
-            BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusRequest inValue = new BHLFlickrTagHarvest.BHLWS.DOIUpdateStatusRequest();
-            inValue.doiID = doiID;
-            inValue.doiStatusId = doiStatusId;
-            inValue.message = message;
-            inValue.setValid = setValid;
-            return ((BHLFlickrTagHarvest.BHLWS.BHLWSSoap)(this)).DOIUpdateStatusAsync(inValue);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName) {
             return base.Channel.DOIUpdateDOIName(doiID, doiStatusId, doiName);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName) {
-            return base.Channel.DOIUpdateDOINameAsync(doiID, doiStatusId, doiName);
         }
         
         public BHLFlickrTagHarvest.BHLWS.DOI DOIUpdateBatchID(int doiID, int doiStatusId, string doiBatchID) {
             return base.Channel.DOIUpdateBatchID(doiID, doiStatusId, doiBatchID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.DOI> DOIUpdateBatchIDAsync(int doiID, int doiStatusId, string doiBatchID) {
-            return base.Channel.DOIUpdateBatchIDAsync(doiID, doiStatusId, doiBatchID);
-        }
-        
         public void IndicatedPageSave(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
             base.Channel.IndicatedPageSave(pageIDs, pagePrefix, style, start, increment, implied, userID);
-        }
-        
-        public System.Threading.Tasks.Task IndicatedPageSaveAsync(int[] pageIDs, string pagePrefix, int style, string start, int increment, bool implied, int userID) {
-            return base.Channel.IndicatedPageSaveAsync(pageIDs, pagePrefix, style, start, increment, implied, userID);
         }
         
         public void IndicatedPageDeleteAllForPage(int[] pageIDs, int userID) {
             base.Channel.IndicatedPageDeleteAllForPage(pageIDs, userID);
         }
         
-        public System.Threading.Tasks.Task IndicatedPageDeleteAllForPageAsync(int[] pageIDs, int userID) {
-            return base.Channel.IndicatedPageDeleteAllForPageAsync(pageIDs, userID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectByItemID(int itemID) {
             return base.Channel.PageSelectByItemID(itemID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectByItemIDAsync(int itemID) {
-            return base.Channel.PageSelectByItemIDAsync(itemID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectFileNameByItemID(int itemID) {
             return base.Channel.PageSelectFileNameByItemID(itemID);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectFileNameByItemIDAsync(int itemID) {
-            return base.Channel.PageSelectFileNameByItemIDAsync(itemID);
-        }
-        
         public BHLFlickrTagHarvest.BHLWS.Page[] PageMetadataSelectByItemID(int itemID) {
             return base.Channel.PageMetadataSelectByItemID(itemID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageMetadataSelectByItemIDAsync(int itemID) {
-            return base.Channel.PageMetadataSelectByItemIDAsync(itemID);
         }
         
         public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge) {
             return base.Channel.PageSelectWithExpiredPageNamesByItemID(itemID, maxAge);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLWS.Page[]> PageSelectWithExpiredPageNamesByItemIDAsync(int itemID, int maxAge) {
-            return base.Channel.PageSelectWithExpiredPageNamesByItemIDAsync(itemID, maxAge);
+        public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNamesByItemID(int itemID) {
+            return base.Channel.PageSelectWithoutPageNamesByItemID(itemID);
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.Page[] PageSelectWithoutPageNames() {
+            return base.Channel.PageSelectWithoutPageNames();
+        }
+        
+        public void PageUpdateYear(int[] pageIDs, string year, int userID) {
+            base.Channel.PageUpdateYear(pageIDs, year, userID);
+        }
+        
+        public void PageUpdateVolume(int[] pageIDs, string volume, int userID) {
+            base.Channel.PageUpdateVolume(pageIDs, volume, userID);
+        }
+        
+        public void PageUpdateIssue(int[] pageIDs, string issuePrefix, string issue, int userID) {
+            base.Channel.PageUpdateIssue(pageIDs, issuePrefix, issue, userID);
+        }
+        
+        public void PageUpdateLastPageNameLookupDate(int pageID) {
+            base.Channel.PageUpdateLastPageNameLookupDate(pageID);
+        }
+        
+        public bool PageCheckForOcrText(int pageID, string ocrTextLocation) {
+            return base.Channel.PageCheckForOcrText(pageID, ocrTextLocation);
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectRandom(int numberToReturn) {
+            return base.Channel.PageFlickrSelectRandom(numberToReturn);
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PageFlickr[] PageFlickrSelectAll() {
+            return base.Channel.PageFlickrSelectAll();
+        }
+        
+        public int[] PageNameUpdateList(int pageID, BHLFlickrTagHarvest.BHLWS.NameFinderResponse[] items, string sourceName) {
+            return base.Channel.PageNameUpdateList(pageID, items, sourceName);
+        }
+        
+        public void NamePageDeleteByItemID(int itemID) {
+            base.Channel.NamePageDeleteByItemID(itemID);
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PageType[] PageTypeSelectAll() {
+            return base.Channel.PageTypeSelectAll();
+        }
+        
+        public void Page_PageTypeSave(int[] pageIDs, int pageTypeID, int userID) {
+            base.Channel.Page_PageTypeSave(pageIDs, pageTypeID, userID);
+        }
+        
+        public void Page_PageTypeDeleteAllForPage(int[] pageIDs, int userID) {
+            base.Channel.Page_PageTypeDeleteAllForPage(pageIDs, userID);
+        }
+        
+        public int GetPaginationStatusPending() {
+            return base.Channel.GetPaginationStatusPending();
+        }
+        
+        public int GetPaginationStatusInProgress() {
+            return base.Channel.GetPaginationStatusInProgress();
+        }
+        
+        public int GetPaginationStatusComplete() {
+            return base.Channel.GetPaginationStatusComplete();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse BHLFlickrTagHarvest.BHLWS.BHLWSSoap.GetPaginationStatusString(BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest request) {
+            return base.Channel.GetPaginationStatusString(request);
+        }
+        
+        public string GetPaginationStatusString(System.Nullable<int> paginationStatusID) {
+            BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest inValue = new BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringRequest();
+            inValue.paginationStatusID = paginationStatusID;
+            BHLFlickrTagHarvest.BHLWS.GetPaginationStatusStringResponse retVal = ((BHLFlickrTagHarvest.BHLWS.BHLWSSoap)(this)).GetPaginationStatusString(inValue);
+            return retVal.GetPaginationStatusStringResult;
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForFileCreation() {
+            return base.Channel.PDFSelectForFileCreation();
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectForDeletion() {
+            return base.Channel.PDFSelectForDeletion();
+        }
+        
+        public BHLFlickrTagHarvest.BHLWS.PDF[] PDFSelectDuplicateForPdfID(int pdfId) {
+            return base.Channel.PDFSelectDuplicateForPdfID(pdfId);
         }
     }
 }

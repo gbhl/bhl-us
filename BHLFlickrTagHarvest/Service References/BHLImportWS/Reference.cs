@@ -20,160 +20,100 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.IAItem[] IAItemSelectPendingApproval(int ageInDays);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemSelectPendingApproval", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItem[]> IAItemSelectPendingApprovalAsync(int ageInDays);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BotanicusHarvestLogSelectRecent", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.BotanicusHarvestLog[] BotanicusHarvestLogSelectRecent(int numLogs);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BotanicusHarvestLogSelectRecent", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BotanicusHarvestLog[]> BotanicusHarvestLogSelectRecentAsync(int numLogs);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemErrorSelectRecent", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.IAItemError[] IAItemErrorSelectRecent(int numErrors);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemErrorSelectRecent", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItemError[]> IAItemErrorSelectRecentAsync(int numErrors);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ImportErrorSelectRecent", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.ImportError[] ImportErrorSelectRecent(int numErrors);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ImportErrorSelectRecent", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.ImportError[]> ImportErrorSelectRecentAsync(int numErrors);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ImportLogSelectRecent", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.ImportLog[] ImportLogSelectRecent(int numLogs);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/ImportLogSelectRecent", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.ImportLog[]> ImportLogSelectRecentAsync(int numLogs);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemQueueForDownload", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemQueueForDownload", ReplyAction="*")]
-        System.Threading.Tasks.Task<string[]> IAItemQueueForDownloadAsync(string iaIdentifier, string localFileFolder);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemStatusSelectAll", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.IAItemStatus[] IAItemStatusSelectAll();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemStatusSelectAll", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItemStatus[]> IAItemStatusSelectAllAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemSelectByStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.IAItem[] IAItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemSelectByStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItem[]> IAItemSelectByStatusAsync(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string[] IAItemUpdateStatus(int itemId, int itemStatusId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/IAItemUpdateStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<string[]> IAItemUpdateStatusAsync(int itemId, int itemStatusId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemStatusSelectAll", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.BSItemStatus[] BSItemStatusSelectAll();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemStatusSelectAll", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSItemStatus[]> BSItemStatusSelectAllAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemSelectByStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.BSItem[] BSItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemSelectByStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSItem[]> BSItemSelectByStatusAsync(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemUpdateStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         string[] BSItemUpdateStatus(int itemId, int itemStatusId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSItemUpdateStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<string[]> BSItemUpdateStatusAsync(int itemId, int itemStatusId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSSegmentSelectByItem", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.BSSegment[] BSSegmentSelectByItem(int itemId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/BSSegmentSelectByItem", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSSegment[]> BSSegmentSelectByItemAsync(int itemId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrTagSelectForPageID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] PageFlickrTagSelectForPageID(int pageID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrTagSelectForPageID", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[]> PageFlickrTagSelectForPageIDAsync(int pageID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrTagUpdateForPageID", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         void PageFlickrTagUpdateForPageID(int pageID, BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] tags);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/PageFlickrTagUpdateForPageID", ReplyAction="*")]
-        System.Threading.Tasks.Task PageFlickrTagUpdateForPageIDAsync(int pageID, BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] tags);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectReadyForProductionBySource", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectReadyForProductionBySource(int importSourceID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectReadyForProductionBySource", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectReadyForProductionBySourceAsync(int importSourceID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsCountIAItemPendingApproval", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.Stats StatsCountIAItemPendingApproval(int ageInDays);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsCountIAItemPendingApproval", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats> StatsCountIAItemPendingApprovalAsync(int ageInDays);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectIAItemGroupByStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectIAItemGroupByStatus();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectIAItemGroupByStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectIAItemGroupByStatusAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectIAItemPendingApprovalGroupByAge", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectIAItemPendingApprovalGroupByAge", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectIAItemPendingApprovalGroupByAgeAsync(int ageInDays);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectBSItemGroupByStatus", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(CustomObjectBase))]
         BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectBSItemGroupByStatus();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://www.mobot.org/StatsSelectBSItemGroupByStatus", ReplyAction="*")]
-        System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectBSItemGroupByStatusAsync();
     }
     
     /// <remarks/>
@@ -2763,160 +2703,80 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
             return base.Channel.IAItemSelectPendingApproval(ageInDays);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItem[]> IAItemSelectPendingApprovalAsync(int ageInDays) {
-            return base.Channel.IAItemSelectPendingApprovalAsync(ageInDays);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.BotanicusHarvestLog[] BotanicusHarvestLogSelectRecent(int numLogs) {
             return base.Channel.BotanicusHarvestLogSelectRecent(numLogs);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BotanicusHarvestLog[]> BotanicusHarvestLogSelectRecentAsync(int numLogs) {
-            return base.Channel.BotanicusHarvestLogSelectRecentAsync(numLogs);
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.IAItemError[] IAItemErrorSelectRecent(int numErrors) {
             return base.Channel.IAItemErrorSelectRecent(numErrors);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItemError[]> IAItemErrorSelectRecentAsync(int numErrors) {
-            return base.Channel.IAItemErrorSelectRecentAsync(numErrors);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.ImportError[] ImportErrorSelectRecent(int numErrors) {
             return base.Channel.ImportErrorSelectRecent(numErrors);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.ImportError[]> ImportErrorSelectRecentAsync(int numErrors) {
-            return base.Channel.ImportErrorSelectRecentAsync(numErrors);
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.ImportLog[] ImportLogSelectRecent(int numLogs) {
             return base.Channel.ImportLogSelectRecent(numLogs);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.ImportLog[]> ImportLogSelectRecentAsync(int numLogs) {
-            return base.Channel.ImportLogSelectRecentAsync(numLogs);
-        }
-        
         public string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder) {
             return base.Channel.IAItemQueueForDownload(iaIdentifier, localFileFolder);
-        }
-        
-        public System.Threading.Tasks.Task<string[]> IAItemQueueForDownloadAsync(string iaIdentifier, string localFileFolder) {
-            return base.Channel.IAItemQueueForDownloadAsync(iaIdentifier, localFileFolder);
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.IAItemStatus[] IAItemStatusSelectAll() {
             return base.Channel.IAItemStatusSelectAll();
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItemStatus[]> IAItemStatusSelectAllAsync() {
-            return base.Channel.IAItemStatusSelectAllAsync();
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.IAItem[] IAItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection) {
             return base.Channel.IAItemSelectByStatus(itemStatusId, numberOfRows, pageNumber, sortColumn, sortDirection);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.IAItem[]> IAItemSelectByStatusAsync(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection) {
-            return base.Channel.IAItemSelectByStatusAsync(itemStatusId, numberOfRows, pageNumber, sortColumn, sortDirection);
         }
         
         public string[] IAItemUpdateStatus(int itemId, int itemStatusId) {
             return base.Channel.IAItemUpdateStatus(itemId, itemStatusId);
         }
         
-        public System.Threading.Tasks.Task<string[]> IAItemUpdateStatusAsync(int itemId, int itemStatusId) {
-            return base.Channel.IAItemUpdateStatusAsync(itemId, itemStatusId);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.BSItemStatus[] BSItemStatusSelectAll() {
             return base.Channel.BSItemStatusSelectAll();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSItemStatus[]> BSItemStatusSelectAllAsync() {
-            return base.Channel.BSItemStatusSelectAllAsync();
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.BSItem[] BSItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection) {
             return base.Channel.BSItemSelectByStatus(itemStatusId, numberOfRows, pageNumber, sortColumn, sortDirection);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSItem[]> BSItemSelectByStatusAsync(int itemStatusId, int numberOfRows, int pageNumber, string sortColumn, string sortDirection) {
-            return base.Channel.BSItemSelectByStatusAsync(itemStatusId, numberOfRows, pageNumber, sortColumn, sortDirection);
-        }
-        
         public string[] BSItemUpdateStatus(int itemId, int itemStatusId) {
             return base.Channel.BSItemUpdateStatus(itemId, itemStatusId);
-        }
-        
-        public System.Threading.Tasks.Task<string[]> BSItemUpdateStatusAsync(int itemId, int itemStatusId) {
-            return base.Channel.BSItemUpdateStatusAsync(itemId, itemStatusId);
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.BSSegment[] BSSegmentSelectByItem(int itemId) {
             return base.Channel.BSSegmentSelectByItem(itemId);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.BSSegment[]> BSSegmentSelectByItemAsync(int itemId) {
-            return base.Channel.BSSegmentSelectByItemAsync(itemId);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] PageFlickrTagSelectForPageID(int pageID) {
             return base.Channel.PageFlickrTagSelectForPageID(pageID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[]> PageFlickrTagSelectForPageIDAsync(int pageID) {
-            return base.Channel.PageFlickrTagSelectForPageIDAsync(pageID);
         }
         
         public void PageFlickrTagUpdateForPageID(int pageID, BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] tags) {
             base.Channel.PageFlickrTagUpdateForPageID(pageID, tags);
         }
         
-        public System.Threading.Tasks.Task PageFlickrTagUpdateForPageIDAsync(int pageID, BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag[] tags) {
-            return base.Channel.PageFlickrTagUpdateForPageIDAsync(pageID, tags);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectReadyForProductionBySource(int importSourceID) {
             return base.Channel.StatsSelectReadyForProductionBySource(importSourceID);
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectReadyForProductionBySourceAsync(int importSourceID) {
-            return base.Channel.StatsSelectReadyForProductionBySourceAsync(importSourceID);
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.Stats StatsCountIAItemPendingApproval(int ageInDays) {
             return base.Channel.StatsCountIAItemPendingApproval(ageInDays);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats> StatsCountIAItemPendingApprovalAsync(int ageInDays) {
-            return base.Channel.StatsCountIAItemPendingApprovalAsync(ageInDays);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectIAItemGroupByStatus() {
             return base.Channel.StatsSelectIAItemGroupByStatus();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectIAItemGroupByStatusAsync() {
-            return base.Channel.StatsSelectIAItemGroupByStatusAsync();
         }
         
         public BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays) {
             return base.Channel.StatsSelectIAItemPendingApprovalGroupByAge(ageInDays);
         }
         
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectIAItemPendingApprovalGroupByAgeAsync(int ageInDays) {
-            return base.Channel.StatsSelectIAItemPendingApprovalGroupByAgeAsync(ageInDays);
-        }
-        
         public BHLFlickrTagHarvest.BHLImportWS.Stats[] StatsSelectBSItemGroupByStatus() {
             return base.Channel.StatsSelectBSItemGroupByStatus();
-        }
-        
-        public System.Threading.Tasks.Task<BHLFlickrTagHarvest.BHLImportWS.Stats[]> StatsSelectBSItemGroupByStatusAsync() {
-            return base.Channel.StatsSelectBSItemGroupByStatusAsync();
         }
     }
 }
