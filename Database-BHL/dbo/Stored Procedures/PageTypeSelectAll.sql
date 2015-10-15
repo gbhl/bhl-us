@@ -10,6 +10,7 @@ SELECT
 	[PageTypeName],
 	[PageTypeDescription]
 FROM [dbo].[PageType]
+WHERE [PageTypeName] NOT IN ('Article Start', 'Article End')
 ORDER BY PageTypeName
 
 IF @@ERROR <> 0
@@ -21,5 +22,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
