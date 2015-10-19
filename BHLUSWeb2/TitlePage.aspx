@@ -290,8 +290,8 @@
 </asp:content>
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
-    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=2" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=2" />
+    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=3" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=3" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
