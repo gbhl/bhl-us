@@ -15,9 +15,9 @@
 }
 
 #BRtoolbar .label {
-    font-size:14px;
+    font-size:13px;
     color:#a6aeb6;
-    width:96px;
+    width:84px;
     float:left;
     text-align:center;
     font-weight:bold;
@@ -60,7 +60,7 @@
 }
 #BRtoolbar-navbuttons .BRicon
 {
-	margin:0 0 0 10px;
+	margin:0;
 }
 #BRtoolbar-zoombuttons .BRicon
 {

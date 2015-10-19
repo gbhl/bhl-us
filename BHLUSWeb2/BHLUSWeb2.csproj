@@ -79,8 +79,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharedLibraries\CounterSoft5.0.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=105.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.2\lib\net4\RestSharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -154,6 +155,7 @@
     <Content Include="AuthorNotFound.aspx" />
     <Content Include="Bibliography.aspx" />
     <Content Include="BiblioSelect.aspx" />
+    <Content Include="bot_list.txt" />
     <Content Include="BrowseByTitleTag.aspx" />
     <Content Include="BrowseByYear.aspx" />
     <Content Include="BrowseCollections.aspx" />
@@ -362,11 +364,13 @@
     <Content Include="images\magnify-icon-over.png" />
     <Content Include="images\mendeley.png" />
     <Content Include="images\NEH-Logo-bkgd.jpg" />
+    <Content Include="images\new-tab.png" />
     <Content Include="images\nhm-official-logo.png" />
     <Content Include="images\pin-icon-normal.png" />
     <Content Include="images\pin-icon-over.png" />
     <Content Include="images\rpterror.png" />
     <Content Include="images\rss.png" />
+    <Content Include="images\start_comment.png" />
     <Content Include="images\support.png" />
     <Content Include="images\title_icon-home.png" />
     <Content Include="images\tweet_like_normal.png" />
@@ -428,8 +432,12 @@
     <Content Include="RecentRss.aspx" />
     <Content Include="SectionPage.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Handlers\GetPageComments.ashx" />
     <None Include="Remoting.config.template" />
     <None Include="services\Name\Web.config.template" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -787,6 +795,9 @@
     </Compile>
     <Compile Include="Handlers\GetPageImage.ashx.cs">
       <DependentUpon>GetPageImage.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPageComments.ashx.cs">
+      <DependentUpon>GetPageComments.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\GetPageOcr.ashx.cs">
       <DependentUpon>GetPageOcr.ashx</DependentUpon>
