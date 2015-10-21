@@ -2,6 +2,7 @@
 ABACHOBot
 Accoona-AI-Agent
 AddSugarSpiderBot
+AddThis
 AnyApexBot
 Arachmo
 B-l-i-t-z-B-O-T
@@ -18,6 +19,7 @@ btbot
 CatchBot
 Cerberian Drtrs
 Charlotte
+coccoc
 ConveraCrawler
 cosmos
 Covario IDS
@@ -42,10 +44,12 @@ GalaxyBot
 genieBot
 Gigabot
 Girafabot
+Gluten Free Crawler
 Googlebot-Image
 Googlebot
 GurujiBot
 HappyFunBot
+heritrix
 hl_ftien_spider
 Holmes
 htdig
@@ -65,8 +69,10 @@ Larbin
 LDSpider
 LexxeBot
 Linguee Bot
+LinkStats Bot
 LinkWalker
 lmspider
+ltx71
 lwp-trivial
 mabontland
 magpie-crawler
@@ -90,6 +96,7 @@ nicebot
 noxtrumbot
 Nusearch Spider
 NutchCVS
+Netluchs/Nutch
 Nymesis
 obot    oegp
 omgilibot
@@ -97,13 +104,16 @@ OmniExplorer_Bot
 OOZBOT
 Orbiter
 PageBitesHyperBot
+PaperLiBot
 Peew
+Pinterest
 polybot
 Pompos
 PostPost
 Psbot
 PycURL
 Qseero
+Qwantify
 Radian6
 RAMPyBot
 RufusBot
@@ -126,6 +136,7 @@ Snappy
 sogou spider
 Sosospider
 Speedy Spider
+SputnikBot
 Sqworm
 StackRambler
 suggybot
@@ -140,6 +151,8 @@ truwoGPS
 TurnitinBot
 TweetedTimes Bot
 TwengaBot
+TwitterCrawler
+uMBot-LN
 updated
 Urlfilebot
 Vagabondo
@@ -163,6 +176,7 @@ Yasaklibot
 Yeti
 YodaoBot
 yoogliFetchAgent
+yoozBot
 YoudaoBot
 Zao
 Zealbot
@@ -172,6 +186,7 @@ teoma
 bot
 spieder
 spider
+Spider
 crawler
 walker
 ask
