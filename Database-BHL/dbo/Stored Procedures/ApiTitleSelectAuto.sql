@@ -13,6 +13,9 @@ SELECT @RedirID = RedirectTitleID FROM dbo.Title WHERE TitleID = @TitleID
 IF (@RedirID IS NOT NULL)
 	exec dbo.ApiTitleSelectAuto @RedirID
 ELSE
+	DECLARE @DOIEntityTypeTitleID int
+	SELECT @DOIEntityTypeTitleID = DOIEntityTypeID FROM dbo.DOIEntityType WITH (NOLOCK) WHERE DOIEntityTypeName = 'Title'
+
 	SELECT	t.[TitleID],
 			ISNULL(b.[BibliographicLevelName], '') AS BibliographicLevelName,
 			t.[MARCBibID],
@@ -52,10 +55,7 @@ ELSE
 			LEFT JOIN [dbo].[DOI] d
 				ON t.TitleID = d.EntityID
 				AND d.IsValid = 1
-			LEFT JOIN [dbo].[DOIEntityType] et
-				ON d.DOIEntityTypeID = et.DOIEntityTypeID
-				AND et.DOIEntityTypeName = 'Title'
+				AND d.DOIEntityTypeID = @DOIEntityTypeTitleID
 	WHERE	t.[TitleID] = @TitleID
 	AND		t.[PublishReady] = 1
-
 
