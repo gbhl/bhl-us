@@ -9,17 +9,12 @@ BEGIN
 
 SET NOCOUNT ON
 
-DECLARE @StartDate datetime
 DECLARE @HarvestDate datetime
 DECLARE @SuccessfulHarvest tinyint
 DECLARE @ItemCount int
 
 SET @HarvestDate = GETDATE()
 SET @ItemCount = 0
-
-SELECT	@StartDate = ISNULL(MAX(HarvestDate), '10/12/2009') 
-FROM	dbo.IAAnalysisHarvestLog 
-WHERE	SuccessfulHarvest = 1
 
 BEGIN TRY
 	CREATE TABLE #tmpItem (
@@ -31,17 +26,18 @@ BEGIN TRY
 		)
 
 	INSERT INTO #tmpItem (IAIdentifier, ItemStatusID, LocalFileFolder, IADateStamp, CreationDate)
-	SELECT	i.Identifier AS IAIdentifier, 
+	SELECT	r.Identifier AS IAIdentifier, 
 			10 AS ItemStatusID, 
 			@LocalFileFolder AS LocalFileFolder,
 			CASE WHEN ISNULL(AddedDate, '1/1/1980') > ISNULL(PublicDate, '1/1/1980') AND ISNULL(AddedDate, '1/1/1980') > ISNULL(UpdateDate, '1/1/1980') THEN AddedDate 
 				WHEN ISNULL(PublicDate, '1/1/1980') > ISNULL(AddedDate, '1/1/1980') AND ISNULL(PublicDate, '1/1/1980') > ISNULL(UpdateDate, '1/1/1980') THEN PublicDate
 				ELSE UpdateDate END	AS IADateStamp,
 			r.CreationDate
-	FROM	IAAnalysisrptCombined r INNER JOIN IAAnalysisItem i
-				ON r.ItemID = i.ItemID
-	WHERE	r.CreationDate > @StartDate
-	AND		i.Sponsor <> 'Google'
+	FROM	IAAnalysisrptCombined r 
+			INNER JOIN IAAnalysisItem i ON r.ItemID = i.ItemID
+			LEFT JOIN dbo.IAItem ii ON r.Identifier = ii.IAIdentifier
+	WHERE	ii.ItemID IS NULL
+	AND		r.Sponsor <> 'Google'
 
 	-- Eliminate any items in the "lendinglibrary" collection (they are non-downloadable)
 	DELETE FROM #tmpItem WHERE IAIdentifier IN (
