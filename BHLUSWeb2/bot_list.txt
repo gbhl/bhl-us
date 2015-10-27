@@ -3,6 +3,7 @@ ABACHOBot
 Accoona-AI-Agent
 AddSugarSpiderBot
 AddThis
+AhrefsBot
 AnyApexBot
 Arachmo
 B-l-i-t-z-B-O-T
@@ -162,7 +163,8 @@ voyager
 VYU2
 webcollage
 Websquash.com
-wf84    WoFindeIch Robot
+wf84    
+WoFindeIch Robot
 WomlpeFactory
 Xaldon_WebSpider
 yacy
@@ -170,7 +172,8 @@ Yahoo! Slurp
 Yahoo! Slurp China
 YahooSeeker
 YahooSeeker-Testing
-YandexBot    YandexImages
+YandexBot
+YandexImages
 YandexMetrika
 Yasaklibot
 Yeti
