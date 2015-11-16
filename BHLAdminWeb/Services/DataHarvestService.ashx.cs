@@ -7,6 +7,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.AdminWeb.BHLImportWebService;
+using System.Security;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -135,11 +136,11 @@ namespace MOBOT.BHL.AdminWeb.Services
                 {
                     response.Append("<row id='" + searchResult[x].ItemId.ToString() + "'>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"http://www.archive.org/details/" + searchResult[x].IAIdentifier + "\">" + searchResult[x].IAIdentifier + "</a>]]> </cell>");
-                    response.Append("<cell> " + searchResult[x].Sponsor + " </cell>");
-                    response.Append("<cell> " + searchResult[x].ScanningCenter + " </cell>");
-                    response.Append("<cell> " + searchResult[x].Volume + " </cell>");
-                    response.Append("<cell> " + searchResult[x].ScanDate + " </cell>");
-                    response.Append("<cell> " + searchResult[x].ExternalStatus + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Sponsor) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].ScanningCenter) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].ScanDate) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].ExternalStatus) + " </cell>");
                     response.Append("</row>");
                 }
                 response.Append("</rows>");
@@ -202,8 +203,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                 {
                     response.Append("<row id='" + searchResult[x].ItemId.ToString() + "'>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"/item/" + searchResult[x].BHLItemId + "\">" + searchResult[x].BHLItemId + "</a>]]> </cell>");
-                    response.Append("<cell> " + searchResult[x].Title + " </cell>");
-                    response.Append("<cell> " + searchResult[x].Volume + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Title) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> <![CDATA[<a href=\"#\" title=\"Segments\" onclick=\"window.open('BioStorSegmentsForItem.aspx?id=" + searchResult[x].ItemId.ToString() + "', 'Segments', 'resizeable=0,scrollbars=1,height=500,width=500,status=0,toolbar=0,menubar=0,location=0');\">" + searchResult[x].TotalSegments + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].CreationDate + " </cell>");
                     response.Append("</row>");
