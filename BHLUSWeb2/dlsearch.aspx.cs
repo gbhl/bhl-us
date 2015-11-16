@@ -53,11 +53,11 @@ namespace MOBOT.BHL.Web2
         protected void btnSearchTitle_Click(object sender, EventArgs e)
         {
             // "return" argument should be used to redirect the "New Search" link on search.aspx back to this page
-            Response.Redirect("/search?SearchTerm=" + Server.HtmlEncode(txtBookTitle.Text) +
-                "&lname=" + Server.HtmlEncode(txtBookAuthorLastName.Text) +
-                "&vol=" + Server.HtmlEncode(txtBookVolume.Text) +
-                "&ed=" + Server.HtmlEncode(txtBookEdition.Text) +
-                "&yr=" + Server.HtmlEncode(txtBookYear.Text) +
+            Response.Redirect("/search?SearchTerm=" + Server.UrlEncode(txtBookTitle.Text) +
+                "&lname=" + Server.UrlEncode(txtBookAuthorLastName.Text) +
+                "&vol=" + Server.UrlEncode(txtBookVolume.Text) +
+                "&ed=" + Server.UrlEncode(txtBookEdition.Text) +
+                "&yr=" + Server.UrlEncode(txtBookYear.Text) +
                 "&col=4&SearchCat=T&return=dl");
         }
 
@@ -65,12 +65,12 @@ namespace MOBOT.BHL.Web2
         {
             // This should trigger a search of both annotations and annotation index terms.
             // "return" argument should be used to redirect the "New Search" link on search.aspx back to this page
-            Response.Redirect("/search?anno=" + Server.HtmlEncode(txtAnnotationText.Text) +
-                "&SearchTerm=" + Server.HtmlEncode(txtAnnoTitle.Text) +
-                "&lname=" + Server.HtmlEncode(txtAnnoAuthorLastName.Text) +
-                "&vol=" + Server.HtmlEncode(txtAnnoVolume.Text) +
-                "&ed=" + Server.HtmlEncode(txtAnnoEdition.Text) +
-                "&yr=" + Server.HtmlEncode(txtAnnoYear.Text) +
+            Response.Redirect("/search?anno=" + Server.UrlEncode(txtAnnotationText.Text) +
+                "&SearchTerm=" + Server.UrlEncode(txtAnnoTitle.Text) +
+                "&lname=" + Server.UrlEncode(txtAnnoAuthorLastName.Text) +
+                "&vol=" + Server.UrlEncode(txtAnnoVolume.Text) +
+                "&ed=" + Server.UrlEncode(txtAnnoEdition.Text) +
+                "&yr=" + Server.UrlEncode(txtAnnoYear.Text) +
                 "&col=4&SearchCat=O&return=dl");
         }
 

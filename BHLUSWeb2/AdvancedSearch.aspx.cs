@@ -120,22 +120,22 @@ namespace MOBOT.BHL.Web2
         protected void btnSearchTitle_Click(object sender, EventArgs e)
         {
             Response.Redirect("/search?SearchTerm=" + Server.UrlEncode(txtBookTitle.Text) +
-                "&lname=" + Server.HtmlEncode(txtBookAuthorLastName.Text) +
-                "&vol=" + Server.HtmlEncode(txtBookVolume.Text) +
-                "&ed=" + Server.HtmlEncode(txtBookEdition.Text) +
-                "&yr=" + Server.HtmlEncode(txtBookYear.Text) +
-                "&subj=" + Server.HtmlEncode(txtBookSubject.Text) +
-                "&lang=" + Server.HtmlEncode(ddlBookLanguage.SelectedValue) +
-                "&col=" + Server.HtmlEncode(ddlBookCollection.SelectedValue) +
+                "&lname=" + Server.UrlEncode(txtBookAuthorLastName.Text) +
+                "&vol=" + Server.UrlEncode(txtBookVolume.Text) +
+                "&ed=" + Server.UrlEncode(txtBookEdition.Text) +
+                "&yr=" + Server.UrlEncode(txtBookYear.Text) +
+                "&subj=" + Server.UrlEncode(txtBookSubject.Text) +
+                "&lang=" + Server.UrlEncode(ddlBookLanguage.SelectedValue) +
+                "&col=" + Server.UrlEncode(ddlBookCollection.SelectedValue) +
                 "&SearchCat=T&return=ADV");
         }
 
         protected void btnSearchArticle_Click(object sender, EventArgs e)
         {
             Response.Redirect("/search?SearchTerm=" + Server.UrlEncode(txtArticleTitle.Text) +
-                "&cont=" + Server.HtmlEncode(txtJournalTitle.Text) +
-                "&lname=" + Server.HtmlEncode(txtArticleAuthor.Text) +
-                "&yr=" + Server.HtmlEncode(txtArticleYear.Text) +
+                "&cont=" + Server.UrlEncode(txtJournalTitle.Text) +
+                "&lname=" + Server.UrlEncode(txtArticleAuthor.Text) +
+                "&yr=" + Server.UrlEncode(txtArticleYear.Text) +
                 "&SearchCat=SG&return=ADV");
         }
 
