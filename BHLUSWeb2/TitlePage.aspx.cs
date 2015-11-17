@@ -239,28 +239,20 @@ namespace MOBOT.BHL.Web2
 
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
-
-                    // Disqus: Create forum for book, list topics
-                    GetPageComments getPageComments = new GetPageComments();
-                    IRestResponse pageComments = getPageComments.GetForumThreads(PageSummary.ItemID.ToString());
+                    
+                    //get cache of pages that have comments
+                    CustomGenericList<DisqusCache> pageCommentsCache = bhlProvider.DisqusCacheSelectByItemID(PageSummary.ItemID);
 
                     CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
                     pages_comments = new CustomGenericList<Page>();
 
                     // Show an indicator on pages that have disqus comments
                     foreach (Page page in pages) {
-                        if (pageComments.Content.Contains("\"bhl-page-" + page.PageID.ToString() + "\""))
+                        foreach (DisqusCache cachedPage in pageCommentsCache)
                         {
-                            //todo: replace with a proper json deserializer, could be brittle
-                            Regex reg = new Regex(@"\[""bhl-page-" + page.PageID.ToString() + @"+""\]\,""posts""\:([0-9]+)\,");
-                            Match match = reg.Match(pageComments.Content);
-                            if (match.Success)
+                            if (cachedPage.PageID == page.PageID)
                             {
-                                page.NumComments = Int32.Parse(match.Groups[1].Value);
-                            }
-                            else
-                            {
-                                page.NumComments = 1;
+                                page.NumComments = cachedPage.Count;
                             }
                         }
                         pages_comments.Add(page);

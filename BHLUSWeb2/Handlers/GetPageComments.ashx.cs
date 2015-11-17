@@ -8,6 +8,7 @@ using MOBOT.BHL.Server;
 using RestSharp;
 using CustomDataAccess;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MOBOT.BHL.Web2
 {
@@ -73,15 +74,49 @@ namespace MOBOT.BHL.Web2
                         APIParameters.Add("identifier", "bhl-page-" + p.PageID);
                         APIParameters.Add("title", p.WebDisplay);
                         response = this.DiqsusCall("threads/create.json", Method.POST, APIParameters);
-
+                        
                     }
                     else
                     {
+                        //A new comments has been posted
+                        //Vote up the thread
                         APIParameters = new Dictionary<string, string>();
                         APIParameters.Add("vote", "1");
                         APIParameters.Add("forum", "bhl-item-" + p.ItemID);
                         APIParameters.Add("thread:ident", "bhl-page-" + p.PageID);
                         response = this.DiqsusCall("threads/vote.json", Method.POST, APIParameters);
+
+                        //update our cache of pages that have comments
+                        IRestResponse pageComments = GetForumThreads(p.ItemID.ToString());
+                        BHLProvider bhlProvider = new BHLProvider();
+                        bhlProvider.DisqusCacheDeleteByItemID(p.ItemID);
+                        CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(p.ItemID);
+                        foreach (Page page in pages)
+                        {
+                            if (pageComments.Content.Contains("\"bhl-page-" + page.PageID.ToString() + "\""))
+                            {
+                                //todo: replace with a proper json deserializer, could be brittle
+                                Regex reg = new Regex(@"\[""bhl-page-" + page.PageID.ToString() + @"""\]\,(.+?)""posts""\:([0-9]+)\,");
+                                Match match = reg.Match(pageComments.Content);
+                                if (match.Success)
+                                {
+                                    page.NumComments = Int32.Parse(match.Groups[2].Value);
+                                }
+                                else
+                                {
+                                    page.NumComments = 1;
+                                }
+                            }
+                            //do insert
+                            if (page.NumComments > 0)
+                            {
+                                DisqusCache cachedPage = new DisqusCache();
+                                cachedPage.PageID = page.PageID;
+                                cachedPage.ItemID = p.ItemID;
+                                cachedPage.Count = page.NumComments;
+                                bhlProvider.DisqusCacheInsertAuto(cachedPage);
+                            }
+                        }
                     }
                     outText = "OK";
                 }
