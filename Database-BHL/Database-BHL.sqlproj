@@ -1200,4 +1200,15 @@
   <ItemGroup>
     <None Include="dbo\Tables\AspNetUserRoles.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\DisqusCache.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\DisqusCacheDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\DisqusCacheDeleteByItemID.sql" />
+    <None Include="dbo\Stored Procedures\DisqusCacheInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\DisqusCacheSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\DisqusCacheSelectByItemID.sql" />
+    <None Include="dbo\Stored Procedures\DisqusCacheUpdateAuto.sql" />
+  </ItemGroup>
 </Project>

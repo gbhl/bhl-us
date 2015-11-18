@@ -1,5 +1,5 @@
 CREATE TABLE [dbo].[DisqusCache] (
-    [DisqusCacheID]	BIGINT	IDENTITY (1, 1) NOT NULL,
+    [DisqusCacheID]	INT	IDENTITY (1, 1) NOT NULL,
     [ItemID] INT NOT NULL,
     [PageID] INT NOT NULL,
     [Count] INT NOT NULL,
