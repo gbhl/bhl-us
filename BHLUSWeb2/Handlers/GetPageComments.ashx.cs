@@ -89,7 +89,10 @@ namespace MOBOT.BHL.Web2
                         //update our cache of pages that have comments
                         IRestResponse pageComments = GetForumThreads(p.ItemID.ToString());
                         BHLProvider bhlProvider = new BHLProvider();
-                        bhlProvider.DisqusCacheDeleteByItemID(p.ItemID);
+                        if (pageComments.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            bhlProvider.DisqusCacheDeleteByItemID(p.ItemID);
+                        }
                         CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(p.ItemID);
                         foreach (Page page in pages)
                         {
