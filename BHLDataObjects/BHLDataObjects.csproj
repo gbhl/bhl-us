@@ -92,6 +92,7 @@
     <Compile Include="Concrete\BioStorHarvestItem.cs" />
     <Compile Include="Concrete\Collection.cs" />
     <Compile Include="Concrete\Configuration.cs" />
+    <Compile Include="Concrete\DisqusCache.cs" />
     <Compile Include="Concrete\IAHarvestItem.cs" />
     <Compile Include="Concrete\DOI.cs" />
     <Compile Include="Concrete\DOIStatus.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Generated\__AuthorType.cs" />
     <Compile Include="Generated\__BibliographicLevel.cs" />
     <Compile Include="Generated\__Collection.cs" />
+    <Compile Include="Generated\__DisqusCache.cs" />
     <Compile Include="Generated\__DOI.cs" />
     <Compile Include="Generated\__DOIStatus.cs" />
     <Compile Include="Generated\__Identifier.cs" />

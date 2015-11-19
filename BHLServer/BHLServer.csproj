@@ -123,6 +123,7 @@
     <Compile Include="BHLProvider.Title.cs">
     </Compile>
     <Compile Include="BHLProvider.TitleAuthor.cs" />
+    <Compile Include="BHLProvider.DisqusCache.cs" />
     <Compile Include="BHLProvider.TitleKeyword.cs" />
     <Compile Include="BHLProvider.TitleNote.cs" />
     <Compile Include="BHLProvider.TitleVariant.cs" />
