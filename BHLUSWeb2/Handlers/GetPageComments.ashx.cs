@@ -89,32 +89,35 @@ namespace MOBOT.BHL.Web2
                         //update our cache of pages that have comments
                         IRestResponse pageComments = GetForumThreads(p.ItemID.ToString());
                         BHLProvider bhlProvider = new BHLProvider();
-                        bhlProvider.DisqusCacheDeleteByItemID(p.ItemID);
-                        CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(p.ItemID);
-                        foreach (Page page in pages)
+                        if (pageComments.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            if (pageComments.Content.Contains("\"bhl-page-" + page.PageID.ToString() + "\""))
+                            bhlProvider.DisqusCacheDeleteByItemID(p.ItemID);
+                            CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(p.ItemID);
+                            foreach (Page page in pages)
                             {
-                                //todo: replace with a proper json deserializer, could be brittle
-                                Regex reg = new Regex(@"\[""bhl-page-" + page.PageID.ToString() + @"""\]\,(.+?)""posts""\:([0-9]+)\,");
-                                Match match = reg.Match(pageComments.Content);
-                                if (match.Success)
+                                if (pageComments.Content.Contains("\"bhl-page-" + page.PageID.ToString() + "\""))
                                 {
-                                    page.NumComments = Int32.Parse(match.Groups[2].Value);
+                                    //todo: replace with a proper json deserializer, could be brittle
+                                    Regex reg = new Regex(@"\[""bhl-page-" + page.PageID.ToString() + @"""\]\,(.+?)""posts""\:([0-9]+)\,");
+                                    Match match = reg.Match(pageComments.Content);
+                                    if (match.Success)
+                                    {
+                                        page.NumComments = Int32.Parse(match.Groups[2].Value);
+                                    }
+                                    else
+                                    {
+                                        page.NumComments = 1;
+                                    }
                                 }
-                                else
+                                //do insert
+                                if (page.NumComments > 0)
                                 {
-                                    page.NumComments = 1;
+                                    DisqusCache cachedPage = new DisqusCache();
+                                    cachedPage.PageID = page.PageID;
+                                    cachedPage.ItemID = p.ItemID;
+                                    cachedPage.Count = page.NumComments;
+                                    bhlProvider.DisqusCacheInsertAuto(cachedPage);
                                 }
-                            }
-                            //do insert
-                            if (page.NumComments > 0)
-                            {
-                                DisqusCache cachedPage = new DisqusCache();
-                                cachedPage.PageID = page.PageID;
-                                cachedPage.ItemID = p.ItemID;
-                                cachedPage.Count = page.NumComments;
-                                bhlProvider.DisqusCacheInsertAuto(cachedPage);
                             }
                         }
                     }

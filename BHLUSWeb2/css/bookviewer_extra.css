@@ -164,7 +164,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
 
 #bookviewercontainer {
     margin: 6px; 
-    overflow: hidden;
+    overflow: visible;
     width: 100%; 
     height: 84%;
 }
@@ -175,7 +175,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     width: 300px;
     background: #2a3038;
     
-    height: 100%;
+    height: auto;
     
     -webkit-border-radius: 10px 0 0 10px;
     border-radius: 10px 0 0 10px; 
@@ -523,7 +523,7 @@ a.BRButton:hover, a.BRButton:active
     display:block;
     width:auto;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 /* OCR Panel */
