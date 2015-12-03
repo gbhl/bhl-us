@@ -8,3 +8,8 @@
     CONSTRAINT [FK_BSSegmentPage_BSSegment] FOREIGN KEY ([SegmentID]) REFERENCES [dbo].[BSSegment] ([SegmentID])
 );
 
+GO
+CREATE NONCLUSTERED INDEX [IX_BSSegmentPage_SegmentID] 
+	ON [dbo].[BSSegmentPage]([SegmentID] ASC);
+
+GO
