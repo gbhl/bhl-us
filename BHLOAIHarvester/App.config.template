@@ -40,6 +40,19 @@
       <appender-ref ref="RollingLogFileAppender"/>
     </root>
   </log4net>
+    <system.net>
+      <mailSettings>
+        <smtp deliveryMethod="Network">
+          <network defaultCredentials="false"
+                   enableSsl="true"
+                   host="MAIL_SERVER_ADDRESS"
+                   port="MAIL_SERVER_PORT"
+                   userName="MAIL_SERVER_USERNAME"
+                   password="MAIL_SERVER_PASSWORD"
+                   />
+        </smtp>
+      </mailSettings>
+    </system.net>
   <startup> 
         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
     </startup>
