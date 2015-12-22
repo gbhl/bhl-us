@@ -435,6 +435,12 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\GetPageComments.ashx" />
     <None Include="Remoting.config.template" />
+    <Content Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.NameFinderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Title_Identifier.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="services\Name\Web.config.template" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
@@ -475,9 +481,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.FindItItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Institution.datasource">

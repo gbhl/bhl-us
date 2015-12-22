@@ -15,6 +15,7 @@ using MOBOT.BHL.DataObjects;
 using CustomDataAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using MOBOT.FileAccess;
 
 namespace MOBOT.BHL.Server
 {
@@ -30,19 +31,6 @@ namespace MOBOT.BHL.Server
             {
                 return new MOBOT.FileAccess.FileAccessProvider();
             }
-        }
-
-        public string GetOcrText(bool useRemoteProvider, string textLocation)
-        {
-            string ocrText = string.Empty;
-
-            MOBOT.FileAccess.IFileAccessProvider fileAccessProvider = GetFileAccessProvider(useRemoteProvider);
-            if (fileAccessProvider.FileExists(textLocation))
-            {
-                ocrText = fileAccessProvider.GetFileText(textLocation);
-            }
-
-            return ocrText;
         }
 
         public string GetTextUrl(bool useRemoteProvider, string textLocation)
@@ -577,6 +565,127 @@ namespace MOBOT.BHL.Server
             }
 
             return nameDetails;
+        }
+
+        /// <summary>
+        /// Determine if an OCR job file exists for the specified item
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        public bool OcrJobExists(int itemID)
+        {
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
+            return fileAccessProvider.FileExists(fileName);
+        }
+
+        /// <summary>
+        /// Create an OCR job file for the specified item
+        /// </summary>
+        /// <param name="itemID"></param>
+        public void OcrCreateJob(int itemID)
+        {
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            string fileName = string.Format("{0}{1}", ConfigurationManager.AppSettings["OCRJobNewPath"], itemID.ToString());
+            byte[] fileContent = new byte[] { 0x20 };
+            fileAccessProvider.SaveFile(fileContent, fileName);
+        }
+
+        public string GetOcrText(int pageID)
+        {
+            Page page = this.PageSelectOcrPathForPageID(pageID);
+            String ocrText = "OCR text unavailable for this page.";
+
+            // Make sure we found an active page
+            if (page != null)
+            {
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["OCRTextLocation"],
+                    page.OcrFolderShare, page.FileRootFolder, page.BarCode, page.FileNamePrefix);
+                if (fileAccessProvider.FileExists(ocrTextLocation)) ocrText = fileAccessProvider.GetFileText(ocrTextLocation);
+            }
+
+            return ocrText;
+        }
+
+        /// <summary>
+        /// Determine if a MARC file exists for the specified title or item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">"t" for title, "i" for item</param>
+        /// <returns>Path to the file</returns>
+        public string MarcFileExists(int id, string type)
+        {
+            string filepath = string.Empty;
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+
+            if (type == "t")
+            {
+                // Check vaults for imported MARC file
+                Title title = this.TitleSelectAuto(id);
+                CustomGenericList<Vault> vaults = this.VaultSelectAll();
+                foreach (Vault vault in vaults)
+                {
+                    if (fileAccessProvider.FileExists(String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID)))
+                    {
+                        filepath = String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID);
+                        break;
+                    }
+                }
+            }
+
+            if (type == "i")
+            {
+                PageSummaryView ps = this.PageSummarySelectByItemId(id, false);
+                if (ps != null)
+                {
+                    if (fileAccessProvider.FileExists(ps.MarcXmlLocation)) filepath = ps.MarcXmlLocation;
+                }
+            }
+
+            return filepath;
+        }
+
+        /// <summary>
+        /// Get the contents of the MARC file
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public string MarcGetFileContents(int id, string type)
+        {
+            string fileContents = "MARC not found.";
+            string filepath = string.Empty;
+
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            filepath = this.MarcFileExists(id, type);
+            if (!string.IsNullOrWhiteSpace(filepath))
+            {
+                fileContents = fileAccessProvider.GetFileText(filepath);
+            }
+
+            return fileContents;
+        }
+
+        /// <summary>
+        /// Create a MARC file for the specified item
+        /// </summary>
+        /// <param name="itemID"></param>
+        public void MarcCreateFile(string marcBibID, string content)
+        {
+            MOBOT.BHL.DataObjects.Configuration config = this.ConfigurationSelectByName(
+                System.Configuration.ConfigurationManager.AppSettings["ConfigNameCurrentIAVault"]);
+            if (config != null)
+            {
+                Vault vault = this.VaultSelect(Convert.ToInt32(config.ConfigurationValue));
+                if (vault != null)
+                {
+                    String destinationFile = string.Format("{0}\\{1}\\{2}_marc.xml", vault.OCRFolderShare, marcBibID, marcBibID);
+                    MOBOT.FileAccess.IFileAccessProvider fileAccess =
+                        this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                    fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
+                }
+            }
         }
 
         /// <summary>

@@ -25,28 +25,8 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!string.IsNullOrEmpty(batchId) && (type == "d" || type == "s"))
                     {
-                        string filepath = string.Empty;
-
-                        if (type == "d")    // Deposit
-                        {
-                            filepath = String.Format(ConfigurationManager.AppSettings["DOIDepositFileLocation"], batchId);
-                        }
-
-                        if (type == "s")    // Submission log
-                        {
-                            filepath = String.Format(ConfigurationManager.AppSettings["DOISubmitLogFileLocation"], batchId);
-                        }
-
-                        BHLProvider service = new BHLProvider();
-                        if (service.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
-                        {
-                            string fileContents = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filepath);
-                            litDetail.Text = Server.HtmlEncode(fileContents).Replace("\n", "<br>");
-                        }
-                        else
-                        {
-                            litDetail.Text = "File not found.";
-                        }
+                        BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                        litDetail.Text = service.DOIGetFileContents(batchId, type);
                     }
                 }
                 catch (Exception ex)

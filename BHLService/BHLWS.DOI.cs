@@ -52,5 +52,11 @@ namespace MOBOT.BHL.WebService
         {
             return new BHLProvider().DOIUpdateBatchID(doiID, doiStatusId, doiBatchID);
         }
+
+        [WebMethod]
+        public string DOIGetFileContents(string batchId, string type)
+        {
+            return new BHLProvider().DOIGetFileContents(batchId, type);
+        }
     }
 }

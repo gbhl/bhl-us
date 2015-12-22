@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAdminWeb", "BHLAdminWeb\BHLAdminWeb.csproj", "{53463F60-2878-46CC-A088-0B09C8F55CC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B33B346A-953D-45FB-B76F-68E12346C9B3} = {B33B346A-953D-45FB-B76F-68E12346C9B3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlickrUtility", "FlickrUtility\FlickrUtility.csproj", "{F9D69FA5-9EE0-43FB-ABA3-DC443ACE3F18}"
 EndProject
@@ -39,6 +42,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +113,10 @@ Global
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

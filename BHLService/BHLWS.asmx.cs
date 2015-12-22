@@ -36,11 +36,12 @@ namespace MOBOT.BHL.WebService
                 Convert.ToInt32(ConfigurationManager.AppSettings["MaxReadAttempts"]));
         }
 
-        private string GetOcrText(PageSummaryView ps)
+        [WebMethod]
+        public string GetOcrText(int pageID)
         {
             try
             {
-                return new BHLProvider().GetOcrText(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true", ps.OcrTextLocation);
+                return new BHLProvider().GetOcrText(pageID);
             }
             catch (Exception ex)
             {
@@ -372,5 +373,44 @@ namespace MOBOT.BHL.WebService
         }
 
         #endregion MODS Methods
+
+        #region OCR Job File Methods
+
+        [WebMethod]
+        public bool OcrJobExists(int itemID)
+        {
+            return new BHLProvider().OcrJobExists(itemID);
+        }
+
+        [WebMethod]
+        public void OcrCreateJob(int itemID)
+        {
+            new BHLProvider().OcrCreateJob(itemID);
+        }
+
+        #endregion OCR Job File Methods
+
+        #region MARC File Methods
+
+        [WebMethod]
+        public bool MARCFileExists(int id, string type)
+        {
+            string filePath = new BHLProvider().MarcFileExists(id, type);
+            return !string.IsNullOrWhiteSpace(filePath);
+        }
+
+        [WebMethod]
+        public string MARCGetFileContents(int id, string type)
+        {
+            return new BHLProvider().MarcGetFileContents(id, type);
+        }
+
+        [WebMethod]
+        public void MarcCreateFile(string marcBibID, string content)
+        {
+            new BHLProvider().MarcCreateFile(marcBibID, content);
+        }
+
+        #endregion MARC File Methods
     }
 }

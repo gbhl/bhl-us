@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="TitleBibTeX" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>MOBOT.BHL.Web2.BHLWebService.TitleBibTeX</TypeInfo>
+   <TypeInfo>MOBOT.BHL.Web2.BHLWebService.TitleBibTeX, Service References.BHLWebService.Reference.cs.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

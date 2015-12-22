@@ -120,20 +120,8 @@ namespace MOBOT.BHL.AdminWeb
                         // - Copy MARC.XML file to new folder (using MarcBibID as name)
                         try
                         {
-                            MOBOT.BHL.DataObjects.Configuration config = provider.ConfigurationSelectByName(
-                                System.Configuration.ConfigurationManager.AppSettings["ConfigNameCurrentIAVault"]);
-                            if (config != null)
-                            {
-                                Vault vault = provider.VaultSelect(Convert.ToInt32(config.ConfigurationValue));
-                                if (vault != null)
-                                {
-                                    String destinationFile = vault.OCRFolderShare + "\\" + title.MARCBibID + "\\" + title.MARCBibID + "_marc.xml";
-                                    MOBOT.FileAccess.IFileAccessProvider fileAccess =
-                                        provider.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
-                                    fileAccess.CopyFile(marc.MarcFileLocation, destinationFile, true);
-                                    //fileAccess.DeleteFile(marc.MarcFileLocation);
-                                }
-                            }
+                            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                            service.MarcCreateFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
                         }
                         catch
                         {

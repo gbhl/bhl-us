@@ -38,7 +38,7 @@ namespace MOBOT.BHL.Web2.Services
             {
                 sa[0] = psv.PageID.ToString();
                 sa[1] = GetTextUrl(psv);    // identifies whether an OCR file was found
-                sa[2] = ReplaceReturnsWithBreaks(GetOcrText(psv));
+                sa[2] = ReplaceReturnsWithBreaks(GetOcrText(pageID));
             }
 			return ( sa );
 		}
@@ -48,11 +48,12 @@ namespace MOBOT.BHL.Web2.Services
             return new BHLProvider().GetTextUrl(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true", psv.OcrTextLocation);
 		}
 
-		private string GetOcrText( PageSummaryView ps )
+		private string GetOcrText( int pageID)
 		{
 			try
 			{
-                return new BHLProvider().GetOcrText(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true", ps.OcrTextLocation);
+                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                return service.GetOcrText(pageID);
 			}
 			catch ( Exception ex )
 			{

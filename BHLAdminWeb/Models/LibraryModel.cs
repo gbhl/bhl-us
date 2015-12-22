@@ -264,15 +264,14 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.OcrItemID = item.ItemID.ToString();
             this.OcrIAID = item.BarCode;
 
-            string fileName = string.Format("{0}{1}", this.OcrJobPath, this.OcrItemID.ToString());
-
-            if (File.Exists(fileName))
+            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+            if (service.OcrJobExists(item.ItemID))
             {
                 this.Message = string.Format("Ocr regeneration job pending for item {0} ({2}).", this.OcrItemID, this.OcrIAID);
                 return;
             }
 
-            File.WriteAllText(fileName, "");
+            service.OcrCreateJob(item.ItemID);
             this.Message = string.Format("Ocr regeneration job created for item {0} ({1}).", this.OcrItemID, this.OcrIAID);
         }
 

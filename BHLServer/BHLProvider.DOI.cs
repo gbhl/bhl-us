@@ -2,6 +2,7 @@
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using CustomDataAccess;
+using System.Configuration;
 
 namespace MOBOT.BHL.Server
 {
@@ -89,6 +90,30 @@ namespace MOBOT.BHL.Server
         public CustomGenericList<DOIStatus> DOIStatusSelectAll()
         {
             return new DOIDAL().DOIStatusSelectAll(null, null);
+        }
+
+        public string DOIGetFileContents(string batchId, string type)
+        {
+            string fileContents = "File not found.";
+            string filepath = string.Empty;
+
+            if (type == "d")    // Deposit
+            {
+                filepath = String.Format(ConfigurationManager.AppSettings["DOIDepositFileLocation"], batchId);
+            }
+
+            if (type == "s")    // Submission log
+            {
+                filepath = String.Format(ConfigurationManager.AppSettings["DOISubmitLogFileLocation"], batchId);
+            }
+
+            BHLProvider service = new BHLProvider();
+            if (service.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
+            {
+                fileContents = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filepath);
+            }
+
+            return fileContents;
         }
     }
 }

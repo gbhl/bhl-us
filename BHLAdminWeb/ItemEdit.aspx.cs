@@ -281,18 +281,8 @@ namespace MOBOT.BHL.AdminWeb
 
 
                 // See if we can display a link to the MARC file
-                bool marcFound = false;
-                PageSummaryView ps = new BHLProvider().PageSummarySelectByItemId(item.ItemID, false);
-                if (ps != null)
-                {
-                    String filepath = ps.MarcXmlLocation;
-                    if (new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
-                    {
-                        marcFound = true;
-                    }
-                }
-
-                if (marcFound)
+                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                if (service.MARCFileExists(item.ItemID, "i"))
                 {
                     hypMarc.Attributes["onclick"] = string.Format("javascript:window.open('TitleItemMarc.aspx?type=i&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');", item.ItemID.ToString());
                     hypMarc.Visible = true;                        

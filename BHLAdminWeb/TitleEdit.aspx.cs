@@ -284,22 +284,8 @@ namespace MOBOT.BHL.AdminWeb
 			//itemsList.DataBind();
 
             // See if we can display a link to the MARC file
-            bool marcFound = false;
-            String filepath = string.Empty;
-
-            // Check vaults for imported MARC file
-            CustomGenericList<Vault> vaults = new BHLProvider().VaultSelectAll();
-            foreach(Vault vault in vaults)
-            {
-                filepath = String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID);
-                if (new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
-                {
-                    marcFound = true;
-                    break;
-                }
-            }
-
-            if (marcFound)
+            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+            if (service.MARCFileExists(id, "t"))
             {
                 hypMarc.Attributes["onclick"] = String.Format(hypMarc.Attributes["onclick"], title.TitleID.ToString());
                 hypMarc.Visible = true;

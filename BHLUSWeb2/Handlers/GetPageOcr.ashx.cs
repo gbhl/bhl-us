@@ -26,22 +26,8 @@ namespace MOBOT.BHL.Web2
             int pageID;
             if (Int32.TryParse(pageIDString, out pageID))
             {
-                BHLProvider provider = new BHLProvider();
-                Page p = provider.PageSelectOcrPathForPageID(pageID);
-                String ocrText = string.Empty;
-
-                // Make sure we found an active page
-                if (p != null)
-                {
-                    String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["OCRTextLocation"],
-                        p.OcrFolderShare, p.FileRootFolder, p.BarCode, p.FileNamePrefix);
-                    ocrText = provider.GetOcrText(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true", ocrTextLocation);
-                }
-                if (ocrText == String.Empty)
-                {
-                    ocrText = "OCR text unavailable for this page.";
-                }
-
+                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                string ocrText = service.GetOcrText(pageID);
                 context.Response.ContentType = "text/plain";
                 context.Response.Write(ocrText);
             }

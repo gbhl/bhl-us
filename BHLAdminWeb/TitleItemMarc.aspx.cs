@@ -29,43 +29,10 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (Int32.TryParse(idString, out id) && (type == "t" || type == "i"))
                     {
-                        bool marcFound = false;
-                        string filepath = string.Empty;
-
-                        if (type == "t")
+                        BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                        if (service.MARCFileExists(id, type))
                         {
-                            // Check vaults for imported MARC file
-                            BHLProvider provider = new BHLProvider();
-                            Title title = provider.TitleSelectAuto(id);
-                            CustomGenericList<Vault> vaults = provider.VaultSelectAll();
-                            foreach (Vault vault in vaults)
-                            {
-                                filepath = String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID);
-                                if (new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
-                                {
-                                    marcFound = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (type == "i")
-                        {
-                            // See if we can display the MARC file
-                            PageSummaryView ps = new BHLProvider().PageSummarySelectByItemId(id, false);
-                            if (ps != null)
-                            {
-                                filepath = ps.MarcXmlLocation;
-                                if (new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").FileExists(filepath))
-                                {
-                                    marcFound = true;
-                                }
-                            }
-                        }
-
-                        if (marcFound)
-                        {
-                            string marcXML = new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filepath);
+                            string marcXML = service.MARCGetFileContents(id, type);
 
                             XmlDocument xml = new XmlDocument();
                             StringReader reader = new StringReader(marcXML);
