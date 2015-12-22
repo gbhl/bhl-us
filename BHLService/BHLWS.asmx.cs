@@ -186,7 +186,7 @@ namespace MOBOT.BHL.WebService
         public bool ItemCheckForOcrText(int itemID, string ocrTextPath)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemCheckForOcrText(itemID, ocrTextPath);
+            return bhlServer.ItemCheckForOcrText(itemID, ocrTextPath, ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
         }
 
         [WebMethod]

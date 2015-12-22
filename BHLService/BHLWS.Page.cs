@@ -5,6 +5,7 @@ using System.ComponentModel;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Configuration;
 
 namespace MOBOT.BHL.WebService
 {
@@ -86,7 +87,7 @@ namespace MOBOT.BHL.WebService
         public bool PageCheckForOcrText(int pageID, string ocrTextLocation)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.PageCheckForOcrText(pageID);
+            return bhlServer.PageCheckForOcrText(pageID, ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
         }
 
         #endregion Page Methods

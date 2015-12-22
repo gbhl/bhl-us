@@ -128,7 +128,7 @@ namespace MOBOT.BHL.Server
 		/// <param name="pageID"></param>
 		/// <param name="ocrTextPath"></param>
 		/// <returns></returns>
-		public bool ItemCheckForOcrText( int itemID, string ocrTextPath )
+		public bool ItemCheckForOcrText( int itemID, string ocrTextPath, bool useRemoteProvider )
 		{
 			try
 			{
@@ -137,7 +137,7 @@ namespace MOBOT.BHL.Server
 				{
 					string filepath = String.Format( ocrTextPath, ps.OCRFolderShare, ps.FileRootFolder, ps.BarCode );
 
-                    string[] files = this.GetFileAccessProvider(true).GetFiles( filepath );
+                    string[] files = this.GetFileAccessProvider(useRemoteProvider).GetFiles( filepath );
 					if ( files.Length == 0 )
 						return false;
 					else
