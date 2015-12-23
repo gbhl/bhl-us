@@ -41,7 +41,6 @@
     <add key="CitationCompletePath" value="SITE_ROOT_FOLDER\Upload\Citation\Complete\" />
     <add key="CitationErrorPath" value="SITE_ROOT_FOLDER\Upload\Citation\Error\" />
     <!-- File path for OCR generation -->
-    <add key="OCRJobNewPath" value="SITE_ROOT_FOLDER\ocrjob\new\" />
     <add key="FlickrUserId" value="FLICKR_USER_ID" />
     <!-- OWIN and Identity configuration -->
     <add key="owin:appStartup" value="DevelopmentConfiguration" />
@@ -60,9 +59,6 @@
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
-    <!-- DOI file locations -->
-    <add key="DOIDepositFileLocation" value="DOI_SERVICE_ROOT_FOLDER\deposit\{0}.xml" />
-    <add key="DOISubmitLogFileLocation" value="DOI_SERVICE_ROOT_FOLDER\submitlog\{0}.log.xml" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
     <add key="jQueryUIPath" value="/Scripts/jquery-ui-1.11.4/jquery-ui.min.js" />
@@ -81,7 +77,6 @@
     <add key="StatsPendingApprovalMinimimDisplayAge" value="0" />
     <!-- value is in days -->
     <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml" />
-    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID" />
     <!-- Flickr settings -->
     <add key="FlickrKey" value="FLICKR_API_KEY_VALUE" />
     <add key="FlickrSecret" value="FLICKR_API_SECRET_VALUE" />
