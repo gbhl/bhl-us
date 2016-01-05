@@ -435,12 +435,7 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\GetPageComments.ashx" />
     <None Include="Remoting.config.template" />
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
+    <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
@@ -450,79 +445,10 @@
     </None>
     <None Include="Properties\PublishProfiles\Beta - BHL.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL.pubxml" />
-    <None Include="Service References\BHLWebService\BHLWS.disco" />
-    <None Include="Service References\BHLWebService\configuration91.svcinfo" />
-    <None Include="Service References\BHLWebService\configuration.svcinfo" />
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.TitleEndNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\MOBOT.BHL.Web2.BHLWebService.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWebService\Reference.svcmap">
+    <None Include="Service References\SiteService\SiteService.disco" />
+    <None Include="Service References\SiteService\configuration91.svcinfo" />
+    <None Include="Service References\SiteService\configuration.svcinfo" />
+    <None Include="Service References\SiteService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -542,8 +468,8 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
-    <None Include="Service References\BHLWebService\BHLWS.wsdl" />
     <None Include="xsd\bhlrss.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -907,7 +833,7 @@
     <Compile Include="SectionPage.aspx.designer.cs">
       <DependentUpon>SectionPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\BHLWebService\Reference.cs">
+    <Compile Include="Service References\SiteService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -1022,10 +948,6 @@
       <Project>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</Project>
       <Name>BHLServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BHLService\BHLWebService.csproj">
-      <Project>{B33B346A-953D-45FB-B76F-68E12346C9B3}</Project>
-      <Name>BHLWebService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
       <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
       <Name>BHLWebUtilities</Name>
@@ -1057,6 +979,10 @@
     <ProjectReference Include="..\OpenUrlUtilities\OpenUrlUtilities.csproj">
       <Project>{DFD7C2B7-C26C-4ECC-865B-FD1AC8B4E9F1}</Project>
       <Name>OpenUrlUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SiteServices\SiteServices.csproj">
+      <Project>{f3f5e38d-5028-4249-8db8-a86fd6a09a8f}</Project>
+      <Name>SiteServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1100,7 +1026,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BHLWebService\" />
+    <WCFMetadataStorage Include="Service References\SiteService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

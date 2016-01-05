@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHLImport.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -16,10 +16,8 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!IsPostBack)
             {
-                BHLImportWSSoapClient ws = new BHLImportWSSoapClient();
-                BSSegment[] segments = ws.BSSegmentSelectByItem(Convert.ToInt32(itemId));
-
-                dlSegments.DataSource = segments;
+                BHLImportProvider service = new BHLImportProvider();
+                dlSegments.DataSource = service.BSSegmentSelectByItem(Convert.ToInt32(itemId));
                 dlSegments.DataBind();
             }
         }

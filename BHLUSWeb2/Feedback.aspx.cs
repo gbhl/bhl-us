@@ -18,6 +18,7 @@ using Countersoft.Gemini.Commons;
 using Countersoft.Gemini.Api;
 using RestSharp;
 using Countersoft.Gemini.Commons.Dto;
+using BHL.SiteServices;
 
 namespace MOBOT.BHL.Web2
 {
@@ -442,13 +443,13 @@ namespace MOBOT.BHL.Web2
         {
             try
             {
-                String[] recipients = new String[1];
-                recipients[0] = recipient;
+                MOBOT.BHL.Web2.SiteService.ArrayOfString recipients = new MOBOT.BHL.Web2.SiteService.ArrayOfString();
+                recipients.Add(recipient);
                 string message = this.GetReceivedMessage();
                 message = message.Replace("[Feedback]", this.CleanStringForEmail(feedbackReceived));
                 if (message != String.Empty)
                 {
-                    MOBOT.BHL.Web2.BHLWebService.BHLWSSoapClient service = new MOBOT.BHL.Web2.BHLWebService.BHLWSSoapClient();
+                    SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                     service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
                         subject, message);
                 }

@@ -6,8 +6,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
 using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHLImport.Server;
+using CustomDataAccess;
+using MOBOT.BHLImport.DataObjects;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -42,8 +44,8 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!IsPostBack)
             {
-                BHLImportWSSoapClient ws = new BHLImportWSSoapClient();
-                IAItemStatus[] statuses = ws.IAItemStatusSelectAll();
+                BHLImportProvider service = new BHLImportProvider();
+                CustomGenericList<IAItemStatus> statuses = service.IAItemStatusSelectAll();
 
                 ddlStatusView.Items.Add(new ListItem("", "0"));
                 foreach (IAItemStatus status in statuses)
@@ -81,11 +83,11 @@ namespace MOBOT.BHL.AdminWeb
             string updateMsg = string.Empty;
             litUpdateResult.Text = string.Empty;
 
-            BHLImportWSSoapClient ws = null;
+            BHLImportProvider service = null;
 
             try
             {
-                ws = new BHLImportWSSoapClient();
+                service = new BHLImportProvider();
 
                 // Get the list of selected items
                 string selected = hidSelected.Value;
@@ -103,7 +105,7 @@ namespace MOBOT.BHL.AdminWeb
                         {
                             string id = ids[x].Replace("jqg_list_", "");
                             // Call the web service to update the item
-                            string[] wsResponse = ws.IAItemUpdateStatus(
+                            string[] wsResponse = service.IAItemUpdateStatus(
                                 Convert.ToInt32(id), Convert.ToInt32(ddlStatusChange.SelectedValue));
 
                             // Check for any errors

@@ -591,12 +591,7 @@
     <Compile Include="SegmentTypeEdit.aspx.designer.cs">
       <DependentUpon>SegmentTypeEdit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Service References\BHLImportWebService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\BHLWebService\Reference.cs">
+    <Compile Include="Service References\SiteService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -973,122 +968,28 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4\jquery-ui.min.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Service References\BHLImportWebService\BHLImportWS.disco" />
-    <Content Include="Service References\BHLImportWebService\configuration91.svcinfo" />
-    <Content Include="Service References\BHLImportWebService\configuration.svcinfo" />
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BotanicusHarvestLog.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.DOIGetFileContentsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSItem.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetOcrTextResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSItemStatus.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MarcCreateFileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.BSSegment.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCFileExistsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItem.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.MARCGetFileContentsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItemError.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.IAItemStatus.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.ImportError.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.ImportLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLImportWebService\MOBOT.BHL.AdminWeb.BHLImportWebService.Stats.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLImportWebService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </Content>
-    <None Include="Service References\BHLWebService\BHLWS.disco" />
-    <None Include="Service References\BHLWebService\configuration91.svcinfo" />
-    <None Include="Service References\BHLWebService\configuration.svcinfo" />
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotatedItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotatedPage.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotatedPageCharacteristic.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotatedTitle.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Annotation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotationNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotationRelation.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.AnnotationSubject.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Annotation_AnnotationConcept.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.DOI.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Institution.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Item.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.ItemNameFileLog.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.NameFinderResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Page.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.PageFlickr.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.PageSummaryView.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.PageType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.PDF.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Segment.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Title.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.TitleEndNote.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Title_Identifier.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BHLWebService\MOBOT.BHL.AdminWeb.BHLWebService.Vault.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\BHLWebService\Reference.svcmap">
+    <None Include="Service References\SiteService\SiteService.disco" />
+    <None Include="Service References\SiteService\configuration91.svcinfo" />
+    <None Include="Service References\SiteService\configuration.svcinfo" />
+    <None Include="Service References\SiteService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -1136,7 +1037,6 @@
     <Content Include="Remoting.config" />
     <Content Include="Services\DOIService.ashx" />
     <Content Include="Services\PageSummaryService.ashx" />
-    <Content Include="Service References\BHLImportWebService\BHLImportWS.wsdl" />
     <Content Include="Services\RecentlyClusteredSegmentsDownloadService.ashx" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
@@ -1171,7 +1071,7 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
-    <None Include="Service References\BHLWebService\BHLWS.wsdl" />
+    <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -1264,6 +1164,14 @@
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLImportDataObjects\BHLImportDataObjects.csproj">
+      <Project>{d936ad4d-99f3-4095-b538-a097b23accd8}</Project>
+      <Name>BHLImportDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLImportServer\BHLImportServer.csproj">
+      <Project>{5d08c39c-54e8-42ce-bda5-99b56de972bb}</Project>
+      <Name>BHLImportServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLServer\BHLServer.csproj">
       <Project>{20fc0f67-c32a-46fe-9ff2-ba5fc74725af}</Project>
       <Name>BHLServer</Name>
@@ -1293,8 +1201,7 @@
     <Folder Include="styles\jqgridtheme\images\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BHLImportWebService\" />
-    <WCFMetadataStorage Include="Service References\BHLWebService\" />
+    <WCFMetadataStorage Include="Service References\SiteService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

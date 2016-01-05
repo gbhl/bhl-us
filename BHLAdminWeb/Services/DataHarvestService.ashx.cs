@@ -6,8 +6,9 @@ using System.Web;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
 using System.Security;
+using MOBOT.BHLImport.Server;
+using MOBOT.BHLImport.DataObjects;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -85,12 +86,12 @@ namespace MOBOT.BHL.AdminWeb.Services
             int itemStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             CustomGenericList<IAHarvestItem> items = new CustomGenericList<IAHarvestItem>();
-            BHLImportWSSoapClient service = null;
+            BHLImportProvider service = null;
 
             try
             {
-                service = new BHLImportWSSoapClient();
-                IAItem[] iaItems = service.IAItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
+                service = new BHLImportProvider();
+                CustomGenericList<IAItem> iaItems = service.IAItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
 
                 foreach (IAItem iaItem in iaItems)
                 {
@@ -153,12 +154,12 @@ namespace MOBOT.BHL.AdminWeb.Services
             int itemStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             CustomGenericList<BioStorHarvestItem> items = new CustomGenericList<BioStorHarvestItem>();
-            BHLImportWSSoapClient service = null;
+            BHLImportProvider service = null;
 
             try
             {
-                service = new BHLImportWSSoapClient();
-                BSItem[] bsItems = service.BSItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
+                service = new BHLImportProvider();
+                CustomGenericList<BSItem> bsItems = service.BSItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
 
                 foreach (BSItem bsItem in bsItems)
                 {

@@ -222,7 +222,7 @@
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
-        <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
+        <binding name="SiteServiceSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
           receiveTimeout="00:10:00" sendTimeout="00:01:00" allowCookies="false"
           bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
           maxBufferPoolSize="524288" maxBufferSize="65536" maxReceivedMessageSize="65536"
@@ -239,9 +239,9 @@
       </basicHttpBinding>
     </bindings>
     <client>
-      <endpoint address="http://localhost:26504/BHLWS.asmx" binding="basicHttpBinding"
-        bindingConfiguration="BHLWSSoap" contract="BHLWebService.BHLWSSoap"
-        name="BHLWSSoap" />
+      <endpoint address="http://localhost:55786/SiteService.asmx" binding="basicHttpBinding"
+        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
+        name="SiteServiceSoap" />
     </client>
   </system.serviceModel>
   <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Services;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using BHL.SiteServices;
 
 namespace MOBOT.BHL.Web2
 {
@@ -26,7 +27,7 @@ namespace MOBOT.BHL.Web2
             int pageID;
             if (Int32.TryParse(pageIDString, out pageID))
             {
-                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                 string ocrText = service.GetOcrText(pageID);
                 context.Response.ContentType = "text/plain";
                 context.Response.Write(ocrText);

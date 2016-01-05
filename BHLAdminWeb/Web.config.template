@@ -113,6 +113,7 @@
     <remove name="BHL" />
     <add name="BHL" connectionString="BHL_DATABASE_CONNECTION_STRING" providerName="System.Data.SqlClient" />
     <add name="BHLUser" connectionString="BHL_USER_DATABASE_CONNECTION_STRING; MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
+    <add name="BHLImport" connectionString="BHLIMPORT_DATABASE_CONNECTION_STRING" providerName="System.Data.SqlClient" />
   </connectionStrings>
   <!--
     For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
@@ -142,11 +143,13 @@
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
-        <binding name="BHLImportWSSoap" maxBufferSize="9437184" maxBufferPoolSize="524288" maxReceivedMessageSize="9437184" />
+        <binding name="SiteServiceSoap" maxBufferSize="9437184" maxBufferPoolSize="524288" maxReceivedMessageSize="9437184" />
       </basicHttpBinding>
     </bindings>
     <client>
-      <endpoint address="http://localhost:22542/BHLImportWS.asmx" binding="basicHttpBinding" bindingConfiguration="BHLImportWSSoap" contract="BHLImportWebService.BHLImportWSSoap" name="BHLImportWSSoap" />
+      <endpoint address="http://localhost:55786/SiteService.asmx" binding="basicHttpBinding"
+        bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
+        name="SiteServiceSoap" />
     </client>
   </system.serviceModel>
   <runtime>

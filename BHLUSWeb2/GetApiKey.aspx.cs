@@ -2,6 +2,7 @@
 using System.Configuration;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using BHL.SiteServices;
 
 namespace MOBOT.BHL.Web2
 {
@@ -58,12 +59,12 @@ namespace MOBOT.BHL.Web2
         {
             // Don't catch errors here... if the email doesn't go, we want the user to know 
             // that something went wrong
-            String[] recipients = new String[1];
-            recipients[0] = recipient;
+            MOBOT.BHL.Web2.SiteService.ArrayOfString recipients = new MOBOT.BHL.Web2.SiteService.ArrayOfString();
+            recipients.Add(recipient);
             string message = this.GetEmailMessage(apiKey, contactName);
             if (message != String.Empty)
             {
-                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                 service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
                     "BHL API Key", message);
             }

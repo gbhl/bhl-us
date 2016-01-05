@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
+using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -23,8 +23,9 @@ namespace MOBOT.BHL.AdminWeb
         {
             if (validate())
             {
-                BHLImportWSSoapClient wsClient = new BHLImportWSSoapClient();
-                string[] wsResult = wsClient.IAItemQueueForDownload(txtIdentifier.Text, ConfigurationManager.AppSettings["LocalFileFolder"]);
+                BHLImportProvider service = new BHLImportProvider();
+
+                string[] wsResult = service.IAItemQueueForDownload(txtIdentifier.Text, ConfigurationManager.AppSettings["LocalFileFolder"]);
                 lblError.Text = wsResult[1];
                 if (wsResult[0] == "true")
                     lblError.ForeColor = System.Drawing.Color.Black;

@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -22,8 +23,8 @@ namespace MOBOT.BHL.AdminWeb
             Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
             Response.AppendHeader("Content-Disposition", "attachment; filename=ItemsPendingApproval.xls");
 
-            BHLImportWebService.BHLImportWSSoapClient ws = new BHLImportWebService.BHLImportWSSoapClient();
-            gvPendingApproval.DataSource = ws.IAItemSelectPendingApproval(Convert.ToInt32(ageInDays));
+            BHLImportProvider service = new BHLImportProvider();
+            gvPendingApproval.DataSource = service.IAItemSelectPendingApproval(Convert.ToInt32(ageInDays));
             gvPendingApproval.DataBind();
         }
     }

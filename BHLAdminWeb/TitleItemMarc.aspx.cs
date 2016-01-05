@@ -29,7 +29,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (Int32.TryParse(idString, out id) && (type == "t" || type == "i"))
                     {
-                        BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                        SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                         if (service.MARCFileExists(id, type))
                         {
                             string marcXML = service.MARCGetFileContents(id, type);

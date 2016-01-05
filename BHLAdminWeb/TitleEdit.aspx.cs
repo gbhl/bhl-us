@@ -280,11 +280,11 @@ namespace MOBOT.BHL.AdminWeb
             languagesList.DataBind();
 
 			bindItemData();
-			//itemsList.DataSource = title.Items;
-			//itemsList.DataBind();
+            //itemsList.DataSource = title.Items;
+            //itemsList.DataBind();
 
             // See if we can display a link to the MARC file
-            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
             if (service.MARCFileExists(id, "t"))
             {
                 hypMarc.Attributes["onclick"] = String.Format(hypMarc.Attributes["onclick"], title.TitleID.ToString());

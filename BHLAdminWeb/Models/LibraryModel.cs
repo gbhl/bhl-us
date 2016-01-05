@@ -264,7 +264,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.OcrItemID = item.ItemID.ToString();
             this.OcrIAID = item.BarCode;
 
-            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
             if (service.OcrJobExists(item.ItemID))
             {
                 this.Message = string.Format("Ocr regeneration job pending for item {0} ({1}).", this.OcrItemID, this.OcrIAID);

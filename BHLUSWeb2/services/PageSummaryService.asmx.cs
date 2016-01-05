@@ -16,6 +16,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
+using BHL.SiteServices;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.Web2.Services
 		{
 			try
 			{
-                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                 return service.GetOcrText(pageID);
 			}
 			catch ( Exception ex )

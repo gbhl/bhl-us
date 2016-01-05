@@ -1,0 +1,54 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
+    <add key="SMTPHost" value="smtp host name"/>
+    <add key="UseRemoteFileAccessProvider" value="true"/>
+    <add key="DBCommandTimeout" value="1800"/>
+    <add key="DebugValue" value="debug"/>
+    <add key="ConfigNameCurrentIAVault" value="CurrentIAVaultID" />
+
+    <!-- DOI file locations -->
+    <add key="DOIDepositFileLocation" value="DOI_SERVICE_ROOT_FOLDER\deposit\{0}.xml" />
+    <add key="DOISubmitLogFileLocation" value="DOI_SERVICE_ROOT_FOLDER\submitlog\{0}.log.xml" />
+
+    <!-- OCR Job file locations -->
+    <add key="OCRJobNewPath" value="OCR_JOB_ROOT_FOLDER\new\" />
+
+    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
+    <add key="NameFinderService" value="GNRD"/>
+
+    <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
+    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+
+    <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
+    <add key="UsePreferredNameResults" value="true"/>
+
+    <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
+    <add key="MaxReadAttempts" value="60" />
+
+  </appSettings>
+  <connectionStrings>
+    <remove name="BHL"/>
+    <add name="BHL" connectionString="database connection string" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+  <system.web>
+    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" />
+    <compilation debug="true" targetFramework="4.0"/>
+    <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"/>
+  </system.web>
+  <system.net>
+    <mailSettings>
+      <smtp deliveryMethod="Network">
+        <network defaultCredentials="false"
+                 enableSsl="true"
+                 host="MAIL_SERVER_ADDRESS"
+                 port="MAIL_SERVER_PORT"
+                 userName="MAIL_SERVER_USERNAME"
+                 password="MAIL_SERVER_PASSWORD"
+                   />
+      </smtp>
+    </mailSettings>
+  </system.net>
+</configuration>

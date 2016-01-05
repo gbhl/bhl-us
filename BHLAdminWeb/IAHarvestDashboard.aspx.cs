@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
+using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -20,22 +20,22 @@ namespace MOBOT.BHL.AdminWeb
             int ageLimit = Convert.ToInt32(ConfigurationManager.AppSettings["StatsPendingApprovalDownloadLimit"]);
             int ageDisplay = Convert.ToInt32(ConfigurationManager.AppSettings["StatsPendingApprovalMinimimDisplayAge"]);
 
-            BHLImportWSSoapClient ws = new BHLImportWSSoapClient();
-            gvItemCountByStatus.DataSource = ws.StatsSelectIAItemGroupByStatus();
+            BHLImportProvider service = new BHLImportProvider();
+            gvItemCountByStatus.DataSource = service.StatsSelectIAItemGroupByStatus();
             gvItemCountByStatus.DataBind();
 
             hypNumItems.NavigateUrl += ageLimit.ToString();
 
-            gvIAReadyToPublish.DataSource = ws.StatsSelectReadyForProductionBySource(1);
+            gvIAReadyToPublish.DataSource = service.StatsSelectReadyForProductionBySource(1);
             gvIAReadyToPublish.DataBind();
 
-            gvLatestPubToProdLogs.DataSource = ws.ImportLogSelectRecent(numLogsToDisplay);
+            gvLatestPubToProdLogs.DataSource = service.ImportLogSelectRecent(numLogsToDisplay);
             gvLatestPubToProdLogs.DataBind();
 
-            gvLatestPubToProdErrors.DataSource = ws.ImportErrorSelectRecent(numLogsToDisplay);
+            gvLatestPubToProdErrors.DataSource = service.ImportErrorSelectRecent(numLogsToDisplay);
             gvLatestPubToProdErrors.DataBind();
 
-            gvIAItemErrors.DataSource = ws.IAItemErrorSelectRecent(numLogsToDisplay);
+            gvIAItemErrors.DataSource = service.IAItemErrorSelectRecent(numLogsToDisplay);
             gvIAItemErrors.DataBind();
         }
 

@@ -12,7 +12,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.AdminWeb.BHLImportWebService;
+using MOBOT.BHLImport.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -23,13 +23,13 @@ namespace MOBOT.BHL.AdminWeb
             int ageLimit = Convert.ToInt32(ConfigurationManager.AppSettings["StatsPendingApprovalDownloadLimit"]);
             
             BHLProvider bp = new BHLProvider();
-            BHLImportWSSoapClient ws = new BHLImportWSSoapClient();
+            BHLImportProvider bip = new BHLImportProvider();
             try
             {
-                gvItemStatus.DataSource = ws.StatsSelectIAItemGroupByStatus();
+                gvItemStatus.DataSource = bip.StatsSelectIAItemGroupByStatus();
                 gvItemStatus.DataBind();
 
-                gvBSItemStatus.DataSource = ws.StatsSelectBSItemGroupByStatus();
+                gvBSItemStatus.DataSource = bip.StatsSelectBSItemGroupByStatus();
                 gvBSItemStatus.DataBind();
 
                 gvDOIStatus.DataSource = bp.DOIStatusSelectAll();
@@ -54,7 +54,7 @@ namespace MOBOT.BHL.AdminWeb
             hypNumItems.NavigateUrl += ageLimit.ToString();
             try
             {
-                BHLImportWebService.Stats importStats = ws.StatsCountIAItemPendingApproval(ageLimit);
+                BHLImport.DataObjects.Stats importStats = bip.StatsCountIAItemPendingApproval(ageLimit);
                 hypNumItems.Text = importStats.NumberOfItems.ToString();
             }
             catch

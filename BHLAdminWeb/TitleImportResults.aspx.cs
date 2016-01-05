@@ -120,7 +120,7 @@ namespace MOBOT.BHL.AdminWeb
                         // - Copy MARC.XML file to new folder (using MarcBibID as name)
                         try
                         {
-                            BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                             service.MarcCreateFile(title.MARCBibID, System.IO.File.ReadAllText(marc.MarcFileLocation));
                         }
                         catch

@@ -25,7 +25,7 @@ namespace MOBOT.BHL.AdminWeb
 
                     if (!string.IsNullOrEmpty(batchId) && (type == "d" || type == "s"))
                     {
-                        BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                        SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                         litDetail.Text = service.DOIGetFileContents(batchId, type);
                     }
                 }

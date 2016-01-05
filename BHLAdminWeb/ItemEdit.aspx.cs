@@ -281,7 +281,7 @@ namespace MOBOT.BHL.AdminWeb
 
 
                 // See if we can display a link to the MARC file
-                BHLWebService.BHLWSSoapClient service = new BHLWebService.BHLWSSoapClient();
+                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                 if (service.MARCFileExists(item.ItemID, "i"))
                 {
                     hypMarc.Attributes["onclick"] = string.Format("javascript:window.open('TitleItemMarc.aspx?type=i&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');", item.ItemID.ToString());
