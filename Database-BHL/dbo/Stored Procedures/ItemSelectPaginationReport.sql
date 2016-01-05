@@ -30,11 +30,11 @@ INSERT	#Step1
 SELECT	i.ItemID,
 		i.BarCode,
 		ISNULL(i.PaginationStatusDate, i.CreationDate) AS PaginationStatusDate,
-		ISNULL(u.NameLast + ', ' + u.NameFirst, '') AS PaginationUserName,
+		ISNULL(u.LastName + ', ' + u.FirstName, '') AS PaginationUserName,
 		ps.PaginationStatusName
 FROM	[dbo].[Item] i
 		INNER JOIN dbo.PaginationStatus ps ON ps.PaginationStatusID = i.PaginationStatusID
-		LEFT JOIN dbo.MOBOTSecuritySecUserSyn u ON u.UserID = i.PaginationStatusUserID
+		LEFT JOIN dbo.AspNetUsers u ON u.Id = i.PaginationStatusUserID
 WHERE	(i.PaginationStatusID = @PaginationStatusID OR @PaginationStatusID = 0)
 AND		ISNULL(i.PaginationStatusDate, i.CreationDate) BETWEEN @StartDate AND @EndDate
 
