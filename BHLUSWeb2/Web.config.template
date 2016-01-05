@@ -20,6 +20,8 @@
     <add key="ImageNotFoundPath" value="http://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
     <add key="ImageNotFoundThumbPath" value="http://beta.biodiversitylibrary.org/images/image_not_found_thumb.jpg"/>
 
+    <add key="PdfUrl" value="http://SITE_SERVICES_WEBSERVICE_URL/pdf{0}/{1}"/>
+
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="http://beta.biodiversitylibrary.org/oai"/>
 
@@ -218,6 +220,7 @@
             <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
         </modules><handlers>
             <add name="Glimpse" path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" preCondition="integratedMode" />
+            <add name="PdfUrlRoutingHandler" type="System.Web.Routing.UrlRoutingHandler, System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" path="pdf*/*" verb="GET"/>
         </handlers></system.webServer>
   <system.serviceModel>
     <bindings>

@@ -256,6 +256,9 @@ namespace BHLUSWeb2
             routes.Add("NameListDownload",
                 new Route("namelistdownload", new HttpHandlerRouteHandler<NameListDownloadService>()));
 
+            routes.Add("PDF",
+                    new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));
+
             routes.MapPageRoute("Biblioselect",
                 "biblioselect/{itemid}",
                 "~/BiblioSelect.aspx");

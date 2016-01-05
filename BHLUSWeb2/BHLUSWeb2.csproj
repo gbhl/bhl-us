@@ -434,6 +434,7 @@
     <Content Include="SectionPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="Handlers\GetPageComments.ashx" />
+    <Content Include="Handlers\PDFDownload.ashx" />
     <None Include="Remoting.config.template" />
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />
@@ -740,6 +741,9 @@
     </Compile>
     <Compile Include="Handlers\MODSDownload.ashx.cs">
       <DependentUpon>MODSDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\PDFDownload.ashx.cs">
+      <DependentUpon>PDFDownload.ashx</DependentUpon>
     </Compile>
     <Compile Include="ItemNotFound.aspx.cs">
       <DependentUpon>ItemNotFound.aspx</DependentUpon>

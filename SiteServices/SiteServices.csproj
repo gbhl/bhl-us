@@ -67,9 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Remoting.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Remoting.config" />
     <Content Include="Remoting.config.template">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
