@@ -29,24 +29,17 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         /// <returns></returns>
         public Task SendAsync(IdentityMessage message, List<string> ccList, List<string> bccList)
         {
-            // Credentials:
-            var credentialUserName = ConfigurationManager.AppSettings["EmailFromName"];
-            var sentFrom = ConfigurationManager.AppSettings["EmailFromAddress"];
+            SiteService.ArrayOfString recipients = new SiteService.ArrayOfString();
+            SiteService.ArrayOfString cc = new SiteService.ArrayOfString();
+            SiteService.ArrayOfString bcc = new SiteService.ArrayOfString();
 
-            // Configure the client:
-            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient(ConfigurationManager.AppSettings["SMTPHost"]);
+            recipients.Add(message.Destination);
+            if (ccList != null) foreach (string ccRecipient in ccList) cc.Add(ccRecipient);
+            if (bccList != null) foreach (string bccRecipient in bccList) bcc.Add(bccRecipient);
 
-            // Create the message:
-            var mail = new System.Net.Mail.MailMessage(sentFrom, message.Destination);
-
-            if (ccList != null) foreach(string cc in ccList) mail.CC.Add(cc);
-            if (bccList != null) foreach (string bcc in bccList) mail.Bcc.Add(bcc);
-
-            mail.Subject = message.Subject;
-            mail.Body = message.Body;
-
-            // Send
-            return client.SendMailAsync(mail);
+            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
+            return service.SendEmailAsync(ConfigurationManager.AppSettings["EmailFromAddress"], 
+                recipients, cc, bcc, message.Subject, message.Body);
         }
     }
 }

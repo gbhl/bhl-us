@@ -78,6 +78,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             : base(store)
         {
             this.UserValidator = new BHLUserValidator(this);
+            //this.UserTokenProvider = new TotpSecurityStampBasedTokenProvider<ApplicationUser, int>();
         }
 
         public static BHLUserManager Create(IdentityFactoryOptions<BHLUserManager> options, IOwinContext context)  
