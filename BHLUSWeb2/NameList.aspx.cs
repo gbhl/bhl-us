@@ -22,7 +22,7 @@ namespace MOBOT.BHL.Web2
             // Read the parameters passed to the page
             if (RouteData.Values["name"] != null)
             {
-                NameParam = (string)RouteData.Values["name"];
+                NameParam = Server.HtmlEncode((string)RouteData.Values["name"]);
                 name = NameParam.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
             }
 
