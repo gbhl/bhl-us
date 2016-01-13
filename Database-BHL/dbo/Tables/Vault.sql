@@ -4,7 +4,7 @@
     [FolderShare]         NVARCHAR (30)  NULL,
     [WebVirtualDirectory] NVARCHAR (30)  NULL,
     [OCRFolderShare]      NVARCHAR (100) NULL,
-    CONSTRAINT [aaaaaVault_PK] PRIMARY KEY NONCLUSTERED ([VaultID] ASC)
+    CONSTRAINT [aaaaaVault_PK] PRIMARY KEY CLUSTERED ([VaultID] ASC)
 );
 
 

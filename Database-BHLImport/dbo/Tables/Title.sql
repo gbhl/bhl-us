@@ -36,7 +36,7 @@
     [ProductionTitleID]           INT            NULL,
     [PartNumber]                  NVARCHAR (255) NULL,
     [PartName]                    NVARCHAR (255) NULL,
-    CONSTRAINT [aaaaaTitle_PK] PRIMARY KEY NONCLUSTERED ([TitleID] ASC),
+    CONSTRAINT [aaaaaTitle_PK] PRIMARY KEY CLUSTERED ([TitleID] ASC),
     CONSTRAINT [FK_Title_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Title_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])
 );

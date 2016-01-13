@@ -6,7 +6,7 @@
     [Email]         NVARCHAR (60)  NULL,
     [Password]      NVARCHAR (10)  NULL,
     [UserNote]      NVARCHAR (255) NULL,
-    CONSTRAINT [aaaaaUser_PK] PRIMARY KEY NONCLUSTERED ([UserID] ASC)
+    CONSTRAINT [aaaaaUser_PK] PRIMARY KEY CLUSTERED ([UserID] ASC)
 );
 
 

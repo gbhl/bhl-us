@@ -4,7 +4,7 @@
     [Note]             NVARCHAR (255) NULL,
     [InstitutionUrl]   NVARCHAR (255) NULL,
     [BHLMemberLibrary] BIT            CONSTRAINT [DF_Institution_BHLMemberLibrary] DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [aaaaaInstitution_PK] PRIMARY KEY NONCLUSTERED ([InstitutionCode] ASC)
+    CONSTRAINT [aaaaaInstitution_PK] PRIMARY KEY CLUSTERED ([InstitutionCode] ASC)
 );
 
 

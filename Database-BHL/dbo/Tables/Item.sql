@@ -44,7 +44,7 @@
     [ThumbnailPageID]           INT            NULL,
     [RedirectItemID]            INT            NULL,
     [ExternalUrl]               NVARCHAR (500) CONSTRAINT [DF_Item_ExternalUrl] DEFAULT ('') NULL,
-    CONSTRAINT [aaaaaItem_PK] PRIMARY KEY NONCLUSTERED ([ItemID] ASC),
+    CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_Institution] FOREIGN KEY ([InstitutionCode]) REFERENCES [dbo].[Institution] ([InstitutionCode]),
     CONSTRAINT [FK_Item_Item] FOREIGN KEY ([RedirectItemID]) REFERENCES [dbo].[Item] ([ItemID]),
     CONSTRAINT [FK_Item_ItemSource] FOREIGN KEY ([ItemSourceID]) REFERENCES [dbo].[ItemSource] ([ItemSourceID]),

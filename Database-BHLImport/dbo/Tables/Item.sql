@@ -46,7 +46,7 @@
     [CopyrightEvidence]         NVARCHAR (MAX) NULL,
     [CopyrightEvidenceOperator] NVARCHAR (100) NULL,
     [CopyrightEvidenceDate]     NVARCHAR (30)  NULL,
-    CONSTRAINT [aaaaaItem_PK] PRIMARY KEY NONCLUSTERED ([ItemID] ASC),
+    CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID]),
     CONSTRAINT [FK_Item_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ImportStatusID])
 );
