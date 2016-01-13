@@ -11,6 +11,9 @@ SET NOCOUNT ON
 DECLARE @NumToReturn int
 SET @NumToReturn = @NumberToReturn
 
+DECLARE @MaxDate DATETIME
+SELECT @MaxDate = GETDATE() - 14 -- days
+
 DECLARE @ISSNID int
 SELECT @ISSNID = IdentifierID FROM dbo.Identifier WITH (NOLOCK) WHERE IdentifierName = 'ISSN'
 
@@ -35,6 +38,7 @@ OR		d.DOIStatusID = 20 -- DOI Assigned (but not submitted)
 OR		d.DOIStatusID = 30 -- Pending Resubmit
 OR		d.DOIStatusID = 40 -- Batch ID Assigned
 OR		d.DOIID IS NULL)
+AND		s.CreationDate <= @MaxDate -- Only select segments older than specified # of days
 AND		c.HasLocalContent = 1 -- Make sure that the segment content is held within BHL
 AND		s.ContributorCode <> 'USER'  -- No user-contributed segments
 AND		(ti.IdentifierValue IS NOT NULL OR si.IdentifierValue IS NOT NULL) -- Make sure that an ISSN exists for the segment container
