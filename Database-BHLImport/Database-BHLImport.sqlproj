@@ -443,4 +443,7 @@
     <None Include="dbo\Stored Procedures\PageFlickrTagUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrTagSelectForPageID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Synonyms\BHLInstitution.sql" />
+  </ItemGroup>
 </Project>

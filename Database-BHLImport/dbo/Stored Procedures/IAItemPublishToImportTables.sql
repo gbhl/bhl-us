@@ -1379,6 +1379,14 @@ BEGIN TRY
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
+	-- Add a default Copyright Status to non-BHL contributor items
+	UPDATE	#tmpItem
+	SET		CopyrightStatus = 'Not provided. Contact Contributing Library to verify copyright status.'
+	FROM	#tmpItem t 
+			INNER JOIN dbo.BHLInstitution i ON t.InstitutionCode = i.InstitutionCode
+	WHERE	ISNULL(CopyrightStatus, '') = ''
+	AND		i.BHLMemberLibrary = 0
+
 	-- Use the AddedDate as the ScanningDate if no Scan Date was specified
 	UPDATE	#tmpItem
 	SET		ScanningDate = i.IAAddedDate
