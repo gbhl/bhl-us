@@ -7,7 +7,7 @@
         <div  class="<%= SpecialClass %> support" id="<%= specialID %>">
         <h3>Help Support <span>BHL</span></h3>
         <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
-                <a  class="featurebutton-home" target="_blank" href="https://donate.sil.si.edu/v/DonateBHL.asp">Donate Now</a>
+                <a  class="featurebutton-home" target="_blank" href="http://library.si.edu/donate-bhl">Donate Now</a>
         </div>
 </asp:Panel>
 <asp:Panel ID="panFlickr" runat="server"  Visible="false">

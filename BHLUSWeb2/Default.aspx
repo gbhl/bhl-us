@@ -15,7 +15,7 @@
 <div id="promobox-home" class="featurebox-home">
 <h3>Help Support <span>BHL</span></h3>
 <p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
-<a  class="featurebutton-home" target="_blank" href="https://donate.sil.si.edu/v/DonateBHL.asp">Donate Now</a>
+<a  class="featurebutton-home" target="_blank" href="http://library.si.edu/donate-bhl">Donate Now</a>
 </div>
 </div>
 </div>
