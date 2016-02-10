@@ -2,7 +2,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -78,7 +80,11 @@ namespace MOBOT.BHL.AdminWeb.Models
             : base(store)
         {
             this.UserValidator = new BHLUserValidator(this);
-            //this.UserTokenProvider = new TotpSecurityStampBasedTokenProvider<ApplicationUser, int>();
+
+            // Configure user account lockout settings
+            this.UserLockoutEnabledByDefault = Convert.ToBoolean(ConfigurationManager.AppSettings["UserLockoutEnabledByDefault"].ToString());
+            this.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(Double.Parse(ConfigurationManager.AppSettings["DefaultAccountLockoutTimeSpan"].ToString()));
+            this.MaxFailedAccessAttemptsBeforeLockout = Convert.ToInt32(ConfigurationManager.AppSettings["MaxFailedAccessAttemptsBeforeLockout"].ToString());
         }
 
         public static BHLUserManager Create(IdentityFactoryOptions<BHLUserManager> options, IOwinContext context)  

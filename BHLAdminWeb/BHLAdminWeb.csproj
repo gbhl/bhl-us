@@ -1072,6 +1072,7 @@
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <None Include="Service References\SiteService\SiteService.wsdl" />
+    <Content Include="Views\Account\Unlock.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

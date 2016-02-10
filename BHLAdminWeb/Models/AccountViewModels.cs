@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -105,6 +106,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.LastName = user.LastName;
             this.Email = user.Email;
             this.Disabled = user.Disabled;
+            this.Locked = (user.LockoutEndDateUtc > DateTime.UtcNow) && user.LockoutEnabled;
         }
 
         [Required]
@@ -121,6 +123,8 @@ namespace MOBOT.BHL.AdminWeb.Models
         public string Email { get; set; }
 
         public bool Disabled { get; set; }
+
+        public bool Locked { get; set; }
 
         public bool AllowDelete = false;
 

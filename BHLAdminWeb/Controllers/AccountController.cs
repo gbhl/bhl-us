@@ -76,22 +76,56 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.UserName, model.Password);
+                // Make sure the user account exists
+                var user = await UserManager.FindByNameAsync(model.UserName);
+
                 if (user != null)
                 {
-                    if (!user.Disabled)
-                    {
+                    // Validate the password
+                    var validatedUser = await UserManager.FindAsync(model.UserName, model.Password);
 
-                        await SignInAsync(user, model.RememberMe);
-                        return RedirectToLocal(returnUrl);
+                    if (user.Disabled)
+                    {
+                        // Disabled user account
+                        ModelState.AddModelError("", "Please contact an administrator for access to this site.");
+                    }
+                    else if (await UserManager.IsLockedOutAsync(user.Id))
+                    {
+                        // User locked out
+                        ModelState.AddModelError("", "Your account has been locked out due to multiple failed login attempts.");
+                    }
+                    else if (await UserManager.GetLockoutEnabledAsync(user.Id) && validatedUser == null)
+                    {
+                        // User is subject to lockouts and the credentials are invalid.  Record the failure.
+                        await UserManager.AccessFailedAsync(user.Id);
+
+                        // Check lockout status
+                        if (await UserManager.IsLockedOutAsync(user.Id))
+                        {
+                            ModelState.AddModelError("", "Your account has been locked out due to multiple failed login attempts.");
+                        }
+                        else
+                        {
+                            int accessFailedCount = await UserManager.GetAccessFailedCountAsync(user.Id);
+                            int attemptsLeft = Convert.ToInt32(ConfigurationManager.AppSettings["MaxFailedAccessAttemptsBeforeLockout"].ToString()) - accessFailedCount;
+                            ModelState.AddModelError("", "Invalid username or password.");
+                        }
+                    }
+                    else if (validatedUser == null)
+                    {
+                        ModelState.AddModelError("", "Invalid username or password.");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Please contact an administrator for access to this site.");
+                        await SignInAsync(user, model.RememberMe);
+                        // Clear the access failed count
+                        await UserManager.ResetAccessFailedCountAsync(user.Id);
+                        return RedirectToLocal(returnUrl);
                     }
                 }
                 else
                 {
+                    // Username does not exist
                     ModelState.AddModelError("", "Invalid username or password.");
                 }
             }
@@ -585,6 +619,30 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult Unlock(string id = null)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            var model = new EditUserViewModel(user);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Unlock")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult UnlockConfirmed(string id)
+        {
+            var Db = new ApplicationDbContext();
+            var user = Db.Users.First(u => u.UserName == id);
+            UserManager.SetLockoutEndDate(user.Id, DateTime.UtcNow.AddMinutes(-1));
+            return RedirectToAction("Index");
+        }
 
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
         public ActionResult UserRoles(string id)

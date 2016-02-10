@@ -46,6 +46,10 @@
     <add key="owin:appStartup" value="DevelopmentConfiguration" />
     <!-- ###################################################################### -->
 
+    <!-- User Account settings -->
+    <add key="UserLockoutEnabledByDefault" value="true"/>
+    <add key="DefaultAccountLockoutTimeSpan" value="15"/>
+    <add key="MaxFailedAccessAttemptsBeforeLockout" value="5"/>
     <!-- Email settings-->
     <add key="SMTPHost" value="MAIL_SERVER_ADDRESS"/>
     <add key="EmailFromName" value="EMAIL_FROM_NAME"/>

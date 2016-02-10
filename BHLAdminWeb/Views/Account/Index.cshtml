@@ -36,6 +36,9 @@
             @Html.DisplayNameFor(model => model.Disabled)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Locked)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.HasRoles)
         </th>
         <th></th>
@@ -59,14 +62,22 @@
             @Html.DisplayFor(modelItem => item.Disabled)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Locked)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.HasRoles)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |
             @Html.ActionLink("Roles", "UserRoles", new { id = item.UserName })
-            @if (item.AllowDelete)
+            @if (item.Locked)
             {
-                @Html.Raw(" | ")
+                @Html.Raw(" | " )
+                @Html.ActionLink("Unlock", "Unlock", new { id = item.UserName })
+            }
+                @if (item.AllowDelete)
+            {
+                    @Html.Raw(" | ")
                 @Html.ActionLink("Delete", "Delete", new { id = item.UserName })
             }
         </td>
