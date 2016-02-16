@@ -435,6 +435,7 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\GetPageComments.ashx" />
     <Content Include="Handlers\PDFDownload.ashx" />
+    <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Remoting.config.template" />
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />

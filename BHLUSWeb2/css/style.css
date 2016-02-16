@@ -1378,9 +1378,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 }
 
 /* partners */
+.ourpartners
+{
+    border-bottom: 1px solid #C9C9C9;
+    margin-bottom: 10px;
+    padding-bottom: 15px;
+}
 .ourpartners a
 {
     text-decoration:none;
+}
+
+/* get involved */
+.getinvolved a
+{
+    width:125px;
 }
 
 /* rss feed */
