@@ -538,7 +538,7 @@
         // Make AJAX call here to get an object containing page information
         var pages = null;
         if (qsParm["item"] != "") {
-            $.getJSON("http://" + document.domain + ':' + location.port + "/Services/PageSummaryService.ashx?op=PageSummarySelectForViewerByItemID&itemID=" + qsParm["item"],
+            $.getJSON("/Services/PageSummaryService.ashx?op=PageSummarySelectForViewerByItemID&itemID=" + qsParm["item"],
                 function (data) {
                     pages = data;
                     InitializeViewer(<%= StartPage %>);

@@ -897,6 +897,7 @@
     <Content Include="Controls\PagingUserControl.ascx" />
     <Content Include="Controls\WebStatsNavControl.ascx" />
     <Content Include="Error.aspx" />
+    <Content Include="ExternalUserRegistrationEmail.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1014,6 +1015,7 @@
     <Content Include="styles\ui.jqdatatable.css" />
     <Content Include="styles\ui.jqgrid.css" />
     <Content Include="NoteTypeEdit.aspx" />
+    <Content Include="UserRegistrationEmail.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

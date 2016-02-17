@@ -1,0 +1,10 @@
+﻿Welcome to the BHL Administrative Dashboard http://admin.biodiversitylibrary.org
+
+Username: <<<USERNAME>>>
+First Name: <<<FIRSTNAME>>>
+Last Name: <<<LASTNAME>>>
+Email Address: <<<EMAILADDRESS>>>
+
+Review documentation for Admin Dashboard functionality via the "Help" link in the top right or https://bhl.wikispaces.com/help
+
+A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.

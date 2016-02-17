@@ -2173,7 +2173,7 @@ BookReader.prototype.search = function(term) {
  	var script  = document.createElement("script");
  	script.setAttribute('id', 'BookReaderSearchScript');
 	script.setAttribute("type", "text/javascript");
-	script.setAttribute("src", 'http://'+this.server+'/BookReader/flipbook_search_br.php?url='+escape(this.bookPath + '_djvu.xml')+'&term='+term+'&format=XML&callback=br.BRSearchCallback');
+	script.setAttribute("src", '/BookReader/flipbook_search_br.php?url='+escape(this.bookPath + '_djvu.xml')+'&term='+term+'&format=XML&callback=br.BRSearchCallback');
 	document.getElementsByTagName('head')[0].appendChild(script);
 	$('#BookReaderSearchBox').val(term);
 	$('#BookReaderSearchResults').html('Searching...');

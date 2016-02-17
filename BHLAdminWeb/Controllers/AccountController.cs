@@ -172,15 +172,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         // Send the user an email letting them know that an administrator will assign
                         // roles to the new account.  Copy the BHL user administrator on the message.
                         int userId = user.Id;
-                        string emailBody = string.Format(
-                            "Welcome to the BHL Administrative Dashboard http://admin.biodiversitylibrary.org \n\r" +
-                            "Username: {0}\r" +
-                            "First Name: {1}\r" +
-                            "Last Name: {2}\r" +
-                            "Email Address: {3}\n\r" +
-                            "Review documentation for Admin Dashboard functionality via the \"Help\" link in the top right or https://bhl.wikispaces.com/help \n\r" +
-                            "A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.",
-                            user.UserName, user.FirstName, user.LastName, user.Email);
+                        string emailBody = System.IO.File.ReadAllText(Server.MapPath(@"\UserRegistrationEmail.txt"));
+                        emailBody = emailBody.Replace("<<<USERNAME>>>", user.UserName);
+                        emailBody = emailBody.Replace("<<<FIRSTNAME>>>", user.FirstName);
+                        emailBody = emailBody.Replace("<<<LASTNAME>>>", user.LastName);
+                        emailBody = emailBody.Replace("<<<EMAILADDRESS>>>", user.Email);
+
                         List<string> bccList = new List<string>();
                         bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
                         await UserManager.SendEmailAsync(userId, new List<string>(), bccList, "Your new BHL user account", emailBody);
@@ -385,13 +382,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             // Send the user an email letting them know that an administrator will assign
                             // roles to the new account.  Copy the BHL user administrator on the message.
                             int userId = user.Id;
-                            string emailBody = string.Format(
-                                "Welcome to the BHL Administrative Dashboard http://admin.biodiversitylibrary.org \n\r" +
-                                "Username: {0}\r" +
-                                "Email Address: {1}\n\r" +
-                                "Review documentation for Admin Dashboard functionality via the \"Help\" link in the top right or https://bhl.wikispaces.com/help \n\r" +
-                                "A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.",
-                                user.UserName, user.Email);
+                            string emailBody = System.IO.File.ReadAllText(Server.MapPath(@"\ExternalUserRegistrationEmail.txt"));
+                            emailBody = emailBody.Replace("<<<USERNAME>>>", user.UserName);
+                            emailBody = emailBody.Replace("<<<EMAILADDRESS>>>", user.Email);
+
                             List<string> bccList = new List<string>();
                             bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
                             await UserManager.SendEmailAsync(userId, new List<string>(), bccList, "Your new BHL user account", emailBody);
