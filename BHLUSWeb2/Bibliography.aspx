@@ -321,7 +321,7 @@
                     <% } else { %>
                     <div class="summary noimg">
                     <% } %>
-                        <h5>Contributing Library:</h5>
+                        <h5>Contributor:</h5>
                         <p>
                             <% if (string.IsNullOrWhiteSpace(bibliographyItem.Item.InstitutionUrl)) { %>
                                 <%: bibliographyItem.Item.InstitutionName%>

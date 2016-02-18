@@ -10,12 +10,12 @@
 <div id="content" class="column-wrap clearfix">
     <section>
         <p>
-            The following institutions have cooperated to digitize content from their collections for free and 
+            The following contributors have cooperated to digitize content from their collections for free and 
             open access via the BHL and the <a href="https://archive.org" target="_blank">Internet Archive</a>. 
             For a list of licensors who have generously provided permission to include in-copyright titles in 
             the BHL, please see our <a href="http://biodivlib.wikispaces.com/permissions" target="_blank">Permissions page</a>.
         </p>
-        <h2>BHL Participating Institutions</h2>
+        <h2>BHL Participating Contributors</h2>
         <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" Width="100%" ItemStyle-Wrap="true">
             <ItemTemplate>
                 <div style="margin-bottom:14px">

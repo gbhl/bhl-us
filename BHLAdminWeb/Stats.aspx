@@ -5,7 +5,7 @@
 	<br />
 	<span class="pageHeader">Expanded Stats</span><hr />
 
-    <br />Institution:
+    <br />Contributor:
     <asp:DropDownList ID="ddlInstitutions" runat="server">
     <asp:ListItem Value="" Text="(All)"></asp:ListItem>
     </asp:DropDownList><br /><br />
@@ -22,13 +22,13 @@
                 GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true"
                 OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Titles" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right" FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvProductionTitlesByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Titles" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
@@ -44,13 +44,13 @@
                 GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true"
                 OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Titles" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right" FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvProductionSegmentsByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Segments" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
@@ -62,13 +62,13 @@
         <div style="overflow:auto;height:225px;width:510px;border-style:solid;border-color:Black;border-width:1px">
             <asp:GridView ID="gvProductionItems" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none"  ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Items" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvProductionItemsByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Items" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
@@ -80,13 +80,13 @@
         <div style="overflow:auto;height:225px;width:510px;border-style:solid;border-color:Black;border-width:1px">
             <asp:GridView ID="gvScannedItems" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Items" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvScannedItemsByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Items" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
@@ -98,13 +98,13 @@
         <div style="overflow:auto;height:225px;width:510px;border-style:solid;border-color:Black;border-width:1px">
             <asp:GridView ID="gvProductionPages" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Pages" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvProductionPagesByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Pages" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right" FooterStyle-HorizontalAlign="Right" />
@@ -116,13 +116,13 @@
         <div style="overflow:auto;height:225px;width:510px;border-style:solid;border-color:Black;border-width:1px">
             <asp:GridView ID="gvProductionNames" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="StatValue" HeaderText="Names" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />
             </Columns>
             </asp:GridView>
             <asp:GridView ID="gvProductionNamesByMonth" runat="server" AutoGenerateColumns="False" Width="90%" HorizontalAlign="Center" GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true" OnRowDataBound="gv_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="InstitutionName" HeaderText="Institution" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
+                <asp:BoundField DataField="InstitutionName" HeaderText="Contributor" ItemStyle-VerticalAlign="top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Year" HeaderText="Year" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="left" />
                 <asp:BoundField DataField="Month" HeaderText="Month" ItemStyle-VerticalAlign="Top" HeaderStyle-HorizontalAlign="right" ItemStyle-HorizontalAlign="right" />
                 <asp:BoundField DataField="StatValue" HeaderText="Names" ItemStyle-VerticalAlign="top" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign=right HeaderStyle-HorizontalAlign="right"  FooterStyle-HorizontalAlign="Right" />

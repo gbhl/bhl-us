@@ -184,7 +184,7 @@
         }
 
         function ConfirmRefresh() {
-            if (confirm("Are you sure that you want to add all books from the selected institution and language to the collection?  THE ACTION CANNOT BE UNDONE!"))
+            if (confirm("Are you sure that you want to add all books from the selected contributor and language to the collection?  THE ACTION CANNOT BE UNDONE!"))
                 return true;
             else
                 return false;

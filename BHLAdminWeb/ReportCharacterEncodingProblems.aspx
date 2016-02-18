@@ -9,7 +9,7 @@
     <table cellpadding="3" width="750">
         <tr>
             <td>
-                Institution:
+                Contributor:
                 <asp:DropDownList ID="listInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode"/>&nbsp;&nbsp;
                 Show Records Added:
                 <asp:DropDownList ID="listAddedSince" runat="server" >
@@ -59,7 +59,7 @@
 		                            <b>Title: </b><%# (Eval("FullTitle").ToString().Length > 65) ? Eval("FullTitle").ToString().Substring(0, 65) + "..." : Eval("FullTitle") %><br />
 		                            <b>MARC260a: </b><%# Eval("Datafield260a") %><br />
 		                            <b>MARC260b: </b><%# Eval("Datafield260b") %><br />
-		                            <b>Institution: </b><%# Eval("InstitutionName") %>
+		                            <b>Contributor: </b><%# Eval("InstitutionName") %>
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
 		                    <asp:TemplateField HeaderText="Title Identifiers" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="135px">
@@ -91,7 +91,7 @@
 		                    <asp:TemplateField HeaderText="Details" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="472px">
 		                        <ItemTemplate>
 		                            <b>Subject: </b><%# Eval("Keyword") %><br />
-		                            <b>Institution: </b><%# Eval("InstitutionName") %>
+		                            <b>Contributor: </b><%# Eval("InstitutionName") %>
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
 		                    <asp:TemplateField HeaderText="Title Identifiers" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="135px">
@@ -137,7 +137,7 @@
 		                            <b>Heading: </b><%# Eval("Heading") %><br />
 		                            <b>Publication: </b><%# Eval("Publication") %><br />
 		                            <b>Relationship: </b><%# Eval("Relationship") %><br />
-		                            <b>Institution: </b><%# Eval("InstitutionName") %>
+		                            <b>Contributor: </b><%# Eval("InstitutionName") %>
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
 		                    <asp:TemplateField HeaderText="Title Identifiers" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="135px">
@@ -180,7 +180,7 @@
 		                            <b>Num/Unit: </b><%# Eval("Numeration")%><%# Eval("Unit")%><br />
 		                            <b>Title/Loc: </b><%# Eval("Title")%><%# Eval("Location")%><br />
 		                            <b>Fuller Form: </b><%# Eval("FullerForm")%><br />
-		                            <b>Institution: </b><%# Eval("InstitutionName") %>
+		                            <b>Contributor: </b><%# Eval("InstitutionName") %>
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
 		                    <asp:TemplateField HeaderText="Title Identifiers" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="135px">
@@ -218,7 +218,7 @@
 		                        <ItemTemplate>
 		                            <b>Title: </b><%# (Eval("ShortTitle").ToString().Length > 65) ? Eval("ShortTitle").ToString().Substring(0, 65) + "..." : Eval("ShortTitle") %><br />
 		                            <b>Volume: </b><%# Eval("Volume")%><br />
-		                            <b>Institution: </b><%# Eval("InstitutionName") %>
+		                            <b>Contributor: </b><%# Eval("InstitutionName") %>
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
 		                    <asp:TemplateField HeaderText="Title Identifiers" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-Width="135px">

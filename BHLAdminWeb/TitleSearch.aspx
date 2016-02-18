@@ -111,7 +111,7 @@
 				</tr>
 				<tr>
 					<td style="white-space: nowrap">
-						Contributing Institution:
+						Contributor:
 					</td>
 					<td>
 					    <asp:DropDownList ID="listInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode"></asp:DropDownList>

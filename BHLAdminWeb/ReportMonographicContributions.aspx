@@ -4,7 +4,7 @@
 	<br />
 	<span class="pageHeader">Monographic Contributions</span><hr />
 	<p>
-    This report shows monographic contributions by the selected institutions in a format suitable for import into the monograph deduper tool.
+    This report shows monographs provided by the selected contributors in a format suitable for import into the monograph deduper tool.
     </p>
     <table cellpadding="0" cellspacing="0" width="900px">
     <tr>

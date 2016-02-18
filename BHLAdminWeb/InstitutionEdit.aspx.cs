@@ -64,7 +64,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( nameTextBox.Text.Trim().Length == 0 )
 			{
 				flag = true;
-				errorControl.AddErrorText( "Institution name is missing" );
+				errorControl.AddErrorText( "Contributor name is missing" );
 			}
 
 			errorControl.Visible = flag;
@@ -80,7 +80,7 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				if ( hidCode.Value.Length == 0 )
 				{
-					errorControl.AddErrorText("Please select an instution before saving" );
+					errorControl.AddErrorText("Please select a contributor before saving" );
 					errorControl.Visible = true;
 					return;
 				}
@@ -109,7 +109,7 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				if ( codeTextBox.Text.Trim().Length == 0 )
 				{
-					errorControl.AddErrorText( "Please include a unique institution code before saving" );
+					errorControl.AddErrorText( "Please include a unique code before saving" );
 					errorControl.Visible = true;
 					return;
 				}
@@ -121,7 +121,7 @@ namespace MOBOT.BHL.AdminWeb
 					{
 						if ( inst.InstitutionCode.ToUpper().Equals( code ) )
 						{
-							errorControl.AddErrorText( "The institution code " + inst.InstitutionCode.ToUpper() +
+							errorControl.AddErrorText( "The code " + inst.InstitutionCode.ToUpper() +
 								" is not a unique code, please use another one." );
 							errorControl.Visible = true;
 							return;

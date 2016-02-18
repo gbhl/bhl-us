@@ -14,7 +14,7 @@
     <div>
         <asp:GridView ID="gvProductionTitles" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Titles" />
@@ -25,7 +25,7 @@
     <div>
         <asp:GridView ID="gvProductionItems" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Items" />
@@ -36,7 +36,7 @@
     <div>
         <asp:GridView ID="gvScannedItems" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Items" />
@@ -47,7 +47,7 @@
     <div>
         <asp:GridView ID="gvProductionPages" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Pages" />
@@ -58,7 +58,7 @@
     <div>
         <asp:GridView ID="gvProductionNames" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Names" />
@@ -69,7 +69,7 @@
     <div>
         <asp:GridView ID="gvProductionSegments" runat="server" AutoGenerateColumns="false">
         <Columns>
-        <asp:BoundField DataField="InstitutionName" HeaderText="Institution Name" />
+        <asp:BoundField DataField="InstitutionName" HeaderText="Contributor Name" />
         <asp:BoundField DataField="Year" HeaderText="Year" />
         <asp:BoundField DataField="Month" HeaderText="Month" />
         <asp:BoundField DataField="StatValue" HeaderText="Segments" />

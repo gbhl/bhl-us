@@ -7,7 +7,7 @@
     <table cellpadding="3" width="750">
         <tr>
             <td>
-                Institution:
+                Contributor:
                 <asp:DropDownList ID="listInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode" AutoPostBack="True" OnSelectedIndexChanged="listInstitutions_SelectedIndexChanged" />
             </td>
         </tr>

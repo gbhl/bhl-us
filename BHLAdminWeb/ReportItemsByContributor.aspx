@@ -4,7 +4,7 @@
 	<br />
 	<span class="pageHeader">Items By Contributor</span><hr />
 	<p>
-        This report shows recent items contributed by a specific institution.  To view ALL items for a contributor, choose the "Download All" button.
+        This report shows recent items from a specific contributor.  To view ALL items for a contributor, choose the "Download All" button.
     </p>
     <p>
         NOTE: Use this report to find items not assigned to a particular contributor by selecting "Unknown" from the Contributor drop-down.

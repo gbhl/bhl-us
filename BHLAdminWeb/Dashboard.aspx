@@ -31,7 +31,7 @@
 					</tr>
 					<tr>
 						<td align="center" runat="server" id="tdInstitutions">
-							<a href="/InstitutionEdit.aspx">Institutions</a>
+							<a href="/InstitutionEdit.aspx">Contributors</a>
 						</td>
 					</tr>
 					<tr>
@@ -492,7 +492,7 @@
 					</tr>
                     <tr>
                         <td align="center" runat="server" id="tdRptDoiByInstitution">
-                            <a href="ReportDOIByInstitution.aspx">DOIs By Institution</a>
+                            <a href="ReportDOIByInstitution.aspx">DOIs By Contributor</a>
                         </td>
                     </tr>
                     <tr>

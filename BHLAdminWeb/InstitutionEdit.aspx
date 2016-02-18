@@ -5,9 +5,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<br />
-	<span class="pageHeader">Institutions</span><hr />
+	<span class="pageHeader">Contributors</span><hr />
 	<br />	<div>
-		Institutions:
+		Contributors:
 		<asp:DropDownList ID="ddlInstitutions" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlInstitutions_SelectedIndexChanged" />
 	</div>
 	<br />
