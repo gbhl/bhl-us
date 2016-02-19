@@ -310,7 +310,7 @@
                 <h4 class="title">
                     <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
                     <span class="text"><%: bibliographyItem.Item.Volume%></span>
-                     <a class="viewbook" href="/item/<%: bibliographyItem.Item.ItemID %>" title="View Book">view book</a>
+                     <a class="viewbook" href="/item/<%: bibliographyItem.Item.ItemID %>" title="View Volume">view volume</a>
                 </h4>
                 <div class="body">
                     <% if(!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl)) { %>
@@ -337,7 +337,7 @@
                         <% } %>
 
                         <div class="booklinks">
-                            <a target="<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write("_blank"); else Response.Write("_self"); %>" href="/item/<%: bibliographyItem.Item.ItemID %>">View Book<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write(" (External)"); %></a>
+                            <a target="<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write("_blank"); else Response.Write("_self"); %>" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write(" (External)"); %></a>
                             <% if (bibliographyItem.Item.NumberOfSegments > 0)
                                 { %>
                                 <br />
@@ -398,7 +398,7 @@
                     </div>
                     <% if (bibliographyItem.Item.ItemSourceID.ToString().Trim() == "1") { %>
                     <div class="download">
-                        Download book:
+                        Download volume:
                         <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
                         <a class="icon jp2" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_jp2.{1}", bibliographyItem.Item.BarCode, ((bibliographyItem.Item.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">JP2</a>
                         <a class="icon ocr" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", bibliographyItem.Item.BarCode) %>">OCR</a>

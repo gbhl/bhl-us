@@ -206,7 +206,7 @@ namespace MOBOT.BHL.Web2
                         //.Where(x => !string.IsNullOrWhiteSpace(x.Volume))
                         .ToList();
 
-                    foreach (Item item in items) if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "(no volume description)";
+                    foreach (Item item in items) if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
 
                     ddlVolumes.DataSource = items;
                     ddlVolumes.DataTextField = "DisplayedShortVolume";

@@ -152,7 +152,7 @@ namespace MOBOT.BHL.Web2
                 // Populate empty volume descriptions with default text
                 if (string.IsNullOrWhiteSpace(item.Volume))
                 {
-                    item.Volume = "(no volume description)";
+                    item.Volume = "Volume details";
                 }
 
                 var page = bhlProvider.PageSelectFirstPageForItem(item.ItemID);
