@@ -329,7 +329,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
                 lblDOIName.Text = segment.DOIName;
-                contributorSegmentIDTextBox.Text = segment.ContributorSegmentID;
+                contributorSegmentIDLabel.Text = segment.ContributorSegmentID;
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
@@ -1186,8 +1186,12 @@ namespace MOBOT.BHL.AdminWeb
                 segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
-                segment.ContributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
-                segment.ContributorSegmentID = contributorSegmentIDTextBox.Text.Trim();
+                string contributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
+                if (segment.ContributorCode != contributorCode)
+                {
+                    segment.ContributorCode = contributorCode;
+                    segment.ContributorSegmentID = string.Empty;    // If the contributor has changed, remove the contributor's ID for the segment
+                }
                 segment.Title = titleTextBox.Text.Trim();
                 segment.SortTitle = sortTitleTextBox.Text.Trim();
                 segment.TranslatedTitle = translatedTitleTextBox.Text.Trim();

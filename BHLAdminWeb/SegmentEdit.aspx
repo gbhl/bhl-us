@@ -387,7 +387,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Contributor Segment ID:</td>
-				<td><asp:TextBox ID="contributorSegmentIDTextBox" runat="server" Width="200px"></asp:TextBox></td>
+				<td><asp:Label ID="contributorSegmentIDLabel" runat="server" /></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Genre:</td>
