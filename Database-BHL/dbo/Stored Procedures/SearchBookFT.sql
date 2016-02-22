@@ -240,33 +240,6 @@ FROM	#tmpTitleFinal f INNER JOIN #tmpTitleFilter3 t
 			AND f.ItemSequence = t.ItemSequence
 
 ----------------------------------------------------------
--- Compile the final sortable result set
-/*
--- NOTE: This was replaced by the following statements which remove duplicate items.
-SELECT	tmp.TitleID,
-		i.ItemID,
-		ti.ItemSequence,
-		t.FullTitle,
-		t.SortTitle,
-		t.PartNumber,
-		t.PartName,
-		t.EditionStatement,
-		t.PublicationDetails,
-		t.Datafield_260_a,
-		t.Datafield_260_b,
-		t.Datafield_260_c,
-		i.Volume,
-		dbo.fnCOinSAuthorStringForTitle(tmp.TitleID, 0) AS Authors,
-		dbo.fnCollectionStringForTitleAndItem(tmp.TitleID, i.ItemID) AS Collections,
-		dbo.fnSeriesStringForTitle (tmp.TitleID) AS Associations,
-		inst.InstitutionName
-INTO	#tmpSortable
-FROM	#tmpTitleFinal tmp INNER JOIN dbo.Title t ON tmp.TitleID = t.TitleID
-		INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID AND ti.ItemSequence = tmp.ItemSequence
-		INNER JOIN dbo.Item i ON ti.ItemID = i.ItemID AND i.ItemStatusID = 40
-		LEFT JOIN dbo.Institution inst ON i.InstitutionCode = inst.InstitutionCode
-*/
-		
 -- Compile the final sortable result set.  In doing so, see if any items appear more 
 -- than once.  If any do, only show the primary title for those items.
 SELECT	tmp.TitleID,
@@ -287,7 +260,9 @@ SELECT	tmp.TitleID,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(tmp.TitleID, i.ItemID) AS Collections,
 		dbo.fnSeriesStringForTitle (tmp.TitleID) AS Associations,
+		i.InstitutionCode,
 		inst.InstitutionName,
+		c.HasLocalContent,
 		TitleRank,
 		ItemRank,
 		AuthorRank,
@@ -301,32 +276,6 @@ FROM	#tmpTitleFinal tmp INNER JOIN dbo.Title t WITH (NOLOCK) ON tmp.TitleID = t.
 		LEFT JOIN dbo.Institution inst WITH (NOLOCK) ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 
-/*
--- Find any duplicated items
-SELECT	ItemID
-INTO	#tmpDups
-FROM	#tmpMayContainDups
-GROUP BY ItemID HAVING COUNT(*) > 1
-
--- Show all non-duplicate item information, plus the primary title information for duplicate items
-SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.SortTitle, m.PartNumber, m.PartName,
-		m.EditionStatement, m.PublicationDetails, m.Datafield_260_a, m.Datafield_260_b, m.Datafield_260_c, m.Volume,
-		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionName, m.TitleRank, m.ItemRank, m.AuthorRank,
-		m.EditionRank, m.SubjectRank, CONVERT(decimal(7,2), m.[Rank]) AS [Rank]
-INTO	#tmpSortable
-FROM	#tmpMayContainDups m LEFT JOIN #tmpDups d
-			ON m.ItemID = d.ItemID
-WHERE	d.ItemID IS NULL
-UNION
-SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.SortTitle, m.PartNumber, m.PartName,
-		m.EditionStatement, m.PublicationDetails, m.Datafield_260_a, m.Datafield_260_b, m.Datafield_260_c, m.Volume,
-		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionName, m.TitleRank, m.ItemRank, m.AuthorRank,
-		m.EditionRank, m.SubjectRank, CONVERT(decimal(7,2), m.[Rank]) AS [Rank]
-FROM	#tmpMayContainDups m INNER JOIN #tmpDups d
-			ON m.ItemID = d.ItemID
-WHERE	m.TitleID = PrimaryTitleID
-*/
-
 -- Find any duplicated titles
 SELECT	TitleID, MIN(ItemID) AS ItemID
 INTO	#tmpDups
@@ -336,18 +285,20 @@ GROUP BY TitleID HAVING COUNT(*) > 1
 -- Show all non-duplicate title information
 SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.SortTitle, m.PartNumber, m.PartName,
 		m.EditionStatement, m.PublicationDetails, m.Datafield_260_a, m.Datafield_260_b, m.Datafield_260_c, m.Volume,
-		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionName, m.TitleRank, m.ItemRank, m.AuthorRank,
-		m.EditionRank, m.SubjectRank, CONVERT(decimal(7,2), m.[Rank]) AS [Rank]
+		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionCode, m.InstitutionName, m.HasLocalContent,
+		m.TitleRank, m.ItemRank, m.AuthorRank, m.EditionRank, m.SubjectRank, CONVERT(decimal(7,2), m.[Rank]) AS [Rank]
 INTO	#tmpSortable
 FROM	#tmpMayContainDups m LEFT JOIN #tmpDups d
 			ON m.TitleID = d.TitleID AND m.ItemID <> d.ItemID
 WHERE	d.ItemID IS NULL
 
--- De-emphasize ranking of any items contributed by Canadiana.org.
+-- De-emphasize ranking of any items:
+--	1) Contributed by Canadiana.org
+--	2) Without local content
 UPDATE	#tmpSortable
 SET		[Rank] = [Rank] / 100.00
-FROM	#tmpSortable s INNER JOIN dbo.Item i WITH (NOLOCK) ON s.ItemID = i.ItemID
-WHERE	i.InstitutionCode = 'CANADIANA'
+WHERE	InstitutionCode = 'CANADIANA'
+OR		HasLocalContent = 0
 
 ----------------------------------------------------------
 -- Return the sorted result set

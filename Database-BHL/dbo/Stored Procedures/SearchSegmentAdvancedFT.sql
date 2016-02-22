@@ -66,6 +66,7 @@ CREATE TABLE #tmpSegment
 	StartPageNumber nvarchar(20) NOT NULL DEFAULT(''),
 	EndPageNumber nvarchar(20) NOT NULL DEFAULT(''),
 	Authors nvarchar(1024) NOT NULL DEFAULT(''),
+	HasLocalContent smallint NOT NULL,
 	[RANK] int NULL
 	)	
 
@@ -183,11 +184,18 @@ SELECT	s.SegmentID,
 		s.StartPageNumber,
 		s.EndPageNumber,
 		REPLACE(scs.Authors, '|', ';') AS Authors,
+		scs.HasLocalContent,
 		ISNULL(t.TitleRank, 0) + ISNULL(t.AuthorRank, 0) + ISNULL(t.ContainerTitleRank, 0) +
 				ISNULL(t.DateRank, 0) -- + ISNULL(t.VolumeRank, 0) + ISNULL(t.SeriesRank, 0) + ISNULL(t.IssueRank, 0)
 FROM	#tmpLimitFinal t INNER JOIN dbo.Segment s ON t.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+
+-- De-emphasize ranking of any segments:
+--	1) Without local content
+UPDATE	#tmpSegment
+SET		[Rank] = [Rank] / 100.00
+WHERE	HasLocalContent = 0
 
 -- Return final result set
 IF (@SortBy = 'Rank')
@@ -288,9 +296,4 @@ BEGIN
 END
 
 END
-
-
-
-
-
 
