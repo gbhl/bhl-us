@@ -304,7 +304,7 @@
 <script src="/js/libs/jquery.validate.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.bt.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.printElement.min.js" type="text/javascript"></script>
-<script src="/js/libs/BookReader.js?v=3" type="text/javascript"></script>
+<script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
 <script src="/js/libs/dragscrollable.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
 <script type="text/javascript">

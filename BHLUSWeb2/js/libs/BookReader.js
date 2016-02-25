@@ -1238,15 +1238,15 @@ BookReader.prototype.jumpToIndex = function (index, pageX, pageY) {
         for (i = 0; i < (index + 1); i++) {
             leafWidth = this.thumbWidth;
             if (rightPos + (leafWidth + this.padding) > viewWidth) {
+                bottomPos += this.padding + rowHeight;
                 rightPos = 0;
                 rowHeight = 0;
                 leafIndex = 0;
             }
 
-            leafHeight = parseInt((this.getPageHeight(leafIndex) * this.thumbWidth) / this.getPageWidth(leafIndex), 10);
+            leafHeight = parseInt((this.getPageHeight(i) * this.thumbWidth) / this.getPageWidth(i), 10);
             if (leafHeight > rowHeight) { rowHeight = leafHeight; }
             if (leafIndex == 0) { leafTop = bottomPos; }
-            if (leafIndex == 0) { bottomPos += this.padding + rowHeight; }
             rightPos += leafWidth + this.padding;
             leafIndex++;
         }
