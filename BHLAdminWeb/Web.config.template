@@ -104,8 +104,8 @@
     <add key="GoogleCumulativeChartUrl" value="https://chart.googleapis.com/chart?cht=lc&amp;chs=900x300&amp;chxt=x,y&amp;chdl=Titles|Items|Pages|Names&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=2c50f2,ffcc00,99cc00,ff0000"/>
     -->
     <!-- Use these Urls to include only items on the chart -->
-    <add key="GoogleMonthlyChartUrl" value="https://chart.googleapis.com/chart?cht=bvg&amp;chs=900x300&amp;chbh=25,1&amp;chxt=x,y&amp;chdl=Items&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=2c50f2" />
-    <add key="GoogleCumulativeChartUrl" value="https://chart.googleapis.com/chart?cht=lc&amp;chs=900x300&amp;chxt=x,y&amp;chdl=Items&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=2c50f2" />
+    <add key="GoogleMonthlyChartUrl" value="https://chart.googleapis.com/chart?cht=bvg&amp;chs=900x300&amp;chbh=25,1&amp;chxt=x,y&amp;chdl=Items&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=9fc9e6&amp;chm=N,000000,0,-1,11" />
+    <add key="GoogleCumulativeChartUrl" value="https://chart.googleapis.com/chart?cht=lc&amp;chs=900x300&amp;chxt=x,y&amp;chdl=Items&amp;chd=t:{0}&amp;chds=0,{1}&amp;chxr=0,0,{2}|1,0,{3}&amp;chxl=0:{4}&amp;chf=&amp;chco=9fc9e6&amp;chm=N,000000,0,-1,11" />
     <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true" />
     <add key="webpages:Version" value="2.0.0.0" />
     <add key="webpages:Enabled" value="false" />
