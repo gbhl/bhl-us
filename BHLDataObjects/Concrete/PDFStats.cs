@@ -21,6 +21,14 @@ namespace MOBOT.BHL.DataObjects
             set { _week = value; }
         }
 
+        private string _weekStartDate = string.Empty;
+
+        public string WeekStartDate
+        {
+            get { return _weekStartDate; }
+            set { _weekStartDate = value; }
+        }
+
         private int _pdfStatusID;
 
         public int PdfStatusID

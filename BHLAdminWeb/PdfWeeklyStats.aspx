@@ -9,6 +9,7 @@
         GridLines="none" ShowFooter="true" FooterStyle-Font-Bold="true"
         CellPadding="3" AlternatingRowStyle-BackColor="#F7FAFB" >
     <Columns>
+        <asp:BoundField DataField="CreationDate" HeaderText="Request Date" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" />
         <asp:HyperLinkField DataTextField="PdfID" HeaderText="PDF" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" DataNavigateUrlFormatString="PdfEdit.aspx?id={0}" DataNavigateUrlFields="PdfID" />
         <asp:HyperLinkField DataTextField="ItemID" HeaderText="Item" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" DataNavigateUrlFormatString="ItemEdit.aspx?id={0}" DataNavigateUrlFields="ItemID" />
         <asp:BoundField DataField="EmailAddress" HeaderText="Email" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="Bottom" />

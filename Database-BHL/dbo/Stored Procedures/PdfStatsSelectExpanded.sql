@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.PdfStatsSelectExpanded
+﻿CREATE PROCEDURE [dbo].[PdfStatsSelectExpanded]
 AS
 BEGIN
 
@@ -7,6 +7,7 @@ SET NOCOUNT ON
 -- Detailed stats (by week and status)
 SELECT	DATEPART(year, CreationDate) AS [Year],
 		DATEPART(week, CreationDate) AS [Week],
+		MIN(CONVERT(varchar(10), CreationDate, 121)) AS WeekStartDate,
 		s.PdfStatusID,
 		s.PdfStatusName, 
 		COUNT(*) as [NumberOfPDFs],

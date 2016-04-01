@@ -18,7 +18,7 @@ SELECT	p.PdfID,
 		p.ArticleTags,
 --		p.FileLocation,
 		p.FileUrl,
---		p.Creationdate,
+		p.CreationDate,
 --		p.FileGenerationDate,
 		DATEDIFF(minute, p.CreationDate, p.FileGenerationDate) AS [MinutesToGenerate],
 --		p.FileDeletionDate,
@@ -34,4 +34,3 @@ ORDER BY
 		p.FileGenerationDate, PdfID
 
 END
-

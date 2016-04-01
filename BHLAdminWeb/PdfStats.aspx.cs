@@ -83,14 +83,14 @@ namespace MOBOT.BHL.AdminWeb
             else if (e.Row.RowType == DataControlRowType.Footer)
             {
                 e.Row.Cells[0].Text = "Total";
-                e.Row.Cells[3].Text = _totalExpandedPdfs.ToString();
-                e.Row.Cells[4].Text = _totalExpandedPdfsWithOcr.ToString();
-                e.Row.Cells[5].Text = _totalExpandedPdfsWithArticleInfo.ToString();
-                e.Row.Cells[6].Text = _totalExpandedPdfsMissingImages.ToString();
-                e.Row.Cells[7].Text = _totalExpandedPdfsMissingOcr.ToString();
-                e.Row.Cells[8].Text = _totalExpandedMissingImages.ToString();
-                e.Row.Cells[9].Text = _totalExpandedMissingOcr.ToString();
-                e.Row.Cells[10].Text = ((double)_totalExpandedMinutes / (double)_totalExpandedPdfs).ToString("#.00");
+                e.Row.Cells[4].Text = _totalExpandedPdfs.ToString();
+                e.Row.Cells[5].Text = _totalExpandedPdfsWithOcr.ToString();
+                e.Row.Cells[6].Text = _totalExpandedPdfsWithArticleInfo.ToString();
+                e.Row.Cells[7].Text = _totalExpandedPdfsMissingImages.ToString();
+                e.Row.Cells[8].Text = _totalExpandedPdfsMissingOcr.ToString();
+                e.Row.Cells[9].Text = _totalExpandedMissingImages.ToString();
+                e.Row.Cells[10].Text = _totalExpandedMissingOcr.ToString();
+                e.Row.Cells[11].Text = ((double)_totalExpandedMinutes / (double)_totalExpandedPdfs).ToString("#.00");
             }
         }
 

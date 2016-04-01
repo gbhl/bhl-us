@@ -52,6 +52,7 @@ namespace MOBOT.BHL.DAL
                     PDFStats stats = new PDFStats();
                     stats.Year = (int)row["Year"].Value;
                     stats.Week = (int)row["Week"].Value;
+                    stats.WeekStartDate = row["WeekStartDate"].Value.ToString();
                     stats.PdfStatusID = (int)row["PdfStatusID"].Value;
                     stats.PdfStatusName = row["PdfStatusName"].Value.ToString();
                     stats.NumberofPdfs = (int)row["NumberOfPDFs"].Value;
