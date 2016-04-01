@@ -143,18 +143,18 @@
         </p>
             <div style="font-weight:bold">OpenUrl 0.1</div>
             <p>
-                The following query references Samual Wendell Williston, <i>Manual of North American Diptera</i> (New Haven :J.T. Hathaway) 16.
+                The following query references Samual W. Williston, <i>Manual of North American Diptera</i> (New Haven :J.T. Hathaway) 16.
             </p>
             <code>
                 /openurl?<br />
                 &amp;genre=book<br />
                 &amp;title=Manual+of+North+American+Diptera<br />
-                &amp;aufirst=Samuel Wendell<br />
+                &amp;aufirst=Samuel<br />
                 &amp;aulast=Williston<br />
                 &amp;date=1908<br />
                 &amp;spage=16<br />
             </code>
-            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel+Wendell&amp;aulast=Williston&amp;date=1908&amp;spage=16" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel&amp;aulast=Williston&amp;date=1908&amp;spage=16" title="Example">Click here to try it</a></p>
             <div style="font-weight:bold">OpenURL 1.0</div>
             <p>
                 Here's the same query, using the OpenURL 1.0 specification.
@@ -165,12 +165,12 @@
             &amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook<br />
             &amp;rft.genre=book<br />
             &amp;rft.btitle=Manual+of+North+American+Diptera<br />
-            &amp;rft.aufirst=Samuel Wendell<br />
+            &amp;rft.aufirst=Samuel<br />
             &amp;rft.aulast=Williston<br />
             &amp;rft.date=1908<br />
             &amp;rft.spage=16<br />
             </code>
-            <p><a href="/openurl?url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=book&amp;rft.btitle=Manual+of+North+American+Diptera&amp;rft.aufirst=Samuel+Wendell&amp;rft.aulast=Williston&amp;rft.date=1908&amp;rft.spage=16" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.genre=book&amp;rft.btitle=Manual+of+North+American+Diptera&amp;rft.aufirst=Samuel&amp;rft.aulast=Williston&amp;rft.date=1908&amp;rft.spage=16" title="Example">Click here to try it</a></p>
             <div style="font-weight:bold">Response in JSON</div>
             <p>
                 To receive the response in JSON, append "&amp;format=json" to the end of the query, as shown here.
@@ -180,13 +180,13 @@
                 /openurl?<br />
                 &amp;genre=book<br />
                 &amp;title=Manual+of+North+American+Diptera<br />
-                &amp;aufirst=Samuel Wendell<br />
+                &amp;aufirst=Samuel<br />
                 &amp;aulast=Williston<br />
                 &amp;date=1908<br />
                 &amp;spage=16<br />
                 <span style="color:Blue">&amp;format=json</span><br />
             </code>
-            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel+Wendell&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=json" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=json" title="Example">Click here to try it</a></p>
             <div style="font-weight:bold">Response in JSON (with a callback function)</div>
             <p>
                 To receive the response in JSON and specify a callback function, append 
@@ -197,14 +197,14 @@
                 /openurl?<br />
                 &amp;genre=book<br />
                 &amp;title=Manual+of+North+American+Diptera<br />
-                &amp;aufirst=Samuel Wendell<br />
+                &amp;aufirst=Samuel<br />
                 &amp;aulast=Williston<br />
                 &amp;date=1908<br />
                 &amp;spage=16<br />
                 <span style="color:Blue">&amp;format=json</span><br />
                 <span style="color:Blue">&amp;callback=functionname</span><br />
             </code>
-            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel+Wendell&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=json&amp;callback=functionname" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=json&amp;callback=functionname" title="Example">Click here to try it</a></p>
             <div style="font-weight:bold">Response in XML</div>
             <p>
                 To receive the response in XML, append "&amp;format=xml" to the end of the query, as shown here.
@@ -214,13 +214,13 @@
                 /openurl?<br />
                 &amp;genre=book<br />
                 &amp;title=Manual+of+North+American+Diptera<br />
-                &amp;aufirst=Samuel Wendell<br />
+                &amp;aufirst=Samuel<br />
                 &amp;aulast=Williston<br />
                 &amp;date=1908<br />
                 &amp;spage=16<br />
                 <span style="color:Blue">&amp;format=xml</span><br />
             </code>
-            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel+Wendell&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=xml" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=xml" title="Example">Click here to try it</a></p>
             <div style="font-weight:bold">Response in HTML</div>
             <p>
                 To receive the response as an HTML fragment, append "&amp;format=html" to the end of the query, as shown here.
@@ -230,13 +230,13 @@
                 /openurl?<br />
                 &amp;genre=book<br />
                 &amp;title=Manual+of+North+American+Diptera<br />
-                &amp;aufirst=Samuel Wendell<br />
+                &amp;aufirst=Samuel<br />
                 &amp;aulast=Williston<br />
                 &amp;date=1908<br />
                 &amp;spage=16<br />
                 <span style="color:Blue">&amp;format=html</span><br />
             </code>
-            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel+Wendell&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=html" title="Example">Click here to try it</a></p>
+            <p><a href="/openurl?genre=book&amp;title=Manual+of+North+American+Diptera&amp;aufirst=Samuel&amp;aulast=Williston&amp;date=1908&amp;spage=16&amp;format=html" title="Example">Click here to try it</a></p>
 
 
 </div>
