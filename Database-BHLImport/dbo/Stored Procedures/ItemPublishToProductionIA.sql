@@ -1479,6 +1479,7 @@ BEGIN TRY
 
 		SELECT @TitleItemInsert = @@ROWCOUNT
 
+		/*
 		-- For items coming from Internet Archive (ImportSourceID = 1),
 		-- make sure the ItemSequence values are correct
 		-- Calculate the ItemSequence by ordering each title by the item volume
@@ -1501,6 +1502,7 @@ BEGIN TRY
 							) x
 					ON ti.ItemID = x.ItemID
 					AND ti.TitleID = x.TitleID
+		*/
 
 		-- =======================================================================
 

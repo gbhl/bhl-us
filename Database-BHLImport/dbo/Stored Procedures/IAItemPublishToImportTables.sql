@@ -1322,8 +1322,8 @@ BEGIN TRY
 	-- Get Items
 
 	-- Get the information we've already collected with the title data
-	INSERT INTO #tmpItem (ItemID, IAIdentifier, MARCBibID, TitleID, BarCode, InstitutionCode, LanguageCode)
-	SELECT	ItemID, IAIdentifier, MARCBibID, 0, '', InstitutionCode, LanguageCode 
+	INSERT INTO #tmpItem (ItemID, IAIdentifier, MARCBibID, TitleID, BarCode, ItemSequence, InstitutionCode, LanguageCode)
+	SELECT	ItemID, IAIdentifier, MARCBibID, 0, '', 10000, InstitutionCode, LanguageCode 
 	FROM	#tmpTitle
 
 	-- Get the current vault ID to assign to the items
@@ -1394,6 +1394,7 @@ BEGIN TRY
 	WHERE	t.ScanningDate IS NULL
 	AND		i.IAAddedDate IS NOT NULL
 	
+	/*
 	-- Add the ItemSequence by ordering each title by the item volume
 	UPDATE	#tmpItem
 	SET		ItemSequence = x.Sequence
@@ -1402,6 +1403,7 @@ BEGIN TRY
 								ItemID 
 						FROM	#tmpItem) x
 				ON t.ItemID = x.ItemID
+	*/
 
 	-- =======================================================================
 	-- =======================================================================
