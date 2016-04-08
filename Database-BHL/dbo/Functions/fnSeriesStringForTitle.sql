@@ -1,21 +1,23 @@
-﻿
-CREATE FUNCTION [dbo].[fnSeriesStringForTitle] 
+﻿CREATE FUNCTION [dbo].[fnSeriesStringForTitle] 
 (
 	@TitleID int
 )
-RETURNS nvarchar(1024)
+RETURNS nvarchar(max)
 AS 
 
 BEGIN
 	
-	DECLARE @AssocString nvarchar(1024)
+	DECLARE @AssocString nvarchar(max)
 
 	DECLARE @CurrentRecord int
 	SELECT @CurrentRecord = 1
 
 	SELECT 
 		@AssocString = COALESCE(@AssocString, '') +
-					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE '|' END) + LTRIM(RTRIM(ta.Title)),
+					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE '|' END) + 
+					LTRIM(RTRIM(ta.Title)) + ' ' + LTRIM(RTRIM(ta.Section)) + ' ' +
+					LTRIM(RTRIM(ta.Volume)) + ' ' + LTRIM(RTRIM(ta.Heading)) + ' ' + 
+					LTRIM(RTRIM(ta.Publication)) + ' ' + LTRIM(RTRIM(ta.Relationship)),
 		@CurrentRecord = @CurrentRecord + 1
 	FROM	dbo.TitleAssociation ta INNER JOIN dbo.TitleAssociationType tat
 				ON ta.TitleAssociationTypeID = tat.TitleAssociationTypeID
@@ -27,4 +29,3 @@ BEGIN
 
 	RETURN LTRIM(RTRIM(COALESCE(@AssocString, '')))
 END
-
