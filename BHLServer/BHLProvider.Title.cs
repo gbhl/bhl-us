@@ -255,9 +255,9 @@ namespace MOBOT.BHL.Server
 			return titleDal;
 		}
 
-		public void TitleSave( Title title, int userId )
+		public Title TitleSave( Title title, int userId )
 		{
-			new TitleDAL().Save( null, null, title, userId );
+			return new TitleDAL().Save( null, null, title, userId );
 		}
 
         public CustomGenericList<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(String institutionCode, int maxAge)

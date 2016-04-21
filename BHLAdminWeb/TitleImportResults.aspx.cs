@@ -12,8 +12,8 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleImportResults : System.Web.UI.Page
     {
-        private int _inserted = 0;
-        private int _updated = 0;
+        private List<Title> _inserted = new List<Title>();
+        private List<Title> _updated = new List<Title>();
         private List<String> _error = new List<string>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -29,9 +29,23 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     this.ImportMarcBatch(batchInt);
 
-                    litInserted.Text = _inserted.ToString();
-                    litUpdated.Text = _updated.ToString();
-                    litErrors.Text = _error.Count.ToString();
+                    litInsertedCount.Text = _inserted.Count.ToString();
+                    litUpdatedCount.Text = _updated.Count.ToString();
+                    litErrorCount.Text = _error.Count.ToString();
+
+                    if (_inserted.Count > 0)
+                    {
+                        litInserted.Visible = true;
+                        dlInserted.DataSource = _inserted;
+                        dlInserted.DataBind();
+                    }
+
+                    if (_updated.Count > 0)
+                    {
+                        litUpdated.Visible = true;
+                        dlUpdated.DataSource = _updated;
+                        dlUpdated.DataBind();
+                    }
 
                     if (_error.Count > 0)
                     {
@@ -113,7 +127,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
 
                         // Save the new title
-                        provider.TitleSave(title, 1);
+                        title = provider.TitleSave(title, 1);
 
                         // Copy MARC XML file to the appropriate server
                         // - Create new folder in current vault (using MarcBibID as name)
@@ -128,7 +142,7 @@ namespace MOBOT.BHL.AdminWeb
                             // Do nothing... file copy is not critical
                         }
 
-                        _inserted++;
+                        _inserted.Add(title);
                     }
                     else
                     {
@@ -248,7 +262,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
 
                         // Update the title
-                        provider.TitleSave(title, 1);
+                        title = provider.TitleSave(title, 1);
 
                         try
                         {
@@ -290,7 +304,7 @@ namespace MOBOT.BHL.AdminWeb
                             // Do nothing... file operations not critical
                         }
 
-                        _updated++;
+                        _updated.Add(title);
                     }
 
                     // Update the record to indicate that the import has completed

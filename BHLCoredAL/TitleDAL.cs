@@ -378,12 +378,13 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Title title, int userId)
+        public Title Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Title title, int userId)
 		{
 			SqlConnection connection = sqlConnection;
 			SqlTransaction transaction = sqlTransaction;
+            CustomDataAccessStatus<Title> updatedTitle = null;
 
-			if ( connection == null )
+            if ( connection == null )
 			{
 				connection =
 					CustomSqlHelper.CreateConnection( CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ) );
@@ -395,8 +396,7 @@ namespace MOBOT.BHL.DAL
 			{
 				transaction = CustomSqlHelper.BeginTransaction( connection, transaction, isTransactionCoordinator );
 
-                CustomDataAccessStatus<Title> updatedTitle = 
-				    new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
+                updatedTitle = new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
 
 				if ( title.TitleAuthors.Count > 0 )
 				{
@@ -526,6 +526,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CloseConnection( connection, isTransactionCoordinator );
 			}
 
+            return updatedTitle.ReturnObject;
 		}
 
         /// <summary>

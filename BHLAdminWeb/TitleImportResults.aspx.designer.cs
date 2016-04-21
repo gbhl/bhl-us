@@ -22,6 +22,33 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
         
         /// <summary>
+        /// litInsertedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litInsertedCount;
+        
+        /// <summary>
+        /// litUpdatedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litUpdatedCount;
+        
+        /// <summary>
+        /// litErrorCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litErrorCount;
+        
+        /// <summary>
         /// litInserted control.
         /// </summary>
         /// <remarks>
@@ -29,6 +56,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litInserted;
+        
+        /// <summary>
+        /// dlInserted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DataGrid dlInserted;
         
         /// <summary>
         /// litUpdated control.
@@ -40,13 +76,13 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.Literal litUpdated;
         
         /// <summary>
-        /// litErrors control.
+        /// dlUpdated control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litErrors;
+        protected global::System.Web.UI.WebControls.DataGrid dlUpdated;
         
         /// <summary>
         /// litErrHeader control.
