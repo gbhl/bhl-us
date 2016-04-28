@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEC97CEE-C95E-4C8E-9AEC-526D27C06EC6}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,13 +45,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUSWeb2", "BHLUSWeb2\BHLU
 		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F} = {F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLApi3Web", "BHLApi3Web\BHLApi3Web.csproj", "{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtility", "BHLUtility\BHLUtility.csproj", "{270E7816-13EC-4D51-A27F-C959981B1275}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentResolver", "DocumentResolver\DocumentResolver.csproj", "{7AE91F63-3D78-4D12-821D-90050A816F66}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLApi3WebTest", "BHLApi3WebTest\BHLApi3WebTest.csproj", "{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
 EndProject
@@ -246,16 +242,6 @@ Global
 		{107F9C1A-12AB-42D5-AD12-333BC5B2DBDA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{107F9C1A-12AB-42D5-AD12-333BC5B2DBDA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{107F9C1A-12AB-42D5-AD12-333BC5B2DBDA}.Release|x86.ActiveCfg = Release|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}.Release|x86.ActiveCfg = Release|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{270E7816-13EC-4D51-A27F-C959981B1275}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -276,16 +262,6 @@ Global
 		{7AE91F63-3D78-4D12-821D-90050A816F66}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7AE91F63-3D78-4D12-821D-90050A816F66}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7AE91F63-3D78-4D12-821D-90050A816F66}.Release|x86.ActiveCfg = Release|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{4A72C6E2-CD5E-4C5A-95A0-92E50448709D}.Release|x86.ActiveCfg = Release|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EBA8419-B379-473B-B641-7AA6FDDB30A7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

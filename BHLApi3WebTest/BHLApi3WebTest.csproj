@@ -90,10 +90,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BHLApi3Web\BHLApi3Web.csproj">
-      <Project>{26AD48FE-9FCC-4EF6-B14B-17F6E53D8E67}</Project>
-      <Name>BHLApi3Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
