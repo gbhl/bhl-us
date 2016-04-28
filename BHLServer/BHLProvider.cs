@@ -191,7 +191,7 @@ namespace MOBOT.BHL.Server
                 // Get the OCR text and start to build the UBIO url
                 string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
                 StringBuilder webServiceUrlSB = new StringBuilder();
-                webServiceUrlSB.Append("http://www.ubio.org/webservices/service.php?function=taxonFinder&includeLinks=0&freeText=");
+                webServiceUrlSB.Append(ConfigurationManager.AppSettings["TaxonFinderRequestText"]);
                 webServiceUrlSB.Append(System.Web.HttpUtility.UrlEncode(ocrText));
 
                 // Add the existing page names for this Page to the UBIO url
@@ -215,7 +215,7 @@ namespace MOBOT.BHL.Server
 
             // OCR text is too large, so just send the file path
             if (tooLarge)
-                webServiceUrl = String.Format("http://www.ubio.org/webservices/service.php?function=taxonFinder&includeLinks=0&url=http://www.biodiversitylibrary.org/pageocr/{0}", pageID.ToString());
+                webServiceUrl = String.Format(ConfigurationManager.AppSettings["TaxonFinderRequestUrl"], pageID.ToString());
 
             List<NameFinderResponse> nameFinderResponses = new List<NameFinderResponse>();
             XmlTextReader reader = null;
@@ -324,9 +324,8 @@ namespace MOBOT.BHL.Server
                 // Data source identifiers listed at http://resolver.globalnames.org/data_sources
                 // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
                 // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
-                //webServiceUrl = "http://gnrd.globalnames.org/name_finder.json";
-                webServiceUrl = "http://128.128.164.213/name_finder.json";
-                ocrText = string.Format("text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169", System.Web.HttpUtility.UrlEncode(ocrText));
+                webServiceUrl = ConfigurationManager.AppSettings["GNRDBaseAddress"];
+                ocrText = string.Format(ConfigurationManager.AppSettings["GNRDRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
 
                 try
                 {

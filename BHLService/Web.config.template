@@ -22,6 +22,18 @@
     <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
     <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
 
+    <!-- TaxonFinder name service request URL that contains text to be evaluated -->
+    <add key="TaxonFinderRequestText" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;freeText=" />
+
+    <!-- TaxonFinder name service request URL that contains pointer (url) to text to be evaluated -->
+    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=http://www.biodiversitylibrary.org/pageocr/{0}" />
+
+    <!-- Base address of GNRD name service -->
+    <add key="GNRDBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
+
+    <!-- Payload for GNRD name service request -->
+    <add key="GNRDRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169" />
+
     <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
     <add key="UsePreferredNameResults" value="true"/>
 
