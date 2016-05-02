@@ -364,7 +364,6 @@
     <None Include="dbo\Stored Procedures\MarcInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PageUpdateLastPageNameLookupDate.sql" />
     <None Include="dbo\Stored Procedures\SegmentIdentifierUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\PageNameSelectByPageIDAndNameFound.sql" />
     <None Include="dbo\Stored Procedures\APIKeyInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcDataFieldInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemUpdateLastPageNameLookupDate.sql" />
@@ -383,7 +382,6 @@
     <None Include="dbo\Stored Procedures\MarcUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordSelectLikeTag.sql" />
     <None Include="dbo\Stored Procedures\SegmentStatusInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\PageNameSelectByItemIDAndSequence.sql" />
     <None Include="dbo\Stored Procedures\OAIIdentifierSelectPDFs.sql" />
     <None Include="dbo\Stored Procedures\MarcDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleSelectByKeyword.sql" />
@@ -467,7 +465,6 @@
     <None Include="dbo\Stored Procedures\SegmentClusterInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectAssociationIdsByMarcDataFieldID.sql" />
-    <None Include="dbo\Stored Procedures\PageNameCountUpdate.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\ItemCOinSSelectByTitleID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationPolygonDeleteByAnnotationID.sql" />
@@ -489,7 +486,6 @@
     <None Include="dbo\Stored Procedures\TitleSelectByDateRangeAndInstitution.sql" />
     <None Include="dbo\Stored Procedures\Page_PageTypeSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorNameUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\PageNameSelectCountByInstitution.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectAll.sql" />
     <None Include="dbo\Stored Procedures\Page_PageTypeInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorRoleDeleteAuto.sql" />
