@@ -16,11 +16,5 @@ namespace MOBOT.BHL.Server
         {
             return new KeywordDAL().KeywordSelectNewLocations(null, null);
         }
-
-        public CustomGenericList<CustomDataRow> KeywordSelectCountByInstitution(int numberToReturn, string institutionCode,
-            string languageCode)
-        {
-            return new KeywordDAL().KeywordSelectCountByInstitution(null, null, numberToReturn, institutionCode, languageCode);
-        }
     }
 }

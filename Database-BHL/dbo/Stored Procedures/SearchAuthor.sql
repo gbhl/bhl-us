@@ -2,7 +2,6 @@
 CREATE PROCEDURE [dbo].[SearchAuthor]
 
 @AuthorName nvarchar(300),
-@LanguageCode nvarchar(10) = '',
 @ReturnCount int = 100
 
 AS 
@@ -11,14 +10,12 @@ BEGIN
 
 SET NOCOUNT ON
 
--- NOTE:  @LanguageCode is no longer used (Feb 12, 2013)
-
 -- Revert to 'normal' SQL search of the search catalog is offline
 DECLARE @CatalogStatus int
 exec @CatalogStatus = dbo.SearchCatalogCheckStatus
 IF (@CatalogStatus = 0)
 BEGIN
-	exec dbo.AuthorSelectByNameLike @AuthorName, @LanguageCode, @ReturnCount
+	exec dbo.AuthorSelectByNameLike @AuthorName, @ReturnCount
 	RETURN
 END
 
@@ -89,5 +86,4 @@ ORDER BY
 		Location, StartDate, EndDate, FullerForm
 
 END
-
 

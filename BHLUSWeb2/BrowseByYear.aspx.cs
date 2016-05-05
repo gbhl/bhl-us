@@ -44,7 +44,7 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-                searchBookResultList = bhlProvider.TitleSelectByDateRangeAndInstitution(StartDate, EndDate, string.Empty, string.Empty);
+                searchBookResultList = bhlProvider.TitleSelectByDateRange(StartDate, EndDate);
 
                 Cache.Add(cacheKey, searchBookResultList, null,
                     DateTime.Now.AddMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),

@@ -12,11 +12,6 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectExtended(null, null, authorId);
         }
 
-        public CustomGenericList<Author> AuthorSelectByInstitution(string institutionCode, string languageCode)
-        {
-            return new AuthorDAL().AuthorSelectByInstitution(null, null, institutionCode, languageCode);
-        }
-
         /// <summary>
         /// Search for active authors that match the specified criteria.
         /// </summary>
@@ -24,15 +19,9 @@ namespace MOBOT.BHL.Server
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> AuthorSelectByNameLike(string fullName, string languageCode, int returnCount)
+        public CustomGenericList<Author> AuthorSelectByNameLike(string fullName, int returnCount)
         {
-            return new AuthorDAL().AuthorSelectByNameLike(null, null, fullName, languageCode, returnCount);
-        }
-
-        public CustomGenericList<Author> AuthorSelectByNameLikeAndInstitution(string fullName,
-            string institutionCode, string languageCode)
-        {
-            return new AuthorDAL().AuthorSelectByNameLikeAndInstitution(null, null, fullName, institutionCode, languageCode);
+            return new AuthorDAL().AuthorSelectByNameLike(null, null, fullName, returnCount);
         }
 
         public CustomGenericList<Author> AuthorSelectByTitleId(int titleId)

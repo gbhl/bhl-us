@@ -43,7 +43,7 @@ namespace MOBOT.BHL.Web2
                 }
                 else
                 {
-                    searchBookResultList = bhlProvider.TitleSelectByNameLike(Start, string.Empty, string.Empty);
+                    searchBookResultList = bhlProvider.TitleSelectByNameLike(Start);
                 }
                 Cache.Add(cacheKey, searchBookResultList, null,
                     DateTime.Now.AddMinutes(Convert.ToDouble(ConfigurationManager.AppSettings["BrowseQueryCacheTime"])),

@@ -1,8 +1,7 @@
 ﻿
-CREATE PROCEDURE [dbo].[TitleSelectByKeywordInstitutionAndLanguage]
-@Keyword nvarchar(50),
-@InstitutionCode nvarchar(10),
-@LanguageCode nvarchar(10) = ''
+CREATE PROCEDURE [dbo].[TitleSelectByKeyword]
+
+@Keyword nvarchar(50)
 
 AS
 SET NOCOUNT ON
@@ -30,14 +29,6 @@ FROM	dbo.TitleKeywordView v INNER JOIN dbo.Title t
 			ON v.ItemID = il.ItemID
 WHERE	v.Keyword = @Keyword
 AND		t.PublishReady=1
-AND		(v.TitleInstitutionCode = @InstitutionCode OR 
-		 v.ItemInstitutionCode = @InstitutionCode OR 
-		 @InstitutionCode = '')
-AND		(v.TitleLanguageCode = @LanguageCode OR
-		 v.ItemLanguageCode = @LanguageCode OR
-		 ISNULL(tl.LanguageCode, '') = @LanguageCode OR
-		 ISNULL(il.LanguageCode, '') = @LanguageCode OR
-		 @LanguageCode = '')
 ORDER BY SortTitle
 
 -- Add supporting information for each title to the result set
@@ -76,14 +67,10 @@ ORDER BY
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure TitleSelectByTagTextInstitutionAndLanguage. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure TitleSelectByKeyword. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
-
-
 

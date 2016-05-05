@@ -51,14 +51,6 @@ namespace MOBOT.BHL.Web2.Services
                                             Convert.ToInt32(pageID));
                         break;
                     }
-                case "TitleSelectByKeywordInstitutionAndLanguage":
-                    {
-                        response = this.TitleSelectByKeywordInstitutionAndLanguage(
-                                            context.Request.QueryString["keyword"],
-                                            context.Request.QueryString["instCode"],
-                                            context.Request.QueryString["langCode"]);
-                        break;
-                    }
                 case "PageSummarySelectForViewerByItemID":
                     {
                         response = this.PageSummarySelectForViewerByItemID(itemID);
@@ -179,20 +171,6 @@ namespace MOBOT.BHL.Web2.Services
                 catch
                 {
                 }
-            }
-        }
-
-        private string TitleSelectByKeywordInstitutionAndLanguage(string keyword, string institutionCode, string languageCode)
-        {
-            try
-            {
-                CustomGenericList<SearchBookResult> titles = new BHLProvider().TitleSelectByKeywordInstitutionAndLanguage(keyword, institutionCode, languageCode);
-                JavaScriptSerializer js = new JavaScriptSerializer();
-                return js.Serialize(titles);
-            }
-            catch
-            {
-                return null;
             }
         }
 

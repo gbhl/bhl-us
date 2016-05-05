@@ -26,9 +26,9 @@ namespace MOBOT.BHL.Server
         /// Select all values from Title like a particular string.
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameLike(string name, string institutionCode, string languageCode)
+        public CustomGenericList<SearchBookResult> TitleSelectByNameLike(string name)
         {
-            return (new SearchDAL().TitleSelectByNameLike(null, null, name, institutionCode, languageCode));
+            return (new SearchDAL().TitleSelectByNameLike(null, null, name));
         }
 
         /// <summary>
@@ -50,16 +50,6 @@ namespace MOBOT.BHL.Server
             return (new SearchDAL().TitleSelectByAuthor(null, null, authorId));
         }
 
-        /// <summary>
-        /// Select Titles for a particular InstitutionCode.
-        /// </summary>
-        /// <param name="institutionCode"></param>
-        /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitution(string institutionCode)
-        {
-            return (new SearchDAL().TitleSelectByInstitution(null, null, institutionCode));
-        }
-
         public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
         {
             return new SearchDAL().TitleSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
@@ -70,9 +60,9 @@ namespace MOBOT.BHL.Server
             return new SearchDAL().TitleSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByKeywordInstitutionAndLanguage(string keyword, string institutionCode, string languageCode)
+        public CustomGenericList<SearchBookResult> TitleSelectByKeyword(string keyword)
         {
-            return new SearchDAL().TitleSelectByKeywordInstitutionAndLanguage(null, null, keyword, institutionCode, languageCode);
+            return new SearchDAL().TitleSelectByKeyword(null, null, keyword);
         }
 
         /// <summary>
@@ -89,9 +79,9 @@ namespace MOBOT.BHL.Server
         /// Select Titles for a particular date range
         /// </summary>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByDateRangeAndInstitution(int startDate, int endDate, String institutionCode, String languageCode)
+        public CustomGenericList<SearchBookResult> TitleSelectByDateRange(int startDate, int endDate)
         {
-            return (new SearchDAL().TitleSelectByDateRangeAndInstitution(null, null, startDate, endDate, institutionCode, languageCode));
+            return (new SearchDAL().TitleSelectByDateRange(null, null, startDate, endDate));
         }
 
         /// <summary>
@@ -128,9 +118,9 @@ namespace MOBOT.BHL.Server
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthor(string authorName, string languageCode, int returnCount)
+        public CustomGenericList<Author> SearchAuthor(string authorName, int returnCount)
         {
-            return new SearchDAL().SearchAuthor(null, null, authorName, languageCode, returnCount);
+            return new SearchDAL().SearchAuthor(null, null, authorName, returnCount);
         }
 
         /// <summary>

@@ -62,7 +62,7 @@ namespace MOBOT.BHL.Web2
                 // Refresh cache
 
                 // Get the list of titles
-                titleList = bhlProvider.TitleSelectByKeywordInstitutionAndLanguage(keyword, string.Empty, string.Empty);
+                titleList = bhlProvider.TitleSelectByKeyword(keyword);
 
                 // Cache the list
                 Cache.Add(cacheKey, titleList, null, DateTime.Now.AddMinutes(

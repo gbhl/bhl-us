@@ -1,8 +1,6 @@
 ﻿
 CREATE PROCEDURE [dbo].[TitleSelectByNameLike]
-@Name varchar(1000),
-@InstitutionCode nvarchar(10) = '',
-@LanguageCode nvarchar(10) = ''
+@Name varchar(1000)
 AS
 SET NOCOUNT ON
 
@@ -38,8 +36,6 @@ FROM	[dbo].[Title] t WITH (NOLOCK)
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID  AND itm.ItemID = c.ItemID
 WHERE	t.PublishReady=1 
 AND		t.SortTitle LIKE @Name + '%'
-AND		(t.InstitutionCode = @InstitutionCode OR I.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
-AND		(t.LanguageCode = @LanguageCode OR ISNULL(tl.LanguageCode, '') = @LanguageCode OR @LanguageCode = '')
 ORDER BY t.SortTitle
 
 IF @@ERROR <> 0
@@ -51,10 +47,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
-
-
-
-
-

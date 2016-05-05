@@ -1,10 +1,8 @@
 ﻿
-CREATE PROCEDURE [dbo].[TitleSelectByDateRangeAndInstitution]
+CREATE PROCEDURE [dbo].[TitleSelectByDateRange]
 
 @StartDate	int,
-@EndDate int,
-@InstitutionCode nvarchar(10) = '',
-@LanguageCode nvarchar(10) = ''
+@EndDate int
 
 AS
 
@@ -38,14 +36,6 @@ FROM	[dbo].[Title] T WITH (NOLOCK)
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) on t.TitleID = c.TitleID AND it.ItemID = c.ItemID
 WHERE	T.StartYear BETWEEN @StartDate AND @EndDate 
 AND		T.PublishReady=1
-AND		(T.InstitutionCode = @InstitutionCode OR 
-		IT.InstitutionCode = @InstitutionCode OR 
-		@InstitutionCode = '')
-AND		(T.LanguageCode = @LanguageCode OR
-		IT.LanguageCode = @LanguageCode OR
-		 ISNULL(tl.LanguageCode, '') = @LanguageCode OR
-		 ISNULL(il.LanguageCode, '') = @LanguageCode OR
-		@LanguageCode = '')
 
 -- Get specific items to return (first volume of title that is within the specified date range
 SELECT	TitleID, MIN(ItemSequence) AS ItemSequence
@@ -78,12 +68,11 @@ ORDER BY
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure TitleSelectByDateRangeAndInstitution. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure TitleSelectByDateRange. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
 
 

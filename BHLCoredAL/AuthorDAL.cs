@@ -26,33 +26,6 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
-        /// Select all Authors associated with title contributed by the specified institution.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorSelectByInstitution(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string institutionCode,
-            string languageCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByInstitution", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
-            {
-                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
-                {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
         /// Select all Authors starting with a certain letter.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>
@@ -62,7 +35,6 @@ namespace MOBOT.BHL.DAL
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string fullName,
-            string languageCode,
             int returnCount)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -70,38 +42,7 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByNameLike", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 255, false, fullName),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode),
                 CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
-            {
-                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
-                {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select all Authors that start with a certain letter and are associated with
-        /// a title contributed by the specified institution.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorSelectByNameLikeAndInstitution(
-            SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction,
-            string fullName,
-            string institutionCode,
-            string languageCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByNameLikeAndInstitution", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 255, false, fullName),
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {

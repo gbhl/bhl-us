@@ -71,15 +71,13 @@ namespace BHLCoreDALTest
         ///A test for TitleSelectByKeywordInstitutionAndLanguage
         ///</summary>
         [TestMethod()]
-        public void TitleSelectByKeywordInstitutionAndLanguageTest()
+        public void TitleSelectByKeywordTest()
         {
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string keyword = "birds";
-            string institutionCode = string.Empty;
-            string languageCode = string.Empty;
-            CustomGenericList<SearchBookResult> actual = target.TitleSelectByKeywordInstitutionAndLanguage(sqlConnection, sqlTransaction, keyword, institutionCode, languageCode);
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByKeyword(sqlConnection, sqlTransaction, keyword);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -199,9 +197,8 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string authorName = "charles darwin";
-            string languageCode = string.Empty;
             int returnCount = 1;
-            CustomGenericList<Author> actual = target.SearchAuthor(sqlConnection, sqlTransaction, authorName, languageCode, returnCount);
+            CustomGenericList<Author> actual = target.SearchAuthor(sqlConnection, sqlTransaction, authorName, returnCount);
             Assert.AreEqual(actual.Count, 1);
         }
 

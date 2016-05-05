@@ -341,11 +341,11 @@ namespace MOBOT.BHL.Web2
                 CustomGenericList<Author> authorsList = null;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
-                    authorsList = bhlProvider.SearchAuthor(searchTerm, searchLang, authorReturnCount);
+                    authorsList = bhlProvider.SearchAuthor(searchTerm, authorReturnCount);
                 }
                 else
                 {
-                    authorsList = bhlProvider.AuthorSelectByNameLike(searchTerm, searchLang, authorReturnCount);
+                    authorsList = bhlProvider.AuthorSelectByNameLike(searchTerm, authorReturnCount);
                 }
 
                 if ((authorsList.Count == maxDefaultResults) && (authorMax == "0"))

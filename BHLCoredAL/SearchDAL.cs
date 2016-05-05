@@ -80,17 +80,13 @@ namespace MOBOT.BHL.DAL
         public CustomGenericList<SearchBookResult> TitleSelectByNameLike(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
-                        string name,
-                        string institutionCode,
-                        string languageCode)
+                        string name)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByNameLike", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name),
-                            CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                            CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
+                            CustomSqlHelper.CreateInputParameter("Name", SqlDbType.VarChar, 1000, false, name)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
@@ -141,31 +137,6 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByAuthor", connection, transaction,
                             CustomSqlHelper.CreateInputParameter("AuthorId", SqlDbType.Int, null, false, authorId)))
-            {
-                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
-                {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
-                    return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select all values from Title that are related to the specified institution.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="institutionCode">ID of the institution for which to retrieve titles</param>
-        /// <returns>List of objects of type SearchBookResult.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitution(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        String institutionCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByInstitution", connection, transaction,
-                     CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
@@ -240,18 +211,14 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByKeywordInstitutionAndLanguage(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string keyword,
-            string institutionCode,
-            string languageCode)
+        public CustomGenericList<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string keyword)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByKeywordInstitutionAndLanguage", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword),
-                            CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                            CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByKeyword", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, keyword)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
@@ -262,27 +229,22 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
-        /// Select all values from Title published between the specified dates
-        /// and contributed by the specified institution.
+        /// Select all values from Title published between the specified dates.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByDateRangeAndInstitution(
+        public CustomGenericList<SearchBookResult> TitleSelectByDateRange(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
-                        int startYear, int endYear,
-                        String institutionCode,
-                        String languageCode)
+                        int startYear, int endYear)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByDateRangeAndInstitution", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByDateRange", connection, transaction,
                             CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.Int, null, false, startYear),
-                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear),
-                            CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                            CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
+                            CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.Int, null, false, endYear)))
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
@@ -391,14 +353,12 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
         /// <param name="creatorName"></param>
-        /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
         public CustomGenericList<Author> SearchAuthor(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string authorName,
-            string languageCode,
             int returnCount)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -406,7 +366,6 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("SearchAuthor", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("AuthorName", SqlDbType.NVarChar, 300, false, authorName),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode),
                 CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())

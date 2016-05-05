@@ -2,14 +2,11 @@
 CREATE PROCEDURE [dbo].[AuthorSelectByNameLike]
 
 @FullName nvarchar(255),
-@LanguageCode nvarchar(10) = '',
 @ReturnCount	int = 100
 
 AS 
 
 SET NOCOUNT ON
-
--- NOTE:  @LanguageCode is no longer used (Feb 12, 2013)
 
 SELECT DISTINCT
 		AuthorID
@@ -32,6 +29,7 @@ INTO	#tmpFinal
 FROM	dbo.TitleAuthorView v INNER JOIN #tmpAuthor t ON v.AuthorID = t.AuthorID
 WHERE	v.IsActive = 1
 AND		v.IsPreferredName = 1
+AND		v.PublishReady = 1
 
 UNION
 
@@ -53,6 +51,7 @@ FROM	#tmpAuthor t
 		INNER JOIN dbo.Segment s ON sa.SegmentID = s.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		a.IsActive = 1
+AND		n.IsPreferredName = 1
 
 SELECT TOP (@ReturnCount) 
 		AuthorID, 
@@ -68,5 +67,11 @@ SELECT TOP (@ReturnCount)
 		IsActive
 FROM	#tmpFinal
 ORDER BY
-		FullName
-		
+		FullName,
+		Numeration,
+		Unit,
+		Title,
+		Location,
+		FullerForm,
+		StartDate, 
+		EndDate

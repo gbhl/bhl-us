@@ -44,14 +44,7 @@ namespace MOBOT.BHL.Web2
             else
             {
                 // Refresh cache
-                if (string.IsNullOrWhiteSpace(Start))
-                {
-                    BhlAuthorList = bhlProvider.AuthorSelectByInstitution(string.Empty, string.Empty);
-                }
-                else
-                {
-                    BhlAuthorList = bhlProvider.AuthorSelectByNameLikeAndInstitution(Start, string.Empty, string.Empty);
-                }
+                BhlAuthorList = bhlProvider.AuthorSelectByNameLike(Start, 1000000);
 
                 Cache.Add(cacheKey,
                     BhlAuthorList,

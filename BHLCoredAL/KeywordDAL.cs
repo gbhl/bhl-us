@@ -13,24 +13,6 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class KeywordDAL
 	{
-        public CustomGenericList<CustomDataRow> KeywordSelectCountByInstitution(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int numberToReturn, string institutionCode, string languageCode)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(
-                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("KeywordSelectCountByInstitution", connection,
-                transaction,
-                CustomSqlHelper.CreateInputParameter("Number", SqlDbType.Int, null, false, numberToReturn),
-                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
-                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode)))
-            {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                return list;
-            }
-        }
-
         public CustomGenericList<CustomDataRow> KeywordSelectNewLocations(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
