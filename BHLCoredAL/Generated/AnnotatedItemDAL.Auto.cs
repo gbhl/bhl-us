@@ -1,8 +1,8 @@
 
-// Generated 7/14/2010 1:25:28 PM
+// Generated 5/9/2016 1:51:09 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class AnnotatedItemDAL is based upon AnnotatedItem.
+// This partial class AnnotatedItemDAL is based upon annotation.AnnotatedItem.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class AnnotatedItemDAL 
+	partial class AnnotatedItemDAL : IAnnotatedItemDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from AnnotatedItem by primary key(s).
+		/// Select values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from AnnotatedItem by primary key(s).
+		/// Select values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -67,8 +67,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedItemSelectAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("AnnotatedItemSelectAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("AnnotatedItemID", SqlDbType.Int, null, false, annotatedItemID)))
 			{
 				using (CustomSqlHelper<AnnotatedItem> helper = new CustomSqlHelper<AnnotatedItem>())
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AnnotatedItem by primary key(s).
+		/// Select values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from AnnotatedItem by primary key(s).
+		/// Select values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -119,8 +119,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedItemSelectAuto", connection, transaction,
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("AnnotatedItemSelectAuto", connection, transaction,
 				CustomSqlHelper.CreateInputParameter("AnnotatedItemID", SqlDbType.Int, null, false, annotatedItemID)))
 			{
 				return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into AnnotatedItem.
+		/// Insert values into annotation.AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -153,7 +153,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AnnotatedItem.
+		/// Insert values into annotation.AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -174,8 +174,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedItemInsertAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("AnnotatedItemInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("AnnotatedItemID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("AnnotatedTitleID", SqlDbType.Int, null, false, annotatedTitleID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
@@ -201,7 +201,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Insert values into annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -216,7 +216,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Insert values into annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +241,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from AnnotatedItem by primary key(s).
+		/// Delete values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +256,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from AnnotatedItem by primary key(s).
+		/// Delete values from annotation.AnnotatedItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -271,8 +271,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedItemDeleteAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("AnnotatedItemDeleteAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("AnnotatedItemID", SqlDbType.Int, null, false, annotatedItemID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -299,7 +299,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Update values in annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -322,7 +322,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Update values in annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -345,8 +345,8 @@ namespace MOBOT.BHL.DAL
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("annotation.AnnotatedItemUpdateAuto", connection, transaction, 
+			
+			using (SqlCommand command = CustomSqlHelper.CreateCommand("AnnotatedItemUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("AnnotatedItemID", SqlDbType.Int, null, false, annotatedItemID),
 					CustomSqlHelper.CreateInputParameter("AnnotatedTitleID", SqlDbType.Int, null, false, annotatedTitleID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
@@ -372,7 +372,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Update values in annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -387,7 +387,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in AnnotatedItem. Returns an object of type AnnotatedItem.
+		/// Update values in annotation.AnnotatedItem. Returns an object of type AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -413,9 +413,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage AnnotatedItem object.
+		/// Manage annotation.AnnotatedItem object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AnnotatedItem.
+		/// then either insert values into, delete values from, or update values in annotation.AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -430,9 +430,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage AnnotatedItem object.
+		/// Manage annotation.AnnotatedItem object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in AnnotatedItem.
+		/// then either insert values into, delete values from, or update values in annotation.AnnotatedItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -501,4 +501,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

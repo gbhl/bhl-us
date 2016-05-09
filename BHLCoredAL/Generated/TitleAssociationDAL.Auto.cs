@@ -1,8 +1,8 @@
 
-// Generated 2/4/2011 2:43:35 PM
+// Generated 5/9/2016 1:54:17 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class TitleAssociationDAL is based upon TitleAssociation.
+// This partial class TitleAssociationDAL is based upon dbo.TitleAssociation.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class TitleAssociationDAL 
+	partial class TitleAssociationDAL : ITitleAssociationDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from TitleAssociation by primary key(s).
+		/// Select values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into TitleAssociation.
+		/// Insert values into dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -169,7 +169,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociation.
+		/// Insert values into dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +241,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into TitleAssociation. Returns an object of type TitleAssociation.
+		/// Insert values into dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -256,7 +256,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into TitleAssociation. Returns an object of type TitleAssociation.
+		/// Insert values into dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -289,7 +289,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from TitleAssociation by primary key(s).
+		/// Delete values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -304,7 +304,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from TitleAssociation by primary key(s).
+		/// Delete values from dbo.TitleAssociation by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -347,7 +347,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -384,7 +384,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -455,7 +455,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -470,7 +470,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in TitleAssociation. Returns an object of type TitleAssociation.
+		/// Update values in dbo.TitleAssociation. Returns an object of type TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -503,9 +503,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage TitleAssociation object.
+		/// Manage dbo.TitleAssociation object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociation.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -520,9 +520,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage TitleAssociation object.
+		/// Manage dbo.TitleAssociation object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in TitleAssociation.
+		/// then either insert values into, delete values from, or update values in dbo.TitleAssociation.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -606,4 +606,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

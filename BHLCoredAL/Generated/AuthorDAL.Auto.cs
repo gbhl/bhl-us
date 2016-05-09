@@ -1,8 +1,8 @@
 
-// Generated 5/29/2012 12:59:27 PM
+// Generated 5/9/2016 1:51:55 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class AuthorDAL is based upon Author.
+// This partial class AuthorDAL is based upon dbo.Author.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class AuthorDAL 
+	partial class AuthorDAL : IAuthorDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Author by primary key(s).
+		/// Select values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Author by primary key(s).
+		/// Select values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Author by primary key(s).
+		/// Select values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Author by primary key(s).
+		/// Select values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Author.
+		/// Insert values into dbo.Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -167,7 +167,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Author.
+		/// Insert values into dbo.Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -205,6 +205,7 @@ namespace MOBOT.BHL.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("AuthorID", SqlDbType.Int, null, false),
+					CustomSqlHelper.CreateOutputParameter("AuthorID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("AuthorTypeID", SqlDbType.Int, null, true, authorTypeID),
 					CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
 					CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate),
@@ -236,7 +237,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Author. Returns an object of type Author.
+		/// Insert values into dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -251,7 +252,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Author. Returns an object of type Author.
+		/// Insert values into dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -283,7 +284,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Author by primary key(s).
+		/// Delete values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -298,7 +299,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Author by primary key(s).
+		/// Delete values from dbo.Author by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -341,7 +342,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Author. Returns an object of type Author.
+		/// Update values in dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +377,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Author. Returns an object of type Author.
+		/// Update values in dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -444,7 +445,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Author. Returns an object of type Author.
+		/// Update values in dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -459,7 +460,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Author. Returns an object of type Author.
+		/// Update values in dbo.Author. Returns an object of type Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -491,9 +492,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Author object.
+		/// Manage dbo.Author object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Author.
+		/// then either insert values into, delete values from, or update values in dbo.Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -508,9 +509,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Author object.
+		/// Manage dbo.Author object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Author.
+		/// then either insert values into, delete values from, or update values in dbo.Author.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -592,4 +593,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

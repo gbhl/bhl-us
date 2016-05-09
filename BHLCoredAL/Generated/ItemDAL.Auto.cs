@@ -1,8 +1,8 @@
 
-// Generated 6/18/2013 3:43:19 PM
+// Generated 5/9/2016 1:52:26 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ItemDAL is based upon Item.
+// This partial class ItemDAL is based upon dbo.Item.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ItemDAL 
+	partial class ItemDAL : IItemDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,17 +128,15 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Item.
+		/// Insert values into dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="primaryTitleID"></param>
-		/// <param name="redirectItemID"></param>
-		/// <param name="thumbnailPageID"></param>
 		/// <param name="barCode"></param>
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
@@ -177,14 +175,14 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int primaryTitleID,
-			int? redirectItemID,
-			int? thumbnailPageID,
 			string barCode,
 			string mARCItemID,
 			string callNumber,
@@ -223,20 +221,20 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
+			int? thumbnailPageID,
+			int? redirectItemID,
 			string externalUrl)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, redirectItemID, thumbnailPageID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, externalUrl );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl );
 		}
 		
 		/// <summary>
-		/// Insert values into Item.
+		/// Insert values into dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="primaryTitleID"></param>
-		/// <param name="redirectItemID"></param>
-		/// <param name="thumbnailPageID"></param>
 		/// <param name="barCode"></param>
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
@@ -275,6 +273,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
@@ -282,8 +282,6 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int primaryTitleID,
-			int? redirectItemID,
-			int? thumbnailPageID,
 			string barCode,
 			string mARCItemID,
 			string callNumber,
@@ -322,6 +320,8 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
+			int? thumbnailPageID,
+			int? redirectItemID,
 			string externalUrl)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -330,8 +330,6 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("ItemID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("PrimaryTitleID", SqlDbType.Int, null, false, primaryTitleID),
-					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
-					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
 					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
@@ -361,15 +359,17 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("FileRootFolder", SqlDbType.NVarChar, 250, true, fileRootFolder),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, true, zQuery),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, true, sponsor),
-					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 1073741823, true, licenseUrl),
-					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, true, rights),
-					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, true, dueDiligence),
-					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, true, copyrightStatus),
+					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, null, true, licenseUrl),
+					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, null, true, rights),
+					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, null, true, dueDiligence),
+					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, null, true, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, true, copyrightRegion),
-					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, true, copyrightComment),
-					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, true, copyrightEvidence),
+					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, null, true, copyrightComment),
+					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, null, true, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
+					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
+					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
 					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -391,7 +391,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Item. Returns an object of type Item.
+		/// Insert values into dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -406,7 +406,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Item. Returns an object of type Item.
+		/// Insert values into dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -421,8 +421,6 @@ namespace MOBOT.BHL.DAL
 		{
 			return ItemInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PrimaryTitleID,
-				value.RedirectItemID,
-				value.ThumbnailPageID,
 				value.BarCode,
 				value.MARCItemID,
 				value.CallNumber,
@@ -461,6 +459,8 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
+				value.ThumbnailPageID,
+				value.RedirectItemID,
 				value.ExternalUrl);
 		}
 		
@@ -469,7 +469,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Item by primary key(s).
+		/// Delete values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -484,7 +484,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Item by primary key(s).
+		/// Delete values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -527,14 +527,12 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
 		/// <param name="primaryTitleID"></param>
-		/// <param name="redirectItemID"></param>
-		/// <param name="thumbnailPageID"></param>
 		/// <param name="barCode"></param>
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
@@ -572,6 +570,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
@@ -579,8 +579,6 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int itemID,
 			int primaryTitleID,
-			int? redirectItemID,
-			int? thumbnailPageID,
 			string barCode,
 			string mARCItemID,
 			string callNumber,
@@ -618,21 +616,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
+			int? thumbnailPageID,
+			int? redirectItemID,
 			string externalUrl)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, redirectItemID, thumbnailPageID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, externalUrl);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl);
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
 		/// <param name="primaryTitleID"></param>
-		/// <param name="redirectItemID"></param>
-		/// <param name="thumbnailPageID"></param>
 		/// <param name="barCode"></param>
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
@@ -670,6 +668,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
@@ -678,8 +678,6 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int itemID,
 			int primaryTitleID,
-			int? redirectItemID,
-			int? thumbnailPageID,
 			string barCode,
 			string mARCItemID,
 			string callNumber,
@@ -717,6 +715,8 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
+			int? thumbnailPageID,
+			int? redirectItemID,
 			string externalUrl)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -725,8 +725,6 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
 					CustomSqlHelper.CreateInputParameter("PrimaryTitleID", SqlDbType.Int, null, false, primaryTitleID),
-					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
-					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
 					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
@@ -755,15 +753,17 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("FileRootFolder", SqlDbType.NVarChar, 250, true, fileRootFolder),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, true, zQuery),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, true, sponsor),
-					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 1073741823, true, licenseUrl),
-					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, true, rights),
-					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, true, dueDiligence),
-					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, true, copyrightStatus),
+					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, null, true, licenseUrl),
+					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, null, true, rights),
+					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, null, true, dueDiligence),
+					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, null, true, copyrightStatus),
 					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, true, copyrightRegion),
-					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, true, copyrightComment),
-					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, true, copyrightEvidence),
+					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, null, true, copyrightComment),
+					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, null, true, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
+					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
+					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
 					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -785,7 +785,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -800,7 +800,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -816,8 +816,6 @@ namespace MOBOT.BHL.DAL
 			return ItemUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.PrimaryTitleID,
-				value.RedirectItemID,
-				value.ThumbnailPageID,
 				value.BarCode,
 				value.MARCItemID,
 				value.CallNumber,
@@ -855,6 +853,8 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
+				value.ThumbnailPageID,
+				value.RedirectItemID,
 				value.ExternalUrl);
 		}
 		
@@ -863,9 +863,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Item object.
+		/// Manage dbo.Item object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Item.
+		/// then either insert values into, delete values from, or update values in dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -880,9 +880,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Item object.
+		/// Manage dbo.Item object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Item.
+		/// then either insert values into, delete values from, or update values in dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -901,8 +901,6 @@ namespace MOBOT.BHL.DAL
 				value.LastModifiedUserID = userId;
 				Item returnValue = ItemInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PrimaryTitleID,
-						value.RedirectItemID,
-						value.ThumbnailPageID,
 						value.BarCode,
 						value.MARCItemID,
 						value.CallNumber,
@@ -941,6 +939,8 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
+						value.ThumbnailPageID,
+						value.RedirectItemID,
 						value.ExternalUrl);
 				
 				return new CustomDataAccessStatus<Item>(
@@ -969,8 +969,6 @@ namespace MOBOT.BHL.DAL
 				Item returnValue = ItemUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.PrimaryTitleID,
-						value.RedirectItemID,
-						value.ThumbnailPageID,
 						value.BarCode,
 						value.MARCItemID,
 						value.CallNumber,
@@ -1008,6 +1006,8 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
+						value.ThumbnailPageID,
+						value.RedirectItemID,
 						value.ExternalUrl);
 					
 				return new CustomDataAccessStatus<Item>(
@@ -1026,4 +1026,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

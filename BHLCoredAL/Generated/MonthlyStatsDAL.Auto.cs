@@ -1,8 +1,8 @@
 
-// Generated 10/29/2008 10:12:36 AM
+// Generated 5/9/2016 1:52:57 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class MonthlyStatsDAL is based upon MonthlyStats.
+// This partial class MonthlyStatsDAL is based upon dbo.MonthlyStats.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class MonthlyStatsDAL 
+	partial class MonthlyStatsDAL : IMonthlyStatsDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from MonthlyStats by primary key(s).
+		/// Select values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -58,7 +58,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from MonthlyStats by primary key(s).
+		/// Select values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MonthlyStats by primary key(s).
+		/// Select values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -125,7 +125,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MonthlyStats by primary key(s).
+		/// Select values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -158,11 +158,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into MonthlyStats.
+		/// Insert values into dbo.MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -185,7 +185,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MonthlyStats.
+		/// Insert values into dbo.MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +235,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into MonthlyStats. Returns an object of type MonthlyStats.
+		/// Insert values into dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +250,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MonthlyStats. Returns an object of type MonthlyStats.
+		/// Insert values into dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -276,7 +276,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from MonthlyStats by primary key(s).
+		/// Delete values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -297,7 +297,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from MonthlyStats by primary key(s).
+		/// Delete values from dbo.MonthlyStats by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -349,7 +349,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in MonthlyStats. Returns an object of type MonthlyStats.
+		/// Update values in dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -372,7 +372,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MonthlyStats. Returns an object of type MonthlyStats.
+		/// Update values in dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -422,7 +422,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MonthlyStats. Returns an object of type MonthlyStats.
+		/// Update values in dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -437,7 +437,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MonthlyStats. Returns an object of type MonthlyStats.
+		/// Update values in dbo.MonthlyStats. Returns an object of type MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -463,9 +463,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage MonthlyStats object.
+		/// Manage dbo.MonthlyStats object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MonthlyStats.
+		/// then either insert values into, delete values from, or update values in dbo.MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -480,9 +480,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage MonthlyStats object.
+		/// Manage dbo.MonthlyStats object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MonthlyStats.
+		/// then either insert values into, delete values from, or update values in dbo.MonthlyStats.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -555,4 +555,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

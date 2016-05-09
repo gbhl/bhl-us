@@ -1,8 +1,8 @@
 
-// Generated 5/3/2012 1:28:21 PM
+// Generated 5/9/2016 1:52:35 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class KeywordDAL is based upon Keyword.
+// This partial class KeywordDAL is based upon dbo.Keyword.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class KeywordDAL 
+	partial class KeywordDAL : IKeywordDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Keyword by primary key(s).
+		/// Select values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Keyword by primary key(s).
+		/// Select values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Keyword by primary key(s).
+		/// Select values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Keyword by primary key(s).
+		/// Select values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Keyword.
+		/// Insert values into dbo.Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +151,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Keyword.
+		/// Insert values into dbo.Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -196,7 +196,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Keyword. Returns an object of type Keyword.
+		/// Insert values into dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Keyword. Returns an object of type Keyword.
+		/// Insert values into dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +235,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Keyword by primary key(s).
+		/// Delete values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +250,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Keyword by primary key(s).
+		/// Delete values from dbo.Keyword by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +293,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Keyword. Returns an object of type Keyword.
+		/// Update values in dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -312,7 +312,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Keyword. Returns an object of type Keyword.
+		/// Update values in dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -356,7 +356,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Keyword. Returns an object of type Keyword.
+		/// Update values in dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -371,7 +371,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Keyword. Returns an object of type Keyword.
+		/// Update values in dbo.Keyword. Returns an object of type Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -395,9 +395,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Keyword object.
+		/// Manage dbo.Keyword object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Keyword.
+		/// then either insert values into, delete values from, or update values in dbo.Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -412,9 +412,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Keyword object.
+		/// Manage dbo.Keyword object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Keyword.
+		/// then either insert values into, delete values from, or update values in dbo.Keyword.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -480,4 +480,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

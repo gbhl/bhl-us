@@ -1,8 +1,8 @@
 
-// Generated 7/30/2010 2:09:29 PM
+// Generated 5/9/2016 1:52:19 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ItemCollectionDAL is based upon ItemCollection.
+// This partial class ItemCollectionDAL is based upon dbo.ItemCollection.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ItemCollectionDAL 
+	partial class ItemCollectionDAL : IItemCollectionDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from ItemCollection by primary key(s).
+		/// Select values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from ItemCollection by primary key(s).
+		/// Select values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ItemCollection by primary key(s).
+		/// Select values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ItemCollection by primary key(s).
+		/// Select values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into ItemCollection.
+		/// Insert values into dbo.ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -149,7 +149,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ItemCollection.
+		/// Insert values into dbo.ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -191,7 +191,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into ItemCollection. Returns an object of type ItemCollection.
+		/// Insert values into dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -206,7 +206,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ItemCollection. Returns an object of type ItemCollection.
+		/// Insert values into dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -229,7 +229,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from ItemCollection by primary key(s).
+		/// Delete values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -244,7 +244,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from ItemCollection by primary key(s).
+		/// Delete values from dbo.ItemCollection by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,7 +287,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in ItemCollection. Returns an object of type ItemCollection.
+		/// Update values in dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -306,7 +306,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ItemCollection. Returns an object of type ItemCollection.
+		/// Update values in dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -350,7 +350,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ItemCollection. Returns an object of type ItemCollection.
+		/// Update values in dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,7 +365,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ItemCollection. Returns an object of type ItemCollection.
+		/// Update values in dbo.ItemCollection. Returns an object of type ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,9 +389,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage ItemCollection object.
+		/// Manage dbo.ItemCollection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ItemCollection.
+		/// then either insert values into, delete values from, or update values in dbo.ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -406,9 +406,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage ItemCollection object.
+		/// Manage dbo.ItemCollection object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ItemCollection.
+		/// then either insert values into, delete values from, or update values in dbo.ItemCollection.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -473,4 +473,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

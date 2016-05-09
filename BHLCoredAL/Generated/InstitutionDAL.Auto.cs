@@ -1,8 +1,8 @@
 
-// Generated 10/15/2009 4:11:33 PM
+// Generated 5/9/2016 1:52:05 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class InstitutionDAL is based upon Institution.
+// This partial class InstitutionDAL is based upon dbo.Institution.
 
 #region How To Implement
 
@@ -32,16 +32,16 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class InstitutionDAL 
+	partial class InstitutionDAL : IInstitutionDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Institution by primary key(s).
+		/// Select values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionSelectAuto(
 			SqlConnection sqlConnection, 
@@ -52,12 +52,12 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Institution by primary key(s).
+		/// Select values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionSelectAuto(
 			SqlConnection sqlConnection, 
@@ -89,11 +89,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Institution by primary key(s).
+		/// Select values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
 		public CustomGenericList<CustomDataRow> InstitutionSelectAutoRaw(
 			SqlConnection sqlConnection, 
@@ -104,12 +104,12 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Institution by primary key(s).
+		/// Select values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
 		public CustomGenericList<CustomDataRow> InstitutionSelectAutoRaw(
 			SqlConnection sqlConnection, 
@@ -128,17 +128,17 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Institution.
+		/// Insert values into dbo.Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
-		/// <param name="institutionName">Name for the Institution.</param>
-		/// <param name="note">Notes about this Institution.</param>
+		/// <param name="institutionCode"></param>
+		/// <param name="institutionName"></param>
+		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
 		/// <returns>Object of type Institution.</returns>
@@ -155,14 +155,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Institution.
+		/// Insert values into dbo.Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
-		/// <param name="institutionName">Name for the Institution.</param>
-		/// <param name="note">Notes about this Institution.</param>
+		/// <param name="institutionCode"></param>
+		/// <param name="institutionName"></param>
+		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
 		/// <returns>Object of type Institution.</returns>
@@ -205,7 +205,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Institution. Returns an object of type Institution.
+		/// Insert values into dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -220,7 +220,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Institution. Returns an object of type Institution.
+		/// Insert values into dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -246,11 +246,11 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Institution by primary key(s).
+		/// Delete values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool InstitutionDeleteAuto(
 			SqlConnection sqlConnection, 
@@ -261,12 +261,12 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Institution by primary key(s).
+		/// Delete values from dbo.Institution by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
+		/// <param name="institutionCode"></param>
 		/// <returns>true if successful otherwise false.</returns>
 		public bool InstitutionDeleteAuto(
 			SqlConnection sqlConnection, 
@@ -304,13 +304,13 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Institution. Returns an object of type Institution.
+		/// Update values in dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
-		/// <param name="institutionName">Name for the Institution.</param>
-		/// <param name="note">Notes about this Institution.</param>
+		/// <param name="institutionCode"></param>
+		/// <param name="institutionName"></param>
+		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
 		/// <returns>Object of type Institution.</returns>
@@ -327,14 +327,14 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Institution. Returns an object of type Institution.
+		/// Update values in dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
-		/// <param name="institutionCode">Code for Institution providing assistance.</param>
-		/// <param name="institutionName">Name for the Institution.</param>
-		/// <param name="note">Notes about this Institution.</param>
+		/// <param name="institutionCode"></param>
+		/// <param name="institutionName"></param>
+		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
 		/// <returns>Object of type Institution.</returns>
@@ -377,7 +377,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Institution. Returns an object of type Institution.
+		/// Update values in dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -392,7 +392,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Institution. Returns an object of type Institution.
+		/// Update values in dbo.Institution. Returns an object of type Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +418,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Institution object.
+		/// Manage dbo.Institution object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Institution.
+		/// then either insert values into, delete values from, or update values in dbo.Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -435,9 +435,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Institution object.
+		/// Manage dbo.Institution object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Institution.
+		/// then either insert values into, delete values from, or update values in dbo.Institution.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -507,4 +507,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

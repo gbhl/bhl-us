@@ -1,8 +1,8 @@
 
-// Generated 4/21/2009 3:39:50 PM
+// Generated 5/9/2016 1:52:44 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class MarcDAL is based upon Marc.
+// This partial class MarcDAL is based upon dbo.Marc.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class MarcDAL 
+	partial class MarcDAL : IMarcDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Marc by primary key(s).
+		/// Select values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Marc by primary key(s).
+		/// Select values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Marc by primary key(s).
+		/// Select values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Marc by primary key(s).
+		/// Select values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Marc.
+		/// Insert values into dbo.Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -157,7 +157,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Marc.
+		/// Insert values into dbo.Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Marc. Returns an object of type Marc.
+		/// Insert values into dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -226,7 +226,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Marc. Returns an object of type Marc.
+		/// Insert values into dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -253,7 +253,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Marc by primary key(s).
+		/// Delete values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -268,7 +268,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Marc by primary key(s).
+		/// Delete values from dbo.Marc by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -311,7 +311,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Marc. Returns an object of type Marc.
+		/// Update values in dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -338,7 +338,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Marc. Returns an object of type Marc.
+		/// Update values in dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -394,7 +394,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Marc. Returns an object of type Marc.
+		/// Update values in dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -409,7 +409,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Marc. Returns an object of type Marc.
+		/// Update values in dbo.Marc. Returns an object of type Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -437,9 +437,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Marc object.
+		/// Manage dbo.Marc object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Marc.
+		/// then either insert values into, delete values from, or update values in dbo.Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -454,9 +454,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Marc object.
+		/// Manage dbo.Marc object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Marc.
+		/// then either insert values into, delete values from, or update values in dbo.Marc.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -529,4 +529,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

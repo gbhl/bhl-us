@@ -1,8 +1,8 @@
 
-// Generated 5/30/2014 11:29:00 AM
+// Generated 5/9/2016 1:53:07 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class SegmentDAL is based upon Segment.
+// This partial class SegmentDAL is based upon dbo.Segment.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class SegmentDAL 
+	partial class SegmentDAL : ISegmentDAL
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Segment by primary key(s).
+		/// Select values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Segment by primary key(s).
+		/// Select values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Segment by primary key(s).
+		/// Select values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Segment by primary key(s).
+		/// Select values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Segment.
+		/// Insert values into dbo.Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -217,7 +217,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Segment.
+		/// Insert values into dbo.Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -317,8 +317,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
-					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
-					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, null, false, notes),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, null, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -361,7 +361,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Segment. Returns an object of type Segment.
+		/// Insert values into dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +376,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Segment. Returns an object of type Segment.
+		/// Insert values into dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -433,7 +433,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Segment by primary key(s).
+		/// Delete values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -448,7 +448,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Segment by primary key(s).
+		/// Delete values from dbo.Segment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -491,7 +491,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Segment. Returns an object of type Segment.
+		/// Update values in dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -576,7 +576,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Segment. Returns an object of type Segment.
+		/// Update values in dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -676,8 +676,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
-					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, 1073741823, false, notes),
-					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
+					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, null, false, notes),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, null, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -719,7 +719,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Segment. Returns an object of type Segment.
+		/// Update values in dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -734,7 +734,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Segment. Returns an object of type Segment.
+		/// Update values in dbo.Segment. Returns an object of type Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -791,9 +791,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Segment object.
+		/// Manage dbo.Segment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Segment.
+		/// then either insert values into, delete values from, or update values in dbo.Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -808,9 +808,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage Segment object.
+		/// Manage dbo.Segment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Segment.
+		/// then either insert values into, delete values from, or update values in dbo.Segment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -942,4 +942,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+
