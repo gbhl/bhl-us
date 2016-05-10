@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:51:55 PM
+// Generated 5/9/2016 2:24:52 PM
 // Do not modify the contents of this code file.
 // Interface IAuthorDAL based upon dbo.Author.
 

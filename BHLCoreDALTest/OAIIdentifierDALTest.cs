@@ -104,24 +104,6 @@ namespace BHLCoreDALTest
         }
 
         /// <summary>
-        ///A test for OAIIdentifierSelectPDFs
-        ///</summary>
-        [TestMethod()]
-        public void OAIIdentifierSelectPDFsTest()
-        {
-            OAIIdentifierDAL target = new OAIIdentifierDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int maxIdentifiers = 10;
-            int startId = 1;
-            Nullable<DateTime> fromDate = new Nullable<DateTime>();
-            Nullable<DateTime> untilDate = new Nullable<DateTime>();
-            CustomGenericList<OAIIdentifier> actual;
-            actual = target.OAIIdentifierSelectPDFs(sqlConnection, sqlTransaction, maxIdentifiers, startId, fromDate, untilDate);
-            Assert.IsTrue(actual.Count == 10);
-        }
-
-        /// <summary>
         ///A test for OAIIdentifierSelectTitles
         ///</summary>
         [TestMethod()]

@@ -6,7 +6,7 @@ using MOBOT.BHL.API.BHLApiDataObjects2;
 
 namespace MOBOT.BHL.API.BHLApiDAL
 {
-    public class Api2DAL
+    public class Api2DAL : IApi2DAL
     {
         #region Page methods
 

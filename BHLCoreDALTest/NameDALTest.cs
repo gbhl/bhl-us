@@ -90,9 +90,9 @@ namespace BHLCoreDALTest
             NameDAL target = new NameDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int nameId = 3076715;
+            int nameId = 4378278;
             Name actual = target.NameSelectByNameID(sqlConnection, sqlTransaction, nameId);
-            Assert.AreEqual(actual.NameString, "Zea mays");
+            Assert.AreEqual(actual.NameString, "Mollusca");
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace BHLCoreDALTest
             NameDAL target = new NameDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string name = "poa annua";
+            string name = "Mollusca";
             Name actual = target.NameSelectByNameStringExact(sqlConnection, sqlTransaction, name);
             Assert.IsNotNull(actual);
         }

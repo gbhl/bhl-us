@@ -55,8 +55,16 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnnotatedItemDALTest.cs" />
+    <Compile Include="AuthorDALTest.cs" />
+    <Compile Include="ImportFileDALTest.cs" />
+    <Compile Include="InstitutionDALTest.cs" />
     <Compile Include="ItemCOinSDALTest.cs" />
+    <Compile Include="ItemCollectionDALTest.cs" />
     <Compile Include="ItemDALTest.cs" />
+    <Compile Include="ItemNameFileLogDALTest.cs" />
+    <Compile Include="KeywordDALTest.cs" />
+    <Compile Include="MarcDALTest.cs" />
     <Compile Include="MonthlyStatsDALTest.cs" />
     <Compile Include="NameDALTest.cs" />
     <Compile Include="NameIdentifierDALTest.cs" />
@@ -70,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDALTest.cs" />
     <Compile Include="SegmentAuthorDALTest.cs" />
+    <Compile Include="SegmentCOinSDALTest.cs" />
     <Compile Include="SegmentDALTest.cs" />
     <Compile Include="SegmentGenreDALTest.cs" />
     <Compile Include="SegmentIdentifierDALTest.cs" />
@@ -77,6 +86,8 @@
     <Compile Include="SegmentPageDALTest.cs" />
     <Compile Include="SegmentStatusDALTest.cs" />
     <Compile Include="StatsDALTest.cs" />
+    <Compile Include="TitleAssociationDALTest.cs" />
+    <Compile Include="TitleCollectionDALTest.cs" />
     <Compile Include="TitleDALTest.cs" />
   </ItemGroup>
   <ItemGroup>

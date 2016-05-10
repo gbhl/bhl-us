@@ -78,7 +78,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             int segmentID = 41797;
             CustomGenericList<NameSegment> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
-            Assert.IsTrue(actual.Count > 0);
+            Assert.IsNotNull(actual);
         }
     }
 }

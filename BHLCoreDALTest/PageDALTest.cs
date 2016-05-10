@@ -101,7 +101,7 @@ namespace BHLCoreDALTest
             PageDAL target = new PageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemID = 1000;
+            int itemID = 22004;
             int maxAge = 0;
             CustomGenericList<Page> actual;
             actual = target.PageSelectWithExpiredPageNamesByItemID(sqlConnection, sqlTransaction, itemID, maxAge);
@@ -114,7 +114,7 @@ namespace BHLCoreDALTest
             PageDAL target = new PageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 2500000;
+            int pageID = 3299787;
             Page actual;
             actual = target.PageSelectOcrPathForPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsNotNull(actual);
@@ -126,7 +126,7 @@ namespace BHLCoreDALTest
             PageDAL target = new PageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 2500000;
+            int pageID = 3299787;
             Page actual;
             actual = target.PageSelectExternalUrlForPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsNotNull(actual);

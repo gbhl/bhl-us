@@ -90,7 +90,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int authorId = 93;
+            int authorId = 178;
             CustomGenericList<SearchBookResult> actual = target.TitleSelectByAuthor(sqlConnection, sqlTransaction, authorId);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -120,7 +120,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string searchText = "darwin origin";
+            string searchText = "d";
             int returnCount = 1;
             string searchSort = string.Empty;
             CustomGenericList<SearchBookResult> actual = target.SearchBookGlobalFullText(sqlConnection, sqlTransaction, searchText, returnCount, searchSort);
@@ -136,8 +136,8 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "origin";
-            string authorLastName = "darwin";
+            string title = "o";
+            string authorLastName = string.Empty;
             string volume = string.Empty;
             string edition = string.Empty;
             Nullable<int> year = new Nullable<int>();
@@ -159,8 +159,8 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "origin of species";
-            string authorLastName = "darwin";
+            string title = "o";
+            string authorLastName = string.Empty;
             string volume = string.Empty;
             string edition = string.Empty;
             Nullable<int> year = new Nullable<int>();
@@ -196,7 +196,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string authorName = "charles darwin";
+            string authorName = "brown";
             int returnCount = 1;
             CustomGenericList<Author> actual = target.SearchAuthor(sqlConnection, sqlTransaction, authorName, returnCount);
             Assert.AreEqual(actual.Count, 1);
@@ -211,7 +211,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string annotationText = "dogs";
+            string annotationText = "d";
             string title = string.Empty;
             string authorLastName = string.Empty;
             string volume = string.Empty;
@@ -233,7 +233,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "bird";
+            string title = "description";
             CustomGenericList<Segment> actual = target.SearchSegmentComplete(sqlConnection, sqlTransaction, title);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -247,7 +247,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "Shells";
+            string title = "S";
             string containerTitle = string.Empty;
             string authorLastName = string.Empty;
             string date = string.Empty;
@@ -297,5 +297,99 @@ namespace BHLCoreDALTest
             CustomGenericList<Segment> actual = target.SearchSegmentFullText(sqlConnection, sqlTransaction, searchText, returnCount, searchSort);
             Assert.AreEqual(actual.Count, 1);
         }
+
+        [TestMethod]
+        public void ItemSelectByCollectionAndStartsWithTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int collectionID = 12;
+            string startsWith = "D";
+            CustomGenericList<SearchBookResult> actual = target.ItemSelectByCollectionAndStartsWith(sqlConnection, sqlTransaction, collectionID, startsWith);
+            Assert.IsNotNull(actual);
+        }
+
+        [TestMethod]
+        public void TitleSelectByCollectionAndStartsWithTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int collectionID = 12;
+            string startsWith = "D";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByCollectionAndStartsWith(sqlConnection, sqlTransaction, collectionID, startsWith);
+            Assert.IsNotNull(actual);
+        }
+
+        [TestMethod]
+        public void TitleSelectByDateRangeTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int startYear = 1900;
+            int endYear = 2000;
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByDateRange(sqlConnection, sqlTransaction, startYear, endYear);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void TitleSelectByInstitutionAndStartsWithTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string institutionCode = "MO";
+            string startsWith = "C";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void TitleSelectByInstitutionAndStartsWithoutTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string institutionCode = "MO";
+            string startsWith = "C";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByInstitutionAndStartsWithout(sqlConnection, sqlTransaction, institutionCode, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void TitleSelectByLanguageTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string languageCode = "ENG";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByLanguage(sqlConnection, sqlTransaction, languageCode);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void TitleSelectByNameLikeTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string startsWith = "C";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByNameLike(sqlConnection, sqlTransaction, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void TitleSelectByNameNotLikeTest()
+        {
+            SearchDAL target = new SearchDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string startsWith = "C";
+            CustomGenericList<SearchBookResult> actual = target.TitleSelectByNameNotLike(sqlConnection, sqlTransaction, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
     }
 }

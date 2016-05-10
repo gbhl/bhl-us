@@ -186,6 +186,7 @@
     <Compile Include="Interfaces\IInstitutionDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemCollectionDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemDAL.Auto.cs" />
+    <Compile Include="Interfaces\IStatsDAL.cs" />
     <Compile Include="Interfaces\IKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IMarcDAL.Auto.cs" />
     <Compile Include="Interfaces\IMonthlyStatsDAL.Auto.cs" />

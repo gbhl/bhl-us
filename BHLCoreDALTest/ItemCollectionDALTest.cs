@@ -7,17 +7,9 @@ using CustomDataAccess;
 
 namespace BHLCoreDALTest
 {
-    
-    
-    /// <summary>
-    ///This is a test class for SegmentIdentifierDALTest and is intended
-    ///to contain all SegmentIdentifierDALTest Unit Tests
-    ///</summary>
-    [TestClass()]
-    public class SegmentIdentifierDALTest
+    [TestClass]
+    public class ItemCollectionDALTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -66,19 +58,15 @@ namespace BHLCoreDALTest
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for SegmentIdentifierSelectBySegmentID
-        ///</summary>
-        [TestMethod()]
-        public void SegmentIdentifierSelectBySegmentIDTest()
+        [TestMethod]
+        public void ItemCollectionInsertItemsForCollectionTest()
         {
-            SegmentIdentifierDAL target = new SegmentIdentifierDAL();
+            ItemCollectionDAL target = new ItemCollectionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentID = 6450;
-            CustomGenericList<SegmentIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID, null);
-            Assert.IsTrue(actual.Count > 0);
+            int collectionID = 12;
+            bool actual = target.ItemCollectionInsertItemsForCollection(sqlConnection, sqlTransaction, collectionID);
+            Assert.IsTrue(actual);
         }
     }
 }

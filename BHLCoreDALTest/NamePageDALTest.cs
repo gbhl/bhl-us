@@ -76,7 +76,7 @@ namespace BHLCoreDALTest
             NamePageDAL target = new NamePageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 7000;
+            int pageID = 3299787;
             CustomGenericList<NamePage> actual = target.NamePageSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -90,8 +90,8 @@ namespace BHLCoreDALTest
             NamePageDAL target = new NamePageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 7000;
-            string nameString = "Heteropteris";
+            int pageID = 3299787;
+            string nameString = "Mollusca";
             NamePage actual = target.NamePageSelectByPageIDAndNameString(sqlConnection, sqlTransaction, pageID, nameString);
             Assert.IsNotNull(actual);
         }

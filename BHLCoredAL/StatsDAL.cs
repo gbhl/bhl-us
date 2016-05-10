@@ -8,7 +8,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class StatsDAL
+	public partial class StatsDAL : IStatsDAL
 	{
         public Stats StatsSelect(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {

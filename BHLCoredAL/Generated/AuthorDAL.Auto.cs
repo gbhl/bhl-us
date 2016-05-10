@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:51:55 PM
+// Generated 5/9/2016 2:24:52 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class AuthorDAL is based upon dbo.Author.
@@ -205,7 +205,6 @@ namespace MOBOT.BHL.DAL
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("AuthorID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateOutputParameter("AuthorID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("AuthorTypeID", SqlDbType.Int, null, true, authorTypeID),
 					CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
 					CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate),

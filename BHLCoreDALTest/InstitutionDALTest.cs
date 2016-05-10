@@ -7,17 +7,9 @@ using CustomDataAccess;
 
 namespace BHLCoreDALTest
 {
-    
-    
-    /// <summary>
-    ///This is a test class for NameResolvedDALTest and is intended
-    ///to contain all NameResolvedDALTest Unit Tests
-    ///</summary>
     [TestClass()]
-    public class NameResolvedDALTest
+    public class InstitutionDALTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -66,51 +58,48 @@ namespace BHLCoreDALTest
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for NameResolvedSelectByNameLike
-        ///</summary>
-        [TestMethod()]
-        public void NameResolvedSelectByNameLikeTest()
+        [TestMethod]
+        public void InstitutionSelectByItemIDTest()
         {
-            NameResolvedDAL target = new NameResolvedDAL();
+            InstitutionDAL target = new InstitutionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string name = "Mollusca";
-            int returnCount = 1;
-            CustomGenericList<NameResolved> actual = target.NameResolvedSelectByNameLike(sqlConnection, sqlTransaction, name, returnCount);
-            Assert.AreEqual(actual.Count, 1);
+            int itemID = 22500;
+            Institution actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
+            Assert.IsNotNull(actual);
         }
 
-        /// <summary>
-        ///A test for NameResolvedSearchForPages
-        ///</summary>
-        [TestMethod()]
-        public void NameResolvedSearchForPagesTest()
+        [TestMethod]
+        public void InstitutionSelectDOIStatsTest()
         {
-            NameResolvedDAL target = new NameResolvedDAL();
+            InstitutionDAL target = new InstitutionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string name = "Mollusca";
-            int numberOfRows = 10;
-            int pageNumber = 1;
-            string sortColumn = "ShortTitle";
-            string sortDirection = "ASC";
-            CustomGenericList<CustomDataRow> actual = target.NameResolvedSearchForPages(sqlConnection, sqlTransaction, name, numberOfRows, pageNumber, sortColumn, sortDirection);
+            int sortBy = 1;
+            int bhlOnly = 0;
+            CustomGenericList<Institution> actual = target.InstitutionSelectDOIStats(sqlConnection, sqlTransaction, sortBy, bhlOnly);
             Assert.IsTrue(actual.Count > 0);
         }
 
-        /// <summary>
-        ///A test for NameResolvedSearchForPagesDownload
-        ///</summary>
-        [TestMethod()]
-        public void NameResolvedSearchForPagesDownloadTest()
+        [TestMethod]
+        public void InstitutionSelectWithPublishedItemsTest()
         {
-            NameResolvedDAL target = new NameResolvedDAL();
+            InstitutionDAL target = new InstitutionDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string name = "Mollusca";
-            CustomGenericList<CustomDataRow> actual = target.NameResolvedSearchForPagesDownload(sqlConnection, sqlTransaction, name);
+            bool onlyMemberLibraries = false;
+            CustomGenericList<Institution> actual = target.InstitutionSelectWithPublishedItems(sqlConnection, sqlTransaction, onlyMemberLibraries);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void InstitutionSelectWithPublishedSegmentsTest()
+        {
+            InstitutionDAL target = new InstitutionDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            bool onlyMemberLibraries = false;
+            CustomGenericList<Institution> actual = target.InstitutionSelectWithPublishedSegments(sqlConnection, sqlTransaction, onlyMemberLibraries);
             Assert.IsTrue(actual.Count > 0);
         }
     }

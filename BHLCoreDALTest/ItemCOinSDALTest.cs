@@ -71,7 +71,7 @@ namespace BHLCoreDALTest
             ItemCOinSDAL target = new ItemCOinSDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemId = 1000;
+            int itemId = 22004;
             ItemCOinSView actual;
             actual = target.ItemCOinSSelectByItemId(sqlConnection, sqlTransaction, itemId);
             Assert.IsNotNull(actual);
@@ -86,7 +86,7 @@ namespace BHLCoreDALTest
             ItemCOinSDAL target = new ItemCOinSDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int titleId = 1000;
+            int titleId = 3926;
             ItemCOinSView actual;
             actual = target.ItemCOinSSelectByTitleId(sqlConnection, sqlTransaction, titleId);
             Assert.IsNotNull(actual);

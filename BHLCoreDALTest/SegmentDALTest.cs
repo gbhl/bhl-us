@@ -76,7 +76,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int authorId = 39105;
+            int authorId = 45632;
             CustomGenericList<Segment> actual = target.SegmentSimpleSelectByAuthor(sqlConnection, sqlTransaction, authorId);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -90,7 +90,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 970;
+            int segmentId = 2341;
             short includeNoContent = 0;
             CustomGenericList<TitleEndNote> actual = target.SegmentSelectEndNoteForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
             Assert.IsTrue(actual.Count > 0);
@@ -105,7 +105,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 970;
+            int segmentId = 2341;
             short includeNoContent = 0;
             CustomGenericList<TitleBibTeX> actual = target.SegmentSelectBibTexForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
             Assert.IsTrue(actual.Count > 0);
@@ -120,9 +120,9 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 970;
+            int segmentId = 2341;
             Segment actual = target.SegmentSelectForSegmentID(sqlConnection, sqlTransaction, segmentId);
-            Assert.AreEqual(actual.SegmentID, 970);
+            Assert.AreEqual(actual.SegmentID, 2341);
         }
 
         /// <summary>
@@ -134,11 +134,11 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 970;
+            int segmentId = 2341;
             Segment actual = target.SegmentSelectExtended(sqlConnection, sqlTransaction, segmentId);
-            Assert.AreEqual(actual.SegmentID, 970);
+            Assert.AreEqual(actual.SegmentID, 2341);
             Assert.IsTrue(actual.AuthorList.Count > 0);
-            Assert.IsTrue(actual.IdentifierList.Count > 0);
+            Assert.IsTrue(actual.IdentifierList.Count == 0);
             Assert.IsTrue(actual.KeywordList.Count == 0);
         }
 
@@ -151,7 +151,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int itemId = 22498;
+            int itemId = 22102;
             short showAll = 0;
             CustomGenericList<Segment> actual = target.SegmentSelectByItemID(sqlConnection, sqlTransaction, itemId, showAll);
             Assert.IsTrue(actual.Count > 0);
@@ -166,7 +166,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int authorId = 39105;
+            int authorId = 45632;
             CustomGenericList<Segment> actual = target.SegmentSelectForAuthorID(sqlConnection, sqlTransaction, authorId);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -193,7 +193,7 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 10408;
+            int segmentId = 25777;
             CustomGenericList<Segment> actual = target.SegmentSelectRelated(sqlConnection, sqlTransaction, segmentId);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -208,8 +208,8 @@ namespace BHLCoreDALTest
             SegmentDAL target = new SegmentDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string startDate = "1700";
-            string endDate = "1799";
+            string startDate = "1900";
+            string endDate = "1923";
             CustomGenericList<Segment> actual = target.SegmentSelectByDateRange(sqlConnection, sqlTransaction, startDate, endDate);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -240,6 +240,53 @@ namespace BHLCoreDALTest
             string title = "[a-z]";
             CustomGenericList<Segment> actual = target.SegmentSelectByTitleNotLike(sqlConnection, sqlTransaction, title);
             Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod()]
+        public void SegmentSelectByInstitutionAndStartsWithTest()
+        {
+            SegmentDAL target = new SegmentDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string institutionCode = "BSTOR";
+            string startsWith = "N";
+            CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod()]
+        public void SegmentSelectByInstitutionAndStartsWithoutTest()
+        {
+            SegmentDAL target = new SegmentDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string institutionCode = "BSTOR";
+            string startsWith = "N";
+            CustomGenericList<Segment> actual = target.SegmentSelectByInstitutionAndStartsWithout(sqlConnection, sqlTransaction, institutionCode, startsWith);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod()]
+        public void SegmentSelectForKeywordTest()
+        {
+            SegmentDAL target = new SegmentDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string keyword = "test";
+            CustomGenericList<Segment> actual = target.SegmentSelectForKeyword(sqlConnection, sqlTransaction, keyword);
+            Assert.IsNotNull(actual);
+        }
+
+        [TestMethod()]
+        public void SegmentSelectWithoutSubmittedDOITest()
+        {
+            SegmentDAL target = new SegmentDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int numberToReturn = 10;
+            CustomGenericList<DOI> actual = target.SegmentSelectWithoutSubmittedDOI(sqlConnection, sqlTransaction, numberToReturn);
+            Assert.IsTrue(actual.Count > 0);
+            Assert.IsTrue(actual.Count <= 10);
         }
     }
 }

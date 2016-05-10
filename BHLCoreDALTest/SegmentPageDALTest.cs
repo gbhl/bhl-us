@@ -76,7 +76,7 @@ namespace BHLCoreDALTest
             SegmentPageDAL target = new SegmentPageDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentId = 970;
+            int segmentId = 2341;
             CustomGenericList<SegmentPage> actual = target.SegmentPageSelectBySegmentID(sqlConnection, sqlTransaction, segmentId);
             Assert.IsTrue(actual.Count > 0);
         }

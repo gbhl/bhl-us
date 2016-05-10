@@ -73,7 +73,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int titleID = 1000;
+            int titleID = 3926;
             int itemID = 0;
             string doi = string.Empty;
             string title = string.Empty;
@@ -99,7 +99,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int titleID = 1000;
+            int titleID = 3926;
             int itemID = 0;
             string doi = string.Empty;
             string title = string.Empty;
@@ -124,7 +124,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string doi = "10.4039/Ent42105-4";
+            string doi = "10.4039/Ent13220-11";
             CustomGenericList<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.IsTrue(actual.Count > 0);
@@ -139,22 +139,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string doi = "10.5962/bhl.title.5";
-            CustomGenericList<OpenUrlCitation> actual;
-            actual = target.OpenUrlCitationSelectByDOI(sqlConnection, sqlTransaction, doi);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
-        ///A test for OpenUrlCitationSelectTitleByDOI
-        ///</summary>
-        [TestMethod()]
-        public void OpenUrlCitationSelectItemByDOITest()
-        {
-            OpenUrlCitationDAL target = new OpenUrlCitationDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string doi = "TESTITEMDOI";
+            string doi = "10.5962/bhl.title.3938";
             CustomGenericList<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.IsTrue(actual.Count > 0);
@@ -169,7 +154,7 @@ namespace BHLCoreDALTest
             OpenUrlCitationDAL target = new OpenUrlCitationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int pageID = 100000;
+            int pageID = 3299787;
             CustomGenericList<OpenUrlCitation> actual;
             actual = target.OpenUrlCitationSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count == 1);

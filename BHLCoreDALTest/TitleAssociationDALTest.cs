@@ -4,20 +4,11 @@ using System;
 using System.Data.SqlClient;
 using MOBOT.BHL.DataObjects;
 using CustomDataAccess;
-
 namespace BHLCoreDALTest
 {
-    
-    
-    /// <summary>
-    ///This is a test class for SegmentIdentifierDALTest and is intended
-    ///to contain all SegmentIdentifierDALTest Unit Tests
-    ///</summary>
-    [TestClass()]
-    public class SegmentIdentifierDALTest
+    [TestClass]
+    public class TitleAssociationDALTest
     {
-
-
         private TestContext testContextInstance;
 
         /// <summary>
@@ -66,19 +57,16 @@ namespace BHLCoreDALTest
         //
         #endregion
 
-
-        /// <summary>
-        ///A test for SegmentIdentifierSelectBySegmentID
-        ///</summary>
-        [TestMethod()]
-        public void SegmentIdentifierSelectBySegmentIDTest()
+        [TestMethod]
+        public void TitleAssociationSelectWithSuspectCharactersTest()
         {
-            SegmentIdentifierDAL target = new SegmentIdentifierDAL();
+            TitleAssociationDAL target = new TitleAssociationDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentID = 6450;
-            CustomGenericList<SegmentIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID, null);
-            Assert.IsTrue(actual.Count > 0);
+            string institutionCode = string.Empty;
+            int maxAge = 5000;
+            CustomGenericList<TitleAssociationSuspectCharacter> actual = target.TitleAssociationSelectWithSuspectCharacters(sqlConnection, sqlTransaction, institutionCode, maxAge);
+            Assert.IsNotNull(actual);
         }
     }
 }

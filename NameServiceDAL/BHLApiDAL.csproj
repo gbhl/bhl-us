@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api2DAL.cs" />
+    <Compile Include="Interfaces\IApi2DAL.cs" />
     <Compile Include="NameDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

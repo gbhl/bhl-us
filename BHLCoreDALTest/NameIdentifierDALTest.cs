@@ -76,9 +76,9 @@ namespace BHLCoreDALTest
             NameIdentifierDAL target = new NameIdentifierDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string resolvedName = "strix varia";
+            string resolvedName = "Mollusca";
             CustomGenericList<NameIdentifier> actual = target.NameIdentifierSelectForResolvedName(sqlConnection, sqlTransaction, resolvedName);
-            Assert.IsTrue(actual.Count > 0);
+            Assert.IsNotNull(actual.Count > 0);
         }
     }
 }

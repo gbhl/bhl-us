@@ -85,5 +85,16 @@ namespace BHLCoreDALTest
             Stats actual = target.StatsSelect(sqlConnection, sqlTransaction, expanded, names, uniqueNames, verifiedNames, eolNames, eolPages);
             Assert.IsTrue(actual.NameCount > 0);
         }
+
+        [TestMethod()]
+        public void StatsSelectForInstitutionTest()
+        {
+            StatsDAL_Accessor target = new StatsDAL_Accessor();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            string institutionCode = "MO";
+            Stats actual = target.StatsSelectForInstitution(sqlConnection, sqlTransaction, institutionCode);
+            Assert.IsTrue(actual.PageCount > 0);
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace BHLCoreDALTest
             SegmentAuthorDAL target = new SegmentAuthorDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int segmentID = 970;
+            int segmentID = 2341;
             CustomGenericList<SegmentAuthor> actual = target.SegmentAuthorSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
