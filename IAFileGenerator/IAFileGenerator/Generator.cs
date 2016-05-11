@@ -545,28 +545,28 @@ namespace MOBOT.IAFileGenerator
                     otherHeaders.Append("--header \"x-archive-meta" + GetMetaIndexString(metaIndex) + "-collection:" + collection + "\" ");
                     metaIndex++;
                 }
-                if (!string.IsNullOrEmpty(volume)) otherHeaders.Append("--header \"x-archive-meta-volume:" + volume + "\" ");
+                if (!string.IsNullOrEmpty(volume)) otherHeaders.Append("--header \"x-archive-meta-volume:" + EncodeHeader(volume) + "\" ");
                 metaIndex = 1;
                 foreach (string creator in creators)
                 {
-                    otherHeaders.Append("--header \"x-archive-meta" + GetMetaIndexString(metaIndex) + "-creator:" + creator + "\" ");
+                    otherHeaders.Append("--header \"x-archive-meta" + GetMetaIndexString(metaIndex) + "-creator:" + EncodeHeader(creator) + "\" ");
                     metaIndex++;
                 }
                 metaIndex = 1;
                 foreach (string subject in subjects)
                 {
-                    otherHeaders.Append("--header \"x-archive-meta" + GetMetaIndexString(metaIndex) + "-subject:" + subject + "\" ");
+                    otherHeaders.Append("--header \"x-archive-meta" + GetMetaIndexString(metaIndex) + "-subject:" + EncodeHeader(subject) + "\" ");
                     metaIndex++;
                 }
-                if (!string.IsNullOrEmpty(description)) otherHeaders.Append("--header \"x-archive-meta-description:" + description + "\" ");
+                if (!string.IsNullOrEmpty(description)) otherHeaders.Append("--header \"x-archive-meta-description:" + EncodeHeader(description) + "\" ");
                 if (!string.IsNullOrEmpty(publisher) || !string.IsNullOrEmpty(publisherPlace))
                 {
-                    otherHeaders.Append("--header \"x-archive-meta-publisher:" + 
-                       ((publisherPlace ?? string.Empty) + " " + (publisher ?? string.Empty)).Trim() + "\" ");
+                    otherHeaders.Append("--header \"x-archive-meta-publisher:" +
+                       EncodeHeader(((publisherPlace ?? string.Empty) + " " + (publisher ?? string.Empty)).Trim()) + "\" ");
                 }
                 if (!string.IsNullOrEmpty(date)) otherHeaders.Append("--header \"x-archive-meta-date:" + date + "\" ");
                 if (!string.IsNullOrEmpty(language)) otherHeaders.Append("--header \"x-archive-meta-language:" + language + "\" ");
-                if (!string.IsNullOrEmpty(callNumber)) otherHeaders.Append("--header \"x-archive-meta-call_number:" + callNumber + "\" ");
+                if (!string.IsNullOrEmpty(callNumber)) otherHeaders.Append("--header \"x-archive-meta-call_number:" + EncodeHeader(callNumber) + "\" ");
                 if (!string.IsNullOrEmpty(possibleCopyrightStatus)) otherHeaders.Append("--header \"x-archive-meta-possible-copyright-status:" + possibleCopyrightStatus + "\" ");
                 if (!string.IsNullOrEmpty(rights)) otherHeaders.Append("--header \"x-archive-meta-rights:" + rights + "\" ");
                 if (!string.IsNullOrEmpty(licenseUrl)) otherHeaders.Append("--header \"x-archive-meta-licenseurl:" + licenseUrl + "\" ");
@@ -576,9 +576,9 @@ namespace MOBOT.IAFileGenerator
                 outputTemplate = outputTemplate.Replace("<curlpath>", AppDomain.CurrentDomain.BaseDirectory);
                 outputTemplate = outputTemplate.Replace("<accesskey>", this.AccessKey);
                 outputTemplate = outputTemplate.Replace("<secretkey>", this.SecretKey);
-                outputTemplate = outputTemplate.Replace("<sponsor>", sponsor);
-                outputTemplate = outputTemplate.Replace("<contributor>", _contributor);
-                outputTemplate = outputTemplate.Replace("<title>", title);
+                outputTemplate = outputTemplate.Replace("<sponsor>", EncodeHeader(sponsor));
+                outputTemplate = outputTemplate.Replace("<contributor>", EncodeHeader(_contributor));
+                outputTemplate = outputTemplate.Replace("<title>", EncodeHeader(title));
                 outputTemplate = outputTemplate.Replace("<curationdate>", DateTime.Now.ToString("yyyyMMddhhmmss"));
                 outputTemplate = outputTemplate.Replace("<iaidentifier>", this.Identifier);
                 outputTemplate = outputTemplate.Replace("<imagezipfile>", this.OutputPath + Path.GetFileName(this.ImageZipFilePath));
@@ -617,6 +617,12 @@ namespace MOBOT.IAFileGenerator
         {
             string metaIndexStr = "0" + metaIndex.ToString();
             return metaIndexStr.Substring(metaIndexStr.Length - 2);
+        }
+
+        private string EncodeHeader(string header)
+        {
+            header = string.IsNullOrEmpty(header) ? string.Empty : string.Format("uri({0})", System.Web.HttpUtility.UrlEncode(header));
+            return header;
         }
 
         #endregion File Generation Operations
