@@ -1203,4 +1203,7 @@
     <None Include="dbo\Stored Procedures\DisqusCacheSelectByItemID.sql" />
     <None Include="dbo\Stored Procedures\DisqusCacheUpdateAuto.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ApiStatsSelect.sql" />
+  </ItemGroup>
 </Project>

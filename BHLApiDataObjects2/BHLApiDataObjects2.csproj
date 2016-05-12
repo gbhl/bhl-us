@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchBookResult.cs" />
     <Compile Include="Part.cs" />
+    <Compile Include="Stats.cs" />
     <Compile Include="Subject.cs">
       <SubType>Code</SubType>
     </Compile>

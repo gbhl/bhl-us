@@ -364,6 +364,15 @@ namespace MOBOT.BHL.Web2.api2
                         key);
                     response = serviceResponse.Serialize(outputType);
                 }
+
+                // ------- Stats operations -------
+
+                if (String.Compare(operation, "GetStats", true) == 0)
+                {
+                    ServiceResponse<Stats> serviceResponse = new ServiceResponse<Stats>();
+                    serviceResponse.Result = this.GetStats(key);
+                    response = serviceResponse.Serialize(outputType);
+                }
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -684,6 +693,13 @@ namespace MOBOT.BHL.Web2.api2
             ValidateUser(Api2.APIRequestType.SearchPart, apiKey, args);
             Api2 api = new Api2();
             return api.SearchSegment(title, containerTitle, author, date, volume, series, issue, 500, "Title", fullText);
+        }
+
+        private Stats GetStats(string apiKey)
+        {
+            ValidateUser(Api2.APIRequestType.GetStats, apiKey, string.Empty);
+            Api2 api = new Api2();
+            return api.GetStats();
         }
 
         #endregion API Methods

@@ -1154,7 +1154,8 @@ namespace MOBOT.BHL.API.BHLApi
             GetPartByIdentifier = 314,
             GetUnpublishedParts = 315,
             GetPartBibTeX = 316,
-            GetPartEndNote = 317
+            GetPartEndNote = 317,
+            GetStats = 318
         }
 
         /// <summary>
@@ -1218,5 +1219,16 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         #endregion Validation methods
+
+        #region Stats methods
+
+        public Stats GetStats()
+        {
+            Api2DAL dal = new Api2DAL();
+            Stats stats = dal.StatsSelect(null, null);
+            return stats;
+        }
+
+        #endregion Stats methods
     }
 }

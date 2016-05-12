@@ -879,5 +879,18 @@ namespace BHLApiDALTest
             CustomGenericList<Name> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
+
+        [TestMethod]
+        public void StatsSelectTest()
+        {
+            Api2DAL target = new Api2DAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            Stats actual = target.StatsSelect(sqlConnection, sqlTransaction);
+            Assert.IsTrue(actual.TitleCount > 0);
+            Assert.IsTrue(actual.ItemCount > 0);
+            Assert.IsTrue(actual.PageCount > 0);
+            Assert.IsTrue(actual.PartCount > 0);
+        }
     }
 }

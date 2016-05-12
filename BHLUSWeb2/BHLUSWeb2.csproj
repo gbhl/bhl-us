@@ -126,6 +126,7 @@
     <Content Include="api2\docs\GetPartEndNote.xml" />
     <Content Include="api2\docs\GetPartMetadata.xml" />
     <Content Include="api2\docs\GetPartNames.xml" />
+    <Content Include="api2\docs\GetStats.xml" />
     <Content Include="api2\docs\GetSubjectParts.xml" />
     <Content Include="api2\docs\GetSubjectTitles.xml" />
     <Content Include="api2\docs\GetTitleBibTex.xml" />

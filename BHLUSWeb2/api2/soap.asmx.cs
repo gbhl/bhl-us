@@ -620,5 +620,24 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         #endregion Validation methods
+
+        #region Stats methods
+
+        [WebMethod]
+        public Stats GetStats(string apiKey)
+        {
+            try
+            {
+                string args = string.Empty;
+                ValidateUser(Api2.APIRequestType.GetStats, apiKey, args);
+                return (new Api2().GetStats());
+            }
+            catch (Exception ex)
+            {
+                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
+            }
+        }
+
+        #endregion Stats methods
     }
 }

@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: January 1, 2013
+Revised: May 12, 2016
 
 ----------------------------------------------------------------------------------------------------
 
@@ -370,6 +370,12 @@ GetLanguages:
 
 	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetLanguages&apikey=<key value>
 
+GetStats:
+
+	Get the number of Titles, Items, Pages, and Parts currently in BHL.
+
+	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetStats&apikey=<key value>
+
 ----------------------------------------------------------------------------------------------------
 
 *** SOAP INTERFACE ***
@@ -408,6 +414,7 @@ GetPartByIdentifier
 GetPartEndNote
 GetPartMetadata
 GetPartNames
+GetStats
 GetSubjectParts
 GetSubjectTitles
 GetTitleBibTex
@@ -633,10 +640,18 @@ Variant/Title					The variant title										Location depends on the type
 																							210 (VariantType = abbreviated)
 																							242 (VariantType = translated)
 																							246 (VariantType = parallel or alternative)
+TitleCount						Number of Titles in BHL									NA
+ItemCount						Number of Items in BHL									NA
+PageCount						Number of Pages in BHL									NA
+PartCount						Number of Parts in BHL									NA
 
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+May 12, 2016 - version 2.6
+
+- Enhancement: Added GetStats method
 
 March 24, 2015 - version 2.5.2
 

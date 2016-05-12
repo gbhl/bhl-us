@@ -1148,5 +1148,36 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #endregion Validation methods
 
+        #region Stats methods
+
+        public Stats StatsSelect(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiStatsSelect", connection, transaction))
+            {
+                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                if (list.Count > 0)
+                {
+                    CustomDataRow row = list[0];
+                    Stats stats = new Stats();
+                    stats.TitleCount = (int)row["TitleCount"].Value;
+                    stats.ItemCount = (int)row["ItemCount"].Value;
+                    stats.PageCount = (int)row["PageCount"].Value;
+                    stats.PartCount = (int)row["PartCount"].Value;
+                    return stats;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
+
+        #endregion Stats methods
     }
 }
