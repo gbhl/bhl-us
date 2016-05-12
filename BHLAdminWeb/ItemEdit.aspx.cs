@@ -1160,7 +1160,7 @@ namespace MOBOT.BHL.AdminWeb
                         TitleItem newTitleItem = new TitleItem();
                         newTitleItem.TitleID = itemTitle.TitleID;
                         newTitleItem.ItemID = item.ItemID;
-                        newTitleItem.ItemSequence = 1000;
+                        newTitleItem.ItemSequence = 10000;
                         newTitleItem.IsNew = true;
                         item.TitleItems.Add(newTitleItem);
                     }
