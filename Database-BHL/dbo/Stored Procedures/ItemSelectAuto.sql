@@ -1,10 +1,4 @@
-﻿
--- ItemSelectAuto PROCEDURE
--- Generated 6/18/2013 3:43:19 PM
--- Do not modify the contents of this procedure.
--- Select Procedure for Item
-
-CREATE PROCEDURE ItemSelectAuto
+﻿CREATE PROCEDURE [dbo].[ItemSelectAuto]
 
 @ItemID INT
 
@@ -12,12 +6,9 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
+SELECT	
 	[ItemID],
 	[PrimaryTitleID],
-	[RedirectItemID],
-	[ThumbnailPageID],
 	[BarCode],
 	[MARCItemID],
 	[CallNumber],
@@ -58,20 +49,34 @@ SELECT
 	[CopyrightEvidence],
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
-	[ExternalUrl]
-
-FROM [dbo].[Item]
-
-WHERE
+	[ThumbnailPageID],
+	[RedirectItemID],
+	[ExternalUrl],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart],
+	[VolumeReviewed],
+	[VolumeReviewedDate],
+	[VolumeReviewedUserID]
+FROM	
+	[dbo].[Item]
+WHERE	
 	[ItemID] = @ItemID
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemSelectAuto. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemSelectAuto. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

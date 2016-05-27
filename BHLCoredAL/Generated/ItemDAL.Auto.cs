@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:26 PM
+// Generated 5/27/2016 10:48:02 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -178,6 +178,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="thumbnailPageID"></param>
 		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
+		/// <param name="volumeReviewed"></param>
+		/// <param name="volumeReviewedDate"></param>
+		/// <param name="volumeReviewedUserID"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -223,9 +237,23 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl)
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID );
 		}
 		
 		/// <summary>
@@ -276,6 +304,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="thumbnailPageID"></param>
 		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
+		/// <param name="volumeReviewed"></param>
+		/// <param name="volumeReviewedDate"></param>
+		/// <param name="volumeReviewedUserID"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -322,7 +364,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl)
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -370,7 +426,21 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
 					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
-					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
+					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewed", SqlDbType.TinyInt, null, false, volumeReviewed),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewedDate", SqlDbType.DateTime, null, true, volumeReviewedDate),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewedUserID", SqlDbType.Int, null, true, volumeReviewedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -461,7 +531,21 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightEvidenceDate,
 				value.ThumbnailPageID,
 				value.RedirectItemID,
-				value.ExternalUrl);
+				value.ExternalUrl,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart,
+				value.VolumeReviewed,
+				value.VolumeReviewedDate,
+				value.VolumeReviewedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -573,6 +657,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="thumbnailPageID"></param>
 		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
+		/// <param name="volumeReviewed"></param>
+		/// <param name="volumeReviewedDate"></param>
+		/// <param name="volumeReviewedUserID"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -618,9 +716,23 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl)
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID);
 		}
 		
 		/// <summary>
@@ -671,6 +783,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="thumbnailPageID"></param>
 		/// <param name="redirectItemID"></param>
 		/// <param name="externalUrl"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
+		/// <param name="volumeReviewed"></param>
+		/// <param name="volumeReviewedDate"></param>
+		/// <param name="volumeReviewedUserID"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -717,7 +843,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl)
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -764,7 +904,21 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
 					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
 					CustomSqlHelper.CreateInputParameter("RedirectItemID", SqlDbType.Int, null, true, redirectItemID),
-					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
+					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewed", SqlDbType.TinyInt, null, false, volumeReviewed),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewedDate", SqlDbType.DateTime, null, true, volumeReviewedDate),
+					CustomSqlHelper.CreateInputParameter("VolumeReviewedUserID", SqlDbType.Int, null, true, volumeReviewedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -855,7 +1009,21 @@ namespace MOBOT.BHL.DAL
 				value.CopyrightEvidenceDate,
 				value.ThumbnailPageID,
 				value.RedirectItemID,
-				value.ExternalUrl);
+				value.ExternalUrl,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart,
+				value.VolumeReviewed,
+				value.VolumeReviewedDate,
+				value.VolumeReviewedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -941,7 +1109,21 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightEvidenceDate,
 						value.ThumbnailPageID,
 						value.RedirectItemID,
-						value.ExternalUrl);
+						value.ExternalUrl,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart,
+						value.VolumeReviewed,
+						value.VolumeReviewedDate,
+						value.VolumeReviewedUserID);
 				
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Insert, 
@@ -1008,7 +1190,21 @@ namespace MOBOT.BHL.DAL
 						value.CopyrightEvidenceDate,
 						value.ThumbnailPageID,
 						value.RedirectItemID,
-						value.ExternalUrl);
+						value.ExternalUrl,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart,
+						value.VolumeReviewed,
+						value.VolumeReviewedDate,
+						value.VolumeReviewedUserID);
 					
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Update, 

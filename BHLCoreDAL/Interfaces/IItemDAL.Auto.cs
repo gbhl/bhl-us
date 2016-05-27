@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:26 PM
+// Generated 5/27/2016 10:48:02 AM
 // Do not modify the contents of this code file.
 // Interface IItemDAL based upon dbo.Item.
 
@@ -70,7 +70,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl);
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID);
 
 		Item ItemInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int primaryTitleID,
@@ -114,7 +128,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl);
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID);
 
 		Item ItemInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Item value);
 
@@ -168,7 +196,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl);
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID);
 
 		Item ItemUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int itemID,
@@ -212,7 +254,21 @@ namespace MOBOT.BHL.DAL
 			string copyrightEvidenceDate,
 			int? thumbnailPageID,
 			int? redirectItemID,
-			string externalUrl);
+			string externalUrl,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart,
+			byte volumeReviewed,
+			DateTime? volumeReviewedDate,
+			int? volumeReviewedUserID);
 
 		Item ItemUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Item value);
 

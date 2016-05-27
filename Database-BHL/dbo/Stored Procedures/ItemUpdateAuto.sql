@@ -1,15 +1,7 @@
-﻿
--- ItemUpdateAuto PROCEDURE
--- Generated 6/18/2013 3:43:19 PM
--- Do not modify the contents of this procedure.
--- Update Procedure for Item
-
-CREATE PROCEDURE ItemUpdateAuto
+﻿CREATE PROCEDURE [dbo].[ItemUpdateAuto]
 
 @ItemID INT,
 @PrimaryTitleID INT,
-@RedirectItemID INT,
-@ThumbnailPageID INT,
 @BarCode NVARCHAR(40),
 @MARCItemID NVARCHAR(50),
 @CallNumber NVARCHAR(100),
@@ -47,19 +39,31 @@ CREATE PROCEDURE ItemUpdateAuto
 @CopyrightEvidence NVARCHAR(MAX),
 @CopyrightEvidenceOperator NVARCHAR(100),
 @CopyrightEvidenceDate NVARCHAR(30),
-@ExternalUrl NVARCHAR(500)
+@ThumbnailPageID INT,
+@RedirectItemID INT,
+@ExternalUrl NVARCHAR(500),
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10),
+@VolumeReviewed TINYINT,
+@VolumeReviewedDate DATETIME,
+@VolumeReviewedUserID INT
 
 AS 
 
 SET NOCOUNT ON
 
 UPDATE [dbo].[Item]
-
 SET
-
 	[PrimaryTitleID] = @PrimaryTitleID,
-	[RedirectItemID] = @RedirectItemID,
-	[ThumbnailPageID] = @ThumbnailPageID,
 	[BarCode] = @BarCode,
 	[MARCItemID] = @MARCItemID,
 	[CallNumber] = @CallNumber,
@@ -98,24 +102,36 @@ SET
 	[CopyrightEvidence] = @CopyrightEvidence,
 	[CopyrightEvidenceOperator] = @CopyrightEvidenceOperator,
 	[CopyrightEvidenceDate] = @CopyrightEvidenceDate,
-	[ExternalUrl] = @ExternalUrl
-
+	[ThumbnailPageID] = @ThumbnailPageID,
+	[RedirectItemID] = @RedirectItemID,
+	[ExternalUrl] = @ExternalUrl,
+	[EndYear] = @EndYear,
+	[StartVolume] = @StartVolume,
+	[EndVolume] = @EndVolume,
+	[StartIssue] = @StartIssue,
+	[EndIssue] = @EndIssue,
+	[StartNumber] = @StartNumber,
+	[EndNumber] = @EndNumber,
+	[StartSeries] = @StartSeries,
+	[EndSeries] = @EndSeries,
+	[StartPart] = @StartPart,
+	[EndPart] = @EndPart,
+	[VolumeReviewed] = @VolumeReviewed,
+	[VolumeReviewedDate] = @VolumeReviewedDate,
+	[VolumeReviewedUserID] = @VolumeReviewedUserID
 WHERE
 	[ItemID] = @ItemID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[PrimaryTitleID],
-		[RedirectItemID],
-		[ThumbnailPageID],
 		[BarCode],
 		[MARCItemID],
 		[CallNumber],
@@ -156,13 +172,26 @@ ELSE BEGIN
 		[CopyrightEvidence],
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
-		[ExternalUrl]
-
+		[ThumbnailPageID],
+		[RedirectItemID],
+		[ExternalUrl],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart],
+		[VolumeReviewed],
+		[VolumeReviewedDate],
+		[VolumeReviewedUserID]
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
-

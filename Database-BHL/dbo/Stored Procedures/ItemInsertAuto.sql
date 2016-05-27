@@ -1,15 +1,7 @@
-﻿
--- ItemInsertAuto PROCEDURE
--- Generated 6/18/2013 3:43:19 PM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Item
-
-CREATE PROCEDURE ItemInsertAuto
+﻿CREATE PROCEDURE [dbo].[ItemInsertAuto]
 
 @ItemID INT OUTPUT,
 @PrimaryTitleID INT,
-@RedirectItemID INT = null,
-@ThumbnailPageID INT = null,
 @BarCode NVARCHAR(40),
 @MARCItemID NVARCHAR(50) = null,
 @CallNumber NVARCHAR(100) = null,
@@ -48,17 +40,30 @@ CREATE PROCEDURE ItemInsertAuto
 @CopyrightEvidence NVARCHAR(MAX) = null,
 @CopyrightEvidenceOperator NVARCHAR(100) = null,
 @CopyrightEvidenceDate NVARCHAR(30) = null,
-@ExternalUrl NVARCHAR(500) = null
+@ThumbnailPageID INT = null,
+@RedirectItemID INT = null,
+@ExternalUrl NVARCHAR(500) = null,
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10),
+@VolumeReviewed TINYINT,
+@VolumeReviewedDate DATETIME = null,
+@VolumeReviewedUserID INT = null
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Item]
-(
-	[PrimaryTitleID],
-	[RedirectItemID],
-	[ThumbnailPageID],
+( 	[PrimaryTitleID],
 	[BarCode],
 	[MARCItemID],
 	[CallNumber],
@@ -99,13 +104,25 @@ INSERT INTO [dbo].[Item]
 	[CopyrightEvidence],
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
-	[ExternalUrl]
-)
+	[ThumbnailPageID],
+	[RedirectItemID],
+	[ExternalUrl],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart],
+	[VolumeReviewed],
+	[VolumeReviewedDate],
+	[VolumeReviewedUserID] )
 VALUES
-(
-	@PrimaryTitleID,
-	@RedirectItemID,
-	@ThumbnailPageID,
+( 	@PrimaryTitleID,
 	@BarCode,
 	@MARCItemID,
 	@CallNumber,
@@ -146,24 +163,36 @@ VALUES
 	@CopyrightEvidence,
 	@CopyrightEvidenceOperator,
 	@CopyrightEvidenceDate,
-	@ExternalUrl
-)
+	@ThumbnailPageID,
+	@RedirectItemID,
+	@ExternalUrl,
+	@EndYear,
+	@StartVolume,
+	@EndVolume,
+	@StartIssue,
+	@EndIssue,
+	@StartNumber,
+	@EndNumber,
+	@StartSeries,
+	@EndSeries,
+	@StartPart,
+	@EndPart,
+	@VolumeReviewed,
+	@VolumeReviewedDate,
+	@VolumeReviewedUserID )
 
 SET @ItemID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[PrimaryTitleID],
-		[RedirectItemID],
-		[ThumbnailPageID],
 		[BarCode],
 		[MARCItemID],
 		[CallNumber],
@@ -204,13 +233,26 @@ ELSE BEGIN
 		[CopyrightEvidence],
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
-		[ExternalUrl]	
-
+		[ThumbnailPageID],
+		[RedirectItemID],
+		[ExternalUrl],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart],
+		[VolumeReviewed],
+		[VolumeReviewedDate],
+		[VolumeReviewedUserID]	
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- insert successful
 END
-
