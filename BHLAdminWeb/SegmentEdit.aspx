@@ -382,12 +382,12 @@
 				<td><asp:TextBox ID="replacedByTextBox" runat="server" Width="200px"></asp:TextBox></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Contributor:</td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Contributors:</td>
 				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlContributor" DataTextField="InstitutionName" DataValueField="InstitutionCode" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Contributor Segment ID:</td>
-				<td><asp:Label ID="contributorSegmentIDLabel" runat="server" /></td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader"></td>
+				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlContributor2" DataTextField="InstitutionName" DataValueField="InstitutionCode" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Genre:</td>

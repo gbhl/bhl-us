@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ExportSegment
+﻿CREATE PROCEDURE [dbo].[ExportSegment]
 
 AS
 
@@ -8,7 +8,7 @@ SET NOCOUNT ON
 
 SELECT	s.SegmentID, 
 		s.ItemID, 
-		inst.InstitutionName AS ContributorName, 
+		c.Contributors AS ContributorName, 
 		s.SequenceOrder, 
 		g.GenreName AS SegmentType, 
 		s.Title, 
@@ -29,11 +29,10 @@ SELECT	s.SegmentID,
 		s.LicenseName, 
 		s.LicenseUrl
 FROM	dbo.Segment s WITH (NOLOCK)
-		LEFT JOIN dbo.Institution inst WITH (NOLOCK) ON s.ContributorCode = inst.InstitutionCode 
+		INNER JOIN dbo.SearchCatalogSegment c ON s.SegmentID = c.SegmentID
 		INNER JOIN dbo.SegmentGenre g WITH (NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID 
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON s.LanguageCode = l.LanguageCode
 WHERE	s.SegmentStatusID IN (10, 20)
 AND     (s.ItemID IS NOT NULL OR ISNULL(s.Url, '') <> '')
 
 END
-

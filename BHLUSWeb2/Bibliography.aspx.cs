@@ -36,11 +36,13 @@ namespace MOBOT.BHL.Web2
         {
             public Item Item { get; set; }
             public string ThumbUrl { get; set; }
+            public CustomGenericList<Institution> institutions { get; set; }
 
             public BibliographyItem(Item item, string thumbUrl)
             {
                 Item = item;
                 ThumbUrl = thumbUrl;
+                institutions = new CustomGenericList<Institution>();
             }
         }
 
@@ -150,14 +152,13 @@ namespace MOBOT.BHL.Web2
             foreach (Item item in Items)
             {
                 // Populate empty volume descriptions with default text
-                if (string.IsNullOrWhiteSpace(item.Volume))
-                {
-                    item.Volume = "Volume details";
-                }
+                if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
 
-                var page = bhlProvider.PageSelectFirstPageForItem(item.ItemID);
-                string externalUrl = (page == null) ? "" : string.Format("/pagethumb/{0},100,100", page.PageID.ToString());
-                BibliographyItems.Add(new BibliographyItem(item, externalUrl));
+                string externalUrl = (item.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", item.FirstPageID.ToString());
+                BibliographyItem bibliographyItem = new BibliographyItem(item, externalUrl);
+                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID(item.ItemID);
+
+                BibliographyItems.Add(bibliographyItem);
             }
 
             // Look for an OCLC identifier (use the first one... might need to account for multiple at some point)

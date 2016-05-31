@@ -59,6 +59,7 @@ namespace MOBOT.BHL.DAL
                     break;
                 }
 
+                segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segmentId, InstitutionRole.Contributor);
                 segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segmentId, null);
                 segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segmentId);
                 segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segmentId);
@@ -550,6 +551,23 @@ namespace MOBOT.BHL.DAL
                     new SegmentDAL().SegmentManageAuto(connection, transaction, segment, userId);
 
                 segmentID = updatedSegment.ReturnObject.SegmentID;
+
+                if (segment.ContributorList.Count > 0)
+                {
+                    SegmentInstitutionDAL segmentInstitutionDAL = new SegmentInstitutionDAL();
+                    foreach (Institution institution in segment.ContributorList)
+                    {
+                        if (institution.IsDeleted)
+                        {
+                            segmentInstitutionDAL.SegmentInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
+                        }
+                        if (institution.IsNew)
+                        {
+                            segmentInstitutionDAL.SegmentInstitutionInsert(connection, transaction, segmentID, 
+                                institution.InstitutionCode, institution.InstitutionRoleName, userId);
+                        }
+                    }
+                }
 
                 if (segment.AuthorList.Count > 0)
                 {

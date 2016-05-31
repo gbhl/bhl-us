@@ -92,7 +92,7 @@ namespace BHLCoreDALTest
             StatsDAL_Accessor target = new StatsDAL_Accessor();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string institutionCode = "MO";
+            string institutionCode = "MBLWHOI";
             Stats actual = target.StatsSelectForInstitution(sqlConnection, sqlTransaction, institutionCode);
             Assert.IsTrue(actual.PageCount > 0);
         }

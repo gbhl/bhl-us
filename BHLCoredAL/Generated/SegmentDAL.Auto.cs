@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:53:07 PM
+// Generated 6/2/2016 9:32:37 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon dbo.Segment.
@@ -138,8 +138,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
 		/// <param name="segmentStatusID"></param>
-		/// <param name="contributorCode"></param>
-		/// <param name="contributorSegmentID"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="segmentGenreID"></param>
 		/// <param name="title"></param>
@@ -178,8 +176,6 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -213,7 +209,7 @@ namespace MOBOT.BHL.DAL
 			string sortTitle,
 			int? redirectSegmentID)
 		{
-			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
+			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
 		}
 		
 		/// <summary>
@@ -224,8 +220,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
 		/// <param name="segmentStatusID"></param>
-		/// <param name="contributorCode"></param>
-		/// <param name="contributorSegmentID"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="segmentGenreID"></param>
 		/// <param name="title"></param>
@@ -265,8 +259,6 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -307,8 +299,6 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("SegmentID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID),
-					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, true, contributorCode),
-					CustomSqlHelper.CreateInputParameter("ContributorSegmentID", SqlDbType.NVarChar, 100, false, contributorSegmentID),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, false, segmentGenreID),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
@@ -392,8 +382,6 @@ namespace MOBOT.BHL.DAL
 			return SegmentInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.SegmentStatusID,
-				value.ContributorCode,
-				value.ContributorSegmentID,
 				value.SequenceOrder,
 				value.SegmentGenreID,
 				value.Title,
@@ -498,8 +486,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="itemID"></param>
 		/// <param name="segmentStatusID"></param>
-		/// <param name="contributorCode"></param>
-		/// <param name="contributorSegmentID"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="segmentGenreID"></param>
 		/// <param name="title"></param>
@@ -538,8 +524,6 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -572,7 +556,7 @@ namespace MOBOT.BHL.DAL
 			string sortTitle,
 			int? redirectSegmentID)
 		{
-			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, contributorCode, contributorSegmentID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
+			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
 		}
 		
 		/// <summary>
@@ -584,8 +568,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="segmentID"></param>
 		/// <param name="itemID"></param>
 		/// <param name="segmentStatusID"></param>
-		/// <param name="contributorCode"></param>
-		/// <param name="contributorSegmentID"></param>
 		/// <param name="sequenceOrder"></param>
 		/// <param name="segmentGenreID"></param>
 		/// <param name="title"></param>
@@ -625,8 +607,6 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -666,8 +646,6 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID),
-					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, true, contributorCode),
-					CustomSqlHelper.CreateInputParameter("ContributorSegmentID", SqlDbType.NVarChar, 100, false, contributorSegmentID),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, false, segmentGenreID),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
@@ -751,8 +729,6 @@ namespace MOBOT.BHL.DAL
 				value.SegmentID,
 				value.ItemID,
 				value.SegmentStatusID,
-				value.ContributorCode,
-				value.ContributorSegmentID,
 				value.SequenceOrder,
 				value.SegmentGenreID,
 				value.Title,
@@ -830,8 +806,6 @@ namespace MOBOT.BHL.DAL
 				Segment returnValue = SegmentInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.SegmentStatusID,
-						value.ContributorCode,
-						value.ContributorSegmentID,
 						value.SequenceOrder,
 						value.SegmentGenreID,
 						value.Title,
@@ -892,8 +866,6 @@ namespace MOBOT.BHL.DAL
 					value.SegmentID,
 						value.ItemID,
 						value.SegmentStatusID,
-						value.ContributorCode,
-						value.ContributorSegmentID,
 						value.SequenceOrder,
 						value.SegmentGenreID,
 						value.Title,

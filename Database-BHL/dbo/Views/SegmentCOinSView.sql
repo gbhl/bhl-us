@@ -28,10 +28,9 @@ SELECT DISTINCT
 		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'ISBN') AS 'rft_isbn'
 		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'CODEN') AS 'rft_coden'
 		,LOWER(g.GenreName) AS 'rft_genre'
-		,i.InstitutionName AS 'rft_contributor' -- dc
+		,scs.Contributors AS 'rft_contributor' -- dc
 FROM	dbo.Segment s
-		LEFT JOIN dbo.Institution i ON s.ContributorCode = i.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
+		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		g.GenreName IN ('Article', 'Issue', 'Proceeding', 'Conference', 'Preprint', 'Unknown')
-

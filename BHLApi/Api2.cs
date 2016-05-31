@@ -134,6 +134,11 @@ namespace MOBOT.BHL.API.BHLApi
                 item.TitleUrl = (item.PrimaryTitleID == null) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
+                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
+                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
+
                 if (pages) item.Pages = this.GetItemPages(itemID, includeOcr);
                 if (segments) item.Parts = this.GetItemSegments(itemID);
             }
@@ -221,9 +226,9 @@ namespace MOBOT.BHL.API.BHLApi
             return pages;
         }
 
-        public CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue)
+        public Item GetItemByIdentifier(string identifierType, string identifierValue)
         {
-            CustomGenericList<Item> items = new CustomGenericList<Item>();
+            Item item;
 
             switch (identifierType.ToLower())
             {
@@ -231,9 +236,14 @@ namespace MOBOT.BHL.API.BHLApi
                 case "ia":
                     {
                         Api2DAL dal = new Api2DAL();
-                        items = dal.ItemSelectByBarcode(null, null, identifierValue);
-                        foreach (Item item in items)
+                        item = dal.ItemSelectByBarcode(null, null, identifierValue);
+                        if (item != null)
                         {
+                            CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                            if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
+                            CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                            if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
+
                             item.ItemUrl = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                             item.TitleUrl = (item.PrimaryTitleID == null ) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                             item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
@@ -245,7 +255,7 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new Exception("identifierType must be one of the following values: barcode, ia");
             }
 
-            return items;
+            return item;
         }
 
         public CustomGenericList<Item> ItemSelectUnpublished()
@@ -268,6 +278,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
             return parts;
@@ -323,6 +334,11 @@ namespace MOBOT.BHL.API.BHLApi
             CustomGenericList<Item> items = new Api2DAL().ItemSelectByTitleID(null, null, titleIDint);
             foreach (Item item in items)
             {
+                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
+                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
+
                 item.ItemUrl = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 item.TitleUrl = (item.PrimaryTitleID == null) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
@@ -447,6 +463,11 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                 part.Pages = this.GetSegmentPages(part.PartID);
                 part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
+                foreach(Part relatedPart in part.RelatedParts)
+                {
+                    relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
+                }
+                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
             return part;
@@ -498,6 +519,11 @@ namespace MOBOT.BHL.API.BHLApi
                             part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                             part.Pages = this.GetSegmentPages(part.PartID);
                             part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
+                            foreach (Part relatedPart in part.RelatedParts)
+                            {
+                                relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
+                            }
+                            part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
                         }
 
                         break;
@@ -514,6 +540,11 @@ namespace MOBOT.BHL.API.BHLApi
                             part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                             part.Pages = this.GetSegmentPages(part.PartID);
                             part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
+                            foreach (Part relatedPart in part.RelatedParts)
+                            {
+                                relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
+                            }
+                            part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
                         }
 
                         break;
@@ -646,6 +677,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
             return parts;
@@ -707,6 +739,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
             return parts;
@@ -1103,6 +1136,11 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                 part.Pages = this.GetSegmentPages(part.PartID);
                 part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
+                foreach (Part relatedPart in part.RelatedParts)
+                {
+                    relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
+                }
+                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
             return parts;

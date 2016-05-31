@@ -76,13 +76,16 @@ namespace MOBOT.BHL.AdminWeb
                     string description = title.ShortTitle + "\n" + title.PublicationDetails + "\n" + pageUrl;
 
                     CustomGenericList<TitleKeyword> titleKeywords = provider.TitleKeywordSelectByTitleID(titleId);
-                    Institution institution = provider.InstitutionSelectByItemID(item.ItemID);
+                    CustomGenericList<Institution> institutions = provider.InstitutionSelectByItemID(item.ItemID);
                     List<string> titleKeywordsList = new List<string>();
                     foreach (TitleKeyword tk in titleKeywords)
                     {
                         titleKeywordsList.Add(tk.Keyword);
                     }
-                    titleKeywordsList.Add(institution.InstitutionName);
+                    foreach (Institution institution in institutions)
+                    {
+                        if (institution.InstitutionRoleName == InstitutionRole.Contributor) titleKeywordsList.Add(institution.InstitutionName);
+                    }
                     string[] subjects = titleKeywordsList.ToArray();
 
                     CustomGenericList<Author> authors = provider.AuthorSelectByTitleId(titleId);

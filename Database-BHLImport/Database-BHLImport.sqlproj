@@ -423,6 +423,9 @@
     <None Include="dbo\Stored Procedures\OAIRecordPublishDeleteTitleAndItem.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordPublishToProduction.sql" />
     <None Include="BHLImportDBBuildScript.bat" />
+    <None Include="dbo\Synonyms\BHLSegmentInstitution.sql" />
+    <None Include="dbo\Synonyms\BHLInstitutionRole.sql" />
+    <None Include="dbo\Synonyms\BHLItemInstitution.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

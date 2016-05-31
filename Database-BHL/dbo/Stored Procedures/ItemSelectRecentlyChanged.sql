@@ -1,9 +1,12 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectRecentlyChanged]
-	@StartDate datetime
+﻿CREATE PROCEDURE [dbo].[ItemSelectRecentlyChanged]
+
+@StartDate datetime
+
 AS
+
 BEGIN
-	SET NOCOUNT ON
+
+SET NOCOUNT ON
 
 -- Get IDs of all items updated since a specified date/time
 
@@ -155,19 +158,19 @@ FROM	dbo.IndicatedPage ip with (nolock) INNER JOIN dbo.Page p with(nolock) ON p.
 WHERE	a.EntityName = 'dbo.IndicatedPage'
 
 -- Select a list of distinct item IDs
-SELECT DISTINCT ti.ItemID, PrimaryTitleID, BarCode FROM #tmpItem ti
-INNER JOIN Item i with (nolock) on ti.ItemID = i.ItemID
-inner join institution inst with (nolock) on i.institutioncode = inst.institutioncode
-where itemstatusid = 40 and inst.bhlmemberlibrary = 1
---SELECT DISTINCT i.ItemID, PrimaryTitleID, BarCode FROM Item i with (nolock)
---inner join institution inst with (nolock) on i.institutioncode = inst.institutioncode
---where itemstatusid = 40 and inst.bhlmemberlibrary = 1
+SELECT DISTINCT ti.ItemID, PrimaryTitleID, BarCode 
+FROM	#tmpItem ti
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
+		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
+		INNER JOIN dbo.Institution inst WITH (NOLOCK) ON ii.institutioncode = inst.institutioncode
+WHERE	i.ItemStatusID = 40 
+AND		inst.BHLMemberLibrary = 1
+AND		r.InstitutionRoleName = 'Contributor'
 
 -- Clean up
 DROP TABLE #tmpItem
 DROP TABLE #tmpAuditInfo
 END
 
-
-
-
+GO

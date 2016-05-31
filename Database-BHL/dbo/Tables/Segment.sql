@@ -2,8 +2,6 @@
     [SegmentID]                   INT             IDENTITY (1, 1) NOT NULL,
     [ItemID]                      INT             NULL,
     [SegmentStatusID]             INT             NOT NULL,
-    [ContributorCode]             NVARCHAR (10)   NULL,
-    [ContributorSegmentID]        NVARCHAR (100)  CONSTRAINT [DF_Segment_ContributorSegmentID] DEFAULT ('') NOT NULL,
     [SequenceOrder]               SMALLINT        CONSTRAINT [DF_Segment_SequenceOrder] DEFAULT ((1)) NOT NULL,
     [SegmentGenreID]              INT             NOT NULL,
     [Title]                       NVARCHAR (2000) CONSTRAINT [DF_Segment_Title] DEFAULT ('') NOT NULL,
@@ -39,7 +37,6 @@
     [SortTitle]                   NVARCHAR (2000) CONSTRAINT [DF_Segment_SortTitle] DEFAULT ('') NOT NULL,
     [RedirectSegmentID] INT NULL, 
     CONSTRAINT [PK_Segment] PRIMARY KEY CLUSTERED ([SegmentID] ASC),
-    CONSTRAINT [FK_Segment_Institution] FOREIGN KEY ([ContributorCode]) REFERENCES [dbo].[Institution] ([InstitutionCode]),
     CONSTRAINT [FK_Segment_Language] FOREIGN KEY ([LanguageCode]) REFERENCES [dbo].[Language] ([LanguageCode]),
     CONSTRAINT [FK_Segment_Page] FOREIGN KEY ([StartPageID]) REFERENCES [dbo].[Page] ([PageID]),
     CONSTRAINT [FK_Segment_SegmentGenre] FOREIGN KEY ([SegmentGenreID]) REFERENCES [dbo].[SegmentGenre] ([SegmentGenreID]),
@@ -57,8 +54,3 @@ CREATE NONCLUSTERED INDEX [IX_Segment_SegmentStatusID]
 ON [dbo].[Segment] ([SegmentStatusID])
 INCLUDE ([ItemID], [SegmentID]);
 GO
-
-CREATE NONCLUSTERED INDEX [IX_Segment_ContributorCodeStatusID]
-	ON [dbo].[Segment] ([ContributorCode], [SegmentStatusID]);
-GO
-

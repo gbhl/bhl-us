@@ -76,9 +76,9 @@ namespace BHLCoreDALTest
             MonthlyStatsDAL target = new MonthlyStatsDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            int startYear = 2010;
+            int startYear = 2008;
             int startMonth = 1;
-            int endYear = 2010;
+            int endYear = 2008;
             int endMonth = 2;
             string institutionName = string.Empty;
             CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectByDateAndInstitution(sqlConnection, sqlTransaction, startYear, startMonth, endYear, endMonth, institutionName);

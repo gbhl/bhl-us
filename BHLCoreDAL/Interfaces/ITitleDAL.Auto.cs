@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:54:36 PM
+// Generated 6/2/2016 9:32:28 AM
 // Do not modify the contents of this code file.
 // Interface ITitleDAL based upon dbo.Title.
 
@@ -44,7 +44,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -76,7 +75,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -119,7 +117,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -151,7 +148,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,

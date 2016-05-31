@@ -76,7 +76,7 @@
                         </span>
                         <br />
                     <% } %>
-                    <% if (AdditionalAuthors.Count > 0) Response.Write("<br .>"); %>
+                    <% if (Authors.Count > 0 && AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
                     <% foreach (Author author in AdditionalAuthors) { %>
                         <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
@@ -323,14 +323,43 @@
                     <% } %>
                         <h5>Contributor:</h5>
                         <p>
-                            <% if (string.IsNullOrWhiteSpace(bibliographyItem.Item.InstitutionUrl)) { %>
-                                <%: bibliographyItem.Item.InstitutionName%>
-                            <% } else { %>
-                                <a target='_blank' href="<%: bibliographyItem.Item.InstitutionUrl %>"><%: bibliographyItem.Item.InstitutionName%></a>
-                            <% } %>                 
+                            <%foreach (Institution institution in bibliographyItem.institutions)
+                                {
+                                    if (institution.InstitutionRoleName == "Contributor") {
+                                        if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                        { %>
+                                            <%: institution.InstitutionName%>
+                                        <% }
+                                        else
+                                        { %>
+                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                        <% }
+                                    }
+                                }%>                 
                         </p>
                         <h5>Sponsor:</h5>
                         <p><%: bibliographyItem.Item.Sponsor%></p>
+
+
+                            <%foreach (Institution institution in bibliographyItem.institutions)
+                                {
+                                    if (institution.InstitutionRoleName == "Scanning Institution") { %>
+                                        <h5>Scanning Institution:</h5>
+                                        <p>
+                                        <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                        { %>
+                                            <%: institution.InstitutionName%>
+                                        <% }
+                                        else
+                                        { %>
+                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                        <% } %>
+                                        </p>
+                                    <%}
+                                }%>                 
+
+
+
                         <% if (bibliographyItem.Item.ScanningDate != null) { %>                        
                             <h5>Date Scanned:</h5>
                             <p><%: bibliographyItem.Item.ScanningDate.Value.ToString("MM/dd/yyyy")%></p>
@@ -350,49 +379,75 @@
                     <div class="copyright">
                         <h5>Copyright &amp; Usage:</h5>
                         <p>
-                            <% if (string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl + bibliographyItem.Item.Rights + bibliographyItem.Item.DueDiligence + bibliographyItem.Item.CopyrightStatus + bibliographyItem.Item.CopyrightRegion + bibliographyItem.Item.CopyrightComment + bibliographyItem.Item.CopyrightEvidence)) { %>
+                            <%  bool showNone = true;
+                                if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
+                                License Type:
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                    <a target="_blank" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
+                                <% } else {%>
+                                    <%: bibliographyItem.Item.LicenseUrl%>
+                                <% }
+                                showNone = false;%>
+                                <br />
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
+                                Rights:
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                    <a target="_blank" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
+                                <% } else { %>
+                                    <%: bibliographyItem.Item.Rights%>
+                                <% }
+                                showNone = false;%>
+                                <br />
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.DueDiligence)) { %>
+                                Due Diligence: 
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                    { %>
+                                    <a target="_blank" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
+                                <% } else { %>
+                                    <%: bibliographyItem.Item.DueDiligence%>
+                                <% }
+                                showNone = false;%>
+                                <br />
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightStatus)) { %>
+                                Copyright Status: <%: bibliographyItem.Item.CopyrightStatus%><br />
+                                <%showNone = false;%>
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightRegion)) { %>
+                                Copyright Region: <%: bibliographyItem.Item.CopyrightRegion%><br />
+                                <%showNone = false;%>
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightComment)) { %>
+                                Copyright Comments: <%: bibliographyItem.Item.CopyrightComment%><br />
+                                <%showNone = false;%>
+                            <% } %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightEvidence)) { %>
+                                Copyright Evidence: <%: bibliographyItem.Item.CopyrightEvidence%><br />
+                                <%showNone = false;%>
+                            <% } %>
+
+
+                            <%foreach (Institution institution in bibliographyItem.institutions)
+                                {
+                                    if (institution.InstitutionRoleName == "Rights Holder") { %>
+                                        Rights Holder:
+                                        <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                        { %>
+                                            <%: institution.InstitutionName%>
+                                        <% }
+                                        else
+                                        { %>
+                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                        <% }
+                                        showNone = false;
+                                    }
+                                }%>                 
+                            <br/>
+
+                            <% if (showNone) { %>
                                 Not specified
-                            <% } else { %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
-                                    License Type:
-                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                        <a target="_blank" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
-                                    <% } else {%>
-                                        <%: bibliographyItem.Item.LicenseUrl%>
-                                    <% } %>
-                                    <br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
-                                    Rights:
-                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                        <a target="_blank" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
-                                    <% } else { %>
-                                        <%: bibliographyItem.Item.Rights%>
-                                    <% } %>
-                                    <br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.DueDiligence)) { %>
-                                    Due Diligence: 
-                                    <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
-                                      { %>
-                                        <a target="_blank" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
-                                    <% } else { %>
-                                        <%: bibliographyItem.Item.DueDiligence%>
-                                    <% } %>
-                                    <br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightStatus)) { %>
-                                    Copyright Status: <%: bibliographyItem.Item.CopyrightStatus%><br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightRegion)) { %>
-                                    Copyright Region: <%: bibliographyItem.Item.CopyrightRegion%><br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightComment)) { %>
-                                    Copyright Comments: <%: bibliographyItem.Item.CopyrightComment%><br />
-                                <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightEvidence)) { %>
-                                    Copyright Evidence: <%: bibliographyItem.Item.CopyrightEvidence%><br />
-                                <% } %>
                             <% } %>
                         </p>
                     </div>

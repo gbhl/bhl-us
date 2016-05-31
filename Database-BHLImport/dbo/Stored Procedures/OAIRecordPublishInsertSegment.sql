@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishInsertSegment
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishInsertSegment]
 
 @OAIRecordID int
 
@@ -13,12 +13,14 @@ DECLARE @IdentifierOAI int
 DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
+DECLARE @ContributorRoleID int
 DECLARE @Right nvarchar(500)
 
 SELECT @IdentifierOAI = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'OAI'
 SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
+SELECT @ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
 
 SET @Right = ''
 SELECT TOP 1 @Right = [Right] FROM dbo.OAIRecordRight WHERE OAIRecordID = @OAIRecordID
@@ -30,8 +32,6 @@ BEGIN TRAN
 INSERT	BHLSegment
 		(
 		SegmentStatusID,
-		ContributorCode,
-		ContributorSegmentID,
 		SequenceOrder,
 		SegmentGenreID,
 		Title,
@@ -53,8 +53,6 @@ INSERT	BHLSegment
 		LastModifiedUserID
 		)
 SELECT	10 AS SegmentStatusID,
-		r.BHLInstitutionCode AS ContributorCode,
-		o.OAIIdentifier AS ContributorSegmentID,
 		1 AS SequenceOrder,
 		1 AS SegmentGenreID,
 		o.Title,
@@ -106,6 +104,16 @@ WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Preserve the production identifier for the new segment
 SET @ProductionSegmentID = SCOPE_IDENTITY()
+
+-- Insert a SegmentInstitution record for the contributor
+INSERT	dbo.BHLSegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID)
+SELECT	@ProductionSegmentID, r.BHLInstitutionCode, @ContributorRoleID
+FROM	dbo.OAIRecord o
+		INNER JOIN dbo.OAIHarvestLog lg ON o.HarvestLogID = lg.HarvestLogID
+		INNER JOIN dbo.OAIHarvestSet s ON lg.HarvestSetID = s.HarvestSetID
+		INNER JOIN dbo.OAIRepositoryFormat rf ON s.RepositoryFormatID = rf.RepositoryFormatID
+		INNER JOIN dbo.OAIRepository r ON rf.RepositoryID = r.RepositoryID
+WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Insert SegmentIdentifier records
 INSERT dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, IsContainerIdentifier)

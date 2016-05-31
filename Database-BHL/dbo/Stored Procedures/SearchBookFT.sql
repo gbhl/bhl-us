@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchBookFT]
+﻿CREATE PROCEDURE [dbo].[SearchBookFT]
 
 @Title			nvarchar(2000) = '',
 @AuthorLastName	nvarchar(255) = '',
@@ -260,8 +259,7 @@ SELECT	tmp.TitleID,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(tmp.TitleID, i.ItemID) AS Collections,
 		dbo.fnSeriesStringForTitle (tmp.TitleID) AS Associations,
-		i.InstitutionCode,
-		inst.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.HasLocalContent,
 		TitleRank,
 		ItemRank,
@@ -273,7 +271,6 @@ INTO	#tmpMayContainDups
 FROM	#tmpTitleFinal tmp INNER JOIN dbo.Title t WITH (NOLOCK) ON tmp.TitleID = t.TitleID
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON t.TitleID = ti.TitleID AND ti.ItemSequence = tmp.ItemSequence
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID AND i.ItemStatusID = 40
-		LEFT JOIN dbo.Institution inst WITH (NOLOCK) ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 
 -- Find any duplicated titles
@@ -285,7 +282,7 @@ GROUP BY TitleID HAVING COUNT(*) > 1
 -- Show all non-duplicate title information
 SELECT	m.TitleID, m.PrimaryTitleID, m.ItemID, m.ItemSequence, m.FullTitle, m.SortTitle, m.PartNumber, m.PartName,
 		m.EditionStatement, m.PublicationDetails, m.Datafield_260_a, m.Datafield_260_b, m.Datafield_260_c, m.Volume,
-		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionCode, m.InstitutionName, m.HasLocalContent,
+		m.ExternalUrl, m.Authors, m.Collections, m.Associations, m.InstitutionName, m.HasLocalContent,
 		m.TitleRank, m.ItemRank, m.AuthorRank, m.EditionRank, m.SubjectRank, CONVERT(decimal(7,2), m.[Rank]) AS [Rank]
 INTO	#tmpSortable
 FROM	#tmpMayContainDups m LEFT JOIN #tmpDups d
@@ -297,8 +294,12 @@ WHERE	d.ItemID IS NULL
 --	2) Without local content
 UPDATE	#tmpSortable
 SET		[Rank] = [Rank] / 100.00
-WHERE	InstitutionCode = 'CANADIANA'
-OR		HasLocalContent = 0
+FROM	#tmpSortable t
+		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON t.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
+WHERE	(InstitutionCode = 'CANADIANA'
+OR		HasLocalContent = 0)
+AND		r.InstitutionRoleName = 'Contributor'
 
 ----------------------------------------------------------
 -- Return the sorted result set
@@ -438,7 +439,7 @@ END
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure SearchBook. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure SearchBookFT. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN

@@ -193,6 +193,14 @@ namespace MOBOT.BHL.DataObjects
             set { _identifierList = value; }
         }
 
+        private CustomGenericList<Institution> _contributorList = new CustomGenericList<Institution>();
+
+        public CustomGenericList<Institution> ContributorList
+        {
+            get { return this._contributorList; }
+            set { this._contributorList = value; }
+        }
+
         private CustomGenericList<SegmentPage> _pageList = new CustomGenericList<SegmentPage>();
 
         public CustomGenericList<SegmentPage> PageList

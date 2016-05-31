@@ -1,4 +1,18 @@
-﻿CREATE PROCEDURE [dbo].[ItemUpdateAuto]
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[ItemUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[ItemUpdateAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Update Procedure for dbo.Item
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:20 AM
+
+CREATE PROCEDURE dbo.ItemUpdateAuto
 
 @ItemID INT,
 @PrimaryTitleID INT,
@@ -6,13 +20,11 @@
 @MARCItemID NVARCHAR(50),
 @CallNumber NVARCHAR(100),
 @Volume NVARCHAR(100),
-@InstitutionCode NVARCHAR(10),
 @LanguageCode NVARCHAR(10),
 @ItemDescription NTEXT,
 @ScannedBy INT,
 @PDFSize INT,
 @VaultID INT,
-@NumberOfFiles SMALLINT,
 @Note NVARCHAR(255),
 @LastModifiedUserID INT,
 @ItemStatusID INT,
@@ -68,13 +80,11 @@ SET
 	[MARCItemID] = @MARCItemID,
 	[CallNumber] = @CallNumber,
 	[Volume] = @Volume,
-	[InstitutionCode] = @InstitutionCode,
 	[LanguageCode] = @LanguageCode,
 	[ItemDescription] = @ItemDescription,
 	[ScannedBy] = @ScannedBy,
 	[PDFSize] = @PDFSize,
 	[VaultID] = @VaultID,
-	[NumberOfFiles] = @NumberOfFiles,
 	[Note] = @Note,
 	[LastModifiedDate] = getdate(),
 	[LastModifiedUserID] = @LastModifiedUserID,
@@ -136,13 +146,11 @@ ELSE BEGIN
 		[MARCItemID],
 		[CallNumber],
 		[Volume],
-		[InstitutionCode],
 		[LanguageCode],
 		[ItemDescription],
 		[ScannedBy],
 		[PDFSize],
 		[VaultID],
-		[NumberOfFiles],
 		[Note],
 		[CreationDate],
 		[LastModifiedDate],
@@ -195,3 +203,10 @@ ELSE BEGIN
 	
 	RETURN -- update successful
 END
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+

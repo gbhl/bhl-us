@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:05 PM
+// Generated 6/2/2016 9:32:10 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class InstitutionDAL is based upon dbo.Institution.
@@ -141,6 +141,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionInsertAuto(
 			SqlConnection sqlConnection, 
@@ -149,9 +151,11 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary)
+			bool bHLMemberLibrary,
+			int? creationUserID,
+			int? lastModifiedUserID)
 		{
-			return InstitutionInsertAuto( sqlConnection, sqlTransaction, "BHL", institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary );
+			return InstitutionInsertAuto( sqlConnection, sqlTransaction, "BHL", institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -165,6 +169,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionInsertAuto(
 			SqlConnection sqlConnection, 
@@ -174,7 +180,9 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary)
+			bool bHLMemberLibrary,
+			int? creationUserID,
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -184,7 +192,9 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("InstitutionName", SqlDbType.NVarChar, 255, false, institutionName),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("InstitutionUrl", SqlDbType.NVarChar, 255, true, institutionUrl),
-					CustomSqlHelper.CreateInputParameter("BHLMemberLibrary", SqlDbType.Bit, null, false, bHLMemberLibrary), 
+					CustomSqlHelper.CreateInputParameter("BHLMemberLibrary", SqlDbType.Bit, null, false, bHLMemberLibrary),
+					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
@@ -238,7 +248,9 @@ namespace MOBOT.BHL.DAL
 				value.InstitutionName,
 				value.Note,
 				value.InstitutionUrl,
-				value.BHLMemberLibrary);
+				value.BHLMemberLibrary,
+				value.CreationUserID,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -313,6 +325,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -321,9 +334,10 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary)
+			bool bHLMemberLibrary,
+			int? lastModifiedUserID)
 		{
-			return InstitutionUpdateAuto( sqlConnection, sqlTransaction, "BHL", institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary);
+			return InstitutionUpdateAuto( sqlConnection, sqlTransaction, "BHL", institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -337,6 +351,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type Institution.</returns>
 		public Institution InstitutionUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -346,7 +361,8 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary)
+			bool bHLMemberLibrary,
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -356,7 +372,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("InstitutionName", SqlDbType.NVarChar, 255, false, institutionName),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("InstitutionUrl", SqlDbType.NVarChar, 255, true, institutionUrl),
-					CustomSqlHelper.CreateInputParameter("BHLMemberLibrary", SqlDbType.Bit, null, false, bHLMemberLibrary), 
+					CustomSqlHelper.CreateInputParameter("BHLMemberLibrary", SqlDbType.Bit, null, false, bHLMemberLibrary),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
@@ -410,7 +427,8 @@ namespace MOBOT.BHL.DAL
 				value.InstitutionName,
 				value.Note,
 				value.InstitutionUrl,
-				value.BHLMemberLibrary);
+				value.BHLMemberLibrary,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -429,9 +447,9 @@ namespace MOBOT.BHL.DAL
 		public CustomDataAccessStatus<Institution> InstitutionManageAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			Institution value  )
+			Institution value , int userId )
 		{
-			return InstitutionManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+			return InstitutionManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
 		}
 		
 		/// <summary>
@@ -448,18 +466,20 @@ namespace MOBOT.BHL.DAL
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			Institution value  )
+			Institution value , int userId )
 		{
 			if (value.IsNew && !value.IsDeleted)
 			{
-				
-				
+				value.CreationUserID = userId;
+				value.LastModifiedUserID = userId;
 				Institution returnValue = InstitutionInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.InstitutionCode,
 						value.InstitutionName,
 						value.Note,
 						value.InstitutionUrl,
-						value.BHLMemberLibrary);
+						value.BHLMemberLibrary,
+						value.CreationUserID,
+						value.LastModifiedUserID);
 				
 				return new CustomDataAccessStatus<Institution>(
 					CustomDataAccessContext.Insert, 
@@ -483,13 +503,14 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (value.IsDirty && !value.IsDeleted)
 			{
-				
+				value.LastModifiedUserID = userId;
 				Institution returnValue = InstitutionUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.InstitutionCode,
 						value.InstitutionName,
 						value.Note,
 						value.InstitutionUrl,
-						value.BHLMemberLibrary);
+						value.BHLMemberLibrary,
+						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<Institution>(
 					CustomDataAccessContext.Update, 

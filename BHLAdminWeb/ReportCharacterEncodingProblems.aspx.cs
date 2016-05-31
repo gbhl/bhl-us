@@ -50,6 +50,11 @@ namespace MOBOT.BHL.AdminWeb
             if (chkTitle.Checked)
             {
                 CustomGenericList<TitleSuspectCharacter> titles = bp.TitleSelectWithSuspectCharacters(institutionCode, maxAge);
+                foreach(TitleSuspectCharacter tsc in titles)
+                {
+                    if (tsc.InstitutionName.Contains("|")) tsc.InstitutionName = "Multiple institutions";
+                }
+
                 gvwTitles.DataSource = titles;
                 gvwTitles.DataBind();
                 litNoTitles.Visible = (titles.Count == 0) ? true : false;
@@ -64,6 +69,11 @@ namespace MOBOT.BHL.AdminWeb
             if (chkSubject.Checked)
             {
                 CustomGenericList<KeywordSuspectCharacter> titleKeywords = bp.KeywordSelectWithSuspectCharacters(institutionCode, maxAge);
+                foreach (KeywordSuspectCharacter ksc in titleKeywords)
+                {
+                    if (ksc.InstitutionName.Contains("|")) ksc.InstitutionName = "Multiple institutions";
+                }
+
                 gvwTitleKeywords.DataSource = titleKeywords;
                 gvwTitleKeywords.DataBind();
                 litNoTitleKeywords.Visible = (titleKeywords.Count == 0) ? true : false;
@@ -78,6 +88,11 @@ namespace MOBOT.BHL.AdminWeb
             if (chkAssociation.Checked)
             {
                 CustomGenericList<TitleAssociationSuspectCharacter> titleAssociations = bp.TitleAssociationSelectWithSuspectCharacters(institutionCode, maxAge);
+                foreach (TitleAssociationSuspectCharacter tsc in titleAssociations)
+                {
+                    if (tsc.InstitutionName.Contains("|")) tsc.InstitutionName = "Multiple institutions";
+                }
+
                 gvwAssociations.DataSource = titleAssociations;
                 gvwAssociations.DataBind();
                 litNoAssociations.Visible = (titleAssociations.Count == 0) ? true : false;
@@ -92,6 +107,11 @@ namespace MOBOT.BHL.AdminWeb
             if (chkAuthor.Checked)
             {
                 CustomGenericList<AuthorSuspectCharacter> authors = bp.AuthorSelectWithSuspectCharacters(institutionCode, maxAge);
+                foreach (AuthorSuspectCharacter asc in authors)
+                {
+                    if (asc.InstitutionName.Contains("|")) asc.InstitutionName = "Multiple institutions";
+                }
+
                 gvwAuthors.DataSource = authors;
                 gvwAuthors.DataBind();
                 litNoAuthors.Visible = (authors.Count == 0) ? true : false;
@@ -106,6 +126,11 @@ namespace MOBOT.BHL.AdminWeb
             if (chkItem.Checked)
             {
                 CustomGenericList<ItemSuspectCharacter> items = bp.ItemSelectWithSuspectCharacters(institutionCode, maxAge);
+                foreach (ItemSuspectCharacter isc in items)
+                {
+                    if (isc.InstitutionName.Contains("|")) isc.InstitutionName = "Multiple institutions";
+                }
+
                 gvwItems.DataSource = items;
                 gvwItems.DataBind();
                 litNoItems.Visible = (items.Count == 0) ? true : false;

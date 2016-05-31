@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[InstitutionSelectDOIStats]
+﻿CREATE PROCEDURE [dbo].[InstitutionSelectDOIStats]
 
 @SortBy int = 1,
 @BHLOnly int = 1
@@ -23,8 +22,13 @@ SELECT	inst.InstitutionCode, inst.InstitutionName, inst.BHLMemberLibrary, COUNT(
 INTO	#tmpTitle
 FROM	dbo.Title t INNER JOIN dbo.Item i
 			ON t.TitleID = i.PrimaryTitleID
+		INNER JOIN dbo.ItemInstitution ii
+			ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r
+			ON ii.InstitutionRoleID = r.InstitutionRoleID
+			AND r.InstitutionRoleName = 'Contributor'
 		INNER JOIN dbo.Institution inst
-			ON i.InstitutionCode = inst.InstitutionCode
+			ON ii.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.DOI d
 			ON t.TitleID = d.EntityID
 			AND d.DOIEntityTypeID = 10 -- Title
@@ -34,8 +38,14 @@ GROUP BY
 
 SELECT	inst.InstitutionCode, inst.InstitutionName, inst.BHLMemberLibrary, COUNT(*) AS SegmentDOIs
 INTO	#tmpSegment
-FROM	dbo.Segment s INNER JOIN dbo.Institution inst
-			ON s.ContributorCode = inst.InstitutionCode
+FROM	dbo.Segment s 
+		INNER JOIN dbo.SegmentInstitution si
+			ON s.SegmentID = si.SegmentID
+		INNER JOIN dbo.InstitutionRole r
+			ON si.InstitutionRoleID = r.InstitutionRoleID
+			AND r.InstitutionRoleName = 'Contributor'
+		INNER JOIN dbo.Institution inst
+			ON si.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.DOI d
 			ON s.SegmentID = d.EntityID
 			AND d.DOIEntityTypeID = 40 -- Segment
@@ -71,4 +81,3 @@ IF @SortBy = 4
 	SELECT * FROM #tmpSort ORDER BY TotalDOIs DESC, InstitutionName
 
 END
-

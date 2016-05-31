@@ -1,15 +1,22 @@
-﻿
--- TitleInsertAuto PROCEDURE
--- Generated 8/3/2010 11:16:34 AM
--- Do not modify the contents of this procedure.
--- Insert Procedure for Title
 
-CREATE PROCEDURE TitleInsertAuto
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TitleInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[TitleInsertAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Insert Procedure for dbo.Title
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:28 AM
+
+CREATE PROCEDURE dbo.TitleInsertAuto
 
 @TitleID INT OUTPUT,
 @MARCBibID NVARCHAR(50),
 @MARCLeader NVARCHAR(24) = null,
-@BibliographicLevelID INT = null,
 @TropicosTitleID INT = null,
 @RedirectTitleID INT = null,
 @FullTitle NVARCHAR(2000),
@@ -23,7 +30,6 @@ CREATE PROCEDURE TitleInsertAuto
 @Datafield_260_a NVARCHAR(150) = null,
 @Datafield_260_b NVARCHAR(255) = null,
 @Datafield_260_c NVARCHAR(100) = null,
-@InstitutionCode NVARCHAR(10) = null,
 @LanguageCode NVARCHAR(10) = null,
 @TitleDescription NTEXT = null,
 @TL2Author NVARCHAR(100) = null,
@@ -36,17 +42,16 @@ CREATE PROCEDURE TitleInsertAuto
 @EditionStatement NVARCHAR(450) = null,
 @CurrentPublicationFrequency NVARCHAR(100) = null,
 @PartNumber NVARCHAR(255) = null,
-@PartName NVARCHAR(255) = null
+@PartName NVARCHAR(255) = null,
+@BibliographicLevelID INT = null
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Title]
-(
-	[MARCBibID],
+( 	[MARCBibID],
 	[MARCLeader],
-	[BibliographicLevelID],
 	[TropicosTitleID],
 	[RedirectTitleID],
 	[FullTitle],
@@ -60,7 +65,6 @@ INSERT INTO [dbo].[Title]
 	[Datafield_260_a],
 	[Datafield_260_b],
 	[Datafield_260_c],
-	[InstitutionCode],
 	[LanguageCode],
 	[TitleDescription],
 	[TL2Author],
@@ -75,13 +79,11 @@ INSERT INTO [dbo].[Title]
 	[EditionStatement],
 	[CurrentPublicationFrequency],
 	[PartNumber],
-	[PartName]
-)
+	[PartName],
+	[BibliographicLevelID] )
 VALUES
-(
-	@MARCBibID,
+( 	@MARCBibID,
 	@MARCLeader,
-	@BibliographicLevelID,
 	@TropicosTitleID,
 	@RedirectTitleID,
 	@FullTitle,
@@ -95,7 +97,6 @@ VALUES
 	@Datafield_260_a,
 	@Datafield_260_b,
 	@Datafield_260_c,
-	@InstitutionCode,
 	@LanguageCode,
 	@TitleDescription,
 	@TL2Author,
@@ -110,24 +111,22 @@ VALUES
 	@EditionStatement,
 	@CurrentPublicationFrequency,
 	@PartNumber,
-	@PartName
-)
+	@PartName,
+	@BibliographicLevelID )
 
 SET @TitleID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure TitleInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.TitleInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[TitleID],
 		[MARCBibID],
 		[MARCLeader],
-		[BibliographicLevelID],
 		[TropicosTitleID],
 		[RedirectTitleID],
 		[FullTitle],
@@ -141,7 +140,6 @@ ELSE BEGIN
 		[Datafield_260_a],
 		[Datafield_260_b],
 		[Datafield_260_c],
-		[InstitutionCode],
 		[LanguageCode],
 		[TitleDescription],
 		[TL2Author],
@@ -156,13 +154,18 @@ ELSE BEGIN
 		[EditionStatement],
 		[CurrentPublicationFrequency],
 		[PartNumber],
-		[PartName]	
-
+		[PartName],
+		[BibliographicLevelID]	
 	FROM [dbo].[Title]
-	
 	WHERE
 		[TitleID] = @TitleID
 	
 	RETURN -- insert successful
 END
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
 

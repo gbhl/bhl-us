@@ -1,7 +1,7 @@
 
-// Generated 10/15/2009 4:11:33 PM
+// Generated 6/2/2016 9:32:10 AM
 // Do not modify the contents of this code file.
-// This abstract class __Institution is based upon Institution.
+// This abstract class __Institution is based upon dbo.Institution.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Institution : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -50,17 +50,29 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
 		/// <param name="bHLMemberLibrary"></param>
+		/// <param name="creationDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		public __Institution(string institutionCode, 
 			string institutionName, 
 			string note, 
 			string institutionUrl, 
-			bool bHLMemberLibrary) : this()
+			bool bHLMemberLibrary, 
+			DateTime? creationDate, 
+			DateTime? lastModifiedDate, 
+			int? creationUserID, 
+			int? lastModifiedUserID) : this()
 		{
 			InstitutionCode = institutionCode;
 			InstitutionName = institutionName;
 			Note = note;
 			InstitutionUrl = institutionUrl;
 			BHLMemberLibrary = bHLMemberLibrary;
+			CreationDate = creationDate;
+			LastModifiedDate = lastModifiedDate;
+			CreationUserID = creationUserID;
+			LastModifiedUserID = lastModifiedUserID;
 		}
 		
 		#endregion Constructors
@@ -112,7 +124,27 @@ namespace MOBOT.BHL.DataObjects
 						_BHLMemberLibrary = (bool)column.Value;
 						break;
 					}
-				}
+					case "CreationDate" :
+					{
+						_CreationDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime?)column.Value;
+						break;
+					}
+					case "CreationUserID" :
+					{
+						_CreationUserID = (int?)column.Value;
+						break;
+					}
+					case "LastModifiedUserID" :
+					{
+						_LastModifiedUserID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -120,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region InstitutionCode
 		
@@ -129,9 +161,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: InstitutionCode;
 		/// DBMS data type: nvarchar(10);
-		/// Description: Code for Institution providing assistance.
 		/// </summary>
-		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=1, Description="Code for Institution providing assistance.", CharacterMaxLength=10, IsInForeignKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=1, CharacterMaxLength=10, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public string InstitutionCode
 		{
 			get
@@ -158,9 +189,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: InstitutionName;
 		/// DBMS data type: nvarchar(255);
-		/// Description: Name for the Institution.
 		/// </summary>
-		[ColumnDefinition("InstitutionName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, Description="Name for the Institution.", CharacterMaxLength=255)]
+		[ColumnDefinition("InstitutionName", DbTargetType=SqlDbType.NVarChar, Ordinal=2, CharacterMaxLength=255)]
 		public string InstitutionName
 		{
 			get
@@ -187,9 +217,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <summary>
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
-		/// Description: Notes about this Institution.
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=3, Description="Notes about this Institution.", CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=255, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -263,9 +292,117 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion BHLMemberLibrary
+		
+		#region CreationDate
+		
+		private DateTime? _CreationDate = null;
+		
+		/// <summary>
+		/// Column: CreationDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=6, IsNullable=true)]
+		public DateTime? CreationDate
+		{
+			get
+			{
+				return _CreationDate;
+			}
+			set
+			{
+				if (_CreationDate != value)
+				{
+					_CreationDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationDate
+		
+		#region LastModifiedDate
+		
+		private DateTime? _LastModifiedDate = null;
+		
+		/// <summary>
+		/// Column: LastModifiedDate;
+		/// DBMS data type: datetime; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=7, IsNullable=true)]
+		public DateTime? LastModifiedDate
+		{
+			get
+			{
+				return _LastModifiedDate;
+			}
+			set
+			{
+				if (_LastModifiedDate != value)
+				{
+					_LastModifiedDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedDate
+		
+		#region CreationUserID
+		
+		private int? _CreationUserID = null;
+		
+		/// <summary>
+		/// Column: CreationUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=8, NumericPrecision=10, IsNullable=true)]
+		public int? CreationUserID
+		{
+			get
+			{
+				return _CreationUserID;
+			}
+			set
+			{
+				if (_CreationUserID != value)
+				{
+					_CreationUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CreationUserID
+		
+		#region LastModifiedUserID
+		
+		private int? _LastModifiedUserID = null;
+		
+		/// <summary>
+		/// Column: LastModifiedUserID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
+		public int? LastModifiedUserID
+		{
+			get
+			{
+				return _LastModifiedUserID;
+			}
+			set
+			{
+				if (_LastModifiedUserID != value)
+				{
+					_LastModifiedUserID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -311,7 +448,11 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.InstitutionName) == GetComparisonString(InstitutionName) &&
 					GetComparisonString(o.Note) == GetComparisonString(Note) &&
 					GetComparisonString(o.InstitutionUrl) == GetComparisonString(InstitutionUrl) &&
-					o.BHLMemberLibrary == BHLMemberLibrary 
+					o.BHLMemberLibrary == BHLMemberLibrary &&
+					o.CreationDate == CreationDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					o.CreationUserID == CreationUserID &&
+					o.LastModifiedUserID == LastModifiedUserID 
 				)
 				{
 					o = null;
@@ -416,10 +557,15 @@ namespace MOBOT.BHL.DataObjects
 			public const string InstitutionName = "InstitutionName";	
 			public const string Note = "Note";	
 			public const string InstitutionUrl = "InstitutionUrl";	
-			public const string BHLMemberLibrary = "BHLMemberLibrary";
+			public const string BHLMemberLibrary = "BHLMemberLibrary";	
+			public const string CreationDate = "CreationDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string CreationUserID = "CreationUserID";	
+			public const string LastModifiedUserID = "LastModifiedUserID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiTitleSelectAuto]
+﻿CREATE PROCEDURE [dbo].[ApiTitleSelectAuto]
 
 @TitleID INT
 
@@ -35,7 +34,6 @@ ELSE
 			t.[Datafield_260_a],
 			t.[Datafield_260_b],
 			t.[Datafield_260_c],
-			t.[InstitutionCode],
 			t.[LanguageCode],
 			t.[TitleDescription],
 			t.[TL2Author],
@@ -58,4 +56,3 @@ ELSE
 				AND d.DOIEntityTypeID = @DOIEntityTypeTitleID
 	WHERE	t.[TitleID] = @TitleID
 	AND		t.[PublishReady] = 1
-

@@ -228,7 +228,7 @@ namespace BHLOAIHarvester
             oaiDataRecord.Lccn = oaiRecord.Llc;
             oaiDataRecord.Doi = oaiRecord.Doi;
             oaiDataRecord.Url = oaiRecord.Url;
-            oaiDataRecord.Contributor = oaiRecord.Contributor;
+            if (oaiRecord.Contributors.Count > 0) oaiDataRecord.Contributor = oaiRecord.Contributors[0];
 
             foreach (KeyValuePair<string, MOBOT.BHL.OAI2.OAIRecord> relatedTitle in oaiRecord.RelatedTitles)
             {

@@ -17,8 +17,7 @@ namespace MOBOT.BHL.DataObjects
 		private string _paginationUserName;
 		private string _downloadUrl;
         private short? _itemSequence = null;
-        private string _institutionName;
-        private string _institutionUrl;
+        private CustomGenericList<Institution> _contributors = new CustomGenericList<Institution>();
 		private CustomGenericList<Page> _pages = new CustomGenericList<Page>();
         private CustomGenericList<Title> _titles = new CustomGenericList<Title>();
         private CustomGenericList<TitleItem> _titleItems = new CustomGenericList<TitleItem>();
@@ -28,10 +27,12 @@ namespace MOBOT.BHL.DataObjects
         private string[] authorStrings = null;
         private string[] tagStrings = null;
         private string[] associationStrings = null;
+        private string[] contributorStrings = null;
         private string _publicationDetails;
         private int _numberOfSegments = 0;
         private int _numberOfPages = 0;
         private int _totalItems = 0;
+        private int? _firstPageID = null;
 
 		public string DisplayedShortVolume
 		{
@@ -43,6 +44,12 @@ namespace MOBOT.BHL.DataObjects
 					return Volume;
 			}
 		}
+
+        public CustomGenericList<Institution> Contributors
+        {
+            get { return this._contributors; }
+            set { this._contributors = value; }
+        }
 
 		public CustomGenericList<Page> Pages
 		{
@@ -134,18 +141,6 @@ namespace MOBOT.BHL.DataObjects
             set { this._itemSequence = value; }
         }
 
-        public string InstitutionName
-        {
-            get { return _institutionName; }
-            set { _institutionName = value; }
-        }
-
-        public string InstitutionUrl
-        {
-            get { return _institutionUrl; }
-            set { _institutionUrl = value; }
-        }
-
         public string[] TagStrings
         {
             get { return tagStrings; }
@@ -171,6 +166,11 @@ namespace MOBOT.BHL.DataObjects
             get { return associationStrings; }
         }
 
+        public string[] ContributorStrings
+        {
+            get { return contributorStrings; }
+        }
+
         public string PublicationDetails
         {
             get { return _publicationDetails; }
@@ -193,6 +193,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _totalItems; }
             set { _totalItems = value; }
+        }
+
+        public int? FirstPageID
+        {
+            get { return _firstPageID; }
+            set { _firstPageID = value; }
         }
 
         #endregion
@@ -236,9 +242,22 @@ namespace MOBOT.BHL.DataObjects
             associationStrings = associationTextString.Split('|');
         }
 
-		#region ISet override
+        private void ProcessContributorTextString(string value)
+        {
+            string contributorTextString = "";
+            //strip off the trailing separator if necessary
+            if (value != null && value.EndsWith("|"))
+                value = value.Substring(0, value.Length - 1);
 
-		public override void SetValues( CustomDataRow row )
+            if (value != null)
+                contributorTextString = value;
+
+            contributorStrings = contributorTextString.Split('|');
+        }
+
+        #region ISet override
+
+        public override void SetValues( CustomDataRow row )
 		{
 			foreach ( CustomDataColumn column in row )
 			{
@@ -257,6 +276,11 @@ namespace MOBOT.BHL.DataObjects
                     case "AssociationTextString":
                         {
                             ProcessAssociationTextString(Utility.EmptyIfNull(column.Value));
+                            break;
+                        }
+                    case "ContributorTextString":
+                        {
+                            ProcessContributorTextString(Utility.EmptyIfNull(column.Value));
                             break;
                         }
                     case "TitleName":
@@ -304,16 +328,6 @@ namespace MOBOT.BHL.DataObjects
                             _itemSequence = (short?)column.Value;
                             break;
                         }
-                    case "InstitutionName":
-                        {
-                            _institutionName = Utility.EmptyIfNull(column.Value);
-                            break;
-                        }
-                    case "InstitutionUrl":
-                        {
-                            _institutionUrl = Utility.EmptyIfNull(column.Value);
-                            break;
-                        }
                     case "PublicationDetails":
                         {
                             _publicationDetails = Utility.EmptyIfNull(column.Value);
@@ -332,6 +346,11 @@ namespace MOBOT.BHL.DataObjects
                     case "TotalItems":
                         {
                             _totalItems = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "FirstPageID":
+                        {
+                            _firstPageID = (int?)column.Value;
                             break;
                         }
 				}

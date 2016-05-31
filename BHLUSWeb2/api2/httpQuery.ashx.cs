@@ -81,7 +81,7 @@ namespace MOBOT.BHL.Web2.api2
                 {
                     String identifierType = context.Request.QueryString["type"];
                     String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
+                    ServiceResponse<Item> serviceResponse = new ServiceResponse<Item>();
                     serviceResponse.Result = this.GetItemByIdentifier(identifierType, identifierValue, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -460,7 +460,7 @@ namespace MOBOT.BHL.Web2.api2
             return api.GetItemMetadata(itemID, includePages, includeOcr, includeParts);
         }
 
-        private CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
+        private Item GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             ValidateUser(Api2.APIRequestType.GetItemByIdentifier, apiKey, identifierType + "|" + identifierValue);
             Api2 api = new Api2();

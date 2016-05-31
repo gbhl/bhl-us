@@ -172,21 +172,6 @@ namespace MOBOT.BHL.AdminWeb
             ddlBibliographicLevel.DataValueField = "BibliographicLevelID";
             ddlBibliographicLevel.DataBind();
 
-            CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
-
-            /*
-            Institution emptyInstitution = new Institution();
-            emptyInstitution.InstitutionCode = string.Empty;
-            emptyInstitution.InstitutionName = string.Empty;
-            institutions.Insert(0, emptyInstitution);
-             */
-
-            ddlInst.DataSource = institutions;
-            ddlInst.DataTextField = "InstitutionName";
-            ddlInst.DataValueField = "InstitutionCode";
-            ddlInst.DataBind();
-            ddlInst.SelectedValue = "UNKNOWN";
-
             CustomGenericList<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
@@ -226,14 +211,6 @@ namespace MOBOT.BHL.AdminWeb
             partNumberTextBox.Text = title.PartNumber;
             partNameTextBox.Text = title.PartName;
 			callNumberTextBox.Text = title.CallNumber;
-            if (title.InstitutionCode != null && title.InstitutionCode.Length > 0)
-            {
-                ddlInst.SelectedValue = title.InstitutionCode;
-            }
-            else
-            {
-                ddlInst.SelectedValue = "UNKNOWN";
-            }
 
 			if ( title.LanguageCode != null && title.LanguageCode.Length > 0 )
 			{
@@ -1687,7 +1664,6 @@ namespace MOBOT.BHL.AdminWeb
                 title.PartNumber = partNumberTextBox.Text.Trim();
                 title.PartName = partNameTextBox.Text.Trim();
 				title.CallNumber = callNumberTextBox.Text.Trim();
-                title.InstitutionCode = (ddlInst.SelectedValue.Length == 0 ? null : ddlInst.SelectedValue);
 				title.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
 				title.TitleDescription = descTextBox.Text.Trim();
 				title.PublicationDetails = publicationPlaceTextBox.Text.Trim() + publisherNameTextBox.Text.Trim() + publicationDateTextBox.Text.Trim();

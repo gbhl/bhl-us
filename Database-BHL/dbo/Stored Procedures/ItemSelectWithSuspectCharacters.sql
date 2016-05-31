@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectWithSuspectCharacters]
+﻿CREATE PROCEDURE [dbo].[ItemSelectWithSuspectCharacters]
 
 @InstitutionCode NVARCHAR(10) = '',
 @MaxAge INT = 30
@@ -14,8 +13,7 @@ SELECT	t.TitleID,
 		t.ShortTitle,
 		i.ItemID,
 		i.BarCode,
-		i.InstitutionCode,
-		ISNULL(inst.InstitutionName, '') AS InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0) AS InstitutionName,
 		i.CreationDate,
 		CHAR(dbo.fnContainsSuspectCharacter(i.Volume)) AS VolumeSuspect, 
 		i.Volume,
@@ -27,10 +25,13 @@ FROM	dbo.Item i INNER JOIN dbo.TitleItem ti
 			ON ti.TitleID = t.TitleID
 		LEFT JOIN (SELECT * FROM dbo.Title_Identifier WHERE IdentifierID = 1) AS oclc
 			ON t.TitleID = oclc.TitleID
-		LEFT JOIN dbo.Institution inst
-			ON i.InstitutionCode = inst.InstitutionCode
+		INNER JOIN dbo.ItemInstitution ii
+			ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r
+			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	dbo.fnContainsSuspectCharacter(i.Volume) > 0
-AND		(i.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
+AND		r.InstitutionRoleName = 'Contributor'
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		i.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY
 		CHAR(dbo.fnContainsSuspectCharacter(i.Volume)), 
@@ -41,11 +42,7 @@ GROUP BY
 		i.CreationDate,
 		i.BarCode,
 		oclc.IdentifierValue,
-		i.InstitutionCode,
-		inst.InstitutionName
+		dbo.fnContributorStringForTitle(t.TitleID, 0)
 ORDER BY
-		inst.InstitutionName, i.CreationDate DESC
+		InstitutionName, i.CreationDate DESC
 END
-
-
-

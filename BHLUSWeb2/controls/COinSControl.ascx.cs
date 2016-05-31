@@ -155,7 +155,13 @@ namespace MOBOT.BHL.Web2
                         if (coins.Rft_publisher != String.Empty) output.Append("&amp;rft.publisher=" + Server.UrlEncode(coins.Rft_publisher));
                         if (titleId != 0)
                         {
-                            if (coins.Rft_contributor_TITLE != String.Empty) output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor_TITLE));
+                            if (coins.Rft_contributor_TITLE != String.Empty)
+                            {
+                                if (coins.Rft_contributor_TITLE.Split('|').Length == 1)
+                                    output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor_TITLE));
+                                else
+                                    output.Append("&amp;rft.contributor = Multiple institutions");
+                            }
                         }
                         else if (itemId != 0)
                         {
@@ -265,8 +271,13 @@ namespace MOBOT.BHL.Web2
                                 if (author != String.Empty) output.Append("&amp;rft.creator=" + Server.UrlEncode(author));
                             }
                         }
-                        if (coins.Rft_contributor != String.Empty) output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor));
-
+                        if (coins.Rft_contributor != String.Empty)
+                        {
+                            if (coins.Rft_contributor.Split('|').Length == 1)
+                                output.Append("&amp;rft.contributor=" + Server.UrlEncode(coins.Rft_contributor));
+                            else
+                                output.Append("&amp;rft.contributor = Multiple institutions");
+                        }
                         if (coins.Rft_subject != String.Empty)
                         {
                             String[] subjects = coins.Rft_subject.Split('|');

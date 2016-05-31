@@ -5,15 +5,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<br />
-	<span class="pageHeader">Contributors</span><hr />
+	<span class="pageHeader">Content Providers</span><hr />
 	<br />	<div>
-		Contributors:
+		Content Providers:
 		<asp:DropDownList ID="ddlInstitutions" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlInstitutions_SelectedIndexChanged" />
 	</div>
 	<br />
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
-	<br />
-	<div class="box" style="padding: 5px;margin-right:5px">
+    <div style="padding:5px;margin-top:5px;margin-bottom:5px;width:600px">
+        Content Providers are institutions or individuals that have contributed to BHL in some way.  Some of the roles a content
+        provider may fill include <strong>Contributor</strong> (of books, articles, or metadata), <strong>Rights Holder</strong>, 
+        or <strong>Scanning Institution</strong>.
+    </div>
+	<div class="box" style="padding:5px;margin-right:5px;width:600px">
 		<table cellpadding="4" width="100%">
 			<tr>
 				<td style="white-space: nowrap" align="right">

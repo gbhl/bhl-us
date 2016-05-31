@@ -1,10 +1,22 @@
-﻿CREATE PROCEDURE SegmentUpdateAuto
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[SegmentUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[SegmentUpdateAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Update Procedure for dbo.Segment
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:37 AM
+
+CREATE PROCEDURE dbo.SegmentUpdateAuto
 
 @SegmentID INT,
 @ItemID INT,
 @SegmentStatusID INT,
-@ContributorCode NVARCHAR(10),
-@ContributorSegmentID NVARCHAR(100),
 @SequenceOrder SMALLINT,
 @SegmentGenreID INT,
 @Title NVARCHAR(2000),
@@ -42,13 +54,9 @@ AS
 SET NOCOUNT ON
 
 UPDATE [dbo].[Segment]
-
 SET
-
 	[ItemID] = @ItemID,
 	[SegmentStatusID] = @SegmentStatusID,
-	[ContributorCode] = @ContributorCode,
-	[ContributorSegmentID] = @ContributorSegmentID,
 	[SequenceOrder] = @SequenceOrder,
 	[SegmentGenreID] = @SegmentGenreID,
 	[Title] = @Title,
@@ -81,24 +89,20 @@ SET
 	[LastModifiedUserID] = @LastModifiedUserID,
 	[SortTitle] = @SortTitle,
 	[RedirectSegmentID] = @RedirectSegmentID
-
 WHERE
 	[SegmentID] = @SegmentID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure SegmentUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.SegmentUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[SegmentID],
 		[ItemID],
 		[SegmentStatusID],
-		[ContributorCode],
-		[ContributorSegmentID],
 		[SequenceOrder],
 		[SegmentGenreID],
 		[Title],
@@ -133,12 +137,16 @@ ELSE BEGIN
 		[LastModifiedUserID],
 		[SortTitle],
 		[RedirectSegmentID]
-
 	FROM [dbo].[Segment]
-	
 	WHERE
 		[SegmentID] = @SegmentID
 	
 	RETURN -- update successful
 END
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
 

@@ -104,8 +104,10 @@
     <Compile Include="Concrete\ImportRecordErrorLog.cs" />
     <Compile Include="Concrete\ImportRecordKeyword.cs" />
     <Compile Include="Concrete\ImportRecordStatus.cs" />
+    <Compile Include="Concrete\InstitutionRole.cs" />
     <Compile Include="Concrete\ItemCOinSView.cs" />
     <Compile Include="Concrete\ItemCollection.cs" />
+    <Compile Include="Concrete\ItemInstitution.cs" />
     <Compile Include="Concrete\ItemLanguage.cs" />
     <Compile Include="Concrete\ItemNameFileLog.cs" />
     <Compile Include="Concrete\ItemSource.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Concrete\SegmentCOinSView.cs" />
     <Compile Include="Concrete\SegmentGenre.cs" />
     <Compile Include="Concrete\SegmentIdentifier.cs" />
+    <Compile Include="Concrete\SegmentInstitution.cs" />
     <Compile Include="Concrete\SegmentKeyword.cs" />
     <Compile Include="Concrete\SegmentPage.cs" />
     <Compile Include="Concrete\SegmentResolutionLog.cs" />
@@ -216,8 +219,10 @@
     <Compile Include="Generated\__ImportRecordErrorLog.cs" />
     <Compile Include="Generated\__ImportRecordKeyword.cs" />
     <Compile Include="Generated\__ImportRecordStatus.cs" />
+    <Compile Include="Generated\__InstitutionRole.cs" />
     <Compile Include="Generated\__ItemCOinSView.cs" />
     <Compile Include="Generated\__ItemCollection.cs" />
+    <Compile Include="Generated\__ItemInstitution.cs" />
     <Compile Include="Generated\__ItemLanguage.cs" />
     <Compile Include="Generated\__ItemNameFileLog.cs" />
     <Compile Include="Generated\__ItemSource.cs" />
@@ -248,6 +253,7 @@
     <Compile Include="Generated\__SegmentCOinSView.cs" />
     <Compile Include="Generated\__SegmentGenre.cs" />
     <Compile Include="Generated\__SegmentIdentifier.cs" />
+    <Compile Include="Generated\__SegmentInstitution.cs" />
     <Compile Include="Generated\__SegmentKeyword.cs" />
     <Compile Include="Generated\__SegmentPage.cs" />
     <Compile Include="Generated\__SegmentResolutionLog.cs" />

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSegmentSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[ApiSegmentSelectByItemID]
 
 @ItemID INT
 
@@ -15,10 +14,7 @@ IF (@RedirItemID IS NOT NULL)
 ELSE
 	SELECT	s.SegmentID,
 			s.ItemID,
-			s.ContributorCode,
-			s.ContributorSegmentID,
 			s.SequenceOrder,
-			inst.InstitutionName AS ContributorName,
 			s.SegmentGenreID,
 			g.GenreName,
 			s.Title,
@@ -58,7 +54,6 @@ ELSE
 			s.CreationUserID,
 			s.LastModifiedUserID
 	FROM	dbo.Segment s 
-			LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 			INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 			LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 			INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
@@ -67,7 +62,3 @@ ELSE
 	AND		s.SegmentStatusID IN (10, 20)  -- New, Published
 	ORDER BY
 			s.SequenceOrder
-
-
-
-

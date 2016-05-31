@@ -1,9 +1,9 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectByInstitution]
+﻿CREATE PROCEDURE [dbo].[ItemSelectByInstitution]
 
 @InstitutionCode nvarchar(10),
 @ReturnCount int = 100,
-@SortBy nvarchar(10) = 'Date'
+@SortBy nvarchar(10) = 'Date',
+@InstitutionRoleName nvarchar(100) = 'Contributor'
 
 AS 
 
@@ -22,9 +22,12 @@ SELECT TOP (@ReturnCount)
 		i.CreationDate
 INTO	#Item
 FROM	dbo.Item i  WITH (NOLOCK)
+		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
 		INNER JOIN dbo.Title t  WITH (NOLOCK)ON i.PrimaryTitleID = t.TitleID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
-WHERE	i.InstitutionCode = @InstitutionCode
+WHERE	ii.InstitutionCode = @InstitutionCode
+AND		(r.InstitutionRoleName = @InstitutionRoleName OR @InstitutionRoleName IS NULL)
 ORDER BY
 		i.CreationDate DESC
 
@@ -42,5 +45,3 @@ BEGIN
 END
 
 END
-
-

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectWithExpiredPageNames]
+﻿CREATE PROCEDURE [dbo].[ItemSelectWithExpiredPageNames]
 
 @MaxAge INT  -- Maximum allowed age of page names (in days)
 
@@ -7,44 +6,37 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
-	[ItemID],
-	[PrimaryTitleID],
-	[BarCode],
-	[MARCItemID],
-	[CallNumber],
-	[Volume],
-	[InstitutionCode],
-	[LanguageCode],
-	[ItemDescription],
-	[ScannedBy],
-	[PDFSize],
-	[VaultID],
-	[NumberOfFiles],
-	[Note],
+SELECT	[ItemID],
+		[PrimaryTitleID],
+		[BarCode],
+		[MARCItemID],
+		[CallNumber],
+		[Volume],
+		[LanguageCode],
+		[ItemDescription],
+		[ScannedBy],
+		[PDFSize],
+		[VaultID],
+		[Note],
 		[CreationDate],
-	[LastModifiedDate],
-	[CreationUserID],
-	[LastModifiedUserID],
-	[ItemStatusID],
-	[ItemSourceID],
-	[ScanningUser],
-	[ScanningDate],
-	[Year],
-	[IdentifierBib],
-	[PaginationCompleteUserID],
-	[PaginationCompleteDate],
-	[PaginationStatusID],
-	[PaginationStatusUserID],
-	[PaginationStatusDate],
-	[LastPageNameLookupDate]
-
-FROM [dbo].[Item]
-
-WHERE
-	DATEDIFF(day, [LastPageNameLookupDate], GETDATE()) > @MaxAge
-AND	[ItemStatusID] = 40
+		[LastModifiedDate],
+		[CreationUserID],
+		[LastModifiedUserID],
+		[ItemStatusID],
+		[ItemSourceID],
+		[ScanningUser],
+		[ScanningDate],
+		[Year],
+		[IdentifierBib],
+		[PaginationCompleteUserID],
+		[PaginationCompleteDate],
+		[PaginationStatusID],
+		[PaginationStatusUserID],
+		[PaginationStatusDate],
+		[LastPageNameLookupDate]
+FROM	[dbo].[Item]
+WHERE	DATEDIFF(day, [LastPageNameLookupDate], GETDATE()) > @MaxAge
+AND		[ItemStatusID] = 40
 
 IF @@ERROR <> 0
 BEGIN

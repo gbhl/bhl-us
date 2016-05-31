@@ -127,6 +127,14 @@ namespace MOBOT.BHL.Web2.Services
                         (searchCollection == 0 ? null : (int?)searchCollection), 500, "title");
                 }
 
+                if (searchResult != null)
+                {
+                    foreach (SearchBookResult result in searchResult)
+                    {
+                        if (result.InstitutionName.Contains("|")) result.InstitutionName = "Multiple institutions";
+                    }
+                }
+
                 // Output the data as CSV
                 this.GetBookCSVString(context, searchResult);
             }

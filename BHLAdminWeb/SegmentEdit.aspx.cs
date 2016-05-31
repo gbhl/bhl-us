@@ -65,13 +65,14 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     // Get the description of the newly selected item
                     Item item = provider.ItemSelectAuto(Convert.ToInt32(selectedItemId));
+                    CustomGenericList<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(selectedItemId), InstitutionRole.Contributor);
                     Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
 
                     itemIDLabel.Text = selectedItemId;
                     itemDescLabel.Text = title.ShortTitle + " " + item.Volume;
 
                     // Use Title/Item metadata to set the journal details for this segment
-                    ddlContributor.SelectedValue = item.InstitutionCode ?? string.Empty;
+                    if (institutions.Count > 0) ddlContributor.SelectedValue = institutions[0].InstitutionCode;
                     containerTitleTextBox.Text = title.FullTitle ?? string.Empty;
                     publicationDetailsTextBox.Text = title.PublicationDetails ?? string.Empty;
                     publisherNameTextBox.Text = title.Datafield_260_b ?? string.Empty;
@@ -279,6 +280,9 @@ namespace MOBOT.BHL.AdminWeb
             ddlContributor.DataSource = institutions;
             ddlContributor.DataBind();
 
+            ddlContributor2.DataSource = institutions;
+            ddlContributor2.DataBind();
+
             CustomGenericList<Language> languages = bp.LanguageSelectAll();
 
             Language emptyLanguage = new Language();
@@ -329,7 +333,6 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
                 lblDOIName.Text = segment.DOIName;
-                contributorSegmentIDLabel.Text = segment.ContributorSegmentID;
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
@@ -358,13 +361,18 @@ namespace MOBOT.BHL.AdminWeb
                 ddlSegmentStatus.SelectedValue = segment.SegmentStatusID.ToString();
                 ddlSegmentGenre.SelectedValue = segment.SegmentGenreID.ToString();
 
-                if (segment.ContributorCode != null && segment.ContributorCode.Length > 0)
+                switch (segment.ContributorList.Count)
                 {
-                    ddlContributor.SelectedValue = segment.ContributorCode;
-                }
-                else
-                {
-                    ddlContributor.SelectedIndex = 0;
+                    case 0:
+                        ddlContributor.SelectedIndex = 0;
+                        break;
+                    case 1:
+                        ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
+                        break;
+                    default:    // 2 or more contributors (should only be two at most)
+                        ddlContributor.SelectedValue = segment.ContributorList[0].InstitutionCode;
+                        ddlContributor2.SelectedValue = segment.ContributorList[1].InstitutionCode;
+                        break;
                 }
 
                 if (segment.LanguageCode != null && segment.LanguageCode.Length > 0)
@@ -1187,11 +1195,6 @@ namespace MOBOT.BHL.AdminWeb
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);
                 string contributorCode = (ddlContributor.SelectedValue.Length == 0 ? null : ddlContributor.SelectedValue);
-                if (segment.ContributorCode != contributorCode)
-                {
-                    segment.ContributorCode = contributorCode;
-                    segment.ContributorSegmentID = string.Empty;    // If the contributor has changed, remove the contributor's ID for the segment
-                }
                 segment.Title = titleTextBox.Text.Trim();
                 segment.SortTitle = sortTitleTextBox.Text.Trim();
                 segment.TranslatedTitle = translatedTitleTextBox.Text.Trim();
@@ -1219,7 +1222,49 @@ namespace MOBOT.BHL.AdminWeb
                 segment.IsPrimary = (short)(chkPrimary.Checked ? 1 : 0);
                 segment.IsNew = (segment.SegmentID == 0);
 
+                //----------------------------------------
+
+                // Mark for deletion any contributors that have been removed
+                bool contributorExists = false;
+                bool contributor2Exists = false;
+                foreach (Institution institution in segment.ContributorList)
+                {
+                    if (institution.InstitutionCode != ddlContributor.SelectedValue &&
+                        institution.InstitutionCode != ddlContributor2.SelectedValue)
+                    {
+                        institution.IsDeleted = true;
+                    }
+                    else
+                    {
+                        if (institution.InstitutionCode == ddlContributor.SelectedValue) contributorExists = true;
+                        if (institution.InstitutionCode == ddlContributor2.SelectedValue) contributor2Exists = true;
+                    }
+                }
+
+                // Add new contributors
+                if (!contributorExists && ddlContributor.SelectedValue != string.Empty)
+                {
+                    Institution newContributor = new Institution();
+                    newContributor.InstitutionCode = ddlContributor.SelectedValue;
+                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
+                    newContributor.IsNew = true;
+                    segment.ContributorList.Add(newContributor);
+                }
+
+                if (!contributor2Exists && ddlContributor2.SelectedValue != string.Empty && 
+                    ddlContributor.SelectedValue != ddlContributor2.SelectedValue)
+                {
+                    Institution newContributor = new Institution();
+                    newContributor.InstitutionCode = ddlContributor2.SelectedValue;
+                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
+                    newContributor.IsNew = true;
+                    segment.ContributorList.Add(newContributor);
+                }
+
+                //----------------------------------------
+
                 // Forces deletes to happen first
+                segment.ContributorList.Sort(SortOrder.Descending, "IsDeleted");
                 segment.IdentifierList.Sort(SortOrder.Descending, "IsDeleted");
                 segment.AuthorList.Sort(SortOrder.Descending, "IsDeleted");
                 segment.KeywordList.Sort(SortOrder.Descending, "IsDeleted");

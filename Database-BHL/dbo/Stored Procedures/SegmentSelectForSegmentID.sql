@@ -13,9 +13,7 @@ SELECT	s.SegmentID,
 		s.SegmentStatusID,
 		st.StatusName,
 		d.DOIName,
-		s.ContributorCode,
-		inst.InstitutionName AS ContributorName,
-		s.ContributorSegmentID,
+		dbo.fnContributorStringForSegment(s.SegmentID) AS ContributorName,
 		s.SequenceOrder,
 		s.SegmentGenreID,
 		g.GenreName,
@@ -61,10 +59,7 @@ SELECT	s.SegmentID,
 FROM	dbo.Segment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		LEFT JOIN dbo.[Language] l ON s.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.SegmentClusterSegment scs ON s.SegmentID = scs.SegmentID
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 -- segment
 WHERE	s.SegmentID = @SegmentID
-
-

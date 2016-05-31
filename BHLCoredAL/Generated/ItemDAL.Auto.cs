@@ -1,5 +1,5 @@
 
-// Generated 5/27/2016 10:48:02 AM
+// Generated 6/2/2016 9:32:20 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -141,13 +141,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="volume"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="itemDescription"></param>
 		/// <param name="scannedBy"></param>
 		/// <param name="pDFSize"></param>
 		/// <param name="vaultID"></param>
-		/// <param name="numberOfFiles"></param>
 		/// <param name="note"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -201,13 +199,11 @@ namespace MOBOT.BHL.DAL
 			string mARCItemID,
 			string callNumber,
 			string volume,
-			string institutionCode,
 			string languageCode,
 			string itemDescription,
 			int? scannedBy,
 			int? pDFSize,
 			int? vaultID,
-			short? numberOfFiles,
 			string note,
 			int? creationUserID,
 			int? lastModifiedUserID,
@@ -253,7 +249,7 @@ namespace MOBOT.BHL.DAL
 			DateTime? volumeReviewedDate,
 			int? volumeReviewedUserID)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHL", primaryTitleID, barCode, mARCItemID, callNumber, volume, languageCode, itemDescription, scannedBy, pDFSize, vaultID, note, creationUserID, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID );
 		}
 		
 		/// <summary>
@@ -267,13 +263,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="volume"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="itemDescription"></param>
 		/// <param name="scannedBy"></param>
 		/// <param name="pDFSize"></param>
 		/// <param name="vaultID"></param>
-		/// <param name="numberOfFiles"></param>
 		/// <param name="note"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -328,13 +322,11 @@ namespace MOBOT.BHL.DAL
 			string mARCItemID,
 			string callNumber,
 			string volume,
-			string institutionCode,
 			string languageCode,
 			string itemDescription,
 			int? scannedBy,
 			int? pDFSize,
 			int? vaultID,
-			short? numberOfFiles,
 			string note,
 			int? creationUserID,
 			int? lastModifiedUserID,
@@ -390,13 +382,11 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
-					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NText, 1073741823, true, itemDescription),
 					CustomSqlHelper.CreateInputParameter("ScannedBy", SqlDbType.Int, null, true, scannedBy),
 					CustomSqlHelper.CreateInputParameter("PDFSize", SqlDbType.Int, null, true, pDFSize),
 					CustomSqlHelper.CreateInputParameter("VaultID", SqlDbType.Int, null, true, vaultID),
-					CustomSqlHelper.CreateInputParameter("NumberOfFiles", SqlDbType.SmallInt, null, true, numberOfFiles),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
@@ -495,13 +485,11 @@ namespace MOBOT.BHL.DAL
 				value.MARCItemID,
 				value.CallNumber,
 				value.Volume,
-				value.InstitutionCode,
 				value.LanguageCode,
 				value.ItemDescription,
 				value.ScannedBy,
 				value.PDFSize,
 				value.VaultID,
-				value.NumberOfFiles,
 				value.Note,
 				value.CreationUserID,
 				value.LastModifiedUserID,
@@ -621,13 +609,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="volume"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="itemDescription"></param>
 		/// <param name="scannedBy"></param>
 		/// <param name="pDFSize"></param>
 		/// <param name="vaultID"></param>
-		/// <param name="numberOfFiles"></param>
 		/// <param name="note"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="itemStatusID"></param>
@@ -681,13 +667,11 @@ namespace MOBOT.BHL.DAL
 			string mARCItemID,
 			string callNumber,
 			string volume,
-			string institutionCode,
 			string languageCode,
 			string itemDescription,
 			int? scannedBy,
 			int? pDFSize,
 			int? vaultID,
-			short? numberOfFiles,
 			string note,
 			int? lastModifiedUserID,
 			int itemStatusID,
@@ -732,7 +716,7 @@ namespace MOBOT.BHL.DAL
 			DateTime? volumeReviewedDate,
 			int? volumeReviewedUserID)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, barCode, mARCItemID, callNumber, volume, institutionCode, languageCode, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHL", itemID, primaryTitleID, barCode, mARCItemID, callNumber, volume, languageCode, itemDescription, scannedBy, pDFSize, vaultID, note, lastModifiedUserID, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, itemSourceID, year, identifierBib, fileRootFolder, zQuery, sponsor, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, thumbnailPageID, redirectItemID, externalUrl, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart, volumeReviewed, volumeReviewedDate, volumeReviewedUserID);
 		}
 		
 		/// <summary>
@@ -747,13 +731,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="mARCItemID"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="volume"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="itemDescription"></param>
 		/// <param name="scannedBy"></param>
 		/// <param name="pDFSize"></param>
 		/// <param name="vaultID"></param>
-		/// <param name="numberOfFiles"></param>
 		/// <param name="note"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <param name="itemStatusID"></param>
@@ -808,13 +790,11 @@ namespace MOBOT.BHL.DAL
 			string mARCItemID,
 			string callNumber,
 			string volume,
-			string institutionCode,
 			string languageCode,
 			string itemDescription,
 			int? scannedBy,
 			int? pDFSize,
 			int? vaultID,
-			short? numberOfFiles,
 			string note,
 			int? lastModifiedUserID,
 			int itemStatusID,
@@ -869,13 +849,11 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 100, true, callNumber),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, true, volume),
-					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NText, 1073741823, true, itemDescription),
 					CustomSqlHelper.CreateInputParameter("ScannedBy", SqlDbType.Int, null, true, scannedBy),
 					CustomSqlHelper.CreateInputParameter("PDFSize", SqlDbType.Int, null, true, pDFSize),
 					CustomSqlHelper.CreateInputParameter("VaultID", SqlDbType.Int, null, true, vaultID),
-					CustomSqlHelper.CreateInputParameter("NumberOfFiles", SqlDbType.SmallInt, null, true, numberOfFiles),
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
@@ -974,13 +952,11 @@ namespace MOBOT.BHL.DAL
 				value.MARCItemID,
 				value.CallNumber,
 				value.Volume,
-				value.InstitutionCode,
 				value.LanguageCode,
 				value.ItemDescription,
 				value.ScannedBy,
 				value.PDFSize,
 				value.VaultID,
-				value.NumberOfFiles,
 				value.Note,
 				value.LastModifiedUserID,
 				value.ItemStatusID,
@@ -1073,13 +1049,11 @@ namespace MOBOT.BHL.DAL
 						value.MARCItemID,
 						value.CallNumber,
 						value.Volume,
-						value.InstitutionCode,
 						value.LanguageCode,
 						value.ItemDescription,
 						value.ScannedBy,
 						value.PDFSize,
 						value.VaultID,
-						value.NumberOfFiles,
 						value.Note,
 						value.CreationUserID,
 						value.LastModifiedUserID,
@@ -1155,13 +1129,11 @@ namespace MOBOT.BHL.DAL
 						value.MARCItemID,
 						value.CallNumber,
 						value.Volume,
-						value.InstitutionCode,
 						value.LanguageCode,
 						value.ItemDescription,
 						value.ScannedBy,
 						value.PDFSize,
 						value.VaultID,
-						value.NumberOfFiles,
 						value.Note,
 						value.LastModifiedUserID,
 						value.ItemStatusID,

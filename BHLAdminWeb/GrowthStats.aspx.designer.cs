@@ -49,13 +49,40 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.Button btnDownload;
         
         /// <summary>
-        /// imgMonthly control.
+        /// imgMonthlyItems control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage imgMonthly;
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgMonthlyItems;
+        
+        /// <summary>
+        /// imgMonthlyPages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgMonthlyPages;
+        
+        /// <summary>
+        /// imgMonthlyNames control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgMonthlyNames;
+        
+        /// <summary>
+        /// imgMonthlySegments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage imgMonthlySegments;
         
         /// <summary>
         /// imgCumulative control.

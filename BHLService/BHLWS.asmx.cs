@@ -299,6 +299,13 @@ namespace MOBOT.BHL.WebService
             return bhlServer.InstitutionSelectAuto(institutionCode);
         }
 
+        [WebMethod]
+        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.InstitutionSelectByItemIDAndRole(itemID, role);
+        }
+
         #endregion
 
         #region Email Methods

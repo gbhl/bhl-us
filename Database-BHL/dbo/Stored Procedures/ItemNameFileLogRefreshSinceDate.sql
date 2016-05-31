@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemNameFileLogRefreshSinceDate]
+﻿CREATE PROCEDURE [dbo].[ItemNameFileLogRefreshSinceDate]
 
 @StartDate datetime
 
@@ -29,11 +28,15 @@ WHERE	t.CreationDate > @StartDate OR t.LastModifiedDate > @StartDate
 
 -- Remove any items not contributed by BHL member libraries
 DELETE	#tmpItem
-FROM	#tmpItem t INNER JOIN dbo.Item i
-			ON t.ItemID = i.ItemiD
-		LEFT JOIN dbo.Institution inst
-			ON i.InstitutionCode = inst.InstitutionCode
-WHERE	ISNULL(inst.BHLMemberLibrary, 0) = 0
+WHERE	ItemID IN (
+			SELECT	t.ItemID
+			FROM	#tmpItem t 
+					INNER JOIN dbo.Item i ON t.ItemID = i.ItemiD
+					INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+					INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
+					INNER JOIN dbo.Institution inst ON ii.InstitutionCode = inst.InstitutionCode
+			WHERE	r.InstitutionRoleName = 'Contributor'
+			GROUP BY t.ItemID HAVING SUM(CONVERT(int, inst.BHLMemberLibrary)) = 0)
 
 -- Add new rows to table
 INSERT INTO dbo.ItemNameFileLog (ItemID, DoUpload)
@@ -55,4 +58,3 @@ FROM	#tmpItem t INNER JOIN dbo.Item i
 			ON t.ItemID = l.ItemID
 
 END
-

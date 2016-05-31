@@ -895,9 +895,12 @@ namespace MOBOT.BHL.OAIMODS
                 sb.Append("<note" + noteTypeAttrib + ">" + HttpUtility.HtmlEncode(note.Value) + "</note>\n");
             }
 
-            if (_oaiRecord.Type == OAIRecord.RecordType.Issue && !String.IsNullOrEmpty(_oaiRecord.Contributor))
+            if (_oaiRecord.Type == OAIRecord.RecordType.Issue)
             {
-                sb.Append("<note type=\"ownership\">" + HttpUtility.HtmlEncode(_oaiRecord.Contributor) + "</note>\n");
+                foreach (string contributor in _oaiRecord.Contributors)
+                {
+                    sb.Append("<note type=\"ownership\">" + HttpUtility.HtmlEncode(contributor) + "</note>\n");
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(_oaiRecord.JournalVolume))
@@ -1110,9 +1113,9 @@ namespace MOBOT.BHL.OAIMODS
             //{
             //    sb.Append("<location>\n");
 
-                if (!String.IsNullOrEmpty(oaiRecord.Contributor))
+                foreach(string contributor in oaiRecord.Contributors)
                 {
-                    sb.Append("\t<physicalLocation>" + HttpUtility.HtmlEncode(oaiRecord.Contributor) + "</physicalLocation>\n");
+                    sb.Append("\t<physicalLocation>" + HttpUtility.HtmlEncode(contributor) + "</physicalLocation>\n");
                 }
 
                 if (!string.IsNullOrWhiteSpace(oaiRecord.Url)) sb.Append("\t<url access=\"raw object\" usage=\"primary\">" + HttpUtility.HtmlEncode(oaiRecord.Url) + "</url>\n");

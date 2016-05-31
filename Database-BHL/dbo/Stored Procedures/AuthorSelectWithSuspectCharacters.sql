@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[AuthorSelectWithSuspectCharacters]
+﻿CREATE PROCEDURE [dbo].[AuthorSelectWithSuspectCharacters]
 
 @InstitutionCode NVARCHAR(10) = '',
 @MaxAge INT = 30
@@ -10,8 +9,7 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	t.TitleID,
-		t.InstitutionCode,
-		ISNULL(inst.InstitutionName, '') AS InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0) AS InstitutionName,
 		ta.CreationDate,
 		a.AuthorID,
 		CHAR(dbo.fnContainsSuspectCharacter(n.FullName)) as NameSuspect, n.FullName,
@@ -34,20 +32,22 @@ FROM	dbo.Author a INNER JOIN dbo.AuthorName n
 			ON t.TitleID = ti.TitleID
 		INNER JOIN dbo.Item i
 			ON ti.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst
-			ON t.InstitutionCode = inst.InstitutionCode
+		INNER JOIN dbo.ItemInstitution ii
+			ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r
+			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	(dbo.fnContainsSuspectCharacter(n.FullName) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Numeration) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Unit) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Title) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Location) > 0
 OR		dbo.fnContainsSuspectCharacter(n.FullerForm) > 0)
-AND		(t.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
+AND		r.InstitutionRoleName = 'Contributor'
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		ISNULL(a.CreationDate, '1/1/2005') > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY 
 		a.AuthorID,
-		t.InstitutionCode,
-		inst.InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0),
 		ta.CreationDate,
 		CHAR(dbo.fnContainsSuspectCharacter(n.FullName)), n.FullName,
 		CHAR(dbo.fnContainsSuspectCharacter(a.Numeration)), a.Numeration,
@@ -58,11 +58,5 @@ GROUP BY
 		t.TitleID, 
 		oclc.IdentifierValue
 ORDER BY
-		inst.InstitutionName, ta.CreationDate DESC
+		InstitutionName, ta.CreationDate DESC
 END
-
-
-
-
-
-

@@ -115,7 +115,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode)
+        public Item ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode)
         {
             SqlConnection connection = sqlConnection;
             SqlTransaction transaction = sqlTransaction;
@@ -127,7 +127,15 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    return helper.ExecuteReader(command);
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                    {
+                        return list[0];
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
         }
@@ -1179,5 +1187,49 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         #endregion Stats methods
+
+        #region Institution methods
+
+        public CustomGenericList<Contributor> InstitutionSelectBySegmentIDAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int segmentID,
+            string institutionRoleName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectBySegmentIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
+            {
+                using (CustomSqlHelper<Contributor> helper = new CustomSqlHelper<Contributor>())
+                {
+                    CustomGenericList<Contributor> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public CustomGenericList<Contributor> InstitutionSelectByItemIDAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int itemID,
+            string institutionRoleName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByItemIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
+            {
+                using (CustomSqlHelper<Contributor> helper = new CustomSqlHelper<Contributor>())
+                {
+                    CustomGenericList<Contributor> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        #endregion Institution methods
     }
 }

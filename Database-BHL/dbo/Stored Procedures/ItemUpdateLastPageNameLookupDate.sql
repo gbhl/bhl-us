@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemUpdateLastPageNameLookupDate]
+﻿CREATE PROCEDURE [dbo].[ItemUpdateLastPageNameLookupDate]
 
 @ItemID INT
 
@@ -31,13 +30,11 @@ ELSE BEGIN
 		[MARCItemID],
 		[CallNumber],
 		[Volume],
-		[InstitutionCode],
 		[LanguageCode],
 		[ItemDescription],
 		[ScannedBy],
 		[PDFSize],
 		[VaultID],
-		[NumberOfFiles],
 		[Note],
 		[CreationDate],
 		[LastModifiedDate],

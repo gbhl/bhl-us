@@ -169,7 +169,7 @@ namespace MOBOT.BHL.Web2
             data.ResolutionId = 15;	    // 15=Unresolved
             data.StatusId = 28;			// 28=Unassigned
             data.SeverityId = 19;        // 19=Null
-            data.Title = issueSummary;
+            data.Title = (issueSummary.Length > 245) ? (issueSummary.Substring(0, 245) + "...") : issueSummary;
             data.TypeId = int.Parse(ddlList.SelectedValue); // 22=Technical Issues, 36=Suggestion, 55=Bibliographic Issues
             data.ReportedBy = user.Entity.Id;
             //data.RiskLevel = 1;
@@ -232,7 +232,7 @@ namespace MOBOT.BHL.Web2
             data.ResolutionId = 15;      // 15=Unresolved
             data.StatusId = 28;			// 28=Unassigned
             data.SeverityId = 19;        // 19=Null
-            data.Title = issueSummary;
+            data.Title = (issueSummary.Length > 245) ? (issueSummary.Substring(0, 245) + "...") : issueSummary;
             data.TypeId = 60;             // 60=Scan Request
             data.ReportedBy = user.Entity.Id;
             //data.RiskLevel = 1;

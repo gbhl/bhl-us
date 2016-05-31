@@ -22,21 +22,27 @@ CREATE TABLE #Books (
 INSERT	#Books
 SELECT	ti.TitleID, i.ItemID
 FROM	dbo.Item i
+		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
 		INNER JOIN dbo.TitleItem ti ON i.ItemID = ti.ItemID
 		INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
-WHERE	i.InstitutionCode = @InstitutionCode
+WHERE	ii.InstitutionCode = @InstitutionCode
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
+AND		r.InstitutionRoleName = 'Contributor'
 
 -- Get Title and Item counts
 SELECT @TitleCount = COUNT(DISTINCT TitleID) FROM #Books
 SELECT @VolumeCount = COUNT(DISTINCT ItemID) FROM #Books
 
 -- Get Segment count
-SELECT	@SegmentCount = COUNT(SegmentID) 
-FROM	dbo.Segment 
-WHERE	SegmentStatusID IN (10, 20) 
-AND		ContributorCode = @InstitutionCode
+SELECT	@SegmentCount = COUNT(s.SegmentID) 
+FROM	dbo.Segment s
+		INNER JOIN dbo.SegmentInstitution si ON s.SegmentID = si.SegmentID
+		INNER JOIN dbo.InstitutionRole r ON si.InstitutionRoleID = r.InstitutionRoleID
+WHERE	s.SegmentStatusID IN (10, 20) 
+AND		si.InstitutionCode = @InstitutionCode
+AND		r.InstitutionRoleName = 'Contributor'
 
 -- Get Page count
 SELECT	@PageCount = COUNT(p.PageID) 
@@ -49,4 +55,3 @@ SELECT	ISNULL(@TitleCount, 0) AS TitleCount,
 		ISNULL(@PageCount, 0) AS [PageCount],
 		ISNULL(@SegmentCount, 0) AS SegmentCount
 END
-

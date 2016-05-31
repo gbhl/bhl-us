@@ -88,6 +88,28 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
+        private string _RightsHolder = null;
+        public string RightsHolder
+        {
+            get { return _RightsHolder; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 255);
+                _RightsHolder = value;
+            }
+        }
+
+        private string _ScanningInstitution = null;
+        public string ScanningInstitution
+        {
+            get { return _ScanningInstitution; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 255);
+                _ScanningInstitution = value;
+            }
+        }
+
         private string _Sponsor = null;
         public string Sponsor
         {

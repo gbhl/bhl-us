@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:52:05 PM
+// Generated 6/2/2016 9:32:10 AM
 // Do not modify the contents of this code file.
 // Interface IInstitutionDAL based upon dbo.Institution.
 
@@ -33,14 +33,18 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary);
+			bool bHLMemberLibrary,
+			int? creationUserID,
+			int? lastModifiedUserID);
 
 		Institution InstitutionInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			string institutionCode,
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary);
+			bool bHLMemberLibrary,
+			int? creationUserID,
+			int? lastModifiedUserID);
 
 		Institution InstitutionInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution value);
 
@@ -57,22 +61,24 @@ namespace MOBOT.BHL.DAL
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary);
+			bool bHLMemberLibrary,
+			int? lastModifiedUserID);
 
 		Institution InstitutionUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			string institutionCode,
 			string institutionName,
 			string note,
 			string institutionUrl,
-			bool bHLMemberLibrary);
+			bool bHLMemberLibrary,
+			int? lastModifiedUserID);
 
 		Institution InstitutionUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution value);
 
 		Institution InstitutionUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, Institution value);
 
-		CustomDataAccessStatus<Institution> InstitutionManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution value);
+		CustomDataAccessStatus<Institution> InstitutionManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution value, int userId);
 
-		CustomDataAccessStatus<Institution> InstitutionManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, Institution value);
+		CustomDataAccessStatus<Institution> InstitutionManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, Institution value, int userId);
 
 
 	}

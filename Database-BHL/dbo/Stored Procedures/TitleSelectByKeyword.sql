@@ -1,9 +1,9 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByKeyword]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByKeyword]
 
 @Keyword nvarchar(50)
 
 AS
+
 SET NOCOUNT ON
 
 -- Get titles tied directly to the specified TagText
@@ -16,13 +16,10 @@ SELECT DISTINCT
 		t.PartName,
 		t.PublicationDetails,
 		t.StartYear,
-		t.EditionStatement,
-		ISNULL(i.InstitutionName, '' ) AS InstitutionName
+		t.EditionStatement
 INTO	#tmpTitle
 FROM	dbo.TitleKeywordView v INNER JOIN dbo.Title t
 			ON v.TitleID = t.TitleID
-		LEFT JOIN dbo.Institution i
-			ON v.TitleInstitutionCode = i.InstitutionCode
 		LEFT JOIN dbo.TitleLanguage tl
 			ON v.TitleID = tl.TitleID
 		LEFT JOIN dbo.ItemLanguage il
@@ -44,7 +41,7 @@ SELECT	t.TitleID,
 		t.EditionStatement,
 		itm.Volume,
 		itm.ExternalUrl,
-		t.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Subjects,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, itm.ItemID) AS Collections--,
@@ -73,4 +70,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

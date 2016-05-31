@@ -237,7 +237,6 @@ BEGIN TRY
 		[ScannedBy] [int] NULL,
 		[PDFSize] [int] NULL,
 		[VaultID] [int] NULL,
-		[NumberOfFiles] [smallint] NULL,
 		[Note] [nvarchar](255) NULL,
 		[ItemStatusID] [int] NOT NULL,
 		[ScanningUser] [nvarchar](100) NULL,
@@ -747,7 +746,6 @@ BEGIN TRY
 			i.[ScannedBy],
 			i.[PDFSize],
 			i.[VaultID],
-			i.[NumberOfFiles],
 			i.[Note],
 			i.[ItemStatusID],
 			i.[ScanningUser],
@@ -966,8 +964,15 @@ BEGIN TRY
 				AND tti.IdentifierName = bti.IdentifierName
 			INNER JOIN dbo.BHLTitle bt
 				ON btti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
+			INNER JOIN dbo.BHLTitleItem btitem
+				ON bt.TitleID = btitem.TitleID
+			INNER JOIN dbo.BHLItemInstitution bii
+				ON btitem.ItemID = bii.ItemID
+				AND t.InstitutionCode = bii.InstitutionCode
+			INNER JOIN dbo.BHLInstitutionRole br
+				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.ProductionTitleID IS NULL
+	AND		br.InstitutionRoleName = 'Contributor'
 
 	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
 	/*
@@ -1024,7 +1029,7 @@ BEGIN TRY
 		INSERT INTO dbo.BHLTitle (MARCBibID, MARCLeader, FullTitle, ShortTitle,
 			UniformTitle, SortTitle, PartNumber, PartName, CallNumber, PublicationDetails, 
 			StartYear, EndYear, 
-			Datafield_260_a, Datafield_260_b, Datafield_260_c, InstitutionCode, 
+			Datafield_260_a, Datafield_260_b, Datafield_260_c, 
 			LanguageCode, TitleDescription, TL2Author, 
 			PublishReady, RareBooks, OriginalCatalogingSource, EditionStatement, 
 			CurrentPublicationFrequency, Note, CreationDate, LastModifiedDate, 
@@ -1033,7 +1038,7 @@ BEGIN TRY
 				tmp.ShortTitle, tmp.UniformTitle, SUBSTRING(tmp.SortTitle, 1, 60), 
 				tmp.PartNumber, tmp.PartName, tmp.CallNumber, 
 				tmp.PublicationDetails, tmp.StartYear, tmp.EndYear,	tmp.Datafield_260_a, 
-				tmp.Datafield_260_b, tmp.Datafield_260_c, tmp.InstitutionCode, UPPER(tmp.LanguageCode),
+				tmp.Datafield_260_b, tmp.Datafield_260_c, UPPER(tmp.LanguageCode),
 				tmp.TitleDescription, tmp.TL2Author,
 				tmp.PublishReady, tmp.RareBooks, tmp.OriginalCatalogingSource, tmp.EditionStatement, 
 				tmp.CurrentPublicationFrequency, tmp.Note, tmp.ExternalCreationDate, 
@@ -1054,7 +1059,6 @@ BEGIN TRY
 					AND ISNULL(tmp.ShortTitle, '') = ISNULL(t.ShortTitle, '')
 					AND ISNULL(tmp.CallNumber, '') = ISNULL(t.CallNumber, '')
 					AND ISNULL(tmp.PublicationDetails, '') = ISNULL(t.PublicationDetails, '')
-					AND ISNULL(tmp.InstitutionCode, '') = ISNULL(t.InstitutionCode, '')
 					AND tmp.ExternalCreationDate = t.CreationDate
 					AND tmp.ExternalLastModifiedDate = t.LastModifiedDate
 					AND tmp.ExternalCreationUser = t.CreationUserID
@@ -1428,8 +1432,8 @@ BEGIN TRY
 
 		-- Insert new items into the production database
 		INSERT INTO dbo.BHLItem (PrimaryTitleID, BarCode, MARCItemID, CallNumber, 
-			Volume, InstitutionCode, LanguageCode, Sponsor, ItemDescription, ScannedBy, 
-			PDFSize, VaultID, NumberOfFiles, Note, ItemStatusID, ItemSourceID, ScanningUser, 
+			Volume, LanguageCode, Sponsor, ItemDescription, ScannedBy, 
+			PDFSize, VaultID, Note, ItemStatusID, ItemSourceID, ScanningUser, 
 			ScanningDate, [Year], IdentifierBib, ZQuery, FileRootFolder, 
 			LicenseUrl, Rights, DueDiligence, CopyrightStatus, CopyrightRegion,
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
@@ -1438,9 +1442,9 @@ BEGIN TRY
 			PaginationStatusUserID, PaginationStatusDate, LastPageNameLookupDate, 
 			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
 		SELECT	t.TitleID, tmp.BarCode, 
-				tmp.MARCItemID, tmp.CallNumber, tmp.Volume, tmp.InstitutionCode, 
+				tmp.MARCItemID, tmp.CallNumber, tmp.Volume, 
 				UPPER(tmp.LanguageCode), tmp.Sponsor, tmp.ItemDescription, tmp.ScannedBy, 
-				tmp.PDFSize, tmp.VaultID, tmp.NumberOfFiles, tmp.Note, tmp.ItemStatusID, 
+				tmp.PDFSize, tmp.VaultID, tmp.Note, tmp.ItemStatusID, 
 				isis.BHLItemSourceID, tmp.ScanningUser, tmp.ScanningDate, 
 				tmp.[Year], tmp.IdentifierBib, tmp.ZQuery, tmp.MARCBibID,
 				tmp.LicenseUrl, tmp.Rights, tmp.DueDiligence, tmp.CopyrightStatus, 
@@ -1479,6 +1483,17 @@ BEGIN TRY
 
 		SELECT @TitleItemInsert = @@ROWCOUNT
 
+		-- =======================================================================
+
+		-- Insert new iteminstitution records into the production database
+		DECLARE @ContributorRoleID int
+		SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+
+		-- Insert ItemInstitution records for the contributors
+		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
+		SELECT	i.ItemID, tmp.InstitutionCode, @ContributorRoleID
+		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
+
 		/*
 		-- For items coming from Internet Archive (ImportSourceID = 1),
 		-- make sure the ItemSequence values are correct
@@ -1516,8 +1531,8 @@ BEGIN TRY
 					FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i
 								ON tmp.BarCode = i.BarCode
 							INNER JOIN dbo.BHLCollection c
-								ON (i.InstitutionCode = c.InstitutionCode AND i.LanguageCode = c.LanguageCode)
-								OR (i.InstitutionCode = c.InstitutionCode AND c.LanguageCode IS NULL)
+								ON (tmp.InstitutionCode = c.InstitutionCode AND i.LanguageCode = c.LanguageCode)
+								OR (tmp.InstitutionCode = c.InstitutionCode AND c.LanguageCode IS NULL)
 								OR (c.InstitutionCode IS NULL AND i.LanguageCode = c.LanguageCode)
 					WHERE	c.Active = 1
 					AND		c.CanContainItems = 1) x
@@ -1544,8 +1559,8 @@ BEGIN TRY
 							INNER JOIN dbo.BHLTitle t
 								ON ti.TitleID = t.TitleID
 							INNER JOIN dbo.BHLCollection c
-								ON (i.InstitutionCode = c.InstitutionCode AND i.LanguageCode = c.LanguageCode)
-								OR (i.InstitutionCode = c.InstitutionCode AND c.LanguageCode IS NULL)
+								ON (tmp.InstitutionCode = c.InstitutionCode AND i.LanguageCode = c.LanguageCode)
+								OR (tmp.InstitutionCode = c.InstitutionCode AND c.LanguageCode IS NULL)
 								OR (c.InstitutionCode IS NULL AND i.LanguageCode = c.LanguageCode)
 					WHERE	c.Active = 1
 					AND		c.CanContainTitles = 1) x

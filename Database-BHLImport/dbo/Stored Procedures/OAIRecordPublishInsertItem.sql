@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishInsertItem
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishInsertItem]
 
 @OAIRecordID int,
 @ProductionTitleID int,
@@ -14,6 +14,9 @@ DECLARE @Right nvarchar(500)
 SET @Right = ''
 SELECT TOP 1 @Right = [Right] FROM dbo.OAIRecordRight WHERE OAIRecordID = @OAIRecordID
 
+DECLARE @ContributorRoleID int
+SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+
 BEGIN TRAN
 
 -- Insert a new Item record
@@ -25,7 +28,6 @@ INSERT	dbo.BHLItem
 		MarcItemID,
 		CallNumber,
 		Volume,
-		InstitutionCode,
 		LanguageCode,
 		ItemSourceID,
 		Year,
@@ -38,7 +40,6 @@ SELECT	40,
 		o.OAIIdentifier AS MarcItemID,
 		o.CallNumber,
 		o.Volume,
-		r.BHLInstitutionCode AS InstitutionCode,
 		l.BHLLanguageCode AS LanguageCode,
 		src.BHLItemSourceID AS ItemSourceID,
 		Date AS Year,
@@ -55,6 +56,16 @@ WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Preserve the production identifier for the new item
 SET @ProductionItemID = SCOPE_IDENTITY()
+
+-- Insert an ItemInstitution record for the contributor
+INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
+SELECT	@ProductionItemID, r.BHLInstitutionCode, @ContributorRoleID
+FROM	dbo.OAIRecord o
+		INNER JOIN dbo.OAIHarvestLog lg ON o.HarvestLogID = lg.HarvestLogID
+		INNER JOIN dbo.OAIHarvestSet s ON lg.HarvestSetID = s.HarvestSetID
+		INNER JOIN dbo.OAIRepositoryFormat rf ON s.RepositoryFormatID = rf.RepositoryFormatID
+		INNER JOIN dbo.OAIRepository r ON rf.RepositoryID = r.RepositoryID
+WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Insert a TitleItem record to associate the title and item
 INSERT dbo.BHLTitleItem (TitleID, ItemID, ItemSequence) VALUES (@ProductionTitleID, @ProductionItemID, 1)

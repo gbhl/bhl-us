@@ -1,7 +1,8 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectByCollectionAndStartsWith]
-	@CollectionID int,
-	@StartsWith nvarchar(255)
+﻿CREATE PROCEDURE [dbo].[ItemSelectByCollectionAndStartsWith]
+
+@CollectionID int,
+@StartsWith nvarchar(255)
+
 AS
 
 BEGIN
@@ -19,7 +20,7 @@ SELECT	t.TitleID,
 		t.EditionStatement,
 		i.Volume,
 		i.ExternalUrl,
-		inst.InstitutionName,
+		c.ItemContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections
 FROM	dbo.Item i WITH (NOLOCK)
@@ -31,8 +32,6 @@ FROM	dbo.Item i WITH (NOLOCK)
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK)
 			ON i.ItemID = ti.ItemID
 			AND ti.TitleID = t.TitleID
-		LEFT JOIN Institution inst WITH (NOLOCK)
-			ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) 
 			ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 WHERE	ic.CollectionID = @CollectionID
@@ -42,6 +41,3 @@ ORDER BY
 		t.SortTitle, ti.ItemSequence
 
 END
-
-
-

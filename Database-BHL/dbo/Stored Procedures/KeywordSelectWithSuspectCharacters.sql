@@ -9,8 +9,7 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	t.TitleID, 
-		t.InstitutionCode,
-		ISNULL(inst.InstitutionName, '') AS InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0) AS InstitutionName,
 		k.CreationDate,
 		CHAR(dbo.fnContainsSuspectCharacter(k.Keyword)) AS KeywordSuspect, 
 		k.Keyword,
@@ -26,22 +25,21 @@ FROM	dbo.Keyword k INNER JOIN dbo.TitleKeyword tk
 			ON t.TitleID = ti.TitleID
 		INNER JOIN dbo.Item i
 			ON ti.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst
-			ON t.InstitutionCode = inst.InstitutionCode
+		INNER JOIN dbo.ItemInstitution ii
+			ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r
+			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	dbo.fnContainsSuspectCharacter(k.Keyword) > 0
-AND		(t.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
+AND		r.InstitutionRoleName = 'Contributor'
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		k.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY
 		CHAR(dbo.fnContainsSuspectCharacter(k.Keyword)), 
 		t.TitleID, 
 		k.Keyword,
-		t.InstitutionCode,
-		inst.InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0),
 		k.CreationDate,
 		oclc.IdentifierValue
 ORDER BY
-		inst.InstitutionName, k.CreationDate DESC
+		InstitutionName, k.CreationDate DESC
 END
-
-
-

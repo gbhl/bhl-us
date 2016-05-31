@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSegmentSelectByIdentifier]
+﻿CREATE PROCEDURE [dbo].[ApiSegmentSelectByIdentifier]
 
 @IdentifierName nvarchar(40),
 @IdentifierValue nvarchar(125)
@@ -12,10 +11,7 @@ SET NOCOUNT ON
 
 SELECT	s.SegmentID,
 		s.ItemID,
-		s.ContributorCode,
-		s.ContributorSegmentID,
 		s.SequenceOrder,
-		inst.InstitutionName AS ContributorName,
 		s.SegmentGenreID,
 		g.GenreName,
 		s.Title,
@@ -57,7 +53,6 @@ SELECT	s.SegmentID,
 FROM	dbo.Segment s 
 		INNER JOIN dbo.SegmentIdentifier si ON s.SegmentID = si.SegmentID
 		INNER JOIN dbo.Identifier i ON si.IdentifierID = i.IdentifierID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
@@ -70,7 +65,3 @@ ORDER BY
 		s.SequenceOrder
 
 END
-
-
-
-

@@ -73,26 +73,75 @@ namespace MOBOT.BHL.AdminWeb
             CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(
                 startYear, startMonth, endYear, endMonth, institutionName);
 
+            imgMonthlyItems.Src = GetMonthlyChartUrl(stats, "Items", "Items");
+            imgMonthlyPages.Src = GetMonthlyChartUrl(stats, "Pages", "Pages");
+            imgMonthlyNames.Src = GetMonthlyChartUrl(stats, "PageNames", "Names");
+            imgMonthlySegments.Src = GetMonthlyChartUrl(stats, "Segments", "Segments");
+            //imgCumulative.Src = GetCumulativeChartUrl(stats);
+        }
+
+        private string GetMonthlyChartUrl(CustomGenericList<MonthlyStats> stats, string statType, string statLabel)
+        {
             int maxValue = 0;
+            String data = String.Empty; //153,113,120|60,70,80|52,60,40|30,50,45
+            String legend = String.Empty; //|Jan%2009|Feb%2009|Mar%2009
+
+            String lastStatType = String.Empty;
+            foreach (MonthlyStats stat in stats)
+            {
+                if (stat.StatType == string.Format("{0} Created", statType))
+                {
+                    if (lastStatType != stat.StatType)
+                    {
+                        if (lastStatType != String.Empty)
+                        {
+                            data = data.Substring(0, data.Length - 1) + "|";
+                        }
+                        lastStatType = stat.StatType;
+                    }
+
+                    // Capture the largest data value
+                    if (stat.StatValue > maxValue) maxValue = stat.StatValue;
+
+                    // Build the legend for the chart
+                    if (stat.StatType == string.Format("{0} Created", statType))
+                    {
+                        legend += "|" + stat.Month.ToString() + "-" + stat.Year.ToString().Substring(2, 2);
+                    }
+
+                    // Build the data for the chart
+                    data += stat.StatValue.ToString() + ",";
+                }
+            }
+
+            // trim off final commas or separators
+            if (data.Length > 0) data = data.Substring(0, data.Length - 1);
+
+            string monthlyChartUrl = String.Format(ConfigurationManager.AppSettings["GoogleMonthlyChartUrl"].ToString(),
+                statLabel, data, maxValue.ToString(), maxValue.ToString(), maxValue.ToString(), legend);
+
+            return monthlyChartUrl;
+        }
+
+        private string GetCumulativeChartUrl(CustomGenericList<MonthlyStats> stats)
+        {
             int maxCumulativeValue = 0;
             int cumulativeValue = 0;
-            String data = String.Empty; //153,113,120|60,70,80|52,60,40|30,50,45
             String cumulativeData = String.Empty;
             String legend = String.Empty; //|Jan%2009|Feb%2009|Mar%2009
 
-            String statType = String.Empty;
+            String lastStatType = String.Empty;
             foreach (MonthlyStats stat in stats)
             {
-                if (stat.StatType == "Items Created")   // Remove this conditional to include titles, pages, and names on the chart
+                if (stat.StatType != "Titles Created")
                 {
-                    if (statType != stat.StatType)
+                    if (lastStatType != stat.StatType)
                     {
-                        if (statType != String.Empty)
+                        if (lastStatType != String.Empty)
                         {
-                            data = data.Substring(0, data.Length - 1) + "|";
                             cumulativeData = cumulativeData.Substring(0, cumulativeData.Length - 1) + "|";
                         }
-                        statType = stat.StatType;
+                        lastStatType = stat.StatType;
                         cumulativeValue = 0;
                     }
 
@@ -100,7 +149,6 @@ namespace MOBOT.BHL.AdminWeb
                     cumulativeValue += stat.StatValue;
 
                     // Capture the largest data value
-                    if (stat.StatValue > maxValue) maxValue = stat.StatValue;
                     if (cumulativeValue > maxCumulativeValue) maxCumulativeValue = cumulativeValue;
 
                     // Build the legend for the chart
@@ -110,24 +158,18 @@ namespace MOBOT.BHL.AdminWeb
                     }
 
                     // Build the data for the chart
-                    data += stat.StatValue.ToString() + ",";
                     cumulativeData += cumulativeValue.ToString() + ",";
                 }
             }
 
             // trim off final commas or separators
-            if (data.Length > 0) data = data.Substring(0, data.Length - 1);
             if (cumulativeData.Length > 0) cumulativeData = cumulativeData.Substring(0, cumulativeData.Length - 1);
 
-            String monthlyChartUrl = String.Format(ConfigurationManager.AppSettings["GoogleMonthlyChartUrl"].ToString(), 
-                data, maxValue.ToString(), maxValue.ToString(), maxValue.ToString(), legend);
-            imgMonthly.Src = monthlyChartUrl;
-
-            String cumulativeChartUrl = String.Format(ConfigurationManager.AppSettings["GoogleCumulativeChartUrl"].ToString(),
-                cumulativeData, maxCumulativeValue.ToString(), maxCumulativeValue.ToString(),
+            string cumulativeChartUrl = String.Format(ConfigurationManager.AppSettings["GoogleCumulativeChartUrl"].ToString(),
+                "Items|Pages|Names|Segments", cumulativeData, maxCumulativeValue.ToString(), maxCumulativeValue.ToString(),
                 maxCumulativeValue.ToString(), legend);
-            imgCumulative.Src = cumulativeChartUrl;
-        }
 
+            return cumulativeChartUrl;
+        }
     }
 }

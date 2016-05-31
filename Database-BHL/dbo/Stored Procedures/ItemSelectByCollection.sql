@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectByCollection]
+﻿CREATE PROCEDURE [dbo].[ItemSelectByCollection]
 
 @CollectionID int
 
@@ -12,9 +11,9 @@ SELECT	i.ItemID,
 		t.ShortTitle,
 		i.Volume,
 		t.PublicationDetails,
-		inst.InstitutionName,
 		dbo.fnAuthorStringForTitle(i.PrimaryTitleID) AS CreatorTextString,
 		c.Subjects AS KeywordString,
+		c.ItemContributors AS ContributorTextString,
 		ic.CreationDate
 FROM	dbo.Item i INNER JOIN dbo.ItemCollection ic
 			ON i.ItemID = ic.ItemID
@@ -23,8 +22,6 @@ FROM	dbo.Item i INNER JOIN dbo.ItemCollection ic
 		INNER JOIN dbo.TitleItem ti
 			ON i.ItemID = ti.ItemID
 			AND ti.TitleID = t.TitleID
-		LEFT JOIN dbo.Institution inst
-			ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK)
 			ON t.TitleID = c.TitleID
 			AND i.ItemID = c.ItemID
@@ -33,6 +30,4 @@ ORDER BY
 		t.FullTitle, ti.ItemSequence
 
 END
-
-
 

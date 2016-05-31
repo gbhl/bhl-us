@@ -1,4 +1,18 @@
-﻿CREATE PROCEDURE [dbo].[ItemDeleteAuto]
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[ItemDeleteAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[ItemDeleteAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Delete Procedure for dbo.Item
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:20 AM
+
+CREATE PROCEDURE dbo.ItemDeleteAuto
 
 @ItemID INT
 
@@ -22,4 +36,10 @@ ELSE BEGIN
 	RETURN 0 -- delete successful
 END
 
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
 

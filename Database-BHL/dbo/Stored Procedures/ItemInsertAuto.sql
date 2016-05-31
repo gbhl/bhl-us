@@ -1,4 +1,18 @@
-﻿CREATE PROCEDURE [dbo].[ItemInsertAuto]
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[ItemInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[ItemInsertAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Insert Procedure for dbo.Item
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:20 AM
+
+CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
 @PrimaryTitleID INT,
@@ -6,13 +20,11 @@
 @MARCItemID NVARCHAR(50) = null,
 @CallNumber NVARCHAR(100) = null,
 @Volume NVARCHAR(100) = null,
-@InstitutionCode NVARCHAR(10) = null,
 @LanguageCode NVARCHAR(10) = null,
 @ItemDescription NTEXT = null,
 @ScannedBy INT = null,
 @PDFSize INT = null,
 @VaultID INT = null,
-@NumberOfFiles SMALLINT = null,
 @Note NVARCHAR(255) = null,
 @CreationUserID INT = null,
 @LastModifiedUserID INT = null,
@@ -68,13 +80,11 @@ INSERT INTO [dbo].[Item]
 	[MARCItemID],
 	[CallNumber],
 	[Volume],
-	[InstitutionCode],
 	[LanguageCode],
 	[ItemDescription],
 	[ScannedBy],
 	[PDFSize],
 	[VaultID],
-	[NumberOfFiles],
 	[Note],
 	[CreationDate],
 	[LastModifiedDate],
@@ -127,13 +137,11 @@ VALUES
 	@MARCItemID,
 	@CallNumber,
 	@Volume,
-	@InstitutionCode,
 	@LanguageCode,
 	@ItemDescription,
 	@ScannedBy,
 	@PDFSize,
 	@VaultID,
-	@NumberOfFiles,
 	@Note,
 	getdate(),
 	getdate(),
@@ -197,13 +205,11 @@ ELSE BEGIN
 		[MARCItemID],
 		[CallNumber],
 		[Volume],
-		[InstitutionCode],
 		[LanguageCode],
 		[ItemDescription],
 		[ScannedBy],
 		[PDFSize],
 		[VaultID],
-		[NumberOfFiles],
 		[Note],
 		[CreationDate],
 		[LastModifiedDate],
@@ -256,3 +262,10 @@ ELSE BEGIN
 	
 	RETURN -- insert successful
 END
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+

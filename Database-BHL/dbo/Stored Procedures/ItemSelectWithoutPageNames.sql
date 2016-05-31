@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectWithoutPageNames]
+﻿CREATE PROCEDURE [dbo].[ItemSelectWithoutPageNames]
 
 AS 
 
@@ -12,13 +11,11 @@ SELECT DISTINCT
 		[MARCItemID],
 		[CallNumber],
 		i.[Volume],
-		[InstitutionCode],
 		[LanguageCode],
 		CONVERT(nvarchar(MAX), [ItemDescription]) AS ItemDescription,
 		[ScannedBy],
 		[PDFSize],
 		[VaultID],
-		[NumberOfFiles],
 		i.[Note],
 		i.[CreationDate],
 		i.[LastModifiedDate],

@@ -31,6 +31,7 @@
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
+    <add key="LogExceptions" value="true"/>
     <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
 
@@ -159,6 +160,15 @@
     </system.web>
   </location>
   <system.web>
+    <!-- 
+            machineKey is only needed if hosting the site in a web farm.
+            If you are hosting in a web farm, follow the guidance given at 
+            https://support.microsoft.com/en-us/kb/2915218 to generate
+            the appropriate decryptionKey and validationKey values for 
+            your server.  If you are not hosting in a web farm, just
+            comment out the <machineKey> element.
+    -->
+    <machineKey decryption="AES" decryptionKey="decryption key" validation="HMACSHA256" validationKey="validation key" />
     <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" />
     <!-- 
             Set compilation debug="true" to insert debugging 

@@ -144,6 +144,21 @@ namespace MOBOT.BHL.AdminWeb
             ddlInst.DataBind();
             ddlInst.SelectedValue = "UNKNOWN";
 
+            Institution emptyInstitution = new Institution();
+            emptyInstitution.InstitutionCode = string.Empty;
+            emptyInstitution.InstitutionName = string.Empty;
+            institutions.Insert(0, emptyInstitution);
+
+            ddlScanningInstitution.DataSource = institutions;
+            ddlScanningInstitution.DataTextField = "InstitutionName";
+            ddlScanningInstitution.DataValueField = "InstitutionCode";
+            ddlScanningInstitution.DataBind();
+
+            ddlRights.DataSource = institutions;
+            ddlRights.DataTextField = "InstitutionName";
+            ddlRights.DataValueField = "InstitutionCode";
+            ddlRights.DataBind();
+
             CustomGenericList<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
@@ -232,13 +247,34 @@ namespace MOBOT.BHL.AdminWeb
                 lastModifiedDateLabel.Text =
                     (item.LastModifiedDate.HasValue ? item.LastModifiedDate.Value.ToShortDateString() : "");
 
-                if (item.InstitutionCode != null && item.InstitutionCode.Length > 0)
+                ddlInst.SelectedValue = "UNKNOWN";
+                foreach (Institution contributor in item.Contributors)
                 {
-                    ddlInst.SelectedValue = item.InstitutionCode;
+                    if (contributor.InstitutionRoleName == InstitutionRole.Contributor)
+                    {
+                        ddlInst.SelectedValue = contributor.InstitutionCode;
+                        break;
+                    }
                 }
-                else
+
+                ddlRights.SelectedValue = "";
+                foreach (Institution contributor in item.Contributors)
                 {
-                    ddlInst.SelectedValue = "UNKNOWN";
+                    if (contributor.InstitutionRoleName == InstitutionRole.RightsHolder)
+                    {
+                        ddlRights.SelectedValue = contributor.InstitutionCode;
+                        break;
+                    }
+                }
+
+                ddlScanningInstitution.SelectedValue = "";
+                foreach (Institution contributor in item.Contributors)
+                {
+                    if (contributor.InstitutionRoleName == InstitutionRole.ScanningInstitution)
+                    {
+                        ddlScanningInstitution.SelectedValue = contributor.InstitutionCode;
+                        break;
+                    }
                 }
 
                 if (item.LanguageCode != null && item.LanguageCode.Length > 0)
@@ -1119,7 +1155,6 @@ namespace MOBOT.BHL.AdminWeb
 				item.MARCItemID = marcItemIDTextBox.Text.Trim();
 				item.CallNumber = callNumberTextBox.Text.Trim();
 				item.Volume = volumeTextBox.Text.Trim();
-                item.InstitutionCode = (ddlInst.SelectedValue.Length == 0 ? null : ddlInst.SelectedValue);
 				item.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
 				item.Note = notesTextBox.Text.Trim();
                 item.Year = yearTextBox.Text.Trim();
@@ -1138,6 +1173,62 @@ namespace MOBOT.BHL.AdminWeb
 				item.ItemStatusID = int.Parse( ddlItemStatus.SelectedValue );
 
 				item.IsNew = false;
+
+                //----------------------------------------
+
+                // Mark for deletion any existing institutions that have changed
+                bool contributorChanged = false;
+                bool contributorExists = false;
+                bool rightsHolderChanged = false;
+                bool rightsHolderExists = false;
+                bool scanningInstitutionChanged = false;
+                bool scanningInstitutionExists = false;
+                foreach (Institution institution in item.Contributors)
+                {
+                    if (institution.InstitutionRoleName == InstitutionRole.Contributor)
+                    {
+                        contributorExists = true;
+                        if (institution.InstitutionCode != ddlInst.SelectedValue) { institution.IsDeleted = true; contributorChanged = true; }
+                    }
+                    if (institution.InstitutionRoleName == InstitutionRole.RightsHolder)
+                    {
+                        rightsHolderExists = true;
+                        if (institution.InstitutionCode != ddlRights.SelectedValue) { institution.IsDeleted = true; rightsHolderChanged = true; }
+                    }
+                    if (institution.InstitutionRoleName == InstitutionRole.ScanningInstitution)
+                    {
+                        scanningInstitutionExists = true;
+                        if (institution.InstitutionCode != ddlScanningInstitution.SelectedValue) { institution.IsDeleted = true; scanningInstitutionChanged = true; }
+                    }
+                }
+
+                // Add new institutions
+                if ((contributorChanged || !contributorExists) && ddlInst.SelectedValue != string.Empty)
+                {
+                    Institution newContributor = new Institution();
+                    newContributor.InstitutionCode = ddlInst.SelectedValue;
+                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
+                    newContributor.IsNew = true;
+                    item.Contributors.Add(newContributor);
+                }
+
+                if ((rightsHolderChanged || !rightsHolderExists) && ddlRights.SelectedValue != string.Empty)
+                {
+                    Institution newRightsHolder = new Institution();
+                    newRightsHolder.InstitutionCode = ddlRights.SelectedValue;
+                    newRightsHolder.InstitutionRoleName = InstitutionRole.RightsHolder;
+                    newRightsHolder.IsNew = true;
+                    item.Contributors.Add(newRightsHolder);
+                }
+
+                if ((scanningInstitutionChanged || !scanningInstitutionExists) && ddlScanningInstitution.SelectedValue != string.Empty)
+                {
+                    Institution newScanningInstitutution = new Institution();
+                    newScanningInstitutution.InstitutionCode = ddlScanningInstitution.SelectedValue;
+                    newScanningInstitutution.InstitutionRoleName = InstitutionRole.ScanningInstitution;
+                    newScanningInstitutution.IsNew = true;
+                    item.Contributors.Add(newScanningInstitutution);
+                }
 
                 //----------------------------------------
                 // Update the title information

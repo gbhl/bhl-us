@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MonthlyStatsUpdate]
+﻿CREATE PROCEDURE [dbo].[MonthlyStatsUpdate]
 AS
 BEGIN
 
@@ -18,21 +17,19 @@ CREATE TABLE #tmpMonthlyStats
 INSERT	#tmpMonthlyStats
 SELECT	[Year], 
 		[Month], 
-		InstitutionName, 
+		'N/A', 
 		'Titles Created', 
 		COUNT(*)
 FROM	(
 		SELECT DISTINCT 
-			n.institutionname, 
-			t.titleid,
-			DATEPART(year, t.CreationDate) AS [Year],
-			DATEPART(month, t.CreationDate) AS [Month]
-		FROM dbo.Title t INNER JOIN dbo.Institution n
-				ON t.institutioncode = n.institutioncode
-		WHERE t.publishready = 1
+			titleid,
+			DATEPART(year, CreationDate) AS [Year],
+			DATEPART(month, CreationDate) AS [Month]
+		FROM dbo.Title
+		WHERE publishready = 1
 		) x
-GROUP BY [Year], [Month], InstitutionName
-		
+GROUP BY [Year], [Month]
+
 -- Items by institution
 INSERT	#tmpMonthlyStats
 SELECT	DATEPART(year, i.CreationDate) AS [Year],
@@ -40,8 +37,9 @@ SELECT	DATEPART(year, i.CreationDate) AS [Year],
 		n.InstitutionName,
 		'Items Created',
 		COUNT(*)
-FROM	dbo.Item i INNER JOIN dbo.Institution n
-			ON i.institutioncode = n.institutioncode
+FROM	dbo.Item i 
+		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.Institution n ON ii.institutioncode = n.institutioncode
 WHERE	i.ItemStatusID = 40
 GROUP BY
 		DATEPART(year, i.CreationDate),
@@ -55,8 +53,9 @@ SELECT	DATEPART(year, i.ScanningDate) AS [Year],
 		n.InstitutionName,
 		'Items Scanned',
 		COUNT(*)
-FROM	dbo.Item i INNER JOIN dbo.Institution n
-			ON i.institutioncode = n.institutioncode
+FROM	dbo.Item i 
+		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.Institution n ON ii.institutioncode = n.institutioncode
 WHERE	i.ItemStatusID = 40
 GROUP BY
 		DATEPART(year, i.ScanningDate),
@@ -70,10 +69,10 @@ SELECT 	DATEPART(year, p.CreationDate) AS [Year],
 		n.institutionname, 
 		'Pages Created',
 		COUNT(*)
-FROM	dbo.Item i INNER JOIN dbo.Institution n
-			ON i.institutioncode = n.institutioncode
-		INNER JOIN dbo.Page p
-			ON i.itemid = p.itemid
+FROM	dbo.Item i 
+		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.Institution n ON ii.institutioncode = n.institutioncode
+		INNER JOIN dbo.Page p ON i.itemid = p.itemid
 WHERE	itemstatusid = 40
 AND		p.active = 1
 GROUP BY DATEPART(year, p.CreationDate),
@@ -87,12 +86,11 @@ SELECT	DATEPART(year, np.CreationDate) AS [Year],
 		n.institutionname, 
 		'PageNames Created',
 		COUNT(*)
-FROM	dbo.Item i INNER JOIN dbo.Institution n
-			ON i.institutioncode = n.institutioncode
-		INNER JOIN dbo.Page p
-			ON i.itemid = p.itemid
-		INNER JOIN dbo.NamePage np
-			ON p.pageid = np.pageid
+FROM	dbo.Item i 
+		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.Institution n ON ii.institutioncode = n.institutioncode
+		INNER JOIN dbo.Page p ON i.itemid = p.itemid
+		INNER JOIN dbo.NamePage np ON p.pageid = np.pageid
 WHERE	itemstatusid = 40
 AND		p.active = 1
 GROUP BY DATEPART(year, np.CreationDate),
@@ -106,8 +104,9 @@ SELECT	DATEPART(year, s.CreationDate) AS [Year],
 		inst.InstitutionName,
 		'Segments Created',
 		COUNT(*)
-FROM	dbo.Segment s INNER JOIN dbo.Institution inst
-			ON s.ContributorCode = inst.InstitutionCode
+FROM	dbo.Segment s 
+		INNER JOIN dbo.SegmentInstitution si ON s.SegmentID = si.SegmentID
+		INNER JOIN dbo.Institution inst ON si.InstitutionCode = inst.InstitutionCode
 WHERE	SegmentStatusID IN (10, 20) -- New, Published
 GROUP BY
 		DATEPART(year, s.CreationDate),
@@ -133,5 +132,3 @@ SELECT	[Year],
 FROM	#tmpMonthlyStats
 
 END
-
-

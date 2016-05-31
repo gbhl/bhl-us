@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchCatalogRefresh]
+﻿CREATE PROCEDURE [dbo].[SearchCatalogRefresh]
 
 @Target nvarchar(20) = 'Books'
 
@@ -150,6 +149,7 @@ BEGIN
 		SearchCatalogID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
 		TitleID int NOT NULL,
 		ItemID int NOT NULL,
+		FirstPageID int NULL,
 		SearchText nvarchar(4000) NOT NULL DEFAULT(''),
 		FullTitle nvarchar(2000) NOT NULL DEFAULT(''),
 		UniformTitle nvarchar(255) NOT NULL DEFAULT(''),
@@ -162,6 +162,8 @@ BEGIN
 		Associations nvarchar(max) NOT NULL DEFAULT(''),
 		Variants nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
+		ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasSegments smallint NOT NULL DEFAULT(0),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
 		HasExternalContent smallint NOT NULL DEFAULT(0)
@@ -214,6 +216,7 @@ BEGIN
 		  SearchCatalogID int IDENTITY(1,1) NOT NULL , --PRIMARY KEY,
 		  TitleID int NOT NULL,
 		  ItemID int NOT NULL,
+		  FirstPageID int NULL,
 		  SearchText nvarchar(4000) NOT NULL DEFAULT(''),
 		  FullTitle nvarchar(2000) NOT NULL DEFAULT(''),
 		  PartNumber nvarchar(255) NULL DEFAULT(''),
@@ -229,6 +232,8 @@ BEGIN
 		  Associations nvarchar(max) NOT NULL DEFAULT(''),
 		  Variants nvarchar(max) NOT NULL DEFAULT(''),
 		  Authors nvarchar(max) NOT NULL DEFAULT(''),
+		  TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
+		  ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
   		  HasSegments smallint NOT NULL DEFAULT(0),
 		  HasLocalContent smallint NOT NULL DEFAULT(0),
 		  HasExternalContent smallint NOT NULL DEFAULT(0)
@@ -264,7 +269,7 @@ BEGIN
 	WHERE	t.PublishReady = 1
 	AND		i.ItemStatusID = 40
 
-	-- Add subjects, associations, authors, and variants
+	-- Add subjects, associations, authors, variants, and contributors
 	UPDATE	#tmpItem
 	SET		Subjects = ISNULL(dbo.fnKeywordStringForTitle(t.TitleID) + ' ', '')
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleKeyword) tt ON t.TitleID = tt.TitleID
@@ -281,16 +286,51 @@ BEGIN
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleVariant) v ON t.TitleID = v.TitleID
 
 	UPDATE	#tmpItem
+	SET		TitleContributors = ISNULL(dbo.fnContributorStringForTitle(TitleID, 1) + ' ', '')
+
+	UPDATE	#tmpItem
+	SET		ItemContributors = ISNULL(dbo.fnContributorStringForItem(ItemID) + ' ', '')
+
+	UPDATE	#tmpItem
 	SET		HasLocalContent = 1
 	FROM	#tmpItem t INNER JOIN dbo.Page p ON t.ItemID = p.ItemID
-	
+
+	-- Get the first page IDs for each item
+	CREATE TABLE #tmpPages (SequenceOrder int NULL, ITEMID int NOT NULL)
+
+	INSERT INTO #tmpPages
+	SELECT	MIN(p.SequenceOrder) AS SequenceOrder, 
+			i.ItemID
+	FROM	#tmpItem i 
+			INNER JOIN dbo.Page p WITH (NOLOCK) ON i.ItemID = p.ItemID
+			INNER JOIN Page_PageType ppt ON p.PageID = ppt.PageID
+	WHERE	p.Active = 1
+	AND		ppt.PageTypeID = 1 -- Use the first Title Page in the book
+	GROUP BY i.ItemID
+
+	UPDATE	#tmpItem
+	SET		FirstPageID = p.PageID
+	FROM	#tmpItem i
+			INNER JOIN #tmpPages t ON i.ItemID = t.ItemID
+			INNER JOIN dbo.Page p WITH (NOLOCK) ON t.ItemID = p.ItemID AND t.SequenceOrder = p.SequenceOrder
+
+	UPDATE	#tmpItem
+	SET		FirstPageID = p.PageID	-- Just use the first physical page in the book if no title page found
+	FROM	#tmpItem i
+			INNER JOIN dbo.Page p WITH (NOLOCK) ON p.ItemID = i.ItemID AND p.SequenceOrder = 1
+	WHERE	i.FirstPageID IS NULL
+
+	DROP TABLE #tmpPages
+
 	-- Populate the temp table we'll use to update the search catalog
-	INSERT  #tmpSearchCatalog (TitleID, ItemID, SearchText, FullTitle, UniformTitle,
-				PublicationDetails, PublisherPlace, PublisherName,
+	INSERT  #tmpSearchCatalog (TitleID, ItemID, FirstPageID, SearchText, FullTitle, 
+				UniformTitle, PublicationDetails, PublisherPlace, PublisherName,
 				Volume, EditionStatement, Subjects, Associations, Variants, Authors,
-				HasSegments, HasLocalContent, HasExternalContent)
+				TitleContributors, ItemContributors, HasSegments, HasLocalContent, 
+				HasExternalContent)
 	SELECT	TitleID,
 			ItemID,
+			FirstPageID,
 			LEFT(FullTitle +
 				PartNumber +
 				PartName +
@@ -313,6 +353,8 @@ BEGIN
 			RTRIM(Associations),
 			RTRIM(Variants),
 			RTRIM(Authors),
+			RTRIM(TitleContributors),
+			RTRIM(ItemContributors),
 			HasSegments,
 			HasLocalContent,
 			HasExternalContent
@@ -343,6 +385,7 @@ BEGIN
 		[Date] nvarchar(20) NOT NULL DEFAULT(''),
 		Subjects nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
 		HasExternalContent smallint NOT NULL DEFAULT(0)
 	)
@@ -377,12 +420,15 @@ BEGIN
 			LEFT JOIN dbo.SegmentPage p ON s.SegmentID = p.SegmentID
 	WHERE	s.SegmentStatusID IN (10, 20)
 
-	-- Add subjects, associations, authors, and variants
+	-- Add subjects, authors, and conributors
 	UPDATE	#tmpSegment
 	SET		Subjects = ISNULL(dbo.fnKeywordStringForSegment(SegmentID) + ' ', '')
 
 	UPDATE	#tmpSegment
 	SET		Authors = ISNULL(dbo.fnAuthorStringForSegment(SegmentID, '|') + ' ', '')
+
+	UPDATE	#tmpSegment
+	SET		Contributors = ISNULL(dbo.fnContributorStringForSegment(SegmentID) + ' ', '')
 	
 	-- Create and populate the temp table we'll use to update the search catalog
 	CREATE TABLE #tmpSearchCatalogSegment
@@ -401,13 +447,14 @@ BEGIN
 		[Date] nvarchar(20) NOT NULL DEFAULT(''),
 		Subjects nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
 		HasExternalContent smallint NOT NULL DEFAULT(0)
 	)
 	
 	INSERT  #tmpSearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 				ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-				Subjects, Authors, HasLocalContent, HasExternalContent)
+				Subjects, Authors, Contributors, HasLocalContent, HasExternalContent)
 	SELECT	SegmentID,
 			ItemID,
 			LEFT(Title +
@@ -428,6 +475,7 @@ BEGIN
 			RTRIM([Date]),
 			RTRIM(Subjects),
 			RTRIM(Authors),
+			RTRIM(Contributors),
 			HasLocalContent,
 			HasExternalContent
 	FROM  #tmpSegment
@@ -489,12 +537,14 @@ IF (@Target = 'Books' OR @Target = '')
 BEGIN
 
 	-- Add any new rows to the search catalog
-	INSERT	dbo.SearchCatalog (TitleID, ItemID, SearchText, FullTitle, UniformTitle,
-					PublicationDetails, PublisherPlace, PublisherName, Volume, 
-					EditionStatement, Subjects, Associations, Variants, Authors,
-					HasSegments, HasLocalContent, HasExternalContent)
+	INSERT	dbo.SearchCatalog (TitleID, ItemID, FirstPageID, SearchText, FullTitle, 
+					UniformTitle, PublicationDetails, PublisherPlace, PublisherName, 
+					Volume, EditionStatement, Subjects, Associations, Variants, Authors,
+					TitleContributors, ItemContributors, HasSegments, HasLocalContent, 
+					HasExternalContent)
 	SELECT	t.TitleID, 
 			t.ItemID, 
+			t.FirstPageID,
 			t.SearchText, 
 			t.FullTitle, 
 			t.UniformTitle,
@@ -507,6 +557,8 @@ BEGIN
 			t.Associations, 
 			t.Variants, 
 			t.Authors,
+			t.TitleContributors,
+			t.ItemContributors,
 			t.HasSegments,
 			t.HasLocalContent,
 			t.HasExternalContent
@@ -517,7 +569,8 @@ BEGIN
 
 	-- Update any existing rows in the search catalog that have changed
 	UPDATE	dbo.SearchCatalog
-	SET		SearchText = CASE WHEN s.SearchText <> t.SearchText THEN t.SearchText ELSE s.SearchText END,
+	SET		FirstPageID = CASE WHEN ISNULL(s.FirstPageID, -1) <> ISNULL(t.FirstPageID, -1) THEN t.FirstPageID ELSE s.FirstPageID END,
+			SearchText = CASE WHEN s.SearchText <> t.SearchText THEN t.SearchText ELSE s.SearchText END,
 			FullTitle = CASE WHEN s.FullTitle <> t.FullTitle THEN t.FullTitle ELSE s.FullTitle END,
 			UniformTitle = CASE WHEN s.UniformTitle <> t.UniformTitle THEN t.UniformTitle ELSE s.UniformTitle END,
 			PublicationDetails = CASE WHEN s.PublicationDetails <> t.PublicationDetails THEN t.PublicationDetails ELSE s.PublicationDetails END,
@@ -529,6 +582,8 @@ BEGIN
 			Associations = CASE WHEN s.Associations <> t.Associations THEN t.Associations ELSE s.Associations END,
 			Variants = CASE WHEN s.Variants <> t.Variants THEN t.Variants ELSE s.Variants END,
 			Authors = CASE WHEN s.Authors <> t.Authors THEN t.Authors ELSE s.Authors END,
+			TitleContributors = CASE WHEN s.TitleContributors <> t.TitleContributors THEN t.TitleContributors ELSE s.TitleContributors END,
+			ItemContributors = CASE WHEN s.ItemContributors <> t.ItemContributors THEN t.ItemContributors ELSE s.ItemContributors END,
 			HasSegments = CASE WHEN s.HasSegments <> t.HasSegments THEN t.HasSegments ELSE s.HasSegments END,
 			HasLocalContent = CASE WHEN s.HasLocalContent <> t.HasLocalContent THEN t.HasLocalContent ELSE s.HasLocalContent END,
 			HasExternalContent = CASE WHEN s.HasExternalContent <> t.HasExternalContent THEN t.HasExternalContent ELSE s.HasExternalContent END,
@@ -536,7 +591,8 @@ BEGIN
 	FROM	dbo.SearchCatalog s INNER JOIN #tmpSearchCatalog t
 				ON s.TitleID = t.TitleID
 				AND s.ItemID = t.ItemID
-	WHERE	s.SearchText <> t.SearchText
+	WHERE	ISNULL(s.FirstPageID, -1) <> ISNULL(t.FirstPageID, -1)
+	OR		s.SearchText <> t.SearchText
 	OR		s.FullTitle <> t.FullTitle
 	OR		s.UniformTitle <> t.UniformTitle
 	OR		s.PublicationDetails <> t.PublicationDetails
@@ -548,6 +604,8 @@ BEGIN
 	OR		s.Associations <> t.Associations
 	OR		s.Variants <> t.Variants
 	OR		s.Authors <> t.Authors
+	OR		s.TitleContributors <> t.TitleContributors
+	OR		s.ItemContributors <> t.ItemContributors
 	OR		s.HasSegments <> t.HasSegments
 	OR		s.HasLocalContent <> t.HasLocalContent
 	OR		s.HasExternalContent <> t.HasExternalContent
@@ -563,7 +621,7 @@ BEGIN
 
 END
 
--- ****************************************  SEARCHCATALOG  ***********************************
+-- ************************************  SEARCHCATALOGSEGMENT  ********************************
 
 IF (@Target = 'Segments' OR @Target = '')
 BEGIN
@@ -571,7 +629,7 @@ BEGIN
 	-- Add any new rows to the search catalog
 	INSERT	dbo.SearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 					ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-					Subjects, Authors, HasLocalContent, HasExternalContent)
+					Subjects, Authors, Contributors, HasLocalContent, HasExternalContent)
 	SELECT	t.SegmentID, 
 			t.ItemID,
 			t.SearchText, 
@@ -585,6 +643,7 @@ BEGIN
 			t.[Date],
 			t.Subjects,
 			t.Authors,
+			t.Contributors,
 			t.HasLocalContent,
 			t.HasExternalContent
 	FROM	#tmpSearchCatalogSegment t LEFT JOIN dbo.SearchCatalogSegment s
@@ -605,6 +664,7 @@ BEGIN
 			[Date] = CASE WHEN s.[Date] <> t.[Date] THEN t.[Date] ELSE s.[Date] END,
 			Subjects = CASE WHEN s.Subjects <> t.Subjects THEN t.Subjects ELSE s.Subjects END,
 			Authors = CASE WHEN s.Authors <> t.Authors THEN t.Authors ELSE s.Authors END,
+			Contributors = CASE WHEN s.Contributors <> t.Contributors THEN t.Contributors ELSE s.Contributors END,
 			HasLocalContent = CASE WHEN s.HasLocalContent <> t.HasLocalContent THEN t.HasLocalContent ELSE s.HasLocalContent END,
 			HasExternalContent = CASE WHEN s.HasExternalContent <> t.HasExternalContent THEN t.HasExternalContent ELSE s.HasExternalContent END,
 			LastModifiedDate = GETDATE()
@@ -622,6 +682,7 @@ BEGIN
 	OR		s.[Date] <> t.[Date]
 	OR		s.Subjects <> t.Subjects
 	OR		s.Authors <> t.Authors
+	OR		s.Contributors <> t.Contributors
 	OR		s.HasLocalContent <> t.HasLocalContent
 	OR		s.HasExternalContent <> t.HasExternalContent
 
@@ -646,6 +707,3 @@ ALTER FULLTEXT CATALOG BHLSearchCatalog REORGANIZE
 UPDATE dbo.Configuration SET ConfigurationValue = 0 WHERE ConfigurationName = 'SearchCatalogOffline'
 
 END
-
-
-

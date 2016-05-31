@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByLanguage]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByLanguage]
 
 @LanguageCode nvarchar(10) = ''
 
@@ -20,7 +19,7 @@ SELECT DISTINCT
 		CASE WHEN ISNULL(i.Year, '') = '' THEN CONVERT(nvarchar(20), t.StartYear) ELSE i.Year END AS [Year],
 		t.EditionStatement,
 		i.Volume,
-		ins.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		dbo.fnCOinSAuthorStringForTitle(t.TitleID, 0) AS Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections
 FROM	dbo.Title t  WITH (NOLOCK)
@@ -35,7 +34,6 @@ FROM	dbo.Title t  WITH (NOLOCK)
 				ON t.TitleID = x.TitleID
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON x.TitleID = ti.TitleID AND x.MinSeq = ti.ItemSequence
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
-		LEFT OUTER JOIN Institution ins WITH (NOLOCK) ON ins.InstitutionCode = t.InstitutionCode
 		LEFT OUTER JOIN dbo.Language l WITH (NOLOCK) ON l.LanguageCode = t.LanguageCode
 		LEFT JOIN dbo.TitleLanguage tl WITH (NOLOCK) ON t.TitleID = tl.TitleID
 		LEFT JOIN dbo.ItemLanguage il WITH (NOLOCK) ON i.ItemID = il.ItemID
@@ -49,5 +47,3 @@ AND		(t.LanguageCode = @LanguageCode OR
 AND		@LanguageCode <> ''
 ORDER BY 
 		t.SortTitle
-
-

@@ -265,6 +265,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.TextBox copyrightEvidenceTextBox;
         
         /// <summary>
+        /// ddlRights control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRights;
+        
+        /// <summary>
         /// externalUrlTextBox control.
         /// </summary>
         /// <remarks>
@@ -272,6 +281,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox externalUrlTextBox;
+        
+        /// <summary>
+        /// ddlScanningInstitution control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlScanningInstitution;
         
         /// <summary>
         /// scannedByLabel control.

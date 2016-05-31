@@ -269,7 +269,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "Shells";
+            string title = "gopher";
             string containerTitle = string.Empty;
             string authorLastName = string.Empty;
             string date = string.Empty;
@@ -291,7 +291,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string searchText = "Shells";
+            string searchText = "gopher";
             int returnCount = 1;
             string searchSort = "Title";
             CustomGenericList<Segment> actual = target.SearchSegmentFullText(sqlConnection, sqlTransaction, searchText, returnCount, searchSort);
@@ -340,7 +340,7 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string institutionCode = "MO";
+            string institutionCode = "MBLWHOI";
             string startsWith = "C";
             CustomGenericList<SearchBookResult> actual = target.TitleSelectByInstitutionAndStartsWith(sqlConnection, sqlTransaction, institutionCode, startsWith);
             Assert.IsTrue(actual.Count > 0);
@@ -352,8 +352,8 @@ namespace BHLCoreDALTest
             SearchDAL target = new SearchDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string institutionCode = "MO";
-            string startsWith = "C";
+            string institutionCode = "MBLWHOI";
+            string startsWith = "X";
             CustomGenericList<SearchBookResult> actual = target.TitleSelectByInstitutionAndStartsWithout(sqlConnection, sqlTransaction, institutionCode, startsWith);
             Assert.IsTrue(actual.Count > 0);
         }

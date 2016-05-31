@@ -31,7 +31,7 @@
 					</tr>
 					<tr>
 						<td align="center" runat="server" id="tdInstitutions">
-							<a href="/InstitutionEdit.aspx">Contributors</a>
+							<a href="/InstitutionEdit.aspx">Content Providers</a>
 						</td>
 					</tr>
 					<tr>

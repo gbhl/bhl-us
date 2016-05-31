@@ -101,11 +101,11 @@ namespace BHLCoreDALTest
             ItemDAL target = new ItemDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string institutionCode = "MO";
+            string institutionCode = "MBLWHOI";
             int returnCount = 1;
             string sortBy = "Date";
             CustomGenericList<Item> actual = target.ItemSelectByInstitution(sqlConnection, sqlTransaction, institutionCode, returnCount, sortBy);
-            Assert.AreEqual(actual.Count, 1);
+            Assert.IsTrue(actual.Count > 0);
         }
 
         [TestMethod]
@@ -114,7 +114,7 @@ namespace BHLCoreDALTest
             ItemDAL target = new ItemDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string institutionCode = "MO";
+            string institutionCode = "MBLWHOI";
             int actual = target.ItemCountByInstitution(sqlConnection, sqlTransaction, institutionCode);
             Assert.IsTrue(actual > 0);
         }

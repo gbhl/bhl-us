@@ -1,7 +1,7 @@
 
-// Generated 8/3/2010 11:16:34 AM
+// Generated 6/2/2016 9:32:28 AM
 // Do not modify the contents of this code file.
-// This abstract class __Title is based upon Title.
+// This abstract class __Title is based upon dbo.Title.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Title : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -48,7 +48,6 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="titleID"></param>
 		/// <param name="mARCBibID"></param>
 		/// <param name="mARCLeader"></param>
-		/// <param name="bibliographicLevelID"></param>
 		/// <param name="tropicosTitleID"></param>
 		/// <param name="redirectTitleID"></param>
 		/// <param name="fullTitle"></param>
@@ -62,7 +61,6 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="datafield_260_a"></param>
 		/// <param name="datafield_260_b"></param>
 		/// <param name="datafield_260_c"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
@@ -78,10 +76,10 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="currentPublicationFrequency"></param>
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
+		/// <param name="bibliographicLevelID"></param>
 		public __Title(int titleID, 
 			string mARCBibID, 
 			string mARCLeader, 
-			int? bibliographicLevelID, 
 			int? tropicosTitleID, 
 			int? redirectTitleID, 
 			string fullTitle, 
@@ -95,7 +93,6 @@ namespace MOBOT.BHL.DataObjects
 			string datafield_260_a, 
 			string datafield_260_b, 
 			string datafield_260_c, 
-			string institutionCode, 
 			string languageCode, 
 			string titleDescription, 
 			string tL2Author, 
@@ -110,12 +107,12 @@ namespace MOBOT.BHL.DataObjects
 			string editionStatement, 
 			string currentPublicationFrequency, 
 			string partNumber, 
-			string partName) : this()
+			string partName, 
+			int? bibliographicLevelID) : this()
 		{
 			_TitleID = titleID;
 			MARCBibID = mARCBibID;
 			MARCLeader = mARCLeader;
-			BibliographicLevelID = bibliographicLevelID;
 			TropicosTitleID = tropicosTitleID;
 			RedirectTitleID = redirectTitleID;
 			FullTitle = fullTitle;
@@ -129,7 +126,6 @@ namespace MOBOT.BHL.DataObjects
 			Datafield_260_a = datafield_260_a;
 			Datafield_260_b = datafield_260_b;
 			Datafield_260_c = datafield_260_c;
-			InstitutionCode = institutionCode;
 			LanguageCode = languageCode;
 			TitleDescription = titleDescription;
 			TL2Author = tL2Author;
@@ -145,6 +141,7 @@ namespace MOBOT.BHL.DataObjects
 			CurrentPublicationFrequency = currentPublicationFrequency;
 			PartNumber = partNumber;
 			PartName = partName;
+			BibliographicLevelID = bibliographicLevelID;
 		}
 		
 		#endregion Constructors
@@ -184,11 +181,6 @@ namespace MOBOT.BHL.DataObjects
 					case "MARCLeader" :
 					{
 						_MARCLeader = (string)column.Value;
-						break;
-					}
-					case "BibliographicLevelID" :
-					{
-						_BibliographicLevelID = (int?)column.Value;
 						break;
 					}
 					case "TropicosTitleID" :
@@ -254,11 +246,6 @@ namespace MOBOT.BHL.DataObjects
 					case "Datafield_260_c" :
 					{
 						_Datafield_260_c = (string)column.Value;
-						break;
-					}
-					case "InstitutionCode" :
-					{
-						_InstitutionCode = (string)column.Value;
 						break;
 					}
 					case "LanguageCode" :
@@ -336,7 +323,12 @@ namespace MOBOT.BHL.DataObjects
 						_PartName = (string)column.Value;
 						break;
 					}
-				}
+					case "BibliographicLevelID" :
+					{
+						_BibliographicLevelID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -344,7 +336,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleID
 		
@@ -430,33 +422,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion MARCLeader
 		
-		#region BibliographicLevelID
-		
-		private int? _BibliographicLevelID = null;
-		
-		/// <summary>
-		/// Column: BibliographicLevelID;
-		/// DBMS data type: int; Nullable;
-		/// </summary>
-		[ColumnDefinition("BibliographicLevelID", DbTargetType=SqlDbType.Int, Ordinal=4, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
-		public int? BibliographicLevelID
-		{
-			get
-			{
-				return _BibliographicLevelID;
-			}
-			set
-			{
-				if (_BibliographicLevelID != value)
-				{
-					_BibliographicLevelID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion BibliographicLevelID
-		
 		#region TropicosTitleID
 		
 		private int? _TropicosTitleID = null;
@@ -465,7 +430,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: TropicosTitleID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("TropicosTitleID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("TropicosTitleID", DbTargetType=SqlDbType.Int, Ordinal=4, NumericPrecision=10, IsNullable=true)]
 		public int? TropicosTitleID
 		{
 			get
@@ -492,7 +457,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: RedirectTitleID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("RedirectTitleID", DbTargetType=SqlDbType.Int, Ordinal=6, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
+		[ColumnDefinition("RedirectTitleID", DbTargetType=SqlDbType.Int, Ordinal=5, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
 		public int? RedirectTitleID
 		{
 			get
@@ -519,7 +484,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: FullTitle;
 		/// DBMS data type: nvarchar(2000);
 		/// </summary>
-		[ColumnDefinition("FullTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=2000)]
+		[ColumnDefinition("FullTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=2000)]
 		public string FullTitle
 		{
 			get
@@ -547,7 +512,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ShortTitle;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("ShortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("ShortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=255, IsNullable=true)]
 		public string ShortTitle
 		{
 			get
@@ -575,7 +540,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: UniformTitle;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("UniformTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("UniformTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=255, IsNullable=true)]
 		public string UniformTitle
 		{
 			get
@@ -603,7 +568,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: SortTitle;
 		/// DBMS data type: nvarchar(60); Nullable;
 		/// </summary>
-		[ColumnDefinition("SortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=60, IsNullable=true)]
+		[ColumnDefinition("SortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=60, IsNullable=true)]
 		public string SortTitle
 		{
 			get
@@ -631,7 +596,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CallNumber;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=100, IsNullable=true)]
 		public string CallNumber
 		{
 			get
@@ -659,7 +624,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PublicationDetails;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PublicationDetails", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PublicationDetails", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=255, IsNullable=true)]
 		public string PublicationDetails
 		{
 			get
@@ -687,7 +652,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: StartYear;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("StartYear", DbTargetType=SqlDbType.SmallInt, Ordinal=13, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("StartYear", DbTargetType=SqlDbType.SmallInt, Ordinal=12, NumericPrecision=5, IsNullable=true)]
 		public short? StartYear
 		{
 			get
@@ -714,7 +679,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: EndYear;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("EndYear", DbTargetType=SqlDbType.SmallInt, Ordinal=14, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("EndYear", DbTargetType=SqlDbType.SmallInt, Ordinal=13, NumericPrecision=5, IsNullable=true)]
 		public short? EndYear
 		{
 			get
@@ -741,7 +706,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Datafield_260_a;
 		/// DBMS data type: nvarchar(150); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_a", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=150, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_a", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=150, IsNullable=true)]
 		public string Datafield_260_a
 		{
 			get
@@ -769,7 +734,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Datafield_260_b;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_b", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_b", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=255, IsNullable=true)]
 		public string Datafield_260_b
 		{
 			get
@@ -797,7 +762,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Datafield_260_c;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("Datafield_260_c", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("Datafield_260_c", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=100, IsNullable=true)]
 		public string Datafield_260_c
 		{
 			get
@@ -817,34 +782,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Datafield_260_c
 		
-		#region InstitutionCode
-		
-		private string _InstitutionCode = null;
-		
-		/// <summary>
-		/// Column: InstitutionCode;
-		/// DBMS data type: nvarchar(10); Nullable;
-		/// </summary>
-		[ColumnDefinition("InstitutionCode", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
-		public string InstitutionCode
-		{
-			get
-			{
-				return _InstitutionCode;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 10);
-				if (_InstitutionCode != value)
-				{
-					_InstitutionCode = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion InstitutionCode
-		
 		#region LanguageCode
 		
 		private string _LanguageCode = null;
@@ -853,7 +790,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LanguageCode;
 		/// DBMS data type: nvarchar(10); Nullable;
 		/// </summary>
-		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
+		[ColumnDefinition("LanguageCode", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=10, IsInForeignKey=true, IsNullable=true)]
 		public string LanguageCode
 		{
 			get
@@ -879,9 +816,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: TitleDescription;
-		/// DBMS data type: ntext; Nullable;
+		/// DBMS data type: ntext(1073741823); Nullable;
 		/// </summary>
-		[ColumnDefinition("TitleDescription", DbTargetType=SqlDbType.NText, Ordinal=20, CharacterMaxLength=1073741823, IsNullable=true)]
+		[ColumnDefinition("TitleDescription", DbTargetType=SqlDbType.NText, Ordinal=18, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string TitleDescription
 		{
 			get
@@ -909,7 +846,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: TL2Author;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("TL2Author", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("TL2Author", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=100, IsNullable=true)]
 		public string TL2Author
 		{
 			get
@@ -937,7 +874,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PublishReady;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("PublishReady", DbTargetType=SqlDbType.Bit, Ordinal=22)]
+		[ColumnDefinition("PublishReady", DbTargetType=SqlDbType.Bit, Ordinal=20)]
 		public bool PublishReady
 		{
 			get
@@ -964,7 +901,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: RareBooks;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("RareBooks", DbTargetType=SqlDbType.Bit, Ordinal=23)]
+		[ColumnDefinition("RareBooks", DbTargetType=SqlDbType.Bit, Ordinal=21)]
 		public bool RareBooks
 		{
 			get
@@ -991,7 +928,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=255, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -1019,7 +956,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=25, IsNullable=true)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=23, IsNullable=true)]
 		public DateTime? CreationDate
 		{
 			get
@@ -1046,7 +983,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=26, IsNullable=true)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=24, IsNullable=true)]
 		public DateTime? LastModifiedDate
 		{
 			get
@@ -1073,7 +1010,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=27, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=25, NumericPrecision=10, IsNullable=true)]
 		public int? CreationUserID
 		{
 			get
@@ -1100,7 +1037,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=28, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=26, NumericPrecision=10, IsNullable=true)]
 		public int? LastModifiedUserID
 		{
 			get
@@ -1127,7 +1064,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: OriginalCatalogingSource;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("OriginalCatalogingSource", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("OriginalCatalogingSource", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=100, IsNullable=true)]
 		public string OriginalCatalogingSource
 		{
 			get
@@ -1155,7 +1092,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: EditionStatement;
 		/// DBMS data type: nvarchar(450); Nullable;
 		/// </summary>
-		[ColumnDefinition("EditionStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=450, IsNullable=true)]
+		[ColumnDefinition("EditionStatement", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=450, IsNullable=true)]
 		public string EditionStatement
 		{
 			get
@@ -1183,7 +1120,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CurrentPublicationFrequency;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("CurrentPublicationFrequency", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("CurrentPublicationFrequency", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=100, IsNullable=true)]
 		public string CurrentPublicationFrequency
 		{
 			get
@@ -1211,7 +1148,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PartNumber;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PartNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PartNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=255, IsNullable=true)]
 		public string PartNumber
 		{
 			get
@@ -1239,7 +1176,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PartName;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PartName", DbTargetType=SqlDbType.NVarChar, Ordinal=33, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PartName", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=255, IsNullable=true)]
 		public string PartName
 		{
 			get
@@ -1258,9 +1195,36 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion PartName
+		
+		#region BibliographicLevelID
+		
+		private int? _BibliographicLevelID = null;
+		
+		/// <summary>
+		/// Column: BibliographicLevelID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("BibliographicLevelID", DbTargetType=SqlDbType.Int, Ordinal=32, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
+		public int? BibliographicLevelID
+		{
+			get
+			{
+				return _BibliographicLevelID;
+			}
+			set
+			{
+				if (_BibliographicLevelID != value)
+				{
+					_BibliographicLevelID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion BibliographicLevelID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1305,7 +1269,6 @@ namespace MOBOT.BHL.DataObjects
 					o.TitleID == TitleID &&
 					GetComparisonString(o.MARCBibID) == GetComparisonString(MARCBibID) &&
 					GetComparisonString(o.MARCLeader) == GetComparisonString(MARCLeader) &&
-					o.BibliographicLevelID == BibliographicLevelID &&
 					o.TropicosTitleID == TropicosTitleID &&
 					o.RedirectTitleID == RedirectTitleID &&
 					GetComparisonString(o.FullTitle) == GetComparisonString(FullTitle) &&
@@ -1319,7 +1282,6 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Datafield_260_a) == GetComparisonString(Datafield_260_a) &&
 					GetComparisonString(o.Datafield_260_b) == GetComparisonString(Datafield_260_b) &&
 					GetComparisonString(o.Datafield_260_c) == GetComparisonString(Datafield_260_c) &&
-					GetComparisonString(o.InstitutionCode) == GetComparisonString(InstitutionCode) &&
 					GetComparisonString(o.LanguageCode) == GetComparisonString(LanguageCode) &&
 					GetComparisonString(o.TitleDescription) == GetComparisonString(TitleDescription) &&
 					GetComparisonString(o.TL2Author) == GetComparisonString(TL2Author) &&
@@ -1334,7 +1296,8 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.EditionStatement) == GetComparisonString(EditionStatement) &&
 					GetComparisonString(o.CurrentPublicationFrequency) == GetComparisonString(CurrentPublicationFrequency) &&
 					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
-					GetComparisonString(o.PartName) == GetComparisonString(PartName) 
+					GetComparisonString(o.PartName) == GetComparisonString(PartName) &&
+					o.BibliographicLevelID == BibliographicLevelID 
 				)
 				{
 					o = null;
@@ -1438,7 +1401,6 @@ namespace MOBOT.BHL.DataObjects
 			public const string TitleID = "TitleID";	
 			public const string MARCBibID = "MARCBibID";	
 			public const string MARCLeader = "MARCLeader";	
-			public const string BibliographicLevelID = "BibliographicLevelID";	
 			public const string TropicosTitleID = "TropicosTitleID";	
 			public const string RedirectTitleID = "RedirectTitleID";	
 			public const string FullTitle = "FullTitle";	
@@ -1452,7 +1414,6 @@ namespace MOBOT.BHL.DataObjects
 			public const string Datafield_260_a = "Datafield_260_a";	
 			public const string Datafield_260_b = "Datafield_260_b";	
 			public const string Datafield_260_c = "Datafield_260_c";	
-			public const string InstitutionCode = "InstitutionCode";	
 			public const string LanguageCode = "LanguageCode";	
 			public const string TitleDescription = "TitleDescription";	
 			public const string TL2Author = "TL2Author";	
@@ -1467,10 +1428,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string EditionStatement = "EditionStatement";	
 			public const string CurrentPublicationFrequency = "CurrentPublicationFrequency";	
 			public const string PartNumber = "PartNumber";	
-			public const string PartName = "PartName";
+			public const string PartName = "PartName";	
+			public const string BibliographicLevelID = "BibliographicLevelID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

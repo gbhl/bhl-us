@@ -24,7 +24,7 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		public Institution InstitutionSelectByItemID(
+		public CustomGenericList<Institution> InstitutionSelectByItemID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID )
@@ -40,9 +40,7 @@ namespace MOBOT.BHL.DAL
 					CustomGenericList<Institution> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 					{
-						Institution o = list[ 0 ];
-						list = null;
-						return o;
+						return list;
 					}
 					else
 					{
@@ -108,7 +106,67 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution institution)
+        public CustomGenericList<Institution> InstitutionSelectBySegmentIDAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int segmentID,
+            string institutionRoleName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectBySegmentIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int itemID,
+            string institutionRoleName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByItemIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public CustomGenericList<Institution> InstitutionSelectByTitleIDAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int titleID,
+            string institutionRoleName)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByTitleIDAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, false, institutionRoleName)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public void Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Institution institution, int userID)
 		{
 			SqlConnection connection = sqlConnection;
 			SqlTransaction transaction = sqlTransaction;
@@ -125,7 +183,7 @@ namespace MOBOT.BHL.DAL
 			{
 				transaction = CustomSqlHelper.BeginTransaction( connection, transaction, isTransactionCoordinator );
 
-				new InstitutionDAL().InstitutionManageAuto( connection, transaction, institution );
+				new InstitutionDAL().InstitutionManageAuto( connection, transaction, institution, userID );
 
 				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}

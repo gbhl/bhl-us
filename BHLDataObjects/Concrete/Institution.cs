@@ -15,8 +15,10 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="institutionName"></param>
 		/// <param name="note"></param>
 		/// <param name="institutionUrl"></param>
-		public Institution( string institutionCode, string institutionName, string note, string institutionUrl, bool bHLMemberLibrary )
-			: base( institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary )
+		public Institution( string institutionCode, string institutionName, string note, string institutionUrl, bool bHLMemberLibrary,
+            DateTime? creationDate, DateTime? lastModifiedDate, int? creationUserID, int? lastModifiedUserID)
+			: base( institutionCode, institutionName, note, institutionUrl, bHLMemberLibrary,
+                  creationDate, lastModifiedDate, creationUserID, lastModifiedUserID)
 		{
 		}
 
@@ -49,6 +51,27 @@ namespace MOBOT.BHL.DataObjects
             set { _totalDOIs = value; }
         }
 
+        private int? _entityInstitutionID = null;
+        public int? EntityInstitutionID
+        {
+            get { return _entityInstitutionID; }
+            set { _entityInstitutionID = value; }
+        }
+
+        private string _institutionRoleName = string.Empty;
+        public string InstitutionRoleName
+        {
+            get { return _institutionRoleName; }
+            set { _institutionRoleName = value; }
+        }
+
+        private string _institutionRoleLabel = string.Empty;
+        public string InstitutionRoleLabel
+        {
+            get { return _institutionRoleLabel; }
+            set { _institutionRoleLabel = value; }
+        }
+
         #endregion Properties
 
         public override void SetValues(CustomDataRow row)
@@ -70,6 +93,22 @@ namespace MOBOT.BHL.DataObjects
                     case "TotalDOIs":
                         {
                             _totalDOIs = (int)column.Value;
+                            break;
+                        }
+                    case "ItemInstitutionID":
+                    case "SegmentInstitutionID":
+                        {
+                            _entityInstitutionID = (int?)column.Value;
+                            break;
+                        }
+                    case "InstitutionRoleName":
+                        {
+                            _institutionRoleName = (string)column.Value;
+                            break;
+                        }
+                    case "InstitutionRoleLabel":
+                        {
+                            _institutionRoleLabel = (string)column.Value;
                             break;
                         }
                 }

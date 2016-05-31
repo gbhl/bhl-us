@@ -1,5 +1,5 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByCollectionAndStartsWith]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByCollectionAndStartsWith]
+
 @CollectionID int,
 @StartsWith varchar(1000)
 
@@ -20,14 +20,12 @@ SELECT	t.TitleID,
 		t.EditionStatement,
 		itm.Volume,
 		itm.ExternalUrl,
-		i.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, itm.ItemID) AS Collections
 FROM	dbo.Title t WITH (NOLOCK)
 		INNER JOIN dbo.TitleCollection tc WITH (NOLOCK)
 			ON t.TitleID = tc.TitleID
-		LEFT JOIN dbo.Institution i WITH (NOLOCK)
-			ON t.InstitutionCode = i.InstitutionCode
 		INNER JOIN (
 				-- Get the first item for each title
 				SELECT	TitleID, MIN(ItemSequence) MinSeq
@@ -47,8 +45,3 @@ ORDER BY
 		t.SortTitle
 
 END
-
-
-
-
-

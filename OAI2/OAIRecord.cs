@@ -112,12 +112,12 @@ namespace MOBOT.BHL.OAI2
             set { _partName = value; }
         }
 
-        String _contributor = String.Empty;
+        List<String> _contributors = new List<string>();
 
-        public String Contributor
+        public List<String> Contributors
         {
-            get { return _contributor; }
-            set { _contributor = value; }
+            get { return _contributors; }
+            set { _contributors = value; }
         }
 
         String _date = String.Empty;
@@ -520,9 +520,13 @@ namespace MOBOT.BHL.OAI2
                 this.JournalVolume = item.Volume;
                 this.Date = item.Year;
 
-                if (!String.IsNullOrEmpty(item.InstitutionCode))
+                CustomGenericList<Institution> contributors = provider.ItemContributorSelectByItemID(item.ItemID);
+                if (contributors.Count > 0)
                 {
-                    this.Contributor = provider.InstitutionSelectAuto(item.InstitutionCode).InstitutionName;
+                    foreach(Institution contributor in contributors)
+                    {
+                        this.Contributors.Add(contributor.InstitutionName);
+                    }
                 }
 
                 if (!String.IsNullOrEmpty(item.CopyrightStatus)) this.Rights.Add(item.CopyrightStatus);
@@ -762,10 +766,15 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                if (!String.IsNullOrEmpty(title.InstitutionCode))
+                CustomGenericList<Institution> contributors = provider.TitleContributorSelectByTitleID(title.TitleID);
+                if (contributors.Count > 0)
                 {
-                    this.Contributor = provider.InstitutionSelectAuto(title.InstitutionCode).InstitutionName;
+                    foreach (Institution contributor in contributors)
+                    {
+                        this.Contributors.Add(contributor.InstitutionName);
+                    }
                 }
+
 
                 if (!string.IsNullOrEmpty(title.UniformTitle))
                 {
@@ -876,9 +885,13 @@ namespace MOBOT.BHL.OAI2
                     this.JournalVolume = item.Volume;
                     this.Date = item.Year;
 
-                    if (!String.IsNullOrEmpty(item.InstitutionCode))
+                    CustomGenericList<Institution> contributors = provider.ItemContributorSelectByItemID(item.ItemID);
+                    if (contributors.Count > 0)
                     {
-                        this.Contributor = provider.InstitutionSelectAuto(item.InstitutionCode).InstitutionName;
+                        foreach (Institution contributor in contributors)
+                        {
+                            this.Contributors.Add(contributor.InstitutionName);
+                        }
                     }
 
                     if (!String.IsNullOrEmpty(item.CopyrightStatus)) this.Rights.Add(item.CopyrightStatus);
@@ -955,7 +968,6 @@ namespace MOBOT.BHL.OAI2
                 if (!string.IsNullOrEmpty(segment.EndPageNumber)) this.Descriptions.Add("End Page: " + segment.EndPageNumber);
                 this.JournalVolume = segment.Volume;
                 this.Date = segment.Date;
-                this.Contributor = segment.ContributorName;
                 if (!string.IsNullOrEmpty(segment.RightsStatus)) this.Rights.Add(segment.RightsStatus);
                 this.JournalTitle = segment.ContainerTitle;
                 this.Publisher = segment.PublisherName;
@@ -968,6 +980,11 @@ namespace MOBOT.BHL.OAI2
                     segment.PublisherName != string.Empty)
                 {
                     this.PublicationDetails = (segment.PublicationDetails == string.Empty ? segment.PublisherPlace + " " + segment.PublisherName : segment.PublicationDetails);
+                }
+
+                foreach(Institution contributor in segment.ContributorList)
+                {
+                    this.Contributors.Add(contributor.InstitutionName);
                 }
 
                 foreach (SegmentAuthor author in segment.AuthorList)

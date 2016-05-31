@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MonthlyStatsSelectByDateAndInstitution]
+﻿CREATE PROCEDURE [dbo].[MonthlyStatsSelectByDateAndInstitution]
 
 @StartYear int,
 @StartMonth int,
@@ -27,7 +26,7 @@ WHERE	[Year] >= 2006
 AND		StatType NOT LIKE '%Scanned%'
 AND		([Year] > @StartYear OR ([Year] = @StartYear AND [Month] >= @StartMonth))
 AND		([Year] < @EndYear OR ([Year] = @EndYear AND [Month] <= @EndMonth))
-AND		(InstitutionName = @InstitutionName OR @InstitutionName = '')
+AND		((InstitutionName = @InstitutionName AND StatType <> 'Titles Created') OR @InstitutionName = '')
 GROUP BY
 		StatType, [Year], [Month]
 ORDER BY
@@ -41,4 +40,3 @@ ORDER BY
 		[Year], [Month]
 
 END
-
