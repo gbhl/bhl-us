@@ -116,7 +116,7 @@
             <!-- <div id="right-panel-tab" title="OCR Text"><a href="#right-panel"><</a></div> -->
             <div id="right-panel-content">
                 <div id="pageOCR-panel"> </div>
-                <div id="pageReaderComments-panel"><img src="../images/blank.gif" alt="Blank" style="display:none" /><div id="disquscommunity"><a href="https://disqus.com/by/BioDivLibrary/favorites/" target="_blank">View BHL's Community <img src="../images/new-tab.png" /></a></div><a href="#" id="startCommentsButton"><img src="../images/start_comment.png" alt="Leave a comment on this page" /></a><div id="pageReaderComments-panelInner"></div></div>
+<!--                <div id="pageReaderComments-panel"><img src="../images/blank.gif" alt="Blank" style="display:none" /><div id="disquscommunity"><a href="https://disqus.com/by/BioDivLibrary/favorites/" target="_blank">View BHL's Community <img src="../images/new-tab.png" /></a></div><a href="#" id="startCommentsButton"><img src="../images/start_comment.png" alt="Leave a comment on this page" /></a><div id="pageReaderComments-panelInner"></div></div> -->
             </div>
         </div> <!-- right-panel -->
 
@@ -1171,7 +1171,7 @@ BookReader.prototype.scrollUp = function() {
             //$('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show OCR</a></div>");
             var BRtoolbar = $("#BRtoolbar").detach();
             BRtoolbar.appendTo("#BRtoolbarwrapper");
-            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> <a id='showReaderCommentsButton' class='BRButton' title='Add Comments'>Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span></a></div>");
+            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> </div>");
             var PDFtoolbar = $("#toolbar-top").detach();
             PDFtoolbar.prependTo("#BRtoolbar"); 
             $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
@@ -1272,6 +1272,7 @@ BookReader.prototype.scrollUp = function() {
 
             //show the disqus tab contents
             function updateDisqus(showDisqus) {
+				return;
                 disqus = "";
                 newpageReaderComments.html('');
                 $("#startCommentsButton").hide();
@@ -1360,16 +1361,16 @@ BookReader.prototype.scrollUp = function() {
                 success: function (data) {
                     pages[br.currentIndex()].NumComments += 1;
                     pageTitleText = $("#lstPages option:selected").text();
-                    if (pageTitleText.indexOf("💬") == -1) {
-                        $("#lstPages option:selected").text(pageTitleText + " 💬");
+                    if (pageTitleText.indexOf("?") == -1) {
+                        $("#lstPages option:selected").text(pageTitleText + " ?");
                     }
                     updateCommentCount();
                 },
                 error: function (data) {
                     pages[br.currentIndex()].NumComments += 1;
                     pageTitleText = $("#lstPages option:selected").text();
-                    if (pageTitleText.indexOf("💬") == -1) {
-                        $("#lstPages option:selected").text(pageTitleText + " 💬");
+                    if (pageTitleText.indexOf("?") == -1) {
+                        $("#lstPages option:selected").text(pageTitleText + " ?");
                     }
                     updateCommentCount();
                 }   
