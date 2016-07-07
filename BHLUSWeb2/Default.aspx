@@ -33,7 +33,6 @@
             <span>Search across books and journals, scientific names, authors and subjects</span>
             <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" Text="Search" />
             <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
-            <!--[if lt IE 9 ]> <asp:TextBox runat="server" class="hidden"></asp:TextBox> <![endif]-->
             <a href="/advsearch" class="advsearch-home">advanced search</a>
         </div>
 </div>
