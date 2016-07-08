@@ -31,6 +31,7 @@
     <add key="DoRemoteNameLookup" value="false"/>
     <add key="ShowAnnotations" value="true"/>
     <add key="EnableFullTextSearch" value="true"/>
+    <add key="LogExceptions" value="true"/>
     <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
 
