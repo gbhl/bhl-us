@@ -19,3 +19,8 @@ GO
 
 ALTER TABLE [dbo].[ItemInstitution]  WITH CHECK ADD CONSTRAINT [FK_ItemInstitution_Item] FOREIGN KEY([ItemID]) REFERENCES [dbo].[Item] ([ItemID])
 GO
+
+CREATE NONCLUSTERED INDEX [IX_ItemInstitution_ItemID]
+	ON [dbo].[ItemInstitution] ([ItemID] ASC)
+	INCLUDE ([InstitutionCode],[InstitutionRoleID])
+GO

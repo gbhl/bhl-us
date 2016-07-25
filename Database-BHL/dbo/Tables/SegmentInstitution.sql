@@ -19,3 +19,7 @@ GO
 
 ALTER TABLE [dbo].[SegmentInstitution]  WITH CHECK ADD CONSTRAINT [FK_SegmentInstitution_Segment] FOREIGN KEY([SegmentID]) REFERENCES [dbo].[Segment] ([SegmentID])
 GO
+
+CREATE NONCLUSTERED INDEX [IX_SegmentInstitution_SegmentID]
+	ON [dbo].[SegmentInstitution] ([SegmentID] ASC)
+GO
