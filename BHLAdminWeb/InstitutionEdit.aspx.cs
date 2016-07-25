@@ -85,13 +85,19 @@ namespace MOBOT.BHL.AdminWeb
 					return;
 				}
 
-				Institution institution = new Institution( hidCode.Value, nameTextBox.Text.Trim(), noteTextBox.Text.Trim(),
-					urlTextBox.Text.Trim(), chkIsMemberLibrary.Checked );
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
+                Institution institution = new Institution();
+                institution.InstitutionCode = hidCode.Value;
+                institution.InstitutionName = nameTextBox.Text.Trim();
+                institution.Note = noteTextBox.Text.Trim();
+                institution.InstitutionUrl = urlTextBox.Text.Trim();
+                institution.BHLMemberLibrary = chkIsMemberLibrary.Checked;
 
 				institution.IsNew = false;
 
 				BHLProvider bp = new BHLProvider();
-				bp.SaveInstitution( institution );
+				bp.SaveInstitution( institution, userId );
 			}
 			else
 			{
@@ -129,12 +135,17 @@ namespace MOBOT.BHL.AdminWeb
 					}
 				}
 
-				Institution institution = new Institution( codeTextBox.Text.Trim().ToUpper(), nameTextBox.Text.Trim(),
-					noteTextBox.Text.Trim(), urlTextBox.Text.Trim(), chkIsMemberLibrary.Checked );
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
-				institution.IsNew = true;
+                Institution institution = new Institution();
+                institution.InstitutionCode = codeTextBox.Text.Trim().ToUpper();
+                institution.InstitutionName = nameTextBox.Text.Trim();
+                institution.Note = noteTextBox.Text.Trim();
+                institution.InstitutionUrl = urlTextBox.Text.Trim();
+                institution.BHLMemberLibrary = chkIsMemberLibrary.Checked;
+                institution.IsNew = true;
 
-				bp.SaveInstitution( institution );
+				bp.SaveInstitution( institution, userId );
 			}
 			else
 			{

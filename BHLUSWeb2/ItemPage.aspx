@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
 <uc:NavBar runat="server" />
 <div id="page-title">
-<h1 class="column-wrap"><%: BhlTitle.ShortTitle%> <%: BhlItem.Volume %></h1>
+<h1 class="ellipsis column-wrap"><%: BhlTitle.ShortTitle%> <%: BhlItem.Volume %></h1>
 </div>
 <div id="content" class="column-wrap clearfix">
 <section>

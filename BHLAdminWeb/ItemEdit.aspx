@@ -351,12 +351,28 @@
 			    </td>
 			</tr>
 			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Rights Holder:
+				</td>
+				<td>
+					<asp:DropDownList ID="ddlRights" runat="server"></asp:DropDownList>
+				</td>
+			</tr>
+			<tr>
 			    <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 			        External URL:
 			    </td>
 			    <td>
     			    <asp:TextBox ID="externalUrlTextBox" runat="server" Width="400px"></asp:TextBox><br />(Include this if the item content is not stored in BHL.)
 			    </td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Scanning Institution:
+				</td>
+				<td>
+					<asp:DropDownList ID="ddlScanningInstitution" runat="server"></asp:DropDownList>
+				</td>
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">

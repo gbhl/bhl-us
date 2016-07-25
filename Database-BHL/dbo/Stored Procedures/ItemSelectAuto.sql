@@ -1,4 +1,18 @@
-﻿CREATE PROCEDURE [dbo].[ItemSelectAuto]
+
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[ItemSelectAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[ItemSelectAuto]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_NULLS ON
+GO
+
+-- Select Procedure for dbo.Item
+-- Do not modify the contents of this procedure.
+-- Generated 6/2/2016 9:32:20 AM
+
+CREATE PROCEDURE [dbo].[ItemSelectAuto]
 
 @ItemID INT
 
@@ -13,13 +27,11 @@ SELECT
 	[MARCItemID],
 	[CallNumber],
 	[Volume],
-	[InstitutionCode],
 	[LanguageCode],
 	[ItemDescription],
 	[ScannedBy],
 	[PDFSize],
 	[VaultID],
-	[NumberOfFiles],
 	[Note],
 	[CreationDate],
 	[LastModifiedDate],
@@ -80,3 +92,11 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
+
+GO
+ 
+SET QUOTED_IDENTIFIER OFF
+GO
+SET ANSI_NULLS ON
+GO
+

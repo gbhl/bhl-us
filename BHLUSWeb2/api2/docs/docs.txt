@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: May 12, 2016
+Revised: June 14, 2016
 
 ----------------------------------------------------------------------------------------------------
 
@@ -525,6 +525,8 @@ Item/Volume						Volume assigned to the book								NA
 Item/Year						Year assigned to to a monograph or single item			NA
 								in a journal
 Item/Contributor				Institution that contributed the book to BHL			NA
+Item/RightsHolder				Institution holding the rights to the book				NA
+Item/ScanningInstitution		Institution performing the scanning of the book			NA
 Item/Sponsor					Institution that sponsored the scanning of the book		NA
 Item/Language					Primary language in which the work is published			008
 Item/LicenseUrl					URL to information about the license asserted			NA
@@ -545,8 +547,6 @@ Part/ItemID						BHL address for the item related to the part			NA
 Part/StartPageID				BHL address for the first page of the part				NA
 Part/SequenceOrder				Sequential position of the part within the container	NA
 								item.
-Part/Contributor				Person/organization that contributed the part to BHL	NA
-Part/ContributorID				Contributing organization's identifier for the part		NA
 Part/GenreName					One of the following values, which identify the			NA
 								type of the part:
 										Article
@@ -584,6 +584,9 @@ Part/RightsStatement			Rights statement for the part							NA
 Part/LicenseName				License under which the part is made available			NA
 Part/LicenseUrl					Link to additional licensing details					NA
 Part/Doi						DOI assigned to the part								NA
+Part/Contributors/
+	Contributor/
+		ContributorName			Person/organization that contributed the part to BHL	NA
 Page/PageID						BHL identifier for the page								NA
 Page/ItemID						BHL identifier for the item containing the page			NA
 Page/Volume						Volume assigned to the page when multiple volumes		NA
@@ -648,6 +651,14 @@ PartCount						Number of Parts in BHL									NA
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+June 14, 2016 - version 2.7
+
+- BREAKING CHANGE: Removed the Part/ContributorID element.  Values previously located in that element
+		now are found in the Identifiers/Identifier element.
+- BREAKING CHANGE: Removed the Part/Contributor element.  Values previously located in that element
+		now are found in the Part/Contributors element.
+- Enhancement: Added RightsHolder and ScanningInstitution to the Item metadata
 
 May 12, 2016 - version 2.6
 

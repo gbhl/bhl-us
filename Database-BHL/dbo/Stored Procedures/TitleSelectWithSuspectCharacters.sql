@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectWithSuspectCharacters]
+﻿CREATE PROCEDURE [dbo].[TitleSelectWithSuspectCharacters]
 
 @InstitutionCode NVARCHAR(10) = '',
 @MaxAge INT = 30
@@ -11,8 +10,7 @@ SET NOCOUNT ON
 
 -- Title
 SELECT	t.TitleID, 
-		t.InstitutionCode,
-		ISNULL(inst.InstitutionName, '') AS InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0) AS InstitutionName,
 		t.CreationDate,
 		CHAR(dbo.fnContainsSuspectCharacter(FullTitle)) as FullTitleSuspect, FullTitle,
 		CHAR(dbo.fnContainsSuspectCharacter(ShortTitle)) as ShortTitleSuspect, ShortTitle,
@@ -28,21 +26,22 @@ FROM	dbo.Title t LEFT JOIN (SELECT * FROM dbo.Title_Identifier WHERE IdentifierI
 			ON t.TitleID = ti.TitleID
 		INNER JOIN dbo.Item i
 			ON ti.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst
-			ON t.InstitutionCode = inst.InstitutionCode
+		INNER JOIN dbo.ItemInstitution ii
+			ON ti.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r
+			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	(dbo.fnContainsSuspectCharacter(FullTitle) > 0
 OR		dbo.fnContainsSuspectCharacter(ShortTitle) > 0
 OR		dbo.fnContainsSuspectCharacter(SortTitle) > 0
 OR		dbo.fnContainsSuspectCharacter(Datafield_260_a) > 0
 OR		dbo.fnContainsSuspectCharacter(Datafield_260_b) > 0
 OR		dbo.fnContainsSuspectCharacter(PublicationDetails) > 0)
-AND		(t.InstitutionCode = @InstitutionCode
-OR		@InstitutionCode = '')
+AND		r.InstitutionRoleName = 'Contributor'
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		t.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY 
 		t.TitleID, 
-		t.InstitutionCode,
-		inst.InstitutionName,
+		dbo.fnContributorStringForTitle(t.TitleID, 0),
 		t.CreationDate,
 		CHAR(dbo.fnContainsSuspectCharacter(FullTitle)), FullTitle,
 		CHAR(dbo.fnContainsSuspectCharacter(ShortTitle)), ShortTitle,
@@ -52,8 +51,6 @@ GROUP BY
 		CHAR(dbo.fnContainsSuspectCharacter(PublicationDetails)), PublicationDetails,
 		oclc.IdentifierValue
 ORDER BY
-		inst.InstitutionName, t.CreationDate DESC
+		InstitutionName, t.CreationDate DESC
 
 END
-
-

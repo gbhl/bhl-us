@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[BSSegmentPublishToProduction]
+﻿CREATE PROCEDURE [dbo].[BSSegmentPublishToProduction]
 
 @ItemID int,
 @SegmentID int
@@ -40,14 +39,18 @@ SELECT	@SegmentGenreID = SegmentGenreID
 FROM	dbo.BHLSegmentGenre g INNER JOIN dbo.BSSegment s ON g.GenreName = s.Genre
 WHERE	s.SegmentID = @SegmentID
 
+DECLARE @ContributorRoleID int
+SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+
 -- ******************************************************************************
 
 -- Get the production ID for this segment, if one exists
 DECLARE @BHLSegmentID int
 
 SELECT	@BHLSegmentID = seg.SegmentID 
-FROM	dbo.BHLSegment seg INNER JOIN dbo.BSSegment s 
-			ON seg.ContributorSegmentID = s.BioStorReferenceID
+FROM	dbo.BHLSegmentIdentifier seg INNER JOIN dbo.BSSegment s 
+			ON seg.IdentifierValue = s.BioStorReferenceID
+			AND seg.IdentifierID = @BSIdentifierID
 WHERE	s.SegmentID = @SegmentID
 
 
@@ -61,11 +64,10 @@ BEGIN TRY
 		-- Segment not in production, so insert it.
 
 		-- Insert a new BHL Segment record
-		INSERT	dbo.BHLSegment (ItemID, SegmentStatusID, ContributorCode, ContributorSegmentID,
-			SequenceOrder, SegmentGenreID, Title, ContainerTitle, Volume, Series, Issue, [Date],
-			StartPageNumber, EndPageNumber, StartPageID, ContributorCreationDate, 
-			ContributorLastModifiedDate, SortTitle)
-		SELECT	@ItemID, 10, 'BSTOR', BioStorReferenceID, SequenceOrder, @SegmentGenreID, Title,
+		INSERT	dbo.BHLSegment (ItemID, SegmentStatusID, SequenceOrder, SegmentGenreID, 
+			Title, ContainerTitle, Volume, Series, Issue, [Date], StartPageNumber, EndPageNumber, 
+			StartPageID, ContributorCreationDate,  ContributorLastModifiedDate, SortTitle)
+		SELECT	@ItemID, 10, SequenceOrder, @SegmentGenreID, Title,
 				ContainerTitle, Volume, Series, Issue, CASE WHEN ISDATE([Date]) = 1 THEN [Date] ELSE Year END,
 				StartPageNumber, EndPageNumber, StartPageID, ContributorCreationDate,
 				ContributorLastModifiedDate,
@@ -96,6 +98,20 @@ BEGIN TRY
 		WHERE	SegmentID = @SegmentID
 		
 		SET @BHLSegmentID = SCOPE_IDENTITY()
+
+		-- Insert new BHL SegmentInstitution record
+		INSERT	dbo.BHLSegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID,
+			CreationUserID, LastModifiedUserID)
+		SELECT	@BHLSegmentID, 'BSTOR', @ContributorRoleID, @UserID, @UserID
+		FROM	dbo.BSSegment
+		WHERE	SegmentID = @SegmentID
+
+		-- Insert new BHL SegmentIdentifier record for BioStor ID
+		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 
+			IsContainerIdentifier, CreationUserID, LastModifiedUserID)
+		SELECT	@BHLSegmentID, @BSIdentifierID, BioStorReferenceID, 0, @UserID, @UserID
+		FROM	dbo.BSSegment
+		WHERE	SegmentID = @SegmentID
 
 		-- Insert new BHL SegmentIdentifier record for ISSN
 		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 
@@ -306,7 +322,3 @@ BEGIN CATCH
 END CATCH
 
 END
-
-
-
-

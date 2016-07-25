@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByNameNotLike]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByNameNotLike]
 
 @Name varchar(1000)
 
@@ -19,11 +18,10 @@ SELECT DISTINCT
 		t.EditionStatement,
 		itm.Volume,
 		itm.ExternalUrl,
-		I.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, itm.ItemID) AS Collections
 FROM	dbo.Title t
-		LEFT OUTER JOIN dbo.Institution I ON I.InstitutionCode = t.InstitutionCode
 		INNER JOIN (
 			-- Get the first item for each title
 			SELECT	TitleID, MIN(ItemSequence) MinSeq
@@ -40,6 +38,3 @@ WHERE	t.PublishReady=1
 AND		t.SortTitle NOT LIKE @Name + '%'
 ORDER BY 
 		t.SortTitle
-
-
-

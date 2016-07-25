@@ -124,7 +124,9 @@
     <Compile Include="Generated\ImportRecordErrorLogDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordKeywordDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordStatusDAL.Auto.cs" />
+    <Compile Include="Generated\InstitutionRoleDAL.Auto.cs" />
     <Compile Include="Generated\ItemCollectionDAL.Auto.cs" />
+    <Compile Include="Generated\ItemInstitutionDAL.Auto.cs" />
     <Compile Include="Generated\ItemLanguageDAL.Auto.cs" />
     <Compile Include="Generated\ItemNameFileLogDAL.Auto.cs" />
     <Compile Include="Generated\KeywordDAL.Auto.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Generated\SegmentDAL.Auto.cs" />
     <Compile Include="Generated\SegmentGenreDAL.Auto.cs" />
     <Compile Include="Generated\SegmentIdentifierDAL.Auto.cs" />
+    <Compile Include="Generated\SegmentInstitutionDAL.Auto.cs" />
     <Compile Include="Generated\SegmentKeywordDAL.Auto.cs" />
     <Compile Include="Generated\SegmentPageDAL.Auto.cs" />
     <Compile Include="Generated\SegmentResolutionLogDAL.Auto.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="ImportRecordErrorLogDAL.cs" />
     <Compile Include="ImportRecordKeywordDAL.cs" />
     <Compile Include="ImportRecordStatusDAL.cs" />
+    <Compile Include="InstitutionRoleDAL.cs" />
     <Compile Include="Interfaces\IAnnotatedItemDAL.Auto.cs" />
     <Compile Include="Interfaces\IAuthorDAL.Auto.cs" />
     <Compile Include="Interfaces\IImportFileDAL.Auto.cs" />
@@ -184,8 +188,11 @@
     <Compile Include="Interfaces\IImportRecordKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IImportRecordStatusDAL.Auto.cs" />
     <Compile Include="Interfaces\IInstitutionDAL.Auto.cs" />
+    <Compile Include="Interfaces\IInstitutionRoleDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemCollectionDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemDAL.Auto.cs" />
+    <Compile Include="Interfaces\IItemInstitutionDAL.Auto.cs" />
+    <Compile Include="Interfaces\ISegmentInstitutionDAL.Auto.cs" />
     <Compile Include="Interfaces\IStatsDAL.cs" />
     <Compile Include="Interfaces\IKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IMarcDAL.Auto.cs" />
@@ -198,6 +205,7 @@
     <Compile Include="Interfaces\ITitleNoteDAL.Auto.cs" />
     <Compile Include="ItemCOinSDAL.cs" />
     <Compile Include="ItemCollectionDAL.cs" />
+    <Compile Include="ItemInstitutionDAL.cs" />
     <Compile Include="ItemLanguageDAL.cs" />
     <Compile Include="ItemNameFileLogDAL.cs" />
     <Compile Include="ItemSourceDAL.cs" />
@@ -238,6 +246,7 @@
     <Compile Include="SegmentDAL.cs" />
     <Compile Include="SegmentGenreDAL.cs" />
     <Compile Include="SegmentIdentifierDAL.cs" />
+    <Compile Include="SegmentInstitutionDAL.cs" />
     <Compile Include="SegmentKeywordDAL.cs" />
     <Compile Include="SegmentPageDAL.cs" />
     <Compile Include="SegmentResolutionLogDAL.cs" />

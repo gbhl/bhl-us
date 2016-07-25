@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSegmentSelectByAuthor]
+﻿CREATE PROCEDURE [dbo].[ApiSegmentSelectByAuthor]
 
 @AuthorID int
 
@@ -10,10 +9,7 @@ SET NOCOUNT ON
 -- Get segments tied directly to the specified author
 SELECT	s.SegmentID,
 		s.ItemID,
-		s.ContributorCode,
-		s.ContributorSegmentID,
 		s.SequenceOrder,
-		inst.InstitutionName AS ContributorName,
 		s.SegmentGenreID,
 		g.GenreName,
 		s.Title,
@@ -54,15 +50,9 @@ SELECT	s.SegmentID,
 		s.LastModifiedUserID
 FROM	dbo.Segment s 
 		INNER JOIN dbo.SegmentAuthor sa ON s.SegmentID = sa.SegmentID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	sa.AuthorID = @AuthorID
 AND		s.SegmentStatusID IN (10, 20) -- New, Published
-
-
-
-
-

@@ -17,6 +17,7 @@
     [ItemID]                 INT             NULL,
     [HasLocalContent]        SMALLINT        CONSTRAINT [DF_SearchCatalogSegment_HasLocalContent] DEFAULT ((1)) NOT NULL,
     [HasExternalContent]     SMALLINT        CONSTRAINT [DF_SearchCatalogSegment_HasExternalContent] DEFAULT ((0)) NOT NULL,
+	[Contributors]           NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalogSegment_Contributors] DEFAULT ('') NOT NULL,
     CONSTRAINT [PK_SearchCatalogSegment] PRIMARY KEY CLUSTERED ([SearchCatalogSegmentID] ASC)
 );
 GO

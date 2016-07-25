@@ -27,6 +27,8 @@ SELECT DISTINCT TOP (@NumToReturn)
 		ISNULL(d.DOIStatusID, 0) AS DOIStatusID,
 		ISNULL(d.DOIName, '') AS DOIName
 FROM	dbo.Segment s WITH (NOLOCK) 
+		INNER JOIN dbo.SegmentInstitution sinst WITH (NOLOCK) ON s.SegmentID = sinst.SegmentID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON sinst.InstitutionRoleID = r.InstitutionRoleID
 		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON s.SegmentID = d.EntityID	AND d.DOIEntityTypeID = 40 -- Segment
 		INNER JOIN dbo.SearchCatalogSegment c WITH (NOLOCK) ON s.SegmentID = c.SegmentID
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON s.ItemID = i.ItemID
@@ -38,9 +40,10 @@ OR		d.DOIStatusID = 20 -- DOI Assigned (but not submitted)
 OR		d.DOIStatusID = 30 -- Pending Resubmit
 OR		d.DOIStatusID = 40 -- Batch ID Assigned
 OR		d.DOIID IS NULL)
+AND		r.InstitutionRoleName = 'Contributor'
 AND		s.CreationDate <= @MaxDate -- Only select segments older than specified # of days
 AND		c.HasLocalContent = 1 -- Make sure that the segment content is held within BHL
-AND		s.ContributorCode <> 'USER'  -- No user-contributed segments
+AND		sinst.InstitutionCode <> 'USER'  -- No user-contributed segments
 AND		(ti.IdentifierValue IS NOT NULL OR si.IdentifierValue IS NOT NULL) -- Make sure that an ISSN exists for the segment container
 AND		s.SegmentGenreID <> @TreatmentID	-- Any segment types except treatments
 

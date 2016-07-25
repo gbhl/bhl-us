@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[InstitutionSelectWithPublishedItems]
+﻿CREATE PROCEDURE [dbo].[InstitutionSelectWithPublishedItems]
 
 @OnlyMemberLibraries bit = 1
 
@@ -13,8 +12,9 @@ SELECT DISTINCT
 		ins.Note,
 		ISNULL(ins.InstitutionUrl, '') AS InstitutionUrl,
 		ins.BHLMemberLibrary
-FROM	dbo.Institution ins INNER JOIN dbo.Item it 
-			ON ins.InstitutionCode = it.InstitutionCode
+FROM	dbo.Institution ins 
+		INNER JOIN dbo.ItemInstitution ii ON ins.InstitutionCode = ii.InstitutionCode
+		INNER JOIN dbo.Item it ON ii.ItemID = it.ItemID
 WHERE	it.ItemStatusID = 40
 AND		((ins.BHLMemberLibrary = 1 AND @OnlyMemberLibraries = 1) OR	@OnlyMemberLibraries = 0)
 ORDER BY
@@ -29,5 +29,4 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
 

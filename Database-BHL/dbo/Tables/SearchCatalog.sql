@@ -19,6 +19,9 @@
     [HasSegments]        SMALLINT        CONSTRAINT [DF_SearchCatalog_HasSegments] DEFAULT ((0)) NOT NULL,
     [HasLocalContent]    SMALLINT        CONSTRAINT [DF_SearchCatalog_HasLocalContent] DEFAULT ((1)) NOT NULL,
     [HasExternalContent] SMALLINT        CONSTRAINT [DF_SearchCatalog_HasExternalContent] DEFAULT ((0)) NOT NULL,
+	[TitleContributors]  NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalog_TitleContributors] DEFAULT ('') NOT NULL,
+	[ItemContributors]   NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalog_ItemContributors] DEFAULT ('') NOT NULL,
+	[FirstPageID]		 INT			 NULL,
     CONSTRAINT [PK_SearchCatalog] PRIMARY KEY CLUSTERED ([SearchCatalogID] ASC)
 );
 

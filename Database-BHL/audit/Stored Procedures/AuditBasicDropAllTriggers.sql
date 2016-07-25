@@ -35,6 +35,9 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOIEntityType'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOIStatus'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Institution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'AspNetUsers'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionRole'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemInstitution'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'SegmentInstitution'
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Author'

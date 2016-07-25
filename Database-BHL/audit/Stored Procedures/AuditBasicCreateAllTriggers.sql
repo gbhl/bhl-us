@@ -48,6 +48,9 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIEntityType', 'DOIEntityTypeID'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIStatus', 'DOIStatusID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Institution', 'InstitutionCode', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AspNetUsers', 'Id', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionRole', 'InstitutionRoleID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'ItemInstitution', 'ItemInstitutionID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'SegmentInstitution', 'SegmentInstitutionID', NULL, NULL
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Author', 'AuthorID', NULL, NULL, 'I'

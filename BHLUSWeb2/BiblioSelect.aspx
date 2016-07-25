@@ -20,7 +20,6 @@
 				    <%= title.FullTitle %> <%= title.PartNumber %> <%= title.PartName %>
 				</a>
 				<div>Publication info: <%= title.PublicationDetails %></div>
-				<div>Contributed By: <%= title.InstitutionName %></div>
             </li>
         <% } %>
         </ol>

@@ -45,6 +45,10 @@ DECLARE @DOIStatusExternalID int
 SELECT @DOIStatusExternalID = DOIStatusID FROM dbo.DOIStatus WHERE DOIStatusName = 'External DOI'
 IF (@DOIStatusExternalID IS NULL) RAISERROR('DOIStatus -External DOI- not found', 0, 1)
 
+DECLARE @InstitutionRoleContributorID int
+SELECT @InstitutionRoleContributorID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Contributor'
+IF (@InstitutionRoleContributorID IS NULL) RAISERROR('InstitutionRole -Contributor- not found', 0, 1)
+
 DECLARE @AuthorRoleNotSpecifiedID int
 DECLARE @SegmentStatusNewID int
 DECLARE @SegmentGenreArticleID int
@@ -262,7 +266,6 @@ BEGIN TRY
 		INSERT	dbo.Segment
 				(
 				SegmentStatusID,
-				ContributorCode,
 				SequenceOrder,
 				SegmentGenreID,
 				Title,
@@ -292,7 +295,6 @@ BEGIN TRY
 				SortTitle
 				)
 		SELECT	@SegmentStatusNewID,
-				@ContributorCode,
 				1 AS SequenceOrder,
 				@SegmentGenreID,
 				Title,
@@ -352,6 +354,10 @@ BEGIN TRY
 		-- Save the ID of the newly inserted segment record
 		SELECT @NewEntityID = SCOPE_IDENTITY()
 				
+		-- Insert SegmentInstitution record
+		INSERT	dbo.SegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID, CreationUserID, LastModifiedUserID)
+		VALUES	(@NewEntityID, @ContributorCode, @InstitutionRoleContributorID, @UserID, @UserID)
+
 		-- Insert SegmentIdentifier records
 		INSERT	dbo.SegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, CreationUserID, LastModifiedUserID)
 		SELECT	@NewEntityID, @IdentifierISSNID, ISSN, @UserID, @UserID
@@ -383,8 +389,6 @@ BEGIN TRY
 		-- =======================================================================
 		-- Resolve title.  
 		--
-		-- Titles are unique by institution.  That is, a given title may only 
-		-- appear more than once if it is contributed by more than one institution.
 		-- Multiple attempts are made to find a matching title in production.  In
 		-- order, the following criteria are used to find a match:
 		--
@@ -393,7 +397,6 @@ BEGIN TRY
 		--	3) Isbn
 		--  4) Lccn
 		--  5) Oclc
-		--	6) Title + Date
 		--
 		-- After titles have been resolved, if a ProductionTitleID has not been found
 		-- then a new title record will be inserted into the production database.
@@ -403,8 +406,7 @@ BEGIN TRY
 		FROM	import.ImportRecord r
 				INNER JOIN dbo.DOI d ON r.DOI = d.DOIName AND d.DOIEntityTypeID = @DOIEntityTypeTitleID
 				INNER JOIN dbo.Title t ON d.EntityID = t.TitleID
-		WHERE	t.InstitutionCode = @ContributorCode
-		AND		r.ImportRecordID = @ImportRecordID
+		WHERE	r.ImportRecordID = @ImportRecordID
 
 		-- Match on ISSN
 		IF @NewEntityID IS NULL
@@ -413,8 +415,7 @@ BEGIN TRY
 			FROM	import.ImportRecord r
 					INNER JOIN dbo.Title_Identifier ti ON r.ISSN = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISSNID
 					INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
-			WHERE	t.InstitutionCode = @ContributorCode
-			AND		r.ImportRecordID = @ImportRecordID
+			WHERE	r.ImportRecordID = @ImportRecordID
 		END
 
 		-- Match on ISBN
@@ -424,8 +425,7 @@ BEGIN TRY
 			FROM	import.ImportRecord r
 					INNER JOIN dbo.Title_Identifier ti ON r.ISBN = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISBNID
 					INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
-			WHERE	t.InstitutionCode = @ContributorCode
-			AND		r.ImportRecordID = @ImportRecordID
+			WHERE	r.ImportRecordID = @ImportRecordID
 		END
 
 		-- Match on LCCN
@@ -435,8 +435,7 @@ BEGIN TRY
 			FROM	import.ImportRecord r
 					INNER JOIN dbo.Title_Identifier ti ON r.LCCN = ti.IdentifierValue AND ti.IdentifierID = @IdentifierLCCNID
 					INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
-			WHERE	t.InstitutionCode = @ContributorCode
-			AND		r.ImportRecordID = @ImportRecordID
+			WHERE	r.ImportRecordID = @ImportRecordID
 		END
 
 		-- Match on OCLC
@@ -446,19 +445,7 @@ BEGIN TRY
 			FROM	import.ImportRecord r
 					INNER JOIN dbo.Title_Identifier ti ON r.OCLC = ti.IdentifierValue AND ti.IdentifierID = @IdentifierOCLCID
 					INNER JOIN dbo.Title t ON ti.TitleID = t.TitleID
-			WHERE	t.InstitutionCode = @ContributorCode
-			AND		r.ImportRecordID = @ImportRecordID
-		END
-
-		-- Match on Title + Date
-		IF @NewEntityID IS NULL
-		BEGIN
-			SELECT	@NewEntityID = t.TitleID
-			FROM	import.ImportRecord r INNER JOIN dbo.Title t 
-						ON r.Title = t.FullTitle COLLATE SQL_Latin1_General_CP1_CI_AI 
-						AND r.[Year] = t.Datafield_260_c
-			WHERE	t.InstitutionCode = @ContributorCode
-			AND		r.ImportRecordID = @ImportRecordID
+			WHERE	r.ImportRecordID = @ImportRecordID
 		END
 
 		-- If the selected production title has been redirected to a different 
@@ -495,7 +482,6 @@ BEGIN TRY
 					Datafield_260_c,
 					EditionStatement,
 					LanguageCode,
-					InstitutionCode,
 					PublishReady,
 					RareBooks,
 					BibliographicLevelID,
@@ -536,7 +522,6 @@ BEGIN TRY
 					[Year] AS Datafield_260_c,
 					Edition,
 					ISNULL(l1.LanguageCode, l2.LanguageCode) AS LanguageCode,
-					@ContributorCode AS InstitutionCode,
 					1 AS PublishReady,
 					0 AS RareBooks,
 					CASE WHEN Genre IN ('Serial', 'Journal') 
@@ -589,7 +574,6 @@ BEGIN TRY
 				PrimaryTitleID,
 				BarCode,
 				Volume,
-				InstitutionCode,
 				LanguageCode,
 				ItemStatusID,
 				ItemSourceID,
@@ -605,7 +589,6 @@ BEGIN TRY
 		SELECT	@NewEntityID,
 				@ContributorCode + '-CiteImport-' + CONVERT(nvarchar(10), @ImportRecordID) AS BarCode,
 				Volume,
-				@ContributorCode,
 				ISNULL(l1.LanguageCode, l2.LanguageCode) AS LanguageCode,
 				@ItemStatusPublishedID,
 				@ItemSourceCitationImportID,
@@ -624,6 +607,10 @@ BEGIN TRY
 
 		-- Save the ID of the newly inserted Item record
 		SELECT @NewItemID = SCOPE_IDENTITY()
+
+		-- Insert ItemInstitution record
+		INSERT dbo.ItemInstitution (ItemID, InstitutionCode, InstitutionRoleID, CreationUserID, LastModifiedUserID)
+		VALUES (@NewItemID, @ContributorCode, @InstitutionRoleContributorID, @UserID, @UserID)
 
 		-- Insert TitleItem record
 		INSERT dbo.TitleItem (TitleID, ItemID, ItemSequence, CreationUserID, LastModifiedUserID)

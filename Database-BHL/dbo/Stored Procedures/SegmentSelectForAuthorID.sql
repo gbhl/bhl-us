@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectForAuthorID]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectForAuthorID]
 
 @AuthorId	int
 
@@ -9,7 +8,7 @@ SET NOCOUNT ON
 
 SELECT	s.SegmentID,
 		s.ItemID,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
+		scs.Contributors AS ContributorName,
 		g.GenreName,
 		s.Title,
 		s.SortTitle,
@@ -41,7 +40,6 @@ SELECT	s.SegmentID,
 		scs.Authors
 FROM	dbo.SegmentAuthor sa
 		INNER JOIN dbo.Segment s ON sa.SegmentID = s.SegmentID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
@@ -51,9 +49,3 @@ AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT
 ORDER BY
 		s.SortTitle,
 		s.SequenceOrder
-
-
-
-
-
-

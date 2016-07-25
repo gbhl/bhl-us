@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByDateRange]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByDateRange]
 
 @StartDate	int,
 @EndDate int
@@ -23,12 +22,11 @@ SELECT DISTINCT
 		IT.[Volume],
 		IT.[ExternalUrl],
 		T.[StartYear],
-		I.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(T.TitleID, IT.ItemID) AS Collections
 INTO	#tmpTitle
 FROM	[dbo].[Title] T WITH (NOLOCK)
-		LEFT OUTER JOIN Institution I WITH (NOLOCK) ON I.InstitutionCode = T.InstitutionCode
 		INNER JOIN dbo.TitleItem TI WITH (NOLOCK) ON T.TitleID = TI.TitleID
 		INNER JOIN [dbo].[Item] IT WITH (NOLOCK) ON [TI].[ItemID] = [IT].[ItemID]
 		LEFT JOIN dbo.TitleLanguage tl WITH (NOLOCK) ON T.TitleID = tl.TitleID
@@ -74,5 +72,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-

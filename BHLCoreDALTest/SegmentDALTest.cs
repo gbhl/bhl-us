@@ -138,8 +138,8 @@ namespace BHLCoreDALTest
             Segment actual = target.SegmentSelectExtended(sqlConnection, sqlTransaction, segmentId);
             Assert.AreEqual(actual.SegmentID, 2341);
             Assert.IsTrue(actual.AuthorList.Count > 0);
-            Assert.IsTrue(actual.IdentifierList.Count == 0);
-            Assert.IsTrue(actual.KeywordList.Count == 0);
+            Assert.IsTrue(actual.IdentifierList.Count > 0);
+            Assert.IsTrue(actual.KeywordList.Count > 0);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             string title = "[a-z]";
             CustomGenericList<Segment> actual = target.SegmentSelectByTitleNotLike(sqlConnection, sqlTransaction, title);
-            Assert.IsTrue(actual.Count > 0);
+            Assert.IsNotNull(actual);
         }
 
         [TestMethod()]

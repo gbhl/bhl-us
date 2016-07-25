@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.InstitutionSelectWithPublishedSegments
+﻿CREATE PROCEDURE [dbo].[InstitutionSelectWithPublishedSegments]
 
 @OnlyMemberLibraries bit = 1
 
@@ -12,8 +12,9 @@ SELECT DISTINCT
 		ins.Note,
 		ISNULL(ins.InstitutionUrl, '') AS InstitutionUrl,
 		ins.BHLMemberLibrary
-FROM	dbo.Institution ins INNER JOIN dbo.Segment s 
-			ON ins.InstitutionCode = s.ContributorCode
+FROM	dbo.Institution ins 
+		INNER JOIN dbo.SegmentInstitution si ON ins.InstitutionCode = si.InstitutionCode
+		INNER JOIN dbo.Segment s ON si.SegmentID = s.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		((ins.BHLMemberLibrary = 1 AND @OnlyMemberLibraries = 1) OR	@OnlyMemberLibraries = 0)
 ORDER BY
@@ -28,4 +29,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

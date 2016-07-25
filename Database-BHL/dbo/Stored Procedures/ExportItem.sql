@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ExportItem
+﻿CREATE PROCEDURE [dbo].[ExportItem]
 
 AS
 
@@ -17,11 +17,11 @@ SELECT DISTINCT
 		'http://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL, 
 		i.IdentifierBib AS LocalID, 
 		i.Year, 
-		ins.InstitutionName, 
+		c.ItemContributors AS InstitutionName, 
 		i.ZQuery, 
 		CONVERT(nvarchar(16), i.CreationDate, 120) AS CreationDate
 FROM	dbo.Item i WITH (NOLOCK)
-		LEFT JOIN dbo.Institution ins WITH (NOLOCK) ON i.InstitutionCode = ins.InstitutionCode
+		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON i.ItemID = c.ItemID
 WHERE	i.ItemStatusID = 40
 
 END

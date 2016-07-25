@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE dbo.TitleCollectionInsertTitlesForCollection
+﻿CREATE PROCEDURE [dbo].[TitleCollectionInsertTitlesForCollection]
 
 @CollectionID int
 
@@ -31,7 +30,12 @@ BEGIN
 				ON t.TitleID = ti.TitleID
 			INNER JOIN dbo.Item i
 				ON ti.ItemID = i.ItemID
-	WHERE	(i.InstitutionCode = @InstitutionCode OR @InstitutionCode IS NULL)
+			INNER JOIN dbo.ItemInstitution ii
+				ON i.ItemID = ii.ItemID
+			INNER JOIN dbo.InstitutionRole r 
+				ON ii.InstitutionRoleID = r.InstitutionRoleID 
+				AND r.InstitutionRoleName = 'Contributor'
+	WHERE	(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode IS NULL)
 	AND		(i.LanguageCode = @LanguageCode OR @LanguageCode IS NULL)
 	AND		tc.TitleCollectionID IS NULL
 END

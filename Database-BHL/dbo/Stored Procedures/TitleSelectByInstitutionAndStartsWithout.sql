@@ -18,17 +18,18 @@ SELECT DISTINCT
 		t.PublicationDetails,
 		t.StartYear,
 		t.EditionStatement,
-		t.InstitutionCode
+		c.TitleContributors AS InstitutionName
 INTO	#Titles
 FROM	dbo.Title t  WITH (NOLOCK)
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON t.TitleID = ti.TitleID
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
-		LEFT OUTER JOIN Institution ins WITH (NOLOCK) ON ins.InstitutionCode = t.InstitutionCode
+		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 WHERE	i.ItemStatusID = 40
-AND		(t.InstitutionCode = ISNULL(@InstitutionCode, t.InstitutionCode) OR
-		 i.InstitutionCode = ISNULL(@InstitutionCode, i.InstitutionCode) )
+AND		ii.InstitutionCode = ISNULL(@InstitutionCode, ii.InstitutionCode)
 AND		t.SortTitle NOT LIKE @StartsWith + '%'
+AND		r.InstitutionRoleName = 'Contributor'
 
 SELECT DISTINCT
 		t.TitleID,
@@ -41,7 +42,7 @@ SELECT DISTINCT
 		CASE WHEN ISNULL(i.Year, '') = '' THEN CONVERT(nvarchar(20), t.StartYear) ELSE i.Year END AS [Year],
 		t.EditionStatement,
 		i.Volume,
-		ins.InstitutionName,
+		t.InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections,
 		i.ExternalUrl
@@ -57,7 +58,6 @@ FROM	#Titles t  WITH (NOLOCK)
 				ON t.TitleID = x.TitleID
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON x.TitleID = ti.TitleID AND x.MinSeq = ti.ItemSequence
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
-		LEFT OUTER JOIN Institution ins WITH (NOLOCK) ON ins.InstitutionCode = t.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 WHERE	i.ItemStatusID = 40
 ORDER BY 

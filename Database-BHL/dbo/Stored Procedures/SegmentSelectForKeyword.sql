@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectForKeyword]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectForKeyword]
 
 @Keyword nvarchar(50)
 
@@ -9,7 +8,7 @@ SET NOCOUNT ON
 
 SELECT	s.SegmentID,
 		s.ItemID,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
+		scs.Contributors AS ContributorName,
 		g.GenreName,
 		s.Title,
 		s.SortTitle,
@@ -43,7 +42,6 @@ SELECT	s.SegmentID,
 FROM	dbo.Keyword k
 		INNER JOIN dbo.SegmentKeyword sk ON k.KeywordID = sk.KeywordID
 		INNER JOIN dbo.Segment s ON sk.SegmentID = s.SegmentID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
@@ -53,7 +51,3 @@ AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT
 ORDER BY
 		s.SortTitle,
 		s.SequenceOrder
-
-
-
-

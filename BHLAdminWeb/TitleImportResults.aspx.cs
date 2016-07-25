@@ -27,7 +27,10 @@ namespace MOBOT.BHL.AdminWeb
                 int batchInt;
                 if (Int32.TryParse(batchID, out batchInt))
                 {
-                    this.ImportMarcBatch(batchInt);
+                    // Get the id of the current user
+                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
+                    this.ImportMarcBatch(batchInt, userId);
 
                     litInsertedCount.Text = _inserted.Count.ToString();
                     litUpdatedCount.Text = _updated.Count.ToString();
@@ -62,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb
             }
         }
 
-        private void ImportMarcBatch(int batchID)
+        private void ImportMarcBatch(int batchID, int userID)
         {
             BHLProvider provider = new BHLProvider();
 
@@ -82,7 +85,6 @@ namespace MOBOT.BHL.AdminWeb
                         // Build new title class, populate, and save
                         title = provider.MarcSelectTitleDetailsByMarcID(marc.MarcID);
                         title.IsNew = true;
-                        title.InstitutionCode = marc.InstitutionCode;
 
                         // Grab all of the supporting data (subjects, languages, authors, identifiers, associations)
                         CustomGenericList<TitleKeyword> titleKeywords = provider.MarcSelectTitleKeywordsByMarcID(marc.MarcID);
@@ -127,7 +129,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
 
                         // Save the new title
-                        title = provider.TitleSave(title, 1);
+                        title = provider.TitleSave(title, userID);
 
                         // Copy MARC XML file to the appropriate server
                         // - Create new folder in current vault (using MarcBibID as name)
@@ -164,7 +166,6 @@ namespace MOBOT.BHL.AdminWeb
                         title.Datafield_260_a = marcTitle.Datafield_260_a;
                         title.Datafield_260_b = marcTitle.Datafield_260_b;
                         title.Datafield_260_c = marcTitle.Datafield_260_c;
-                        title.InstitutionCode = marc.InstitutionCode;
                         title.LanguageCode = marcTitle.LanguageCode;
                         title.OriginalCatalogingSource = marcTitle.OriginalCatalogingSource;
                         title.EditionStatement = marcTitle.EditionStatement;
@@ -262,7 +263,7 @@ namespace MOBOT.BHL.AdminWeb
                         }
 
                         // Update the title
-                        title = provider.TitleSave(title, 1);
+                        title = provider.TitleSave(title, userID);
 
                         try
                         {

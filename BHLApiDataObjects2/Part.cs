@@ -59,22 +59,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _sequenceOrder = value; }
         }
 
-        private string _contributor = string.Empty;
-
-        public string Contributor
-        {
-            get { return _contributor; }
-            set { _contributor = value; }
-        }
-
-        private string _contributorID = string.Empty;
-
-        public string ContributorID
-        {
-            get { return _contributorID; }
-            set { _contributorID = value; }
-        }
-
         private string _genreName = string.Empty;
 
         public string GenreName
@@ -267,6 +251,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _authors = value; }
         }
 
+        private CustomGenericList<Contributor> _contributors = null;
+
+        public CustomGenericList<Contributor> Contributors
+        {
+            get { return _contributors; }
+            set { _contributors = value; }
+        }
+
         private CustomGenericList<Subject> _subjects = null;
 
         public CustomGenericList<Subject> Subjects
@@ -327,16 +319,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                     case "SequenceOrder":
                         {
                             _sequenceOrder = (short)column.Value;
-                            break;
-                        }
-                    case "ContributorName":
-                        {
-                            _contributor = Utility.EmptyIfNull(column.Value);
-                            break;
-                        }
-                    case "ContributorSegmentID":
-                        {
-                            _contributorID = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "GenreName":

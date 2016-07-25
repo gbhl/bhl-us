@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchBook]
+﻿CREATE PROCEDURE [dbo].[SearchBook]
 
 @Title			nvarchar(2000) = '',
 @AuthorLastName	nvarchar(255) = '',
@@ -144,33 +143,6 @@ GROUP BY
 		tmp.TitleID
 
 ----------------------------------------------------------
--- Compile the final sortable result set
-/*
--- NOTE: This was replaced by the following statements which remove duplicate items.
-SELECT	tmp.TitleID,
-		i.ItemID,
-		ti.ItemSequence,
-		t.FullTitle,
-		t.SortTitle,
-		t.PartNumber,
-		t.PartName,
-		t.EditionStatement,
-		t.PublicationDetails,
-		t.Datafield_260_a,
-		t.Datafield_260_b,
-		t.Datafield_260_c,
-		i.Volume,
-		dbo.fnCOinSAuthorStringForTitle(tmp.TitleID, 0) AS Authors,
-		dbo.fnCollectionStringForTitleAndItem(tmp.TitleID, i.ItemID) AS Collections,
-		dbo.fnSeriesStringForTitle (tmp.TitleID) AS Associations,
-		inst.InstitutionName
-INTO	#tmpSortable
-FROM	#tmpTitleFinal tmp INNER JOIN dbo.Title t ON tmp.TitleID = t.TitleID
-		INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID AND ti.ItemSequence = tmp.ItemSequence
-		INNER JOIN dbo.Item i ON ti.ItemID = i.ItemID AND i.ItemStatusID = 40
-		LEFT JOIN dbo.Institution inst ON i.InstitutionCode = inst.InstitutionCode
-*/
-		
 -- Compile the final sortable result set.  In doing so, see if any items appear more 
 -- than once.  If any do, only show the primary title for those items.
 SELECT	tmp.TitleID,
@@ -191,13 +163,12 @@ SELECT	tmp.TitleID,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(tmp.TitleID, i.ItemID) AS Collections,
 		dbo.fnSeriesStringForTitle (tmp.TitleID) AS Associations,
-		inst.InstitutionName
+		c.TitleContributors AS InstitutionName
 INTO	#tmpMayContainDups
 FROM	#tmpTitleFinal tmp WITH (NOLOCK)
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON tmp.TitleID = t.TitleID
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON t.TitleID = ti.TitleID AND ti.ItemSequence = tmp.ItemSequence
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID AND i.ItemStatusID = 40
-		LEFT JOIN dbo.Institution inst WITH (NOLOCK) ON i.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 
 -- Find any duplicated items
@@ -310,8 +281,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-
-
-
-

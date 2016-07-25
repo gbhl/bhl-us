@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE dbo.ItemCollectionInsertItemsForCollection
+﻿CREATE PROCEDURE [dbo].[ItemCollectionInsertItemsForCollection]
 
 @CollectionID int
 
@@ -22,14 +21,20 @@ IF (@InstitutionCode IS NOT NULL OR @LanguageCode IS NOT NULL)
 BEGIN
 	-- Only add items not already in the collection
 	INSERT	dbo.ItemCollection (ItemID, CollectionID)
-	SELECT	i.ItemID, @CollectionID
-	FROM	dbo.Item i LEFT JOIN dbo.ItemCollection ic
+	SELECT DISTINCT
+			i.ItemID, @CollectionID
+	FROM	dbo.Item i 
+			INNER JOIN dbo.ItemInstitution ii 
+				ON i.ItemID = ii.ItemID
+			INNER JOIN dbo.InstitutionRole r 
+				ON ii.InstitutionRoleID = r.InstitutionRoleID 
+				AND r.InstitutionRoleName = 'Contributor'
+			LEFT JOIN dbo.ItemCollection ic
 				ON i.ItemID = ic.ItemID
 				AND ic.CollectionID = @CollectionID
-	WHERE	(i.InstitutionCode = @InstitutionCode OR @InstitutionCode IS NULL)
+	WHERE	(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode IS NULL)
 	AND		(i.LanguageCode = @LanguageCode OR @LanguageCode IS NULL)
 	AND		ic.ItemCollectionID IS NULL
 END
 
 END
-

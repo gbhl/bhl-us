@@ -54,6 +54,15 @@ namespace MOBOT.BHL.Web2
                     Data.Sort(comp);
                 }
 
+                // Replace the contributor name with default text if there is more than one
+                if (Data != null)
+                {
+                    foreach (SearchBookResult result in Data)
+                    {
+                        if (result.InstitutionName.Contains("|")) result.InstitutionName = "Multiple institutions";
+                    }
+                }
+
                 bookRepeater.DataSource = Data;
                 bookRepeater.DataBind();
             }

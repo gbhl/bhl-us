@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcResolveTitles]
+﻿CREATE PROCEDURE [dbo].[MarcResolveTitles]
 
 @MarcImportBatchID INT
 
@@ -209,8 +208,15 @@ BEGIN TRY
 				AND tti.IdentifierName = bi.IdentifierName
 			INNER JOIN dbo.Title bt
 				ON bti.TitleID = bt.TitleID
-				AND t.InstitutionCode = bt.InstitutionCode
+			INNER JOIN dbo.TitleItem btitem
+				ON bt.TitleID = btitem.TitleID
+			INNER JOIN dbo.ItemInstitution bii
+				ON btitem.ItemID = bii.ItemID
+				AND t.InstitutionCode = bii.InstitutionCode
+			INNER JOIN dbo.InstitutionRole br
+				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.TitleID IS NULL
+	AND		br.InstitutionRoleName = 'Contributor'
 
 	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
 	/*
@@ -282,4 +288,3 @@ DROP TABLE #tmpTitle
 DROP TABLE #tmpTitleIdentifier
 
 END
-

@@ -2,10 +2,8 @@
 AS
 SELECT	i.PrimaryTitleID,
 		i.ItemID, 
-		i.InstitutionCode AS ItemInstitutionCode, 
 		i.LanguageCode AS ItemLanguageCode,
 		t.TitleID, 
-		t.InstitutionCode AS TitleInstitutionCode,
 		t.LanguageCode AS TitleLanguageCode,
 		t.PublishReady,
 		k.KeywordID,
@@ -21,4 +19,3 @@ FROM	dbo.Item i INNER JOIN dbo.TitleItem ti
 			ON t.TitleID = tk.TitleID
 		INNER JOIN dbo.Keyword k
 			ON tk.KeywordID = k.KeywordID
-

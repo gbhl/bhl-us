@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ItemSelectRecent]
+﻿CREATE PROCEDURE [dbo].[ItemSelectRecent]
 
 @Top INT = 25,
 @LanguageCode NVARCHAR(10) = '',
@@ -22,7 +21,7 @@ BEGIN
 	SELECT DISTINCT TOP (@NumRows) t.TitleID, 
 			i.ItemID, t.FullTitle, t.ShortTitle, t.PartNumber, 
 			t.PartName, i.Volume, i.ScanningDate, 
-			i.CreationDate,	i.Sponsor, inst.InstitutionName, 
+			i.CreationDate,	i.Sponsor, 
 			i.LicenseUrl, i.Rights, i.DueDiligence, 
 			i.CopyrightStatus, i.CopyrightRegion,
 			i.CopyrightComment, i.CopyrightEvidence,
@@ -31,13 +30,13 @@ BEGIN
 	INTO	#tmpRecent
 	FROM	dbo.Item i WITH (NOLOCK) INNER JOIN dbo.Title t WITH (NOLOCK)
 				ON t.TitleID = i.PrimaryTitleID
-			LEFT JOIN dbo.Institution inst WITH (NOLOCK)
-				ON i.InstitutionCode = inst.InstitutionCode
 			LEFT JOIN dbo.ItemLanguage il WITH (NOLOCK)
 				ON i.ItemID = il.ItemID
+			LEFT JOIN dbo.ItemInstitution ii
+				ON i.ItemID = ii.ItemID
 	WHERE	t.PublishReady = 1
 	AND		i.ItemStatusID = 40
-	AND		(i.InstitutionCode = @Institution OR 
+	AND		(ii.InstitutionCode = @Institution OR 
 			@Institution = '')
 	AND		(i.LanguageCode = @Language OR
 			 ISNULL(il.LanguageCode, '') = @Language OR
@@ -48,7 +47,7 @@ BEGIN
 			ISNULL(t.PartNumber, '') AS PartNumber,
 			ISNULL(t.PartName, '') AS PartName, 
 			t.Volume, t.ScanningDate, 
-			t.CreationDate, t.Sponsor, t.InstitutionName, 
+			t.CreationDate, t.Sponsor,
 			t.LicenseUrl, t.Rights, t.DueDiligence, 
 			t.CopyrightStatus, t.CopyrightRegion,
 			t.CopyrightComment, t.CopyrightEvidence,
@@ -56,10 +55,10 @@ BEGIN
 			dbo.fnAuthorStringForTitle(t.TitleID) AS CreatorTextString,
 			c.Subjects AS KeywordString,
 			c.Associations AS AssociationTextString,
+			c.ItemContributors AS ContributorTextString,
 			CASE WHEN c.HasLocalContent = 0 AND c.HasExternalContent = 1 THEN t.ExternalUrl ELSE '' END AS ExternalUrl
 	FROM	#tmpRecent t
 			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND t.ItemID = c.ItemID
 	ORDER BY CreationDate DESC
 END
-
 

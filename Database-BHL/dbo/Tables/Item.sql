@@ -5,13 +5,11 @@
     [MARCItemID]                NVARCHAR (50)  NULL,
     [CallNumber]                NVARCHAR (100) NULL,
     [Volume]                    NVARCHAR (100) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
-    [InstitutionCode]           NVARCHAR (10)  CONSTRAINT [DF__Item__Institutio__68D28DBC] DEFAULT ('MO') NULL,
     [LanguageCode]              NVARCHAR (10)  NULL,
     [ItemDescription]           NTEXT          NULL,
     [ScannedBy]                 INT            NULL,
     [PDFSize]                   INT            NULL,
     [VaultID]                   INT            NULL,
-    [NumberOfFiles]             SMALLINT       NULL,
     [Note]                      NVARCHAR (255) NULL,
     [CreationDate]              DATETIME       CONSTRAINT [DF__Item__Created__6BAEFA67] DEFAULT (getdate()) NULL,
     [LastModifiedDate]          DATETIME       CONSTRAINT [DF__Item__Changed__6CA31EA0] DEFAULT (getdate()) NULL,
@@ -59,7 +57,6 @@
 	[VolumeReviewedDate]		DATETIME       NULL,
 	[VolumeReviewedUserID]		INT            NULL,
     CONSTRAINT [aaaaaItem_PK] PRIMARY KEY CLUSTERED ([ItemID] ASC),
-    CONSTRAINT [FK_Item_Institution] FOREIGN KEY ([InstitutionCode]) REFERENCES [dbo].[Institution] ([InstitutionCode]),
     CONSTRAINT [FK_Item_Item] FOREIGN KEY ([RedirectItemID]) REFERENCES [dbo].[Item] ([ItemID]),
     CONSTRAINT [FK_Item_ItemSource] FOREIGN KEY ([ItemSourceID]) REFERENCES [dbo].[ItemSource] ([ItemSourceID]),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[ItemStatus] ([ItemStatusID]),
@@ -78,7 +75,7 @@ CREATE UNIQUE NONCLUSTERED INDEX [BarCode]
 GO
 CREATE NONCLUSTERED INDEX [IX_Item_TitleID]
     ON [dbo].[Item]([PrimaryTitleID] ASC)
-    INCLUDE([InstitutionCode], [LanguageCode]);
+    INCLUDE([LanguageCode]);
 
 
 GO
@@ -98,90 +95,3 @@ CREATE NONCLUSTERED INDEX [IX_Item_ItemStatusID]
 
 
 GO
-CREATE TRIGGER dbo.Item_AuditBasic_Insert ON [dbo].[Item]
- AFTER Insert
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- SET ARITHABORT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
-
-DECLARE @AuditTime DATETIME
-SET @AuditTime = GetDate()
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.Item', 'I',@UserSQL, Inserted.ItemID,Inserted.CreationUserID
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
-GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[Item_AuditBasic_Insert]', @order = N'last', @stmttype = N'insert';
-
-
-GO
-CREATE TRIGGER dbo.Item_AuditBasic_Update ON [dbo].[Item]
- AFTER Update
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
-
-DECLARE @AuditTime DATETIME, @IsDirty BIT
-SET @AuditTime = GetDate()
-
-SET @IsDirty = 0
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.Item', 'U',@UserSQL, Inserted.ItemID,Inserted.LastModifiedUserID
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
-GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[Item_AuditBasic_Update]', @order = N'last', @stmttype = N'update';
-

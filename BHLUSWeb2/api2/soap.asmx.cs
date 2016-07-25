@@ -191,7 +191,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
+        public Item GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             try
             {

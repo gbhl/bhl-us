@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:53:07 PM
+// Generated 6/2/2016 9:32:37 AM
 // Do not modify the contents of this code file.
 // Interface ISegmentDAL based upon dbo.Segment.
 
@@ -31,8 +31,6 @@ namespace MOBOT.BHL.DAL
 		Segment SegmentInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -69,8 +67,6 @@ namespace MOBOT.BHL.DAL
 		Segment SegmentInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -118,8 +114,6 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,
@@ -156,8 +150,6 @@ namespace MOBOT.BHL.DAL
 			int segmentID,
 			int? itemID,
 			int segmentStatusID,
-			string contributorCode,
-			string contributorSegmentID,
 			short sequenceOrder,
 			int segmentGenreID,
 			string title,

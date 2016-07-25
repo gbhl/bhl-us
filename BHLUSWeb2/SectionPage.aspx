@@ -86,7 +86,13 @@
                 </span></p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
-            <div class="segmentdetails"><h3>Contributed by</h3> <p><%: BhlSegment.ContributorName%></p></div>
+                <div class="segmentdetails"><h3>Contributed by</h3> <p>
+                    <%foreach (Institution institution in BhlSegment.ContributorList)
+                        { %>
+                        <%: institution.InstitutionName%><br />
+                    <% } %>
+                    </p>
+                </div>
             <% } %>
             <% if (DOI != string.Empty) { %>
             <h3>DOI</h3>
@@ -165,7 +171,13 @@
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
-            <div class="segmentdetails"><h3>Contributed by</h3> <p><%: BhlSegment.ContributorName%></p></div>
+                <div class="segmentdetails"><h3>Contributed by</h3> <p>
+                    <%foreach (Institution institution in BhlSegment.ContributorList)
+                        { %>
+                        <%: institution.InstitutionName%><br />
+                    <% } %>
+                    </p>
+                </div>
             <% } %>
             <% if (DOI != string.Empty) { %>
             <h3>DOI</h3>

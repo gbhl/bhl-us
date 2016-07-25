@@ -15,7 +15,6 @@
     [Datafield_260_a]             NVARCHAR (150)  COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
     [Datafield_260_b]             NVARCHAR (255)  COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
     [Datafield_260_c]             NVARCHAR (100)  NULL,
-    [InstitutionCode]             NVARCHAR (10)   CONSTRAINT [DF__Title__Instituti__7167D3BD] DEFAULT ('MO') NULL,
     [LanguageCode]                NVARCHAR (10)   NULL,
     [TitleDescription]            NTEXT           NULL,
     [TL2Author]                   NVARCHAR (100)  NULL,
@@ -37,7 +36,6 @@
     CONSTRAINT [CK Title StartYear] CHECK ([StartYear]>=(1400) AND [StartYear]<=(2025) OR [StartYear] IS NULL),
     CONSTRAINT [FK_Title_BibliographicLevel] FOREIGN KEY ([BibliographicLevelID]) REFERENCES [dbo].[BibliographicLevel] ([BibliographicLevelID]),
     CONSTRAINT [FK_Title_Title] FOREIGN KEY ([RedirectTitleID]) REFERENCES [dbo].[Title] ([TitleID]),
-    CONSTRAINT [Title_FK00] FOREIGN KEY ([InstitutionCode]) REFERENCES [dbo].[Institution] ([InstitutionCode]) ON UPDATE CASCADE,
     CONSTRAINT [Title_FK01] FOREIGN KEY ([LanguageCode]) REFERENCES [dbo].[Language] ([LanguageCode]) ON UPDATE CASCADE
 );
 
@@ -56,13 +54,13 @@ CREATE NONCLUSTERED INDEX [IX_Title_TitleIDSortTitle]
 GO
 CREATE NONCLUSTERED INDEX [IX_Title_PublishReadySortTitle]
     ON [dbo].[Title]([PublishReady] ASC, [SortTitle] ASC)
-    INCLUDE([TitleID], [FullTitle], [ShortTitle], [PublicationDetails], [InstitutionCode], [LanguageCode]);
+    INCLUDE([TitleID], [FullTitle], [ShortTitle], [PublicationDetails], [LanguageCode]);
 
 
 GO
 CREATE NONCLUSTERED INDEX [IX_Title_PublishReadyStartYear]
     ON [dbo].[Title]([PublishReady] ASC, [StartYear] ASC)
-    INCLUDE([PublicationDetails], [TitleID], [FullTitle], [LanguageCode], [InstitutionCode]);
+    INCLUDE([PublicationDetails], [TitleID], [FullTitle], [LanguageCode]);
 
 
 GO
@@ -72,98 +70,3 @@ CREATE NONCLUSTERED INDEX [IX_Title_TitleIDCovering]
 
 
 GO
-CREATE TRIGGER dbo.Title_AuditBasic_Insert ON [dbo].[Title]
- AFTER Insert
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- SET ARITHABORT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
-
-DECLARE @AuditTime DATETIME
-SET @AuditTime = GetDate()
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.Title', 'I',@UserSQL, Inserted.TitleID,Inserted.CreationUserID
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
-GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[Title_AuditBasic_Insert]', @order = N'last', @stmttype = N'insert';
-
-
-GO
-CREATE TRIGGER dbo.Title_AuditBasic_Update ON [dbo].[Title]
- AFTER Update
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
-
-DECLARE @AuditTime DATETIME, @IsDirty BIT
-SET @AuditTime = GetDate()
-
-SET @IsDirty = 0
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.Title', 'U',@UserSQL, Inserted.TitleID,Inserted.LastModifiedUserID
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
-GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[Title_AuditBasic_Update]', @order = N'last', @stmttype = N'update';
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_ConstraintText', @value = N'Value must be from 1400 to 2025, inclusive, or empty.', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'Title', @level2type = N'CONSTRAINT', @level2name = N'CK Title EndYear';
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_ConstraintText', @value = N'Value must be from 1400 to 2025, inclusive, or empty.', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = N'Title', @level2type = N'CONSTRAINT', @level2name = N'CK Title StartYear';
-

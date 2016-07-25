@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[ItemCOinSView]
+﻿CREATE VIEW [dbo].[ItemCOinSView]
 AS
 SELECT DISTINCT 
 		t.TitleID
@@ -34,21 +33,14 @@ SELECT DISTINCT
 		,dbo.fnGetIdentifierForTitle(t.TitleID, 'ISSN') AS 'rft_issn' -- book/journal
 		,dbo.fnGetIdentifierForTitle(t.TitleID, 'CODEN') AS 'rft_coden' -- journal
 		,dbo.fnKeywordStringForTitle(t.TitleID) AS 'rft_subject' -- dc
-		,inst.InstitutionName AS 'rft_contributor_ITEM' -- dc
-		,inst2.InstitutionName AS 'rft_contributor_TITLE' -- dc
+		,c.ItemContributors  AS 'rft_contributor_ITEM' -- dc
+		,c.TitleContributors AS 'rft_contributor_TITLE' -- dc
 		,CASE WHEN SUBSTRING(t.MARCLeader, 8, 1) IN ('s','b') THEN 'journal'
 			WHEN SUBSTRING(t.MARCLeader, 8, 1) IN ('a','m') THEN 'book'
 			ELSE 'unknown' END AS 'rft_genre' -- book/journal/dc
-FROM	dbo.Title t INNER JOIN dbo.TitleItem ti
-			ON t.TitleID = ti.TitleID
-		INNER JOIN dbo.Item i
-			ON ti.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst
-			ON i.InstitutionCode = inst.InstitutionCode
-		LEFT JOIN dbo.Institution inst2
-			ON t.InstitutionCode = inst2.InstitutionCode
+FROM	dbo.Title t 
+		INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID
+		INNER JOIN dbo.Item i ON ti.ItemID = i.ItemID
+		INNER JOIN dbo.SearchCatalog c ON c.TitleID = t.TitleID AND c.ItemID = i.ItemID
 WHERE	t.PublishReady = 1
 AND		i.ItemStatusID = 40
-
-
-

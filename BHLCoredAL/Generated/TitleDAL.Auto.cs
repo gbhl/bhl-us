@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 1:54:36 PM
+// Generated 6/2/2016 9:32:28 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleDAL is based upon dbo.Title.
@@ -151,7 +151,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="datafield_260_a"></param>
 		/// <param name="datafield_260_b"></param>
 		/// <param name="datafield_260_c"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
@@ -185,7 +184,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -201,7 +199,7 @@ namespace MOBOT.BHL.DAL
 			string partName,
 			int? bibliographicLevelID)
 		{
-			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHL", mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, creationUserID, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID );
+			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHL", mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, creationUserID, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID );
 		}
 		
 		/// <summary>
@@ -225,7 +223,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="datafield_260_a"></param>
 		/// <param name="datafield_260_b"></param>
 		/// <param name="datafield_260_c"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
@@ -260,7 +257,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -296,7 +292,6 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Datafield_260_a", SqlDbType.NVarChar, 150, true, datafield_260_a),
 					CustomSqlHelper.CreateInputParameter("Datafield_260_b", SqlDbType.NVarChar, 255, true, datafield_260_b),
 					CustomSqlHelper.CreateInputParameter("Datafield_260_c", SqlDbType.NVarChar, 100, true, datafield_260_c),
-					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("TitleDescription", SqlDbType.NText, 1073741823, true, titleDescription),
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
@@ -375,7 +370,6 @@ namespace MOBOT.BHL.DAL
 				value.Datafield_260_a,
 				value.Datafield_260_b,
 				value.Datafield_260_c,
-				value.InstitutionCode,
 				value.LanguageCode,
 				value.TitleDescription,
 				value.TL2Author,
@@ -475,7 +469,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="datafield_260_a"></param>
 		/// <param name="datafield_260_b"></param>
 		/// <param name="datafield_260_c"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
@@ -509,7 +502,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -524,7 +516,7 @@ namespace MOBOT.BHL.DAL
 			string partName,
 			int? bibliographicLevelID)
 		{
-			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleID, mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, institutionCode, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID);
+			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleID, mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID);
 		}
 		
 		/// <summary>
@@ -549,7 +541,6 @@ namespace MOBOT.BHL.DAL
 		/// <param name="datafield_260_a"></param>
 		/// <param name="datafield_260_b"></param>
 		/// <param name="datafield_260_c"></param>
-		/// <param name="institutionCode"></param>
 		/// <param name="languageCode"></param>
 		/// <param name="titleDescription"></param>
 		/// <param name="tL2Author"></param>
@@ -584,7 +575,6 @@ namespace MOBOT.BHL.DAL
 			string datafield_260_a,
 			string datafield_260_b,
 			string datafield_260_c,
-			string institutionCode,
 			string languageCode,
 			string titleDescription,
 			string tL2Author,
@@ -619,7 +609,6 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Datafield_260_a", SqlDbType.NVarChar, 150, true, datafield_260_a),
 					CustomSqlHelper.CreateInputParameter("Datafield_260_b", SqlDbType.NVarChar, 255, true, datafield_260_b),
 					CustomSqlHelper.CreateInputParameter("Datafield_260_c", SqlDbType.NVarChar, 100, true, datafield_260_c),
-					CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, true, institutionCode),
 					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("TitleDescription", SqlDbType.NText, 1073741823, true, titleDescription),
 					CustomSqlHelper.CreateInputParameter("TL2Author", SqlDbType.NVarChar, 100, true, tL2Author),
@@ -698,7 +687,6 @@ namespace MOBOT.BHL.DAL
 				value.Datafield_260_a,
 				value.Datafield_260_b,
 				value.Datafield_260_c,
-				value.InstitutionCode,
 				value.LanguageCode,
 				value.TitleDescription,
 				value.TL2Author,
@@ -771,7 +759,6 @@ namespace MOBOT.BHL.DAL
 						value.Datafield_260_a,
 						value.Datafield_260_b,
 						value.Datafield_260_c,
-						value.InstitutionCode,
 						value.LanguageCode,
 						value.TitleDescription,
 						value.TL2Author,
@@ -827,7 +814,6 @@ namespace MOBOT.BHL.DAL
 						value.Datafield_260_a,
 						value.Datafield_260_b,
 						value.Datafield_260_c,
-						value.InstitutionCode,
 						value.LanguageCode,
 						value.TitleDescription,
 						value.TL2Author,

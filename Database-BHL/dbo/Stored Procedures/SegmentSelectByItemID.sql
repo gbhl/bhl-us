@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectByItemID]
 
 @ItemID int,
 @ShowAll smallint = 0
@@ -14,11 +13,8 @@ SELECT	s.SegmentID,
 		s.ItemID,
 		s.SegmentStatusID,
 		st.StatusName,
-		s.ContributorCode,
-		s.ContributorSegmentID,
 		s.SequenceOrder,
 		i.PrimaryTitleID AS TitleID,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
 		s.SegmentGenreID,
 		g.GenreName,
 		s.Title,
@@ -58,7 +54,6 @@ SELECT	s.SegmentID,
 		scs.Authors
 FROM	dbo.Segment s 
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
@@ -69,7 +64,3 @@ ORDER BY
 		s.SequenceOrder
 
 END
-
-
-
-

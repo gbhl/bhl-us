@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishInsertTitleAndItem
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishInsertTitleAndItem]
 
 @OAIRecordID int
 
@@ -14,26 +14,14 @@ DECLARE @ProductionItemID int
 DECLARE @IdentifierISSN int
 DECLARE @IdentifierISBN int
 DECLARE @IdentifierLCCN int
-DECLARE @BHLInstitutionCode nvarchar(10)
 
 SELECT @IdentifierISSN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 SELECT @IdentifierISBN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISBN'
 SELECT @IdentifierLCCN = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'DLC'
 
--- Get the contributing institution code for this record
-SELECT	@BHLInstitutionCode = r.BHLInstitutionCode
-FROM	dbo.OAIRecord o
-		INNER JOIN dbo.OAIHarvestLog lg ON o.HarvestLogID = lg.HarvestLogID
-		INNER JOIN dbo.OAIHarvestSet s ON lg.HarvestSetID = s.HarvestSetID
-		INNER JOIN dbo.OAIRepositoryFormat rf ON s.RepositoryFormatID = rf.RepositoryFormatID
-		INNER JOIN dbo.OAIRepository r ON rf.RepositoryID = r.RepositoryID
-WHERE	o.OAIRecordID = @OAIRecordID
-
 -- =======================================================================
 -- Resolve title.  
 --
--- Titles are unique by institution.  That is, a given title may only 
--- appear more than once if it is contributed by more than one institution.
 -- Multiple attempts are made to find a matching title in production.  In
 -- order, the following criteria are used to find a match:
 --
@@ -41,7 +29,6 @@ WHERE	o.OAIRecordID = @OAIRecordID
 --	2) Issn
 --	3) Isbn
 --  4) Lccn
---	3) Title + Date
 --
 -- After titles have been resolved, if a ProductionTitleID has not been found
 -- then a new title record will be inserted into the production database.
@@ -51,8 +38,7 @@ SELECT	@ProductionTitleID = t.TitleID
 FROM	dbo.OAIRecord o 
 		INNER JOIN dbo.BHLDOI d ON o.Doi = d.DoiName AND d.DOIEntityTypeID = 10 -- title
 		INNER JOIN dbo.BHLTitle t ON d.EntityID = t.TitleID
-WHERE	t.InstitutionCode = @BHLInstitutionCode
-AND		o.OAIRecordID = @OAIRecordID
+WHERE	o.OAIRecordID = @OAIRecordID
 
 -- Match on ISSN
 IF @ProductionTitleID IS NULL
@@ -61,8 +47,7 @@ BEGIN
 	FROM	dbo.OAIRecord o
 			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Issn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISSN
 			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
-	WHERE	t.InstitutionCode = @BHLInstitutionCode
-	AND		o.OAIRecordID = @OAIRecordID
+	WHERE	o.OAIRecordID = @OAIRecordID
 END
 
 -- Match on ISBN
@@ -72,8 +57,7 @@ BEGIN
 	FROM	dbo.OAIRecord o
 			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Isbn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierISBN
 			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
-	WHERE	t.InstitutionCode = @BHLInstitutionCode
-	AND		o.OAIRecordID = @OAIRecordID
+	WHERE	o.OAIRecordID = @OAIRecordID
 END
 
 -- Match on LCCN
@@ -83,19 +67,7 @@ BEGIN
 	FROM	dbo.OAIRecord o
 			INNER JOIN dbo.BHLTitle_Identifier ti ON o.Lccn = ti.IdentifierValue AND ti.IdentifierID = @IdentifierLCCN
 			INNER JOIN dbo.BHLTitle t ON ti.TitleID = t.TitleID
-	WHERE	t.InstitutionCode = @BHLInstitutionCode
-	AND		o.OAIRecordID = @OAIRecordID
-END
-
--- Match on Title + Date
-IF @ProductionTitleID IS NULL
-BEGIN
-	SELECT	@ProductionTitleID = t.TitleID
-	FROM	dbo.OAIRecord o
-			INNER JOIN dbo.BHLTitle t ON o.Title = t.FullTitle AND o.Date = t.Datafield_260_c
-	WHERE	t.InstitutionCode = @BHLInstitutionCode
-	AND		o.OAIRecordID = @OAIRecordID
-					
+	WHERE	o.OAIRecordID = @OAIRecordID
 END
 
 -- If the selected production title has been redirected to a different 

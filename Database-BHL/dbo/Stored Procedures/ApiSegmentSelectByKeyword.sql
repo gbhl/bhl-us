@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSegmentSelectByKeyword]
+﻿CREATE PROCEDURE [dbo].[ApiSegmentSelectByKeyword]
 
 @Keyword nvarchar(50)
 
@@ -9,10 +8,7 @@ SET NOCOUNT ON
 -- Get segments tied directly to the specified Keyword
 SELECT	s.SegmentID,
 		s.ItemID,
-		s.ContributorCode,
-		s.ContributorSegmentID,
 		s.SequenceOrder,
-		inst.InstitutionName AS ContributorName,
 		s.SegmentGenreID,
 		g.GenreName,
 		s.Title,
@@ -54,7 +50,6 @@ SELECT	s.SegmentID,
 FROM	dbo.Keyword k 
 		INNER JOIN dbo.SegmentKeyword sk ON k.KeywordID = sk.KeywordID
 		INNER JOIN dbo.Segment s ON sk.SegmentID = s.SegmentID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
@@ -62,9 +57,3 @@ FROM	dbo.Keyword k
 WHERE	k.Keyword = @Keyword
 AND		s.SegmentStatusID IN (10, 20) -- New, Published
 ORDER BY s.SortTitle
-
-
-
-
-
-

@@ -1,7 +1,9 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByNameLike]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByNameLike]
+
 @Name varchar(1000)
+
 AS
+
 SET NOCOUNT ON
 
 SELECT DISTINCT
@@ -16,11 +18,10 @@ SELECT DISTINCT
 		t.EditionStatement,
 		itm.Volume,
 		itm.ExternalUrl,
-		I.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, itm.ItemID) AS Collections
 FROM	[dbo].[Title] t WITH (NOLOCK)
-		LEFT OUTER JOIN dbo.Institution I WITH (NOLOCK) ON I.InstitutionCode = t.InstitutionCode
 		LEFT OUTER JOIN dbo.TitleLanguage tl WITH (NOLOCK) ON t.TitleID = tl.TitleID
 		INNER JOIN (
 				-- Get the first item for each title

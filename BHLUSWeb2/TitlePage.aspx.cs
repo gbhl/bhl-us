@@ -215,9 +215,10 @@ namespace MOBOT.BHL.Web2
                     ddlVolumes.SelectedValue = PageSummary.ItemID.ToString();
 
                     // Show contributing institution
-                    Institution institution = bhlProvider.InstitutionSelectByItemID(PageSummary.ItemID);
-                    if (institution != null)
+                    CustomGenericList<Institution> institutions = bhlProvider.ItemContributorSelectByItemID(PageSummary.ItemID);
+                    if (institutions.Count > 0)
                     {
+                        Institution institution = institutions[0];
                         if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl))
                         {
                             HyperLink link = new HyperLink();

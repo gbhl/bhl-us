@@ -33,6 +33,7 @@ namespace MOBOT.BHL.Web2
                 SegmentID = segmentID;
                 BhlSegment = bhlProvider.SegmentSelectExtended(SegmentID);
                 BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
+                BhlSegment.ContributorList.Sort(new InstitutionComparer(InstitutionComparer.CompareEnum.InstitutionName, SortOrder.Ascending));
                 if (BhlSegment == null)
                 {
                     Response.Redirect("~/pagenotfound");

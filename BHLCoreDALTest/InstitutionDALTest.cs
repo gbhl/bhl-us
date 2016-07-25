@@ -65,7 +65,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 22500;
-            Institution actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
+            CustomGenericList<Institution> actual = target.InstitutionSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsNotNull(actual);
         }
 
@@ -100,6 +100,42 @@ namespace BHLCoreDALTest
             SqlTransaction sqlTransaction = null;
             bool onlyMemberLibraries = false;
             CustomGenericList<Institution> actual = target.InstitutionSelectWithPublishedSegments(sqlConnection, sqlTransaction, onlyMemberLibraries);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void InstitutionSelectByItemIDAndRole()
+        {
+            InstitutionDAL target = new InstitutionDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int itemID = 22004;
+            string role = "Contributor";
+            CustomGenericList<Institution> actual = target.InstitutionSelectByItemIDAndRole(sqlConnection, sqlTransaction, itemID, role);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void InstitutionSelectBySegmentIDAndRole()
+        {
+            InstitutionDAL target = new InstitutionDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int segmentID = 6450;
+            string role = "Contributor";
+            CustomGenericList<Institution> actual = target.InstitutionSelectBySegmentIDAndRole(sqlConnection, sqlTransaction, segmentID, role);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void InstitutionSelectByTitleIDAndRole()
+        {
+            InstitutionDAL target = new InstitutionDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            int titleID = 2187;
+            string role = "Contributor";
+            CustomGenericList<Institution> actual = target.InstitutionSelectByTitleIDAndRole(sqlConnection, sqlTransaction, titleID, role);
             Assert.IsTrue(actual.Count > 0);
         }
     }

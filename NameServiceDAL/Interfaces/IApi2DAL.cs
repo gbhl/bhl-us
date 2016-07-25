@@ -17,7 +17,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         CustomGenericList<PageNumber> IndicatedPageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
         CustomGenericList<PageType> PageTypeSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
         Item ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID);
-        CustomGenericList<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
+        Item ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
         CustomGenericList<PageDetail> PageSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID);
         CustomGenericList<Item> ItemSelectUnpublished(SqlConnection sqlConnection, SqlTransaction sqlTransaction);

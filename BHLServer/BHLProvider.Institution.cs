@@ -17,10 +17,15 @@ namespace MOBOT.BHL.Server
 			return ( GetInstitutionDalInstance().InstitutionSelectAll( null, null ) );
 		}
 
-		public Institution InstitutionSelectByItemID( int itemID )
+		public CustomGenericList<Institution> InstitutionSelectByItemID( int itemID )
 		{
 			return GetInstitutionDalInstance().InstitutionSelectByItemID( null, null, itemID );
 		}
+
+        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
+        {
+            return GetInstitutionDalInstance().InstitutionSelectByItemIDAndRole(null, null, itemID, role);
+        }
 
         public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(bool onlyMemberLibraries)
         {
@@ -47,14 +52,24 @@ namespace MOBOT.BHL.Server
 			return institutionDal;
 		}
 
-		public Institution InstitutionSelectAuto( string institutionCode )
+        public CustomGenericList<Institution> ItemContributorSelectByItemID(int itemID)
+        {
+            return new InstitutionDAL().InstitutionSelectByItemIDAndRole(null, null, itemID, InstitutionRole.Contributor);
+        }
+
+        public CustomGenericList<Institution> TitleContributorSelectByTitleID(int titleID)
+        {
+            return new InstitutionDAL().InstitutionSelectByTitleIDAndRole(null, null, titleID, InstitutionRole.Contributor);
+        }
+
+        public Institution InstitutionSelectAuto( string institutionCode )
 		{
 			return ( new InstitutionDAL().InstitutionSelectAuto( null, null, institutionCode ) );
 		}
 
-		public void SaveInstitution( Institution institution )
+		public void SaveInstitution( Institution institution, int userID )
 		{
-			new InstitutionDAL().Save( null, null, institution );
+			new InstitutionDAL().Save( null, null, institution, userID );
 		}
 	}
 }

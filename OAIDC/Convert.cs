@@ -118,7 +118,7 @@ namespace MOBOT.BHL.OAIDC
             if (publisher != null) _oaiRecord.PublicationDetails = publisher.Value;
 
             XElement contributor = root.Element(ns + "contributor");
-            if (contributor != null) _oaiRecord.Contributor = contributor.Value;
+            if (contributor != null) _oaiRecord.Contributors.Add(contributor.Value);
 
             var languages = from l in root.Elements(ns + "language") select l;
             foreach (XElement l in languages)
@@ -212,7 +212,10 @@ namespace MOBOT.BHL.OAIDC
             if (!String.IsNullOrEmpty(_oaiRecord.PublicationDetails)) sb.Append("<dc:publisher>" + HttpUtility.HtmlEncode(_oaiRecord.PublicationDetails) + "</dc:publisher>\n");
 
             // Contributor 
-            if (!String.IsNullOrEmpty(_oaiRecord.Contributor)) sb.Append("<dc:contributor>" + HttpUtility.HtmlEncode(_oaiRecord.Contributor) + "</dc:contributor>\n");
+            foreach (string contributor in _oaiRecord.Contributors)
+            {
+                sb.Append("<dc:contributor>" + HttpUtility.HtmlEncode(contributor) + "</dc:contributor>\n");
+            }
 
             // Date
             if (!String.IsNullOrEmpty(_oaiRecord.Date)) sb.Append("<dc:date>" + HttpUtility.HtmlEncode(_oaiRecord.Date) + "</dc:date>\n");

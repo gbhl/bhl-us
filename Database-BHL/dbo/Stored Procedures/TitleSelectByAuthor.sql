@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectByAuthor]
+﻿CREATE PROCEDURE [dbo].[TitleSelectByAuthor]
 
 @AuthorId	int
 
@@ -20,12 +19,11 @@ SELECT DISTINCT
 		t.EditionStatement,
 		itm.Volume,
 		itm.ExternalUrl,
-		i.InstitutionName,
+		c.TitleContributors AS InstitutionName,
 		c.Authors,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, itm.ItemID) AS Collections
 FROM	dbo.TitleAuthorView v WITH (NOLOCK) 
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON v.TitleID = t.TitleID AND t.PublishReady = 1
-		LEFT JOIN dbo.Institution i WITH (NOLOCK) ON t.InstitutionCode = i.InstitutionCode
 		INNER JOIN (
 				-- Get the first item for each title
 				SELECT	TitleID, MIN(ItemSequence) MinSeq
@@ -43,6 +41,3 @@ AND		v.IsActive = 1
 AND		v.IsPreferredName = 1
 ORDER BY
 		t.SortTitle
-
-
-

@@ -58,6 +58,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataObjectBase.cs" />
+    <Compile Include="Contributor.cs" />
+    <Compile Include="InstitutionRole.cs" />
     <Compile Include="Item.cs">
       <SubType>Code</SubType>
     </Compile>

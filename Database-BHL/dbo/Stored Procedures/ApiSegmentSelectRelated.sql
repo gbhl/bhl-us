@@ -10,7 +10,6 @@ SET NOCOUNT ON
 
 SELECT	g.GenreName,
 		st.StatusName,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
 		ISNULL(l.LanguageName, '') AS LanguageName,
 		s.SegmentID,
 		s.Title,
@@ -30,12 +29,8 @@ FROM	dbo.SegmentClusterSegment scs1
 		INNER JOIN dbo.Segment s ON scs2.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 WHERE	scs1.SegmentID = @SegmentID
 AND		s.SegmentID <> @SegmentID
 
 END
-
-
-

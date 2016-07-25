@@ -33,6 +33,7 @@ namespace MOBOT.BHL.DAL
                         item.ItemLanguages = new ItemLanguageDAL().ItemLanguageSelectByItemID(connection, transaction, item.ItemID);
                         item.ItemCollections = new ItemCollectionDAL().SelectByItem(connection, transaction, item.ItemID);
                         item.Segments = new SegmentDAL().SegmentSelectByItemID(connection, transaction, item.ItemID, 1);
+                        item.Contributors = new InstitutionDAL().InstitutionSelectByItemID(connection, transaction, item.ItemID);
                         return item;
 					}
 					else
@@ -291,12 +292,29 @@ namespace MOBOT.BHL.DAL
 
 			bool isTransactionCoordinator = CustomSqlHelper.IsTransactionCoordinator( transaction );
 
-			try
-			{
-				transaction = CustomSqlHelper.BeginTransaction( connection, transaction, isTransactionCoordinator );
+            try
+            {
+                transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
 
                 CustomDataAccessStatus<Item> updatedItem =
                     new ItemDAL().ItemManageAuto(connection, transaction, item, userId);
+
+                if (item.Contributors.Count > 0)
+                {
+                    ItemInstitutionDAL itemInstitutionDAL = new ItemInstitutionDAL();
+                    foreach (Institution institution in item.Contributors)
+                    {
+                        if (institution.IsDeleted)
+                        {
+                            itemInstitutionDAL.ItemInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
+                        }
+                        if (institution.IsNew)
+                        {
+                            itemInstitutionDAL.ItemInstitutionInsert(connection, transaction, updatedItem.ReturnObject.ItemID, 
+                                institution.InstitutionCode, institution.InstitutionRoleName, userId);
+                        }
+                    }
+                }
 
 				if ( item.Pages.Count > 0 )
 				{

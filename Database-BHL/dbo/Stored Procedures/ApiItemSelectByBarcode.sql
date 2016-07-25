@@ -1,5 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[ApiItemSelectByBarcode]
+
 @Barcode nvarchar(40)
+
 AS 
 
 SET NOCOUNT ON
@@ -18,7 +20,7 @@ ELSE
 			i.Barcode,
 			i.Volume,
 			i.Year,
-			ISNULL(inst.InstitutionName, '') AS InstitutionName,
+			c.ItemContributors AS InstitutionName,
 			i.Sponsor,
 			ISNULL(l.LanguageName, '') AS Language,
 			ISNULL(i.LicenseUrl, '') AS LicenseUrl,
@@ -27,11 +29,9 @@ ELSE
 			ISNULL(i.CopyrightStatus, '') AS CopyrightStatus,
 			ISNULL(i.CopyrightRegion, '') AS CopyrightRegion,
 			ISNULL(i.ExternalUrl, '') AS ExternalUrl
-	FROM	dbo.Item i LEFT JOIN dbo.Institution inst
-				ON i.InstitutionCode = inst.InstitutionCode
-			LEFT JOIN dbo.Language l
-				ON i.LanguageCode = l.LanguageCode
-			INNER JOIN dbo.ItemSource s
-				ON i.ItemSourceID = s.ItemSourceID
+	FROM	dbo.Item i 
+			LEFT JOIN dbo.Language l ON i.LanguageCode = l.LanguageCode
+			INNER JOIN dbo.ItemSource s ON i.ItemSourceID = s.ItemSourceID
+			INNER JOIN dbo.SearchCatalog c ON c.ItemID = i.ItemID
 	WHERE	i.Barcode = @Barcode
 	AND		i.ItemStatusID = 40

@@ -86,8 +86,8 @@ namespace BHLApiDALTest
             NameApiDAL target = new NameApiDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            DateTime startDate = new DateTime(2009, 11, 1);
-            DateTime endDate = new DateTime(2009, 12, 1);
+            DateTime startDate = new DateTime(2008, 1, 1);
+            DateTime endDate = new DateTime(2008, 2, 1);
             int actual;
             actual = target.NameCountUniqueConfirmedBetweenDates(sqlConnection, sqlTransaction, startDate, endDate);
             Assert.IsTrue(actual == 0);
@@ -120,11 +120,11 @@ namespace BHLApiDALTest
             SqlTransaction sqlTransaction = null;
             int startRow = 1;
             int batchSize = 10;
-            DateTime startDate = new DateTime(2012, 9, 17);
-            DateTime endDate = new DateTime(2012, 9, 18);
+            DateTime startDate = new DateTime(2008, 1, 24);
+            DateTime endDate = new DateTime(2008, 1, 26);
             CustomGenericList<Name> actual;
             actual = target.NameListActiveBetweenDates(sqlConnection, sqlTransaction, startRow, batchSize, startDate, endDate);
-            Assert.IsTrue(actual.Count == 10);
+            Assert.IsNotNull(actual);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace BHLApiDALTest
             string nameBankID = "2661223"; // poa annua
             CustomGenericList<PageDetail> actual;
             actual = target.PageSelectByNameBankID(sqlConnection, sqlTransaction, nameBankID);
-            Assert.IsTrue(actual.Count > 0);
+            Assert.IsNotNull(actual);
         }
     }
 }

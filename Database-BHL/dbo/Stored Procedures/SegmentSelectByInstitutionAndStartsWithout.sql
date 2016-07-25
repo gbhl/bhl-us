@@ -13,11 +13,9 @@ SELECT	s.SegmentID,
 		s.ItemID,
 		s.SegmentStatusID,
 		st.StatusName,
-		s.ContributorCode,
-		s.ContributorSegmentID,
 		s.SequenceOrder,
 		i.PrimaryTitleID AS TitleID,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
+		scs.Contributors AS ContributorName,
 		s.SegmentGenreID,
 		g.GenreName,
 		s.Title,
@@ -58,15 +56,16 @@ SELECT	s.SegmentID,
 		scs.Authors
 FROM	dbo.Segment s 
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
+		INNER JOIN dbo.SegmentInstitution si ON s.SegmentID = si.SegmentID
+		INNER JOIN dbo.InstitutionRole r ON si.InstitutionRoleID = r.InstitutionRoleID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)  -- New, Published
 AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT NULL)
-AND		s.ContributorCode = @InstitutionCode
+AND		r.InstitutionRoleName = 'Contributor'
+AND		si.InstitutionCode = @InstitutionCode
 AND		s.SortTitle NOT LIKE @StartsWith + '%'
 
 END
-

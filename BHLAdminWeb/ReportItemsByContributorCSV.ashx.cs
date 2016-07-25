@@ -39,9 +39,9 @@ namespace MOBOT.BHL.AdminWeb
                 csvString.Append("\"" + institution.InstitutionName + "\",");
                 csvString.Append("\"" + item.ItemID.ToString() + "\",");
                 csvString.Append("\"" + item.BarCode + "\",");
-                csvString.Append("\"" + item.TitleName.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + item.Volume.Replace('"', '\'') + "\",");
-                csvString.Append("\"" + item.Year.Replace('"', '\'') + "\",");
+                csvString.Append("\"" + (item.TitleName ?? string.Empty).Replace('"', '\'') + "\",");
+                csvString.Append("\"" + (item.Volume ?? string.Empty).Replace('"', '\'') + "\",");
+                csvString.Append("\"" + (item.Year ?? string.Empty).Replace('"', '\'') + "\",");
                 csvString.Append("\"" + item.AuthorListString + "\",");
                 csvString.AppendLine("\"" + item.CreationDate + "\"");
 

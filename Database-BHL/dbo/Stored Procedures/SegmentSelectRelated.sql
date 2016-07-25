@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectRelated]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectRelated]
 
 @SegmentID INT
 
@@ -15,7 +14,6 @@ SELECT	scs2.SegmentClusterID,
 		scs2.IsPrimary, 
 		g.GenreName,
 		st.StatusName,
-		ISNULL(inst.InstitutionName, '') AS ContributorName,
 		ISNULL(l.LanguageName, '') AS LanguageName,
 		s.SegmentID,
 		s.ItemID,
@@ -41,7 +39,6 @@ FROM	dbo.SegmentClusterSegment scs1
 		INNER JOIN dbo.Segment s ON scs2.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Institution inst ON s.ContributorCode = inst.InstitutionCode
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	scs1.SegmentID = @SegmentID
@@ -52,6 +49,3 @@ ORDER BY
 		s.Title
 
 END
-
-
-

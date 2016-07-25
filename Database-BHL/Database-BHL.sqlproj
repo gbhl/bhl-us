@@ -527,7 +527,6 @@
     <None Include="dbo\Stored Procedures\InstitutionInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorSelectByNameLike.sql" />
     <None Include="dbo\Stored Procedures\ConfigurationSelectByName.sql" />
-    <None Include="dbo\Stored Procedures\ItemSelectByTitle.sql" />
     <None Include="dbo\Stored Procedures\InstitutionUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentPageSelectBySegmentID.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrSelectRandom.sql" />
@@ -998,7 +997,6 @@
     <None Include="Data\dbo.MarcImportError.Table.sql" />
     <None Include="Data\dbo.MarcImportStatus.Table.sql" />
     <None Include="Data\dbo.MarcSubField.Table.sql" />
-    <None Include="Data\dbo.MonthlyStats.Table.sql" />
     <None Include="Data\dbo.Name.Table.sql" />
     <None Include="Data\dbo.NamebankEOL.Table.sql" />
     <None Include="Data\import.ImportFileStatus.Table.sql" />
@@ -1205,5 +1203,61 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ApiStatsSelect.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\InstitutionRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\ItemInstitution.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\SegmentInstitution.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\dbo.InstitutionRole.Table.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\dbo.ItemInstitution.Table.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\dbo.SegmentInstitution.Table.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemInstitutionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemInstitutionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemInstitutionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemInstitutionUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentInstitutionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentInstitutionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentInstitutionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\SegmentInstitutionUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionRoleDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionRoleInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionRoleSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionRoleUpdateAuto.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\InstitutionSelectBySegmentIDAndRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\InstitutionSelectByItemIDAndRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\InstitutionSelectByTitleIDAndRole.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnContributorStringForSegment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnContributorStringForItem.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnContributorStringForTitle.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemInstitutionInsert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\SegmentInstitutionInsert.sql" />
   </ItemGroup>
 </Project>
