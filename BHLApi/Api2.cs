@@ -1193,7 +1193,8 @@ namespace MOBOT.BHL.API.BHLApi
             GetUnpublishedParts = 315,
             GetPartBibTeX = 316,
             GetPartEndNote = 317,
-            GetStats = 318
+            GetStats = 318,
+            GetInstitutions = 319
         }
 
         /// <summary>
@@ -1268,5 +1269,16 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         #endregion Stats methods
+
+        #region Institution methods
+
+        public CustomGenericList<Institution> GetInstitutions()
+        {
+            Api2DAL dal = new Api2DAL();
+            CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
+            return institutions;
+        }
+
+        #endregion Institution methods
     }
 }

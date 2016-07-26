@@ -113,6 +113,7 @@
     <Content Include="api2\docs\GetAuthorParts.xml" />
     <Content Include="api2\docs\GetAuthorTitles.xml" />
     <Content Include="api2\docs\GetCollections.xml" />
+    <Content Include="api2\docs\GetInstitutions.xml" />
     <Content Include="api2\docs\GetItemByIdentifier.xml" />
     <Content Include="api2\docs\GetItemMetadata.xml" />
     <Content Include="api2\docs\GetItemPages.xml" />

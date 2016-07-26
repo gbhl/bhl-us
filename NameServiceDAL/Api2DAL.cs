@@ -1230,6 +1230,23 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public CustomGenericList<Institution> InstitutionSelectAll(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectAll", connection, transaction))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         #endregion Institution methods
     }
 }

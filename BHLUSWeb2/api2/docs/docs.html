@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<p>Biodiversity Heritage Library<br />API v2 Documentation<br />Created: April 6, 2010<br />Revised: June 14, 2016</p>
+<p>Biodiversity Heritage Library<br />API v2 Documentation<br />Created: April 6, 2010<br />Revised: July 26, 2016</p>
 <hr />
 <p><b>*** HTTP QUERY INTERFACE ***</b></p>
 <p>The HTTP query interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting data using HTTP GET requests.</p>
@@ -168,6 +168,9 @@
 <p><i><b>GetCollections</b></i></p>
 <p>	Get a list of collections which are used to group titles and items.  A single collection may contain either titles or items, but not both.</p>
 <p>	Example - <a href="/api2/docs/GetCollections.xml" title="GetCollections">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetCollections&amp;apikey=&lt;key+value&gt;</a></p>
+<p><i><b>GetInstitutions</b></i></p>
+<p>	Get a list of institutions which have contributed to BHL in some way.  These institutions may fill roles such as contributors, rights holders, and scanning institutions.</p>
+<p>	Example - <a href="/api2/docs/GetInstitutions.xml" title="GetInstitutions">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetInstitutions&amp;apikey=&lt;key+value&gt;</a></p>
 <p><i><b>GetLanguages</b></i></p>
 <p>	Get a list of languages in which materials in BHL have been written.</p>
 <p> Example - <a href="/api2/docs/GetLanguages.xml" title="GetLanguages">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></p>
@@ -184,7 +187,7 @@
 <p><b>METHODS</b></p>
 <p>The SOAP methods that are available generally map to the methods exposed by the HTTP query interface. The methods names are listed below, and a complete description of each method can be found by browsing the information found at 
     <a href="/api2/soap.asmx" title="SOAP">http://www.biodiversitylibrary.org/api2/soap.asmx</a>.</p>
-<p>AuthorSearch<br />BookSearch<br />GetAuthorParts<br />GetAuthorTitles<br />GetCollections<br />GetItemByIdentifier<br />GetItemMetadata<br />GetItemPages<br />GetItemParts<br />GetLanguages<br />GetPageMetadata<br />GetPageNames<br />GetPageOcrText<br />GetPartBibTeX<br />GetPartByIdentifier<br />GetPartEndNote<br />GetPartMetadata<br />GetPartNames<br />GetStats<br />GetSubjectParts<br />GetSubjectTitles<br />GetTitleBibTex<br />GetTitleByIdentifier<br />GetTitleEndNote<br />GetTitleItems<br />GetTitleMetadata<br />GetUnpublishedItems<br />GetUnpublishedParts<br />GetUnpublishedTitles<br />NameCount<br />NameCountBetweenDates<br />NameGetDetailForName<br />NameGetDetailForNameBankID<br />NameList<br />NameListBetweenDates<br />NameSearch<br />PartSearch<br />SubjectSearch<br />TitleSearchSimple</p>
+<p>AuthorSearch<br />BookSearch<br />GetAuthorParts<br />GetAuthorTitles<br />GetCollections<br />GetInstitutions<br />GetItemByIdentifier<br />GetItemMetadata<br />GetItemPages<br />GetItemParts<br />GetLanguages<br />GetPageMetadata<br />GetPageNames<br />GetPageOcrText<br />GetPartBibTeX<br />GetPartByIdentifier<br />GetPartEndNote<br />GetPartMetadata<br />GetPartNames<br />GetStats<br />GetSubjectParts<br />GetSubjectTitles<br />GetTitleBibTex<br />GetTitleByIdentifier<br />GetTitleEndNote<br />GetTitleItems<br />GetTitleMetadata<br />GetUnpublishedItems<br />GetUnpublishedParts<br />GetUnpublishedTitles<br />NameCount<br />NameCountBetweenDates<br />NameGetDetailForName<br />NameGetDetailForNameBankID<br />NameList<br />NameListBetweenDates<br />NameSearch<br />PartSearch<br />SubjectSearch<br />TitleSearchSimple</p>
 <p>*** The Name* methods were a part of version 1 of the BHL API.  Their signatures and/or return values may have changed. ***<br /></p>
 <hr />
 <p><b>*** DATA ELEMENTS ***</b></p>
@@ -768,6 +771,26 @@
         <td>NA</td>
     </tr>
     <tr>
+        <td>Institution/InstitutionCode</td>
+        <td>BHL code for the institution</td>
+        <td>NA</td>
+    </tr>
+    <tr>
+        <td>Institution/InstitutionName</td>
+        <td>The name of the institution</td>
+        <td>NA</td>
+    </tr>
+    <tr>
+        <td>Institution/InstitutionUrl</td>
+        <td>URL for the institution</td>
+        <td>NA</td>
+    </tr>
+    <tr>
+        <td>Institution/BHLMember</td>
+        <td>True if the institution is a member of the BHL consortium</td>
+        <td>NA</td>
+    </tr>
+    <tr>
         <td>Collection/CanContainItems</td>
         <td>1 if the collection can contain items, 0 otherwise</td>
         <td>NA</td>
@@ -824,6 +847,8 @@
 <br />
 <hr />
 <p><b>*** RELEASE NOTES ***</b></p>
+<p>July 26, 2016 - version 2.7.1</p>
+<p><ul><li>Enhancement: Added GetInstitutions method</li></ul></p>
 <p>June 14, 2016 - version 2.7</p>
 <p><ul><li>BREAKING CHANGE: Removed the Part/ContributorID element.  Values previously located in that element now are found in the Identifiers/Identifier element.</li>
 <li>BREAKING CHANGE: Removed the Part/Contributor element.  Values previously located in that element now are found in the Part/Contributors element.</li>

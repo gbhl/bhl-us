@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
     <Compile Include="Collection.cs" />
+    <Compile Include="Institution.cs" />
     <Compile Include="Creator.cs">
       <SubType>Code</SubType>
     </Compile>

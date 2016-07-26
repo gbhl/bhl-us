@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: June 14, 2016
+Revised: July 26, 2016
 
 ----------------------------------------------------------------------------------------------------
 
@@ -364,6 +364,13 @@ GetCollections:
 
 	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetCollections&apikey=<key value>
 
+GetInstitutions:
+
+	Get a list of institutions which have contributed to BHL in some way.  These institutions may
+	fill roles such as contributors, rights holders, and scanning institutions.
+
+	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetInstitutions&apikey=<key value>
+
 GetLanguages:
 
 	Get a list of languages in which materials in BHL have been written.
@@ -401,6 +408,7 @@ BookSearch
 GetAuthorParts
 GetAuthorTitles
 GetCollections
+GetInstitutions
 GetItemByIdentifier
 GetItemMetadata
 GetItemPages
@@ -630,6 +638,11 @@ Collection/CollectionDescription
 								A description of the contents of the collection			NA
 Collection/CanContainTitles		1 if the collection can contain titles, 0 otherwise		NA
 Collection/CanContainItems		1 if the collection can contain items, 0 otherwise		NA
+Institution/InstitutionCode		BHL code for the institution							NA
+Institution/InstitutionName		The name of the institution								NA
+Institution/InstitutionUrl		URL for the institution									NA
+Institution/BHLMember			True if the institution is a member of the BHL			NA
+								consortium
 Language/LanguageCode			BHL code for the language								NA
 Language/LanguageName			The name of the language								NA
 Variant/TitleVariantTypeName	One of the following values, which identify the type	NA
@@ -651,6 +664,10 @@ PartCount						Number of Parts in BHL									NA
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+July 26, 2016 - version 2.7.1
+
+- Enhancement: Added GetInstitutions method
 
 June 14, 2016 - version 2.7
 

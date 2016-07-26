@@ -373,6 +373,15 @@ namespace MOBOT.BHL.Web2.api2
                     serviceResponse.Result = this.GetStats(key);
                     response = serviceResponse.Serialize(outputType);
                 }
+
+                // ------- Institution operations -------
+
+                if (String.Compare(operation, "GetInstitutions", true) == 0)
+                {
+                    ServiceResponse<CustomGenericList<Institution>> serviceResponse = new ServiceResponse<CustomGenericList<Institution>>();
+                    serviceResponse.Result = this.GetInstitutions(key);
+                    response = serviceResponse.Serialize(outputType);
+                }
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -700,6 +709,13 @@ namespace MOBOT.BHL.Web2.api2
             ValidateUser(Api2.APIRequestType.GetStats, apiKey, string.Empty);
             Api2 api = new Api2();
             return api.GetStats();
+        }
+
+        private CustomGenericList<Institution> GetInstitutions(string apiKey)
+        {
+            ValidateUser(Api2.APIRequestType.GetInstitutions, apiKey, string.Empty);
+            Api2 api = new Api2();
+            return api.GetInstitutions();
         }
 
         #endregion API Methods

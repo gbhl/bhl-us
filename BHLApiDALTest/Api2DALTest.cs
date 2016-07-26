@@ -892,5 +892,16 @@ namespace BHLApiDALTest
             Assert.IsTrue(actual.PageCount > 0);
             Assert.IsTrue(actual.PartCount > 0);
         }
+
+        [TestMethod]
+        public void InstitutionSelectAll()
+        {
+            Api2DAL target = new Api2DAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            CustomGenericList<Institution> actual = target.InstitutionSelectAll(sqlConnection, sqlTransaction);
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual.Count > 0);
+        }
     }
 }

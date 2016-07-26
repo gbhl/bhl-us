@@ -639,5 +639,25 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         #endregion Stats methods
+
+        #region Institution methods
+
+        [WebMethod]
+        public CustomGenericList<Institution> GetInstitutions(string apiKey)
+        {
+            try
+            {
+                string args = string.Empty;
+                ValidateUser(Api2.APIRequestType.GetInstitutions, apiKey, args);
+                return (new Api2().GetInstitutions());
+            }
+            catch (Exception ex)
+            {
+                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
+            }
+        }
+
+        #endregion Institution methods
+
     }
 }
