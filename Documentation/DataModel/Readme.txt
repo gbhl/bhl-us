@@ -1,5 +1,5 @@
-Open ModelSphere (http://modelsphere.org/) was used to create the data diagrams, and 
-Microsoft Excel was used to create the data dictionary.
+SQL Power Architect (http://www.sqlpower.ca/page/architect) was used to create the data diagrams, 
+and Microsoft Excel was used to create the data dictionary.
 
 List of files:
 
@@ -9,12 +9,8 @@ BHLDataDictionary.pdf
 BHLDataDictionary.xlsx 
   Details of all tables and columns in the BHL database, including descriptions, in Excel format.
 
-BHLDataModel.jpg
-  Image of the data model for the BHL database, exported from Open Modelsphere.
+BHLDataModel.pdf
+  PDF of the data model for the BHL database, exported from SQL Power Architect.
 
-BHLDataModel.sms
-  Open Modelsphere data file for the BHL database diagram.
-
-
-
-
+BHLDataModel.html
+  HTML representation of the data model for the BHL database, exported from SQL Power Architect.
