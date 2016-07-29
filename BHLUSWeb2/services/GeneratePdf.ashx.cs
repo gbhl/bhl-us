@@ -22,41 +22,45 @@ namespace MOBOT.BHL.Web2.services
 
         public void ProcessRequest(HttpContext context)
         {
-            int itemId = int.Parse(context.Request["itemId"]);
-            List<int> pageIds = context.Request["pages"].Split(',').Select(x => int.Parse(x)).ToList();
-            string email = context.Request["email"];
-            string title = context.Request["title"];
-            string authors = context.Request["authors"];
-            string subjects = context.Request["subjects"];
-            bool imagesOnly = context.Request["imagesOnly"] != null;
-
-            bool isSuccess = false;
-
-            BHLProvider bhlProvider = new BHLProvider();
-
-            PDF pdf = null;
-
-            try
+            int parsedId;
+            if (int.TryParse(context.Request["itemId"], out parsedId))
             {
-                if (pageIds.Count > 0 && !string.IsNullOrWhiteSpace(email) &&
-                    (string.IsNullOrWhiteSpace(title + authors + subjects) || (!string.IsNullOrWhiteSpace(title))))
+                int itemId = int.Parse(context.Request["itemId"]);
+                List<int> pageIds = context.Request["pages"].Split(',').Select(x => int.Parse(x)).ToList();
+                string email = context.Request["email"];
+                string title = context.Request["title"];
+                string authors = context.Request["authors"];
+                string subjects = context.Request["subjects"];
+                bool imagesOnly = context.Request["imagesOnly"] != null;
+
+                bool isSuccess = false;
+
+                BHLProvider bhlProvider = new BHLProvider();
+
+                PDF pdf = null;
+
+                try
                 {
-                    pdf = bhlProvider.AddNewPdf(itemId, email, string.Empty, imagesOnly, title, authors, subjects, pageIds);
-                    isSuccess = SendEmail(email, pdf.PdfID);
+                    if (pageIds.Count > 0 && !string.IsNullOrWhiteSpace(email) &&
+                        (string.IsNullOrWhiteSpace(title + authors + subjects) || (!string.IsNullOrWhiteSpace(title))))
+                    {
+                        pdf = bhlProvider.AddNewPdf(itemId, email, string.Empty, imagesOnly, title, authors, subjects, pageIds);
+                        isSuccess = SendEmail(email, pdf.PdfID);
+                    }
                 }
+                catch (Exception ex)
+                {
+                    ExceptionUtility.LogException(ex, "GeneratePdf.ProcessRequest");
+                }
+
+                context.Response.ContentType = "application/json";
+
+                JsonTextWriter writer = new JsonTextWriter(context.Response.Output);
+                JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings());
+
+                serializer.Serialize(writer, new { isSuccess, pdfId = (pdf != null) ? pdf.PdfID : 0 });
+                writer.Flush();
             }
-            catch (Exception ex)
-            {
-                ExceptionUtility.LogException(ex, "GeneratePdf.ProcessRequest");
-            }
-
-            context.Response.ContentType = "application/json";
-
-            JsonTextWriter writer = new JsonTextWriter(context.Response.Output);
-            JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings());
-
-            serializer.Serialize(writer, new { isSuccess, pdfId = (pdf != null) ? pdf.PdfID : 0 });
-            writer.Flush();
         }
 
         private bool SendEmail(string toEmail, int pdfId)

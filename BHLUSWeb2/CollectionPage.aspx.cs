@@ -38,8 +38,10 @@ namespace MOBOT.BHL.Web2
             int collectionID;
             // Parse CollectionId - may be "nice" name
 
-            CustomDataAccess.CustomGenericList<MOBOT.BHL.DataObjects.Collection> collections =
-            new MOBOT.BHL.Server.BHLProvider().CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
+            CustomDataAccess.CustomGenericList<MOBOT.BHL.DataObjects.Collection> collections = null;
+            collections = (string.IsNullOrWhiteSpace((string)RouteData.Values["collectionid"])) ?
+                new CustomGenericList<DataObjects.Collection>() :
+                provider.CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
 
             if (collections.Count > 0)
             {
@@ -47,7 +49,6 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-
                 if (!int.TryParse((string)RouteData.Values["collectionid"], out collectionID))
                 {
                     Response.Redirect("~/collectionnotfound");
@@ -127,6 +128,10 @@ namespace MOBOT.BHL.Web2
                     BookBrowse.Data = list;
                     BookBrowse.DataBind();
                 }
+            }
+            else
+            {
+                Response.Redirect("~/collectionnotfound");
             }
         }
 

@@ -20,14 +20,15 @@ namespace MOBOT.BHL.Web2.Services
             string response = String.Empty;
 
             string name = context.Request.QueryString["name"] as String;
-            name = name.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
             string type = context.Request.QueryString["type"] as String;
             type = string.IsNullOrEmpty(type) ? "" : type;
 
             NameSearchResult searchResult = null;
 
-            if (!string.IsNullOrEmpty(name) && (type == "c" || type == "b" || type == "e"))
+            if (!string.IsNullOrWhiteSpace(name) && (type == "c" || type == "b" || type == "e"))
             {
+                name = name.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
+
                 // Get the data to output
                 BHLProvider provider = new BHLProvider();
                 searchResult = provider.NameResolvedSearchForPagesDownload(name);

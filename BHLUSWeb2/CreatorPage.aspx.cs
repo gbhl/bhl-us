@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web2
             
             // Parse AuthorId
             int creatorId;
-            if (!int.TryParse((string)RouteData.Values["creatorid"], out creatorId)) Response.Redirect("~/authornotfound");
+            if (!int.TryParse(RouteData.Values["creatorid"] as string, out creatorId)) Response.Redirect("~/authornotfound");
 
             // Find Author
             // Author = bhlProvider.AuthorSelectAuto(creatorId);

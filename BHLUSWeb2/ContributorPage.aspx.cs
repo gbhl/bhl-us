@@ -26,7 +26,8 @@ namespace MOBOT.BHL.Web2
             sortBy = (string)RouteData.Values["sort"];
             if (string.IsNullOrWhiteSpace(sortBy)) sortBy = "";
 
-            contributor = provider.InstitutionSelectAuto(institutionCode);
+            contributor = (String.IsNullOrWhiteSpace(institutionCode)) ? null : provider.InstitutionSelectAuto(institutionCode);
+
             if (contributor != null)
             {
                 ltlContributorStats.Visible = true;
@@ -69,6 +70,10 @@ namespace MOBOT.BHL.Web2
                 segmentcount = segmentList.Count;
                 SectionBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
                 SectionBrowse.Data = segmentList;
+            }
+            else
+            {
+                Response.Redirect("~/pagenotfound");
             }
         }
 

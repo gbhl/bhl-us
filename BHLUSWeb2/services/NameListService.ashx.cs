@@ -22,7 +22,6 @@ namespace MOBOT.BHL.Web2.Services
 
             // Clean up inputs
             String name = context.Request.QueryString["name"] as String;
-            name = name.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
             String numRows = context.Request.QueryString["rows"] as String;
             String pageNum = context.Request.QueryString["page"] as String;
             String sortColumn = context.Request.QueryString["sidx"] as String;
@@ -42,9 +41,13 @@ namespace MOBOT.BHL.Web2.Services
 
             BHLProvider service = new BHLProvider();
             NameSearchResult searchResult = null;
-            
-            if (!String.IsNullOrEmpty(name)) searchResult = service.NameResolvedSearchForPages(
-                name, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
+
+            if (!String.IsNullOrWhiteSpace(name))
+            {
+                name = name.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
+                searchResult = service.NameResolvedSearchForPages(name, Convert.ToInt32(numRows), 
+                    Convert.ToInt32(pageNum), sortColumn, sortOrder);
+            }
 
             context.Response.ContentType = "text/xml";
             context.Response.Write(GetXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows)));
