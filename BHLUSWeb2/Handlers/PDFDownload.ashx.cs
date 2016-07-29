@@ -32,6 +32,42 @@ namespace MOBOT.BHL.Web2
             context.Response.ContentType = "application/pdf";
             context.Response.AddHeader("content-disposition", "filename=" + filename);
 
+            Stream stream = null;
+            try
+            {
+                stream = this.GetPdfStream(pdfPath);
+            }
+            catch (System.Net.WebException wex)
+            {
+                if (stream != null) stream.Close();
+
+                string redirect = "~/error";
+                var response = wex.Response as HttpWebResponse;
+                if (response != null)
+                {
+                    if (response.StatusCode == HttpStatusCode.NotFound) redirect = "~/pagenotfound";
+                }
+                context.Response.Redirect(redirect, true);
+            }
+
+            if (stream != null)
+            {
+                try
+                {
+                    stream.CopyTo(context.Response.OutputStream);
+                    context.Response.Flush();
+                }
+                catch
+                {
+                    context.Response.Redirect("~/error", true);
+                }
+                finally
+                {
+                    stream.Close();
+                }
+            }
+
+            /*
             // Read the PDF and write it to the output stream
             BinaryReader stream = null;
             try
@@ -72,6 +108,7 @@ namespace MOBOT.BHL.Web2
                     stream.Close();
                 }
             }
+            */
 
             context.Response.End();
         }
@@ -81,12 +118,22 @@ namespace MOBOT.BHL.Web2
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
+        /*
         private BinaryReader GetPdf(string url)
         {
             BinaryReader reader = null;
             HttpWebResponse resp = this.HttpGet(url);
             if (resp != null) reader = new BinaryReader(resp.GetResponseStream());
             return reader;
+        }
+        */
+
+        private Stream GetPdfStream(string url)
+        {
+            Stream pdf = null;
+            HttpWebResponse resp = this.HttpGet(url);
+            if (resp != null) pdf = resp.GetResponseStream();
+            return pdf;
         }
 
         private HttpWebResponse HttpGet(string url)
