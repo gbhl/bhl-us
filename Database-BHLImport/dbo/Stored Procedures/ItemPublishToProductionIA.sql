@@ -1483,26 +1483,13 @@ BEGIN TRY
 
 		SELECT @TitleItemInsert = @@ROWCOUNT
 
-		-- =======================================================================
-
-		-- Insert new iteminstitution records into the production database
-		DECLARE @ContributorRoleID int
-		SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
-
-		-- Insert ItemInstitution records for the contributors
-		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
-		SELECT	i.ItemID, tmp.InstitutionCode, @ContributorRoleID
-		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
-
-		/*
-		-- For items coming from Internet Archive (ImportSourceID = 1),
-		-- make sure the ItemSequence values are correct
-		-- Calculate the ItemSequence by ordering each title by the item volume
+		-- Make sure the auto-assigned ItemSequence values are unique.
+		-- Calculate the ItemSequence by ordering each title by the TitleItemID.
 		UPDATE	dbo.BHLTitleItem
 		SET		ItemSequence = x.Sequence
 		FROM	dbo.BHLTitleItem ti
-				INNER JOIN (SELECT	ROW_NUMBER() OVER (PARTITION BY t.TitleID 
-														ORDER BY CONVERT(BIGINT, LEFT(dbo.fnFilterString(i.Volume, '[0-9]', ''), 19))) AS Sequence, 
+				INNER JOIN (SELECT	(ROW_NUMBER() OVER (PARTITION BY t.TitleID 
+														ORDER BY ti2.TitleItemID)) + 9999 AS Sequence, 
 									i.ItemID,
 									t.TitleID
 							FROM	#tmpItem tmp INNER JOIN #tmpTitle tmpT
@@ -1514,10 +1501,21 @@ BEGIN TRY
 									INNER JOIN dbo.BHLItem i
 										ON ti2.ItemID = i.ItemID
 							WHERE	tmp.ImportSourceID = 1
+							AND		ti2.ItemSequence >= 10000
 							) x
 					ON ti.ItemID = x.ItemID
 					AND ti.TitleID = x.TitleID
-		*/
+
+		-- =======================================================================
+
+		-- Insert new iteminstitution records into the production database
+		DECLARE @ContributorRoleID int
+		SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+
+		-- Insert ItemInstitution records for the contributors
+		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
+		SELECT	i.ItemID, tmp.InstitutionCode, @ContributorRoleID
+		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
 
 		-- =======================================================================
 
