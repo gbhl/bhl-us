@@ -1,10 +1,9 @@
 ﻿
--- ItemSelectAuto PROCEDURE
--- Generated 12/18/2008 2:14:22 PM
+-- Select Procedure for dbo.Item
 -- Do not modify the contents of this procedure.
--- Select Procedure for Item
+-- Generated 8/3/2016 1:34:57 PM
 
-CREATE PROCEDURE ItemSelectAuto
+CREATE PROCEDURE [dbo].[ItemSelectAuto]
 
 @ItemID INT
 
@@ -12,8 +11,7 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
+SELECT	
 	[ItemID],
 	[ImportKey],
 	[ImportStatusID],
@@ -36,18 +34,6 @@ SELECT
 	[ItemStatusID],
 	[ScanningUser],
 	[ScanningDate],
-	[Year],
-	[IdentifierBib],
-	[ZQuery],
-	[LicenseUrl],
-	[Rights],
-	[DueDiligence],
-	[CopyrightStatus],
-	[CopyrightRegion],
-	[CopyrightComment],
-	[CopyrightEvidence],
-	[CopyrightEvidenceOperator],
-	[CopyrightEvidenceDate],
 	[PaginationCompleteUserID],
 	[PaginationCompleteDate],
 	[PaginationStatusID],
@@ -60,17 +46,30 @@ SELECT
 	[ExternalLastModifiedUser],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-
-FROM [dbo].[Item]
-
-WHERE
+	[LastModifiedDate],
+	[Year],
+	[IdentifierBib],
+	[ZQuery],
+	[LicenseUrl],
+	[Rights],
+	[DueDiligence],
+	[CopyrightStatus],
+	[CopyrightRegion],
+	[CopyrightComment],
+	[CopyrightEvidence],
+	[CopyrightEvidenceOperator],
+	[CopyrightEvidenceDate],
+	[ScanningInstitutionCode],
+	[RightsHolderCode]
+FROM	
+	[dbo].[Item]
+WHERE	
 	[ItemID] = @ItemID
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemSelectAuto. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemSelectAuto. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN

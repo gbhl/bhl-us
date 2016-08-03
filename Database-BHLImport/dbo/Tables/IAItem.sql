@@ -40,6 +40,8 @@
     [CopyrightEvidenceDate]     NVARCHAR (30)  CONSTRAINT [DF_IAItem_CopyrightEvidenceDate] DEFAULT ('') NOT NULL,
     [LocalFileFolder]           NVARCHAR (200) CONSTRAINT [DF_IAItem_LocalFileFolder] DEFAULT ('') NOT NULL,
     [NoMARCOk]                  TINYINT        CONSTRAINT [DF_IAItem_NoMARCOk] DEFAULT ((0)) NOT NULL,
+	[ScanningInstitution]		NVARCHAR(500)  CONSTRAINT [DF_IAItem_ScanningInstitution] DEFAULT '' NOT NULL,
+	[RightsHolder]				NVARCHAR(500)  CONSTRAINT [DF_IAItem_RightsHolder] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );

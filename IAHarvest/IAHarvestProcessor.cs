@@ -615,6 +615,8 @@ namespace IAHarvest
                     String copyrightEvidence = String.Empty;
                     String copyrightEvidenceOperator = String.Empty;
                     String copyrightEvidenceDate = String.Empty;
+                    String scanningInstitution = String.Empty;
+                    String rightsHolder = String.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -674,13 +676,17 @@ namespace IAHarvest
                     if (element != null) copyrightEvidenceOperator = element.InnerText;
                     element = xml.SelectSingleNode("metadata/copyright-evidence-date");
                     if (element != null) copyrightEvidenceDate = element.InnerText;
-    
+                    element = xml.SelectSingleNode("metadata/scanning-institution");
+                    if (element != null) scanningInstitution = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/rights-holder");
+                    if (element != null) rightsHolder = element.InnerText;
+
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
                         callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
                         scanDate, addedDate, externalStatus, titleID, year, identifierBib,
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
-                        copyrightEvidenceDate);
+                        copyrightEvidenceDate, scanningInstitution, rightsHolder);
 
                     // Read the set information
                     provider.IAItemSetDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -707,7 +713,7 @@ namespace IAHarvest
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
                 provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "");
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         }
 

@@ -1,19 +1,16 @@
 ﻿
--- IAItemUpdateAuto PROCEDURE
--- Generated 10/14/2011 12:13:11 PM
+-- Update Procedure for dbo.IAItem
 -- Do not modify the contents of this procedure.
--- Update Procedure for IAItem
+-- Generated 8/3/2016 12:50:45 PM
 
-CREATE PROCEDURE IAItemUpdateAuto
+CREATE PROCEDURE dbo.IAItemUpdateAuto
 
 @ItemID INT,
 @ItemStatusID INT,
-@LocalFileFolder NVARCHAR(200),
 @IAIdentifierPrefix NVARCHAR(50),
 @IAIdentifier NVARCHAR(50),
 @Sponsor NVARCHAR(100),
 @SponsorName NVARCHAR(50),
-@SponsorDate NVARCHAR(50),
 @ScanningCenter NVARCHAR(50),
 @CallNumber NVARCHAR(50),
 @ImageCount INT,
@@ -23,11 +20,19 @@ CREATE PROCEDURE IAItemUpdateAuto
 @ScanOperator NVARCHAR(100),
 @ScanDate NVARCHAR(50),
 @ExternalStatus NVARCHAR(50),
+@MARCBibID NVARCHAR(50),
+@BarCode NVARCHAR(40),
+@IADateStamp DATETIME,
+@IAAddedDate DATETIME,
+@LastOAIDataHarvestDate DATETIME,
+@LastXMLDataHarvestDate DATETIME,
+@LastProductionDate DATETIME,
+@ShortTitle NVARCHAR(255),
+@SponsorDate NVARCHAR(50),
 @TitleID NVARCHAR(50),
 @Year NVARCHAR(20),
 @IdentifierBib NVARCHAR(50),
 @ZQuery NVARCHAR(200),
-@MARCBibID NVARCHAR(50),
 @LicenseUrl NVARCHAR(MAX),
 @Rights NVARCHAR(MAX),
 @DueDiligence NVARCHAR(MAX),
@@ -37,30 +42,22 @@ CREATE PROCEDURE IAItemUpdateAuto
 @CopyrightEvidence NVARCHAR(MAX),
 @CopyrightEvidenceOperator NVARCHAR(100),
 @CopyrightEvidenceDate NVARCHAR(30),
-@ShortTitle NVARCHAR(255),
-@BarCode NVARCHAR(40),
-@IADateStamp DATETIME,
-@IAAddedDate DATETIME,
-@LastOAIDataHarvestDate DATETIME,
-@LastXMLDataHarvestDate DATETIME,
-@LastProductionDate DATETIME,
-@NoMARCOk TINYINT
+@LocalFileFolder NVARCHAR(200),
+@NoMARCOk TINYINT,
+@ScanningInstitution NVARCHAR(500),
+@RightsHolder NVARCHAR(500)
 
 AS 
 
 SET NOCOUNT ON
 
 UPDATE [dbo].[IAItem]
-
 SET
-
 	[ItemStatusID] = @ItemStatusID,
-	[LocalFileFolder] = @LocalFileFolder,
 	[IAIdentifierPrefix] = @IAIdentifierPrefix,
 	[IAIdentifier] = @IAIdentifier,
 	[Sponsor] = @Sponsor,
 	[SponsorName] = @SponsorName,
-	[SponsorDate] = @SponsorDate,
 	[ScanningCenter] = @ScanningCenter,
 	[CallNumber] = @CallNumber,
 	[ImageCount] = @ImageCount,
@@ -70,11 +67,20 @@ SET
 	[ScanOperator] = @ScanOperator,
 	[ScanDate] = @ScanDate,
 	[ExternalStatus] = @ExternalStatus,
+	[MARCBibID] = @MARCBibID,
+	[BarCode] = @BarCode,
+	[IADateStamp] = @IADateStamp,
+	[IAAddedDate] = @IAAddedDate,
+	[LastOAIDataHarvestDate] = @LastOAIDataHarvestDate,
+	[LastXMLDataHarvestDate] = @LastXMLDataHarvestDate,
+	[LastProductionDate] = @LastProductionDate,
+	[LastModifiedDate] = getdate(),
+	[ShortTitle] = @ShortTitle,
+	[SponsorDate] = @SponsorDate,
 	[TitleID] = @TitleID,
 	[Year] = @Year,
 	[IdentifierBib] = @IdentifierBib,
 	[ZQuery] = @ZQuery,
-	[MARCBibID] = @MARCBibID,
 	[LicenseUrl] = @LicenseUrl,
 	[Rights] = @Rights,
 	[DueDiligence] = @DueDiligence,
@@ -84,36 +90,27 @@ SET
 	[CopyrightEvidence] = @CopyrightEvidence,
 	[CopyrightEvidenceOperator] = @CopyrightEvidenceOperator,
 	[CopyrightEvidenceDate] = @CopyrightEvidenceDate,
-	[ShortTitle] = @ShortTitle,
-	[BarCode] = @BarCode,
-	[IADateStamp] = @IADateStamp,
-	[IAAddedDate] = @IAAddedDate,
-	[LastOAIDataHarvestDate] = @LastOAIDataHarvestDate,
-	[LastXMLDataHarvestDate] = @LastXMLDataHarvestDate,
-	[LastProductionDate] = @LastProductionDate,
+	[LocalFileFolder] = @LocalFileFolder,
 	[NoMARCOk] = @NoMARCOk,
-	[LastModifiedDate] = getdate()
-
+	[ScanningInstitution] = @ScanningInstitution,
+	[RightsHolder] = @RightsHolder
 WHERE
 	[ItemID] = @ItemID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IAItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IAItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[ItemStatusID],
-		[LocalFileFolder],
 		[IAIdentifierPrefix],
 		[IAIdentifier],
 		[Sponsor],
 		[SponsorName],
-		[SponsorDate],
 		[ScanningCenter],
 		[CallNumber],
 		[ImageCount],
@@ -123,11 +120,21 @@ ELSE BEGIN
 		[ScanOperator],
 		[ScanDate],
 		[ExternalStatus],
+		[MARCBibID],
+		[BarCode],
+		[IADateStamp],
+		[IAAddedDate],
+		[LastOAIDataHarvestDate],
+		[LastXMLDataHarvestDate],
+		[LastProductionDate],
+		[CreatedDate],
+		[LastModifiedDate],
+		[ShortTitle],
+		[SponsorDate],
 		[TitleID],
 		[Year],
 		[IdentifierBib],
 		[ZQuery],
-		[MARCBibID],
 		[LicenseUrl],
 		[Rights],
 		[DueDiligence],
@@ -137,22 +144,13 @@ ELSE BEGIN
 		[CopyrightEvidence],
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
-		[ShortTitle],
-		[BarCode],
-		[IADateStamp],
-		[IAAddedDate],
-		[LastOAIDataHarvestDate],
-		[LastXMLDataHarvestDate],
-		[LastProductionDate],
+		[LocalFileFolder],
 		[NoMARCOk],
-		[CreatedDate],
-		[LastModifiedDate]
-
+		[ScanningInstitution],
+		[RightsHolder]
 	FROM [dbo].[IAItem]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
-

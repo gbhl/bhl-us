@@ -1,10 +1,9 @@
 ﻿
--- ItemInsertAuto PROCEDURE
--- Generated 12/18/2008 2:14:22 PM
+-- Insert Procedure for dbo.Item
 -- Do not modify the contents of this procedure.
--- Insert Procedure for Item
+-- Generated 8/3/2016 1:34:57 PM
 
-CREATE PROCEDURE ItemInsertAuto
+CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ImportKey NVARCHAR(50),
@@ -28,6 +27,17 @@ CREATE PROCEDURE ItemInsertAuto
 @ItemStatusID INT,
 @ScanningUser NVARCHAR(100) = null,
 @ScanningDate DATETIME = null,
+@PaginationCompleteUserID INT = null,
+@PaginationCompleteDate DATETIME = null,
+@PaginationStatusID INT = null,
+@PaginationStatusUserID INT = null,
+@PaginationStatusDate DATETIME = null,
+@LastPageNameLookupDate DATETIME = null,
+@ExternalCreationDate DATETIME = null,
+@ExternalLastModifiedDate DATETIME = null,
+@ExternalCreationUser INT = null,
+@ExternalLastModifiedUser INT = null,
+@ProductionDate DATETIME = null,
 @Year NVARCHAR(20) = null,
 @IdentifierBib NVARCHAR(50) = null,
 @ZQuery NVARCHAR(200) = null,
@@ -40,25 +50,15 @@ CREATE PROCEDURE ItemInsertAuto
 @CopyrightEvidence NVARCHAR(MAX) = null,
 @CopyrightEvidenceOperator NVARCHAR(100) = null,
 @CopyrightEvidenceDate NVARCHAR(30) = null,
-@PaginationCompleteUserID INT = null,
-@PaginationCompleteDate DATETIME = null,
-@PaginationStatusID INT = null,
-@PaginationStatusUserID INT = null,
-@PaginationStatusDate DATETIME = null,
-@LastPageNameLookupDate DATETIME = null,
-@ExternalCreationDate DATETIME = null,
-@ExternalLastModifiedDate DATETIME = null,
-@ExternalCreationUser INT = null,
-@ExternalLastModifiedUser INT = null,
-@ProductionDate DATETIME = null
+@ScanningInstitutionCode NVARCHAR(10) = null,
+@RightsHolderCode NVARCHAR(10) = null
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[Item]
-(
-	[ImportKey],
+( 	[ImportKey],
 	[ImportStatusID],
 	[ImportSourceID],
 	[MARCBibID],
@@ -79,18 +79,6 @@ INSERT INTO [dbo].[Item]
 	[ItemStatusID],
 	[ScanningUser],
 	[ScanningDate],
-	[Year],
-	[IdentifierBib],
-	[ZQuery],
-	[LicenseUrl],
-	[Rights],
-	[DueDiligence],
-	[CopyrightStatus],
-	[CopyrightRegion],
-	[CopyrightComment],
-	[CopyrightEvidence],
-	[CopyrightEvidenceOperator],
-	[CopyrightEvidenceDate],
 	[PaginationCompleteUserID],
 	[PaginationCompleteDate],
 	[PaginationStatusID],
@@ -103,11 +91,23 @@ INSERT INTO [dbo].[Item]
 	[ExternalLastModifiedUser],
 	[ProductionDate],
 	[CreatedDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate],
+	[Year],
+	[IdentifierBib],
+	[ZQuery],
+	[LicenseUrl],
+	[Rights],
+	[DueDiligence],
+	[CopyrightStatus],
+	[CopyrightRegion],
+	[CopyrightComment],
+	[CopyrightEvidence],
+	[CopyrightEvidenceOperator],
+	[CopyrightEvidenceDate],
+	[ScanningInstitutionCode],
+	[RightsHolderCode] )
 VALUES
-(
-	@ImportKey,
+( 	@ImportKey,
 	@ImportStatusID,
 	@ImportSourceID,
 	@MARCBibID,
@@ -128,18 +128,6 @@ VALUES
 	@ItemStatusID,
 	@ScanningUser,
 	@ScanningDate,
-	@Year,
-	@IdentifierBib,
-	@ZQuery,
-	@LicenseUrl,
-	@Rights,
-	@DueDiligence,
-	@CopyrightStatus,
-	@CopyrightRegion,
-	@CopyrightComment,
-	@CopyrightEvidence,
-	@CopyrightEvidenceOperator,
-	@CopyrightEvidenceDate,
 	@PaginationCompleteUserID,
 	@PaginationCompleteDate,
 	@PaginationStatusID,
@@ -152,20 +140,32 @@ VALUES
 	@ExternalLastModifiedUser,
 	@ProductionDate,
 	getdate(),
-	getdate()
-)
+	getdate(),
+	@Year,
+	@IdentifierBib,
+	@ZQuery,
+	@LicenseUrl,
+	@Rights,
+	@DueDiligence,
+	@CopyrightStatus,
+	@CopyrightRegion,
+	@CopyrightComment,
+	@CopyrightEvidence,
+	@CopyrightEvidenceOperator,
+	@CopyrightEvidenceDate,
+	@ScanningInstitutionCode,
+	@RightsHolderCode )
 
 SET @ItemID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[ImportKey],
 		[ImportStatusID],
@@ -188,18 +188,6 @@ ELSE BEGIN
 		[ItemStatusID],
 		[ScanningUser],
 		[ScanningDate],
-		[Year],
-		[IdentifierBib],
-		[ZQuery],
-		[LicenseUrl],
-		[Rights],
-		[DueDiligence],
-		[CopyrightStatus],
-		[CopyrightRegion],
-		[CopyrightComment],
-		[CopyrightEvidence],
-		[CopyrightEvidenceOperator],
-		[CopyrightEvidenceDate],
 		[PaginationCompleteUserID],
 		[PaginationCompleteDate],
 		[PaginationStatusID],
@@ -212,13 +200,24 @@ ELSE BEGIN
 		[ExternalLastModifiedUser],
 		[ProductionDate],
 		[CreatedDate],
-		[LastModifiedDate]	
-
+		[LastModifiedDate],
+		[Year],
+		[IdentifierBib],
+		[ZQuery],
+		[LicenseUrl],
+		[Rights],
+		[DueDiligence],
+		[CopyrightStatus],
+		[CopyrightRegion],
+		[CopyrightComment],
+		[CopyrightEvidence],
+		[CopyrightEvidenceOperator],
+		[CopyrightEvidenceDate],
+		[ScanningInstitutionCode],
+		[RightsHolderCode]	
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- insert successful
 END
-

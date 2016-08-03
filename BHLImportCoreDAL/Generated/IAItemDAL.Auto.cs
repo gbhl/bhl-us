@@ -1,8 +1,8 @@
 
-// Generated 10/14/2011 12:13:11 PM
+// Generated 8/3/2016 12:50:46 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAItemDAL is based upon IAItem.
+// This partial class IAItemDAL is based upon dbo.IAItem.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAItem by primary key(s).
+		/// Select values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAItem by primary key(s).
+		/// Select values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAItem by primary key(s).
+		/// Select values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAItem by primary key(s).
+		/// Select values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,21 +128,19 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAItem.
+		/// Insert values into dbo.IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemStatusID"></param>
-		/// <param name="localFileFolder"></param>
 		/// <param name="iAIdentifierPrefix"></param>
 		/// <param name="iAIdentifier"></param>
 		/// <param name="sponsor"></param>
 		/// <param name="sponsorName"></param>
-		/// <param name="sponsorDate"></param>
 		/// <param name="scanningCenter"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="imageCount"></param>
@@ -152,11 +150,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanOperator"></param>
 		/// <param name="scanDate"></param>
 		/// <param name="externalStatus"></param>
+		/// <param name="mARCBibID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="iADateStamp"></param>
+		/// <param name="iAAddedDate"></param>
+		/// <param name="lastOAIDataHarvestDate"></param>
+		/// <param name="lastXMLDataHarvestDate"></param>
+		/// <param name="lastProductionDate"></param>
+		/// <param name="shortTitle"></param>
+		/// <param name="sponsorDate"></param>
 		/// <param name="titleID"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
-		/// <param name="mARCBibID"></param>
 		/// <param name="licenseUrl"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
@@ -166,25 +172,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="shortTitle"></param>
-		/// <param name="barCode"></param>
-		/// <param name="iADateStamp"></param>
-		/// <param name="iAAddedDate"></param>
-		/// <param name="lastOAIDataHarvestDate"></param>
-		/// <param name="lastXMLDataHarvestDate"></param>
-		/// <param name="lastProductionDate"></param>
+		/// <param name="localFileFolder"></param>
 		/// <param name="noMARCOk"></param>
+		/// <param name="scanningInstitution"></param>
+		/// <param name="rightsHolder"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemStatusID,
-			string localFileFolder,
 			string iAIdentifierPrefix,
 			string iAIdentifier,
 			string sponsor,
 			string sponsorName,
-			string sponsorDate,
 			string scanningCenter,
 			string callNumber,
 			int? imageCount,
@@ -194,11 +194,19 @@ namespace MOBOT.BHLImport.DAL
 			string scanOperator,
 			string scanDate,
 			string externalStatus,
+			string mARCBibID,
+			string barCode,
+			DateTime? iADateStamp,
+			DateTime? iAAddedDate,
+			DateTime? lastOAIDataHarvestDate,
+			DateTime? lastXMLDataHarvestDate,
+			DateTime? lastProductionDate,
+			string shortTitle,
+			string sponsorDate,
 			string titleID,
 			string year,
 			string identifierBib,
 			string zQuery,
-			string mARCBibID,
 			string licenseUrl,
 			string rights,
 			string dueDiligence,
@@ -208,31 +216,25 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			string shortTitle,
-			string barCode,
-			DateTime? iADateStamp,
-			DateTime? iAAddedDate,
-			DateTime? lastOAIDataHarvestDate,
-			DateTime? lastXMLDataHarvestDate,
-			DateTime? lastProductionDate,
-			byte noMARCOk)
+			string localFileFolder,
+			byte noMARCOk,
+			string scanningInstitution,
+			string rightsHolder)
 		{
-			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, localFileFolder, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, sponsorDate, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, titleID, year, identifierBib, zQuery, mARCBibID, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, shortTitle, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, noMARCOk );
+			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder );
 		}
 		
 		/// <summary>
-		/// Insert values into IAItem.
+		/// Insert values into dbo.IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemStatusID"></param>
-		/// <param name="localFileFolder"></param>
 		/// <param name="iAIdentifierPrefix"></param>
 		/// <param name="iAIdentifier"></param>
 		/// <param name="sponsor"></param>
 		/// <param name="sponsorName"></param>
-		/// <param name="sponsorDate"></param>
 		/// <param name="scanningCenter"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="imageCount"></param>
@@ -242,11 +244,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanOperator"></param>
 		/// <param name="scanDate"></param>
 		/// <param name="externalStatus"></param>
+		/// <param name="mARCBibID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="iADateStamp"></param>
+		/// <param name="iAAddedDate"></param>
+		/// <param name="lastOAIDataHarvestDate"></param>
+		/// <param name="lastXMLDataHarvestDate"></param>
+		/// <param name="lastProductionDate"></param>
+		/// <param name="shortTitle"></param>
+		/// <param name="sponsorDate"></param>
 		/// <param name="titleID"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
-		/// <param name="mARCBibID"></param>
 		/// <param name="licenseUrl"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
@@ -256,26 +266,20 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="shortTitle"></param>
-		/// <param name="barCode"></param>
-		/// <param name="iADateStamp"></param>
-		/// <param name="iAAddedDate"></param>
-		/// <param name="lastOAIDataHarvestDate"></param>
-		/// <param name="lastXMLDataHarvestDate"></param>
-		/// <param name="lastProductionDate"></param>
+		/// <param name="localFileFolder"></param>
 		/// <param name="noMARCOk"></param>
+		/// <param name="scanningInstitution"></param>
+		/// <param name="rightsHolder"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int itemStatusID,
-			string localFileFolder,
 			string iAIdentifierPrefix,
 			string iAIdentifier,
 			string sponsor,
 			string sponsorName,
-			string sponsorDate,
 			string scanningCenter,
 			string callNumber,
 			int? imageCount,
@@ -285,11 +289,19 @@ namespace MOBOT.BHLImport.DAL
 			string scanOperator,
 			string scanDate,
 			string externalStatus,
+			string mARCBibID,
+			string barCode,
+			DateTime? iADateStamp,
+			DateTime? iAAddedDate,
+			DateTime? lastOAIDataHarvestDate,
+			DateTime? lastXMLDataHarvestDate,
+			DateTime? lastProductionDate,
+			string shortTitle,
+			string sponsorDate,
 			string titleID,
 			string year,
 			string identifierBib,
 			string zQuery,
-			string mARCBibID,
 			string licenseUrl,
 			string rights,
 			string dueDiligence,
@@ -299,14 +311,10 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			string shortTitle,
-			string barCode,
-			DateTime? iADateStamp,
-			DateTime? iAAddedDate,
-			DateTime? lastOAIDataHarvestDate,
-			DateTime? lastXMLDataHarvestDate,
-			DateTime? lastProductionDate,
-			byte noMARCOk)
+			string localFileFolder,
+			byte noMARCOk,
+			string scanningInstitution,
+			string rightsHolder)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -314,12 +322,10 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("ItemID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
-					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
 					CustomSqlHelper.CreateInputParameter("IAIdentifierPrefix", SqlDbType.NVarChar, 50, false, iAIdentifierPrefix),
 					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iAIdentifier),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("SponsorName", SqlDbType.NVarChar, 50, true, sponsorName),
-					CustomSqlHelper.CreateInputParameter("SponsorDate", SqlDbType.NVarChar, 50, true, sponsorDate),
 					CustomSqlHelper.CreateInputParameter("ScanningCenter", SqlDbType.NVarChar, 50, false, scanningCenter),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 50, false, callNumber),
 					CustomSqlHelper.CreateInputParameter("ImageCount", SqlDbType.Int, null, true, imageCount),
@@ -329,11 +335,19 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ScanOperator", SqlDbType.NVarChar, 100, false, scanOperator),
 					CustomSqlHelper.CreateInputParameter("ScanDate", SqlDbType.NVarChar, 50, false, scanDate),
 					CustomSqlHelper.CreateInputParameter("ExternalStatus", SqlDbType.NVarChar, 50, false, externalStatus),
+					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
+					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
+					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),
+					CustomSqlHelper.CreateInputParameter("LastXMLDataHarvestDate", SqlDbType.DateTime, null, true, lastXMLDataHarvestDate),
+					CustomSqlHelper.CreateInputParameter("LastProductionDate", SqlDbType.DateTime, null, true, lastProductionDate),
+					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
+					CustomSqlHelper.CreateInputParameter("SponsorDate", SqlDbType.NVarChar, 50, true, sponsorDate),
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.NVarChar, 50, false, titleID),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, false, year),
 					CustomSqlHelper.CreateInputParameter("IdentifierBib", SqlDbType.NVarChar, 50, false, identifierBib),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, false, zQuery),
-					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 1073741823, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, false, rights),
 					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, false, dueDiligence),
@@ -343,14 +357,10 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, false, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, false, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, false, copyrightEvidenceDate),
-					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
-					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
-					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
-					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),
-					CustomSqlHelper.CreateInputParameter("LastXMLDataHarvestDate", SqlDbType.DateTime, null, true, lastXMLDataHarvestDate),
-					CustomSqlHelper.CreateInputParameter("LastProductionDate", SqlDbType.DateTime, null, true, lastProductionDate),
-					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk), 
+					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
+					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
+					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
+					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -371,7 +381,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAItem. Returns an object of type IAItem.
+		/// Insert values into dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -386,7 +396,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAItem. Returns an object of type IAItem.
+		/// Insert values into dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,12 +411,10 @@ namespace MOBOT.BHLImport.DAL
 		{
 			return IAItemInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemStatusID,
-				value.LocalFileFolder,
 				value.IAIdentifierPrefix,
 				value.IAIdentifier,
 				value.Sponsor,
 				value.SponsorName,
-				value.SponsorDate,
 				value.ScanningCenter,
 				value.CallNumber,
 				value.ImageCount,
@@ -416,11 +424,19 @@ namespace MOBOT.BHLImport.DAL
 				value.ScanOperator,
 				value.ScanDate,
 				value.ExternalStatus,
+				value.MARCBibID,
+				value.BarCode,
+				value.IADateStamp,
+				value.IAAddedDate,
+				value.LastOAIDataHarvestDate,
+				value.LastXMLDataHarvestDate,
+				value.LastProductionDate,
+				value.ShortTitle,
+				value.SponsorDate,
 				value.TitleID,
 				value.Year,
 				value.IdentifierBib,
 				value.ZQuery,
-				value.MARCBibID,
 				value.LicenseUrl,
 				value.Rights,
 				value.DueDiligence,
@@ -430,14 +446,10 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
-				value.ShortTitle,
-				value.BarCode,
-				value.IADateStamp,
-				value.IAAddedDate,
-				value.LastOAIDataHarvestDate,
-				value.LastXMLDataHarvestDate,
-				value.LastProductionDate,
-				value.NoMARCOk);
+				value.LocalFileFolder,
+				value.NoMARCOk,
+				value.ScanningInstitution,
+				value.RightsHolder);
 		}
 		
 		#endregion ===== INSERT =====
@@ -445,7 +457,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAItem by primary key(s).
+		/// Delete values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -460,7 +472,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAItem by primary key(s).
+		/// Delete values from dbo.IAItem by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -503,18 +515,16 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAItem. Returns an object of type IAItem.
+		/// Update values in dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
 		/// <param name="itemStatusID"></param>
-		/// <param name="localFileFolder"></param>
 		/// <param name="iAIdentifierPrefix"></param>
 		/// <param name="iAIdentifier"></param>
 		/// <param name="sponsor"></param>
 		/// <param name="sponsorName"></param>
-		/// <param name="sponsorDate"></param>
 		/// <param name="scanningCenter"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="imageCount"></param>
@@ -524,11 +534,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanOperator"></param>
 		/// <param name="scanDate"></param>
 		/// <param name="externalStatus"></param>
+		/// <param name="mARCBibID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="iADateStamp"></param>
+		/// <param name="iAAddedDate"></param>
+		/// <param name="lastOAIDataHarvestDate"></param>
+		/// <param name="lastXMLDataHarvestDate"></param>
+		/// <param name="lastProductionDate"></param>
+		/// <param name="shortTitle"></param>
+		/// <param name="sponsorDate"></param>
 		/// <param name="titleID"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
-		/// <param name="mARCBibID"></param>
 		/// <param name="licenseUrl"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
@@ -538,26 +556,20 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="shortTitle"></param>
-		/// <param name="barCode"></param>
-		/// <param name="iADateStamp"></param>
-		/// <param name="iAAddedDate"></param>
-		/// <param name="lastOAIDataHarvestDate"></param>
-		/// <param name="lastXMLDataHarvestDate"></param>
-		/// <param name="lastProductionDate"></param>
+		/// <param name="localFileFolder"></param>
 		/// <param name="noMARCOk"></param>
+		/// <param name="scanningInstitution"></param>
+		/// <param name="rightsHolder"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int itemID,
 			int itemStatusID,
-			string localFileFolder,
 			string iAIdentifierPrefix,
 			string iAIdentifier,
 			string sponsor,
 			string sponsorName,
-			string sponsorDate,
 			string scanningCenter,
 			string callNumber,
 			int? imageCount,
@@ -567,11 +579,19 @@ namespace MOBOT.BHLImport.DAL
 			string scanOperator,
 			string scanDate,
 			string externalStatus,
+			string mARCBibID,
+			string barCode,
+			DateTime? iADateStamp,
+			DateTime? iAAddedDate,
+			DateTime? lastOAIDataHarvestDate,
+			DateTime? lastXMLDataHarvestDate,
+			DateTime? lastProductionDate,
+			string shortTitle,
+			string sponsorDate,
 			string titleID,
 			string year,
 			string identifierBib,
 			string zQuery,
-			string mARCBibID,
 			string licenseUrl,
 			string rights,
 			string dueDiligence,
@@ -581,32 +601,26 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			string shortTitle,
-			string barCode,
-			DateTime? iADateStamp,
-			DateTime? iAAddedDate,
-			DateTime? lastOAIDataHarvestDate,
-			DateTime? lastXMLDataHarvestDate,
-			DateTime? lastProductionDate,
-			byte noMARCOk)
+			string localFileFolder,
+			byte noMARCOk,
+			string scanningInstitution,
+			string rightsHolder)
 		{
-			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, localFileFolder, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, sponsorDate, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, titleID, year, identifierBib, zQuery, mARCBibID, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, shortTitle, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, noMARCOk);
+			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder);
 		}
 		
 		/// <summary>
-		/// Update values in IAItem. Returns an object of type IAItem.
+		/// Update values in dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
 		/// <param name="itemStatusID"></param>
-		/// <param name="localFileFolder"></param>
 		/// <param name="iAIdentifierPrefix"></param>
 		/// <param name="iAIdentifier"></param>
 		/// <param name="sponsor"></param>
 		/// <param name="sponsorName"></param>
-		/// <param name="sponsorDate"></param>
 		/// <param name="scanningCenter"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="imageCount"></param>
@@ -616,11 +630,19 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanOperator"></param>
 		/// <param name="scanDate"></param>
 		/// <param name="externalStatus"></param>
+		/// <param name="mARCBibID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="iADateStamp"></param>
+		/// <param name="iAAddedDate"></param>
+		/// <param name="lastOAIDataHarvestDate"></param>
+		/// <param name="lastXMLDataHarvestDate"></param>
+		/// <param name="lastProductionDate"></param>
+		/// <param name="shortTitle"></param>
+		/// <param name="sponsorDate"></param>
 		/// <param name="titleID"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
-		/// <param name="mARCBibID"></param>
 		/// <param name="licenseUrl"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
@@ -630,14 +652,10 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="shortTitle"></param>
-		/// <param name="barCode"></param>
-		/// <param name="iADateStamp"></param>
-		/// <param name="iAAddedDate"></param>
-		/// <param name="lastOAIDataHarvestDate"></param>
-		/// <param name="lastXMLDataHarvestDate"></param>
-		/// <param name="lastProductionDate"></param>
+		/// <param name="localFileFolder"></param>
 		/// <param name="noMARCOk"></param>
+		/// <param name="scanningInstitution"></param>
+		/// <param name="rightsHolder"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -645,12 +663,10 @@ namespace MOBOT.BHLImport.DAL
 			string connectionKeyName,
 			int itemID,
 			int itemStatusID,
-			string localFileFolder,
 			string iAIdentifierPrefix,
 			string iAIdentifier,
 			string sponsor,
 			string sponsorName,
-			string sponsorDate,
 			string scanningCenter,
 			string callNumber,
 			int? imageCount,
@@ -660,11 +676,19 @@ namespace MOBOT.BHLImport.DAL
 			string scanOperator,
 			string scanDate,
 			string externalStatus,
+			string mARCBibID,
+			string barCode,
+			DateTime? iADateStamp,
+			DateTime? iAAddedDate,
+			DateTime? lastOAIDataHarvestDate,
+			DateTime? lastXMLDataHarvestDate,
+			DateTime? lastProductionDate,
+			string shortTitle,
+			string sponsorDate,
 			string titleID,
 			string year,
 			string identifierBib,
 			string zQuery,
-			string mARCBibID,
 			string licenseUrl,
 			string rights,
 			string dueDiligence,
@@ -674,14 +698,10 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			string shortTitle,
-			string barCode,
-			DateTime? iADateStamp,
-			DateTime? iAAddedDate,
-			DateTime? lastOAIDataHarvestDate,
-			DateTime? lastXMLDataHarvestDate,
-			DateTime? lastProductionDate,
-			byte noMARCOk)
+			string localFileFolder,
+			byte noMARCOk,
+			string scanningInstitution,
+			string rightsHolder)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -689,12 +709,10 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAItemUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
-					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
 					CustomSqlHelper.CreateInputParameter("IAIdentifierPrefix", SqlDbType.NVarChar, 50, false, iAIdentifierPrefix),
 					CustomSqlHelper.CreateInputParameter("IAIdentifier", SqlDbType.NVarChar, 50, false, iAIdentifier),
 					CustomSqlHelper.CreateInputParameter("Sponsor", SqlDbType.NVarChar, 100, false, sponsor),
 					CustomSqlHelper.CreateInputParameter("SponsorName", SqlDbType.NVarChar, 50, true, sponsorName),
-					CustomSqlHelper.CreateInputParameter("SponsorDate", SqlDbType.NVarChar, 50, true, sponsorDate),
 					CustomSqlHelper.CreateInputParameter("ScanningCenter", SqlDbType.NVarChar, 50, false, scanningCenter),
 					CustomSqlHelper.CreateInputParameter("CallNumber", SqlDbType.NVarChar, 50, false, callNumber),
 					CustomSqlHelper.CreateInputParameter("ImageCount", SqlDbType.Int, null, true, imageCount),
@@ -704,11 +722,19 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ScanOperator", SqlDbType.NVarChar, 100, false, scanOperator),
 					CustomSqlHelper.CreateInputParameter("ScanDate", SqlDbType.NVarChar, 50, false, scanDate),
 					CustomSqlHelper.CreateInputParameter("ExternalStatus", SqlDbType.NVarChar, 50, false, externalStatus),
+					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
+					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
+					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
+					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),
+					CustomSqlHelper.CreateInputParameter("LastXMLDataHarvestDate", SqlDbType.DateTime, null, true, lastXMLDataHarvestDate),
+					CustomSqlHelper.CreateInputParameter("LastProductionDate", SqlDbType.DateTime, null, true, lastProductionDate),
+					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
+					CustomSqlHelper.CreateInputParameter("SponsorDate", SqlDbType.NVarChar, 50, true, sponsorDate),
 					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.NVarChar, 50, false, titleID),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, false, year),
 					CustomSqlHelper.CreateInputParameter("IdentifierBib", SqlDbType.NVarChar, 50, false, identifierBib),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, false, zQuery),
-					CustomSqlHelper.CreateInputParameter("MARCBibID", SqlDbType.NVarChar, 50, false, mARCBibID),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 1073741823, false, licenseUrl),
 					CustomSqlHelper.CreateInputParameter("Rights", SqlDbType.NVarChar, 1073741823, false, rights),
 					CustomSqlHelper.CreateInputParameter("DueDiligence", SqlDbType.NVarChar, 1073741823, false, dueDiligence),
@@ -718,14 +744,10 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, false, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, false, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, false, copyrightEvidenceDate),
-					CustomSqlHelper.CreateInputParameter("ShortTitle", SqlDbType.NVarChar, 255, true, shortTitle),
-					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
-					CustomSqlHelper.CreateInputParameter("IADateStamp", SqlDbType.DateTime, null, true, iADateStamp),
-					CustomSqlHelper.CreateInputParameter("IAAddedDate", SqlDbType.DateTime, null, true, iAAddedDate),
-					CustomSqlHelper.CreateInputParameter("LastOAIDataHarvestDate", SqlDbType.DateTime, null, true, lastOAIDataHarvestDate),
-					CustomSqlHelper.CreateInputParameter("LastXMLDataHarvestDate", SqlDbType.DateTime, null, true, lastXMLDataHarvestDate),
-					CustomSqlHelper.CreateInputParameter("LastProductionDate", SqlDbType.DateTime, null, true, lastProductionDate),
-					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk), 
+					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
+					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
+					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
+					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -746,7 +768,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItem. Returns an object of type IAItem.
+		/// Update values in dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -761,7 +783,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAItem. Returns an object of type IAItem.
+		/// Update values in dbo.IAItem. Returns an object of type IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -777,12 +799,10 @@ namespace MOBOT.BHLImport.DAL
 			return IAItemUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.ItemStatusID,
-				value.LocalFileFolder,
 				value.IAIdentifierPrefix,
 				value.IAIdentifier,
 				value.Sponsor,
 				value.SponsorName,
-				value.SponsorDate,
 				value.ScanningCenter,
 				value.CallNumber,
 				value.ImageCount,
@@ -792,11 +812,19 @@ namespace MOBOT.BHLImport.DAL
 				value.ScanOperator,
 				value.ScanDate,
 				value.ExternalStatus,
+				value.MARCBibID,
+				value.BarCode,
+				value.IADateStamp,
+				value.IAAddedDate,
+				value.LastOAIDataHarvestDate,
+				value.LastXMLDataHarvestDate,
+				value.LastProductionDate,
+				value.ShortTitle,
+				value.SponsorDate,
 				value.TitleID,
 				value.Year,
 				value.IdentifierBib,
 				value.ZQuery,
-				value.MARCBibID,
 				value.LicenseUrl,
 				value.Rights,
 				value.DueDiligence,
@@ -806,14 +834,10 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
-				value.ShortTitle,
-				value.BarCode,
-				value.IADateStamp,
-				value.IAAddedDate,
-				value.LastOAIDataHarvestDate,
-				value.LastXMLDataHarvestDate,
-				value.LastProductionDate,
-				value.NoMARCOk);
+				value.LocalFileFolder,
+				value.NoMARCOk,
+				value.ScanningInstitution,
+				value.RightsHolder);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -821,9 +845,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAItem object.
+		/// Manage dbo.IAItem object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAItem.
+		/// then either insert values into, delete values from, or update values in dbo.IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -838,9 +862,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAItem object.
+		/// Manage dbo.IAItem object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAItem.
+		/// then either insert values into, delete values from, or update values in dbo.IAItem.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -859,12 +883,10 @@ namespace MOBOT.BHLImport.DAL
 				
 				IAItem returnValue = IAItemInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemStatusID,
-						value.LocalFileFolder,
 						value.IAIdentifierPrefix,
 						value.IAIdentifier,
 						value.Sponsor,
 						value.SponsorName,
-						value.SponsorDate,
 						value.ScanningCenter,
 						value.CallNumber,
 						value.ImageCount,
@@ -874,11 +896,19 @@ namespace MOBOT.BHLImport.DAL
 						value.ScanOperator,
 						value.ScanDate,
 						value.ExternalStatus,
+						value.MARCBibID,
+						value.BarCode,
+						value.IADateStamp,
+						value.IAAddedDate,
+						value.LastOAIDataHarvestDate,
+						value.LastXMLDataHarvestDate,
+						value.LastProductionDate,
+						value.ShortTitle,
+						value.SponsorDate,
 						value.TitleID,
 						value.Year,
 						value.IdentifierBib,
 						value.ZQuery,
-						value.MARCBibID,
 						value.LicenseUrl,
 						value.Rights,
 						value.DueDiligence,
@@ -888,14 +918,10 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
-						value.ShortTitle,
-						value.BarCode,
-						value.IADateStamp,
-						value.IAAddedDate,
-						value.LastOAIDataHarvestDate,
-						value.LastXMLDataHarvestDate,
-						value.LastProductionDate,
-						value.NoMARCOk);
+						value.LocalFileFolder,
+						value.NoMARCOk,
+						value.ScanningInstitution,
+						value.RightsHolder);
 				
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Insert, 
@@ -923,12 +949,10 @@ namespace MOBOT.BHLImport.DAL
 				IAItem returnValue = IAItemUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.ItemStatusID,
-						value.LocalFileFolder,
 						value.IAIdentifierPrefix,
 						value.IAIdentifier,
 						value.Sponsor,
 						value.SponsorName,
-						value.SponsorDate,
 						value.ScanningCenter,
 						value.CallNumber,
 						value.ImageCount,
@@ -938,11 +962,19 @@ namespace MOBOT.BHLImport.DAL
 						value.ScanOperator,
 						value.ScanDate,
 						value.ExternalStatus,
+						value.MARCBibID,
+						value.BarCode,
+						value.IADateStamp,
+						value.IAAddedDate,
+						value.LastOAIDataHarvestDate,
+						value.LastXMLDataHarvestDate,
+						value.LastProductionDate,
+						value.ShortTitle,
+						value.SponsorDate,
 						value.TitleID,
 						value.Year,
 						value.IdentifierBib,
 						value.ZQuery,
-						value.MARCBibID,
 						value.LicenseUrl,
 						value.Rights,
 						value.DueDiligence,
@@ -952,14 +984,10 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
-						value.ShortTitle,
-						value.BarCode,
-						value.IADateStamp,
-						value.IAAddedDate,
-						value.LastOAIDataHarvestDate,
-						value.LastXMLDataHarvestDate,
-						value.LastProductionDate,
-						value.NoMARCOk);
+						value.LocalFileFolder,
+						value.NoMARCOk,
+						value.ScanningInstitution,
+						value.RightsHolder);
 					
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Update, 
@@ -977,4 +1005,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

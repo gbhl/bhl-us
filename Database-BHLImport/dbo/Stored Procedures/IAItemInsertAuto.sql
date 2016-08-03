@@ -1,19 +1,16 @@
 ﻿
--- IAItemInsertAuto PROCEDURE
--- Generated 10/14/2011 12:13:11 PM
+-- Insert Procedure for dbo.IAItem
 -- Do not modify the contents of this procedure.
--- Insert Procedure for IAItem
+-- Generated 8/3/2016 12:50:45 PM
 
-CREATE PROCEDURE IAItemInsertAuto
+CREATE PROCEDURE dbo.IAItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ItemStatusID INT,
-@LocalFileFolder NVARCHAR(200),
 @IAIdentifierPrefix NVARCHAR(50),
 @IAIdentifier NVARCHAR(50),
 @Sponsor NVARCHAR(100),
 @SponsorName NVARCHAR(50) = null,
-@SponsorDate NVARCHAR(50) = null,
 @ScanningCenter NVARCHAR(50),
 @CallNumber NVARCHAR(50),
 @ImageCount INT = null,
@@ -23,11 +20,19 @@ CREATE PROCEDURE IAItemInsertAuto
 @ScanOperator NVARCHAR(100),
 @ScanDate NVARCHAR(50),
 @ExternalStatus NVARCHAR(50),
+@MARCBibID NVARCHAR(50),
+@BarCode NVARCHAR(40),
+@IADateStamp DATETIME = null,
+@IAAddedDate DATETIME = null,
+@LastOAIDataHarvestDate DATETIME = null,
+@LastXMLDataHarvestDate DATETIME = null,
+@LastProductionDate DATETIME = null,
+@ShortTitle NVARCHAR(255) = null,
+@SponsorDate NVARCHAR(50) = null,
 @TitleID NVARCHAR(50),
 @Year NVARCHAR(20),
 @IdentifierBib NVARCHAR(50),
 @ZQuery NVARCHAR(200),
-@MARCBibID NVARCHAR(50),
 @LicenseUrl NVARCHAR(MAX),
 @Rights NVARCHAR(MAX),
 @DueDiligence NVARCHAR(MAX),
@@ -37,28 +42,21 @@ CREATE PROCEDURE IAItemInsertAuto
 @CopyrightEvidence NVARCHAR(MAX),
 @CopyrightEvidenceOperator NVARCHAR(100),
 @CopyrightEvidenceDate NVARCHAR(30),
-@ShortTitle NVARCHAR(255) = null,
-@BarCode NVARCHAR(40),
-@IADateStamp DATETIME = null,
-@IAAddedDate DATETIME = null,
-@LastOAIDataHarvestDate DATETIME = null,
-@LastXMLDataHarvestDate DATETIME = null,
-@LastProductionDate DATETIME = null,
-@NoMARCOk TINYINT
+@LocalFileFolder NVARCHAR(200),
+@NoMARCOk TINYINT,
+@ScanningInstitution NVARCHAR(500),
+@RightsHolder NVARCHAR(500)
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[IAItem]
-(
-	[ItemStatusID],
-	[LocalFileFolder],
+( 	[ItemStatusID],
 	[IAIdentifierPrefix],
 	[IAIdentifier],
 	[Sponsor],
 	[SponsorName],
-	[SponsorDate],
 	[ScanningCenter],
 	[CallNumber],
 	[ImageCount],
@@ -68,11 +66,21 @@ INSERT INTO [dbo].[IAItem]
 	[ScanOperator],
 	[ScanDate],
 	[ExternalStatus],
+	[MARCBibID],
+	[BarCode],
+	[IADateStamp],
+	[IAAddedDate],
+	[LastOAIDataHarvestDate],
+	[LastXMLDataHarvestDate],
+	[LastProductionDate],
+	[CreatedDate],
+	[LastModifiedDate],
+	[ShortTitle],
+	[SponsorDate],
 	[TitleID],
 	[Year],
 	[IdentifierBib],
 	[ZQuery],
-	[MARCBibID],
 	[LicenseUrl],
 	[Rights],
 	[DueDiligence],
@@ -82,26 +90,16 @@ INSERT INTO [dbo].[IAItem]
 	[CopyrightEvidence],
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
-	[ShortTitle],
-	[BarCode],
-	[IADateStamp],
-	[IAAddedDate],
-	[LastOAIDataHarvestDate],
-	[LastXMLDataHarvestDate],
-	[LastProductionDate],
+	[LocalFileFolder],
 	[NoMARCOk],
-	[CreatedDate],
-	[LastModifiedDate]
-)
+	[ScanningInstitution],
+	[RightsHolder] )
 VALUES
-(
-	@ItemStatusID,
-	@LocalFileFolder,
+( 	@ItemStatusID,
 	@IAIdentifierPrefix,
 	@IAIdentifier,
 	@Sponsor,
 	@SponsorName,
-	@SponsorDate,
 	@ScanningCenter,
 	@CallNumber,
 	@ImageCount,
@@ -111,11 +109,21 @@ VALUES
 	@ScanOperator,
 	@ScanDate,
 	@ExternalStatus,
+	@MARCBibID,
+	@BarCode,
+	@IADateStamp,
+	@IAAddedDate,
+	@LastOAIDataHarvestDate,
+	@LastXMLDataHarvestDate,
+	@LastProductionDate,
+	getdate(),
+	getdate(),
+	@ShortTitle,
+	@SponsorDate,
 	@TitleID,
 	@Year,
 	@IdentifierBib,
 	@ZQuery,
-	@MARCBibID,
 	@LicenseUrl,
 	@Rights,
 	@DueDiligence,
@@ -125,37 +133,27 @@ VALUES
 	@CopyrightEvidence,
 	@CopyrightEvidenceOperator,
 	@CopyrightEvidenceDate,
-	@ShortTitle,
-	@BarCode,
-	@IADateStamp,
-	@IAAddedDate,
-	@LastOAIDataHarvestDate,
-	@LastXMLDataHarvestDate,
-	@LastProductionDate,
+	@LocalFileFolder,
 	@NoMARCOk,
-	getdate(),
-	getdate()
-)
+	@ScanningInstitution,
+	@RightsHolder )
 
 SET @ItemID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IAItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IAItemInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[ItemStatusID],
-		[LocalFileFolder],
 		[IAIdentifierPrefix],
 		[IAIdentifier],
 		[Sponsor],
 		[SponsorName],
-		[SponsorDate],
 		[ScanningCenter],
 		[CallNumber],
 		[ImageCount],
@@ -165,11 +163,21 @@ ELSE BEGIN
 		[ScanOperator],
 		[ScanDate],
 		[ExternalStatus],
+		[MARCBibID],
+		[BarCode],
+		[IADateStamp],
+		[IAAddedDate],
+		[LastOAIDataHarvestDate],
+		[LastXMLDataHarvestDate],
+		[LastProductionDate],
+		[CreatedDate],
+		[LastModifiedDate],
+		[ShortTitle],
+		[SponsorDate],
 		[TitleID],
 		[Year],
 		[IdentifierBib],
 		[ZQuery],
-		[MARCBibID],
 		[LicenseUrl],
 		[Rights],
 		[DueDiligence],
@@ -179,22 +187,13 @@ ELSE BEGIN
 		[CopyrightEvidence],
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
-		[ShortTitle],
-		[BarCode],
-		[IADateStamp],
-		[IAAddedDate],
-		[LastOAIDataHarvestDate],
-		[LastXMLDataHarvestDate],
-		[LastProductionDate],
+		[LocalFileFolder],
 		[NoMARCOk],
-		[CreatedDate],
-		[LastModifiedDate]	
-
+		[ScanningInstitution],
+		[RightsHolder]	
 	FROM [dbo].[IAItem]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- insert successful
 END
-

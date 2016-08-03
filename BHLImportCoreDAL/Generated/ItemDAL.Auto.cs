@@ -1,8 +1,8 @@
 
-// Generated 12/18/2008 2:14:22 PM
+// Generated 8/3/2016 1:34:57 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ItemDAL is based upon Item.
+// This partial class ItemDAL is based upon dbo.Item.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Item by primary key(s).
+		/// Select values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Item.
+		/// Insert values into dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -157,6 +157,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="itemStatusID"></param>
 		/// <param name="scanningUser"></param>
 		/// <param name="scanningDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="externalCreationUser"></param>
+		/// <param name="externalLastModifiedUser"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
@@ -169,17 +180,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="paginationCompleteUserID"></param>
-		/// <param name="paginationCompleteDate"></param>
-		/// <param name="paginationStatusID"></param>
-		/// <param name="paginationStatusUserID"></param>
-		/// <param name="paginationStatusDate"></param>
-		/// <param name="lastPageNameLookupDate"></param>
-		/// <param name="externalCreationDate"></param>
-		/// <param name="externalLastModifiedDate"></param>
-		/// <param name="externalCreationUser"></param>
-		/// <param name="externalLastModifiedUser"></param>
-		/// <param name="productionDate"></param>
+		/// <param name="scanningInstitutionCode"></param>
+		/// <param name="rightsHolderCode"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -205,6 +207,17 @@ namespace MOBOT.BHLImport.DAL
 			int itemStatusID,
 			string scanningUser,
 			DateTime? scanningDate,
+			int? paginationCompleteUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationStatusID,
+			int? paginationStatusUserID,
+			DateTime? paginationStatusDate,
+			DateTime? lastPageNameLookupDate,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			int? externalCreationUser,
+			int? externalLastModifiedUser,
+			DateTime? productionDate,
 			string year,
 			string identifierBib,
 			string zQuery,
@@ -217,23 +230,14 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			int? paginationCompleteUserID,
-			DateTime? paginationCompleteDate,
-			int? paginationStatusID,
-			int? paginationStatusUserID,
-			DateTime? paginationStatusDate,
-			DateTime? lastPageNameLookupDate,
-			DateTime? externalCreationDate,
-			DateTime? externalLastModifiedDate,
-			int? externalCreationUser,
-			int? externalLastModifiedUser,
-			DateTime? productionDate)
+			string scanningInstitutionCode,
+			string rightsHolderCode)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode );
 		}
 		
 		/// <summary>
-		/// Insert values into Item.
+		/// Insert values into dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -259,6 +263,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="itemStatusID"></param>
 		/// <param name="scanningUser"></param>
 		/// <param name="scanningDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="externalCreationUser"></param>
+		/// <param name="externalLastModifiedUser"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
@@ -271,17 +286,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="paginationCompleteUserID"></param>
-		/// <param name="paginationCompleteDate"></param>
-		/// <param name="paginationStatusID"></param>
-		/// <param name="paginationStatusUserID"></param>
-		/// <param name="paginationStatusDate"></param>
-		/// <param name="lastPageNameLookupDate"></param>
-		/// <param name="externalCreationDate"></param>
-		/// <param name="externalLastModifiedDate"></param>
-		/// <param name="externalCreationUser"></param>
-		/// <param name="externalLastModifiedUser"></param>
-		/// <param name="productionDate"></param>
+		/// <param name="scanningInstitutionCode"></param>
+		/// <param name="rightsHolderCode"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -308,6 +314,17 @@ namespace MOBOT.BHLImport.DAL
 			int itemStatusID,
 			string scanningUser,
 			DateTime? scanningDate,
+			int? paginationCompleteUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationStatusID,
+			int? paginationStatusUserID,
+			DateTime? paginationStatusDate,
+			DateTime? lastPageNameLookupDate,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			int? externalCreationUser,
+			int? externalLastModifiedUser,
+			DateTime? productionDate,
 			string year,
 			string identifierBib,
 			string zQuery,
@@ -320,17 +337,8 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			int? paginationCompleteUserID,
-			DateTime? paginationCompleteDate,
-			int? paginationStatusID,
-			int? paginationStatusUserID,
-			DateTime? paginationStatusDate,
-			DateTime? lastPageNameLookupDate,
-			DateTime? externalCreationDate,
-			DateTime? externalLastModifiedDate,
-			int? externalCreationUser,
-			int? externalLastModifiedUser,
-			DateTime? productionDate)
+			string scanningInstitutionCode,
+			string rightsHolderCode)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -358,6 +366,17 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
 					CustomSqlHelper.CreateInputParameter("ScanningUser", SqlDbType.NVarChar, 100, true, scanningUser),
 					CustomSqlHelper.CreateInputParameter("ScanningDate", SqlDbType.DateTime, null, true, scanningDate),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
+					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
+					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
+					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
+					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
+					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
 					CustomSqlHelper.CreateInputParameter("IdentifierBib", SqlDbType.NVarChar, 50, true, identifierBib),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, true, zQuery),
@@ -370,17 +389,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, true, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
-					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
-					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
-					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
-					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
-					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
-					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
-					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("ScanningInstitutionCode", SqlDbType.NVarChar, 10, true, scanningInstitutionCode),
+					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -401,7 +411,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Item. Returns an object of type Item.
+		/// Insert values into dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -416,7 +426,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into Item. Returns an object of type Item.
+		/// Insert values into dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -451,6 +461,17 @@ namespace MOBOT.BHLImport.DAL
 				value.ItemStatusID,
 				value.ScanningUser,
 				value.ScanningDate,
+				value.PaginationCompleteUserID,
+				value.PaginationCompleteDate,
+				value.PaginationStatusID,
+				value.PaginationStatusUserID,
+				value.PaginationStatusDate,
+				value.LastPageNameLookupDate,
+				value.ExternalCreationDate,
+				value.ExternalLastModifiedDate,
+				value.ExternalCreationUser,
+				value.ExternalLastModifiedUser,
+				value.ProductionDate,
 				value.Year,
 				value.IdentifierBib,
 				value.ZQuery,
@@ -463,17 +484,8 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
-				value.PaginationCompleteUserID,
-				value.PaginationCompleteDate,
-				value.PaginationStatusID,
-				value.PaginationStatusUserID,
-				value.PaginationStatusDate,
-				value.LastPageNameLookupDate,
-				value.ExternalCreationDate,
-				value.ExternalLastModifiedDate,
-				value.ExternalCreationUser,
-				value.ExternalLastModifiedUser,
-				value.ProductionDate);
+				value.ScanningInstitutionCode,
+				value.RightsHolderCode);
 		}
 		
 		#endregion ===== INSERT =====
@@ -481,7 +493,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Item by primary key(s).
+		/// Delete values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -496,7 +508,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from Item by primary key(s).
+		/// Delete values from dbo.Item by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -539,7 +551,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -565,6 +577,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="itemStatusID"></param>
 		/// <param name="scanningUser"></param>
 		/// <param name="scanningDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="externalCreationUser"></param>
+		/// <param name="externalLastModifiedUser"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
@@ -577,17 +600,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="paginationCompleteUserID"></param>
-		/// <param name="paginationCompleteDate"></param>
-		/// <param name="paginationStatusID"></param>
-		/// <param name="paginationStatusUserID"></param>
-		/// <param name="paginationStatusDate"></param>
-		/// <param name="lastPageNameLookupDate"></param>
-		/// <param name="externalCreationDate"></param>
-		/// <param name="externalLastModifiedDate"></param>
-		/// <param name="externalCreationUser"></param>
-		/// <param name="externalLastModifiedUser"></param>
-		/// <param name="productionDate"></param>
+		/// <param name="scanningInstitutionCode"></param>
+		/// <param name="rightsHolderCode"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -614,6 +628,17 @@ namespace MOBOT.BHLImport.DAL
 			int itemStatusID,
 			string scanningUser,
 			DateTime? scanningDate,
+			int? paginationCompleteUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationStatusID,
+			int? paginationStatusUserID,
+			DateTime? paginationStatusDate,
+			DateTime? lastPageNameLookupDate,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			int? externalCreationUser,
+			int? externalLastModifiedUser,
+			DateTime? productionDate,
 			string year,
 			string identifierBib,
 			string zQuery,
@@ -626,23 +651,14 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			int? paginationCompleteUserID,
-			DateTime? paginationCompleteDate,
-			int? paginationStatusID,
-			int? paginationStatusUserID,
-			DateTime? paginationStatusDate,
-			DateTime? lastPageNameLookupDate,
-			DateTime? externalCreationDate,
-			DateTime? externalLastModifiedDate,
-			int? externalCreationUser,
-			int? externalLastModifiedUser,
-			DateTime? productionDate)
+			string scanningInstitutionCode,
+			string rightsHolderCode)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode);
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -669,6 +685,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="itemStatusID"></param>
 		/// <param name="scanningUser"></param>
 		/// <param name="scanningDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="externalCreationDate"></param>
+		/// <param name="externalLastModifiedDate"></param>
+		/// <param name="externalCreationUser"></param>
+		/// <param name="externalLastModifiedUser"></param>
+		/// <param name="productionDate"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
@@ -681,17 +708,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="paginationCompleteUserID"></param>
-		/// <param name="paginationCompleteDate"></param>
-		/// <param name="paginationStatusID"></param>
-		/// <param name="paginationStatusUserID"></param>
-		/// <param name="paginationStatusDate"></param>
-		/// <param name="lastPageNameLookupDate"></param>
-		/// <param name="externalCreationDate"></param>
-		/// <param name="externalLastModifiedDate"></param>
-		/// <param name="externalCreationUser"></param>
-		/// <param name="externalLastModifiedUser"></param>
-		/// <param name="productionDate"></param>
+		/// <param name="scanningInstitutionCode"></param>
+		/// <param name="rightsHolderCode"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -719,6 +737,17 @@ namespace MOBOT.BHLImport.DAL
 			int itemStatusID,
 			string scanningUser,
 			DateTime? scanningDate,
+			int? paginationCompleteUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationStatusID,
+			int? paginationStatusUserID,
+			DateTime? paginationStatusDate,
+			DateTime? lastPageNameLookupDate,
+			DateTime? externalCreationDate,
+			DateTime? externalLastModifiedDate,
+			int? externalCreationUser,
+			int? externalLastModifiedUser,
+			DateTime? productionDate,
 			string year,
 			string identifierBib,
 			string zQuery,
@@ -731,17 +760,8 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidence,
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
-			int? paginationCompleteUserID,
-			DateTime? paginationCompleteDate,
-			int? paginationStatusID,
-			int? paginationStatusUserID,
-			DateTime? paginationStatusDate,
-			DateTime? lastPageNameLookupDate,
-			DateTime? externalCreationDate,
-			DateTime? externalLastModifiedDate,
-			int? externalCreationUser,
-			int? externalLastModifiedUser,
-			DateTime? productionDate)
+			string scanningInstitutionCode,
+			string rightsHolderCode)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -769,6 +789,17 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("ItemStatusID", SqlDbType.Int, null, false, itemStatusID),
 					CustomSqlHelper.CreateInputParameter("ScanningUser", SqlDbType.NVarChar, 100, true, scanningUser),
 					CustomSqlHelper.CreateInputParameter("ScanningDate", SqlDbType.DateTime, null, true, scanningDate),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
+					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
+					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
+					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
+					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
+					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
+					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
 					CustomSqlHelper.CreateInputParameter("IdentifierBib", SqlDbType.NVarChar, 50, true, identifierBib),
 					CustomSqlHelper.CreateInputParameter("ZQuery", SqlDbType.NVarChar, 200, true, zQuery),
@@ -781,17 +812,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, true, copyrightEvidence),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
-					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
-					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
-					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
-					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
-					CustomSqlHelper.CreateInputParameter("ExternalCreationDate", SqlDbType.DateTime, null, true, externalCreationDate),
-					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedDate", SqlDbType.DateTime, null, true, externalLastModifiedDate),
-					CustomSqlHelper.CreateInputParameter("ExternalCreationUser", SqlDbType.Int, null, true, externalCreationUser),
-					CustomSqlHelper.CreateInputParameter("ExternalLastModifiedUser", SqlDbType.Int, null, true, externalLastModifiedUser),
-					CustomSqlHelper.CreateInputParameter("ProductionDate", SqlDbType.DateTime, null, true, productionDate), 
+					CustomSqlHelper.CreateInputParameter("ScanningInstitutionCode", SqlDbType.NVarChar, 10, true, scanningInstitutionCode),
+					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -812,7 +834,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -827,7 +849,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Item. Returns an object of type Item.
+		/// Update values in dbo.Item. Returns an object of type Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -863,6 +885,17 @@ namespace MOBOT.BHLImport.DAL
 				value.ItemStatusID,
 				value.ScanningUser,
 				value.ScanningDate,
+				value.PaginationCompleteUserID,
+				value.PaginationCompleteDate,
+				value.PaginationStatusID,
+				value.PaginationStatusUserID,
+				value.PaginationStatusDate,
+				value.LastPageNameLookupDate,
+				value.ExternalCreationDate,
+				value.ExternalLastModifiedDate,
+				value.ExternalCreationUser,
+				value.ExternalLastModifiedUser,
+				value.ProductionDate,
 				value.Year,
 				value.IdentifierBib,
 				value.ZQuery,
@@ -875,17 +908,8 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidence,
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
-				value.PaginationCompleteUserID,
-				value.PaginationCompleteDate,
-				value.PaginationStatusID,
-				value.PaginationStatusUserID,
-				value.PaginationStatusDate,
-				value.LastPageNameLookupDate,
-				value.ExternalCreationDate,
-				value.ExternalLastModifiedDate,
-				value.ExternalCreationUser,
-				value.ExternalLastModifiedUser,
-				value.ProductionDate);
+				value.ScanningInstitutionCode,
+				value.RightsHolderCode);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -893,9 +917,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Item object.
+		/// Manage dbo.Item object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Item.
+		/// then either insert values into, delete values from, or update values in dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -910,9 +934,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage Item object.
+		/// Manage dbo.Item object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Item.
+		/// then either insert values into, delete values from, or update values in dbo.Item.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -951,6 +975,17 @@ namespace MOBOT.BHLImport.DAL
 						value.ItemStatusID,
 						value.ScanningUser,
 						value.ScanningDate,
+						value.PaginationCompleteUserID,
+						value.PaginationCompleteDate,
+						value.PaginationStatusID,
+						value.PaginationStatusUserID,
+						value.PaginationStatusDate,
+						value.LastPageNameLookupDate,
+						value.ExternalCreationDate,
+						value.ExternalLastModifiedDate,
+						value.ExternalCreationUser,
+						value.ExternalLastModifiedUser,
+						value.ProductionDate,
 						value.Year,
 						value.IdentifierBib,
 						value.ZQuery,
@@ -963,17 +998,8 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
-						value.PaginationCompleteUserID,
-						value.PaginationCompleteDate,
-						value.PaginationStatusID,
-						value.PaginationStatusUserID,
-						value.PaginationStatusDate,
-						value.LastPageNameLookupDate,
-						value.ExternalCreationDate,
-						value.ExternalLastModifiedDate,
-						value.ExternalCreationUser,
-						value.ExternalLastModifiedUser,
-						value.ProductionDate);
+						value.ScanningInstitutionCode,
+						value.RightsHolderCode);
 				
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Insert, 
@@ -1021,6 +1047,17 @@ namespace MOBOT.BHLImport.DAL
 						value.ItemStatusID,
 						value.ScanningUser,
 						value.ScanningDate,
+						value.PaginationCompleteUserID,
+						value.PaginationCompleteDate,
+						value.PaginationStatusID,
+						value.PaginationStatusUserID,
+						value.PaginationStatusDate,
+						value.LastPageNameLookupDate,
+						value.ExternalCreationDate,
+						value.ExternalLastModifiedDate,
+						value.ExternalCreationUser,
+						value.ExternalLastModifiedUser,
+						value.ProductionDate,
 						value.Year,
 						value.IdentifierBib,
 						value.ZQuery,
@@ -1033,17 +1070,8 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidence,
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
-						value.PaginationCompleteUserID,
-						value.PaginationCompleteDate,
-						value.PaginationStatusID,
-						value.PaginationStatusUserID,
-						value.PaginationStatusDate,
-						value.LastPageNameLookupDate,
-						value.ExternalCreationDate,
-						value.ExternalLastModifiedDate,
-						value.ExternalCreationUser,
-						value.ExternalLastModifiedUser,
-						value.ProductionDate);
+						value.ScanningInstitutionCode,
+						value.RightsHolderCode);
 					
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Update, 
@@ -1061,4 +1089,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

@@ -171,7 +171,8 @@ namespace MOBOT.BHLImport.Server
             string externalStatus, string titleID, string year, string identifierBib,
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
-            string copyrightEvidenceOperator, string copyrightEvidenceDate)
+            string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
+            string rightsHolder)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
@@ -201,6 +202,8 @@ namespace MOBOT.BHLImport.Server
                 savedItem.CopyrightEvidenceOperator = copyrightEvidenceOperator;
                 savedItem.CopyrightEvidenceDate = copyrightEvidenceDate;
                 savedItem.IAAddedDate = addedDate;
+                savedItem.ScanningInstitution = scanningInstitution;
+                savedItem.RightsHolder = rightsHolder;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else

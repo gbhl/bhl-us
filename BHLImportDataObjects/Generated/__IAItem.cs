@@ -1,7 +1,7 @@
 
-// Generated 10/14/2011 12:13:11 PM
+// Generated 8/3/2016 12:50:46 PM
 // Do not modify the contents of this code file.
-// This abstract class __IAItem is based upon IAItem.
+// This abstract class __IAItem is based upon dbo.IAItem.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IAItem : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -47,12 +47,10 @@ namespace MOBOT.BHLImport.DataObjects
 		/// </summary>
 		/// <param name="itemID"></param>
 		/// <param name="itemStatusID"></param>
-		/// <param name="localFileFolder"></param>
 		/// <param name="iAIdentifierPrefix"></param>
 		/// <param name="iAIdentifier"></param>
 		/// <param name="sponsor"></param>
 		/// <param name="sponsorName"></param>
-		/// <param name="sponsorDate"></param>
 		/// <param name="scanningCenter"></param>
 		/// <param name="callNumber"></param>
 		/// <param name="imageCount"></param>
@@ -62,11 +60,21 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="scanOperator"></param>
 		/// <param name="scanDate"></param>
 		/// <param name="externalStatus"></param>
+		/// <param name="mARCBibID"></param>
+		/// <param name="barCode"></param>
+		/// <param name="iADateStamp"></param>
+		/// <param name="iAAddedDate"></param>
+		/// <param name="lastOAIDataHarvestDate"></param>
+		/// <param name="lastXMLDataHarvestDate"></param>
+		/// <param name="lastProductionDate"></param>
+		/// <param name="createdDate"></param>
+		/// <param name="lastModifiedDate"></param>
+		/// <param name="shortTitle"></param>
+		/// <param name="sponsorDate"></param>
 		/// <param name="titleID"></param>
 		/// <param name="year"></param>
 		/// <param name="identifierBib"></param>
 		/// <param name="zQuery"></param>
-		/// <param name="mARCBibID"></param>
 		/// <param name="licenseUrl"></param>
 		/// <param name="rights"></param>
 		/// <param name="dueDiligence"></param>
@@ -76,24 +84,16 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="copyrightEvidence"></param>
 		/// <param name="copyrightEvidenceOperator"></param>
 		/// <param name="copyrightEvidenceDate"></param>
-		/// <param name="shortTitle"></param>
-		/// <param name="barCode"></param>
-		/// <param name="iADateStamp"></param>
-		/// <param name="iAAddedDate"></param>
-		/// <param name="lastOAIDataHarvestDate"></param>
-		/// <param name="lastXMLDataHarvestDate"></param>
-		/// <param name="lastProductionDate"></param>
+		/// <param name="localFileFolder"></param>
 		/// <param name="noMARCOk"></param>
-		/// <param name="createdDate"></param>
-		/// <param name="lastModifiedDate"></param>
+		/// <param name="scanningInstitution"></param>
+		/// <param name="rightsHolder"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
-			string localFileFolder, 
 			string iAIdentifierPrefix, 
 			string iAIdentifier, 
 			string sponsor, 
 			string sponsorName, 
-			string sponsorDate, 
 			string scanningCenter, 
 			string callNumber, 
 			int? imageCount, 
@@ -103,11 +103,21 @@ namespace MOBOT.BHLImport.DataObjects
 			string scanOperator, 
 			string scanDate, 
 			string externalStatus, 
+			string mARCBibID, 
+			string barCode, 
+			DateTime? iADateStamp, 
+			DateTime? iAAddedDate, 
+			DateTime? lastOAIDataHarvestDate, 
+			DateTime? lastXMLDataHarvestDate, 
+			DateTime? lastProductionDate, 
+			DateTime createdDate, 
+			DateTime lastModifiedDate, 
+			string shortTitle, 
+			string sponsorDate, 
 			string titleID, 
 			string year, 
 			string identifierBib, 
 			string zQuery, 
-			string mARCBibID, 
 			string licenseUrl, 
 			string rights, 
 			string dueDiligence, 
@@ -117,25 +127,17 @@ namespace MOBOT.BHLImport.DataObjects
 			string copyrightEvidence, 
 			string copyrightEvidenceOperator, 
 			string copyrightEvidenceDate, 
-			string shortTitle, 
-			string barCode, 
-			DateTime? iADateStamp, 
-			DateTime? iAAddedDate, 
-			DateTime? lastOAIDataHarvestDate, 
-			DateTime? lastXMLDataHarvestDate, 
-			DateTime? lastProductionDate, 
+			string localFileFolder, 
 			byte noMARCOk, 
-			DateTime createdDate, 
-			DateTime lastModifiedDate) : this()
+			string scanningInstitution, 
+			string rightsHolder) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
-			LocalFileFolder = localFileFolder;
 			IAIdentifierPrefix = iAIdentifierPrefix;
 			IAIdentifier = iAIdentifier;
 			Sponsor = sponsor;
 			SponsorName = sponsorName;
-			SponsorDate = sponsorDate;
 			ScanningCenter = scanningCenter;
 			CallNumber = callNumber;
 			ImageCount = imageCount;
@@ -145,11 +147,21 @@ namespace MOBOT.BHLImport.DataObjects
 			ScanOperator = scanOperator;
 			ScanDate = scanDate;
 			ExternalStatus = externalStatus;
+			MARCBibID = mARCBibID;
+			BarCode = barCode;
+			IADateStamp = iADateStamp;
+			IAAddedDate = iAAddedDate;
+			LastOAIDataHarvestDate = lastOAIDataHarvestDate;
+			LastXMLDataHarvestDate = lastXMLDataHarvestDate;
+			LastProductionDate = lastProductionDate;
+			CreatedDate = createdDate;
+			LastModifiedDate = lastModifiedDate;
+			ShortTitle = shortTitle;
+			SponsorDate = sponsorDate;
 			TitleID = titleID;
 			Year = year;
 			IdentifierBib = identifierBib;
 			ZQuery = zQuery;
-			MARCBibID = mARCBibID;
 			LicenseUrl = licenseUrl;
 			Rights = rights;
 			DueDiligence = dueDiligence;
@@ -159,16 +171,10 @@ namespace MOBOT.BHLImport.DataObjects
 			CopyrightEvidence = copyrightEvidence;
 			CopyrightEvidenceOperator = copyrightEvidenceOperator;
 			CopyrightEvidenceDate = copyrightEvidenceDate;
-			ShortTitle = shortTitle;
-			BarCode = barCode;
-			IADateStamp = iADateStamp;
-			IAAddedDate = iAAddedDate;
-			LastOAIDataHarvestDate = lastOAIDataHarvestDate;
-			LastXMLDataHarvestDate = lastXMLDataHarvestDate;
-			LastProductionDate = lastProductionDate;
+			LocalFileFolder = localFileFolder;
 			NoMARCOk = noMARCOk;
-			CreatedDate = createdDate;
-			LastModifiedDate = lastModifiedDate;
+			ScanningInstitution = scanningInstitution;
+			RightsHolder = rightsHolder;
 		}
 		
 		#endregion Constructors
@@ -205,11 +211,6 @@ namespace MOBOT.BHLImport.DataObjects
 						_ItemStatusID = (int)column.Value;
 						break;
 					}
-					case "LocalFileFolder" :
-					{
-						_LocalFileFolder = (string)column.Value;
-						break;
-					}
 					case "IAIdentifierPrefix" :
 					{
 						_IAIdentifierPrefix = (string)column.Value;
@@ -228,11 +229,6 @@ namespace MOBOT.BHLImport.DataObjects
 					case "SponsorName" :
 					{
 						_SponsorName = (string)column.Value;
-						break;
-					}
-					case "SponsorDate" :
-					{
-						_SponsorDate = (string)column.Value;
 						break;
 					}
 					case "ScanningCenter" :
@@ -280,6 +276,61 @@ namespace MOBOT.BHLImport.DataObjects
 						_ExternalStatus = (string)column.Value;
 						break;
 					}
+					case "MARCBibID" :
+					{
+						_MARCBibID = (string)column.Value;
+						break;
+					}
+					case "BarCode" :
+					{
+						_BarCode = (string)column.Value;
+						break;
+					}
+					case "IADateStamp" :
+					{
+						_IADateStamp = (DateTime?)column.Value;
+						break;
+					}
+					case "IAAddedDate" :
+					{
+						_IAAddedDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastOAIDataHarvestDate" :
+					{
+						_LastOAIDataHarvestDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastXMLDataHarvestDate" :
+					{
+						_LastXMLDataHarvestDate = (DateTime?)column.Value;
+						break;
+					}
+					case "LastProductionDate" :
+					{
+						_LastProductionDate = (DateTime?)column.Value;
+						break;
+					}
+					case "CreatedDate" :
+					{
+						_CreatedDate = (DateTime)column.Value;
+						break;
+					}
+					case "LastModifiedDate" :
+					{
+						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
+					case "ShortTitle" :
+					{
+						_ShortTitle = (string)column.Value;
+						break;
+					}
+					case "SponsorDate" :
+					{
+						_SponsorDate = (string)column.Value;
+						break;
+					}
 					case "TitleID" :
 					{
 						_TitleID = (string)column.Value;
@@ -298,11 +349,6 @@ namespace MOBOT.BHLImport.DataObjects
 					case "ZQuery" :
 					{
 						_ZQuery = (string)column.Value;
-						break;
-					}
-					case "MARCBibID" :
-					{
-						_MARCBibID = (string)column.Value;
 						break;
 					}
 					case "LicenseUrl" :
@@ -350,39 +396,9 @@ namespace MOBOT.BHLImport.DataObjects
 						_CopyrightEvidenceDate = (string)column.Value;
 						break;
 					}
-					case "ShortTitle" :
+					case "LocalFileFolder" :
 					{
-						_ShortTitle = (string)column.Value;
-						break;
-					}
-					case "BarCode" :
-					{
-						_BarCode = (string)column.Value;
-						break;
-					}
-					case "IADateStamp" :
-					{
-						_IADateStamp = (DateTime?)column.Value;
-						break;
-					}
-					case "IAAddedDate" :
-					{
-						_IAAddedDate = (DateTime?)column.Value;
-						break;
-					}
-					case "LastOAIDataHarvestDate" :
-					{
-						_LastOAIDataHarvestDate = (DateTime?)column.Value;
-						break;
-					}
-					case "LastXMLDataHarvestDate" :
-					{
-						_LastXMLDataHarvestDate = (DateTime?)column.Value;
-						break;
-					}
-					case "LastProductionDate" :
-					{
-						_LastProductionDate = (DateTime?)column.Value;
+						_LocalFileFolder = (string)column.Value;
 						break;
 					}
 					case "NoMARCOk" :
@@ -390,17 +406,17 @@ namespace MOBOT.BHLImport.DataObjects
 						_NoMARCOk = (byte)column.Value;
 						break;
 					}
-					case "CreatedDate" :
+					case "ScanningInstitution" :
 					{
-						_CreatedDate = (DateTime)column.Value;
+						_ScanningInstitution = (string)column.Value;
 						break;
 					}
-					case "LastModifiedDate" :
+					case "RightsHolder" :
 					{
-						_LastModifiedDate = (DateTime)column.Value;
+						_RightsHolder = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -408,7 +424,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ItemID
 		
@@ -465,34 +481,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion ItemStatusID
 		
-		#region LocalFileFolder
-		
-		private string _LocalFileFolder = string.Empty;
-		
-		/// <summary>
-		/// Column: LocalFileFolder;
-		/// DBMS data type: nvarchar(200);
-		/// </summary>
-		[ColumnDefinition("LocalFileFolder", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
-		public string LocalFileFolder
-		{
-			get
-			{
-				return _LocalFileFolder;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 200);
-				if (_LocalFileFolder != value)
-				{
-					_LocalFileFolder = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LocalFileFolder
-		
 		#region IAIdentifierPrefix
 		
 		private string _IAIdentifierPrefix = string.Empty;
@@ -501,7 +489,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IAIdentifierPrefix;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("IAIdentifierPrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=50)]
+		[ColumnDefinition("IAIdentifierPrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
 		public string IAIdentifierPrefix
 		{
 			get
@@ -529,7 +517,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IAIdentifier;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("IAIdentifier", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=50)]
+		[ColumnDefinition("IAIdentifier", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=50)]
 		public string IAIdentifier
 		{
 			get
@@ -557,7 +545,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Sponsor;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("Sponsor", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=100)]
+		[ColumnDefinition("Sponsor", DbTargetType=SqlDbType.NVarChar, Ordinal=5, CharacterMaxLength=100)]
 		public string Sponsor
 		{
 			get
@@ -585,7 +573,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: SponsorName;
 		/// DBMS data type: nvarchar(50); Nullable;
 		/// </summary>
-		[ColumnDefinition("SponsorName", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=50, IsNullable=true)]
+		[ColumnDefinition("SponsorName", DbTargetType=SqlDbType.NVarChar, Ordinal=6, CharacterMaxLength=50, IsNullable=true)]
 		public string SponsorName
 		{
 			get
@@ -605,34 +593,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion SponsorName
 		
-		#region SponsorDate
-		
-		private string _SponsorDate = null;
-		
-		/// <summary>
-		/// Column: SponsorDate;
-		/// DBMS data type: nvarchar(50); Nullable;
-		/// </summary>
-		[ColumnDefinition("SponsorDate", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=50, IsNullable=true)]
-		public string SponsorDate
-		{
-			get
-			{
-				return _SponsorDate;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 50);
-				if (_SponsorDate != value)
-				{
-					_SponsorDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion SponsorDate
-		
 		#region ScanningCenter
 		
 		private string _ScanningCenter = string.Empty;
@@ -641,7 +601,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ScanningCenter;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("ScanningCenter", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=50)]
+		[ColumnDefinition("ScanningCenter", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=50)]
 		public string ScanningCenter
 		{
 			get
@@ -669,7 +629,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CallNumber;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=50)]
+		[ColumnDefinition("CallNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=50)]
 		public string CallNumber
 		{
 			get
@@ -697,7 +657,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ImageCount;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("ImageCount", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("ImageCount", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
 		public int? ImageCount
 		{
 			get
@@ -724,7 +684,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IdentifierAccessUrl;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("IdentifierAccessUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("IdentifierAccessUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=100, IsNullable=true)]
 		public string IdentifierAccessUrl
 		{
 			get
@@ -752,7 +712,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Volume;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=50)]
+		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=50)]
 		public string Volume
 		{
 			get
@@ -780,7 +740,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255);
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=255)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=255)]
 		public string Note
 		{
 			get
@@ -808,7 +768,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ScanOperator;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("ScanOperator", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=100)]
+		[ColumnDefinition("ScanOperator", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=100)]
 		public string ScanOperator
 		{
 			get
@@ -836,7 +796,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ScanDate;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("ScanDate", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=50)]
+		[ColumnDefinition("ScanDate", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=50)]
 		public string ScanDate
 		{
 			get
@@ -864,7 +824,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ExternalStatus;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("ExternalStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=50)]
+		[ColumnDefinition("ExternalStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=50)]
 		public string ExternalStatus
 		{
 			get
@@ -884,118 +844,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion ExternalStatus
 		
-		#region TitleID
-		
-		private string _TitleID = string.Empty;
-		
-		/// <summary>
-		/// Column: TitleID;
-		/// DBMS data type: nvarchar(50);
-		/// </summary>
-		[ColumnDefinition("TitleID", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=50)]
-		public string TitleID
-		{
-			get
-			{
-				return _TitleID;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 50);
-				if (_TitleID != value)
-				{
-					_TitleID = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion TitleID
-		
-		#region Year
-		
-		private string _Year = string.Empty;
-		
-		/// <summary>
-		/// Column: Year;
-		/// DBMS data type: nvarchar(20);
-		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=20)]
-		public string Year
-		{
-			get
-			{
-				return _Year;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 20);
-				if (_Year != value)
-				{
-					_Year = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Year
-		
-		#region IdentifierBib
-		
-		private string _IdentifierBib = string.Empty;
-		
-		/// <summary>
-		/// Column: IdentifierBib;
-		/// DBMS data type: nvarchar(50);
-		/// </summary>
-		[ColumnDefinition("IdentifierBib", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=50)]
-		public string IdentifierBib
-		{
-			get
-			{
-				return _IdentifierBib;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 50);
-				if (_IdentifierBib != value)
-				{
-					_IdentifierBib = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion IdentifierBib
-		
-		#region ZQuery
-		
-		private string _ZQuery = string.Empty;
-		
-		/// <summary>
-		/// Column: ZQuery;
-		/// DBMS data type: nvarchar(200);
-		/// </summary>
-		[ColumnDefinition("ZQuery", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=200)]
-		public string ZQuery
-		{
-			get
-			{
-				return _ZQuery;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 200);
-				if (_ZQuery != value)
-				{
-					_ZQuery = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ZQuery
-		
 		#region MARCBibID
 		
 		private string _MARCBibID = string.Empty;
@@ -1004,7 +852,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: MARCBibID;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("MARCBibID", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=50)]
+		[ColumnDefinition("MARCBibID", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=50)]
 		public string MARCBibID
 		{
 			get
@@ -1024,286 +872,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion MARCBibID
 		
-		#region LicenseUrl
-		
-		private string _LicenseUrl = string.Empty;
-		
-		/// <summary>
-		/// Column: LicenseUrl;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("LicenseUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=23, CharacterMaxLength=1073741823)]
-		public string LicenseUrl
-		{
-			get
-			{
-				return _LicenseUrl;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_LicenseUrl != value)
-				{
-					_LicenseUrl = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion LicenseUrl
-		
-		#region Rights
-		
-		private string _Rights = string.Empty;
-		
-		/// <summary>
-		/// Column: Rights;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("Rights", DbTargetType=SqlDbType.NVarChar, Ordinal=24, CharacterMaxLength=1073741823)]
-		public string Rights
-		{
-			get
-			{
-				return _Rights;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_Rights != value)
-				{
-					_Rights = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion Rights
-		
-		#region DueDiligence
-		
-		private string _DueDiligence = string.Empty;
-		
-		/// <summary>
-		/// Column: DueDiligence;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("DueDiligence", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=1073741823)]
-		public string DueDiligence
-		{
-			get
-			{
-				return _DueDiligence;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_DueDiligence != value)
-				{
-					_DueDiligence = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion DueDiligence
-		
-		#region PossibleCopyrightStatus
-		
-		private string _PossibleCopyrightStatus = string.Empty;
-		
-		/// <summary>
-		/// Column: PossibleCopyrightStatus;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("PossibleCopyrightStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=1073741823)]
-		public string PossibleCopyrightStatus
-		{
-			get
-			{
-				return _PossibleCopyrightStatus;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_PossibleCopyrightStatus != value)
-				{
-					_PossibleCopyrightStatus = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion PossibleCopyrightStatus
-		
-		#region CopyrightRegion
-		
-		private string _CopyrightRegion = string.Empty;
-		
-		/// <summary>
-		/// Column: CopyrightRegion;
-		/// DBMS data type: nvarchar(50);
-		/// </summary>
-		[ColumnDefinition("CopyrightRegion", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=50)]
-		public string CopyrightRegion
-		{
-			get
-			{
-				return _CopyrightRegion;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 50);
-				if (_CopyrightRegion != value)
-				{
-					_CopyrightRegion = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CopyrightRegion
-		
-		#region CopyrightComment
-		
-		private string _CopyrightComment = string.Empty;
-		
-		/// <summary>
-		/// Column: CopyrightComment;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("CopyrightComment", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=1073741823)]
-		public string CopyrightComment
-		{
-			get
-			{
-				return _CopyrightComment;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_CopyrightComment != value)
-				{
-					_CopyrightComment = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CopyrightComment
-		
-		#region CopyrightEvidence
-		
-		private string _CopyrightEvidence = string.Empty;
-		
-		/// <summary>
-		/// Column: CopyrightEvidence;
-		/// DBMS data type: nvarchar(MAX);
-		/// </summary>
-		[ColumnDefinition("CopyrightEvidence", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=1073741823)]
-		public string CopyrightEvidence
-		{
-			get
-			{
-				return _CopyrightEvidence;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 1073741823);
-				if (_CopyrightEvidence != value)
-				{
-					_CopyrightEvidence = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CopyrightEvidence
-		
-		#region CopyrightEvidenceOperator
-		
-		private string _CopyrightEvidenceOperator = string.Empty;
-		
-		/// <summary>
-		/// Column: CopyrightEvidenceOperator;
-		/// DBMS data type: nvarchar(100);
-		/// </summary>
-		[ColumnDefinition("CopyrightEvidenceOperator", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100)]
-		public string CopyrightEvidenceOperator
-		{
-			get
-			{
-				return _CopyrightEvidenceOperator;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 100);
-				if (_CopyrightEvidenceOperator != value)
-				{
-					_CopyrightEvidenceOperator = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CopyrightEvidenceOperator
-		
-		#region CopyrightEvidenceDate
-		
-		private string _CopyrightEvidenceDate = string.Empty;
-		
-		/// <summary>
-		/// Column: CopyrightEvidenceDate;
-		/// DBMS data type: nvarchar(30);
-		/// </summary>
-		[ColumnDefinition("CopyrightEvidenceDate", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=30)]
-		public string CopyrightEvidenceDate
-		{
-			get
-			{
-				return _CopyrightEvidenceDate;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 30);
-				if (_CopyrightEvidenceDate != value)
-				{
-					_CopyrightEvidenceDate = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion CopyrightEvidenceDate
-		
-		#region ShortTitle
-		
-		private string _ShortTitle = null;
-		
-		/// <summary>
-		/// Column: ShortTitle;
-		/// DBMS data type: nvarchar(255); Nullable;
-		/// </summary>
-		[ColumnDefinition("ShortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=255, IsNullable=true)]
-		public string ShortTitle
-		{
-			get
-			{
-				return _ShortTitle;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 255);
-				if (_ShortTitle != value)
-				{
-					_ShortTitle = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ShortTitle
-		
 		#region BarCode
 		
 		private string _BarCode = string.Empty;
@@ -1312,7 +880,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: BarCode;
 		/// DBMS data type: nvarchar(40);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=33, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=40)]
 		public string BarCode
 		{
 			get
@@ -1340,7 +908,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IADateStamp;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("IADateStamp", DbTargetType=SqlDbType.DateTime, Ordinal=34, IsNullable=true)]
+		[ColumnDefinition("IADateStamp", DbTargetType=SqlDbType.DateTime, Ordinal=18, IsNullable=true)]
 		public DateTime? IADateStamp
 		{
 			get
@@ -1367,7 +935,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: IAAddedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("IAAddedDate", DbTargetType=SqlDbType.DateTime, Ordinal=35, IsNullable=true)]
+		[ColumnDefinition("IAAddedDate", DbTargetType=SqlDbType.DateTime, Ordinal=19, IsNullable=true)]
 		public DateTime? IAAddedDate
 		{
 			get
@@ -1394,7 +962,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastOAIDataHarvestDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastOAIDataHarvestDate", DbTargetType=SqlDbType.DateTime, Ordinal=36, IsNullable=true)]
+		[ColumnDefinition("LastOAIDataHarvestDate", DbTargetType=SqlDbType.DateTime, Ordinal=20, IsNullable=true)]
 		public DateTime? LastOAIDataHarvestDate
 		{
 			get
@@ -1421,7 +989,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastXMLDataHarvestDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastXMLDataHarvestDate", DbTargetType=SqlDbType.DateTime, Ordinal=37, IsNullable=true)]
+		[ColumnDefinition("LastXMLDataHarvestDate", DbTargetType=SqlDbType.DateTime, Ordinal=21, IsNullable=true)]
 		public DateTime? LastXMLDataHarvestDate
 		{
 			get
@@ -1448,7 +1016,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastProductionDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=38, IsNullable=true)]
+		[ColumnDefinition("LastProductionDate", DbTargetType=SqlDbType.DateTime, Ordinal=22, IsNullable=true)]
 		public DateTime? LastProductionDate
 		{
 			get
@@ -1467,33 +1035,6 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion LastProductionDate
 		
-		#region NoMARCOk
-		
-		private byte _NoMARCOk = default(byte);
-		
-		/// <summary>
-		/// Column: NoMARCOk;
-		/// DBMS data type: tinyint;
-		/// </summary>
-		[ColumnDefinition("NoMARCOk", DbTargetType=SqlDbType.TinyInt, Ordinal=39, NumericPrecision=3)]
-		public byte NoMARCOk
-		{
-			get
-			{
-				return _NoMARCOk;
-			}
-			set
-			{
-				if (_NoMARCOk != value)
-				{
-					_NoMARCOk = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion NoMARCOk
-		
 		#region CreatedDate
 		
 		private DateTime _CreatedDate;
@@ -1502,7 +1043,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreatedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=40)]
+		[ColumnDefinition("CreatedDate", DbTargetType=SqlDbType.DateTime, Ordinal=23)]
 		public DateTime CreatedDate
 		{
 			get
@@ -1529,7 +1070,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=41)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=24)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -1547,9 +1088,540 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region ShortTitle
+		
+		private string _ShortTitle = null;
+		
+		/// <summary>
+		/// Column: ShortTitle;
+		/// DBMS data type: nvarchar(255); Nullable;
+		/// </summary>
+		[ColumnDefinition("ShortTitle", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=255, IsNullable=true)]
+		public string ShortTitle
+		{
+			get
+			{
+				return _ShortTitle;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 255);
+				if (_ShortTitle != value)
+				{
+					_ShortTitle = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ShortTitle
+		
+		#region SponsorDate
+		
+		private string _SponsorDate = null;
+		
+		/// <summary>
+		/// Column: SponsorDate;
+		/// DBMS data type: nvarchar(50); Nullable;
+		/// </summary>
+		[ColumnDefinition("SponsorDate", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=50, IsNullable=true)]
+		public string SponsorDate
+		{
+			get
+			{
+				return _SponsorDate;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_SponsorDate != value)
+				{
+					_SponsorDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SponsorDate
+		
+		#region TitleID
+		
+		private string _TitleID = string.Empty;
+		
+		/// <summary>
+		/// Column: TitleID;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("TitleID", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=50)]
+		public string TitleID
+		{
+			get
+			{
+				return _TitleID;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_TitleID != value)
+				{
+					_TitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion TitleID
+		
+		#region Year
+		
+		private string _Year = string.Empty;
+		
+		/// <summary>
+		/// Column: Year;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=20)]
+		public string Year
+		{
+			get
+			{
+				return _Year;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_Year != value)
+				{
+					_Year = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Year
+		
+		#region IdentifierBib
+		
+		private string _IdentifierBib = string.Empty;
+		
+		/// <summary>
+		/// Column: IdentifierBib;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("IdentifierBib", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=50)]
+		public string IdentifierBib
+		{
+			get
+			{
+				return _IdentifierBib;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_IdentifierBib != value)
+				{
+					_IdentifierBib = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion IdentifierBib
+		
+		#region ZQuery
+		
+		private string _ZQuery = string.Empty;
+		
+		/// <summary>
+		/// Column: ZQuery;
+		/// DBMS data type: nvarchar(200);
+		/// </summary>
+		[ColumnDefinition("ZQuery", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=200)]
+		public string ZQuery
+		{
+			get
+			{
+				return _ZQuery;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 200);
+				if (_ZQuery != value)
+				{
+					_ZQuery = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ZQuery
+		
+		#region LicenseUrl
+		
+		private string _LicenseUrl = string.Empty;
+		
+		/// <summary>
+		/// Column: LicenseUrl;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("LicenseUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=1073741823)]
+		public string LicenseUrl
+		{
+			get
+			{
+				return _LicenseUrl;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_LicenseUrl != value)
+				{
+					_LicenseUrl = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LicenseUrl
+		
+		#region Rights
+		
+		private string _Rights = string.Empty;
+		
+		/// <summary>
+		/// Column: Rights;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("Rights", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=1073741823)]
+		public string Rights
+		{
+			get
+			{
+				return _Rights;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_Rights != value)
+				{
+					_Rights = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Rights
+		
+		#region DueDiligence
+		
+		private string _DueDiligence = string.Empty;
+		
+		/// <summary>
+		/// Column: DueDiligence;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("DueDiligence", DbTargetType=SqlDbType.NVarChar, Ordinal=33, CharacterMaxLength=1073741823)]
+		public string DueDiligence
+		{
+			get
+			{
+				return _DueDiligence;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_DueDiligence != value)
+				{
+					_DueDiligence = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion DueDiligence
+		
+		#region PossibleCopyrightStatus
+		
+		private string _PossibleCopyrightStatus = string.Empty;
+		
+		/// <summary>
+		/// Column: PossibleCopyrightStatus;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("PossibleCopyrightStatus", DbTargetType=SqlDbType.NVarChar, Ordinal=34, CharacterMaxLength=1073741823)]
+		public string PossibleCopyrightStatus
+		{
+			get
+			{
+				return _PossibleCopyrightStatus;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_PossibleCopyrightStatus != value)
+				{
+					_PossibleCopyrightStatus = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PossibleCopyrightStatus
+		
+		#region CopyrightRegion
+		
+		private string _CopyrightRegion = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightRegion;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("CopyrightRegion", DbTargetType=SqlDbType.NVarChar, Ordinal=35, CharacterMaxLength=50)]
+		public string CopyrightRegion
+		{
+			get
+			{
+				return _CopyrightRegion;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_CopyrightRegion != value)
+				{
+					_CopyrightRegion = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightRegion
+		
+		#region CopyrightComment
+		
+		private string _CopyrightComment = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightComment;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("CopyrightComment", DbTargetType=SqlDbType.NVarChar, Ordinal=36, CharacterMaxLength=1073741823)]
+		public string CopyrightComment
+		{
+			get
+			{
+				return _CopyrightComment;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_CopyrightComment != value)
+				{
+					_CopyrightComment = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightComment
+		
+		#region CopyrightEvidence
+		
+		private string _CopyrightEvidence = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightEvidence;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("CopyrightEvidence", DbTargetType=SqlDbType.NVarChar, Ordinal=37, CharacterMaxLength=1073741823)]
+		public string CopyrightEvidence
+		{
+			get
+			{
+				return _CopyrightEvidence;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_CopyrightEvidence != value)
+				{
+					_CopyrightEvidence = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightEvidence
+		
+		#region CopyrightEvidenceOperator
+		
+		private string _CopyrightEvidenceOperator = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightEvidenceOperator;
+		/// DBMS data type: nvarchar(100);
+		/// </summary>
+		[ColumnDefinition("CopyrightEvidenceOperator", DbTargetType=SqlDbType.NVarChar, Ordinal=38, CharacterMaxLength=100)]
+		public string CopyrightEvidenceOperator
+		{
+			get
+			{
+				return _CopyrightEvidenceOperator;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_CopyrightEvidenceOperator != value)
+				{
+					_CopyrightEvidenceOperator = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightEvidenceOperator
+		
+		#region CopyrightEvidenceDate
+		
+		private string _CopyrightEvidenceDate = string.Empty;
+		
+		/// <summary>
+		/// Column: CopyrightEvidenceDate;
+		/// DBMS data type: nvarchar(30);
+		/// </summary>
+		[ColumnDefinition("CopyrightEvidenceDate", DbTargetType=SqlDbType.NVarChar, Ordinal=39, CharacterMaxLength=30)]
+		public string CopyrightEvidenceDate
+		{
+			get
+			{
+				return _CopyrightEvidenceDate;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 30);
+				if (_CopyrightEvidenceDate != value)
+				{
+					_CopyrightEvidenceDate = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion CopyrightEvidenceDate
+		
+		#region LocalFileFolder
+		
+		private string _LocalFileFolder = string.Empty;
+		
+		/// <summary>
+		/// Column: LocalFileFolder;
+		/// DBMS data type: nvarchar(200);
+		/// </summary>
+		[ColumnDefinition("LocalFileFolder", DbTargetType=SqlDbType.NVarChar, Ordinal=40, CharacterMaxLength=200)]
+		public string LocalFileFolder
+		{
+			get
+			{
+				return _LocalFileFolder;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 200);
+				if (_LocalFileFolder != value)
+				{
+					_LocalFileFolder = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion LocalFileFolder
+		
+		#region NoMARCOk
+		
+		private byte _NoMARCOk = default(byte);
+		
+		/// <summary>
+		/// Column: NoMARCOk;
+		/// DBMS data type: tinyint;
+		/// </summary>
+		[ColumnDefinition("NoMARCOk", DbTargetType=SqlDbType.TinyInt, Ordinal=41, NumericPrecision=3)]
+		public byte NoMARCOk
+		{
+			get
+			{
+				return _NoMARCOk;
+			}
+			set
+			{
+				if (_NoMARCOk != value)
+				{
+					_NoMARCOk = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion NoMARCOk
+		
+		#region ScanningInstitution
+		
+		private string _ScanningInstitution = string.Empty;
+		
+		/// <summary>
+		/// Column: ScanningInstitution;
+		/// DBMS data type: nvarchar(500);
+		/// </summary>
+		[ColumnDefinition("ScanningInstitution", DbTargetType=SqlDbType.NVarChar, Ordinal=42, CharacterMaxLength=500)]
+		public string ScanningInstitution
+		{
+			get
+			{
+				return _ScanningInstitution;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_ScanningInstitution != value)
+				{
+					_ScanningInstitution = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ScanningInstitution
+		
+		#region RightsHolder
+		
+		private string _RightsHolder = string.Empty;
+		
+		/// <summary>
+		/// Column: RightsHolder;
+		/// DBMS data type: nvarchar(500);
+		/// </summary>
+		[ColumnDefinition("RightsHolder", DbTargetType=SqlDbType.NVarChar, Ordinal=43, CharacterMaxLength=500)]
+		public string RightsHolder
+		{
+			get
+			{
+				return _RightsHolder;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 500);
+				if (_RightsHolder != value)
+				{
+					_RightsHolder = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion RightsHolder
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1593,12 +1665,10 @@ namespace MOBOT.BHLImport.DataObjects
 					o.IsDeleted == IsDeleted &&
 					o.ItemID == ItemID &&
 					o.ItemStatusID == ItemStatusID &&
-					GetComparisonString(o.LocalFileFolder) == GetComparisonString(LocalFileFolder) &&
 					GetComparisonString(o.IAIdentifierPrefix) == GetComparisonString(IAIdentifierPrefix) &&
 					GetComparisonString(o.IAIdentifier) == GetComparisonString(IAIdentifier) &&
 					GetComparisonString(o.Sponsor) == GetComparisonString(Sponsor) &&
 					GetComparisonString(o.SponsorName) == GetComparisonString(SponsorName) &&
-					GetComparisonString(o.SponsorDate) == GetComparisonString(SponsorDate) &&
 					GetComparisonString(o.ScanningCenter) == GetComparisonString(ScanningCenter) &&
 					GetComparisonString(o.CallNumber) == GetComparisonString(CallNumber) &&
 					o.ImageCount == ImageCount &&
@@ -1608,11 +1678,21 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.ScanOperator) == GetComparisonString(ScanOperator) &&
 					GetComparisonString(o.ScanDate) == GetComparisonString(ScanDate) &&
 					GetComparisonString(o.ExternalStatus) == GetComparisonString(ExternalStatus) &&
+					GetComparisonString(o.MARCBibID) == GetComparisonString(MARCBibID) &&
+					GetComparisonString(o.BarCode) == GetComparisonString(BarCode) &&
+					o.IADateStamp == IADateStamp &&
+					o.IAAddedDate == IAAddedDate &&
+					o.LastOAIDataHarvestDate == LastOAIDataHarvestDate &&
+					o.LastXMLDataHarvestDate == LastXMLDataHarvestDate &&
+					o.LastProductionDate == LastProductionDate &&
+					o.CreatedDate == CreatedDate &&
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.ShortTitle) == GetComparisonString(ShortTitle) &&
+					GetComparisonString(o.SponsorDate) == GetComparisonString(SponsorDate) &&
 					GetComparisonString(o.TitleID) == GetComparisonString(TitleID) &&
 					GetComparisonString(o.Year) == GetComparisonString(Year) &&
 					GetComparisonString(o.IdentifierBib) == GetComparisonString(IdentifierBib) &&
 					GetComparisonString(o.ZQuery) == GetComparisonString(ZQuery) &&
-					GetComparisonString(o.MARCBibID) == GetComparisonString(MARCBibID) &&
 					GetComparisonString(o.LicenseUrl) == GetComparisonString(LicenseUrl) &&
 					GetComparisonString(o.Rights) == GetComparisonString(Rights) &&
 					GetComparisonString(o.DueDiligence) == GetComparisonString(DueDiligence) &&
@@ -1622,16 +1702,10 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.CopyrightEvidence) == GetComparisonString(CopyrightEvidence) &&
 					GetComparisonString(o.CopyrightEvidenceOperator) == GetComparisonString(CopyrightEvidenceOperator) &&
 					GetComparisonString(o.CopyrightEvidenceDate) == GetComparisonString(CopyrightEvidenceDate) &&
-					GetComparisonString(o.ShortTitle) == GetComparisonString(ShortTitle) &&
-					GetComparisonString(o.BarCode) == GetComparisonString(BarCode) &&
-					o.IADateStamp == IADateStamp &&
-					o.IAAddedDate == IAAddedDate &&
-					o.LastOAIDataHarvestDate == LastOAIDataHarvestDate &&
-					o.LastXMLDataHarvestDate == LastXMLDataHarvestDate &&
-					o.LastProductionDate == LastProductionDate &&
+					GetComparisonString(o.LocalFileFolder) == GetComparisonString(LocalFileFolder) &&
 					o.NoMARCOk == NoMARCOk &&
-					o.CreatedDate == CreatedDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					GetComparisonString(o.ScanningInstitution) == GetComparisonString(ScanningInstitution) &&
+					GetComparisonString(o.RightsHolder) == GetComparisonString(RightsHolder) 
 				)
 				{
 					o = null;
@@ -1734,12 +1808,10 @@ namespace MOBOT.BHLImport.DataObjects
 		{	
 			public const string ItemID = "ItemID";	
 			public const string ItemStatusID = "ItemStatusID";	
-			public const string LocalFileFolder = "LocalFileFolder";	
 			public const string IAIdentifierPrefix = "IAIdentifierPrefix";	
 			public const string IAIdentifier = "IAIdentifier";	
 			public const string Sponsor = "Sponsor";	
 			public const string SponsorName = "SponsorName";	
-			public const string SponsorDate = "SponsorDate";	
 			public const string ScanningCenter = "ScanningCenter";	
 			public const string CallNumber = "CallNumber";	
 			public const string ImageCount = "ImageCount";	
@@ -1749,11 +1821,21 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ScanOperator = "ScanOperator";	
 			public const string ScanDate = "ScanDate";	
 			public const string ExternalStatus = "ExternalStatus";	
+			public const string MARCBibID = "MARCBibID";	
+			public const string BarCode = "BarCode";	
+			public const string IADateStamp = "IADateStamp";	
+			public const string IAAddedDate = "IAAddedDate";	
+			public const string LastOAIDataHarvestDate = "LastOAIDataHarvestDate";	
+			public const string LastXMLDataHarvestDate = "LastXMLDataHarvestDate";	
+			public const string LastProductionDate = "LastProductionDate";	
+			public const string CreatedDate = "CreatedDate";	
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string ShortTitle = "ShortTitle";	
+			public const string SponsorDate = "SponsorDate";	
 			public const string TitleID = "TitleID";	
 			public const string Year = "Year";	
 			public const string IdentifierBib = "IdentifierBib";	
 			public const string ZQuery = "ZQuery";	
-			public const string MARCBibID = "MARCBibID";	
 			public const string LicenseUrl = "LicenseUrl";	
 			public const string Rights = "Rights";	
 			public const string DueDiligence = "DueDiligence";	
@@ -1763,19 +1845,14 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string CopyrightEvidence = "CopyrightEvidence";	
 			public const string CopyrightEvidenceOperator = "CopyrightEvidenceOperator";	
 			public const string CopyrightEvidenceDate = "CopyrightEvidenceDate";	
-			public const string ShortTitle = "ShortTitle";	
-			public const string BarCode = "BarCode";	
-			public const string IADateStamp = "IADateStamp";	
-			public const string IAAddedDate = "IAAddedDate";	
-			public const string LastOAIDataHarvestDate = "LastOAIDataHarvestDate";	
-			public const string LastXMLDataHarvestDate = "LastXMLDataHarvestDate";	
-			public const string LastProductionDate = "LastProductionDate";	
+			public const string LocalFileFolder = "LocalFileFolder";	
 			public const string NoMARCOk = "NoMARCOk";	
-			public const string CreatedDate = "CreatedDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string ScanningInstitution = "ScanningInstitution";	
+			public const string RightsHolder = "RightsHolder";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

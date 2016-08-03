@@ -231,6 +231,8 @@ BEGIN TRY
 		[CallNumber] [nvarchar](100) NULL,
 		[Volume] [nvarchar](100) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[InstitutionCode] [nvarchar](10) NULL,
+		[ScanningInstitutionCode] [nvarchar](10) NULL,
+		[RightsHolderCode] [nvarchar](10) NULL,
 		[LanguageCode] [nvarchar](10) NULL,
 		[Sponsor] [nvarchar](100) NULL,
 		[ItemDescription] [ntext] NULL,
@@ -740,6 +742,8 @@ BEGIN TRY
 			i.[CallNumber],
 			i.[Volume],
 			CASE WHEN i.[InstitutionCode] = '' THEN NULL ELSE i.[InstitutionCode] END,
+			i.ScanningInstitutionCode,
+			i.RightsHolderCode,
 			CASE WHEN i.[LanguageCode] = '' THEN NULL ELSE i.[LanguageCode] END,
 			i.[Sponsor],
 			i.[ItemDescription],
@@ -1510,12 +1514,27 @@ BEGIN TRY
 
 		-- Insert new iteminstitution records into the production database
 		DECLARE @ContributorRoleID int
+		DECLARE @ScanningInstitutionRoleID int
+		DEClARE @RightsHolderRoleID int
 		SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+		SELECT	@ScanningInstitutionRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Scanning Institution'
+		SELECT	@RightsHolderRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Rights Holder'
 
-		-- Insert ItemInstitution records for the contributors
+		-- Insert ItemInstitution records for each role
 		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
 		SELECT	i.ItemID, tmp.InstitutionCode, @ContributorRoleID
 		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
+		WHERE	tmp.InstitutionCode IS NOT NULL
+
+		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
+		SELECT	i.ItemID, tmp.ScanningInstitutionCode, @ScanningInstitutionRoleID
+		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
+		WHERE	tmp.ScanningInstitutionCode IS NOT NULL
+
+		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
+		SELECT	i.ItemID, tmp.RightsHolderCode, @RightsHolderRoleID
+		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
+		WHERE	tmp.RightsHolderCode IS NOT NULL
 
 		-- =======================================================================
 

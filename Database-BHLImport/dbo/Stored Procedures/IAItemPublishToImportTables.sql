@@ -252,7 +252,9 @@ BEGIN TRY
 		[CopyrightComment] [nvarchar](max) NULL,
 		[CopyrightEvidence] [nvarchar](max) NULL,
 		[CopyrightEvidenceOperator] [nvarchar](100) NULL,
-		[CopyrightEvidenceDate] [nvarchar](30) NULL
+		[CopyrightEvidenceDate] [nvarchar](30) NULL,
+		[ScanningInstitutionCode] [nvarchar](10) NULL,
+		[RightsHolderCode] [nvarchar](10) NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1379,6 +1381,36 @@ BEGIN TRY
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
+	-- Get the scanning institution code
+	UPDATE	#tmpItem
+	SET		ScanningInstitutionCode = s.InstitutionCode
+	FROM	#tmpItem t 
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemiD
+			INNER JOIN dbo.IAScanCenterInstitution s ON i.ScanningInstitution = s.ScanningCenterCode
+	
+	-- If we don't match on institution metadata, set the code to "UNKNOWN".
+	UPDATE	#tmpItem 
+	SET		ScanningInstitutionCode = 'UNKNOWN' 
+	FROM	#tmpItem t
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+	WHERE	t.ScanningInstitutionCode IS NULL
+	AND		i.ScanningInstitution <> ''
+
+	-- Get the rights holder code
+	UPDATE	#tmpItem
+	SET		RightsHolderCode = s.InstitutionCode
+	FROM	#tmpItem t 
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+			INNER JOIN dbo.IAScanCenterInstitution s ON i.RightsHolder = s.ScanningCenterCode
+	
+	-- If we don't match on institution metadata, set the code to "UNKNOWN".
+	UPDATE	#tmpItem 
+	SET		RightsHolderCode = 'UNKNOWN' 
+	FROM	#tmpItem t
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+	WHERE	t.RightsHolderCode IS NULL
+	AND		i.RightsHolder <> ''
+
 	-- Add a default Copyright Status to non-BHL contributor items
 	UPDATE	#tmpItem
 	SET		CopyrightStatus = 'Not provided. Contact Contributing Library to verify copyright status.'
@@ -1749,14 +1781,15 @@ BEGIN TRY
 			VaultID, ItemStatusID, ScanningUser, ScanningDate, [Year], IdentifierBib,
 			ZQuery, LicenseUrl, Rights, DueDiligence, CopyrightStatus, CopyrightRegion,
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
-			CopyrightEvidenceDate, ImportKey)
+			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
 				t.ScanningUser, t.ScanningDate, t.[Year], t.IdentifierBib, t.ZQuery,
 				t.LicenseUrl, t.Rights, t.DueDiligence, t.CopyrightStatus, t.CopyrightRegion,
 				t.CopyrightComment, t.CopyrightEvidence, t.CopyrightEvidenceOperator,
-				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID)
+				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID), 
+				ScanningInstitutionCode, RightsHolderCode
 		FROM	#tmpItem t
 
 		-- =======================================================================

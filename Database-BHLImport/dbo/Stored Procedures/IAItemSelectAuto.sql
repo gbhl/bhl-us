@@ -1,10 +1,9 @@
 ﻿
--- IAItemSelectAuto PROCEDURE
--- Generated 10/14/2011 12:13:11 PM
+-- Select Procedure for dbo.IAItem
 -- Do not modify the contents of this procedure.
--- Select Procedure for IAItem
+-- Generated 8/3/2016 12:50:45 PM
 
-CREATE PROCEDURE IAItemSelectAuto
+CREATE PROCEDURE [dbo].[IAItemSelectAuto]
 
 @ItemID INT
 
@@ -12,16 +11,13 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
+SELECT	
 	[ItemID],
 	[ItemStatusID],
-	[LocalFileFolder],
 	[IAIdentifierPrefix],
 	[IAIdentifier],
 	[Sponsor],
 	[SponsorName],
-	[SponsorDate],
 	[ScanningCenter],
 	[CallNumber],
 	[ImageCount],
@@ -31,11 +27,21 @@ SELECT
 	[ScanOperator],
 	[ScanDate],
 	[ExternalStatus],
+	[MARCBibID],
+	[BarCode],
+	[IADateStamp],
+	[IAAddedDate],
+	[LastOAIDataHarvestDate],
+	[LastXMLDataHarvestDate],
+	[LastProductionDate],
+	[CreatedDate],
+	[LastModifiedDate],
+	[ShortTitle],
+	[SponsorDate],
 	[TitleID],
 	[Year],
 	[IdentifierBib],
 	[ZQuery],
-	[MARCBibID],
 	[LicenseUrl],
 	[Rights],
 	[DueDiligence],
@@ -45,29 +51,21 @@ SELECT
 	[CopyrightEvidence],
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
-	[ShortTitle],
-	[BarCode],
-	[IADateStamp],
-	[IAAddedDate],
-	[LastOAIDataHarvestDate],
-	[LastXMLDataHarvestDate],
-	[LastProductionDate],
+	[LocalFileFolder],
 	[NoMARCOk],
-	[CreatedDate],
-	[LastModifiedDate]
-
-FROM [dbo].[IAItem]
-
-WHERE
+	[ScanningInstitution],
+	[RightsHolder]
+FROM	
+	[dbo].[IAItem]
+WHERE	
 	[ItemID] = @ItemID
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure IAItemSelectAuto. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.IAItemSelectAuto. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

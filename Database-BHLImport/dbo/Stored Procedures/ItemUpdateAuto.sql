@@ -1,10 +1,9 @@
 ﻿
--- ItemUpdateAuto PROCEDURE
--- Generated 12/18/2008 2:14:22 PM
+-- Update Procedure for dbo.Item
 -- Do not modify the contents of this procedure.
--- Update Procedure for Item
+-- Generated 8/3/2016 1:34:57 PM
 
-CREATE PROCEDURE ItemUpdateAuto
+CREATE PROCEDURE dbo.ItemUpdateAuto
 
 @ItemID INT,
 @ImportKey NVARCHAR(50),
@@ -28,6 +27,17 @@ CREATE PROCEDURE ItemUpdateAuto
 @ItemStatusID INT,
 @ScanningUser NVARCHAR(100),
 @ScanningDate DATETIME,
+@PaginationCompleteUserID INT,
+@PaginationCompleteDate DATETIME,
+@PaginationStatusID INT,
+@PaginationStatusUserID INT,
+@PaginationStatusDate DATETIME,
+@LastPageNameLookupDate DATETIME,
+@ExternalCreationDate DATETIME,
+@ExternalLastModifiedDate DATETIME,
+@ExternalCreationUser INT,
+@ExternalLastModifiedUser INT,
+@ProductionDate DATETIME,
 @Year NVARCHAR(20),
 @IdentifierBib NVARCHAR(50),
 @ZQuery NVARCHAR(200),
@@ -40,26 +50,15 @@ CREATE PROCEDURE ItemUpdateAuto
 @CopyrightEvidence NVARCHAR(MAX),
 @CopyrightEvidenceOperator NVARCHAR(100),
 @CopyrightEvidenceDate NVARCHAR(30),
-@PaginationCompleteUserID INT,
-@PaginationCompleteDate DATETIME,
-@PaginationStatusID INT,
-@PaginationStatusUserID INT,
-@PaginationStatusDate DATETIME,
-@LastPageNameLookupDate DATETIME,
-@ExternalCreationDate DATETIME,
-@ExternalLastModifiedDate DATETIME,
-@ExternalCreationUser INT,
-@ExternalLastModifiedUser INT,
-@ProductionDate DATETIME
+@ScanningInstitutionCode NVARCHAR(10),
+@RightsHolderCode NVARCHAR(10)
 
 AS 
 
 SET NOCOUNT ON
 
 UPDATE [dbo].[Item]
-
 SET
-
 	[ImportKey] = @ImportKey,
 	[ImportStatusID] = @ImportStatusID,
 	[ImportSourceID] = @ImportSourceID,
@@ -81,6 +80,18 @@ SET
 	[ItemStatusID] = @ItemStatusID,
 	[ScanningUser] = @ScanningUser,
 	[ScanningDate] = @ScanningDate,
+	[PaginationCompleteUserID] = @PaginationCompleteUserID,
+	[PaginationCompleteDate] = @PaginationCompleteDate,
+	[PaginationStatusID] = @PaginationStatusID,
+	[PaginationStatusUserID] = @PaginationStatusUserID,
+	[PaginationStatusDate] = @PaginationStatusDate,
+	[LastPageNameLookupDate] = @LastPageNameLookupDate,
+	[ExternalCreationDate] = @ExternalCreationDate,
+	[ExternalLastModifiedDate] = @ExternalLastModifiedDate,
+	[ExternalCreationUser] = @ExternalCreationUser,
+	[ExternalLastModifiedUser] = @ExternalLastModifiedUser,
+	[ProductionDate] = @ProductionDate,
+	[LastModifiedDate] = getdate(),
 	[Year] = @Year,
 	[IdentifierBib] = @IdentifierBib,
 	[ZQuery] = @ZQuery,
@@ -93,31 +104,19 @@ SET
 	[CopyrightEvidence] = @CopyrightEvidence,
 	[CopyrightEvidenceOperator] = @CopyrightEvidenceOperator,
 	[CopyrightEvidenceDate] = @CopyrightEvidenceDate,
-	[PaginationCompleteUserID] = @PaginationCompleteUserID,
-	[PaginationCompleteDate] = @PaginationCompleteDate,
-	[PaginationStatusID] = @PaginationStatusID,
-	[PaginationStatusUserID] = @PaginationStatusUserID,
-	[PaginationStatusDate] = @PaginationStatusDate,
-	[LastPageNameLookupDate] = @LastPageNameLookupDate,
-	[ExternalCreationDate] = @ExternalCreationDate,
-	[ExternalLastModifiedDate] = @ExternalLastModifiedDate,
-	[ExternalCreationUser] = @ExternalCreationUser,
-	[ExternalLastModifiedUser] = @ExternalLastModifiedUser,
-	[ProductionDate] = @ProductionDate,
-	[LastModifiedDate] = getdate()
-
+	[ScanningInstitutionCode] = @ScanningInstitutionCode,
+	[RightsHolderCode] = @RightsHolderCode
 WHERE
 	[ItemID] = @ItemID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.ItemUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[ItemID],
 		[ImportKey],
 		[ImportStatusID],
@@ -140,18 +139,6 @@ ELSE BEGIN
 		[ItemStatusID],
 		[ScanningUser],
 		[ScanningDate],
-		[Year],
-		[IdentifierBib],
-		[ZQuery],
-		[LicenseUrl],
-		[Rights],
-		[DueDiligence],
-		[CopyrightStatus],
-		[CopyrightRegion],
-		[CopyrightComment],
-		[CopyrightEvidence],
-		[CopyrightEvidenceOperator],
-		[CopyrightEvidenceDate],
 		[PaginationCompleteUserID],
 		[PaginationCompleteDate],
 		[PaginationStatusID],
@@ -164,13 +151,24 @@ ELSE BEGIN
 		[ExternalLastModifiedUser],
 		[ProductionDate],
 		[CreatedDate],
-		[LastModifiedDate]
-
+		[LastModifiedDate],
+		[Year],
+		[IdentifierBib],
+		[ZQuery],
+		[LicenseUrl],
+		[Rights],
+		[DueDiligence],
+		[CopyrightStatus],
+		[CopyrightRegion],
+		[CopyrightComment],
+		[CopyrightEvidence],
+		[CopyrightEvidenceOperator],
+		[CopyrightEvidenceDate],
+		[ScanningInstitutionCode],
+		[RightsHolderCode]
 	FROM [dbo].[Item]
-	
 	WHERE
 		[ItemID] = @ItemID
 	
 	RETURN -- update successful
 END
-
