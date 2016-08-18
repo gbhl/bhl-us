@@ -21,7 +21,7 @@ SELECT 	s.SegmentID,
 			WHEN 'Issue' THEN 'Serial'
 			ELSE 'Book'
 		END AS PublicationType,
-		REPLACE(scs.Authors, '|', ' ') AS Authors,
+		scs.Authors,
 		CASE 
 			WHEN s.[Date] <> '' THEN s.[Date]
 			ELSE ISNULL(i.[Year], '')
@@ -59,8 +59,3 @@ AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT
 AND		s.SegmentID = @SegmentID
 
 END
-
-
-
-
-
