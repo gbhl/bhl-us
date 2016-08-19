@@ -164,13 +164,13 @@ FROM	#tmpItem ti
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
 		INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
 		INNER JOIN dbo.Institution inst WITH (NOLOCK) ON ii.institutioncode = inst.institutioncode
+		INNER JOIN dbo.ItemSource src WITH (NOLOCK) ON i.ItemSourceID = src.ItemSourceID
 WHERE	i.ItemStatusID = 40 
 AND		inst.BHLMemberLibrary = 1
+AND		src.SourceName = 'Internet Archive'	-- we only care about items for which we can upload to IA
 AND		r.InstitutionRoleName = 'Contributor'
 
 -- Clean up
 DROP TABLE #tmpItem
 DROP TABLE #tmpAuditInfo
 END
-
-GO
