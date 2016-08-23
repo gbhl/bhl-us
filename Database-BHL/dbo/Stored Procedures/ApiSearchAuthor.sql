@@ -20,6 +20,11 @@ END
 DECLARE @SearchCondition nvarchar(4000)
 SELECT @SearchCondition = dbo.fnGetFullTextSearchString(@AuthorName)
 
+SELECT	c.CreatorID
+INTO	#tmpAuthor
+FROM	CONTAINSTABLE(SearchCatalogCreator, CreatorName, @SearchCondition) x
+		INNER JOIN SearchCatalogCreator c ON c.SearchCatalogCreatorID = x.[KEY]
+
 SELECT DISTINCT
 		a.AuthorID ,
 		n.FullName ,
@@ -37,6 +42,22 @@ FROM	CONTAINSTABLE(SearchCatalogCreator, CreatorName, @SearchCondition) x
 		INNER JOIN dbo.AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
 		INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID AND t.PublishReady = 1
 WHERE	a.IsActive = 1
+
+UNION
+
+SELECT	a.AuthorID, 
+		n.FullName, 
+		a.Numeration, 
+		a.Unit, 
+		a.Title, 
+		a.Location,
+		n.FullerForm, 
+		a.StartDate + CASE WHEN a.StartDate <> '' THEN '-' ELSE '' END + a.EndDate AS Dates
+FROM	#tmpAuthor t
+		INNER JOIN dbo.SegmentAuthor sa ON t.CreatorID = sa.AuthorID
+		INNER JOIN dbo.Segment s ON sa.SegmentID = s.SegmentID
+		INNER JOIN dbo.Author a ON sa.AuthorID = a.AuthorID
+		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+WHERE	s.SegmentStatusID IN (10, 20)
+AND		a.IsActive = 1
 ORDER BY n.FullName
-
-
