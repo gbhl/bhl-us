@@ -19,7 +19,11 @@ SELECT TOP (@ReturnCount)
 		i.Volume, 
 		ISNULL(CASE WHEN ISNULL(i.[Year], '') = '' THEN CONVERT(nvarchar(20), t.StartYear) ELSE i.[Year] END, '') AS [Year],
 		c.Authors AS CreatorTextString,
-		i.CreationDate
+		i.CreationDate,
+		i.CopyrightStatus,
+		i.Rights,
+		i.LicenseUrl,
+		i.DueDiligence
 INTO	#Item
 FROM	dbo.Item i  WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID
@@ -33,13 +37,15 @@ ORDER BY
 
 IF (@SortBy = 'Title')
 BEGIN
-	SELECT	ItemID, BarCode, TitleName, Volume, [Year], CreatorTextString, CreationDate
+	SELECT	ItemID, BarCode, TitleName, Volume, [Year], CreatorTextString, CreationDate,
+			CopyrightStatus, Rights, LicenseUrl, DueDiligence
 	FROM	#Item 
 	ORDER BY SortTitle, Volume
 END
 ELSE
 BEGIN
-	SELECT	ItemID, BarCode, TitleName, Volume, [Year], CreatorTextString, CreationDate
+	SELECT	ItemID, BarCode, TitleName, Volume, [Year], CreatorTextString, CreationDate,
+			CopyrightStatus, Rights, LicenseUrl, DueDiligence
 	FROM	#Item 
 	ORDER BY CreationDate DESC
 END

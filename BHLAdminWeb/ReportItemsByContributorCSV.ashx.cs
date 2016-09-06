@@ -28,7 +28,7 @@ namespace MOBOT.BHL.AdminWeb
 
             // Write file header
             StringBuilder csvString = new StringBuilder();
-            csvString.AppendLine("\"Contributor\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Date Added\"");
+            csvString.AppendLine("\"Contributor\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
@@ -43,6 +43,10 @@ namespace MOBOT.BHL.AdminWeb
                 csvString.Append("\"" + (item.Volume ?? string.Empty).Replace('"', '\'') + "\",");
                 csvString.Append("\"" + (item.Year ?? string.Empty).Replace('"', '\'') + "\",");
                 csvString.Append("\"" + item.AuthorListString + "\",");
+                csvString.Append("\"" + item.CopyrightStatus + "\",");
+                csvString.Append("\"" + item.Rights + "\",");
+                csvString.Append("\"" + item.LicenseUrl + "\",");
+                csvString.Append("\"" + item.DueDiligence + "\",");
                 csvString.AppendLine("\"" + item.CreationDate + "\"");
 
                 context.Response.Write(csvString.ToString());

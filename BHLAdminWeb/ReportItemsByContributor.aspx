@@ -41,17 +41,23 @@
     </p>
     <p></p>
     <asp:Literal ID="litMsg" runat="server"></asp:Literal>
+    <div style="word-break:break-word">
 	<asp:GridView ID="itemList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
-        AlternatingRowStyle-BackColor="#F7FAFB" Width="900px" CssClass="boxTable" HeaderStyle-VerticalAlign="Bottom">
+        AlternatingRowStyle-BackColor="#F7FAFB" Width="1200px" CssClass="boxTable" HeaderStyle-VerticalAlign="Bottom">
 		<Columns>
-			<asp:BoundField DataField="ItemID" HeaderText="Item ID" HeaderStyle-HorizontalAlign="Left" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" />
-			<asp:BoundField DataField="BarCode" HeaderText="IA Identifier" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" />
-			<asp:BoundField DataField="TitleName" HeaderText="Title" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" />
-			<asp:BoundField DataField="Volume" HeaderText="Volume" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" />
-			<asp:BoundField DataField="Year" HeaderText="Year" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" />
-			<asp:BoundField DataField="AuthorListString" HeaderText="Authors" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" />
-			<asp:BoundField DataField="CreationDate" HeaderText="Date Added" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" />
+			<asp:BoundField DataField="ItemID" HeaderText="Item ID" HeaderStyle-HorizontalAlign="Left" HeaderStyle-Wrap="false" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Width="10px" />
+			<asp:BoundField DataField="BarCode" HeaderText="IA Identifier" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Width="65px" ItemStyle-Wrap="false" />
+			<asp:BoundField DataField="TitleName" HeaderText="Title" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Width="75px" />
+			<asp:BoundField DataField="Volume" HeaderText="Volume" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="35px" />
+			<asp:BoundField DataField="Year" HeaderText="Year" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="false" ItemStyle-Width="15px" />
+			<asp:BoundField DataField="AuthorListString" HeaderText="Authors" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Width="50px" />
+			<asp:BoundField DataField="CopyrightStatus" HeaderText="Copyright Status" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="75px" />
+			<asp:BoundField DataField="Rights" HeaderText="Rights" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="75px" />
+			<asp:BoundField DataField="LicenseUrl" HeaderText="License Type" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="75px" />
+			<asp:BoundField DataField="DueDiligence" HeaderText="Due Diligence" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="75px" />
+			<asp:BoundField DataField="CreationDate" HeaderText="Date Added" HeaderStyle-HorizontalAlign="Left" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-Wrap="true" ItemStyle-Width="30px" HeaderStyle-Wrap="false" />
 		</Columns>
 		<HeaderStyle HorizontalAlign="Left" CssClass="SearchResultsHeader" />
 	</asp:GridView>
+    </div>
 </asp:Content>
