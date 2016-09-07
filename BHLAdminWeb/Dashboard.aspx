@@ -287,37 +287,45 @@
 							<table>
 								<tr>
 									<td>&nbsp;</td>
-									<td align="center" style="white-space: nowrap; width: 33%; border-bottom: 1px solid black">
+									<td align="center" style="white-space: nowrap; width: 25%; border-bottom: 1px solid black">
 										New<br />This Year
 									</td>
-									<td align="center" style="white-space: nowrap; width: 33%; border-bottom: 1px solid black">
+									<td align="center" style="white-space: nowrap; width: 25%; border-bottom: 1px solid black">
 										New<br />This Month
+									</td>
+									<td align="center" style="white-space: nowrap; width: 25%; border-bottom: 1px solid black">
+										New<br />Last Month
 									</td>
 								</tr>
 								<tr>
 									<td>Titles</td>
 									<td align="right" runat="server" id="titlesThisYear">0</td>
 									<td align="right" runat="server" id="titlesThisMonth">0</td>
+									<td align="right" runat="server" id="titlesPrevMonth">0</td>
 								</tr>
 								<tr>
 									<td>Items</td>
 									<td align="right" runat="server" id="itemsThisYear">0</td>
 									<td align="right" runat="server" id="itemsThisMonth">0</td>
+									<td align="right" runat="server" id="itemsPrevMonth">0</td>
 								</tr>
 								<tr>
 									<td>Pages</td>
 									<td align="right" runat="server" id="pagesThisYear">0</td>
 									<td align="right" runat="server" id="pagesThisMonth">0</td>
+									<td align="right" runat="server" id="pagesPrevMonth">0</td>
 								</tr>
 								<tr>
 									<td>Names</td>
 									<td align="right" runat="server" id="namesThisYear">0</td>
 									<td align="right" runat="server" id="namesThisMonth">0</td>
+									<td align="right" runat="server" id="namesPrevMonth">0</td>
 								</tr>
                                 <tr>
                                     <td>Segments</td>
                                     <td align="right" runat="server" id="segmentsThisYear">0</td>
 									<td align="right" runat="server" id="segmentsThisMonth">0</td>
+									<td align="right" runat="server" id="segmentsPrevMonth">0</td>
                                 </tr>
 							</table>
 						</td>

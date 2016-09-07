@@ -629,7 +629,6 @@
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectByTitleAssociationID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectCategoryUpdateAuto.sql" />
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsSelectCurrentYearSummary.sql" />
     <None Include="dbo\Stored Procedures\PaginationStatusSelectAll.sql" />
     <None Include="dbo\Stored Procedures\ApiSegmentSelectUnpublished.sql" />
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptInsertAuto.sql" />
@@ -639,7 +638,6 @@
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageSelectCountByItemID.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionInsertItemsForCollection.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsSelectCurrentMonthSummary.sql" />
     <None Include="dbo\Stored Procedures\ApiSegmentSelectByIdentifier.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedItemDeleteAuto.sql" />
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptDeleteByAnnotationID.sql" />
@@ -1259,5 +1257,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\SegmentInstitutionInsert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\MonthlyStatsSelectSummary.sql" />
   </ItemGroup>
 </Project>

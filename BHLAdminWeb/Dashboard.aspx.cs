@@ -93,6 +93,7 @@ namespace MOBOT.BHL.AdminWeb
             // Get the growth stats
             CustomGenericList<MonthlyStats> growthYear = bp.MonthlyStatsSelectCurrentYearSummary();
             CustomGenericList<MonthlyStats> growthMonth = bp.MonthlyStatsSelectCurrentMonthSummary();
+            CustomGenericList<MonthlyStats> growthPrevMonth = bp.MonthlyStatsSelectPreviousMonthSummary();
             foreach (MonthlyStats stat in growthYear)
             {
                 switch (stat.StatType)
@@ -132,6 +133,29 @@ namespace MOBOT.BHL.AdminWeb
                         break;
                     case "Segments Created":
                         segmentsThisMonth.InnerHtml = stat.StatValue.ToString();
+                        break;
+                }
+
+            }
+
+            foreach (MonthlyStats stat in growthPrevMonth)
+            {
+                switch (stat.StatType)
+                {
+                    case "Titles Created":
+                        titlesPrevMonth.InnerHtml = stat.StatValue.ToString();
+                        break;
+                    case "Items Created":
+                        itemsPrevMonth.InnerHtml = stat.StatValue.ToString();
+                        break;
+                    case "Pages Created":
+                        pagesPrevMonth.InnerHtml = stat.StatValue.ToString();
+                        break;
+                    case "PageNames Created":
+                        namesPrevMonth.InnerHtml = stat.StatValue.ToString();
+                        break;
+                    case "Segments Created":
+                        segmentsPrevMonth.InnerHtml = stat.StatValue.ToString();
                         break;
                 }
 

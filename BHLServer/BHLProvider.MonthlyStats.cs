@@ -16,12 +16,23 @@ namespace MOBOT.BHL.Server
 
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectCurrentYearSummary()
         {
-            return GetMonthlyStatsDalInstance().MonthlyStatsSelectCurrentYearSummary(null, null);
+            int year = DateTime.Today.Year;
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectSummary(null, null, year, 0);
         }
 
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectCurrentMonthSummary()
         {
-            return GetMonthlyStatsDalInstance().MonthlyStatsSelectCurrentMonthSummary(null, null);
+            int year = DateTime.Today.Year;
+            int month = DateTime.Today.Month;
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectSummary(null, null, year, month);
+        }
+
+        public CustomGenericList<MonthlyStats> MonthlyStatsSelectPreviousMonthSummary()
+        {
+            int year = DateTime.Today.Year;
+            int month = DateTime.Today.Month - 1;
+            if (month == 0) { year--; month = 1; }
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectSummary(null, null, year, month);
         }
 
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectByDateAndInstitution(int startYear,

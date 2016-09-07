@@ -427,6 +427,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell titlesThisMonth;
         
         /// <summary>
+        /// titlesPrevMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell titlesPrevMonth;
+        
+        /// <summary>
         /// itemsThisYear control.
         /// </summary>
         /// <remarks>
@@ -443,6 +452,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell itemsThisMonth;
+        
+        /// <summary>
+        /// itemsPrevMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell itemsPrevMonth;
         
         /// <summary>
         /// pagesThisYear control.
@@ -463,6 +481,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell pagesThisMonth;
         
         /// <summary>
+        /// pagesPrevMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell pagesPrevMonth;
+        
+        /// <summary>
         /// namesThisYear control.
         /// </summary>
         /// <remarks>
@@ -481,6 +508,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell namesThisMonth;
         
         /// <summary>
+        /// namesPrevMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell namesPrevMonth;
+        
+        /// <summary>
         /// segmentsThisYear control.
         /// </summary>
         /// <remarks>
@@ -497,6 +533,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell segmentsThisMonth;
+        
+        /// <summary>
+        /// segmentsPrevMonth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell segmentsPrevMonth;
         
         /// <summary>
         /// tdExpandedGrowthStats control.
