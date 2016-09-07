@@ -15,6 +15,7 @@
         <asp:Button ID="bulkAddButton" runat="server" Text="Bulk Add" Enabled="false" OnClick="bulkAddButton_Click" OnClientClick="return ConfirmBulkAdd();" />
         <asp:Button ID="refreshContentsButton" runat="server" Text="Refresh Contents" Enabled="false" OnClick="refreshContentsButton_Click" OnClientClick="return ConfirmRefresh();" />
         <asp:Button ID="clearContentsButton" runat="server" Text="Clear Contents" Enabled="false" OnClick="clearContentsButton_Click" OnClientClick="return ConfirmClear();" />
+        <asp:Literal runat="server" ID="ltlCollectionStats" Visible="false" Text=""></asp:Literal>
 	</div>
 	<br />
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>

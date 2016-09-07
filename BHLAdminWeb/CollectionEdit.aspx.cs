@@ -14,7 +14,9 @@ namespace MOBOT.BHL.AdminWeb
     public partial class CollectionEdit : System.Web.UI.Page
     {
         protected BHLProvider bhlProvider = new BHLProvider();
-        
+        protected string statsMessageFormat = "<p>This collection contains <span style='font-weight:bolder'>{0}</span> volumes from <span style='font-weight:bolder'>{1}</span> titles, containing <span style='font-weight:bolder'>{2}</span> pages.</p>";
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -197,10 +199,17 @@ namespace MOBOT.BHL.AdminWeb
                     chkFeatured.Checked = (c.Featured == 1);
                     ddlCollections.SelectedValue = c.CollectionID.ToString();
                     flag = true;
+
+                    // Show the collection statistics
+                    MOBOT.BHL.DataObjects.Stats stats = bhlProvider.StatsSelectForCollection(collectionID);
+                    ltlCollectionStats.Text = string.Format(statsMessageFormat,
+                        stats.VolumeCount.ToString(), stats.TitleCount.ToString(), stats.PageCount.ToString());
+                    ltlCollectionStats.Visible = true;
                 }
             }
             else
             {
+                lblID.Text = "";
                 lnkLandingPage.Visible = false;
                 txtCollectionURL.Enabled = true;
                 rdoContents.Enabled = true;
@@ -209,6 +218,7 @@ namespace MOBOT.BHL.AdminWeb
                 chkBHL.Checked = true;
                 chkITunes.Checked = false;
                 iTunesImageUpload.Enabled = false;
+                ltlCollectionStats.Visible = false;
             }
 
             contentsButton.Text = "Show Contents";
@@ -372,6 +382,8 @@ namespace MOBOT.BHL.AdminWeb
                 ddlInstitution.Enabled = false;
                 ddlLanguage.Enabled = false;
                 rdoContents.Enabled = false;
+
+                populateForm();
             }
             else
             {
@@ -440,6 +452,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     bhlProvider.ItemCollectionDeleteForCollection(collectionID);
                 }
+                populateForm();
             }
         }
 
@@ -456,6 +469,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     bhlProvider.ItemCollectionInsertItemsForCollection(collectionID);
                 }
+                populateForm();
             }
         }
 
