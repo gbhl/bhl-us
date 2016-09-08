@@ -19,6 +19,7 @@ ELSE
 			i.Barcode,
 			i.Volume,
 			i.[Year],
+			i.ItemDescription,
 			c.ItemContributors AS InstitutionName,
 			i.Sponsor,
 			ISNULL(l.LanguageName, '') AS Language,

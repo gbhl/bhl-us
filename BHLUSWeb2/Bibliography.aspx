@@ -376,6 +376,17 @@
 
                     </div>
                     
+                    <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ItemDescription)) { %>
+                    
+                        <div class="copyspecific copyright">
+                            <h5>Copy-specific information:</h5>
+                            <p>
+                                <%: bibliographyItem.Item.ItemDescription %>
+                            </p>
+                        </div>
+
+                    <% } %>
+
                     <div class="copyright">
                         <h5>Copyright &amp; Usage:</h5>
                         <p>

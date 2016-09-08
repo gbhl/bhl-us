@@ -203,6 +203,7 @@ namespace MOBOT.BHL.AdminWeb
                 marcItemIDTextBox.Text = item.MARCItemID;
                 callNumberTextBox.Text = item.CallNumber;
                 volumeTextBox.Text = item.Volume;
+                itemDescriptionTextBox.Text = item.ItemDescription;
                 notesTextBox.Text = item.Note;
                 replacedByTextBox.Text = item.RedirectItemID.ToString();
                 yearTextBox.Text = item.Year;
@@ -1156,6 +1157,7 @@ namespace MOBOT.BHL.AdminWeb
 				item.CallNumber = callNumberTextBox.Text.Trim();
 				item.Volume = volumeTextBox.Text.Trim();
 				item.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
+                item.ItemDescription = itemDescriptionTextBox.Text.Trim();
 				item.Note = notesTextBox.Text.Trim();
                 item.Year = yearTextBox.Text.Trim();
                 item.IdentifierBib = identifierBibTextBox.Text.Trim();

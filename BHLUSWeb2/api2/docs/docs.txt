@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: July 26, 2016
+Revised: September 8, 2016
 
 ----------------------------------------------------------------------------------------------------
 
@@ -41,9 +41,9 @@ STATUS CODE
 Each method response contains a status code that indicates the success or failure of the method call.  
 This code is contained in the "Status" field of the response.  The valid status codes are:
 
-	ok - the method executed successfully
-	error - an error occurred while executing the method; check the ErrorMessage field for details
-	unauthorized - the specified api key is invalid or does not have permission to execute the method
+    ok - the method executed successfully
+    error - an error occurred while executing the method; check the ErrorMessage field for details
+    unauthorized - the specified api key is invalid or does not have permission to execute the method
 
 METHODS
 
@@ -52,336 +52,336 @@ http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method name>
 
 GetPageMetadata:
 
-	Return metadata about a page.  You may choose to include the OCR text and a list of names found 
-	on the page.
+    Return metadata about a page.  You may choose to include the OCR text and a list of names found 
+    on the page.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageMetadata&pageid=1328690&ocr=t&names=t&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageMetadata&pageid=1328690&ocr=t&names=t&apikey=<key value>
 
-	pageid - the identifier of an individual page in a scanned book
-	ocr - "t" or "true" to return ocr text of the page
-	names - "t" or "true" to return the names that appear on the page
+    pageid - the identifier of an individual page in a scanned book
+    ocr - "t" or "true" to return ocr text of the page
+    names - "t" or "true" to return the names that appear on the page
 
 GetPageOcrText:
 
-	Return the OCR-generated text of a page.
+    Return the OCR-generated text of a page.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageOcrText&pageid=1328690&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageOcrText&pageid=1328690&apikey=<key value>
 
-	pageid - the identifier of an individual page in a scanned book
+    pageid - the identifier of an individual page in a scanned book
 
 GetPageNames:
 
-	Return a list of names that appear on a page.
+    Return a list of names that appear on a page.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageNames&pageid=1328690&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageNames&pageid=1328690&apikey=<key value>
 
-	pageid - the identifier of an individual page in a scanned book
+    pageid - the identifier of an individual page in a scanned book
 
 GetItemMetadata:
 
-	Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, 
-	and a list of the item's parts.
+    Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, 
+    and a list of the item's parts.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemMetadata&itemid=16800&pages=t&ocr=f&parts=f&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemMetadata&itemid=16800&pages=t&ocr=f&parts=f&apikey=<key value>
 
-	itemid - the identifier of an individual item (book)
-	pages - "t" or "true" to return the item's pages
-	ocr - "t" or "true" to return the ocr for the item's pages
-	parts - "t" or "true" to return the item's parts 
+    itemid - the identifier of an individual item (book)
+    pages - "t" or "true" to return the item's pages
+    ocr - "t" or "true" to return the ocr for the item's pages
+    parts - "t" or "true" to return the item's parts 
 
 GetItemPages:
 
-	Return a list of an item's pages.  You may choose to include the ocr for the pages.
+    Return a list of an item's pages.  You may choose to include the ocr for the pages.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemPages&itemid=16800&ocr=f&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemPages&itemid=16800&ocr=f&apikey=<key value>
 
-	itemid - the identifier of an individual item (book)
-	ocr - "t" or "true" to return the ocr for the item's pages
+    itemid - the identifier of an individual item (book)
+    ocr - "t" or "true" to return the ocr for the item's pages
 
 GetItemParts:
 
-	Return a list of parts (articles, chapters, etc) associated with an item.
+    Return a list of parts (articles, chapters, etc) associated with an item.
 
-	Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemParts&itemid=35600&apikey=<key value>
+    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemParts&itemid=35600&apikey=<key value>
 
-	itemid - the identifier of an individual item (book)
+    itemid - the identifier of an individual item (book)
 
 GetUnpublishedItems:
 
-	Return a list of the identifiers of all unpublished items.
+    Return a list of the identifiers of all unpublished items.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedItems&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedItems&apikey=<key value>
 
 GetPartMetadata:
 
-	Return metadata about a part.
+    Return metadata about a part.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartMetadata&partid=10409&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartMetadata&partid=10409&apikey=<key value>
 
-	partid - the identifier of an individual part (article, chapter, etc)
+    partid - the identifier of an individual part (article, chapter, etc)
 
 GetPartNames:
 
-	Return a list of scientific names associated with a part.
+    Return a list of scientific names associated with a part.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartNames&partid=41797&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartNames&partid=41797&apikey=<key value>
 
-	partid - the identifier of an individual part (article, chapter, etc)
+    partid - the identifier of an individual part (article, chapter, etc)
 
 GetUnpublishedParts:
 
-	Return a list of the identifiers of all unpublished parts (articles, chapters, etc).
+    Return a list of the identifiers of all unpublished parts (articles, chapters, etc).
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedParts&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedParts&apikey=<key value>
 
 GetPartByIdentifier:
 
-	Find and return metadata about a part or parts that match a specific identifier.
+    Find and return metadata about a part or parts that match a specific identifier.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartByIdentifier&type=doi&value=10.4039/Ent38406-12&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartByIdentifier&type=doi&value=10.4039/Ent38406-12&apikey=<key value>
 
-	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor)
-	value - the identifier value
+    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor)
+    value - the identifier value
 
 GetPartBibTex:
 
-	Return a citation for a part, using the BibTeX format.
+    Return a citation for a part, using the BibTeX format.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartBibTex&partid=1000&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartBibTex&partid=1000&apikey=<key value>
 
-	partid - the identifier of an individual part (article, chapter, etc)
+    partid - the identifier of an individual part (article, chapter, etc)
 
 GetPartEndNote:
 
-	Return a citation for a part, using the EndNote format.
+    Return a citation for a part, using the EndNote format.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartEndNote&partid=1000&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartEndNote&partid=1000&apikey=<key value>
 
-	partid - the identifier of an individual part (article, chapter, etc)
+    partid - the identifier of an individual part (article, chapter, etc)
 
 GetTitleMetadata:
 
-	Return metadata about a title.  You may choose to include a list of the items (books) associated
-	with the title.
+    Return metadata about a title.  You may choose to include a list of the items (books) associated
+    with the title.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleMetadata&titleid=1726&items=t&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleMetadata&titleid=1726&items=t&apikey=<key value>
 
-	titleid - the identifier of an individual title
-	items - "t" or "true" to return the title's items
+    titleid - the identifier of an individual title
+    items - "t" or "true" to return the title's items
 
 GetTitleItems:
 
-	Return a list of a title's items (books).
+    Return a list of a title's items (books).
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleItems&titleid=1726&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleItems&titleid=1726&apikey=<key value>
 
-	titleid - the identifier of an individual title
+    titleid - the identifier of an individual title
 
 GetTitleByIdentifier:
 
-	Find and return metadata about a title or titles that match a specific identifier.
+    Find and return metadata about a title or titles that match a specific identifier.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleByIdentifier&type=oclc&value=2992225&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleByIdentifier&type=oclc&value=2992225&apikey=<key value>
 
-	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden)
-	value - the identifier value
+    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden)
+    value - the identifier value
 
 TitleSearchSimple:
 
-	Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)
-	is searched for the specified string.  Basic metadata for all full and partial matches is returned.
+    Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)
+    is searched for the specified string.  Basic metadata for all full and partial matches is returned.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=TitleSearchSimple&title=nematocerous&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=TitleSearchSimple&title=nematocerous&apikey=<key value>
 
-	title - full or partial title for which to search
+    title - full or partial title for which to search
 
 GetTitleBibTex:
 
-	Return a citation for a title, using the BibTeX format.
+    Return a citation for a title, using the BibTeX format.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleBibTex&titleid=1726&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleBibTex&titleid=1726&apikey=<key value>
 
-	titleid - the identifier of an individual title
+    titleid - the identifier of an individual title
 
 GetTitleEndNote:
 
-	Return a citation for a title, using the EndNote format.
+    Return a citation for a title, using the EndNote format.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleEndNote&titleid=1726&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleEndNote&titleid=1726&apikey=<key value>
 
-	titleid - the identifier of an individual title
+    titleid - the identifier of an individual title
 
 GetUnpublishedTitles:
 
-	Return a list of the identifiers of all unpublished titles.
+    Return a list of the identifiers of all unpublished titles.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedTitles&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedTitles&apikey=<key value>
 
 BookSearch:
 
-	Search for titles and items in BHL.  Search criteria includes title, author last name, volume, edition, 
-	year of publication, subject, language code, and collection identifier.
+    Search for titles and items in BHL.  Search criteria includes title, author last name, volume, edition, 
+    year of publication, subject, language code, and collection identifier.
 
-	Valid language codes and collection identifiers can be obtained from the GetLanguages and GetCollections
-	methods.  If year of publication is specified, it should be a 4-digit year.
+    Valid language codes and collection identifiers can be obtained from the GetLanguages and GetCollections
+    methods.  If year of publication is specified, it should be a 4-digit year.
 	
-	To execute a search, you must supply at least a title, author last name, or collection identifier.
+    To execute a search, you must supply at least a title, author last name, or collection identifier.
 
-	The metadata returned by this method includes Title Identifier, Title URL, Full Title, Part Number, 
-	Part Name, Publisher Place, Publisher Name, Publication Date, complete author data, Item Identifier,
-	Item URL, Volume, Contributor, and collection data.  For more information about these data elements,
-	see the "Data Elements" section of this documentation.
+    The metadata returned by this method includes Title Identifier, Title URL, Full Title, Part Number, 
+    Part Name, Publisher Place, Publisher Name, Publication Date, complete author data, Item Identifier,
+    Item URL, Volume, Contributor, and collection data.  For more information about these data elements,
+    see the "Data Elements" section of this documentation.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=BookSearch&title=Selborne&lname=White&volume=2&edition=new&year=1825&subject=&collectionid=4&language=eng&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=BookSearch&title=Selborne&lname=White&volume=2&edition=new&year=1825&subject=&collectionid=4&language=eng&apikey=<key value>
 
 PartSearch:
 
-	Search for parts of books in BHL, such as articles, chapters, or treatments.  Search criteria includes
-	title, container (journal or book title), author, date of publication, volume, series, and issue.
+    Search for parts of books in BHL, such as articles, chapters, or treatments.  Search criteria includes
+    title, container (journal or book title), author, date of publication, volume, series, and issue.
 
-	To execute a search, you must supply at least a title or author.
+    To execute a search, you must supply at least a title or author.
 
-	The metadata returned by this method includes Part Identifier, Part URL, Item ID, Page ID for the 
-	start page, Genre, Title, Container Title, Publication Details, Volume, Series, Issue, Date,
-	Page Range, Language, rights information, authors, keywords, identifiers, pages, and related
-	parts.  For more information, see the "Data Elements" section of this documentation.
+    The metadata returned by this method includes Part Identifier, Part URL, Item ID, Page ID for the 
+    start page, Genre, Title, Container Title, Publication Details, Volume, Series, Issue, Date,
+    Page Range, Language, rights information, authors, keywords, identifiers, pages, and related
+    parts.  For more information, see the "Data Elements" section of this documentation.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=PartSearch&title=Critical+approach+to+the+definition+of+Darwinian+units&containerTitle=&author=&date=&volume=&series=&issue=&apikey=<key value>.
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=PartSearch&title=Critical+approach+to+the+definition+of+Darwinian+units&containerTitle=&author=&date=&volume=&series=&issue=&apikey=<key value>.
 
 SubjectSearch:
 
-	Return a list of subjects that match (fully or partially) the specified search string.
+    Return a list of subjects that match (fully or partially) the specified search string.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=SubjectSearch&subject=diptera&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=SubjectSearch&subject=diptera&apikey=<key value>
 
-	subject - the full or partial subject for which to search
+    subject - the full or partial subject for which to search
 
 GetSubjectTitles:
 
-	Return a list of titles associated with a subject.
+    Return a list of titles associated with a subject.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectTitles&subject=diptera&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectTitles&subject=diptera&apikey=<key value>
 
-	subject - the full subject string for which to search
+    subject - the full subject string for which to search
 
 GetSubjectParts:
 
-	Return a list of parts (articles, chapters, etc) associated with a subject.
+    Return a list of parts (articles, chapters, etc) associated with a subject.
 
-	Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectParts&subject=frogs&apikey=<key value>
+    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectParts&subject=frogs&apikey=<key value>
 
-	subject - the full subject string for which to search
+    subject - the full subject string for which to search
 
 AuthorSearch:
 
-	Return a list of authors that match (fully or partially) the specified search string.  The names
-	searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.
+    Return a list of authors that match (fully or partially) the specified search string.  The names
+    searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=AuthorSearch&name=dimmock&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=AuthorSearch&name=dimmock&apikey=<key value>
 
-	name - full or partial name of the author for which to search (last name listed first, i.e. "Darwin, Charles")
+    name - full or partial name of the author for which to search (last name listed first, i.e. "Darwin, Charles")
 
 GetAuthorTitles:
 
-	Return a list of titles associated with a given BHL author identifier.  Unless the identifier
-	for a particular BHL author record is known in advance, this method should be used in combination
-	with the AuthorSearch method.
+    Return a list of titles associated with a given BHL author identifier.  Unless the identifier
+    for a particular BHL author record is known in advance, this method should be used in combination
+    with the AuthorSearch method.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorTitles&creatorid=1970&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorTitles&creatorid=1970&apikey=<key value>
 
-	creatorid - BHL identifier for a particular author
+    creatorid - BHL identifier for a particular author
 
 GetAuthorParts:
 
-	Return a list of parts (articles, chapters, etc) associated with a given BHL author identifier.  
-	Unless the identifier for a particular BHL author record is known in advance, this method should
-	be used in combination with the AuthorSearch method.
+    Return a list of parts (articles, chapters, etc) associated with a given BHL author identifier.  
+    Unless the identifier for a particular BHL author record is known in advance, this method should
+    be used in combination with the AuthorSearch method.
 
-	Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorParts&creatorid=39120&apikey=<key value>
+    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorParts&creatorid=39120&apikey=<key value>
 
-	creatorid - BHL identifier for a particular author
+    creatorid - BHL identifier for a particular author
 
 NameCount:
 
-	Return the number of unique names found on pages in BHL.  Names both with and without NameBank
-	identifiers are counted.
+    Return the number of unique names found on pages in BHL.  Names both with and without NameBank
+    identifiers are counted.
 
-	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-	have changed. ***
+    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
+    have changed. ***
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameCount&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameCount&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
 
-	startdate - (optional) start date of range between which to count names
-	enddate - (optional) end date of range between which to count names
+    startdate - (optional) start date of range between which to count names
+    enddate - (optional) end date of range between which to count names
 
 NameList:
 
-	List the unique names.  By using the startrow and batchsize parameters appropriately, you can
-	pull the list all at once, or in batches (i.e. 1000 names at a time).  Names both with and 
-	without NameBank identifiers are returned.
+    List the unique names.  By using the startrow and batchsize parameters appropriately, you can
+    pull the list all at once, or in batches (i.e. 1000 names at a time).  Names both with and 
+    without NameBank identifiers are returned.
 
-	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-	have changed. ***
+    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
+    have changed. ***
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameList&startrow=1&batchsize=1000&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameList&startrow=1&batchsize=1000&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
 
-	startrow - first name to return (if are returning names in batches of 100, specify startrow=1
-				for the first batch, startrow=101 for the second batch, and so on
-	batchsize - number of names to return
-	startdate - (optional) start date of range between which to count names
-	enddate - (optional) end date of range between which to count names
+    startrow - first name to return (if are returning names in batches of 100, specify startrow=1
+                for the first batch, startrow=101 for the second batch, and so on
+    batchsize - number of names to return
+    startdate - (optional) start date of range between which to count names
+    enddate - (optional) end date of range between which to count names
 
 NameGetDetail:
 
-	Get basic title, item, and page metadata for each page on which the specified name appears.
+    Get basic title, item, and page metadata for each page on which the specified name appears.
 
-	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-	have changed. ***
+    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
+    have changed. ***
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&namebankid=3501464&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&namebankid=3501464&apikey=<key value>
 
-	namebankid - (not used if "name" specified) NameBank identifier for a name
+    namebankid - (not used if "name" specified) NameBank identifier for a name
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&name=poa+annua+supina&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&name=poa+annua+supina&apikey=<key value>
 
-	name - (not used if "namebankid" specified) a complete name string
+    name - (not used if "namebankid" specified) a complete name string
 
 NameSearch:
 
-	Search for a particular name.  Names both with and without NameBank identifiers are returned.
+    Search for a particular name.  Names both with and without NameBank identifiers are returned.
 
-	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-	have changed. ***
+    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
+    have changed. ***
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameSearch&name=poa+annua&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameSearch&name=poa+annua&apikey=<key value>
 
-	name - a partial or complete name string
+    name - a partial or complete name string
 
 GetCollections:
 
-	Get a list of collections which are used to group titles and items.  A single collection may
-	contain either titles or items, but not both.
+    Get a list of collections which are used to group titles and items.  A single collection may
+    contain either titles or items, but not both.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetCollections&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetCollections&apikey=<key value>
 
 GetInstitutions:
 
-	Get a list of institutions which have contributed to BHL in some way.  These institutions may
-	fill roles such as contributors, rights holders, and scanning institutions.
+    Get a list of institutions which have contributed to BHL in some way.  These institutions may
+    fill roles such as contributors, rights holders, and scanning institutions.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetInstitutions&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetInstitutions&apikey=<key value>
 
 GetLanguages:
 
-	Get a list of languages in which materials in BHL have been written.
+    Get a list of languages in which materials in BHL have been written.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetLanguages&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetLanguages&apikey=<key value>
 
 GetStats:
 
-	Get the number of Titles, Items, Pages, and Parts currently in BHL.
+    Get the number of Titles, Items, Pages, and Parts currently in BHL.
 
-	Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetStats&apikey=<key value>
+    Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetStats&apikey=<key value>
 
 ----------------------------------------------------------------------------------------------------
 
@@ -454,216 +454,221 @@ may have changed. ***
 The following table describes the data elements that may be included in the various API responses.
 Included is a mapping of the API data elements to the MARC cataloging standard.
 
-BHL API							Description												MARC
--------							-----------												----
-Title/TitleID					BHL identifier for the title							NA
-Title/BibliographicLevel		One of the following values, which identify the			Leader position 07
-								'type' of work:
-									Collection
-									Monograph/Item
-									Monographic component part
-									Serial
-									Serial component part
-Title/FullTitle					The complete title of the work							245a,b,c
-Title/ShortTitle				The title proper of the work							245a
-Title/SortTitle					Title of the work, modified for more accurate searching	NA
-Title/PartNumber				Number designation for part of a work used in the title	245n
-Title/PartName					Name of a part of a work used in the title				245p
-Title/CallNumber				Classification or call number of the work				050a,b
-Title/Edition					Information about the edition of the work				250a,b
-Title/PublisherPlace			Place of publication of the work						260a
-Title/PublisherName				Name of publisher/distributor of the work				260b
-Title/PublicationDate			Date of publication of the work							260c
-Title/PublicationFrequency		Frequency of publication of the work					310a
-Title/Doi						DOI assigned to the title								NA
-Title/TitleURL					BHL address for the title								NA
-Creator/CreatorID				BHL identifier for the author							NA
-Creator/Name					Personal, corporate, or meeting name					100/110/111/700/710/711/720a
-Creator/Role					One of the following values, which identify the role 
-								of an author:
-									Main Entry -- Personal Name (MARC 100)
-									Main Entry -- Corporate Name (MARC 110)
-									Main Entry -- Meeting Name (MARC 111)
-									Added Entry -- Personal Name (MARC 700)
-									Added Entry -- Corporate Name (MARC 710)
-									Added Entry -- Meeting Name (MARC 711)
-									Added Entry -- Uncontrolled Name (MARC 720)			NA
-Creator/Numeration				Personal numeration										100/110/111/700/710/711/720b
-Creator/Unit					Corporate unit											100/110/111/700/710/711/720b
-Creator/Title					Personal title											100/110/111/700/710/711/720c
-Creator/Location				Corporate/meeting location								100/110/111/700/710/711/720c
-Creator/FullerForm				Fuller form of name										100/700q
-Creator/Relationship			Relationship of person to work (editor, illustrator)	700e
-Creator/TitleOfWork				Title page title or serial title related to person		700t
-Creator/Dates					Date of birth/death or Corp/Meeting dates				100/110/111/700/710/711/720d
-Creator/CreatorUrl				BHL address for the author								NA
-Subject/SubjectText				Subject term											Various 6XX fields.  Most BHL 
-																						subjects are from 650.
-TitleIdentifier/IdentifierName	One of the following values, which identify the type	NA
-								of identifier:
-									doi
-									oclc
-									issn
-									isbn
-									lccn
-									ddc
-									nal
-									nlm
-									coden
-TitleIdentifier/IdentifierValue	Value of an identifier assigned to the title			Location depends on the type 
-																						of identifier:
-																							035 (IdentifierName = oclc)
-																							022 (IdentifierName = issn)
-																							020 (IdentifierName = isbn)
-																							050 (IdentifierName = lccn)
-																							082 (IdentifierName = ddc)
-																							070 (IdentifierName = nal)
-																							060 (IdentifierName = nlm)
-																							030 (IdentifierName = coden)
-TitleNote/NoteText				Text of a note associated with a title					Various 5XX fields.
-TitleNote/NoteSequence			Numerical position of the note							NA
-TitleNote/NoteTypeName			Description of the note									NA
-Item/ItemID						BHL identifier for the item								NA
-Item/PrimaryTitleID				BHL identifier for the title related to the item		NA
-Item/ThumbnailPageID			BHL identifier of the page that produces the item		NA
-								thumbnail
-Item/Source						System from which the item originated          			NA
-Item/SourceIdentifier			Originating system identifier							NA
-Item/Volume						Volume assigned to the book								NA
-Item/Year						Year assigned to to a monograph or single item			NA
-								in a journal
-Item/Contributor				Institution that contributed the book to BHL			NA
-Item/RightsHolder				Institution holding the rights to the book				NA
-Item/ScanningInstitution		Institution performing the scanning of the book			NA
-Item/Sponsor					Institution that sponsored the scanning of the book		NA
-Item/Language					Primary language in which the work is published			008
-Item/LicenseUrl					URL to information about the license asserted			NA
-								on the book
-Item/Rights						URL to information about the rights/permissions			NA
-								asserted on the book
-Item/DueDiligence				URL to information about the rights/permissions			NA
-								asserted on the book
-Item/CopyrightStatus			Copyright statement for the book						NA
-Item/CopyrightRegion			Country issuing the copyright on the book				NA
-Item/ExternalUrl				Non-BHL address for the item							NA
-Item/ItemUrl					BHL address for the item								NA
-Item/TitleUrl					BHL address for the title								NA
-Item/ItemThumbUrl				BHL address for the item thumbnail image				NA
-Part/PartID						BHL identifier for the part								NA
-Part/PartUrl					BHL address for the part								NA
-Part/ItemID						BHL address for the item related to the part			NA
-Part/StartPageID				BHL address for the first page of the part				NA
-Part/SequenceOrder				Sequential position of the part within the container	NA
-								item.
-Part/GenreName					One of the following values, which identify the			NA
-								type of the part:
-										Article
-										Book
-										BookItem
-										Chapter
-										Journal
-										Issue
-										Proceeding
-										Conference
-										Preprint
-										Unknown
-										Treatment
-Part/Title						The title of the part									NA
-Part/TranslatedTitle			Translated title of the part							NA
-Part/ContainerTitle				Title of the containing journal/book					NA
-Part/PublicationDetails			Combined publication information (publisher name,		NA
-								publisher place, and publication date)
-Part/PublisherName				Name of publisher/distributor of the part				NA
-Part/PublisherPlace				Place of publication of the part						NA
-Part/Notes						Miscellaneous information about the part				NA
-Part/Volume						Volume of the work in which the part appears			NA
-Part/Series						Series of the work in which the part appears			NA
-Part/Issue						Issue of the work in which the part appears				NA
-Part/Date						Publication date of the part							NA
-Part/PageRange					Combined page information (start--end)					NA
-Part/StartPageNumber			Starting page number of the part						NA
-Part/EndPageNumber				Ending page number of the part							NA
-Part/Language					Language of the part									NA
-Part/ExternalUrl				Non-BHL location of the part							NA
-Part/DownloadUrl				Link to a downloadable version of the part				NA
-Part/RightsStatus				Rights status of the part (for example, "out of			NA
-								copyright")
-Part/RightsStatement			Rights statement for the part							NA
-Part/LicenseName				License under which the part is made available			NA
-Part/LicenseUrl					Link to additional licensing details					NA
-Part/Doi						DOI assigned to the part								NA
+BHL API                         Description                                             MARC
+-------                         -----------                                             ----
+Title/TitleID                   BHL identifier for the title                            NA
+Title/BibliographicLevel        One of the following values, which identify the         Leader position 07
+                                'type' of work:
+                                    Collection
+                                    Monograph/Item
+                                    Monographic component part
+                                    Serial
+                                    Serial component part
+Title/FullTitle                 The complete title of the work                          245a,b,c
+Title/ShortTitle                The title proper of the work                            245a
+Title/SortTitle                 Title of the work, modified for more accurate searching NA
+Title/PartNumber                Number designation for part of a work used in the title 245n
+Title/PartName                  Name of a part of a work used in the title              245p
+Title/CallNumber                Classification or call number of the work               050a,b
+Title/Edition                   Information about the edition of the work               250a,b
+Title/PublisherPlace            Place of publication of the work                        260a
+Title/PublisherName             Name of publisher/distributor of the work               260b
+Title/PublicationDate           Date of publication of the work                         260c
+Title/PublicationFrequency      Frequency of publication of the work                    310a
+Title/Doi                       DOI assigned to the title                               NA
+Title/TitleURL                  BHL address for the title                               NA
+Creator/CreatorID               BHL identifier for the author                           NA
+Creator/Name                    Personal, corporate, or meeting name                    100/110/111/700/710/711/720a
+Creator/Role                    One of the following values, which identify the role 
+                                of an author:
+                                    Main Entry -- Personal Name (MARC 100)
+                                    Main Entry -- Corporate Name (MARC 110)
+                                    Main Entry -- Meeting Name (MARC 111)
+                                    Added Entry -- Personal Name (MARC 700)
+                                    Added Entry -- Corporate Name (MARC 710)
+                                    Added Entry -- Meeting Name (MARC 711)
+                                    Added Entry -- Uncontrolled Name (MARC 720)         NA
+Creator/Numeration              Personal numeration                                     100/110/111/700/710/711/720b
+Creator/Unit                    Corporate unit                                          100/110/111/700/710/711/720b
+Creator/Title                   Personal title                                          100/110/111/700/710/711/720c
+Creator/Location                Corporate/meeting location                              100/110/111/700/710/711/720c
+Creator/FullerForm              Fuller form of name                                     100/700q
+Creator/Relationship            Relationship of person to work (editor, illustrator)    700e
+Creator/TitleOfWork             Title page title or serial title related to person      700t
+Creator/Dates                   Date of birth/death or Corp/Meeting dates               100/110/111/700/710/711/720d
+Creator/CreatorUrl              BHL address for the author                              NA
+Subject/SubjectText             Subject term                                            Various 6XX fields.  Most BHL 
+                                                                                        subjects are from 650.
+TitleIdentifier/IdentifierName  One of the following values, which identify the type    NA
+                                of identifier:
+                                    doi
+                                    oclc
+                                    issn
+                                    isbn
+                                    lccn
+                                    ddc
+                                    nal
+                                    nlm
+                                    coden
+TitleIdentifier/IdentifierValue Value of an identifier assigned to the title            Location depends on the type 
+                                                                                        of identifier:
+                                                                                            035 (IdentifierName = oclc)
+                                                                                            022 (IdentifierName = issn)
+                                                                                            020 (IdentifierName = isbn)
+                                                                                            050 (IdentifierName = lccn)
+                                                                                            082 (IdentifierName = ddc)
+                                                                                            070 (IdentifierName = nal)
+                                                                                            060 (IdentifierName = nlm)
+                                                                                            030 (IdentifierName = coden)
+TitleNote/NoteText              Text of a note associated with a title                  Various 5XX fields.
+TitleNote/NoteSequence          Numerical position of the note                          NA
+TitleNote/NoteTypeName          Description of the note                                 NA
+Item/ItemID                     BHL identifier for the item                             NA
+Item/PrimaryTitleID             BHL identifier for the title related to the item        NA
+Item/ThumbnailPageID            BHL identifier of the page that produces the item       NA
+                                thumbnail
+Item/Source                     System from which the item originated                   NA
+Item/SourceIdentifier           Originating system identifier                           NA
+Item/Volume                     Volume assigned to the book                             NA
+Item/Year                       Year assigned to to a monograph or single item          NA
+                                in a journal
+Item/CopySpecificInformation    Information specific to this copy of the book           NA
+Item/Contributor                Institution that contributed the book to BHL            NA
+Item/RightsHolder               Institution holding the rights to the book              NA
+Item/ScanningInstitution        Institution performing the scanning of the book         NA
+Item/Sponsor                    Institution that sponsored the scanning of the book     NA
+Item/Language                   Primary language in which the work is published         008
+Item/LicenseUrl                 URL to information about the license asserted           NA
+                                on the book
+Item/Rights                     URL to information about the rights/permissions         NA
+                                asserted on the book
+Item/DueDiligence               URL to information about the rights/permissions         NA
+                                asserted on the book
+Item/CopyrightStatus            Copyright statement for the book                        NA
+Item/CopyrightRegion            Country issuing the copyright on the book               NA
+Item/ExternalUrl                Non-BHL address for the item                            NA
+Item/ItemUrl                    BHL address for the item                                NA
+Item/TitleUrl                   BHL address for the title                               NA
+Item/ItemThumbUrl               BHL address for the item thumbnail image                NA
+Part/PartID                     BHL identifier for the part                             NA
+Part/PartUrl                    BHL address for the part                                NA
+Part/ItemID                     BHL address for the item related to the part            NA
+Part/StartPageID                BHL address for the first page of the part              NA
+Part/SequenceOrder              Sequential position of the part within the container    NA
+                                item.
+Part/GenreName                  One of the following values, which identify the         NA
+                                type of the part:
+                                        Article
+                                        Book
+                                        BookItem
+                                        Chapter
+                                        Journal
+                                        Issue
+                                        Proceeding
+                                        Conference
+                                        Preprint
+                                        Unknown
+                                        Treatment
+Part/Title                      The title of the part                                   NA
+Part/TranslatedTitle            Translated title of the part                            NA
+Part/ContainerTitle             Title of the containing journal/book                    NA
+Part/PublicationDetails         Combined publication information (publisher name,       NA
+                                publisher place, and publication date)
+Part/PublisherName              Name of publisher/distributor of the part               NA
+Part/PublisherPlace             Place of publication of the part                        NA
+Part/Notes                      Miscellaneous information about the part                NA
+Part/Volume                     Volume of the work in which the part appears            NA
+Part/Series                     Series of the work in which the part appears            NA
+Part/Issue                      Issue of the work in which the part appears             NA
+Part/Date                       Publication date of the part                            NA
+Part/PageRange                  Combined page information (start--end)                  NA
+Part/StartPageNumber            Starting page number of the part                        NA
+Part/EndPageNumber              Ending page number of the part                          NA
+Part/Language                   Language of the part                                    NA
+Part/ExternalUrl                Non-BHL location of the part                            NA
+Part/DownloadUrl                Link to a downloadable version of the part              NA
+Part/RightsStatus               Rights status of the part (for example, "out of         NA
+                                copyright")
+Part/RightsStatement            Rights statement for the part                           NA
+Part/LicenseName                License under which the part is made available          NA
+Part/LicenseUrl                 Link to additional licensing details                    NA
+Part/Doi                        DOI assigned to the part                                NA
 Part/Contributors/
 	Contributor/
-		ContributorName			Person/organization that contributed the part to BHL	NA
-Page/PageID						BHL identifier for the page								NA
-Page/ItemID						BHL identifier for the item containing the page			NA
-Page/Volume						Volume assigned to the page when multiple volumes		NA
-								bound together.
-Page/Issue						Issue assigned to the page when multiple volumes		NA
-								bound together.
-Page/Year						Year assigned to the page when multiple volumes			NA
-								bound together.
-Page/PageUrl					BHL address for the page								NA
-Page/ThumbnailUrl				BHL address for the thumbnail image of the page			NA
-Page/FullSizeImageUrl			BHL address for the full-size image of the page			NA
-Page/OcrUrl						BHL address for the OCR of the page						NA
-Page/OcrText					Text of the page OCR									NA
-PageNumber/Prefix				Prefix of the number assigned to the page				NA
-								(ex. Page, Plate)
-PageNumber/Number				The number assigned to the page							NA
-PageType/PageTypeName			One of the following values, which identify the			NA
-								type of a page:
-									Title Page
-									Text
-									Illustration
-									Verso
-									Recto
-									Blank
-									Index
-									Cover
-									Appendix
-									Map
-									Table of Contents
-									Article Start
-									Article End
-									Foldout
-									Issue Start
-									Issue End
-Name/NameBankID					Identifier assigned to a name in uBio's NameBank		NA
-Name/NameFound					Name found on a page									NA
-Name/NameConfirmed				Name found on a page and confirmed in uBio's NameBank	NA
-Collection/CollectionID			BHL identifier for the collection						NA
-Collection/CollectionName		The name of the collection								NA
+        ContributorName         Person/organization that contributed the part to BHL    NA
+Page/PageID                     BHL identifier for the page                             NA
+Page/ItemID                     BHL identifier for the item containing the page         NA
+Page/Volume                     Volume assigned to the page when multiple volumes       NA
+                                bound together.
+Page/Issue                      Issue assigned to the page when multiple volumes        NA
+                                bound together.
+Page/Year                       Year assigned to the page when multiple volumes         NA
+                                bound together.
+Page/PageUrl                    BHL address for the page                                NA
+Page/ThumbnailUrl               BHL address for the thumbnail image of the page         NA
+Page/FullSizeImageUrl           BHL address for the full-size image of the page         NA
+Page/OcrUrl                     BHL address for the OCR of the page                     NA
+Page/OcrText                    Text of the page OCR                                    NA
+PageNumber/Prefix               Prefix of the number assigned to the page               NA
+                                (ex. Page, Plate)
+PageNumber/Number               The number assigned to the page                         NA
+PageType/PageTypeName           One of the following values, which identify the         NA
+                                type of a page:
+                                    Title Page
+                                    Text
+                                    Illustration
+                                    Verso
+                                    Recto
+                                    Blank
+                                    Index
+                                    Cover
+                                    Appendix
+                                    Map
+                                    Table of Contents
+                                    Article Start
+                                    Article End
+                                    Foldout
+                                    Issue Start
+                                    Issue End
+Name/NameBankID                 Identifier assigned to a name in uBio's NameBank        NA
+Name/NameFound                  Name found on a page                                    NA
+Name/NameConfirmed              Name found on a page and confirmed in uBio's NameBank   NA
+Collection/CollectionID         BHL identifier for the collection                       NA
+Collection/CollectionName       The name of the collection                              NA
 Collection/CollectionDescription
-								A description of the contents of the collection			NA
-Collection/CanContainTitles		1 if the collection can contain titles, 0 otherwise		NA
-Collection/CanContainItems		1 if the collection can contain items, 0 otherwise		NA
-Institution/InstitutionCode		BHL code for the institution							NA
-Institution/InstitutionName		The name of the institution								NA
-Institution/InstitutionUrl		URL for the institution									NA
-Institution/BHLMember			True if the institution is a member of the BHL			NA
-								consortium
-Language/LanguageCode			BHL code for the language								NA
-Language/LanguageName			The name of the language								NA
-Variant/TitleVariantTypeName	One of the following values, which identify the type	NA
-								of variant:
-									Translated
-									Parallel (Translated)
-									Abbreviated
-									Alterative
-Variant/Title					The variant title										Location depends on the type 
-																						of variant:
-																							210 (VariantType = abbreviated)
-																							242 (VariantType = translated)
-																							246 (VariantType = parallel or alternative)
-TitleCount						Number of Titles in BHL									NA
-ItemCount						Number of Items in BHL									NA
-PageCount						Number of Pages in BHL									NA
-PartCount						Number of Parts in BHL									NA
+                                A description of the contents of the collection         NA
+Collection/CanContainTitles     1 if the collection can contain titles, 0 otherwise     NA
+Collection/CanContainItems      1 if the collection can contain items, 0 otherwise      NA
+Institution/InstitutionCode     BHL code for the institution                            NA
+Institution/InstitutionName     The name of the institution                             NA
+Institution/InstitutionUrl      URL for the institution                                 NA
+Institution/BHLMember           True if the institution is a member of the BHL          NA
+                                consortium
+Language/LanguageCode           BHL code for the language                               NA
+Language/LanguageName           The name of the language                                NA
+Variant/TitleVariantTypeName    One of the following values, which identify the type    NA
+                                of variant:
+                                    Translated
+                                    Parallel (Translated)
+                                    Abbreviated
+                                    Alterative
+Variant/Title                    The variant title                                      Location depends on the type 
+                                                                                        of variant:
+                                                                                            210 (VariantType = abbreviated)
+                                                                                            242 (VariantType = translated)
+                                                                                            246 (VariantType = parallel or alternative)
+TitleCount                      Number of Titles in BHL                                 NA
+ItemCount                       Number of Items in BHL                                  NA
+PageCount                       Number of Pages in BHL                                  NA
+PartCount                       Number of Parts in BHL                                  NA
 
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+September 8, 2016 - version 2.7.2
+
+- Enhancement: Added Item/CopySpecificInformation element.
 
 July 26, 2016 - version 2.7.1
 
@@ -672,9 +677,9 @@ July 26, 2016 - version 2.7.1
 June 14, 2016 - version 2.7
 
 - BREAKING CHANGE: Removed the Part/ContributorID element.  Values previously located in that element
-		now are found in the Identifiers/Identifier element.
+        now are found in the Identifiers/Identifier element.
 - BREAKING CHANGE: Removed the Part/Contributor element.  Values previously located in that element
-		now are found in the Part/Contributors element.
+        now are found in the Part/Contributors element.
 - Enhancement: Added RightsHolder and ScanningInstitution to the Item metadata
 
 May 12, 2016 - version 2.6
@@ -703,9 +708,9 @@ January 1, 2013 - version 2.5
 - Enhancement: Added GetPartBibTeX method
 - Enhancement: Added GetPartEndNote method
 - Enhancement: Added parts and ocr options to the GetItemMetadata method to allow for parts and ocr to
-		be included in the data returned by the method
+        be included in the data returned by the method
 - Enhancement: Added an ocr option to the GetItemPages method to allow for ocr to be returned by the
-		method
+        method
 
 March 22, 2012 - version 2.3
 
@@ -720,7 +725,7 @@ March 1, 2011 - version 2.2.1
 
 - Enhancement: Added FullerForm to the Creator information returned by various methods
 - Enhancement: Added Variant titles (such as Translated titles and Alternative titles) to the Title information 
-		returned by GetTitleMetadata and GetTitleByIdentifier.
+        returned by GetTitleMetadata and GetTitleByIdentifier.
 
 February 1, 2011 - version 2.2
 

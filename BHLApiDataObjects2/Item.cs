@@ -77,6 +77,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
+        private string _CopySpecificInformation = null;
+        public string CopySpecificInformation
+        {
+            get { return _CopySpecificInformation; }
+            set { _CopySpecificInformation = value; }
+        }
+
         private string _Contributor = null;
         public string Contributor
         {
@@ -264,6 +271,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                     case "Year":
                         {
                             _Year = (string)column.Value;
+                            break;
+                        }
+                    case "ItemDescription":
+                        {
+                            _CopySpecificInformation = (string)column.Value;
                             break;
                         }
                     case "InstitutionName":

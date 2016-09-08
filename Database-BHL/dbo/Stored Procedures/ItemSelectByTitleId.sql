@@ -14,6 +14,7 @@ SELECT	i.[ItemID],
 		CASE WHEN ISNULL(s.DownloadUrl, '') = '' THEN ''
 			ELSE ISNULL(s.[DownloadUrl] + i.BarCode, '') END AS [DownloadUrl],
 		i.[ScanningDate],
+		ISNULL(i.ItemDescription, '') AS ItemDescription,
 		ISNULL(i.LicenseUrl, '') AS LicenseUrl,
 		ISNULL(i.ExternalUrl, '') AS ExternalUrl,
 		ISNULL(i.Rights, '') AS Rights,

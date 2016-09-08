@@ -105,25 +105,14 @@ namespace BHLCoreDALTest
         ///A test for MonthlyStatsSelectCurrentMonthSummary
         ///</summary>
         [TestMethod()]
-        public void MonthlyStatsSelectCurrentMonthSummaryTest()
+        public void MonthlyStatsSelectSummaryTest()
         {
             MonthlyStatsDAL target = new MonthlyStatsDAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectCurrentMonthSummary(sqlConnection, sqlTransaction);
-            Assert.IsNotNull(actual);
-        }
-
-        /// <summary>
-        ///A test for MonthlyStatsSelectCurrentYearSummary
-        ///</summary>
-        [TestMethod()]
-        public void MonthlyStatsSelectCurrentYearSummaryTest()
-        {
-            MonthlyStatsDAL target = new MonthlyStatsDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectCurrentYearSummary(sqlConnection, sqlTransaction);
+            int year = 2008;
+            int month = 0;
+            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectSummary(sqlConnection, sqlTransaction, year, month);
             Assert.IsNotNull(actual);
         }
     }

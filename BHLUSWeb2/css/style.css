@@ -2252,6 +2252,10 @@ ul.data.collections li .collectiontitle
 	color:#416991;
 	font-size:11px;
 }
+.volume .copyspecific
+{
+    background:#EBEDEA;
+}
 .volume .booklinks
 {
     margin: 30px 0 0 0;

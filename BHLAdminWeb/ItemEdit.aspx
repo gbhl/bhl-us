@@ -238,10 +238,18 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Notes:
+					Copy-specific Information:
 				</td>
 				<td>
-					<asp:TextBox ID="notesTextBox" runat="server" MaxLength="255" Width="100%"></asp:TextBox>
+					<asp:TextBox ID="itemDescriptionTextBox" runat="server" TextMode="MultiLine" Rows="4" Width="600px"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Notes (not for public display):
+				</td>
+				<td>
+					<asp:TextBox ID="notesTextBox" runat="server" TextMode="MultiLine" Rows="2" Width="600px" MaxLength="255"></asp:TextBox>
 				</td>
 			</tr>
 			<tr>
