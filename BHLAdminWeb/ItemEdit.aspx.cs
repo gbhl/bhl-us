@@ -206,6 +206,7 @@ namespace MOBOT.BHL.AdminWeb
                 itemDescriptionTextBox.Text = item.ItemDescription;
                 notesTextBox.Text = item.Note;
                 replacedByTextBox.Text = item.RedirectItemID.ToString();
+                replacedByOrig.Value = item.RedirectItemID.ToString();
                 yearTextBox.Text = item.Year;
                 identifierBibTextBox.Text = item.IdentifierBib;
                 zQueryTextBox.Text = item.ZQuery;
@@ -304,6 +305,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     ddlItemStatus.SelectedIndex = 0;
                 }
+                itemStatusOrig.Value = item.ItemStatusID.ToString();
 
                 if (item.Pages.Count > 0)
                 {

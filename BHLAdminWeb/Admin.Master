@@ -8,7 +8,7 @@
 </head>
 <body id="body" runat="server">
     <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post"></form>
-	<form id="form1" runat="server">
+	<form id="masterForm" clientidmode="Static" runat="server">
 		<div id="firefoxKludge" style="position: absolute; margin: 0; padding: 0; border: none; top: 0px; left: 0px; bottom: 0px; right: 0px;
 			visibility: hidden; overflow: hidden;">
 		</div>

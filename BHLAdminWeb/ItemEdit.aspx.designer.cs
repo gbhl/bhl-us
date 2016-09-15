@@ -175,6 +175,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.DropDownList ddlItemStatus;
         
         /// <summary>
+        /// itemStatusOrig control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField itemStatusOrig;
+        
+        /// <summary>
         /// replacedByTextBox control.
         /// </summary>
         /// <remarks>
@@ -182,6 +191,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox replacedByTextBox;
+        
+        /// <summary>
+        /// replacedByOrig control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField replacedByOrig;
         
         /// <summary>
         /// yearTextBox control.

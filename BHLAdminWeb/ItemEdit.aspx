@@ -138,6 +138,36 @@
             btn.click();
         }
     }
+
+    function validateRedirect() {
+        var statusDDL = document.getElementById("ddlItemStatus");
+        var replacedByTB = document.getElementById("replacedByTextBox");
+        var replaceWarningDiv = document.getElementById("replaceWarning");
+
+        var visibility = "none";
+        var border = "";
+        if (statusDDL.value != 40 && replacedByTB.value == "") {
+            visibility = "block";
+            border = "2px solid #ed7600";
+        }
+
+        replaceWarningDiv.style.display = visibility;
+        replacedByTB.style.border = border;
+    }
+
+    document.getElementById("masterForm").onsubmit = function () {
+        var statusDDL = document.getElementById("ddlItemStatus");
+        var statusOrig = document.getElementById("itemStatusOrig");
+        var replacedByTB = document.getElementById("replacedByTextBox");
+        var replacedByOrig = document.getElementById("replacedByOrig");
+
+        if (statusDDL.value != 40 && replacedByTB.value == '' &&
+            (statusOrig.value == '40' || replacedByOrig.value != '')) {
+            if (confirm('You are REMOVING CONTENT without REPLACING it.  Continue?')) { return true; } else { return false; }
+        }
+
+        return true;
+    }
     </script>
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<br />
@@ -266,8 +296,13 @@
 					Item Status:
 				</td>
 				<td>
-					<asp:DropDownList ID="ddlItemStatus" runat="server">
-					</asp:DropDownList>
+					<asp:DropDownList ID="ddlItemStatus" ClientIDMode="Static" runat="server" onchange="validateRedirect();"></asp:DropDownList>
+                    <asp:HiddenField ID="itemStatusOrig" ClientIDMode="Static" runat="server" />
+                    <div id="replaceWarning" style="color:#ed7600; display:none;">
+                        DEAD LINK WARNING:  Are you replacing this item with another copy?<br />
+                        Enter the ID of the replacement ITEM in the "Replaced By" field.<br />
+                        To REMOVE content click "Save" below.
+                    </div>
 				</td>
 			</tr>
 			<tr>
@@ -275,7 +310,8 @@
 					Replaced By (Item ID):
 				</td>
 				<td>
-				    <asp:TextBox ID="replacedByTextBox" runat="server" Width="200px"></asp:TextBox>
+				    <asp:TextBox ID="replacedByTextBox" ClientIDMode="Static" runat="server" Width="200px" onchange="validateRedirect();"></asp:TextBox>
+                    <asp:HiddenField ID="replacedByOrig" ClientIDMode="Static" runat="server" />
 				</td>
 			</tr>
 			<tr>

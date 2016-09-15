@@ -180,6 +180,38 @@
             btn.click();
         }
     }
+
+    function validateRedirect()
+    {
+        var publishedCB = document.getElementById("publishReadyCheckBox");
+        var replacedByTB = document.getElementById("replacedByTextBox");
+        var replaceWarningDiv = document.getElementById("replaceWarning");
+
+        var visibility = "none";
+        var border = "";
+        if (!publishedCB.checked && replacedByTB.value == "") {
+            visibility = "block";
+            border = "2px solid #ed7600";
+        }
+
+        replaceWarningDiv.style.display = visibility;
+        replacedByTB.style.border = border;
+    }
+
+    document.getElementById("masterForm").onsubmit = function () {
+        var publishedCB = document.getElementById("publishReadyCheckBox");
+        var publishedOrig = document.getElementById("publishReadyOrig");
+        var replacedByTB = document.getElementById("replacedByTextBox");
+        var replacedByOrig = document.getElementById("replacedByOrig");
+
+        if (!publishedCB.checked && replacedByTB.value == '' &&
+            (publishedOrig.value == 'True' || replacedByOrig.value != '') ) {
+            if (confirm('You are removing TITLE METADATA from BHL\'s SEARCH INDEX.  Continue?')) { return true; } else { return false; }
+        }
+
+        return true;
+    }
+
     </script>
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<a href="/TitleSearch.aspx">&lt; Find a Different Title</a><br />
@@ -192,12 +224,18 @@
 	<div class="box" style="padding: 5px;margin-right:5px">
 		<table cellpadding="4" width="100%">
 			<tr>
-				<td style="white-space: nowrap" align="right" class="dataHeader">
+				<td style="white-space: nowrap;" align="right" valign="top" class="dataHeader">
 					Title ID:
 				</td>
-				<td style="white-space: nowrap" colspan="4" valign="middle" width="100%">
+				<td style="white-space: nowrap; padding-top:0px" colspan="4" valign="middle" width="100%">
 					<asp:Label ID="idLabel" runat="server" ForeColor="blue" />
-					<asp:CheckBox ID="publishReadyCheckBox" runat="server" />Publish On BHL Portal
+					<asp:CheckBox ID="publishReadyCheckBox" ClientIDMode="Static" onclick="validateRedirect();" runat="server" />Publish On BHL Portal
+                    <asp:HiddenField ID="publishReadyOrig" ClientIDMode="Static" runat="server" />
+                    <div id="replaceWarning" style="color:#ed7600; display:none;">
+                        You are removing TITLE METADATA from BHL's SEARCH INDEX.<br>
+                        To redirect to another title use "Replaced By" field below.<br>
+                        To remove content files, edit "Item Status" in ITEMS screen.
+                    </div>
 				</td>
 			</tr>
             <tr>
@@ -211,7 +249,8 @@
 					Replaced By (Title ID):
 				</td>
 				<td>
-				    <asp:TextBox ID="replacedByTextBox" runat="server" Width="200px"></asp:TextBox>
+				    <asp:TextBox ID="replacedByTextBox" ClientIDMode="Static" runat="server" onchange="validateRedirect();" Width="200px"></asp:TextBox>
+                    <asp:HiddenField ID="replacedByOrig" ClientIDMode="Static" runat="server" />
 				</td>
 			</tr>
 			<tr>

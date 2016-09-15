@@ -198,10 +198,12 @@ namespace MOBOT.BHL.AdminWeb
 			Session[ "Title" + title.TitleID.ToString()] = title;
 
             replacedByTextBox.Text = title.RedirectTitleID.ToString();
+            replacedByOrig.Value = title.RedirectTitleID.ToString();
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
             makePrimary.Text = "Make Title " + title.TitleID.ToString() + " (\"" + displayTitle + "\") the Primary title for the items.";
             ddlBibliographicLevel.SelectedValue = (title.BibliographicLevelID ?? 0).ToString();
             publishReadyCheckBox.Checked = title.PublishReady;
+            publishReadyOrig.Value = title.PublishReady.ToString();
 			marcBibIdLabel.Text = title.MARCBibID;
 			marcLeaderLabel.Text = title.MARCLeader;
 			fullTitleTextBox.Text = title.FullTitle;
