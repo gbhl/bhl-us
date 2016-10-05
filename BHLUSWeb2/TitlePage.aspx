@@ -93,6 +93,10 @@
                 URL for Current Page
             </div>
             <div class="urlbox"><a id="currentpageURL" href="http://biodiversitylibrary.org/page/4254470">http://biodiversitylibrary.org/page/4254470</a></div>
+
+            <div class="flickrbox">
+                <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
+            </div>
         </div>
 
       <div id="names-container-div" class="left-panel-boxes limit-height">
@@ -291,7 +295,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=3" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=4" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=5" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -997,6 +1001,18 @@
             // Update page URL and names
             $("#currentpageURL").text("http://biodiversitylibrary.org/page/" + pages[index].PageID);
             $("#currentpageURL").attr("href", "http://biodiversitylibrary.org/page/" + pages[index].PageID);
+            var currentFlickrUrl = $("#currentFlickrURL");
+            var flickrUrlSpan = $("#flickrurlspan");
+            if (pages[index].FlickrUrl == "")
+            {
+                flickrUrlSpan.toggle(false);
+                currentFlickrUrl.attr("href", "#");
+            }
+            else
+            {
+                currentFlickrUrl.attr("href", pages[index].FlickrUrl);
+                flickrUrlSpan.toggle(true);
+            }
 
             addthis_share = { 
                 url: "http://biodiversitylibrary.org/page/" + pages[index].PageID,

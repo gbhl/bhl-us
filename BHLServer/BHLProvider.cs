@@ -820,6 +820,7 @@ namespace MOBOT.BHL.Server
             public string ExternalBaseUrl = string.Empty;
             public string AltExternalUrl = string.Empty;
             public string BarCode = string.Empty;
+            public string FlickrUrl = string.Empty;
             public int? SequenceOrder = null;
             public int Width = 1600;
             public int Height = 2400;

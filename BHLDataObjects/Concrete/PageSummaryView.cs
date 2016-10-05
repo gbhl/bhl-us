@@ -3,6 +3,7 @@
 
 using System;
 using System.Configuration;
+using CustomDataAccess;
 
 #endregion Using
 
@@ -29,6 +30,31 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        private string _flickrUrl = string.Empty;
+
+        public string FlickrUrl
+        {
+            get { return _flickrUrl; }
+            set { _flickrUrl = value; }
+        }
+
         #endregion Properties
+
+        public override void SetValues(CustomDataRow row)
+        {
+            foreach (CustomDataColumn column in row)
+            {
+                switch (column.Name)
+                {
+                    case "FlickrUrl":
+                        {
+                            _flickrUrl = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                }
+            }
+
+            base.SetValues(row);
+        }
     }
 }

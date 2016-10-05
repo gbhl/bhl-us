@@ -208,6 +208,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#525c6b', end
     font-size: 13px; 
     color: #fff; 
 }
+.flickrbox {
+    margin: 10px 0;
+    font-family: Georgia;
+    font-style: normal; 
+    font-size: 13px; 
+    color: #fff; 
+}
+.flickrbox a, .flickrbox a:visited {
+    color:#ffffff;
+}
 .optionbox {
     background: #f4f4ec;
 }

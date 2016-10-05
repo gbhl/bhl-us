@@ -242,13 +242,14 @@ namespace MOBOT.BHL.Web2
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
                     
                     //get cache of pages that have comments
-                    CustomGenericList<DisqusCache> pageCommentsCache = bhlProvider.DisqusCacheSelectByItemID(PageSummary.ItemID);
+                    //CustomGenericList<DisqusCache> pageCommentsCache = bhlProvider.DisqusCacheSelectByItemID(PageSummary.ItemID);
 
                     CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
                     pages_comments = new CustomGenericList<Page>();
 
                     // Show an indicator on pages that have disqus comments
                     foreach (Page page in pages) {
+                        /*
                         foreach (DisqusCache cachedPage in pageCommentsCache)
                         {
                             if (cachedPage.PageID == page.PageID)
@@ -256,6 +257,7 @@ namespace MOBOT.BHL.Web2
                                 page.NumComments = cachedPage.Count;
                             }
                         }
+                        */
                         pages_comments.Add(page);
                     }
 
@@ -303,6 +305,7 @@ namespace MOBOT.BHL.Web2
                             ExternalBaseUrl = pageview.ExternalBaseURL,
                             AltExternalUrl = pageview.AltExternalURL,
                             BarCode = pageview.BarCode,
+                            FlickrUrl = pageview.FlickrUrl,
                             SequenceOrder = pageview.SequenceOrder
                         };
                         viewerPages.Add(viewerPage);
@@ -326,7 +329,8 @@ namespace MOBOT.BHL.Web2
                                                         p.SegmentID,
                                                         vp.ExternalBaseUrl,
                                                         vp.Height,
-                                                        vp.Width
+                                                        vp.Width,
+                                                        vp.FlickrUrl
                                                     }));
                 }
             }
