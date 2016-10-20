@@ -194,7 +194,6 @@ namespace MOBOT.BHL.AdminWeb
                 tdShowEOLNames.InnerHtml = GetMenuText(tdShowEOLNames.InnerHtml);
                 tdShowEOLPages.InnerHtml = GetMenuText(tdShowEOLPages.InnerHtml);
 
-                tdExpandedLibraryStats.InnerHtml = GetMenuText(tdExpandedLibraryStats.InnerHtml);
                 tdExpandedGrowthStats.InnerHtml = GetMenuText(tdExpandedGrowthStats.InnerHtml);
                 tdExpandedPDFStats.InnerHtml = GetMenuText(tdExpandedPDFStats.InnerHtml);
 
@@ -204,6 +203,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdViewUpdateBioStor.InnerHtml = GetMenuText(tdViewUpdateBioStor.InnerHtml);
                 tdViewUpdateDoi.InnerHtml = GetMenuText(tdViewUpdateDoi.InnerHtml);
 
+                tdRptReportingStats.InnerHtml = GetMenuText(tdRptReportingStats.InnerHtml);
                 tdRptCharEncoding.InnerHtml = GetMenuText(tdRptCharEncoding.InnerHtml);
                 tdRptDoiByInstitution.InnerHtml = GetMenuText(tdRptDoiByInstitution.InnerHtml);
                 tdRptMonoContributions.InnerHtml = GetMenuText(tdRptMonoContributions.InnerHtml);

@@ -135,7 +135,6 @@
     <Compile Include="Generated\MarcDataFieldDAL.Auto.cs" />
     <Compile Include="Generated\MarcImportBatchDAL.Auto.cs" />
     <Compile Include="Generated\MarcSubFieldDAL.Auto.cs" />
-    <Compile Include="Generated\MonthlyStatsDAL.Auto.cs" />
     <Compile Include="Generated\NameDAL.Auto.cs" />
     <Compile Include="Generated\NameIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\NamePageDAL.Auto.cs" />
@@ -196,7 +195,6 @@
     <Compile Include="Interfaces\IStatsDAL.cs" />
     <Compile Include="Interfaces\IKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IMarcDAL.Auto.cs" />
-    <Compile Include="Interfaces\IMonthlyStatsDAL.Auto.cs" />
     <Compile Include="Interfaces\INoteTypeDAL.Auto.cs" />
     <Compile Include="Interfaces\ISegmentDAL.Auto.cs" />
     <Compile Include="Interfaces\ITitleAssociationDAL.Auto.cs" />

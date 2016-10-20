@@ -267,11 +267,11 @@
 									    <span id="eolPageActiveSpan" style="display:none"></span>
 									</td>
 								</tr>
+					            <tr>
+    					            <td colspan="3" align="center" runat="server" id="tdExpandedLibraryStats"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
+					            </tr>
 							</table>
 						</td>
-					</tr>
-					<tr>
-					<td align="center" runat="server" id="tdExpandedLibraryStats"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
 					</tr>
 				</table>
 			</td>
@@ -481,6 +481,11 @@
 					<tr>
 						<td class="boxHeader" align="center">
 							Reports
+						</td>
+					</tr>
+					<tr>
+						<td align="center" runat="server" id="tdRptReportingStats">
+							<a href="/Report/ReportingStats">BHL Reporting Statistics</a>
 						</td>
 					</tr>
 					<tr>

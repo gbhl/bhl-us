@@ -296,13 +296,11 @@
     <None Include="annotation\Stored Procedures\SearchPageForSubject.sql" />
     <None Include="dbo\Stored Procedures\PageSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectAllBibTeXCitations.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcImportBatchInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PageSelectExternalUrlForPageID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectSelectByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\PageSelectByBarCodeAndSequence.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectForSegmentID.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsDeleteAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationNoteDeleteByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\MarcImportBatchSelectAuto.sql" />
     <None Include="annotation\Stored Procedures\SearchPageForConcept.sql" />
@@ -315,13 +313,10 @@
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptSelectByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySelectByBarcode.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectEndNoteForSegmentID.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentAuthorUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\SearchSegmentComplete.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsSelectByStatType.sql" />
     <None Include="dbo\Stored Procedures\SegmentIdentifierDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\MonthlyStatsInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\PageNameDeleteForInactivePages.sql" />
     <None Include="dbo\Stored Procedures\PageUpdateAuto.sql" />
@@ -1260,5 +1255,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\MonthlyStatsSelectSummary.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\MonthlyStatsSelectByInstitution.sql" />
+    <None Include="dbo\Stored Procedures\MonthlyStatsSelectDetailed.sql" />
+    <None Include="dbo\Stored Procedures\MonthlyStatsSelectSummaryStats.sql" />
   </ItemGroup>
 </Project>

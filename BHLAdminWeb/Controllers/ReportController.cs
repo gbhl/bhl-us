@@ -23,6 +23,37 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return View(model);
         }
 
+        // GET: /Report/ReportingStats
+        public ActionResult ReportingStats()
+        {
+            ViewBag.PageTitle += "BHL Reporting Statistics";
+            ReportingStatsModel model = new ReportingStatsModel();
+            return View(model);
+        }
+
+        // POST: /Report/ReportingStats
+        [HttpPost]
+        public ActionResult ReportingStats(ReportingStatsModel model)
+        {
+            if (Request.Form["btnDownload"] != null)
+            {
+                var cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = string.Format("BHLReportingStatistics{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),
+                    Inline = false,  // prompt the user for downloading, set true to show the file in the browser
+                };
+                Response.AppendHeader("Content-Disposition", cd.ToString());
+
+                model.GetCSV();  // Get the report data to be downloaded
+                return File(model.DownloadStats, "text/csv");
+            }
+            else // if (Request.Form["btnShow"] != null)
+            {
+                model.GetStats();  // Get the report data
+                return View(model);
+            }
+        }
+
         //
         // GET: /Report/CitationImportHistory
         [HttpGet]

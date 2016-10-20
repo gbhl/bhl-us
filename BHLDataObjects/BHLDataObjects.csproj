@@ -275,6 +275,7 @@
     <Compile Include="InstitutionComparer.cs" />
     <Compile Include="ItemSuspectCharacter.cs" />
     <Compile Include="KeywordSuspectCharacter.cs" />
+    <Compile Include="MonthlyStatsComparer.cs" />
     <Compile Include="NonMemberMonograph.cs" />
     <Compile Include="NamePageComparer.cs" />
     <Compile Include="PageComparer.cs" />

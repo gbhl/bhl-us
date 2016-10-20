@@ -13,8 +13,8 @@ namespace MOBOT.BHL.AdminWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            String institutionName = Request.QueryString["i"] as String;
-            if (institutionName == null) institutionName = "";
+            String institutionCode = Request.QueryString["i"] as String;
+            if (institutionCode == null) institutionCode = "";
 
             Response.Clear();
             Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
@@ -27,7 +27,11 @@ namespace MOBOT.BHL.AdminWeb
             CustomGenericList<MonthlyStats> segmentStats = new CustomGenericList<MonthlyStats>();
 
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(2000, 1, 2099, 12, institutionName);
+
+            Institution institution = provider.InstitutionSelectAuto(institutionCode);
+            String institutionName = institution == null ? "(All)" : institution.InstitutionName;
+
+            CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(2000, 1, 2099, 12, institutionCode);
             foreach(MonthlyStats stat in stats)
             {
                 switch (stat.StatType)
