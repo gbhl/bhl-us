@@ -120,7 +120,8 @@
                 <a href="http://biodivlib.wikispaces.com/Developer+Tools+and+API">Developer Tools</a>
 		        <a href="http://biodivlib.wikispaces.com/BHL+Consortium+Membership">Members</a>
                 <a href="http://biodivlib.wikispaces.com/Licensing+and+Copyright">Licensing & Copyright</a>
-		            <%--<a href="/scanningrequest">Submit a Scanning Request</a>--%>
+                <a href="http://si.edu/Termsofuse">Terms of Use</a>
+                <a href="http://si.edu/Privacy">Privacy</a>
 	            
             </div>
             </nav>
