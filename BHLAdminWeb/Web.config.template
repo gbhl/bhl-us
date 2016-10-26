@@ -58,7 +58,7 @@
     <!-- Indicates if full-text search is enabled on the BHL web site -->
     <add key="EnableFullTextSearch" value="true" />
     <!-- Indicates whether to use the remote file access services -->
-    <add key="UseRemoteFileAccessProvider" value="true" />
+    <add key="UseRemoteFileAccessProvider" value="false" />
     <!-- Path to OCR files -->
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->
@@ -244,7 +244,7 @@
       <mailSettings>
         <smtp deliveryMethod="Network">
           <network defaultCredentials="false"
-                   enableSsl="true"
+                   enableSsl="false"
                    host="MAIL_SERVER_ADDRESS"
                    port="MAIL_SERVER_PORT"
                    userName="MAIL_SERVER_USERNAME"
