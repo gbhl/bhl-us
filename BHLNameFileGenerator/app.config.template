@@ -17,7 +17,7 @@
     <add key="NameFileFormat" value="{0}_names.xml"/>
     <add key="NameFilePathFormat" value="{0}\{1}\{2}"/>
     <!-- These access keys are associated with the IA account bhlnames.upload@gmail.com, password 4651CBEC -->
-    <add key="IAS3AccessKey" value="INTERNET ARCHVIE ACCESS KEY"/>
+    <add key="IAS3AccessKey" value="INTERNET ARCHIVE ACCESS KEY"/>
     <add key="IAS3SecretKey" value="INTERNET ARCHIVE SECRET KEY"/>
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
@@ -85,7 +85,7 @@
       <mailSettings>
         <smtp deliveryMethod="Network">
           <network defaultCredentials="false"
-                   enableSsl="true"
+                   enableSsl="false"
                    host="MAIL_SERVER_ADDRESS"
                    port="MAIL_SERVER_PORT"
                    userName="MAIL_SERVER_USERNAME"

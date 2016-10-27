@@ -74,7 +74,7 @@
       <mailSettings>
         <smtp deliveryMethod="Network">
           <network defaultCredentials="false"
-                   enableSsl="true"
+                   enableSsl="false"
                    host="MAIL_SERVER_ADDRESS"
                    port="MAIL_SERVER_PORT"
                    userName="MAIL_SERVER_USERNAME"
