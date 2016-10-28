@@ -447,8 +447,12 @@ BEGIN TRY
 				AND dfB.Code = 'b'
 	WHERE	t.CallNumber IS NULL
 
-	-- Get the institution code (first check the "contributor" metadata, 
-	-- if we don't get a match then check the scanning center)
+	-- Get the institution code.  First use the IAScanCenterInstitution
+	-- table, which maps IA "contributor" strings to entries in the BHL
+	-- Institution table.  If no match is found there, then attempt to 
+	-- find a match by comparing the IA "contributor" string to the 
+	-- Insitution.InstitutionName values.  Anything left over is assigned
+	-- to the "UNKNOWN" contributor.
 	UPDATE	#tmpTitle
 	SET		InstitutionCode = s.InstitutionCode
 	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
@@ -456,6 +460,15 @@ BEGIN TRY
 				AND m.DCElementName = 'contributor'
 			INNER JOIN dbo.IAScanCenterInstitution s
 				ON m.DCElementValue = s.ScanningCenterCode
+	
+	UPDATE	#tmpTitle
+	SET		InstitutionCode = i.InstitutionCode
+	FROM	#tmpTitle t INNER JOIN dbo.IADCMetadata m
+				ON t.ItemID = m.ItemID
+				AND m.DCElementName = 'contributor'
+			INNER JOIN dbo.BHLInstitution i
+				ON m.DCElementValue = i.InstitutionName
+	WHERE	t.InstitutionCode IS NULL
 	
 	-- 5/21/2008 - DON'T fall back to the scanning center.  If we don't match
 	-- on "contributor" metadata, then raise an error.  This will allow us
