@@ -637,20 +637,6 @@
       <DependentUpon>TitleService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Stats.aspx.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Stats.aspx.designer.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StatsDownload.aspx.cs">
-      <DependentUpon>StatsDownload.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StatsDownload.aspx.designer.cs">
-      <DependentUpon>StatsDownload.aspx</DependentUpon>
-    </Compile>
     <Compile Include="TitleAssociationEdit.aspx.cs">
       <DependentUpon>TitleAssociationEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -995,8 +981,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Stats.aspx" />
-    <Content Include="StatsDownload.aspx" />
     <Content Include="styles\adminstyle.css" />
     <Content Include="styles\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="styles\jqgridtheme\ui.jqgrid.css" />

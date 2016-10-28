@@ -267,9 +267,6 @@
 									    <span id="eolPageActiveSpan" style="display:none"></span>
 									</td>
 								</tr>
-					            <tr>
-    					            <td colspan="3" align="center" runat="server" id="tdExpandedLibraryStats"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
-					            </tr>
 							</table>
 						</td>
 					</tr>
@@ -296,12 +293,6 @@
 									<td align="center" style="white-space: nowrap; width: 25%; border-bottom: 1px solid black">
 										New<br />Last Month
 									</td>
-								</tr>
-								<tr>
-									<td>Titles</td>
-									<td align="right" runat="server" id="titlesThisYear">0</td>
-									<td align="right" runat="server" id="titlesThisMonth">0</td>
-									<td align="right" runat="server" id="titlesPrevMonth">0</td>
 								</tr>
 								<tr>
 									<td>Items</td>

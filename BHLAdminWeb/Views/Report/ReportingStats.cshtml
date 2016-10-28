@@ -13,13 +13,13 @@
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
     <div style="margin-bottom:20px;" class="col-md-6">
-        <div>@Html.Label("Show Statistics For")</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 1, new { Checked = "true" }) All Contributors</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 2) All Contributors (combined)</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 3) BHL Member Contributors</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 4) BHL Member Contributors (combined)</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 5) Selected Contributor
-        @Html.DropDownListFor(m => m.ContributorCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), "")</div>
+        <div>@Html.Label("Show")</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 1, new { Checked = "true" }) All Contributor Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 2) All Contributor BHL Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 3) All BHL Partner Contributor Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 4) BHL Partner Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 5) Selected Contributor Statistics
+        @Html.DropDownListFor(m => m.ContributorCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })</div>
     </div>
     <div style="margin-bottom:20px;" class="col-md-3">
         <div>@Html.Label("Sort Order")</div>
