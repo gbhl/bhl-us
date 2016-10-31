@@ -9,11 +9,6 @@ namespace MOBOT.BHL.Server
     {
         private MonthlyStatsDAL monthlyStatsDal = null;
 
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectByStatType(string statType, string institutionName, bool showMonthly)
-        {
-            return GetMonthlyStatsDalInstance().MonthlyStatsSelectByStatType(null, null, statType, institutionName, showMonthly);
-        }
-
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectCurrentYearSummary()
         {
             int year = DateTime.Today.Year;

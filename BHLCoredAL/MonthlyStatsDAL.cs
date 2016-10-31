@@ -13,25 +13,6 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class MonthlyStatsDAL
 	{
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectByStatType(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string statType, string institutionName, bool showMonthly)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("MonthlyStatsSelectByStatType", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("StatType", SqlDbType.NVarChar, 100, false, statType),
-                CustomSqlHelper.CreateInputParameter("InstitutionName", SqlDbType.NVarChar, 255, false, institutionName),
-                CustomSqlHelper.CreateInputParameter("ShowMonthly", SqlDbType.Bit, null, false, showMonthly)))
-            {
-                using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
-                {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectSummary(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int year, int month)
         {
