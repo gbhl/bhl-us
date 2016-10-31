@@ -21,7 +21,7 @@ namespace MOBOT.BHL.AdminWeb
                 CustomGenericList<Institution> institutions = provider.InstitutionSelectWithPublishedItems(false);
                 foreach (Institution institution in institutions)
                 {
-                    ddlInstitutions.Items.Add(new ListItem(institution.InstitutionName, institution.InstitutionName));
+                    ddlInstitutions.Items.Add(new ListItem(institution.InstitutionName, institution.InstitutionCode));
                 }
 
                 this.BuildCharts("", -6);
@@ -39,7 +39,7 @@ namespace MOBOT.BHL.AdminWeb
                                 Server.UrlEncode(ddlInstitutions.SelectedValue));
         }
 
-        private void BuildCharts(String institutionName, int dateRange)
+        private void BuildCharts(String institutionCode, int dateRange)
         {
             DateTime now = DateTime.Now;
             int startYear = 0;
@@ -71,7 +71,7 @@ namespace MOBOT.BHL.AdminWeb
 
             BHLProvider provider = new BHLProvider();
             CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(
-                startYear, startMonth, endYear, endMonth, institutionName);
+                startYear, startMonth, endYear, endMonth, institutionCode);
 
             imgMonthlyItems.Src = GetMonthlyChartUrl(stats, "Items", "Items");
             imgMonthlyPages.Src = GetMonthlyChartUrl(stats, "Pages", "Pages");

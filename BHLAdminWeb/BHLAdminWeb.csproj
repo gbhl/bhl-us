@@ -441,6 +441,7 @@
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="MVCServices\EmailService.cs" />
@@ -636,20 +637,6 @@
       <DependentUpon>TitleService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Stats.aspx.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Stats.aspx.designer.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="StatsDownload.aspx.cs">
-      <DependentUpon>StatsDownload.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="StatsDownload.aspx.designer.cs">
-      <DependentUpon>StatsDownload.aspx</DependentUpon>
-    </Compile>
     <Compile Include="TitleAssociationEdit.aspx.cs">
       <DependentUpon>TitleAssociationEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1075,6 +1062,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <Content Include="Views\Account\Unlock.cshtml" />
+    <Content Include="Views\Report\ReportingStats.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -1133,8 +1121,6 @@
     <Content Include="SegmentEdit.aspx" />
     <Content Include="SegmentSearch.aspx" />
     <Content Include="SegmentTypeEdit.aspx" />
-    <Content Include="Stats.aspx" />
-    <Content Include="StatsDownload.aspx" />
     <Content Include="TitleAssociationEdit.aspx" />
     <Content Include="TitleEdit.aspx" />
     <Content Include="TitleImport.aspx" />

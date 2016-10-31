@@ -98,9 +98,6 @@ namespace MOBOT.BHL.AdminWeb
             {
                 switch (stat.StatType)
                 {
-                    case "Titles Created":
-                        titlesThisYear.InnerHtml = stat.StatValue.ToString();
-                        break;
                     case "Items Created":
                         itemsThisYear.InnerHtml = stat.StatValue.ToString();
                         break;
@@ -119,9 +116,6 @@ namespace MOBOT.BHL.AdminWeb
             {
                 switch (stat.StatType)
                 {
-                    case "Titles Created":
-                        titlesThisMonth.InnerHtml = stat.StatValue.ToString();
-                        break;
                     case "Items Created":
                         itemsThisMonth.InnerHtml = stat.StatValue.ToString();
                         break;
@@ -142,9 +136,6 @@ namespace MOBOT.BHL.AdminWeb
             {
                 switch (stat.StatType)
                 {
-                    case "Titles Created":
-                        titlesPrevMonth.InnerHtml = stat.StatValue.ToString();
-                        break;
                     case "Items Created":
                         itemsPrevMonth.InnerHtml = stat.StatValue.ToString();
                         break;
@@ -194,7 +185,6 @@ namespace MOBOT.BHL.AdminWeb
                 tdShowEOLNames.InnerHtml = GetMenuText(tdShowEOLNames.InnerHtml);
                 tdShowEOLPages.InnerHtml = GetMenuText(tdShowEOLPages.InnerHtml);
 
-                tdExpandedLibraryStats.InnerHtml = GetMenuText(tdExpandedLibraryStats.InnerHtml);
                 tdExpandedGrowthStats.InnerHtml = GetMenuText(tdExpandedGrowthStats.InnerHtml);
                 tdExpandedPDFStats.InnerHtml = GetMenuText(tdExpandedPDFStats.InnerHtml);
 
@@ -204,6 +194,7 @@ namespace MOBOT.BHL.AdminWeb
                 tdViewUpdateBioStor.InnerHtml = GetMenuText(tdViewUpdateBioStor.InnerHtml);
                 tdViewUpdateDoi.InnerHtml = GetMenuText(tdViewUpdateDoi.InnerHtml);
 
+                tdRptReportingStats.InnerHtml = GetMenuText(tdRptReportingStats.InnerHtml);
                 tdRptCharEncoding.InnerHtml = GetMenuText(tdRptCharEncoding.InnerHtml);
                 tdRptDoiByInstitution.InnerHtml = GetMenuText(tdRptDoiByInstitution.InnerHtml);
                 tdRptMonoContributions.InnerHtml = GetMenuText(tdRptMonoContributions.InnerHtml);

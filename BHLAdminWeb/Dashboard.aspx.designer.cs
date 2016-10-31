@@ -400,42 +400,6 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell eolPageActiveCell;
         
         /// <summary>
-        /// tdExpandedLibraryStats control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdExpandedLibraryStats;
-        
-        /// <summary>
-        /// titlesThisYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell titlesThisYear;
-        
-        /// <summary>
-        /// titlesThisMonth control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell titlesThisMonth;
-        
-        /// <summary>
-        /// titlesPrevMonth control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell titlesPrevMonth;
-        
-        /// <summary>
         /// itemsThisYear control.
         /// </summary>
         /// <remarks>
@@ -704,6 +668,15 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor openurlStatsLink;
+        
+        /// <summary>
+        /// tdRptReportingStats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptReportingStats;
         
         /// <summary>
         /// tdRptItemPagination control.

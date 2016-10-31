@@ -1,0 +1,121 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.ReportingStatsModel
+
+@{
+    ViewBag.Title = "BHL Reporting Statistics";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div style="margin-bottom:20px;" class="col-md-6">
+        <div>@Html.Label("Show")</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 1, new { Checked = "true" }) All Contributor Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 2) All Contributor BHL Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 3) All BHL Partner Contributor Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 4) BHL Partner Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 5) Selected Contributor Statistics
+        @Html.DropDownListFor(m => m.ContributorCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })</div>
+    </div>
+    <div style="margin-bottom:20px;" class="col-md-3">
+        <div>@Html.Label("Sort Order")</div>
+        <div>@Html.RadioButtonFor(m => m.SortOrder, "Asc", new { Checked = "true" }) Oldest First</div>
+        <div>@Html.RadioButtonFor(m => m.SortOrder, "Desc") Most Recent First</div>
+    </div>
+    <div style="margin-bottom:20px;" class="col-md-3">
+        <input type="submit" name="btnShow" id="btnShow" value="Show Report" class="col-md-8 btn btn-primary"/><br />
+        <input type="submit" name="btnDownload" id="btnDownload" value="Download Report" class="col-md-8 btn"/>
+    </div>
+
+    <div class="col-md-12">
+        <table cellpadding="0" cellspacing="0" border="0" class="display table-bordered" id="recordlist" style="width:100%">
+            <thead>
+                <tr>
+                    <th width="30%">Institution Name</th>
+                    <th width="5%">Year</th>
+                    <th width="5%">Month</th>
+                    <th width="5%" style="border-left-width:3px; background-color:whitesmoke">New<br />Items</th>
+                    <th width="5%" style="background-color:whitesmoke">New<br />Pages</th>
+                    <th width="5%" style="background-color:whitesmoke">New<br />Names</th>
+                    <th width="5%" style="background-color:whitesmoke">New<br />Segments</th>
+                    @{
+                        if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                        {
+                            <th width="5%" style="background-color:whitesmoke">New<br />PDFs</th>
+                            <th width="5%" style="background-color:whitesmoke">New<br />DOIs</th>
+                        }
+                    }
+                    <th width="5%" style="border-left-width:3px">Total<br />Items</th>
+                    <th width="5%">Total<br />Pages</th>
+                    <th width="5%">Total<br />Names</th>
+                    <th width="5%">Total<br />Segments</th>
+                    @{
+                        if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                        {
+                            <th width="5%">Total<br />PDFs</th>
+                            <th width="5%">Total<br />DOIs</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    string prevInstitutionName = string.Empty;
+                    foreach (MOBOT.BHL.AdminWeb.Models.ReportingStatsModel.ReportStat reportStat in Model.ReportStats)
+                    {
+                        string institutionName = (prevInstitutionName != reportStat.InstitutionName) ? reportStat.InstitutionName : string.Empty;
+                        string topWidth = (prevInstitutionName != reportStat.InstitutionName) ? "3px" : "1px";
+                        <tr>
+                            <td style="border-top-width:@topWidth">@institutionName</td>
+                            <td style="border-top-width:@topWidth">@reportStat.Year</td>
+                            <td style="border-top-width:@topWidth">@reportStat.Month</td>
+                            <td style="border-top-width:@topWidth; border-left-width:3px; background-color:whitesmoke">@reportStat.Items</td>
+                            <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Pages</td>
+                            <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Names</td>
+                            <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Segments</td>
+                            @{
+                                if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                                {
+                                    <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.PDFs</td>
+                                    <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.DOIs</td>
+                                }
+                            }
+                            <td style="border-top-width:@topWidth; border-left-width:3px;">@reportStat.TotalItems</td>
+                            <td style="border-top-width:@topWidth">@reportStat.TotalPages</td>
+                            <td style="border-top-width:@topWidth">@reportStat.TotalNames</td>
+                            <td style="border-top-width:@topWidth">@reportStat.TotalSegments</td>
+                            @{
+                                if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                                {
+                                    <td style="border-top-width:@topWidth">@reportStat.TotalPDFs</td>
+                                    <td style="border-top-width:@topWidth">@reportStat.TotalDOIs</td>
+                                }
+                            }
+                        </tr>
+                        prevInstitutionName = reportStat.InstitutionName;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($("form input:radio[name='ContributorTarget']:checked").val() != "5") $("#ContributorCode").attr("disabled", true);
+    });
+
+    $("form input:radio[name='ContributorTarget']").change(function () {
+        if ($(this).val() == '5') {
+            $("#ContributorCode").removeAttr("disabled");
+        }
+        else {
+            $("#ContributorCode").attr("disabled", true);
+        }
+    });
+</script>

@@ -36,10 +36,25 @@ namespace MOBOT.BHL.Server
         }
 
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectByDateAndInstitution(int startYear,
-            int startMonth, int endYear, int endMonth, String institutionName)
+            int startMonth, int endYear, int endMonth, String institutionCode)
         {
             return GetMonthlyStatsDalInstance().MonthlyStatsSelectByDateAndInstitution(null, null, 
-                startYear, startMonth, endYear, endMonth, institutionName);
+                startYear, startMonth, endYear, endMonth, institutionCode);
+        }
+
+        public CustomGenericList<MonthlyStats> MonthlyStatsSelectByInstitution(string institutionCode)
+        {
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectByInstitution(null, null, institutionCode);
+        }
+
+        public CustomGenericList<MonthlyStats> MonthlyStatsSelectDetailed(bool bhlMemberLibraryOnly)
+        {
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectDetailed(null, null, bhlMemberLibraryOnly);
+        }
+
+        public CustomGenericList<MonthlyStats> MonthlyStatsSelectSummaryStats(bool bhlMemberLibraryOnly)
+        {
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectSummaryStats(null, null, bhlMemberLibraryOnly);
         }
 
         private MonthlyStatsDAL GetMonthlyStatsDalInstance()

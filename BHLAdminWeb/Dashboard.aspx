@@ -270,9 +270,6 @@
 							</table>
 						</td>
 					</tr>
-					<tr>
-					<td align="center" runat="server" id="tdExpandedLibraryStats"><br /><a href="Stats.aspx">Expanded Library Stats</a></td>
-					</tr>
 				</table>
 			</td>
 			<td class="box" style="width: 250px;background-color:White" valign="top">
@@ -296,12 +293,6 @@
 									<td align="center" style="white-space: nowrap; width: 25%; border-bottom: 1px solid black">
 										New<br />Last Month
 									</td>
-								</tr>
-								<tr>
-									<td>Titles</td>
-									<td align="right" runat="server" id="titlesThisYear">0</td>
-									<td align="right" runat="server" id="titlesThisMonth">0</td>
-									<td align="right" runat="server" id="titlesPrevMonth">0</td>
 								</tr>
 								<tr>
 									<td>Items</td>
@@ -481,6 +472,11 @@
 					<tr>
 						<td class="boxHeader" align="center">
 							Reports
+						</td>
+					</tr>
+					<tr>
+						<td align="center" runat="server" id="tdRptReportingStats">
+							<a href="/Report/ReportingStats">BHL Reporting Statistics</a>
 						</td>
 					</tr>
 					<tr>
