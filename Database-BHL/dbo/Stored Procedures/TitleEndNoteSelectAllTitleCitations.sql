@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleEndNoteSelectAllTitleCitations]
+﻿CREATE PROCEDURE [dbo].[TitleEndNoteSelectAllTitleCitations]
 AS
 BEGIN
 
@@ -33,6 +32,7 @@ SELECT 	DISTINCT
 		ISNULL(t.Note, '') + CASE WHEN ISNULL(t.Note, '') = '' THEN dbo.fnNoteStringForTitle(t.TitleID, '') ELSE dbo.fnNoteStringForTitle(t.TitleID, ' --- ') END AS Note,
 		t.EditionStatement,
 		d.DOIName AS DOI
+INTO	#EndNote
 FROM	dbo.Title t WITH (NOLOCK) 
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK)
 			ON t.TitleID = isbn.TitleID
@@ -49,5 +49,37 @@ FROM	dbo.Title t WITH (NOLOCK)
 			ON t.TitleID = c.TitleID
 WHERE	PublishReady = 1
 
-END
+SELECT 	TitleID,
+		PublicationType,
+		Authors,
+		[Year],
+		FullTitle,
+		PublisherPlace,
+		PublisherName,
+		ShortTitle,
+		MIN(Abbreviation) AS Abbreviation,
+		MIN(ISBN) AS ISBN,
+		CallNumber,
+		Keywords,
+		LanguageName,
+		Note,
+		EditionStatement,
+		DOI
+FROM	#EndNote
+GROUP BY
+		TitleID,
+		PublicationType,
+		Authors,
+		[Year],
+		FullTitle,
+		PublisherPlace,
+		PublisherName,
+		ShortTitle,
+		CallNumber,
+		Keywords,
+		LanguageName,
+		Note,
+		EditionStatement,
+		DOI
 
+END
