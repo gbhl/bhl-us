@@ -143,6 +143,12 @@
     <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
     <customErrors mode="Off" />
     <authentication mode="None" />
+    <sessionState mode="StateServer" stateConnectionString="state server address"></sessionState>
+    <machineKey
+      validationKey="validation key"
+      decryptionKey="decryption key"
+      validation="SHA1"
+  	/>
   </system.web>
   <system.serviceModel>
     <bindings>
