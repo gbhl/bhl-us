@@ -1313,6 +1313,7 @@ namespace MOBOT.BHL.AdminWeb
 
         #region TitleItem
 
+        [Serializable]
         private class ItemTitle : Title
         {
             private int _titleID;
