@@ -467,7 +467,7 @@ BEGIN TRY
 				ON t.ItemID = m.ItemID
 				AND m.DCElementName = 'contributor'
 			INNER JOIN dbo.BHLInstitution i
-				ON m.DCElementValue = i.InstitutionName
+				ON m.DCElementValue = i.InstitutionName COLLATE Latin1_general_CI_AI -- ignore diacritics for this comparison
 	WHERE	t.InstitutionCode IS NULL
 	
 	-- 5/21/2008 - DON'T fall back to the scanning center.  If we don't match
