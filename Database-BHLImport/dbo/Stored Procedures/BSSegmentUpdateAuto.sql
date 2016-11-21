@@ -1,10 +1,8 @@
-﻿
--- BSSegmentUpdateAuto PROCEDURE
--- Generated 10/24/2012 4:21:54 PM
+﻿-- Update Procedure for dbo.BSSegment
 -- Do not modify the contents of this procedure.
--- Update Procedure for BSSegment
+-- Generated 11/21/2016 1:39:33 PM
 
-CREATE PROCEDURE BSSegmentUpdateAuto
+CREATE PROCEDURE [dbo].[BSSegmentUpdateAuto]
 
 @SegmentID INT,
 @ItemID INT,
@@ -13,6 +11,8 @@ CREATE PROCEDURE BSSegmentUpdateAuto
 @Genre NVARCHAR(50),
 @Title NVARCHAR(2000),
 @ContainerTitle NVARCHAR(2000),
+@PublisherName NVARCHAR(250),
+@PublisherPlace NVARCHAR(150),
 @Volume NVARCHAR(100),
 @Series NVARCHAR(100),
 @Issue NVARCHAR(100),
@@ -20,6 +20,8 @@ CREATE PROCEDURE BSSegmentUpdateAuto
 @Date NVARCHAR(20),
 @ISSN NVARCHAR(125),
 @DOI NVARCHAR(50),
+@OCLC NVARCHAR(125),
+@JSTOR NVARCHAR(125),
 @StartPageNumber NVARCHAR(20),
 @EndPageNumber NVARCHAR(20),
 @StartPageID INT,
@@ -32,15 +34,15 @@ AS
 SET NOCOUNT ON
 
 UPDATE [dbo].[BSSegment]
-
 SET
-
 	[ItemID] = @ItemID,
 	[BioStorReferenceID] = @BioStorReferenceID,
 	[SequenceOrder] = @SequenceOrder,
 	[Genre] = @Genre,
 	[Title] = @Title,
 	[ContainerTitle] = @ContainerTitle,
+	[PublisherName] = @PublisherName,
+	[PublisherPlace] = @PublisherPlace,
 	[Volume] = @Volume,
 	[Series] = @Series,
 	[Issue] = @Issue,
@@ -48,6 +50,8 @@ SET
 	[Date] = @Date,
 	[ISSN] = @ISSN,
 	[DOI] = @DOI,
+	[OCLC] = @OCLC,
+	[JSTOR] = @JSTOR,
 	[StartPageNumber] = @StartPageNumber,
 	[EndPageNumber] = @EndPageNumber,
 	[StartPageID] = @StartPageID,
@@ -55,19 +59,17 @@ SET
 	[ContributorLastModifiedDate] = @ContributorLastModifiedDate,
 	[BHLSegmentID] = @BHLSegmentID,
 	[LastModifiedDate] = getdate()
-
 WHERE
 	[SegmentID] = @SegmentID
 		
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure BSSegmentUpdateAuto. No information was updated as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.BSSegmentUpdateAuto. No information was updated as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[SegmentID],
 		[ItemID],
 		[BioStorReferenceID],
@@ -75,6 +77,8 @@ ELSE BEGIN
 		[Genre],
 		[Title],
 		[ContainerTitle],
+		[PublisherName],
+		[PublisherPlace],
 		[Volume],
 		[Series],
 		[Issue],
@@ -82,6 +86,8 @@ ELSE BEGIN
 		[Date],
 		[ISSN],
 		[DOI],
+		[OCLC],
+		[JSTOR],
 		[StartPageNumber],
 		[EndPageNumber],
 		[StartPageID],
@@ -90,12 +96,9 @@ ELSE BEGIN
 		[BHLSegmentID],
 		[CreationDate],
 		[LastModifiedDate]
-
 	FROM [dbo].[BSSegment]
-	
 	WHERE
 		[SegmentID] = @SegmentID
 	
 	RETURN -- update successful
 END
-

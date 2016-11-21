@@ -59,8 +59,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
             var segmentIDParameter = segmentID.HasValue ?
                 new ObjectParameter("SegmentID", segmentID) :
                 new ObjectParameter("SegmentID", typeof(int));
-
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 300;
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BSSegmentResolveAuthors", segmentIDParameter);
         }
     
@@ -73,8 +72,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
             var segmentIDParameter = segmentID.HasValue ?
                 new ObjectParameter("SegmentID", segmentID) :
                 new ObjectParameter("SegmentID", typeof(int));
-
-            ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 300;
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BSSegmentPublishToProduction", itemIDParameter, segmentIDParameter);
         }
     

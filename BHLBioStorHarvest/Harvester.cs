@@ -219,7 +219,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             segment.BioStorReferenceID = ((string)article["reference_id"]) ?? string.Empty;
             segment.Title = ((string)article["title"]) ?? string.Empty;
             segment.ContainerTitle = ((string)article["secondary_title"]) ?? string.Empty;
+            segment.PublisherName = ((string)article["publisher"]) ?? string.Empty;
+            segment.PublisherPlace = ((string)article["publoc"]) ?? string.Empty;
             segment.Volume = ((string)article["volume"]) ?? string.Empty;
+            segment.Issue = ((string)article["issue"]) ?? string.Empty;
             segment.Series = ((string)article["series"]) ?? string.Empty;
             segment.Year = ((string)article["year"]) ?? string.Empty;
             segment.Date = ((string)article["date"]) ?? string.Empty;
@@ -227,6 +230,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             segment.EndPageNumber = ((string)article["epage"]) ?? string.Empty;
             segment.ISSN = ((string)article["issn"]) ?? string.Empty;
             segment.DOI = this.GetDOI(article);
+            segment.OCLC = ((string)article["oclc"]) ?? string.Empty;
+            segment.JSTOR = ((string)article["jstor"]) ?? string.Empty;
 
             // Strip tabs, newlines, and carriage returns from title strings
             segment.Title = segment.Title.Replace("\t", " ").Replace("\n\r", " ").Replace("\r\n", " ").Replace("\r", " ").Replace("\n", " ");

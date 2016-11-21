@@ -28,6 +28,12 @@ SELECT @VIAFIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierN
 DECLARE @ISSNIdentifierID int
 SELECT @ISSNIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'ISSN'
 
+DECLARE @OCLCIdentifierID int
+SELECT @OCLCIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'OCLC'
+
+DECLARE @JSTORIdentifierID int
+SELECT @JSTORIdentifierID = IdentifierID FROM dbo.BHLIdentifier WHERE IdentifierName = 'JSTOR'
+
 DECLARE @DOIEntityTypeID int
 SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Segment'
 
@@ -65,10 +71,12 @@ BEGIN TRY
 
 		-- Insert a new BHL Segment record
 		INSERT	dbo.BHLSegment (ItemID, SegmentStatusID, SequenceOrder, SegmentGenreID, 
-			Title, ContainerTitle, Volume, Series, Issue, [Date], StartPageNumber, EndPageNumber, 
-			StartPageID, ContributorCreationDate,  ContributorLastModifiedDate, SortTitle)
+			Title, ContainerTitle, PublisherName, PublisherPlace, Volume, Series, Issue, 
+			[Date], StartPageNumber, EndPageNumber, StartPageID, ContributorCreationDate,  
+			ContributorLastModifiedDate, SortTitle)
 		SELECT	@ItemID, 10, SequenceOrder, @SegmentGenreID, Title,
-				ContainerTitle, Volume, Series, Issue, CASE WHEN ISDATE([Date]) = 1 THEN [Date] ELSE Year END,
+				ContainerTitle, PublisherName, PublisherPlace, Volume, Series, Issue, 
+				CASE WHEN ISDATE([Date]) = 1 THEN [Date] ELSE Year END,
 				StartPageNumber, EndPageNumber, StartPageID, ContributorCreationDate,
 				ContributorLastModifiedDate,
 				CASE
@@ -120,6 +128,22 @@ BEGIN TRY
 		FROM	dbo.BSSegment
 		WHERE	SegmentID = @SegmentID
 		AND		ISSN <> ''	
+
+		-- Insert new BHL SegmentIdentifier record for OCLC
+		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 
+			IsContainerIdentifier, CreationUserID, LastModifiedUserID)
+		SELECT	@BHLSegmentID, @OCLCIdentifierID, OCLC, 1, @UserID, @UserID
+		FROM	dbo.BSSegment
+		WHERE	SegmentID = @SegmentID
+		AND		OCLC <> ''	
+
+		-- Insert new BHL SegmentIdentifier record for JSTOR
+		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 
+			IsContainerIdentifier, CreationUserID, LastModifiedUserID)
+		SELECT	@BHLSegmentID, @JSTORIdentifierID, JSTOR, 0, @UserID, @UserID
+		FROM	dbo.BSSegment
+		WHERE	SegmentID = @SegmentID
+		AND		JSTOR <> ''	
 
 		-- Insert new BHL DOI record
 		INSERT	dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, DOIName, StatusDate, IsValid)

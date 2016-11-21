@@ -1,10 +1,8 @@
-﻿
--- BSSegmentSelectAuto PROCEDURE
--- Generated 10/24/2012 4:21:54 PM
+﻿-- Select Procedure for dbo.BSSegment
 -- Do not modify the contents of this procedure.
--- Select Procedure for BSSegment
+-- Generated 11/21/2016 1:39:33 PM
 
-CREATE PROCEDURE BSSegmentSelectAuto
+CREATE PROCEDURE [dbo].[BSSegmentSelectAuto]
 
 @SegmentID INT
 
@@ -12,8 +10,7 @@ AS
 
 SET NOCOUNT ON
 
-SELECT 
-
+SELECT	
 	[SegmentID],
 	[ItemID],
 	[BioStorReferenceID],
@@ -21,6 +18,8 @@ SELECT
 	[Genre],
 	[Title],
 	[ContainerTitle],
+	[PublisherName],
+	[PublisherPlace],
 	[Volume],
 	[Series],
 	[Issue],
@@ -28,6 +27,8 @@ SELECT
 	[Date],
 	[ISSN],
 	[DOI],
+	[OCLC],
+	[JSTOR],
 	[StartPageNumber],
 	[EndPageNumber],
 	[StartPageID],
@@ -36,19 +37,17 @@ SELECT
 	[BHLSegmentID],
 	[CreationDate],
 	[LastModifiedDate]
-
-FROM [dbo].[BSSegment]
-
-WHERE
+FROM	
+	[dbo].[BSSegment]
+WHERE	
 	[SegmentID] = @SegmentID
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure BSSegmentSelectAuto. No information was selected.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.BSSegmentSelectAuto. No information was selected.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

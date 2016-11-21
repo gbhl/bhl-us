@@ -1,7 +1,7 @@
 
-// Generated 10/24/2012 4:21:54 PM
+// Generated 11/21/2016 1:39:33 PM
 // Do not modify the contents of this code file.
-// This abstract class __BSSegment is based upon BSSegment.
+// This abstract class __BSSegment is based upon dbo.BSSegment.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __BSSegment : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -52,6 +52,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="containerTitle"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="publisherPlace"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
@@ -59,6 +61,8 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="date"></param>
 		/// <param name="iSSN"></param>
 		/// <param name="dOI"></param>
+		/// <param name="oCLC"></param>
+		/// <param name="jSTOR"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
 		/// <param name="startPageID"></param>
@@ -74,6 +78,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string genre, 
 			string title, 
 			string containerTitle, 
+			string publisherName, 
+			string publisherPlace, 
 			string volume, 
 			string series, 
 			string issue, 
@@ -81,6 +87,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string date, 
 			string iSSN, 
 			string dOI, 
+			string oCLC, 
+			string jSTOR, 
 			string startPageNumber, 
 			string endPageNumber, 
 			int? startPageID, 
@@ -97,6 +105,8 @@ namespace MOBOT.BHLImport.DataObjects
 			Genre = genre;
 			Title = title;
 			ContainerTitle = containerTitle;
+			PublisherName = publisherName;
+			PublisherPlace = publisherPlace;
 			Volume = volume;
 			Series = series;
 			Issue = issue;
@@ -104,6 +114,8 @@ namespace MOBOT.BHLImport.DataObjects
 			Date = date;
 			ISSN = iSSN;
 			DOI = dOI;
+			OCLC = oCLC;
+			JSTOR = jSTOR;
 			StartPageNumber = startPageNumber;
 			EndPageNumber = endPageNumber;
 			StartPageID = startPageID;
@@ -173,6 +185,16 @@ namespace MOBOT.BHLImport.DataObjects
 						_ContainerTitle = (string)column.Value;
 						break;
 					}
+					case "PublisherName" :
+					{
+						_PublisherName = (string)column.Value;
+						break;
+					}
+					case "PublisherPlace" :
+					{
+						_PublisherPlace = (string)column.Value;
+						break;
+					}
 					case "Volume" :
 					{
 						_Volume = (string)column.Value;
@@ -206,6 +228,16 @@ namespace MOBOT.BHLImport.DataObjects
 					case "DOI" :
 					{
 						_DOI = (string)column.Value;
+						break;
+					}
+					case "OCLC" :
+					{
+						_OCLC = (string)column.Value;
+						break;
+					}
+					case "JSTOR" :
+					{
+						_JSTOR = (string)column.Value;
 						break;
 					}
 					case "StartPageNumber" :
@@ -248,7 +280,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -256,7 +288,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region SegmentID
 		
@@ -452,6 +484,62 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion ContainerTitle
 		
+		#region PublisherName
+		
+		private string _PublisherName = string.Empty;
+		
+		/// <summary>
+		/// Column: PublisherName;
+		/// DBMS data type: nvarchar(250);
+		/// </summary>
+		[ColumnDefinition("PublisherName", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=250)]
+		public string PublisherName
+		{
+			get
+			{
+				return _PublisherName;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 250);
+				if (_PublisherName != value)
+				{
+					_PublisherName = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PublisherName
+		
+		#region PublisherPlace
+		
+		private string _PublisherPlace = string.Empty;
+		
+		/// <summary>
+		/// Column: PublisherPlace;
+		/// DBMS data type: nvarchar(150);
+		/// </summary>
+		[ColumnDefinition("PublisherPlace", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=150)]
+		public string PublisherPlace
+		{
+			get
+			{
+				return _PublisherPlace;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 150);
+				if (_PublisherPlace != value)
+				{
+					_PublisherPlace = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion PublisherPlace
+		
 		#region Volume
 		
 		private string _Volume = string.Empty;
@@ -460,7 +548,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Volume;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=8, CharacterMaxLength=100)]
+		[ColumnDefinition("Volume", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=100)]
 		public string Volume
 		{
 			get
@@ -488,7 +576,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Series;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=100)]
+		[ColumnDefinition("Series", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=100)]
 		public string Series
 		{
 			get
@@ -516,7 +604,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Issue;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=10, CharacterMaxLength=100)]
+		[ColumnDefinition("Issue", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=100)]
 		public string Issue
 		{
 			get
@@ -544,7 +632,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Year;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=11, CharacterMaxLength=20)]
+		[ColumnDefinition("Year", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=20)]
 		public string Year
 		{
 			get
@@ -572,7 +660,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: Date;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("Date", DbTargetType=SqlDbType.NVarChar, Ordinal=12, CharacterMaxLength=20)]
+		[ColumnDefinition("Date", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=20)]
 		public string Date
 		{
 			get
@@ -600,7 +688,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ISSN;
 		/// DBMS data type: nvarchar(125);
 		/// </summary>
-		[ColumnDefinition("ISSN", DbTargetType=SqlDbType.NVarChar, Ordinal=13, CharacterMaxLength=125)]
+		[ColumnDefinition("ISSN", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=125)]
 		public string ISSN
 		{
 			get
@@ -628,7 +716,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: DOI;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("DOI", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=50)]
+		[ColumnDefinition("DOI", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=50)]
 		public string DOI
 		{
 			get
@@ -648,6 +736,62 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion DOI
 		
+		#region OCLC
+		
+		private string _OCLC = string.Empty;
+		
+		/// <summary>
+		/// Column: OCLC;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("OCLC", DbTargetType=SqlDbType.NVarChar, Ordinal=17, CharacterMaxLength=125)]
+		public string OCLC
+		{
+			get
+			{
+				return _OCLC;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_OCLC != value)
+				{
+					_OCLC = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion OCLC
+		
+		#region JSTOR
+		
+		private string _JSTOR = string.Empty;
+		
+		/// <summary>
+		/// Column: JSTOR;
+		/// DBMS data type: nvarchar(125);
+		/// </summary>
+		[ColumnDefinition("JSTOR", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=125)]
+		public string JSTOR
+		{
+			get
+			{
+				return _JSTOR;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 125);
+				if (_JSTOR != value)
+				{
+					_JSTOR = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion JSTOR
+		
 		#region StartPageNumber
 		
 		private string _StartPageNumber = string.Empty;
@@ -656,7 +800,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: StartPageNumber;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("StartPageNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=20)]
+		[ColumnDefinition("StartPageNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=19, CharacterMaxLength=20)]
 		public string StartPageNumber
 		{
 			get
@@ -684,7 +828,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: EndPageNumber;
 		/// DBMS data type: nvarchar(20);
 		/// </summary>
-		[ColumnDefinition("EndPageNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=16, CharacterMaxLength=20)]
+		[ColumnDefinition("EndPageNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=20)]
 		public string EndPageNumber
 		{
 			get
@@ -712,7 +856,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: StartPageID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("StartPageID", DbTargetType=SqlDbType.Int, Ordinal=17, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("StartPageID", DbTargetType=SqlDbType.Int, Ordinal=21, NumericPrecision=10, IsNullable=true)]
 		public int? StartPageID
 		{
 			get
@@ -739,7 +883,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ContributorCreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ContributorCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=18, IsNullable=true)]
+		[ColumnDefinition("ContributorCreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=22, IsNullable=true)]
 		public DateTime? ContributorCreationDate
 		{
 			get
@@ -766,7 +910,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: ContributorLastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("ContributorLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=19, IsNullable=true)]
+		[ColumnDefinition("ContributorLastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=23, IsNullable=true)]
 		public DateTime? ContributorLastModifiedDate
 		{
 			get
@@ -793,7 +937,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: BHLSegmentID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("BHLSegmentID", DbTargetType=SqlDbType.Int, Ordinal=20, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("BHLSegmentID", DbTargetType=SqlDbType.Int, Ordinal=24, NumericPrecision=10, IsNullable=true)]
 		public int? BHLSegmentID
 		{
 			get
@@ -820,7 +964,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=21)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=25)]
 		public DateTime CreationDate
 		{
 			get
@@ -847,7 +991,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=22)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=26)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -867,7 +1011,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -916,6 +1060,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Genre) == GetComparisonString(Genre) &&
 					GetComparisonString(o.Title) == GetComparisonString(Title) &&
 					GetComparisonString(o.ContainerTitle) == GetComparisonString(ContainerTitle) &&
+					GetComparisonString(o.PublisherName) == GetComparisonString(PublisherName) &&
+					GetComparisonString(o.PublisherPlace) == GetComparisonString(PublisherPlace) &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.Series) == GetComparisonString(Series) &&
 					GetComparisonString(o.Issue) == GetComparisonString(Issue) &&
@@ -923,6 +1069,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.Date) == GetComparisonString(Date) &&
 					GetComparisonString(o.ISSN) == GetComparisonString(ISSN) &&
 					GetComparisonString(o.DOI) == GetComparisonString(DOI) &&
+					GetComparisonString(o.OCLC) == GetComparisonString(OCLC) &&
+					GetComparisonString(o.JSTOR) == GetComparisonString(JSTOR) &&
 					GetComparisonString(o.StartPageNumber) == GetComparisonString(StartPageNumber) &&
 					GetComparisonString(o.EndPageNumber) == GetComparisonString(EndPageNumber) &&
 					o.StartPageID == StartPageID &&
@@ -1038,6 +1186,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Genre = "Genre";	
 			public const string Title = "Title";	
 			public const string ContainerTitle = "ContainerTitle";	
+			public const string PublisherName = "PublisherName";	
+			public const string PublisherPlace = "PublisherPlace";	
 			public const string Volume = "Volume";	
 			public const string Series = "Series";	
 			public const string Issue = "Issue";	
@@ -1045,6 +1195,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string Date = "Date";	
 			public const string ISSN = "ISSN";	
 			public const string DOI = "DOI";	
+			public const string OCLC = "OCLC";	
+			public const string JSTOR = "JSTOR";	
 			public const string StartPageNumber = "StartPageNumber";	
 			public const string EndPageNumber = "EndPageNumber";	
 			public const string StartPageID = "StartPageID";	
@@ -1059,3 +1211,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

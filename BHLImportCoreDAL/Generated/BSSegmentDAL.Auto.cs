@@ -1,8 +1,8 @@
 
-// Generated 10/24/2012 4:21:54 PM
+// Generated 11/21/2016 1:39:33 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class BSSegmentDAL is based upon BSSegment.
+// This partial class BSSegmentDAL is based upon dbo.BSSegment.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from BSSegment by primary key(s).
+		/// Select values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from BSSegment by primary key(s).
+		/// Select values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BSSegment by primary key(s).
+		/// Select values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BSSegment by primary key(s).
+		/// Select values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into BSSegment.
+		/// Insert values into dbo.BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -142,6 +142,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="containerTitle"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="publisherPlace"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
@@ -149,6 +151,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="date"></param>
 		/// <param name="iSSN"></param>
 		/// <param name="dOI"></param>
+		/// <param name="oCLC"></param>
+		/// <param name="jSTOR"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
 		/// <param name="startPageID"></param>
@@ -165,6 +169,8 @@ namespace MOBOT.BHLImport.DAL
 			string genre,
 			string title,
 			string containerTitle,
+			string publisherName,
+			string publisherPlace,
 			string volume,
 			string series,
 			string issue,
@@ -172,6 +178,8 @@ namespace MOBOT.BHLImport.DAL
 			string date,
 			string iSSN,
 			string dOI,
+			string oCLC,
+			string jSTOR,
 			string startPageNumber,
 			string endPageNumber,
 			int? startPageID,
@@ -179,11 +187,11 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID)
 		{
-			return BSSegmentInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, volume, series, issue, year, date, iSSN, dOI, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID );
+			return BSSegmentInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID );
 		}
 		
 		/// <summary>
-		/// Insert values into BSSegment.
+		/// Insert values into dbo.BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -194,6 +202,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="containerTitle"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="publisherPlace"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
@@ -201,6 +211,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="date"></param>
 		/// <param name="iSSN"></param>
 		/// <param name="dOI"></param>
+		/// <param name="oCLC"></param>
+		/// <param name="jSTOR"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
 		/// <param name="startPageID"></param>
@@ -218,6 +230,8 @@ namespace MOBOT.BHLImport.DAL
 			string genre,
 			string title,
 			string containerTitle,
+			string publisherName,
+			string publisherPlace,
 			string volume,
 			string series,
 			string issue,
@@ -225,6 +239,8 @@ namespace MOBOT.BHLImport.DAL
 			string date,
 			string iSSN,
 			string dOI,
+			string oCLC,
+			string jSTOR,
 			string startPageNumber,
 			string endPageNumber,
 			int? startPageID,
@@ -243,6 +259,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
 					CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
+					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
+					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -250,6 +268,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
 					CustomSqlHelper.CreateInputParameter("ISSN", SqlDbType.NVarChar, 125, false, iSSN),
 					CustomSqlHelper.CreateInputParameter("DOI", SqlDbType.NVarChar, 50, false, dOI),
+					CustomSqlHelper.CreateInputParameter("OCLC", SqlDbType.NVarChar, 125, false, oCLC),
+					CustomSqlHelper.CreateInputParameter("JSTOR", SqlDbType.NVarChar, 125, false, jSTOR),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
 					CustomSqlHelper.CreateInputParameter("EndPageNumber", SqlDbType.NVarChar, 20, false, endPageNumber),
 					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
@@ -276,7 +296,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into BSSegment. Returns an object of type BSSegment.
+		/// Insert values into dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -291,7 +311,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into BSSegment. Returns an object of type BSSegment.
+		/// Insert values into dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -311,6 +331,8 @@ namespace MOBOT.BHLImport.DAL
 				value.Genre,
 				value.Title,
 				value.ContainerTitle,
+				value.PublisherName,
+				value.PublisherPlace,
 				value.Volume,
 				value.Series,
 				value.Issue,
@@ -318,6 +340,8 @@ namespace MOBOT.BHLImport.DAL
 				value.Date,
 				value.ISSN,
 				value.DOI,
+				value.OCLC,
+				value.JSTOR,
 				value.StartPageNumber,
 				value.EndPageNumber,
 				value.StartPageID,
@@ -331,7 +355,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from BSSegment by primary key(s).
+		/// Delete values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -346,7 +370,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from BSSegment by primary key(s).
+		/// Delete values from dbo.BSSegment by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -389,7 +413,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in BSSegment. Returns an object of type BSSegment.
+		/// Update values in dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -400,6 +424,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="containerTitle"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="publisherPlace"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
@@ -407,6 +433,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="date"></param>
 		/// <param name="iSSN"></param>
 		/// <param name="dOI"></param>
+		/// <param name="oCLC"></param>
+		/// <param name="jSTOR"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
 		/// <param name="startPageID"></param>
@@ -424,6 +452,8 @@ namespace MOBOT.BHLImport.DAL
 			string genre,
 			string title,
 			string containerTitle,
+			string publisherName,
+			string publisherPlace,
 			string volume,
 			string series,
 			string issue,
@@ -431,6 +461,8 @@ namespace MOBOT.BHLImport.DAL
 			string date,
 			string iSSN,
 			string dOI,
+			string oCLC,
+			string jSTOR,
 			string startPageNumber,
 			string endPageNumber,
 			int? startPageID,
@@ -438,11 +470,11 @@ namespace MOBOT.BHLImport.DAL
 			DateTime? contributorLastModifiedDate,
 			int? bHLSegmentID)
 		{
-			return BSSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, volume, series, issue, year, date, iSSN, dOI, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID);
+			return BSSegmentUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, itemID, bioStorReferenceID, sequenceOrder, genre, title, containerTitle, publisherName, publisherPlace, volume, series, issue, year, date, iSSN, dOI, oCLC, jSTOR, startPageNumber, endPageNumber, startPageID, contributorCreationDate, contributorLastModifiedDate, bHLSegmentID);
 		}
 		
 		/// <summary>
-		/// Update values in BSSegment. Returns an object of type BSSegment.
+		/// Update values in dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -454,6 +486,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="genre"></param>
 		/// <param name="title"></param>
 		/// <param name="containerTitle"></param>
+		/// <param name="publisherName"></param>
+		/// <param name="publisherPlace"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
 		/// <param name="issue"></param>
@@ -461,6 +495,8 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="date"></param>
 		/// <param name="iSSN"></param>
 		/// <param name="dOI"></param>
+		/// <param name="oCLC"></param>
+		/// <param name="jSTOR"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
 		/// <param name="startPageID"></param>
@@ -479,6 +515,8 @@ namespace MOBOT.BHLImport.DAL
 			string genre,
 			string title,
 			string containerTitle,
+			string publisherName,
+			string publisherPlace,
 			string volume,
 			string series,
 			string issue,
@@ -486,6 +524,8 @@ namespace MOBOT.BHLImport.DAL
 			string date,
 			string iSSN,
 			string dOI,
+			string oCLC,
+			string jSTOR,
 			string startPageNumber,
 			string endPageNumber,
 			int? startPageID,
@@ -504,6 +544,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Genre", SqlDbType.NVarChar, 50, false, genre),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
 					CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
+					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
+					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -511,6 +553,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
 					CustomSqlHelper.CreateInputParameter("ISSN", SqlDbType.NVarChar, 125, false, iSSN),
 					CustomSqlHelper.CreateInputParameter("DOI", SqlDbType.NVarChar, 50, false, dOI),
+					CustomSqlHelper.CreateInputParameter("OCLC", SqlDbType.NVarChar, 125, false, oCLC),
+					CustomSqlHelper.CreateInputParameter("JSTOR", SqlDbType.NVarChar, 125, false, jSTOR),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
 					CustomSqlHelper.CreateInputParameter("EndPageNumber", SqlDbType.NVarChar, 20, false, endPageNumber),
 					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
@@ -537,7 +581,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BSSegment. Returns an object of type BSSegment.
+		/// Update values in dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -552,7 +596,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BSSegment. Returns an object of type BSSegment.
+		/// Update values in dbo.BSSegment. Returns an object of type BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -573,6 +617,8 @@ namespace MOBOT.BHLImport.DAL
 				value.Genre,
 				value.Title,
 				value.ContainerTitle,
+				value.PublisherName,
+				value.PublisherPlace,
 				value.Volume,
 				value.Series,
 				value.Issue,
@@ -580,6 +626,8 @@ namespace MOBOT.BHLImport.DAL
 				value.Date,
 				value.ISSN,
 				value.DOI,
+				value.OCLC,
+				value.JSTOR,
 				value.StartPageNumber,
 				value.EndPageNumber,
 				value.StartPageID,
@@ -593,9 +641,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage BSSegment object.
+		/// Manage dbo.BSSegment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BSSegment.
+		/// then either insert values into, delete values from, or update values in dbo.BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -610,9 +658,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage BSSegment object.
+		/// Manage dbo.BSSegment object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BSSegment.
+		/// then either insert values into, delete values from, or update values in dbo.BSSegment.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -636,6 +684,8 @@ namespace MOBOT.BHLImport.DAL
 						value.Genre,
 						value.Title,
 						value.ContainerTitle,
+						value.PublisherName,
+						value.PublisherPlace,
 						value.Volume,
 						value.Series,
 						value.Issue,
@@ -643,6 +693,8 @@ namespace MOBOT.BHLImport.DAL
 						value.Date,
 						value.ISSN,
 						value.DOI,
+						value.OCLC,
+						value.JSTOR,
 						value.StartPageNumber,
 						value.EndPageNumber,
 						value.StartPageID,
@@ -681,6 +733,8 @@ namespace MOBOT.BHLImport.DAL
 						value.Genre,
 						value.Title,
 						value.ContainerTitle,
+						value.PublisherName,
+						value.PublisherPlace,
 						value.Volume,
 						value.Series,
 						value.Issue,
@@ -688,6 +742,8 @@ namespace MOBOT.BHLImport.DAL
 						value.Date,
 						value.ISSN,
 						value.DOI,
+						value.OCLC,
+						value.JSTOR,
 						value.StartPageNumber,
 						value.EndPageNumber,
 						value.StartPageID,
@@ -711,4 +767,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

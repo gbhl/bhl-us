@@ -1,10 +1,8 @@
-﻿
--- BSSegmentInsertAuto PROCEDURE
--- Generated 10/24/2012 4:21:54 PM
+﻿-- Insert Procedure for dbo.BSSegment
 -- Do not modify the contents of this procedure.
--- Insert Procedure for BSSegment
+-- Generated 11/21/2016 1:39:33 PM
 
-CREATE PROCEDURE BSSegmentInsertAuto
+CREATE PROCEDURE [dbo].[BSSegmentInsertAuto]
 
 @SegmentID INT OUTPUT,
 @ItemID INT,
@@ -13,6 +11,8 @@ CREATE PROCEDURE BSSegmentInsertAuto
 @Genre NVARCHAR(50),
 @Title NVARCHAR(2000),
 @ContainerTitle NVARCHAR(2000),
+@PublisherName NVARCHAR(250),
+@PublisherPlace NVARCHAR(150),
 @Volume NVARCHAR(100),
 @Series NVARCHAR(100),
 @Issue NVARCHAR(100),
@@ -20,6 +20,8 @@ CREATE PROCEDURE BSSegmentInsertAuto
 @Date NVARCHAR(20),
 @ISSN NVARCHAR(125),
 @DOI NVARCHAR(50),
+@OCLC NVARCHAR(125),
+@JSTOR NVARCHAR(125),
 @StartPageNumber NVARCHAR(20),
 @EndPageNumber NVARCHAR(20),
 @StartPageID INT = null,
@@ -32,13 +34,14 @@ AS
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[BSSegment]
-(
-	[ItemID],
+( 	[ItemID],
 	[BioStorReferenceID],
 	[SequenceOrder],
 	[Genre],
 	[Title],
 	[ContainerTitle],
+	[PublisherName],
+	[PublisherPlace],
 	[Volume],
 	[Series],
 	[Issue],
@@ -46,6 +49,8 @@ INSERT INTO [dbo].[BSSegment]
 	[Date],
 	[ISSN],
 	[DOI],
+	[OCLC],
+	[JSTOR],
 	[StartPageNumber],
 	[EndPageNumber],
 	[StartPageID],
@@ -53,16 +58,16 @@ INSERT INTO [dbo].[BSSegment]
 	[ContributorLastModifiedDate],
 	[BHLSegmentID],
 	[CreationDate],
-	[LastModifiedDate]
-)
+	[LastModifiedDate] )
 VALUES
-(
-	@ItemID,
+( 	@ItemID,
 	@BioStorReferenceID,
 	@SequenceOrder,
 	@Genre,
 	@Title,
 	@ContainerTitle,
+	@PublisherName,
+	@PublisherPlace,
 	@Volume,
 	@Series,
 	@Issue,
@@ -70,6 +75,8 @@ VALUES
 	@Date,
 	@ISSN,
 	@DOI,
+	@OCLC,
+	@JSTOR,
 	@StartPageNumber,
 	@EndPageNumber,
 	@StartPageID,
@@ -77,20 +84,18 @@ VALUES
 	@ContributorLastModifiedDate,
 	@BHLSegmentID,
 	getdate(),
-	getdate()
-)
+	getdate() )
 
 SET @SegmentID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure BSSegmentInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.BSSegmentInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[SegmentID],
 		[ItemID],
 		[BioStorReferenceID],
@@ -98,6 +103,8 @@ ELSE BEGIN
 		[Genre],
 		[Title],
 		[ContainerTitle],
+		[PublisherName],
+		[PublisherPlace],
 		[Volume],
 		[Series],
 		[Issue],
@@ -105,6 +112,8 @@ ELSE BEGIN
 		[Date],
 		[ISSN],
 		[DOI],
+		[OCLC],
+		[JSTOR],
 		[StartPageNumber],
 		[EndPageNumber],
 		[StartPageID],
@@ -113,12 +122,9 @@ ELSE BEGIN
 		[BHLSegmentID],
 		[CreationDate],
 		[LastModifiedDate]	
-
 	FROM [dbo].[BSSegment]
-	
 	WHERE
 		[SegmentID] = @SegmentID
 	
 	RETURN -- insert successful
 END
-

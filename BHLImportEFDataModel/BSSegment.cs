@@ -41,6 +41,10 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public System.DateTime CreationDate { get; set; }
         public Nullable<int> BHLSegmentID { get; set; }
         public System.DateTime LastModifiedDate { get; set; }
+        public string PublisherName { get; set; }
+        public string PublisherPlace { get; set; }
+        public string OCLC { get; set; }
+        public string JSTOR { get; set; }
     
         public virtual BSItem BSItem { get; set; }
         public virtual ICollection<BSSegmentPage> BSSegmentPages { get; set; }
