@@ -167,13 +167,17 @@ BEGIN TRY
 		-- conversation with Chris Freeland on July 13, 2012.
 
 		DECLARE @SegmentSequence smallint
+		DECLARE @StartPageID int
 		
-		SELECT	@SegmentSequence = SequenceOrder
+		SELECT	@SegmentSequence = SequenceOrder,
+				@StartPageID = StartPageID
 		FROM	dbo.BSSegment
 		WHERE	SegmentID = @SegmentID
 
 		UPDATE	dbo.BHLSegment 
-		SET		SequenceOrder = @SegmentSequence,
+		SET		ItemID = @ItemID,
+				SequenceOrder = @SegmentSequence,
+				StartPageID = @StartPageID,
 				LastModifiedDate = GETDATE(),
 				LastModifiedUserID = 1
 		WHERE	SegmentID = @BHLSegmentID
