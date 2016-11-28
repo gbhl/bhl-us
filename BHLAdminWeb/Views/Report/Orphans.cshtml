@@ -1,0 +1,74 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.OrphanModel
+
+@{
+    ViewBag.Title = "Orphaned Titles/Items/Segments";
+}
+
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    <div class="col-md-9">
+        <p>"Orphaned" records are records that cannot be presented correctly in BHL because other records on which they rely have 
+        been removed.  For example, an Item record whose related Titles have been removed will no longer display correctly.</p>
+    </div>
+    <div class="col-md-3">
+        <input type="submit" name="btnDownload" id="btnDownload" value="Download Report" class="col-md-7 btn-primary" />
+    </div>
+    <div style="margin-bottom:20px;" class="col-md-12">
+        <p>
+            The purpose of this report is to aid in identification of Title, Item, and Segments records that are orphans.
+        </p>
+        <div id="moreinfo">
+            <p>The table below lists the following:</p>
+            <ul>
+                <li>Published Items with no related published Titles (orphaned Item)</li>
+                <li>Published Titles with no related published Items (orphaned Title)</li>
+                <li>Removed Items with related published Segments (orphaned Segments) *</li>
+            </ul>
+            <p>
+                * If a removed Item with Segments has been replaced with another Item (see the "Replaced By" column) and the contributor of
+                the Segments was <strong>BioStor</strong>, the replacement Item ID should be reported to Rod Page so that the BioStor data can be corrected.
+                Corrections made in BioStor will automatically be applied to BHL.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <table cellpadding="0" cellspacing="0" border="0" class="display table-bordered" id="recordlist" style="width:100%">
+            <thead>
+                <tr>
+                    <th width="6%">Type</th>
+                    <th width="7%">ID</th>
+                    <th width="12%">Status</th>
+                    <th width="7%">Replaced<br />By</th>
+                    <th width="50%">Contributor</th>
+                    <th width="6%">Active<br />Titles</th>
+                    <th width="6%">Active<br />Items</th>
+                    <th width="6%">Active<br />Segments</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (MOBOT.BHL.AdminWeb.Models.OrphanModel.Orphan orphan in Model.OrphanList)
+                    {
+                        <tr>
+                            <td>@orphan.Type</td>
+                            <td><a href="@orphan.Url">@orphan.ID</a></td>
+                            <td>@orphan.Status</td>
+                            <td>@orphan.ReplacedBy</td>
+                            <td>@orphan.Contributor</td>
+                            <td align="center">@((orphan.HasActiveTitles == null) ? "" : ((orphan.HasActiveTitles == true) ? "Yes" : "No"))</td>
+                            <td align="center">@((orphan.HasActiveItems == null) ? "" : ((orphan.HasActiveItems == true) ? "Yes" : "No"))</td>
+                            <td align="center">@((orphan.HasActiveSegments == null) ? "" : ((orphan.HasActiveSegments == true) ? "Yes" : "No"))</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}

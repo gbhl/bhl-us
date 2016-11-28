@@ -54,6 +54,29 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
         }
 
+        // GET: /Report/Orphans
+        public ActionResult Orphans()
+        {
+            ViewBag.PageTitle += "Orphaned Titles/Items/Segments";
+            OrphanModel model = new OrphanModel();
+            return View(model);
+        }
+
+        // POST: /Report/ReportingStats
+        [HttpPost]
+        public ActionResult Orphans(OrphanModel model)
+        {
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = string.Format("Orphans{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),
+                Inline = false,  // prompt the user for downloading, set true to show the file in the browser
+            };
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            model.GetCSV();  // Get the report data to be downloaded
+            return File(model.DownloadOrphans, "text/csv");
+        }
+
         //
         // GET: /Report/CitationImportHistory
         [HttpGet]

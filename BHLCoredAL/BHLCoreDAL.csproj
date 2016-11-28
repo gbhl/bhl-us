@@ -233,6 +233,7 @@
     <Compile Include="PDFPageDAL.cs" />
     <Compile Include="PDFStatsDAL.cs" />
     <Compile Include="PDFStatusDAL.cs" />
+    <Compile Include="ReportDAL.cs" />
     <Compile Include="RequestLog.ApplicationDAL.cs" />
     <Compile Include="RequestLog.RequestLogDAL.cs" />
     <Compile Include="ScanningRequestDAL.cs" />

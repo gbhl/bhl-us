@@ -1261,4 +1261,7 @@
     <None Include="dbo\Stored Procedures\MonthlyStatsSelectDetailed.sql" />
     <None Include="dbo\Stored Procedures\MonthlyStatsSelectSummaryStats.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ReportSelectOrphanedEntities.sql" />
+  </ItemGroup>
 </Project>

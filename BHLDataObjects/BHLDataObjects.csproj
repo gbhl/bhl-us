@@ -133,6 +133,7 @@
     <Compile Include="Concrete\PDFPage.cs" />
     <Compile Include="Concrete\PDFStats.cs" />
     <Compile Include="Concrete\PDFStatus.cs" />
+    <Compile Include="Concrete\ReportOrphan.cs" />
     <Compile Include="Concrete\RequestLog.Application.cs" />
     <Compile Include="Concrete\RequestLog.GenericStat.cs" />
     <Compile Include="Concrete\RequestLog.HistoryStat.cs" />

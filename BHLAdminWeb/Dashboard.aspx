@@ -514,6 +514,11 @@
                             <a href="ReportRecentlyClusteredSegments.aspx">Recently Clustered Segments</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td align="center" runat="server" id="td1">
+                            <a href="/Report/Orphans">Orphaned Titles/Items/Segments</a>
+                        </td>
+                    </tr>
 				</table>
             </td>
             <td class="box" style="width: 250px;background-color:White" valign="top">

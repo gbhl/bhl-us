@@ -441,6 +441,7 @@
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
@@ -1063,6 +1064,7 @@
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <Content Include="Views\Account\Unlock.cshtml" />
     <Content Include="Views\Report\ReportingStats.cshtml" />
+    <Content Include="Views\Report\Orphans.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
