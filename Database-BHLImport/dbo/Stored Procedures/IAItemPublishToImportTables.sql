@@ -1394,14 +1394,22 @@ BEGIN TRY
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
-	-- Get the scanning institution code
+	-- Get the scanning institution code.  Look in the IASCanCenterInstitution
+	-- table first.  If no match is found there, then look in the Institution
+	-- table in the BHL database.  Anything left over is assigned "UNKNOWN".
 	UPDATE	#tmpItem
 	SET		ScanningInstitutionCode = s.InstitutionCode
 	FROM	#tmpItem t 
-			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemiD
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 			INNER JOIN dbo.IAScanCenterInstitution s ON i.ScanningInstitution = s.ScanningCenterCode
 	
-	-- If we don't match on institution metadata, set the code to "UNKNOWN".
+	UPDATE	#tmpItem
+	SET		ScanningInstitutionCode = inst.InstitutionCode
+	FROM	#tmpItem t
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+			INNER JOIN dbo.BHLInstitution inst ON i.ScanningInstitution = inst.InstitutionName COLLATE Latin1_general_CI_AI
+	WHERE	t.ScanningInstitutionCode IS NULL
+
 	UPDATE	#tmpItem 
 	SET		ScanningInstitutionCode = 'UNKNOWN' 
 	FROM	#tmpItem t
@@ -1409,21 +1417,29 @@ BEGIN TRY
 	WHERE	t.ScanningInstitutionCode IS NULL
 	AND		i.ScanningInstitution <> ''
 
-	-- Get the rights holder code
+	-- Get the rights holder code.  Look in the IASCanCenterInstitution
+	-- table first.  If no match is found there, then look in the Institution
+	-- table in the BHL database.  Anything left over is assigned "UNKNOWN".
 	UPDATE	#tmpItem
 	SET		RightsHolderCode = s.InstitutionCode
 	FROM	#tmpItem t 
 			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 			INNER JOIN dbo.IAScanCenterInstitution s ON i.RightsHolder = s.ScanningCenterCode
 	
-	-- If we don't match on institution metadata, set the code to "UNKNOWN".
+	UPDATE	#tmpItem
+	SET		RightsHolderCode = inst.InstitutionCode
+	FROM	#tmpItem t
+			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
+			INNER JOIN dbo.BHLInstitution inst ON i.RightsHolder = inst.InstitutionName COLLATE Latin1_general_CI_AI
+	WHERE	t.RightsHolderCode IS NULL
+
 	UPDATE	#tmpItem 
 	SET		RightsHolderCode = 'UNKNOWN' 
 	FROM	#tmpItem t
 			INNER JOIN dbo.IAItem i ON t.ItemID = i.ItemID
 	WHERE	t.RightsHolderCode IS NULL
 	AND		i.RightsHolder <> ''
-
+	
 	-- Add a default Copyright Status to non-BHL contributor items
 	UPDATE	#tmpItem
 	SET		CopyrightStatus = 'Not provided. Contact Contributing Library to verify copyright status.'
