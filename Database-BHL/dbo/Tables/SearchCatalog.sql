@@ -30,4 +30,9 @@ GO
 CREATE NONCLUSTERED INDEX [IX_SearchCatalog_TitleID]
     ON [dbo].[SearchCatalog]([TitleID] ASC)
     INCLUDE([ItemID], [Authors], [Subjects]);
+GO
 
+CREATE NONCLUSTERED INDEX [IX_SearchCatalog_ItemID] 
+	ON [dbo].[SearchCatalog] ([ItemID] ASC)
+	INCLUDE ([TitleID], [ItemContributors]);
+GO

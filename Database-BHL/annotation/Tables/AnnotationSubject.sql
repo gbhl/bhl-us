@@ -11,9 +11,14 @@
     CONSTRAINT [FK_AnnotationSubject_AnnotationKeywordTarget] FOREIGN KEY ([AnnotationKeywordTargetID]) REFERENCES [annotation].[AnnotationKeywordTarget] ([AnnotationKeywordTargetID]),
     CONSTRAINT [FK_AnnotationSubject_AnnotationSubjectCategory] FOREIGN KEY ([AnnotationSubjectCategoryID]) REFERENCES [annotation].[AnnotationSubjectCategory] ([AnnotationSubjectCategoryID])
 );
-
-
 GO
+
 CREATE UNIQUE NONCLUSTERED INDEX [IX_AnnotationSubject]
     ON [annotation].[AnnotationSubject]([AnnotationID] ASC, [AnnotationSubjectCategoryID] ASC, [AnnotationKeywordTargetID] ASC, [SubjectText] ASC);
+GO
+
+CREATE NONCLUSTERED INDEX [IX_AnnotationSubject_CategoryText] 
+	ON [annotation].[AnnotationSubject] ([AnnotationSubjectCategoryID], [SubjectText]);
+GO
+
 

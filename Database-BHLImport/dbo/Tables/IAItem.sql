@@ -51,3 +51,9 @@ GO
 CREATE NONCLUSTERED INDEX [IX_IAItem_IAIdentifier]
 	ON [dbo].[IAItem] ([IAIdentifier]);
 GO
+
+CREATE NONCLUSTERED INDEX [IX_IAItem_ItemStatus] 
+	ON [dbo].[IAItem] ([ItemStatusID])
+INCLUDE ([IAAddedDate], [CreatedDate]);
+GO
+

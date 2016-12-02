@@ -23,3 +23,8 @@ GO
 CREATE NONCLUSTERED INDEX [IX_SegmentInstitution_SegmentID]
 	ON [dbo].[SegmentInstitution] ([SegmentID] ASC)
 GO
+
+CREATE NONCLUSTERED INDEX [IX_SegmentInsitution_InstitutionCode] 
+	ON [dbo].[SegmentInstitution] ([InstitutionCode] ASC)
+	INCLUDE ([SegmentID], [InstitutionRoleID])
+GO

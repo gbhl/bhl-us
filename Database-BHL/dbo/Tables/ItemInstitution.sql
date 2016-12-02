@@ -24,3 +24,13 @@ CREATE NONCLUSTERED INDEX [IX_ItemInstitution_ItemID]
 	ON [dbo].[ItemInstitution] ([ItemID] ASC)
 	INCLUDE ([InstitutionCode],[InstitutionRoleID])
 GO
+
+CREATE NONCLUSTERED INDEX [IX_ItemInstitution_InstitutionCode] 
+	ON [dbo].[ItemInstitution] ([InstitutionCode] ASC)
+GO
+
+CREATE NONCLUSTERED INDEX [IX_ItemInstitution_InstitutionRole] 
+	ON [dbo].[ItemInstitution] ([InstitutionRoleID] ASC)
+	INCLUDE ([ItemID], [InstitutionCode])
+GO
+

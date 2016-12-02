@@ -13,4 +13,10 @@
     CONSTRAINT [PK_SegmentAuthor] PRIMARY KEY CLUSTERED ([SegmentAuthorID] ASC),
     CONSTRAINT [FK_SegmentAuthor_ImportSource] FOREIGN KEY ([ImportSourceID]) REFERENCES [dbo].[ImportSource] ([ImportSourceID])
 );
+GO
+
+CREATE NONCLUSTERED INDEX [IX_SegmentAuthor_SegmentAuthor] 
+	ON [dbo].[SegmentAuthor] ([SegmentID], [BHLAuthorID])
+INCLUDE ([ImportSourceID], [SequenceOrder]);
+GO
 

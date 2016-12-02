@@ -86,7 +86,7 @@ CREATE NONCLUSTERED INDEX [IX_Item_StatusItemVolume]
 GO
 CREATE NONCLUSTERED INDEX [IX_Item_StatusItemTitle]
     ON [dbo].[Item]([ItemStatusID] ASC, [ItemID] ASC, [PrimaryTitleID] ASC)
-    INCLUDE([Volume], [Year], [LanguageCode], [CallNumber]);
+    INCLUDE([Volume], [Year], [LanguageCode], [CallNumber], [ExternalUrl]);
 
 
 GO

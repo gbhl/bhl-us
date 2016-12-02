@@ -7,4 +7,8 @@
     CONSTRAINT [PK_IAScandataAltPageType] PRIMARY KEY CLUSTERED ([ScandataAltPageTypeID] ASC),
     CONSTRAINT [FK_IAScandataAltPageType_IAScandata] FOREIGN KEY ([ScandataID]) REFERENCES [dbo].[IAScandata] ([ScandataID])
 );
+GO
 
+CREATE UNIQUE NONCLUSTERED INDEX [IX_IAScandataAltPageType_ScandataType] 
+	ON [dbo].[IAScandataAltPageType] ([ScandataID], [PageType]);
+GO
