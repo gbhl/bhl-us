@@ -86,7 +86,6 @@
     <Compile Include="BHLProvider.Author.cs" />
     <Compile Include="BHLProvider.AuthorRole.cs" />
     <Compile Include="BHLProvider.AuthorType.cs" />
-    <Compile Include="BHLProvider.DisqusCache.cs" />
     <Compile Include="BHLProvider.DOI.cs" />
     <Compile Include="BHLProvider.Identifier.cs" />
     <Compile Include="BHLProvider.ImportRecord.cs" />

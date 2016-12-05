@@ -86,22 +86,6 @@ namespace BHLCoreDALTest
         }
 
         /// <summary>
-        ///A test for MonthlyStatsSelectByStatType
-        ///</summary>
-        [TestMethod()]
-        public void MonthlyStatsSelectByStatTypeTest()
-        {
-            MonthlyStatsDAL target = new MonthlyStatsDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            string statType = "PageNames Created";
-            string institutionName = string.Empty;
-            bool showMonthly = false;
-            CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectByStatType(sqlConnection, sqlTransaction, statType, institutionName, showMonthly);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
         ///A test for MonthlyStatsSelectCurrentMonthSummary
         ///</summary>
         [TestMethod()]

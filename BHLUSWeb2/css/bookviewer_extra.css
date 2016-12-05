@@ -513,17 +513,6 @@ a.BRButton:hover, a.BRButton:active
     background-color: #3f4040; 
 }
 
-#disquscommunity {
-    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-    padding:6px;
-    text-align:center;
-}
-#disquscommunity a {
-    font-size:13pt;
-    color:white;
-    text-decoration:none;
-}
-
 #pageReaderComments-panel
 {
     position:relative;

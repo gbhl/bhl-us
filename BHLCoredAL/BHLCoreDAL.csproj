@@ -89,7 +89,6 @@
     <Compile Include="BibliographicLevelDAL.cs" />
     <Compile Include="CollectionDAL.cs" />
     <Compile Include="ConfigurationDAL.cs" />
-    <Compile Include="DisqusCacheDAL.cs" />
     <Compile Include="DOIDAL.cs" />
     <Compile Include="Generated\AnnotatedItemDAL.Auto.cs" />
     <Compile Include="Generated\AnnotatedPageCharacteristicDAL.Auto.cs" />
@@ -114,7 +113,6 @@
     <Compile Include="Generated\BibliographicLevelDAL.Auto.cs" />
     <Compile Include="Generated\CollectionDAL.Auto.cs" />
     <Compile Include="Generated\ConfigurationDAL.Auto.cs" />
-    <Compile Include="Generated\DisqusCacheDAL.Auto.cs" />
     <Compile Include="Generated\DOIDAL.Auto.cs" />
     <Compile Include="Generated\IdentifierDAL.Auto.cs" />
     <Compile Include="Generated\ImportFileDAL.Auto.cs" />

@@ -242,9 +242,6 @@ namespace BHLUSWeb2
             routes.Add("PageOCR",
                 new Route("pageocr/{pageid}", new HttpHandlerRouteHandler<GetPageOcr>()));
 
-            routes.Add("PageComments",
-                new Route("pagecomments/{pageid}", new HttpHandlerRouteHandler<GetPageComments>()));
-
             routes.MapPageRoute("Bibliography",
                 "bibliography/{titleid}",
                 "~/bibliography.aspx");

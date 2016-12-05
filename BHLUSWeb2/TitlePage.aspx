@@ -120,7 +120,6 @@
             <!-- <div id="right-panel-tab" title="OCR Text"><a href="#right-panel"><</a></div> -->
             <div id="right-panel-content">
                 <div id="pageOCR-panel"> </div>
-<!--                <div id="pageReaderComments-panel"><img src="../images/blank.gif" alt="Blank" style="display:none" /><div id="disquscommunity"><a href="https://disqus.com/by/BioDivLibrary/favorites/" target="_blank">View BHL's Community <img src="../images/new-tab.png" /></a></div><a href="#" id="startCommentsButton"><img src="../images/start_comment.png" alt="Leave a comment on this page" /></a><div id="pageReaderComments-panelInner"></div></div> -->
             </div>
         </div> <!-- right-panel -->
 
@@ -418,10 +417,6 @@
             $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
             resetAnnotationsBox();
             resetPageOCRBox();
-            $("#pageReaderComments-panel").hide();
-            $("#showReaderCommentsButton").attr("title", "Add Comments");
-            $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-            $("#showReaderCommentsButton").removeClass("displayed");
 
             $(".pagetoolbox").show();
             setInterval('fixIEDisplayIssue()', 1000);
@@ -992,8 +987,6 @@
                 }
             }
 
-            updateDisqus(0);
-
             // Update the Altmetric badge
             $(".altmetric-embed").attr("data-uri", "http://www.biodiversitylibrary.org/item/" + "<%: CurrentItemID %>");
             _altmetric_embed_init();
@@ -1243,100 +1236,8 @@ BookReader.prototype.scrollUp = function() {
                 }
 
                 resetAnnotationsBox();
-                $("#pageReaderComments-panel").hide();
-                $("#showReaderCommentsButton").attr("title", "Add Comments");
-                $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                $("#showReaderCommentsButton").removeClass("displayed");
             });
 
-            // Toggle right hand container for Reader Comments 
-            var showReaderCommentsButton = $('#showReaderCommentsButton'); 
-            showReaderCommentsButton.click(function() {
-
-                if (showReaderCommentsButton.attr("title") == "Add Comments") {
-                    updateDisqus(0);
-                    $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
-                    $("#pageReaderComments-panel").show();
-                    showReaderCommentsButton.attr("title", "Hide Comments");
-                    showReaderCommentsButton.html("Hide<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                    showReaderCommentsButton.addClass("displayed");
-                } else {
-                    $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
-                    showReaderCommentsButton.attr("title", "Add Comments");
-                    showReaderCommentsButton.html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                    showReaderCommentsButton.removeClass("displayed");
-                }
-                
-                resetAnnotationsBox();
-                resetPageOCRBox();
-                return false;
-            });
-
-            //initialize a new comment thread for page
-            $("#startCommentsButton").click(function() {
-                $.ajax({
-                    type: 'get',
-                    url: '/pagecomments/' + pages[br.currentIndex()].PageID,
-                    success: function (data) {
-                        updateDisqus(1);
-                    },
-                    error: function (data) {
-                        updateDisqus(1);
-                    }   
-                });
-            });
-
-            //show the disqus tab contents
-            function updateDisqus(showDisqus) {
-				return;
-                disqus = "";
-                newpageReaderComments.html('');
-                $("#startCommentsButton").hide();
-                if (pages[br.currentIndex()].NumComments > 0 || showDisqus == 1) {
-                    disqus += ["<div id=\"disqus_thread\"></div>",
-                        "<script type=\"text/javascript\">",
-                        "function disqus_config() {",
-                        "this.callbacks.onNewComment = [function() { trackComment(); }];",
-                        "}",
-                        "var disqus_shortname = 'bhl-item-<%: PageSummary.ItemID %>';",
-                        "var disqus_identifier = 'bhl-page-" + pages[br.currentIndex()].PageID + "';",
-                        "var disqus_title = '" + br.getPageName(br.currentIndex()) + "';",
-                        "var disqus_url = '" + br.getPageURI(br.currentIndex(), 0 ,100) + "';",
-                        "(function() {",
-                        "var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;",
-                        "dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';",
-                        "(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);",
-                        "})();",
-                        "<\/script>"].join("\n");
-                } else {
-                    $("#startCommentsButton").show();
-                }
-                /*disqus += "<div class='othercomments'>";
-                for (i=br.currentIndex(); i>=0; i--) {
-                    if (pages[i].NumComments > 0 && br.currentIndex() != i) {
-                        disqus += "<a href='#' onclick='changePage(" + i + ")'>Previous Page with Comments</a><br/>";
-                        break;
-                    }
-                }
-                for (i=br.currentIndex(); i<pages.length; i++) {
-                    if (pages[i].NumComments > 0 && br.currentIndex() != i) {
-                        disqus += "<a href='#' onclick='changePage(" + i + ")'>Next Page with Comments</a>";
-                        break;
-                    }
-                }
-                disqus += "</div>";*/
-                newpageReaderComments.append(disqus);
-                updateCommentCount();
-            }
-
-            function updateCommentCount() {
-                if (showReaderCommentsButton.attr("title") == "Add Comments") {
-                    showReaderCommentsButton.html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                } else {
-                    showReaderCommentsButton.html("Hide<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                }
-            }
-            
             // Toggle right hand container for Annotations
             var showAnnotationsButton = $("#showAnnotationsButton");
             showAnnotationsButton.click(function() {
@@ -1355,10 +1256,6 @@ BookReader.prototype.scrollUp = function() {
                 }
 
                 resetPageOCRBox();
-                $("#pageReaderComments-panel").hide();
-                $("#showReaderCommentsButton").attr("title", "Add Comments");
-                $("#showReaderCommentsButton").html("Add<br/>Comments <span id='commentsbadge' data-badge='" + pages[br.currentIndex()].NumComments + "'></span>");
-                $("#showReaderCommentsButton").removeClass("displayed");
             });
             if ($("#AnnotationBox").length == 0) {
                 showAnnotationsButton.hide();
@@ -1369,30 +1266,6 @@ BookReader.prototype.scrollUp = function() {
 
             updateUIHeights(); 
         }
-
-        trackComment = function() {
-            $.ajax({
-                type: 'get',
-                url: '/pagecomments/' + pages[br.currentIndex()].PageID + '?vote=1',
-                success: function (data) {
-                    pages[br.currentIndex()].NumComments += 1;
-                    pageTitleText = $("#lstPages option:selected").text();
-                    if (pageTitleText.indexOf("?") == -1) {
-                        $("#lstPages option:selected").text(pageTitleText + " ?");
-                    }
-                    updateCommentCount();
-                },
-                error: function (data) {
-                    pages[br.currentIndex()].NumComments += 1;
-                    pageTitleText = $("#lstPages option:selected").text();
-                    if (pageTitleText.indexOf("?") == -1) {
-                        $("#lstPages option:selected").text(pageTitleText + " ?");
-                    }
-                    updateCommentCount();
-                }   
-            });
-        }
-
 
         $("#BRcontainer").bind('scroll', this, function (e) {
             if (self.mode != self.constMode2up) {
@@ -1773,14 +1646,4 @@ $(document).ready(function(){
         }
     -->
     </script>
-
-    <script type="text/javascript">
-    var disqus_shortname = 'bhl-item-<%: PageSummary.ItemID %>';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
 </asp:content>

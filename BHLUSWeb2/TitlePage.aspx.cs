@@ -25,7 +25,6 @@ namespace MOBOT.BHL.Web2
         protected string Pages = String.Empty;
         protected string PageTitle { get; set; }
         protected int CurrentItemID { get; set; }
-        protected CustomGenericList<Page> pages_comments { get; set; }
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -241,28 +240,10 @@ namespace MOBOT.BHL.Web2
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
                     
-                    //get cache of pages that have comments
-                    //CustomGenericList<DisqusCache> pageCommentsCache = bhlProvider.DisqusCacheSelectByItemID(PageSummary.ItemID);
-
                     CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
-                    pages_comments = new CustomGenericList<Page>();
-
-                    // Show an indicator on pages that have disqus comments
-                    foreach (Page page in pages) {
-                        /*
-                        foreach (DisqusCache cachedPage in pageCommentsCache)
-                        {
-                            if (cachedPage.PageID == page.PageID)
-                            {
-                                page.NumComments = cachedPage.Count;
-                            }
-                        }
-                        */
-                        pages_comments.Add(page);
-                    }
 
                     //SCS Set the Pages drop down list   
-                    lstPages.DataSource = pages_comments;
+                    lstPages.DataSource = pages;
                     lstPages.DataTextField = "WebDisplay";
                     lstPages.DataValueField = "PageID";
                     lstPages.DataBind();
@@ -313,7 +294,7 @@ namespace MOBOT.BHL.Web2
 
                     viewerPages = bhlProvider.PageGetImageDimensions(viewerPages, PageSummary.ItemID);
 
-                    Pages = JsonConvert.SerializeObject(pages_comments.ToList().Join(viewerPages,
+                    Pages = JsonConvert.SerializeObject(pages.ToList().Join(viewerPages,
                                                     p => p.SequenceOrder,
                                                     vp => vp.SequenceOrder,
                                                     (p, vp) => new
@@ -324,7 +305,6 @@ namespace MOBOT.BHL.Web2
                                                         p.AltExternalURL,
                                                         p.BarCode,
                                                         p.RareBooks,
-                                                        p.NumComments,
                                                         p.Illustration,
                                                         p.SegmentID,
                                                         vp.ExternalBaseUrl,

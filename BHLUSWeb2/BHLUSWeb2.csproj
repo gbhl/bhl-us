@@ -435,7 +435,6 @@
     <Content Include="RecentRss.aspx" />
     <Content Include="SectionPage.aspx" />
     <Content Include="packages.config" />
-    <Content Include="Handlers\GetPageComments.ashx" />
     <Content Include="Handlers\PDFDownload.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Remoting.config.template" />
@@ -729,9 +728,6 @@
     </Compile>
     <Compile Include="Handlers\GetPageImage.ashx.cs">
       <DependentUpon>GetPageImage.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Handlers\GetPageComments.ashx.cs">
-      <DependentUpon>GetPageComments.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\GetPageOcr.ashx.cs">
       <DependentUpon>GetPageOcr.ashx</DependentUpon>
