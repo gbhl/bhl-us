@@ -1,11 +1,11 @@
-﻿
-CREATE PROCEDURE [dbo].[CollectionSelectActive]
+﻿CREATE PROCEDURE [dbo].[CollectionSelectActive]
 AS 
 
 SET NOCOUNT ON
 
 -- Only include collections that have content
-SELECT	c.[CollectionID],
+SELECT	DISTINCT
+		c.[CollectionID],
 		c.[CollectionName],
 		c.[CollectionDescription],
 		c.[CollectionURL],
@@ -19,7 +19,8 @@ AND		c.[CollectionTarget] IN ('BHL', 'All')
 
 UNION
 
-SELECT	c.[CollectionID],
+SELECT	DISTINCT
+		c.[CollectionID],
 		c.[CollectionName],
 		c.[CollectionDescription],
 		c.[CollectionURL],
@@ -32,4 +33,3 @@ WHERE	c.[Active] = 1
 AND		c.[CollectionTarget] IN ('BHL', 'All')
 ORDER BY 
 		c.[CollectionName]
-
