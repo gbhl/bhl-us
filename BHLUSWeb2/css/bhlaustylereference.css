@@ -2870,7 +2870,7 @@ ul.creator-titles li
 	float:right;
 	margin:15px 0 0 20px;
 }
-.jqmWindow fieldset.optional
+.jqmWindow div.optional
 {
 	background:#d7e0e7;
 	-webkit-border-radius:5px;
@@ -2878,26 +2878,26 @@ ul.creator-titles li
 	border-radius:5px;
 	padding:10px;
 }
-.jqmWindow fieldset.required
+.jqmWindow div.required
 {
 	clear:both;
 	margin:0 0 20px 0;
 }
-.jqmWindow fieldset.optional span
+.jqmWindow div.optional span
 {
 	float:right;
 }
-.jqmWindow fieldset.optional input.field
+.jqmWindow div.optional input.field
 {
 	width:285px;
 	display:inline;
 }
-.jqmWindow fieldset.optional span.example
+.jqmWindow div.optional span.example
 {
 	padding-left:15px;
 	float:none;
 }
-.ie7 .jqmWindow fieldset.optional input.field
+.ie7 .jqmWindow div.optional input.field
 {
 	margin-bottom:5px;
 }

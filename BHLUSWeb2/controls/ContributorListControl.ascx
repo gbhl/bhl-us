@@ -16,7 +16,7 @@
             the BHL, please see our <a href="http://biodivlib.wikispaces.com/permissions" target="_blank">Permissions page</a>.
         </p>
         <h2>BHL Participating Contributors</h2>
-        <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" Width="100%" ItemStyle-Wrap="true">
+        <asp:DataList ID="dlMembers" runat="server" RepeatDirection="Vertical" Width="100%" ItemStyle-Wrap="true" role="presentation" >
             <ItemTemplate>
                 <div style="margin-bottom:14px">
                     <a href='/browse/contributor/<%# Eval("InstitutionCode") %>'><%# Eval("InstitutionName") %></a>
@@ -26,7 +26,7 @@
         </asp:DataList>
 
         <h2>Other Contributors</h2>
-        <asp:DataList ID="dlNonMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" Width="100%" ItemStyle-Wrap="true">
+        <asp:DataList ID="dlNonMembers" runat="server" RepeatDirection="Vertical" RepeatColumns="2" Width="100%" ItemStyle-Wrap="true" role="presentation">
             <ItemTemplate>
                 <div style="margin-bottom:14px">
                     <a href='/browse/contributor/<%# Eval("InstitutionCode") %>'><%# Eval("InstitutionName") %></a>

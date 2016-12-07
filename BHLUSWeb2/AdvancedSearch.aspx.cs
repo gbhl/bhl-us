@@ -39,6 +39,8 @@ namespace MOBOT.BHL.Web2
         protected override void Page_Load(object sender, EventArgs e)
         {
             base.Page_Load(sender, e);
+            main.Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Advanced Search");
+
             if (!this.IsPostBack)
             {
                 // Initial populate of controls 

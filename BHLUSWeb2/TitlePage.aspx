@@ -175,29 +175,17 @@
                             <p>There was an issue with the request. Please try again and if the problem persists, please send us <a href="/contact">feedback</a>.</p>
                             <p>For your reference, the confirmation number for this request is <span id="pdfIdFail"></span>.</p>
                         </div>
-                        <fieldset class="required">
+                        <div class="required">
                             <label for="tbEmail">Email Address<span class="required">(required)</span></label>
                             <div class="field-wrap">
                                 <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:322px; top:6.5px;"></span>
                             </div>
-
-                            <!-- 
-                                Replace ".form input" style in bhlaustylereference.cs line 1101 with this
-                                input {
-                                   // styles for most inputs
-                                }   
-
-                                input[type=checkbox] {
-                                  // revert back to the original style
-                                } 
-                                -->
-
                             <label for="grpImageOCR">Include</label>
                             <div class="field-wrap">
                                 <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and OCR text" />
                             </div>
-                        </fieldset>
-                        <fieldset class="optional">
+                        </div>
+                        <div class="optional">
                             <span>Optional</span>
                             <label for="tbTitle">Article/Chapter Title</label>
                             <div class="field-wrap">
@@ -211,7 +199,7 @@
                             <div class="field-wrap">
                                 <input class="field" type="text" id="tbSubjects" name="tbSubjects" /><span class="example">Example: Birds, Classification, Mammals</span>
                             </div>
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -383,7 +371,7 @@
             }
 
             function resetGenerate() {
-                $('#generate-dialog fieldset, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
+                $('#generate-dialog div, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
                 $('#generate-dialog').css('height', '520px');
                 $('#generate-dialog .intro').show();
                 $('#generate-dialog .success').hide();
@@ -856,11 +844,11 @@
                                 finishButton.removeClass('loading').removeAttr('style');
                             });
 
-                            $('#generate-dialog fieldset, #generate-dialog .finish').fadeOut(function() {
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .finish').fadeOut(function() {
                                 $('#generate-dialog').animate({ 'height': '330px' }, 200);
                             });
 
-                            $('#generate-dialog fieldset, #generate-dialog .review').fadeOut(function() {
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .review').fadeOut(function() {
                                 $('#generate-dialog').animate({ 'height': '330px' }, 200);
                             });
 
@@ -871,7 +859,7 @@
                         } else {
                             $('#pdfIdFail').text(data.pdfId);
 
-                            $('#generate-dialog fieldset, #generate-dialog .footer').fadeOut(function() {
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .footer').fadeOut(function() {
                                 $('#generate-dialog').animate({ 'height': '330px' }, 200);
                             });
 

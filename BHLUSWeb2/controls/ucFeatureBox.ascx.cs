@@ -151,7 +151,7 @@ namespace MOBOT.BHL.Web2
                     {
                         string[] thumbDetails = flickrThumb.Split('\t');
                         sb.Append(string.Format(
-                            "<li><a href='/page/{0}' title='{1}'><img src='/images/flickrthumbs/{2}.jpg'></a></li>\n",
+                            "<li><a href='/page/{0}' title='{1}'><img alt='Flickr image:{1}' src='/images/flickrthumbs/{2}.jpg'></a></li>\n",
                             thumbDetails[0],
                             thumbDetails[2] + " - " + (thumbDetails[3].Length > 0 ? thumbDetails[3] : thumbDetails[4]),
                             thumbDetails[0]));

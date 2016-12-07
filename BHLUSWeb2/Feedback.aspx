@@ -37,14 +37,14 @@
                 <li>* = required field</li>
             </div>
             <li>
-                <label class="caption">Name:</label><asp:TextBox ID="nameTextBox" runat="server" Width="200px" class="field"></asp:TextBox>
+                <label class="caption" for="nameTextBox">Name:</label><asp:TextBox ID="nameTextBox" ClientIDMode="Static" runat="server" Width="200px" class="field"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Email:</label><asp:TextBox ID="emailTextBox" runat="server" Width="200px"></asp:TextBox>
+                <label class="caption" for="emailTextBox">Email:</label><asp:TextBox ID="emailTextBox" ClientIDMode="Static" runat="server" Width="200px"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Subject:</label>
-			    <asp:DropDownList runat="server" ID="ddlList">
+                <label class="caption" for="ddlList">Subject:</label>
+			    <asp:DropDownList runat="server" ID="ddlList" ClientIDMode="Static">
 			        <asp:ListItem Text="" Value=""></asp:ListItem>
 				    <asp:ListItem Text="Technical Issues" Value="22"></asp:ListItem>
 					<asp:ListItem Text="Suggestion" Value="36"></asp:ListItem>
@@ -52,9 +52,9 @@
 			    </asp:DropDownList> *
             </li>
             <li>
-                <label class="caption">Comment:</label>
+                <label class="caption" for="commentTextBox">Comment:</label>
                 <span style="float: right; padding-right: 30px;">*</span>
-                <asp:TextBox ID="commentTextBox" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
+                <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
             </li>
         </ol>
         <div class="tabbed">
@@ -75,56 +75,56 @@
                 <li>* = required field</li>
             </div>
             <li>
-                <label class="caption">Your Name:</label><asp:TextBox ID="srNameTextBox" runat="server" Width="200px"></asp:TextBox> *
+                <label class="caption" for="srNameTextBox">Your Name:</label><asp:TextBox ID="srNameTextBox" ClientIDMode="Static" runat="server" Width="200px"></asp:TextBox> *
             </li>
             <li>
-                <label class="caption">Email:</label><asp:TextBox ID="srEmailTextBox" runat="server" Width="200px"></asp:TextBox> *
+                <label class="caption" for="srEmailTextBox">Email:</label><asp:TextBox ID="srEmailTextBox" ClientIDMode="Static" runat="server" Width="200px"></asp:TextBox> *
             </li>
             <div class="tabbed">
                 Search for your title in <a href="http://www.worldcat.org/" target="_blank" title="WorldCat">WorldCat</a> (recommended)
             </div>
             <li>
-                <label class="caption">OCLC:</label><asp:TextBox ID="srOCLCTextBox" runat="server" Width="200px" MaxLength="30"></asp:TextBox>
+                <label class="caption" for="srOCLCTextBox">OCLC:</label><asp:TextBox ID="srOCLCTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Book Title:</label><asp:TextBox ID="srTitleTextBox" runat="server" Width="400px" MaxLength="500"></asp:TextBox> *
+                <label class="caption" for="srTitleTextBox">Book Title:</label><asp:TextBox ID="srTitleTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="500"></asp:TextBox> *
             </li>
             <li>
-                <label class="caption">Year:</label><asp:TextBox ID="srYearTextBox" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox> *
+                <label class="caption" for="srYearTextBox">Year:</label><asp:TextBox ID="srYearTextBox" ClientIDMode="Static" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox> *
                 &nbsp;&nbsp;&nbsp;
 				(For © compliance, must be prior to <b>1923</b>)
             </li>
             <li>
-                <label class="caption">Type:</label>
-                <asp:DropDownList ID="srTypeList" runat="server">
+                <label class="caption" for="srTypeList">Type:</label>
+                <asp:DropDownList ID="srTypeList" runat="server" ClientIDMode="Static">
 				    <asp:ListItem Value="Book" Text="Book" />
 				    <asp:ListItem Value="Journal" Text="Journal" />
 				    <asp:ListItem Value="Not Sure" Text="Not Sure" />
 				</asp:DropDownList> *
             </li>
             <li>
-                <label class="caption">Volume:</label><asp:TextBox ID="srVolumeTextBox" runat="server" Width="200px" MaxLength="100" Text="All volumes" class="inlinetextbox"></asp:TextBox> * (journals only)
+                <label class="caption" for="srVolumeTextBox">Volume:</label><asp:TextBox ID="srVolumeTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100" Text="All volumes" class="inlinetextbox"></asp:TextBox> * (journals only)
             </li>
             <li>
-                <label class="caption">Edition:</label><asp:TextBox ID="srEditionTextBox" runat="server" Width="200px" MaxLength="100"></asp:TextBox>
+                <label class="caption" for="srEditionTextBox">Edition:</label><asp:TextBox ID="srEditionTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="100"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">ISBN:</label><asp:TextBox ID="srISBNTextBox" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox>
+                <label class="caption" for="srISBNTextBox">ISBN:</label><asp:TextBox ID="srISBNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">ISSN:</label><asp:TextBox ID="srISSNTextBox" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox>
+                <label class="caption" for="srISSNTextBox">ISSN:</label><asp:TextBox ID="srISSNTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30" class="inlinetextbox"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Author:</label><asp:TextBox ID="srAuthorTextBox" runat="server" Width="400px" MaxLength="200"></asp:TextBox>
+                <label class="caption" for="srAuthorTextBox">Author:</label><asp:TextBox ID="srAuthorTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Publisher:</label><asp:TextBox ID="srPublisherTextBox" runat="server" Width="400px" MaxLength="200"></asp:TextBox>
+                <label class="caption" for="srPublisherTextBox">Publisher:</label><asp:TextBox ID="srPublisherTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="200"></asp:TextBox>
             </li>
             <li>
-                <label class="caption">Language:</label><asp:DropDownList ID="srLanguageList" runat="server"></asp:DropDownList>
+                <label class="caption" for="srLanguageList">Language:</label><asp:DropDownList ID="srLanguageList" ClientIDMode="Static" runat="server"></asp:DropDownList>
             </li>
             <li>
-                <label class="caption">Note:</label><asp:TextBox ID="srNoteTextBox" runat="server" Height="100px" Width="400px" TextMode="MultiLine"></asp:TextBox>
+                <label class="caption" for="srNoteTextBox">Note:</label><asp:TextBox ID="srNoteTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="400px" TextMode="MultiLine"></asp:TextBox>
             </li>
         </ol>
         <div class="tabbed">

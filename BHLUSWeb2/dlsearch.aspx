@@ -3,16 +3,8 @@
 <%@ Register TagPrefix="uc" TagName="FeatureBox" Src="~/controls/ucFeatureBox.ascx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
         <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" rel="stylesheet"/>
-
         <link rel="stylesheet" href="/css/ui.jqgrid.css" />
    <style>
-       /* label.caption { float: left; width: 12em; margin-right: 1em; text-align: right; }
-        label.header { float: left; width: 12em; margin-right: 1em; text-align: right; font-weight:bold; }
-        fieldset { margin: 1.5em 0 1.5em 0; padding: 0; }
-        fieldset li { padding-bottom: 0.5em; }
-        fieldset ol { padding: 1em 1em 1em 1em; list-style: none; }
-        li { padding-bottom: 0.5em; }
-        ol { padding: 0em 0em 0em 1em; list-style: none; }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
@@ -32,7 +24,6 @@
                     <li><a href="#divAnnotationSearch" title="Annotations"><span>Annotations</span></a></li>
                 </ul>
                 <div id="divBookSearch">
-                    <!--<fieldset>-->
                     <ol>
                     <li>
                     <label class="caption">Title:</label><asp:TextBox ID="txtBookTitle" runat="server" Width="400"></asp:TextBox>
@@ -53,13 +44,11 @@
                     <label class="caption">&nbsp;</label><label id="lblBookError" class="ErrorText" style="display:none">Please specify Title or Author Last Name.</label>
                     </li>
                     </ol>
-                    <!--</fieldset>-->
                     <div style="width: 13em; margin-right: 1em; text-align: right;">
                         <asp:Button runat="server" ID="btnSearchTitle" Text="Search" onclick="btnSearchTitle_Click" />
                     </div>
                 </div>
                 <div id="divAnnotationSearch">
-                    <!--<fieldset>-->
                     <ol>
                     <li>
                     <label class="header">Search For&nbsp;</label><label>&nbsp;</label>
@@ -91,7 +80,6 @@
                     <label class="caption">&nbsp;</label><label id="lblAnnotationError" class="ErrorText" style="display:none">Please specify Title or Author Last Name.</label>
                     </li>
                     </ol>
-                    <!--</fieldset>-->
                     <div style="width: 13em; margin-right: 1em; text-align: right;">
                         <asp:Button runat="server" ID="btnSearchAnnotation" Text="Search" onclick="btnSearchAnnotation_Click" />
                     </div>
