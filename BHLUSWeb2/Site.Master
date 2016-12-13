@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=1080" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/style.css?v=13" />
+    <link rel="stylesheet" href="/css/style.css?v=14" />
     <script src="/js/libs/modernizr-1.6.min.js"></script> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
@@ -53,6 +53,7 @@
 			            <a href="http://biodivlib.wikispaces.com/About">About</a>
 			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>
                         <a href="/contact">Feedback</a>
+                        <a class="storelink" target="_blank" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
 		            </nav>
                     <span id="altmetricbadge">
                         <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" class="altmetric-embed"></div>

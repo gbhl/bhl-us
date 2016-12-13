@@ -720,10 +720,12 @@ header nav a, footer nav a
 	margin:0 0 0 30px;
 	text-decoration:none;
 }
+/*
 header nav a:hover, footer nav a:hover 
 {
 	text-decoration:underline;
 }
+*/
 #page-title 
 {
 	background:#266099;

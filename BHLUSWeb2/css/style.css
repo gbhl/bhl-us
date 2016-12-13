@@ -373,6 +373,14 @@ footer nav a:hover
 {
     font-size: 14px;
 }	
+.storelink
+{
+    padding: 2px 10px; 
+    border-radius: 14px; 
+    line-height: 14px; 
+    margin-top: 2px; 
+    background-color: #DDECF6;
+}
 
 /* Footer Styles */
 footer 
