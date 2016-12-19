@@ -1,8 +1,4 @@
-﻿-- Insert Procedure for dbo.BSSegment
--- Do not modify the contents of this procedure.
--- Generated 11/21/2016 1:39:33 PM
-
-CREATE PROCEDURE [dbo].[BSSegmentInsertAuto]
+﻿CREATE PROCEDURE [dbo].[BSSegmentInsertAuto]
 
 @SegmentID INT OUTPUT,
 @ItemID INT,
@@ -27,7 +23,8 @@ CREATE PROCEDURE [dbo].[BSSegmentInsertAuto]
 @StartPageID INT = null,
 @ContributorCreationDate DATETIME = null,
 @ContributorLastModifiedDate DATETIME = null,
-@BHLSegmentID INT = null
+@BHLSegmentID INT = null,
+@ContributorName NVARCHAR(255)
 
 AS 
 
@@ -58,7 +55,8 @@ INSERT INTO [dbo].[BSSegment]
 	[ContributorLastModifiedDate],
 	[BHLSegmentID],
 	[CreationDate],
-	[LastModifiedDate] )
+	[LastModifiedDate],
+	[ContributorName] )
 VALUES
 ( 	@ItemID,
 	@BioStorReferenceID,
@@ -84,7 +82,8 @@ VALUES
 	@ContributorLastModifiedDate,
 	@BHLSegmentID,
 	getdate(),
-	getdate() )
+	getdate(),
+	@ContributorName )
 
 SET @SegmentID = Scope_Identity()
 
@@ -121,7 +120,8 @@ ELSE BEGIN
 		[ContributorLastModifiedDate],
 		[BHLSegmentID],
 		[CreationDate],
-		[LastModifiedDate]	
+		[LastModifiedDate],
+		[ContributorName]	
 	FROM [dbo].[BSSegment]
 	WHERE
 		[SegmentID] = @SegmentID

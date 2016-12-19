@@ -45,6 +45,7 @@
           <Property Name="BHLSegmentID" Type="int" />
           <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="ContributorName" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="BSSegmentPage">
           <Key>
@@ -236,6 +237,7 @@
           <Property Name="PublisherPlace" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="OCLC" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="true" />
           <Property Name="JSTOR" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="true" />
+          <Property Name="ContributorName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="BSSegmentPage">
           <Key>
@@ -325,7 +327,8 @@
             <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="BSSegments"><EntityTypeMapping TypeName="BHLImportModel.BSSegment"><MappingFragment StoreEntitySet="BSSegment">
-            <ScalarProperty Name="JSTOR" ColumnName="JSTOR" />
+            <ScalarProperty Name="ContributorName" ColumnName="ContributorName" />
+                <ScalarProperty Name="JSTOR" ColumnName="JSTOR" />
                 <ScalarProperty Name="OCLC" ColumnName="OCLC" />
                 <ScalarProperty Name="PublisherPlace" ColumnName="PublisherPlace" />
                 <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />

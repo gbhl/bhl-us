@@ -107,12 +107,20 @@ BEGIN TRY
 		
 		SET @BHLSegmentID = SCOPE_IDENTITY()
 
-		-- Insert new BHL SegmentInstitution record
+		-- Insert new BHL SegmentInstitution records
+		-- Every segment harvested by this procedure has a BSTOR contributor
 		INSERT	dbo.BHLSegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID,
 			CreationUserID, LastModifiedUserID)
 		SELECT	@BHLSegmentID, 'BSTOR', @ContributorRoleID, @UserID, @UserID
 		FROM	dbo.BSSegment
 		WHERE	SegmentID = @SegmentID
+
+		INSERT	dbo.BHLSegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID,
+			CreationUserID, LastModifiedUserID)
+		SELECT	@BHLSegmentID, i.InstitutionCode, @ContributorRoleID, @UserID, @UserID
+		FROM	dbo.BSSegment s
+				INNER JOIN dbo.BHLInstitution i 
+					ON s.ContributorName = i.InstitutionName COLLATE Latin1_general_CI_AI -- ignore diacritics for this comparison
 
 		-- Insert new BHL SegmentIdentifier record for BioStor ID
 		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 

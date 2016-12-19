@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[BSItemSelectByStatus]
+﻿CREATE PROCEDURE [dbo].[BSItemSelectByStatus]
 
 @ItemStatusID int,
 @NumRows int = 100,
@@ -28,7 +27,7 @@ INSERT #Step1
 SELECT	b.ItemID,
 		b.BHLItemID,
 		t.ShortTitle,
-		i.Volume,
+		ISNULL(i.Volume, ''),
 		CONVERT(VARCHAR(30), b.CreationDate, 120)
 FROM	dbo.BSItem b 
 		INNER JOIN dbo.BHLItem i ON b.BHLItemID = i.ItemID
@@ -123,5 +122,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-

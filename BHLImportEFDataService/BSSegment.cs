@@ -55,6 +55,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             segment.EndPageNumber = segment.EndPageNumber ?? string.Empty;
             segment.CreationDate = (segment.CreationDate == DateTime.MinValue ? date : segment.CreationDate);
             segment.LastModifiedDate = (segment.LastModifiedDate == DateTime.MinValue ? date : segment.LastModifiedDate);
+            segment.ContributorName = segment.ContributorName ?? string.Empty;
 
             foreach (BSSegmentPage page in segment.BSSegmentPages)
             {

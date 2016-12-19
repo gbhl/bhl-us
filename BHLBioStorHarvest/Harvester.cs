@@ -232,6 +232,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             segment.DOI = this.GetDOI(article);
             segment.OCLC = ((string)article["oclc"]) ?? string.Empty;
             segment.JSTOR = ((string)article["jstor"]) ?? string.Empty;
+            segment.ContributorName = ((string)article["contributor"]) ?? string.Empty;
 
             // Strip tabs, newlines, and carriage returns from title strings
             segment.Title = segment.Title.Replace("\t", " ").Replace("\n\r", " ").Replace("\r\n", " ").Replace("\r", " ").Replace("\n", " ");

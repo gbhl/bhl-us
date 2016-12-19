@@ -45,6 +45,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public string PublisherPlace { get; set; }
         public string OCLC { get; set; }
         public string JSTOR { get; set; }
+        public string ContributorName { get; set; }
     
         public virtual BSItem BSItem { get; set; }
         public virtual ICollection<BSSegmentPage> BSSegmentPages { get; set; }

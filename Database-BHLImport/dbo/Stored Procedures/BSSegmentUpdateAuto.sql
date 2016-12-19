@@ -1,8 +1,4 @@
-﻿-- Update Procedure for dbo.BSSegment
--- Do not modify the contents of this procedure.
--- Generated 11/21/2016 1:39:33 PM
-
-CREATE PROCEDURE [dbo].[BSSegmentUpdateAuto]
+﻿CREATE PROCEDURE [dbo].[BSSegmentUpdateAuto]
 
 @SegmentID INT,
 @ItemID INT,
@@ -27,7 +23,8 @@ CREATE PROCEDURE [dbo].[BSSegmentUpdateAuto]
 @StartPageID INT,
 @ContributorCreationDate DATETIME,
 @ContributorLastModifiedDate DATETIME,
-@BHLSegmentID INT
+@BHLSegmentID INT,
+@ContributorName NVARCHAR(255)
 
 AS 
 
@@ -58,7 +55,8 @@ SET
 	[ContributorCreationDate] = @ContributorCreationDate,
 	[ContributorLastModifiedDate] = @ContributorLastModifiedDate,
 	[BHLSegmentID] = @BHLSegmentID,
-	[LastModifiedDate] = getdate()
+	[LastModifiedDate] = getdate(),
+	[ContributorName] = @ContributorName
 WHERE
 	[SegmentID] = @SegmentID
 		
@@ -95,7 +93,8 @@ ELSE BEGIN
 		[ContributorLastModifiedDate],
 		[BHLSegmentID],
 		[CreationDate],
-		[LastModifiedDate]
+		[LastModifiedDate],
+		[ContributorName]
 	FROM [dbo].[BSSegment]
 	WHERE
 		[SegmentID] = @SegmentID

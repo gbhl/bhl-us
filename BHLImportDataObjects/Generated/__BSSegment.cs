@@ -1,5 +1,5 @@
 
-// Generated 11/21/2016 1:39:33 PM
+// Generated 12/19/2016 1:43:52 PM
 // Do not modify the contents of this code file.
 // This abstract class __BSSegment is based upon dbo.BSSegment.
 
@@ -71,6 +71,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="bHLSegmentID"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
+		/// <param name="contributorName"></param>
 		public __BSSegment(int segmentID, 
 			int itemID, 
 			string bioStorReferenceID, 
@@ -96,7 +97,8 @@ namespace MOBOT.BHLImport.DataObjects
 			DateTime? contributorLastModifiedDate, 
 			int? bHLSegmentID, 
 			DateTime creationDate, 
-			DateTime lastModifiedDate) : this()
+			DateTime lastModifiedDate, 
+			string contributorName) : this()
 		{
 			_SegmentID = segmentID;
 			ItemID = itemID;
@@ -124,6 +126,7 @@ namespace MOBOT.BHLImport.DataObjects
 			BHLSegmentID = bHLSegmentID;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
+			ContributorName = contributorName;
 		}
 		
 		#endregion Constructors
@@ -278,6 +281,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "LastModifiedDate" :
 					{
 						_LastModifiedDate = (DateTime)column.Value;
+						break;
+					}
+					case "ContributorName" :
+					{
+						_ContributorName = (string)column.Value;
 						break;
 					}
 								}
@@ -1009,6 +1017,34 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion LastModifiedDate
+		
+		#region ContributorName
+		
+		private string _ContributorName = string.Empty;
+		
+		/// <summary>
+		/// Column: ContributorName;
+		/// DBMS data type: nvarchar(255);
+		/// </summary>
+		[ColumnDefinition("ContributorName", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=255)]
+		public string ContributorName
+		{
+			get
+			{
+				return _ContributorName;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 255);
+				if (_ContributorName != value)
+				{
+					_ContributorName = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ContributorName
 			
 		#endregion Properties
 
@@ -1078,7 +1114,8 @@ namespace MOBOT.BHLImport.DataObjects
 					o.ContributorLastModifiedDate == ContributorLastModifiedDate &&
 					o.BHLSegmentID == BHLSegmentID &&
 					o.CreationDate == CreationDate &&
-					o.LastModifiedDate == LastModifiedDate 
+					o.LastModifiedDate == LastModifiedDate &&
+					GetComparisonString(o.ContributorName) == GetComparisonString(ContributorName) 
 				)
 				{
 					o = null;
@@ -1204,7 +1241,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string ContributorLastModifiedDate = "ContributorLastModifiedDate";	
 			public const string BHLSegmentID = "BHLSegmentID";	
 			public const string CreationDate = "CreationDate";	
-			public const string LastModifiedDate = "LastModifiedDate";
+			public const string LastModifiedDate = "LastModifiedDate";	
+			public const string ContributorName = "ContributorName";
 		}
 				
 		#endregion SortColumn

@@ -1,8 +1,4 @@
-﻿-- Select Procedure for dbo.BSSegment
--- Do not modify the contents of this procedure.
--- Generated 11/21/2016 1:39:33 PM
-
-CREATE PROCEDURE [dbo].[BSSegmentSelectAuto]
+﻿CREATE PROCEDURE [dbo].[BSSegmentSelectAuto]
 
 @SegmentID INT
 
@@ -36,7 +32,8 @@ SELECT
 	[ContributorLastModifiedDate],
 	[BHLSegmentID],
 	[CreationDate],
-	[LastModifiedDate]
+	[LastModifiedDate],
+	[ContributorName]
 FROM	
 	[dbo].[BSSegment]
 WHERE	

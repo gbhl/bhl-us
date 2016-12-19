@@ -20,6 +20,7 @@
     [StartPageNumber]             NVARCHAR (20)   CONSTRAINT [DF_BSSegment_StartPageNumber] DEFAULT ('') NOT NULL,
     [EndPageNumber]               NVARCHAR (20)   CONSTRAINT [DF_BSSegment_EndPageNumber] DEFAULT ('') NOT NULL,
     [StartPageID]                 INT             NULL,
+	[ContributorName]             NVARCHAR (255)  CONSTRAINT [DF_BSSegment_ContributorName] DEFAULT ('') NOT NULL,
     [ContributorCreationDate]     DATETIME        NULL,
     [ContributorLastModifiedDate] DATETIME        NULL,
     [BHLSegmentID]                INT             NULL,
