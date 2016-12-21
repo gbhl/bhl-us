@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[InstitutionSelectWithPublishedSegments]
 
-@OnlyMemberLibraries bit = 1
+@OnlyMemberLibraries bit = 1,
+@InstitutionRoleName nvarchar(100) = null
 
 AS 
 
@@ -12,11 +13,13 @@ SELECT DISTINCT
 		ins.Note,
 		ISNULL(ins.InstitutionUrl, '') AS InstitutionUrl,
 		ins.BHLMemberLibrary
-FROM	dbo.Institution ins 
-		INNER JOIN dbo.SegmentInstitution si ON ins.InstitutionCode = si.InstitutionCode
-		INNER JOIN dbo.Segment s ON si.SegmentID = s.SegmentID
+FROM	dbo.Institution ins WITH (NOLOCK)
+		INNER JOIN dbo.SegmentInstitution si WITH (NOLOCK) ON ins.InstitutionCode = si.InstitutionCode
+		INNER JOIN dbo.Segment s WITH (NOLOCK) ON si.SegmentID = s.SegmentID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON si.InstitutionRoleID = r.InstitutionRoleID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		((ins.BHLMemberLibrary = 1 AND @OnlyMemberLibraries = 1) OR	@OnlyMemberLibraries = 0)
+AND		(r.InstitutionRoleName = @InstitutionRoleName OR @InstitutionRoleName IS NULL)
 ORDER BY
 		ins.InstitutionName
 

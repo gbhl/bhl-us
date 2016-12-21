@@ -69,22 +69,16 @@ namespace MOBOT.BHL.Web2.controls
         /// <returns></returns>
         private CustomGenericList<Institution> GetInstitutions()
         {
-            CustomGenericList<Institution> institutions = provider.InstitutionSelectWithPublishedItems(false);
-            CustomGenericList<Institution> instWithSegments = provider.InstitutionSelectWithPublishedSegments(false);
-            
-            foreach(Institution instWithSegment in instWithSegments)
-            {
-                bool exists = false;
-                foreach(Institution institution in institutions)
-                {
-                    if (institution.InstitutionCode == instWithSegment.InstitutionCode)
-                    {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists) institutions.Add(instWithSegment);
-            }
+            CustomGenericList<Institution> institutions = new CustomGenericList<Institution>();
+            CustomGenericList<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Contributor");
+            CustomGenericList<Institution> contributorsWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Contributor");
+            CustomGenericList<Institution> rightsHolders = provider.InstitutionSelectWithPublishedItems(false, "Rights Holder");
+            CustomGenericList<Institution> rightsHoldersWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Rights Holder");
+
+            BuildInstitutionList(contributors, institutions);
+            BuildInstitutionList(contributorsWithSegments, institutions);
+            BuildInstitutionList(rightsHolders, institutions);
+            BuildInstitutionList(rightsHoldersWithSegments, institutions);
 
             InstitutionComparer comp = new InstitutionComparer(
                 InstitutionComparer.CompareEnum.InstitutionName, 
@@ -92,6 +86,19 @@ namespace MOBOT.BHL.Web2.controls
             institutions.Sort(comp);
 
             return institutions;
+        }
+
+        private void BuildInstitutionList(CustomGenericList<Institution> source, CustomGenericList<Institution> target)
+        {
+            foreach(Institution newInstitution in source)
+            {
+                bool exists = false;
+                foreach(Institution institution in target)
+                {
+                    if (institution.InstitutionCode == newInstitution.InstitutionCode) { exists = true; break; }
+                }
+                if (!exists) target.Add(newInstitution);
+            }
         }
     }
 }

@@ -53,12 +53,14 @@ namespace MOBOT.BHL.DAL
         public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
-                bool onlyMemberLibraries)
+                bool onlyMemberLibraries,
+                string institutionRoleName = null)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectWithPublishedItems", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("OnlyMemberLibraries", SqlDbType.Bit, null, false, onlyMemberLibraries)))
+                CustomSqlHelper.CreateInputParameter("OnlyMemberLibraries", SqlDbType.Bit, null, false, onlyMemberLibraries),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, true, institutionRoleName)))
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {
@@ -71,12 +73,14 @@ namespace MOBOT.BHL.DAL
         public CustomGenericList<Institution> InstitutionSelectWithPublishedSegments(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
-                bool onlyMemberLibraries)
+                bool onlyMemberLibraries,
+                string institutionRoleName = null)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectWithPublishedSegments", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("OnlyMemberLibraries", SqlDbType.Bit, null, false, onlyMemberLibraries)))
+                CustomSqlHelper.CreateInputParameter("OnlyMemberLibraries", SqlDbType.Bit, null, false, onlyMemberLibraries),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleName", SqlDbType.NVarChar, 100, true, institutionRoleName)))
             {
                 using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
                 {

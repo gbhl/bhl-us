@@ -29,7 +29,7 @@ FROM	dbo.Item i
 WHERE	ii.InstitutionCode = @InstitutionCode
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName IN ('Contributor', 'Rights Holder')
 
 -- Get Title and Item counts
 SELECT @TitleCount = COUNT(DISTINCT TitleID) FROM #Books
@@ -42,7 +42,7 @@ FROM	dbo.Segment s
 		INNER JOIN dbo.InstitutionRole r ON si.InstitutionRoleID = r.InstitutionRoleID
 WHERE	s.SegmentStatusID IN (10, 20) 
 AND		si.InstitutionCode = @InstitutionCode
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName IN ('Contributor', 'Rights Holder')
 
 -- Get Page count
 SELECT	@PageCount = COUNT(p.PageID) 

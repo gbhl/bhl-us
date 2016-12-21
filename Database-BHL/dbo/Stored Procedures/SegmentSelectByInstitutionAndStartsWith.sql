@@ -64,9 +64,8 @@ FROM	dbo.Segment s
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)  -- New, Published
 AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT NULL)
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName IN ('Contributor', 'Rights Holder')
 AND		si.InstitutionCode = @InstitutionCode
 AND		s.SortTitle LIKE @StartsWith + '%'
 
 END
-

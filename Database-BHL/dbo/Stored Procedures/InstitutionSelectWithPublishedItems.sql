@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[InstitutionSelectWithPublishedItems]
 
-@OnlyMemberLibraries bit = 1
+@OnlyMemberLibraries bit = 1,
+@InstitutionRoleName nvarchar(100) = null
 
 AS 
 
@@ -12,11 +13,13 @@ SELECT DISTINCT
 		ins.Note,
 		ISNULL(ins.InstitutionUrl, '') AS InstitutionUrl,
 		ins.BHLMemberLibrary
-FROM	dbo.Institution ins 
-		INNER JOIN dbo.ItemInstitution ii ON ins.InstitutionCode = ii.InstitutionCode
-		INNER JOIN dbo.Item it ON ii.ItemID = it.ItemID
+FROM	dbo.Institution ins WITH (NOLOCK)
+		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON ins.InstitutionCode = ii.InstitutionCode
+		INNER JOIN dbo.Item it WITH (NOLOCK) ON ii.ItemID = it.ItemID
+		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	it.ItemStatusID = 40
 AND		((ins.BHLMemberLibrary = 1 AND @OnlyMemberLibraries = 1) OR	@OnlyMemberLibraries = 0)
+AND		(r.InstitutionRoleName = @InstitutionRoleName OR @InstitutionRoleName IS NULL)
 ORDER BY
 		ins.InstitutionName
 
@@ -29,4 +32,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
