@@ -189,7 +189,9 @@ BEGIN TRY
 				LastModifiedDate = GETDATE(),
 				LastModifiedUserID = 1
 		WHERE	SegmentID = @BHLSegmentID
-		AND		SequenceOrder <> @SegmentSequence
+		AND		(ItemID <> @ItemID OR
+				SequenceOrder <> @SegmentSequence OR
+				StartPageID <> @StartPageID)
 		
 		-- Replace the SegmentPage records
 		DELETE FROM dbo.BHLSegmentPage WHERE SegmentID = @BHLSegmentID
