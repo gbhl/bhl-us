@@ -28,7 +28,7 @@ namespace MOBOT.BHL.Web2 {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ifrmFB;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe ifrmFB;
         
         /// <summary>
         /// aTweet control.
