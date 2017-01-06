@@ -478,6 +478,12 @@
     <Content Include="Views\Shared\_CollectionStats.cshtml" />
     <Content Include="Views\Shared\_TwitterFeed.cshtml" />
     <Content Include="Views\Shared\_AlertMessage.cshtml" />
+    <None Include="Views\Web.config.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
