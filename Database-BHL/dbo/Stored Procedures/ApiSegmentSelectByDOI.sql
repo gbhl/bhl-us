@@ -10,6 +10,8 @@ SET NOCOUNT ON
 
 SELECT	s.SegmentID,
 		s.ItemID,
+		dbo.fnContributorStringForSegment(s.SegmentID) AS ContributorName,
+		@DOIName as DOIName,
 		s.SequenceOrder,
 		s.SegmentGenreID,
 		g.GenreName,
@@ -20,9 +22,11 @@ SELECT	s.SegmentID,
 		s.PublisherName,
 		s.PublisherPlace,
 		s.Notes,
+		s.Summary,
 		s.Volume,
 		s.Series,
 		s.Issue,
+		s.Edition,
 		s.Date,
 		CASE
 		WHEN s.PageRange <> '' THEN s.PageRange 
