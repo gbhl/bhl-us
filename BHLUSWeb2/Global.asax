@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="BHLUSWeb2.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="MOBOT.BHL.Web2.Global" Language="C#" %>

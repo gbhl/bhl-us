@@ -470,6 +470,14 @@
     <None Include="Remoting.config.template" />
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_layout.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\_CollectionStats.cshtml" />
+    <Content Include="Views\Shared\_TwitterFeed.cshtml" />
+    <Content Include="Views\Shared\_AlertMessage.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -529,6 +537,7 @@
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="App_Code\RouteConfig.cs" />
     <Compile Include="AuthorNotFound.aspx.cs">
       <DependentUpon>AuthorNotFound.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -612,6 +621,7 @@
     <Compile Include="ContributorPage.aspx.designer.cs">
       <DependentUpon>ContributorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -944,6 +954,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

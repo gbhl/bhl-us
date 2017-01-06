@@ -9,12 +9,12 @@ $(document).ready(function () {
 
     // Search bar
     $('#searchbar #btnSearchSubmit').click(function (e) {
-        if ($('#searchbar #tbSearchTerm').val() == searchDefaultText) {
+        if ($('#searchbar .field').val() == searchDefaultText) {
             e.preventDefault();
             return false;
         }
     });
-    $('#searchbar #tbSearchTerm')
+    $('#searchbar .field')
             .val(searchDefaultText)
             .focus(function () {
                 if ($(this).val() == searchDefaultText) {
