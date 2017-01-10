@@ -126,7 +126,7 @@
         <div id="bookcontent">
             <div id="toolbar-top" class="column-wrap">
                 <div id="mypdfbar" class="disabled">
-                    <div style="position: absolute; top: 15px; left: 440px; font-size:13px;"> Click pages to select/de-select for download </div>
+                    <div style="position: absolute; top: 15px; left: 440px; font-size:13px;"> Click/Shift+Click pages to select for download </div>
 
                     <div id="BRtoolbar-pdfzoombuttons">
                         <a class="BRicon zoom_out" bt-xtitle="Zoom Out">zoom out</a>
@@ -350,6 +350,7 @@
             Icon: 2
         };
         var pdfMode;
+        var lastPdfIndex = -1;
         var isModalDialogChange;
         var cancelPdfSelection = false;
         var newpageOCR = $("#pageOCR-panel");
@@ -423,6 +424,7 @@
                 $(this).trigger(pageToolBoxEvent);
             });
             $(".pagetoolbox").hide();
+            lastPdfIndex = -1;
             fixIEDisplayIssue();
         }
 
@@ -1042,56 +1044,76 @@
             }
         }
 
-
         // Function used by book reader to create the pagetoolbox
         br.getPageToolbox = function (index) {
             var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).bind(pageToolBoxEvent, function(event) {
+                var origBG = '#404040'
+                var origActiveBG = '#455667';
+                var activeBG = '#ffa200';
+                var pdfPageCount;
+                var startIndex;
+                var endIndex;
 
-                    var origBG = '#404040'
-                    var origActiveBG = '#455667';
-                    var activeBG = '#ffa200';
-                    var pdfPageCount;
+                if (event.shiftKey && lastPdfIndex !== -1) {
+                    // Select multiple pages
+                    if (index < lastPdfIndex) 
+                        { startIndex = index; endIndex = lastPdfIndex - 1; }
+                    else 
+                        { startIndex = lastPdfIndex + 1; endIndex = index; }
 
-                    var pdfPageCount;
+                    for (x = startIndex; x <= endIndex; x++)
+                    {
+                        pdfPageIndex = $.inArray(x, pdfPages);
 
+                        // Select/Deselect a single page
+                        if(pdfPageIndex < 0) {
+                            pdfPageCount = pdfPages.push(x);
+                            $('#ptb' + x).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
+
+                            if(!pdfBar.hasClass('active')) {
+                                pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
+                            }
+                        }
+                    }
+                    lastPdfIndex = index;
+                }
+                else {
                     pdfPageIndex = $.inArray(index, pdfPages);
 
+                    // Select/Deselect a single page
                     if(pdfPageIndex < 0) {
                         pdfPageCount = pdfPages.push(index);
-                        //pageToolbox.addClass('active');
                         pageToolbox.addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
 
                         if(!pdfBar.hasClass('active')) {
                             pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
                         }
+                        lastPdfIndex = index;
                     } else {
                         pdfPageCount = pdfPages.remove(pdfPageIndex);
-                        //pageToolbox.removeClass('active');
                         pageToolbox.removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
-
+                        lastPdfIndex = -1;
                     }
+                }
 
-                    // Re-sort pdfs
-                    pdfPages.sort(function (a, b){ return (a-b); });
+                // Re-sort pdfs
+                pdfPages.sort(function (a, b){ return (a-b); });
 
-                    pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
-                        if(pdfPageCount <= 0) {
-                            pdfCounter.text('No Pages Added');
-                            pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
-                        } else if(pdfPageCount == 1) {
-                            pdfCounter.text(pdfPageCount + ' Page Added');
-                            pdfReviewCounter.text(pdfPageCount + ' Page');
-                        } else {
-                            pdfCounter.text(pdfPageCount + ' Pages Added');
-                            pdfReviewCounter.text(pdfPageCount + ' Pages');
-                        }                        
-                    }).animate({ backgroundColor : (pdfPageCount <= 0) ? origBG : origActiveBG }, 400, 'easeOutQuad');
-
+                pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
+                    if(pdfPageCount <= 0) {
+                        pdfCounter.text('No Pages Added');
+                        pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
+                    } else if(pdfPageCount == 1) {
+                        pdfCounter.text(pdfPageCount + ' Page Added');
+                        pdfReviewCounter.text(pdfPageCount + ' Page');
+                    } else {
+                        pdfCounter.text(pdfPageCount + ' Pages Added');
+                        pdfReviewCounter.text(pdfPageCount + ' Pages');
+                    }                        
+                }).animate({ backgroundColor : (pdfPageCount <= 0) ? origBG : origActiveBG }, 400, 'easeOutQuad');
 
                 // Prevent event propagating to dragscrollable
                 event.stopPropagation();
-
-
             });
 
             var isAnimating = false;
