@@ -121,6 +121,7 @@ BEGIN TRY
 		FROM	dbo.BSSegment s
 				INNER JOIN dbo.BHLInstitution i 
 					ON s.ContributorName = i.InstitutionName COLLATE Latin1_general_CI_AI -- ignore diacritics for this comparison
+		WHERE	SegmentID = @SegmentID
 
 		-- Insert new BHL SegmentIdentifier record for BioStor ID
 		INSERT	dbo.BHLSegmentIdentifier (SegmentID, IdentifierID, IdentifierValue, 
