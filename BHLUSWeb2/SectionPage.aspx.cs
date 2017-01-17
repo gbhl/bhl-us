@@ -32,8 +32,6 @@ namespace MOBOT.BHL.Web2
             {
                 SegmentID = segmentID;
                 BhlSegment = bhlProvider.SegmentSelectExtended(SegmentID);
-                BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
-                BhlSegment.ContributorList.Sort(new InstitutionComparer(InstitutionComparer.CompareEnum.InstitutionName, SortOrder.Ascending));
                 if (BhlSegment == null)
                 {
                     Response.Redirect("~/pagenotfound");
@@ -54,6 +52,9 @@ namespace MOBOT.BHL.Web2
                         Response.Redirect("~/itemunavailable");
                     }
                 }
+
+                BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
+                BhlSegment.ContributorList.Sort(new InstitutionComparer(InstitutionComparer.CompareEnum.InstitutionName, SortOrder.Ascending));
 
                 // Add Google Scholar metadata to the page headers
                 List<KeyValuePair<string, string>> tags = bhlProvider.GetGoogleScholarMetadataForSegment(SegmentID, ConfigurationManager.AppSettings["PartPageUrl"]);
