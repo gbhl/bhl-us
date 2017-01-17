@@ -373,7 +373,8 @@
 
         // Update the Altmetric badge
         $(".altmetric-embed").attr("data-uri", "http://www.biodiversitylibrary.org/part/" + "<%: BhlSegment.SegmentID %>");
-        _altmetric_embed_init();
+        if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
+
         
         var tabBodys = $('.tab-body').hide();
 
