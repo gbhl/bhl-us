@@ -786,6 +786,11 @@
 				OnRowCommand="itemsList_RowCommand" OnSorting="itemsList_Sorting" OnRowDataBound="itemsList_RowDataBound" DataKeyNames="ItemID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Image ID="FlickrImage" runat="server" ImageUrl="images/flickr_sml.png" AlternateText="Item in Flickr" ToolTip="Item in Flickr" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
 					<asp:BoundField DataField="ItemID" HeaderText="Item ID" SortExpression="ItemID" ItemStyle-Width="80px" ReadOnly="true" />
                     <asp:TemplateField HeaderText="MARC" HeaderStyle-HorizontalAlign="Left">
                         <ItemTemplate>

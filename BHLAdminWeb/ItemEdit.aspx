@@ -199,7 +199,8 @@
 					Item ID:
 				</td>
 				<td width="100%">
-					<asp:Label ID="itemIdLabel" runat="server" ForeColor="Blue"></asp:Label>
+					<asp:Label ID="itemIdLabel" runat="server" ForeColor="Blue"></asp:Label>&nbsp;
+                    <asp:Image ID="FlickrImage" runat="server" ImageUrl="images/flickr_sml.png" ImageAlign="Bottom" AlternateText="Item in Flickr" ToolTip="Item in Flickr" Visible="false" />
 				</td>
 			</tr>
 			<tr>
@@ -614,6 +615,11 @@
 				Width="600px" RowStyle-BackColor="white" CssClass="boxTable" OnRowCancelingEdit="pageList_RowCancelingEdit" OnRowEditing="pageList_RowEditing" OnRowUpdating="pageList_RowUpdating"
 				OnSorting="pageList_Sorting" OnRowDataBound="pageList_RowDataBound">
 				<Columns>
+                    <asp:TemplateField ItemStyle-Width="20px">
+                        <ItemTemplate>
+                            <asp:ImageButton ID="FlickrLinkButton" runat="server" AlternateText="View in Flickr" ToolTip="View in Flickr" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
 					<asp:BoundField DataField="PageID" HeaderText="Page ID" SortExpression="PageID" ItemStyle-Width="80px" ReadOnly="true" />
 					<asp:BoundField HeaderText="File Name Prefix" DataField="FileNamePrefix" ItemStyle-Width="200px" SortExpression="FileNamePrefix" />
 					<asp:TemplateField HeaderText="Sequence" ItemStyle-Width="80px" SortExpression="SequenceOrder">

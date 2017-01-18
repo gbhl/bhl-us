@@ -33,6 +33,7 @@ namespace MOBOT.BHL.DataObjects
         private int _numberOfPages = 0;
         private int _totalItems = 0;
         private int? _firstPageID = null;
+        private bool _hasFlickrImages = false;
 
 		public string DisplayedShortVolume
 		{
@@ -201,6 +202,12 @@ namespace MOBOT.BHL.DataObjects
             set { _firstPageID = value; }
         }
 
+        public bool HasFlickrImages
+        {
+            get { return _hasFlickrImages; }
+            set { _hasFlickrImages = value; }
+        }
+
         #endregion
 
         private void ProcessTagTextString(string value)
@@ -351,6 +358,11 @@ namespace MOBOT.BHL.DataObjects
                     case "FirstPageID":
                         {
                             _firstPageID = (int?)column.Value;
+                            break;
+                        }
+                    case "HasFlickrImages":
+                        {
+                            _hasFlickrImages = (((int)column.Value) == 1);
                             break;
                         }
 				}

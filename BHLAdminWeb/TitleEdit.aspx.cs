@@ -195,6 +195,20 @@ namespace MOBOT.BHL.AdminWeb
 			// Look up title
 			Title title = bp.TitleSelectExtended( id );
 
+            // Look up flickr status of each item associated with the title
+            CustomGenericList<Item> items = bp.ItemInFlickrByTitleID(id);
+            foreach(TitleItem item in title.TitleItems)
+            {
+                foreach (Item flickrItem in items)
+                {
+                    if (flickrItem.ItemID == item.ItemID)
+                    {
+                        item.HasFlickrImages = flickrItem.HasFlickrImages;
+                        break;
+                    }
+                }
+            }
+
 			Session[ "Title" + title.TitleID.ToString()] = title;
 
             replacedByTextBox.Text = title.RedirectTitleID.ToString();
@@ -1608,22 +1622,22 @@ namespace MOBOT.BHL.AdminWeb
 					img.ImageUrl = "/images/down.gif";
 				}
 
-				int sortColumnIndex = 1;
+                int sortColumnIndex = 2;
 				switch ( _sortColumn )
 				{
 					case TitleItemComparer.CompareEnum.BarCode:
 						{
-							sortColumnIndex = 3;
+							sortColumnIndex = 4;
 							break;
 						}
 					case TitleItemComparer.CompareEnum.ItemSequence:
 						{
-							sortColumnIndex = 4;
+							sortColumnIndex = 5;
 							break;
 						}
 					case TitleItemComparer.CompareEnum.Volume:
 						{
-							sortColumnIndex = 5;
+							sortColumnIndex = 6;
 							break;
 						}
 				}
@@ -1632,6 +1646,21 @@ namespace MOBOT.BHL.AdminWeb
 				e.Row.Cells[ sortColumnIndex ].Controls.Add( img );
 				e.Row.Cells[ sortColumnIndex ].Wrap = false;
 			}
+            else if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                TitleItem item = (TitleItem)e.Row.DataItem;
+                if (item != null)
+                {
+                    Image flickrImage = (Image)e.Row.FindControl("FlickrImage");
+                    if (item.HasFlickrImages)
+                    {
+                        //flickrImage.ImageUrl = "images/flickr_sml.png";
+                        flickrImage.Visible = true;
+                    }
+                    else
+                        flickrImage.Visible = false;
+                }
+            }
         }
 
         protected void itemFilter_CheckedChanged(object sender, EventArgs e)

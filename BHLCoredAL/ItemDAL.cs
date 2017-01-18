@@ -602,6 +602,56 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        /// <summary>
+        /// Get a list of item IDs for the specified title, including an indicator of whether there
+        /// are pages from each item in the BHL Flickr collection.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="titleId"></param>
+        /// <returns></returns>
+        public CustomGenericList<Item> ItemInFlickrByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int titleId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
 
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInFlickrByTitleId", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleId", SqlDbType.Int, null, false, titleId)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get an indicator of whether there are pages in the BHL Flickr collection for the specified item.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public Item ItemInFlickrByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInFlickrByItemId", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemId", SqlDbType.Int, null, false, itemId)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                        return null;
+                    else
+                        return list[0];
+                }
+            }
+        }
     }
 }
