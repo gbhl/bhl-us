@@ -151,6 +151,10 @@
       <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
       <Name>BHLFileAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
       <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
       <Name>BHLWebUtilities</Name>

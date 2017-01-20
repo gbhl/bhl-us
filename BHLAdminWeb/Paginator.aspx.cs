@@ -20,6 +20,7 @@ using MOBOT.BHL.Web.Utilities;
 using SortOrder = CustomDataAccess.SortOrder;
 using Page = MOBOT.BHL.DataObjects.Page;
 using FlickrUtility;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -451,7 +452,8 @@ namespace MOBOT.BHL.AdminWeb
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), userId );
+                string year = DataCleaner.CleanYear(yearTextBox.Text.Trim());
+                bp.PageUpdateYear( arrPages, year, userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
 
@@ -463,7 +465,7 @@ namespace MOBOT.BHL.AdminWeb
                     CheckBox cb = (CheckBox)gvr.FindControl("pageCheckBox");
                     if (cb.Checked)
                     {
-                        ((Literal)gvr.FindControl("Year")).Text = yearTextBox.Text.Trim();
+                        ((Literal)gvr.FindControl("Year")).Text = year;
                     }
                 }
 
@@ -523,7 +525,8 @@ namespace MOBOT.BHL.AdminWeb
                 int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
                 int[] arrPages = new int[ pages.Count ];
 				pages.CopyTo( arrPages );
-				bp.PageUpdateYear( arrPages, yearTextBox.Text.Trim(), userId );
+                string year = DataCleaner.CleanYear(yearTextBox.Text.Trim());
+                bp.PageUpdateYear( arrPages, year, userId );
 				bp.PageUpdateVolume( arrPages, volumeTextBox.Text.Trim(), userId );
 				int itemId = int.Parse( itemDropDownList.SelectedValue );
 				//fillPageList( itemId );
@@ -536,7 +539,7 @@ namespace MOBOT.BHL.AdminWeb
                     CheckBox cb = (CheckBox)gvr.FindControl("pageCheckBox");
                     if (cb.Checked)
                     {
-                        ((Literal)gvr.FindControl("Year")).Text = yearTextBox.Text.Trim();
+                        ((Literal)gvr.FindControl("Year")).Text = year;
                         ((Literal)gvr.FindControl("Volume")).Text = volumeTextBox.Text.Trim();
                     }
                 }

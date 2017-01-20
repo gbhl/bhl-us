@@ -85,6 +85,10 @@
       <Project>{D936AD4D-99F3-4095-B538-A097B23ACCD8}</Project>
       <Name>BHLImportDataObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270e7816-13ec-4d51-a27f-c959981b1275}</Project>
+      <Name>BHLUtility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>

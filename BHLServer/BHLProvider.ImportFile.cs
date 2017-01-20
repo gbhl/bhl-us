@@ -1,6 +1,7 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 using System;
 
 namespace MOBOT.BHL.Server
@@ -34,6 +35,7 @@ namespace MOBOT.BHL.Server
 
         public void ImportRecordSave(ImportRecord citation, int userID)
         {
+            citation.Year = DataCleaner.CleanYear(citation.Year);
             new ImportRecordDAL().ImportRecordSave(null, null, citation, userID);
         }
 

@@ -4,6 +4,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <script language="javascript">
+    var _submitMousedown = false;
+
     function overlay() {
 	    el = document.getElementById("overlay");
 	    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
@@ -30,6 +32,10 @@
             return;
         }
         executeServiceCall('services/segmentservice.ashx?op=SegmentSearch&segmentID=' + segmentId + '&title=' + title, showSegmentList);
+    }
+
+    function validateYear(year) {
+        executeServiceCall('services/utilityservice.ashx?op=CleanYear&year=' + encodeURIComponent(year), updateYear);
     }
 
     function showTitleList(result)
@@ -98,6 +104,19 @@
 
         // Display the table
         document.getElementById('srchSegmentResultTable').style.display = 'block';
+    }
+
+    function updateYear(result)
+    {
+        var spanStyle = "none";
+        if (document.getElementById("yearTextBox").value != result) spanStyle = "block";
+        document.getElementById('spanYearUpdate').style.display = spanStyle;
+        document.getElementById("yearTextBox").value = result;
+
+        if (_submitMousedown) {
+            _submitMousedown = false;
+            document.getElementById("saveButton").click();
+        }
     }
 
     function executeServiceCall(url, callback)
@@ -320,7 +339,8 @@
 					Year:
 				</td>
 				<td>
-					<asp:TextBox ID="yearTextBox" runat="server" MaxLength="20" Width="400px"></asp:TextBox>
+					<asp:TextBox ID="yearTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="400px" onblur="validateYear(document.getElementById('yearTextBox').value);" ></asp:TextBox>
+                    <span id="spanYearUpdate" style="display:none; color:red">The Year value has been normalized!  The preferred Year formats are "YYYY", "YYYY-YYYY", or "YYYY,YYYY".</span>
 				</td>
 			</tr>
 			<tr>
@@ -637,7 +657,7 @@
 			</asp:GridView>
 		</fieldset>
 		<br />
-		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		<asp:Button ID="saveButton" runat="server" ClientIDMode="Static" OnClick="saveButton_Click" Text="Save" />
 	</div>
 	<div id="overlay" class="overlay">
 	    <div style="top:900px">
@@ -695,4 +715,9 @@
 	        <input type="hidden" id="selectedSegment" value="" runat="server" />
         </div>
     </div>
+    <script>
+    document.getElementById("saveButton").onmousedown = function () {
+        _submitMousedown = true;
+    }
+    </script>
 </asp:Content>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.Server
 {
@@ -93,7 +94,9 @@ namespace MOBOT.BHL.Server
 
 		public Page PageUpdateYear( int pageID, string year, int userID )
 		{
-			PageDAL dal = new PageDAL();
+            year = DataCleaner.CleanYear(year);
+
+            PageDAL dal = new PageDAL();
 			Page storedPage = dal.PageSelectAuto( null, null, pageID );
 			if ( storedPage != null )
 			{

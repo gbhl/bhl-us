@@ -2,6 +2,7 @@ using System;
 using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -174,6 +175,9 @@ namespace MOBOT.BHLImport.Server
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
             string rightsHolder)
         {
+            // Standardize the format of the year value
+            year = DataCleaner.CleanYear(year);
+
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
             if (savedItem != null)

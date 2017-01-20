@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataCleaner.cs" />
     <Compile Include="EmailSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeHelper.cs" />

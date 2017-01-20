@@ -2,6 +2,7 @@ using System;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.Server
 {
@@ -156,7 +157,8 @@ namespace MOBOT.BHL.Server
 
 		public void ItemSave( Item item, int userId )
 		{
-			new ItemDAL().Save( null, null, item, userId );
+            item.Year = DataCleaner.CleanYear(item.Year);
+            new ItemDAL().Save( null, null, item, userId );
 		}
 
         public CustomGenericList<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(String institutionCode, int maxAge)

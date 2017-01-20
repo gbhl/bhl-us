@@ -637,6 +637,9 @@
     <Compile Include="Services\TitleService.ashx.cs">
       <DependentUpon>TitleService.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Services\UtilityService.ashx.cs">
+      <DependentUpon>UtilityService.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TitleAssociationEdit.aspx.cs">
       <DependentUpon>TitleAssociationEdit.aspx</DependentUpon>
@@ -1065,6 +1068,7 @@
     <Content Include="Views\Account\Unlock.cshtml" />
     <Content Include="Views\Report\ReportingStats.cshtml" />
     <Content Include="Views\Report\Orphans.cshtml" />
+    <Content Include="Services\UtilityService.ashx" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
