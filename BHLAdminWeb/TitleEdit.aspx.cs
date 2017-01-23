@@ -1488,7 +1488,7 @@ namespace MOBOT.BHL.AdminWeb
                     short newItemSeq = 0;
 					short.TryParse( newItemSeqString, out newItemSeq );
 
-					string itemIdString = row.Cells[ 1 ].Text;
+					string itemIdString = row.Cells[ 2 ].Text;
 					int itemId = 0;
 					int.TryParse( itemIdString, out itemId );
 
