@@ -60,7 +60,15 @@ namespace MOBOT.BHL.DataObjects
             get { return _itemStatusID; }
             set { _itemStatusID = value; }
         }
-        
+
+        private bool _hasFlickrImages = false;
+
+        public bool HasFlickrImages
+        {
+            get { return _hasFlickrImages; }
+            set { _hasFlickrImages = value; }
+        }
+
         #endregion
 
         #region ISet override
@@ -99,6 +107,11 @@ namespace MOBOT.BHL.DataObjects
                     case "ItemStatusID":
                         {
                             _itemStatusID = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "HasFlickrImages":
+                        {
+                            _hasFlickrImages = (((int)column.Value) == 1);
                             break;
                         }
                 }

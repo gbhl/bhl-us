@@ -204,5 +204,15 @@ namespace MOBOT.BHL.Server
         {
             return new ItemDAL().ItemSelectBarcodes(null, null);
         }
+
+        public CustomGenericList<Item> ItemInFlickrByTitleID(int titleId)
+        {
+            return new ItemDAL().ItemInFlickrByTitleID(null, null, titleId);
+        }
+
+        public Item ItemInFlickrByItemID(int itemId)
+        {
+            return new ItemDAL().ItemInFlickrByItemID(null, null, itemId);
+        }
     }
 }

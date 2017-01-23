@@ -1253,4 +1253,10 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ReportSelectOrphanedEntities.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemInFlickrByTitleID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemInFlickrByItemId.sql" />
+  </ItemGroup>
 </Project>

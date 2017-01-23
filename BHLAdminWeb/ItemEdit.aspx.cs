@@ -199,6 +199,7 @@ namespace MOBOT.BHL.AdminWeb
             {
 
                 itemIdLabel.Text = item.ItemID.ToString();
+                FlickrImage.Visible = item.HasFlickrImages;
                 barcodeLabel.Text = item.BarCode;
                 marcItemIDTextBox.Text = item.MARCItemID;
                 callNumberTextBox.Text = item.CallNumber;
@@ -333,6 +334,14 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			BHLProvider bp = new BHLProvider();
 			Item item = bp.ItemSelectByBarcodeOrItemID( id, barcode );
+
+            if (item != null)
+            {
+                // Look up flickr status of the item
+                Item flickrItem = bp.ItemInFlickrByItemID(item.ItemID);
+                item.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
+            }
+
             Session["Item" + itemIdTextBox.Text] = item;
 			fillUI();
 		}
@@ -979,7 +988,7 @@ namespace MOBOT.BHL.AdminWeb
 
 					int seqOrder = 0;
 					int.TryParse( seqOrderString, out seqOrder );
-					string pageIdString = row.Cells[ 0 ].Text;
+					string pageIdString = row.Cells[ 1 ].Text;
 					int pageId = 0;
 					int.TryParse( pageIdString, out pageId );
 
@@ -1108,17 +1117,17 @@ namespace MOBOT.BHL.AdminWeb
 				{
 					case PageComparer.CompareEnum.PageID:
 						{
-							sortColumnIndex = 0;
+							sortColumnIndex = 1;
 							break;
 						}
 					case PageComparer.CompareEnum.FileNamePrefix:
 						{
-							sortColumnIndex = 1;
+							sortColumnIndex = 2;
 							break;
 						}
 					case PageComparer.CompareEnum.SequenceOrder:
 						{
-							sortColumnIndex = 2;
+							sortColumnIndex = 3;
 							break;
 						}
 				}
@@ -1127,6 +1136,18 @@ namespace MOBOT.BHL.AdminWeb
 				e.Row.Cells[ sortColumnIndex ].Controls.Add( img );
 				e.Row.Cells[ sortColumnIndex ].Wrap = false;
 			}
+            else if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Paige page = (Paige)e.Row.DataItem;
+                ImageButton flickrLinkButton = (ImageButton)e.Row.FindControl("FlickrLinkButton");
+                if (page.FlickrURL.Length == 0)
+                    flickrLinkButton.Visible = false;
+                else
+                {
+                    flickrLinkButton.ImageUrl = "images/flickr_sml.png";
+                    flickrLinkButton.Attributes.Add("onclick", "window.open('" + page.FlickrURL + "');return false");
+                }
+            }
         }
 
         #endregion Page event handlers
