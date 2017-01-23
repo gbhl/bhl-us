@@ -988,7 +988,7 @@ namespace MOBOT.BHL.AdminWeb
 
 					int seqOrder = 0;
 					int.TryParse( seqOrderString, out seqOrder );
-					string pageIdString = row.Cells[ 0 ].Text;
+					string pageIdString = row.Cells[ 1 ].Text;
 					int pageId = 0;
 					int.TryParse( pageIdString, out pageId );
 
@@ -1117,17 +1117,17 @@ namespace MOBOT.BHL.AdminWeb
 				{
 					case PageComparer.CompareEnum.PageID:
 						{
-							sortColumnIndex = 0;
+							sortColumnIndex = 1;
 							break;
 						}
 					case PageComparer.CompareEnum.FileNamePrefix:
 						{
-							sortColumnIndex = 1;
+							sortColumnIndex = 2;
 							break;
 						}
 					case PageComparer.CompareEnum.SequenceOrder:
 						{
-							sortColumnIndex = 2;
+							sortColumnIndex = 3;
 							break;
 						}
 				}
