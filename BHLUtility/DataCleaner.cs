@@ -10,12 +10,14 @@ namespace MOBOT.BHL.Utility
     {
         /// <summary>
         /// Transform the specified Year value to one of the following forms:
-        ///     XXXX
-        ///     XXXX-XXXX
-        ///     XXXX,XXXX
+        ///     YYYY
+        ///     YYYY-YYYY
+        ///     YYYY,YYYY
+        /// Extra characters and spaces are removed from the sumbmitted value, but
+        /// the final result is NOT guaranteed to match one of those formats.
         /// </summary>
         /// <param name="year"></param>
-        /// <returns></returns>
+        /// <returns>The transformed value for Year</returns>
         public static string CleanYear(string year)
         {
             if (!string.IsNullOrWhiteSpace(year))
@@ -67,6 +69,45 @@ namespace MOBOT.BHL.Utility
             }
 
             return year;
+        }
+
+        /// <summary>
+        /// Verify that the specified Year value conforms to one of the following forms:
+        ///     YYYY
+        ///     YYYY-YYYY
+        ///     YYYY,YYYY
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns>True if the year is in the correct form, otherwise False.</returns>
+        public static bool ValidateItemYear(string year)
+        {
+            bool isValid = true;
+
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                // YYYY
+                Regex regex = new Regex("^[0-9]{4}$");
+                Match match = regex.Match(year);
+                isValid = match.Success;
+
+                if (!isValid)
+                {
+                    // YYYY-YYYY
+                    regex = new Regex("^[0-9]{4}-[0-9]{4}$");
+                    match = regex.Match(year);
+                    isValid = match.Success;
+                }
+
+                if (!isValid)
+                {
+                    // YYYY,YYYY
+                    regex = new Regex("^[0-9]{4},[0-9]{4}$");
+                    match = regex.Match(year);
+                    isValid = match.Success;
+                }
+            }
+
+            return isValid;
         }
     }
 }

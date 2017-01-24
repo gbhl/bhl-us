@@ -35,7 +35,8 @@
     }
 
     function validateYear(year) {
-        executeServiceCall('services/utilityservice.ashx?op=CleanYear&year=' + encodeURIComponent(year), updateYear);
+        year = year.trim().replace(" ", "");
+        executeServiceCall('services/utilityservice.ashx?op=ValidYear&year=' + encodeURIComponent(year), updateYear);
     }
 
     function showTitleList(result)
@@ -109,9 +110,8 @@
     function updateYear(result)
     {
         var spanStyle = "none";
-        if (document.getElementById("yearTextBox").value != result) spanStyle = "block";
-        document.getElementById('spanYearUpdate').style.display = spanStyle;
-        document.getElementById("yearTextBox").value = result;
+        if (result != true) spanStyle = "block";
+        document.getElementById('spanYearMessage').style.display = spanStyle;
 
         if (_submitMousedown) {
             _submitMousedown = false;
@@ -340,7 +340,7 @@
 				</td>
 				<td>
 					<asp:TextBox ID="yearTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="400px" onblur="validateYear(document.getElementById('yearTextBox').value);" ></asp:TextBox>
-                    <span id="spanYearUpdate" style="display:none; color:red">The Year value has been normalized!  The preferred Year formats are "YYYY", "YYYY-YYYY", or "YYYY,YYYY".</span>
+                    <span id="spanYearMessage" style="display:none; color:red">The Year value must be formatted as "YYYY", "YYYY-YYYY", or "YYYY,YYYY".</span>
 				</td>
 			</tr>
 			<tr>

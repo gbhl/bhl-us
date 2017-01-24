@@ -27,6 +27,12 @@ namespace MOBOT.BHL.AdminWeb.Services
                         response = this.CleanYear(year);
                         break;
                     }
+                case "ValidYear":
+                    {
+                        context.Response.ContentType = "application/json";
+                        response = this.ValidateYear(year);
+                        break;
+                    }
                 default:
                     {
                         response = null;
@@ -43,6 +49,13 @@ namespace MOBOT.BHL.AdminWeb.Services
             year = DataCleaner.CleanYear(year);
             JavaScriptSerializer js = new JavaScriptSerializer();
             return js.Serialize(year);
+        }
+
+        private string ValidateYear(string year)
+        {
+            bool isValid = DataCleaner.ValidateItemYear(year);
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            return js.Serialize(isValid);
         }
 
         public bool IsReusable

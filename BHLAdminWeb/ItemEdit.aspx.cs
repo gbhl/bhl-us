@@ -14,6 +14,7 @@ using MOBOT.BHL.Server;
 using CustomDataAccess;
 using SortOrder = CustomDataAccess.SortOrder;
 using Paige = MOBOT.BHL.DataObjects.Page;
+using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -386,6 +387,19 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("One and only one title must be designated the Primary title for this item.");
+            }
+
+            if (yearTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateItemYear(yearTextBox.Text.Trim().Replace(" ", "")))
+                {
+                    yearTextBox.Text = yearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Year must be formatted as 'YYYY', 'YYYY-YYYY', or 'YYYY,YYYY'.");
+                }
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id
