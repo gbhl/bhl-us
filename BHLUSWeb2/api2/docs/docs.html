@@ -72,7 +72,7 @@
 <p><i><b>GetPartByIdentifier</b></i></p>
 <p>	Find and return metadata about a part or parts that match a specific identifier.</p>
 <p>	Example - <a href="/api2/docs/GetPartByIdentifier.xml" title="GetPartByIdentifier">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartByIdentifier&amp;type=doi&amp;value=10.4039/Ent38406-12&amp;apikey=&lt;key+value&gt;</a></p>
-<p>	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden)<br />	value - the identifier value</p>
+<p>	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby)<br />	value - the identifier value</p>
 <p><i><b>GetPartBibTex</b></i></p>
 <p>	Return a citation for a part, using the BibTeX format.</p>
 <p>	Example - <a href="/api2/docs/GetPartBibTeX.xml" title="GetPartBibTeX">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartBibTex&amp;partid=1000&amp;apikey=&lt;key+value&gt;</a></p>
@@ -92,7 +92,7 @@
 <p><i><b>GetTitleByIdentifier</b></i></p>
 <p>	Find and return metadata about a title or titles that match a specific identifier.</p>
 <p>	Example - <a href="/api2/docs/GetTitleByIdentifier.xml" title="GetTitleByIdentifier">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleByIdentifier&amp;type=oclc&amp;value=2992225&amp;apikey=&lt;key+value&gt;</a></p>
-<p>	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden)<br />	value - the identifier value</p>
+<p>	type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby)<br />	value - the identifier value</p>
 <p><i><b>TitleSearchSimple</b></i></p>
 <p>	Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)	is searched for the specified string.  Basic metadata for all full and partial matches is returned.</p>
 <p>	Example - <a href="/api2/docs/TitleSearchSimple.xml" title="TitleSearchSimple">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=TitleSearchSimple&amp;title=nematocerous&amp;apikey=&lt;key+value&gt;</a></p>
@@ -362,7 +362,8 @@
             ddc<br />
             nal<br />
             nlm<br />
-            coden</td>
+            coden<br />
+            soulsby</td>
         <td>NA</td>
     </tr>
     <tr>
@@ -852,6 +853,8 @@
 <br />
 <hr />
 <p><b>*** RELEASE NOTES ***</b></p>
+<p>January 25 2017 - version 2.7.3</p>
+<p><ul><li>Enhancement: Added "soulsby" as a valid identifier type parameter for the GetTitleByIdentifier and GetPartByIdentifier methods.</li></ul></p>
 <p>September 8, 2016 - version 2.7.2</p>
 <p><ul><li>Enhancement: Added Item/CopySpecificInformation element.</li></ul></p>
 <p>July 26, 2016 - version 2.7.1</p>

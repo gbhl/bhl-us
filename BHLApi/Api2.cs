@@ -361,6 +361,7 @@ namespace MOBOT.BHL.API.BHLApi
                 case "nal":
                 case "nlm":
                 case "coden":
+                case "soulsby":
                     {
                         if (identifierType.ToLower() == "lccn") identifierType = "dlc";
 
@@ -506,6 +507,7 @@ namespace MOBOT.BHL.API.BHLApi
                 case "nlm":
                 case "coden":
                 case "biostor":
+                case "soulsby":
                     {
                         if (identifierType.ToLower() == "lccn") identifierType = "dlc";
 
