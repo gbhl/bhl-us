@@ -140,7 +140,7 @@ GetPartByIdentifier:
 
     Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartByIdentifier&type=doi&value=10.4039/Ent38406-12&apikey=<key value>
 
-    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor)
+    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby)
     value - the identifier value
 
 GetPartBibTex:
@@ -183,7 +183,7 @@ GetTitleByIdentifier:
 
     Example - http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleByIdentifier&type=oclc&value=2992225&apikey=<key value>
 
-    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden)
+    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby)
     value - the identifier value
 
 TitleSearchSimple:
@@ -510,6 +510,7 @@ TitleIdentifier/IdentifierName  One of the following values, which identify the 
                                     nal
                                     nlm
                                     coden
+                                    soulsby
 TitleIdentifier/IdentifierValue Value of an identifier assigned to the title            Location depends on the type 
                                                                                         of identifier:
                                                                                             035 (IdentifierName = oclc)
@@ -665,6 +666,11 @@ PartCount                       Number of Parts in BHL                          
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+January 25, 2017 - version 2.7.3
+
+- Enhancement: Added "soulsby" as a valid identifier type parameter for the GetTitleByIdentifier and 
+		GetPartByIdentifier methods.
 
 September 8, 2016 - version 2.7.2
 
