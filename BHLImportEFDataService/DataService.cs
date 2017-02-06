@@ -12,7 +12,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
 
         public DataService()
         {
-            context = new BHLImportEntities();
+            //context = new BHLImportEntities();
         }
 
         /// <summary>
@@ -54,6 +54,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             if (context == null || forceNew)
             {
                 BHLImportEntities newContext = new BHLImportEntities();
+                newContext.Configuration.AutoDetectChangesEnabled = false;
                 if (persist) context = newContext;
                 return newContext;
             }
