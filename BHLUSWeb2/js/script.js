@@ -64,19 +64,8 @@ $(document).ready(function () {
         });
     }
 
-    // Language select
-    $('#ddlLanguage').change(function () {
-        var queryString = setUrlEncodedKey('lang', $(this).val(), location.search);
-        (queryString.length > 1) ? location.search = queryString : location.href = location.href.split('?')[0];
-    });
-
-    //$('#ddlVolumes').change(function () {
     $('#ddlVolumes').live("change", function () {
         location.href = '/item/' + $(this).val();
-    });
-
-    $('#ddlPages').change(function () {
-
     });
 
 

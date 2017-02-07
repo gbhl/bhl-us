@@ -18,18 +18,21 @@ namespace MOBOT.BHL.Web2
         {
             base.Page_Load(sender, e);
 
-            string name = string.Empty;
+            string searchName = string.Empty;
+            string displayName = string.Empty;
+
             // Read the parameters passed to the page
             if (RouteData.Values["name"] != null)
             {
-                NameParam = Server.HtmlEncode((string)RouteData.Values["name"]);
-                name = NameParam.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
+                searchName = (string)RouteData.Values["name"];
+                NameParam = Server.UrlEncode(searchName);
+                displayName = Server.HtmlEncode(searchName).Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
             }
 
-            main.Page.Title = string.Format("Bibliography for \"{0}\"- Biodiversity Heritage Library", name);
+            main.Page.Title = string.Format("Bibliography for \"{0}\"- Biodiversity Heritage Library", displayName);
 
             // Get the identifiers for this name            
-            CustomGenericList<NameIdentifier> nameIdentifiers = bhlProvider.NameIdentifierSelectForResolvedName(name);
+            CustomGenericList<NameIdentifier> nameIdentifiers = bhlProvider.NameIdentifierSelectForResolvedName(searchName);
       
             string nameBankID = string.Empty;
             foreach (NameIdentifier nameIdentifier in nameIdentifiers)
@@ -39,7 +42,7 @@ namespace MOBOT.BHL.Web2
             }
 
             litEOLLink.Text = (!string.IsNullOrEmpty(EOLID)) ? string.Format("<a class=\"button\" target=\"_blank\" href=\"http://www.eol.org/pages/{0}\">View in <img src='/images/eol_15px.png' style='position:relative;top:2px'></a>", EOLID) : string.Empty;
-            TitleLink = name;
+            TitleLink = displayName;
         }
     
     }
