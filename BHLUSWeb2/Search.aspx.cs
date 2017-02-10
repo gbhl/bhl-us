@@ -33,6 +33,8 @@ namespace MOBOT.BHL.Web2
 
         protected string uiSearchTerm { get; set; } //for displaying the search term in the UI
 
+        protected string queryString { get; set; } // for the elasticsearch redirect
+
         // Log an Exception
         public static void LogMessage(string message)
         {
@@ -109,11 +111,13 @@ namespace MOBOT.BHL.Web2
             if (Request["cont"] != null) searchContainerTitle = Request["cont"].ToString();
             if (Request["ser"] != null) searchSeries = Request["ser"].ToString();
 
+            queryString = Request.QueryString.ToString().Replace("elastic=0&", "");
+            divESToggle.Visible = (ConfigurationManager.AppSettings["UseElasticSearch"] == "true" && searchCat != "O");
+
             //get sortdetails
             if (!string.IsNullOrEmpty(searchSort)) {
                 sortBy = searchSort;
             }
-
 
             // Make sure we have valid search terms
             if ((searchTerm != string.Empty || searchLastName != string.Empty ||
@@ -123,9 +127,9 @@ namespace MOBOT.BHL.Web2
             {
                 string searchCriteria = GetSearchCriteriaLabel(searchCat, searchTerm, searchLang, searchLastName, searchVolume,
                     searchEdition, searchYear, searchSubject, searchCollection, searchIssue, searchStartPage, searchAnnotation, searchContainerTitle);
-              //  searchResultsLabel.Text = searchCriteria;
+
                 Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Search Results");
-               //TODO ((Main)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Search Results for '" + searchCriteria + "'"));
+
                 navbar.searchTerm = searchTerm;
                 uiSearchTerm = searchCriteria;
                 PerformSearch(searchCat, searchTerm, searchLang, searchLastName, searchVolume, searchEdition, searchYear,
@@ -133,8 +137,6 @@ namespace MOBOT.BHL.Web2
                     nameMax, subjectMax, annotationMax, annotationConceptMax, annotationSubjectMax, segmentMax, searchSort,
                     returnPage, searchContainerTitle, searchSeries);
             }
-
-
         }
 
         /// <summary>

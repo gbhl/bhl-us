@@ -478,6 +478,10 @@
     <Content Include="Views\Shared\_CollectionStats.cshtml" />
     <Content Include="Views\Shared\_TwitterFeed.cshtml" />
     <Content Include="Views\Shared\_AlertMessage.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\Advanced.cshtml" />
+    <Content Include="Views\Shared\_DonateFeature.cshtml" />
+    <Content Include="Views\Shared\_CollectionFeature.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -628,6 +632,7 @@
       <DependentUpon>ContributorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -818,6 +823,7 @@
     <Compile Include="Monitor.aspx.designer.cs">
       <DependentUpon>Monitor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MVCServices\SearchService.cs" />
     <Compile Include="NameDetail.aspx.cs">
       <DependentUpon>NameDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -961,7 +967,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

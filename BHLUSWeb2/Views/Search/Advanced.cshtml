@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Advanced Search";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@section CSS {
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/ui.jqgrid.css" />
+}
+
+<div id="page-title"><h1 class="column-wrap">@ViewBag.Title</h1></div>
+
+<div id="content" class="column-wrap clearfix">
+    <section class="search">
+        <div id="tabs">
+            <ul>
+                <li><a href="#divPubSearch" title="Publications"><span>Publications</span></a></li>
+                <li><a href="#divAuthorSearch" title="Authors"><span>Authors</span></a></li>
+                <li><a href="#divSubjectSearch" title="Subjects"><span>Subjects</span></a></li>
+                <li><a href="#divNameSearch" title="Names"><span>Scientific Names</span></a></li>
+            </ul>
+            <div id="divPubSearch">
+                <form id="frmPub" method="post">
+                    <ol>
+                        <li>
+                            <label class="caption" for="txtPubTitle">Title:</label><input name="txtPubTitle" type="text" id="txtPubTitle" style="width:400px;" />
+                        </li>
+                        <li>
+                            <label class="caption" for="txtPubAuthorLastName">Author Last Name:</label><input name="txtPubAuthorLastName" type="text" id="txtPubAuthorLastName" style="width:200px;" />
+                        </li>
+                        <li>
+                            <label class="caption" for="txtPubVolume">Volume:</label><input name="txtPubVolume" type="text" id="txtPubVolume" />
+                        </li>
+                        <li>
+                            <label class="caption" for="txtPubYear">Year (YYYY):</label><input name="txtPubYear" type="text" id="txtPubYear" /><label id="lblPubYearError" for="txtPubYear" class="ErrorText" style="display:none"> Please specify a 4-digit Year.</label>
+                        </li>
+                        <li>
+                            <label class="caption" for="txtPubSubject">Subject:</label><input name="txtPubSubject" type="text" id="txtPubSubject" style="width:200px;" />
+                        </li>
+                        <li>
+                            <label class="caption" for="ddlPubLanguage">Language:</label>
+                            <select name="ddlPubLanguage" id="ddlPubLanguage">
+                                <option value="">(Any Language)</option>
+                                @foreach (MOBOT.BHL.DataObjects.Language language in ViewBag.Languages)
+                                {
+                                    <option value="@language.LanguageCode">@language.LanguageName</option>
+                                }
+                            </select>
+                        </li>
+                        <li>
+                            <label class="caption" for="ddlPubCollection">Collection:</label>
+                            <select name="ddlPubCollection" id="ddlPubCollection">
+                                <option value="">(Any Collection)</option>
+                                @foreach (MOBOT.BHL.DataObjects.Collection collection in ViewBag.Collections)
+                                {
+                                    <option value="@collection.CollectionID.ToString()">@collection.CollectionName</option>
+                                }
+                            </select>
+                        </li>
+                    </ol>
+                    <div style="margin-left: 152px;">
+                        <div id="lblPubError" class="ErrorText" style="display:none;">Please specify Title or Author Last Name, or select a Collection.</div>
+                        <div style="width: 13em; margin-right: 1em; margin-top: -1em; margin-bottom: 20px;">
+                            <input type="submit" name="btnSearchTitle" value="Search" id="btnSearchTitle" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="divAuthorSearch">
+                <form id="frmAuthor" method="post">
+                    <ol style="margin-bottom: 50px;">
+                        <li>
+                            <label class="caption" for="txtAuthorName">Author Name:</label><input name="txtAuthorName" type="text" id="txtAuthorName" class="inlinetextbox" style="width:200px;" />
+                            &nbsp;<input type="submit" name="btnSearchAuthor" value="Search" id="btnSearchAuthor" class="inlinebutton" style="margin-left: 10px;" />
+                        </li>
+                    </ol>
+                    <div style="margin-left: 152px; margin-top: -2em; margin-bottom: 20px;">
+                        <div id="lblAuthorError" class="ErrorText" style="display:none;">Please specify an Author Name.</div>
+                    </div>
+                </form>
+            </div>
+            <div id="divSubjectSearch">
+                <form id="frmSubject" method="post">
+                    <ol style="margin-bottom: 50px;">
+                        <li>
+                            <label class="caption" for="txtSubject">Subject:</label><input name="txtSubject" type="text" id="txtSubject" class="inlinetextbox" style="width:200px;" />
+                            &nbsp;<input type="submit" name="btnSearchSubject" value="Search" id="btnSearchSubject" class="inlinebutton" style="margin-left: 10px;" />
+                        </li>
+                    </ol>
+                    <div style="margin-left: 152px; margin-top: -2em; margin-bottom: 20px;">
+                        <div id="lblSubjectError" class="ErrorText" style="display:none;">Please specify a Subject.</div>
+                    </div>
+                </form>
+            </div>
+            <div id="divNameSearch">
+                <form id="frmName" method="post">
+                    <ol style="margin-bottom: 50px;">
+                        <li>
+                            <label class="caption" for="txtName">Scientific Name:</label><input name="txtName" type="text" id="txtName" class="inlinetextbox" style="width:200px;" />
+                            &nbsp;<input type="submit" name="btnSearchName" value="Search" id="btnSearchName" class="inlinebutton" style="margin-left: 10px;" />
+                        </li>
+                    </ol>
+                    <div style="margin-left: 152px; margin-top: -2em; ">
+                        <div id="lblNameError" class="ErrorText" style="display:none;">Please specify a Name.</div>
+                    </div>
+                    <div class="searchinfoblock">
+                        <p>Biodiversity Heritage Library uses Global Names Architecture's Global Names Recognition and Discovery (GNRD), a taxonomic name recognition algorithm, to search through all of the texts digitized in BHL and extract the scientific names.  Searching for a name will return a list of all the individual pages where that name occurs.  NOTE: The text is currently uncorrected text automatically generated from Optical Character Recognition (OCR) programs and is of variable quality for each scanned book.</p>
+                        <p>Here are some examples of scientific names that you can find in the Biodiversity Heritage Library:</p>
+                        <table width="525" cellpadding="3" cellspacing="3" role="presentation">
+                            <tr>
+                                <td><b>Corn</b>: <a href="/name/zea_mays" title="Name">Zea mays</a></td>
+                                <td><b>Great white shark</b>: <a href="/name/carcharodon_carcharias" title="Name">Carcharodon carcharias</a></td>
+                            </tr>
+                            <tr>
+                                <td><b>Tiger</b>: <a href="/name/panthera_tigris" title="Name">Panthera tigris</a></td>
+                                <td><b>African elephant</b>: <a href="/name/loxodonta_africana" title="Name">Loxodonta africana</a></td>
+                            </tr>
+                            <tr>
+                                <td><b>Monarch butterfly</b>: <a href="/name/danaus_plexippus" title="Name">Danaus plexippus</a></td>
+                                <td><b>Domestic dog</b>: <a href="/name/canis_lupus_familiaris" title="Name">Canis lupus familiaris</a></td>
+                            </tr>
+                            <tr>
+                                <td><b>Strawberry</b>: <a href="/name/fragaria_magna" title="Name">Fragaria magna</a></td>
+                                <td><b>Bottlenose Dolphin</b>: <a href="/name/Tursiops_truncatus" title="Name">Tursiops truncatus</a></td>
+                            </tr>
+                            <tr>
+                                <td><b>Annual meadow grass</b>: <a href="/name/poa_annua" title="Name">Poa annua</a></td>
+                                <td><b>Blue whale</b>: <a href="/name/balaenoptera_musculus" title="Name">Balaenoptera musculus</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </section>
+    <aside>
+        <div class="column-wrap">
+            <p><a href="~/advsearch?elastic=0">Use our old search interface.</a></p>
+        </div>
+        @Html.Action("_DonateFeature", "Partial")
+        @Html.Action("_CollectionFeature", "Partial")
+    </aside>
+</div>
+
+@section scripts {
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js" language="javascript"></script>
+<script type="text/javascript">
+    // Set up tabs
+    $(document).ready(function () {
+        $("#tabs").tabs();
+        $("#tabs").tabs('select', '#divPubSearch');    // Default to a particular tab
+    });
+
+    // Validate publication search
+    $("#btnSearchTitle").click(function () {
+        var isValid = true;
+
+        if (!validateYear($("#txtPubYear").val())) { $("#lblPubYearError").show(); isValid = false; }
+        else { $("#lblPubYearError").hide(); }
+
+        if ($.trim($("#txtPubTitle").val()) == '' &&
+            $.trim($("#txtPubAuthorLastName").val()) == '' &&
+            $("#ddlPubCollection").val() == '') { $("#lblPubError").show(); isValid = false; }
+        else { $("#lblPubError").hide(); }
+
+        return isValid;
+    });
+
+    function validateYear(value) {
+        var re = new RegExp("^[0-9]{4}$");
+        var m = re.exec(value);
+        if (m == null && value != "") return false;
+        return true;
+    }
+
+    // Validate author search
+    $("#btnSearchAuthor").click(function () {
+        if ($.trim($("#txtAuthorName").val()) == '') { $("#lblAuthorError").show(); return false; }
+        else { $("#lblAuthorError").hide(); return true; }
+    });
+
+    // Validate subject search
+    $("#btnSearchSubject").click(function () {
+        if ($.trim($("#txtSubject").val()) == '') { $("#lblSubjectError").show(); return false; }
+        else { $("#lblSubjectError").hide(); return true; }
+    });
+
+    // Validate name search
+    $("#btnSearchName").click(function () {
+        if ($.trim($("#txtName").val()) == '') { $("#lblNameError").show(); return false; }
+        else { $("#lblNameError").hide(); return true; }
+    });
+
+    // Search books on Enter keypress
+    $("#txtPubTitle").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
+    $("#txtPubAuthorLastName").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
+    $("#txtPubVolume").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
+    $("#txtPubYear").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
+    $("#txtPubSubject").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
+
+    // Search authors on Enter keypress
+    $("#txtAuthorName").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchAuthor").click(); });
+
+    // Search subjects on Enter keypress
+    $("#txtSubject").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchSubject").click(); });
+
+    // Search names on Enter keypress
+    $("#txtName").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchName").click(); });
+</script>
+}

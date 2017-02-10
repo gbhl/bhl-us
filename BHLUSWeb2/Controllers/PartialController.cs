@@ -235,5 +235,50 @@ namespace MOBOT.BHL.Web2.Controllers
 
             return PartialView();
         }
+
+        public ActionResult _DonateFeature()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _CollectionFeature()
+        {
+            string cacheKey = "FeaturedCollection";
+            Collection collection = null;
+
+            if (HttpContext.Cache[cacheKey] != null)
+            {
+                // Used the cached version of the feed contents
+                collection = (Collection)HttpContext.Cache[cacheKey];
+            }
+            else
+            {
+                BHLProvider provider = new BHLProvider();
+                collection = provider.CollectionSelectFeatured();
+
+                // Cache the featured collection
+                if (collection != null)
+                {
+                    HttpContext.Cache.Add(cacheKey, collection, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["FeaturedCollectionCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
+                }
+            }
+
+            if (collection == null)
+            {
+                ViewBag.CollectionDisplay = "none";
+            }
+            else
+            {
+                ViewBag.CollectionDisplay = "block";
+                ViewBag.CollectionUrlRoot = (string.IsNullOrWhiteSpace(collection.HtmlContent)) ? "/browse" : string.Empty;
+                ViewBag.CollectionUrl = collection.CollectionURL == string.Empty ? collection.CollectionID.ToString() : collection.CollectionURL;
+                ViewBag.CollectionName = collection.CollectionName;
+                ViewBag.CollectionImageUrl = collection.ImageURL;
+            }
+
+            return PartialView();
+        }
     }
 }

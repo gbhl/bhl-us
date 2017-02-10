@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Search Results";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<nav id="sub-nav-tabs" class="no-js-hide">
+    <div class="column-wrap">
+        <span class="arrow search"></span>
+        <div id="linkbar">
+            <h3>Results for "@ViewBag.SearchTerm"</h3>
+            <ul>
+                <li id="spanTitleSummary" class="titles">
+                    <a href="#/titles" title="Books">Publications (@ViewBag.NumPubs)</a>
+                </li>
+                <li id="spanAuthorSummary" class="authors">
+                    <a href="#/authors" title="Authors">Authors (@ViewBag.NumAuthors)</a>
+                </li>
+                <li id="spanSubjectSummary" class="subjects">
+                    <a href="#/subjects" title="Subjects">Subjects (@ViewBag.NumSubjects)</a>
+                </li>
+                <li id="spanNameSummary" class="names">
+                    <a href="#/names" title="Names">Scientific Names (@ViewBag.NumNames)</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="column-wrap">
+    <p><a href="~/search?elastic=0&@ViewBag.QueryString">Use our old search interface.</a></p>
+</div>
+
+<div id="sub-sections" class="clearfix">
+    <div id="titles">
+        <div class="content column-wrap">
+            <section class="js-hide">
+                <ol class="data titles">
+                </ol>
+            </section>
+        </div>
+    </div>
+    <div id="authors" class="floatclear">
+        <div class="content column-wrap">
+            <section class="js-hide">
+                <ol>
+                </ol>
+            </section>
+        </div>
+    </div>
+    <div id="subjects" class="floatclear">
+        <div class="content column-wrap">
+            <section class="js-hide">
+                <ol>
+                </ol>
+            </section>
+        </div>
+    </div>
+    <div id="names" class="floatclear">
+        <div class="content column-wrap">
+            <section class="js-hide">
+                <p>
+                    Biodiversity Heritage Library uses <em>taxonomic intelligence</em> tools, including <a href="http://gnrd.globalnames.org" title="GNRD">
+                        Global Names Recognition and Discovery (GNRD)
+                    </a> developed by <a href="http://globalnames.org/" title="uBio">Global Names Architecture</a>, to locate, verify, and record scientific names located
+                    within the text of each digitized page. <b>Note:</b> The text used for this identification is uncorrected OCR, so may not include
+                    all results expected or visible in the page.
+                </p>
+                <ol></ol>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="/js/libs/jquery.history.min.js"></script>
+    <script src="/js/libs/jquery.hoverintent.min.js"></script>
+    <script src="/js/libs/jquery.text-overflow.min.js"></script>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        $(document).ready(function () {
+            var subSections = $('#sub-sections').children(); //.hide();
+
+            // Navigate to the default sub-section if no hash
+            if (!location.hash) {
+                if (@ViewBag.NumPubs > 0) {
+                    window.location.replace('#/titles');
+                }
+                else if (@ViewBag.NumAuthors > 0) {
+                    window.location.replace('#/authors');
+                }
+                else if (@ViewBag.NumSubjects > 0) {
+                    window.location.replace('#/subjects');
+                }
+                else if (@ViewBag.NumNames > 0) {
+                    window.location.replace('#/names');
+                }
+                else {
+                    window.location.replace('#/titles');
+                }
+            }
+
+            $.History.bind(function (state) {
+                if (!$('#sub-sections').is(':visible')) {
+                    $('#sub-sections').show();
+                }
+                var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+                var subSection = $('#' + stateName);
+                //var subSectionHeader = $('#subhead-' + stateName)
+                subSections.hide();
+
+                // Highlight selected link
+                $('#linkbar a').removeClass('active');
+                $('#linkbar .' + stateName + ' a').addClass('active').blur();
+
+                // Special case
+                if (stateName == 'all') {
+                    subSections.show();
+                    return false;
+                }
+
+                // If no default sub-section found then head on to the default otherwise show selected sub-section
+                if (!subSection.length) {
+                  $.History.go('/all');
+                    return false;
+                } else {
+                    subSection.show();
+                }
+            });
+        });
+    //]]>
+    </script>
+}

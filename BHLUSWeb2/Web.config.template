@@ -25,6 +25,9 @@
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="http://beta.biodiversitylibrary.org/oai"/>
 
+    <!-- Feature toggle for ElasticSearch implementation -->
+    <add key="UseElasticSearch" value="false"/>
+
     <!-- ###################################################################### -->
 
     <add key="UseRemoteFileAccessProvider" value="false"/>
