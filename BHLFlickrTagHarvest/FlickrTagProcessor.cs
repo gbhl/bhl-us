@@ -348,10 +348,7 @@ namespace BHLFlickrTagHarvest
             try
             {
                 string thisComputer = Environment.MachineName;
-                MailMessage mailMessage = new MailMessage();
-                MailAddress mailAddress = new MailAddress(configParms.EmailFromAddress);
-                mailMessage.From = mailAddress;
-                mailMessage.To.Add(configParms.EmailToAddress);
+                MailMessage mailMessage = new MailMessage(configParms.EmailFromAddress, configParms.EmailToAddress);
                 if (this.errorMessages.Count == 0)
                 {
                     mailMessage.Subject = "BHLFlickrTagHarvest: Flickr Harvesting on " + thisComputer + " completed successfully.";
