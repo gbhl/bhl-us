@@ -932,7 +932,7 @@ namespace MOBOT.BHL.OAIMODS
                     marcCode = subject.Key.Split('|')[1];
                 }
 
-                if (marcCode == "z" || marcTag == "651")
+                if (marcCode == "z" || (marcTag == "651" && marcCode == "a"))
                 {
                     sb.Append("\t<geographic>" + HttpUtility.HtmlEncode(subject.Value) + "</geographic>\n");
                 }
