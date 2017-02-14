@@ -119,7 +119,8 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         private AuthorName findAuthorName(CustomGenericList<AuthorName> authorNames,
-            int authorNameId, int authorId)
+            int authorNameId, int authorId, string fullName, string lastName, 
+            string firstName, string fullerForm)
         {
             foreach (AuthorName ai in authorNames)
             {
@@ -127,7 +128,9 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     continue;
                 }
-                if (authorNameId == 0 && ai.AuthorNameID == 0 && authorId == ai.AuthorID)
+                if (authorNameId == 0 && ai.AuthorNameID == 0 && authorId == ai.AuthorID &&
+                    fullName == ai.FullName && lastName == ai.LastName && firstName == ai.FirstName &&
+                    fullerForm == ai.FullerForm)
                 {
                     return ai;
                 }
@@ -250,7 +253,11 @@ namespace MOBOT.BHL.AdminWeb
 
                     AuthorName authorName = findAuthorName(author.AuthorNames,
                         (int)namesList.DataKeys[e.RowIndex].Values[0],
-                        (int)namesList.DataKeys[e.RowIndex].Values[1]);
+                        (int)namesList.DataKeys[e.RowIndex].Values[1],
+                        namesList.DataKeys[e.RowIndex].Values[2].ToString(),
+                        namesList.DataKeys[e.RowIndex].Values[3].ToString(),
+                        namesList.DataKeys[e.RowIndex].Values[4].ToString(),
+                        namesList.DataKeys[e.RowIndex].Values[5].ToString());
 
                     authorName.AuthorID = author.AuthorID;
                     authorName.FullName = fullName;
@@ -290,7 +297,11 @@ namespace MOBOT.BHL.AdminWeb
 
                 AuthorName authorName = findAuthorName(author.AuthorNames,
                     (int)namesList.DataKeys[rowNum].Values[0],
-                    (int)namesList.DataKeys[rowNum].Values[1]);
+                    (int)namesList.DataKeys[rowNum].Values[1],
+                    namesList.DataKeys[rowNum].Values[2].ToString(),
+                    namesList.DataKeys[rowNum].Values[3].ToString(),
+                    namesList.DataKeys[rowNum].Values[4].ToString(),
+                    namesList.DataKeys[rowNum].Values[5].ToString());
 
                 authorName.IsDeleted = true;
                 bindAuthorNameData();

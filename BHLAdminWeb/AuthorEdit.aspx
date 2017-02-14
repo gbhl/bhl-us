@@ -38,7 +38,7 @@
 			<asp:GridView ID="namesList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 				Width="800px" CssClass="boxTable" OnRowCancelingEdit="namesList_RowCancelingEdit" OnRowEditing="namesList_RowEditing"
-				OnRowUpdating="namesList_RowUpdating" OnRowCommand="namesList_RowCommand" DataKeyNames="AuthorNameID,AuthorID">
+				OnRowUpdating="namesList_RowUpdating" OnRowCommand="namesList_RowCommand" DataKeyNames="AuthorNameID,AuthorID,FullName,LastName,FirstName,FullerForm">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 					<asp:TemplateField HeaderText="Full Name (last, first)" HeaderStyle-HorizontalAlign="Left">
