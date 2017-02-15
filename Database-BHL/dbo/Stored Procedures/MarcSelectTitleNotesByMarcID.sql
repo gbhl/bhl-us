@@ -63,7 +63,7 @@ ORDER BY MarcDataFieldID, RowNum
 -- Deliver the final result set
 
 SELECT	nt.NoteTypeID,
-		t.NoteText,
+		LTRIM(RTRIM(t.NoteText)) AS NoteText,
 		t.NoteSequence
 FROM	#tmpTitleNote t INNER JOIN dbo.NoteType nt
 			ON t.MarcDataFieldTag = nt.MarcDataFieldTag
@@ -73,4 +73,3 @@ ORDER BY t.NoteSequence
 DROP TABLE #tmpTitleNote
 
 END
-

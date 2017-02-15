@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcSelectAssociationsByMarcID]
+﻿CREATE PROCEDURE [dbo].[MarcSelectAssociationsByMarcID]
 
 @MarcID int
 
@@ -167,8 +166,13 @@ FROM	#tmpTitleAssociation t INNER JOIN vwMarcDataField m
 WHERE	m.Code = 'a'
 AND		m.DataFieldTag IN ('780', '785')
 
--- Get 773 tags (this is Host Item information... defines "container" items for 
--- titles that are also articles)
+-- Get 770, 772, 773, 775, 777, 787 tags 
+-- 770 are Supplement/Special Issue items
+-- 772 are Supplement Parent items
+-- 773 is Host Item information... defines "container" items for titles that are also articles
+-- 775 are other editions
+-- 777 are Issue With items
+-- 787 are other relationships
 INSERT INTO #tmpTitleAssociation
 SELECT	0 AS Sequence,
 		x.MarcDataFieldID,
@@ -185,9 +189,32 @@ SELECT	0 AS Sequence,
 FROM	(
 		SELECT	MarcDataFieldID, DataFieldTag, [a], [d], [g], [t]
 		FROM	(SELECT * FROM dbo.vwMarcDataField
-				WHERE DataFieldTag = '773'
+				WHERE DataFieldTag IN ('770', '772', '773', '775', '777', '787')
 				AND MarcID = @MarcID) AS m
 		PIVOT	(MIN(SubFieldValue) FOR Code in ([a], [d], [g], [t])) AS Pvt
+		) x
+GROUP BY x.MarcDataFieldID, x.DataFieldTag
+
+-- Get the 740 tags
+INSERT INTO #tmpTitleAssociation
+SELECT	0 AS Sequence,
+		x.MarcDataFieldID, 
+		x.DataFieldTag, 
+		'',
+		'',
+		ISNULL(MIN([a]), '') AS Title, 
+		ISNULL(MIN([n]), '') AS Section, 
+		ISNULL(MIN([p]), '') AS Volume,
+		'',
+		'',
+		'',
+		1 AS Active
+FROM	(
+		SELECT	MarcDataFieldID, DataFieldTag, [a], [p], [n]
+		FROM	(SELECT * FROM dbo.vwMarcDataField
+				WHERE DataFieldTag = '740'
+				AND MarcID = @MarcID) AS m
+		PIVOT	(MIN(SubFieldValue) FOR Code IN ([a], [p], [n])) AS Pvt
 		) x
 GROUP BY x.MarcDataFieldID, x.DataFieldTag
 
@@ -199,7 +226,7 @@ SELECT	Sequence,
 		MARCIndicator1,
 		t.MARCIndicator2,
 		tat.TitleAssociationTypeID,
-		Title,
+		RTRIM(REPLACE(Title, '[from old catalog]', '')) AS Title,
 		Section,
 		Volume,
 		Heading,
@@ -215,4 +242,3 @@ DROP TABLE #tmpTitleAssociation
 SET NOCOUNT OFF
 
 END
-

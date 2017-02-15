@@ -750,6 +750,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSelectTitleIdentifiersByMarc
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSelectTitleKeywordsByMarcID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSelectTitleLanguagesByMarcID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSelectTitleNotesByMarcID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSelectVariantsByMarcID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSubFieldDeleteAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSubFieldInsertAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\MarcSubFieldSelectAuto.sql"

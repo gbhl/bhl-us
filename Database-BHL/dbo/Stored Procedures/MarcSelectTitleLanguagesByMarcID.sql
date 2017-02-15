@@ -21,10 +21,14 @@ INSERT INTO #tmpTitleLanguage (LanguageCode)
 SELECT DISTINCT LanguageCode
 FROM	dbo.fnSplitLanguage(@MarcID)
 
+-- Correct frequently incorrect language code for Japanese
+UPDATE	#tmpTitleLanguage
+SET		LanguageCode = 'jpn'
+WHERE	LanguageCode = 'jap'
 
 -- =======================================================================
 -- Deliver the final result set
-SELECT	LanguageCode
+SELECT	UPPER(LanguageCode) AS LanguageCode
 FROM	#tmpTitleLanguage
 
 DROP TABLE #tmpTitleLanguage

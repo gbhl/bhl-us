@@ -74,6 +74,11 @@ namespace MOBOT.BHL.Server
             return new MarcDAL().MarcSelectAssociationIdsByMarcDataFieldID(null, null, marcDataFieldID);
         }
 
+        public CustomGenericList<TitleVariant> MarcSelectVariantsByMarcID(int marcID)
+        {
+            return new MarcDAL().MarcSelectVariantsByMarcID(null, null, marcID);
+        }
+
         public bool MarcResolveTitles(int batchId)
         {
             return new MarcDAL().MarcResolveTitles(null, null, batchId);

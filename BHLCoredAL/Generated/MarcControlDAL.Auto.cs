@@ -1,8 +1,8 @@
 
-// Generated 4/15/2009 3:34:26 PM
+// Generated 2/15/2017 3:14:49 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class MarcControlDAL is based upon MarcControl.
+// This partial class MarcControlDAL is based upon dbo.MarcControl.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from MarcControl by primary key(s).
+		/// Select values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into MarcControl.
+		/// Insert values into dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +151,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcControl.
+		/// Insert values into dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -175,7 +175,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("MarcControlID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("MarcID", SqlDbType.Int, null, false, marcID),
 					CustomSqlHelper.CreateInputParameter("Tag", SqlDbType.NChar, 3, false, tag),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 200, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<MarcControl> helper = new CustomSqlHelper<MarcControl>())
@@ -196,7 +196,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into MarcControl. Returns an object of type MarcControl.
+		/// Insert values into dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into MarcControl. Returns an object of type MarcControl.
+		/// Insert values into dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +235,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from MarcControl by primary key(s).
+		/// Delete values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +250,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from MarcControl by primary key(s).
+		/// Delete values from dbo.MarcControl by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +293,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,7 +314,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -340,7 +340,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("MarcControlID", SqlDbType.Int, null, false, marcControlID),
 					CustomSqlHelper.CreateInputParameter("MarcID", SqlDbType.Int, null, false, marcID),
 					CustomSqlHelper.CreateInputParameter("Tag", SqlDbType.NChar, 3, false, tag),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 200, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<MarcControl> helper = new CustomSqlHelper<MarcControl>())
@@ -361,7 +361,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +376,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in MarcControl. Returns an object of type MarcControl.
+		/// Update values in dbo.MarcControl. Returns an object of type MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,9 +401,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage MarcControl object.
+		/// Manage dbo.MarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +418,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage MarcControl object.
+		/// Manage dbo.MarcControl object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in MarcControl.
+		/// then either insert values into, delete values from, or update values in dbo.MarcControl.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -487,4 +487,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

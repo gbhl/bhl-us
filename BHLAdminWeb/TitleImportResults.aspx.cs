@@ -128,6 +128,13 @@ namespace MOBOT.BHL.AdminWeb
                             title.TitleAssociations.Add(titleAssociation);
                         }
 
+                        CustomGenericList<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
+                        foreach(TitleVariant titleVariant in titleVariants)
+                        {
+                            titleVariant.IsNew = true;
+                            title.TitleVariants.Add(titleVariant);
+                        }
+
                         // Save the new title
                         title = provider.TitleSave(title, userID);
 
@@ -260,6 +267,20 @@ namespace MOBOT.BHL.AdminWeb
                             titleAssociation.TitleAssociationIdentifiers = 
                                 provider.MarcSelectAssociationIdsByMarcDataFieldID(titleAssociation.MarcDataFieldID);
                             title.TitleAssociations.Add(titleAssociation);
+                        }
+
+                        // Replace all variants associated with this title
+                        foreach(TitleVariant titleVariant in title.TitleVariants)
+                        {
+                            titleVariant.IsDeleted = true;
+                        }
+
+                        CustomGenericList<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
+                        foreach(TitleVariant titleVariant in titleVariants)
+                        {
+                            titleVariant.IsNew = true;
+                            titleVariant.TitleID = title.TitleID;
+                            title.TitleVariants.Add(titleVariant);
                         }
 
                         // Update the title

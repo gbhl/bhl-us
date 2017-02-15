@@ -21,7 +21,7 @@ CREATE TABLE #tmpTitleKeyword
 -- Populate the temp table
 
 INSERT INTO #tmpTitleKeyword
-SELECT	m.SubFieldValue,
+SELECT	RTRIM(SUBSTRING(REPLACE(m.SubFieldValue, '[from old catalog]', ''), 1, 200)),
 		m.DataFieldTag,
 		m.Code
 FROM	dbo.vwMarcDataField m
@@ -45,14 +45,13 @@ SET		Keyword = CASE WHEN RIGHT(Keyword, 1) = '.'
 					ELSE Keyword
 					END
 
-SELECT	Keyword,
+SELECT	SUBSTRING(Keyword, 1, 50) AS Keyword,
 		MIN(MarcDataFieldTag) AS MarcDataFieldTag,
 		MIN(MarcSubFieldCode) AS MarcSubFieldCode
 FROM	#tmpTitleKeyword
 GROUP BY
-		Keyword
+		SUBSTRING(Keyword, 1, 50)
 
 DROP TABLE #tmpTitleKeyword
 
 END
-

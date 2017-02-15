@@ -1,7 +1,7 @@
 
-// Generated 4/15/2009 3:34:26 PM
+// Generated 2/15/2017 3:14:49 PM
 // Do not modify the contents of this code file.
-// This abstract class __MarcControl is based upon MarcControl.
+// This abstract class __MarcControl is based upon dbo.MarcControl.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __MarcControl : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -120,7 +120,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region MarcControlID
 		
@@ -219,9 +219,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: Value;
-		/// DBMS data type: nvarchar(200);
+		/// DBMS data type: nvarchar(2000);
 		/// </summary>
-		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=200)]
+		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=2000)]
 		public string Value
 		{
 			get
@@ -230,7 +230,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 200);
+				if (value != null) value = CalibrateValue(value, 2000);
 				if (_Value != value)
 				{
 					_Value = value;
@@ -296,7 +296,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -456,3 +456,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

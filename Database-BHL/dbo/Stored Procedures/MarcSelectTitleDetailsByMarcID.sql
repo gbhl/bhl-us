@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcSelectTitleDetailsByMarcID]
+﻿CREATE PROCEDURE [dbo].[MarcSelectTitleDetailsByMarcID]
 
 @MarcID int
 
@@ -18,7 +17,7 @@ CREATE TABLE #tmpTitle (
 	[FullTitle] [ntext] NOT NULL,
 	[ShortTitle] [nvarchar](255) NULL,
 	[UniformTitle] [nvarchar](255) NULL,
-	[SortTitle] [nvarchar](65) NULL,
+	[SortTitle] [nvarchar](60) NULL,
 	[CallNumber] [nvarchar](100) NULL,
 	[PublicationDetails] [nvarchar](255) NULL,
 	[StartYear] [smallint] NULL,
@@ -40,7 +39,7 @@ CREATE TABLE #tmpTitle (
 
 -- Get the MARC leader and MARC BIB ID
 INSERT	#tmpTitle (MARCBibID, MARCLeader, FullTitle)
-SELECT	MARCBibID = REPLACE(Leader, ' ', 'x'),
+SELECT	MARCBibID = REPLACE(REPLACE(Leader, ' ', 'x'), '|', 'x'),
 		MARCLeader = Leader,
 		''
 FROM	dbo.Marc 
@@ -61,6 +60,11 @@ FROM	dbo.vwMarcControl c
 WHERE	c.Tag = '008' 
 AND		c.MarcID = @MarcID
 
+-- Make sure the start and end years are within the valid ranges
+UPDATE	#tmpTitle
+SET		StartYear = CASE WHEN ((StartYear>=1400 AND StartYear<=2025) OR StartYear IS NULL) THEN StartYear ELSE NULL END,
+		EndYear = CASE WHEN ((EndYear>=1400 AND EndYear<=2025) OR EndYear IS NULL) THEN EndYear ELSE NULL END
+
 -- If the language code is unrecognized, replace it with NULL.  In
 -- the vast majority of cases, the code is unrecognized because it is
 -- mal-formed in the MARC.
@@ -71,7 +75,7 @@ WHERE	l.LanguageCode IS NULL
 
 -- Get the publication titles
 UPDATE	#tmpTitle
-SET		ShortTitle = df.SubFieldValue
+SET		ShortTitle = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'a'
@@ -79,7 +83,7 @@ AND		df.MarcID = @MarcID
 
 -- Get the uniform title (stored in either MARC 130 or MARC 240)
 UPDATE	#tmpTitle
-SET		UniformTitle = df.SubFieldValue
+SET		UniformTitle = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag in ('130', '240')
 AND		df.Code = 'a'
@@ -87,9 +91,7 @@ AND		df.MarcID = @MarcID
 
 -- Full Title
 UPDATE	#tmpTitle
-SET		FullTitle = dfA.SubFieldValue + ' ' + 
-					ISNULL(dfB.SubFieldValue, '')-- + ' ' + 
---					ISNULL(dfC.SubFieldValue, '')
+SET		FullTitle = LTRIM(RTRIM(dfA.SubFieldValue + ' ' +  ISNULL(dfB.SubFieldValue, '')))
 FROM	dbo.Marc m INNER JOIN dbo.vwMarcDataField dfA
 			ON m.MarcID = dfA.MarcID
 			AND dfA.DataFieldTag = '245' 
@@ -106,14 +108,14 @@ WHERE	m.MarcID = @MarcID
 
 -- Part Number and Part Name
 UPDATE	#tmpTitle
-SET		PartNumber = df.SubFieldValue
+SET		PartNumber = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'n'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
-SET		PartName = df.SubFieldValue
+SET		PartName = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'p'
@@ -121,29 +123,50 @@ AND		df.MarcID = @MarcID
 
 -- Get datafield 260/264 information
 UPDATE	#tmpTitle
-SET		Datafield_260_a = df.SubFieldValue
+SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
 FROM	dbo.vwMarcDataField df
 WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'a'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
-SET		Datafield_260_b = df.SubFieldValue
+SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'b'
 AND		df.MarcID = @MarcID
 
 UPDATE	#tmpTitle
-SET		Datafield_260_c = df.SubFieldValue
+SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
 FROM	dbo.vwMarcDataField df
 WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
 AND		df.Code = 'c'
 AND		df.MarcID = @MarcID
 
+-- Remove start and end brackets ( [ ] ) from publication information
+UPDATE	#tmpTitle
+SET		Datafield_260_a = SUBSTRING(Datafield_260_a, 2, LEN(Datafield_260_a) - 1),
+        Datafield_260_b = CASE WHEN ISNULL(Datafield_260_c, '') = '' THEN SUBSTRING(Datafield_260_b, 1, LEN(Datafield_260_b) - 1) ELSE Datafield_260_b END,
+        Datafield_260_c = CASE WHEN ISNULL(Datafield_260_c, '') <> '' THEN SUBSTRING(Datafield_260_c, 1, LEN(Datafield_260_c) - 1) ELSE Datafield_260_c END
+WHERE	LEFT(Datafield_260_a, 1) = '['
+AND     CHARINDEX(']', Datafield_260_a, 1) = 0
+AND     (
+			(
+			RIGHT(Datafield_260_c, 1) = ']'
+			AND CHARINDEX('[', Datafield_260_c, 1) = 0
+			)
+		OR
+			(
+			RIGHT(Datafield_260_b, 1) = ']'
+			AND CHARINDEX('[', Datafield_260_b, 1) = 0
+			AND ISNULL(Datafield_260_c, '') = ''
+			)
+		)
+
 -- Get publication details
 UPDATE	#tmpTitle
-SET		PublicationDetails = ISNULL(Datafield_260_a, '') + ISNULL(Datafield_260_b, '') + ISNULL(Datafield_260_c, '')
+SET		PublicationDetails = SUBSTRING(ISNULL(Datafield_260_a, '') + ISNULL(Datafield_260_b, '') + 
+			ISNULL(Datafield_260_c, ''), 1, 255)
 
 -- Get the call number (first check the 050 record, then the 090... use the 050 value if both exist)
 UPDATE	#tmpTitle
@@ -182,9 +205,9 @@ WHERE	m.DataFieldTag = '040'
 AND		m.Code = 'a'
 AND		m.MarcID = @MarcID
 
-	-- Get the Edition Statement
+-- Get the Edition Statement
 UPDATE	#tmpTitle
-SET		EditionStatement = t.SubFieldValue
+SET		EditionStatement = SUBSTRING(t.SubFieldValue, 1, 450)
 FROM	dbo.Marc m INNER JOIN (
 				SELECT	MarcID, MarcDataFieldID, 
 						LTRIM(ISNULL(MIN([a]), '') + ' ' + ISNULL(MIN([b]), '')) AS SubFieldValue
@@ -209,47 +232,25 @@ AND		m.MarcID = @MarcID
 
 -- =======================================================================
 
--- Get the sort titles for all titles
--- Remove keywords from the full title
+-- Use Indicator2 of the 245a field to build the appropriate SortTitle
 UPDATE	#tmpTitle
-SET		SortTitle = SUBSTRING(
-						LTRIM(RTRIM(
-						REPLACE(
-						REPLACE(
-						REPLACE(
-						REPLACE(
-						REPLACE(
-						REPLACE(CONVERT(NVARCHAR(4000), FullTitle), 
-							' A ', ' '),
-							' An ', ' '),
-							' Les ', ' '),
-							' Las ', ' '),
-							' Los ', ' '),
-							' L'' ', ' ')
-						))
-					, 1, 65)
-
--- Remove keywords from the beginning of the sort titles
-UPDATE	#tmpTitle
-SET		SortTitle = CASE 
-					WHEN SUBSTRING(SortTitle, 1, 4) = 'The ' THEN SUBSTRING(SortTitle, 5, 60)
-					WHEN SUBSTRING(SortTitle, 1, 2) = 'A ' THEN SUBSTRING(SortTitle, 3, 60)
-					WHEN SUBSTRING(SortTitle, 1, 3) = 'An ' THEN SUBSTRING(SortTitle, 4, 60)
-					WHEN SUBSTRING(SortTitle, 1, 4) = 'Les ' THEN SUBSTRING(SortTitle, 5, 60)
-					WHEN SUBSTRING(SortTitle, 1, 4) = 'Las ' THEN SUBSTRING(SortTitle, 5, 60)
-					WHEN SUBSTRING(SortTitle, 1, 4) = 'Los ' THEN SUBSTRING(SortTitle, 5, 60)
-					WHEN SUBSTRING(SortTitle, 1, 3) = 'L'' ' THEN SUBSTRING(SortTitle, 4, 60)
-					WHEN SUBSTRING(SortTitle, 1, 3) = '...' THEN LTRIM(SUBSTRING(SortTitle, 4, 60))
-					WHEN SUBSTRING(SortTitle, 1, 1) = '[' THEN SUBSTRING(SortTitle, 2, 60)
-					ELSE SUBSTRING(SortTitle, 1, 60)
-					END
+SET		SortTitle = LTRIM(RTRIM(SUBSTRING(	FullTitle, 
+											CASE WHEN ISNUMERIC(ISNULL(Indicator2, '')) = 1 THEN 
+												CASE WHEN Indicator2 = '0' THEN 1 ELSE CONVERT(int, Indicator2) END
+											ELSE 1 END, 
+											60)
+								))
+FROM	dbo.vwMarcDataField m
+WHERE	m.DataFieldTag = '245'
+AND		m.Code = 'a'
+AND		m.MarcID = @MarcID
 
 -- =======================================================================
 -- Deliver the final result set
 SELECT	[MARCBibID],
 		[MARCLeader],
 		[BibliographicLevelID],
-		[FullTitle],
+		SUBSTRING(CONVERT(nvarchar(max), [FullTitle]), 1, 2000) AS FullTitle,
 		[ShortTitle],
 		[UniformTitle],
 		[SortTitle],

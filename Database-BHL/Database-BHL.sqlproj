@@ -1259,4 +1259,10 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ItemInFlickrByItemId.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\MarcSelectTitleNotesByMarcID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\MarcSelectVariantsByMarcID.sql" />
+  </ItemGroup>
 </Project>

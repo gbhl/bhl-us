@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[MarcSelectAuthorsByMarcID]
+﻿CREATE PROCEDURE [dbo].[MarcSelectAuthorsByMarcID]
 
 @MarcID int
 
@@ -23,7 +22,9 @@ CREATE TABLE #tmpAuthor (
 	[MARCCreator_b] [nvarchar](300),
 	[MARCCreator_c] [nvarchar](200),
 	[MARCCreator_d] [nvarchar](450),
+	[MARCCreator_e] [nvarchar](150),
 	[MARCCreator_q] [nvarchar](150),
+	[MARCCreator_t] [nvarchar](500),
 	[MARCCreator_5] [nvarchar](450) NULL,
 	[AuthorID] [int] NULL
 	)
@@ -75,6 +76,14 @@ FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
 			AND t.MarcDataFieldTag = m.DataFieldTag
 			AND m.Code = 'd'
 
+-- Get creator MARC subfield 'e'
+UPDATE	#tmpAuthor
+SET		MARCCreator_e = m.SubFieldValue
+FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
+			ON t.MarcDataFieldID = m.MarcDataFieldID
+			AND t.MarcDataFieldTag = m.DataFieldTag
+			AND m.Code = 'e'
+
 -- Get creator MARC subfield 'q'
 UPDATE	#tmpAuthor
 SET		MARCCreator_q = m.SubFieldValue
@@ -82,6 +91,14 @@ FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
 			ON t.MarcDataFieldID = m.MarcDataFieldID
 			AND t.MarcDataFieldTag = m.DataFieldTag
 			AND m.Code = 'q'
+
+-- Get creator MARC subfield 't'
+UPDATE	#tmpAuthor
+SET		MARCCreator_t = m.SubFieldValue
+FROM	#tmpAuthor t INNER JOIN dbo.vwMarcDataField m
+			ON t.MarcDataFieldID = m.MarcDataFieldID
+			AND t.MarcDataFieldTag = m.DataFieldTag
+			AND m.Code = 't'
 
 -- Get creator MARC subfield '5'
 UPDATE	#tmpAuthor
@@ -105,10 +122,16 @@ SELECT	MARCCreator_a,
 		LTRIM(RTRIM(
 			REPLACE(
 			REPLACE(
+			REPLACE(
+			REPLACE(
+			REPLACE(
 			REPLACE(MARCCreator_d, 
 				'b.', ''), 
 				'.', ''), 
-				',', '')
+				',', ''),
+				'(', ''),
+				')', ''),
+				':', '')
 		)) AS Dates
 INTO	#tmpAuthorDates
 FROM	#tmpAuthor
@@ -128,6 +151,11 @@ DROP TABLE #tmpAuthorDates
 -- Delete any authors where subfield 5 is NOT null
 DELETE	#tmpAuthor
 WHERE	MARCCreator_5 IS NOT NULL
+
+-- Remove "from old catalog" text from creatorname and MARCCreator_q
+UPDATE	#tmpAuthor
+SET		FullName = RTRIM(REPLACE(FullName, '[from old catalog]', '')),
+		MARCCreator_q = RTRIM(REPLACE(MARCCreator_q, '[from old catalog]', ''))
 
 -- =======================================================================
 -- Add new author and authorname records, if necessary
@@ -201,10 +229,9 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
 	-- Record the error
-	INSERT INTO dbo.MarcImportError (ErrorDate, Number, Severity, State, 
-		[Procedure], Line, [Message])
-	SELECT	GETDATE(), ERROR_NUMBER(), ERROR_SEVERITY(),
-		ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), ERROR_MESSAGE()
+	INSERT INTO dbo.MarcImportError (ErrorDate, Number, Severity, State, [Procedure], Line, [Message])
+	SELECT	GETDATE(), ERROR_NUMBER(), ERROR_SEVERITY(), ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), 
+			ERROR_MESSAGE()
 END CATCH
 
 -- =======================================================================
@@ -218,6 +245,24 @@ FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDat
 			AND ISNULL(t.EndDate, '') = ISNULL(a.Enddate, '')
 			AND t.FullName = a.FullName
 
+-- If a selected production Author ID has been redirected to a different 
+-- author ID, then use that author ID instead.  Follow the "redirect" chain
+-- up to ten levels.
+UPDATE	#tmpAuthor
+SET		AuthorID = COALESCE(a10.AuthorID, a9.AuthorID, a8.AuthorID, a7.AuthorID, a6.AuthorID,
+							a5.AuthorID, a4.AuthorID, a3.AuthorID, a2.AuthorID, a1.AuthorID)
+FROM	#tmpAuthor t INNER JOIN dbo.Author a1 ON t.AuthorID = a1.AuthorID
+		LEFT JOIN dbo.Author a2 ON a1.RedirectAuthorID = a2.AuthorID
+		LEFT JOIN dbo.Author a3 ON a2.RedirectAuthorID = a3.AuthorID
+		LEFT JOIN dbo.Author a4 ON a3.RedirectAuthorID = a4.AuthorID
+		LEFT JOIN dbo.Author a5 ON a4.RedirectAuthorID = a5.AuthorID
+		LEFT JOIN dbo.Author a6 ON a5.RedirectAuthorID = a6.AuthorID
+		LEFT JOIN dbo.Author a7 ON a6.RedirectAuthorID = a7.AuthorID
+		LEFT JOIN dbo.Author a8 ON a7.RedirectAuthorID = a8.AuthorID
+		LEFT JOIN dbo.Author a9 ON a8.RedirectAuthorID = a9.AuthorID
+		LEFT JOIN dbo.Author a10 ON a9.RedirectAuthorID = a10.AuthorID
+WHERE	t.AuthorID IS NOT NULL
+
 -- =======================================================================
 -- Deliver the final result set
 SELECT DISTINCT
@@ -225,6 +270,12 @@ SELECT DISTINCT
 		FullName,
 		StartDate,
 		EndDate,
+		ISNULL(CASE WHEN RIGHT(MARCCreator_e, 1) = '.' 
+			THEN LEFT(MARCCreator_e, LEN(MARCCreator_e) - 1) 
+			ELSE MARCCreator_e END, '') AS Relationship,
+		ISNULL(CASE WHEN RIGHT(MARCCreator_t, 1) = '.' 
+			THEN LEFT(MARCCreator_t, LEN(MARCCreator_t) - 1) 
+			ELSE MARCCreator_t END, '') AS TitleOfWork,
 		MARCDataFieldTag,
 		AuthorID
 FROM	#tmpAuthor

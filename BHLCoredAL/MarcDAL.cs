@@ -235,6 +235,27 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<TitleVariant> MarcSelectVariantsByMarcID(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int marcId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("MarcSelectVariantsByMarcID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("MarcID", SqlDbType.Int, null, false, marcId)))
+            {
+                using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
+                {
+                    CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+
         public bool MarcResolveTitles(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
