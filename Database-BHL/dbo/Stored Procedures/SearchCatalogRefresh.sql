@@ -138,6 +138,17 @@ FROM	#tmpReverseName2
 DROP TABLE #tmpReverseName
 DROP TABLE #tmpReverseName2
 
+-- Add additional name details (Fuller Form, Title, Unit, Location)
+UPDATE	#tmpSearchCatalogCreator
+SET		CreatorName = CASE WHEN AuthorTypeName = 'Person' THEN CreatorName + ' ' + n.FullerForm + ' ' + a.Title
+						WHEN AuthorTypeName = 'Corporation' THEN CreatorName + ' ' + a.Unit + ' ' + a.Location
+						WHEN AuthorTypeName = 'Meeting' THEN CreatorName + ' ' + a.Location
+						END
+FROM	#tmpSearchCatalogCreator t
+		INNER JOIN dbo.Author a ON t.CreatorID = a.AuthorID
+		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+		INNER JOIN dbo.AuthorType at ON a.AuthorTypeID = at.AuthorTypeID
+
 -- ****************************************  SEARCHCATALOG  ***********************************
 
 IF (@Target = 'Books' OR @Target = '')
@@ -279,7 +290,7 @@ BEGIN
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleAssociation) a ON t.TitleID = a.TitleID
 
 	UPDATE	#tmpItem
-	SET		Authors = ISNULL(dbo.fnCOinSAuthorStringForTitle(TitleID, 0) + ' ', '')
+	SET		Authors = ISNULL(dbo.fnAuthorSearchStringForTitle(TitleID) + ' ', '')
 
 	UPDATE	#tmpItem
 	SET		Variants = ISNULL(dbo.fnVariantStringForTitle(t.TitleID) + ' ', '')
@@ -425,7 +436,7 @@ BEGIN
 	SET		Subjects = ISNULL(dbo.fnKeywordStringForSegment(SegmentID) + ' ', '')
 
 	UPDATE	#tmpSegment
-	SET		Authors = ISNULL(dbo.fnAuthorStringForSegment(SegmentID, '|') + ' ', '')
+	SET		Authors = ISNULL(dbo.fnAuthorSearchStringForSegment(SegmentID) + ' ', '')
 
 	UPDATE	#tmpSegment
 	SET		Contributors = ISNULL(dbo.fnContributorStringForSegment(SegmentID) + ' ', '')

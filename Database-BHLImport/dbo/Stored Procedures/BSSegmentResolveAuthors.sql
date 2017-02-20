@@ -54,12 +54,30 @@ AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 -- Only update import DB if a single matching author is found
 IF (@@ROWCOUNT = 1)
 BEGIN
+	-- Do the update
 	UPDATE	dbo.SegmentAuthor
 	SET		BHLAuthorID = AuthorID
 	FROM	dbo.SegmentAuthor sa INNER JOIN #tmpNameAuthorID t 
 				ON sa.SegmentAuthorID = t.SegmentAuthorID
 END
 
+-- If the selected production author ID has been redirected to a different 
+-- author, then use that author instead.  Follow the "redirect" chain up 
+-- to ten levels.
+UPDATE	dbo.SegmentAuthor
+SET		BHLAuthorID = COALESCE(a10.AuthorID, a9.AuthorID, a8.AuthorID, a7.AuthorID, a6.AuthorID,
+							a5.AuthorID, a4.AuthorID, a3.AuthorID, a2.AuthorID, a1.AuthorID)
+FROM	dbo.SegmentAuthor sa INNER JOIN dbo.BHLAuthor a1 ON sa.BHLAuthorID = a1.AuthorID
+		LEFT JOIN dbo.BHLAuthor a2 ON a1.RedirectAuthorID = a2.AuthorID
+		LEFT JOIN dbo.BHLAuthor a3 ON a2.RedirectAuthorID = a3.AuthorID
+		LEFT JOIN dbo.BHLAuthor a4 ON a3.RedirectAuthorID = a4.AuthorID
+		LEFT JOIN dbo.BHLAuthor a5 ON a4.RedirectAuthorID = a5.AuthorID
+		LEFT JOIN dbo.BHLAuthor a6 ON a5.RedirectAuthorID = a6.AuthorID
+		LEFT JOIN dbo.BHLAuthor a7 ON a6.RedirectAuthorID = a7.AuthorID
+		LEFT JOIN dbo.BHLAuthor a8 ON a7.RedirectAuthorID = a8.AuthorID
+		LEFT JOIN dbo.BHLAuthor a9 ON a8.RedirectAuthorID = a9.AuthorID
+		LEFT JOIN dbo.BHLAuthor a10 ON a9.RedirectAuthorID = a10.AuthorID
+WHERE	sa.SegmentID = @SegmentID
+AND		BHLAuthorID IS NOT NULL
+
 END
-
-

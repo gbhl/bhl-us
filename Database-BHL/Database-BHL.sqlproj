@@ -1265,4 +1265,10 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\MarcSelectVariantsByMarcID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnAuthorSearchStringForTitle.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnAuthorSearchStringForSegment.sql" />
+  </ItemGroup>
 </Project>

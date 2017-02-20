@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.OAIRecordPublishSetProductionIDs
+﻿CREATE PROCEDURE [dbo].[OAIRecordPublishSetProductionIDs]
 
 @HarvestLogID int = NULL
 
@@ -191,6 +191,24 @@ FROM	dbo.OAIRecordCreator c
 WHERE	dbo.fnReverseAuthorName(n.FullName) = c.FullName
 AND		c.ProductionAuthorID IS NULL
 
+-- If the selected production author ID has been redirected to a different 
+-- author, then use that author instead.  Follow the "redirect" chain up 
+-- to ten levels.
+UPDATE	dbo.OAIRecordCreator
+SET		ProductionAuthorID = COALESCE(a10.AuthorID, a9.AuthorID, a8.AuthorID, a7.AuthorID, a6.AuthorID,
+									a5.AuthorID, a4.AuthorID, a3.AuthorID, a2.AuthorID, a1.AuthorID)
+FROM	dbo.OAIRecordCreator c INNER JOIN dbo.BHLAuthor a1 ON c.ProductionAuthorID = a1.AuthorID
+		LEFT JOIN dbo.BHLAuthor a2 ON a1.RedirectAuthorID = a2.AuthorID
+		LEFT JOIN dbo.BHLAuthor a3 ON a2.RedirectAuthorID = a3.AuthorID
+		LEFT JOIN dbo.BHLAuthor a4 ON a3.RedirectAuthorID = a4.AuthorID
+		LEFT JOIN dbo.BHLAuthor a5 ON a4.RedirectAuthorID = a5.AuthorID
+		LEFT JOIN dbo.BHLAuthor a6 ON a5.RedirectAuthorID = a6.AuthorID
+		LEFT JOIN dbo.BHLAuthor a7 ON a6.RedirectAuthorID = a7.AuthorID
+		LEFT JOIN dbo.BHLAuthor a8 ON a7.RedirectAuthorID = a8.AuthorID
+		LEFT JOIN dbo.BHLAuthor a9 ON a8.RedirectAuthorID = a9.AuthorID
+		LEFT JOIN dbo.BHLAuthor a10 ON a9.RedirectAuthorID = a10.AuthorID
+WHERE	c.ProductionAuthorID IS NOT NULL
+
 -- Get related title ids
 UPDATE	OAIRecordRelatedTitle
 SET		ProductionEntityType = 'Association',
@@ -230,8 +248,3 @@ DROP TABLE #tmpNewOAIRecords
 COMMIT TRAN
 
 END
-
-
-GO
-
-
