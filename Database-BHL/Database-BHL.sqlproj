@@ -237,7 +237,6 @@
     <None Include="dbo\Stored Procedures\TitleVariantSelectByTitleID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\NamePageSelectByPageIDAndSource.sql" />
-    <None Include="dbo\Stored Procedures\TitleEndNoteSelectForTitleID.sql" />
     <None Include="dbo\Stored Procedures\SegmentCOinSSelectBySegmentID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSearchForPagesDownload.sql" />
@@ -304,7 +303,6 @@
     <None Include="annotation\Stored Procedures\AnnotationNoteDeleteByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\MarcImportBatchSelectAuto.sql" />
     <None Include="annotation\Stored Procedures\SearchPageForConcept.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectAllEndNoteCitations.sql" />
     <None Include="dbo\Stored Procedures\MonthlyStatsUpdate.sql" />
     <None Include="dbo\Stored Procedures\SegmentClusterSegmentSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ExportIAIdentifiers.sql" />
@@ -312,7 +310,6 @@
     <None Include="dbo\Stored Procedures\ItemGetNamesXMLByItemID.sql" />
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptSelectByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySelectByBarcode.sql" />
-    <None Include="dbo\Stored Procedures\SegmentSelectEndNoteForSegmentID.sql" />
     <None Include="dbo\Stored Procedures\SegmentAuthorUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\SearchSegmentComplete.sql" />
@@ -576,12 +573,10 @@
     <None Include="dbo\Stored Procedures\ScanningRequestUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAuthorDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectByCollectionAndStartsWith.sql" />
-    <None Include="dbo\Stored Procedures\TitleEndNoteSelectAllItemCitations.sql" />
     <None Include="dbo\Stored Procedures\NameSelectByNameStringExact.sql" />
     <None Include="annotation\Stored Procedures\AnnotationNoteUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ScanningRequestInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAuthorInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\TitleEndNoteSelectAllTitleCitations.sql" />
     <None Include="dbo\Stored Procedures\NameInsertComplete.sql" />
     <None Include="dbo\Stored Procedures\TitleLanguageDeleteAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedItemUpdateAuto.sql" />

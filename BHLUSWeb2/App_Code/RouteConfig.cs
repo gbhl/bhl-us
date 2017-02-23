@@ -112,8 +112,6 @@ namespace MOBOT.BHL.Web2
 
             routes.Add("BibTeXDownload", new Route("bibtexdownload/{id}", new HttpHandlerRouteHandler<BibTeXDownload>()));
 
-            routes.Add("EndNoteDownload", new Route("endnotedownload/{id}", new HttpHandlerRouteHandler<EndNoteDownload>()));
-
             routes.Add("NameListDownload", new Route("namelistdownload", new HttpHandlerRouteHandler<NameListDownloadService>()));
 
             routes.Add("PDF", new Route("pdf{folder}/{filename}", new HttpHandlerRouteHandler<PDFDownload>()));

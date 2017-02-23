@@ -423,19 +423,6 @@ namespace MOBOT.BHL.API.BHLApi
             return provider.TitleBibTeXGetCitationStringForTitleID(titleIDint);
         }
 
-        public string GetTitleEndNote(string titleID)
-        {
-            // Validate the parameters
-            int titleIDint;
-            if (!Int32.TryParse(titleID, out titleIDint))
-            {
-                throw new Exception("titleID (" + titleID + ") must be a valid integer value.");
-            }
-
-            BHLProvider provider = new BHLProvider();
-            return provider.TitleEndNoteGetCitationStringForTitleID(titleIDint, "http://www.biodiversitylibrary.org/item/{0}");
-        }
-
         public CustomGenericList<Title> TitleSelectUnpublished()
         {
             return new Api2DAL().TitleSelectUnpublished(null, null);
@@ -630,19 +617,6 @@ namespace MOBOT.BHL.API.BHLApi
 
             BHLProvider provider = new BHLProvider();
             return provider.SegmentBibTeXGetCitationStringForSegmentID(segmentIDint, true);
-        }
-
-        public string GetSegmentEndNote(string segmentID)
-        {
-            // Validate the parameters
-            int segmentIDint;
-            if (!Int32.TryParse(segmentID, out segmentIDint))
-            {
-                throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
-            }
-
-            BHLProvider provider = new BHLProvider();
-            return provider.SegmentEndNoteGetCitationStringForSegmentID(segmentIDint, "http://www.biodiversitylibrary.org/part/{0}", true);
         }
 
         #endregion Segment methods
@@ -1166,7 +1140,6 @@ namespace MOBOT.BHL.API.BHLApi
             GetSubjectTitles = 146,
             GetTitleBibTex = 147,
             GetTitleByIdentifier = 148,
-            GetTitleEndNote = 149,
             GetTitleItems = 150,
             GetTitleMetadata = 151,
             NameCount = 152,
@@ -1194,7 +1167,6 @@ namespace MOBOT.BHL.API.BHLApi
             GetPartByIdentifier = 314,
             GetUnpublishedParts = 315,
             GetPartBibTeX = 316,
-            GetPartEndNote = 317,
             GetStats = 318,
             GetInstitutions = 319
         }

@@ -150,32 +150,12 @@ namespace BHLServerTest
         }
 
         [TestMethod]
-        public void SegmentEndNoteGetCitationStringForSegmentTest()
-        {
-            BHLProvider target = new BHLProvider();
-            int segmentID = 6450;
-            string actual = string.Empty;
-            actual = target.SegmentEndNoteGetCitationStringForSegmentID(segmentID, string.Empty, false);
-            Assert.IsTrue(actual.Length > 0);
-        }
-
-        [TestMethod]
         public void TitleBibTeXGetCitationStringForTitleIDTest()
         {
             BHLProvider target = new BHLProvider();
             int titleID = 4000;
             string actual = string.Empty;
             actual = target.TitleBibTeXGetCitationStringForTitleID(titleID);
-            Assert.IsTrue(actual.Length > 0);
-        }
-
-        [TestMethod]
-        public void TitleEndNoteGetCitationStringForTitleID()
-        {
-            BHLProvider target = new BHLProvider();
-            int titleID = 4000;
-            string actual = string.Empty;
-            actual = target.TitleEndNoteGetCitationStringForTitleID(titleID, string.Empty);
             Assert.IsTrue(actual.Length > 0);
         }
     }

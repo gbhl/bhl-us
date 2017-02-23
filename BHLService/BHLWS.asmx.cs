@@ -96,27 +96,6 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<TitleEndNote> SegmentSelectAllEndNoteCitations()
-        {
-            BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.SegmentSelectAllEndNoteCitations();
-        }
-
-        [WebMethod]
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllTitleCitations()
-        {
-            BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.TitleEndNoteSelectAllTitleCitations();
-        }
-
-        [WebMethod]
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllItemCitations()
-        {
-            BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.TitleEndNoteSelectAllItemCitations();
-        }
-
-        [WebMethod]
         public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
         {
             BHLProvider bhlServer = new BHLProvider();

@@ -280,28 +280,6 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
-        /// Select segment data for EndNote citations.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleEndNote> SegmentSelectAllEndNoteCitations(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectAllEndNoteCitations", connection, transaction))
-            {
-                using (CustomSqlHelper<TitleEndNote> helper = new CustomSqlHelper<TitleEndNote>())
-                {
-                    CustomGenericList<TitleEndNote> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
-        /// <summary>
         /// Select data for BibTeX reference for the specified Segment.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>
@@ -373,33 +351,6 @@ namespace MOBOT.BHL.DAL
                     CustomGenericList<Segment> list = helper.ExecuteReader(command);
 
                     return list;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select data for EndNote reference for the specified Segment.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="titleId">Segment identifier for which to get EndNote data</param>
-        /// <returns>List of type TitleEndNote.</returns>
-        public CustomGenericList<TitleEndNote> SegmentSelectEndNoteForSegmentID(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        int segmentId,
-                        short includeNoContent)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectEndNoteForSegmentID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentId),
-                CustomSqlHelper.CreateInputParameter("IncludeNoContent", SqlDbType.SmallInt, null, false, includeNoContent)))
-            {
-                using (CustomSqlHelper<TitleEndNote> helper = new CustomSqlHelper<TitleEndNote>())
-                {
-                    CustomGenericList<TitleEndNote> list = helper.ExecuteReader(command);
-                    return (list);
                 }
             }
         }

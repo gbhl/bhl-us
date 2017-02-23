@@ -97,21 +97,6 @@ namespace MOBOT.BHL.Server
             return (new TitleDAL().TitleBibTeXSelectForTitleID(null, null, titleID));
         }
 
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllTitleCitations()
-        {
-            return (new TitleDAL().TitleEndNoteSelectAllTitleCitations(null, null));
-        }
-
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllItemCitations()
-        {
-            return (new TitleDAL().TitleEndNoteSelectAllItemCitations(null, null));
-        }
-
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectForTitleID(int titleID)
-        {
-            return (new TitleDAL().TitleEndNoteSelectForTitleID(null, null, titleID));
-        }
-
         public String TitleBibTeXGetCitationStringForTitleID(int titleID)
         {
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
@@ -148,63 +133,6 @@ namespace MOBOT.BHL.Server
                 bibtexString.Append(bibTex.GenerateReference());
             }
             return bibtexString.ToString();
-        }
-
-        public String TitleEndNoteGetCitationStringForTitleID(int titleID, String titleUrl)
-        {
-            System.Text.StringBuilder endnoteString = new System.Text.StringBuilder("");
-            CustomGenericList<TitleEndNote> citations = this.TitleEndNoteSelectForTitleID(titleID);
-            foreach (TitleEndNote citation in citations)
-            {
-                CustomGenericList<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);
-
-                String type = citation.PublicationType;
-                String authors = citation.Authors;
-                String year = citation.Year;
-                String title = citation.FullTitle;
-                String secondaryTitle = citation.SecondaryTitle;
-                String publisherPlace = citation.PublisherPlace;
-                String publisherName = citation.PublisherName;
-                String volume = citation.Volume;
-                String shortTitle = citation.ShortTitle;
-                String abbreviation = citation.Abbreviation;
-                String isbnissn = citation.Isbn;
-                String callNumber = citation.CallNumber;
-                String keywords = citation.Keywords;
-                String language = citation.LanguageName;
-                String note = citation.Note;
-                String edition = citation.EditionStatement;
-                String url = String.Format(titleUrl, citation.ItemID.ToString());
-                String doi = citation.Doi;
-
-                System.Collections.Generic.Dictionary<String, String> elements = new System.Collections.Generic.Dictionary<string, string>();
-                if (authors != String.Empty) elements.Add(EndNoteRefElementName.AUTHORS, authors);
-                if (year != String.Empty) elements.Add(EndNoteRefElementName.YEAR, year);
-                if (title != String.Empty) elements.Add(EndNoteRefElementName.TITLE, title);
-                if (secondaryTitle != String.Empty) elements.Add(EndNoteRefElementName.SECONDARYTITLE, secondaryTitle);
-                if (publisherPlace != String.Empty) elements.Add(EndNoteRefElementName.CITY, publisherPlace);
-                if (publisherName != String.Empty) elements.Add(EndNoteRefElementName.PUBLISHER, publisherName);
-                if (volume != String.Empty) elements.Add(EndNoteRefElementName.VOLUME, volume);
-                if (shortTitle != String.Empty) elements.Add(EndNoteRefElementName.SHORTTITLE, shortTitle);
-                if (abbreviation != String.Empty) elements.Add(EndNoteRefElementName.ABBREVIATION, abbreviation);
-                if (isbnissn != String.Empty) elements.Add(EndNoteRefElementName.ISBNISSN, isbnissn);
-                if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
-                if (keywords != String.Empty) elements.Add(EndNoteRefElementName.KEYWORDS, keywords);
-                if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
-                foreach (TitleNote titleNote in titleNotes)
-                {
-                    if (note != string.Empty) note += " --- ";
-                    note += titleNote.NoteText;
-                }
-                if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note);
-                if (edition != String.Empty) elements.Add(EndNoteRefElementName.EDITION, edition);
-                if (url != String.Empty) elements.Add(EndNoteRefElementName.URL, url);
-                if (doi != String.Empty) elements.Add(EndNoteRefElementName.DOI, doi);
-
-                EndNote endnote = new EndNote(type, elements);
-                endnoteString.Append(endnote.GenerateReference());
-            }
-            return endnoteString.ToString();
         }
 
         #endregion

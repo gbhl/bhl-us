@@ -9,7 +9,6 @@
             <a class="button" href="/namedetail/<%= NameParam %>">View Name Sources</a>
             <a class="button" href="/namelistdownload/?type=c&name=<%= NameParam %>">Download CSV</a>
             <a class="button" href="/namelistdownload/?type=b&name=<%= NameParam %>">Download BibTeX</a>
-            <a class="button" href="/namelistdownload/?type=e&name=<%= NameParam %>">Download EndNote</a>
         </span>
         Bibliography for <%= TitleLink  %> by Page 
     </h1>

@@ -82,21 +82,6 @@ namespace BHLCoreDALTest
         }
 
         /// <summary>
-        ///A test for SegmentSelectEndNoteForSegmentID
-        ///</summary>
-        [TestMethod()]
-        public void SegmentSelectEndNoteForSegmentIDTest()
-        {
-            SegmentDAL target = new SegmentDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int segmentId = 2341;
-            short includeNoContent = 0;
-            CustomGenericList<TitleEndNote> actual = target.SegmentSelectEndNoteForSegmentID(sqlConnection, sqlTransaction, segmentId, includeNoContent);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
-        /// <summary>
         ///A test for SegmentSelectBibTexForSegmentID
         ///</summary>
         [TestMethod()]

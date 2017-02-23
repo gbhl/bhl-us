@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<p>Biodiversity Heritage Library<br />API v2 Documentation<br />Created: April 6, 2010<br />Revised: September 8, 2016</p>
+<p>Biodiversity Heritage Library<br />API v2 Documentation<br />Created: April 6, 2010<br />Revised: February 24, 2017</p>
 <hr />
 <p><b>*** HTTP QUERY INTERFACE ***</b></p>
 <p>The HTTP query interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting data using HTTP GET requests.</p>
@@ -77,10 +77,6 @@
 <p>	Return a citation for a part, using the BibTeX format.</p>
 <p>	Example - <a href="/api2/docs/GetPartBibTeX.xml" title="GetPartBibTeX">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartBibTex&amp;partid=1000&amp;apikey=&lt;key+value&gt;</a></p>
 <p>	partid - the identifier of an individual part (article, chapter, etc)</p>
-<p><i><b>GetPartEndNote</b></i></p>
-<p>	Return a citation for a part, using the EndNote format.</p>
-<p>	Example - <a href="/api2/docs/GetPartEndNote.xml" title="GetPartEndNote">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartEndNote&amp;partid=1000&amp;apikey=&lt;key+value&gt;</a></p>
-<p>	partid - the identifier of an individual part (article, chapter, etc)</p>
 <p><i><b>GetTitleMetadata</b></i></p>
 <p>	Return metadata about a title.  You may choose to include a list of the items (books) associated	with the title.</p>
 <p>	Example - <a href="/api2/docs/GetTitleMetadata.xml" title="GetTitleMetadata">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleMetadata&amp;titleid=1726&amp;items=t&amp;apikey=&lt;key+value&gt;</a></p>
@@ -100,10 +96,6 @@
 <p><i><b>GetTitleBibTex</b></i></p>
 <p>	Return a citation for a title, using the BibTeX format.</p>
 <p>	Example - <a href="/api2/docs/GetTitleBibTeX.xml" title="GetTitleBibTeX">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleBibTex&amp;titleid=1726&amp;apikey=&lt;key+value&gt;</a></p>
-<p>	titleid - the identifier of an individual title</p>
-<p><i><b>GetTitleEndNote</b></i></p>
-<p>	Return a citation for a title, using the EndNote format.</p>
-<p>	Example - <a href="/api2/docs/GetTitleEndNote.xml" title="GetTitleEndNote">http://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleEndNote&amp;titleid=1726&amp;apikey=&lt;key+value&gt;</a></p>
 <p>	titleid - the identifier of an individual title</p>
 <p><i><b>GetUnpublishedTitles</b></i></p>
 <p>	Return a list of the identifiers of all unpublished titles.</p>
@@ -187,7 +179,7 @@
 <p><b>METHODS</b></p>
 <p>The SOAP methods that are available generally map to the methods exposed by the HTTP query interface. The methods names are listed below, and a complete description of each method can be found by browsing the information found at 
     <a href="/api2/soap.asmx" title="SOAP">http://www.biodiversitylibrary.org/api2/soap.asmx</a>.</p>
-<p>AuthorSearch<br />BookSearch<br />GetAuthorParts<br />GetAuthorTitles<br />GetCollections<br />GetInstitutions<br />GetItemByIdentifier<br />GetItemMetadata<br />GetItemPages<br />GetItemParts<br />GetLanguages<br />GetPageMetadata<br />GetPageNames<br />GetPageOcrText<br />GetPartBibTeX<br />GetPartByIdentifier<br />GetPartEndNote<br />GetPartMetadata<br />GetPartNames<br />GetStats<br />GetSubjectParts<br />GetSubjectTitles<br />GetTitleBibTex<br />GetTitleByIdentifier<br />GetTitleEndNote<br />GetTitleItems<br />GetTitleMetadata<br />GetUnpublishedItems<br />GetUnpublishedParts<br />GetUnpublishedTitles<br />NameCount<br />NameCountBetweenDates<br />NameGetDetailForName<br />NameGetDetailForNameBankID<br />NameList<br />NameListBetweenDates<br />NameSearch<br />PartSearch<br />SubjectSearch<br />TitleSearchSimple</p>
+<p>AuthorSearch<br />BookSearch<br />GetAuthorParts<br />GetAuthorTitles<br />GetCollections<br />GetInstitutions<br />GetItemByIdentifier<br />GetItemMetadata<br />GetItemPages<br />GetItemParts<br />GetLanguages<br />GetPageMetadata<br />GetPageNames<br />GetPageOcrText<br />GetPartBibTeX<br />GetPartByIdentifier<br />GetPartMetadata<br />GetPartNames<br />GetStats<br />GetSubjectParts<br />GetSubjectTitles<br />GetTitleBibTex<br />GetTitleByIdentifier<br />GetTitleItems<br />GetTitleMetadata<br />GetUnpublishedItems<br />GetUnpublishedParts<br />GetUnpublishedTitles<br />NameCount<br />NameCountBetweenDates<br />NameGetDetailForName<br />NameGetDetailForNameBankID<br />NameList<br />NameListBetweenDates<br />NameSearch<br />PartSearch<br />SubjectSearch<br />TitleSearchSimple</p>
 <p>*** The Name* methods were a part of version 1 of the BHL API.  Their signatures and/or return values may have changed. ***<br /></p>
 <hr />
 <p><b>*** DATA ELEMENTS ***</b></p>
@@ -853,6 +845,9 @@
 <br />
 <hr />
 <p><b>*** RELEASE NOTES ***</b></p>
+<p>February 24, 2017 - version 2.8</p>
+<p><ul><li>BREAKING CHANGE: Removed the GetPartEndNote method.</li>
+<li>BREAKING CHANGE: Removed the GetTitleEndNote method.</li></ul></p>
 <p>January 25 2017 - version 2.7.3</p>
 <p><ul><li>Enhancement: Added "soulsby" as a valid identifier type parameter for the GetTitleByIdentifier and GetPartByIdentifier methods.</li></ul></p>
 <p>September 8, 2016 - version 2.7.2</p>

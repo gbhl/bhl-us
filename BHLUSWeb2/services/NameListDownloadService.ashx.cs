@@ -47,10 +47,10 @@ namespace MOBOT.BHL.Web2.Services
                             this.GetBibTeXString(context, searchResult);
                             break;
                         }
-                    case "e":   // EndNote
+                    case "r":   // RIS
                         {
-                            this.WriteHttpHeaders(context, "application/x-endnote-refer", "names.enw");
-                            this.GetEndNoteString(context, searchResult);
+                            this.WriteHttpHeaders(context, "application/x-research-info-systems", "names.ris");
+                            this.GetRISString(context, searchResult);
                             break;
                         }
                 }
@@ -145,16 +145,19 @@ namespace MOBOT.BHL.Web2.Services
         }
 
         /// <summary>
-        /// Write the search results into the EndNote Tagged format
+        /// Write the search results into the RIS format
         /// </summary>
         /// <param name="searchResult"></param>
         /// <returns></returns>
-        private void GetEndNoteString(HttpContext context, NameSearchResult searchResult)
+        private void GetRISString(HttpContext context, NameSearchResult searchResult)
         {
-            StringBuilder endnoteString = new StringBuilder("");
+            StringBuilder risString = new StringBuilder("");
 
             foreach (NameSearchPage page in searchResult.Pages)
             {
+                /*
+                 * TODO: Complete this when RIS format is supported
+                 *
                 String type = page.BibliographicLevelName.Contains("Serial") ? "Serial" : "Book";
                 String authors = page.Authors;
                 String year = page.Date;
@@ -171,25 +174,25 @@ namespace MOBOT.BHL.Web2.Services
 
                 System.Collections.Generic.Dictionary<String, String> elements = new System.Collections.Generic.Dictionary<string, string>();
 
-                elements.Add(EndNoteRefElementName.REFERENCETYPE, type);
-                if (authors != String.Empty) elements.Add(EndNoteRefElementName.AUTHORS, authors);
-                if (year != String.Empty) elements.Add(EndNoteRefElementName.YEAR, year);
-                if (title != String.Empty) elements.Add(EndNoteRefElementName.TITLE, title);
-                if (shortTitle != String.Empty) elements.Add(EndNoteRefElementName.SHORTTITLE, shortTitle);
-                if (secondaryTitle != String.Empty) elements.Add(EndNoteRefElementName.SECONDARYTITLE, secondaryTitle);
-                if (publisherPlace != String.Empty) elements.Add(EndNoteRefElementName.CITY, publisherPlace);
-                if (publisherName != String.Empty) elements.Add(EndNoteRefElementName.PUBLISHER, publisherName);
-                if (volume != String.Empty) elements.Add(EndNoteRefElementName.VOLUME, volume);
-                if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
-                if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
-                if (pages != String.Empty) elements.Add(EndNoteRefElementName.PAGES, pages);
-                if (url != String.Empty) elements.Add(EndNoteRefElementName.URL, url);
+                elements.Add(RISRefElementName.REFERENCETYPE, type);
+                if (authors != String.Empty) elements.Add(RISRefElementName.AUTHORS, authors);
+                if (year != String.Empty) elements.Add(RISRefElementName.YEAR, year);
+                if (title != String.Empty) elements.Add(RISRefElementName.TITLE, title);
+                if (shortTitle != String.Empty) elements.Add(RISRefElementName.SHORTTITLE, shortTitle);
+                if (secondaryTitle != String.Empty) elements.Add(RISRefElementName.SECONDARYTITLE, secondaryTitle);
+                if (publisherPlace != String.Empty) elements.Add(RISRefElementName.CITY, publisherPlace);
+                if (publisherName != String.Empty) elements.Add(RISRefElementName.PUBLISHER, publisherName);
+                if (volume != String.Empty) elements.Add(RISRefElementName.VOLUME, volume);
+                if (callNumber != String.Empty) elements.Add(RISRefElementName.CALLNUMBER, callNumber);
+                if (language != String.Empty) elements.Add(RISRefElementName.LANGUAGE, language);
+                if (pages != String.Empty) elements.Add(RISRefElementName.PAGES, pages);
+                if (url != String.Empty) elements.Add(RISRefElementName.URL, url);
 
-                EndNote endnote = new EndNote(type, elements);
-
-                endnoteString.Remove(0, endnoteString.Length);
-                endnoteString.Append(endnote.GenerateReference());
-                context.Response.Write(endnoteString.ToString());
+                RIS ris = new RIS(type, elements);
+                risString.Remove(0, risString.Length);
+                risString.Append(ris.GenerateReference());
+                */
+                context.Response.Write(risString.ToString());
                 context.Response.Flush();
             }
         }

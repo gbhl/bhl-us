@@ -154,7 +154,6 @@
     <Content Include="api2\docs\GetPageOcrText.xml" />
     <Content Include="api2\docs\GetPartBibTex.xml" />
     <Content Include="api2\docs\GetPartByIdentifier.xml" />
-    <Content Include="api2\docs\GetPartEndNote.xml" />
     <Content Include="api2\docs\GetPartMetadata.xml" />
     <Content Include="api2\docs\GetPartNames.xml" />
     <Content Include="api2\docs\GetStats.xml" />
@@ -162,7 +161,6 @@
     <Content Include="api2\docs\GetSubjectTitles.xml" />
     <Content Include="api2\docs\GetTitleBibTex.xml" />
     <Content Include="api2\docs\GetTitleByIdentifier.xml" />
-    <Content Include="api2\docs\GetTitleEndNote.xml" />
     <Content Include="api2\docs\GetTitleItems.xml" />
     <Content Include="api2\docs\GetTitleMetadata.xml" />
     <Content Include="api2\docs\GetUnpublishedItems.xml" />
@@ -776,9 +774,6 @@
     <Compile Include="Handlers\BibTeXDownload.ashx.cs">
       <DependentUpon>BibTeXDownload.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\EndNoteDownload.ashx.cs">
-      <DependentUpon>EndNoteDownload.ashx</DependentUpon>
-    </Compile>
     <Compile Include="Handlers\GetPageImage.ashx.cs">
       <DependentUpon>GetPageImage.ashx</DependentUpon>
     </Compile>
@@ -1048,7 +1043,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Handlers\BibTeXDownload.ashx" />
-    <Content Include="Handlers\EndNoteDownload.ashx" />
     <Content Include="Handlers\GetPageImage.ashx" />
     <Content Include="Handlers\GetPageOcr.ashx" />
     <Content Include="Handlers\GetPageThumb.ashx" />

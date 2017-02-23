@@ -53,19 +53,9 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectAllBibTeXCitations(null, null);
         }
 
-        public CustomGenericList<TitleEndNote> SegmentSelectAllEndNoteCitations()
-        {
-            return new SegmentDAL().SegmentSelectAllEndNoteCitations(null, null);
-        }
-
         public CustomGenericList<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
         {
             return new SegmentDAL().SegmentSelectBibTexForSegmentID(null, null, segmentID, includeNoContent);
-        }
-
-        public CustomGenericList<TitleEndNote> SegmentSelectEndNoteForSegmentID(int segmentID, short includeNoContent)
-        {
-            return new SegmentDAL().SegmentSelectEndNoteForSegmentID(null, null, segmentID, includeNoContent);
         }
 
         public String SegmentBibTeXGetCitationStringForSegmentID(int segmentID, bool includeNoContent)
@@ -114,68 +104,6 @@ namespace MOBOT.BHL.Server
                 bibtexString.Append(bibTex.GenerateReference());
             }
             return bibtexString.ToString();
-        }
-
-        public String SegmentEndNoteGetCitationStringForSegmentID(int segmentID, String segmentUrl, bool includeNoContent)
-        {
-            System.Text.StringBuilder endnoteString = new System.Text.StringBuilder("");
-            CustomGenericList<TitleEndNote> citations = this.SegmentSelectEndNoteForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
-            foreach (TitleEndNote citation in citations)
-            {
-                String type = citation.PublicationType;
-                String authors = citation.Authors;
-                String year = citation.Year;
-                String title = citation.Title;
-                String journal = citation.Journal;
-                String secondaryTitle = citation.SecondaryTitle;
-                String publisher = citation.Publisher;
-                String publisherPlace = citation.PublisherPlace;
-                String publisherName = citation.PublisherName;
-                String volume = citation.Volume;
-                String issue = citation.Issue;
-                String shortTitle = citation.ShortTitle;
-                String abbreviation = citation.Abbreviation;
-                String isbnissn = citation.Isbn;
-                String callNumber = citation.CallNumber;
-                String pageRange = citation.PageRange;
-                String startPage = citation.StartPage;
-                String keywords = citation.Keywords;
-                String language = citation.LanguageName;
-                String summary = citation.Summary;
-                String note = citation.Note;
-                String edition = citation.EditionStatement;
-                String url = String.Format(segmentUrl, citation.SegmentID.ToString());
-                String doi = citation.Doi;
-
-                System.Collections.Generic.Dictionary<String, String> elements = new System.Collections.Generic.Dictionary<string, string>();
-                if (authors != String.Empty) elements.Add(EndNoteRefElementName.AUTHORS, authors);
-                if (year != String.Empty) elements.Add(EndNoteRefElementName.YEAR, year);
-                if (title != String.Empty) elements.Add(EndNoteRefElementName.TITLE, title);
-                if (journal != String.Empty) elements.Add(EndNoteRefElementName.JOURNAL, journal);
-                if (secondaryTitle != String.Empty) elements.Add(EndNoteRefElementName.SECONDARYTITLE, secondaryTitle);
-                if (publisherPlace != String.Empty) elements.Add(EndNoteRefElementName.CITY, publisherPlace);
-                if (publisherName != String.Empty) elements.Add(EndNoteRefElementName.PUBLISHER, publisherName);
-                else if (publisher != String.Empty) elements.Add(EndNoteRefElementName.PUBLISHER, publisher);
-                if (volume != String.Empty) elements.Add(EndNoteRefElementName.VOLUME, volume);
-                if (issue != String.Empty) elements.Add(EndNoteRefElementName.ISSUE, issue);
-                if (shortTitle != String.Empty) elements.Add(EndNoteRefElementName.SHORTTITLE, shortTitle);
-                if (abbreviation != String.Empty) elements.Add(EndNoteRefElementName.ABBREVIATION, abbreviation);
-                if (isbnissn != String.Empty) elements.Add(EndNoteRefElementName.ISBNISSN, isbnissn);
-                if (callNumber != String.Empty) elements.Add(EndNoteRefElementName.CALLNUMBER, callNumber);
-                if (pageRange != String.Empty) elements.Add(EndNoteRefElementName.PAGES, pageRange);
-                if (startPage != String.Empty) elements.Add(EndNoteRefElementName.STARTPAGE, startPage);
-                if (keywords != String.Empty) elements.Add(EndNoteRefElementName.KEYWORDS, keywords);
-                if (language != String.Empty) elements.Add(EndNoteRefElementName.LANGUAGE, language);
-                if (summary != String.Empty) elements.Add(EndNoteRefElementName.ABSTRACT, summary.Replace("\n", " ").Replace("\r", " "));
-                if (note != String.Empty) elements.Add(EndNoteRefElementName.NOTE, note.Replace("\n", " ").Replace("\r", " "));
-                if (edition != String.Empty) elements.Add(EndNoteRefElementName.EDITION, edition);
-                if (url != String.Empty) elements.Add(EndNoteRefElementName.URL, url);
-                if (doi != String.Empty) elements.Add(EndNoteRefElementName.DOI, doi);
-
-                EndNote endnote = new EndNote(type, elements);
-                endnoteString.Append(endnote.GenerateReference());
-            }
-            return endnoteString.ToString();
         }
 
         public Segment SegmentSelectForSegmentID(int segmentID)

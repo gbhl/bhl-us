@@ -219,14 +219,14 @@ namespace MOBOT.BHL.Web2
                 litBibTeX.Text = string.Empty;
             }
 
-            // Get the EndNote citation for this title
+            // Get the RIS citation for this title
             try
             {
-                litEndNote.Text = bhlProvider.TitleEndNoteGetCitationStringForTitleID(BhlTitle.TitleID, ConfigurationManager.AppSettings["ItemPageUrl"]).Replace("\n", "<br />");
+                //litRIS.Text = bhlProvider.TitleRISGetCitationStringForTitleID(BhlTitle.TitleID, ConfigurationManager.AppSettings["ItemPageUrl"]).Replace("\n", "<br />");
             }
             catch
             {
-                litEndNote.Text = string.Empty;
+                litRIS.Text = string.Empty;
             }
         }
 

@@ -285,50 +285,6 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
-        /// Select data for EndNote item citations for all Titles.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>List of type TitleEndNote.</returns>
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllItemCitations(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleEndNoteSelectAllItemCitations", connection, transaction))
-            {
-                using (CustomSqlHelper<TitleEndNote> helper = new CustomSqlHelper<TitleEndNote>())
-                {
-                    CustomGenericList<TitleEndNote> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select data for EndNote all title citations.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <returns>List of type TitleEndNote.</returns>
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectAllTitleCitations(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleEndNoteSelectAllTitleCitations", connection, transaction))
-            {
-                using (CustomSqlHelper<TitleEndNote> helper = new CustomSqlHelper<TitleEndNote>())
-                {
-                    CustomGenericList<TitleEndNote> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
-        /// <summary>
         /// Select data for BibTex references for the specified Title.
         /// </summary>
         /// <param name="sqlConnection">Sql connection or null.</param>
@@ -348,31 +304,6 @@ namespace MOBOT.BHL.DAL
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
                     CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Select data for EndNote reference for the specified Title.
-        /// </summary>
-        /// <param name="sqlConnection">Sql connection or null.</param>
-        /// <param name="sqlTransaction">Sql transaction or null.</param>
-        /// <param name="titleId">Title identifier for which to get EndNote data</param>
-        /// <returns>List of type TitleEndNote.</returns>
-        public CustomGenericList<TitleEndNote> TitleEndNoteSelectForTitleID(
-                        SqlConnection sqlConnection,
-                        SqlTransaction sqlTransaction,
-                        int titleId)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleEndNoteSelectForTitleID", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleId)))
-            {
-                using (CustomSqlHelper<TitleEndNote> helper = new CustomSqlHelper<TitleEndNote>())
-                {
-                    CustomGenericList<TitleEndNote> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

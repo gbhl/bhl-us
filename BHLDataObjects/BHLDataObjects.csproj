@@ -158,7 +158,6 @@
     <Compile Include="Concrete\TitleAuthor.cs" />
     <Compile Include="Concrete\TitleBibTeX.cs" />
     <Compile Include="Concrete\TitleCollection.cs" />
-    <Compile Include="Concrete\TitleEndNote.cs" />
     <Compile Include="Concrete\TitleItem.cs" />
     <Compile Include="Concrete\TitleKeyword.cs" />
     <Compile Include="Concrete\TitleLanguage.cs" />

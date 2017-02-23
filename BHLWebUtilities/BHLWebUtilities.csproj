@@ -82,7 +82,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DebugUtility.cs" />
-    <Compile Include="EndNote.cs" />
     <Compile Include="HttpHandlerRouteHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestLog.cs" />

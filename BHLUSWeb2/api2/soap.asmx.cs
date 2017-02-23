@@ -321,20 +321,6 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public string GetTitleEndNote(string titleID, string apiKey)
-        {
-            try
-            {
-                ValidateUser(Api2.APIRequestType.GetTitleEndNote, apiKey, titleID);
-                return (new Api2().GetTitleEndNote(titleID));
-            }
-            catch (Exception ex)
-            {
-                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
-            }
-        }
-
-        [WebMethod]
         public CustomGenericList<Title> GetUnpublishedTitles(string apiKey)
         {
             try
@@ -415,20 +401,6 @@ namespace MOBOT.BHL.Web2.api2
             {
                 ValidateUser(Api2.APIRequestType.GetPartBibTeX, apiKey, partID);
                 return (new Api2().GetSegmentBibTex(partID));
-            }
-            catch (Exception ex)
-            {
-                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
-            }
-        }
-
-        [WebMethod]
-        public string GetPartEndNote(string partID, string apiKey)
-        {
-            try
-            {
-                ValidateUser(Api2.APIRequestType.GetPartEndNote, apiKey, partID);
-                return (new Api2().GetSegmentEndNote(partID));
             }
             catch (Exception ex)
             {

@@ -78,21 +78,6 @@ namespace BHLCoreDALTest
             Assert.IsTrue(actual.Count > 0);
         }
 
-        /// <summary>
-        ///A test for TitleEndNoteSelectForTitleID
-        ///</summary>
-        [TestMethod()]
-        public void TitleEndNoteSelectForTitleIDTest()
-        {
-            TitleDAL target = new TitleDAL();
-            SqlConnection sqlConnection = null;
-            SqlTransaction sqlTransaction = null;
-            int titleId = 3926;
-            CustomGenericList<TitleEndNote> actual;
-            actual = target.TitleEndNoteSelectForTitleID(sqlConnection, sqlTransaction, titleId);
-            Assert.IsTrue(actual.Count > 0);
-        }
-
         [TestMethod()]
         public void TitleSelectByCollectionTest()
         {

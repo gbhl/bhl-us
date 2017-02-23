@@ -107,14 +107,14 @@ namespace MOBOT.BHL.Web2
                     litBibTeX.Text = string.Empty;
                 }
 
-                // Get the EndNote citation
+                // Get the RIS citation
                 try
                 {
-                    litEndNote.Text = bhlProvider.SegmentEndNoteGetCitationStringForSegmentID(BhlSegment.SegmentID, ConfigurationManager.AppSettings["PartPageUrl"], false).Replace("\n", "<br />");
+                    //litRIS.Text = bhlProvider.SegmentRISGetCitationStringForSegmentID(BhlSegment.SegmentID, ConfigurationManager.AppSettings["PartPageUrl"], false).Replace("\n", "<br />");
                 }
                 catch
                 {
-                    litEndNote.Text = string.Empty;
+                    litRIS.Text = string.Empty;
                 }
             }
         }

@@ -22,7 +22,7 @@
                 <li class="details"><a href="#/details">Details</a></li>
                 <li class="mods"><a href="#/mods">MODS</a></li>
                 <li class="bibtex"><a href="#/bibtex">BibTeX</a></li>
-                <li class="endnote last-child"><a href="#/endnote">Endnote</a></li>
+                <li class="ris last-child"><a href="#/ris">RIS</a></li>
             </ul>            
             <uc:COinS ID="COinS" runat="server" />
             <div id="summary" class="tab-body">
@@ -289,15 +289,16 @@
                 </p>
                 <% } %>
             </div>
-            <div id="endnote" class="tab-body">
-                <% if (!string.IsNullOrEmpty(litEndNote.Text)) { %>                
+            <div id="ris" class="tab-body">
+                <% if (!string.IsNullOrEmpty(litRIS.Text)) { %>
                 <p>
-                    <a class="button" href="/endnotedownload/<%: BhlTitle.TitleID %>">Download EndNote citations</a>
+                    <a class="button" href="/risdownload/<%: BhlTitle.TitleID %>">Download RIS citations</a>
                 </p>
                 <p class="header">
-                    <asp:Literal ID="litEndNote" runat="server"></asp:Literal>
+                    <asp:Literal ID="litRIS" runat="server" ></asp:Literal>
                 </p>
                 <% } %>
+                <p class="header" style="height:300px">Coming Soon...</p>
             </div>
         </div>
     </section>
