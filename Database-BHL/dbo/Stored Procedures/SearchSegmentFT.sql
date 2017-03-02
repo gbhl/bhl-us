@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchSegmentFT]
+﻿CREATE PROCEDURE [dbo].[SearchSegmentFT]
 
 @SearchText nvarchar(2000) = '',
 @ReturnCount int = 100,
@@ -35,7 +34,7 @@ CREATE TABLE #tmpSegment
 	GenreName nvarchar(50) NOT NULL,
 	Title nvarchar(2000) NOT NULL,
 	SortTitle nvarchar(2000) NOT NULL,
-	ContainerTitle nvarchar(300) NOT NULL,
+	ContainerTitle nvarchar(2000) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
 	PublicationDetails nvarchar(400) NOT NULL,
 	[Date] nvarchar(20) NOT NULL,
@@ -45,7 +44,7 @@ CREATE TABLE #tmpSegment
 	PageRange nvarchar(50) NOT NULL,
 	StartPageNumber nvarchar(20) NOT NULL,
 	EndPageNumber nvarchar(20) NOT NULL,
-	Authors nvarchar(1024) NOT NULL,
+	Authors nvarchar(2000) NOT NULL,
 	HasLocalContent smallint NULL,
 	[RANK] int NULL
 	)	
@@ -184,4 +183,3 @@ BEGIN
 END
 
 END
-

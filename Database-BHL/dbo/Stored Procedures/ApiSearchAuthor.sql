@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSearchAuthor]
+﻿CREATE PROCEDURE [dbo].[ApiSearchAuthor]
 
 @AuthorName nvarchar(4000)
 
@@ -42,6 +41,7 @@ FROM	CONTAINSTABLE(SearchCatalogCreator, CreatorName, @SearchCondition) x
 		INNER JOIN dbo.AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
 		INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID AND t.PublishReady = 1
 WHERE	a.IsActive = 1
+AND		n.IsPreferredName = 1
 
 UNION
 
@@ -60,4 +60,5 @@ FROM	#tmpAuthor t
 		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		a.IsActive = 1
+AND		n.IsPreferredName = 1
 ORDER BY n.FullName

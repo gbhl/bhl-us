@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchSegmentAdvancedFT]
+﻿CREATE PROCEDURE [dbo].[SearchSegmentAdvancedFT]
 
 @Title nvarchar(2000) = '',
 @ContainerTitle nvarchar(2000) = '',
@@ -85,7 +84,7 @@ BEGIN
 			x.RANK,
 			y.RANK
 	FROM	CONTAINSTABLE(SearchCatalogSegment, (Title), @SearchTitle) x
-			INNER JOIN CONTAINSTABLE(SearchCatalogSegment, (Authors), @SearchAuthor) y ON x.[KEY] = y.[KEY]
+			INNER JOIN CONTAINSTABLE(SearchCatalogSegment, (SearchAuthors), @SearchAuthor) y ON x.[KEY] = y.[KEY]
 			INNER JOIN dbo.SearchCatalogSegment c ON c.SearchCatalogSegmentID = x.[KEY]
 			INNER JOIN dbo.Segment s ON c.SegmentID = s.SegmentID
 	WHERE	s.SegmentStatusID IN (10, 20) -- New, Published
@@ -109,7 +108,7 @@ BEGIN
 	INSERT #tmpInitialResult (SegmentID, AuthorRank)
 	SELECT	c.SegmentID,
 			x.RANK
-	FROM	CONTAINSTABLE(SearchCatalogSegment, (Authors), @SearchAuthor) x
+	FROM	CONTAINSTABLE(SearchCatalogSegment, (SearchAuthors), @SearchAuthor) x
 			INNER JOIN dbo.SearchCatalogSegment c ON c.SearchCatalogSegmentID = x.[KEY]
 			INNER JOIN dbo.Segment s ON c.SegmentID = s.SegmentID
 	WHERE	s.SegmentStatusID IN (10, 20) -- New, Published
@@ -296,4 +295,3 @@ BEGIN
 END
 
 END
-

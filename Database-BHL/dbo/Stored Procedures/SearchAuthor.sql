@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchAuthor]
+﻿CREATE PROCEDURE [dbo].[SearchAuthor]
 
 @AuthorName nvarchar(300),
 @ReturnCount int = 100
@@ -46,6 +45,7 @@ FROM	#tmpAuthor t
 		INNER JOIN dbo.TitleAuthorView v ON t.CreatorID = v.AuthorID
 WHERE	v.PublishReady = 1
 AND		v.IsActive = 1
+AND		v.IsPreferredName = 1
 
 UNION
 
@@ -67,6 +67,7 @@ FROM	#tmpAuthor t
 		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		a.IsActive = 1
+AND		n.IsPreferredName = 1
 
 SELECT TOP (@ReturnCount)
 		AuthorID, 
@@ -86,4 +87,3 @@ ORDER BY
 		Location, StartDate, EndDate, FullerForm
 
 END
-

@@ -1,6 +1,7 @@
 ﻿CREATE FUNCTION [dbo].[fnAuthorSearchStringForTitle] 
 (
-	@TitleID int
+	@TitleID int,
+	@PreferredOnly int
 )
 RETURNS nvarchar(MAX)
 AS 
@@ -26,8 +27,9 @@ BEGIN
 					INNER JOIN AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
 					INNER JOIN AuthorName n ON a.AuthorID = n.AuthorID
 			WHERE	t.TitleID = @TitleID
+			AND		(n.IsPreferredName = @PreferredOnly OR @PreferredOnly = 0)
+					 -- 0 to include all names associated with the author
 			AND		a.IsActive = 1
-			AND		n.IsPreferredName = 1	-- Remove this to include all forms of a name
 			GROUP BY n.FullName, n.FullerForm, a.Title, a.Unit, a.Location
 			) x
 	ORDER BY x.MarcDataFieldTag, x.FullName ASC

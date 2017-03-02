@@ -32,7 +32,7 @@ BEGIN
 			  Subjects,
 			  Associations,
 			  Variants,
-			  Authors
+			  SearchAuthors
 		)
 		KEY INDEX PK_SearchCatalog ON BHLSearchCatalog
 		GO
@@ -63,7 +63,7 @@ BEGIN
 			Issue,
 			Date,
 			Subjects,
-			Authors
+			SearchAuthors
 		)
 		KEY INDEX PK_SearchCatalogSegment ON BHLSearchCatalog
 		GO
@@ -101,53 +101,17 @@ CREATE TABLE #tmpSearchCatalogCreator
 (
 	SearchCatalogCreatorID int IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	CreatorID int NOT NULL,
-	CreatorName nvarchar(255) NOT NULL DEFAULT('')
+	CreatorName nvarchar(2000) NOT NULL DEFAULT('')
 )
 
 -- Populate the temporary table
 INSERT	#tmpSearchCatalogCreator(CreatorID, CreatorName)
 SELECT DISTINCT
 		a.AuthorID,
-		n.FullName
+		dbo.fnAuthorSearchStringForAuthor(a.AuthorID)
 FROM	dbo.AuthorName n INNER JOIN dbo.Author a ON n.AuthorID = a.AuthorID
 WHERE	LTRIM(RTRIM(n.FullName)) <> ''
-
--- Reverse personal names from "last, first" to "first last"
-SELECT DISTINCT
-		a.AuthorID,
-		n.FullName,
-		CHARINDEX(',', n.FullName) AS CommaLocation
-INTO	#tmpReverseName
-FROM	dbo.AuthorName n INNER JOIN dbo.Author a ON n.AuthorID = a.AuthorID
-WHERE	LTRIM(RTRIM(n.FullName)) <> ''
-AND		a.AuthorTypeID = 1
-AND		CHARINDEX(',', n.FullName) > 0
-
-SELECT DISTINCT
-		AuthorID,
-		SUBSTRING(FullName, 1, CASE WHEN CommaLocation > 1 THEN CommaLocation - 1 ELSE LEN(FullName) END) AS LastName,
-		SUBSTRING(FullName, CASE WHEN CommaLocation > 1 AND CommaLocation < LEN(FullName) THEN CommaLocation + 1 ELSE 1 END, 1000) AS FirstName
-INTO	#tmpReverseName2
-FROM	#tmpReverseName
-
-INSERT	#tmpSearchCatalogCreator(CreatorID, CreatorName)
-SELECT	AuthorID,
-		LTRIM(RTRIM(REPLACE(FirstName, ',', '') + ' ' + REPLACE(LastName, ',', ''))) AS CreatorName
-FROM	#tmpReverseName2
-
-DROP TABLE #tmpReverseName
-DROP TABLE #tmpReverseName2
-
--- Add additional name details (Fuller Form, Title, Unit, Location)
-UPDATE	#tmpSearchCatalogCreator
-SET		CreatorName = CASE WHEN AuthorTypeName = 'Person' THEN CreatorName + ' ' + n.FullerForm + ' ' + a.Title
-						WHEN AuthorTypeName = 'Corporation' THEN CreatorName + ' ' + a.Unit + ' ' + a.Location
-						WHEN AuthorTypeName = 'Meeting' THEN CreatorName + ' ' + a.Location
-						END
-FROM	#tmpSearchCatalogCreator t
-		INNER JOIN dbo.Author a ON t.CreatorID = a.AuthorID
-		INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
-		INNER JOIN dbo.AuthorType at ON a.AuthorTypeID = at.AuthorTypeID
+AND		a.IsActive = 1
 
 -- ****************************************  SEARCHCATALOG  ***********************************
 
@@ -173,6 +137,7 @@ BEGIN
 		Associations nvarchar(max) NOT NULL DEFAULT(''),
 		Variants nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
 		ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasSegments smallint NOT NULL DEFAULT(0),
@@ -243,6 +208,7 @@ BEGIN
 		  Associations nvarchar(max) NOT NULL DEFAULT(''),
 		  Variants nvarchar(max) NOT NULL DEFAULT(''),
 		  Authors nvarchar(max) NOT NULL DEFAULT(''),
+		  SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		  TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
 		  ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
   		  HasSegments smallint NOT NULL DEFAULT(0),
@@ -257,22 +223,22 @@ BEGIN
 	SELECT DISTINCT
 			t.TitleID,
 			i.ItemID,
-			ISNULL(t.FullTitle + ' ', '') AS FullTitle,
-			ISNULL(t.PartNumber + ' ', '') AS PartNumber,
-			ISNULL(t.PartName + ' ', '') AS PartName,
-			ISNULL(t.UniformTitle COLLATE SQL_Latin1_General_CP1_CI_AI + ' ', '') AS UniformTitle,
-			ISNULL(i.Volume + ' ', '') AS Volume,
-			ISNULL(t.PublicationDetails + ' ', '') AS PublicationDetails,
-			ISNULL(t.Datafield_260_a + ' ', '') AS PublisherPlace,
-			ISNULL(t.Datafield_260_b + ' ', '') AS PublisherName,
-			ISNULL(t.EditionStatement COLLATE SQL_Latin1_General_CP1_CI_AI + ' ', '') AS EditionStatement,
+			ISNULL(RTRIM(t.FullTitle) + ' ', '') AS FullTitle,
+			ISNULL(RTRIM(t.PartNumber) + ' ', '') AS PartNumber,
+			ISNULL(RTRIM(t.PartName) + ' ', '') AS PartName,
+			ISNULL(RTRIM(t.UniformTitle) COLLATE SQL_Latin1_General_CP1_CI_AI + ' ', '') AS UniformTitle,
+			ISNULL(RTRIM(i.Volume) + ' ', '') AS Volume,
+			ISNULL(RTRIM(t.PublicationDetails) + ' ', '') AS PublicationDetails,
+			ISNULL(RTRIM(t.Datafield_260_a) + ' ', '') AS PublisherPlace,
+			ISNULL(RTRIM(t.Datafield_260_b) + ' ', '') AS PublisherName,
+			ISNULL(RTRIM(t.EditionStatement) COLLATE SQL_Latin1_General_CP1_CI_AI + ' ', '') AS EditionStatement,
 			CASE WHEN LEN(i.Year) > 0 THEN i.Year + ' '
 				WHEN LEN(t.StartYear) > 0 OR LEN(t.EndYear) > 0
 				THEN LTRIM(RTRIM(ISNULL(CONVERT(nvarchar(4), t.StartYear), '') + ' ' + ISNULL(CONVERT(nvarchar(4), t.EndYear), ''))) + ' '
 				ELSE ''
 				END AS [Year],
 			CASE WHEN s.SegmentID IS NULL THEN 0 ELSE 1 END,
-			CASE WHEN ISNULL(i.ExternalUrl, '') = '' THEN 0 ELSE 1 END
+			CASE WHEN ISNULL(RTRIM(i.ExternalUrl), '') = '' THEN 0 ELSE 1 END
 	FROM	dbo.Title t 
 			INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID
 			INNER JOIN dbo.Item i ON ti.ItemID = i.ItemID
@@ -282,25 +248,28 @@ BEGIN
 
 	-- Add subjects, associations, authors, variants, and contributors
 	UPDATE	#tmpItem
-	SET		Subjects = ISNULL(dbo.fnKeywordStringForTitle(t.TitleID) + ' ', '')
+	SET		Subjects = ISNULL(RTRIM(dbo.fnKeywordStringForTitle(t.TitleID)) + ' ', '')
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleKeyword) tt ON t.TitleID = tt.TitleID
 
 	UPDATE	#tmpItem
-	SET		Associations = ISNULL(dbo.fnAssociationStringForTitle(t.TitleID) + ' ', '')
+	SET		Associations = ISNULL(RTRIM(dbo.fnAssociationStringForTitle(t.TitleID)) + ' ', '')
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleAssociation) a ON t.TitleID = a.TitleID
 
 	UPDATE	#tmpItem
-	SET		Authors = ISNULL(dbo.fnAuthorSearchStringForTitle(TitleID) + ' ', '')
+	SET		Authors = ISNULL(RTRIM(dbo.fnAuthorSearchStringForTitle(TitleID, 1)) + ' ', '')
 
 	UPDATE	#tmpItem
-	SET		Variants = ISNULL(dbo.fnVariantStringForTitle(t.TitleID) + ' ', '')
+	SET		SearchAuthors = ISNULL(RTRIM(dbo.fnAuthorSearchStringForTitle(TitleID, 0)) + ' ', '')
+
+	UPDATE	#tmpItem
+	SET		Variants = ISNULL(RTRIM(dbo.fnVariantStringForTitle(t.TitleID)) + ' ', '')
 	FROM	#tmpItem t INNER JOIN (SELECT DISTINCT TitleID FROM dbo.TitleVariant) v ON t.TitleID = v.TitleID
 
 	UPDATE	#tmpItem
-	SET		TitleContributors = ISNULL(dbo.fnContributorStringForTitle(TitleID, 1) + ' ', '')
+	SET		TitleContributors = ISNULL(RTRIM(dbo.fnContributorStringForTitle(TitleID, 1)) + ' ', '')
 
 	UPDATE	#tmpItem
-	SET		ItemContributors = ISNULL(dbo.fnContributorStringForItem(ItemID) + ' ', '')
+	SET		ItemContributors = ISNULL(RTRIM(dbo.fnContributorStringForItem(ItemID)) + ' ', '')
 
 	UPDATE	#tmpItem
 	SET		HasLocalContent = 1
@@ -337,8 +306,8 @@ BEGIN
 	INSERT  #tmpSearchCatalog (TitleID, ItemID, FirstPageID, SearchText, FullTitle, 
 				UniformTitle, PublicationDetails, PublisherPlace, PublisherName,
 				Volume, EditionStatement, Subjects, Associations, Variants, Authors,
-				TitleContributors, ItemContributors, HasSegments, HasLocalContent, 
-				HasExternalContent)
+				SearchAuthors, TitleContributors, ItemContributors, HasSegments, 
+				HasLocalContent, HasExternalContent)
 	SELECT	TitleID,
 			ItemID,
 			FirstPageID,
@@ -351,7 +320,7 @@ BEGIN
 				[Year] +
 				Subjects +
 				Associations +
-				Authors +
+				SearchAuthors +
 				Variants, 4000) AS SearchText,
 			LEFT(RTRIM(FullTitle + PartNumber + PartName), 2000),
 			RTRIM(UniformTitle),
@@ -364,6 +333,7 @@ BEGIN
 			RTRIM(Associations),
 			RTRIM(Variants),
 			RTRIM(Authors),
+			RTRIM(SearchAuthors),
 			RTRIM(TitleContributors),
 			RTRIM(ItemContributors),
 			HasSegments,
@@ -396,6 +366,7 @@ BEGIN
 		[Date] nvarchar(20) NOT NULL DEFAULT(''),
 		Subjects nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
 		HasExternalContent smallint NOT NULL DEFAULT(0)
@@ -408,24 +379,24 @@ BEGIN
 	SELECT DISTINCT
 			s.SegmentID,
 			s.ItemID,
-			s.Title + ' ',
-			s.TranslatedTitle + ' ',
-			CASE WHEN (s.ContainerTitle = '') 
+			RTRIM(s.Title) + ' ',
+			RTRIM(s.TranslatedTitle) + ' ',
+			RTRIM(CASE WHEN (s.ContainerTitle = '') 
 				THEN ISNULL(t.FullTitle, '') 
 				ELSE s.ContainerTitle COLLATE SQL_Latin1_General_CP1_CI_AI 
-			END + ' ' AS ContainerTitle,
-			CASE WHEN (s.PublisherPlace = '' AND s.PublisherName = '')
+			END) + ' ' AS ContainerTitle,
+			RTRIM(CASE WHEN (s.PublisherPlace = '' AND s.PublisherName = '')
 				THEN ISNULL(t.PublicationDetails, '')
 				ELSE s.PublisherPlace COLLATE SQL_Latin1_General_CP1_CI_AI + CASE WHEN s.PublisherPlace <> '' THEN ': ' ELSE '' END + s.PublisherName COLLATE SQL_Latin1_General_CP1_CI_AI
-			END + ' ' AS PublicationDetails,
-			s.Volume + ' ',
-			s.Series + ' ',
-			s.Issue + ' ',
-			s.[Date] + ' ',
+			END) + ' ' AS PublicationDetails,
+			RTRIM(s.Volume) + ' ',
+			RTRIM(s.Series) + ' ',
+			RTRIM(s.Issue) + ' ',
+			RTRIM(s.[Date]) + ' ',
 			'',
 			'',
 			CASE WHEN p.SegmentPageID IS NULL THEN 0 ELSE 1 END,
-			CASE WHEN s.Url = '' THEN 0 ELSE 1 END
+			RTRIM(CASE WHEN s.Url = '' THEN 0 ELSE 1 END)
 	FROM	dbo.Segment s LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 			LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
 			LEFT JOIN dbo.SegmentPage p ON s.SegmentID = p.SegmentID
@@ -433,13 +404,16 @@ BEGIN
 
 	-- Add subjects, authors, and conributors
 	UPDATE	#tmpSegment
-	SET		Subjects = ISNULL(dbo.fnKeywordStringForSegment(SegmentID) + ' ', '')
+	SET		Subjects = ISNULL(RTRIM(dbo.fnKeywordStringForSegment(SegmentID)) + ' ', '')
 
 	UPDATE	#tmpSegment
-	SET		Authors = ISNULL(dbo.fnAuthorSearchStringForSegment(SegmentID) + ' ', '')
+	SET		Authors = ISNULL(RTRIM(dbo.fnAuthorSearchStringForSegment(SegmentID, 1)) + ' ', '')
 
 	UPDATE	#tmpSegment
-	SET		Contributors = ISNULL(dbo.fnContributorStringForSegment(SegmentID) + ' ', '')
+	SET		SearchAuthors = ISNULL(RTRIM(dbo.fnAuthorSearchStringForSegment(SegmentID, 0)) + ' ', '')
+
+	UPDATE	#tmpSegment
+	SET		Contributors = ISNULL(RTRIM(dbo.fnContributorStringForSegment(SegmentID)) + ' ', '')
 	
 	-- Create and populate the temp table we'll use to update the search catalog
 	CREATE TABLE #tmpSearchCatalogSegment
@@ -458,6 +432,7 @@ BEGIN
 		[Date] nvarchar(20) NOT NULL DEFAULT(''),
 		Subjects nvarchar(max) NOT NULL DEFAULT(''),
 		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
 		HasExternalContent smallint NOT NULL DEFAULT(0)
@@ -465,7 +440,7 @@ BEGIN
 	
 	INSERT  #tmpSearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 				ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-				Subjects, Authors, Contributors, HasLocalContent, HasExternalContent)
+				Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent)
 	SELECT	SegmentID,
 			ItemID,
 			LEFT(Title +
@@ -475,7 +450,7 @@ BEGIN
 				Issue +
 				[Date] +
 				Subjects +
-				Authors, 4000) AS SearchText,
+				SearchAuthors, 4000) AS SearchText,
 			RTRIM(Title),
 			RTRIM(TranslatedTitle),
 			RTRIM(ContainerTitle),
@@ -486,6 +461,7 @@ BEGIN
 			RTRIM([Date]),
 			RTRIM(Subjects),
 			RTRIM(Authors),
+			RTRIM(SearchAuthors),
 			RTRIM(Contributors),
 			HasLocalContent,
 			HasExternalContent
@@ -530,14 +506,15 @@ SELECT	t.CreatorID,
 		t.CreatorName
 FROM	#tmpSearchCatalogCreator t LEFT JOIN dbo.SearchCatalogCreator s
 			ON t.CreatorID = s.CreatorID
-			AND t.CreatorName = s.CreatorName
+			AND t.CreatorName = s.CreatorName COLLATE SQL_Latin1_General_CP1_CS_AS
 WHERE	s.SearchCatalogCreatorID IS NULL
 
 -- Remove any rows from the search catalog that no longer exist
 DELETE	dbo.SearchCatalogCreator
+-- select *
 FROM	dbo.SearchCatalogCreator s LEFT JOIN #tmpSearchCatalogCreator t
 			ON s.CreatorID = t.CreatorID
-			AND s.CreatorName = t.CreatorName
+			AND s.CreatorName = t.CreatorName COLLATE SQL_Latin1_General_CP1_CS_AS
 WHERE	t.SearchCatalogCreatorID IS NULL
 
 DROP TABLE #tmpSearchCatalogCreator
@@ -551,8 +528,8 @@ BEGIN
 	INSERT	dbo.SearchCatalog (TitleID, ItemID, FirstPageID, SearchText, FullTitle, 
 					UniformTitle, PublicationDetails, PublisherPlace, PublisherName, 
 					Volume, EditionStatement, Subjects, Associations, Variants, Authors,
-					TitleContributors, ItemContributors, HasSegments, HasLocalContent, 
-					HasExternalContent)
+					SearchAuthors, TitleContributors, ItemContributors, HasSegments, 
+					HasLocalContent, HasExternalContent)
 	SELECT	t.TitleID, 
 			t.ItemID, 
 			t.FirstPageID,
@@ -568,6 +545,7 @@ BEGIN
 			t.Associations, 
 			t.Variants, 
 			t.Authors,
+			t.SearchAuthors,
 			t.TitleContributors,
 			t.ItemContributors,
 			t.HasSegments,
@@ -593,6 +571,7 @@ BEGIN
 			Associations = CASE WHEN s.Associations <> t.Associations THEN t.Associations ELSE s.Associations END,
 			Variants = CASE WHEN s.Variants <> t.Variants THEN t.Variants ELSE s.Variants END,
 			Authors = CASE WHEN s.Authors <> t.Authors THEN t.Authors ELSE s.Authors END,
+			SearchAuthors = CASE WHEN s.SearchAuthors <> t.SearchAuthors THEN t.SearchAuthors ELSE s.SearchAuthors END,
 			TitleContributors = CASE WHEN s.TitleContributors <> t.TitleContributors THEN t.TitleContributors ELSE s.TitleContributors END,
 			ItemContributors = CASE WHEN s.ItemContributors <> t.ItemContributors THEN t.ItemContributors ELSE s.ItemContributors END,
 			HasSegments = CASE WHEN s.HasSegments <> t.HasSegments THEN t.HasSegments ELSE s.HasSegments END,
@@ -615,6 +594,7 @@ BEGIN
 	OR		s.Associations <> t.Associations
 	OR		s.Variants <> t.Variants
 	OR		s.Authors <> t.Authors
+	OR		s.SearchAuthors <> t.SearchAuthors
 	OR		s.TitleContributors <> t.TitleContributors
 	OR		s.ItemContributors <> t.ItemContributors
 	OR		s.HasSegments <> t.HasSegments
@@ -640,7 +620,7 @@ BEGIN
 	-- Add any new rows to the search catalog
 	INSERT	dbo.SearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 					ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-					Subjects, Authors, Contributors, HasLocalContent, HasExternalContent)
+					Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent)
 	SELECT	t.SegmentID, 
 			t.ItemID,
 			t.SearchText, 
@@ -654,6 +634,7 @@ BEGIN
 			t.[Date],
 			t.Subjects,
 			t.Authors,
+			t.SearchAuthors,
 			t.Contributors,
 			t.HasLocalContent,
 			t.HasExternalContent
@@ -675,6 +656,7 @@ BEGIN
 			[Date] = CASE WHEN s.[Date] <> t.[Date] THEN t.[Date] ELSE s.[Date] END,
 			Subjects = CASE WHEN s.Subjects <> t.Subjects THEN t.Subjects ELSE s.Subjects END,
 			Authors = CASE WHEN s.Authors <> t.Authors THEN t.Authors ELSE s.Authors END,
+			SearchAuthors = CASE WHEN s.SearchAuthors <> t.SearchAuthors THEN t.SearchAuthors ELSE s.SearchAuthors END,
 			Contributors = CASE WHEN s.Contributors <> t.Contributors THEN t.Contributors ELSE s.Contributors END,
 			HasLocalContent = CASE WHEN s.HasLocalContent <> t.HasLocalContent THEN t.HasLocalContent ELSE s.HasLocalContent END,
 			HasExternalContent = CASE WHEN s.HasExternalContent <> t.HasExternalContent THEN t.HasExternalContent ELSE s.HasExternalContent END,
@@ -693,6 +675,7 @@ BEGIN
 	OR		s.[Date] <> t.[Date]
 	OR		s.Subjects <> t.Subjects
 	OR		s.Authors <> t.Authors
+	OR		s.SearchAuthors <> t.SearchAuthors
 	OR		s.Contributors <> t.Contributors
 	OR		s.HasLocalContent <> t.HasLocalContent
 	OR		s.HasExternalContent <> t.HasExternalContent

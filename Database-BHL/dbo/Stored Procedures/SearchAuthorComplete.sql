@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchAuthorComplete]
+﻿CREATE PROCEDURE [dbo].[SearchAuthorComplete]
 
 @AuthorName nvarchar(300)
 
@@ -62,6 +61,7 @@ BEGIN
 			INNER JOIN SearchCatalogCreator c ON c.SearchCatalogCreatorID = x.[KEY]
 			INNER JOIN dbo.Author a ON c.CreatorID = a.AuthorID
 			INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+	WHERE	n.IsPreferredName = 1
 	ORDER BY 
 			n.FullName, a.Numeration, a.Unit, a.Title, 
 			a.Location, a.StartDate, a.EndDate, n.FullerForm
@@ -102,5 +102,3 @@ ORDER BY n.FullName
 SELECT * FROM #tmpAuthor
 
 END
-
-

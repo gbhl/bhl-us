@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchSegment]
+﻿CREATE PROCEDURE [dbo].[SearchSegment]
 
 @Title nvarchar(2000) = '',
 @ContainerTitle nvarchar(2000) = '',
@@ -38,7 +37,8 @@ CREATE TABLE #tmpSegment
 	PageRange nvarchar(50) NOT NULL,
 	StartPageNumber nvarchar(20) NOT NULL,
 	EndPageNumber nvarchar(20) NOT NULL,
-	Authors nvarchar(1024) NOT NULL
+	Authors nvarchar(2000) NOT NULL,
+	SearchAuthors nvarchar(2000) NOT NULL
 	)	
 
 -- Get initial result set, filtering by Titles, Date, and Volume/Series/Issue
@@ -60,7 +60,8 @@ SELECT DISTINCT
 		s.PageRange,
 		s.StartPageNumber,
 		s.EndPageNumber,
-		REPLACE(scs.Authors, '|', ';') AS Authors
+		REPLACE(scs.Authors, '|', ';') AS Authors,
+		scs.SearchAuthors
 FROM	dbo.Segment s 
 		INNER JOIN dbo.SegmentGenre g ON g.SegmentGenreID = s.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
@@ -77,7 +78,7 @@ AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT
 SELECT	*
 INTO	#tmpSegment2
 FROM	#tmpSegment
-WHERE	Authors LIKE ('%' + @Author + '%') OR @Author = ''
+WHERE	SearchAuthors LIKE ('%' + @Author + '%') OR @Author = ''
 
 -- Return final result set
 IF (@SortBy = 'Title')
@@ -151,9 +152,3 @@ BEGIN
 END
 
 END
-
-
-
-
-
-

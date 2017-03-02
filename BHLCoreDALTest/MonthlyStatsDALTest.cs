@@ -77,9 +77,9 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int startYear = 2008;
-            int startMonth = 1;
+            int startMonth = 4;
             int endYear = 2008;
-            int endMonth = 2;
+            int endMonth = 5;
             string institutionName = string.Empty;
             CustomGenericList<MonthlyStats> actual = target.MonthlyStatsSelectByDateAndInstitution(sqlConnection, sqlTransaction, startYear, startMonth, endYear, endMonth, institutionName);
             Assert.IsTrue(actual.Count > 0);

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentDetailFT]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentDetailFT]
 
 @ArticleTitle nvarchar(2000) = '',
 @ContainerTitle nvarchar(2000) = '',
@@ -142,7 +141,7 @@ BEGIN
 	AND		(c.HasLocalContent = 1 OR c.HasExternalContent = 1 OR c.ItemID IS NOT NULL)
 	AND		(CONTAINS((c.Title), @SearchArticleTitle) OR @SearchArticleTitle = '"**"')
 	AND		(CONTAINS((c.ContainerTitle), @SearchContainerTitle) OR @SearchContainerTitle = '"**"')
-	AND		(CONTAINS(c.Authors, @SearchAuthor) OR @SearchAuthor = '"**"')
+	AND		(CONTAINS(c.SearchAuthors, @SearchAuthor) OR @SearchAuthor = '"**"')
 	AND		(CONTAINS(c.Volume, @SearchVolume) OR @SearchVolume = '"**"')
 	AND		(CONTAINS(c.Issue, @SearchIssue) OR @SearchIssue = '"**"')
 	AND		(CONTAINS(c.Date, @SearchYear) OR @SearchYear = '"**"')
@@ -198,5 +197,3 @@ BEGIN
 END
 
 END
-
-

@@ -15,7 +15,7 @@ CREATE FULLTEXT INDEX ON [dbo].[SearchCatalogKeyword]
 
 GO
 CREATE FULLTEXT INDEX ON [dbo].[SearchCatalogSegment]
-    ([SearchText] LANGUAGE 1033, [Title] LANGUAGE 1033, [TranslatedTitle] LANGUAGE 1033, [ContainerTitle] LANGUAGE 1033, [PublicationDetails] LANGUAGE 1033, [Volume] LANGUAGE 1033, [Series] LANGUAGE 1033, [Issue] LANGUAGE 1033, [Date] LANGUAGE 1033, [Subjects] LANGUAGE 1033, [Authors] LANGUAGE 1033)
+    ([SearchText] LANGUAGE 1033, [Title] LANGUAGE 1033, [TranslatedTitle] LANGUAGE 1033, [ContainerTitle] LANGUAGE 1033, [PublicationDetails] LANGUAGE 1033, [Volume] LANGUAGE 1033, [Series] LANGUAGE 1033, [Issue] LANGUAGE 1033, [Date] LANGUAGE 1033, [Subjects] LANGUAGE 1033, [SearchAuthors] LANGUAGE 1033)
     KEY INDEX [PK_SearchCatalogSegment]
     ON ([BHLSearchCatalog], FILEGROUP [ftfg_BHLSearchCatalog])
     WITH STOPLIST [BHLFullTextStopList];
@@ -23,7 +23,7 @@ CREATE FULLTEXT INDEX ON [dbo].[SearchCatalogSegment]
 
 GO
 CREATE FULLTEXT INDEX ON [dbo].[SearchCatalog]
-    ([SearchText] LANGUAGE 1033, [FullTitle] LANGUAGE 1033, [UniformTitle] LANGUAGE 1033, [PublicationDetails] LANGUAGE 1033, [PublisherPlace] LANGUAGE 1033, [PublisherName] LANGUAGE 1033, [Volume] LANGUAGE 1033, [EditionStatement] LANGUAGE 1033, [Subjects] LANGUAGE 1033, [Associations] LANGUAGE 1033, [Variants] LANGUAGE 1033, [Authors] LANGUAGE 1033)
+    ([SearchText] LANGUAGE 1033, [FullTitle] LANGUAGE 1033, [UniformTitle] LANGUAGE 1033, [PublicationDetails] LANGUAGE 1033, [PublisherPlace] LANGUAGE 1033, [PublisherName] LANGUAGE 1033, [Volume] LANGUAGE 1033, [EditionStatement] LANGUAGE 1033, [Subjects] LANGUAGE 1033, [Associations] LANGUAGE 1033, [Variants] LANGUAGE 1033, [SearchAuthors] LANGUAGE 1033)
     KEY INDEX [PK_SearchCatalog]
     ON ([BHLSearchCatalog], FILEGROUP [ftfg_BHLSearchCatalog])
     WITH STOPLIST [BHLFullTextStopList];

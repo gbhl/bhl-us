@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleDetailFT]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByTitleDetailFT]
 
 @Title nvarchar(2000) = '',
 @AuthorLast nvarchar(150) = '',
@@ -96,7 +95,7 @@ BEGIN
 			INNER JOIN dbo.Title t WITH (NOLOCK) ON s.TitleID = t.TitleID
 	WHERE	t.PublishReady = 1
 	AND		(CONTAINS((s.FullTitle, s.UniformTitle), @SearchTitle) OR @SearchTitle = '"**"')
-	AND		(CONTAINS(s.Authors, @SearchAuthor) OR @SearchAuthor = '"**"')
+	AND		(CONTAINS(s.SearchAuthors, @SearchAuthor) OR @SearchAuthor = '"**"')
 	OPTION (RECOMPILE)
 END
 
@@ -104,7 +103,3 @@ END
 SELECT DISTINCT * FROM #tmpOpenUrlCitation ORDER BY FullTitle, SegmentTitle, Volume, Date, StartPage
 
 END
-
-
-
-

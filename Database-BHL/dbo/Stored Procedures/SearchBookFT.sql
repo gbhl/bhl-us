@@ -157,7 +157,7 @@ SELECT DISTINCT
 		tmp.EditionRank,
 		x.[RANK] AS AuthorRank
 INTO	#tmpTitleFilter2
-FROM	CONTAINSTABLE(SearchCatalog, Authors, @SearchAuthorLastName) x
+FROM	CONTAINSTABLE(SearchCatalog, SearchAuthors, @SearchAuthorLastName) x
 		INNER JOIN SearchCatalog c WITH (NOLOCK) ON c.SearchCatalogID = x.[KEY]
 		INNER JOIN #tmpTitleFilter1 tmp ON c.TitleID = tmp.TitleID AND c.ItemID = tmp.ItemID
 UNION

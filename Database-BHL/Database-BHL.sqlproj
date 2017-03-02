@@ -1266,4 +1266,7 @@
   <ItemGroup>
     <None Include="dbo\Functions\fnAuthorSearchStringForSegment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Functions\fnAuthorSearchStringForAuthor.sql" />
+  </ItemGroup>
 </Project>

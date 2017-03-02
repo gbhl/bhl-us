@@ -1,6 +1,7 @@
 ﻿CREATE FUNCTION [dbo].[fnAuthorSearchStringForSegment] 
 (
-	@SegmentID int
+	@SegmentID int,
+	@PreferredOnly int
 )
 RETURNS nvarchar(MAX)
 AS 
@@ -22,7 +23,8 @@ BEGIN
 						INNER JOIN Author a ON sa.AuthorID = a.AuthorID
 						INNER JOIN AuthorName n ON a.AuthorID = n.AuthorID
 				WHERE	s.SegmentID = @SegmentID
-				AND		n.IsPreferredName = 1	-- Remove this to include all forms of a name
+				AND		(n.IsPreferredName = @PreferredOnly OR @PreferredOnly = 0)
+						 -- 0 to include all names associated with the author
 				AND		a.IsActive = 1
 				GROUP BY n.FullName, n.FullerForm, a.Title, a.Unit, a.Location
 				) x
