@@ -180,6 +180,7 @@ REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAssociationStringForTitle.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorStringForSegment.sql"
