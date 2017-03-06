@@ -30,8 +30,8 @@ namespace MOBOT.BHL.BHLPDFGenerator
         {
             Process thisProcess = Process.GetCurrentProcess();
             Process[] allProcesses = Process.GetProcessesByName(thisProcess.ProcessName);
-            // Allow up to three instances of this process to run simultaneously
-            if (allProcesses.Length > 3)
+            // Allow up to ten instances of this process to run simultaneously
+            if (allProcesses.Length > 10)
             {
                 return true;
             }
