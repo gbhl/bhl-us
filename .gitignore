@@ -7,6 +7,7 @@
 *.sln.docstates
 *.pubxml
 applicationhost.config
+*.jfm
 
 # Build results
 
