@@ -1,6 +1,7 @@
 ﻿CREATE FUNCTION [dbo].[fnAuthorSearchStringForAuthor] 
 (
-	@AuthorID int
+	@AuthorID int,
+	@Delimiter nvarchar(5)
 )
 RETURNS nvarchar(2000)
 AS 
@@ -11,7 +12,7 @@ BEGIN
 	SET @CurrentRecord = 1
 
 	SELECT	@AuthorString = COALESCE(@AuthorString, '') +
-					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE ' ' END) +  
+					(CASE WHEN @CurrentRecord = 1 THEN '' ELSE @Delimiter END) +  
 					LTRIM(RTRIM(x.FullName + ' ' +
 					ISNULL(NULLIF(x.FullerForm + ' ', ' ' ), '') +
 					ISNULL(NULLIF(x.Title + ' ', ' '), '') + 
@@ -30,4 +31,3 @@ BEGIN
 
 	RETURN SUBSTRING(LTRIM(RTRIM(COALESCE(@AuthorString, ''))), 1, 2000)
 END
-

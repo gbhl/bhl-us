@@ -108,7 +108,7 @@ CREATE TABLE #tmpSearchCatalogCreator
 INSERT	#tmpSearchCatalogCreator(CreatorID, CreatorName)
 SELECT DISTINCT
 		a.AuthorID,
-		dbo.fnAuthorSearchStringForAuthor(a.AuthorID)
+		dbo.fnAuthorSearchStringForAuthor(a.AuthorID, ' ')
 FROM	dbo.AuthorName n INNER JOIN dbo.Author a ON n.AuthorID = a.AuthorID
 WHERE	LTRIM(RTRIM(n.FullName)) <> ''
 AND		a.IsActive = 1
