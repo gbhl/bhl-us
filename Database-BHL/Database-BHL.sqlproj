@@ -1269,4 +1269,19 @@
   <ItemGroup>
     <None Include="dbo\Functions\fnAuthorSearchStringForAuthor.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\TitleSelectAllRISCitations.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemSelectAllRISCitations.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\SegmentSelectAllRISCitations.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\SegmentSelectRISCitationForSegmentID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemSelectRISCitationsForTitleID.sql" />
+  </ItemGroup>
 </Project>

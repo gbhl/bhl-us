@@ -114,6 +114,7 @@
     <Compile Include="BHLProvider.Page_PageType.cs">
     </Compile>
     <Compile Include="BHLProvider.Report.cs" />
+    <Compile Include="BHLProvider.RISCitation.cs" />
     <Compile Include="BHLProvider.Search.cs" />
     <Compile Include="BHLProvider.Segment.cs" />
     <Compile Include="BHLProvider.SegmentCOinS.cs" />

@@ -321,6 +321,20 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
+        public string GetTitleRIS(string titleID, string apiKey)
+        {
+            try
+            {
+                ValidateUser(Api2.APIRequestType.GetTitleRIS, apiKey, titleID);
+                return (new Api2().GetTitleRIS(titleID));
+            }
+            catch (Exception ex)
+            {
+                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
+            }
+        }
+
+        [WebMethod]
         public CustomGenericList<Title> GetUnpublishedTitles(string apiKey)
         {
             try
@@ -401,6 +415,20 @@ namespace MOBOT.BHL.Web2.api2
             {
                 ValidateUser(Api2.APIRequestType.GetPartBibTeX, apiKey, partID);
                 return (new Api2().GetSegmentBibTex(partID));
+            }
+            catch (Exception ex)
+            {
+                throw new SoapException(ex.Message, SoapException.ServerFaultCode);
+            }
+        }
+
+        [WebMethod]
+        public string GetPartRIS(string partID, string apiKey)
+        {
+            try
+            {
+                ValidateUser(Api2.APIRequestType.GetPartRIS, apiKey, partID);
+                return (new Api2().GetSegmentRIS(partID));
             }
             catch (Exception ex)
             {

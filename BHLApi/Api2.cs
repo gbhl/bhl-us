@@ -423,6 +423,19 @@ namespace MOBOT.BHL.API.BHLApi
             return provider.TitleBibTeXGetCitationStringForTitleID(titleIDint);
         }
 
+        public string GetTitleRIS(string titleID)
+        {
+            // Validate the parameters
+            int titleIDint;
+            if (!Int32.TryParse(titleID, out titleIDint))
+            {
+                throw new Exception("titleID (" + titleID + ") must be a valid integer value.");
+            }
+
+            BHLProvider provider = new BHLProvider();
+            return provider.ItemSelectRISCitationsForTitleID(titleIDint);
+        }
+
         public CustomGenericList<Title> TitleSelectUnpublished()
         {
             return new Api2DAL().TitleSelectUnpublished(null, null);
@@ -617,6 +630,19 @@ namespace MOBOT.BHL.API.BHLApi
 
             BHLProvider provider = new BHLProvider();
             return provider.SegmentBibTeXGetCitationStringForSegmentID(segmentIDint, true);
+        }
+
+        public string GetSegmentRIS(string segmentID)
+        {
+            // Validate the parameters
+            int segmentIDint;
+            if (!Int32.TryParse(segmentID, out segmentIDint))
+            {
+                throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
+            }
+
+            BHLProvider provider = new BHLProvider();
+            return provider.SegmentGetRISCitationStringForSegmentID(segmentIDint);
         }
 
         #endregion Segment methods
@@ -1139,6 +1165,7 @@ namespace MOBOT.BHL.API.BHLApi
             GetPageOcrText = 145,
             GetSubjectTitles = 146,
             GetTitleBibTex = 147,
+            GetTitleRIS = 320,
             GetTitleByIdentifier = 148,
             GetTitleItems = 150,
             GetTitleMetadata = 151,
@@ -1167,6 +1194,7 @@ namespace MOBOT.BHL.API.BHLApi
             GetPartByIdentifier = 314,
             GetUnpublishedParts = 315,
             GetPartBibTeX = 316,
+            GetPartRIS = 321,
             GetStats = 318,
             GetInstitutions = 319
         }

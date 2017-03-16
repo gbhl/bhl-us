@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Status>ok</Status>
+  <Result>
+    TY  - BOOK
+    TI  - Proceedings of the Biological Society of Washington.  
+    VL  - v. 17 (1904)
+    UR  - http://www.biodiversitylibrary.org/item/22854
+    PB  - Biological Society of Washington
+    CY  - Washington,
+    PY  - 1882
+    N1  - Life sciences collection --- GeoRef | 0197-7482 --- Biological abstracts | 0006-3169 --- Bibliography of agriculture | 0006-1530 --- Vols. 7-   issued in brochures, each consisting of a single paper. --- A "Price list of publications" appended to v. 21 (20 p.) gives contents of v. 1-21. --- Vols. 1-4 published with the cooperation of the Smithsonian Institution. --- Vols. 1-2 issued also in: Smithsonian miscellaneous collections as Smithsonian Institution publication, no. 499 and 545.
+    ER  - 
+  </Result>
+</Response>

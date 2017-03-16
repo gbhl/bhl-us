@@ -298,7 +298,6 @@
                     <asp:Literal ID="litRIS" runat="server" ></asp:Literal>
                 </p>
                 <% } %>
-                <p class="header" style="height:300px">Coming Soon...</p>
             </div>
         </div>
     </section>

@@ -96,6 +96,12 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public CustomGenericList<RISCitation> TitleSelectAllRISCitations()
+        {
+            return new BHLProvider().TitleSelectAllRISCitations();
+        }
+
+        [WebMethod]
         public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
         {
             BHLProvider bhlServer = new BHLProvider();
@@ -204,6 +210,12 @@ namespace MOBOT.BHL.WebService
             return barcodes;
         }
 
+        [WebMethod]
+        public CustomGenericList<RISCitation> ItemSelectAllRISCitations()
+        {
+            return new BHLProvider().ItemSelectAllRISCitations();
+        }
+
         #endregion Item Methods
 
         #region Segment Methods
@@ -220,6 +232,18 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.SegmentSelectExtended(segmentID);
+        }
+
+        [WebMethod]
+        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations()
+        {
+            return new BHLProvider().SegmentSelectAllRISCitations();
+        }
+
+        [WebMethod]
+        public string GenerateRISCitation(RISCitation citation)
+        {
+            return new BHLProvider().GenerateRISCitation(citation);
         }
 
         #endregion Segment Methods

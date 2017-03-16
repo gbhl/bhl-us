@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Status>ok</Status>
+  <Result>
+    TY  - JOUR
+    TI  - Composition and relationship of the terrestrial faunas of Easter, Juan Fernandez, Desventuradas, and Galápagos islands
+    T2  - Occasional Papers of the California Academy of Sciences, San Francisco
+    VL  - 44
+    UR  - http://www.biodiversitylibrary.org/part/2341
+    PB  - California Academy of Sciences,
+    CY  - San Francisco :
+    PY  - 1963
+    SP  - 79
+    EP  - 95
+    DO  - 10.5962/bhl.part.2341
+    ET  - test edition
+    AB  - this is a test
+    AU  - Guillermo, K U S C H E L
+    KW  - island
+    ER  -
+  </Result>
+</Response>

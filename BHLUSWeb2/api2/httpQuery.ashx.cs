@@ -154,6 +154,14 @@ namespace MOBOT.BHL.Web2.api2
                     response = serviceResponse.Serialize(outputType);
                 }
 
+                if (String.Compare(operation, "GetTitleRIS", true) == 0)
+                {
+                    String titleID = context.Request.QueryString["titleid"];
+                    ServiceResponse<string> serviceResponse = new ServiceResponse<string>();
+                    serviceResponse.Result = this.GetTitleRIS(titleID, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
                 if (String.Compare(operation, "GetUnpublishedTitles", true) == 0)
                 {
                     ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
@@ -200,6 +208,14 @@ namespace MOBOT.BHL.Web2.api2
                     String partID = context.Request.QueryString["partid"];
                     ServiceResponse<string> serviceResponse = new ServiceResponse<string>();
                     serviceResponse.Result = this.GetPartBibTex(partID, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                if (String.Compare(operation, "GetPartRIS", true) == 0)
+                {
+                    String partID = context.Request.QueryString["partid"];
+                    ServiceResponse<string> serviceResponse = new ServiceResponse<string>();
+                    serviceResponse.Result = this.GetPartRIS(partID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -515,6 +531,13 @@ namespace MOBOT.BHL.Web2.api2
             return api.GetTitleBibTex(titleID);
         }
 
+        private string GetTitleRIS(string titleID, string apiKey)
+        {
+            ValidateUser(Api2.APIRequestType.GetTitleRIS, apiKey, titleID);
+            Api2 api = new Api2();
+            return api.GetTitleRIS(titleID);
+        }
+
         private CustomGenericList<Title> GetUnpublishedTitles(string apiKey)
         {
             ValidateUser(Api2.APIRequestType.GetUnpublishedTitles, apiKey, string.Empty);
@@ -553,6 +576,13 @@ namespace MOBOT.BHL.Web2.api2
             ValidateUser(Api2.APIRequestType.GetPartBibTeX, apiKey, partID);
             Api2 api = new Api2();
             return api.GetSegmentBibTex(partID);
+        }
+
+        private string GetPartRIS(string partID, string apiKey)
+        {
+            ValidateUser(Api2.APIRequestType.GetPartRIS, apiKey, partID);
+            Api2 api = new Api2();
+            return api.GetSegmentRIS(partID);
         }
 
         private CustomGenericList<Subject> SubjectSearch(string subject, bool fullText, string apiKey)

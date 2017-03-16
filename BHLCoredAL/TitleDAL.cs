@@ -309,6 +309,28 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        /// <summary>
+        /// Select data for RIS citations for all Titles.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public CustomGenericList<RISCitation> TitleSelectAllRISCitations(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectAllRISCitations", connection, transaction))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         public Title Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Title title, int userId)
 		{
 			SqlConnection connection = sqlConnection;

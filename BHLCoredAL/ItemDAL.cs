@@ -228,16 +228,62 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		#endregion
+        /// <summary>
+        /// Select data for RIS citations for all items.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public CustomGenericList<RISCitation> ItemSelectAllRISCitations(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectAllRISCitations", connection, transaction))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
 
-		/// <summary>
-		/// Update the LastPageNameLookupDate for the specified Item.
-		/// </summary>
-		/// <param name="sqlConnection">Sql connection or null</param>
-		/// <param name="sqlTransaction">Sql transaction or null</param>
-		/// <param name="itemID">Identifier of a specific item</param>
-		/// <returns>The updated item</returns>
-		public Item ItemUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID )
+        /// <summary>
+        /// Select data for all item RIS citations for the specified title.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public CustomGenericList<RISCitation> ItemSelectRISCitationsForTitleID(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectRISCitationsForTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Update the LastPageNameLookupDate for the specified Item.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null</param>
+        /// <param name="sqlTransaction">Sql transaction or null</param>
+        /// <param name="itemID">Identifier of a specific item</param>
+        /// <returns>The updated item</returns>
+        public Item ItemUpdateLastPageNameLookupDate( SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );

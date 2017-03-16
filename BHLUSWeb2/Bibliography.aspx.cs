@@ -222,7 +222,7 @@ namespace MOBOT.BHL.Web2
             // Get the RIS citation for this title
             try
             {
-                //litRIS.Text = bhlProvider.TitleRISGetCitationStringForTitleID(BhlTitle.TitleID, ConfigurationManager.AppSettings["ItemPageUrl"]).Replace("\n", "<br />");
+                litRIS.Text = bhlProvider.ItemSelectRISCitationsForTitleID(BhlTitle.TitleID).Replace("\n", "<br />");
             }
             catch
             {

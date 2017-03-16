@@ -156,6 +156,7 @@
     <Content Include="api2\docs\GetPartByIdentifier.xml" />
     <Content Include="api2\docs\GetPartMetadata.xml" />
     <Content Include="api2\docs\GetPartNames.xml" />
+    <Content Include="api2\docs\GetPartRIS.xml" />
     <Content Include="api2\docs\GetStats.xml" />
     <Content Include="api2\docs\GetSubjectParts.xml" />
     <Content Include="api2\docs\GetSubjectTitles.xml" />
@@ -163,6 +164,7 @@
     <Content Include="api2\docs\GetTitleByIdentifier.xml" />
     <Content Include="api2\docs\GetTitleItems.xml" />
     <Content Include="api2\docs\GetTitleMetadata.xml" />
+    <Content Include="api2\docs\GetTitleRIS.xml" />
     <Content Include="api2\docs\GetUnpublishedItems.xml" />
     <Content Include="api2\docs\GetUnpublishedParts.xml" />
     <Content Include="api2\docs\GetUnpublishedTitles.xml" />
@@ -464,6 +466,7 @@
     <Content Include="SectionPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="Handlers\PDFDownload.ashx" />
+    <Content Include="Handlers\RISDownload.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -791,6 +794,9 @@
     </Compile>
     <Compile Include="Handlers\PDFDownload.ashx.cs">
       <DependentUpon>PDFDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\RISDownload.ashx.cs">
+      <DependentUpon>RISDownload.ashx</DependentUpon>
     </Compile>
     <Compile Include="ItemNotFound.aspx.cs">
       <DependentUpon>ItemNotFound.aspx</DependentUpon>

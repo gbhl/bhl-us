@@ -330,6 +330,52 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Select data for RIS citations for all segments.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectAllRISCitations", connection, transaction))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select data for a RIS citations for the specified segment.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>List of type RISCitation.</returns>
+        public CustomGenericList<RISCitation>SegmentSelectRISCitationForSegmentID(
+                        SqlConnection sqlConnection,
+                        SqlTransaction sqlTransaction,
+                        int segmentID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentSelectRISCitationForSegmentID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
+            {
+                using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
+                {
+                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
         /// Select the segments related to the specified segment
         /// </summary>
         /// <param name="sqlConnection"></param>

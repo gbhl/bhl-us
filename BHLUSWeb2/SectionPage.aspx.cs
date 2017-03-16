@@ -110,7 +110,7 @@ namespace MOBOT.BHL.Web2
                 // Get the RIS citation
                 try
                 {
-                    //litRIS.Text = bhlProvider.SegmentRISGetCitationStringForSegmentID(BhlSegment.SegmentID, ConfigurationManager.AppSettings["PartPageUrl"], false).Replace("\n", "<br />");
+                    litRIS.Text = bhlProvider.SegmentGetRISCitationStringForSegmentID(BhlSegment.SegmentID).Replace("\n", "<br />");
                 }
                 catch
                 {

@@ -78,6 +78,7 @@
     <Compile Include="BrowserUtility.cs" />
     <Compile Include="ControlGenerator.cs" />
     <Compile Include="ExceptionUtility.cs" />
+    <Compile Include="RIS.cs" />
     <Compile Include="RssFeedControlVersion2.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

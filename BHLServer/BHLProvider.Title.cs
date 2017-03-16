@@ -135,9 +135,14 @@ namespace MOBOT.BHL.Server
             return bibtexString.ToString();
         }
 
+        public CustomGenericList<RISCitation> TitleSelectAllRISCitations()
+        {
+            return new TitleDAL().TitleSelectAllRISCitations(null, null);
+        }
+
         #endregion
 
-		public CustomGenericList<Title> TitleSearchPaging( TitleSearchCriteria criteria )
+        public CustomGenericList<Title> TitleSearchPaging( TitleSearchCriteria criteria )
 		{
 			return new TitleDAL().TitleSearch( null, null, criteria );
 		}

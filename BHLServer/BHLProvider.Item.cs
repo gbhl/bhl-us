@@ -80,9 +80,25 @@ namespace MOBOT.BHL.Server
                 pageNum, sortColumn, sortDirection);
 		}
 
-		#endregion
+        public CustomGenericList<RISCitation> ItemSelectAllRISCitations()
+        {
+            return new ItemDAL().ItemSelectAllRISCitations(null, null);
+        }
 
-		public Item ItemUpdateStatus( int itemID, int itemStatusID )
+        public string ItemSelectRISCitationsForTitleID(int titleID)
+        {
+            System.Text.StringBuilder risString = new System.Text.StringBuilder("");
+            CustomGenericList<RISCitation> citations = new ItemDAL().ItemSelectRISCitationsForTitleID(null, null, titleID);
+            foreach (RISCitation citation in citations)
+            {
+                risString.Append(this.GenerateRISCitation(citation));
+            }
+            return risString.ToString();
+        }
+
+        #endregion
+
+        public Item ItemUpdateStatus( int itemID, int itemStatusID )
 		{
 			ItemDAL dal = new ItemDAL();
 			Item item = dal.ItemSelectAuto( null, null, itemID );

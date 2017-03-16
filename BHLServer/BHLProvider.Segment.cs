@@ -106,6 +106,22 @@ namespace MOBOT.BHL.Server
             return bibtexString.ToString();
         }
 
+        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations()
+        {
+            return new SegmentDAL().SegmentSelectAllRISCitations(null, null);
+        }
+
+        public String SegmentGetRISCitationStringForSegmentID(int segmentID)
+        {
+            System.Text.StringBuilder risString = new System.Text.StringBuilder("");
+            CustomGenericList<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
+            foreach (RISCitation citation in citations)
+            {
+                risString.Append(this.GenerateRISCitation(citation));
+            }
+            return risString.ToString();
+        }
+
         public Segment SegmentSelectForSegmentID(int segmentID)
         {
             return new SegmentDAL().SegmentSelectForSegmentID(null, null, segmentID);

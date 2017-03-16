@@ -139,6 +139,7 @@
     <Compile Include="Concrete\RequestLog.GenericStat.cs" />
     <Compile Include="Concrete\RequestLog.HistoryStat.cs" />
     <Compile Include="Concrete\RequestLog.RequestLog.cs" />
+    <Compile Include="Concrete\RISCitation.cs" />
     <Compile Include="Concrete\ScanningRequest.cs" />
     <Compile Include="Concrete\Segment.cs" />
     <Compile Include="Concrete\SegmentAuthor.cs" />

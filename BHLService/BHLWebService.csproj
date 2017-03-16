@@ -148,9 +148,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Remoting.config.template">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="Remoting.config.template" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
