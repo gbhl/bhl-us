@@ -12,7 +12,8 @@ namespace MOBOT.BHL.Web2
     public partial class Book : MasterPage
     {
         public string searchTerm { get; set; }
-        public string activeItem { get; set; }
+        public string contributorName { get; set; }
+        public string itemID { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {

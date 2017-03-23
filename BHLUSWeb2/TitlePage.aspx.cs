@@ -232,6 +232,8 @@ namespace MOBOT.BHL.Web2
                             literal.Text = institution.InstitutionName;
                             attributionPlaceHolder.Controls.Add(literal);
                         }
+
+                        ((Book)this.Master).contributorName = institution.InstitutionCode.Replace("'", "");
                     }
 
                     // Used to determine where to send people for bibliographic curiosity
@@ -264,6 +266,7 @@ namespace MOBOT.BHL.Web2
 
                     // Check and set up Annotations SCS
                     CurrentItemID = PageSummary.ItemID;
+                    ((Book)this.Master).itemID = CurrentItemID.ToString();
                     
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["ShowAnnotations"]))
                     {
@@ -274,7 +277,7 @@ namespace MOBOT.BHL.Web2
                     segmentid = GetSegmentID(pages, pageid);
 
                     // Add Google Scholar metadata to the page headers
-                    SetGoogleScholarTags(PageSummary.ItemID, segmentid);
+                    SetGoogleScholarTags(PageSummary.ItemID);
 
                     // Serialize only the information we need
                     List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
@@ -341,13 +344,10 @@ namespace MOBOT.BHL.Web2
         /// <summary>
         /// Set the Google Scholar tags for the page
         /// </summary>
-        private void SetGoogleScholarTags(int itemid, int? segmentid)
+        private void SetGoogleScholarTags(int itemid)
         {
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
-            //if (segmentid != null)
-            //    tags = bhlProvider.GetGoogleScholarMetadataForSegment((int)segmentid, ConfigurationManager.AppSettings["PartPageUrl"]);
-            //else
-                tags = bhlProvider.GetGoogleScholarMetadataForItem(itemid, ConfigurationManager.AppSettings["ItemPageUrl"]);
+            tags = bhlProvider.GetGoogleScholarMetadataForItem(itemid, ConfigurationManager.AppSettings["ItemPageUrl"]);
 
             foreach (KeyValuePair<string, string> tag in tags)
             {
