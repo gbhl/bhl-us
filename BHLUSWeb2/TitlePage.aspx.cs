@@ -287,7 +287,6 @@ namespace MOBOT.BHL.Web2
                         BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage
                         {
                             ExternalBaseUrl = pageview.ExternalBaseURL,
-                            AltExternalUrl = pageview.AltExternalURL,
                             BarCode = pageview.BarCode,
                             FlickrUrl = pageview.FlickrUrl,
                             SequenceOrder = pageview.SequenceOrder
@@ -305,10 +304,7 @@ namespace MOBOT.BHL.Web2
                                                         p.PageID,
                                                         p.WebDisplay,
                                                         p.SequenceOrder,
-                                                        p.AltExternalURL,
                                                         p.BarCode,
-                                                        p.RareBooks,
-                                                        p.Illustration,
                                                         p.SegmentID,
                                                         vp.ExternalBaseUrl,
                                                         vp.Height,
