@@ -108,6 +108,11 @@ namespace MOBOT.BHL.AdminWeb
                         newSegmentAuthor.AuthorID = Convert.ToInt32(selectedAuthorId);
                         newSegmentAuthor.SegmentID = segment.SegmentID;
                         newSegmentAuthor.FullName = author.FullName;
+                        newSegmentAuthor.FullerForm = author.FullerForm;
+                        newSegmentAuthor.Numeration = author.Numeration;
+                        newSegmentAuthor.Unit = author.Unit;
+                        newSegmentAuthor.Title = author.Title;
+                        newSegmentAuthor.Location = author.Location;
                         newSegmentAuthor.SequenceOrder = (short)(authorsList.Rows.Count + 1);
                         newSegmentAuthor.Author = author;
                         newSegmentAuthor.IsNew = true;

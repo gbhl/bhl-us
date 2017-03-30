@@ -73,6 +73,11 @@ namespace MOBOT.BHL.AdminWeb
                         newTitleAuthor.AuthorID = Convert.ToInt32(selectedAuthorId);
                         newTitleAuthor.TitleID = title.TitleID;
                         newTitleAuthor.FullName = author.FullName;
+                        newTitleAuthor.FullerForm = author.FullerForm;
+                        newTitleAuthor.Numeration = author.Numeration;
+                        newTitleAuthor.Unit = author.Unit;
+                        newTitleAuthor.Title = author.Title;
+                        newTitleAuthor.Location = author.Location;
                         newTitleAuthor.AuthorRoleID = 1;
                         newTitleAuthor.RoleDescription = authorRole.RoleDescription;
                         newTitleAuthor.Author = author;

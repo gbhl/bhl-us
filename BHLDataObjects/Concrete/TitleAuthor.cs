@@ -15,7 +15,6 @@ namespace MOBOT.BHL.DataObjects
         }
 
         private string _roleDescription = string.Empty;
-
         public string RoleDescription
         {
             get { return _roleDescription; }
@@ -23,11 +22,45 @@ namespace MOBOT.BHL.DataObjects
         }
 
         private string _fullName = string.Empty;
-
         public string FullName
         {
             get { return _fullName; }
             set { _fullName = value; }
+        }
+
+        private string _fullerForm = string.Empty;
+        public string FullerForm
+        {
+            get { return _fullerForm; }
+            set { _fullerForm = value; }
+        }
+
+        private string _numeration = string.Empty;
+        public string Numeration
+        {
+            get { return _numeration; }
+            set { _numeration = value; }
+        }
+
+        private string _title = string.Empty;
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; }
+        }
+
+        private string _unit = string.Empty;
+        public string Unit
+        {
+            get { return _unit; }
+            set { _unit = value; }
+        }
+
+        private string _location = string.Empty;
+        public string Location
+        {
+            get { return _location; }
+            set { _location = value; }
         }
 
         public override void SetValues(CustomDataAccess.CustomDataRow row)
@@ -41,6 +74,21 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "FullName":
                         FullName = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "FullerForm":
+                        FullerForm = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Numeration":
+                        Numeration = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Title":
+                        Title = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Unit":
+                        Unit = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Location":
+                        Location = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

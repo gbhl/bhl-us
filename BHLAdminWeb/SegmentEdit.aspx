@@ -504,7 +504,7 @@
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 					<asp:TemplateField HeaderText="Name" ItemStyle-Width="350px" HeaderStyle-HorizontalAlign="Left">
 						<ItemTemplate>
-							<%# Eval( "FullName" ) %>
+							<%# Eval( "FullName" ) %> <%# Eval("FullerForm") %> <%# Eval("Numeration") %> <%# Eval("Unit") %> <%# Eval("Title") %> <%# Eval("Location") %>
 						</ItemTemplate>
 					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Sequence" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Left">

@@ -47,9 +47,7 @@
 					<Columns>
 						<asp:HyperLinkField HeaderText="Author ID" DataNavigateUrlFields="AuthorID" DataNavigateUrlFormatString="/AuthorEdit.aspx?id={0}" DataTextField="AuthorID"
 							NavigateUrl="/AuthorEdit.aspx" ControlStyle-Width="100%" HeaderStyle-HorizontalAlign="Left" />
-						<asp:BoundField DataField="FullName" HeaderText="Name" HeaderStyle-HorizontalAlign="Left" />
-						<asp:BoundField DataField="StartDate" HeaderText="Start Date" HeaderStyle-HorizontalAlign="Left" />
-						<asp:BoundField DataField="EndDate" HeaderText="End Date" HeaderStyle-HorizontalAlign="Left" />
+						<asp:BoundField DataField="NameExtended" HeaderText="Name" HeaderStyle-HorizontalAlign="Left" />
 					    <asp:TemplateField HeaderText="Is Active" HeaderStyle-HorizontalAlign="Left">
 						    <ItemTemplate>
 						        <asp:CheckBox ID="isActiveCheckBox" Enabled="false" Checked='<%#(Convert.ToInt32(Eval("IsActive")) == 1)%>' runat="server" />

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleAuthorSelectByTitle]
+﻿CREATE PROCEDURE [dbo].[TitleAuthorSelectByTitle]
 
 @TitleID INT
 
@@ -11,6 +10,11 @@ SELECT	TA.TitleAuthorID,
 		TA.TitleID,
 		TA.AuthorID,
 		N.FullName,
+		N.FullerForm,
+		A.Numeration,
+		A.Title,
+		A.Unit,
+		A.Location,
 		TA.AuthorRoleID,
 		R.RoleDescription,
 		TA.Relationship,
@@ -22,5 +26,4 @@ FROM	dbo.TitleAuthor TA
 WHERE	TA.TitleID = @TitleID
 AND		A.IsActive = 1
 AND		N.IsPreferredName = 1
-ORDER BY R.MARCDataFieldTag, N.FullName
-
+ORDER BY R.MARCDataFieldTag, N.FullName, FullerForm, Numeration, Unit, Title, Location
