@@ -238,12 +238,26 @@ END CATCH
 -- Add the production author IDs to the temp table
 UPDATE	#tmpAuthor
 SET		AuthorID = a.AuthorID
-FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName
+FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDate, FullName,
+										a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
 								FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
 			ON t.AuthorTypeID = a.AuthorTypeID
 			AND ISNULL(t.StartDate, '') = ISNULL(a.StartDate, '')
 			AND ISNULL(t.EndDate, '') = ISNULL(a.Enddate, '')
 			AND t.FullName = a.FullName
+			AND	(  -- If b is blank, match records with blank Numeration/Unit values
+				(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
+				OR  -- If b is not blank, find records with matching Numeration/Unit values
+				(ISNULL(t.MARCCreator_b, '') <> '' AND
+					(ISNULL(t.MARCCreator_b, '') = ISNULL(a.Numeration, '') OR ISNULL(t.MARCCreator_b, '') = ISNULL(a.Unit, ''))) 
+				)
+			AND	(  -- If c is blank, match records with blank Numeration/Unit values
+				(ISNULL(t.MARCCreator_c, '') = '' AND ISNULL(a.Title, '') = '' AND ISNULL(a.Location, '') = '')
+				OR  -- If c is not blank, find records with matching Numeration/Unit values
+				(ISNULL(t.MARCCreator_c, '') <> '' AND
+					(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') OR ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, ''))) 
+				)
+			AND ISNULL(t.MARCCreator_q, '') = ISNULL(a.FullerForm, '')
 
 -- If a selected production Author ID has been redirected to a different 
 -- author ID, then use that author ID instead.  Follow the "redirect" chain
