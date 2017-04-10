@@ -170,6 +170,17 @@
                         <div class="success">
                             <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
                             <p>For your reference, the confirmation number for this request is <span id="pdfId"></span>.</p>
+                            <div style="float:left;margin:0;width:49%">
+                                <h3>Join Our Mailing List</h3>
+                                <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
+                                <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                            </div>
+
+                            <div style="float:left;margin:0;width:49%">
+                                <h3>Help Support <span>BHL</span></h3>
+                                <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
+                                <a class="featurebutton-home" title="Donate" target="_blank" href="http://library.si.edu/donate-bhl">Donate</a>
+                            </div>
                         </div>
                         <div class="failure">
                             <p>There was an issue with the request. Please try again and if the problem persists, please send us <a href="/contact">feedback</a>.</p>

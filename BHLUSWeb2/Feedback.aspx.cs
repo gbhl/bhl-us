@@ -1,24 +1,14 @@
 ﻿using System;
-using System.Data;
 using System.Configuration;
-using System.Collections;
 using System.Text;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
 using Countersoft.Gemini.Commons.Entity;
-using Countersoft.Gemini.Commons;
 using Countersoft.Gemini.Api;
-using RestSharp;
 using Countersoft.Gemini.Commons.Dto;
-using BHL.SiteServices;
 
 namespace MOBOT.BHL.Web2
 {
@@ -26,9 +16,6 @@ namespace MOBOT.BHL.Web2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            this.registerValidationScripts();
-
             if (!IsPostBack)
             {
                 fillCombos();
@@ -51,57 +38,9 @@ namespace MOBOT.BHL.Web2
                 ViewState["FeedbackRefererURL"] = (Request.UrlReferrer != null) ? Request.UrlReferrer.ToString() : "/";
 
                 string page = Request.QueryString["page"];
-                if (page != null)
-                {
-                    ViewState["PageID"] = page;
-                }
+                if (page != null) ViewState["PageID"] = page;
 
                 Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Feedback");
-            //To do    ((Main)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Feedback"));
-            }
-        }
-
-        private void registerValidationScripts()
-        {
-            // Define the name and type of the client scripts on the page.
-            String csname1 = "FeedbackValidationScript";
-            String csname2 = "ScanRequestValidationScript";
-            Type cstype = this.GetType();
-
-            ClientScriptManager cs = Page.ClientScript;
-
-            if (!cs.IsClientScriptBlockRegistered(cstype, csname1))
-            {
-                StringBuilder cstext1 = new StringBuilder();
-
-                cstext1.Append("function ValidateFeedbackForm() {\n");
-                cstext1.Append("var errMsg = '';\n");
-                cstext1.Append("if (document.getElementById('" + this.ddlList.ClientID + "').selectedIndex == 0) errMsg = errMsg + 'Please choose a subject.<br>';\n");
-                cstext1.Append("if (document.getElementById('" + this.commentTextBox.ClientID + "').value == '') errMsg = errMsg + 'Please supply a comment.<br>';\n");
-                cstext1.Append("if (errMsg != '') document.getElementById('spanErrorText').innerHTML = errMsg;");
-                cstext1.Append("return (errMsg == '');\n");
-                cstext1.Append("}\n");
-
-                cs.RegisterClientScriptBlock(cstype, csname1, cstext1.ToString(), true);
-            }
-
-            if (!cs.IsClientScriptBlockRegistered(cstype, csname2))
-            {
-                StringBuilder cstext2 = new StringBuilder();
-
-                cstext2.Append("function ValidateRequestForm() {\n");
-                cstext2.Append("var errMsg = '';\n");
-                cstext2.Append("if (document.getElementById('" + this.srNameTextBox.ClientID + "').value == '') errMsg = errMsg + 'Please supply your name.<br>';\n");
-                cstext2.Append("if (document.getElementById('" + this.srEmailTextBox.ClientID + "').value == '') errMsg = errMsg + 'Please supply your email address.<br>';\n");
-                cstext2.Append("if (document.getElementById('" + this.srTitleTextBox.ClientID + "').value == '') errMsg = errMsg + 'Please supply the book title.<br>';\n");
-                cstext2.Append("if (document.getElementById('" + this.srYearTextBox.ClientID + "').value == '') errMsg = errMsg + 'Please supply the year of publication.<br>';\n");
-                cstext2.Append("var type = document.getElementById('" + this.srTypeList.ClientID + "');\n");
-                cstext2.Append("if (document.getElementById('" + this.srVolumeTextBox.ClientID + "').value == '' && type.options[type.selectedIndex].text == 'Journal') errMsg = errMsg + 'Please supply the volume.<br>';\n");
-                cstext2.Append("if (errMsg != '') document.getElementById('srSpanErrorText').innerHTML = errMsg;");
-                cstext2.Append("return (errMsg == '');\n");
-                cstext2.Append("}\n");
-
-                cs.RegisterClientScriptBlock(cstype, csname2, cstext2.ToString(), true);
             }
         }
 
@@ -147,32 +86,54 @@ namespace MOBOT.BHL.Web2
 
         protected void submitButton_Click(object sender, EventArgs e)
         {
+            string issueLongDesc = string.Empty;
+
             // Get Gemini data from web.config file
             string geminiWebServiceURL = ConfigurationManager.AppSettings.GetValues("GeminiURL")[0];
             string geminiUserName = ConfigurationManager.AppSettings.GetValues("GeminiUser")[0];
             string geminiUserPassword = ConfigurationManager.AppSettings.GetValues("GeminiPassword")[0];
             string issueSummary = ConfigurationManager.AppSettings.GetValues("GeminiDesc")[0];
-            if (emailTextBox.Text.Trim().Length > 0)
-            {
-                issueSummary = emailTextBox.Text.Trim();
-            }
             int projectId = int.Parse(ConfigurationManager.AppSettings.GetValues("GeminiProjectId")[0]);
-            string issueLongDesc = getComment();
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
             Issue data = new Issue();
 
-            data.AddComponent(56);  // Web-Other
+            if (subjectScanReq.Checked)
+            {
+                // Scanning request
+                if (srTitleTextBox.Text.Trim().Length > 0)
+                {
+                    issueSummary = srTitleTextBox.Text.Trim();
+                }
+                else
+                {
+                    issueSummary = "Scan Request";
+                }
+                issueLongDesc = getScanRequest();
+
+                data.AddComponent(78);  // Collections
+                data.TypeId = Convert.ToInt32(subjectScanReq.Value);    // 60=Scan Request
+            }
+            else
+            {
+                // Feedback
+                if (!string.IsNullOrWhiteSpace(emailTextBox.Text)) issueSummary = emailTextBox.Text.Trim();
+                issueLongDesc = getComment();
+
+                data.AddComponent(56);  // Web-Other
+                if (subjectTech.Checked) data.TypeId = Convert.ToInt32(subjectTech.Value);    // 22=Tech Issue
+                if (subjectSuggest.Checked) data.TypeId = Convert.ToInt32(subjectSuggest.Value);    // 36=Suggestion
+                if (subjectBibIssue.Checked) data.TypeId = Convert.ToInt32(subjectBibIssue.Value);    // 55=Bib Issue
+            }
+
             data.Description = issueLongDesc;
-            data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
-            data.ResolutionId = 15;	    // 15=Unresolved
-            data.StatusId = 28;			// 28=Unassigned
-            data.SeverityId = 19;        // 19=Null
             data.Title = (issueSummary.Length > 245) ? (issueSummary.Substring(0, 245) + "...") : issueSummary;
-            data.TypeId = int.Parse(ddlList.SelectedValue); // 22=Technical Issues, 36=Suggestion, 55=Bibliographic Issues
+            data.PriorityId = 17;       // 17=Low, 18=Medium, 19=High
+            data.ResolutionId = 15;      // 15=Unresolved
+            data.StatusId = 28;         // 28=Unassigned
+            data.SeverityId = 19;        // 19=Null
             data.ReportedBy = user.Entity.Id;
-            //data.RiskLevel = 1;
             data.ProjectId = projectId;
 
             try
@@ -183,95 +144,30 @@ namespace MOBOT.BHL.Web2
                     !emailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
                     string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()))
                 {
-                    serviceManager.Item.Create(data);
-                    if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, "BHL Feedback Received", Server.HtmlDecode(issueLongDesc));
-                }
-
-                string returnUrl = createReturnUrl();
-                if (returnUrl.ToLower().Contains("/contact"))
-                {
-                    rcvdMsg.Style.Add("display", "block");
-                }
-                else
-                {
-                    Response.Redirect(returnUrl);
-                }
-            }
-            catch
-            {
-                errorPanel.Visible = true;
-                errorLabel.Text = "There was a problem sending your comment. Your feedback is important to us, we apologize.";
-            }
-        }
-
-        protected void srSubmitButton_Click(object sender, EventArgs e)
-        {
-            // Get Gemini data from web.config file
-            string geminiWebServiceURL = ConfigurationManager.AppSettings.GetValues("GeminiURL")[0];
-            string geminiUserName = ConfigurationManager.AppSettings.GetValues("GeminiUser")[0];
-            string geminiUserPassword = ConfigurationManager.AppSettings.GetValues("GeminiPassword")[0];
-            string issueSummary = ConfigurationManager.AppSettings.GetValues("GeminiDesc")[0];
-            if (srTitleTextBox.Text.Trim().Length > 0)
-            {
-                issueSummary = srTitleTextBox.Text.Trim();
-            }
-            else if (srEmailTextBox.Text.Trim().Length > 0)
-            {
-                issueSummary = "Scan Request from " + srEmailTextBox.Text.Trim();
-            }
-            int projectId = int.Parse(ConfigurationManager.AppSettings.GetValues("GeminiProjectId")[0]);
-            string issueLongDesc = getScanRequest();
-
-            ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
-            UserDto user = serviceManager.Admin.WhoAmI();
-            Issue data = new Issue();
-
-            data.AddComponent(78);  // Collections
-            data.Description = issueLongDesc;
-            data.PriorityId = 17;		// 17=Low, 18=Medium, 19=High
-            data.ResolutionId = 15;      // 15=Unresolved
-            data.StatusId = 28;			// 28=Unassigned
-            data.SeverityId = 19;        // 19=Null
-            data.Title = (issueSummary.Length > 245) ? (issueSummary.Substring(0, 245) + "...") : issueSummary;
-            data.TypeId = 60;             // 60=Scan Request
-            data.ReportedBy = user.Entity.Id;
-            //data.RiskLevel = 1;
-            data.ProjectId = projectId;
-
-            try
-            {
-                // Ignore spam from kelev.biz and email.tst.
-                // Only a bot can fill Foo with a value, so ignore that as well.
-                if (!srEmailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
-                    !srEmailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
-                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()))
-                {
                     IssueDto newIssue = serviceManager.Item.Create(data);
-                    if (srEmailTextBox.Text.Trim().Length > 0) this.SendEmail(srEmailTextBox.Text, "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received", Server.HtmlDecode(issueLongDesc));
 
-                    try
-                    {
-                        new BHLProvider().ScanRequestInsertAuto(newIssue.Id, srTitleTextBox.Text.Trim(),
-                            srYearTextBox.Text.Trim(), srTypeList.SelectedValue, srVolumeTextBox.Text.Trim(),
-                            srEditionTextBox.Text.Trim(), srOCLCTextBox.Text.Trim(), srISBNTextBox.Text.Trim(),
-                            srISSNTextBox.Text.Trim(), srAuthorTextBox.Text.Trim(), srPublisherTextBox.Text.Trim(),
-                            srLanguageList.SelectedItem.Text, srNoteTextBox.Text.Trim());
-                    }
-                    catch
-                    {
-                        // Do nothing, we're just catching to prevent database errors from stopping us.
-                        // Database insert is a 'nice-to-have', not a necessity.
-                    }
-                }
+                    string subject = "BHL Feedback (# " + newIssue.Id.ToString() + ") Received";
+                    if (subjectScanReq.Checked) subject = "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received";
+                    //this.SendEmail(emailTextBox.Text, subject, Server.HtmlDecode(issueLongDesc));
+                    this.ShowConfirmationMessage(subject, Server.HtmlDecode(issueLongDesc));
 
-                string returnUrl = createReturnUrl();
-                if (returnUrl.ToLower().Contains("/contact"))
-                {
-                    rcvdMsg.Style.Add("display", "block");
-                }
-                else
-                {
-                    Response.Redirect(returnUrl);
+                    if (subjectScanReq.Checked)
+                    {
+                        try
+                        {
+                            var type = typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value;
+                            new BHLProvider().ScanRequestInsertAuto(newIssue.Id, srTitleTextBox.Text.Trim(),
+                                srYearTextBox.Text.Trim(), type, srVolumeTextBox.Text.Trim(),
+                                srEditionTextBox.Text.Trim(), srOCLCTextBox.Text.Trim(), srISBNTextBox.Text.Trim(),
+                                srISSNTextBox.Text.Trim(), srAuthorTextBox.Text.Trim(), srPublisherTextBox.Text.Trim(),
+                                srLanguageList.SelectedItem.Text, srNoteTextBox.Text.Trim());
+                        }
+                        catch
+                        {
+                            // Do nothing, we're just catching to prevent database errors from stopping us.
+                            // Database insert is a 'nice-to-have', not a necessity.
+                        }
+                    }
                 }
             }
             catch
@@ -281,10 +177,12 @@ namespace MOBOT.BHL.Web2
             }
         }
 
+        /*
         protected void closeButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(createReturnUrl());
         }
+        */
 
         private string createReturnUrl()
         {
@@ -356,12 +254,20 @@ namespace MOBOT.BHL.Web2
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<b>Name: </b>");
-            sb.Append(Server.HtmlEncode(srNameTextBox.Text.Trim()));
-            sb.Append("<br><b>Email: </b>");
-            sb.Append(Server.HtmlEncode(srEmailTextBox.Text.Trim()));
-            sb.Append("<br><br><b>Type: </b>");
-            sb.Append(srTypeList.SelectedValue);
+            if (nameTextBox.Text.Trim() != string.Empty)
+            {
+                sb.Append("<b>Name: </b>");
+                sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
+            }
+            if (emailTextBox.Text.Trim() != string.Empty)
+            {
+                if (sb.Length > 0) sb.Append("<br>");
+                sb.Append("<b>Email: </b>");
+                sb.Append(Server.HtmlEncode(emailTextBox.Text.Trim()));
+            }
+            if (sb.Length > 0) sb.Append("<br><br>");
+            sb.Append("<b>Type: </b>");
+            sb.Append(typeBook.Checked ? typeBook.Value : typeJournal.Checked ? typeJournal.Value : typeUnsure.Value);
             sb.Append("<br><b>Title: </b>");
             sb.Append(Server.HtmlEncode(srTitleTextBox.Text.Trim()));
             sb.Append("<br><b>Year: </b>");
@@ -453,12 +359,20 @@ namespace MOBOT.BHL.Web2
                     service.SendEmail("noreply@biodiversitylibrary.org", recipients, null, null,
                         subject, message);
                 }
-
             }
             catch
             {
                 // Do nothing if email fails
             }
+        }
+
+        private void ShowConfirmationMessage(string subject, string feedbackReceived)
+        {
+            divSubmit.Visible = false;
+            divConfirm.Visible = true;
+            litConfirmationSubject.Text = subject;
+            litConfirmationText.Text = feedbackReceived;
+            lnkReturn.HRef = createReturnUrl();
         }
 
     }

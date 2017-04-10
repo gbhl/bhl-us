@@ -1280,6 +1280,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#507ea4), color-stop(100%,#2c5b83));
 	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#507ea4', endColorstr='#2c5b83',GradientType=0 );
 	border:1px solid #182937;
+    color: #ffffff;
+}
+.featurebutton-home:active, .featurebutton-home:visited{
+    color:#ffffff;
 }
 .featurebox-home h3
 {
@@ -1564,7 +1568,7 @@ aside
     border-radius: 3px; 
     margin-top: 30px;
     
-    width:645px;
+    width:745px;
 }
 #content section.search #tabs, #content section.search .ui-tabs 
 {

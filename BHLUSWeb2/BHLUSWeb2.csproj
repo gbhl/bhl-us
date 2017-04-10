@@ -497,8 +497,6 @@
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\Beta - BHL.pubxml" />
-    <None Include="Properties\PublishProfiles\Production - BHL.pubxml" />
     <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />

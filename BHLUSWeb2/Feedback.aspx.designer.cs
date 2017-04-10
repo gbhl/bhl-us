@@ -13,6 +13,15 @@ namespace MOBOT.BHL.Web2 {
     public partial class Feedback {
         
         /// <summary>
+        /// divSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubmit;
+        
+        /// <summary>
         /// rcvdMsg control.
         /// </summary>
         /// <remarks>
@@ -49,13 +58,40 @@ namespace MOBOT.BHL.Web2 {
         protected global::System.Web.UI.WebControls.TextBox emailTextBox;
         
         /// <summary>
-        /// ddlList control.
+        /// subjectTech control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlList;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton subjectTech;
+        
+        /// <summary>
+        /// subjectBibIssue control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton subjectBibIssue;
+        
+        /// <summary>
+        /// subjectSuggest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton subjectSuggest;
+        
+        /// <summary>
+        /// subjectScanReq control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton subjectScanReq;
         
         /// <summary>
         /// commentTextBox control.
@@ -65,33 +101,6 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox commentTextBox;
-        
-        /// <summary>
-        /// submitButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button submitButton;
-        
-        /// <summary>
-        /// srNameTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox srNameTextBox;
-        
-        /// <summary>
-        /// srEmailTextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox srEmailTextBox;
         
         /// <summary>
         /// srOCLCTextBox control.
@@ -121,13 +130,31 @@ namespace MOBOT.BHL.Web2 {
         protected global::System.Web.UI.WebControls.TextBox srYearTextBox;
         
         /// <summary>
-        /// srTypeList control.
+        /// typeBook control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList srTypeList;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton typeBook;
+        
+        /// <summary>
+        /// typeJournal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton typeJournal;
+        
+        /// <summary>
+        /// typeUnsure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton typeUnsure;
         
         /// <summary>
         /// srVolumeTextBox control.
@@ -202,13 +229,49 @@ namespace MOBOT.BHL.Web2 {
         protected global::System.Web.UI.WebControls.TextBox srNoteTextBox;
         
         /// <summary>
-        /// srSubmitButton control.
+        /// submitButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button srSubmitButton;
+        protected global::System.Web.UI.WebControls.Button submitButton;
+        
+        /// <summary>
+        /// divConfirm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divConfirm;
+        
+        /// <summary>
+        /// lnkReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkReturn;
+        
+        /// <summary>
+        /// litConfirmationSubject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litConfirmationSubject;
+        
+        /// <summary>
+        /// litConfirmationText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litConfirmationText;
         
         /// <summary>
         /// validationSummary control.
