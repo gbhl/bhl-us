@@ -1284,4 +1284,7 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ItemSelectRISCitationsForTitleID.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\ItemSelectOAIDetail.sql" />
+  </ItemGroup>
 </Project>

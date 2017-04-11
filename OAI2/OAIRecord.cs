@@ -512,7 +512,7 @@ namespace MOBOT.BHL.OAI2
         private void LoadItem(int identifier)
         {
             BHLProvider provider = new BHLProvider();
-            Item item = provider.ItemSelectAuto(identifier);
+            Item item = provider.ItemSelectOAIDetail(identifier);
 
             if (item != null)
             {

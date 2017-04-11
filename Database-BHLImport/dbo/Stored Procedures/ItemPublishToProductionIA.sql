@@ -1681,7 +1681,8 @@ BEGIN TRY
 		-- =======================================================================
 
 		-- Add the thumbnail pageid to the just-inserted item		
-		EXEC dbo.ItemUpdateThumbnailPageID @BarCode
+		-- NO LONGER NEEDED - APRIL 10, 2017
+		-- EXEC dbo.ItemUpdateThumbnailPageID @BarCode
 
 		-- =======================================================================
 		DECLARE @StatusComplete INT

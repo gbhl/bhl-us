@@ -77,13 +77,39 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		/// <summary>
-		/// Select all Items for a particular Title.
-		/// </summary>
-		/// <param name="sqlConnection">Sql connection or null.</param>
-		/// <param name="sqlTransaction">Sql transaction or null.</param>
-		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Item> ItemSelectByTitleID(
+        public Item ItemSelectOAIDetail(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectOAIDetail", connection, transaction,
+                            CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                    {
+                        return list[0];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Select all Items for a particular Title.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <returns>Object of type Title.</returns>
+        public CustomGenericList<Item> ItemSelectByTitleID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int titleID )

@@ -14,7 +14,7 @@ IF (@RedirID IS NOT NULL)
 ELSE
 	SELECT	i.ItemID,
 			i.PrimaryTitleID,
-			i.ThumbnailPageID,
+			c.FirstPageID AS ThumbnailPageID,
 			s.SourceName,
 			i.Barcode,
 			i.Volume,

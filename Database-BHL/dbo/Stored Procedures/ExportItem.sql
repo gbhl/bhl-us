@@ -9,7 +9,7 @@ SET NOCOUNT ON
 SELECT DISTINCT 
 		i.ItemID, 
 		i.PrimaryTitleID AS TitleID, 
-		i.ThumbnailPageID, 
+		c.FirstPageID AS ThumbnailPageID, 
 		i.BarCode, 
 		i.MARCItemID, 
 		i.CallNumber, 

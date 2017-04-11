@@ -36,6 +36,11 @@ namespace MOBOT.BHL.Server
 			return dal.ItemSelectAuto( null, null, itemID );
 		}
 
+        public Item ItemSelectOAIDetail(int itemID)
+        {
+            return new ItemDAL().ItemSelectOAIDetail(null, null, itemID);
+        }
+
 		public Item ItemSelectPagination( int itemID )
 		{
 			return new ItemDAL().ItemSelectPagination( null, null, itemID );
