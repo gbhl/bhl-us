@@ -927,7 +927,7 @@ BEGIN TRY
 	-- order, the following criteria are used to find a match:
 	--
 	--	1) OCLC
-	--	2) WonderFetch TitleID
+	--	2) WonderFetch TitleID + Institution Code
 	--	3) MARC 001 value + Institution Code
 	--
 	-- After titles have been resolved, any records remaining in the #tmpTitle 
@@ -949,7 +949,7 @@ BEGIN TRY
 				ON btti.TitleID = bt.TitleID
 	WHERE	t.ProductionTitleID IS NULL
 
-	-- Match on WonderFetch Title ID
+	-- Match on WonderFetch Title ID + Institution Code
 	UPDATE	#tmpTitle
 	SET		ProductionTitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitle_TitleIdentifier tti
@@ -962,7 +962,15 @@ BEGIN TRY
 				AND tti.IdentifierName = bti.IdentifierName
 			INNER JOIN dbo.BHLTitle bt
 				ON btti.TitleID = bt.TitleID
+			INNER JOIN dbo.BHLTitleItem btitem
+				ON bt.TitleID = btitem.TitleID
+			INNER JOIN dbo.BHLItemInstitution bii
+				ON btitem.ItemID = bii.ItemID
+				AND t.InstitutionCode = bii.InstitutionCode
+			INNER JOIN dbo.BHLInstitutionRole br
+				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.ProductionTitleID IS NULL
+	AND		br.InstitutionRoleName = 'Contributor'
 
 	-- Match on MARC 001 Value + Institution Code
 	UPDATE	#tmpTitle
