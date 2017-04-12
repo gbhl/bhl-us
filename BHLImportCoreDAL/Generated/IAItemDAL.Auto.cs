@@ -1,5 +1,5 @@
 
-// Generated 8/3/2016 12:50:46 PM
+// Generated 4/12/2017 9:33:46 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAItemDAL is based upon dbo.IAItem.
@@ -176,6 +176,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="noMARCOk"></param>
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
+		/// <param name="itemDescription"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -219,9 +220,10 @@ namespace MOBOT.BHLImport.DAL
 			string localFileFolder,
 			byte noMARCOk,
 			string scanningInstitution,
-			string rightsHolder)
+			string rightsHolder,
+			string itemDescription)
 		{
-			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder );
+			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription );
 		}
 		
 		/// <summary>
@@ -270,6 +272,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="noMARCOk"></param>
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
+		/// <param name="itemDescription"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -314,7 +317,8 @@ namespace MOBOT.BHLImport.DAL
 			string localFileFolder,
 			byte noMARCOk,
 			string scanningInstitution,
-			string rightsHolder)
+			string rightsHolder,
+			string itemDescription)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -360,7 +364,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
 					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
-					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder), 
+					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder),
+					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -449,7 +454,8 @@ namespace MOBOT.BHLImport.DAL
 				value.LocalFileFolder,
 				value.NoMARCOk,
 				value.ScanningInstitution,
-				value.RightsHolder);
+				value.RightsHolder,
+				value.ItemDescription);
 		}
 		
 		#endregion ===== INSERT =====
@@ -560,6 +566,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="noMARCOk"></param>
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
+		/// <param name="itemDescription"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -604,9 +611,10 @@ namespace MOBOT.BHLImport.DAL
 			string localFileFolder,
 			byte noMARCOk,
 			string scanningInstitution,
-			string rightsHolder)
+			string rightsHolder,
+			string itemDescription)
 		{
-			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder);
+			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription);
 		}
 		
 		/// <summary>
@@ -656,6 +664,7 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="noMARCOk"></param>
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
+		/// <param name="itemDescription"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -701,7 +710,8 @@ namespace MOBOT.BHLImport.DAL
 			string localFileFolder,
 			byte noMARCOk,
 			string scanningInstitution,
-			string rightsHolder)
+			string rightsHolder,
+			string itemDescription)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -747,7 +757,8 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("LocalFileFolder", SqlDbType.NVarChar, 200, false, localFileFolder),
 					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
-					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder), 
+					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder),
+					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -837,7 +848,8 @@ namespace MOBOT.BHLImport.DAL
 				value.LocalFileFolder,
 				value.NoMARCOk,
 				value.ScanningInstitution,
-				value.RightsHolder);
+				value.RightsHolder,
+				value.ItemDescription);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -921,7 +933,8 @@ namespace MOBOT.BHLImport.DAL
 						value.LocalFileFolder,
 						value.NoMARCOk,
 						value.ScanningInstitution,
-						value.RightsHolder);
+						value.RightsHolder,
+						value.ItemDescription);
 				
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Insert, 
@@ -987,7 +1000,8 @@ namespace MOBOT.BHLImport.DAL
 						value.LocalFileFolder,
 						value.NoMARCOk,
 						value.ScanningInstitution,
-						value.RightsHolder);
+						value.RightsHolder,
+						value.ItemDescription);
 					
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Update, 

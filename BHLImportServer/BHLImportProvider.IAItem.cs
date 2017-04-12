@@ -173,7 +173,7 @@ namespace MOBOT.BHLImport.Server
             string licenseUrl, string rights, string dueDiligence, string possibleCopyrightStatus,
             string copyrightRegion, string copyrightComment, string copyrightEvidence,
             string copyrightEvidenceOperator, string copyrightEvidenceDate, string scanningInstitution,
-            string rightsHolder)
+            string rightsHolder, string itemDescription)
         {
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
@@ -208,6 +208,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.IAAddedDate = addedDate;
                 savedItem.ScanningInstitution = scanningInstitution;
                 savedItem.RightsHolder = rightsHolder;
+                savedItem.ItemDescription = itemDescription;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else

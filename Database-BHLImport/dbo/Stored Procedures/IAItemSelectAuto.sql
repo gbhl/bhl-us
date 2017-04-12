@@ -1,9 +1,4 @@
-﻿
--- Select Procedure for dbo.IAItem
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 12:50:45 PM
-
-CREATE PROCEDURE [dbo].[IAItemSelectAuto]
+﻿CREATE PROCEDURE [dbo].[IAItemSelectAuto]
 
 @ItemID INT
 
@@ -54,7 +49,8 @@ SELECT
 	[LocalFileFolder],
 	[NoMARCOk],
 	[ScanningInstitution],
-	[RightsHolder]
+	[RightsHolder],
+	[ItemDescription]
 FROM	
 	[dbo].[IAItem]
 WHERE	

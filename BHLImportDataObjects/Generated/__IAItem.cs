@@ -1,5 +1,5 @@
 
-// Generated 8/3/2016 12:50:46 PM
+// Generated 4/12/2017 9:33:46 AM
 // Do not modify the contents of this code file.
 // This abstract class __IAItem is based upon dbo.IAItem.
 
@@ -88,6 +88,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="noMARCOk"></param>
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
+		/// <param name="itemDescription"></param>
 		public __IAItem(int itemID, 
 			int itemStatusID, 
 			string iAIdentifierPrefix, 
@@ -130,7 +131,8 @@ namespace MOBOT.BHLImport.DataObjects
 			string localFileFolder, 
 			byte noMARCOk, 
 			string scanningInstitution, 
-			string rightsHolder) : this()
+			string rightsHolder, 
+			string itemDescription) : this()
 		{
 			_ItemID = itemID;
 			ItemStatusID = itemStatusID;
@@ -175,6 +177,7 @@ namespace MOBOT.BHLImport.DataObjects
 			NoMARCOk = noMARCOk;
 			ScanningInstitution = scanningInstitution;
 			RightsHolder = rightsHolder;
+			ItemDescription = itemDescription;
 		}
 		
 		#endregion Constructors
@@ -414,6 +417,11 @@ namespace MOBOT.BHLImport.DataObjects
 					case "RightsHolder" :
 					{
 						_RightsHolder = (string)column.Value;
+						break;
+					}
+					case "ItemDescription" :
+					{
+						_ItemDescription = (string)column.Value;
 						break;
 					}
 								}
@@ -1619,6 +1627,34 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion RightsHolder
+		
+		#region ItemDescription
+		
+		private string _ItemDescription = string.Empty;
+		
+		/// <summary>
+		/// Column: ItemDescription;
+		/// DBMS data type: nvarchar(1073741823);
+		/// </summary>
+		[ColumnDefinition("ItemDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=44, CharacterMaxLength=1073741823)]
+		public string ItemDescription
+		{
+			get
+			{
+				return _ItemDescription;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_ItemDescription != value)
+				{
+					_ItemDescription = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ItemDescription
 			
 		#endregion Properties
 
@@ -1705,7 +1741,8 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.LocalFileFolder) == GetComparisonString(LocalFileFolder) &&
 					o.NoMARCOk == NoMARCOk &&
 					GetComparisonString(o.ScanningInstitution) == GetComparisonString(ScanningInstitution) &&
-					GetComparisonString(o.RightsHolder) == GetComparisonString(RightsHolder) 
+					GetComparisonString(o.RightsHolder) == GetComparisonString(RightsHolder) &&
+					GetComparisonString(o.ItemDescription) == GetComparisonString(ItemDescription) 
 				)
 				{
 					o = null;
@@ -1848,7 +1885,8 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string LocalFileFolder = "LocalFileFolder";	
 			public const string NoMARCOk = "NoMARCOk";	
 			public const string ScanningInstitution = "ScanningInstitution";	
-			public const string RightsHolder = "RightsHolder";
+			public const string RightsHolder = "RightsHolder";	
+			public const string ItemDescription = "ItemDescription";
 		}
 				
 		#endregion SortColumn

@@ -1,9 +1,4 @@
-﻿
--- Insert Procedure for dbo.IAItem
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 12:50:45 PM
-
-CREATE PROCEDURE dbo.IAItemInsertAuto
+﻿CREATE PROCEDURE dbo.IAItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ItemStatusID INT,
@@ -45,7 +40,8 @@ CREATE PROCEDURE dbo.IAItemInsertAuto
 @LocalFileFolder NVARCHAR(200),
 @NoMARCOk TINYINT,
 @ScanningInstitution NVARCHAR(500),
-@RightsHolder NVARCHAR(500)
+@RightsHolder NVARCHAR(500),
+@ItemDescription NVARCHAR(MAX)
 
 AS 
 
@@ -93,7 +89,8 @@ INSERT INTO [dbo].[IAItem]
 	[LocalFileFolder],
 	[NoMARCOk],
 	[ScanningInstitution],
-	[RightsHolder] )
+	[RightsHolder],
+	[ItemDescription] )
 VALUES
 ( 	@ItemStatusID,
 	@IAIdentifierPrefix,
@@ -136,7 +133,8 @@ VALUES
 	@LocalFileFolder,
 	@NoMARCOk,
 	@ScanningInstitution,
-	@RightsHolder )
+	@RightsHolder,
+	@ItemDescription )
 
 SET @ItemID = Scope_Identity()
 
@@ -190,7 +188,8 @@ ELSE BEGIN
 		[LocalFileFolder],
 		[NoMARCOk],
 		[ScanningInstitution],
-		[RightsHolder]	
+		[RightsHolder],
+		[ItemDescription]	
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

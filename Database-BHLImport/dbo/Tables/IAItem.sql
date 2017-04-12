@@ -42,6 +42,7 @@
     [NoMARCOk]                  TINYINT        CONSTRAINT [DF_IAItem_NoMARCOk] DEFAULT ((0)) NOT NULL,
 	[ScanningInstitution]		NVARCHAR(500)  CONSTRAINT [DF_IAItem_ScanningInstitution] DEFAULT '' NOT NULL,
 	[RightsHolder]				NVARCHAR(500)  CONSTRAINT [DF_IAItem_RightsHolder] DEFAULT '' NOT NULL,
+	[ItemDescription]			NVARCHAR(MAX)  CONSTRAINT [DF_IAItem_ItemDescription] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );

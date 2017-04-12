@@ -1,9 +1,4 @@
-﻿
--- Update Procedure for dbo.IAItem
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 12:50:45 PM
-
-CREATE PROCEDURE dbo.IAItemUpdateAuto
+﻿CREATE PROCEDURE dbo.IAItemUpdateAuto
 
 @ItemID INT,
 @ItemStatusID INT,
@@ -45,7 +40,8 @@ CREATE PROCEDURE dbo.IAItemUpdateAuto
 @LocalFileFolder NVARCHAR(200),
 @NoMARCOk TINYINT,
 @ScanningInstitution NVARCHAR(500),
-@RightsHolder NVARCHAR(500)
+@RightsHolder NVARCHAR(500),
+@ItemDescription NVARCHAR(MAX)
 
 AS 
 
@@ -93,7 +89,8 @@ SET
 	[LocalFileFolder] = @LocalFileFolder,
 	[NoMARCOk] = @NoMARCOk,
 	[ScanningInstitution] = @ScanningInstitution,
-	[RightsHolder] = @RightsHolder
+	[RightsHolder] = @RightsHolder,
+	[ItemDescription] = @ItemDescription
 WHERE
 	[ItemID] = @ItemID
 		
@@ -147,7 +144,8 @@ ELSE BEGIN
 		[LocalFileFolder],
 		[NoMARCOk],
 		[ScanningInstitution],
-		[RightsHolder]
+		[RightsHolder],
+		[ItemDescription]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

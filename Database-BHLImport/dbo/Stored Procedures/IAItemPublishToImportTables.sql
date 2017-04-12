@@ -254,7 +254,8 @@ BEGIN TRY
 		[CopyrightEvidenceOperator] [nvarchar](100) NULL,
 		[CopyrightEvidenceDate] [nvarchar](30) NULL,
 		[ScanningInstitutionCode] [nvarchar](10) NULL,
-		[RightsHolderCode] [nvarchar](10) NULL
+		[RightsHolderCode] [nvarchar](10) NULL,
+		[ItemDescription] [nvarchar](max) NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1390,7 +1391,8 @@ BEGIN TRY
 			CopyrightComment = i.CopyrightComment,
 			CopyrightEvidence = i.CopyrightEvidence,
 			CopyrightEvidenceOperator = i.CopyrightEvidenceOperator,
-			CopyrightEvidenceDate = i.CopyrightEvidenceDate
+			CopyrightEvidenceDate = i.CopyrightEvidenceDate,
+			ItemDescription = i.ItemDescription
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
@@ -1810,7 +1812,8 @@ BEGIN TRY
 			VaultID, ItemStatusID, ScanningUser, ScanningDate, [Year], IdentifierBib,
 			ZQuery, LicenseUrl, Rights, DueDiligence, CopyrightStatus, CopyrightRegion,
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
-			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode)
+			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode,
+			ItemDescription)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -1818,7 +1821,7 @@ BEGIN TRY
 				t.LicenseUrl, t.Rights, t.DueDiligence, t.CopyrightStatus, t.CopyrightRegion,
 				t.CopyrightComment, t.CopyrightEvidence, t.CopyrightEvidenceOperator,
 				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID), 
-				ScanningInstitutionCode, RightsHolderCode
+				ScanningInstitutionCode, RightsHolderCode, ItemDescription
 		FROM	#tmpItem t
 
 		-- =======================================================================
@@ -1910,24 +1913,6 @@ BEGIN TRY
 	-- =======================================================================
 	-- =======================================================================
 	-- =======================================================================
-
-	/*
-	-- DEBUGGING OUTPUT
-	SELECT DISTINCT MARCBibID, MARCLeader, CONVERT(nvarchar(4000), FullTitle) AS FullTitle,
-		ShortTitle, SUBSTRING(SortTitle, 1, 60) AS SortTitle, CallNumber, PublicationDetails, 
-		StartYear, EndYear,	Datafield_260_a, Datafield_260_b, Datafield_260_c, InstitutionCode, 
-		LanguageCode FROM #tmpTitle
-	SELECT * FROM #tmpTitleTag
-	SELECT * FROM #tmpTitleIdentifier
-	SELECT * FROM #tmpTitleAssociation
-	SELECT * FROM #tmpTitleVariant
-	SELECT * FROM #tmpTitleNote
-	SELECT * FROM #tmpCreator
-	SELECT * FROM #tmpItem ORDER BY MARCBIBId, ItemSequence
-	SELECT * FROM #tmpPage
-	SELECT * FRMO #tmpPage_PageType
-	SELECT * FROM #tmpIndicatedPage
-	*/
 
 	-- Clean up temp tables
 	DROP TABLE #tmpTitle

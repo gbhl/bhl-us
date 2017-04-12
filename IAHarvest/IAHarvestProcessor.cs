@@ -617,6 +617,7 @@ namespace IAHarvest
                     String copyrightEvidenceDate = String.Empty;
                     String scanningInstitution = String.Empty;
                     String rightsHolder = String.Empty;
+                    String itemDescription = String.Empty;
 
                     XmlNode element = xml.SelectSingleNode("metadata/sponsor");
                     if (element != null) sponsor = element.InnerText;
@@ -680,13 +681,15 @@ namespace IAHarvest
                     if (element != null) scanningInstitution = element.InnerText;
                     element = xml.SelectSingleNode("metadata/rights-holder");
                     if (element != null) rightsHolder = element.InnerText;
+                    element = xml.SelectSingleNode("metadata/copy-specific-information");
+                    if (element != null) itemDescription = element.InnerText;
 
                     provider.IAItemUpdateMetadata(itemID, sponsor, sponsorDate, scanningCenter, 
                         callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator,
                         scanDate, addedDate, externalStatus, titleID, year, identifierBib,
                         licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion,
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
-                        copyrightEvidenceDate, scanningInstitution, rightsHolder);
+                        copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription);
 
                     // Read the set information
                     provider.IAItemSetDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
@@ -713,7 +716,7 @@ namespace IAHarvest
                 provider.IADCMetadataDeleteForItemAndSource(itemID, DC_SOURCE_META);
                 provider.IAItemSetDeleteByItem(itemID);
                 provider.IAItemUpdateMetadata(itemID, "", "", "", "", 0, "", "", "", "", "", null, 
-                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+                    "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
             }
         }
 
