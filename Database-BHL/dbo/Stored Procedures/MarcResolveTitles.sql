@@ -180,7 +180,7 @@ BEGIN TRY
 				ON bti.TitleID = bt.TitleID
 	WHERE	t.TitleID IS NULL
 
-	-- Match on WonderFetch Title ID
+	-- Match on WonderFetch Title ID + Institution Code
 	UPDATE	#tmpTitle
 	SET		TitleID = bt.TitleID
 	FROM	#tmpTitle t INNER JOIN #tmpTitleIdentifier tti
@@ -193,7 +193,15 @@ BEGIN TRY
 				AND tti.IdentifierName = bi.IdentifierName
 			INNER JOIN dbo.Title bt
 				ON bti.TitleID = bt.TitleID
+			INNER JOIN dbo.TitleItem btitem
+				ON bt.TitleID = btitem.TitleID
+			INNER JOIN dbo.ItemInstitution bii
+				ON btitem.ItemID = bii.ItemID
+				AND t.InstitutionCode = bii.InstitutionCode
+			INNER JOIN dbo.InstitutionRole br
+				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.TitleID IS NULL
+	AND		br.InstitutionRoleName = 'Contributor'
 
 	-- Match on MARC 001 Value + Institution Code
 	UPDATE	#tmpTitle
