@@ -31,6 +31,14 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 
+                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForTitle(connection, transaction, titleId);
+                foreach (DOI doi in dois)
+                {
+                    // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
+                    title.DOIName = doi.DOIName;
+                    break;
+                }
+
                 title.TitleIdentifiers = new Title_IdentifierDAL().Title_IdentifierSelectByTitleID(connection, transaction, titleId, null);
 
 				title.TitleCollections = new TitleCollectionDAL().SelectByTitle( connection, transaction, titleId );
@@ -351,7 +359,51 @@ namespace MOBOT.BHL.DAL
 
                 updatedTitle = new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
 
-				if ( title.TitleAuthors.Count > 0 )
+                DOIDAL doiDAL = new DOIDAL();
+                CustomGenericList<DOI> doiList = doiDAL.DOISelectValidForTitle(connection, transaction, title.TitleID);
+
+                DOI doi = null;
+                if (doiList.Count == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(title.DOIName))
+                    {
+                        // Insert
+                        doi = new DOI();
+                        doi.IsNew = true;
+                        doi.EntityID = title.TitleID;
+                        doi.DOIEntityTypeID = 10;   // Title
+                        doi.DOIName = title.DOIName;
+                        doi.DOIStatusID = 200;
+                        doi.StatusDate = DateTime.Now;
+                        doi.StatusMessage = "User-edited";
+                        doi.IsValid = 1;
+                        doi.CreationDate = DateTime.Now;
+                        doi.LastModifiedDate = DateTime.Now;
+                    }
+                }
+                else // DOI exists
+                {
+                    doi = doiList[0];
+                    doi.IsNew = false;
+
+                    if (!string.IsNullOrWhiteSpace(title.DOIName))
+                    {
+                        // Update
+                        doi.DOIName = title.DOIName;
+                        doi.DOIStatusID = 200;
+                        doi.StatusDate = DateTime.Now;
+                        doi.StatusMessage = "User-edited";
+                        doi.LastModifiedDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        // Delete
+                        doi.IsDeleted = true;
+                    }
+                }
+                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi);
+
+                if ( title.TitleAuthors.Count > 0 )
 				{
 					TitleAuthorDAL titleAuthorDAL = new TitleAuthorDAL();
 					foreach ( TitleAuthor titleAuthor in title.TitleAuthors )

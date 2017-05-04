@@ -371,7 +371,7 @@
             </tr>
             <tr>
                 <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
-				<td style="white-space: nowrap" colspan="2" valign="middle" width="100%"><asp:Label ID="lblDOIName" runat="server" /></td>
+				<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
             </tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Status:</td>

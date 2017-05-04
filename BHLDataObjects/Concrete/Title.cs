@@ -25,6 +25,7 @@ namespace MOBOT.BHL.DataObjects
         private CustomGenericList<TitleNote> _titleNotes = new CustomGenericList<TitleNote>();
 		private long _rowNum;
 		private string _institutionName;
+        private string _doiName;
 
         public CustomGenericList<TitleAuthor> TitleAuthors
 		{
@@ -92,7 +93,13 @@ namespace MOBOT.BHL.DataObjects
 			set { this._institutionName = value; }
 		}
 
-		public long RowNum
+        public string DOIName
+        {
+            get { return _doiName; }
+            set { _doiName = value; }
+        }
+
+        public long RowNum
 		{
 			get { return this._rowNum; }
 		}
@@ -116,11 +123,11 @@ namespace MOBOT.BHL.DataObjects
 			}
 		}
 
-		#endregion
+        #endregion
 
-		#region ISet override
+        #region ISet override
 
-		public override void SetValues( CustomDataRow row )
+        public override void SetValues( CustomDataRow row )
 		{
 			foreach ( CustomDataColumn column in row )
 			{
@@ -131,6 +138,11 @@ namespace MOBOT.BHL.DataObjects
 							_institutionName = Utility.EmptyIfNull( column.Value );
 							break;
 						}
+                    case "DOIName":
+                        {
+                            _doiName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
 					case "RowNum":
 						{
 							_rowNum = (long)column.Value;

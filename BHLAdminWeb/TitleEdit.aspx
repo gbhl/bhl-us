@@ -269,6 +269,10 @@
 				    <asp:Label ID="marcBibIdLabel" runat="server" ForeColor="Blue"></asp:Label>
 				</td>
 			</tr>
+            <tr>
+                <td style="white-space: nowrap" align="right" class="dataHeader">DOI:</td>
+				<td><asp:TextBox ID="doiTextBox" runat="server" Width="300px"></asp:TextBox></td>
+            </tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 					Bibliographic Level (MARC Leader char 07):

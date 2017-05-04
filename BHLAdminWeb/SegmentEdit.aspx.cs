@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
@@ -337,7 +331,7 @@ namespace MOBOT.BHL.AdminWeb
                     itemDescLabel.Text = segment.TitleShortTitle + " " + segment.ItemVolume;
                 }
                 replacedByTextBox.Text = segment.RedirectSegmentID.ToString();
-                lblDOIName.Text = segment.DOIName;
+                doiTextBox.Text = segment.DOIName;
                 titleTextBox.Text = segment.Title;
                 sortTitleTextBox.Text = segment.SortTitle;
                 translatedTitleTextBox.Text = segment.TranslatedTitle;
@@ -1196,6 +1190,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Gather up data on form
                 bool isItemChanged = (segment.ItemID ?? 0) != (itemIDLabel.Text == "" ? 0 : Convert.ToInt32(itemIDLabel.Text));
                 segment.ItemID = (itemIDLabel.Text == "" ? (int?)null : Convert.ToInt32(itemIDLabel.Text));
+                segment.DOIName = doiTextBox.Text.Trim();
                 segment.RedirectSegmentID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 segment.SegmentStatusID = Convert.ToInt32(ddlSegmentStatus.SelectedValue);
                 segment.SegmentGenreID = Convert.ToInt32(ddlSegmentGenre.SelectedValue);

@@ -1,14 +1,7 @@
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
@@ -16,7 +9,7 @@ using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class TitleEdit : System.Web.UI.Page
+    public partial class TitleEdit : System.Web.UI.Page
 	{
 		private TitleItemComparer.CompareEnum _sortColumn = TitleItemComparer.CompareEnum.ItemSequence;
 		private SortOrder _sortOrder = SortOrder.Ascending;
@@ -216,6 +209,7 @@ namespace MOBOT.BHL.AdminWeb
 
 			Session[ "Title" + title.TitleID.ToString()] = title;
 
+            doiTextBox.Text = title.DOIName;
             replacedByTextBox.Text = title.RedirectTitleID.ToString();
             replacedByOrig.Value = title.RedirectTitleID.ToString();
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
@@ -278,8 +272,6 @@ namespace MOBOT.BHL.AdminWeb
             languagesList.DataBind();
 
 			bindItemData();
-            //itemsList.DataSource = title.Items;
-            //itemsList.DataBind();
 
             // See if we can display a link to the MARC file
             SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
@@ -1689,7 +1681,8 @@ namespace MOBOT.BHL.AdminWeb
                 // Set the id of the editing user
                 userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
-				// Gather up data on form
+                // Gather up data on form
+                title.DOIName = doiTextBox.Text.Trim();
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 title.PublishReady = publishReadyCheckBox.Checked;
                 title.BibliographicLevelID = bibLevelID;

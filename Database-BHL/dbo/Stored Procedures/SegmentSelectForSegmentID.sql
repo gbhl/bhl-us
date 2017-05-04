@@ -61,5 +61,5 @@ FROM	dbo.Segment s
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		LEFT JOIN dbo.[Language] l ON s.LanguageCode = l.LanguageCode
 		LEFT JOIN dbo.SegmentClusterSegment scs ON s.SegmentID = scs.SegmentID
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 -- segment
+		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 AND d.IsValid = 1 -- segment
 WHERE	s.SegmentID = @SegmentID

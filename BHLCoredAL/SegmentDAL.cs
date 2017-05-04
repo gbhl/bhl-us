@@ -549,6 +549,50 @@ namespace MOBOT.BHL.DAL
 
                 segmentID = updatedSegment.ReturnObject.SegmentID;
 
+                DOIDAL doiDAL = new DOIDAL();
+                CustomGenericList<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
+
+                DOI doi = null;
+                if (doiList.Count == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(segment.DOIName))
+                    {
+                        // Insert
+                        doi = new DOI();
+                        doi.IsNew = true;
+                        doi.EntityID = segmentID;
+                        doi.DOIEntityTypeID = 40;   // Segment
+                        doi.DOIName = segment.DOIName;
+                        doi.DOIStatusID = 200;
+                        doi.StatusDate = DateTime.Now;
+                        doi.StatusMessage = "User-edited";
+                        doi.IsValid = 1;
+                        doi.CreationDate = DateTime.Now;
+                        doi.LastModifiedDate = DateTime.Now;
+                    }
+                }
+                else // DOI exists
+                {
+                    doi = doiList[0];
+                    doi.IsNew = false;
+
+                    if (!string.IsNullOrWhiteSpace(segment.DOIName))
+                    {
+                        // Update
+                        doi.DOIName = segment.DOIName;
+                        doi.DOIStatusID = 200;
+                        doi.StatusDate = DateTime.Now;
+                        doi.StatusMessage = "User-edited";
+                        doi.LastModifiedDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        // Delete
+                        doi.IsDeleted = true;
+                    }
+                }
+                if (doi != null) doiDAL.DOIManageAuto(connection, transaction, doi);
+
                 if (segment.ContributorList.Count > 0)
                 {
                     SegmentInstitutionDAL segmentInstitutionDAL = new SegmentInstitutionDAL();
