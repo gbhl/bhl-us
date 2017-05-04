@@ -18,7 +18,8 @@
     		<a href="/recent/50" id="lnkRecent50" runat="server" title="Last 50">Last 50</a> | 
     		<a href="/recent/100" id="lnkRecent100" runat="server" title="Last 100">Last 100</a> | 
     		<a href="/recent/250" id="lnkRecent250" runat="server" title="Last 250">Last 250</a> | 
-    		<a href="/recent/500" id="lnkRecent500" runat="server" title="Last 500">Last 500</a></td>
+    		<a href="/recent/500" id="lnkRecent500" runat="server" title="Last 500">Last 500</a> | 
+    		<a href="/recent/1000" id="lnkRecent1000" runat="server" title="Last 1000">Last 1000</a></td>
         </div>
 
         <p>

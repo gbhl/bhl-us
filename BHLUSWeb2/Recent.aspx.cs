@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using MOBOT.BHL.DataObjects;
 using System.Configuration;
 
@@ -11,18 +7,17 @@ namespace MOBOT.BHL.Web2
 {
     public partial class Recent : BasePage
     {
-        public String institutionCode = String.Empty;
-        public String languageCode = String.Empty;
+        public string institutionCode = string.Empty;
+        public string languageCode = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             int top = 100;
-            String paramTop = (string)RouteData.Values["top"]; 
-            if (paramTop != null)
-                Int32.TryParse(paramTop, out top);
-            top = (top < 1 || top > 500) ? 100 : top;
+            string paramTop = (string)RouteData.Values["top"]; 
+            if (paramTop != null) Int32.TryParse(paramTop, out top);
+            top = (top < 1 || top > 1000) ? 100 : top;
 
-            String institutionName = ((string)RouteData.Values["inst"] ?? String.Empty).ToString();
+            string institutionName = ((string)RouteData.Values["inst"] ?? string.Empty).ToString();
             if (institutionName != String.Empty)
             {
                 institutionCode = institutionName.ToUpper();
@@ -30,7 +25,7 @@ namespace MOBOT.BHL.Web2
                 if (institution != null) institutionName = institution.InstitutionName.Replace("(archive.org)", "").Trim();
             }
 
-            String languageName = ((string)RouteData.Values["lang"] ?? String.Empty).ToString();
+            string languageName = ((string)RouteData.Values["lang"] ?? string.Empty).ToString();
             if (this.Request.QueryString["lang"] != null)
             {
                 languageCode = languageName.ToUpper();
@@ -41,11 +36,11 @@ namespace MOBOT.BHL.Web2
             rptRecent.DataSource = bhlProvider.ItemSelectRecent(top, languageCode, institutionCode);
             rptRecent.DataBind();
 
-            String recentLink = "http://" + Request.ServerVariables["HTTP_HOST"] + "/RecentRss/" + top.ToString();
-            if ((languageCode + institutionCode) != String.Empty)
+            string recentLink = string.Format("http://{0}/RecentRss/{1}", Request.ServerVariables["HTTP_HOST"], top.ToString());
+            if ((languageCode + institutionCode) != string.Empty)
             {
-                if (languageCode == String.Empty) languageCode = "ALL";
-                if (institutionCode == String.Empty) institutionCode = "ALL";
+                if (languageCode == string.Empty) languageCode = "ALL";
+                if (institutionCode == string.Empty) institutionCode = "ALL";
                 recentLink += "/" + languageCode + "/" + institutionCode;
                 lnkRecent25.HRef += "/" + languageCode + "/" + institutionCode;
                 lnkRecent50.HRef += "/" + languageCode + "/" + institutionCode;
@@ -62,9 +57,7 @@ namespace MOBOT.BHL.Web2
             rssFeedLink.InnerHtml = recentLink;
             rssFeedImageLink.HRef = recentLink;
 
-            Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Recent Additions");
-            //((SiteMaster)Page.Master).SetTweetMessage(String.Format(ConfigurationManager.AppSettings["TweetMessage"], "Recent Additions"));
-
+            Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], "Recent Additions");
         }
     }
 }
