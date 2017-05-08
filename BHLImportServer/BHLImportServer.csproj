@@ -72,6 +72,7 @@
     <Compile Include="BHLImportProvider.IASet.cs" />
     <Compile Include="BHLImportProvider.OAIHarvestLog.cs" />
     <Compile Include="BHLImportProvider.OAIRecord.cs" />
+    <Compile Include="BHLImportProvider.PageFlickrNote.cs" />
     <Compile Include="BHLImportProvider.PageFlickrTag.cs" />
     <Compile Include="BHLImportProvider.WebRequest.cs" />
     <Compile Include="BHLImportProvider.BSItem.cs" />

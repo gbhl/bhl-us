@@ -18,6 +18,9 @@ namespace BHLFlickrTagHarvest
         private List<string> tagsAdded = new List<string>();
         private List<string> tagsUpdated = new List<string>();
         private List<string> tagsRemoved = new List<string>();
+        private List<string> notesAdded = new List<string>();
+        private List<string> notesUpdated = new List<string>();
+        private List<string> notesRemoved = new List<string>();
         private List<string> errorMessages = new List<string>();
 
         public void Process()
@@ -62,16 +65,21 @@ namespace BHLFlickrTagHarvest
                         // Get the tags and notes from Flickr for the current page
                         string[] flickrUrlParts = page.FlickrURL.Split('/');
                         photoID = flickrUrlParts[5];
-                        List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID);
+                        PhotoInfo photoInfo = this.GetFlickrPhotoInfo(photoID);
+                        List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID, photoInfo);
+                        List<PageFlickrNote> flickrNotes = this.GetFlickrNotes(page.PageID, photoID, photoInfo);
 
-                        // Get the tags from the database for the current page
+                        // Get the tags and notes from the database for the current page
                         PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
+                        PageFlickrNote[] bhlNotes = bhlImportWSClient.PageFlickrNoteSelectForPageID(page.PageID);
 
-                        // Merge the tags in the database with the new list of tags from Flickr
+                        // Merge the tags and notes in the database with the new lists from Flickr
                         List<PageFlickrTag> updateTags = this.CompareTags(new List<PageFlickrTag>(bhlTags), flickrTags);
+                        List<PageFlickrNote> updateNotes = this.CompareNotes(new List<PageFlickrNote>(bhlNotes), flickrNotes);
 
-                        // Update the database with the new set of tags for the page
+                        // Update the database with the new sets of tags and notes for the page
                         bhlImportWSClient.PageFlickrTagUpdateForPageID(page.PageID, updateTags.ToArray());
+                        bhlImportWSClient.PageFlickrNoteUpdateForPageID(page.PageID, updateNotes.ToArray());
                     }
                     catch (FlickrApiException fex)
                     {
@@ -102,14 +110,12 @@ namespace BHLFlickrTagHarvest
         }
 
         /// <summary>
-        /// Get the tags assigned to the specified photo at Flickr
+        /// Get the metadata for a specific photo from Flickr
         /// </summary>
-        /// <param name="pageID"></param>
         /// <param name="photoID"></param>
         /// <returns></returns>
-        private List<PageFlickrTag> GetFlickrTags(int pageID, string photoID)
+        private PhotoInfo GetFlickrPhotoInfo(string photoID)
         {
-            List<PageFlickrTag> flickrTags = new List<PageFlickrTag>();
             Flickr flickr = new Flickr();
             flickr.ApiKey = configParms.FlickrApiKey;
             PhotoInfo photoInfo = null;
@@ -142,9 +148,25 @@ namespace BHLFlickrTagHarvest
                 }
             }
 
+            return photoInfo;
+        }
+
+        /// <summary>
+        /// Get the tags assigned to the specified photo at Flickr
+        /// </summary>
+        /// <param name="pageID"></param>
+        /// <param name="photoID"></param>
+        /// <param name="photoInfo"></param>
+        /// <returns></returns>
+        private List<PageFlickrTag> GetFlickrTags(int pageID, string photoID, PhotoInfo photoInfo)
+        {
+            List<PageFlickrTag> flickrTags = new List<PageFlickrTag>();
+
             foreach (PhotoInfoTag tag in photoInfo.Tags)
             {
-                // Only include tags not entered by BioDivLibrary user
+                // Only include tags not entered by BioDivLibrary user.  During upload of new
+                // images, the BioDivLibrary user adds tags that we are not interested in 
+                // harvesting here. 
                 if (tag.AuthorId != configParms.BHLFlickrUserID)
                 {
                     PageFlickrTag flickrTag = new PageFlickrTag();
@@ -161,6 +183,43 @@ namespace BHLFlickrTagHarvest
             }
 
             return flickrTags;
+        }
+
+        /// <summary>
+        /// Get the notes assigned to the specified photo at Flickr
+        /// </summary>
+        /// <param name="pageID"></param>
+        /// <param name="photoID"></param>
+        /// <param name="photoInfo"></param>
+        /// <returns></returns>
+        private List<PageFlickrNote> GetFlickrNotes(int pageID, string photoID, PhotoInfo photoInfo)
+        {
+            List<PageFlickrNote> flickrNotes = new List<PageFlickrNote>();
+
+            foreach (PhotoInfoNote note in photoInfo.Notes)
+            {
+                // Include all notes, including those entered by the BioDivLibrary user.
+                // There are no auto-added notes from BioDivLibrary, so no reason to
+                // exclude anything.
+                PageFlickrNote flickrNote = new PageFlickrNote();
+
+                flickrNote.PageID = pageID;
+                flickrNote.PhotoID = photoID;
+                flickrNote.FlickrNoteID = note.NoteId;
+                flickrNote.FlickrAuthorID = note.AuthorId;
+                flickrNote.FlickrAuthorName = note.AuthorName;
+                flickrNote.FlickrAuthorRealName = note.AuthorRealName;
+                flickrNote.AuthorIsPro = (short)((note.AuthorIsPro ?? false) ? 1 : 0);
+                flickrNote.XCoord = note.XPosition;
+                flickrNote.YCoord = note.YPosition;
+                flickrNote.Width = note.Width;
+                flickrNote.Height = note.Height;
+                flickrNote.NoteValue = note.NoteText;
+
+                flickrNotes.Add(flickrNote);
+            }
+
+            return flickrNotes;
         }
 
         /// <summary>
@@ -236,6 +295,82 @@ namespace BHLFlickrTagHarvest
             return bhlTags;
         }
 
+        /// <summary>
+        /// Compare the list of notes in Flickr with the list in notes in BHL, and update the list in BHL
+        /// to match the list in Flickr.
+        /// </summary>
+        /// <param name="bhlNotes"></param>
+        /// <param name="flickrNotes"></param>
+        /// <returns></returns>
+        private List<PageFlickrNote> CompareNotes(List<PageFlickrNote> bhlNotes, List<PageFlickrNote> flickrNotes)
+        {
+            DateTime updateDate = DateTime.Now;
+
+            // Add and update tags
+            foreach (PageFlickrNote flickrNote in flickrNotes)
+            {
+                bool inBhl = false;
+                foreach (PageFlickrNote bhlNote in bhlNotes)
+                {
+                    // Look for the flickr note in the list of notes in bhl
+                    if (flickrNote.FlickrNoteID == bhlNote.FlickrNoteID)
+                    {
+                        // Tag found; update it
+                        inBhl = true;
+                        bhlNote.NoteValue = flickrNote.NoteValue;
+                        bhlNote.XCoord = flickrNote.XCoord;
+                        bhlNote.YCoord = flickrNote.YCoord;
+                        bhlNote.Width = flickrNote.Width;
+                        bhlNote.Height = flickrNote.Height;
+                        bhlNote.AuthorIsPro = flickrNote.AuthorIsPro;
+                        bhlNote.IsActive = 1;
+                        bhlNote.LastModifiedDate = updateDate;
+                        bhlNote.DeleteDate = null;
+                        notesUpdated.Add(bhlNote.NoteValue);
+                    }
+                }
+
+                if (!inBhl)
+                {
+                    // Tag not found in BHL; add it
+                    PageFlickrNote newBhlNote = flickrNote;
+                    newBhlNote.IsActive = 1;
+                    newBhlNote.CreationDate = updateDate;
+                    newBhlNote.LastModifiedDate = updateDate;
+                    bhlNotes.Add(newBhlNote);
+                    notesAdded.Add(newBhlNote.NoteValue);
+                }
+            }
+
+            // Delete tags
+            foreach (PageFlickrNote bhlNote in bhlNotes)
+            {
+                bool inFlickr = false;
+                foreach (PageFlickrNote flickrNote in flickrNotes)
+                {
+                    // Look for the bhl tag in the list of tags in Flickr
+                    if (flickrNote.FlickrNoteID == bhlNote.FlickrNoteID)
+                    {
+                        inFlickr = true;
+                        break;
+                    }
+                }
+
+                if (!inFlickr)
+                {
+                    // Tag not found in Flickr; mark it deleted
+                    bhlNote.IsActive = 0;
+                    bhlNote.LastModifiedDate = updateDate;
+                    bhlNote.DeleteDate = updateDate;
+                    notesRemoved.Add(bhlNote.NoteValue);
+                }
+            }
+
+            // Return the updated list of notes in BHL
+            return bhlNotes;
+        }
+
+
         #region Process Results
 
         /// <summary>
@@ -249,7 +384,9 @@ namespace BHLFlickrTagHarvest
                 // send email with process results to Exchange group
                 if (pagesProcessed.Count > 0 || tagsAdded.Count > 0 ||
                     tagsUpdated.Count > 0 || tagsRemoved.Count > 0 || 
-                    photosNotFound.Count > 0 || errorMessages.Count > 0)
+                    notesAdded.Count > 0 || notesUpdated.Count > 0 ||
+                    notesRemoved.Count > 0 || photosNotFound.Count > 0 || 
+                    errorMessages.Count > 0)
                 {
                     this.LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
@@ -318,6 +455,18 @@ namespace BHLFlickrTagHarvest
             if (this.tagsRemoved.Count > 0)
             {
                 sb.Append(endOfLine + "Removed " + this.tagsRemoved.Count.ToString() + " Tags" + endOfLine);
+            }
+            if (this.notesAdded.Count > 0)
+            {
+                sb.Append(endOfLine + "Added " + this.notesAdded.Count.ToString() + " Notes" + endOfLine);
+            }
+            if (this.notesUpdated.Count > 0)
+            {
+                sb.Append(endOfLine + "Updated " + this.notesUpdated.Count.ToString() + " Notes" + endOfLine);
+            }
+            if (this.notesRemoved.Count > 0)
+            {
+                sb.Append(endOfLine + "Removed " + this.notesRemoved.Count.ToString() + " Notes" + endOfLine);
             }
             if (this.photosNotFound.Count > 0)
             {

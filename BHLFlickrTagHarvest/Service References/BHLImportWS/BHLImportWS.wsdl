@@ -576,6 +576,66 @@
       <s:element name="PageFlickrTagUpdateForPageIDResponse">
         <s:complexType />
       </s:element>
+      <s:element name="PageFlickrNoteSelectForPageID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageFlickrNoteSelectForPageIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PageFlickrNoteSelectForPageIDResult" type="tns:ArrayOfPageFlickrNote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPageFlickrNote">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PageFlickrNote" nillable="true" type="tns:PageFlickrNote" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PageFlickrNote">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:__PageFlickrNote" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="__PageFlickrNote" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CustomObjectBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PageFlickrNoteID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="PageID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="PhotoID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FlickrNoteID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FlickrAuthorID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FlickrAuthorName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FlickrAuthorRealName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="AuthorIsPro" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="XCoord" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="YCoord" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Width" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Height" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="NoteValue" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:unsignedByte" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DeleteDate" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="PageFlickrNoteUpdateForPageID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="pageID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="notes" type="tns:ArrayOfPageFlickrNote" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageFlickrNoteUpdateForPageIDResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="StatsSelectReadyForProductionBySource">
         <s:complexType>
           <s:sequence>
@@ -746,6 +806,18 @@
   <wsdl:message name="PageFlickrTagUpdateForPageIDSoapOut">
     <wsdl:part name="parameters" element="tns:PageFlickrTagUpdateForPageIDResponse" />
   </wsdl:message>
+  <wsdl:message name="PageFlickrNoteSelectForPageIDSoapIn">
+    <wsdl:part name="parameters" element="tns:PageFlickrNoteSelectForPageID" />
+  </wsdl:message>
+  <wsdl:message name="PageFlickrNoteSelectForPageIDSoapOut">
+    <wsdl:part name="parameters" element="tns:PageFlickrNoteSelectForPageIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageFlickrNoteUpdateForPageIDSoapIn">
+    <wsdl:part name="parameters" element="tns:PageFlickrNoteUpdateForPageID" />
+  </wsdl:message>
+  <wsdl:message name="PageFlickrNoteUpdateForPageIDSoapOut">
+    <wsdl:part name="parameters" element="tns:PageFlickrNoteUpdateForPageIDResponse" />
+  </wsdl:message>
   <wsdl:message name="StatsSelectReadyForProductionBySourceSoapIn">
     <wsdl:part name="parameters" element="tns:StatsSelectReadyForProductionBySource" />
   </wsdl:message>
@@ -836,6 +908,14 @@
     <wsdl:operation name="PageFlickrTagUpdateForPageID">
       <wsdl:input message="tns:PageFlickrTagUpdateForPageIDSoapIn" />
       <wsdl:output message="tns:PageFlickrTagUpdateForPageIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteSelectForPageID">
+      <wsdl:input message="tns:PageFlickrNoteSelectForPageIDSoapIn" />
+      <wsdl:output message="tns:PageFlickrNoteSelectForPageIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteUpdateForPageID">
+      <wsdl:input message="tns:PageFlickrNoteUpdateForPageIDSoapIn" />
+      <wsdl:output message="tns:PageFlickrNoteUpdateForPageIDSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="StatsSelectReadyForProductionBySource">
       <wsdl:input message="tns:StatsSelectReadyForProductionBySourceSoapIn" />
@@ -988,6 +1068,24 @@
     </wsdl:operation>
     <wsdl:operation name="PageFlickrTagUpdateForPageID">
       <soap:operation soapAction="http://www.mobot.org/PageFlickrTagUpdateForPageID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteSelectForPageID">
+      <soap:operation soapAction="http://www.mobot.org/PageFlickrNoteSelectForPageID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteUpdateForPageID">
+      <soap:operation soapAction="http://www.mobot.org/PageFlickrNoteUpdateForPageID" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -1171,6 +1269,24 @@
     </wsdl:operation>
     <wsdl:operation name="PageFlickrTagUpdateForPageID">
       <soap12:operation soapAction="http://www.mobot.org/PageFlickrTagUpdateForPageID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteSelectForPageID">
+      <soap12:operation soapAction="http://www.mobot.org/PageFlickrNoteSelectForPageID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageFlickrNoteUpdateForPageID">
+      <soap12:operation soapAction="http://www.mobot.org/PageFlickrNoteUpdateForPageID" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

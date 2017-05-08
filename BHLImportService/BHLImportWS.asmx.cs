@@ -113,6 +113,19 @@ namespace MOBOT.BHLImport.WebService
             new BHLImportProvider().PageFlickrTagUpdateForPageID(pageID, tags);
         }
 
+        [WebMethod]
+        public CustomGenericList<PageFlickrNote> PageFlickrNoteSelectForPageID(int pageID)
+        {
+            return new BHLImportProvider().PageFlickrNoteSelectForPageID(pageID);
+        }
+
+        [WebMethod]
+        public void PageFlickrNoteUpdateForPageID(int pageID, PageFlickrNote[] notes)
+        {
+            new BHLImportProvider().PageFlickrNoteUpdateForPageID(pageID, notes);
+        }
+
+
         #endregion Dashboard methods
     }
 }

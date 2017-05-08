@@ -106,6 +106,9 @@
     <None Include="Service References\BHLImportWS\BHLFlickrTagHarvest.BHLImportWS.ImportLog.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLImportWS\BHLFlickrTagHarvest.BHLImportWS.PageFlickrNote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLImportWS\BHLFlickrTagHarvest.BHLImportWS.PageFlickrTag.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="89f3f5e1-10f1-4d27-89b7-25be10738187" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bec3f192-c5c2-45d7-856c-e625700023dd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
     <EnableDataBinding>true</EnableDataBinding>
     <ExcludedTypes />
     <ImportXmlTypes>false</ImportXmlTypes>
@@ -21,8 +22,8 @@
     <MetadataSource Address="http://localhost:22542/BHLImportWS.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BHLImportWS.disco" MetadataType="Disco" ID="c2a3f281-5315-4387-9471-93f39eff73af" SourceId="1" SourceUrl="http://localhost:22542/BHLImportWS.asmx?disco" />
-    <MetadataFile FileName="BHLImportWS.wsdl" MetadataType="Wsdl" ID="49d28bdc-2d80-42fa-8cfb-6afbe6962686" SourceId="1" SourceUrl="http://localhost:22542/BHLImportWS.asmx?wsdl" />
+    <MetadataFile FileName="BHLImportWS.disco" MetadataType="Disco" ID="fe3b5dad-9999-457a-84c1-06285c1cd301" SourceId="1" SourceUrl="http://localhost:22542/BHLImportWS.asmx?disco" />
+    <MetadataFile FileName="BHLImportWS.wsdl" MetadataType="Wsdl" ID="2b15c7d5-d5de-4326-9644-3f8f0192f605" SourceId="1" SourceUrl="http://localhost:22542/BHLImportWS.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -458,4 +458,7 @@
     <None Include="dbo\Stored Procedures\PageFlickrNoteSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrNoteUpdateAuto.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\PageFlickrNoteSelectForPageID.sql" />
+  </ItemGroup>
 </Project>
