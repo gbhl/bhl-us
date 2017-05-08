@@ -36,8 +36,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlickrNet, Version=3.17.0.0, Culture=neutral, PublicKeyToken=2491df59efa5d132, processorArchitecture=MSIL">
-      <HintPath>..\packages\FlickrNet.3.17.0\lib\net20\FlickrNet.dll</HintPath>
+    <Reference Include="FlickrNet, Version=3.24.0.0, Culture=neutral, PublicKeyToken=2491df59efa5d132, processorArchitecture=MSIL">
+      <HintPath>..\packages\FlickrNet.3.24.0\lib\net20\FlickrNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
@@ -78,7 +78,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="FlickrNet.chm" />
     <None Include="packages.config" />
     <None Include="Service References\BHLImportWS\BHLFlickrTagHarvest.BHLImportWS.BotanicusHarvestLog.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

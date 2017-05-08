@@ -95,6 +95,7 @@
     <Compile Include="Concrete\OAIRecordStatus.cs" />
     <Compile Include="Concrete\OAIRecordSubject.cs" />
     <Compile Include="Concrete\Page.cs" />
+    <Compile Include="Concrete\PageFlickrNote.cs" />
     <Compile Include="Concrete\PageFlickrTag.cs" />
     <Compile Include="Concrete\PageName.cs" />
     <Compile Include="Concrete\Page_PageType.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Generated\__OAIRecordStatus.cs" />
     <Compile Include="Generated\__OAIRecordSubject.cs" />
     <Compile Include="Generated\__Page.cs" />
+    <Compile Include="Generated\__PageFlickrNote.cs" />
     <Compile Include="Generated\__PageFlickrTag.cs" />
     <Compile Include="Generated\__PageName.cs" />
     <Compile Include="Generated\__Page_PageType.cs" />

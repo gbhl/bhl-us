@@ -449,4 +449,13 @@
   <ItemGroup>
     <None Include="dbo\Synonyms\BHLInstitution.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Tables\PageFlickrNote.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Stored Procedures\PageFlickrNoteDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrNoteInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrNoteSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageFlickrNoteUpdateAuto.sql" />
+  </ItemGroup>
 </Project>

@@ -117,7 +117,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -141,7 +141,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(IAItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -152,8 +152,6 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         private int itemStatusIDField;
         
-        private string localFileFolderField;
-        
         private string iAIdentifierPrefixField;
         
         private string iAIdentifierField;
@@ -161,8 +159,6 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         private string sponsorField;
         
         private string sponsorNameField;
-        
-        private string sponsorDateField;
         
         private string scanningCenterField;
         
@@ -182,6 +178,28 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         private string externalStatusField;
         
+        private string mARCBibIDField;
+        
+        private string barCodeField;
+        
+        private System.Nullable<System.DateTime> iADateStampField;
+        
+        private System.Nullable<System.DateTime> iAAddedDateField;
+        
+        private System.Nullable<System.DateTime> lastOAIDataHarvestDateField;
+        
+        private System.Nullable<System.DateTime> lastXMLDataHarvestDateField;
+        
+        private System.Nullable<System.DateTime> lastProductionDateField;
+        
+        private System.DateTime createdDateField;
+        
+        private System.DateTime lastModifiedDateField;
+        
+        private string shortTitleField;
+        
+        private string sponsorDateField;
+        
         private string titleIDField;
         
         private string yearField;
@@ -189,8 +207,6 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         private string identifierBibField;
         
         private string zQueryField;
-        
-        private string mARCBibIDField;
         
         private string licenseUrlField;
         
@@ -210,25 +226,15 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         private string copyrightEvidenceDateField;
         
-        private string shortTitleField;
-        
-        private string barCodeField;
-        
-        private System.Nullable<System.DateTime> iADateStampField;
-        
-        private System.Nullable<System.DateTime> iAAddedDateField;
-        
-        private System.Nullable<System.DateTime> lastOAIDataHarvestDateField;
-        
-        private System.Nullable<System.DateTime> lastXMLDataHarvestDateField;
-        
-        private System.Nullable<System.DateTime> lastProductionDateField;
+        private string localFileFolderField;
         
         private byte noMARCOkField;
         
-        private System.DateTime createdDateField;
+        private string scanningInstitutionField;
         
-        private System.DateTime lastModifiedDateField;
+        private string rightsHolderField;
+        
+        private string itemDescriptionField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -256,18 +262,6 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string LocalFileFolder {
-            get {
-                return this.localFileFolderField;
-            }
-            set {
-                this.localFileFolderField = value;
-                this.RaisePropertyChanged("LocalFileFolder");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public string IAIdentifierPrefix {
             get {
                 return this.iAIdentifierPrefixField;
@@ -279,7 +273,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public string IAIdentifier {
             get {
                 return this.iAIdentifierField;
@@ -291,7 +285,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
         public string Sponsor {
             get {
                 return this.sponsorField;
@@ -303,7 +297,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
         public string SponsorName {
             get {
                 return this.sponsorNameField;
@@ -315,19 +309,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
-        public string SponsorDate {
-            get {
-                return this.sponsorDateField;
-            }
-            set {
-                this.sponsorDateField = value;
-                this.RaisePropertyChanged("SponsorDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=6)]
         public string ScanningCenter {
             get {
                 return this.scanningCenterField;
@@ -339,7 +321,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=7)]
         public string CallNumber {
             get {
                 return this.callNumberField;
@@ -351,7 +333,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=8)]
         public System.Nullable<int> ImageCount {
             get {
                 return this.imageCountField;
@@ -363,7 +345,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
         public string IdentifierAccessUrl {
             get {
                 return this.identifierAccessUrlField;
@@ -375,7 +357,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public string Volume {
             get {
                 return this.volumeField;
@@ -387,7 +369,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
         public string Note {
             get {
                 return this.noteField;
@@ -399,7 +381,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
         public string ScanOperator {
             get {
                 return this.scanOperatorField;
@@ -411,7 +393,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
         public string ScanDate {
             get {
                 return this.scanDateField;
@@ -423,7 +405,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
         public string ExternalStatus {
             get {
                 return this.externalStatusField;
@@ -435,55 +417,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
-        public string TitleID {
-            get {
-                return this.titleIDField;
-            }
-            set {
-                this.titleIDField = value;
-                this.RaisePropertyChanged("TitleID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
-        public string Year {
-            get {
-                return this.yearField;
-            }
-            set {
-                this.yearField = value;
-                this.RaisePropertyChanged("Year");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
-        public string IdentifierBib {
-            get {
-                return this.identifierBibField;
-            }
-            set {
-                this.identifierBibField = value;
-                this.RaisePropertyChanged("IdentifierBib");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
-        public string ZQuery {
-            get {
-                return this.zQueryField;
-            }
-            set {
-                this.zQueryField = value;
-                this.RaisePropertyChanged("ZQuery");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public string MARCBibID {
             get {
                 return this.mARCBibIDField;
@@ -495,127 +429,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
-        public string LicenseUrl {
-            get {
-                return this.licenseUrlField;
-            }
-            set {
-                this.licenseUrlField = value;
-                this.RaisePropertyChanged("LicenseUrl");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
-        public string Rights {
-            get {
-                return this.rightsField;
-            }
-            set {
-                this.rightsField = value;
-                this.RaisePropertyChanged("Rights");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
-        public string DueDiligence {
-            get {
-                return this.dueDiligenceField;
-            }
-            set {
-                this.dueDiligenceField = value;
-                this.RaisePropertyChanged("DueDiligence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
-        public string PossibleCopyrightStatus {
-            get {
-                return this.possibleCopyrightStatusField;
-            }
-            set {
-                this.possibleCopyrightStatusField = value;
-                this.RaisePropertyChanged("PossibleCopyrightStatus");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
-        public string CopyrightRegion {
-            get {
-                return this.copyrightRegionField;
-            }
-            set {
-                this.copyrightRegionField = value;
-                this.RaisePropertyChanged("CopyrightRegion");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
-        public string CopyrightComment {
-            get {
-                return this.copyrightCommentField;
-            }
-            set {
-                this.copyrightCommentField = value;
-                this.RaisePropertyChanged("CopyrightComment");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
-        public string CopyrightEvidence {
-            get {
-                return this.copyrightEvidenceField;
-            }
-            set {
-                this.copyrightEvidenceField = value;
-                this.RaisePropertyChanged("CopyrightEvidence");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
-        public string CopyrightEvidenceOperator {
-            get {
-                return this.copyrightEvidenceOperatorField;
-            }
-            set {
-                this.copyrightEvidenceOperatorField = value;
-                this.RaisePropertyChanged("CopyrightEvidenceOperator");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
-        public string CopyrightEvidenceDate {
-            get {
-                return this.copyrightEvidenceDateField;
-            }
-            set {
-                this.copyrightEvidenceDateField = value;
-                this.RaisePropertyChanged("CopyrightEvidenceDate");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
-        public string ShortTitle {
-            get {
-                return this.shortTitleField;
-            }
-            set {
-                this.shortTitleField = value;
-                this.RaisePropertyChanged("ShortTitle");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
         public string BarCode {
             get {
                 return this.barCodeField;
@@ -627,7 +441,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=33)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
         public System.Nullable<System.DateTime> IADateStamp {
             get {
                 return this.iADateStampField;
@@ -639,7 +453,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=34)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
         public System.Nullable<System.DateTime> IAAddedDate {
             get {
                 return this.iAAddedDateField;
@@ -651,7 +465,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=35)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
         public System.Nullable<System.DateTime> LastOAIDataHarvestDate {
             get {
                 return this.lastOAIDataHarvestDateField;
@@ -663,7 +477,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=36)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
         public System.Nullable<System.DateTime> LastXMLDataHarvestDate {
             get {
                 return this.lastXMLDataHarvestDateField;
@@ -675,7 +489,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=37)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
         public System.Nullable<System.DateTime> LastProductionDate {
             get {
                 return this.lastProductionDateField;
@@ -687,19 +501,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=38)]
-        public byte NoMARCOk {
-            get {
-                return this.noMARCOkField;
-            }
-            set {
-                this.noMARCOkField = value;
-                this.RaisePropertyChanged("NoMARCOk");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=39)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
         public System.DateTime CreatedDate {
             get {
                 return this.createdDateField;
@@ -711,7 +513,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=40)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
         public System.DateTime LastModifiedDate {
             get {
                 return this.lastModifiedDateField;
@@ -719,6 +521,246 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
             set {
                 this.lastModifiedDateField = value;
                 this.RaisePropertyChanged("LastModifiedDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
+        public string ShortTitle {
+            get {
+                return this.shortTitleField;
+            }
+            set {
+                this.shortTitleField = value;
+                this.RaisePropertyChanged("ShortTitle");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
+        public string SponsorDate {
+            get {
+                return this.sponsorDateField;
+            }
+            set {
+                this.sponsorDateField = value;
+                this.RaisePropertyChanged("SponsorDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string TitleID {
+            get {
+                return this.titleIDField;
+            }
+            set {
+                this.titleIDField = value;
+                this.RaisePropertyChanged("TitleID");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=27)]
+        public string Year {
+            get {
+                return this.yearField;
+            }
+            set {
+                this.yearField = value;
+                this.RaisePropertyChanged("Year");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=28)]
+        public string IdentifierBib {
+            get {
+                return this.identifierBibField;
+            }
+            set {
+                this.identifierBibField = value;
+                this.RaisePropertyChanged("IdentifierBib");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=29)]
+        public string ZQuery {
+            get {
+                return this.zQueryField;
+            }
+            set {
+                this.zQueryField = value;
+                this.RaisePropertyChanged("ZQuery");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=30)]
+        public string LicenseUrl {
+            get {
+                return this.licenseUrlField;
+            }
+            set {
+                this.licenseUrlField = value;
+                this.RaisePropertyChanged("LicenseUrl");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=31)]
+        public string Rights {
+            get {
+                return this.rightsField;
+            }
+            set {
+                this.rightsField = value;
+                this.RaisePropertyChanged("Rights");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        public string DueDiligence {
+            get {
+                return this.dueDiligenceField;
+            }
+            set {
+                this.dueDiligenceField = value;
+                this.RaisePropertyChanged("DueDiligence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=33)]
+        public string PossibleCopyrightStatus {
+            get {
+                return this.possibleCopyrightStatusField;
+            }
+            set {
+                this.possibleCopyrightStatusField = value;
+                this.RaisePropertyChanged("PossibleCopyrightStatus");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=34)]
+        public string CopyrightRegion {
+            get {
+                return this.copyrightRegionField;
+            }
+            set {
+                this.copyrightRegionField = value;
+                this.RaisePropertyChanged("CopyrightRegion");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=35)]
+        public string CopyrightComment {
+            get {
+                return this.copyrightCommentField;
+            }
+            set {
+                this.copyrightCommentField = value;
+                this.RaisePropertyChanged("CopyrightComment");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=36)]
+        public string CopyrightEvidence {
+            get {
+                return this.copyrightEvidenceField;
+            }
+            set {
+                this.copyrightEvidenceField = value;
+                this.RaisePropertyChanged("CopyrightEvidence");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=37)]
+        public string CopyrightEvidenceOperator {
+            get {
+                return this.copyrightEvidenceOperatorField;
+            }
+            set {
+                this.copyrightEvidenceOperatorField = value;
+                this.RaisePropertyChanged("CopyrightEvidenceOperator");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=38)]
+        public string CopyrightEvidenceDate {
+            get {
+                return this.copyrightEvidenceDateField;
+            }
+            set {
+                this.copyrightEvidenceDateField = value;
+                this.RaisePropertyChanged("CopyrightEvidenceDate");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=39)]
+        public string LocalFileFolder {
+            get {
+                return this.localFileFolderField;
+            }
+            set {
+                this.localFileFolderField = value;
+                this.RaisePropertyChanged("LocalFileFolder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=40)]
+        public byte NoMARCOk {
+            get {
+                return this.noMARCOkField;
+            }
+            set {
+                this.noMARCOkField = value;
+                this.RaisePropertyChanged("NoMARCOk");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=41)]
+        public string ScanningInstitution {
+            get {
+                return this.scanningInstitutionField;
+            }
+            set {
+                this.scanningInstitutionField = value;
+                this.RaisePropertyChanged("ScanningInstitution");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=42)]
+        public string RightsHolder {
+            get {
+                return this.rightsHolderField;
+            }
+            set {
+                this.rightsHolderField = value;
+                this.RaisePropertyChanged("RightsHolder");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=43)]
+        public string ItemDescription {
+            get {
+                return this.itemDescriptionField;
+            }
+            set {
+                this.itemDescriptionField = value;
+                this.RaisePropertyChanged("ItemDescription");
             }
         }
     }
@@ -744,7 +786,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BotanicusHarvestLog))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__IAItem))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(IAItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -762,7 +804,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -879,7 +921,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickrTag))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1042,7 +1084,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1052,7 +1094,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BSSegment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1073,6 +1115,10 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         private string containerTitleField;
         
+        private string publisherNameField;
+        
+        private string publisherPlaceField;
+        
         private string volumeField;
         
         private string seriesField;
@@ -1086,6 +1132,10 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         private string iSSNField;
         
         private string dOIField;
+        
+        private string oCLCField;
+        
+        private string jSTORField;
         
         private string startPageNumberField;
         
@@ -1102,6 +1152,8 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         private System.DateTime creationDateField;
         
         private System.DateTime lastModifiedDateField;
+        
+        private string contributorNameField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1189,6 +1241,30 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=7)]
+        public string PublisherName {
+            get {
+                return this.publisherNameField;
+            }
+            set {
+                this.publisherNameField = value;
+                this.RaisePropertyChanged("PublisherName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        public string PublisherPlace {
+            get {
+                return this.publisherPlaceField;
+            }
+            set {
+                this.publisherPlaceField = value;
+                this.RaisePropertyChanged("PublisherPlace");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
         public string Volume {
             get {
                 return this.volumeField;
@@ -1200,7 +1276,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=8)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public string Series {
             get {
                 return this.seriesField;
@@ -1212,7 +1288,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=9)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
         public string Issue {
             get {
                 return this.issueField;
@@ -1224,7 +1300,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=10)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
         public string Year {
             get {
                 return this.yearField;
@@ -1236,7 +1312,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=11)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
         public string Date {
             get {
                 return this.dateField;
@@ -1248,7 +1324,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=12)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
         public string ISSN {
             get {
                 return this.iSSNField;
@@ -1260,7 +1336,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public string DOI {
             get {
                 return this.dOIField;
@@ -1272,7 +1348,31 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public string OCLC {
+            get {
+                return this.oCLCField;
+            }
+            set {
+                this.oCLCField = value;
+                this.RaisePropertyChanged("OCLC");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public string JSTOR {
+            get {
+                return this.jSTORField;
+            }
+            set {
+                this.jSTORField = value;
+                this.RaisePropertyChanged("JSTOR");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=18)]
         public string StartPageNumber {
             get {
                 return this.startPageNumberField;
@@ -1284,7 +1384,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=15)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
         public string EndPageNumber {
             get {
                 return this.endPageNumberField;
@@ -1296,7 +1396,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=20)]
         public System.Nullable<int> StartPageID {
             get {
                 return this.startPageIDField;
@@ -1308,7 +1408,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=21)]
         public System.Nullable<System.DateTime> ContributorCreationDate {
             get {
                 return this.contributorCreationDateField;
@@ -1320,7 +1420,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=22)]
         public System.Nullable<System.DateTime> ContributorLastModifiedDate {
             get {
                 return this.contributorLastModifiedDateField;
@@ -1332,7 +1432,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=23)]
         public System.Nullable<int> BHLSegmentID {
             get {
                 return this.bHLSegmentIDField;
@@ -1344,7 +1444,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=24)]
         public System.DateTime CreationDate {
             get {
                 return this.creationDateField;
@@ -1356,7 +1456,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=25)]
         public System.DateTime LastModifiedDate {
             get {
                 return this.lastModifiedDateField;
@@ -1366,10 +1466,22 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
                 this.RaisePropertyChanged("LastModifiedDate");
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=26)]
+        public string ContributorName {
+            get {
+                return this.contributorNameField;
+            }
+            set {
+                this.contributorNameField = value;
+                this.RaisePropertyChanged("ContributorName");
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1379,7 +1491,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BSItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1458,7 +1570,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1524,7 +1636,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BSItemStatus))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1603,7 +1715,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1613,7 +1725,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(IAItemStatus))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1692,7 +1804,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1702,7 +1814,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ImportLog))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2117,7 +2229,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2141,7 +2253,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ImportError))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2290,7 +2402,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2300,7 +2412,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(IAItemError))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2435,7 +2547,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2459,7 +2571,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BotanicusHarvestLog))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2664,7 +2776,7 @@ namespace BHLFlickrTagHarvest.BHLImportWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1087.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2046.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]

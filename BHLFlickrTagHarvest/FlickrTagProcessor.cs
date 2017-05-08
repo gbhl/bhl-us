@@ -34,8 +34,8 @@ namespace BHLFlickrTagHarvest
             // validate config values
             if (!this.ValidateConfiguration()) return;
 
-            // Read the pages with flickr images and get the flickr tags for each
-            this.HarvestTags();
+            // Read the pages with flickr images and get the flickr tags and notes for each
+            this.HarvestData();
 
             // Report the results of item/page processing
             this.ProcessResults();
@@ -43,7 +43,7 @@ namespace BHLFlickrTagHarvest
             this.LogMessage("BHLFlickrTagHarvest Processing Complete");
         }
 
-        private void HarvestTags()
+        private void HarvestData()
         {
             try
             {
@@ -59,13 +59,13 @@ namespace BHLFlickrTagHarvest
 
                     try
                     {
-                        // Get the tags from the database for the current page
-                        PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
-
-                        // Get the tags from Flickr for the current page
+                        // Get the tags and notes from Flickr for the current page
                         string[] flickrUrlParts = page.FlickrURL.Split('/');
                         photoID = flickrUrlParts[5];
                         List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID);
+
+                        // Get the tags from the database for the current page
+                        PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
 
                         // Merge the tags in the database with the new list of tags from Flickr
                         List<PageFlickrTag> updateTags = this.CompareTags(new List<PageFlickrTag>(bhlTags), flickrTags);

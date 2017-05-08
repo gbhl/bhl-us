@@ -36,12 +36,10 @@
             <s:sequence>
               <s:element minOccurs="1" maxOccurs="1" name="ItemID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemStatusID" type="s:int" />
-              <s:element minOccurs="0" maxOccurs="1" name="LocalFileFolder" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="IAIdentifierPrefix" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="IAIdentifier" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="SponsorName" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="SponsorDate" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ScanningCenter" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="CallNumber" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="ImageCount" nillable="true" type="s:int" />
@@ -51,11 +49,21 @@
               <s:element minOccurs="0" maxOccurs="1" name="ScanOperator" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ScanDate" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ExternalStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MARCBibID" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="BarCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IADateStamp" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="IAAddedDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastOAIDataHarvestDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastXMLDataHarvestDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastProductionDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ShortTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SponsorDate" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleID" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Year" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="IdentifierBib" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ZQuery" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="MARCBibID" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LicenseUrl" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Rights" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="DueDiligence" type="s:string" />
@@ -65,16 +73,11 @@
               <s:element minOccurs="0" maxOccurs="1" name="CopyrightEvidence" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="CopyrightEvidenceOperator" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="CopyrightEvidenceDate" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="ShortTitle" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="BarCode" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="IADateStamp" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="IAAddedDate" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastOAIDataHarvestDate" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastXMLDataHarvestDate" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastProductionDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="LocalFileFolder" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="NoMARCOk" type="s:unsignedByte" />
-              <s:element minOccurs="1" maxOccurs="1" name="CreatedDate" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ScanningInstitution" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="RightsHolder" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemDescription" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -495,6 +498,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="Genre" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ContainerTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PublisherName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PublisherPlace" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Series" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Issue" type="s:string" />
@@ -502,6 +507,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="Date" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ISSN" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="DOI" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OCLC" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="JSTOR" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="StartPageNumber" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="EndPageNumber" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="StartPageID" nillable="true" type="s:int" />
@@ -510,6 +517,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="BHLSegmentID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ContributorName" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
