@@ -1190,12 +1190,29 @@ BEGIN TRY
 
 	-- Get creator MARC subfield 'b'
 	UPDATE	#tmpCreator
-	SET		MARCCreator_b = m.SubFieldValue
-	FROM	#tmpCreator t INNER JOIN dbo.vwIAMarcDataField m
-				ON t.ItemID = m.ItemID
-				AND t.MarcDataFieldID = m.MarcDataFieldID
-				AND t.MarcDataFieldTag = m.DataFieldTag
-				AND m.Code = 'b'
+	SET		MARCCreator_b = 
+--	SELECT	MARCDataFieldID,
+				SUBSTRING(
+					LTRIM(
+						REPLACE(
+							STUFF(
+								(
+								SELECT	'. ' + LTRIM(RTRIM(m.SubFieldValue))
+								FROM	#tmpCreator t2 INNER JOIN dbo.vwIAMarcDataField m
+											ON t2.ItemID = m.ItemID
+											AND t2.MarcDataFieldID = m.MarcDataFieldID
+											AND t2.MarcDataFieldTag = m.DataFieldTag
+											AND m.Code = 'b'
+								WHERE	t2.MARCDataFieldID = t1.MARCDataFieldID
+								ORDER BY MARCSubFieldID
+								FOR XML PATH('')
+								)  -- FOR XML contatenation of 'b' values
+							,1,1,'') -- STUFF to remove leading '. '
+						,'..', '.')	-- REPLACE to replace duplicated periods
+					) -- LTRIM to remove leading spaces
+				, 1, 450) -- SUBSTRING to limit total length of the value
+	FROM	#tmpCreator t1
+
 
 	-- Get creator MARC subfield 'c'
 	UPDATE	#tmpCreator
@@ -1217,12 +1234,26 @@ BEGIN TRY
 
 	-- Get creator MARC subfield 'e'
 	UPDATE	#tmpCreator
-	SET		MARCCreator_e = m.SubFieldValue
-	FROM	#tmpCreator t INNER JOIN dbo.vwIAMarcDataField m
-				ON t.ItemID = m.ItemID
-				AND t.MarcDataFieldID = m.MarcDataFieldID
-				AND t.MarcDataFieldTag = m.DataFieldTag
-				AND m.Code = 'e'
+	SET		MARCCreator_e = 
+--	SELECT	MARCDataFieldID,
+				SUBSTRING(
+					LTRIM(
+						STUFF(
+							(
+							SELECT	' ' + LTRIM(RTRIM(m.SubFieldValue))
+							FROM	#tmpCreator t2 INNER JOIN dbo.vwIAMarcDataField m
+										ON t2.ItemID = m.ItemID
+										AND t2.MarcDataFieldID = m.MarcDataFieldID
+										AND t2.MarcDataFieldTag = m.DataFieldTag
+										AND m.Code = 'e'
+							WHERE	t2.MARCDataFieldID = t1.MARCDataFieldID
+							ORDER BY MARCSubFieldID
+							FOR XML PATH('')
+							)  -- FOR XML contatenation of 'e' values
+						,1,1,'') -- STUFF to remove leading ' '
+					) -- LTRIM to remove leading spaces
+				, 1, 450) -- SUBSTRING to limit total length of the value
+	FROM	#tmpCreator t1
 
 	-- Get creator MARC subfield 'q'
 	UPDATE	#tmpCreator
