@@ -24,11 +24,16 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            // Log the exception.            
             Exception exception = Server.GetLastError();
 
             if (!HttpContext.Current.IsDebuggingEnabled && !(new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).IsDebugMode(Response, Request)))
             {
+                // Log the exception
+                if (ConfigurationManager.AppSettings["LogExceptions"] == "true")
+                {
+                    ExceptionUtility.LogException(exception, "Global.Application_Error");
+                }
+
                 Response.Clear();
 
                 // Default redirect on Application_Error..
@@ -54,6 +59,7 @@ namespace MOBOT.BHL.AdminWeb
                 Response.TrySkipIisCustomErrors = true;
 
                 Response.Redirect(redirect);
+                Response.End();
             }
         }
 

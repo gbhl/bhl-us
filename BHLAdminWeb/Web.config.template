@@ -112,6 +112,7 @@
     <add key="PreserveLoginUrl" value="true" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="LogExceptions" value="true"/>
   </appSettings>
   <connectionStrings>
     <remove name="BHL" />
