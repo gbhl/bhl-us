@@ -1,9 +1,4 @@
-﻿
--- Insert Procedure for dbo.Item
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 1:34:57 PM
-
-CREATE PROCEDURE dbo.ItemInsertAuto
+﻿CREATE PROCEDURE dbo.ItemInsertAuto
 
 @ItemID INT OUTPUT,
 @ImportKey NVARCHAR(50),
@@ -51,7 +46,18 @@ CREATE PROCEDURE dbo.ItemInsertAuto
 @CopyrightEvidenceOperator NVARCHAR(100) = null,
 @CopyrightEvidenceDate NVARCHAR(30) = null,
 @ScanningInstitutionCode NVARCHAR(10) = null,
-@RightsHolderCode NVARCHAR(10) = null
+@RightsHolderCode NVARCHAR(10) = null,
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10)
 
 AS 
 
@@ -105,7 +111,18 @@ INSERT INTO [dbo].[Item]
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
 	[ScanningInstitutionCode],
-	[RightsHolderCode] )
+	[RightsHolderCode],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart] )
 VALUES
 ( 	@ImportKey,
 	@ImportStatusID,
@@ -154,7 +171,18 @@ VALUES
 	@CopyrightEvidenceOperator,
 	@CopyrightEvidenceDate,
 	@ScanningInstitutionCode,
-	@RightsHolderCode )
+	@RightsHolderCode,
+	@EndYear,
+	@StartVolume,
+	@EndVolume,
+	@StartIssue,
+	@EndIssue,
+	@StartNumber,
+	@EndNumber,
+	@StartSeries,
+	@EndSeries,
+	@StartPart,
+	@EndPart )
 
 SET @ItemID = Scope_Identity()
 
@@ -214,7 +242,18 @@ ELSE BEGIN
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
 		[ScanningInstitutionCode],
-		[RightsHolderCode]	
+		[RightsHolderCode],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart]	
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

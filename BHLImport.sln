@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLImportDataObjects", "BHLImportDataObjects\BHLImportDataObjects.csproj", "{D936AD4D-99F3-4095-B538-A097B23ACCD8}"
 EndProject
@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLFlickrTagHarvest", "BHLF
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLWebService", "BHLService\BHLWebService.csproj", "{B33B346A-953D-45FB-B76F-68E12346C9B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLUtilityTest", "BHLUtilityTest\BHLUtilityTest.csproj", "{4FD4183A-F10F-45BD-9B81-AEF237705873}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -430,6 +432,18 @@ Global
 		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{B33B346A-953D-45FB-B76F-68E12346C9B3}.Release|x86.Build.0 = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Debug|x86.Build.0 = Debug|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|x86.ActiveCfg = Release|Any CPU
+		{4FD4183A-F10F-45BD-9B81-AEF237705873}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

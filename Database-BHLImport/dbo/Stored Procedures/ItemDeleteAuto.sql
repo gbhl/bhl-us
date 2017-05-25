@@ -1,9 +1,4 @@
-﻿
--- Delete Procedure for dbo.Item
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 1:34:57 PM
-
-CREATE PROCEDURE dbo.ItemDeleteAuto
+﻿CREATE PROCEDURE dbo.ItemDeleteAuto
 
 @ItemID INT
 

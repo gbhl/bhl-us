@@ -41,7 +41,18 @@
 @NoMARCOk TINYINT,
 @ScanningInstitution NVARCHAR(500),
 @RightsHolder NVARCHAR(500),
-@ItemDescription NVARCHAR(MAX)
+@ItemDescription NVARCHAR(MAX),
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10)
 
 AS 
 
@@ -90,7 +101,18 @@ SET
 	[NoMARCOk] = @NoMARCOk,
 	[ScanningInstitution] = @ScanningInstitution,
 	[RightsHolder] = @RightsHolder,
-	[ItemDescription] = @ItemDescription
+	[ItemDescription] = @ItemDescription,
+	[EndYear] = @EndYear,
+	[StartVolume] = @StartVolume,
+	[EndVolume] = @EndVolume,
+	[StartIssue] = @StartIssue,
+	[EndIssue] = @EndIssue,
+	[StartNumber] = @StartNumber,
+	[EndNumber] = @EndNumber,
+	[StartSeries] = @StartSeries,
+	[EndSeries] = @EndSeries,
+	[StartPart] = @StartPart,
+	[EndPart] = @EndPart
 WHERE
 	[ItemID] = @ItemID
 		
@@ -145,7 +167,18 @@ ELSE BEGIN
 		[NoMARCOk],
 		[ScanningInstitution],
 		[RightsHolder],
-		[ItemDescription]
+		[ItemDescription],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart]
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

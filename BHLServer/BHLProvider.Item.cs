@@ -179,6 +179,23 @@ namespace MOBOT.BHL.Server
 		public void ItemSave( Item item, int userId )
 		{
             item.Year = DataCleaner.CleanYear(item.Year);
+
+            // Parse the volume into its component parts.
+            // NOTE: Once a UI for the component parts of the volume string is available, the parsing should probably be removed from here.
+            VolumeData volumeData = DataCleaner.ParseVolumeString(item.Volume);
+            item.Year = string.IsNullOrWhiteSpace(item.Year) ? volumeData.StartYear : item.Year;
+            item.EndYear = volumeData.EndYear;
+            item.StartVolume = volumeData.StartVolume;
+            item.EndVolume = volumeData.EndVolume;
+            item.StartIssue = volumeData.StartIssue;
+            item.EndIssue = volumeData.EndIssue;
+            item.StartPart = volumeData.StartPart;
+            item.EndPart = volumeData.EndPart;
+            item.StartNumber = volumeData.StartNumber;
+            item.EndNumber = volumeData.EndNumber;
+            item.StartSeries = volumeData.StartSeries;
+            item.EndSeries = volumeData.EndSeries;
+
             new ItemDAL().Save( null, null, item, userId );
 		}
 

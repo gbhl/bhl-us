@@ -255,7 +255,18 @@ BEGIN TRY
 		[CopyrightEvidenceDate] [nvarchar](30) NULL,
 		[ScanningInstitutionCode] [nvarchar](10) NULL,
 		[RightsHolderCode] [nvarchar](10) NULL,
-		[ItemDescription] [nvarchar](max) NULL
+		[ItemDescription] [nvarchar](max) NULL,
+		[EndYear] [nvarchar](20) NULL,
+		[StartVolume] [nvarchar](10) NULL,
+		[EndVolume] [nvarchar](10) NULL,
+		[StartIssue] [nvarchar](10) NULL,
+		[EndIssue] [nvarchar](10) NULL,
+		[StartNumber] [nvarchar](10) NULL,
+		[EndNumber] [nvarchar](10) NULL,
+		[StartSeries] [nvarchar](10) NULL,
+		[EndSeries] [nvarchar](10) NULL,
+		[StartPart] [nvarchar](10) NULL,
+		[EndPart] [nvarchar](10) NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage(
@@ -1423,7 +1434,18 @@ BEGIN TRY
 			CopyrightEvidence = i.CopyrightEvidence,
 			CopyrightEvidenceOperator = i.CopyrightEvidenceOperator,
 			CopyrightEvidenceDate = i.CopyrightEvidenceDate,
-			ItemDescription = i.ItemDescription
+			ItemDescription = i.ItemDescription,
+			EndYear = i.EndYear,
+			StartVolume = i.StartVolume,
+			EndVolume = i.EndVolume,
+			StartIssue = i.StartIssue,
+			EndIssue = i.EndIssue,
+			StartNumber = i.StartNumber,
+			EndNumber = i.EndNumber,
+			StartSeries = i.StartSeries,
+			EndSeries = i.EndSeries,
+			StartPart = i.StartPart,
+			EndPart = i.EndPart
 	FROM	#tmpItem t INNER JOIN dbo.IAItem i
 				ON t.ItemID = i.ItemID
 
@@ -1844,7 +1866,8 @@ BEGIN TRY
 			ZQuery, LicenseUrl, Rights, DueDiligence, CopyrightStatus, CopyrightRegion,
 			CopyrightComment, CopyrightEvidence, CopyrightEvidenceOperator,
 			CopyrightEvidenceDate, ImportKey, ScanningInstitutionCode, RightsHolderCode,
-			ItemDescription)
+			ItemDescription, EndYear, StartVolume, EndVolume, StartIssue, EndIssue,
+			StartNumber, EndNumber, StartSeries, EndSeries, StartPart, EndPart)
 		SELECT	10, @ImportSourceID, t.MARCBibID, t.Sponsor, t.BarCode,
 				t.MaxExistingItemSequence + t.ItemSequence, t.MARCItemID, t.Volume, 
 				t.InstitutionCode, t.LanguageCode, t.VaultID, t.ItemStatusID, 
@@ -1852,7 +1875,9 @@ BEGIN TRY
 				t.LicenseUrl, t.Rights, t.DueDiligence, t.CopyrightStatus, t.CopyrightRegion,
 				t.CopyrightComment, t.CopyrightEvidence, t.CopyrightEvidenceOperator,
 				t.CopyrightEvidenceDate, CONVERT(nvarchar(50), t.ItemID), 
-				ScanningInstitutionCode, RightsHolderCode, ItemDescription
+				ScanningInstitutionCode, RightsHolderCode, ItemDescription, EndYear, 
+				StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, EndNumber, 
+				StartSeries, EndSeries, StartPart, EndPart
 		FROM	#tmpItem t
 
 		-- =======================================================================

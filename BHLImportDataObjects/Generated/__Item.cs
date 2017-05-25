@@ -1,5 +1,5 @@
 
-// Generated 8/3/2016 1:34:57 PM
+// Generated 5/23/2017 3:34:43 PM
 // Do not modify the contents of this code file.
 // This abstract class __Item is based upon dbo.Item.
 
@@ -94,6 +94,17 @@ namespace MOBOT.BHLImport.DataObjects
 		/// <param name="copyrightEvidenceDate"></param>
 		/// <param name="scanningInstitutionCode"></param>
 		/// <param name="rightsHolderCode"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		public __Item(int itemID, 
 			string importKey, 
 			int importStatusID, 
@@ -142,7 +153,18 @@ namespace MOBOT.BHLImport.DataObjects
 			string copyrightEvidenceOperator, 
 			string copyrightEvidenceDate, 
 			string scanningInstitutionCode, 
-			string rightsHolderCode) : this()
+			string rightsHolderCode, 
+			string endYear, 
+			string startVolume, 
+			string endVolume, 
+			string startIssue, 
+			string endIssue, 
+			string startNumber, 
+			string endNumber, 
+			string startSeries, 
+			string endSeries, 
+			string startPart, 
+			string endPart) : this()
 		{
 			_ItemID = itemID;
 			ImportKey = importKey;
@@ -193,6 +215,17 @@ namespace MOBOT.BHLImport.DataObjects
 			CopyrightEvidenceDate = copyrightEvidenceDate;
 			ScanningInstitutionCode = scanningInstitutionCode;
 			RightsHolderCode = rightsHolderCode;
+			EndYear = endYear;
+			StartVolume = startVolume;
+			EndVolume = endVolume;
+			StartIssue = startIssue;
+			EndIssue = endIssue;
+			StartNumber = startNumber;
+			EndNumber = endNumber;
+			StartSeries = startSeries;
+			EndSeries = endSeries;
+			StartPart = startPart;
+			EndPart = endPart;
 		}
 		
 		#endregion Constructors
@@ -462,6 +495,61 @@ namespace MOBOT.BHLImport.DataObjects
 					case "RightsHolderCode" :
 					{
 						_RightsHolderCode = (string)column.Value;
+						break;
+					}
+					case "EndYear" :
+					{
+						_EndYear = (string)column.Value;
+						break;
+					}
+					case "StartVolume" :
+					{
+						_StartVolume = (string)column.Value;
+						break;
+					}
+					case "EndVolume" :
+					{
+						_EndVolume = (string)column.Value;
+						break;
+					}
+					case "StartIssue" :
+					{
+						_StartIssue = (string)column.Value;
+						break;
+					}
+					case "EndIssue" :
+					{
+						_EndIssue = (string)column.Value;
+						break;
+					}
+					case "StartNumber" :
+					{
+						_StartNumber = (string)column.Value;
+						break;
+					}
+					case "EndNumber" :
+					{
+						_EndNumber = (string)column.Value;
+						break;
+					}
+					case "StartSeries" :
+					{
+						_StartSeries = (string)column.Value;
+						break;
+					}
+					case "EndSeries" :
+					{
+						_EndSeries = (string)column.Value;
+						break;
+					}
+					case "StartPart" :
+					{
+						_StartPart = (string)column.Value;
+						break;
+					}
+					case "EndPart" :
+					{
+						_EndPart = (string)column.Value;
 						break;
 					}
 								}
@@ -1823,6 +1911,314 @@ namespace MOBOT.BHLImport.DataObjects
 		}
 		
 		#endregion RightsHolderCode
+		
+		#region EndYear
+		
+		private string _EndYear = string.Empty;
+		
+		/// <summary>
+		/// Column: EndYear;
+		/// DBMS data type: nvarchar(20);
+		/// </summary>
+		[ColumnDefinition("EndYear", DbTargetType=SqlDbType.NVarChar, Ordinal=50, CharacterMaxLength=20)]
+		public string EndYear
+		{
+			get
+			{
+				return _EndYear;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 20);
+				if (_EndYear != value)
+				{
+					_EndYear = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndYear
+		
+		#region StartVolume
+		
+		private string _StartVolume = string.Empty;
+		
+		/// <summary>
+		/// Column: StartVolume;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("StartVolume", DbTargetType=SqlDbType.NVarChar, Ordinal=51, CharacterMaxLength=10)]
+		public string StartVolume
+		{
+			get
+			{
+				return _StartVolume;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_StartVolume != value)
+				{
+					_StartVolume = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartVolume
+		
+		#region EndVolume
+		
+		private string _EndVolume = string.Empty;
+		
+		/// <summary>
+		/// Column: EndVolume;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("EndVolume", DbTargetType=SqlDbType.NVarChar, Ordinal=52, CharacterMaxLength=10)]
+		public string EndVolume
+		{
+			get
+			{
+				return _EndVolume;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_EndVolume != value)
+				{
+					_EndVolume = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndVolume
+		
+		#region StartIssue
+		
+		private string _StartIssue = string.Empty;
+		
+		/// <summary>
+		/// Column: StartIssue;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("StartIssue", DbTargetType=SqlDbType.NVarChar, Ordinal=53, CharacterMaxLength=10)]
+		public string StartIssue
+		{
+			get
+			{
+				return _StartIssue;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_StartIssue != value)
+				{
+					_StartIssue = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartIssue
+		
+		#region EndIssue
+		
+		private string _EndIssue = string.Empty;
+		
+		/// <summary>
+		/// Column: EndIssue;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("EndIssue", DbTargetType=SqlDbType.NVarChar, Ordinal=54, CharacterMaxLength=10)]
+		public string EndIssue
+		{
+			get
+			{
+				return _EndIssue;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_EndIssue != value)
+				{
+					_EndIssue = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndIssue
+		
+		#region StartNumber
+		
+		private string _StartNumber = string.Empty;
+		
+		/// <summary>
+		/// Column: StartNumber;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("StartNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=55, CharacterMaxLength=10)]
+		public string StartNumber
+		{
+			get
+			{
+				return _StartNumber;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_StartNumber != value)
+				{
+					_StartNumber = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartNumber
+		
+		#region EndNumber
+		
+		private string _EndNumber = string.Empty;
+		
+		/// <summary>
+		/// Column: EndNumber;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("EndNumber", DbTargetType=SqlDbType.NVarChar, Ordinal=56, CharacterMaxLength=10)]
+		public string EndNumber
+		{
+			get
+			{
+				return _EndNumber;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_EndNumber != value)
+				{
+					_EndNumber = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndNumber
+		
+		#region StartSeries
+		
+		private string _StartSeries = string.Empty;
+		
+		/// <summary>
+		/// Column: StartSeries;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("StartSeries", DbTargetType=SqlDbType.NVarChar, Ordinal=57, CharacterMaxLength=10)]
+		public string StartSeries
+		{
+			get
+			{
+				return _StartSeries;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_StartSeries != value)
+				{
+					_StartSeries = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartSeries
+		
+		#region EndSeries
+		
+		private string _EndSeries = string.Empty;
+		
+		/// <summary>
+		/// Column: EndSeries;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("EndSeries", DbTargetType=SqlDbType.NVarChar, Ordinal=58, CharacterMaxLength=10)]
+		public string EndSeries
+		{
+			get
+			{
+				return _EndSeries;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_EndSeries != value)
+				{
+					_EndSeries = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndSeries
+		
+		#region StartPart
+		
+		private string _StartPart = string.Empty;
+		
+		/// <summary>
+		/// Column: StartPart;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("StartPart", DbTargetType=SqlDbType.NVarChar, Ordinal=59, CharacterMaxLength=10)]
+		public string StartPart
+		{
+			get
+			{
+				return _StartPart;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_StartPart != value)
+				{
+					_StartPart = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartPart
+		
+		#region EndPart
+		
+		private string _EndPart = string.Empty;
+		
+		/// <summary>
+		/// Column: EndPart;
+		/// DBMS data type: nvarchar(10);
+		/// </summary>
+		[ColumnDefinition("EndPart", DbTargetType=SqlDbType.NVarChar, Ordinal=60, CharacterMaxLength=10)]
+		public string EndPart
+		{
+			get
+			{
+				return _EndPart;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 10);
+				if (_EndPart != value)
+				{
+					_EndPart = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndPart
 			
 		#endregion Properties
 
@@ -1915,7 +2311,18 @@ namespace MOBOT.BHLImport.DataObjects
 					GetComparisonString(o.CopyrightEvidenceOperator) == GetComparisonString(CopyrightEvidenceOperator) &&
 					GetComparisonString(o.CopyrightEvidenceDate) == GetComparisonString(CopyrightEvidenceDate) &&
 					GetComparisonString(o.ScanningInstitutionCode) == GetComparisonString(ScanningInstitutionCode) &&
-					GetComparisonString(o.RightsHolderCode) == GetComparisonString(RightsHolderCode) 
+					GetComparisonString(o.RightsHolderCode) == GetComparisonString(RightsHolderCode) &&
+					GetComparisonString(o.EndYear) == GetComparisonString(EndYear) &&
+					GetComparisonString(o.StartVolume) == GetComparisonString(StartVolume) &&
+					GetComparisonString(o.EndVolume) == GetComparisonString(EndVolume) &&
+					GetComparisonString(o.StartIssue) == GetComparisonString(StartIssue) &&
+					GetComparisonString(o.EndIssue) == GetComparisonString(EndIssue) &&
+					GetComparisonString(o.StartNumber) == GetComparisonString(StartNumber) &&
+					GetComparisonString(o.EndNumber) == GetComparisonString(EndNumber) &&
+					GetComparisonString(o.StartSeries) == GetComparisonString(StartSeries) &&
+					GetComparisonString(o.EndSeries) == GetComparisonString(EndSeries) &&
+					GetComparisonString(o.StartPart) == GetComparisonString(StartPart) &&
+					GetComparisonString(o.EndPart) == GetComparisonString(EndPart) 
 				)
 				{
 					o = null;
@@ -2064,7 +2471,18 @@ namespace MOBOT.BHLImport.DataObjects
 			public const string CopyrightEvidenceOperator = "CopyrightEvidenceOperator";	
 			public const string CopyrightEvidenceDate = "CopyrightEvidenceDate";	
 			public const string ScanningInstitutionCode = "ScanningInstitutionCode";	
-			public const string RightsHolderCode = "RightsHolderCode";
+			public const string RightsHolderCode = "RightsHolderCode";	
+			public const string EndYear = "EndYear";	
+			public const string StartVolume = "StartVolume";	
+			public const string EndVolume = "EndVolume";	
+			public const string StartIssue = "StartIssue";	
+			public const string EndIssue = "EndIssue";	
+			public const string StartNumber = "StartNumber";	
+			public const string EndNumber = "EndNumber";	
+			public const string StartSeries = "StartSeries";	
+			public const string EndSeries = "EndSeries";	
+			public const string StartPart = "StartPart";	
+			public const string EndPart = "EndPart";
 		}
 				
 		#endregion SortColumn

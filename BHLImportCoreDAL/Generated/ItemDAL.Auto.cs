@@ -1,5 +1,5 @@
 
-// Generated 8/3/2016 1:34:57 PM
+// Generated 5/23/2017 3:34:43 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ItemDAL is based upon dbo.Item.
@@ -182,6 +182,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidenceDate"></param>
 		/// <param name="scanningInstitutionCode"></param>
 		/// <param name="rightsHolderCode"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -231,9 +242,20 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
 			string scanningInstitutionCode,
-			string rightsHolderCode)
+			string rightsHolderCode,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
-			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode );
+			return ItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart );
 		}
 		
 		/// <summary>
@@ -288,6 +310,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidenceDate"></param>
 		/// <param name="scanningInstitutionCode"></param>
 		/// <param name="rightsHolderCode"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -338,7 +371,18 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
 			string scanningInstitutionCode,
-			string rightsHolderCode)
+			string rightsHolderCode,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -390,7 +434,18 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitutionCode", SqlDbType.NVarChar, 10, true, scanningInstitutionCode),
-					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode), 
+					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -485,7 +540,18 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
 				value.ScanningInstitutionCode,
-				value.RightsHolderCode);
+				value.RightsHolderCode,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart);
 		}
 		
 		#endregion ===== INSERT =====
@@ -602,6 +668,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidenceDate"></param>
 		/// <param name="scanningInstitutionCode"></param>
 		/// <param name="rightsHolderCode"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -652,9 +729,20 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
 			string scanningInstitutionCode,
-			string rightsHolderCode)
+			string rightsHolderCode,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
-			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode);
+			return ItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, importKey, importStatusID, importSourceID, mARCBibID, barCode, itemSequence, mARCItemID, callNumber, volume, institutionCode, languageCode, sponsor, itemDescription, scannedBy, pDFSize, vaultID, numberOfFiles, note, itemStatusID, scanningUser, scanningDate, paginationCompleteUserID, paginationCompleteDate, paginationStatusID, paginationStatusUserID, paginationStatusDate, lastPageNameLookupDate, externalCreationDate, externalLastModifiedDate, externalCreationUser, externalLastModifiedUser, productionDate, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, scanningInstitutionCode, rightsHolderCode, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart);
 		}
 		
 		/// <summary>
@@ -710,6 +798,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="copyrightEvidenceDate"></param>
 		/// <param name="scanningInstitutionCode"></param>
 		/// <param name="rightsHolderCode"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type Item.</returns>
 		public Item ItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -761,7 +860,18 @@ namespace MOBOT.BHLImport.DAL
 			string copyrightEvidenceOperator,
 			string copyrightEvidenceDate,
 			string scanningInstitutionCode,
-			string rightsHolderCode)
+			string rightsHolderCode,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -813,7 +923,18 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceOperator", SqlDbType.NVarChar, 100, true, copyrightEvidenceOperator),
 					CustomSqlHelper.CreateInputParameter("CopyrightEvidenceDate", SqlDbType.NVarChar, 30, true, copyrightEvidenceDate),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitutionCode", SqlDbType.NVarChar, 10, true, scanningInstitutionCode),
-					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode), 
+					CustomSqlHelper.CreateInputParameter("RightsHolderCode", SqlDbType.NVarChar, 10, true, rightsHolderCode),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
@@ -909,7 +1030,18 @@ namespace MOBOT.BHLImport.DAL
 				value.CopyrightEvidenceOperator,
 				value.CopyrightEvidenceDate,
 				value.ScanningInstitutionCode,
-				value.RightsHolderCode);
+				value.RightsHolderCode,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -999,7 +1131,18 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
 						value.ScanningInstitutionCode,
-						value.RightsHolderCode);
+						value.RightsHolderCode,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart);
 				
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Insert, 
@@ -1071,7 +1214,18 @@ namespace MOBOT.BHLImport.DAL
 						value.CopyrightEvidenceOperator,
 						value.CopyrightEvidenceDate,
 						value.ScanningInstitutionCode,
-						value.RightsHolderCode);
+						value.RightsHolderCode,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart);
 					
 				return new CustomDataAccessStatus<Item>(
 					CustomDataAccessContext.Update, 

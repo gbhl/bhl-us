@@ -1,9 +1,4 @@
-﻿
--- Update Procedure for dbo.Item
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 1:34:57 PM
-
-CREATE PROCEDURE dbo.ItemUpdateAuto
+﻿CREATE PROCEDURE dbo.ItemUpdateAuto
 
 @ItemID INT,
 @ImportKey NVARCHAR(50),
@@ -51,7 +46,18 @@ CREATE PROCEDURE dbo.ItemUpdateAuto
 @CopyrightEvidenceOperator NVARCHAR(100),
 @CopyrightEvidenceDate NVARCHAR(30),
 @ScanningInstitutionCode NVARCHAR(10),
-@RightsHolderCode NVARCHAR(10)
+@RightsHolderCode NVARCHAR(10),
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10)
 
 AS 
 
@@ -105,7 +111,18 @@ SET
 	[CopyrightEvidenceOperator] = @CopyrightEvidenceOperator,
 	[CopyrightEvidenceDate] = @CopyrightEvidenceDate,
 	[ScanningInstitutionCode] = @ScanningInstitutionCode,
-	[RightsHolderCode] = @RightsHolderCode
+	[RightsHolderCode] = @RightsHolderCode,
+	[EndYear] = @EndYear,
+	[StartVolume] = @StartVolume,
+	[EndVolume] = @EndVolume,
+	[StartIssue] = @StartIssue,
+	[EndIssue] = @EndIssue,
+	[StartNumber] = @StartNumber,
+	[EndNumber] = @EndNumber,
+	[StartSeries] = @StartSeries,
+	[EndSeries] = @EndSeries,
+	[StartPart] = @StartPart,
+	[EndPart] = @EndPart
 WHERE
 	[ItemID] = @ItemID
 		
@@ -165,7 +182,18 @@ ELSE BEGIN
 		[CopyrightEvidenceOperator],
 		[CopyrightEvidenceDate],
 		[ScanningInstitutionCode],
-		[RightsHolderCode]
+		[RightsHolderCode],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart]
 	FROM [dbo].[Item]
 	WHERE
 		[ItemID] = @ItemID

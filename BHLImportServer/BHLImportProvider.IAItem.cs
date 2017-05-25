@@ -178,6 +178,9 @@ namespace MOBOT.BHLImport.Server
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
 
+            // Parse the volume into its component parts
+            VolumeData volumeData = DataCleaner.ParseVolumeString(volume);
+
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectAuto(null, null, itemID);
             if (savedItem != null)
@@ -194,7 +197,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanDate = scanDate;
                 savedItem.ExternalStatus = externalStatus;
                 savedItem.TitleID = titleID;
-                savedItem.Year = year;
+                savedItem.Year = string.IsNullOrWhiteSpace(volumeData.StartYear) ? year : volumeData.StartYear;
                 savedItem.IdentifierBib = identifierBib;
                 savedItem.LicenseUrl = licenseUrl;
                 savedItem.Rights = rights;
@@ -209,6 +212,17 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanningInstitution = scanningInstitution;
                 savedItem.RightsHolder = rightsHolder;
                 savedItem.ItemDescription = itemDescription;
+                savedItem.EndYear = volumeData.EndYear;
+                savedItem.StartVolume = volumeData.StartVolume;
+                savedItem.EndVolume = volumeData.EndVolume;
+                savedItem.StartIssue = volumeData.StartIssue;
+                savedItem.EndIssue = volumeData.EndIssue;
+                savedItem.StartNumber = volumeData.StartNumber;
+                savedItem.EndNumber = volumeData.EndNumber;
+                savedItem.StartSeries = volumeData.StartSeries;
+                savedItem.EndSeries = volumeData.EndSeries;
+                savedItem.StartPart = volumeData.StartPart;
+                savedItem.EndPart = volumeData.EndPart;
                 savedItem = dal.IAItemUpdateAuto(null, null, savedItem);
             }
             else

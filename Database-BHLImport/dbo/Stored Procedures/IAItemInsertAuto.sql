@@ -41,7 +41,18 @@
 @NoMARCOk TINYINT,
 @ScanningInstitution NVARCHAR(500),
 @RightsHolder NVARCHAR(500),
-@ItemDescription NVARCHAR(MAX)
+@ItemDescription NVARCHAR(MAX),
+@EndYear NVARCHAR(20),
+@StartVolume NVARCHAR(10),
+@EndVolume NVARCHAR(10),
+@StartIssue NVARCHAR(10),
+@EndIssue NVARCHAR(10),
+@StartNumber NVARCHAR(10),
+@EndNumber NVARCHAR(10),
+@StartSeries NVARCHAR(10),
+@EndSeries NVARCHAR(10),
+@StartPart NVARCHAR(10),
+@EndPart NVARCHAR(10)
 
 AS 
 
@@ -90,7 +101,18 @@ INSERT INTO [dbo].[IAItem]
 	[NoMARCOk],
 	[ScanningInstitution],
 	[RightsHolder],
-	[ItemDescription] )
+	[ItemDescription],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart] )
 VALUES
 ( 	@ItemStatusID,
 	@IAIdentifierPrefix,
@@ -134,7 +156,18 @@ VALUES
 	@NoMARCOk,
 	@ScanningInstitution,
 	@RightsHolder,
-	@ItemDescription )
+	@ItemDescription,
+	@EndYear,
+	@StartVolume,
+	@EndVolume,
+	@StartIssue,
+	@EndIssue,
+	@StartNumber,
+	@EndNumber,
+	@StartSeries,
+	@EndSeries,
+	@StartPart,
+	@EndPart )
 
 SET @ItemID = Scope_Identity()
 
@@ -189,7 +222,18 @@ ELSE BEGIN
 		[NoMARCOk],
 		[ScanningInstitution],
 		[RightsHolder],
-		[ItemDescription]	
+		[ItemDescription],
+		[EndYear],
+		[StartVolume],
+		[EndVolume],
+		[StartIssue],
+		[EndIssue],
+		[StartNumber],
+		[EndNumber],
+		[StartSeries],
+		[EndSeries],
+		[StartPart],
+		[EndPart]	
 	FROM [dbo].[IAItem]
 	WHERE
 		[ItemID] = @ItemID

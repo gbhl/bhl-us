@@ -1,9 +1,4 @@
-﻿
--- Select Procedure for dbo.Item
--- Do not modify the contents of this procedure.
--- Generated 8/3/2016 1:34:57 PM
-
-CREATE PROCEDURE [dbo].[ItemSelectAuto]
+﻿CREATE PROCEDURE [dbo].[ItemSelectAuto]
 
 @ItemID INT
 
@@ -60,7 +55,18 @@ SELECT
 	[CopyrightEvidenceOperator],
 	[CopyrightEvidenceDate],
 	[ScanningInstitutionCode],
-	[RightsHolderCode]
+	[RightsHolderCode],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart]
 FROM	
 	[dbo].[Item]
 WHERE	
@@ -75,4 +81,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-

@@ -50,7 +50,18 @@ SELECT
 	[NoMARCOk],
 	[ScanningInstitution],
 	[RightsHolder],
-	[ItemDescription]
+	[ItemDescription],
+	[EndYear],
+	[StartVolume],
+	[EndVolume],
+	[StartIssue],
+	[EndIssue],
+	[StartNumber],
+	[EndNumber],
+	[StartSeries],
+	[EndSeries],
+	[StartPart],
+	[EndPart]
 FROM	
 	[dbo].[IAItem]
 WHERE	

@@ -265,7 +265,18 @@ BEGIN TRY
 		[ExternalLastModifiedDate] [datetime] NULL,
 		[ExternalCreationUser] [int] NULL,
 		[ExternalLastModifiedUser] [int] NULL,
-		[ImportKey] [nvarchar](50) NULL
+		[ImportKey] [nvarchar](50) NULL,
+		[EndYear] [nvarchar](20) NOT NULL,
+		[StartVolume] [nvarchar](10) NOT NULL,
+		[EndVolume] [nvarchar](10) NOT NULL,
+		[StartIssue] [nvarchar](10) NOT NULL,
+		[EndIssue] [nvarchar](10) NOT NULL,
+		[StartNumber] [nvarchar](10) NOT NULL,
+		[EndNumber] [nvarchar](10) NOT NULL,
+		[StartSeries] [nvarchar](10) NOT NULL,
+		[EndSeries] [nvarchar](10) NOT NULL,
+		[StartPart] [nvarchar](10) NOT NULL,
+		[EndPart] [nvarchar](10) NOT NULL
 		)
 
 	CREATE TABLE #tmpItemLanguage
@@ -785,7 +796,18 @@ BEGIN TRY
 			i.[ExternalLastModifiedDate],
 			i.[ExternalCreationUser],
 			i.[ExternalLastModifiedUser],
-			@ImportKey
+			@ImportKey,
+			i.[EndYear],
+			i.[StartVolume],
+			i.[EndVolume],
+			i.[StartIssue],
+			i.[EndIssue],
+			i.[StartNumber],
+			i.[EndNumber],
+			i.[StartSeries],
+			i.[EndSeries],
+			i.[StartPart],
+			i.[EndPart]
 	FROM	dbo.Item i
 	WHERE	i.ImportStatusID = 10
 	AND		i.ImportSourceID = @ImportSourceID
@@ -1461,7 +1483,9 @@ BEGIN TRY
 			CopyrightEvidenceDate,
 			PaginationCompleteUserID, PaginationCompleteDate, PaginationStatusID, 
 			PaginationStatusUserID, PaginationStatusDate, LastPageNameLookupDate, 
-			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID,
+			EndYear, StartVolume, EndVolume, StartIssue, EndIssue, StartNumber, 
+			EndNumber, StartSeries, EndSeries, StartPart, EndPart, VolumeReviewed)
 		SELECT	t.TitleID, tmp.BarCode, 
 				tmp.MARCItemID, tmp.CallNumber, tmp.Volume, 
 				UPPER(tmp.LanguageCode), tmp.Sponsor, tmp.ItemDescription, tmp.ScannedBy, 
@@ -1475,7 +1499,10 @@ BEGIN TRY
 				tmp.PaginationStatusID, tmp.PaginationStatusUserID, 
 				tmp.PaginationStatusDate, tmp.LastPageNameLookupDate, 
 				tmp.ExternalCreationDate, tmp.ExternalLastModifiedDate, 
-				tmp.ExternalCreationUser, tmp.ExternalLastModifiedUser
+				tmp.ExternalCreationUser, tmp.ExternalLastModifiedUser,
+				tmp.EndYear, tmp.StartVolume, tmp.EndVolume, tmp.StartIssue, 
+				tmp.EndIssue, tmp.StartNumber, tmp.EndNumber, tmp.StartSeries, 
+				tmp.EndSeries, tmp.StartPart, tmp.EndPart, 0
 		FROM	#tmpItem tmp INNER JOIN #tmpTitle tmpT
 					ON tmp.ImportKey = tmpT.ImportKey
 				INNER JOIN dbo.BHLTitle t

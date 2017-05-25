@@ -1,5 +1,5 @@
 
-// Generated 4/12/2017 9:33:46 AM
+// Generated 5/23/2017 3:34:32 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class IAItemDAL is based upon dbo.IAItem.
@@ -177,6 +177,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
 		/// <param name="itemDescription"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -221,9 +232,20 @@ namespace MOBOT.BHLImport.DAL
 			byte noMARCOk,
 			string scanningInstitution,
 			string rightsHolder,
-			string itemDescription)
+			string itemDescription,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
-			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription );
+			return IAItemInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart );
 		}
 		
 		/// <summary>
@@ -273,6 +295,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
 		/// <param name="itemDescription"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemInsertAuto(
 			SqlConnection sqlConnection, 
@@ -318,7 +351,18 @@ namespace MOBOT.BHLImport.DAL
 			byte noMARCOk,
 			string scanningInstitution,
 			string rightsHolder,
-			string itemDescription)
+			string itemDescription,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -365,7 +409,18 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
 					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder),
-					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription), 
+					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -455,7 +510,18 @@ namespace MOBOT.BHLImport.DAL
 				value.NoMARCOk,
 				value.ScanningInstitution,
 				value.RightsHolder,
-				value.ItemDescription);
+				value.ItemDescription,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart);
 		}
 		
 		#endregion ===== INSERT =====
@@ -567,6 +633,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
 		/// <param name="itemDescription"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -612,9 +689,20 @@ namespace MOBOT.BHLImport.DAL
 			byte noMARCOk,
 			string scanningInstitution,
 			string rightsHolder,
-			string itemDescription)
+			string itemDescription,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
-			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription);
+			return IAItemUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, itemStatusID, iAIdentifierPrefix, iAIdentifier, sponsor, sponsorName, scanningCenter, callNumber, imageCount, identifierAccessUrl, volume, note, scanOperator, scanDate, externalStatus, mARCBibID, barCode, iADateStamp, iAAddedDate, lastOAIDataHarvestDate, lastXMLDataHarvestDate, lastProductionDate, shortTitle, sponsorDate, titleID, year, identifierBib, zQuery, licenseUrl, rights, dueDiligence, possibleCopyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, copyrightEvidenceOperator, copyrightEvidenceDate, localFileFolder, noMARCOk, scanningInstitution, rightsHolder, itemDescription, endYear, startVolume, endVolume, startIssue, endIssue, startNumber, endNumber, startSeries, endSeries, startPart, endPart);
 		}
 		
 		/// <summary>
@@ -665,6 +753,17 @@ namespace MOBOT.BHLImport.DAL
 		/// <param name="scanningInstitution"></param>
 		/// <param name="rightsHolder"></param>
 		/// <param name="itemDescription"></param>
+		/// <param name="endYear"></param>
+		/// <param name="startVolume"></param>
+		/// <param name="endVolume"></param>
+		/// <param name="startIssue"></param>
+		/// <param name="endIssue"></param>
+		/// <param name="startNumber"></param>
+		/// <param name="endNumber"></param>
+		/// <param name="startSeries"></param>
+		/// <param name="endSeries"></param>
+		/// <param name="startPart"></param>
+		/// <param name="endPart"></param>
 		/// <returns>Object of type IAItem.</returns>
 		public IAItem IAItemUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -711,7 +810,18 @@ namespace MOBOT.BHLImport.DAL
 			byte noMARCOk,
 			string scanningInstitution,
 			string rightsHolder,
-			string itemDescription)
+			string itemDescription,
+			string endYear,
+			string startVolume,
+			string endVolume,
+			string startIssue,
+			string endIssue,
+			string startNumber,
+			string endNumber,
+			string startSeries,
+			string endSeries,
+			string startPart,
+			string endPart)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -758,7 +868,18 @@ namespace MOBOT.BHLImport.DAL
 					CustomSqlHelper.CreateInputParameter("NoMARCOk", SqlDbType.TinyInt, null, false, noMARCOk),
 					CustomSqlHelper.CreateInputParameter("ScanningInstitution", SqlDbType.NVarChar, 500, false, scanningInstitution),
 					CustomSqlHelper.CreateInputParameter("RightsHolder", SqlDbType.NVarChar, 500, false, rightsHolder),
-					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription), 
+					CustomSqlHelper.CreateInputParameter("ItemDescription", SqlDbType.NVarChar, 1073741823, false, itemDescription),
+					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 20, false, endYear),
+					CustomSqlHelper.CreateInputParameter("StartVolume", SqlDbType.NVarChar, 10, false, startVolume),
+					CustomSqlHelper.CreateInputParameter("EndVolume", SqlDbType.NVarChar, 10, false, endVolume),
+					CustomSqlHelper.CreateInputParameter("StartIssue", SqlDbType.NVarChar, 10, false, startIssue),
+					CustomSqlHelper.CreateInputParameter("EndIssue", SqlDbType.NVarChar, 10, false, endIssue),
+					CustomSqlHelper.CreateInputParameter("StartNumber", SqlDbType.NVarChar, 10, false, startNumber),
+					CustomSqlHelper.CreateInputParameter("EndNumber", SqlDbType.NVarChar, 10, false, endNumber),
+					CustomSqlHelper.CreateInputParameter("StartSeries", SqlDbType.NVarChar, 10, false, startSeries),
+					CustomSqlHelper.CreateInputParameter("EndSeries", SqlDbType.NVarChar, 10, false, endSeries),
+					CustomSqlHelper.CreateInputParameter("StartPart", SqlDbType.NVarChar, 10, false, startPart),
+					CustomSqlHelper.CreateInputParameter("EndPart", SqlDbType.NVarChar, 10, false, endPart), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
@@ -849,7 +970,18 @@ namespace MOBOT.BHLImport.DAL
 				value.NoMARCOk,
 				value.ScanningInstitution,
 				value.RightsHolder,
-				value.ItemDescription);
+				value.ItemDescription,
+				value.EndYear,
+				value.StartVolume,
+				value.EndVolume,
+				value.StartIssue,
+				value.EndIssue,
+				value.StartNumber,
+				value.EndNumber,
+				value.StartSeries,
+				value.EndSeries,
+				value.StartPart,
+				value.EndPart);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -934,7 +1066,18 @@ namespace MOBOT.BHLImport.DAL
 						value.NoMARCOk,
 						value.ScanningInstitution,
 						value.RightsHolder,
-						value.ItemDescription);
+						value.ItemDescription,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart);
 				
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Insert, 
@@ -1001,7 +1144,18 @@ namespace MOBOT.BHLImport.DAL
 						value.NoMARCOk,
 						value.ScanningInstitution,
 						value.RightsHolder,
-						value.ItemDescription);
+						value.ItemDescription,
+						value.EndYear,
+						value.StartVolume,
+						value.EndVolume,
+						value.StartIssue,
+						value.EndIssue,
+						value.StartNumber,
+						value.EndNumber,
+						value.StartSeries,
+						value.EndSeries,
+						value.StartPart,
+						value.EndPart);
 					
 				return new CustomDataAccessStatus<IAItem>(
 					CustomDataAccessContext.Update, 

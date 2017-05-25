@@ -43,6 +43,17 @@
 	[ScanningInstitution]		NVARCHAR(500)  CONSTRAINT [DF_IAItem_ScanningInstitution] DEFAULT '' NOT NULL,
 	[RightsHolder]				NVARCHAR(500)  CONSTRAINT [DF_IAItem_RightsHolder] DEFAULT '' NOT NULL,
 	[ItemDescription]			NVARCHAR(MAX)  CONSTRAINT [DF_IAItem_ItemDescription] DEFAULT '' NOT NULL,
+	[EndYear]                   NVARCHAR(20)   CONSTRAINT [DF_IAItem_EndYear] DEFAULT '' NOT NULL ,
+	[StartVolume]               NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartVolume] DEFAULT '' NOT NULL,
+	[EndVolume]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndVolume] DEFAULT '' NOT NULL,
+	[StartIssue]                NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartIssue] DEFAULT '' NOT NULL,
+	[EndIssue]                  NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndIssue] DEFAULT '' NOT NULL,
+	[StartNumber]               NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartNumber] DEFAULT '' NOT NULL,
+	[EndNumber]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndNumber] DEFAULT '' NOT NULL,
+	[StartSeries]               NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartSeries] DEFAULT '' NOT NULL,
+	[EndSeries]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndSeries] DEFAULT '' NOT NULL,
+	[StartPart]                 NVARCHAR(10)   CONSTRAINT [DF_IAItem_StartPart] DEFAULT '' NOT NULL,
+	[EndPart]                   NVARCHAR(10)   CONSTRAINT [DF_IAItem_EndPart] DEFAULT '' NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC),
     CONSTRAINT [FK_Item_ItemStatus] FOREIGN KEY ([ItemStatusID]) REFERENCES [dbo].[IAItemStatus] ([ItemStatusID])
 );
