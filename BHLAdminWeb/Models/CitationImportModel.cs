@@ -12,6 +12,7 @@ using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
+    [Serializable]
     public class CitationImportModel
     {
         #region Properties
@@ -850,6 +851,7 @@ namespace MOBOT.BHL.AdminWeb.Models
     /// <summary>
     /// Model to hold the attributes of a column in a data file
     /// </summary>
+    [Serializable]
     public class CitationImportColumn
     {
         private int _position;
@@ -888,6 +890,7 @@ namespace MOBOT.BHL.AdminWeb.Models
     /// <summary>
     /// Class used to produce the JSON representation of citations records that is needed by jQuery DataTables
     /// </summary>
+    [Serializable]
     public class ImportRecordJson
     {
         public class Rootobject
