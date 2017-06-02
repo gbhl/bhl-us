@@ -26,7 +26,7 @@ FROM	dbo.Title t INNER JOIN dbo.Item i
 			ON i.ItemID = ii.ItemID
 		INNER JOIN dbo.InstitutionRole r
 			ON ii.InstitutionRoleID = r.InstitutionRoleID
-			AND r.InstitutionRoleName = 'Contributor'
+			AND r.InstitutionRoleName = 'Holding Institution'
 		INNER JOIN dbo.Institution inst
 			ON ii.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.DOI d

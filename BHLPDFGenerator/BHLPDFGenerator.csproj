@@ -164,6 +164,9 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Web References\BHLWS\RISCitation.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\BHLWS\Segment.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -171,9 +174,6 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\TitleBibTeX.datasource">
-      <DependentUpon>Reference.map</DependentUpon>
-    </None>
-    <None Include="Web References\BHLWS\TitleEndNote1.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\Title_Identifier.datasource">

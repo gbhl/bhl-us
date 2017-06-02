@@ -42,7 +42,7 @@ OR		dbo.fnContainsSuspectCharacter(a.Unit) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Title) > 0
 OR		dbo.fnContainsSuspectCharacter(a.Location) > 0
 OR		dbo.fnContainsSuspectCharacter(n.FullerForm) > 0)
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		ISNULL(a.CreationDate, '1/1/2005') > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY 

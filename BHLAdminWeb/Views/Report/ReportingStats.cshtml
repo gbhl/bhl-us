@@ -14,12 +14,12 @@
 {
     <div style="margin-bottom:20px;" class="col-md-6">
         <div>@Html.Label("Show")</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 1, new { Checked = "true" }) All Contributor Statistics</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 2) All Contributor BHL Totals</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 3) All BHL Partner Contributor Statistics</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 4) BHL Partner Totals</div>
-        <div>@Html.RadioButtonFor(m => m.ContributorTarget, 5) Selected Contributor Statistics
-        @Html.DropDownListFor(m => m.ContributorCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })</div>
+        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 1, new { Checked = "true" }) All Content Provider Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 2) All Content Provider BHL Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 3) All BHL Partner Content Provider Statistics</div>
+        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 4) BHL Partner Totals</div>
+        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 5) Selected Content Provider Statistics
+        @Html.DropDownListFor(m => m.InstitutionCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })</div>
     </div>
     <div style="margin-bottom:20px;" class="col-md-3">
         <div>@Html.Label("Sort Order")</div>
@@ -43,7 +43,7 @@
                     <th width="5%" style="background-color:whitesmoke">New<br />Names</th>
                     <th width="5%" style="background-color:whitesmoke">New<br />Segments</th>
                     @{
-                        if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
                         {
                             <th width="5%" style="background-color:whitesmoke">New<br />PDFs</th>
                             <th width="5%" style="background-color:whitesmoke">New<br />DOIs</th>
@@ -54,7 +54,7 @@
                     <th width="5%">Total<br />Names</th>
                     <th width="5%">Total<br />Segments</th>
                     @{
-                        if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
                         {
                             <th width="5%">Total<br />PDFs</th>
                             <th width="5%">Total<br />DOIs</th>
@@ -78,7 +78,7 @@
                             <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Names</td>
                             <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Segments</td>
                             @{
-                                if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
                                 {
                                     <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.PDFs</td>
                                     <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.DOIs</td>
@@ -89,7 +89,7 @@
                             <td style="border-top-width:@topWidth">@reportStat.TotalNames</td>
                             <td style="border-top-width:@topWidth">@reportStat.TotalSegments</td>
                             @{
-                                if (Model.ContributorTarget == 2 || Model.ContributorTarget == 4)
+                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
                                 {
                                     <td style="border-top-width:@topWidth">@reportStat.TotalPDFs</td>
                                     <td style="border-top-width:@topWidth">@reportStat.TotalDOIs</td>
@@ -107,15 +107,15 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        if ($("form input:radio[name='ContributorTarget']:checked").val() != "5") $("#ContributorCode").attr("disabled", true);
+        if ($("form input:radio[name='ContentProviderTarget']:checked").val() != "5") $("#InstitutionCode").attr("disabled", true);
     });
 
-    $("form input:radio[name='ContributorTarget']").change(function () {
+    $("form input:radio[name='ContentProviderTarget']").change(function () {
         if ($(this).val() == '5') {
-            $("#ContributorCode").removeAttr("disabled");
+            $("#InstitutionCode").removeAttr("disabled");
         }
         else {
-            $("#ContributorCode").attr("disabled", true);
+            $("#InstitutionCode").attr("disabled", true);
         }
     });
 </script>

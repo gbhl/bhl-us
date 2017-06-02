@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v2 Documentation
 Created: April 6, 2010
-Revised: March 17, 2017
+Revised: June 12, 2017
 
 ----------------------------------------------------------------------------------------------------
 
@@ -534,7 +534,7 @@ Item/Volume                     Volume assigned to the book                     
 Item/Year                       Year assigned to to a monograph or single item          NA
                                 in a journal
 Item/CopySpecificInformation    Information specific to this copy of the book           NA
-Item/Contributor                Institution that contributed the book to BHL            NA
+Item/HoldingInstitution         Institution that contributed the book to BHL            NA
 Item/RightsHolder               Institution holding the rights to the book              NA
 Item/ScanningInstitution        Institution performing the scanning of the book         NA
 Item/Sponsor                    Institution that sponsored the scanning of the book     NA
@@ -666,6 +666,10 @@ PartCount                       Number of Parts in BHL                          
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+June 12, 2017 - version 2.8.2
+
+- BREAKING CHANGE: Changed the Item/Contributor element to Item/HoldingInstitution.
 
 March 17, 2017 - version 2.8.1
 

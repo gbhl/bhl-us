@@ -22,7 +22,7 @@ FROM	dbo.Title t WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID 
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) 
 			ON ii.InstitutionRoleID = r.InstitutionRoleID 
-			AND r.InstitutionRoleName = 'Contributor'
+			AND r.InstitutionRoleName = 'Holding Institution'
 		INNER JOIN dbo.Institution inst WITH (NOLOCK) ON ii.InstitutionCode = inst.InstitutionCode
 WHERE	t.PublishReady = 1
 GROUP BY t.TitleID, t.RedirectTitleID
@@ -44,7 +44,7 @@ FROM	dbo.Item I WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID 
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) 
 			ON ii.InstitutionRoleID = r.InstitutionRoleID 
-			AND r.InstitutionRoleName = 'Contributor'
+			AND r.InstitutionRoleName = 'Holding Institution'
 		INNER JOIN dbo.Institution inst WITH (NOLOCK) ON ii.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.ItemStatus istat WITH (NOLOCK) ON i.ItemStatusID = istat.ItemStatusID
 WHERE	i.ItemStatusID = 40
@@ -78,7 +78,7 @@ FROM	dbo.Segment s WITH (NOLOCK)
 		INNER JOIN dbo.ItemInstitution ii WITH (NOLOCK) ON i.ItemID = ii.ItemID 
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) 
 			ON ii.InstitutionRoleID = r.InstitutionRoleID 
-			AND r.InstitutionRoleName = 'Contributor'
+			AND r.InstitutionRoleName = 'Holding Institution'
 		INNER JOIN dbo.Institution inst WITH (NOLOCK) ON ii.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.ItemStatus istat WITH (NOLOCK) ON i.ItemStatusID = istat.ItemStatusID
 WHERE	s.SegmentStatusID IN (10, 20)

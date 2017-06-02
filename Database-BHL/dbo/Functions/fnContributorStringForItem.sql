@@ -12,7 +12,7 @@ BEGIN
 			INNER JOIN Institution i ON ii.InstitutionCode = i.InstitutionCode
 			INNER JOIN InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
 	WHERE	ii.ItemID = @ItemID
-	AND		r.InstitutionRoleName = 'Contributor'
+	AND		r.InstitutionRoleName = 'Holding Institution'
 	ORDER BY
 			i.InstitutionName ASC
 

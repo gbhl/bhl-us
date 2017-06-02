@@ -321,11 +321,11 @@
                     <% } else { %>
                     <div class="summary noimg">
                     <% } %>
-                        <h5>Contributor:</h5>
+                        <h5>Holding Institution:</h5>
                         <p>
                             <%foreach (Institution institution in bibliographyItem.institutions)
                                 {
-                                    if (institution.InstitutionRoleName == "Contributor") {
+                                    if (institution.InstitutionRoleName == "Holding Institution") {
                                         if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
                                         { %>
                                             <%: institution.InstitutionName%>

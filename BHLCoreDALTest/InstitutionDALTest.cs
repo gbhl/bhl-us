@@ -110,7 +110,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 22004;
-            string role = "Contributor";
+            string role = "Holding Institution";
             CustomGenericList<Institution> actual = target.InstitutionSelectByItemIDAndRole(sqlConnection, sqlTransaction, itemID, role);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -134,7 +134,7 @@ namespace BHLCoreDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 2187;
-            string role = "Contributor";
+            string role = "Holding Institution";
             CustomGenericList<Institution> actual = target.InstitutionSelectByTitleIDAndRole(sqlConnection, sqlTransaction, titleID, role);
             Assert.IsTrue(actual.Count > 0);
         }

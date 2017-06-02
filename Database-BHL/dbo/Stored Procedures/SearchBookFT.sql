@@ -299,7 +299,7 @@ FROM	#tmpSortable t
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	(InstitutionCode = 'CANADIANA'
 OR		HasLocalContent = 0)
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 
 ----------------------------------------------------------
 -- Return the sorted result set

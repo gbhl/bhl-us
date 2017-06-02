@@ -29,7 +29,7 @@ FROM	dbo.Item i
 WHERE	ii.InstitutionCode = @InstitutionCode
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
-AND		r.InstitutionRoleName IN ('Contributor', 'Rights Holder')
+AND		r.InstitutionRoleName IN ('Holding Institution', 'Rights Holder')
 
 -- Get Title and Item counts
 SELECT @TitleCount = COUNT(DISTINCT TitleID) FROM #Books

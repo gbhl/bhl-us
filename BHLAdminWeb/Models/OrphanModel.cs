@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             List<Orphan> orphans = new List<Orphan>();
             foreach (ReportOrphan o in orphanList)
             {
-                Orphan orphan = new Orphan(o.Type, o.ID, o.Status, o.ReplacedBy, o.Contributor, 
+                Orphan orphan = new Orphan(o.Type, o.ID, o.Status, o.ReplacedBy, o.HoldingInstitution, 
                     o.HasActiveTitles, o.HasActiveItems, o.HasActiveSegments);
                 orphans.Add(orphan);
             }
@@ -42,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             StringBuilder sb = new StringBuilder();
 
             // Add CSV header
-            sb.AppendLine("\"Type\",\"ID\",\"Status\",\"Replaced By\",\"Contributor\",\"Active Titles\",\"Active Items\",\"Active Segments\"");
+            sb.AppendLine("\"Type\",\"ID\",\"Status\",\"Replaced By\",\"Content Provider\",\"Active Titles\",\"Active Items\",\"Active Segments\"");
 
             // Add CSV data
             foreach (Orphan orphan in OrphanList)
@@ -51,7 +51,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 sb.Append(",\"" + orphan.ID.ToString() + "\"");
                 sb.Append(",\"" + orphan.Status + "\"");
                 sb.Append(",\"" + orphan.ReplacedBy.ToString() + "\"");
-                sb.Append(",\"" + orphan.Contributor.Replace("\"", "'") + "\"");
+                sb.Append(",\"" + orphan.HoldingInstitution.Replace("\"", "'") + "\"");
                 sb.Append(",\"" + ((orphan.HasActiveTitles == null) ? "" : ((orphan.HasActiveTitles == true) ? "Yes" : "No")) + "\"");
                 sb.Append(",\"" + ((orphan.HasActiveItems == null) ? "" : ((orphan.HasActiveItems == true) ? "Yes" : "No")) + "\"");
                 sb.Append(",\"" + ((orphan.HasActiveSegments == null) ? "" : ((orphan.HasActiveSegments == true) ? "Yes" : "No")) + "\"");
@@ -69,21 +69,21 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string Url { get; set; }
             public string Status { get; set; }
             public int? ReplacedBy { get; set; }
-            public string Contributor { get; set; }
+            public string HoldingInstitution { get; set; }
             public bool? HasActiveTitles { get; set; }
             public bool? HasActiveItems { get; set; }
             public bool? HasActiveSegments { get; set; }
 
             public Orphan() { }
 
-            public Orphan(string type, int id, string status, int? replacedBy, string contributor,
+            public Orphan(string type, int id, string status, int? replacedBy, string holdingInstitution,
                 bool? hasActiveTitles, bool? hasActiveItems, bool? hasActiveSegments)
             {
                 Type = type;
                 ID = id;
                 Status = status;
                 ReplacedBy = replacedBy;
-                Contributor = contributor;
+                HoldingInstitution = holdingInstitution;
                 HasActiveTitles = hasActiveTitles;
                 HasActiveItems = hasActiveItems;
                 HasActiveSegments = hasActiveSegments;

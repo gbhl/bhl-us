@@ -18,7 +18,7 @@ BEGIN
 						INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
 				WHERE	t.TitleID = @TitleID
 				AND		(itm.ItemStatusID = 40 OR @OnlyActiveItems = 0)
-				AND		r.InstitutionRoleName = 'Contributor'
+				AND		r.InstitutionRoleName = 'Holding Institution'
 				) X
 	ORDER BY InstitutionName ASC
 

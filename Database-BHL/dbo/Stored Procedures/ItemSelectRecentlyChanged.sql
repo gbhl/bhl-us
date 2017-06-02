@@ -168,7 +168,7 @@ FROM	#tmpItem ti
 WHERE	i.ItemStatusID = 40 
 AND		inst.BHLMemberLibrary = 1
 AND		src.SourceName = 'Internet Archive'	-- we only care about items for which we can upload to IA
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 
 -- Clean up
 DROP TABLE #tmpItem

@@ -28,7 +28,7 @@ BEGIN
 				ON i.ItemID = ii.ItemID
 			INNER JOIN dbo.InstitutionRole r 
 				ON ii.InstitutionRoleID = r.InstitutionRoleID 
-				AND r.InstitutionRoleName = 'Contributor'
+				AND r.InstitutionRoleName = 'Holding Institution'
 			LEFT JOIN dbo.ItemCollection ic
 				ON i.ItemID = ic.ItemID
 				AND ic.CollectionID = @CollectionID

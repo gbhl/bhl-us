@@ -45,7 +45,7 @@
 {
     
     <div style="margin-bottom:10px">
-        <div>Contributor: @Html.DropDownListFor(m => m.Institution, new SelectList(ViewBag.ContributorList, "InstitutionCode", "InstitutionName"), "-- All --")</div>
+        <div>Content Provider: @Html.DropDownListFor(m => m.Institution, new SelectList(ViewBag.InstitutionList, "InstitutionCode", "InstitutionName"), "-- All --")</div>
         <div>Import Status: @Html.DropDownListFor(m => m.ImportFileStatus, new SelectList(ViewBag.ImportFileStatusList, "ImportFileStatusID", "StatusName"), "-- All --")</div>
         <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
         <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>

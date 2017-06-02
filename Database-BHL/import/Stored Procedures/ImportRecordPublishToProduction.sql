@@ -49,6 +49,10 @@ DECLARE @InstitutionRoleContributorID int
 SELECT @InstitutionRoleContributorID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Contributor'
 IF (@InstitutionRoleContributorID IS NULL) RAISERROR('InstitutionRole -Contributor- not found', 0, 1)
 
+DECLARE @InstitutionRoleHoldingInstitutionID int
+SELECT @InstitutionRoleHoldingInstitutionID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Holding Institution'
+IF (@InstitutionRoleHoldingInstitutionID IS NULL) RAISERROR('InstitutionRole -Holding Institution- not found', 0, 1)
+
 DECLARE @AuthorRoleNotSpecifiedID int
 DECLARE @SegmentStatusNewID int
 DECLARE @SegmentGenreArticleID int
@@ -614,7 +618,7 @@ BEGIN TRY
 
 		-- Insert ItemInstitution record
 		INSERT dbo.ItemInstitution (ItemID, InstitutionCode, InstitutionRoleID, CreationUserID, LastModifiedUserID)
-		VALUES (@NewItemID, @ContributorCode, @InstitutionRoleContributorID, @UserID, @UserID)
+		VALUES (@NewItemID, @ContributorCode, @InstitutionRoleHoldingInstitutionID, @UserID, @UserID)
 
 		-- Insert TitleItem record
 		INSERT dbo.TitleItem (TitleID, ItemID, ItemSequence, CreationUserID, LastModifiedUserID)

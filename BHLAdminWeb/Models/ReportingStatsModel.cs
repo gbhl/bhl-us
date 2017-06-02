@@ -11,16 +11,16 @@ namespace MOBOT.BHL.AdminWeb.Models
 {
     public class ReportingStatsModel
     {
-        public int ContributorTarget { get; set; }
+        public int ContentProviderTarget { get; set; }
         public string SortOrder { get; set; }
-        public string ContributorCode { get; set; }
+        public string InstitutionCode { get; set; }
         public CustomGenericList<Institution> Institutions { get; set; }
         public List<ReportStat> ReportStats { get; set; }
         public byte[] DownloadStats { get; set; }
 
         public ReportingStatsModel()
         {
-            ContributorCode = string.Empty;
+            InstitutionCode = string.Empty;
             ReportStats = new List<ReportStat>();
             Institutions = new BHLProvider().InstituationSelectAll();
             Institutions.Insert(0, new Institution { InstitutionCode = "", InstitutionName = "" });
@@ -30,7 +30,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             CustomGenericList<MonthlyStats> stats = null;
 
-            switch (ContributorTarget)
+            switch (ContentProviderTarget)
             {
                 case 1:
                     stats = GetDetailedStats(false);
@@ -45,7 +45,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     stats = GetSummaryStats(true);
                     break;
                 case 5:
-                    stats = GetStatsForInstitution(ContributorCode ?? string.Empty);
+                    stats = GetStatsForInstitution(InstitutionCode ?? string.Empty);
                     break;
             }
 
@@ -62,7 +62,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             StringBuilder sb = new StringBuilder();
 
             // Add CSV header
-            if (this.ContributorTarget == 2 || this.ContributorTarget == 4)
+            if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
             {
                 sb.AppendLine("\"Institution\",\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"New PDFs\",\"New DOIs\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\",\"Total PDFs\",\"Total DOIs\"");
             }
@@ -81,7 +81,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 sb.Append(",\"" + reportStat.Pages + "\"");
                 sb.Append(",\"" + reportStat.Names + "\"");
                 sb.Append(",\"" + reportStat.Segments + "\"");
-                if (this.ContributorTarget == 2 || this.ContributorTarget == 4)
+                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
                 {
                     sb.Append(",\"" + reportStat.PDFs + "\"");
                     sb.Append(",\"" + reportStat.DOIs + "\"");
@@ -90,7 +90,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 sb.Append(",\"" + reportStat.TotalPages + "\"");
                 sb.Append(",\"" + reportStat.TotalNames + "\"");
                 sb.Append(",\"" + reportStat.TotalSegments + "\"");
-                if (this.ContributorTarget == 2 || this.ContributorTarget == 4)
+                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
                 {
                     sb.Append(",\"" + reportStat.TotalPDFs + "\"");
                     sb.Append(",\"" + reportStat.TotalDOIs + "\"");
@@ -179,13 +179,13 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             if (string.IsNullOrWhiteSpace(institutionName))
             {
-                switch (ContributorTarget)
+                switch (ContentProviderTarget)
                 {
                     case 2:
-                        institutionName = "All Contributors";
+                        institutionName = "All Content Providers";
                         break;
                     case 4:
-                        institutionName = "BHL Member Contributors";
+                        institutionName = "BHL Partner Content Providers";
                         break;
                 }
             }

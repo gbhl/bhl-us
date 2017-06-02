@@ -14,8 +14,8 @@ DECLARE @Right nvarchar(500)
 SET @Right = ''
 SELECT TOP 1 @Right = [Right] FROM dbo.OAIRecordRight WHERE OAIRecordID = @OAIRecordID
 
-DECLARE @ContributorRoleID int
-SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+DECLARE @HoldingInstitutionRoleID int
+SELECT	@HoldingInstitutionRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Holding Institution'
 
 BEGIN TRAN
 
@@ -57,9 +57,9 @@ WHERE	o.OAIRecordID = @OAIRecordID
 -- Preserve the production identifier for the new item
 SET @ProductionItemID = SCOPE_IDENTITY()
 
--- Insert an ItemInstitution record for the contributor
+-- Insert an ItemInstitution record for the holding institution
 INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
-SELECT	@ProductionItemID, r.BHLInstitutionCode, @ContributorRoleID
+SELECT	@ProductionItemID, r.BHLInstitutionCode, @HoldingInstitutionRoleID
 FROM	dbo.OAIRecord o
 		INNER JOIN dbo.OAIHarvestLog lg ON o.HarvestLogID = lg.HarvestLogID
 		INNER JOIN dbo.OAIHarvestSet s ON lg.HarvestSetID = s.HarvestSetID
@@ -85,5 +85,3 @@ FROM	dbo.BHLTitleItem bti INNER JOIN (
 COMMIT TRAN
 
 END
-
-GO

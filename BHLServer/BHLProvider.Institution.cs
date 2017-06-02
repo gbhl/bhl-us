@@ -52,14 +52,14 @@ namespace MOBOT.BHL.Server
 			return institutionDal;
 		}
 
-        public CustomGenericList<Institution> ItemContributorSelectByItemID(int itemID)
+        public CustomGenericList<Institution> ItemHoldingInstitutionSelectByItemID(int itemID)
         {
-            return new InstitutionDAL().InstitutionSelectByItemIDAndRole(null, null, itemID, InstitutionRole.Contributor);
+            return new InstitutionDAL().InstitutionSelectByItemIDAndRole(null, null, itemID, InstitutionRole.HoldingInstitution);
         }
 
-        public CustomGenericList<Institution> TitleContributorSelectByTitleID(int titleID)
+        public CustomGenericList<Institution> TitleHoldingInstitutionSelectByTitleID(int titleID)
         {
-            return new InstitutionDAL().InstitutionSelectByTitleIDAndRole(null, null, titleID, InstitutionRole.Contributor);
+            return new InstitutionDAL().InstitutionSelectByTitleIDAndRole(null, null, titleID, InstitutionRole.HoldingInstitution);
         }
 
         public Institution InstitutionSelectAuto( string institutionCode )

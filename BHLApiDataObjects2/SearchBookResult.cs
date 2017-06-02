@@ -113,13 +113,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
-        private string _contributor = null;
-        public string Contributor
+        private string _holdingInstitution = null;
+        public string HoldingInstitution
         {
-            get { return _contributor; }
+            get { return _holdingInstitution; }
             set {
                 if (value != null) value = CalibrateValue(value, 255);
-                _contributor = value;
+                _holdingInstitution = value;
             }
         }
 
@@ -200,7 +200,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                         }
                     case "InstitutionName":
                         {
-                            Contributor = Utility.EmptyIfNull(column.Value);
+                            HoldingInstitution = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

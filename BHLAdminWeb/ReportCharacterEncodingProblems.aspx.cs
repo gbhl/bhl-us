@@ -20,7 +20,7 @@ namespace MOBOT.BHL.AdminWeb
                 CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
 
                 Institution emptyInstitution = new Institution();
-                emptyInstitution.InstitutionName = "(select contributor)";
+                emptyInstitution.InstitutionName = "(select content provider)";
                 emptyInstitution.InstitutionCode = "";
                 institutions.Insert(0, emptyInstitution);
                 listInstitutions.DataSource = institutions;

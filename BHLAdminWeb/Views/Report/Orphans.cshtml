@@ -46,7 +46,7 @@
                     <th width="7%">ID</th>
                     <th width="12%">Status</th>
                     <th width="7%">Replaced<br />By</th>
-                    <th width="50%">Contributor</th>
+                    <th width="50%">Content Provider</th>
                     <th width="6%">Active<br />Titles</th>
                     <th width="6%">Active<br />Items</th>
                     <th width="6%">Active<br />Segments</th>
@@ -61,7 +61,7 @@
                             <td><a href="@orphan.Url">@orphan.ID</a></td>
                             <td>@orphan.Status</td>
                             <td>@orphan.ReplacedBy</td>
-                            <td>@orphan.Contributor</td>
+                            <td>@orphan.HoldingInstitution</td>
                             <td align="center">@((orphan.HasActiveTitles == null) ? "" : ((orphan.HasActiveTitles == true) ? "Yes" : "No"))</td>
                             <td align="center">@((orphan.HasActiveItems == null) ? "" : ((orphan.HasActiveItems == true) ? "Yes" : "No"))</td>
                             <td align="center">@((orphan.HasActiveSegments == null) ? "" : ((orphan.HasActiveSegments == true) ? "Yes" : "No"))</td>

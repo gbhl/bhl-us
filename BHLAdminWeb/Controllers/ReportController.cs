@@ -82,14 +82,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult CitationImportHistory()
         {
-            /*
-            CitationService service = new CitationService();
-            ViewBag.PageTitle += "Citation Import History";
-            ViewBag.ContributorList = service.InstitutionList();
-            ViewBag.ImportFileStatusList = service.ImportFileStatusList();
-            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
-
-             */
             CitationImportHistoryModel model = new CitationImportHistoryModel();
             model.Institution = string.Empty;
             model.ImportFileStatus = string.Empty;
@@ -105,15 +97,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpPost]
         public ActionResult CitationImportHistory(CitationImportHistoryModel model)
         {   
-            /*
-            CitationService service = new CitationService();
-            ViewBag.PageTitle += "Citation Import History";
-            ViewBag.ContributorList = service.InstitutionList();
-            ViewBag.ImportFileStatusList = service.ImportFileStatusList();
-            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
-
-            model.GetImportFileList();
-             */
             CitationImportHistoryInit(model);
 
             return View(model);
@@ -123,7 +106,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         {
             CitationService service = new CitationService();
             ViewBag.PageTitle += "Citation Import History";
-            ViewBag.ContributorList = service.InstitutionList();
+            ViewBag.InstitutionList = service.InstitutionList();
             ViewBag.ImportFileStatusList = service.ImportFileStatusList();
             ViewBag.ReportDateRangeList = service.ReportDateRangeList();
 

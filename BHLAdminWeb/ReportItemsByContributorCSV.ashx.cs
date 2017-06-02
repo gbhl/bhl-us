@@ -24,11 +24,11 @@ namespace MOBOT.BHL.AdminWeb
             Institution institution = provider.InstitutionSelectAuto(institutionCode);
             CustomGenericList<Item> items = provider.ItemSelectByInstitution(institutionCode, 1000000, "Date");
 
-            this.WriteHttpHeaders(context, "text/csv", "ItemsByContributor" + institutionCode + DateTime.Now.ToString("yyyyMMdd") + ".csv");
+            this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProvider" + institutionCode + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
             // Write file header
             StringBuilder csvString = new StringBuilder();
-            csvString.AppendLine("\"Contributor\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\"");
+            csvString.AppendLine("\"Content Provider\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 

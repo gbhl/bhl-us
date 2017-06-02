@@ -40,12 +40,12 @@ namespace MOBOT.BHL.DataObjects
             set { _replacedBy = value; }
         }
 
-        private string _contributor = string.Empty;
+        private string _holdingInstitution = string.Empty;
 
-        public string Contributor
+        public string HoldingInstitution
         {
-            get { return _contributor; }
-            set { _contributor = value; }
+            get { return _holdingInstitution; }
+            set { _holdingInstitution = value; }
         }
 
         private bool? _hasActiveTitles = null;
@@ -100,7 +100,7 @@ namespace MOBOT.BHL.DataObjects
                         }
                     case "InstitutionName":
                         {
-                            Contributor = (String)column.Value;
+                            HoldingInstitution = (String)column.Value;
                             break;
                         }
                     case "HasActiveTitles":

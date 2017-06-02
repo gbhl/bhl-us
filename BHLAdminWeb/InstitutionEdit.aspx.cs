@@ -64,7 +64,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( nameTextBox.Text.Trim().Length == 0 )
 			{
 				flag = true;
-				errorControl.AddErrorText( "Contributor name is missing" );
+				errorControl.AddErrorText( "Name is missing" );
 			}
 
 			errorControl.Visible = flag;
@@ -80,7 +80,7 @@ namespace MOBOT.BHL.AdminWeb
 			{
 				if ( hidCode.Value.Length == 0 )
 				{
-					errorControl.AddErrorText("Please select a contributor before saving" );
+					errorControl.AddErrorText("Please select a content provider before saving" );
 					errorControl.Visible = true;
 					return;
 				}

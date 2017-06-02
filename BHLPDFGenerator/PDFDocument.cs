@@ -552,12 +552,12 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 string sponsor = string.Empty;
                 Item item = service.ItemSelectAuto(pages[0].ItemID);
                 if (item != null) sponsor = item.Sponsor;
-                Institution[] institutions = service.InstitutionSelectByItemIDAndRole(pages[0].ItemID, "Contributor");
+                Institution[] institutions = service.InstitutionSelectByItemIDAndRole(pages[0].ItemID, "Holding Institution");
                 
                 if (institutions != null || sponsor != string.Empty)
                 {
                     Institution institution = institutions[0];
-                    if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Contributed by: " + institution.InstitutionName, 60, 60);
+                    if (institution != null) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Holding Institution: " + institution.InstitutionName, 60, 60);
                     if (sponsor != String.Empty) this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, standardFont, "Sponsored by: " + sponsor, 60, 60);
                     this.AddSpace(doc, standardFont);
                 }

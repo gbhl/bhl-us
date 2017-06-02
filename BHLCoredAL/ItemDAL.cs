@@ -33,7 +33,7 @@ namespace MOBOT.BHL.DAL
                         item.ItemLanguages = new ItemLanguageDAL().ItemLanguageSelectByItemID(connection, transaction, item.ItemID);
                         item.ItemCollections = new ItemCollectionDAL().SelectByItem(connection, transaction, item.ItemID);
                         item.Segments = new SegmentDAL().SegmentSelectByItemID(connection, transaction, item.ItemID, 1);
-                        item.Contributors = new InstitutionDAL().InstitutionSelectByItemID(connection, transaction, item.ItemID);
+                        item.Institutions = new InstitutionDAL().InstitutionSelectByItemID(connection, transaction, item.ItemID);
                         return item;
 					}
 					else
@@ -371,10 +371,10 @@ namespace MOBOT.BHL.DAL
                 CustomDataAccessStatus<Item> updatedItem =
                     new ItemDAL().ItemManageAuto(connection, transaction, item, userId);
 
-                if (item.Contributors.Count > 0)
+                if (item.Institutions.Count > 0)
                 {
                     ItemInstitutionDAL itemInstitutionDAL = new ItemInstitutionDAL();
-                    foreach (Institution institution in item.Contributors)
+                    foreach (Institution institution in item.Institutions)
                     {
                         if (institution.IsDeleted)
                         {

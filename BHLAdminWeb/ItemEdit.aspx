@@ -262,7 +262,7 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Contributor:
+					Holding Institution:
 				</td>
 				<td>
 					<asp:DropDownList ID="ddlInst" runat="server">

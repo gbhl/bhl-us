@@ -520,7 +520,7 @@ namespace MOBOT.BHL.OAI2
                 this.JournalVolume = item.Volume;
                 this.Date = item.Year;
 
-                CustomGenericList<Institution> contributors = provider.ItemContributorSelectByItemID(item.ItemID);
+                CustomGenericList<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
                 if (contributors.Count > 0)
                 {
                     foreach(Institution contributor in contributors)
@@ -766,7 +766,7 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                CustomGenericList<Institution> contributors = provider.TitleContributorSelectByTitleID(title.TitleID);
+                CustomGenericList<Institution> contributors = provider.TitleHoldingInstitutionSelectByTitleID(title.TitleID);
                 if (contributors.Count > 0)
                 {
                     foreach (Institution contributor in contributors)
@@ -885,7 +885,7 @@ namespace MOBOT.BHL.OAI2
                     this.JournalVolume = item.Volume;
                     this.Date = item.Year;
 
-                    CustomGenericList<Institution> contributors = provider.ItemContributorSelectByItemID(item.ItemID);
+                    CustomGenericList<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
                     if (contributors.Count > 0)
                     {
                         foreach (Institution contributor in contributors)

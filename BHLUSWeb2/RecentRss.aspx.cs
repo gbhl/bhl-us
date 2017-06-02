@@ -50,8 +50,8 @@ namespace MOBOT.BHL.Web2
                 {
                     if (!String.IsNullOrEmpty(association)) description += association + "<br/>";
                 }
-                if (item.ContributorStrings.Count() > 1) description += "<b>Contributing Library:</b><br/>Multiple institutions<br/>";
-                if (item.ContributorStrings.Count() == 1) description += "<b>Contributing Library:</b><br/>" + item.ContributorStrings[0] + "<br/>";
+                if (item.InstitutionStrings.Count() > 1) description += "<b>Contributing Library:</b><br/>Multiple institutions<br/>";
+                if (item.InstitutionStrings.Count() == 1) description += "<b>Contributing Library:</b><br/>" + item.InstitutionStrings[0] + "<br/>";
                 if (!String.IsNullOrEmpty(item.Sponsor)) description += "<b>Sponsor:</b><br/>" + item.Sponsor + "<br/>";
                 if (!String.IsNullOrEmpty(item.LicenseUrl)) description += "<b>License Type:</b><br/>" + item.LicenseUrl + "<br/>";
                 if (!String.IsNullOrEmpty(item.Rights)) description += "<b>Rights:</b><br/>" + item.Rights + "<br/>";

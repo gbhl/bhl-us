@@ -23,7 +23,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
                 Institution emptyInstitution = new Institution();
-                emptyInstitution.InstitutionName = "(select contributor)";
+                emptyInstitution.InstitutionName = "(select content provider)";
                 emptyInstitution.InstitutionCode = "";
                 institutions.Insert(0, emptyInstitution);
                 listInstitutions.DataSource = institutions;
@@ -49,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb
             itemList.DataBind();
 
             Page.SetFocus(listInstitutions);
-            Page.Title = "BHL Admin - Items By Contributor";
+            Page.Title = "BHL Admin - Items By Content Provider";
         }
 
         protected void btnDownload_Click(object sender, EventArgs e)
@@ -70,7 +70,7 @@ namespace MOBOT.BHL.AdminWeb
             msg = string.Empty;
 
             bool valid = !string.IsNullOrEmpty(listInstitutions.SelectedValue);
-            if (!valid) msg = "Please select a contributor";
+            if (!valid) msg = "Please select a content provider";
 
             return valid;
         }

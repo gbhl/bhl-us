@@ -229,7 +229,7 @@ namespace MOBOT.BHL.Web2.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"TitleId\",\"TitleUrl\",\"ItemId\",\"ItemUrl\",\"Title\",\"PartNumber\",\"PartName\",\"Edition\",\"Publication Details\",\"Volume\",\"Authors\",\"Collections\",\"Contributor\"");
+            csvString.AppendLine("\"TitleId\",\"TitleUrl\",\"ItemId\",\"ItemUrl\",\"Title\",\"PartNumber\",\"PartName\",\"Edition\",\"Publication Details\",\"Volume\",\"Authors\",\"Collections\",\"Holding Institution\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 

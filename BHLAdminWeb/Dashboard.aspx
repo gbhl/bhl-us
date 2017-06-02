@@ -496,7 +496,7 @@
 					</tr>
                     <tr>
                         <td align="center" runat="server" id="tdRptDoiByInstitution">
-                            <a href="ReportDOIByInstitution.aspx">DOIs By Contributor</a>
+                            <a href="ReportDOIByInstitution.aspx">DOIs By Content Provider</a>
                         </td>
                     </tr>
                     <tr>
@@ -506,7 +506,7 @@
                     </tr>
                     <tr>
                         <td align="center" runat="server" id="tdRptItemsByContributor">
-                            <a href="ReportItemsByContributor.aspx">Items By Contributor</a>
+                            <a href="ReportItemsByContributor.aspx">Items By Content Provider</a>
                         </td>
                     </tr>
                     <tr>

@@ -34,11 +34,10 @@ BEGIN
 				ON i.ItemID = ii.ItemID
 			INNER JOIN dbo.InstitutionRole r 
 				ON ii.InstitutionRoleID = r.InstitutionRoleID 
-				AND r.InstitutionRoleName = 'Contributor'
+				AND r.InstitutionRoleName = 'Holding Institution'
 	WHERE	(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode IS NULL)
 	AND		(i.LanguageCode = @LanguageCode OR @LanguageCode IS NULL)
 	AND		tc.TitleCollectionID IS NULL
 END
 
 END
-

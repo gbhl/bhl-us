@@ -124,8 +124,8 @@ namespace MOBOT.BHL.Web2.Handlers
                         if (!string.IsNullOrEmpty(item.Volume)) content += "Volume: " + item.Volume + "<br>";
                         if (item.AuthorStrings.Length > 0) content += "By: " + String.Join(" - ", item.AuthorStrings) + "<br>"; 
                         if (!string.IsNullOrEmpty(item.PublicationDetails)) content += "Publication Details: " + item.PublicationDetails + "<br>";
-                        if (item.ContributorStrings.Count() > 1) content += "Contributed By: Multiple institutions";
-                        if (item.ContributorStrings.Count() == 1) content += "Contributed By: " + item.ContributorStrings[0];
+                        if (item.InstitutionStrings.Count() > 1) content += "Contributed By: Multiple institutions";
+                        if (item.InstitutionStrings.Count() == 1) content += "Contributed By: " + item.InstitutionStrings[0];
 
                         // Set up item with standard RSS information
                         SyndicationItem syndItem = new SyndicationItem(
@@ -140,8 +140,8 @@ namespace MOBOT.BHL.Web2.Handlers
                         string iTunesContent = string.Empty;
                         if (!string.IsNullOrEmpty(item.Volume)) iTunesContent += "Volume: " + item.Volume + ".  ";
                         if (!string.IsNullOrEmpty(item.PublicationDetails)) iTunesContent += "Publication Details: " + item.PublicationDetails + ".  ";
-                        if (item.ContributorStrings.Count() > 1) iTunesContent += "Contributed By: Multiple institutions";
-                        if (item.ContributorStrings.Count() == 1) iTunesContent += "Contributed By: " + item.ContributorStrings[0];
+                        if (item.InstitutionStrings.Count() > 1) iTunesContent += "Contributed By: Multiple institutions";
+                        if (item.InstitutionStrings.Count() == 1) iTunesContent += "Contributed By: " + item.InstitutionStrings[0];
 
                         XmlElement itemElement = doc.CreateElement("itunes", "subtitle", _itunesNamespace);
                         itemElement.InnerText = iTunesContent.Substring(0, (iTunesContent.Length > 255) ? 255 : iTunesContent.Length);

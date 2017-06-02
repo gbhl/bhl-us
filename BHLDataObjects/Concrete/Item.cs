@@ -17,7 +17,7 @@ namespace MOBOT.BHL.DataObjects
 		private string _paginationUserName;
 		private string _downloadUrl;
         private short? _itemSequence = null;
-        private CustomGenericList<Institution> _contributors = new CustomGenericList<Institution>();
+        private CustomGenericList<Institution> _institutions = new CustomGenericList<Institution>();
 		private CustomGenericList<Page> _pages = new CustomGenericList<Page>();
         private CustomGenericList<Title> _titles = new CustomGenericList<Title>();
         private CustomGenericList<TitleItem> _titleItems = new CustomGenericList<TitleItem>();
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DataObjects
         private string[] authorStrings = null;
         private string[] tagStrings = null;
         private string[] associationStrings = null;
-        private string[] contributorStrings = null;
+        private string[] institutionStrings = null;
         private string _publicationDetails;
         private int _numberOfSegments = 0;
         private int _numberOfPages = 0;
@@ -46,10 +46,10 @@ namespace MOBOT.BHL.DataObjects
 			}
 		}
 
-        public CustomGenericList<Institution> Contributors
+        public CustomGenericList<Institution> Institutions
         {
-            get { return this._contributors; }
-            set { this._contributors = value; }
+            get { return this._institutions; }
+            set { this._institutions = value; }
         }
 
 		public CustomGenericList<Page> Pages
@@ -167,9 +167,9 @@ namespace MOBOT.BHL.DataObjects
             get { return associationStrings; }
         }
 
-        public string[] ContributorStrings
+        public string[] InstitutionStrings
         {
-            get { return contributorStrings; }
+            get { return institutionStrings; }
         }
 
         public string PublicationDetails
@@ -249,17 +249,17 @@ namespace MOBOT.BHL.DataObjects
             associationStrings = associationTextString.Split('|');
         }
 
-        private void ProcessContributorTextString(string value)
+        private void ProcessInstitutionTextString(string value)
         {
-            string contributorTextString = "";
+            string institutionTextString = "";
             //strip off the trailing separator if necessary
             if (value != null && value.EndsWith("|"))
                 value = value.Substring(0, value.Length - 1);
 
             if (value != null)
-                contributorTextString = value;
+                institutionTextString = value;
 
-            contributorStrings = contributorTextString.Split('|');
+            institutionStrings = institutionTextString.Split('|');
         }
 
         #region ISet override
@@ -287,7 +287,7 @@ namespace MOBOT.BHL.DataObjects
                         }
                     case "ContributorTextString":
                         {
-                            ProcessContributorTextString(Utility.EmptyIfNull(column.Value));
+                            ProcessInstitutionTextString(Utility.EmptyIfNull(column.Value));
                             break;
                         }
                     case "TitleName":

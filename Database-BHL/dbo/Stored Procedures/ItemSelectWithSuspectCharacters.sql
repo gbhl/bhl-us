@@ -30,7 +30,7 @@ FROM	dbo.Item i INNER JOIN dbo.TitleItem ti
 		INNER JOIN dbo.InstitutionRole r
 			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	dbo.fnContainsSuspectCharacter(i.Volume) > 0
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		i.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY

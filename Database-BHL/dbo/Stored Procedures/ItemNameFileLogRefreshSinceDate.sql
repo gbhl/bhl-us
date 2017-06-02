@@ -35,7 +35,7 @@ WHERE	ItemID IN (
 					INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
 					INNER JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID
 					INNER JOIN dbo.Institution inst ON ii.InstitutionCode = inst.InstitutionCode
-			WHERE	r.InstitutionRoleName = 'Contributor'
+			WHERE	r.InstitutionRoleName = 'Holding Institution'
 			GROUP BY t.ItemID HAVING SUM(CONVERT(int, inst.BHLMemberLibrary)) = 0)
 
 -- Add new rows to table

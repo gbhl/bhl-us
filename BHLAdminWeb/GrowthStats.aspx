@@ -5,10 +5,10 @@
 	<br />
 	<span class="pageHeader">Expanded Growth Stats</span><hr />
 
-    Contributor:
+    Content Provider:
     <asp:DropDownList ID="ddlInstitutions" runat="server">
     <asp:ListItem Value="" Text="(All)"></asp:ListItem>
-    </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </asp:DropDownList>&nbsp;&nbsp;&nbsp;
     Dates:
     <asp:DropDownList ID="ddlTimespan" runat="server">
     <asp:ListItem Value="0" Text="This Month"></asp:ListItem>
@@ -17,9 +17,9 @@
     <asp:ListItem Value="-6" Text="Last 6 Months" Selected="True"></asp:ListItem>
     <asp:ListItem Value="-12" Text="Last 12 Months"></asp:ListItem>
     <asp:ListItem Value="-24" Text="Last 24 Months"></asp:ListItem>
-    </asp:DropDownList>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </asp:DropDownList>&nbsp;&nbsp;&nbsp;
     <asp:Button ID="btnShow" runat="server" Text="Show" onclick="btnShow_Click" />
-    <asp:Button ID="btnDownload" runat="server" Text="Download All For Contributor" OnClick="btnDownload_Click" />
+    <asp:Button ID="btnDownload" runat="server" Text="Download All For Content Provider" OnClick="btnDownload_Click" />
     <br /><br />
 
     <span class="tableHeader">Item Additions By Month</span><br />

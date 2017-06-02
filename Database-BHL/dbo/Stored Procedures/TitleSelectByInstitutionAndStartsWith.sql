@@ -29,7 +29,7 @@ FROM	dbo.Title t  WITH (NOLOCK)
 WHERE	i.ItemStatusID = 40
 AND		ii.InstitutionCode = ISNULL(@InstitutionCode, ii.InstitutionCode)
 AND		t.SortTitle LIKE @StartsWith + '%'
-AND		r.InstitutionRoleName IN ('Contributor', 'Rights Holder')
+AND		r.InstitutionRoleName IN ('Holding Institution', 'Rights Holder')
 
 SELECT DISTINCT
 		t.TitleID,

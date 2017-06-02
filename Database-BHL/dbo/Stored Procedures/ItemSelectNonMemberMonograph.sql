@@ -23,7 +23,7 @@ FROM	dbo.Item i
 		INNER JOIN dbo.SearchCatalog c ON i.ItemID = c.ItemID
 WHERE	i.CreationDate > @SinceDate
 AND		c.HasLocalContent = 1
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 
 SELECT	t.TitleID,
 		ISNULL(tti.IdentifierValue, '') AS OCLC,

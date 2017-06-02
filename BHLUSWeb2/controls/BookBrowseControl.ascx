@@ -9,7 +9,7 @@
             <%# Eval("PublicationDetails") == string.Empty ? "" : "<div class=\"titledetails\">Publication info: " + Eval("PublicationDetails") + "</div>"%>
             <%# Eval("Volume") != string.Empty && ShowVolume ? "<div class=\"titledetails\">Volume: " + Eval("Volume") + "</div>" : ""%>
             <%# Eval("Associations") == string.Empty ? "" : "<div class=\"titledetails\">Series: " + Eval("Associations").ToString().Replace("|", "<br />Series: ") + "</div>"%>
-            <%# Eval("InstitutionName") == string.Empty ? "" : "<div class=\"titledetails\">Contributed by: " + Eval("InstitutionName") + "</div>"%>
+            <%# Eval("InstitutionName") == string.Empty ? "" : "<div class=\"titledetails\">Holding Institution: " + Eval("InstitutionName") + "</div>"%>
             <%# Eval("Subjects") == string.Empty ? "" : "<div class=\"titledetails\">Subjects: " + Eval("Subjects").ToString().Replace("|", "&nbsp;&nbsp;") + "</div>"%>
             <%# Eval("Collections") == string.Empty ? "" : "<div class=\"titledetails\">BHL Collections: " + Eval("Collections") + "</div>"%>
              <a class="titleviewbook" target="<%# Eval("ExternalUrl") == string.Empty ? "_self" : "_blank" %>" href="/item/<%# Eval("ItemID ")%>">View Book<%# Eval("ExternalUrl") == string.Empty ? "" : " (External)" %></a>

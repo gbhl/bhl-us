@@ -992,7 +992,7 @@ BEGIN TRY
 			INNER JOIN dbo.BHLInstitutionRole br
 				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.ProductionTitleID IS NULL
-	AND		br.InstitutionRoleName = 'Contributor'
+	AND		br.InstitutionRoleName = 'Holding Institution'
 
 	-- Match on MARC 001 Value + Institution Code
 	UPDATE	#tmpTitle
@@ -1015,7 +1015,7 @@ BEGIN TRY
 			INNER JOIN dbo.BHLInstitutionRole br
 				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.ProductionTitleID IS NULL
-	AND		br.InstitutionRoleName = 'Contributor'
+	AND		br.InstitutionRoleName = 'Holding Institution'
 
 	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
 	/*
@@ -1557,16 +1557,16 @@ BEGIN TRY
 		-- =======================================================================
 
 		-- Insert new iteminstitution records into the production database
-		DECLARE @ContributorRoleID int
+		DECLARE @HoldingInstitutionRoleID int
 		DECLARE @ScanningInstitutionRoleID int
 		DEClARE @RightsHolderRoleID int
-		SELECT	@ContributorRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+		SELECT	@HoldingInstitutionRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Holding Institution'
 		SELECT	@ScanningInstitutionRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Scanning Institution'
 		SELECT	@RightsHolderRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Rights Holder'
 
 		-- Insert ItemInstitution records for each role
 		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
-		SELECT	i.ItemID, tmp.InstitutionCode, @ContributorRoleID
+		SELECT	i.ItemID, tmp.InstitutionCode, @HoldingInstitutionRoleID
 		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
 		WHERE	tmp.InstitutionCode IS NOT NULL
 

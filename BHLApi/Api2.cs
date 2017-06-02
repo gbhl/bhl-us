@@ -846,7 +846,7 @@ namespace MOBOT.BHL.API.BHLApi
                             item.Source = pageDetail.Source;
                             item.SourceIdentifier = pageDetail.SourceIdentifier;
                             item.Volume = pageDetail.VolumeInfo;
-                            item.Contributor = pageDetail.Contributor;
+                            item.HoldingInstitution = pageDetail.HoldingInstitution;
                             item.ItemUrl = pageDetail.ItemUrl;
                             item.Pages = new CustomGenericList<Page>();
                             currentTitle.Items.Add(item);
@@ -1088,7 +1088,7 @@ namespace MOBOT.BHL.API.BHLApi
                 newItem.ItemID = book.ItemID;
                 newItem.ItemUrl = "http://www.biodiversitylibrary.org/item/" + book.ItemID.ToString();
                 newItem.Volume = book.Volume;
-                newItem.Contributor = book.Contributor;
+                newItem.HoldingInstitution = book.HoldingInstitution;
 
                 CustomGenericList<Collection> itemCollections = dal.CollectionSelectByItemID(null, null, book.ItemID);
                 foreach (Collection collection in itemCollections)

@@ -70,7 +70,7 @@ namespace MOBOT.BHL.Web2.controls
         private CustomGenericList<Institution> GetInstitutions()
         {
             CustomGenericList<Institution> institutions = new CustomGenericList<Institution>();
-            CustomGenericList<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Contributor");
+            CustomGenericList<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Holding Institution");
             CustomGenericList<Institution> contributorsWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Contributor");
             CustomGenericList<Institution> rightsHolders = provider.InstitutionSelectWithPublishedItems(false, "Rights Holder");
             CustomGenericList<Institution> rightsHoldersWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Rights Holder");

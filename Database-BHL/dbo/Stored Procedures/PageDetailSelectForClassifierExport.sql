@@ -44,7 +44,7 @@ WHERE	pd.PageDetailStatusID = 10 -- Extracted
 AND		p.Active = 1
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 AND		(pd.AbbyyHasImage = 1 OR pd.ContrastHasImage = 1)
 ORDER BY
 		p.ItemID,

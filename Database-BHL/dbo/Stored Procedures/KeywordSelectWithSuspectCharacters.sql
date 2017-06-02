@@ -30,7 +30,7 @@ FROM	dbo.Keyword k INNER JOIN dbo.TitleKeyword tk
 		INNER JOIN dbo.InstitutionRole r
 			ON ii.InstitutionRoleID = r.InstitutionRoleID
 WHERE	dbo.fnContainsSuspectCharacter(k.Keyword) > 0
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		k.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY

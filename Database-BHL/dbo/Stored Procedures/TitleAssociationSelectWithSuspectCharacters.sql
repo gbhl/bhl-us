@@ -38,7 +38,7 @@ OR		dbo.fnContainsSuspectCharacter(ta.Volume) > 0
 OR		dbo.fnContainsSuspectCharacter(ta.Heading) > 0
 OR		dbo.fnContainsSuspectCharacter(ta.Publication) > 0
 OR		dbo.fnContainsSuspectCharacter(ta.Relationship) > 0)
-AND		r.InstitutionRoleName = 'Contributor'
+AND		r.InstitutionRoleName = 'Holding Institution'
 AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		ta.CreationDate > DATEADD(dd, (@MaxAge * -1), GETDATE())
 GROUP BY 

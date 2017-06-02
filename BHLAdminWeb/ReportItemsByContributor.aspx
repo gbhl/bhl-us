@@ -2,16 +2,16 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<br />
-	<span class="pageHeader">Items By Contributor</span><hr />
+	<span class="pageHeader">Items By Content Provider</span><hr />
 	<p>
-        This report shows recent items from a specific contributor.  To view ALL items for a contributor, choose the "Download All" button.
+        This report shows recent items from a specific content provider.  To view ALL items for a content provider, choose the "Download All" button.
     </p>
     <p>
-        NOTE: Use this report to find items not assigned to a particular contributor by selecting "Unknown" from the Contributor drop-down.
+        NOTE: Use this report to find items not assigned to a particular content provider by selecting "Unknown" from the Content Provider drop-down.
     </p>
     <table>
     <tr>
-    <td><b>Contributor:</b></td>
+    <td><b>Content Provider:</b></td>
     <td><asp:DropDownList ID="listInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode"/></td>
     </tr>
     <tr>

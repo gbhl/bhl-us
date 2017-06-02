@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb
                 CustomGenericList<Institution> institutions = bhlProvider.InstituationSelectAll();
                 ddlInstitution.DataSource = institutions;
                 ddlInstitution.DataBind();
-                ddlInstitution.Items.Insert(0, new ListItem("(select contributor)", ""));
+                ddlInstitution.Items.Insert(0, new ListItem("(select content provider)", ""));
 
                 CustomGenericList<Language> languages = bhlProvider.LanguageSelectAll();
                 ddlLanguage.DataSource = languages;

@@ -14,8 +14,8 @@
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
     <div style="padding:5px;margin-top:5px;margin-bottom:5px;width:600px">
         Content Providers are institutions or individuals that have contributed to BHL in some way.  Some of the roles a content
-        provider may fill include <strong>Contributor</strong> (of books, articles, or metadata), <strong>Rights Holder</strong>, 
-        or <strong>Scanning Institution</strong>.
+        provider may fill include <strong>Holding Institution</strong> (books), <strong>Contributor</strong> (of articles or metadata), 
+        <strong>Rights Holder</strong>, or <strong>Scanning Institution</strong>.
     </div>
 	<div class="box" style="padding:5px;margin-right:5px;width:600px">
 		<table cellpadding="4" width="100%">

@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[ItemCountByInstitution]
 
 @InstitutionCode nvarchar(10),
-@RoleName nvarchar(100) = 'Contributor'
+@RoleName nvarchar(100) = 'Holding Institution'
 
 AS
 
@@ -19,4 +19,3 @@ WHERE	i.ItemStatusID = 40
 AND		ii.InstitutionCode = @InstitutionCode
 
 END
-

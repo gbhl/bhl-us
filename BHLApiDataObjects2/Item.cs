@@ -84,14 +84,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _CopySpecificInformation = value; }
         }
 
-        private string _Contributor = null;
-        public string Contributor
+        private string _HoldingInstitution = null;
+        public string HoldingInstitution
         {
-            get { return _Contributor; }
+            get { return _HoldingInstitution; }
             set 
             {
                 if (value != null) value = CalibrateValue(value, 255);
-                _Contributor = value; 
+                _HoldingInstitution = value; 
             }
         }
 
@@ -280,7 +280,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                         }
                     case "InstitutionName":
                         {
-                            _Contributor = (string)column.Value;
+                            _HoldingInstitution = (string)column.Value;
                             break;
                         }
                     case "Sponsor":

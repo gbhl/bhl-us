@@ -214,7 +214,7 @@ namespace MOBOT.BHL.Web2
                     ddlVolumes.SelectedValue = PageSummary.ItemID.ToString();
 
                     // Show contributing institution
-                    CustomGenericList<Institution> institutions = bhlProvider.ItemContributorSelectByItemID(PageSummary.ItemID);
+                    CustomGenericList<Institution> institutions = bhlProvider.ItemHoldingInstitutionSelectByItemID(PageSummary.ItemID);
                     if (institutions.Count > 0)
                     {
                         Institution institution = institutions[0];
@@ -233,7 +233,7 @@ namespace MOBOT.BHL.Web2
                             attributionPlaceHolder.Controls.Add(literal);
                         }
 
-                        ((Book)this.Master).contributorName = institution.InstitutionCode.Replace("'", "");
+                        ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("'", "");
                     }
 
                     // Used to determine where to send people for bibliographic curiosity

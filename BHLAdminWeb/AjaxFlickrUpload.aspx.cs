@@ -84,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb
                     }
                     foreach (Institution institution in institutions)
                     {
-                        if (institution.InstitutionRoleName == InstitutionRole.Contributor) titleKeywordsList.Add(institution.InstitutionName);
+                        if (institution.InstitutionRoleName == InstitutionRole.HoldingInstitution) titleKeywordsList.Add(institution.InstitutionName);
                     }
                     string[] subjects = titleKeywordsList.ToArray();
 

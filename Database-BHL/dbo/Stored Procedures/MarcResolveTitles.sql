@@ -201,7 +201,7 @@ BEGIN TRY
 			INNER JOIN dbo.InstitutionRole br
 				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.TitleID IS NULL
-	AND		br.InstitutionRoleName = 'Contributor'
+	AND		br.InstitutionRoleName = 'Holding Institution'
 
 	-- Match on MARC 001 Value + Institution Code
 	UPDATE	#tmpTitle
@@ -224,7 +224,7 @@ BEGIN TRY
 			INNER JOIN dbo.InstitutionRole br
 				ON bii.InstitutionRoleID = br.InstitutionRoleID
 	WHERE	t.TitleID IS NULL
-	AND		br.InstitutionRoleName = 'Contributor'
+	AND		br.InstitutionRoleName = 'Holding Institution'
 
 	-- ** REMOVED 4/24/2015 TO PREVENT FALSE POSITIVES **
 	/*

@@ -252,9 +252,9 @@ namespace MOBOT.BHL.AdminWeb
                     (item.LastModifiedDate.HasValue ? item.LastModifiedDate.Value.ToShortDateString() : "");
 
                 ddlInst.SelectedValue = "UNKNOWN";
-                foreach (Institution contributor in item.Contributors)
+                foreach (Institution contributor in item.Institutions)
                 {
-                    if (contributor.InstitutionRoleName == InstitutionRole.Contributor)
+                    if (contributor.InstitutionRoleName == InstitutionRole.HoldingInstitution)
                     {
                         ddlInst.SelectedValue = contributor.InstitutionCode;
                         break;
@@ -262,7 +262,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 ddlRights.SelectedValue = "";
-                foreach (Institution contributor in item.Contributors)
+                foreach (Institution contributor in item.Institutions)
                 {
                     if (contributor.InstitutionRoleName == InstitutionRole.RightsHolder)
                     {
@@ -272,7 +272,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 ddlScanningInstitution.SelectedValue = "";
-                foreach (Institution contributor in item.Contributors)
+                foreach (Institution contributor in item.Institutions)
                 {
                     if (contributor.InstitutionRoleName == InstitutionRole.ScanningInstitution)
                     {
@@ -1216,18 +1216,18 @@ namespace MOBOT.BHL.AdminWeb
                 //----------------------------------------
 
                 // Mark for deletion any existing institutions that have changed
-                bool contributorChanged = false;
-                bool contributorExists = false;
+                bool holdingInstitutionChanged = false;
+                bool holdingInstitutionExists = false;
                 bool rightsHolderChanged = false;
                 bool rightsHolderExists = false;
                 bool scanningInstitutionChanged = false;
                 bool scanningInstitutionExists = false;
-                foreach (Institution institution in item.Contributors)
+                foreach (Institution institution in item.Institutions)
                 {
-                    if (institution.InstitutionRoleName == InstitutionRole.Contributor)
+                    if (institution.InstitutionRoleName == InstitutionRole.HoldingInstitution)
                     {
-                        contributorExists = true;
-                        if (institution.InstitutionCode != ddlInst.SelectedValue) { institution.IsDeleted = true; contributorChanged = true; }
+                        holdingInstitutionExists = true;
+                        if (institution.InstitutionCode != ddlInst.SelectedValue) { institution.IsDeleted = true; holdingInstitutionChanged = true; }
                     }
                     if (institution.InstitutionRoleName == InstitutionRole.RightsHolder)
                     {
@@ -1242,13 +1242,13 @@ namespace MOBOT.BHL.AdminWeb
                 }
 
                 // Add new institutions
-                if ((contributorChanged || !contributorExists) && ddlInst.SelectedValue != string.Empty)
+                if ((holdingInstitutionChanged || !holdingInstitutionExists) && ddlInst.SelectedValue != string.Empty)
                 {
-                    Institution newContributor = new Institution();
-                    newContributor.InstitutionCode = ddlInst.SelectedValue;
-                    newContributor.InstitutionRoleName = InstitutionRole.Contributor;
-                    newContributor.IsNew = true;
-                    item.Contributors.Add(newContributor);
+                    Institution newHoldingInstitution = new Institution();
+                    newHoldingInstitution.InstitutionCode = ddlInst.SelectedValue;
+                    newHoldingInstitution.InstitutionRoleName = InstitutionRole.HoldingInstitution;
+                    newHoldingInstitution.IsNew = true;
+                    item.Institutions.Add(newHoldingInstitution);
                 }
 
                 if ((rightsHolderChanged || !rightsHolderExists) && ddlRights.SelectedValue != string.Empty)
@@ -1257,7 +1257,7 @@ namespace MOBOT.BHL.AdminWeb
                     newRightsHolder.InstitutionCode = ddlRights.SelectedValue;
                     newRightsHolder.InstitutionRoleName = InstitutionRole.RightsHolder;
                     newRightsHolder.IsNew = true;
-                    item.Contributors.Add(newRightsHolder);
+                    item.Institutions.Add(newRightsHolder);
                 }
 
                 if ((scanningInstitutionChanged || !scanningInstitutionExists) && ddlScanningInstitution.SelectedValue != string.Empty)
@@ -1266,7 +1266,7 @@ namespace MOBOT.BHL.AdminWeb
                     newScanningInstitutution.InstitutionCode = ddlScanningInstitution.SelectedValue;
                     newScanningInstitutution.InstitutionRoleName = InstitutionRole.ScanningInstitution;
                     newScanningInstitutution.IsNew = true;
-                    item.Contributors.Add(newScanningInstitutution);
+                    item.Institutions.Add(newScanningInstitutution);
                 }
 
                 //----------------------------------------
