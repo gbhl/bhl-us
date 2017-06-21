@@ -56,7 +56,7 @@ SELECT	s.SegmentID,
 		s.LastModifiedUserID,
 		dbo.fnAuthorStringForSegment(s.SegmentID, ' ') AS Authors,
 		s.RedirectSegmentID
-FROM	dbo.Segment s
+FROM	dbo.vwSegment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		LEFT JOIN dbo.[Language] l ON s.LanguageCode = l.LanguageCode

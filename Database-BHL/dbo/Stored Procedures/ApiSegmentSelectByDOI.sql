@@ -53,7 +53,7 @@ SELECT	s.SegmentID,
 		s.LastModifiedDate,
 		s.CreationUserID,
 		s.LastModifiedUserID
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		INNER JOIN dbo.DOI d ON s.SegmentID = d.EntityID
 		INNER JOIN dbo.DOIEntityType et ON d.DOIEntityTypeID = et.DOIEntityTypeID AND et.DOIEntityTypeName = 'Segment'
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID

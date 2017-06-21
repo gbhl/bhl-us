@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectBibTeXForSegmentID]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectBibTeXForSegmentID]
 
 @SegmentID INT,
 @IncludeNoContent SMALLINT = 0
@@ -16,18 +15,9 @@ SELECT	'bhlpart' + CONVERT(nvarchar(10), s.SegmentID) AS CitationKey,
 		g.GenreName AS [Type],
 		s.Title,
 		s.ContainerTitle AS Journal,
-		CASE 
-			WHEN s.PublicationDetails <> '' THEN s.PublicationDetails COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(t.PublicationDetails, '') 
-		END AS Publisher,
-		CASE 
-			WHEN s.[Date] <> '' THEN s.[Date]
-			ELSE ISNULL(i.[Year], '')
-		END AS [Year],
-		CASE
-			WHEN s.Volume <> '' THEN s.Volume COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(i.Volume, '')
-		END AS Volume,
+		s.PublicationDetails AS Publisher,
+		s.[Date] AS [Year],
+		s.Volume,
 		s.Series,
 		s.Issue,
 		s.Notes as Note,
@@ -41,15 +31,10 @@ SELECT	'bhlpart' + CONVERT(nvarchar(10), s.SegmentID) AS CitationKey,
 		scs.Authors,
 		scs.Subjects AS 'Keywords',
 		dbo.fnGetPageCountForSegment(s.SegmentID) AS 'Pages'
-FROM	dbo.Segment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
+FROM	dbo.vwSegment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT NULL or @IncludeNoContent = 1)
 AND		s.SegmentID = @SegmentID
 
 END
-
-
-

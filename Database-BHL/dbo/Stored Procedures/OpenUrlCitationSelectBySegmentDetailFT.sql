@@ -134,7 +134,7 @@ BEGIN
 			c.Subjects,
 			s.StartPageNumber AS StartPage
 	FROM	SearchCatalogSegment c WITH (NOLOCK)
-			INNER JOIN dbo.Segment s WITH (NOLOCK) ON c.SegmentID = s.SegmentID
+			INNER JOIN dbo.vwSegment s WITH (NOLOCK) ON c.SegmentID = s.SegmentID
 			INNER JOIN dbo.SegmentGenre g WITH (NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID
 			LEFT JOIN dbo.Language l WITH (NOLOCK) ON s.LanguageCode = l.LanguageCode
 	WHERE	s.SegmentStatusID IN (10, 20)
@@ -178,7 +178,7 @@ BEGIN
 			t.OCLC,
 			t.Abbreviation
 	FROM	#tmpOpenUrlCitation t
-			INNER JOIN dbo.Segment s ON t.SegmentID = s.SegmentID
+			INNER JOIN dbo.vwSegment s ON t.SegmentID = s.SegmentID
 			INNER JOIN dbo.SegmentPage sp ON s.SegmentID = sp.SegmentID
 			INNER JOIN dbo.Page p ON sp.PageID = p.PageID AND p.Active = 1
 			INNER JOIN dbo.IndicatedPage ip ON p.PageID = ip.PageID 

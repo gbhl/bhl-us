@@ -381,13 +381,10 @@ BEGIN
 			s.ItemID,
 			RTRIM(s.Title) + ' ',
 			RTRIM(s.TranslatedTitle) + ' ',
-			RTRIM(CASE WHEN (s.ContainerTitle = '') 
-				THEN ISNULL(t.FullTitle, '') 
-				ELSE s.ContainerTitle COLLATE SQL_Latin1_General_CP1_CI_AI 
-			END) + ' ' AS ContainerTitle,
+			RTRIM(s.ContainerTitle) + ' ' AS ContainerTitle,
 			RTRIM(CASE WHEN (s.PublisherPlace = '' AND s.PublisherName = '')
-				THEN ISNULL(t.PublicationDetails, '')
-				ELSE s.PublisherPlace COLLATE SQL_Latin1_General_CP1_CI_AI + CASE WHEN s.PublisherPlace <> '' THEN ': ' ELSE '' END + s.PublisherName COLLATE SQL_Latin1_General_CP1_CI_AI
+				THEN ISNULL(s.PublicationDetails, '')
+				ELSE s.PublisherPlace + CASE WHEN s.PublisherPlace <> '' THEN ': ' ELSE '' END + s.PublisherName
 			END) + ' ' AS PublicationDetails,
 			RTRIM(s.Volume) + ' ',
 			RTRIM(s.Series) + ' ',
@@ -397,7 +394,7 @@ BEGIN
 			'',
 			CASE WHEN p.SegmentPageID IS NULL THEN 0 ELSE 1 END,
 			RTRIM(CASE WHEN s.Url = '' THEN 0 ELSE 1 END)
-	FROM	dbo.Segment s LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
+	FROM	dbo.vwSegment s LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 			LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
 			LEFT JOIN dbo.SegmentPage p ON s.SegmentID = p.SegmentID
 	WHERE	s.SegmentStatusID IN (10, 20)

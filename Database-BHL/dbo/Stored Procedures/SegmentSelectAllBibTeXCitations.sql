@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SegmentSelectAllBibTeXCitations]
+﻿CREATE PROCEDURE [dbo].[SegmentSelectAllBibTeXCitations]
 AS
 BEGIN
 
@@ -34,18 +33,9 @@ SELECT	s.SegmentID,
 		g.GenreName AS [Type],
 		s.Title,
 		s.ContainerTitle AS Journal,
-		CASE 
-			WHEN s.PublicationDetails <> '' THEN s.PublicationDetails COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(t.PublicationDetails, '') 
-		END AS Publisher,
-		CASE 
-			WHEN s.[Date] <> '' THEN s.[Date]
-			ELSE ISNULL(i.[Year], '')
-		END AS [Year],
-		CASE
-			WHEN s.Volume <> '' THEN s.Volume COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(i.Volume, '')
-		END AS Volume,
+		s.PublicationDetails AS Publisher,
+		s.[Date] AS [Year],
+		s.Volume,
 		s.Series,
 		s.Issue,
 		s.RightsStatus AS CopyrightStatus,
@@ -58,7 +48,7 @@ SELECT	s.SegmentID,
 		scs.Authors,
 		scs.Subjects as 'Keywords',
 		0 AS Pages
-FROM	dbo.Segment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
+FROM	dbo.vwSegment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 		LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID

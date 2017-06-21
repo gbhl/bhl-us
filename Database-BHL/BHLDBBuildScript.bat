@@ -222,6 +222,7 @@ REM  Build Views
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "annotation\Views\vwAnnotation.sql"
 sqlcmd -E -S %1 -d %2 -i "annotation\Views\vwAnnotationConcept.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Views\ItemCOinSView.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Views\PageDetailView.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Views\PageSummaryView.sql"

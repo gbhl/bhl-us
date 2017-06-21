@@ -36,7 +36,7 @@ FROM	dbo.SegmentClusterSegment scs1
 		INNER JOIN dbo.SegmentClusterSegment scs2 ON scs1.SegmentClusterID = scs2.SegmentClusterID
 		INNER JOIN dbo.SegmentCluster sc ON scs2.SegmentClusterID = sc.SegmentClusterID
 		INNER JOIN dbo.SegmentClusterType sct ON sc.SegmentClusterTypeID = sct.SegmentClusterTypeID
-		INNER JOIN dbo.Segment s ON scs2.SegmentID = s.SegmentID
+		INNER JOIN dbo.vwSegment s ON scs2.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode

@@ -497,7 +497,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string title = "Proceedings of the National Shellfisheries";
+            string title = "Proceedings National Shellfisheries";
             CustomGenericList<Title> actual;
             actual = target.SearchTitleSimple(sqlConnection, sqlTransaction, title);
             Assert.IsTrue(actual.Count > 0);

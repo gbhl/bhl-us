@@ -41,7 +41,7 @@ SELECT	s.SegmentID,
 		scs.Subjects
 FROM	dbo.Keyword k
 		INNER JOIN dbo.SegmentKeyword sk ON k.KeywordID = sk.KeywordID
-		INNER JOIN dbo.Segment s ON sk.SegmentID = s.SegmentID
+		INNER JOIN dbo.vwSegment s ON sk.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID

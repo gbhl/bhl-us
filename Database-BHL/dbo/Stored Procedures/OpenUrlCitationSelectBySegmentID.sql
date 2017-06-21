@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentID]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentID]
 
 @SegmentID int
 
@@ -74,7 +73,7 @@ SELECT	s.SegmentID,
 		s.StartPageNumber,
 		s.EndPageNumber,
 		s.PageRange
-FROM	dbo.Segment s WITH (NOLOCK) INNER JOIN dbo.SegmentGenre g WITH (NOLOCK)
+FROM	dbo.vwSegment s WITH (NOLOCK) INNER JOIN dbo.SegmentGenre g WITH (NOLOCK)
 			ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l WITH (NOLOCK)
 			ON s.LanguageCode = l.LanguageCode
@@ -95,9 +94,3 @@ FROM	#tmpOpenUrlCitation t INNER JOIN SegmentIdentifier si WITH (NOLOCK)
 SELECT * FROM #tmpOpenUrlCitation ORDER BY SegmentTitle, Volume, Date, StartPage
 
 END
-
-
-
-
-
-

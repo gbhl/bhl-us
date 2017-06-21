@@ -18,25 +18,16 @@ SELECT	DISTINCT
 		-- Would prefer to use Title.FullTitle as the Journal name, but the journal title 
 		-- is not always the Primary title associated with the item
 		s.ContainerTitle AS Journal,
-		CASE
-			WHEN s.Volume <> '' THEN s.Volume COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(i.Volume, '')
-		END AS Volume,
+		s.Volume,
 		s.Issue,
 		'http://www.biodiversitylibrary.org/part/' + CONVERT(NVARCHAR(10), s.SegmentID) AS Url,
-		CASE 
-			WHEN s.PublicationDetails <> '' THEN s.PublicationDetails COLLATE SQL_Latin1_General_CP1_CI_AI
-			ELSE ISNULL(t.Datafield_260_b, '') 
-		END AS Publisher,
-		CASE WHEN s.PublicationDetails = '' THEN ISNULL(t.Datafield_260_a, '') ELSE '' END AS PublicationPlace,
-		CASE 
-			WHEN s.[Date] <> '' THEN s.[Date]
-			ELSE ISNULL(i.[Year], '')
-		END AS [Year],
+		s.PublisherName AS Publisher,
+		s.PublisherPlace AS PublicationPlace,
+		s.[Date] AS [Year],
 		scs.Authors,
 		scs.Subjects AS Keywords,
 		ISNULL(d.DOIName, '') AS DOI,
-		CASE WHEN ISNULL(s.Edition, '') <> '' THEN s.Edition ELSE ISNULL(t.EditionStatement, '') END AS Edition,
+		s.Edition,
 		ISNULL(isbn.IdentifierValue, ISNULL(issn.IdentifierValue, '')) AS ISSNISBN,
 		ISNULL(l.LanguageName, '') AS [Language],
 		s.Notes,
@@ -44,7 +35,7 @@ SELECT	DISTINCT
 		s.StartPageNumber AS StartPage,
 		s.EndPageNumber AS EndPage
 INTO	#RIS
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 		LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID

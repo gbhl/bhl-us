@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentDetail]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectBySegmentDetail]
 
 @ArticleTitle nvarchar(2000) = '',
 @ContainerTitle nvarchar(2000) = '',
@@ -128,7 +127,7 @@ BEGIN
 			scs.Authors,
 			scs.Subjects,
 			s.StartPageNumber AS StartPage
-	FROM	dbo.Segment s WITH (NOLOCK) 
+	FROM	dbo.vwSegment s WITH (NOLOCK) 
 			INNER JOIN dbo.SegmentGenre g WITH (NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID
 			LEFT JOIN dbo.SegmentAuthor sa WITH (NOLOCK) ON s.SegmentID = sa.SegmentID
 			LEFT JOIN dbo.Author a WITH (NOLOCK) ON sa.AuthorID = a.AuthorID
@@ -179,7 +178,7 @@ BEGIN
 			t.OCLC,
 			t.Abbreviation
 	FROM	#tmpOpenUrlCitation t
-			INNER JOIN dbo.Segment s ON t.SegmentID = s.SegmentID
+			INNER JOIN dbo.vwSegment s ON t.SegmentID = s.SegmentID
 			INNER JOIN dbo.SegmentPage sp ON s.SegmentID = sp.SegmentID
 			INNER JOIN dbo.Page p ON sp.PageID = p.PageID AND p.Active = 1
 			INNER JOIN dbo.IndicatedPage ip ON p.PageID = ip.PageID 
@@ -198,4 +197,3 @@ BEGIN
 END
 
 END
-

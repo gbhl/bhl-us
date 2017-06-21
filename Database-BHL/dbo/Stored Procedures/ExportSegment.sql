@@ -28,7 +28,7 @@ SELECT	s.SegmentID,
 		s.RightsStatement, 
 		s.LicenseName, 
 		s.LicenseUrl
-FROM	dbo.Segment s WITH (NOLOCK)
+FROM	dbo.vwSegment s WITH (NOLOCK)
 		INNER JOIN dbo.SearchCatalogSegment c ON s.SegmentID = c.SegmentID
 		INNER JOIN dbo.SegmentGenre g WITH (NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID 
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON s.LanguageCode = l.LanguageCode

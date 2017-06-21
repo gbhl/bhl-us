@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[SearchSegmentComplete]
+﻿CREATE PROCEDURE [dbo].[SearchSegmentComplete]
 
 @Title nvarchar(2000)
 
@@ -58,7 +57,7 @@ BEGIN
 			REPLACE(c.Authors, '|', ';') AS Authors
 	FROM	CONTAINSTABLE(SearchCatalogSegment, Title, @SearchCondition) x
 			INNER JOIN SearchCatalogSegment c ON c.SearchCatalogSegmentID = x.[KEY]
-			INNER JOIN dbo.Segment s ON c.SegmentID = s.SegmentID
+			INNER JOIN dbo.vwSegment s ON c.SegmentID = s.SegmentID
 			INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 END
 
@@ -84,7 +83,7 @@ SELECT DISTINCT TOP (500)
 		s.[Date],
 		s.PageRange,
 		REPLACE(scs.Authors, '|', ' ') AS Authors
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		LEFT JOIN #tmpSegment t ON s.SegmentID = t.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON g.SegmentGenreID = s.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
@@ -108,9 +107,3 @@ FROM	#tmpSegment
 ORDER BY SortTitle
 
 END
-
-
-
-
-
-

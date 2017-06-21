@@ -1287,4 +1287,7 @@
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ItemSelectOAIDetail.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="dbo\Views\vwSegment.sql" />
+  </ItemGroup>
 </Project>

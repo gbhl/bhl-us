@@ -15,7 +15,7 @@ SELECT DISTINCT
 		cat.Authors, d.DOIName, s.StartPageNumber, s.EndPageNumber, s.PageRange,
 		s.StartPageID
 FROM	dbo.SegmentClusterSegment scs 
-		INNER JOIN dbo.Segment s ON scs.SegmentID = s.SegmentID
+		INNER JOIN dbo.vwSegment s ON scs.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SegmentCluster sc ON scs.SegmentClusterID = sc.SegmentClusterID
 		INNER JOIN dbo.SegmentClusterType ct ON sc.SegmentClusterTypeID = ct.SegmentClusterTypeID
@@ -40,4 +40,3 @@ ORDER BY
 		s.PageRange
 
 END
-

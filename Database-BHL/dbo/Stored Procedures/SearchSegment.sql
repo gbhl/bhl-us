@@ -62,7 +62,7 @@ SELECT DISTINCT
 		s.EndPageNumber,
 		REPLACE(scs.Authors, '|', ';') AS Authors,
 		scs.SearchAuthors
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		INNER JOIN dbo.SegmentGenre g ON g.SegmentGenreID = s.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	(s.Title LIKE (@Title + '%') OR @Title = '')

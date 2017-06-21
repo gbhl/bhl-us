@@ -28,7 +28,7 @@ SELECT DISTINCT
 		REPLACE(cat.Authors, '|', ' '),
 		NULL AS SegmentClusterID,
 		d.DOIName
-FROM	dbo.Segment s
+FROM	dbo.vwSegment s
 		LEFT JOIN dbo.SearchCatalogSegment cat ON s.SegmentID = cat.SegmentID
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
 WHERE	SegmentStatusID = @SegmentStatusID
@@ -45,6 +45,5 @@ FROM	#tmpSegment t INNER JOIN SegmentClusterSegment scs ON t.SegmentID = scs.Seg
 
 SELECT	*
 FROM	#tmpSegment
-
 
 END

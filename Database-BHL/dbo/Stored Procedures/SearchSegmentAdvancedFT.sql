@@ -186,7 +186,7 @@ SELECT	s.SegmentID,
 		scs.HasLocalContent,
 		ISNULL(t.TitleRank, 0) + ISNULL(t.AuthorRank, 0) + ISNULL(t.ContainerTitleRank, 0) +
 				ISNULL(t.DateRank, 0) -- + ISNULL(t.VolumeRank, 0) + ISNULL(t.SeriesRank, 0) + ISNULL(t.IssueRank, 0)
-FROM	#tmpLimitFinal t INNER JOIN dbo.Segment s ON t.SegmentID = s.SegmentID
+FROM	#tmpLimitFinal t INNER JOIN dbo.vwSegment s ON t.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 

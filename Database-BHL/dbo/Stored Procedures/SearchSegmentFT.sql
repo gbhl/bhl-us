@@ -73,7 +73,7 @@ SELECT DISTINCT
 		x.[RANK]
 FROM	CONTAINSTABLE(SearchCatalogSegment, (SearchText), @Search) x
 		INNER JOIN dbo.SearchCatalogSegment c ON c.SearchCatalogSegmentID = x.[KEY]
-		INNER JOIN dbo.Segment s ON c.SegmentID = s.SegmentID
+		INNER JOIN dbo.vwSegment s ON c.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 WHERE	s.SegmentStatusID IN (10, 20) -- New, Published
 AND		(c.HasLocalContent = 1 OR c.HasExternalContent = 1 OR c.ItemID IS NOT NULL)

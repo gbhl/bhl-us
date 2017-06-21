@@ -10,7 +10,37 @@ namespace MOBOT.BHL.DAL
 	public partial class SegmentDAL
 	{
         /// <summary>
-        /// Select the specified segment and all of its related objects.
+        /// Select the specified segment and all of its related objects for editing.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="segmentId"></param>
+        /// <returns></returns>
+        public Segment SegmentSelectForEdit(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            // Get the segment information for editing
+            Segment segment = SegmentSelectAuto(connection, transaction, segmentId);
+            if (segment != null)
+            {
+                // NOTE: The selection of IsPrimary and PageRange values could be included with the previous database request
+                // Get a couple extra segment details for editing
+                Segment segmentExtra = SegmentSelectForSegmentID(connection, transaction, segmentId);
+                segment.IsPrimary = segmentExtra.IsPrimary;
+                segment.PageRange = segmentExtra.PageRange;
+            }
+
+            // Get the rest of the segment details
+            SegmentSelectDetail(connection, transaction, segment);
+
+            return segment;
+        }
+
+        /// <summary>
+        /// Select the specified segment and all of its related objects for read-only access.
         /// </summary>
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
@@ -22,8 +52,23 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
+            // Get the read-only segment info for display
             Segment segment = SegmentSelectForSegmentID(connection, transaction, segmentId);
 
+            // Get the rest of the segment details
+            SegmentSelectDetail(connection, transaction, segment);
+
+            return segment;
+        }
+
+        /// <summary>
+        /// Select the supporting segment metadata (authors, keywords, identifier, etc)
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="transaction"></param>
+        /// <param name="segment"></param>
+        private void SegmentSelectDetail(SqlConnection connection, SqlTransaction transaction, Segment segment)
+        {
             if (segment != null)
             {
                 if (segment.ItemID != null)
@@ -41,7 +86,7 @@ namespace MOBOT.BHL.DAL
                     segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
                 }
 
-                segment.AuthorList = new SegmentAuthorDAL().SegmentAuthorSelectBySegmentID(connection, transaction, segmentId);
+                segment.AuthorList = new SegmentAuthorDAL().SegmentAuthorSelectBySegmentID(connection, transaction, segment.SegmentID);
                 if (segment.AuthorList != null && segment.AuthorList.Count > 0)
                 {
                     AuthorDAL authorDAL = new AuthorDAL();
@@ -51,23 +96,21 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segmentId);
-                foreach(DOI doi in dois)
+                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segment.SegmentID);
+                foreach (DOI doi in dois)
                 {
                     // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
                     segment.DOIName = doi.DOIName;
                     break;
                 }
 
-                segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segmentId, InstitutionRole.Contributor);
-                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segmentId, null);
-                segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segmentId);
-                segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segmentId);
-                segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segmentId);
-                segment.RelatedSegmentList = SegmentSelectRelated(connection, transaction, segmentId);
+                segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segment.SegmentID, InstitutionRole.Contributor);
+                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
+                segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.RelatedSegmentList = SegmentSelectRelated(connection, transaction, segment.SegmentID);
             }
-
-            return segment;
         }
 
         /// <summary>

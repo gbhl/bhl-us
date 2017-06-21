@@ -52,7 +52,7 @@ SELECT	s.SegmentID,
 		s.CreationUserID,
 		s.LastModifiedUserID,
 		scs.Authors
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode

@@ -54,7 +54,7 @@ SELECT	s.SegmentID,
 		s.CreationUserID,
 		s.LastModifiedUserID,
 		scs.Authors
-FROM	dbo.Segment s 
+FROM	dbo.vwSegment s 
 		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
 		INNER JOIN dbo.SegmentInstitution si ON s.SegmentID = si.SegmentID
 		INNER JOIN dbo.InstitutionRole r ON si.InstitutionRoleID = r.InstitutionRoleID

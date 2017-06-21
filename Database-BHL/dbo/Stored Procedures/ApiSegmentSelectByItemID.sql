@@ -53,7 +53,7 @@ ELSE
 			s.LastModifiedDate,
 			s.CreationUserID,
 			s.LastModifiedUserID
-	FROM	dbo.Segment s 
+	FROM	dbo.vwSegment s 
 			INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 			LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 			INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID

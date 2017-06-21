@@ -132,6 +132,11 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectPublished(null, null);
         }
 
+        public Segment SegmentSelectForEdit(int segmentID)
+        {
+            return new SegmentDAL().SegmentSelectForEdit(null, null, segmentID);
+        }
+
         public Segment SegmentSelectExtended(int segmentID)
         {
             return new SegmentDAL().SegmentSelectExtended(null, null, segmentID);

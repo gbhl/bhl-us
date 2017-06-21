@@ -39,7 +39,7 @@ SELECT	s.SegmentID,
 		s.LicenseUrl,
 		scs.Authors
 FROM	dbo.SegmentAuthor sa
-		INNER JOIN dbo.Segment s ON sa.SegmentID = s.SegmentID
+		INNER JOIN dbo.vwSegment s ON sa.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID

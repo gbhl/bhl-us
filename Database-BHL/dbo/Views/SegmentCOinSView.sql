@@ -29,7 +29,7 @@ SELECT DISTINCT
 		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'CODEN') AS 'rft_coden'
 		,LOWER(g.GenreName) AS 'rft_genre'
 		,scs.Contributors AS 'rft_contributor' -- dc
-FROM	dbo.Segment s
+FROM	dbo.vwSegment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)

@@ -311,7 +311,7 @@ namespace MOBOT.BHL.AdminWeb
             else
             {
                 // Look up segment
-                segment = bp.SegmentSelectExtended(id);
+                segment = bp.SegmentSelectForEdit(id);
             }
 
             if (segment == null)
