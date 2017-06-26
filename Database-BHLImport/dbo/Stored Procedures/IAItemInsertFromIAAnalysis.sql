@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[IAItemInsertFromIAAnalysis]
+﻿CREATE PROCEDURE [dbo].[IAItemInsertFromIAAnalysis]
 
 @LocalFileFolder nvarchar(200)
 
@@ -39,7 +38,8 @@ BEGIN TRY
 	WHERE	ii.ItemID IS NULL
 	AND		r.Sponsor <> 'Google'
 
-	-- Eliminate any items in the "lendinglibrary" collection (they are non-downloadable)
+	-- Eliminate any items in the "lendinglibrary", "printdisabled", or 
+	-- "browseringlending" collections (they are non-downloadable)
 	DELETE FROM #tmpItem WHERE IAIdentifier IN (
 		SELECT	i.Identifier
 		FROM	IAAnalysisItem i INNER JOIN IAAnalysisItemCollection ic
@@ -47,6 +47,8 @@ BEGIN TRY
 				INNER JOIN IAAnalysisCollection c
 					ON ic.CollectionID = c.CollectionID
 		WHERE	c.CollectionName LIKE '%lendinglibrary%'
+		OR		c.CollectionName LIKE '%printdisabled%'
+		OR		c.CollectionName LIKE '%browserlending%'
 	)
 
 	SELECT @HarvestDate = MAX(CreationDate) FROM #tmpItem
@@ -71,4 +73,3 @@ BEGIN
 END
 
 END
-
