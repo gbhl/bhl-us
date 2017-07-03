@@ -426,6 +426,7 @@
     <None Include="dbo\Synonyms\BHLSegmentInstitution.sql" />
     <None Include="dbo\Synonyms\BHLInstitutionRole.sql" />
     <None Include="dbo\Synonyms\BHLItemInstitution.sql" />
+    <None Include="dbo\Synonyms\BHLMaterialType.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

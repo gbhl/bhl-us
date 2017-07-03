@@ -282,6 +282,15 @@
 					</asp:DropDownList>
 				</td>
 			</tr>
+            <tr>
+                <td style="white-space: nowrap" align="right" class="dataHeader">
+                    Material Type (MARC Leader char 06):
+                </td>
+                <td colspan="4" style="width: 100%">
+                    <asp:DropDownList ID="ddlMaterialType" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 					Full Title (MARC 245a,b,c):

@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TitleDeleteAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[TitleDeleteAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Delete Procedure for dbo.Title
--- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:28 AM
-
 CREATE PROCEDURE dbo.TitleDeleteAuto
 
 @TitleID INT
@@ -37,9 +23,3 @@ ELSE BEGIN
 END
 
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

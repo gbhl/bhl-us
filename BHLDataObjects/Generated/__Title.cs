@@ -1,5 +1,5 @@
 
-// Generated 6/2/2016 9:32:28 AM
+// Generated 6/28/2017 2:38:16 PM
 // Do not modify the contents of this code file.
 // This abstract class __Title is based upon dbo.Title.
 
@@ -77,6 +77,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
+		/// <param name="materialTypeID"></param>
 		public __Title(int titleID, 
 			string mARCBibID, 
 			string mARCLeader, 
@@ -108,7 +109,8 @@ namespace MOBOT.BHL.DataObjects
 			string currentPublicationFrequency, 
 			string partNumber, 
 			string partName, 
-			int? bibliographicLevelID) : this()
+			int? bibliographicLevelID, 
+			int? materialTypeID) : this()
 		{
 			_TitleID = titleID;
 			MARCBibID = mARCBibID;
@@ -142,6 +144,7 @@ namespace MOBOT.BHL.DataObjects
 			PartNumber = partNumber;
 			PartName = partName;
 			BibliographicLevelID = bibliographicLevelID;
+			MaterialTypeID = materialTypeID;
 		}
 		
 		#endregion Constructors
@@ -326,6 +329,11 @@ namespace MOBOT.BHL.DataObjects
 					case "BibliographicLevelID" :
 					{
 						_BibliographicLevelID = (int?)column.Value;
+						break;
+					}
+					case "MaterialTypeID" :
+					{
+						_MaterialTypeID = (int?)column.Value;
 						break;
 					}
 								}
@@ -816,7 +824,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: TitleDescription;
-		/// DBMS data type: ntext(1073741823); Nullable;
+		/// DBMS data type: ntext; Nullable;
 		/// </summary>
 		[ColumnDefinition("TitleDescription", DbTargetType=SqlDbType.NText, Ordinal=18, CharacterMaxLength=1073741823, IsNullable=true)]
 		public string TitleDescription
@@ -1222,6 +1230,33 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion BibliographicLevelID
+		
+		#region MaterialTypeID
+		
+		private int? _MaterialTypeID = null;
+		
+		/// <summary>
+		/// Column: MaterialTypeID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("MaterialTypeID", DbTargetType=SqlDbType.Int, Ordinal=33, NumericPrecision=10, IsInForeignKey=true, IsNullable=true)]
+		public int? MaterialTypeID
+		{
+			get
+			{
+				return _MaterialTypeID;
+			}
+			set
+			{
+				if (_MaterialTypeID != value)
+				{
+					_MaterialTypeID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion MaterialTypeID
 			
 		#endregion Properties
 
@@ -1297,7 +1332,8 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.CurrentPublicationFrequency) == GetComparisonString(CurrentPublicationFrequency) &&
 					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
 					GetComparisonString(o.PartName) == GetComparisonString(PartName) &&
-					o.BibliographicLevelID == BibliographicLevelID 
+					o.BibliographicLevelID == BibliographicLevelID &&
+					o.MaterialTypeID == MaterialTypeID 
 				)
 				{
 					o = null;
@@ -1429,7 +1465,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string CurrentPublicationFrequency = "CurrentPublicationFrequency";	
 			public const string PartNumber = "PartNumber";	
 			public const string PartName = "PartName";	
-			public const string BibliographicLevelID = "BibliographicLevelID";
+			public const string BibliographicLevelID = "BibliographicLevelID";	
+			public const string MaterialTypeID = "MaterialTypeID";
 		}
 				
 		#endregion SortColumn

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ApiTitleSelectByIdentifier
+﻿CREATE PROCEDURE [dbo].[ApiTitleSelectByIdentifier]
 
 @IdentifierName nvarchar(40),
 @IdentifierValue nvarchar(125)
@@ -34,6 +34,7 @@ AND		ti.IdentifierValue = @IdentifierValue
 
 SELECT	t.TitleID,
 		ISNULL(b.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		t.MARCBibID,
 		t.MARCLeader,
 		t.TropicosTitleID,
@@ -68,6 +69,7 @@ SELECT	t.TitleID,
 FROM	dbo.Title t 
 		INNER JOIN #Title tmp on t.TitleID = tmp.TitleID
 		LEFT JOIN dbo.BibliographicLevel b ON t.BibliographicLevelID = b.BibliographicLevelID
+		LEFT JOIN dbo.MaterialType m ON t.MaterialTypeID = m.MaterialTypeID
 		LEFT JOIN dbo.DOI d 
 			ON t.TitleID = d.EntityID 
 			AND d.IsValid = 1 

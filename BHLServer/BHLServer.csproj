@@ -100,6 +100,7 @@
     <Compile Include="BHLProvider.ItemSummaryView.cs">
     </Compile>
     <Compile Include="BHLProvider.Keyword.cs" />
+    <Compile Include="BHLProvider.MaterialType.cs" />
     <Compile Include="BHLProvider.Name.cs" />
     <Compile Include="BHLProvider.NameIdentifier.cs" />
     <Compile Include="BHLProvider.NamePage.cs" />

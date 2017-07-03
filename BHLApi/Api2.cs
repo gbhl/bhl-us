@@ -311,7 +311,7 @@ namespace MOBOT.BHL.API.BHLApi
                 title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                 title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
                 title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
-                
+
                 if (items)
                 {
                     title.Items = this.GetTitleItems(title.TitleID.ToString());

@@ -97,6 +97,12 @@
                 <p>
                     <span itemprop="genre"><%= Genre %></span>
                 </p>
+                <%if (!string.IsNullOrWhiteSpace(Material)) { %>
+                <h3>Material Type</h3>
+                <p>
+                    <span><%= Material %></span>
+                </p>
+                <%} %>
                 <h3>Publication info</h3>
                 <p>
                     <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name"><%: BhlTitle.PublicationDetails %></span></span>
@@ -198,6 +204,12 @@
                 <p>
                     <%= Genre %>
                 </p>
+                <%if (!string.IsNullOrWhiteSpace(Material)) { %>
+                <h3>Material Type</h3>
+                <p>
+                    <span><%= Material %></span>
+                </p>
+                <%} %>
                 <h3>Publication info</h3>
                 <p>
                     <%: BhlTitle.PublicationDetails %>

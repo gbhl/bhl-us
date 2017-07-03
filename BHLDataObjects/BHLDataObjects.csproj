@@ -118,6 +118,7 @@
     <Compile Include="Concrete\MarcDataField.cs" />
     <Compile Include="Concrete\MarcImportBatch.cs" />
     <Compile Include="Concrete\MarcSubField.cs" />
+    <Compile Include="Concrete\MaterialType.cs" />
     <Compile Include="Concrete\MonthlyStats.cs" />
     <Compile Include="Concrete\Name.cs" />
     <Compile Include="Concrete\NameIdentifier.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Generated\__MarcDataField.cs" />
     <Compile Include="Generated\__MarcImportBatch.cs" />
     <Compile Include="Generated\__MarcSubField.cs" />
+    <Compile Include="Generated\__MaterialType.cs" />
     <Compile Include="Generated\__MonthlyStats.cs" />
     <Compile Include="Generated\__Name.cs" />
     <Compile Include="Generated\__NameIdentifier.cs" />

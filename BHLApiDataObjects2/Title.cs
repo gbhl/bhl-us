@@ -32,7 +32,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             get { return _BibliographicLevel; }
             set { _BibliographicLevel = value; }
         }
-        
+
+        private string _MaterialType = string.Empty;
+        public string MaterialType
+        {
+            get { return _MaterialType; }
+            set { _MaterialType = value; }
+        }
 
         private string _FullTitle = null;
         public string FullTitle
@@ -245,6 +251,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                     case "BibliographicLevelName":
                         {
                             _BibliographicLevel = (string)column.Value;
+                            break;
+                        }
+                    case "MaterialTypeLabel":
+                        {
+                            _MaterialType = (string)column.Value;
                             break;
                         }
                     case "FullTitle":

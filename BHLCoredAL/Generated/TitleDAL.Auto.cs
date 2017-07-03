@@ -1,5 +1,5 @@
 
-// Generated 6/2/2016 9:32:28 AM
+// Generated 6/28/2017 2:38:16 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TitleDAL is based upon dbo.Title.
@@ -32,7 +32,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class TitleDAL : ITitleDAL
+	partial class TitleDAL 
 	{
  		#region ===== SELECT =====
 
@@ -165,6 +165,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
+		/// <param name="materialTypeID"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -197,9 +198,10 @@ namespace MOBOT.BHL.DAL
 			string currentPublicationFrequency,
 			string partNumber,
 			string partName,
-			int? bibliographicLevelID)
+			int? bibliographicLevelID,
+			int? materialTypeID)
 		{
-			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHL", mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, creationUserID, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID );
+			return TitleInsertAuto( sqlConnection, sqlTransaction, "BHL", mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, creationUserID, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID, materialTypeID );
 		}
 		
 		/// <summary>
@@ -237,6 +239,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
+		/// <param name="materialTypeID"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleInsertAuto(
 			SqlConnection sqlConnection, 
@@ -270,7 +273,8 @@ namespace MOBOT.BHL.DAL
 			string currentPublicationFrequency,
 			string partNumber,
 			string partName,
-			int? bibliographicLevelID)
+			int? bibliographicLevelID,
+			int? materialTypeID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -305,7 +309,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
 					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
 					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName),
-					CustomSqlHelper.CreateInputParameter("BibliographicLevelID", SqlDbType.Int, null, true, bibliographicLevelID), 
+					CustomSqlHelper.CreateInputParameter("BibliographicLevelID", SqlDbType.Int, null, true, bibliographicLevelID),
+					CustomSqlHelper.CreateInputParameter("MaterialTypeID", SqlDbType.Int, null, true, materialTypeID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
@@ -383,7 +388,8 @@ namespace MOBOT.BHL.DAL
 				value.CurrentPublicationFrequency,
 				value.PartNumber,
 				value.PartName,
-				value.BibliographicLevelID);
+				value.BibliographicLevelID,
+				value.MaterialTypeID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -482,6 +488,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
+		/// <param name="materialTypeID"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -514,9 +521,10 @@ namespace MOBOT.BHL.DAL
 			string currentPublicationFrequency,
 			string partNumber,
 			string partName,
-			int? bibliographicLevelID)
+			int? bibliographicLevelID,
+			int? materialTypeID)
 		{
-			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleID, mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID);
+			return TitleUpdateAuto( sqlConnection, sqlTransaction, "BHL", titleID, mARCBibID, mARCLeader, tropicosTitleID, redirectTitleID, fullTitle, shortTitle, uniformTitle, sortTitle, callNumber, publicationDetails, startYear, endYear, datafield_260_a, datafield_260_b, datafield_260_c, languageCode, titleDescription, tL2Author, publishReady, rareBooks, note, lastModifiedUserID, originalCatalogingSource, editionStatement, currentPublicationFrequency, partNumber, partName, bibliographicLevelID, materialTypeID);
 		}
 		
 		/// <summary>
@@ -554,6 +562,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
 		/// <param name="bibliographicLevelID"></param>
+		/// <param name="materialTypeID"></param>
 		/// <returns>Object of type Title.</returns>
 		public Title TitleUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -587,7 +596,8 @@ namespace MOBOT.BHL.DAL
 			string currentPublicationFrequency,
 			string partNumber,
 			string partName,
-			int? bibliographicLevelID)
+			int? bibliographicLevelID,
+			int? materialTypeID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -621,7 +631,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("CurrentPublicationFrequency", SqlDbType.NVarChar, 100, true, currentPublicationFrequency),
 					CustomSqlHelper.CreateInputParameter("PartNumber", SqlDbType.NVarChar, 255, true, partNumber),
 					CustomSqlHelper.CreateInputParameter("PartName", SqlDbType.NVarChar, 255, true, partName),
-					CustomSqlHelper.CreateInputParameter("BibliographicLevelID", SqlDbType.Int, null, true, bibliographicLevelID), 
+					CustomSqlHelper.CreateInputParameter("BibliographicLevelID", SqlDbType.Int, null, true, bibliographicLevelID),
+					CustomSqlHelper.CreateInputParameter("MaterialTypeID", SqlDbType.Int, null, true, materialTypeID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
@@ -699,7 +710,8 @@ namespace MOBOT.BHL.DAL
 				value.CurrentPublicationFrequency,
 				value.PartNumber,
 				value.PartName,
-				value.BibliographicLevelID);
+				value.BibliographicLevelID,
+				value.MaterialTypeID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -772,7 +784,8 @@ namespace MOBOT.BHL.DAL
 						value.CurrentPublicationFrequency,
 						value.PartNumber,
 						value.PartName,
-						value.BibliographicLevelID);
+						value.BibliographicLevelID,
+						value.MaterialTypeID);
 				
 				return new CustomDataAccessStatus<Title>(
 					CustomDataAccessContext.Insert, 
@@ -826,7 +839,8 @@ namespace MOBOT.BHL.DAL
 						value.CurrentPublicationFrequency,
 						value.PartNumber,
 						value.PartName,
-						value.BibliographicLevelID);
+						value.BibliographicLevelID,
+						value.MaterialTypeID);
 					
 				return new CustomDataAccessStatus<Title>(
 					CustomDataAccessContext.Update, 

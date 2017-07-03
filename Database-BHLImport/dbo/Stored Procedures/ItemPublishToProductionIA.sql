@@ -1129,6 +1129,15 @@ BEGIN TRY
 					ON t.TitleID = tmp.ProductionTitleID
 		WHERE	t.BibliographicLevelID IS NULL
 
+		-- Add a material type for any just-added/updated titles that don't already have one
+		UPDATE	dbo.BHLTitle
+		SET		MaterialTypeID = m.MaterialTypeID
+		FROM	dbo.BHLTitle t INNER JOIN dbo.BHLMaterialType m
+					ON SUBSTRING(t.MarcLeader, 7, 1) = m.MARCCode
+				INNER JOIN #tmpTitle tmp
+					ON t.TitleID = tmp.ProductionTitleID
+		WHERE	t.MaterialTypeID IS NULL
+
 		-- =======================================================================
 
 		-- Insert new authors into the production database

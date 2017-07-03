@@ -671,7 +671,18 @@ namespace MOBOT.BHL.OAIMODS
         /// <returns></returns>
         private String GetTypeOfResourceElement()
         {
-            return "<typeOfResource>text</typeOfResource>\n";
+            string typeOfResource = string.Empty;
+            string manuscript = string.Empty;
+            GetTypeOfResource(out typeOfResource, out manuscript);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<typeOfResource");
+            if (!string.IsNullOrWhiteSpace(manuscript)) sb.Append(" manuscript=\"" + manuscript + "\"");
+            sb.Append(">");
+            sb.Append(typeOfResource);
+            sb.Append("</typeOfResource>\n");
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -1210,6 +1221,29 @@ namespace MOBOT.BHL.OAIMODS
             }
 
             return type;
+        }
+
+        private void GetTypeOfResource(out string typeOfResource, out string manuscript)
+        {
+            typeOfResource = "text";
+            manuscript = "";
+            switch (_oaiRecord.MaterialCode)
+            {
+                case "a": typeOfResource = "text"; break;
+                case "c": typeOfResource = "notated music"; break;
+                case "d": typeOfResource = "notated music"; manuscript = "yes"; break;
+                case "e": typeOfResource = "cartographic"; break;
+                case "f": typeOfResource = "cartographic"; manuscript = "yes"; break;
+                case "g": typeOfResource = "moving image"; break;
+                case "i": typeOfResource = "sound recording-nonmusical"; break;
+                case "j": typeOfResource = "sound recording-musical"; break;
+                case "k": typeOfResource = "still image"; break;
+                case "m": typeOfResource = "software, multimedia"; break;
+                case "p": typeOfResource = "mixed material"; break;
+                case "r": typeOfResource = "three dimensional object"; break;
+                case "t": typeOfResource = "text"; manuscript = "yes"; break;
+                default: typeOfResource = "text"; break;
+            }
         }
 
         private enum ItemType

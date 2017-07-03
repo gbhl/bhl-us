@@ -1047,6 +1047,7 @@
     <None Include="Data\dbo.NoteType.Table.sql" />
     <None Include="Data\dbo.AspNetRoles.Table.sql" />
     <None Include="Data\dbo.AspNetUsers.Table.sql" />
+    <None Include="Data\dbo.MaterialType.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1289,5 +1290,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Views\vwSegment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\MaterialType.sql" />
+    <None Include="dbo\Stored Procedures\MaterialTypeUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\MaterialTypeDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\MaterialTypeInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\MaterialTypeSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\MaterialTypeSelectAll.sql" />
   </ItemGroup>
 </Project>

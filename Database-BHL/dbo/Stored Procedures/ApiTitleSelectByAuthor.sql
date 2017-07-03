@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiTitleSelectByAuthor]
+﻿CREATE PROCEDURE [dbo].[ApiTitleSelectByAuthor]
 
 @AuthorID int
 
@@ -11,6 +10,7 @@ SET NOCOUNT ON
 SELECT DISTINCT 
 		t.TitleID,
 		ISNULL(b.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		t.FullTitle,
 		t.ShortTitle,
 		t.SortTitle,
@@ -24,7 +24,6 @@ SELECT DISTINCT
 		t.CurrentPublicationFrequency AS PublicationFrequency
 FROM	dbo.TitleAuthor ta INNER JOIN dbo.Title t ON ta.TitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b ON t.BibliographicLevelID = b.BibliographicLevelID
+		LEFT JOIN dbo.MaterialType m ON t.MaterialTypeID = m.MaterialTypeID
 WHERE	ta.AuthorID = @AuthorID
 AND		t.PublishReady = 1
-
-

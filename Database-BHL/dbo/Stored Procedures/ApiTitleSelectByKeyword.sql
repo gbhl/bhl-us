@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiTitleSelectByKeyword]
+﻿CREATE PROCEDURE [dbo].[ApiTitleSelectByKeyword]
 
 @Keyword nvarchar(50)
 
@@ -10,6 +9,7 @@ SET NOCOUNT ON
 SELECT DISTINCT 
 		t.TitleID,
 		ISNULL(b.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		t.FullTitle,
 		t.ShortTitle,
 		t.SortTitle,
@@ -27,7 +27,7 @@ FROM	dbo.Keyword k INNER JOIN dbo.TitleKeyword tk
 			ON tk.TitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b
 			ON t.BibliographicLevelID = b.BibliographicLevelID
+		LEFT JOIN dbo.MaterialType m
+			ON t.MaterialTypeID = m.MaterialTypeID
 WHERE	k.Keyword = @Keyword
 AND		t.PublishReady=1
-
-

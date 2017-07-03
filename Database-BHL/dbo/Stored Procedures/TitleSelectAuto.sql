@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TitleSelectAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[TitleSelectAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Select Procedure for dbo.Title
--- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:28 AM
-
 CREATE PROCEDURE [dbo].[TitleSelectAuto]
 
 @TitleID INT
@@ -52,7 +38,8 @@ SELECT
 	[CurrentPublicationFrequency],
 	[PartNumber],
 	[PartName],
-	[BibliographicLevelID]
+	[BibliographicLevelID],
+	[MaterialTypeID]
 FROM	
 	[dbo].[Title]
 WHERE	
@@ -69,9 +56,3 @@ ELSE BEGIN
 END
 
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

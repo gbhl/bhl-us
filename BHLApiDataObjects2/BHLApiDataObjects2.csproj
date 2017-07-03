@@ -67,6 +67,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Language.cs" />
+    <Compile Include="MaterialType.cs" />
     <Compile Include="Name.cs" />
     <Compile Include="Page.cs">
       <SubType>Code</SubType>

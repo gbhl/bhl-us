@@ -121,6 +121,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.WebControls.DropDownList ddlBibliographicLevel;
         
         /// <summary>
+        /// ddlMaterialType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMaterialType;
+        
+        /// <summary>
         /// fullTitleTextBox control.
         /// </summary>
         /// <remarks>

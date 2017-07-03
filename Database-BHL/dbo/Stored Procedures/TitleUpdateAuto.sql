@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TitleUpdateAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[TitleUpdateAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Update Procedure for dbo.Title
--- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:28 AM
-
 CREATE PROCEDURE dbo.TitleUpdateAuto
 
 @TitleID INT,
@@ -42,7 +28,8 @@ CREATE PROCEDURE dbo.TitleUpdateAuto
 @CurrentPublicationFrequency NVARCHAR(100),
 @PartNumber NVARCHAR(255),
 @PartName NVARCHAR(255),
-@BibliographicLevelID INT
+@BibliographicLevelID INT,
+@MaterialTypeID INT
 
 AS 
 
@@ -78,7 +65,8 @@ SET
 	[CurrentPublicationFrequency] = @CurrentPublicationFrequency,
 	[PartNumber] = @PartNumber,
 	[PartName] = @PartName,
-	[BibliographicLevelID] = @BibliographicLevelID
+	[BibliographicLevelID] = @BibliographicLevelID,
+	[MaterialTypeID] = @MaterialTypeID
 WHERE
 	[TitleID] = @TitleID
 		
@@ -121,7 +109,8 @@ ELSE BEGIN
 		[CurrentPublicationFrequency],
 		[PartNumber],
 		[PartName],
-		[BibliographicLevelID]
+		[BibliographicLevelID],
+		[MaterialTypeID]
 	FROM [dbo].[Title]
 	WHERE
 		[TitleID] = @TitleID
@@ -129,9 +118,3 @@ ELSE BEGIN
 	RETURN -- update successful
 END
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

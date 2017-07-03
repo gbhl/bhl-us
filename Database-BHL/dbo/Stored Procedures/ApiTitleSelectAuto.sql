@@ -17,6 +17,7 @@ ELSE
 
 	SELECT	t.[TitleID],
 			ISNULL(b.[BibliographicLevelName], '') AS BibliographicLevelName,
+			ISNULL(m.[MaterialTypeLabel], '') AS MaterialTypeLabel,
 			t.[MARCBibID],
 			t.[MARCLeader],
 			t.[TropicosTitleID],
@@ -50,9 +51,12 @@ ELSE
 			d.[DOIName]
 	FROM	[dbo].[Title] t LEFT JOIN [dbo].[BibliographicLevel] b
 				ON t.BibliographicLevelID = b.BibliographicLevelID
+			LEFT JOIN [dbo].[MaterialType] m
+				ON t.MaterialTypeID = m.MaterialTypeID
 			LEFT JOIN [dbo].[DOI] d
 				ON t.TitleID = d.EntityID
 				AND d.IsValid = 1
 				AND d.DOIEntityTypeID = @DOIEntityTypeTitleID
 	WHERE	t.[TitleID] = @TitleID
 	AND		t.[PublishReady] = 1
+

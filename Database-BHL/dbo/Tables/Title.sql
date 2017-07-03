@@ -31,10 +31,12 @@
     [PartNumber]                  NVARCHAR (255)  COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
     [PartName]                    NVARCHAR (255)  COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
     [BibliographicLevelID]        INT             NULL,
+	[MaterialTypeID]              INT             NULL,
     CONSTRAINT [aaaaaTitle_PK] PRIMARY KEY CLUSTERED ([TitleID] ASC),
     CONSTRAINT [CK Title EndYear] CHECK ([EndYear]>=(1400) AND [EndYear]<=(2025) OR [EndYear] IS NULL),
     CONSTRAINT [CK Title StartYear] CHECK ([StartYear]>=(1400) AND [StartYear]<=(2025) OR [StartYear] IS NULL),
     CONSTRAINT [FK_Title_BibliographicLevel] FOREIGN KEY ([BibliographicLevelID]) REFERENCES [dbo].[BibliographicLevel] ([BibliographicLevelID]),
+	CONSTRAINT [FK_Title_MaterialType] FOREIGN KEY ([MaterialTypeID]) REFERENCES [dbo].[MaterialType] ([MaterialTypeID]),
     CONSTRAINT [FK_Title_Title] FOREIGN KEY ([RedirectTitleID]) REFERENCES [dbo].[Title] ([TitleID]),
     CONSTRAINT [Title_FK01] FOREIGN KEY ([LanguageCode]) REFERENCES [dbo].[Language] ([LanguageCode]) ON UPDATE CASCADE
 );

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiSearchTitleSimple]
+﻿CREATE PROCEDURE [dbo].[ApiSearchTitleSimple]
 
 @FullTitle varchar(4000)
 
@@ -25,6 +24,7 @@ SELECT @SearchCondition = dbo.fnGetFullTextSearchString(@FullTitle)
 SELECT DISTINCT
 		t.TitleID,
 		ISNULL(b.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		t.FullTitle,
 		t.ShortTitle,
 		t.SortTitle,
@@ -38,9 +38,9 @@ SELECT DISTINCT
 FROM	dbo.SearchCatalog s 
 		INNER JOIN dbo.Title t ON s.TitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b ON t.BibliographicLevelID = b.BibliographicLevelID
+		LEFT JOIN dbo.MaterialType m ON t.MaterialTypeID = m.MaterialTypeID
 WHERE	CONTAINS(s.FullTitle, @SearchCondition)
 AND		t.PublishReady = 1
 ORDER BY t.SortTitle
 
 END
-

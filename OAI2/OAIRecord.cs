@@ -370,6 +370,14 @@ namespace MOBOT.BHL.OAI2
             set { _types = value; }
         }
 
+        public string _materialCode = "a";
+
+        public string MaterialCode
+        {
+            get { return _materialCode; }
+            set { _materialCode = value; }
+        }
+
         List<String> _descriptions = new List<string>();
 
         public List<String> Descriptions
@@ -624,6 +632,9 @@ namespace MOBOT.BHL.OAI2
                             break;
                     }
 
+                    MaterialType materialType = provider.MaterialTypeSelect(title.MaterialTypeID ?? 0);
+                    if (materialType != null) this.MaterialCode = materialType.MARCCode;
+
                     CustomGenericList<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(item.PrimaryTitleID);
                     foreach (TitleKeyword subject in subjects)
                     {
@@ -726,6 +737,9 @@ namespace MOBOT.BHL.OAI2
                         break;
                 }
                 this.Types.Add("text");
+
+                MaterialType materialType = provider.MaterialTypeSelect(title.MaterialTypeID ?? 0);
+                if (materialType != null) this.MaterialCode = materialType.MARCCode;
 
                 CustomGenericList<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(title.TitleID);
                 foreach (TitleKeyword subject in subjects)

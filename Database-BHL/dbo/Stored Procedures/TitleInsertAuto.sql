@@ -1,17 +1,3 @@
-
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[dbo].[TitleInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[TitleInsertAuto]
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-SET ANSI_NULLS ON
-GO
-
--- Insert Procedure for dbo.Title
--- Do not modify the contents of this procedure.
--- Generated 6/2/2016 9:32:28 AM
-
 CREATE PROCEDURE dbo.TitleInsertAuto
 
 @TitleID INT OUTPUT,
@@ -43,7 +29,8 @@ CREATE PROCEDURE dbo.TitleInsertAuto
 @CurrentPublicationFrequency NVARCHAR(100) = null,
 @PartNumber NVARCHAR(255) = null,
 @PartName NVARCHAR(255) = null,
-@BibliographicLevelID INT = null
+@BibliographicLevelID INT = null,
+@MaterialTypeID INT = null
 
 AS 
 
@@ -80,7 +67,8 @@ INSERT INTO [dbo].[Title]
 	[CurrentPublicationFrequency],
 	[PartNumber],
 	[PartName],
-	[BibliographicLevelID] )
+	[BibliographicLevelID],
+	[MaterialTypeID] )
 VALUES
 ( 	@MARCBibID,
 	@MARCLeader,
@@ -112,7 +100,8 @@ VALUES
 	@CurrentPublicationFrequency,
 	@PartNumber,
 	@PartName,
-	@BibliographicLevelID )
+	@BibliographicLevelID,
+	@MaterialTypeID )
 
 SET @TitleID = Scope_Identity()
 
@@ -155,7 +144,8 @@ ELSE BEGIN
 		[CurrentPublicationFrequency],
 		[PartNumber],
 		[PartName],
-		[BibliographicLevelID]	
+		[BibliographicLevelID],
+		[MaterialTypeID]	
 	FROM [dbo].[Title]
 	WHERE
 		[TitleID] = @TitleID
@@ -163,9 +153,3 @@ ELSE BEGIN
 	RETURN -- insert successful
 END
 GO
- 
-SET QUOTED_IDENTIFIER OFF
-GO
-SET ANSI_NULLS ON
-GO
-

@@ -170,6 +170,18 @@ namespace MOBOT.BHL.AdminWeb
             ddlBibliographicLevel.DataValueField = "BibliographicLevelID";
             ddlBibliographicLevel.DataBind();
 
+            CustomGenericList<MaterialType> materialTypes = bp.MaterialTypeSelectAll();
+
+            MaterialType emptyMaterialType = new MaterialType();
+            emptyMaterialType.MaterialTypeID = 0;
+            emptyMaterialType.MaterialTypeLabel = string.Empty;
+            materialTypes.Insert(0, emptyMaterialType);
+
+            ddlMaterialType.DataSource = materialTypes;
+            ddlMaterialType.DataTextField = "MaterialTypeLabel";
+            ddlMaterialType.DataValueField = "MaterialTypeID";
+            ddlMaterialType.DataBind();
+
             CustomGenericList<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
@@ -215,6 +227,7 @@ namespace MOBOT.BHL.AdminWeb
             String displayTitle = ((title.ShortTitle.Length > 30) ? title.ShortTitle.Substring(0, 30) + "..." : title.ShortTitle);
             makePrimary.Text = "Make Title " + title.TitleID.ToString() + " (\"" + displayTitle + "\") the Primary title for the items.";
             ddlBibliographicLevel.SelectedValue = (title.BibliographicLevelID ?? 0).ToString();
+            ddlMaterialType.SelectedValue = (title.MaterialTypeID ?? 0).ToString();
             publishReadyCheckBox.Checked = title.PublishReady;
             publishReadyOrig.Value = title.PublishReady.ToString();
 			marcBibIdLabel.Text = title.MARCBibID;
@@ -1678,6 +1691,9 @@ namespace MOBOT.BHL.AdminWeb
                 int? bibLevelID = null;
                 if (ddlBibliographicLevel.SelectedValue != "0") bibLevelID = (int?)Convert.ToInt32(ddlBibliographicLevel.SelectedValue);
 
+                int? materialTypeID = null;
+                if (ddlMaterialType.SelectedValue != "0") materialTypeID = (int?)Convert.ToInt32(ddlMaterialType.SelectedValue);
+
                 // Set the id of the editing user
                 userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
@@ -1686,6 +1702,7 @@ namespace MOBOT.BHL.AdminWeb
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
                 title.PublishReady = publishReadyCheckBox.Checked;
                 title.BibliographicLevelID = bibLevelID;
+                title.MaterialTypeID = materialTypeID;
 				title.FullTitle = fullTitleTextBox.Text.Trim();
 				title.ShortTitle = shortTitleTextBox.Text.Trim();
 				title.SortTitle = sortTitleTextBox.Text.Trim();
