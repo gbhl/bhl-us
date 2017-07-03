@@ -23,6 +23,7 @@
 	[ItemContributors]   NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalog_ItemContributors] DEFAULT ('') NOT NULL,
 	[FirstPageID]		 INT			 NULL,
 	[SearchAuthors]      NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalog_SearchAuthors] DEFAULT('') NOT NULL,
+	[HasIllustrations]   SMALLINT        CONSTRAINT [DF_SearchCatalog_HasIllustrations] DEFAULT((0)) NOT NULL, 
     CONSTRAINT [PK_SearchCatalog] PRIMARY KEY CLUSTERED ([SearchCatalogID] ASC)
 );
 

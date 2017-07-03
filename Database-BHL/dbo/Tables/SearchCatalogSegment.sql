@@ -19,6 +19,7 @@
     [HasExternalContent]     SMALLINT        CONSTRAINT [DF_SearchCatalogSegment_HasExternalContent] DEFAULT ((0)) NOT NULL,
 	[Contributors]           NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalogSegment_Contributors] DEFAULT ('') NOT NULL,
 	[SearchAuthors]          NVARCHAR(MAX)   CONSTRAINT [DF_SearchCatalogSegment_SearchAuthors] DEFAULT ('') NOT NULL,
+	[HasIllustrations]       SMALLINT        CONSTRAINT [DF_SearchCatalogSegment_HasIllustrations] DEFAULT((0)) NOT NULL, 
     CONSTRAINT [PK_SearchCatalogSegment] PRIMARY KEY CLUSTERED ([SearchCatalogSegmentID] ASC)
 );
 GO

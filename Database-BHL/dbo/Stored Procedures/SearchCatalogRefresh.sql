@@ -142,7 +142,8 @@ BEGIN
 		ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasSegments smallint NOT NULL DEFAULT(0),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
-		HasExternalContent smallint NOT NULL DEFAULT(0)
+		HasExternalContent smallint NOT NULL DEFAULT(0),
+		HasIllustrations smallint NOT NULL DEFAULT(0)
 	)
 
 	/*
@@ -188,33 +189,34 @@ BEGIN
 	*/
 
 	CREATE TABLE #tmpItem
-		  (
-		  SearchCatalogID int IDENTITY(1,1) NOT NULL , --PRIMARY KEY,
-		  TitleID int NOT NULL,
-		  ItemID int NOT NULL,
-		  FirstPageID int NULL,
-		  SearchText nvarchar(4000) NOT NULL DEFAULT(''),
-		  FullTitle nvarchar(2000) NOT NULL DEFAULT(''),
-		  PartNumber nvarchar(255) NULL DEFAULT(''),
-		  PartName nvarchar(255) NULL DEFAULT(''),
-		  UniformTitle nvarchar(255) NOT NULL DEFAULT(''),
-		  PublicationDetails nvarchar(255) NULL DEFAULT(''),
-		  PublisherPlace nvarchar(150) NULL DEFAULT(''),
-		  PublisherName nvarchar(255) NULL DEFAULT(''),
-		  Volume nvarchar(100) NOT NULL DEFAULT(''),
-		  EditionStatement nvarchar(450) NOT NULL DEFAULT(''),
-		  [Year] nvarchar(20) NOT NULL DEFAULT(''),
-		  Subjects nvarchar(max) NOT NULL DEFAULT(''),
-		  Associations nvarchar(max) NOT NULL DEFAULT(''),
-		  Variants nvarchar(max) NOT NULL DEFAULT(''),
-		  Authors nvarchar(max) NOT NULL DEFAULT(''),
-		  SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
-		  TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
-		  ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
-  		  HasSegments smallint NOT NULL DEFAULT(0),
-		  HasLocalContent smallint NOT NULL DEFAULT(0),
-		  HasExternalContent smallint NOT NULL DEFAULT(0)
-		  )
+		(
+		SearchCatalogID int IDENTITY(1,1) NOT NULL , --PRIMARY KEY,
+		TitleID int NOT NULL,
+		ItemID int NOT NULL,
+		FirstPageID int NULL,
+		SearchText nvarchar(4000) NOT NULL DEFAULT(''),
+		FullTitle nvarchar(2000) NOT NULL DEFAULT(''),
+		PartNumber nvarchar(255) NULL DEFAULT(''),
+		PartName nvarchar(255) NULL DEFAULT(''),
+		UniformTitle nvarchar(255) NOT NULL DEFAULT(''),
+		PublicationDetails nvarchar(255) NULL DEFAULT(''),
+		PublisherPlace nvarchar(150) NULL DEFAULT(''),
+		PublisherName nvarchar(255) NULL DEFAULT(''),
+		Volume nvarchar(100) NOT NULL DEFAULT(''),
+		EditionStatement nvarchar(450) NOT NULL DEFAULT(''),
+		[Year] nvarchar(20) NOT NULL DEFAULT(''),
+		Subjects nvarchar(max) NOT NULL DEFAULT(''),
+		Associations nvarchar(max) NOT NULL DEFAULT(''),
+		Variants nvarchar(max) NOT NULL DEFAULT(''),
+		Authors nvarchar(max) NOT NULL DEFAULT(''),
+		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
+		TitleContributors nvarchar(max) NOT NULL DEFAULT(''),
+		ItemContributors nvarchar(max) NOT NULL DEFAULT(''),
+  		HasSegments smallint NOT NULL DEFAULT(0),
+		HasLocalContent smallint NOT NULL DEFAULT(0),
+		HasExternalContent smallint NOT NULL DEFAULT(0),
+		HasIllustrations smallint NOT NULL DEFAULT(0)
+		)
 
 	-- Get the initial data set
 	INSERT	#tmpItem (TitleID, ItemID, FullTitle, PartNumber, PartName, UniformTitle, 
@@ -275,6 +277,23 @@ BEGIN
 	SET		HasLocalContent = 1
 	FROM	#tmpItem t INNER JOIN dbo.Page p ON t.ItemID = p.ItemID
 
+	UPDATE	#tmpItem
+	SET		HasIllustrations = x.HasIllustrations
+	FROM	#tmpItem i INNER JOIN (
+				SELECT	t.ItemID, MAX(CASE WHEN ppt.PageID IS NULL THEN 0 ELSE 1 END) AS HasIllustrations
+				FROM	#tmpItem t
+						INNER JOIN dbo.Page p ON t.ItemID = p.ItemID
+						-- 3 = Illustration
+						-- 10 = Map
+						-- 14 = Foldout
+						-- 18 = Drawing
+						-- 19 = Table
+						-- 20 = Photograph
+						LEFT JOIN dbo.Page_PageType ppt ON p.PageID = ppt.PageID AND ppt.PageTypeID IN (3, 10, 14, 18, 19, 20)
+				GROUP BY
+						t.ItemID
+				) x ON i.ItemID = x.ItemID
+
 	-- Get the first page IDs for each item
 	CREATE TABLE #tmpPages (SequenceOrder int NULL, ITEMID int NOT NULL)
 
@@ -307,7 +326,7 @@ BEGIN
 				UniformTitle, PublicationDetails, PublisherPlace, PublisherName,
 				Volume, EditionStatement, Subjects, Associations, Variants, Authors,
 				SearchAuthors, TitleContributors, ItemContributors, HasSegments, 
-				HasLocalContent, HasExternalContent)
+				HasLocalContent, HasExternalContent, HasIllustrations)
 	SELECT	TitleID,
 			ItemID,
 			FirstPageID,
@@ -338,11 +357,11 @@ BEGIN
 			RTRIM(ItemContributors),
 			HasSegments,
 			HasLocalContent,
-			HasExternalContent
-	FROM  #tmpItem
+			HasExternalContent,
+			HasIllustrations
+	FROM	#tmpItem
 
 	DROP TABLE #tmpItem
-
 END
 
 -- *************************************  SEARCHCATALOGSEGMENT *******************************
@@ -369,7 +388,8 @@ BEGIN
 		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
-		HasExternalContent smallint NOT NULL DEFAULT(0)
+		HasExternalContent smallint NOT NULL DEFAULT(0),
+		HasIllustrations smallint NOT NULL DEFAULT(0)
 	)
 
 	-- Get the initial data set
@@ -412,6 +432,23 @@ BEGIN
 	UPDATE	#tmpSegment
 	SET		Contributors = ISNULL(RTRIM(dbo.fnContributorStringForSegment(SegmentID)) + ' ', '')
 	
+	UPDATE	#tmpSegment
+	SET		HasIllustrations = x.HasIllustrations
+	FROM	#tmpSegment s INNER JOIN (
+				SELECT	t.SegmentID, MAX(CASE WHEN ppt.PageID IS NULL THEN 0 ELSE 1 END) AS HasIllustrations
+				FROM	#tmpSegment t
+						INNER JOIN dbo.SegmentPage p ON t.SegmentID = p.SegmentID
+						-- 3 = Illustration
+						-- 10 = Map
+						-- 14 = Foldout
+						-- 18 = Drawing
+						-- 19 = Table
+						-- 20 = Photograph
+						LEFT JOIN dbo.Page_PageType ppt ON p.PageID = ppt.PageID AND ppt.PageTypeID IN (3, 10, 14, 18, 19, 20)
+				GROUP BY
+						t.SegmentID
+				) x ON s.SegmentID = x.SegmentID
+
 	-- Create and populate the temp table we'll use to update the search catalog
 	CREATE TABLE #tmpSearchCatalogSegment
 	(
@@ -432,12 +469,14 @@ BEGIN
 		SearchAuthors nvarchar(max) NOT NULL DEFAULT(''),
 		Contributors nvarchar(max) NOT NULL DEFAULT(''),
 		HasLocalContent smallint NOT NULL DEFAULT(1),
-		HasExternalContent smallint NOT NULL DEFAULT(0)
+		HasExternalContent smallint NOT NULL DEFAULT(0),
+		HasIllustrations smallint NOT NULL DEFAULT(0)
 	)
 	
 	INSERT  #tmpSearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 				ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-				Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent)
+				Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent,
+				HasIllustrations)
 	SELECT	SegmentID,
 			ItemID,
 			LEFT(Title +
@@ -461,8 +500,9 @@ BEGIN
 			RTRIM(SearchAuthors),
 			RTRIM(Contributors),
 			HasLocalContent,
-			HasExternalContent
-	FROM  #tmpSegment
+			HasExternalContent,
+			HasIllustrations
+	FROM	#tmpSegment
 
 	DROP TABLE #tmpSegment
 
@@ -526,7 +566,7 @@ BEGIN
 					UniformTitle, PublicationDetails, PublisherPlace, PublisherName, 
 					Volume, EditionStatement, Subjects, Associations, Variants, Authors,
 					SearchAuthors, TitleContributors, ItemContributors, HasSegments, 
-					HasLocalContent, HasExternalContent)
+					HasLocalContent, HasExternalContent, HasIllustrations)
 	SELECT	t.TitleID, 
 			t.ItemID, 
 			t.FirstPageID,
@@ -547,7 +587,8 @@ BEGIN
 			t.ItemContributors,
 			t.HasSegments,
 			t.HasLocalContent,
-			t.HasExternalContent
+			t.HasExternalContent,
+			t.HasIllustrations
 	FROM	#tmpSearchCatalog t LEFT JOIN dbo.SearchCatalog s
 				ON t.TitleID = s.TitleID
 				AND t.ItemID = s.ItemID
@@ -574,6 +615,7 @@ BEGIN
 			HasSegments = CASE WHEN s.HasSegments <> t.HasSegments THEN t.HasSegments ELSE s.HasSegments END,
 			HasLocalContent = CASE WHEN s.HasLocalContent <> t.HasLocalContent THEN t.HasLocalContent ELSE s.HasLocalContent END,
 			HasExternalContent = CASE WHEN s.HasExternalContent <> t.HasExternalContent THEN t.HasExternalContent ELSE s.HasExternalContent END,
+			HasIllustrations = CASE WHEN s.HasIllustrations <> t.HasIllustrations THEN t.HasIllustrations ELSE s.HasIllustrations END,
 			LastModifiedDate = GETDATE()
 	FROM	dbo.SearchCatalog s INNER JOIN #tmpSearchCatalog t
 				ON s.TitleID = t.TitleID
@@ -597,6 +639,7 @@ BEGIN
 	OR		s.HasSegments <> t.HasSegments
 	OR		s.HasLocalContent <> t.HasLocalContent
 	OR		s.HasExternalContent <> t.HasExternalContent
+	OR		s.HasIllustrations <> t.HasIllustrations
 
 	-- Remove any rows from the search catalog that no longer exist
 	DELETE	dbo.SearchCatalog
@@ -617,7 +660,8 @@ BEGIN
 	-- Add any new rows to the search catalog
 	INSERT	dbo.SearchCatalogSegment (SegmentID, ItemID, SearchText, Title, TranslatedTitle,
 					ContainerTitle, PublicationDetails, Volume, Series, Issue, [Date],
-					Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent)
+					Subjects, Authors, SearchAuthors, Contributors, HasLocalContent, HasExternalContent,
+					HasIllustrations)
 	SELECT	t.SegmentID, 
 			t.ItemID,
 			t.SearchText, 
@@ -634,7 +678,8 @@ BEGIN
 			t.SearchAuthors,
 			t.Contributors,
 			t.HasLocalContent,
-			t.HasExternalContent
+			t.HasExternalContent,
+			t.HasIllustrations
 	FROM	#tmpSearchCatalogSegment t LEFT JOIN dbo.SearchCatalogSegment s
 				ON t.SegmentID = s.SegmentID
 	WHERE	s.SearchCatalogSegmentID IS NULL
@@ -657,6 +702,7 @@ BEGIN
 			Contributors = CASE WHEN s.Contributors <> t.Contributors THEN t.Contributors ELSE s.Contributors END,
 			HasLocalContent = CASE WHEN s.HasLocalContent <> t.HasLocalContent THEN t.HasLocalContent ELSE s.HasLocalContent END,
 			HasExternalContent = CASE WHEN s.HasExternalContent <> t.HasExternalContent THEN t.HasExternalContent ELSE s.HasExternalContent END,
+			HasIllustrations = CASE WHEN s.HasIllustrations <> t.HasIllustrations THEN t.HasIllustrations ELSE s.HasIllustrations END,
 			LastModifiedDate = GETDATE()
 	FROM	dbo.SearchCatalogSegment s INNER JOIN #tmpSearchCatalogSegment t
 				ON s.SegmentID = t.SegmentID
@@ -676,6 +722,7 @@ BEGIN
 	OR		s.Contributors <> t.Contributors
 	OR		s.HasLocalContent <> t.HasLocalContent
 	OR		s.HasExternalContent <> t.HasExternalContent
+	OR		s.HasIllustrations <> t.HasIllustrations
 
 	-- Remove any rows from the search catalog that no longer exist
 	DELETE	dbo.SearchCatalogSegment
