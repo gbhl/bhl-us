@@ -4,7 +4,6 @@
     <sectionGroup name="applicationSettings" type="System.Configuration.ApplicationSettingsGroup, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
       <section name="MOBOT.BHL.Web2.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
     </sectionGroup>
-  <section name="glimpse" type="Glimpse.Core.Configuration.Section, Glimpse.Core" />
   </configSections>
   <appSettings>
     <!-- ############# SETTINGS THAT DIFFER BETWEEN BETA AND PRODUCTION ############# -->
@@ -38,9 +37,6 @@
     <add key="MonitorThreshold" value="20"/>
     <add key="DebugValue" value="debug"/>
 
-    <!-- Glimpse settings -->
-    <add key="Glimpse:DisableAsyncSupport" value="true" />
-    
     <!-- OAI Settings -->
     <add key="OAIRepositoryName" value="Biodiversity Heritage Library OAI Repository"/>
     <add key="OAIAdminEmail" value="oai@biodiversitylibrary.org"/>
@@ -185,13 +181,8 @@
       </assemblies>
     </compilation>
     <globalization requestEncoding="utf-8" responseEncoding="utf-8" />
-     <customErrors mode="Off" />
-  <!-- Glimpse: This can be commented in to add additional data to the Trace tab when using WebForms -->
-        <trace writeToDiagnosticsTrace="true" enabled="true" pageOutput="false"/> <httpModules>
-            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" />
-        </httpModules><httpHandlers>
-            <add path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" />
-        </httpHandlers></system.web>
+    <customErrors mode="Off" />
+  </system.web>
   <system.web.extensions>
     <scripting>
       <webServices>
@@ -236,12 +227,10 @@
       <security>
           <requestFiltering allowDoubleEscaping="true" />
       </security>
-  <validation validateIntegratedModeConfiguration="false" /><modules>
-            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
-        </modules><handlers>
-            <add name="Glimpse" path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" preCondition="integratedMode" />
-            <add name="PdfUrlRoutingHandler" type="System.Web.Routing.UrlRoutingHandler, System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" path="pdf*/*" verb="GET"/>
-        </handlers></system.webServer>
+  <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+        <add name="PdfUrlRoutingHandler" type="System.Web.Routing.UrlRoutingHandler, System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" path="pdf*/*" verb="GET"/>
+    </handlers></system.webServer>
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
@@ -267,17 +256,6 @@
         name="SiteServiceSoap" />
     </client>
   </system.serviceModel>
-  <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
-    <!-- 
-          For more information on how to configure Glimpse, please visit http://getglimpse.com/Help/Configuration
-          or access {your site}/Glimpse.axd for even more details and a Configuration Tool to support you. 
-      -->
-    <runtimePolicies>
-      <ignoredTypes>
-        <add type="Glimpse.AspNet.Policy.LocalPolicy, Glimpse.AspNet"/>
-      </ignoredTypes>
-    </runtimePolicies>
-  </glimpse>
  <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>

@@ -11,8 +11,6 @@ namespace MOBOT.BHL.Web2
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-            routes.Ignore("glimpse.axd");
-
             routes.MapPageRoute("Default", "", "~/default.aspx");
 
             routes.MapPageRoute("Browse-Default", "browse", "~/default.aspx");
