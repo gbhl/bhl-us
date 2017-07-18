@@ -14,6 +14,7 @@ namespace MOBOT.BHL.Web2
         public string searchTerm { get; set; }
         public string holdingInstitution { get; set; }
         public string itemID { get; set; }
+        public string sponsor { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {

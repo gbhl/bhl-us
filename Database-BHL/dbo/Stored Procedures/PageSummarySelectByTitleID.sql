@@ -6,7 +6,7 @@ AS
 SET NOCOUNT ON
 
 	SELECT TOP 1 MARCBibID, TitleID, FullTitle, PartNumber, PartName, RareBooks, 
-		ItemStatusID, ItemID, BarCode, PageID, FileNamePrefix, PageDescription, SequenceOrder, 
+		ItemStatusID, ItemID, BarCode, Sponsor, PageID, FileNamePrefix, PageDescription, SequenceOrder, 
 		Illustration, PDFSize, ShortTitle, Volume, WebVirtualDirectory,
 		OCRFolderShare, ExternalURL, AltExternalURL, DownloadUrl, ImageServerUrlFormat,
 		FileRootFolder
@@ -23,5 +23,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
-

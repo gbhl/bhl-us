@@ -6,7 +6,7 @@ AS
 SET NOCOUNT ON
 
 	SELECT MARCBibID, TitleID, RedirectTitleID, FullTitle, PartNumber, PartName, RareBooks, 
-		ItemStatusID, ItemID, RedirectItemID, PrimaryTitleID, BarCode, 
+		ItemStatusID, ItemID, RedirectItemID, PrimaryTitleID, BarCode, Sponsor,
 		PageID, FileNamePrefix, PageDescription, SequenceOrder, 
 		Illustration, PDFSize, ShortTitle, Volume, WebVirtualDirectory,
 		OCRFolderShare, ExternalURL, AltExternalURL, DownloadUrl, ImageServerUrlFormat,

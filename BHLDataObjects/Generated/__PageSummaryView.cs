@@ -1,7 +1,7 @@
 
-// Generated 6/10/2011 1:45:34 PM
+// Generated 7/18/2017 11:14:00 AM
 // Do not modify the contents of this code file.
-// This abstract class __PageSummaryView is based upon PageSummaryView.
+// This abstract class __PageSummaryView is based upon dbo.PageSummaryView.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __PageSummaryView : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -62,6 +62,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="pDFSize"></param>
 		/// <param name="volume"></param>
 		/// <param name="fileRootFolder"></param>
+		/// <param name="sponsor"></param>
 		/// <param name="itemSequence"></param>
 		/// <param name="pageID"></param>
 		/// <param name="fileNamePrefix"></param>
@@ -93,6 +94,7 @@ namespace MOBOT.BHL.DataObjects
 			int? pDFSize, 
 			string volume, 
 			string fileRootFolder, 
+			string sponsor, 
 			short? itemSequence, 
 			int pageID, 
 			string fileNamePrefix, 
@@ -125,6 +127,7 @@ namespace MOBOT.BHL.DataObjects
 			PDFSize = pDFSize;
 			Volume = volume;
 			FileRootFolder = fileRootFolder;
+			Sponsor = sponsor;
 			ItemSequence = itemSequence;
 			PageID = pageID;
 			FileNamePrefix = fileNamePrefix;
@@ -250,6 +253,11 @@ namespace MOBOT.BHL.DataObjects
 						_FileRootFolder = (string)column.Value;
 						break;
 					}
+					case "Sponsor" :
+					{
+						_Sponsor = (string)column.Value;
+						break;
+					}
 					case "ItemSequence" :
 					{
 						_ItemSequence = (short?)column.Value;
@@ -320,7 +328,7 @@ namespace MOBOT.BHL.DataObjects
 						_ImageServerUrlFormat = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -328,7 +336,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region MARCBibID
 		
@@ -798,6 +806,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion FileRootFolder
 		
+		#region Sponsor
+		
+		private string _Sponsor = null;
+		
+		/// <summary>
+		/// Column: Sponsor;
+		/// DBMS data type: nvarchar(100); Nullable;
+		/// </summary>
+		[ColumnDefinition("Sponsor", DbTargetType=SqlDbType.NVarChar, Ordinal=18, CharacterMaxLength=100, IsNullable=true)]
+		public string Sponsor
+		{
+			get
+			{
+				return _Sponsor;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 100);
+				if (_Sponsor != value)
+				{
+					_Sponsor = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Sponsor
+		
 		#region ItemSequence
 		
 		private short? _ItemSequence = null;
@@ -806,7 +842,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ItemSequence;
 		/// DBMS data type: smallint; Nullable;
 		/// </summary>
-		[ColumnDefinition("ItemSequence", DbTargetType=SqlDbType.SmallInt, Ordinal=18, NumericPrecision=5, IsNullable=true)]
+		[ColumnDefinition("ItemSequence", DbTargetType=SqlDbType.SmallInt, Ordinal=19, NumericPrecision=5, IsNullable=true)]
 		public short? ItemSequence
 		{
 			get
@@ -833,7 +869,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PageID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=19, NumericPrecision=10)]
+		[ColumnDefinition("PageID", DbTargetType=SqlDbType.Int, Ordinal=20, NumericPrecision=10)]
 		public int PageID
 		{
 			get
@@ -860,7 +896,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: FileNamePrefix;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=20, CharacterMaxLength=50)]
+		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=50)]
 		public string FileNamePrefix
 		{
 			get
@@ -888,7 +924,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PageDescription;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("PageDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("PageDescription", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=255, IsNullable=true)]
 		public string PageDescription
 		{
 			get
@@ -916,7 +952,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: SequenceOrder;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=22, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10, IsNullable=true)]
 		public int? SequenceOrder
 		{
 			get
@@ -943,7 +979,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Illustration;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=23)]
+		[ColumnDefinition("Illustration", DbTargetType=SqlDbType.Bit, Ordinal=24)]
 		public bool Illustration
 		{
 			get
@@ -970,7 +1006,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Active;
 		/// DBMS data type: bit;
 		/// </summary>
-		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=24)]
+		[ColumnDefinition("Active", DbTargetType=SqlDbType.Bit, Ordinal=25)]
 		public bool Active
 		{
 			get
@@ -997,7 +1033,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalURL;
 		/// DBMS data type: nvarchar(500); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=25, CharacterMaxLength=500, IsNullable=true)]
+		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=500, IsNullable=true)]
 		public string ExternalURL
 		{
 			get
@@ -1025,7 +1061,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalBaseURL;
 		/// DBMS data type: nvarchar(1000); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=1000, IsNullable=true)]
+		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1000, IsNullable=true)]
 		public string ExternalBaseURL
 		{
 			get
@@ -1053,7 +1089,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: AltExternalURL;
 		/// DBMS data type: nvarchar(1500); Nullable;
 		/// </summary>
-		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1500, IsNullable=true)]
+		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=1500, IsNullable=true)]
 		public string AltExternalURL
 		{
 			get
@@ -1081,7 +1117,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: WebVirtualDirectory;
 		/// DBMS data type: nvarchar(30); Nullable;
 		/// </summary>
-		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=30, IsNullable=true)]
 		public string WebVirtualDirectory
 		{
 			get
@@ -1109,7 +1145,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: OCRFolderShare;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100, IsNullable=true)]
 		public string OCRFolderShare
 		{
 			get
@@ -1137,7 +1173,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: DownloadUrl;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100)]
+		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=100)]
 		public string DownloadUrl
 		{
 			get
@@ -1165,7 +1201,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ImageServerUrlFormat;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=200)]
+		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=200)]
 		public string ImageServerUrlFormat
 		{
 			get
@@ -1186,7 +1222,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion ImageServerUrlFormat
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1245,6 +1281,7 @@ namespace MOBOT.BHL.DataObjects
 					o.PDFSize == PDFSize &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.FileRootFolder) == GetComparisonString(FileRootFolder) &&
+					GetComparisonString(o.Sponsor) == GetComparisonString(Sponsor) &&
 					o.ItemSequence == ItemSequence &&
 					o.PageID == PageID &&
 					GetComparisonString(o.FileNamePrefix) == GetComparisonString(FileNamePrefix) &&
@@ -1376,6 +1413,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string PDFSize = "PDFSize";	
 			public const string Volume = "Volume";	
 			public const string FileRootFolder = "FileRootFolder";	
+			public const string Sponsor = "Sponsor";	
 			public const string ItemSequence = "ItemSequence";	
 			public const string PageID = "PageID";	
 			public const string FileNamePrefix = "FileNamePrefix";	
@@ -1396,3 +1434,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

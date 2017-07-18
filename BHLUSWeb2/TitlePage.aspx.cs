@@ -233,7 +233,7 @@ namespace MOBOT.BHL.Web2
                             attributionPlaceHolder.Controls.Add(literal);
                         }
 
-                        ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("'", "");
+                        ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("\"", "");
                     }
 
                     // Used to determine where to send people for bibliographic curiosity
@@ -264,10 +264,14 @@ namespace MOBOT.BHL.Web2
                     lbSegments.DataValueField = "StartPageID";
                     lbSegments.DataBind();
 
-                    // Check and set up Annotations SCS
                     CurrentItemID = PageSummary.ItemID;
                     ((Book)this.Master).itemID = CurrentItemID.ToString();
-                    
+                    ((Book)this.Master).sponsor = 
+                        PageSummary.Sponsor == null ? 
+                        string.Empty : 
+                        PageSummary.Sponsor.Replace("\"", "");
+
+                    // Check and set up Annotations SCS
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["ShowAnnotations"]))
                     {
                         setAnnotationContent();

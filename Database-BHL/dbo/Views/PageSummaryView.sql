@@ -8,7 +8,7 @@ SELECT	-- Title
 		dbo.Title.ShortTitle, dbo.Title.SortTitle, dbo.Title.PartNumber, dbo.Title.PartName,
 		-- Item
 		dbo.Item.ItemStatusID, dbo.Item.ItemID, dbo.Item.RedirectItemID, dbo.Item.PrimaryTitleID,
-		dbo.Item.BarCode, dbo.Item.PDFSize, dbo.Item.Volume, dbo.Item.FileRootFolder,
+		dbo.Item.BarCode, dbo.Item.PDFSize, dbo.Item.Volume, dbo.Item.FileRootFolder, Item.Sponsor,
 		-- TitleItem
 		dbo.TitleItem.ItemSequence,
 		-- Page
@@ -48,4 +48,3 @@ FROM	dbo.Vault
 		CROSS JOIN dbo.Configuration AS Configuration2
 WHERE	dbo.Configuration.ConfigurationName = 'ImageBaseURL'
 AND		Configuration2.ConfigurationName = 'ImageBaseDefaultURL'
-

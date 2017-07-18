@@ -6,7 +6,7 @@ AS
 SET NOCOUNT ON
 
 SELECT MARCBibID, TitleID, RedirectTitleID, FullTitle, PartNumber, PartName, RareBooks, 
-	ItemStatusID, ItemID, RedirectItemID, PrimaryTitleID, BarCode, 
+	ItemStatusID, ItemID, RedirectItemID, PrimaryTitleID, BarCode, Sponsor,
 	v.PageID, FileNamePrefix, PageDescription, 
 	CONVERT(int, x.SequenceOrder) AS SequenceOrder, 
 	Illustration, PDFSize, ShortTitle, Volume, WebVirtualDirectory,
@@ -32,4 +32,3 @@ END
 ELSE BEGIN
 	RETURN -- select successful
 END
-
