@@ -1298,5 +1298,6 @@
     <None Include="dbo\Stored Procedures\MaterialTypeInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\MaterialTypeSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\MaterialTypeSelectAll.sql" />
+    <None Include="dbo\Functions\fnGetIdentifierStringForTitle.sql" />
   </ItemGroup>
 </Project>
