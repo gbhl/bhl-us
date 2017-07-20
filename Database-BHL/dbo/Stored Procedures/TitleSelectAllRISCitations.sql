@@ -32,7 +32,7 @@ FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
 		LEFT JOIN dbo.Language l WITH (NOLOCK) ON t.LanguageCode = l.LanguageCode
-		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON t.TitleID = d.EntityID AND d.DOIEntityTypeID = @DOITITLEID
+		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON t.TitleID = d.EntityID AND d.DOIEntityTypeID = @DOITITLEID AND d.IsValid = 1
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID
 WHERE	t.PublishReady = 1
 

@@ -30,7 +30,7 @@ SELECT DISTINCT
 		d.DOIName
 FROM	dbo.vwSegment s
 		LEFT JOIN dbo.SearchCatalogSegment cat ON s.SegmentID = cat.SegmentID
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
+		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 AND d.IsValid = 1
 WHERE	SegmentStatusID = @SegmentStatusID
 
 -- If we didn't get author information from the search catalog, attempt to compile it on-the-fly.

@@ -20,7 +20,7 @@ FROM	dbo.SegmentClusterSegment scs
 		INNER JOIN dbo.SegmentCluster sc ON scs.SegmentClusterID = sc.SegmentClusterID
 		INNER JOIN dbo.SegmentClusterType ct ON sc.SegmentClusterTypeID = ct.SegmentClusterTypeID
 		LEFT JOIN dbo.SearchCatalogSegment cat ON s.SegmentID = cat.SegmentID
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40
+		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 AND d.IsValid = 1
 		INNER JOIN (
 			-- Select the most recently modified clusters
 			SELECT TOP (@NumClusters )

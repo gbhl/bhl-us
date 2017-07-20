@@ -43,7 +43,7 @@ FROM	dbo.vwSegment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.SegmentIdentifier isbn WITH (NOLOCK) ON s.SegmentID = isbn.SegmentID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.SegmentIdentifier issn WITH (NOLOCK) ON s.SegmentID = issn.SegmentID AND issn.IdentifierID = @ISSNID
-		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = @DOISEGMENTID
+		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = @DOISEGMENTID AND d.IsValid = 1
 		LEFT JOIN dbo.[Language] l WITH (NOLOCK) ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentID = @SegmentID
