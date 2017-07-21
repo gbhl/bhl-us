@@ -72,7 +72,7 @@
 </div>
 
 @section scripts {
-    <script src="/js/libs/jquery.history.min.js"></script>
+    <!--<script src="/js/libs/jquery.history.min.js"></script>-->
     <script src="/js/libs/jquery.hoverintent.min.js"></script>
     <script src="/js/libs/jquery.text-overflow.min.js"></script>
 
@@ -100,34 +100,70 @@
                 }
             }
 
-            $.History.bind(function (state) {
-                if (!$('#sub-sections').is(':visible')) {
-                    $('#sub-sections').show();
-                }
-                var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
-                var subSection = $('#' + stateName);
-                //var subSectionHeader = $('#subhead-' + stateName)
-                subSections.hide();
+            selectTab();
 
-                // Highlight selected link
-                $('#linkbar a').removeClass('active');
-                $('#linkbar .' + stateName + ' a').addClass('active').blur();
+            //$.History.bind(function (state) {
+            //    if (!$('#sub-sections').is(':visible')) {
+            //        $('#sub-sections').show();
+            //    }
+            //    var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+            //    var subSection = $('#' + stateName);
+            //    //var subSectionHeader = $('#subhead-' + stateName)
+            //    subSections.hide();
 
-                // Special case
-                if (stateName == 'all') {
-                    subSections.show();
-                    return false;
-                }
+            //    // Highlight selected link
+            //    $('#linkbar a').removeClass('active');
+            //    $('#linkbar .' + stateName + ' a').addClass('active').blur();
 
-                // If no default sub-section found then head on to the default otherwise show selected sub-section
-                if (!subSection.length) {
-                  $.History.go('/all');
-                    return false;
-                } else {
-                    subSection.show();
-                }
-            });
+            //    // Special case
+            //    if (stateName == 'all') {
+            //        subSections.show();
+            //        return false;
+            //    }
+
+            //    // If no default sub-section found then head on to the default otherwise show selected sub-section
+            //    if (!subSection.length) {
+            //      $.History.go('/all');
+            //        return false;
+            //    } else {
+            //        subSection.show();
+            //    }
+            //});
         });
+
+        $(window).on('hashchange', function () {
+            selectTab();
+        });
+
+        function selectTab() {
+            var state = location.hash;
+            var subSections = $('#sub-sections').children();
+
+            if (!$('#sub-sections').is(':visible')) {
+                $('#sub-sections').show();
+            }
+            var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
+            var subSection = $('#' + stateName);
+            subSections.hide();
+
+            // Highlight selected link
+            $('#linkbar a').removeClass('active');
+            $('#linkbar .' + stateName + ' a').addClass('active').blur();
+
+            // Special case
+            if (stateName == 'all') {
+                subSections.show();
+                return false;
+            }
+
+            // If no default sub-section found then head on to the default otherwise show selected sub-section
+            if (!subSection.length) {
+                $('#titles').show();
+            } else {
+                subSection.show();
+            }
+        }
+
     //]]>
     </script>
 }

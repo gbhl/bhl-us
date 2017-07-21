@@ -27,6 +27,63 @@ $(document).ready(function () {
                 }
             });
 
+    // Code taken from here to account for deprecated "browser" jQuery attribute
+    // https://stackoverflow.com/a/14798444
+    if (typeof jQuery.browser == 'undefined') {
+        var matched, browser;
+
+        jQuery.uaMatch = function (ua) {
+            ua = ua.toLowerCase();
+
+            var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                /(msie)[\s?]([\w.]+)/.exec(ua) ||
+                /(trident)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) ||
+                [];
+
+            return {
+                browser: match[1] || "",
+                version: match[2] || "0"
+            };
+        };
+
+        matched = jQuery.uaMatch(navigator.userAgent);
+        //IE 11+ fix (Trident) 
+        matched.browser = matched.browser == 'trident' ? 'msie' : matched.browser;
+        browser = {};
+
+        if (matched.browser) {
+            browser[matched.browser] = true;
+            browser.version = matched.version;
+        }
+
+        // Chrome is Webkit, but Webkit is also Safari.
+        if (browser.chrome) {
+            browser.webkit = true;
+        } else if (browser.webkit) {
+            browser.safari = true;
+        }
+
+        jQuery.browser = browser;
+    }
+
+    // Code taken from here to account for deprecated "live()" jQuery method
+    // https://stackoverflow.com/a/31826928
+    // Forward port jQuery.live().  Wrapper for newer jQuery.on()
+    // Uses optimized selector context.  Only add if live() not already existing.
+    if (typeof jQuery.fn.live == 'undefined' || !(jQuery.isFunction(jQuery.fn.live))) {
+        jQuery.fn.extend({
+            live: function (event, callback) {
+                if (this.selector) {
+                    jQuery(document).on(event, this.selector, callback);
+                }
+            }
+        });
+    }
+
+
     if (($.browser.msie && (parseInt($.browser.version, 10) < 9))) {
         $("#volumedd > div").css("display", "none");
         $("#volumedd").attr("class", "ieUnder9");

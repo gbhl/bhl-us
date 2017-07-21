@@ -426,6 +426,7 @@
     <Content Include="js\libs\FlickrUpload.js" />
     <Content Include="js\libs\grid.locale-en.js" />
     <Content Include="js\libs\jqModal.min.js" />
+    <Content Include="js\libs\jquery-1.12.4.min.js" />
     <Content Include="js\libs\jquery-1.4.4.min.js" />
     <Content Include="js\libs\jquery-ui-1.8.11.custom.min.js" />
     <Content Include="js\libs\jquery.bt.min.js" />
