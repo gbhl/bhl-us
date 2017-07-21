@@ -8,7 +8,7 @@
 </div>
 
 <div id="content" class="column-wrap clearfix">
-    <section class="search">
+    <section class="search" style="width:745px">
         <div class="ui-tabs"><div class="ui-tabs-panel">
         <div runat="server" id="divSubmit">
 
