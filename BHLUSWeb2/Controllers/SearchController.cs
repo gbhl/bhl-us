@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BHL.Search;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -54,15 +55,63 @@ namespace MOBOT.BHL.Web2.Controllers
             //@ViewBag.UseElasticSearch = ConfigurationManager.AppSettings["UseElasticSearch"] == "true";
 
 
+            // Submit the request to ElasticSearch here
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            ISearchResult result = null;
 
-            // TODO: Submit the request to ElasticSearch here!!!
+            search.NumResults = 20;
+            search.Highlight = true;
+            search.Suggest = true;
 
+            if (searchCat.Trim().Length == 0)
+            {
+                search.Facet = true;
+                result = search.SearchCatalog(searchTerm);
+            }
+            else
+            {
+                if (searchCat.ToUpper().Equals("A")) result = search.SearchAuthor(searchTerm);
+                if ((searchCat.ToUpper().Equals("N") || searchCat.ToUpper().Equals("M"))) result = search.SearchName(searchTerm);
+                if (searchCat.ToUpper().Equals("T"))
+                {
+                    search.Facet = true;
+                    result = search.SearchItem(searchTerm, searchLastName,
+                        searchVolume, searchYear, searchSubject, searchLang, searchCollection);
+                }
+                if (searchCat.ToUpper().Equals("S")) result = search.SearchKeyword(searchTerm);
+            }
 
+            if (result.IsValid)
+            {
+                if (searchCat.ToUpper() == "M" && result.Names.Count > 0)
+                {
+                    // Only one result to a name-only search... redirect directly 
+                    // to the bibliography for that name
+                    return new RedirectResult("~/name/" +
+                        Server.HtmlEncode(((NameHit)result.Names[0]).Name
+                            .Replace(' ', '_')
+                            .Replace('.', '$')
+                            .Replace('?', '^')
+                            .Replace('&', '~')
+                        )
+                    );
+                }
 
-            ViewBag.NumPubs = 0;
-            ViewBag.NumAuthors = 0;
-            ViewBag.NumSubjects = 0;
-            ViewBag.NumNames = 0;
+                ViewBag.NumPubs = result.Items.Count;
+                ViewBag.NumAuthors = result.Authors.Count;
+                ViewBag.NumSubjects = result.Keywords.Count;
+                ViewBag.NumNames = result.Names.Count;
+                ViewBag.ErrorMessage = string.Empty;
+            }
+            else
+            {
+                // Error during search
+                ViewBag.NumPubs = 0;
+                ViewBag.NumAuthors = 0;
+                ViewBag.NumSubjects = 0;
+                ViewBag.NumNames = 0;
+                ViewBag.ErrorMessage = result.ErrorMessage;
+            }
 
             return View();
         }

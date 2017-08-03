@@ -72,9 +72,8 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -201,6 +200,7 @@
     <Content Include="css\BookReader.css" />
     <Content Include="css\bookviewer.css" />
     <Content Include="css\bookviewer_extra.css" />
+    <Content Include="css\bootstrap.min.css" />
     <Content Include="css\jqgridtheme\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="css\jqgridtheme\images\ui-bg_flat_100_ccd4d8_40x100.png" />
     <Content Include="css\jqgridtheme\images\ui-bg_flat_75_5caa46_40x100.png" />
@@ -422,6 +422,7 @@
     <Content Include="js\jMyCarousel\license.txt" />
     <Content Include="js\jMyCarousel\README.txt" />
     <Content Include="js\libs\BookReader.js" />
+    <Content Include="js\libs\bootstrap.min.js" />
     <Content Include="js\libs\dragscrollable.js" />
     <Content Include="js\libs\FlickrUpload.js" />
     <Content Include="js\libs\grid.locale-en.js" />
@@ -444,6 +445,7 @@
     <Content Include="js\plugins.js" />
     <Content Include="js\script.js" />
     <Content Include="js\webtrends.js" />
+    <Content Include="libs\countersoft\Newtonsoft.Json.dll" />
     <Content Include="Monitor.aspx" />
     <Content Include="NameDetail.aspx" />
     <Content Include="NameList.aspx" />
@@ -1022,9 +1024,25 @@
       <Project>{FB23E2B6-AA57-46E0-BB71-BB215E783CF2}</Project>
       <Name>OAIMODS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OAIOLEF\OAIOLEF.csproj">
+      <Project>{4edb0375-9817-474b-9c3d-01a0867fccd2}</Project>
+      <Name>OAIOLEF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OpenUrlUtilities\OpenUrlUtilities.csproj">
       <Project>{DFD7C2B7-C26C-4ECC-865B-FD1AC8B4E9F1}</Project>
       <Name>OpenUrlUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchBHL\SearchBHL.csproj">
+      <Project>{331e4ba6-e31a-488a-a9f0-ef0d81969b4c}</Project>
+      <Name>SearchBHL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchElastic\SearchElastic.csproj">
+      <Project>{d253c132-e830-47c7-90b9-e8b69288539c}</Project>
+      <Name>SearchElastic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchOffline\SearchOffline.csproj">
+      <Project>{07e617f9-4cac-4f83-807e-c00e9526389e}</Project>
+      <Name>SearchOffline</Name>
     </ProjectReference>
     <ProjectReference Include="..\SiteServices\SiteServices.csproj">
       <Project>{f3f5e38d-5028-4249-8db8-a86fd6a09a8f}</Project>
@@ -1105,6 +1123,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

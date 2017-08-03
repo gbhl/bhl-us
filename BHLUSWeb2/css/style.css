@@ -405,21 +405,23 @@ background: #fcfcfc;
 	margin:0;
 	border-top:1px solid #b0c3d0;
 }
-.socialcolumn
-{
-    padding:26px;
-    display:block;
+.socialcolumn {
+    padding: 26px;
+    display: block;
     /*final box width 312px */
     width: 260px; /*312 - (26 )*2 */
     font: 13px Georgia;
     float: left;
     color: #6D6D6D;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
 }
 .socialcolumn hr 
 {
     display: none;
 }
-.socialcolumn .subscribe
+.socialcolumn .subscribe 
 {
     padding:7px 15px 7px 40px;
     border:1px solid #3e5d77;
@@ -433,11 +435,13 @@ background: #fcfcfc;
     color:#fff;
     background:#5989b1;
     background:-moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
-	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
-	text-decoration:none;
-	display:block;
-	position: relative; 
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+    text-decoration:none;
+    display:block;
+    position: relative;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
 }
 .socialcolumn .subscribe img 
 {
@@ -445,7 +449,7 @@ background: #fcfcfc;
     top: 5px;
     left: 10px;
 }
-.socialcolumn .community
+.socialcolumn .community 
 {
     padding:7px 15px 7px 15px;
     border:1px solid #3e5d77;
@@ -459,11 +463,13 @@ background: #fcfcfc;
     color:#fff;
     background:#5989b1;
     background:-moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
-	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
-	text-decoration:none;
-	display:block;
-	position: relative; 
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+    text-decoration:none;
+    display:block;
+    position: relative;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
 }
 .socialcolumn h3
 {
@@ -693,9 +699,8 @@ background: #fcfcfc;
 {
     line-height: 49px;
 }
-#browsebar
-{
-	float:left;
+#browsebar {
+    float: left;
 }
 #browsebar h3
 {
@@ -819,23 +824,25 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     text-shadow: 0 -1px 1px #315b7e;
 }
 #searchbar a:hover { text-decoration:underline; color: #dff0fb; }
-#searchbar .field
+#searchbar .field 
 {
-	font:16px Georgia, Times, serif;
-	color:#5e88ab;
-	background:#ecf4fa;
-	width:250px;
-	height:18px;
-	padding:7px 17px 7px 8px;
-	position:absolute;
-	top:40px;
-	border:0;
-	-webkit-border-top-left-radius:5px;
-	-webkit-border-bottom-left-radius:5px;
-	-moz-border-radius-topleft:5px;
-	-moz-border-radius-bottomleft:5px;
-	border-top-left-radius:5px;
-	border-bottom-left-radius:5px;
+    font:16px Georgia, Times, serif;
+    color:#5e88ab;
+    background:#ecf4fa;
+    width:250px;
+    height:18px;
+    padding:7px 17px 7px 8px;
+    position:absolute;
+    top:40px;
+    border:0;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
 }
 #searchbar .button
 {
@@ -1274,13 +1281,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 	text-decoration:none;
 	display:block;
 }
-.featurebutton-home:hover, .socialcolumn .subscribe:hover, .socialcolumn .community:hover
+.featurebutton-home:hover, .socialcolumn .subscribe:hover, .socialcolumn .community:hover 
 {
     background:-moz-linear-gradient(top, #507ea4 0%, #2c5b83 100%);
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#507ea4), color-stop(100%,#2c5b83));
-	filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#507ea4', endColorstr='#2c5b83',GradientType=0 );
-	border:1px solid #182937;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#507ea4), color-stop(100%,#2c5b83));
+    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#507ea4', endColorstr='#2c5b83',GradientType=0 );
+    border:1px solid #182937;
     color: #ffffff;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
 }
 .featurebutton-home:active, .featurebutton-home:visited{
     color:#ffffff;

@@ -3,6 +3,10 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
+@section CSS {
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+}
+
 <nav id="sub-nav-tabs" class="no-js-hide">
     <div class="column-wrap">
         <span class="arrow search"></span>
@@ -29,6 +33,12 @@
 <div class="column-wrap">
     <p><a href="~/search?elastic=0&@ViewBag.QueryString">Use our old search interface.</a></p>
 </div>
+
+@if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage)) {
+    <div class="column-wrap">
+        <p style="font-weight:bold">@ViewBag.ErrorMessage</p>
+    </div>
+}
 
 <div id="sub-sections" class="clearfix">
     <div id="titles">
@@ -75,6 +85,7 @@
     <!--<script src="/js/libs/jquery.history.min.js"></script>-->
     <script src="/js/libs/jquery.hoverintent.min.js"></script>
     <script src="/js/libs/jquery.text-overflow.min.js"></script>
+    <script src="/js/libs/bootstrap.min.js"></script>
 
     <script type="text/javascript">
     //<![CDATA[
