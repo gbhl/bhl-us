@@ -164,8 +164,7 @@
                     </div>
                     <div class="body form">
                         <div class="intro">
-                            <p>If you are generating a PDF of a journal article or book chapter, please provide title and author information.</p>
-                            <p>BHL stores this information to allow these articles to be indexed, searched and retrieved by other users. If you download an article but do not provide title or author information, these articles will be lost.</p>
+                            <p>If you are generating a PDF of a journal article or book chapter, please feel free to enter the title and author information. The information you enter here will be stored in the downloaded file to assist you in managing your downloaded PDFs locally.<br /><br /></p>
                         </div>
                         <div class="success">
                             <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
