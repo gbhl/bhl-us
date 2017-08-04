@@ -6,11 +6,14 @@ using System.Web.UI.WebControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
+using System.Globalization;
 
 namespace MOBOT.BHL.AdminWeb
 {
     public partial class PdfEdit : System.Web.UI.Page
     {
+        private string weeklyStatsLinkTemplate = "/PdfWeeklyStats.aspx?y={0}&w={1}&s={2}&sn={3}";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -85,7 +88,28 @@ namespace MOBOT.BHL.AdminWeb
 
                 gvPages.DataSource = new BHLProvider().PDFPageSelectForPdfID(pdf.PdfID);
                 gvPages.DataBind();
+
+                weeklyStatsLink.HRef = GetWeeklyStatsLink();
+                weeklyStatsLink.Visible = true;
             }
+            else
+            {
+                weeklyStatsLink.Visible = false;
+            }
+
+        }
+
+        private string GetWeeklyStatsLink()
+        {
+            DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
+            DateTime dt = Convert.ToDateTime(creationDateLabel.Text);
+            System.Globalization.Calendar cal = dfi.Calendar;
+            int year = dt.Year;
+            int week = cal.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            int statusID = Convert.ToInt32(ddlPdfStatus.SelectedValue);
+            string statusName = ddlPdfStatus.SelectedItem.Text;
+            return string.Format(weeklyStatsLinkTemplate,
+                year.ToString(), week.ToString(), statusID.ToString(), statusName);
         }
 
         private void fillCombos()
@@ -124,7 +148,7 @@ namespace MOBOT.BHL.AdminWeb
             //    Response.Redirect("/Error.aspx");
             //}
 
-            Response.Redirect("/PdfWeeklyStats.aspx");
+            Response.Redirect(GetWeeklyStatsLink());
         }
     }
 }

@@ -3,7 +3,7 @@
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <a href="/">&lt; Return to Dashboard</a><br />
-	<a href="/PdfWeeklyStats.aspx">&lt; Return to PDF Generation Weekly Stats</a><br />
+	<a id="weeklyStatsLink" runat="server" href="/PdfWeeklyStats.aspx" visible="false">&lt; Return to PDF Generation Weekly Stats</a><br />
 	<br />
 	<span class="pageHeader">Generated PDF</span><hr />
 	<br />

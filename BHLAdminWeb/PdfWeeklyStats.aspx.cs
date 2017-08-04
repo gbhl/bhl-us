@@ -21,6 +21,7 @@ namespace MOBOT.BHL.AdminWeb
                 String statusId = Request.QueryString["s"] as String;
                 String statusName = Request.QueryString["sn"] as String;
 
+                /*
                 if (String.IsNullOrEmpty(year)) year = Session["PDFWeeklyYear"] as String;
                 if (String.IsNullOrEmpty(week)) week = Session["PDFWeeklyWeek"] as String;
                 if (String.IsNullOrEmpty(statusId)) statusId = Session["PDFWeeklyStatus"] as String;
@@ -31,6 +32,7 @@ namespace MOBOT.BHL.AdminWeb
                 Session["PDFWeeklyWeek"] = week;
                 Session["PDFWeeklyStatus"] = statusId;
                 Session["PDFWeeklyStatusName"] = statusName;
+                */
 
                 // Display params on page
                 if (!String.IsNullOrEmpty(year)) litYear.Text = year;
