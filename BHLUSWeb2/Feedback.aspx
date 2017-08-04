@@ -119,24 +119,41 @@
 
             <div style="border-bottom:1px;border-style:solid;">
                 <h3><asp:Literal runat="server" ID="litConfirmationSubject"></asp:Literal></h3>
-                <p><asp:Literal runat="server" ID="litConfirmationText"></asp:Literal></p>
+                <div id="showhideDetailsDiv"><p><a id="showhideDetailsLink" href="#"><span id="showhideText">Show</span> Submitted Feedback</a></p></div>
+                <div id="feedbackDetails" style="display:none">
+                    <p><asp:Literal runat="server" ID="litConfirmationText"></asp:Literal></p>
+                </div>
             </div>
 
-            <div style="float:left;margin:0;width:50%">
-                <h3>Join Our Mailing List</h3>
-                <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+            <div style="border-bottom:1px;border-style:solid;">
+                <div style="float:left;margin:0;width:50%">
+                    <h3>Join Our Mailing List</h3>
+                    <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
+                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                </div>
+
+                <div style="float:left;margin:0;width:50%">
+                    <h3>Help Support <span>BHL</span></h3>
+                    <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
+                    <a class="featurebutton-home" title="Donate" target="_blank" href="http://library.si.edu/donate-bhl">Donate</a>
+                </div>
+
+                <div>&nbsp;</div>
             </div>
 
-            <div style="float:left;margin:0;width:50%">
-                <h3>Help Support <span>BHL</span></h3>
-                <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                <a class="featurebutton-home" title="Donate" target="_blank" href="http://library.si.edu/donate-bhl">Donate</a>
+            <div>
+	            <p>BHL is voluntarily staffed by our Partner Libraries (http://biodivlib.wikispaces.com/BHL+Consortium). We are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information or clarification.</p>
+	            <p>In the meantime, you may find useful information on our Help Pages (http://biodivlib.wikispaces.com/help). For example:</p>
+	            <ul style="list-style-type:disc;margin-left:30px;">
+		            <li><a href="http://biodivlib.wikispaces.com/Guidelines+for+Submitting+Scanning+Requests" target="_blank">When will the title I requested be available in BHL? What is the Scan Request process?</a></li>
+		            <li><a href="http://biodivlib.wikispaces.com/Download+How+To" target="_blank">How can I download a book / series of pages / single image from BHL?</a></li>
+		            <li><a href="http://biodivlib.wikispaces.com/Licensing+and+Copyright#reuse" target="_blank">Can I reuse your images? If I do, how would BHL like me to attribute them?</a></li>
+		            <li><a href="http://biodivlib.wikispaces.com/Help#Using%20DOIs%20and%20Stable%20URLs" target="_blank">What link should I use when I cite BHL items in my published research?</a></li>
+		            <li><a href="http://biodivlib.wikispaces.com/Get+Involved" target="_blank">Where can I find information about supporting the BHL as an individual or institution?</a></li>
+	            </ul>
+	            <p>Thank you for your continued use and support of the Biodiversity Heritage Library. We appreciate your feedback!</p>
             </div>
-
-            <div>&nbsp;</div>
         </div>
-        </div></div>
 
 		<br />
 		<asp:ValidationSummary ID="validationSummary" runat="server" />
@@ -210,5 +227,12 @@
         if (errMsg != "") $("#spanErrorText").html(errMsg);
         return (errMsg == "");
     }
+
+    $("#showhideDetailsDiv").click(function () {
+        var showHide = $("#showhideText").text();
+        if (showHide == "Show") showHide = "Hide"; else showHide = "Show";
+        $("#showhideText").text(showHide);
+        $("#feedbackDetails").toggle();
+    });
 </script>
 </asp:Content>
