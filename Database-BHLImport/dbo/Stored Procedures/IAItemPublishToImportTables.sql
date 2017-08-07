@@ -1198,6 +1198,7 @@ BEGIN TRY
 				ON t.ItemID = m.ItemID
 				AND m.DataFieldTag IN ('100', '110', '111', '700', '710', '711')
 				AND m.Code = 'a'
+				AND LTRIM(RTRIM(ISNULL(m.SubFieldValue, ''))) <> ''
 
 	-- Get creator MARC subfield 'b'
 	UPDATE	#tmpCreator
