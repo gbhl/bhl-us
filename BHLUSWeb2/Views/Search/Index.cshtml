@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MOBOT.BHL.Web2.Models.SearchModel
+
+@{
     ViewBag.Title = "Search Results";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
@@ -11,75 +13,579 @@
     <div class="column-wrap">
         <span class="arrow search"></span>
         <div id="linkbar">
-            <h3>Results for "@ViewBag.SearchTerm"</h3>
             <ul>
-                <li id="spanTitleSummary" class="titles">
-                    <a href="#/titles" title="Books">Publications (@ViewBag.NumPubs)</a>
-                </li>
-                <li id="spanAuthorSummary" class="authors">
-                    <a href="#/authors" title="Authors">Authors (@ViewBag.NumAuthors)</a>
-                </li>
-                <li id="spanSubjectSummary" class="subjects">
-                    <a href="#/subjects" title="Subjects">Subjects (@ViewBag.NumSubjects)</a>
-                </li>
-                <li id="spanNameSummary" class="names">
-                    <a href="#/names" title="Names">Scientific Names (@ViewBag.NumNames)</a>
-                </li>
+                @if (Model.Params.SearchCategory == "T" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                    <li id="spanTitleSummary" class="titles">
+                        <a href="#/titles" title="Books">Publications (@(Model.IsItemResultValid ? Model.ItemResult.TotalHits : 0))</a>
+                    </li>
+                }
+                @if (Model.Params.SearchCategory == "A" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                    <li id="spanAuthorSummary" class="authors">
+                        <a href="#/authors" title="Authors">Authors (@(Model.IsAuthorResultValid ? Model.AuthorResult.TotalHits : 0))</a>
+                    </li>
+                }
+                @if (Model.Params.SearchCategory == "S" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                    <li id="spanSubjectSummary" class="subjects">
+                        <a href="#/subjects" title="Subjects">Subjects (@(Model.IsKeywordResultValid ? Model.KeywordResult.TotalHits : 0))</a>
+                    </li>
+                }
+                @if (Model.Params.SearchCategory == "M" || Model.Params.SearchCategory == "N" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                    <li id="spanNameSummary" class="names">
+                        <a href="#/names" title="Names">Scientific Names (@(Model.IsNameResultValid ? Model.NameResult.TotalHits : 0))</a>
+                    </li>
+                }
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="column-wrap">
-    <p><a href="~/search?elastic=0&@ViewBag.QueryString">Use our old search interface.</a></p>
+<form id="searchForm" action="~/search" method="post">
+
+@Html.HiddenFor(m => m.Params.SearchTerm)
+@Html.HiddenFor(m => m.Params.SearchCategory)
+@Html.HiddenFor(m => m.Params.LastName)
+@Html.HiddenFor(m => m.Params.Volume)
+@Html.HiddenFor(m => m.Params.Year)
+@Html.HiddenFor(m => m.Params.Subject)
+@Html.HiddenFor(m => m.Params.Language)
+@Html.HiddenFor(m => m.Params.Collection)
+@Html.HiddenFor(m => m.ItemPage)
+@Html.HiddenFor(m => m.AuthorPage)
+@Html.HiddenFor(m => m.KeywordPage)
+@Html.HiddenFor(m => m.NamePage)
+    
+<div id="page-title-query-details">
+    <div class="content column-wrap">
+        <div>&nbsp;</div>
+        <div style="font-size:16px;margin-bottom:10px;">Results for: @Model.ParamLabel</div>
+        @if (Model.Suggestions.Count > 0)
+        {
+            int numSuggest = 0;
+            <div style="font-size:12px;">Search instead for:
+            @foreach (string suggestion in Model.Suggestions)
+            {
+                <span>@(numSuggest > 0 ? ", " : "")<a href="~/search?searchTerm=@Server.UrlEncode(suggestion)">@suggestion</a></span>
+                numSuggest++;
+            }
+            </div>
+        }
+
+        <div>&nbsp;</div>
+    </div>
 </div>
 
-@if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage)) {
-    <div class="column-wrap">
-        <p style="font-weight:bold">@ViewBag.ErrorMessage</p>
-    </div>
-}
+<div class="content column-wrap">
+    <div class="row">
+        <div class="col-sm-10" id="content">
+            <div id="sub-sections" class="clearfix">
+                @if (Model.Params.SearchCategory == "T" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                <div id="titles" style="display: block;">
+                    @if (Model.ItemResult.Items.Count > 0 && Model.TotalFacets > 0)
+                    {
+                    <div class="col-sm-4">
+                        <p style="font-size:16px;">Narrow Search By</p>
+                        @if (Model.Params.GenreFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Type</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.GenreFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f=>facet.Checked, new { @value="~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick="$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.MaterialTypeFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Material</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.MaterialTypeFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.AuthorFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Author</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.AuthorFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.DateRangeFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Publication Date</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.DateRangeFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.ContributorFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Contributor</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.ContributorFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.KeywordFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Subject</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.KeywordFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (Model.Params.LanguageFacets.Count > 0)
+                        {
+                            <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Language</div>
+                            <div class="facetBody">
+                                @foreach (var facet in Model.Params.LanguageFacets)
+                                {
+                                    <div style="font-size:12px;margin: 5px 0px 5px 15px">
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <!--
+                        <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Illustrations</div>
+                        <div class="facetBody">
+                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" style="margin: 0px 5px 0px 0px;">With Illustrations</div>
+                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" style="margin: 0px 5px 0px 0px;">Without Illustrations</div>
+                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" checked style="margin: 0px 5px 0px 0px;">With and Without</div>
+                        </div>
+                        -->
+                    </div>
+                    }
+                    <div class="content column-wrap">
+                        <section class="js-hide">
+                            @if (Model.IsItemResultValid)
+                            {
+                                if (Model.ItemResult.Items.Count == 0)
+                                {
+                                    <p style="font-weight:bold">No publications found</p>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-10" style="margin: 25px 0px 10px 0px">
+                                            @foreach (BHL.Search.ItemHit item in Model.ItemResult.Items)
+                                            {
+                                                <div class="pubresult" style="margin: 0px 0px 15px 0px; padding: 0px 0px 15px 0px; border-bottom:1px solid #d6d2d1;">
+                                                    <div class="row">
+                                                        <div class="col-sm-9">
+                                                            @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
+                                                            {
+                                                                <div><a href="~/bibliography/@item.TitleId">@item.Title</a></div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div><a href="~/part/@item.SegmentId">@item.Title</a></div>
+                                                            }
+                                                        </div>
+                                                        <div class="col-sm-3" style="margin: 25px 0px 0px 0px">
+                                                            @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
+                                                            {
+                                                                <a class="titleviewbook" href="~/item/@item.ItemId">View Book</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="titleviewbook" href="~/page/#">View @item.Genre</a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            @if (!string.IsNullOrWhiteSpace(item.Volume))
+                                                            {
+                                                                <div style="margin-bottom:2px">Volume: @item.Volume</div>
+                                                            }
+                                                            @if (item.Authors.Count > 0)
+                                                            {
+                                                                <div style="margin-bottom:2px">
+                                                                    By: @string.Join(" - ", item.Authors)
+                                                                </div>
+                                                            }
+                                                            @if (!(item.Genre.Contains("Monograph") || item.Genre.Contains("Serial")))
+                                                            {
+                                                                if (!string.IsNullOrWhiteSpace(item.Genre))
+                                                                {
+                                                                    <div style="margin-bottom:2px">Type: @item.Genre</div>
+                                                                }
+                                                                if (!string.IsNullOrWhiteSpace(item.Container))
+                                                                {
+                                                                    <div style="margin-bottom:2px">In: @item.Container</div>
+                                                                }
+                                                                if (!string.IsNullOrWhiteSpace(item.Volume))
+                                                                {
+                                                                    <div style="margin-bottom:2px">Volume: @item.Volume</div>
+                                                                }
+                                                                if (!string.IsNullOrWhiteSpace(item.Series))
+                                                                {
+                                                                    <div style="margin-bottom:2px">Series: @item.Series</div>
+                                                                }
+                                                                if (!string.IsNullOrWhiteSpace(item.Issue))
+                                                                {
+                                                                    <div style="margin-bottom:2px">Issue: @item.Issue</div>
+                                                                }
+                                                                if (item.Dates.Count > 0)
+                                                                {
+                                                                    <div style="margin-bottom:2px">Date: @item.Dates[0]</div>
+                                                                }
+                                                                //if (!string.IsNullOrWhiteSpace(item.PageRange))
+                                                                //{
 
-<div id="sub-sections" class="clearfix">
-    <div id="titles">
-        <div class="content column-wrap">
-            <section class="js-hide">
-                <ol class="data titles">
-                </ol>
-            </section>
+                                                                //}
+                                                            }
+                                                            @if (!string.IsNullOrWhiteSpace(item.PublicationPlace) || !string.IsNullOrWhiteSpace(item.Publisher) || item.Dates.Count > 0)
+                                                            {
+                                                                <div style="margin-bottom:2px">
+                                                                    Publication info: 
+                                                                    @if (!string.IsNullOrWhiteSpace(item.PublicationPlace))
+                                                                    {
+                                                                        @item.PublicationPlace <text>:</text>
+                                                                    }
+                                                                    @item.Publisher
+                                                                    @if (item.Dates.Count > 0)
+                                                                    {
+                                                                        @item.Dates[0];
+                                                                        if (item.Dates.Count > 1)
+                                                                        {
+                                                                            @item.Dates[item.Dates.Count - 1];
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            }
+                                                            @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
+                                                            {
+                                                                foreach (var association in item.Associations)
+                                                                {
+                                                                    <div style="margin-bottom:2px">@association</div>
+                                                                }
+                                                                if (item.Contributors.Count == 1)
+                                                                {
+                                                                    <div style="margin-bottom:2px">Holding Institution: @item.Contributors[0]</div>
+                                                                }
+                                                                if (item.Contributors.Count > 1)
+                                                                {
+                                                                    <div style="margin-bottom:2px">Holding Institution: Multiple Institutions</div>
+                                                                }
+                                                                if (item.Collections.Count > 0)
+                                                                {
+                                                                    <div style="margin-bottom:2px">BHL Collections: @string.Join(" | ", item.Collections)</div>
+                                                                }
+
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    if (Model.ItemResult.TotalHits > Model.ItemResult.PageSize)
+                                    {
+                                        <div style="margin: 0px 0px 25px 0px">
+                                            <div style="margin: 0px 0px 0px 15px">
+                                                @if (Model.ItemResult.StartPage > 1)
+                                                {
+                                                    <a onclick="$('#ItemPage').val(@(Model.ItemResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                }
+
+                                                @for (int x = 1; x <= Model.ItemResult.TotalPages; x++)
+                                                {
+                                                    if (x == Model.ItemResult.StartPage)
+                                                    {
+                                                        <text>@x</text> 
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="$('#ItemPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                    }
+                                                }
+                                                @if (Model.ItemResult.StartPage < Model.ItemResult.TotalPages)
+                                                {
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#ItemPage').val('@(Model.ItemResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <p style="font-weight:bold">@if (Model.ItemResult != null)
+                                { <text>Model.ItemResult.ErrorMessage;</text> }</p>
+                            }
+                        </section>
+                    </div>
+                </div>
+                }
+                @if (Model.Params.SearchCategory == "A" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                <div id="authors" class="floatclear" style="display: none;">
+                    <div class="content column-wrap">
+                        <section class="js-hide">
+                            @if (Model.IsAuthorResultValid)
+                            {
+                                if (Model.AuthorResult.Authors.Count == 0)
+                                {
+                                    <p style="font-weight:bold">No authors found</p>
+                                }
+                                else
+                                {
+                                    <div style="margin: 25px 0px 25px 0px">
+                                        @foreach (BHL.Search.AuthorHit author in Model.AuthorResult.Authors)
+                                        {
+                                            <div style="margin: 15px 0px 15px 15px"><a href="/creator/@author.Id">@author.PrimaryAuthorName</a></div>
+                                        }
+                                    </div>
+
+                                    if (Model.AuthorResult.TotalHits > Model.AuthorResult.PageSize)
+                                    {
+                                        <div style="margin: 0px 0px 25px 0px">
+                                            <div style="margin: 0px 0px 0px 15px">
+                                                @if (Model.AuthorResult.StartPage > 1)
+                                                {
+                                                    <a onclick="$('#AuthorPage').val(@(Model.AuthorResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                }
+
+                                                @for (int x = 1; x <= Model.AuthorResult.TotalPages; x++)
+                                                {
+                                                    if (x == Model.AuthorResult.StartPage)
+                                                    {
+                                                        <text>@x</text> 
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="$('#AuthorPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                    }
+                                                }
+                                                @if (Model.AuthorResult.StartPage < Model.AuthorResult.TotalPages)
+                                                {
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#AuthorPage').val('@(Model.AuthorResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <p style="font-weight:bold">@if (Model.AuthorResult != null)
+                                { <text>Model.AuthorResult.ErrorMessage;</text> }</p>
+                            }
+                        </section>
+                    </div>
+                </div>
+                }
+                @if (Model.Params.SearchCategory == "S" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                <div id="subjects" class="floatclear" style="display: none;">
+                    <div class="content column-wrap">
+                        <section class="js-hide">
+                            @if (Model.IsKeywordResultValid)
+                            {
+                                if (Model.KeywordResult.Keywords.Count == 0)
+                                {
+                                    <p style="font-weight:bold">No subjects found</p>
+                                }
+                                else
+                                {
+                                    <div style="margin: 25px 0px 25px 0px">
+                                        @foreach (BHL.Search.KeywordHit keyword in Model.KeywordResult.Keywords)
+                                        {
+                                            <div style="margin: 15px 0px 15px 15px"><a href="/subject/@Server.UrlEncode(keyword.Keyword)">@keyword.Keyword</a></div>
+                                        }
+                                    </div>
+
+                                    if (Model.KeywordResult.TotalHits > Model.KeywordResult.PageSize)
+                                    {
+                                        <div style="margin: 0px 0px 25px 0px">
+                                            <div style="margin: 0px 0px 0px 15px">
+                                                @if (Model.KeywordResult.StartPage > 1)
+                                                {
+                                                    <a onclick="$('#KeywordPage').val(@(Model.KeywordResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                }
+
+                                                @for (int x = 1; x <= Model.KeywordResult.TotalPages; x++)
+                                                {
+                                                    if (x == Model.KeywordResult.StartPage)
+                                                    {
+                                                        <text>@x</text> 
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="$('#KeywordPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                    }
+                                                }
+                                                @if (Model.KeywordResult.StartPage < Model.KeywordResult.TotalPages)
+                                                {
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#KeywordPage').val('@(Model.KeywordResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <p style="font-weight:bold">@if (Model.KeywordResult != null)
+                                { <text>Model.KeywordResult.ErrorMessage;</text> }</p>
+
+                            }
+                        </section>
+                    </div>
+                </div>
+                }
+                @if (Model.Params.SearchCategory == "M" || Model.Params.SearchCategory == "N" || string.IsNullOrWhiteSpace(Model.Params.SearchCategory))
+                {
+                <div id="names" class="floatclear" style="display: none;">
+                    <div class="content column-wrap">
+                        <section class="js-hide">
+                            <div class="row">
+                                <div class="col-sm-11">
+                                    <p>
+                                        Biodiversity Heritage Library uses <em>taxonomic intelligence</em> tools, including <a href="http://gnrd.globalnames.org/" title="GNRD">
+                                            Global Names Recognition and Discovery (GNRD)
+                                        </a> developed by <a href="http://globalnames.org/" title="uBio">Global Names Architecture</a>, to locate, verify, and record scientific names located
+                                        within the text of each digitized page. <b>Note:</b> The text used for this identification is uncorrected OCR, so may not include
+                                        all results expected or visible in the page.
+                                    </p>
+                                </div>
+                            </div>
+                            @if (Model.IsNameResultValid)
+                            {
+                                if (Model.NameResult.Names.Count == 0)
+                                {
+                                    <p style="font-weight:bold">No names found</p>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div style="margin: 25px 0px 25px 0px">
+                                            @foreach (BHL.Search.NameHit name in Model.NameResult.Names)
+                                            {
+                                                <div style="margin: 15px 0px 15px 15px">
+                                                    <a href="/name/@Server.UrlEncode(name.Name.Replace(' ', '_').Replace('.', '$').Replace('?', '^').Replace('&', '~'))">
+                                                        @name.Name
+                                                    </a> (@name.Count)
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    if (Model.NameResult.TotalHits > Model.NameResult.PageSize)
+                                    {
+                                        <div style="margin: 0px 0px 25px 0px">
+                                            <div style="margin: 0px 0px 0px 15px">
+                                                @if (Model.NameResult.StartPage > 1)
+                                                {
+                                                    <a onclick="$('#NamePage').val(@(Model.NameResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                }
+
+                                                @for (int x = 1; x <= Model.NameResult.TotalPages; x++)
+                                                {
+                                                    if (x == Model.NameResult.StartPage)
+                                                    {
+                                                        <text>@x</text> 
+                                                    }
+                                                    else
+                                                    {
+                                                        <a onclick="$('#NamePage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                    }
+                                                }
+                                                @if (Model.NameResult.StartPage < Model.NameResult.TotalPages)
+                                                {
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#NamePage').val('@(Model.NameResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <p style="font-weight:bold">@if (Model.NameResult != null)
+                                { <text>Model.NameResult.ErrorMessage;</text> }</p>
+                            }
+                        </section>
+                    </div>
+                </div>
+                }
+            </div>
+            <!-- Added MWL -->
         </div>
-    </div>
-    <div id="authors" class="floatclear">
-        <div class="content column-wrap">
-            <section class="js-hide">
-                <ol>
-                </ol>
-            </section>
+        <div class="col-sm-2">
+            <p>
+                <div class="column-wrap" style="padding-left:10px; padding-bottom:5px;">
+                    <p><a href="~/search?elastic=0&@Model.QueryString">Use our old<br />search interface</a></p>
+                </div>
+            </p>
+
+            <p>
+                <div style="min-height:0; height:auto; padding:10px; border:1px solid #ccd4d9;
+										width: 100%; background-color: #fafaf7; -webkit-border-radius:3px;
+										-moz-border-radius:3px; border-radius: 3px; float:left; margin:0 0 0 0;">
+                    <h3 style="margin:0; font:16px Georgia; color: #8b8e92;">Support <span>BHL</span></h3>
+                    <p>Help us keep this free resource alive!</p>
+                    <a target="_blank" href="http://library.si.edu/donate-bhl" style="width:90%;
+										        text-align:center; border:1px solid #3e5d77; -webkit-border-radius:3px; -moz-border-radius:3px;
+										        border-radius: 3px; font: 14px Georgia; padding:7px 0; color:#fff; background:#5989b1;
+										        background:-moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
+										        background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+										        filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+										        text-decoration:none; display:block;">Donate</a>
+                </div>
+            </p>
+            <p>&nbsp;</p>
+            <p>
+                <div class="featurebox" style="min-height:0; padding:10px; border:1px solid #ccd4d9; width: 100%;
+										    background-color: #fafaf7; -webkit-border-radius:3px; -moz-border-radius:3px;
+										    border-radius: 3px; float:left; margin:0px 0 0 0;">
+                    <h3 style="margin:0; font:16px Georgia; color: #8b8e92;">Featured Content</h3>
+                    <h4 style="margin:16px 0 16px 0; font: 14px Georgia; color: #3e92c6;">@ViewBag.CollectionName</h4>
+                    <a href="/collection/@ViewBag.CollectionUrl" style="width:90%;
+										    text-align:center; border:1px solid #3e5d77; -webkit-border-radius:3px; -moz-border-radius:3px;
+										    border-radius: 3px; font: 14px Georgia; padding:7px 0; color:#fff; background:#5989b1;
+										    background:-moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
+										    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+										    filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+										    text-decoration:none; display:block;">Explore</a>
+                </div>
+            </p>
         </div>
-    </div>
-    <div id="subjects" class="floatclear">
-        <div class="content column-wrap">
-            <section class="js-hide">
-                <ol>
-                </ol>
-            </section>
-        </div>
-    </div>
-    <div id="names" class="floatclear">
-        <div class="content column-wrap">
-            <section class="js-hide">
-                <p>
-                    Biodiversity Heritage Library uses <em>taxonomic intelligence</em> tools, including <a href="http://gnrd.globalnames.org" title="GNRD">
-                        Global Names Recognition and Discovery (GNRD)
-                    </a> developed by <a href="http://globalnames.org/" title="uBio">Global Names Architecture</a>, to locate, verify, and record scientific names located
-                    within the text of each digitized page. <b>Note:</b> The text used for this identification is uncorrected OCR, so may not include
-                    all results expected or visible in the page.
-                </p>
-                <ol></ol>
-            </section>
-        </div>
+</form>
+<!--
     </div>
 </div>
+-->
 
 @section scripts {
     <!--<script src="/js/libs/jquery.history.min.js"></script>-->
@@ -94,16 +600,16 @@
 
             // Navigate to the default sub-section if no hash
             if (!location.hash) {
-                if (@ViewBag.NumPubs > 0) {
+                if (@(Model.IsItemResultValid ? Model.ItemResult.TotalHits : 0) > 0) {
                     window.location.replace('#/titles');
                 }
-                else if (@ViewBag.NumAuthors > 0) {
+                else if (@(Model.IsAuthorResultValid ? Model.AuthorResult.TotalHits : 0) > 0) {
                     window.location.replace('#/authors');
                 }
-                else if (@ViewBag.NumSubjects > 0) {
+                else if (@(Model.IsKeywordResultValid ? Model.KeywordResult.TotalHits : 0) > 0) {
                     window.location.replace('#/subjects');
                 }
-                else if (@ViewBag.NumNames > 0) {
+                else if (@(Model.IsNameResultValid ? Model.NameResult.TotalHits : 0) > 0) {
                     window.location.replace('#/names');
                 }
                 else {
@@ -112,34 +618,6 @@
             }
 
             selectTab();
-
-            //$.History.bind(function (state) {
-            //    if (!$('#sub-sections').is(':visible')) {
-            //        $('#sub-sections').show();
-            //    }
-            //    var stateName = state.replace(/[^a-zA-Z0-9\s]/gi, '');
-            //    var subSection = $('#' + stateName);
-            //    //var subSectionHeader = $('#subhead-' + stateName)
-            //    subSections.hide();
-
-            //    // Highlight selected link
-            //    $('#linkbar a').removeClass('active');
-            //    $('#linkbar .' + stateName + ' a').addClass('active').blur();
-
-            //    // Special case
-            //    if (stateName == 'all') {
-            //        subSections.show();
-            //        return false;
-            //    }
-
-            //    // If no default sub-section found then head on to the default otherwise show selected sub-section
-            //    if (!subSection.length) {
-            //      $.History.go('/all');
-            //        return false;
-            //    } else {
-            //        subSection.show();
-            //    }
-            //});
         });
 
         $(window).on('hashchange', function () {
@@ -174,6 +652,28 @@
                 subSection.show();
             }
         }
+
+        $(".facetHead").click(function () {
+            $header = $(this);
+            //getting the next div
+            $content = $header.next();
+
+            //open up the content needed, toggle the slide.  if visible, slide up, if not slidedown.
+            $content.slideToggle(0, function () {
+                //execute this after slideToggle is done
+                //change text of header based on visibility of content div
+
+                //$header.text(function () {
+                //	//change text based on condition
+                //	return $content.is(":visible") ? "Collapse" : "Expand";
+                //});
+
+                $img = $header.children("img");
+                $img.attr("src", function () {
+                    return $content.is(":visible") ? "images/bib_minus.gif" : "images/bib_plus.gif";
+                });
+            });
+        });
 
     //]]>
     </script>

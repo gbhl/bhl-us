@@ -1,4 +1,7 @@
 ﻿using BHL.Search;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web2.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,108 +15,58 @@ namespace MOBOT.BHL.Web2.Controllers
     public class SearchController : Controller
     {
         // GET: Index
+        [HttpGet]
         public ActionResult Index(string searchTerm)
         {
-            if (SearchRedirect()) return new RedirectResult("~/search.aspx?" + Request.QueryString);
+            SearchModel model = new SearchModel();
+            model.Params.SearchTerm = searchTerm;
 
             // Get the search arguments
-            string searchCat = Request["SearchCat"] ?? string.Empty;
-            string searchLang = Request["lang"] ?? string.Empty;
-            string searchLastName = Request["lname"] ?? string.Empty;
-            string searchVolume = Request["vol"] ?? string.Empty;;
-            string searchEdition = Request["ed"] ?? string.Empty;;
-            string searchYear = Request["yr"] ?? string.Empty;;
-            string searchSubject = Request["subj"] ?? string.Empty;;
-            string searchCollection = Request["col"] ?? string.Empty;;
-            string searchIssue = Request["iss"] ?? string.Empty;;
-            string searchStartPage = Request["spage"] ?? string.Empty;;
-            string searchSort = Request["sort"] ?? string.Empty;;
-            string searchAnnotation = Request["anno"] ?? string.Empty;;
-            string titleMax = Request["tMax"] ?? string.Empty;;
-            string authorMax = Request["aMax"] ?? string.Empty;;
-            string nameMax = Request["nMax"] ?? string.Empty;;
-            string subjectMax = Request["sMax"] ?? string.Empty;;
-            string annotationMax = Request["anMax"] ?? string.Empty;;
-            string annotationConceptMax = Request["anCMax"] ?? string.Empty;;
-            string annotationSubjectMax = Request["anSMax"] ?? string.Empty;;
-            string segmentMax = Request["segMax"] ?? string.Empty;;
-            string returnPage = Request["return"] ?? string.Empty;;
-            string searchContainerTitle = Request["cont"] ?? string.Empty;;
-            string searchSeries = Request["ser"] ?? string.Empty;;
+            model.Params.SearchCategory = (Request["SearchCat"] ?? string.Empty).Trim().ToUpper();
+            model.Params.LastName = Request["lname"] ?? string.Empty;
+            model.Params.Volume = Request["vol"] ?? string.Empty; ;
+            model.Params.Year = Request["yr"] ?? string.Empty; ;
+            model.Params.Subject = Request["subj"] ?? string.Empty; ;
+            model.Params.Language = Request["lang"] ?? string.Empty;
+            model.Params.Collection = Request["col"] ?? string.Empty; ;
+            int startPage;
+            if (!Int32.TryParse(Request["ppage"] ?? "1", out startPage)) startPage = 1;
+            model.ItemPage = startPage;
+            if (!Int32.TryParse(Request["apage"] ?? "1", out startPage)) startPage = 1;
+            model.AuthorPage = startPage;
+            if (!Int32.TryParse(Request["kpage"] ?? "1", out startPage)) startPage = 1;
+            model.KeywordPage = startPage;
+            if (!Int32.TryParse(Request["npage"] ?? "1", out startPage)) startPage = 1;
+            model.NamePage = startPage;
 
             // For annotation searches, use the non-elasticsearch search page
-            if (searchCat == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
+            if (model.Params.SearchCategory == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
 
-            MVCServices.SearchService searchService = new MVCServices.SearchService();
+            return SearchAction(model, null);
+        }
 
-            ViewBag.SearchTerm = searchService.GetSearchCriteriaLabel(searchCat,
-                searchTerm, searchLang, searchLastName, searchVolume, searchEdition, searchYear, searchSubject,
-                searchCollection, searchIssue, searchStartPage, searchAnnotation, searchContainerTitle);
-
-            // Set up the querystring for opting out of elasticsearch
-            ViewBag.QueryString = Request.QueryString.ToString().Replace("elastic=1&", "");
-            //@ViewBag.UseElasticSearch = ConfigurationManager.AppSettings["UseElasticSearch"] == "true";
-
-
-            // Submit the request to ElasticSearch here
-            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-            ISearchResult result = null;
-
-            search.NumResults = 20;
-            search.Highlight = true;
-            search.Suggest = true;
-
-            if (searchCat.Trim().Length == 0)
+        [HttpPost]
+        public ActionResult Index(SearchModel model)
+        {
+            // Convert the selected facets to limits for search
+            List<Tuple<SearchField, string>> limits = null;
+            string selectedFacets = Request["facet.Checked"];
+            List<string> facets = selectedFacets.Replace("false", "").Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            for (int x = facets.Count - 1; x >= 0; x--)
             {
-                search.Facet = true;
-                result = search.SearchCatalog(searchTerm);
-            }
-            else
-            {
-                if (searchCat.ToUpper().Equals("A")) result = search.SearchAuthor(searchTerm);
-                if ((searchCat.ToUpper().Equals("N") || searchCat.ToUpper().Equals("M"))) result = search.SearchName(searchTerm);
-                if (searchCat.ToUpper().Equals("T"))
-                {
-                    search.Facet = true;
-                    result = search.SearchItem(searchTerm, searchLastName,
-                        searchVolume, searchYear, searchSubject, searchLang, searchCollection);
-                }
-                if (searchCat.ToUpper().Equals("S")) result = search.SearchKeyword(searchTerm);
+                if (facets[x].StartsWith(",")) facets.RemoveAt(x);
             }
 
-            if (result.IsValid)
+            if (facets.Count > 0) limits = new List<Tuple<SearchField, string>>();
+            foreach(var facet in facets)
             {
-                if (searchCat.ToUpper() == "M" && result.Names.Count > 0)
-                {
-                    // Only one result to a name-only search... redirect directly 
-                    // to the bibliography for that name
-                    return new RedirectResult("~/name/" +
-                        Server.HtmlEncode(((NameHit)result.Names[0]).Name
-                            .Replace(' ', '_')
-                            .Replace('.', '$')
-                            .Replace('?', '^')
-                            .Replace('&', '~')
-                        )
-                    );
-                }
-
-                ViewBag.NumPubs = result.Items.Count;
-                ViewBag.NumAuthors = result.Authors.Count;
-                ViewBag.NumSubjects = result.Keywords.Count;
-                ViewBag.NumNames = result.Names.Count;
-                ViewBag.ErrorMessage = string.Empty;
-            }
-            else
-            {
-                // Error during search
-                ViewBag.NumPubs = 0;
-                ViewBag.NumAuthors = 0;
-                ViewBag.NumSubjects = 0;
-                ViewBag.NumNames = 0;
-                ViewBag.ErrorMessage = result.ErrorMessage;
+                limits.Add(
+                    new Tuple<SearchField, string>(
+                        (SearchField)Enum.Parse(typeof(SearchField), facet.Split('_')[0], true),
+                        facet.Split('_')[1]));
             }
 
-            return View();
+            return SearchAction(model, limits);
         }
 
         // GET: Advanced
@@ -148,7 +101,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
             if (!string.IsNullOrWhiteSpace(Request.Form["btnSearchAuthor"]))
             {
-                queryString = "SearchTerm=" + Server.UrlEncode(Request.Form["txtAuthorName"]) + " & SearchCat=A&return=ADV";
+                queryString = "SearchTerm=" + Server.UrlEncode(Request.Form["txtAuthorName"]) + " &SearchCat=A&return=ADV";
             }
 
             if (!string.IsNullOrWhiteSpace(Request.Form["btnSearchSubject"]))
@@ -162,6 +115,173 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             return new RedirectResult("~/search?" + queryString);
+        }
+
+        public ActionResult SearchAction(SearchModel model, List<Tuple<SearchField, string>> limits)
+        {
+            int pageSize = 10;
+
+            if (SearchRedirect()) return new RedirectResult("~/search.aspx?" + Request.QueryString);
+
+            // Get featured collection name
+            BHLProvider provider = new BHLProvider();
+            Collection collection = provider.CollectionSelectFeatured();
+            if (collection != null)
+            {
+                ViewBag.CollectionName = collection.CollectionName;
+                ViewBag.CollectionUrl = string.IsNullOrWhiteSpace(collection.CollectionURL) ? collection.CollectionID.ToString() : collection.CollectionURL;
+            }
+
+            // Submit the request to ElasticSearch here
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.NumResults = pageSize;
+            search.Highlight = true;
+            search.Suggest = true;
+
+            if (string.IsNullOrWhiteSpace(model.Params.SearchCategory))
+            {
+                // Standard search
+                search.StartPage = model.AuthorPage;
+                model.AuthorResult = search.SearchAuthor(model.Params.SearchTerm);
+                search.StartPage = model.KeywordPage;
+                model.KeywordResult = search.SearchKeyword(model.Params.SearchTerm);
+                search.StartPage = model.NamePage;
+                model.NameResult = search.SearchName(model.Params.SearchTerm);
+                search.Facet = true;
+                search.StartPage = model.ItemPage;
+                model.ItemResult = search.SearchItem(model.Params.SearchTerm, limits);
+            }
+            else
+            {
+                // Advanced search
+                if (model.Params.SearchCategory.Equals("A"))
+                {
+                    search.StartPage = model.AuthorPage;
+                    model.AuthorResult = search.SearchAuthor(model.Params.SearchTerm);
+                }
+                if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
+                {
+                    search.StartPage = model.NamePage;
+                    model.NameResult = search.SearchName(model.Params.SearchTerm);
+                }
+                if (model.Params.SearchCategory.Equals("T"))
+                {
+                    search.StartPage = model.ItemPage;
+                    search.Facet = true;
+                    model.ItemResult = search.SearchItem(model.Params.SearchTerm, model.Params.LastName,
+                        model.Params.Volume, model.Params.Year, model.Params.Subject, model.Params.Language, 
+                        model.Params.Collection, limits);
+                }
+                if (model.Params.SearchCategory.Equals("S"))
+                {
+                    search.StartPage = model.KeywordPage;
+                    model.KeywordResult = search.SearchKeyword(model.Params.SearchTerm);
+                }
+            }
+
+            if (model.Params.SearchCategory == "M" && model.NameResult.Names.Count == 1)
+            {
+                if (model.NameResult.IsValid)
+                {
+                    // Only one result to a name-only search... redirect directly 
+                    // to the bibliography for that name
+                    return new RedirectResult("~/name/" +
+                        Server.HtmlEncode(((NameHit)model.NameResult.Names[0]).Name
+                            .Replace(' ', '_')
+                            .Replace('.', '$')
+                            .Replace('?', '^')
+                            .Replace('&', '~')
+                        )
+                    );
+                }
+            }
+
+            if (search.Facet) AddFacetsToModel(model, limits);
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Parse the facets from the search results into bindable model fields
+        /// </summary>
+        /// <param name="model"></param>
+        private void AddFacetsToModel(SearchModel model, List<Tuple<SearchField, string>> limits)
+        {
+            // https://stackoverflow.com/questions/31343732/mvc-model-with-a-list-of-objects-as-property
+            foreach (var facet in model.ItemResult.Facets)
+            {
+                switch (facet.Key)
+                {
+                    case SearchField.Genre:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.GenreFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.MaterialType:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.MaterialTypeFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.ItemAuthors:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.AuthorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.DateRanges:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.DateRangeFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.Contributors:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.ContributorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.ItemKeywords:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.KeywordFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                    case SearchField.Language:
+                        foreach (var facetValue in facet.Value)
+                        {
+                            model.Params.LanguageFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
+                        }
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determine if the SearchField and value combination is included in the list of limits
+        /// </summary>
+        /// <param name="facet"></param>
+        /// <param name="value"></param>
+        /// <param name="limits"></param>
+        /// <returns></returns>
+        private bool IsFacetLimited(SearchField facet, string value, List<Tuple<SearchField, string>> limits)
+        {
+            bool isLimited = false;
+
+            if (limits != null)
+            {
+                foreach (var limit in limits)
+                {
+                    if (limit.Item1 == facet && limit.Item2 == value)
+                    {
+                        isLimited = true;
+                        break;
+                    }
+                }
+            }
+
+            return isLimited;
         }
 
         private bool SearchRedirect()
@@ -205,6 +325,5 @@ namespace MOBOT.BHL.Web2.Controllers
 
             return redirect;
         }
-
     }
 }

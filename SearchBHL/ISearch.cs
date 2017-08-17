@@ -66,6 +66,14 @@ namespace BHL.Search
             string language, string collection, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
+        /// Search for publications
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <param name="limits"></param>
+        /// <returns>Object containing the publications returned by the search.</returns>
+        ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null);
+
+        /// <summary>
         /// Search for pages
         /// </summary>
         /// <param name="query"></param>

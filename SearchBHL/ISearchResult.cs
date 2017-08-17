@@ -5,6 +5,9 @@ namespace BHL.Search
 {
     public interface ISearchResult
     {
+        int PageSize { get; set; }
+        int StartPage { get; set; }
+        long TotalPages { get; set; }
         long TotalHits { get; set; }
         bool IsValid { get; set; }
         string ErrorMessage { get; set; }

@@ -9,6 +9,21 @@ namespace BHL.Search
     public class SearchResult : ISearchResult
     {
         /// <summary>
+        /// Number of hits included on a single page of results
+        /// </summary>
+        private int _pageSize = 10;
+
+        /// <summary>
+        /// Start page of the search
+        /// </summary>
+        private int _startPage = 1;
+
+        /// <summary>
+        /// Total number of pages of hits returned by the search
+        /// </summary>
+        private long _totalPages = 1;
+
+        /// <summary>
         /// Total number of hits returned by the search
         /// </summary>
         private long _totalHits = 0;
@@ -74,6 +89,24 @@ namespace BHL.Search
         /// Query limits (facets) that produced this result
         /// </summary>
         private List<Tuple<SearchField, string>> _queryLimits = new List<Tuple<SearchField, string>>();
+
+        public int PageSize
+        {
+            get { return _pageSize; }
+            set { _pageSize = value; }
+        }
+
+        public int StartPage
+        {
+            get { return _startPage; }
+            set { _startPage = value; }
+        }
+
+        public long TotalPages
+        {
+            get { return _totalPages; }
+            set { _totalPages = value; }
+        }
 
         public long TotalHits
         {

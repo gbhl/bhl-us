@@ -655,7 +655,10 @@ namespace BHL.Search.Elastic
             SearchResult result = new SearchResult();
 
             // Get metadata about search results
+            result.PageSize = this._numResults;
+            result.StartPage = this._startPage;
             result.TotalHits = results.HitsMetaData.Total;
+            result.TotalPages = (result.TotalHits / (long)result.PageSize) + 1;
             result.IsValid = results.IsValid;
             if (_debug || !results.IsValid) result.DebugInfo = results.DebugInformation;
 

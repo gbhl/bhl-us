@@ -808,6 +808,7 @@
     <Compile Include="ItemUnavailable.aspx.designer.cs">
       <DependentUpon>ItemUnavailable.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Monitor.aspx.cs">
       <DependentUpon>Monitor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -958,7 +959,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

@@ -46,6 +46,14 @@ namespace BHL.Search.Offline
             return result;
         }
 
+        public ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null)
+        {
+            SearchResult result = GetOfflineSearchResult();
+            result.Query.Add(new Tuple<SearchField, string>(SearchField.All, searchTerm));
+            result.QueryLimits = limits;
+            return result;
+        }
+
         public ISearchResult SearchKeyword(string keyword)
         {
             SearchResult result = GetOfflineSearchResult();
@@ -71,6 +79,8 @@ namespace BHL.Search.Offline
         private SearchResult GetOfflineSearchResult()
         {
             SearchResult result = new SearchResult();
+            result.PageSize = this.NumResults;
+            result.StartPage = this.StartPage;
             result.IsValid = false;
             result.ErrorMessage = "Search services are offline.";
             return result;
