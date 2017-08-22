@@ -7,6 +7,7 @@ namespace BHL.Search
         private int _titleId = 0;
         private int _itemId = 0;
         private int _segmentId = 0;
+        private int _startPageId = 0;
         private string _title = string.Empty;
         private string _translatedTitle = string.Empty;
         private string _uniformTitle = string.Empty;
@@ -31,8 +32,10 @@ namespace BHL.Search
         private List<string> _issn = new List<string>();
         private List<string> _isbn = new List<string>();
         private string _doi = string.Empty;
+        private string _url = string.Empty;
         private List<string> _collections = new List<string>();
         private string _container = string.Empty;
+        private string _pageRange = string.Empty;
         private string _text = string.Empty;
         private bool _hasSegments = false;
         private bool _hasLocalContent = false;
@@ -54,6 +57,12 @@ namespace BHL.Search
         {
             get { return _segmentId; }
             set { _segmentId = value; }
+        }
+
+        public int StartPageId
+        {
+            get { return _startPageId; }
+            set { _startPageId = value; }
         }
 
         public string Title
@@ -200,6 +209,12 @@ namespace BHL.Search
             set { _doi = value ?? string.Empty; }
         }
 
+        public string Url
+        {
+            get { return _url; }
+            set { _url = value ?? string.Empty; }
+        }
+
         public List<string> Collections
         {
             get { return _collections; }
@@ -210,6 +225,12 @@ namespace BHL.Search
         {
             get { return _container; }
             set { _container = value ?? string.Empty;}
+        }
+
+        public string PageRange
+        {
+            get { return _pageRange; }
+            set { _pageRange = value; }
         }
 
         public string Text

@@ -92,10 +92,11 @@ namespace BHL.Search.Elastic
                 ESField.DATES, ESField.DOI, ESField.GENRE, ESField.HASEXTERNALCONTENT,
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
-                ESField.OCLC, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE, ESField.SEGMENTID,
-                ESField.SERIES, ESField.TEXT, ESField.TITLE, ESField.TITLEID, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.VOLUME, ESField.AUTHORNAMES,
-                ESField.PRIMARYAUTHORNAME, ESField.KEYWORD, ESField.COUNT, ESField.NAME};
+                ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE,
+                ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
+                ESField.VOLUME, ESField.AUTHORNAMES, ESField.PRIMARYAUTHORNAME, ESField.KEYWORD,
+                ESField.COUNT, ESField.NAME};
             List<string> facetFields = new List<string> { ESField.GENRE, ESField.MATERIALTYPE, ESField.AUTHORS,
                 ESField.DATERANGES, ESField.CONTRIBUTORS_RAW, ESField.KEYWORDS_RAW, ESField.LANGUAGE };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
@@ -123,9 +124,10 @@ namespace BHL.Search.Elastic
                 ESField.DATES, ESField.DOI, ESField.GENRE, ESField.HASEXTERNALCONTENT,
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
-                ESField.OCLC, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE, ESField.SEGMENTID,
-                ESField.SERIES, ESField.TEXT, ESField.TITLE, ESField.TITLEID, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.VOLUME };
+                ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE,
+                ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
+                ESField.VOLUME };
             List<string> facetFields = new List<string> { ESField.GENRE, ESField.MATERIALTYPE, ESField.AUTHORS,
                 ESField.DATERANGES, ESField.CONTRIBUTORS_RAW, ESField.KEYWORDS_RAW, ESField.LANGUAGE };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
@@ -158,9 +160,10 @@ namespace BHL.Search.Elastic
                 ESField.DATES, ESField.DOI, ESField.GENRE, ESField.HASEXTERNALCONTENT,
                 ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
                 ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
-                ESField.OCLC, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE, ESField.SEGMENTID,
-                ESField.SERIES, ESField.TEXT, ESField.TITLE, ESField.TITLEID, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.VOLUME };
+                ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE,
+                ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
+                ESField.VOLUME };
             List<string> facetFields = new List<string> { ESField.GENRE, ESField.MATERIALTYPE, ESField.AUTHORS,
                 ESField.DATERANGES, ESField.CONTRIBUTORS_RAW, ESField.KEYWORDS_RAW, ESField.LANGUAGE };
             List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,

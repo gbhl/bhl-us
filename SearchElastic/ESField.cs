@@ -29,6 +29,7 @@
         public const string LANGUAGE = "language";
         public const string MATERIALTYPE = "materialType";
         public const string OCLC = "oclc";
+        public const string PAGERANGE = "pageRange";
         public const string PUBLICATIONPLACE = "publicationPlace";
         public const string PUBLICATIONPLACE_RAW = "publicationPlace.raw";
         public const string PUBLISHER = "publisher";
@@ -38,12 +39,14 @@
         public const string SEGMENTID = "segmentId";
         public const string SERIES = "series";
         public const string SORTTITLE = "sortTitle";
+        public const string STARTPAGEID = "startPageId";
         public const string TEXT = "text";
         public const string TITLE = "title";
         public const string TITLE_RAW = "title.raw";
         public const string TITLEID = "titleId";
         public const string TRANSLATEDTITLE = "translatedTitle";
         public const string UNIFORMTITLE = "uniformTitle";
+        public const string URL = "url";
         public const string VARIANTS = "variants";
         public const string VOLUME = "volume";
 

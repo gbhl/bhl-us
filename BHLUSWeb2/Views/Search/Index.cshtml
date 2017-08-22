@@ -212,11 +212,25 @@
                                                         <div class="col-sm-3" style="margin: 25px 0px 0px 0px">
                                                             @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
                                                             {
-                                                                <a class="titleviewbook" href="~/item/@item.ItemId">View Book</a>
+                                                                if (string.IsNullOrWhiteSpace(item.Url))
+                                                                {
+                                                                    <a class="titleviewbook" href="~/item/@item.ItemId">View Book</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="titleviewbook" target="_blank" href="/item/@item.ItemId">View Book (External)</a>
+                                                                }
                                                             }
                                                             else
                                                             {
-                                                                <a class="titleviewbook" href="~/page/#">View @item.Genre</a>
+                                                                if (string.IsNullOrWhiteSpace(item.Url))
+                                                                {
+                                                                    <a class="titleviewbook" href="~/page/@item.StartPageId">View @item.Genre</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a class="titleviewbook" target="_blank" href="@item.Url">View @item.Genre (External)</a>
+                                                                }
                                                             }
                                                         </div>
                                                     </div>
@@ -341,7 +355,7 @@
                             else
                             {
                                 <p style="font-weight:bold">@if (Model.ItemResult != null)
-                                { <text>Model.ItemResult.ErrorMessage;</text> }</p>
+                                { <text>@Model.ItemResult.ErrorMessage</text> }</p>
                             }
                         </section>
                     </div>
