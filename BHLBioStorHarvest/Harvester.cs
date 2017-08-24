@@ -298,6 +298,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         private string GetDOI(JObject article)
         {
             string doi = ((string)article["doi"]) ?? string.Empty;
+            if (doi.Length > 50) doi = doi.Substring(0, 50);
             if (doi != string.Empty)
             {
                 // Make sure this DOI applies to the article, and not the the container object (journal)
