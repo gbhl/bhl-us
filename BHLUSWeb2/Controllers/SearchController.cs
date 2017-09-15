@@ -51,19 +51,22 @@ namespace MOBOT.BHL.Web2.Controllers
             // Convert the selected facets to limits for search
             List<Tuple<SearchField, string>> limits = null;
             string selectedFacets = Request["facet.Checked"];
-            List<string> facets = selectedFacets.Replace("false", "").Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            for (int x = facets.Count - 1; x >= 0; x--)
+            if (selectedFacets != null)
             {
-                if (facets[x].StartsWith(",")) facets.RemoveAt(x);
-            }
+                List<string> facets = selectedFacets.Replace("false", "").Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                for (int x = facets.Count - 1; x >= 0; x--)
+                {
+                    if (facets[x].StartsWith(",")) facets.RemoveAt(x);
+                }
 
-            if (facets.Count > 0) limits = new List<Tuple<SearchField, string>>();
-            foreach(var facet in facets)
-            {
-                limits.Add(
-                    new Tuple<SearchField, string>(
-                        (SearchField)Enum.Parse(typeof(SearchField), facet.Split('_')[0], true),
-                        facet.Split('_')[1]));
+                if (facets.Count > 0) limits = new List<Tuple<SearchField, string>>();
+                foreach (var facet in facets)
+                {
+                    limits.Add(
+                        new Tuple<SearchField, string>(
+                            (SearchField)Enum.Parse(typeof(SearchField), facet.Split('_')[0], true),
+                            facet.Split('_')[1]));
+                }
             }
 
             return SearchAction(model, limits);

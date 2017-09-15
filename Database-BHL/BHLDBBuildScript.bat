@@ -28,6 +28,7 @@ sqlcmd -E -S %1 -d %2 -i "Security\Schemas\annotation.sql"
 sqlcmd -E -S %1 -d %2 -i "Security\Schemas\audit.sql"
 sqlcmd -E -S %1 -d %2 -i "Security\Schemas\import.sql"
 sqlcmd -E -S %1 -d %2 -i "Security\Schemas\reqlog.sql"
+sqlcmd -E -S %1 -d %2 -i "Security\Schemas\srchindex.sql"
 
 REM --------------------------------------
 REM  Create Full-Text Catalogs
@@ -1182,6 +1183,11 @@ sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTopUser.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTypesByDate.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestTypeSelectByApplication.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\DailyTasks.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchAuthor.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchKeyword.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchName.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublication.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublicationAdvanced.sql"
 
 GOTO DONE
 

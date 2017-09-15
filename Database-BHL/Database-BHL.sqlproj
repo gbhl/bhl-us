@@ -91,6 +91,8 @@
     <Folder Include="reqlog" />
     <Folder Include="reqlog\Tables" />
     <Folder Include="reqlog\Stored Procedures" />
+    <Folder Include="srchindex" />
+    <Folder Include="srchindex\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Keyword.sql" />
@@ -1048,6 +1050,7 @@
     <None Include="Data\dbo.AspNetRoles.Table.sql" />
     <None Include="Data\dbo.AspNetUsers.Table.sql" />
     <None Include="Data\dbo.MaterialType.Table.sql" />
+    <None Include="Security\Schemas\srchindex.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1299,5 +1302,11 @@
     <None Include="dbo\Stored Procedures\MaterialTypeSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\MaterialTypeSelectAll.sql" />
     <None Include="dbo\Functions\fnGetIdentifierStringForTitle.sql" />
+    <Build Include="Security\Schemas\reqlog.sql" />
+    <None Include="srchindex\Stored Procedures\SearchAuthor.sql" />
+    <None Include="srchindex\Stored Procedures\SearchKeyword.sql" />
+    <None Include="srchindex\Stored Procedures\SearchName.sql" />
+    <None Include="srchindex\Stored Procedures\SearchPublicationAdvanced.sql" />
+    <None Include="srchindex\Stored Procedures\SearchPublication.sql" />
   </ItemGroup>
 </Project>

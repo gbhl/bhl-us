@@ -36,6 +36,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1043,6 +1044,10 @@
     <ProjectReference Include="..\SearchOffline\SearchOffline.csproj">
       <Project>{07e617f9-4cac-4f83-807e-c00e9526389e}</Project>
       <Name>SearchOffline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchSQL\SearchSQL.csproj">
+      <Project>{b792f1c8-5971-400b-8ced-65a8e0b9bd3f}</Project>
+      <Name>SearchSQL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SiteServices\SiteServices.csproj">
       <Project>{f3f5e38d-5028-4249-8db8-a86fd6a09a8f}</Project>

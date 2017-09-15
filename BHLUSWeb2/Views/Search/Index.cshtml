@@ -68,7 +68,7 @@
             <div style="font-size:12px;">Search instead for:
             @foreach (string suggestion in Model.Suggestions)
             {
-                <span>@(numSuggest > 0 ? ", " : "")<a href="~/search?searchTerm=@Server.UrlEncode(suggestion)">@suggestion</a></span>
+                <span>@(numSuggest > 0 ? ", " : "")<a href="~/search?searchTerm=@Server.UrlEncode(suggestion)&searchCat=@Model.Params.SearchCategory">@suggestion</a></span>
                 numSuggest++;
             }
             </div>
@@ -327,16 +327,31 @@
                                     {
                                         <div style="margin: 0px 0px 25px 0px">
                                             <div style="margin: 0px 0px 0px 15px">
+                                                @{
+                                                    long start = 1;
+                                                    long end = (Model.ItemResult.TotalPages > 10) ? 10 : Model.ItemResult.TotalPages;
+                                                    if (Model.ItemResult.StartPage - 5 > 1)
+                                                    {
+                                                        if ((Model.ItemResult.StartPage + 4) <= Model.ItemResult.TotalPages)
+                                                        {
+                                                            start = Model.ItemResult.StartPage - 5; end = Model.ItemResult.StartPage + 4;
+                                                        }
+                                                        else
+                                                        {
+                                                            start = Model.ItemResult.TotalPages - 9; end = Model.ItemResult.TotalPages;
+                                                        }
+                                                    }
+                                                }
+
                                                 @if (Model.ItemResult.StartPage > 1)
                                                 {
                                                     <a onclick="$('#ItemPage').val(@(Model.ItemResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
-
-                                                @for (int x = 1; x <= Model.ItemResult.TotalPages; x++)
+                                                @for (long x = start; x <= end; x++)
                                                 {
                                                     if (x == Model.ItemResult.StartPage)
                                                     {
-                                                        <text>@x</text> 
+                                                    <text>@x</text> 
                                                     }
                                                     else
                                                     {
@@ -385,12 +400,28 @@
                                     {
                                         <div style="margin: 0px 0px 25px 0px">
                                             <div style="margin: 0px 0px 0px 15px">
+                                                @{
+                                                    long start = 1;
+                                                    long end = (Model.AuthorResult.TotalPages > 10) ? 10 : Model.AuthorResult.TotalPages;
+                                                    if (Model.AuthorResult.StartPage - 5 > 1)
+                                                    {
+                                                        if ((Model.AuthorResult.StartPage + 4) <= Model.AuthorResult.TotalPages)
+                                                        {
+                                                            start = Model.AuthorResult.StartPage - 5; end = Model.AuthorResult.StartPage + 4;
+                                                        }
+                                                        else
+                                                        {
+                                                            start = Model.AuthorResult.TotalPages - 9; end = Model.AuthorResult.TotalPages;
+                                                        }
+                                                    }
+                                                }
+
                                                 @if (Model.AuthorResult.StartPage > 1)
                                                 {
                                                     <a onclick="$('#AuthorPage').val(@(Model.AuthorResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
-                                                @for (int x = 1; x <= Model.AuthorResult.TotalPages; x++)
+                                                @for (long x = start; x <= end; x++)
                                                 {
                                                     if (x == Model.AuthorResult.StartPage)
                                                     {
@@ -443,12 +474,28 @@
                                     {
                                         <div style="margin: 0px 0px 25px 0px">
                                             <div style="margin: 0px 0px 0px 15px">
+                                                @{
+                                                    long start = 1;
+                                                    long end = (Model.KeywordResult.TotalPages > 10) ? 10 : Model.KeywordResult.TotalPages;
+                                                    if (Model.KeywordResult.StartPage - 5 > 1)
+                                                    {
+                                                        if ((Model.KeywordResult.StartPage + 4) <= Model.KeywordResult.TotalPages)
+                                                        {
+                                                            start = Model.KeywordResult.StartPage - 5; end = Model.KeywordResult.StartPage + 4;
+                                                        }
+                                                        else
+                                                        {
+                                                            start = Model.KeywordResult.TotalPages - 9; end = Model.KeywordResult.TotalPages;
+                                                        }
+                                                    }
+                                                }
+
                                                 @if (Model.KeywordResult.StartPage > 1)
                                                 {
                                                     <a onclick="$('#KeywordPage').val(@(Model.KeywordResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
-                                                @for (int x = 1; x <= Model.KeywordResult.TotalPages; x++)
+                                                @for (long x = start; x <= end; x++)
                                                 {
                                                     if (x == Model.KeywordResult.StartPage)
                                                     {
@@ -519,12 +566,28 @@
                                     {
                                         <div style="margin: 0px 0px 25px 0px">
                                             <div style="margin: 0px 0px 0px 15px">
+                                                @{
+                                                    long start = 1;
+                                                    long end = (Model.NameResult.TotalPages > 10) ? 10 : Model.NameResult.TotalPages;
+                                                    if (Model.NameResult.StartPage - 5 > 1)
+                                                    {
+                                                        if ((Model.NameResult.StartPage + 4) <= Model.NameResult.TotalPages)
+                                                        {
+                                                            start = Model.NameResult.StartPage - 5; end = Model.NameResult.StartPage + 4;
+                                                        }
+                                                        else
+                                                        {
+                                                            start = Model.NameResult.TotalPages - 9; end = Model.NameResult.TotalPages;
+                                                        }
+                                                    }
+                                                }
+
                                                 @if (Model.NameResult.StartPage > 1)
                                                 {
                                                     <a onclick="$('#NamePage').val(@(Model.NameResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
-                                                @for (int x = 1; x <= Model.NameResult.TotalPages; x++)
+                                                @for (long x = start; x <= end; x++)
                                                 {
                                                     if (x == Model.NameResult.StartPage)
                                                     {

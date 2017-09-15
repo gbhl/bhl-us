@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEC97CEE-C95E-4C8E-9AEC-526D27C06EC6}"
 	ProjectSection(SolutionItems) = preProject
@@ -77,6 +77,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchElastic", "SearchElastic\SearchElastic.csproj", "{D253C132-E830-47C7-90B9-E8B69288539C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchOffline", "SearchOffline\SearchOffline.csproj", "{07E617F9-4CAC-4F83-807E-C00E9526389E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchSQL", "SearchSQL\SearchSQL.csproj", "{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -388,9 +390,24 @@ Global
 		{07E617F9-4CAC-4F83-807E-C00E9526389E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{07E617F9-4CAC-4F83-807E-C00E9526389E}.Release|x86.ActiveCfg = Release|Any CPU
 		{07E617F9-4CAC-4F83-807E-C00E9526389E}.Release|x86.Build.0 = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {76CBB32A-396D-4049-8237-6050450A2E1D}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = BHL.vsmdi
