@@ -89,7 +89,7 @@
     <add key="PageTitle" value="{0} - Biodiversity Heritage Library" />
     <add key="TweetMessage" value="{0} @BioDivLibrary" />
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
-    <add key="DOIResolverURL" value="http://dx.doi.org/"/>
+    <add key="DOIResolverURL" value="https://doi.org/"/>
 
     <add key="TwitterConsumerKey" value="your twitter consumer key goes here"/>
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
