@@ -318,6 +318,27 @@
                                                             }
                                                         </div>
                                                     </div>
+                                                    @if (item.Highlights.Count > 0)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-sm-12" style="font-size:12px;font-style:italic;">
+                                                                <div class="highlightHead" style="margin-bottom:5px;margin-top:10px;"><img src="images/bib_plus.gif">&nbsp;Details</div>
+                                                                <div class="highlightBody" style="display:none">
+                                                                @foreach(Tuple<string,string> highlight in item.Highlights)
+                                                                {
+                                                                    <div class="col-sm-2" style="margin-bottom:2px; display:inline;">
+                                                                        @Html.Raw(highlight.Item1.Replace("searchAuthors", "authors"))
+                                                                    </div>
+                                                                    <div class="col-sm-10" style="margin-bottom:2px; display:inline;">
+                                                                        @if (highlight.Item1 == "text") { @Html.Raw("...") }
+                                                                        @Html.Raw(highlight.Item2.Replace("<b>", "<span style='font-weight:bold'>").Replace("</b>", "</span>"))
+                                                                        @if (highlight.Item1 == "text") { @Html.Raw("...") }
+                                                                    </div>
+                                                                }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             }
                                         </div>
@@ -738,13 +759,24 @@
             //open up the content needed, toggle the slide.  if visible, slide up, if not slidedown.
             $content.slideToggle(0, function () {
                 //execute this after slideToggle is done
-                //change text of header based on visibility of content div
 
+                //change text of header based on visibility of content div
                 //$header.text(function () {
                 //	//change text based on condition
                 //	return $content.is(":visible") ? "Collapse" : "Expand";
                 //});
 
+                $img = $header.children("img");
+                $img.attr("src", function () {
+                    return $content.is(":visible") ? "images/bib_minus.gif" : "images/bib_plus.gif";
+                });
+            });
+        });
+
+        $(".highlightHead").click(function () {
+            $header = $(this);
+            $content = $header.next();
+            $content.slideToggle(200, function() {
                 $img = $header.children("img");
                 $img.attr("src", function () {
                     return $content.is(":visible") ? "images/bib_minus.gif" : "images/bib_plus.gif";
