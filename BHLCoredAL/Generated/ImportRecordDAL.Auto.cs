@@ -1,8 +1,8 @@
 
-// Generated 5/30/2014 11:29:00 AM
+// Generated 11/7/2017 10:02:12 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ImportRecordDAL is based upon ImportRecord.
+// This partial class ImportRecordDAL is based upon import.ImportRecord.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from ImportRecord by primary key(s).
+		/// Select values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from ImportRecord by primary key(s).
+		/// Select values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecord by primary key(s).
+		/// Select values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecord by primary key(s).
+		/// Select values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into ImportRecord.
+		/// Insert values into import.ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -172,6 +172,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lCCN"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="endPageID"></param>
+		/// <param name="segmentID"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordInsertAuto(
 			SqlConnection sqlConnection, 
@@ -211,13 +216,18 @@ namespace MOBOT.BHL.DAL
 			string oCLC,
 			string lCCN,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? titleID,
+			int? itemID,
+			int? startPageID,
+			int? endPageID,
+			int? segmentID)
 		{
-			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID );
+			return ImportRecordInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, creationUserID, lastModifiedUserID, titleID, itemID, startPageID, endPageID, segmentID );
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecord.
+		/// Insert values into import.ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -258,6 +268,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="lCCN"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="endPageID"></param>
+		/// <param name="segmentID"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordInsertAuto(
 			SqlConnection sqlConnection, 
@@ -298,7 +313,12 @@ namespace MOBOT.BHL.DAL
 			string oCLC,
 			string lCCN,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? titleID,
+			int? itemID,
+			int? startPageID,
+			int? endPageID,
+			int? segmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -340,7 +360,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("OCLC", SqlDbType.NVarChar, 125, false, oCLC),
 					CustomSqlHelper.CreateInputParameter("LCCN", SqlDbType.NVarChar, 125, false, lCCN),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
+					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
@@ -361,7 +386,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into ImportRecord. Returns an object of type ImportRecord.
+		/// Insert values into import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +401,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecord. Returns an object of type ImportRecord.
+		/// Insert values into import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -425,7 +450,12 @@ namespace MOBOT.BHL.DAL
 				value.OCLC,
 				value.LCCN,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.TitleID,
+				value.ItemID,
+				value.StartPageID,
+				value.EndPageID,
+				value.SegmentID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -433,7 +463,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from ImportRecord by primary key(s).
+		/// Delete values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -448,7 +478,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from ImportRecord by primary key(s).
+		/// Delete values from import.ImportRecord by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -491,7 +521,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in ImportRecord. Returns an object of type ImportRecord.
+		/// Update values in import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -531,6 +561,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="oCLC"></param>
 		/// <param name="lCCN"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="endPageID"></param>
+		/// <param name="segmentID"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -570,13 +605,18 @@ namespace MOBOT.BHL.DAL
 			string iSBN,
 			string oCLC,
 			string lCCN,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? titleID,
+			int? itemID,
+			int? startPageID,
+			int? endPageID,
+			int? segmentID)
 		{
-			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID);
+			return ImportRecordUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, importFileID, importRecordStatusID, genre, title, translatedTitle, journalTitle, volume, series, issue, edition, publicationDetails, publisherName, publisherPlace, year, startYear, endYear, language, summary, notes, rights, dueDiligence, copyrightStatus, license, licenseUrl, pageRange, startPage, endPage, url, downloadUrl, dOI, iSSN, iSBN, oCLC, lCCN, lastModifiedUserID, titleID, itemID, startPageID, endPageID, segmentID);
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecord. Returns an object of type ImportRecord.
+		/// Update values in import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -617,6 +657,11 @@ namespace MOBOT.BHL.DAL
 		/// <param name="oCLC"></param>
 		/// <param name="lCCN"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="endPageID"></param>
+		/// <param name="segmentID"></param>
 		/// <returns>Object of type ImportRecord.</returns>
 		public ImportRecord ImportRecordUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -657,7 +702,12 @@ namespace MOBOT.BHL.DAL
 			string iSBN,
 			string oCLC,
 			string lCCN,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? titleID,
+			int? itemID,
+			int? startPageID,
+			int? endPageID,
+			int? segmentID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -698,7 +748,12 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ISBN", SqlDbType.NVarChar, 125, false, iSBN),
 					CustomSqlHelper.CreateInputParameter("OCLC", SqlDbType.NVarChar, 125, false, oCLC),
 					CustomSqlHelper.CreateInputParameter("LCCN", SqlDbType.NVarChar, 125, false, lCCN),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, true, titleID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
+					CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, true, endPageID),
+					CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
@@ -719,7 +774,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecord. Returns an object of type ImportRecord.
+		/// Update values in import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -734,7 +789,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecord. Returns an object of type ImportRecord.
+		/// Update values in import.ImportRecord. Returns an object of type ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -783,7 +838,12 @@ namespace MOBOT.BHL.DAL
 				value.ISBN,
 				value.OCLC,
 				value.LCCN,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.TitleID,
+				value.ItemID,
+				value.StartPageID,
+				value.EndPageID,
+				value.SegmentID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -791,9 +851,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage ImportRecord object.
+		/// Manage import.ImportRecord object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecord.
+		/// then either insert values into, delete values from, or update values in import.ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -808,9 +868,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage ImportRecord object.
+		/// Manage import.ImportRecord object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecord.
+		/// then either insert values into, delete values from, or update values in import.ImportRecord.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -863,7 +923,12 @@ namespace MOBOT.BHL.DAL
 						value.OCLC,
 						value.LCCN,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.TitleID,
+						value.ItemID,
+						value.StartPageID,
+						value.EndPageID,
+						value.SegmentID);
 				
 				return new CustomDataAccessStatus<ImportRecord>(
 					CustomDataAccessContext.Insert, 
@@ -924,7 +989,12 @@ namespace MOBOT.BHL.DAL
 						value.ISBN,
 						value.OCLC,
 						value.LCCN,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.TitleID,
+						value.ItemID,
+						value.StartPageID,
+						value.EndPageID,
+						value.SegmentID);
 					
 				return new CustomDataAccessStatus<ImportRecord>(
 					CustomDataAccessContext.Update, 
@@ -942,4 +1012,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

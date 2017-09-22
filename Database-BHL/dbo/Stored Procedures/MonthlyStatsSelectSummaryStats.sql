@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.MonthlyStatsSelectSummaryStats
+﻿CREATE PROCEDURE [dbo].[MonthlyStatsSelectSummaryStats]
 
 @BHLMemberLibraryOnly bit
 
@@ -16,16 +16,10 @@ SELECT	'' AS InstitutionCode,
 		[Month], 
 		StatValue,
 		SUM(StatValue) OVER (PARTITION BY StatType ORDER BY [Year], [Month]) AS CumulativeValue
-FROM (	SELECT	StatType, 
-				[Year], 
-				[Month], 
-				sum(StatValue) as StatValue
-		FROM	dbo.Monthlystats s WITH (NOLOCK) LEFT JOIN dbo.Institution inst WITH (NOLOCK)
-					ON s.InstitutionCode = inst.InstitutionCode
-		WHERE	(inst.BHLMemberLibrary = @BHLMemberLibraryOnly OR @BHLMemberLibraryOnly = 0)
-		OR		s.InstitutionCode = 'N/A'
-		GROUP BY StatType, [Year], [Month]
-		) x
-ORDER BY InstitutionName, [Year], [Month], StatType
+FROM	dbo.Monthlystats s WITH (NOLOCK)
+WHERE	(StatLevel = 'Total' AND @BHLMemberLibraryOnly = 0) 
+OR		(StatLevel = 'MemberTotal' AND @BHLMemberLibraryOnly = 1)
+OR		s.StatType IN ('PDFs Created', 'DOIs Created')
+ORDER BY [Year], [Month], StatType
 
 END

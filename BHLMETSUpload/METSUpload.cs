@@ -103,11 +103,11 @@ namespace MOBOT.BHL.BHLMETSUpload
                             foreach (BHLWS.Page p in pages)
                             {
                                 refImages.AppendFormat("<mets:file ID=\"pageImg{0}\" GROUPID=\"G{1}\" USE=\"reference image\" MIMETYPE=\"image/jpeg\">", p.PageID, count);
-                                refImages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"http://www.biodiversitylibrary.org/pageimage/{0}\" />", p.PageID);
+                                refImages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/pageimage/{0}\" />", p.PageID);
                                 refImages.AppendFormat("</mets:file>");
 
                                 containerPages.AppendFormat("<mets:file ID=\"page{0}\" GROUPID=\"G{1}\" USE=\"container page\" MIMETYPE=\"text/html\">", p.PageID, count);
-                                containerPages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"http://www.biodiversitylibrary.org/page/{0}\" />", p.PageID);
+                                containerPages.AppendFormat("<mets:FLocat LOCTYPE=\"URL\" xlink:href=\"https://www.biodiversitylibrary.org/page/{0}\" />", p.PageID);
                                 containerPages.AppendFormat("</mets:file>");
 
                                 string orderLabel = "";

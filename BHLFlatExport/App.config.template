@@ -25,7 +25,7 @@
     <add key="KeywordFile" value="subject.txt" />
     <add key="TitleFile" value="title.txt" />
     <add key="TitleIdentifierFile" value="titleidentifier.txt" />
-    <add key="ItemURLFormat" value="http://www.biodiversitylibrary.org/item/{0} "/>
+    <add key="ItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
   </appSettings>
   <!-- This section contains the log4net configuration settings -->
   <log4net>

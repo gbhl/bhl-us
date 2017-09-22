@@ -13,7 +13,7 @@ namespace BHL.SiteServices
     /// <summary>
     /// Summary description for SiteService
     /// </summary>
-    [WebService(Namespace = "http://biodiversitylibrary.org/")]
+    [WebService(Namespace = "https://biodiversitylibrary.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 

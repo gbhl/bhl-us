@@ -15,8 +15,8 @@ IF (@RedirID IS NOT NULL)
 	exec dbo.TitleBibTeXSelectForTitleID @RedirID
 ELSE
 	SELECT	'bhl' + CONVERT(NVARCHAR(10), i.ItemID) AS CitationKey,
-			'http://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), i.ItemID) AS Url,
-			'http://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Note,
+			'https://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), i.ItemID) AS Url,
+			'https://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Note,
 			t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title, 
 			ISNULL(t.Datafield_260_a, '') + ISNULL(t.Datafield_260_b, '') AS Publisher,
 			CASE WHEN i.Year IS NULL THEN ISNULL(t.Datafield_260_c, '') ELSE i.Year END AS [Year],

@@ -23,6 +23,14 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        private string _genreName;
+
+        public string GenreName
+        {
+            get { return _genreName; }
+            set { _genreName = value; }
+        }
+
         private string _statusName;
 
         public string StatusName
@@ -37,6 +45,22 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _contributorName; }
             set { _contributorName = value; }
+        }
+
+        private string _creationUser;
+
+        public string CreationUser
+        {
+            get { return _creationUser; }
+            set { _creationUser = value; }
+        }
+
+        private string _lastModifiedUser;
+
+        public string LastModifiedUser
+        {
+            get { return _lastModifiedUser; }
+            set { _lastModifiedUser = value; }
         }
 
         private int _totalRecords;
@@ -62,6 +86,15 @@ namespace MOBOT.BHL.DataObjects
             get { return _importedRecords; }
             set { _importedRecords = value; }
         }
+
+        private int _invalidRecords;
+        public int InvalidRecords { get => _invalidRecords; set => _invalidRecords = value; }
+
+        private int _incompleteRecords;
+        public int IncompleteRecords { get => _incompleteRecords; set => _incompleteRecords = value; }
+
+        private int _duplicateRecords;
+        public int DuplicateRecords { get => _duplicateRecords; set => _duplicateRecords = value; }
 
         private int _rejectedRecords;
 
@@ -94,9 +127,24 @@ namespace MOBOT.BHL.DataObjects
                             _contributorName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "GenreName":
+                        {
+                            _genreName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "StatusName":
                         {
                             _statusName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "CreationUser":
+                        {
+                            _creationUser = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "LastModifiedUser":
+                        {
+                            _lastModifiedUser = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "TotalRecords":
@@ -112,6 +160,22 @@ namespace MOBOT.BHL.DataObjects
                     case "ImportedRecords":
                         {
                             _importedRecords = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+
+                    case "InvalidRecords":
+                        {
+                            _invalidRecords = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "IncompleteRecords":
+                        {
+                            _incompleteRecords = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "DuplicateRecords":
+                        {
+                            _duplicateRecords = Utility.ZeroIfNull(column.Value);
                             break;
                         }
                     case "RejectedRecords":

@@ -20,12 +20,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            CitationService service = new CitationService();
-
-            ViewBag.PageTitle += "Citation Import";
-            ViewBag.Contributor = new SelectList(service.InstitutionList(), "InstitutionCode", "InstitutionName");
-            ViewBag.DataSourceType = new SelectList(service.DataSourceTypeList(), "key", "value", "text/plain");
-
+            ViewBag.PageTitle += "Segment Import";
             return View();
         }
 
@@ -33,6 +28,29 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         // POST: /CitationImport/Index
         [HttpPost]
         public RedirectToRouteResult Index(CitationImportModel model)
+        {
+            return RedirectToAction("SelectFile");
+        }
+
+        //
+        // GET: /CitationImport/SelectFile
+        [HttpGet]
+        public ActionResult SelectFile()
+        {
+            CitationService service = new CitationService();
+
+            ViewBag.PageTitle += "Segment Import";
+            ViewBag.Contributor = new SelectList(service.InstitutionList(), "InstitutionCode", "InstitutionName");
+            ViewBag.Genre = new SelectList(service.GenreList(), "SegmentGenreID", "GenreName");
+            ViewBag.DataSourceType = new SelectList(service.DataSourceTypeList(), "key", "value", "text/plain");
+
+            return View();
+        }
+
+        //
+        // POST: /CitationImport/SelectFile
+        [HttpPost]
+        public RedirectToRouteResult SelectFile(CitationImportModel model)
         {
             // Upload and save the file
             foreach (string file in Request.Files)
@@ -46,8 +64,14 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 model.FileName = savedFileName;
             }
 
+            CustomDataAccess.CustomGenericList<DataObjects.SegmentGenre> genres = new CitationService().GenreList();
+            foreach(DataObjects.SegmentGenre genre in genres)
+            {
+                if (genre.SegmentGenreID == model.Genre) model.GenreName = genre.GenreName;
+            }
+
             TempData["Model"] = model;
-            return RedirectToAction("FileDetail");
+            return RedirectToAction("Mapping");
         }
 
         //
@@ -60,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             Dictionary<string, string> codePages = service.CodePageList();
             Dictionary<string, string> delimiters = service.RowColumnDelimiterList();
 
-            ViewBag.PageTitle += "Citation Import";
+            ViewBag.PageTitle += "Segment Import";
             ViewBag.CodePage = new SelectList(codePages, "key", "value", model.CodePage);
             ViewBag.RowDelimiter = new SelectList(delimiters, "key", "value", model.RowDelimiter);
             ViewBag.ColumnDelimiter = new SelectList(delimiters, "key", "value", model.ColumnDelimiter);
@@ -90,7 +114,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             
             if (model.Columns.Count == 0) model.GetColumns();
 
-            ViewBag.PageTitle += "Citation Import";
+            foreach(var column in model.Columns)
+            {
+                column.MappedColumn = model.GetMappedColumn(column.ColumnName).name;
+                column.ValueDelimiter = model.GetDelimiter(column.ColumnName);
+            }
+
+            ViewBag.PageTitle += "Segment Import";
             ViewBag.MappedColumns = service.MappedColumnList();
 
             return View(model);
@@ -105,7 +135,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             if (Request.Form["btnBack"] != null)
             {
-                return RedirectToAction("FileDetail");
+                return RedirectToAction("SelectFile");
             }
             else
             {
@@ -123,7 +153,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             int userId = Helper.GetCurrentUserUID(Request);//  new HttpRequestWrapper(Request));
             model.GetRows(true, false, userId);
 
-            ViewBag.PageTitle += "Citation Import";
+            ViewBag.PageTitle += "Segment Import";
 
             return View(model);
         }
@@ -131,7 +161,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         //
         // POST: /CitationImport/Preview
         [HttpPost]
-        public RedirectToRouteResult Preview(CitationImportModel model)
+        public ActionResult Preview(CitationImportModel model)
         {
             TempData["Model"] = model;
 
@@ -143,8 +173,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             {
                 // Parse the contents of the file and save it to the database.  Pass record ID for the file to the next View.
                 int userId = Helper.GetCurrentUserUID(Request);
-                model.ImportFile(userId);
-                return RedirectToAction("Review", new { id = model.ImportFileID });
+                model.ImportFileError = string.Empty;
+
+                try
+                {
+                    model.ImportFile(userId);
+                    return RedirectToAction("Review", new { id = model.ImportFileID });
+                }
+                catch (CitationService.ImportFileException ex)
+                {
+                    model.ImportFileError = ex.Message;
+                    return View(model);
+                }
             }
         }
 
@@ -157,7 +197,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             if (id != null) model.GetImportFileDetails((int)id);
 
             ViewBag.ImportRecordStatuses = new JavaScriptSerializer().Serialize(new CitationService().GetImportRecordStatuses());
-            ViewBag.PageTitle += "Citation Import Review";
+            ViewBag.PageTitle += "Segment Import Review";
 
             return View(model);
         }
@@ -190,8 +230,24 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult GetRecords(int importFileID, int sEcho, int iDisplayStart, int iDisplayLength, 
             int iSortCol_0, string sSortDir_0)
         {
+            string sortColumn = "Title";
+
+            switch (iSortCol_0)
+            {
+                case 0:
+                case 2:
+                    sortColumn = "Title";
+                    break;
+                case 10:
+                    sortColumn = "Status";
+                    break;
+                default:
+                    sortColumn = string.Format("JournalTitle {0},Year {0},Volume {0},Issue {0},RIGHT(SPACE(20) + StartPage,20)", sSortDir_0);
+                    break;
+            }
+
             ImportRecordJson.Rootobject json = new CitationImportModel().GetImportRecords(importFileID, iDisplayLength, 
-                iDisplayStart, "Title", sSortDir_0);
+                iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
             return Json(json, JsonRequestBehavior.AllowGet);
         }
@@ -211,6 +267,24 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
 
             return Content(newStatus);
+        }
+
+        // AJAX method to support/CitationImport/Review
+        [HttpGet]
+        public ActionResult UpdateRecordCreatorID(int importRecordCreatorID, string value)
+        {
+            int? authorID = null;
+            int intValue;
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                if (Int32.TryParse(value, out intValue)) authorID = intValue;
+            }
+
+            int userId = Helper.GetCurrentUserUID(Request);
+            new CitationImportModel().UpdateRecordCreatorID(importRecordCreatorID, authorID, userId);
+
+            return Content(authorID.ToString() ?? string.Empty);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using MOBOT.BHL.AdminWeb.MVCServices;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -23,6 +24,38 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             get { return _contributor; }
             set { _contributor = value; }
+        }
+
+        private int _genre = -1;
+
+        public int Genre
+        {
+            get { return _genre; }
+            set { _genre = value; }
+        }
+
+        private string _genreName = string.Empty;
+
+        public string GenreName
+        {
+            get { return _genreName; }
+            set { _genreName = value; }
+        }
+
+        private string _fileCreationDate = string.Empty;
+
+        public string FileCreationDate
+        {
+            get { return _fileCreationDate; }
+            set { _fileCreationDate = value; }
+        }
+
+        private bool _isOldFile = false;
+
+        public bool IsOldFile
+        {
+            get { return _isOldFile; }
+            set { _isOldFile = value; }
         }
 
         private string _dataSourceType = string.Empty;
@@ -67,6 +100,14 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
         }
 
+        private string _importFileError = string.Empty;
+
+        public string ImportFileError
+        {
+            get { return _importFileError; }
+            set { _importFileError = value; }
+        }
+
         private string _codePage = "65001"; // UTF-8
 
         public string CodePage
@@ -107,7 +148,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _headerRowsToSkip = value; }
         }
 
-        private bool _columnNamesInFirstRow = false;
+        private bool _columnNamesInFirstRow = true;
 
         public bool ColumnNamesInFirstRow
         {
@@ -149,12 +190,37 @@ namespace MOBOT.BHL.AdminWeb.Models
             Rejected = 30
         }
 
-        private enum RecordStatus
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        /// This class follows the TypeSafe Enum pattern 
+        /// </remarks>
+        public sealed class TemplateColumn
         {
-            New = 10,
-            Imported = 20,
-            Rejected = 30,
-            Error = 40
+            public string name { get; private set; }
+            public int value { get; private set; }
+
+            public static readonly TemplateColumn TITLE = new TemplateColumn(1, "Title");
+            public static readonly TemplateColumn TRANSLATEDTITLE = new TemplateColumn(2, "Translated Title");
+            public static readonly TemplateColumn ITEMID = new TemplateColumn(3, "Item ID");
+            public static readonly TemplateColumn VOLUME = new TemplateColumn(4, "Volume");
+            public static readonly TemplateColumn ISSUE = new TemplateColumn(5, "Issue");
+            public static readonly TemplateColumn SERIES = new TemplateColumn(6, "Series");
+            public static readonly TemplateColumn DATE = new TemplateColumn(7, "Date");
+            public static readonly TemplateColumn LANGUAGE = new TemplateColumn(8, "Language");
+            public static readonly TemplateColumn AUTHORS = new TemplateColumn(9, "Authors");
+            public static readonly TemplateColumn STARTPAGE = new TemplateColumn(10, "Start Page");
+            public static readonly TemplateColumn ENDPAGE = new TemplateColumn(11, "End Page");
+            public static readonly TemplateColumn STARTPAGEID = new TemplateColumn(12, "Start Page BHL ID");
+            public static readonly TemplateColumn ENDPAGEID = new TemplateColumn(13, "End Page BHL ID");
+            public static readonly TemplateColumn ADDITIONALPAGEIDS = new TemplateColumn(14, "Additional Page IDs");
+            public static readonly TemplateColumn DOI = new TemplateColumn(15, "Article DOI");
+
+            private TemplateColumn(int value, string name)
+            {
+                this.value = value;
+                this.name = name;
+            }
         }
 
         /// <summary>
@@ -169,44 +235,48 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             public static readonly MappedColumn NONE = new MappedColumn(0, "");
             public static readonly MappedColumn ABSTRACT = new MappedColumn(1, "Abstract");
+            public static readonly MappedColumn ADDITIONALPAGES = new MappedColumn(2, "Additional Page IDs");
             //public static readonly MappedColumn AUTHORENDDATE = new MappedColumn(1, "Author End Date");
             //public static readonly MappedColumn AUTHORFIRSTNAME = new MappedColumn(2, "Author First Name");
             //public static readonly MappedColumn AUTHORLASTNAME = new MappedColumn(3, "Author Last Name");
-            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(2, "Author Name(s)");
+            public static readonly MappedColumn AUTHORNAMES = new MappedColumn(3, "Author Name(s)");
             //public static readonly MappedColumn AUTHORSTARTDATE = new MappedColumn(5, "Author Start Date");
             //public static readonly MappedColumn AUTHORTYPE = new MappedColumn(6, "Author Type");
-            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(3, "Article Page Range");
-            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(4, "Article End Page");
-            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(5, "Article Start Page");
-            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(6, "Article Title");
-            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(7, "Book/Journal Title");
-            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(8, "Copyright Status");
-            public static readonly MappedColumn DOI = new MappedColumn(9, "DOI");
-            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(10, "Download Url");
-            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(11, "Due Diligence");
-            public static readonly MappedColumn EDITION = new MappedColumn(12, "Edition");
-            public static readonly MappedColumn GENRE = new MappedColumn(13, "Genre");
-            public static readonly MappedColumn ISBN = new MappedColumn(14, "ISBN");
-            public static readonly MappedColumn ISSN = new MappedColumn(15, "ISSN");
-            public static readonly MappedColumn ISSUE = new MappedColumn(16, "Issue");
-            public static readonly MappedColumn JOURNALENDYEAR = new MappedColumn(17, "Journal End Year");
-            public static readonly MappedColumn JOURNALSTARTYEAR = new MappedColumn(18, "Journal Start Year");
-            public static readonly MappedColumn KEYWORDS = new MappedColumn(19, "Keyword(s)");
-            public static readonly MappedColumn LANGUAGE = new MappedColumn(20, "Language");
-            public static readonly MappedColumn LCCN = new MappedColumn(21, "LCCN");
-            public static readonly MappedColumn LICENSE = new MappedColumn(22, "License");
-            public static readonly MappedColumn LICENSEURL = new MappedColumn(23, "License Url");
-            public static readonly MappedColumn NOTES = new MappedColumn(24, "Notes");
-            public static readonly MappedColumn OCLC = new MappedColumn(26, "OCLC");
-            public static readonly MappedColumn PUBLICATIONDETAILS = new MappedColumn(27, "Publication Details");
-            public static readonly MappedColumn PUBLISHERNAME = new MappedColumn(28, "Publisher Name");
-            public static readonly MappedColumn PUBLISHERPLACE = new MappedColumn(29, "Publisher Place");
-            public static readonly MappedColumn RIGHTS = new MappedColumn(30, "Rights");
-            public static readonly MappedColumn SERIES = new MappedColumn(31, "Series");
-            public static readonly MappedColumn TRANSLATEDTITLE = new MappedColumn(32, "Translated Title");
-            public static readonly MappedColumn URL = new MappedColumn(33, "Url");
-            public static readonly MappedColumn VOLUME = new MappedColumn(34, "Volume");
-            public static readonly MappedColumn YEAR = new MappedColumn(35, "Year");
+            public static readonly MappedColumn DOI = new MappedColumn(4, "Article DOI");
+            public static readonly MappedColumn ARTICLEPAGERANGE = new MappedColumn(5, "Article Page Range");
+            public static readonly MappedColumn ARTICLEENDPAGE = new MappedColumn(6, "Article End Page");
+            public static readonly MappedColumn ARTICLEENDPAGEID = new MappedColumn(7, "Article End Page ID");
+            public static readonly MappedColumn ARTICLESTARTPAGE = new MappedColumn(8, "Article Start Page");
+            public static readonly MappedColumn ARTICLESTARTPAGEID = new MappedColumn(9, "Article Start Page ID");
+            public static readonly MappedColumn ARTICLETITLE = new MappedColumn(10, "Article Title");
+            public static readonly MappedColumn BOOKJOURNALTITLE = new MappedColumn(11, "Book/Journal Title");
+            public static readonly MappedColumn COPYRIGHTSTATUS = new MappedColumn(12, "Copyright Status");
+            public static readonly MappedColumn DOWNLOADURL = new MappedColumn(13, "Download Url");
+            public static readonly MappedColumn DUEDILIGENCE = new MappedColumn(14, "Due Diligence");
+            public static readonly MappedColumn EDITION = new MappedColumn(15, "Edition");
+            public static readonly MappedColumn ISBN = new MappedColumn(16, "ISBN");
+            public static readonly MappedColumn ISSN = new MappedColumn(17, "ISSN");
+            public static readonly MappedColumn ISSUE = new MappedColumn(18, "Issue");
+            public static readonly MappedColumn ITEMID = new MappedColumn(19, "Item ID");
+            public static readonly MappedColumn JOURNALENDYEAR = new MappedColumn(20, "Journal End Year");
+            public static readonly MappedColumn JOURNALSTARTYEAR = new MappedColumn(21, "Journal Start Year");
+            public static readonly MappedColumn KEYWORDS = new MappedColumn(22, "Keyword(s)");
+            public static readonly MappedColumn LANGUAGE = new MappedColumn(23, "Language");
+            public static readonly MappedColumn LCCN = new MappedColumn(24, "LCCN");
+            public static readonly MappedColumn LICENSE = new MappedColumn(25, "License");
+            public static readonly MappedColumn LICENSEURL = new MappedColumn(26, "License Url");
+            public static readonly MappedColumn NOTES = new MappedColumn(27, "Notes");
+            public static readonly MappedColumn OCLC = new MappedColumn(28, "OCLC");
+            public static readonly MappedColumn PUBLICATIONDETAILS = new MappedColumn(29, "Publication Details");
+            public static readonly MappedColumn PUBLISHERNAME = new MappedColumn(30, "Publisher Name");
+            public static readonly MappedColumn PUBLISHERPLACE = new MappedColumn(31, "Publisher Place");
+            public static readonly MappedColumn RIGHTS = new MappedColumn(32, "Rights");
+            public static readonly MappedColumn SERIES = new MappedColumn(33, "Series");
+            public static readonly MappedColumn TITLEID = new MappedColumn(34, "TitleID");
+            public static readonly MappedColumn TRANSLATEDTITLE = new MappedColumn(35, "Translated Title");
+            public static readonly MappedColumn URL = new MappedColumn(36, "Url");
+            public static readonly MappedColumn VOLUME = new MappedColumn(37, "Volume");
+            public static readonly MappedColumn YEAR = new MappedColumn(38, "Year");
 
             private MappedColumn(int value, string name)
             {
@@ -218,6 +288,40 @@ namespace MOBOT.BHL.AdminWeb.Models
         #endregion Enum
 
         #region Public Methods
+
+        public MappedColumn GetMappedColumn(string templateColumn)
+        {
+            MappedColumn mappedColumn = MappedColumn.NONE;
+
+            if (templateColumn == TemplateColumn.TITLE.name) mappedColumn = MappedColumn.ARTICLETITLE;
+            if (templateColumn == TemplateColumn.TRANSLATEDTITLE.name) mappedColumn = MappedColumn.TRANSLATEDTITLE;
+            if (templateColumn == TemplateColumn.ITEMID.name) mappedColumn = MappedColumn.ITEMID;
+            if (templateColumn == TemplateColumn.VOLUME.name) mappedColumn = MappedColumn.VOLUME;
+            if (templateColumn == TemplateColumn.ISSUE.name) mappedColumn = MappedColumn.ISSUE;
+            if (templateColumn == TemplateColumn.SERIES.name) mappedColumn = MappedColumn.SERIES;
+            if (templateColumn == TemplateColumn.DATE.name) mappedColumn = MappedColumn.YEAR;
+            if (templateColumn == TemplateColumn.LANGUAGE.name) mappedColumn = MappedColumn.LANGUAGE;
+            if (templateColumn == TemplateColumn.AUTHORS.name) mappedColumn = MappedColumn.AUTHORNAMES;
+            if (templateColumn == TemplateColumn.STARTPAGE.name) mappedColumn = MappedColumn.ARTICLESTARTPAGE;
+            if (templateColumn == TemplateColumn.ENDPAGE.name) mappedColumn = MappedColumn.ARTICLEENDPAGE;
+            if (templateColumn == TemplateColumn.STARTPAGEID.name) mappedColumn = MappedColumn.ARTICLESTARTPAGEID;
+            if (templateColumn == TemplateColumn.ENDPAGEID.name) mappedColumn = MappedColumn.ARTICLEENDPAGEID;
+            if (templateColumn == TemplateColumn.ADDITIONALPAGEIDS.name) mappedColumn = MappedColumn.ADDITIONALPAGES;
+            if (templateColumn == TemplateColumn.DOI.name) mappedColumn = MappedColumn.DOI;
+
+
+            return mappedColumn;
+        }
+
+        public string GetDelimiter(string templateColumn)
+        {
+            string delimiter = "";
+
+            if (templateColumn == TemplateColumn.AUTHORS.name ||
+                templateColumn == TemplateColumn.ADDITIONALPAGEIDS.name) delimiter = ";";
+
+            return delimiter;
+        }
 
         /// <summary>
         /// Parse the columns from the specified file
@@ -291,7 +395,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 {
                     // Insert a new ImportFile record.
                     ImportFile importFile = service.ImportFileInsertAuto((int)FileStatus.Loading, this.FileName, this.Contributor,
-                        userId);
+                        userId, this.Genre);
                     this.ImportFileID = importFile.ImportFileID;
 
                     // Read and save all of the rows from the file
@@ -338,12 +442,16 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="importFileID"></param>
         public void GetImportFileDetails(int importFileID)
         {
-            ImportFile importFile = new BHLProvider().ImportFileSelectAuto(importFileID);
+            ImportFile importFile = new BHLProvider().ImportFileSelectById(importFileID);
             if (importFile != null)
             {
                 this.ImportFileID = importFile.ImportFileID;
                 this.FileName = importFile.ImportFileName;
                 this.Contributor = importFile.ContributorCode;
+                this.Genre = importFile.SegmentGenreID ?? 0;
+                this.GenreName = string.IsNullOrWhiteSpace(importFile.GenreName) ? "Unknown" : importFile.GenreName;
+                this.FileCreationDate = importFile.CreationDate.ToShortDateString();
+                this.IsOldFile = (DateTime.Now - importFile.CreationDate).TotalDays > 7;
             }
         }
 
@@ -358,25 +466,59 @@ namespace MOBOT.BHL.AdminWeb.Models
         public ImportRecordJson.Rootobject GetImportRecords(int importFileID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
             CustomGenericList<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(importFileID,
-                numRows, startRow, sortColumn, sortDirection);
+                numRows, startRow, sortColumn, sortDirection, 1);
 
             ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();
             json.iTotalRecords = (records.Count == 0) ? "0" : records[0].TotalRecords.ToString();
             json.iTotalDisplayRecords = json.iTotalRecords;
 
-            string[][] aaData = new string[records.Count][];
+            ImportRecordJson.Datum[] aaData = new ImportRecordJson.Datum[records.Count];
+
             for(int x = 0; x < records.Count; x++)
             {
-                aaData[x] = new string[9]{
-                    records[x].ImportRecordID.ToString(),
-                    records[x].Genre,
-                    records[x].Title,
-                    records[x].JournalTitle,
-                    records[x].Volume,
-                    records[x].Series,
-                    records[x].Issue,
-                    records[x].Year,
-                    records[x].StatusName};
+                string sPageID = records[x].StartPageID == null ? "" : string.Format(" (ID: {0})", records[x].StartPageID.ToString());
+                string ePageID = records[x].EndPageID == null ? "" : string.Format(" (ID: {0})", records[x].EndPageID.ToString());
+
+                aaData[x] = new ImportRecordJson.Datum()
+                {
+                    // Summary
+                    id = records[x].ImportRecordID.ToString(),
+                    title = records[x].Title,
+                    itemID = records[x].ItemID.ToString(),
+                    segmentID = records[x].SegmentID.ToString(),
+                    journal = records[x].JournalTitle,
+                    year = records[x].Year,
+                    volume = records[x].Volume,
+                    issue = records[x].Issue,
+                    startPageID = records[x].StartPageID.ToString(),
+                    startPage = records[x].StartPage + sPageID,
+                    endPage = records[x].EndPage + ePageID,
+                    status = records[x].StatusName,
+                    // Detailed
+                    translatedTitle = records[x].TranslatedTitle,
+                    series = records[x].Series,
+                    edition = records[x].Edition,
+                    publicationDetails = records[x].PublicationDetails,
+                    publisherName = records[x].PublisherName,
+                    publisherPlace = records[x].PublisherPlace,
+                    language = records[x].Language,
+                    rights = records[x].Rights,
+                    dueDiligence = records[x].DueDiligence,
+                    copyrightStatus = records[x].CopyrightStatus,
+                    license = records[x].License,
+                    licenseUrl = records[x].LicenseUrl,
+                    url = records[x].Url,
+                    issn = records[x].ISSN,
+                    isbn = records[x].ISBN,
+                    oclc = records[x].OCLC,
+                    lccn = records[x].LCCN,
+                    doi = records[x].DOI,
+                    summary = records[x].Summary,
+                    notes = records[x].Notes,
+                    authors = records[x].AuthorString,
+                    keywords = records[x].KeywordString,
+                    errors = records[x].ErrorString
+                };
             }
             json.aaData = aaData;
 
@@ -395,6 +537,18 @@ namespace MOBOT.BHL.AdminWeb.Models
             BHLProvider bhlService = new BHLProvider();
             ImportRecord updatedRecord = bhlService.ImportRecordUpdateRecordStatus(importRecordID, importRecordStatusID, userId);
             return bhlService.ImportRecordStatusSelectAuto(updatedRecord.ImportRecordStatusID).StatusName;
+        }
+
+        /// <summary>
+        /// Update the specified import record creator with the specified author id.
+        /// </summary>
+        /// <param name="importRecordCreatorID"></param>
+        /// <param name="authorID"></param>
+        /// <param name="userId"></param>
+        public void UpdateRecordCreatorID(int importRecordCreatorID, int? authorID, int userId)
+        {
+            BHLProvider bhlService = new BHLProvider();
+            bhlService.ImportRecordCreatorUpdateAuthorID(importRecordCreatorID, authorID, userId);
         }
 
         #endregion Public Methods
@@ -555,9 +709,10 @@ namespace MOBOT.BHL.AdminWeb.Models
                     {
                         string value = values[x];
 
-                        // Remove text qualifiers (if a qualifier was specified)
-                        if ((this.TextQualifier ?? string.Empty) != string.Empty) value = value.Replace(this.TextQualifier, "");
+                        //// Remove text qualifiers (if a qualifier was specified)
+                        //if ((this.TextQualifier ?? string.Empty) != string.Empty) value = value.Replace(this.TextQualifier, "");
 
+                        value = RemoveQuoteQualifiers(value);
                         row.Add(value);
                     }
 
@@ -611,7 +766,9 @@ namespace MOBOT.BHL.AdminWeb.Models
                         List<string> row = new List<string>();
                         for (int x = 0; x < excelReader.FieldCount; x++)
                         {
-                            row.Add(excelReader.GetString(x) ?? string.Empty);
+                            string value = excelReader.GetString(x) ?? string.Empty;
+                            value = RemoveQuoteQualifiers(value);
+                            row.Add(value);
                         }
 
                         // Save the row
@@ -634,6 +791,23 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             return importRows;
+        }
+
+        /// <summary>
+        /// If the specified value includes " or ' qualifiers, remove them.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="qualifier"></param>
+        /// <returns></returns>
+        private string RemoveQuoteQualifiers(string value)
+        {
+            if ((value.StartsWith("\"") && value.EndsWith("\"")) ||
+                (value.StartsWith("'") && value.EndsWith("'")))
+            {
+                value = value.Remove(value.Length - 1);
+                value = value.Substring(1);
+            }
+            return value;
         }
 
         /// <summary>
@@ -749,9 +923,17 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="securityToken"></param>
         private void SaveCitation(List<string> row, int userId)
         {
+            if (row.Count != this.Columns.Count)
+            {
+                throw new CitationService.ImportFileException(string.Format(
+                    "Error Importing File.  {0} columns defined, but row has {1} columns.",
+                    this.Columns.Count, row.Count));
+            }
+
             ImportRecord citation = new ImportRecord();
             citation.ImportFileID = (int)this.ImportFileID;
-            citation.ImportRecordStatusID = (int)RecordStatus.New;
+            citation.ImportRecordStatusID = default(int);
+            citation.Genre = this.GenreName;
 
             string articleTitle = string.Empty;
             string bookJournalTitle = string.Empty;
@@ -764,8 +946,22 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.ABSTRACT.name) citation.Summary = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEPAGERANGE.name) citation.PageRange = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLEENDPAGE.name) citation.EndPage = row[x];
+                if (column.MappedColumn == MappedColumn.ARTICLEENDPAGEID.name) citation.EndPageIDString = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLESTARTPAGE.name) citation.StartPage = row[x];
+                if (column.MappedColumn == MappedColumn.ARTICLESTARTPAGEID.name) citation.StartPageIDString = row[x];
                 if (column.MappedColumn == MappedColumn.ARTICLETITLE.name) articleTitle = row[x];
+
+                if (column.MappedColumn == MappedColumn.ADDITIONALPAGES.name)
+                {
+                    string[] pages = string.IsNullOrWhiteSpace(column.ValueDelimiter) ?
+                        new string[] { row[x] } :
+                        row[x].Split(column.ValueDelimiter.ToCharArray());
+
+                    foreach(string page in pages)
+                    {
+                        if (!string.IsNullOrWhiteSpace(page)) citation.PageIDs.Add(page);
+                    }
+                }
 
                 if (column.MappedColumn == MappedColumn.AUTHORNAMES.name)
                 {
@@ -775,7 +971,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
                     foreach (string author in authors)
                     {
-                        citation.Authors.Add(GetNewCreator(author));
+                        if (!string.IsNullOrWhiteSpace(author)) citation.Authors.Add(GetNewCreator(author));
                     }
                 }
 
@@ -785,10 +981,11 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.DOWNLOADURL.name) citation.DownloadUrl = row[x];
                 if (column.MappedColumn == MappedColumn.DUEDILIGENCE.name) citation.DueDiligence = row[x];
                 if (column.MappedColumn == MappedColumn.EDITION.name) citation.Edition = row[x];
-                if (column.MappedColumn == MappedColumn.GENRE.name) citation.Genre = row[x];
+                //if (column.MappedColumn == MappedColumn.GENRE.name) citation.Genre = row[x];
                 if (column.MappedColumn == MappedColumn.ISBN.name) citation.ISBN = row[x];
                 if (column.MappedColumn == MappedColumn.ISSN.name) citation.ISSN = row[x];
                 if (column.MappedColumn == MappedColumn.ISSUE.name) citation.Issue = row[x];
+                if (column.MappedColumn == MappedColumn.ITEMID.name) citation.ItemIDString = row[x];
 
                 int year;
                 if (column.MappedColumn == MappedColumn.JOURNALENDYEAR.name)
@@ -823,6 +1020,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 if (column.MappedColumn == MappedColumn.PUBLISHERPLACE.name) citation.PublisherPlace = row[x];
                 if (column.MappedColumn == MappedColumn.RIGHTS.name) citation.Rights = row[x];
                 if (column.MappedColumn == MappedColumn.SERIES.name) citation.Series = row[x];
+                if (column.MappedColumn == MappedColumn.TITLEID.name) citation.TitleIDString = row[x];
                 if (column.MappedColumn == MappedColumn.TRANSLATEDTITLE.name) citation.TranslatedTitle = row[x];
                 if (column.MappedColumn == MappedColumn.URL.name) citation.Url = row[x];
                 if (column.MappedColumn == MappedColumn.VOLUME.name) citation.Volume = row[x];
@@ -898,8 +1096,47 @@ namespace MOBOT.BHL.AdminWeb.Models
             public int sEcho { get; set; }
             public string iTotalRecords { get; set; }
             public string iTotalDisplayRecords { get; set; }
-            public object[][] aaData { get; set; }
+            public Datum[] aaData { get; set;}
         }
 
+        public class Datum
+        {
+            public string id { get; set; }
+            public string title { get; set; }
+            public string itemID { get; set; }
+            public string segmentID { get; set; }
+            public string journal { get; set; }
+            public string year { get; set; }
+            public string volume { get; set; }
+            public string issue { get; set; }
+            public string startPageID { get; set; }
+            public string startPage { get; set; }
+            public string endPage { get; set; }
+            public string status { get; set; }
+
+            public string translatedTitle { get; set; }
+            public string series { get; set; }
+            public string edition { get; set; }
+            public string publicationDetails { get; set; }
+            public string publisherName { get; set; }
+            public string publisherPlace { get; set; }
+            public string language { get; set; }
+            public string rights { get; set; }
+            public string dueDiligence { get; set; }
+            public string copyrightStatus { get; set; }
+            public string license { get; set; }
+            public string licenseUrl { get; set; }
+            public string url { get; set; }
+            public string issn { get; set; }
+            public string isbn { get; set; }
+            public string oclc { get; set; }
+            public string lccn { get; set; }
+            public string doi { get; set; }
+            public string summary { get; set; }
+            public string notes { get; set; }
+            public string authors { get; set; }
+            public string keywords { get; set; }
+            public string errors { get; set; }
+        }
     }
 }

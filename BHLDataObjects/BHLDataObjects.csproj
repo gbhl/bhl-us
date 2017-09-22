@@ -104,6 +104,7 @@
     <Compile Include="Concrete\ImportRecordCreator.cs" />
     <Compile Include="Concrete\ImportRecordErrorLog.cs" />
     <Compile Include="Concrete\ImportRecordKeyword.cs" />
+    <Compile Include="Concrete\ImportRecordPage.cs" />
     <Compile Include="Concrete\ImportRecordStatus.cs" />
     <Compile Include="Concrete\InstitutionRole.cs" />
     <Compile Include="Concrete\ItemCOinSView.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Concrete\Vault.cs" />
     <Compile Include="Concrete\vwMarcDataField.cs" />
     <Compile Include="EntityCount.cs" />
+    <Compile Include="Enum\ImportRecordStatus.cs" />
     <Compile Include="Generated\RequestLog.__Application.cs" />
     <Compile Include="Generated\RequestLog.__RequestLog.cs" />
     <Compile Include="Generated\__AnnotatedItem.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="Generated\__ImportRecordCreator.cs" />
     <Compile Include="Generated\__ImportRecordErrorLog.cs" />
     <Compile Include="Generated\__ImportRecordKeyword.cs" />
+    <Compile Include="Generated\__ImportRecordPage.cs" />
     <Compile Include="Generated\__ImportRecordStatus.cs" />
     <Compile Include="Generated\__InstitutionRole.cs" />
     <Compile Include="Generated\__ItemCOinSView.cs" />

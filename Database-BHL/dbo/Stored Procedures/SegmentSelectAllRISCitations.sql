@@ -20,7 +20,7 @@ SELECT	DISTINCT
 		s.ContainerTitle AS Journal,
 		s.Volume,
 		s.Issue,
-		'http://www.biodiversitylibrary.org/part/' + CONVERT(NVARCHAR(10), s.SegmentID) AS Url,
+		'https://www.biodiversitylibrary.org/part/' + CONVERT(NVARCHAR(10), s.SegmentID) AS Url,
 		s.PublisherName AS Publisher,
 		s.PublisherPlace AS PublicationPlace,
 		s.[Date] AS [Year],

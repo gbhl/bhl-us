@@ -42,16 +42,16 @@ FROM	#namepage np
 -- Get Names XML for items with new or updated names
 SELECT	'<?xml version="1.0" encoding="UTF-8" ?>' + (
 SELECT	item.barcode + '_' + RIGHT('0000' + CONVERT(varchar(4), page.sequenceorder), 4) AS map,
-		'http://www.biodiversitylibrary.org/page/' + CONVERT(varchar(20), page.pageid) AS bhlurl, 
+		'https://www.biodiversitylibrary.org/page/' + CONVERT(varchar(20), page.pageid) AS bhlurl, 
 		-- For this procedure, always use www.archive.org as the base domain for images.
 		-- However, we should check the value of AltExternalURL before adding the 
 		-- www.archive.org prefix. This allows for never-converted Page records (on the 
 		-- beta site) and slowly converted Page records (on the production site).
 		CASE WHEN ISNULL(page.AltExternalURL, '') = '' THEN page.AltExternalURL
 		ELSE 
-			CASE WHEN LEFT(dbo.Page.AltExternalURL, 22) = 'http://www.archive.org'
+			CASE WHEN LEFT(dbo.Page.AltExternalURL, 22) = 'https://www.archive.org'
 				THEN dbo.Page.AltExternalURL
-				ELSE 'http://www.archive.org' + dbo.Page.AltExternalURL
+				ELSE 'https://www.archive.org' + dbo.Page.AltExternalURL
 			END
 		END AS imageurl, 
 		name.found, 
@@ -75,7 +75,6 @@ ORDER BY
 		name.namepageid
 FOR XML AUTO, ROOT ('book')
 )
-
 
 END
 

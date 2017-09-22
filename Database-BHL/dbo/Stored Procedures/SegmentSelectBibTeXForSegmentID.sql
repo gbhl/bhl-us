@@ -10,7 +10,7 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	'bhlpart' + CONVERT(nvarchar(10), s.SegmentID) AS CitationKey,
-		'http://www.biodiversitylibrary.org/part/' + CONVERT(nvarchar(20), s.SegmentID) AS Url,
+		'https://www.biodiversitylibrary.org/part/' + CONVERT(nvarchar(20), s.SegmentID) AS Url,
 		'' AS Note,
 		g.GenreName AS [Type],
 		s.Title,

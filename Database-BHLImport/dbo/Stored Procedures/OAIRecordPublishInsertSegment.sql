@@ -86,7 +86,11 @@ SELECT	10 AS SegmentStatusID,
 		o.Volume,
 		o.Issue,
 		CASE WHEN o.PublicationDate = '' THEN o.Date ELSE o.PublicationDate END AS Date,
-		CASE WHEN o.StartPage <> '' THEN o.StartPage + '-' + o.EndPage ELSE o.EndPage END AS PageRange,
+		CASE
+			WHEN o.StartPage <> '' AND o.EndPage <> '' THEN o.StartPage + '--' + o.EndPage
+			WHEN o.StartPage <> '' THEN o.StartPage
+			ELSE o.EndPage
+		END AS PageRange,
 		o.StartPage,
 		o.EndPage,
 		l.BHLLanguageCode,
@@ -152,6 +156,3 @@ WHERE	OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
-
-GO
-

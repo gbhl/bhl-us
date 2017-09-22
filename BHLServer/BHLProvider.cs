@@ -86,7 +86,7 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        filePath = String.Format("http://www.archive.org/download/{0}/{1}_scandata.xml", psv.BarCode, psv.BarCode);
+                        filePath = String.Format("https://www.archive.org/download/{0}/{1}_scandata.xml", psv.BarCode, psv.BarCode);
                         xml = XDocument.Load(filePath);
                     }
                 }

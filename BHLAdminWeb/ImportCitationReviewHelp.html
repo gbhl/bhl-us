@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Import Citations Review Help</title>
+    <title>Import Segments Review Help</title>
     <link rel="stylesheet" type="text/css" runat="server" id="link1" href="styles/adminstyle.css" />
     <style>
         table 
@@ -23,15 +23,31 @@
     </style>
 </head>
 <body>
-    <p class="BlackHeading">Using The Import Citations Review Page</p>
-    <p>The "Import Citations - Review" page allows the contents of an import file to be reviewed.  Individual rows or the entire file can be imported or rejected.</p>
+    <p class="BlackHeading">Using The Import Segments Review Page</p>
+    <p>The "Import Segments - Review" page allows the contents of an import file to be reviewed.  Individual rows or the entire file can be imported or rejected.</p>
+    <p>The following actions can be taken on this page:<p>
+    <p>
+        <ul>
+            <li>Click on the plus sign at the left of each row to see additional details about that row, <u>including error messages</u> 
+                related to the import of that row.</li>
+            <li>Click the page icon next to the Start Page to view the start page of the segment.</li>
+            <li>View and edit the production BHL Author identifiers associated with the segment authors.  Authors matched to existing records will include the ID of
+                the production record (i.e. "John Doe (BHL ID 12345)").  Click the "Edit" link next to the author if the matched production record is incorrect.</li>
+            <li>Change the status of individual rows (for more information, see below).</li>
+            <li>Click the "Import File" button to import records with "New" status into production.</li>
+            <li>Click the "Reject File" button to reject all records with a "New' status."</li>
+        </ul>
+    </p>
     <p>The status of each row controls the action that will be taken on the row.</p>
     <p>
         <ul>
-            <li>Rows with a status of "New" are ready to be imported.</li>
-            <li>A row with a "Rejected" status will not be imported for a business reason.  For example, the row may duplicate data already in BHL.</li>
-            <li>A row with an "Error" status will not be imported due to problems with the data.</li>
-            <li>Rows with a status of "Imported" have been imported, and cannot be changed.</li>
+            <li>Rows with a status of "New" are ready to be imported.  <b>Only rows in this status will be imported.</b></li>
+            <li>A row with a "Rejected" status will not be imported.  This status is set by the person performing the import.</li>
+            <li>A row with an "Error" status failed to import.  Check the error messages to determine the reason.</li>
+            <li>A row with an "Incomplete" status is missing some required data, and will not be imported.  Can be overridden by setting the status to "New".</li>
+            <li>A row with a "Duplicate" status duplicates a segment already in BHL, and will not be imported.  Can be overridden by setting the status to "New".</li>
+            <li>A row with an "Invalid" status includes some invalid data, and will not be imported.  Check the error messages, correct the data at the source, and re-import.</li>
+            <li>Rows with a status of "Imported" have been imported.  This status cannot be changed.</li>
         </ul>
     </p>
     <p>Change the status of any row by clicking on the status of the row.  A dropdown of available status values will appear.  Pick the desired new status from the list.</p>
@@ -40,7 +56,7 @@
         <ul>
             <li>Import all "New" rows by clicking the "Import File" button.</li>
             <li>Reject all "New" rows by clicking the "Reject File" button.</li>
-            <li>Leave the page without taking any action on the "New" rows by clicking "Return to Dashboard" or "View Citation Import History" links in the upper left.</li>
+            <li>Leave the page without taking any action on the "New" rows by clicking "Return to Dashboard" or "View Segment Import History" links in the upper left.</li>
         </ul>
     </p>
 </body>

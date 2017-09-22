@@ -18,10 +18,15 @@ SELECT	s.SegmentID,
 		s.Series, 
 		s.Issue, 
 		s.Date, 
-        CASE WHEN s.PageRange <> '' THEN s.PageRange ELSE s.StartPageNumber + '--' + s.EndPageNumber END AS PageRange, 
+		CASE
+		WHEN s.PageRange <> '' THEN s.PageRange 
+		WHEN s.StartPageNumber <> '' AND s.EndPageNumber <> '' THEN s.StartPageNumber + '--' + s.EndPageNumber
+		WHEN s.StartPageNumber <> '' THEN s.StartPageNumber
+		ELSE s.EndPageNumber
+		END AS PageRange,
 		ISNULL(CONVERT(nvarchar(20), StartPageID), '') AS StartPageID,
         ISNULL(l.LanguageName, N'') AS LanguageName, 
-		'http://www.biodiversitylibrary.org/segment/' + CONVERT(NVARCHAR(20), s.SegmentID) AS SegmentUrl, 
+		'https://www.biodiversitylibrary.org/segment/' + CONVERT(NVARCHAR(20), s.SegmentID) AS SegmentUrl, 
 		s.Url AS ExternalUrl, 
 		s.DownloadUrl, 
 		s.RightsStatus, 

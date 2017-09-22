@@ -84,9 +84,19 @@ namespace MOBOT.BHL.Server
 			return GetPageDalInstance().PageSelectAuto( null, null, pageID );
 		}
 
+        public CustomGenericList<Page> PageSelectRangeForPagesAndItem(int startPageID, int endPageID, int? itemID)
+        {
+            return GetPageDalInstance().PageSelectRangeForPagesAndItem(null, null, startPageID, endPageID, itemID);
+        }
+
+        public CustomGenericList<Page> PageSelectByItemAndPageNumber(int itemID, string volume, string pageNumber)
+        {
+            return GetPageDalInstance().PageSelectByItemAndPageNumber(null, null, itemID, volume, pageNumber);
+        }
+
         #endregion
 
-		public CustomGenericList<CustomDataRow> PageResolve( int titleID, string volume, string issue, string year, 
+        public CustomGenericList<CustomDataRow> PageResolve( int titleID, string volume, string issue, string year, 
 			string startPage )
 		{
 			return ( new PageDAL().PageResolve( null, null, titleID, volume, issue, year, startPage ) );

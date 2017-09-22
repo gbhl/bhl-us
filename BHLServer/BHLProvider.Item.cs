@@ -101,6 +101,12 @@ namespace MOBOT.BHL.Server
             return risString.ToString();
         }
 
+        public CustomGenericList<Item> ItemResolve(string title, string issn, string isbn, string oclc,
+            string volume, string year)
+        {
+            return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, year);
+        }
+
         #endregion
 
         public Item ItemUpdateStatus( int itemID, int itemStatusID )

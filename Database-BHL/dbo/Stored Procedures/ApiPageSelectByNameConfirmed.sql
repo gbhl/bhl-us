@@ -17,15 +17,15 @@ SELECT @NameBank = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'Name
 SELECT	ni.IdentifierValue AS NameBankID, nr.ResolvedNameString,
 		t.TitleID, t.ShortTitle, t.CallNumber, t.Datafield_260_a AS PublisherPlace, 
 		t.Datafield_260_b AS PublisherName, t.Datafield_260_c AS PublicationDate, 
-		'http://www.biodiversitylibrary.org/title/' + CONVERT(nvarchar(20), t.TitleID) AS TitleURL,
+		'https://www.biodiversitylibrary.org/title/' + CONVERT(nvarchar(20), t.TitleID) AS TitleURL,
 		i.ItemID, s.SourceName, i.Barcode, i.Volume AS VolumeInfo, c.ItemContributors AS InstitutionName,
-		'http://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL,
+		'https://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL,
 		p.PageID, p.[Year], p.Volume, p.Issue,
 		ip.PagePrefix, ip.PageNumber,
-		'http://www.biodiversitylibrary.org/page/' + CONVERT(nvarchar(20), p.PageID) AS PageURL,
-		'http://www.biodiversitylibrary.org/pagethumb/' + CONVERT(nvarchar(20), p.PageID) AS ThumbnailURL,
-		'http://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID) AS FullSizeImageURL,
-		'http://www.biodiversitylibrary.org/pageocr/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
+		'https://www.biodiversitylibrary.org/page/' + CONVERT(nvarchar(20), p.PageID) AS PageURL,
+		'https://www.biodiversitylibrary.org/pagethumb/' + CONVERT(nvarchar(20), p.PageID) AS ThumbnailURL,
+		'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID) AS FullSizeImageURL,
+		'https://www.biodiversitylibrary.org/pageocr/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
 		dbo.fnPageTypeStringForPage(p.PageID) AS PageTypeName
 FROM	dbo.NameResolved nr WITH (NOLOCK) 
 		LEFT JOIN dbo.NameIdentifier ni WITH (NOLOCK) ON nr.NameResolvedID = ni.NameResolvedID AND ni.IdentifierID = @NameBank

@@ -79,7 +79,7 @@
     <None Include="app.config.template">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BHLWS\BHLWS1.wsdl" />
+    <None Include="Service References\BHLWS\BHLWS.wsdl" />
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -137,6 +137,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -144,9 +147,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.TitleEndNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Title_Identifier.datasource">
@@ -193,7 +193,7 @@
     <Content Include="MonographDepositTemplate.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Service References\BHLWS\BHLWS1.disco" />
+    <None Include="Service References\BHLWS\BHLWS.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -211,28 +211,28 @@ namespace MOBOT.BHL.BHLDOIService
             set { _submitLogFolder = value; }
         }
 
-        private string _bhlTitleUrlFormat = "http://www.biodiversitylibrary.org/bibliography/{0}";
+        private string _bhlTitleUrlFormat = "https://www.biodiversitylibrary.org/bibliography/{0}";
         public string BhlTitleUrlFormat
         {
             get { return _bhlTitleUrlFormat; }
             set { _bhlTitleUrlFormat = value; }
         }
 
-        private string _bhlItemUrlFormat = "http://www.biodiversitylibrary.org/item/{0}";
+        private string _bhlItemUrlFormat = "https://www.biodiversitylibrary.org/item/{0}";
         public string BhlItemUrlFormat
         {
             get { return _bhlItemUrlFormat; }
             set { _bhlItemUrlFormat = value; }
         }
 
-        private string _bhlPageUrlFormat = "http://www.biodiversitylibrary.org/page/{0}";
+        private string _bhlPageUrlFormat = "https://www.biodiversitylibrary.org/page/{0}";
         public string BhlPageUrlFormat
         {
             get { return _bhlPageUrlFormat; }
             set { _bhlPageUrlFormat = value; }
         }
 
-        private string _bhlPartUrlFormat = "http://www.biodiversitylibrary.org/part/{0}";
+        private string _bhlPartUrlFormat = "https://www.biodiversitylibrary.org/part/{0}";
         public string BhlPartUrlFormat
         {
             get { return _bhlPartUrlFormat; }

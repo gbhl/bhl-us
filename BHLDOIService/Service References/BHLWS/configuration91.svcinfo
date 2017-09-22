@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="DfxptJWRb2TDWbl1pk17XTgOdXE=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="vhWYgE+kxZCdFyVC0Ykm5J9V/IM=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BHLWSSoap">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BHLWSSoap" contract="BHLWS.BHLWSSoap" bindingType="basicHttpBinding" address="http://mbgserv09:2012/BHLWS.asmx" bindingConfiguration="BHLWSSoap">
+    <endpoint name="BHLWSSoap" contract="BHLWS.BHLWSSoap" bindingType="basicHttpBinding" address="http://localhost:26504/BHLWS.asmx" bindingConfiguration="BHLWSSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://mbgserv09:2012/BHLWS.asmx</serializedValue>
+          <serializedValue>http://localhost:26504/BHLWS.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

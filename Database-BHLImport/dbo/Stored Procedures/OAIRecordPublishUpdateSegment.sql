@@ -86,7 +86,12 @@ SET		Title = @Title,
 		Volume = @Volume,
 		Issue = @Issue,
 		Date = @Date,
-		PageRange = CASE WHEN @StartPage <> '' THEN @StartPage + '-' + @EndPage ELSE @EndPage END,
+		PageRange = 
+			CASE
+			WHEN @StartPage <> '' AND @EndPage <> '' THEN @StartPage + '--' + @EndPage
+			WHEN @StartPage <> '' THEN @StartPage
+			ELSE @EndPage
+			END,
 		StartPageNumber = @StartPage,
 		EndPageNumber = @EndPage,
 		LanguageCode = @LanguageCode,
@@ -154,6 +159,3 @@ WHERE	OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
-
-
-GO

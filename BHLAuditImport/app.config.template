@@ -9,8 +9,8 @@
     <add key="SMTPHost" value="SMTP SERVER NAME"/>
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
-    <add key="remoteManifestLocation" value="http://www.biodiversitylibrary.org/data/auditexports/manifest.txt" />
-    <add key="remoteFileLocation" value="http://www.biodiversitylibrary.org/data/auditexports/" />
+    <add key="remoteManifestLocation" value="https://www.biodiversitylibrary.org/data/auditexports/manifest.txt" />
+    <add key="remoteFileLocation" value="https://www.biodiversitylibrary.org/data/auditexports/" />
     <add key="importFileLocation" value="C:\BHLImport\" />
     <add key="localImportedManifest" value="c:\BHLImport\localImported.txt" />
     <add key="localManifest" value="c:\BHLImport\manifest.txt" />

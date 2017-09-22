@@ -11,21 +11,21 @@
 
     <!-- ############# SETTINGS TO OVERRIDE IN WEB.RELEASE.CONFIG ############# -->
     <!-- Default URLs -->
-    <add key="BaseUrl" value="http://www.biodiversitylibrary.org" />
-    <add key="BibPageUrl" value="http://www.biodiversitylibrary.org/bibliography/{0}" />
-    <add key="ItemPageUrl" value="http://www.biodiversitylibrary.org/item/{0}" />
-    <add key="PagePageUrl" value="http://www.biodiversitylibrary.org/page/{0}" />
-    <add key="PartPageUrl" value="http://www.biodiversitylibrary.org/part/{0}" />
-    <add key="AuthorPageUrl" value="http://www.biodiversitylibrary.org/creator/{0}" />
-    <add key="CollectionPageUrl" value="http://www.biodiversitylibrary.org/collection/{0}" />
+    <add key="BaseUrl" value="https://www.biodiversitylibrary.org" />
+    <add key="BibPageUrl" value="https://www.biodiversitylibrary.org/bibliography/{0}" />
+    <add key="ItemPageUrl" value="https://www.biodiversitylibrary.org/item/{0}" />
+    <add key="PagePageUrl" value="https://www.biodiversitylibrary.org/page/{0}" />
+    <add key="PartPageUrl" value="https://www.biodiversitylibrary.org/part/{0}" />
+    <add key="AuthorPageUrl" value="https://www.biodiversitylibrary.org/creator/{0}" />
+    <add key="CollectionPageUrl" value="https://www.biodiversitylibrary.org/collection/{0}" />
     <!-- Upload path for collection images -->
     <add key="CollectionImageUploadPath" value="SITE_ROOT_FOLDER\images\collection\{0}" />
     <!-- Collection image path -->
-    <add key="CollectionImagePath" value="http://www.biodiversitylibrary.org/images/collection/{0}" />
+    <add key="CollectionImagePath" value="https://www.biodiversitylibrary.org/images/collection/{0}" />
     <!-- Upload path for iTunes images -->
     <add key="iTunesImageUploadPath" value="SITE_ROOT_FOLDER\images\itunes\{0}" />
     <!-- iTunes image path -->
-    <add key="iTunesImagePath" value="http://www.biodiversitylibrary.org/images/itunes/{0}" />
+    <add key="iTunesImagePath" value="https://www.biodiversitylibrary.org/images/itunes/{0}" />
     <!-- Path to the alertmsg.txt file -->
     <add key="AlertMsgPath" value="SITE_ROOT_FOLDER\alertmsg.txt" />
     <!-- Value of querystring parameter that indicates the site is in debug mode -->
@@ -37,6 +37,7 @@
     <!-- Server name of upload path for MARC files -->
     <add key="MarcUploadServer" value="\\SITE_SERVER" />
     <!-- File paths for Citation file uploads -->
+    <add key="CitationTemplatePath" value="SITE_ROOT_FOLDER\Upload\Citation\" />
     <add key="CitationNewPath" value="SITE_ROOT_FOLDER\Upload\Citation\New\" />
     <add key="CitationCompletePath" value="SITE_ROOT_FOLDER\Upload\Citation\Complete\" />
     <add key="CitationErrorPath" value="SITE_ROOT_FOLDER\Upload\Citation\Error\" />
@@ -65,12 +66,13 @@
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
+    <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
     <add key="jQueryUIPath" value="/Scripts/jquery-ui-1.11.4/jquery-ui.min.js" />
     <add key="jQueryUICSSPath" value="/styles/jquery-ui-1.11.4/jquery-ui.min.css" />
-    <add key="jQueryDataTablesPath" value="/js/jquery.dataTables.min.js" />
+    <add key="jQueryDataTablesPath" value="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />
     <add key="jQueryJEditablePath" value="/js/jquery.jeditable.1.7.3.min.js" />
     <add key="jqGridCSSPath" value="/styles/jqgridtheme/ui.jqgrid.css" />
-    <add key="jQueryDataTablesCSSPath" value="/styles/jquery.dataTables.css" />
+    <add key="jQueryDataTablesCSSPath" value="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     <add key="jqGridLocalePath" value="/js/grid.locale-en.js" />
     <add key="jqGridPath" value="/js/jquery.jqGrid.min.js" />
     <!-- Required for forms with large numbers of fields (such as the paginator) -->
@@ -85,14 +87,14 @@
     <add key="FlickrKey" value="FLICKR_API_KEY_VALUE" />
     <add key="FlickrSecret" value="FLICKR_API_SECRET_VALUE" />
     <add key="FlickrImageCredit" value="Image courtesy of BHL" />
-    <add key="FlickrImageSource" value="http://biodiversitylibrary.org" />
+    <add key="FlickrImageSource" value="https://biodiversitylibrary.org" />
     <add key="FlickrImageRights" value="Public Domain" />
     <add key="FlickrImageQuality" value="90" />
     <add key="FlickrMaxWidth" value="3200" />
     <add key="FlickrMaxHeight" value="3200" />
     <add key="FlickrImageQuality" value="90" />
     <add key="FlickrUserError" value="You must be logged into flickr using the BHL account in order to upload images." />
-    <add key="FlickrReturnUrl" value="http://admin.biodiversitylibrary.org/FlickrLoginRedirect.aspx" />
+    <add key="FlickrReturnUrl" value="https://admin.biodiversitylibrary.org/FlickrLoginRedirect.aspx" />
     <!-- Maximum time in minutes that the dashboard stats are cached -->
     <add key="DashboardStatsCacheTime" value="240" />
     <!-- Values for these keys map to the ApplicationIDs defined in the Application table in the MOBOTAdmin database -->

@@ -3,7 +3,7 @@
   <Status>ok</Status>
   <Result>
     <Part>
-      <PartUrl>http://www.biodiversitylibrary.org/part/988</PartUrl>
+      <PartUrl>https://www.biodiversitylibrary.org/part/988</PartUrl>
       <PartID>988</PartID>
       <ItemID>22498</ItemID>
       <StartPageID>3190870</StartPageID>
@@ -50,7 +50,7 @@
       </Contributors>
     </Part>
     <Part>
-      <PartUrl>http://www.biodiversitylibrary.org/part/22372</PartUrl>
+      <PartUrl>https://www.biodiversitylibrary.org/part/22372</PartUrl>
       <PartID>22372</PartID>
       <ItemID>22517</ItemID>
       <StartPageID>3199680</StartPageID>
@@ -97,7 +97,7 @@
       </Contributors>
     </Part>
     <Part>
-      <PartUrl>http://www.biodiversitylibrary.org/part/30222</PartUrl>
+      <PartUrl>https://www.biodiversitylibrary.org/part/30222</PartUrl>
       <PartID>30222</PartID>
       <ItemID>25341</ItemID>
       <StartPageID>4284153</StartPageID>

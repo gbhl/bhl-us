@@ -10,6 +10,9 @@ BEGIN
 SET NOCOUNT ON
 
 BEGIN TRY
+	-- Create author records in production for any new authors
+	exec import.ImportRecordCreatorPublishToProduction @ImportFileID, @UserID
+
 	-- Get status IDs
 	DECLARE @ImportFileImportedID int
 	SELECT @ImportFileImportedID = ImportFileStatusID FROM import.ImportFileStatus WHERE StatusName = 'Imported'
@@ -65,4 +68,3 @@ BEGIN CATCH
 END CATCH
 
 END
-

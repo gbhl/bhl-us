@@ -1,9 +1,9 @@
-﻿
-CREATE PROCEDURE [dbo].[PDFPageSummaryViewSelectByPdfID]
+﻿CREATE PROCEDURE [dbo].[PDFPageSummaryViewSelectByPdfID]
 
 @PdfID int
 
 AS
+
 BEGIN
 
 SET NOCOUNT ON
@@ -20,20 +20,18 @@ SELECT DISTINCT
 		psv.OCRFolderShare,
 		psv.WebVirtualDirectory,
 		psv.ExternalURL,
-		psv.AltExternalURL,
+		REPLACE(psv.AltExternalURL, 'https', 'http') AS AltExternalURL,
 		psv.FileRootFolder,
 		psv.RareBooks,
 		psv.Illustration,
 		psv.SequenceOrder
-FROM	PDFPage ppg	INNER JOIN PageSummaryView psv
+FROM 	PDFPage ppg INNER JOIN PageSummaryView psv
 			ON ppg.PageID = psv.PageID
 		INNER JOIN Item i 
 			ON psv.TitleID = i.PrimaryTitleID
 			AND psv.ItemID = i.ItemID
-WHERE	ppg.PdfID = @PdfID
+WHERE 	ppg.PdfID = @PdfID
 ORDER BY
 		psv.SequenceOrder
 
 END
-
-

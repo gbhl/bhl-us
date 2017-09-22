@@ -1,8 +1,8 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 9/20/2017 1:00:17 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ImportRecordCreatorDAL is based upon ImportRecordCreator.
+// This partial class ImportRecordCreatorDAL is based upon import.ImportRecordCreator.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from ImportRecordCreator by primary key(s).
+		/// Select values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from ImportRecordCreator by primary key(s).
+		/// Select values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecordCreator by primary key(s).
+		/// Select values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecordCreator by primary key(s).
+		/// Select values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into ImportRecordCreator.
+		/// Insert values into import.ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -145,6 +145,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="authorType"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="authorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -157,13 +158,14 @@ namespace MOBOT.BHL.DAL
 			string endYear,
 			string authorType,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? authorID)
 		{
-			return ImportRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, creationUserID, lastModifiedUserID );
+			return ImportRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, creationUserID, lastModifiedUserID, authorID );
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecordCreator.
+		/// Insert values into import.ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -177,6 +179,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="authorType"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="authorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -190,7 +193,8 @@ namespace MOBOT.BHL.DAL
 			string endYear,
 			string authorType,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? authorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -205,7 +209,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 25, false, endYear),
 					CustomSqlHelper.CreateInputParameter("AuthorType", SqlDbType.NVarChar, 50, false, authorType),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, true, authorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordCreator> helper = new CustomSqlHelper<ImportRecordCreator>())
@@ -226,7 +231,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Insert values into import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -241,7 +246,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Insert values into import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -263,7 +268,8 @@ namespace MOBOT.BHL.DAL
 				value.EndYear,
 				value.AuthorType,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.AuthorID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -271,7 +277,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from ImportRecordCreator by primary key(s).
+		/// Delete values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -286,7 +292,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from ImportRecordCreator by primary key(s).
+		/// Delete values from import.ImportRecordCreator by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -329,7 +335,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Update values in import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -342,6 +348,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="endYear"></param>
 		/// <param name="authorType"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="authorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -354,13 +361,14 @@ namespace MOBOT.BHL.DAL
 			string startYear,
 			string endYear,
 			string authorType,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? authorID)
 		{
-			return ImportRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordCreatorID, importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, lastModifiedUserID);
+			return ImportRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordCreatorID, importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, lastModifiedUserID, authorID);
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Update values in import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -374,6 +382,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="endYear"></param>
 		/// <param name="authorType"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="authorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -387,7 +396,8 @@ namespace MOBOT.BHL.DAL
 			string startYear,
 			string endYear,
 			string authorType,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? authorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -401,7 +411,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("StartYear", SqlDbType.NVarChar, 25, false, startYear),
 					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 25, false, endYear),
 					CustomSqlHelper.CreateInputParameter("AuthorType", SqlDbType.NVarChar, 50, false, authorType),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, true, authorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordCreator> helper = new CustomSqlHelper<ImportRecordCreator>())
@@ -422,7 +433,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Update values in import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -437,7 +448,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordCreator. Returns an object of type ImportRecordCreator.
+		/// Update values in import.ImportRecordCreator. Returns an object of type ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -459,7 +470,8 @@ namespace MOBOT.BHL.DAL
 				value.StartYear,
 				value.EndYear,
 				value.AuthorType,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.AuthorID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -467,9 +479,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage ImportRecordCreator object.
+		/// Manage import.ImportRecordCreator object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecordCreator.
+		/// then either insert values into, delete values from, or update values in import.ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -484,9 +496,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage ImportRecordCreator object.
+		/// Manage import.ImportRecordCreator object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecordCreator.
+		/// then either insert values into, delete values from, or update values in import.ImportRecordCreator.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -512,7 +524,8 @@ namespace MOBOT.BHL.DAL
 						value.EndYear,
 						value.AuthorType,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.AuthorID);
 				
 				return new CustomDataAccessStatus<ImportRecordCreator>(
 					CustomDataAccessContext.Insert, 
@@ -546,7 +559,8 @@ namespace MOBOT.BHL.DAL
 						value.StartYear,
 						value.EndYear,
 						value.AuthorType,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.AuthorID);
 					
 				return new CustomDataAccessStatus<ImportRecordCreator>(
 					CustomDataAccessContext.Update, 
@@ -564,4 +578,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

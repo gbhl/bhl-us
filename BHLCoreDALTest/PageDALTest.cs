@@ -131,5 +131,65 @@ namespace BHLCoreDALTest
             actual = target.PageSelectExternalUrlForPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsNotNull(actual);
         }
+
+        [TestMethod()]
+        public void PageSelectByItemAndPageNumberTest1()
+        {
+            PageDAL target = new PageDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            // Matching record
+            int itemID = 22024;
+            string volume = "12";
+            string pageNumber = "382";
+            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            Assert.IsTrue(actual.Count == 1);
+        }
+
+        [TestMethod()]
+        public void PageSelectByItemAndPageNumberTest2()
+        {
+            PageDAL target = new PageDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            // Matching record
+            int itemID = 22024;
+            string volume = "";
+            string pageNumber = "382";
+            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            Assert.IsTrue(actual.Count == 1);
+        }
+
+        [TestMethod()]
+        public void PageSelectByItemAndPageNumberTest3()
+        {
+            PageDAL target = new PageDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            // No matching record
+            int itemID = 22024;
+            string volume = "13";
+            string pageNumber = "382";
+            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            Assert.IsTrue(actual.Count == 0);
+        }
+
+        [TestMethod()]
+        public void PageSelectByItemAndPageNumberTest4()
+        {
+            PageDAL target = new PageDAL();
+            SqlConnection sqlConnection = null;
+            SqlTransaction sqlTransaction = null;
+            // No matching record
+            int itemID = 22024;
+            string volume = "12";
+            string pageNumber = "450";
+            CustomGenericList<Page> actual = new CustomGenericList<Page>();
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            Assert.IsTrue(actual.Count == 0);
+        }
     }
 }

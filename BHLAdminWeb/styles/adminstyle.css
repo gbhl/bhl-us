@@ -323,6 +323,24 @@ div .field {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6fb', endColorstr='#e7eff7',GradientType=0 ); /* IE6-9 */
 }
 
+td.import-detail, th.import-detail {
+    background: url('/Images/bib_plus.GIF') no-repeat center center;
+    cursor: pointer;
+}
+
+tr.import-detail-row td.import-detail {
+    background: url('/Images/bib_minus.gif') no-repeat center center;
+}
+
+.importMapDelimiter {
+    text-align:center; 
+    font-weight:bold;
+}
+
+.importHistAlign {
+    text-align:center;
+}
+
 .formButton
  {
     background: #4c99cc;

@@ -1,8 +1,8 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 9/20/2017 11:00:01 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ImportFileDAL is based upon ImportFile.
+// This partial class ImportFileDAL is based upon import.ImportFile.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from ImportFile by primary key(s).
+		/// Select values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from ImportFile by primary key(s).
+		/// Select values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportFile by primary key(s).
+		/// Select values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportFile by primary key(s).
+		/// Select values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into ImportFile.
+		/// Insert values into import.ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -141,6 +141,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="contributorCode"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileInsertAuto(
 			SqlConnection sqlConnection, 
@@ -149,13 +150,14 @@ namespace MOBOT.BHL.DAL
 			string importFileName,
 			string contributorCode,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? segmentGenreID)
 		{
-			return ImportFileInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileStatusID, importFileName, contributorCode, creationUserID, lastModifiedUserID );
+			return ImportFileInsertAuto( sqlConnection, sqlTransaction, "BHL", importFileStatusID, importFileName, contributorCode, creationUserID, lastModifiedUserID, segmentGenreID );
 		}
 		
 		/// <summary>
-		/// Insert values into ImportFile.
+		/// Insert values into import.ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -165,6 +167,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="contributorCode"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileInsertAuto(
 			SqlConnection sqlConnection, 
@@ -174,7 +177,8 @@ namespace MOBOT.BHL.DAL
 			string importFileName,
 			string contributorCode,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? segmentGenreID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -185,7 +189,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ImportFileName", SqlDbType.NVarChar, 200, false, importFileName),
 					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, false, contributorCode),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
@@ -206,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into ImportFile. Returns an object of type ImportFile.
+		/// Insert values into import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +226,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ImportFile. Returns an object of type ImportFile.
+		/// Insert values into import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -239,7 +244,8 @@ namespace MOBOT.BHL.DAL
 				value.ImportFileName,
 				value.ContributorCode,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.SegmentGenreID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -247,7 +253,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from ImportFile by primary key(s).
+		/// Delete values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -262,7 +268,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from ImportFile by primary key(s).
+		/// Delete values from import.ImportFile by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -305,7 +311,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in ImportFile. Returns an object of type ImportFile.
+		/// Update values in import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,6 +320,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -322,13 +329,14 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? segmentGenreID)
 		{
-			return ImportFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importFileStatusID, importFileName, contributorCode, lastModifiedUserID);
+			return ImportFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", importFileID, importFileStatusID, importFileName, contributorCode, lastModifiedUserID, segmentGenreID);
 		}
 		
 		/// <summary>
-		/// Update values in ImportFile. Returns an object of type ImportFile.
+		/// Update values in import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -338,6 +346,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="importFileName"></param>
 		/// <param name="contributorCode"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentGenreID"></param>
 		/// <returns>Object of type ImportFile.</returns>
 		public ImportFile ImportFileUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -347,7 +356,8 @@ namespace MOBOT.BHL.DAL
 			int importFileStatusID,
 			string importFileName,
 			string contributorCode,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			int? segmentGenreID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -357,7 +367,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ImportFileStatusID", SqlDbType.Int, null, false, importFileStatusID),
 					CustomSqlHelper.CreateInputParameter("ImportFileName", SqlDbType.NVarChar, 200, false, importFileName),
 					CustomSqlHelper.CreateInputParameter("ContributorCode", SqlDbType.NVarChar, 10, false, contributorCode),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, true, segmentGenreID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
@@ -378,7 +389,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportFile. Returns an object of type ImportFile.
+		/// Update values in import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +404,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportFile. Returns an object of type ImportFile.
+		/// Update values in import.ImportFile. Returns an object of type ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,7 +422,8 @@ namespace MOBOT.BHL.DAL
 				value.ImportFileStatusID,
 				value.ImportFileName,
 				value.ContributorCode,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.SegmentGenreID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -419,9 +431,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage ImportFile object.
+		/// Manage import.ImportFile object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportFile.
+		/// then either insert values into, delete values from, or update values in import.ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,9 +448,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage ImportFile object.
+		/// Manage import.ImportFile object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportFile.
+		/// then either insert values into, delete values from, or update values in import.ImportFile.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -460,7 +472,8 @@ namespace MOBOT.BHL.DAL
 						value.ImportFileName,
 						value.ContributorCode,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.SegmentGenreID);
 				
 				return new CustomDataAccessStatus<ImportFile>(
 					CustomDataAccessContext.Insert, 
@@ -490,7 +503,8 @@ namespace MOBOT.BHL.DAL
 						value.ImportFileStatusID,
 						value.ImportFileName,
 						value.ContributorCode,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.SegmentGenreID);
 					
 				return new CustomDataAccessStatus<ImportFile>(
 					CustomDataAccessContext.Update, 
@@ -508,4 +522,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

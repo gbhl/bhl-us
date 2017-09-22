@@ -14,7 +14,7 @@ SELECT DISTINCT
 		i.MARCItemID, 
 		i.CallNumber, 
 		i.Volume AS VolumeInfo,
-		'http://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL, 
+		'https://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL, 
 		i.IdentifierBib AS LocalID, 
 		i.Year, 
 		c.ItemContributors AS InstitutionName, 

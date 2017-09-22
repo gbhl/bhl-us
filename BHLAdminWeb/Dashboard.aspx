@@ -525,17 +525,17 @@
 				<table width="100%" cellspacing="0px" cellpadding="3px">
 					<tr>
 						<td class="boxHeader" align="center">
-							Citations
+							Data Import
 						</td>
 					</tr>
 					<tr>
 						<td align="center" runat="server" id="tdImportCitations">
-							<a href="/CitationImport">Import Citations</a>
+							<a href="/CitationImport">Import Segments</a>
 						</td>
 					</tr>
 					<tr>
 					    <td align="center" runat="server" id="tdImportCitationHistory">
-					        <a href="Report/CitationImportHistory">Citation Import History</a>
+					        <a href="Report/CitationImportHistory">Segment Import History</a>
 					    </td>
 					</tr>
 				</table>

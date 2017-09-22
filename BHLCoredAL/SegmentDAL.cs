@@ -562,6 +562,34 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Find segment, given doi and/or page IDs.  Used during the ImportRecord process.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="doi"></param>
+        /// <param name="startPageID"></param>
+        /// <param name="endPageID"></param>
+        /// <returns></returns>
+        public CustomGenericList<Segment> SegmentResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string doi, int? startPageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.SegmentResolve", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, doi),
+                    CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, false, startPageID)))
+            {
+                using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
+                {
+                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
         /// Save the specified segment and all supporting information (including authors, keywords, identifiers, and pages).
         /// </summary>
         /// <param name="sqlConnection"></param>

@@ -119,6 +119,38 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        /// <summary>
+        /// Select all authors that match the specified criteria.
+        /// </summary>
+        /// <param name="sqlConnection">Sql connection or null.</param>
+        /// <param name="sqlTransaction">Sql transaction or null.</param>
+        /// <param name="fullName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="firstName"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns>Object of type Author.</returns>
+        public CustomGenericList<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string fullName, string lastName, string firstName, string startDate, string endDate)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.AuthorResolve", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 300, false, fullName),
+                CustomSqlHelper.CreateInputParameter("LastName", SqlDbType.NVarChar, 150, false, lastName),
+                CustomSqlHelper.CreateInputParameter("FirstName", SqlDbType.NVarChar, 150, false, firstName),
+                CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         public int Save(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Author author, int userId)
         {
             int authorID = author.AuthorID;

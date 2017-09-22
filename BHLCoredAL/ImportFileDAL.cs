@@ -52,6 +52,25 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public ImportFile ImportFileSelectByID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int importFileID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ImportFileSelectById", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ImportFileID", SqlDbType.Int, null, false, importFileID)))
+            {
+                using (CustomSqlHelper<ImportFile> helper = new CustomSqlHelper<ImportFile>())
+                {
+                    CustomGenericList<ImportFile> list = helper.ExecuteReader(command);
+                    if (list != null)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
         public CustomGenericList<ImportFile> ImportFileSelectDetails(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionCode,
             int fileStatusID, int numberOfDays)
         {

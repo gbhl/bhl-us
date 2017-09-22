@@ -10,7 +10,7 @@ namespace MOBOT.BHL.Web2.api
     /// <summary>
     /// Summary description for soap
     /// </summary>
-    [WebService(Namespace = "http://www.biodiversitylibrary.org/")]
+    [WebService(Namespace = "https://www.biodiversitylibrary.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 

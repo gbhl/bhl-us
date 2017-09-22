@@ -46,7 +46,8 @@ namespace MOBOT.BHL.AdminWeb.Models
         public void GetImportFileList()
         {
             int fileStatus = string.IsNullOrWhiteSpace(this.ImportFileStatus) ? 0 : Convert.ToInt32(this.ImportFileStatus);
-            _importFileList = new BHLProvider().ImportFileSelectDetails(this.Institution, fileStatus, Convert.ToInt32(this.ReportDateRange));
+            int numDays = string.IsNullOrWhiteSpace(this.ReportDateRange) ? 10000 : Convert.ToInt32(this.ReportDateRange);
+            _importFileList = new BHLProvider().ImportFileSelectDetails(this.Institution, fileStatus, numDays);
         }
     }
 }
