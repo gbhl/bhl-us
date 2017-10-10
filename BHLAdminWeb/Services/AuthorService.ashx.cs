@@ -13,7 +13,7 @@ namespace MOBOT.BHL.AdminWeb.Services
     /// <summary>
     /// Summary description for AuthorService
     /// </summary>
-    [WebService(Namespace = "http://biodiversitylibrary.org/")]
+    [WebService(Namespace = "https://biodiversitylibrary.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class AuthorService : IHttpHandler
     {

@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div id="content" class="column-wrap clearfix" itemscope itemtype="http://schema.org/Book">
+<div id="content" class="column-wrap clearfix" itemscope itemtype="https://schema.org/Book">
     <section>
         <div class="tabs js-hide">
             <ul class="tab-nav no-js-hide">
@@ -62,7 +62,7 @@
                 <h3>By</h3>
                 <p>
                     <% foreach (Author author in Authors) { %>
-                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
+                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
 							<span itemprop="name"><%: author.NameExtended %></span>
 						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
@@ -78,7 +78,7 @@
                     <% } %>
                     <% if (Authors.Count > 0 && AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
                     <% foreach (Author author in AdditionalAuthors) { %>
-                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "http://schema.org/Person" : "http://schema.org/Organization" %>'>
+                        <span itemprop="author" itemscope itemtype='<%: (author.AuthorRoleID.ToString() == "1" || author.AuthorRoleID.ToString() == "4") ? "https://schema.org/Person" : "https://schema.org/Organization" %>'>
                         <a href="/creator/<%: author.AuthorID %>" title="Author">
 							<span itemprop="name"><%: author.NameExtended %></span>
 						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %>
@@ -105,7 +105,7 @@
                 <%} %>
                 <h3>Publication info</h3>
                 <p>
-                    <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name"><%: BhlTitle.PublicationDetails %></span></span>
+                    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name"><%: BhlTitle.PublicationDetails %></span></span>
                     <span itemprop="datePublished" style="display:none"><%: BhlTitle.StartYear.ToString() %></span>
                 </p>
                 <%if (!String.IsNullOrWhiteSpace(BhlTitle.EditionStatement)) { %>
@@ -478,9 +478,9 @@
                     <div class="download">
                         Download volume:
                         <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_jp2.{1}", bibliographyItem.Item.BarCode, ((bibliographyItem.Item.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">JP2</a>
-                        <a class="icon ocr" href="<%: string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", bibliographyItem.Item.BarCode) %>">OCR</a>
-                        <a class="icon pdf" href="<%: string.Format("http://www.archive.org/download/{0}/{0}.pdf", bibliographyItem.Item.BarCode) %>">PDF</a>
+                        <a class="icon jp2" href="<%: string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", bibliographyItem.Item.BarCode, ((bibliographyItem.Item.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">JP2</a>
+                        <a class="icon ocr" href="<%: string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", bibliographyItem.Item.BarCode) %>">OCR</a>
+                        <a class="icon pdf" href="<%: string.Format("https://www.archive.org/download/{0}/{0}.pdf", bibliographyItem.Item.BarCode) %>">PDF</a>
                     </div>
                     <% } %>
                 </div>

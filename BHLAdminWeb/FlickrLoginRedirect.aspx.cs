@@ -20,8 +20,8 @@ namespace MOBOT.BHL.AdminWeb
                 string pageIds = Request["pageids"];
                 string titleId = Request["titleid"];
 
-                // Hardcoding an old version of jQuery here because the Flickr components require it
-                Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJQueryJS", "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+                // Using an old version of jQuery here because the Flickr components require it
+                Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJQueryJS", ConfigurationManager.AppSettings["jQuery142Path"]);
                 Page.ClientScript.RegisterClientScriptInclude("FlickrUploadJS", "/js/FlickrUpload.js");
                 Page.ClientScript.RegisterStartupScript(typeof(FlickrUpload), "FlickrUpload", createInitJS());
             }

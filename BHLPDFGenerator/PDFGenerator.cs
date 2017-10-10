@@ -325,7 +325,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
             sb.Append("Having Problems Viewing Your PDF? Depending on your browser, you may experience trouble using the built-in PDF viewer, which may not correctly display the images contained in this PDF. If you experience viewing problems in your browser, open the PDF in an alternative viewer.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            sb.Append("If you have questions or need to report an error, please contact us via our Feedback page: http://www.biodiversitylibrary.org/feedback.aspx");
+            sb.Append("If you have questions or need to report an error, please contact us via our Feedback page: https://www.biodiversitylibrary.org/feedback.aspx");
             sb.Append(endOfLine);
 
             return sb.ToString();

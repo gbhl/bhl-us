@@ -15,7 +15,7 @@ SELECT @DOITITLEID = DOIEntityTypeID FROM dbo.DOIEntityType WHERE DOIEntityTypeN
 SELECT	DISTINCT
 		ISNULL(b.BibliographicLevelName, '') AS Genre,
 		t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title,
-		'http://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Url,
+		'https://www.biodiversitylibrary.org/bibliography/' + CONVERT(NVARCHAR(10), t.TitleID) AS Url,
 		ISNULL(t.Datafield_260_b, '') AS Publisher,
 		ISNULL(t.Datafield_260_a, '') AS PublicationPlace,
 		CASE WHEN ISNULL(CONVERT(NVARCHAR(20), StartYear), '') = '' THEN ISNULL(t.Datafield_260_c, '') ELSE ISNULL(CONVERT(NVARCHAR(20), StartYear), '') END [Year],

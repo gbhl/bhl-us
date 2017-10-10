@@ -76,14 +76,14 @@ namespace MOBOT.BHL.Web2
                 {
                     case "Book":
                     case "Journal":
-                        SchemaType = "http://schema.org/Book";
+                        SchemaType = "https://schema.org/Book";
                         break;
                     case "Article":
                     case "Preprint":
-                        SchemaType = "http://schema.org/ScholarlyArticle";
+                        SchemaType = "https://schema.org/ScholarlyArticle";
                         break;
                     default: // BookItem, Chapter, Issue, Proceeding, Conference, Unknown, Treatment
-                        SchemaType = "http://schema.org/CreativeWork";
+                        SchemaType = "https://schema.org/CreativeWork";
                         break;
                 }
 

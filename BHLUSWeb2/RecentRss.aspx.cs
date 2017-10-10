@@ -28,11 +28,11 @@ namespace MOBOT.BHL.Web2
             WriteLine("<rss version=\"2.0\" xmlns:bhl=\"http://www.biodiversitylibrary.org/xsd/bhlrss.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
             WriteLine("<channel>");
             WriteLine("<title>BHL Recent Updates</title>");
-            WriteLine("<link>http://www.biodiversitylibrary.org/</link>");
+            WriteLine("<link>https://www.biodiversitylibrary.org/</link>");
             WriteLine("<description>Recently published digital volumes from the Biodiversity Heritage Library.</description>");
             WriteLine("<pubDate>" + DateTime.Now.ToUniversalTime().ToString() + "</pubDate>");
             WriteLine("<lastBuildDate>" + DateTime.Now.ToUniversalTime().ToString() + "</lastBuildDate>");
-            WriteLine("<generator>http://www.biodiversitylibrary.org/</generator>");
+            WriteLine("<generator>https://www.biodiversitylibrary.org/</generator>");
 
             CustomGenericList<Item> list = new BHLProvider().ItemSelectRecent(top, languageCode, institutionCode);
             foreach (Item item in list)
@@ -65,10 +65,10 @@ namespace MOBOT.BHL.Web2
 
                 WriteLine(itemElement);
                 WriteLine("<title>" + Server.HtmlEncode(item.FullTitle + " " + item.PartNumber + " " + item.PartName + " " + item.Volume) + " (added: " + DateTime.Parse(item.CreationDate.ToString()).ToString("MM/dd/yyyy") + ")</title>");
-                WriteLine("<link>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
+                WriteLine("<link>https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</link>");
                 WriteLine("<description>" + Server.HtmlEncode(description) + "</description>");
                 WriteLine("<pubDate>" + item.CreationDate.ToString() + "</pubDate>");
-                WriteLine("<guid>http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</guid>");
+                WriteLine("<guid>https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString() + "</guid>");
                 WriteLine("</item>");
             }
 

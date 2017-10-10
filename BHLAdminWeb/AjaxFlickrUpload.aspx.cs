@@ -71,8 +71,8 @@ namespace MOBOT.BHL.AdminWeb
                     Page page = provider.PageMetadataSelectByPageID(pageId);
                     Item item = provider.ItemSelectByBarcodeOrItemID(null, page.BarCode);
                     Title title = provider.TitleSelect(titleId);
-                    string pageUrl = "http://biodiversitylibrary.org/page/" + pageId;
-                    string itemUrl = "http://biodiversitylibrary.org/item/" + item.ItemID;
+                    string pageUrl = "https://biodiversitylibrary.org/page/" + pageId;
+                    string itemUrl = "https://biodiversitylibrary.org/item/" + item.ItemID;
                     string description = title.ShortTitle + "\n" + title.PublicationDetails + "\n" + pageUrl;
 
                     CustomGenericList<TitleKeyword> titleKeywords = provider.TitleKeywordSelectByTitleID(titleId);

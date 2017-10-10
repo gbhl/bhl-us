@@ -41,7 +41,7 @@
                 <p>
                     <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
                     { %>
-                        <span itemprop="author" itemscope itemtype='http://schema.org/Person'>
+                        <span itemprop="author" itemscope itemtype='https://schema.org/Person'>
                         <a href="/creator/<%: author.AuthorID %>">
 							<span itemprop="name"><%: author.NameExtended%></span>
 						</a>
@@ -196,7 +196,7 @@
                    !String.IsNullOrEmpty(BhlSegment.PublisherPlace)) { %>
                 <div class="segmentdetails"><h3>Published by</h3> 
                 <p>
-                    <span itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">
+                    <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">
                     <%if (!String.IsNullOrEmpty(BhlSegment.PublicationDetails)) { %>
                     <%: BhlSegment.PublicationDetails%>
                     <%} else { %>
@@ -372,7 +372,7 @@
     $(document).ready(function () {
 
         // Update the Altmetric badge
-        $(".altmetric-embed").attr("data-uri", "http://www.biodiversitylibrary.org/part/" + "<%: BhlSegment.SegmentID %>");
+        $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/part/" + "<%: BhlSegment.SegmentID %>");
         if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 
         

@@ -18,7 +18,7 @@ SELECT DISTINCT
 		t.EndYear, 
 		t.LanguageCode, 
 		t.TL2Author, 
-		'http://www.biodiversitylibrary.org/title/' + CONVERT(nvarchar(20), t.TitleID) AS TitleURL, 
+		'https://www.biodiversitylibrary.org/title/' + CONVERT(nvarchar(20), t.TitleID) AS TitleURL, 
 		CONVERT(nvarchar(16), t.CreationDate, 120) AS CreationDate
 FROM	dbo.Title t WITH (NOLOCK)
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON t.TitleID = i.PrimaryTitleID

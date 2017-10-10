@@ -12,7 +12,7 @@
     <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <add key="PdfFilePath" value="\\SERVER\FOLDER\pdf\{0}"/>
-		<add key="PdfUrl" value="http://www.biodiversitylibrary.org/pdf4/{0}"/>
+		<add key="PdfUrl" value="https://www.biodiversitylibrary.org/pdf4/{0}"/>
 		<add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     
     <!-- Number of milliseconds to wait before retrying a failed image download -->

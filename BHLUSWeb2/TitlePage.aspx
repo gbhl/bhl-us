@@ -14,7 +14,7 @@
                 <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">Bibliographic Information</a></div>
                 <div><a href="#" class="selectpages">Select pages to download</a></div>
                 <div><a href="#" class="downloadbook">Download Book</a></div>
-                <div><a href="<%= string.Format("http://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
+                <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
              </div>
             <div class="jqmWindow" id="download-dialog">
                 <div class="head">
@@ -22,10 +22,10 @@
                     <h2>Download book</h2>
                     <hr />
                 </div>
-                <a class="large-icon pdf" href="<%= string.Format("http://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
+                <a class="large-icon pdf" href="<%= string.Format("https://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
                 <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
-                <a class="large-icon jp2" href="<%= string.Format("http://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
-                <a class="large-icon ocr" href="<%= string.Format("http://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download OCR</a>                
+                <a class="large-icon jp2" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
+                <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download OCR</a>                
             </div>
         <% } %>
 
@@ -92,7 +92,7 @@
             <div class="panel-box-heading">
                 URL for Current Page
             </div>
-            <div class="urlbox"><a id="currentpageURL" href="http://biodiversitylibrary.org/page/4254470">http://biodiversitylibrary.org/page/4254470</a></div>
+            <div class="urlbox"><a id="currentpageURL" href="https://biodiversitylibrary.org/page/4254470">https://biodiversitylibrary.org/page/4254470</a></div>
 
             <div class="flickrbox">
                 <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
@@ -172,13 +172,13 @@
                             <div style="float:left;margin:0;width:49%">
                                 <h3>Join Our Mailing List</h3>
                                 <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                                <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                                <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
                             </div>
 
                             <div style="float:left;margin:0;width:49%">
                                 <h3>Help Support <span>BHL</span></h3>
                                 <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
-                                <a class="featurebutton-home" title="Donate" target="_blank" href="http://library.si.edu/donate-bhl">Donate</a>
+                                <a class="featurebutton-home" title="Donate" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
                             </div>
                         </div>
                         <div class="failure">
@@ -275,7 +275,7 @@
 
                 <div id="copyrightcontainer">
                 <div id="copyrighttitle">Credit</div>
-                <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="http://darwin.amnh.org" title="AMNH" target="_blank">darwin.amnh.org</a>)</div>
+                <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="https://darwin.amnh.org" title="AMNH" target="_blank">darwin.amnh.org</a>)</div>
                 </div>
             </div> <!-- content --> 
             </div> <!-- contentbox --> 
@@ -988,12 +988,12 @@
             }
 
             // Update the Altmetric badge
-            $(".altmetric-embed").attr("data-uri", "http://www.biodiversitylibrary.org/item/" + "<%: CurrentItemID %>");
+            $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: CurrentItemID %>");
             if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 
             // Update page URL and names
-            $("#currentpageURL").text("http://biodiversitylibrary.org/page/" + pages[index].PageID);
-            $("#currentpageURL").attr("href", "http://biodiversitylibrary.org/page/" + pages[index].PageID);
+            $("#currentpageURL").text("https://biodiversitylibrary.org/page/" + pages[index].PageID);
+            $("#currentpageURL").attr("href", "https://biodiversitylibrary.org/page/" + pages[index].PageID);
             var currentFlickrUrl = $("#currentFlickrURL");
             var flickrUrlSpan = $("#flickrurlspan");
             if (pages[index].FlickrUrl == "")
@@ -1008,7 +1008,7 @@
             }
 
             addthis_share = { 
-                url: "http://biodiversitylibrary.org/page/" + pages[index].PageID,
+                url: "https://biodiversitylibrary.org/page/" + pages[index].PageID,
                 title: $(document).find("title").text()
             }
 

@@ -65,8 +65,8 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader
         protected void Page_Load(object sender, EventArgs e)
         {
             // Add references to the javascript and CSS needed by the book reader
-            // Hardcoding an old version of jQuery here because the bookviewer code requires it
-            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+            // Using an old version of jQuery here because the bookviewer code requires it
+            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQuery142Path"]);
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/js/jquery.easing.1.3.js");
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Controls/OLBookReader/BookReader/BookReader.js?v=1.3bhl");
             ControlGenerator.AddLinkControl(Page.Master.Page.Header.Controls, "/Controls/OLBookReader/BookReader/BookReader.css?v=1.2bhl");

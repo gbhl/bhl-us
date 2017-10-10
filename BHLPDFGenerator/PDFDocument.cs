@@ -482,13 +482,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 iTextSharp.text.Font smallFont = new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 8, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK);
 
                 // Generate links
-                String bhlUrl = "http://www.biodiversitylibrary.org/";
+                String bhlUrl = "https://www.biodiversitylibrary.org/";
                 Anchor bhlAnchor = new Anchor(bhlUrl, standardFont);
                 bhlAnchor.Reference = bhlUrl;
-                String titleUrl = "http://www.biodiversitylibrary.org/bibliography/" + pages[0].TitleID.ToString();
+                String titleUrl = "https://www.biodiversitylibrary.org/bibliography/" + pages[0].TitleID.ToString();
                 Anchor titleAnchor = new Anchor(titleUrl, standardFont);
                 titleAnchor.Reference = titleUrl;
-                String itemUrl = "http://www.biodiversitylibrary.org/item/" + pages[0].ItemID.ToString();
+                String itemUrl = "https://www.biodiversitylibrary.org/item/" + pages[0].ItemID.ToString();
                 Anchor itemAnchor = new Anchor(itemUrl, standardFont);
                 itemAnchor.Reference = itemUrl;
                 Anchor pdfAnchor = new Anchor(String.Format(this.UrlFormat, fileName), smallFont);

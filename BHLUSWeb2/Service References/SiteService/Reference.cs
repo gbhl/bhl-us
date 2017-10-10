@@ -15,43 +15,43 @@ namespace MOBOT.BHL.Web2.SiteService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfString", Namespace="http://biodiversitylibrary.org/", ItemName="string")]
+    [System.Runtime.Serialization.CollectionDataContractAttribute(Name="ArrayOfString", Namespace="https://biodiversitylibrary.org/", ItemName="string")]
     [System.SerializableAttribute()]
     public class ArrayOfString : System.Collections.Generic.List<string> {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://biodiversitylibrary.org/", ConfigurationName="SiteService.SiteServiceSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="https://biodiversitylibrary.org/", ConfigurationName="SiteService.SiteServiceSoap")]
     public interface SiteServiceSoap {
         
-        // CODEGEN: Generating message contract since element name GetOcrTextResult from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/GetOcrText", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name GetOcrTextResult from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetOcrText", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.GetOcrTextResponse GetOcrText(MOBOT.BHL.Web2.SiteService.GetOcrTextRequest request);
         
-        // CODEGEN: Generating message contract since element name batchId from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/DOIGetFileContents", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name batchId from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/DOIGetFileContents", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.DOIGetFileContentsResponse DOIGetFileContents(MOBOT.BHL.Web2.SiteService.DOIGetFileContentsRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/OcrJobExists", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/OcrJobExists", ReplyAction="*")]
         bool OcrJobExists(int itemID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/OcrCreateJob", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/OcrCreateJob", ReplyAction="*")]
         void OcrCreateJob(int itemID);
         
-        // CODEGEN: Generating message contract since element name type from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/MARCFileExists", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name type from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/MARCFileExists", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.MARCFileExistsResponse MARCFileExists(MOBOT.BHL.Web2.SiteService.MARCFileExistsRequest request);
         
-        // CODEGEN: Generating message contract since element name type from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/MARCGetFileContents", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name type from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/MARCGetFileContents", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.MARCGetFileContentsResponse MARCGetFileContents(MOBOT.BHL.Web2.SiteService.MARCGetFileContentsRequest request);
         
-        // CODEGEN: Generating message contract since element name marcBibID from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/MarcCreateFile", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name marcBibID from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/MarcCreateFile", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.MarcCreateFileResponse MarcCreateFile(MOBOT.BHL.Web2.SiteService.MarcCreateFileRequest request);
         
-        // CODEGEN: Generating message contract since element name from from namespace http://biodiversitylibrary.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://biodiversitylibrary.org/SendEmail", ReplyAction="*")]
+        // CODEGEN: Generating message contract since element name from from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/SendEmail", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.SendEmailResponse SendEmail(MOBOT.BHL.Web2.SiteService.SendEmailRequest request);
     }
     
@@ -61,7 +61,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetOcrTextRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetOcrText", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetOcrText", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.GetOcrTextRequestBody Body;
         
         public GetOcrTextRequest() {
@@ -75,7 +75,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class GetOcrTextRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
@@ -95,7 +95,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetOcrTextResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetOcrTextResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetOcrTextResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.GetOcrTextResponseBody Body;
         
         public GetOcrTextResponse() {
@@ -109,7 +109,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class GetOcrTextResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -129,7 +129,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DOIGetFileContentsRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="DOIGetFileContents", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DOIGetFileContents", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.DOIGetFileContentsRequestBody Body;
         
         public DOIGetFileContentsRequest() {
@@ -143,7 +143,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class DOIGetFileContentsRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -167,7 +167,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DOIGetFileContentsResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="DOIGetFileContentsResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DOIGetFileContentsResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.DOIGetFileContentsResponseBody Body;
         
         public DOIGetFileContentsResponse() {
@@ -181,7 +181,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class DOIGetFileContentsResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -201,7 +201,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MARCFileExistsRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCFileExists", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCFileExists", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MARCFileExistsRequestBody Body;
         
         public MARCFileExistsRequest() {
@@ -215,7 +215,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class MARCFileExistsRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
@@ -239,7 +239,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MARCFileExistsResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCFileExistsResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCFileExistsResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MARCFileExistsResponseBody Body;
         
         public MARCFileExistsResponse() {
@@ -253,7 +253,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class MARCFileExistsResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
@@ -273,7 +273,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MARCGetFileContentsRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCGetFileContents", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCGetFileContents", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MARCGetFileContentsRequestBody Body;
         
         public MARCGetFileContentsRequest() {
@@ -287,7 +287,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class MARCGetFileContentsRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
@@ -311,7 +311,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MARCGetFileContentsResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCGetFileContentsResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MARCGetFileContentsResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MARCGetFileContentsResponseBody Body;
         
         public MARCGetFileContentsResponse() {
@@ -325,7 +325,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class MARCGetFileContentsResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -345,7 +345,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MarcCreateFileRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MarcCreateFile", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MarcCreateFile", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MarcCreateFileRequestBody Body;
         
         public MarcCreateFileRequest() {
@@ -359,7 +359,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class MarcCreateFileRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -383,7 +383,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class MarcCreateFileResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="MarcCreateFileResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="MarcCreateFileResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.MarcCreateFileResponseBody Body;
         
         public MarcCreateFileResponse() {
@@ -410,7 +410,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SendEmailRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendEmail", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendEmail", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.SendEmailRequestBody Body;
         
         public SendEmailRequest() {
@@ -424,7 +424,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class SendEmailRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
@@ -464,7 +464,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SendEmailResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendEmailResponse", Namespace="http://biodiversitylibrary.org/", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SendEmailResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
         public MOBOT.BHL.Web2.SiteService.SendEmailResponseBody Body;
         
         public SendEmailResponse() {
@@ -478,7 +478,7 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://biodiversitylibrary.org/")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
     public partial class SendEmailResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=0)]

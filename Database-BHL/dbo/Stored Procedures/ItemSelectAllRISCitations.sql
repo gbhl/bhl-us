@@ -14,7 +14,7 @@ SELECT	DISTINCT
 		ISNULL(b.BibliographicLevelName, '') AS Genre,
 		t.FullTitle + ' ' + ISNULL(t.PartNumber, '') + ' ' + ISNULL(t.PartName, '') AS Title,
 		ISNULL(i.Volume, '') AS Volume,
-		'http://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), i.ItemID) AS Url,
+		'https://www.biodiversitylibrary.org/item/' + CONVERT(NVARCHAR(10), i.ItemID) AS Url,
 		ISNULL(t.Datafield_260_b, '') AS Publisher,
 		ISNULL(t.Datafield_260_a, '') AS PublicationPlace,
 		CASE 

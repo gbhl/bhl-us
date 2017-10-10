@@ -284,7 +284,7 @@ namespace MOBOT.BHL.OpenUrlProvider
                 {
                     for (int x = 0; x < query.Identifiers.Length; x++)
                     {
-                        // Look for the ID in a url (http://www.biodiversitylibrary.org/page/1234)
+                        // Look for the ID in a url (https://www.biodiversitylibrary.org/page/1234)
                         if ((string)query.Identifiers[x].Key == "url")
                         {
                             string url = (string)query.Identifiers[x].Value;
@@ -365,8 +365,8 @@ namespace MOBOT.BHL.OpenUrlProvider
             citation.Subjects.Add("Lecythidaceae");
             citation.Subjects.Add("South American");
             citation.Subjects.Add("Trees");
-            citation.Url = "http://www.biodiversitylibrary.org/page/4354945";
-            citation.TitleUrl = "http://www.biodiversitylibary.org/title/5435";
+            citation.Url = "https://www.biodiversitylibrary.org/page/4354945";
+            citation.TitleUrl = "https://www.biodiversitylibary.org/title/5435";
             citation.Oclc = "179674112";
             response.citations.Add(citation);
             citation = new OpenUrlResponseCitation();
@@ -383,8 +383,8 @@ namespace MOBOT.BHL.OpenUrlProvider
             citation.Subjects.Add("Lecythidaceae");
             citation.Subjects.Add("South American");
             citation.Subjects.Add("Trees");
-            citation.Url = "http://www.biodiversitylibrary.org/page/4354939";
-            citation.TitleUrl = "http://www.biodiversitylibary.org/title/5435";
+            citation.Url = "https://www.biodiversitylibrary.org/page/4354939";
+            citation.TitleUrl = "https://www.biodiversitylibary.org/title/5435";
             citation.Oclc = "179674112";
             response.citations.Add(citation);
         }

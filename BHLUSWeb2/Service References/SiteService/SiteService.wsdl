@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://biodiversitylibrary.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://biodiversitylibrary.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://biodiversitylibrary.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="https://biodiversitylibrary.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://biodiversitylibrary.org/">
+    <s:schema elementFormDefault="qualified" targetNamespace="https://biodiversitylibrary.org/">
       <s:element name="GetOcrText">
         <s:complexType>
           <s:sequence>
@@ -207,7 +207,7 @@
   <wsdl:binding name="SiteServiceSoap" type="tns:SiteServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
-      <soap:operation soapAction="http://biodiversitylibrary.org/GetOcrText" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -216,7 +216,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DOIGetFileContents">
-      <soap:operation soapAction="http://biodiversitylibrary.org/DOIGetFileContents" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/DOIGetFileContents" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -225,7 +225,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="OcrJobExists">
-      <soap:operation soapAction="http://biodiversitylibrary.org/OcrJobExists" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/OcrJobExists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -234,7 +234,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="OcrCreateJob">
-      <soap:operation soapAction="http://biodiversitylibrary.org/OcrCreateJob" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/OcrCreateJob" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -243,7 +243,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MARCFileExists">
-      <soap:operation soapAction="http://biodiversitylibrary.org/MARCFileExists" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/MARCFileExists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -252,7 +252,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MARCGetFileContents">
-      <soap:operation soapAction="http://biodiversitylibrary.org/MARCGetFileContents" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/MARCGetFileContents" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -261,7 +261,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MarcCreateFile">
-      <soap:operation soapAction="http://biodiversitylibrary.org/MarcCreateFile" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/MarcCreateFile" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -270,7 +270,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
-      <soap:operation soapAction="http://biodiversitylibrary.org/SendEmail" style="document" />
+      <soap:operation soapAction="https://biodiversitylibrary.org/SendEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -282,7 +282,7 @@
   <wsdl:binding name="SiteServiceSoap12" type="tns:SiteServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/GetOcrText" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -291,7 +291,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DOIGetFileContents">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/DOIGetFileContents" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/DOIGetFileContents" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -300,7 +300,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="OcrJobExists">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/OcrJobExists" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/OcrJobExists" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -309,7 +309,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="OcrCreateJob">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/OcrCreateJob" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/OcrCreateJob" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -318,7 +318,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MARCFileExists">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/MARCFileExists" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/MARCFileExists" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -327,7 +327,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MARCGetFileContents">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/MARCGetFileContents" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/MARCGetFileContents" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -336,7 +336,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MarcCreateFile">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/MarcCreateFile" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/MarcCreateFile" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -345,7 +345,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
-      <soap12:operation soapAction="http://biodiversitylibrary.org/SendEmail" style="document" />
+      <soap12:operation soapAction="https://biodiversitylibrary.org/SendEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

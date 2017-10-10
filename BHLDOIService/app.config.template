@@ -48,10 +48,10 @@
     <add key="SubmitLogFileFormat" value="{0}.log.xml"/>
     <add key="SubmitLogFolder" value="submitlog/"/>
     <!-- BHL entity URL formats -->
-    <add key="BHLTitleUrlFormat" value="http://www.biodiversitylibrary.org/bibliography/{0}"/>
-    <add key="BHLItemUrlFormat" value="http://www.biodiversitylibrary.org/item/{0}"/>
-    <add key="BHLPageUrlFormat" value="http://www.biodiversitylibrary.org/page/{0}"/>
-    <add key="BHLPartUrlFormat" value="http://www.biodiversitylibrary.org/part/{0}"/>
+    <add key="BHLTitleUrlFormat" value="https://www.biodiversitylibrary.org/bibliography/{0}"/>
+    <add key="BHLItemUrlFormat" value="https://www.biodiversitylibrary.org/item/{0}"/>
+    <add key="BHLPageUrlFormat" value="https://www.biodiversitylibrary.org/page/{0}"/>
+    <add key="BHLPartUrlFormat" value="https://www.biodiversitylibrary.org/part/{0}"/>
     <!-- DOI Status codes.  These should match the rows in the DOIStatus database table. -->
     <add key="DOIStatus_Null" value="0"/>
     <add key="DOIStatus_None" value="10"/>

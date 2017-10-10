@@ -565,9 +565,9 @@ namespace MOBOT.BHL.OAI2
                     if (titleItem.TitleID == item.PrimaryTitleID) this.Sequence = titleItem.ItemSequence.ToString();
                 }
 
-                this.Url = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                this.ParentUrl = "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
-                if (item.ThumbnailPageID != null) this.ThumbnailUrl = "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                this.Url = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
+                this.ParentUrl = "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                if (item.ThumbnailPageID != null) this.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
                 this.Types.Add("text");
 
@@ -585,8 +585,8 @@ namespace MOBOT.BHL.OAI2
                             currentPageID = (int)page["PageID"].Value;
 
                             oaiPage = new OAIRecord.Page();
-                            oaiPage.Url = "http://www.biodiversitylibrary.org/page/" + currentPageID.ToString();
-                            oaiPage.ImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + currentPageID.ToString();
+                            oaiPage.Url = "https://www.biodiversitylibrary.org/page/" + currentPageID.ToString();
+                            oaiPage.ImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + currentPageID.ToString();
                             oaiPage.Sequence = (int)page["SequenceOrder"].Value;
                             oaiPage.PageType = page["PageTypes"].Value.ToString().Split(',')[0];
                             oaiPage.PageLabel = page["IndicatedPages"].Value.ToString();
@@ -681,7 +681,7 @@ namespace MOBOT.BHL.OAI2
                             titleAssociation.Relationship).Trim();
                         if (titleAssociation.AssociatedTitleID != null)
                         {
-                            association.Url = "http://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
+                            association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
                         }
 
                         // Add identifiers associated with the association
@@ -722,7 +722,7 @@ namespace MOBOT.BHL.OAI2
                 this.OriginalCatalogingSource = (title.OriginalCatalogingSource == null) ? String.Empty : title.OriginalCatalogingSource;
                 this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;
                 if (String.IsNullOrEmpty(this.Date) && title.StartYear != null) this.Date = title.StartYear.ToString();
-                this.Url = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                this.Url = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                 this.Date = title.StartYear.ToString() + (String.IsNullOrEmpty(title.EndYear.ToString()) ? "" : "-" + title.EndYear.ToString());
                 this.Sequence = "1";
 
@@ -820,7 +820,7 @@ namespace MOBOT.BHL.OAI2
                         titleAssociation.Relationship).Trim();
                     if (titleAssociation.AssociatedTitleID != null)
                     {
-                        association.Url = "http://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
+                        association.Url = "https://www.biodiversitylibrary.org/bibliography/" + titleAssociation.AssociatedTitleID.ToString();
                     }
 
                     // Add identifiers associated with the association
@@ -963,12 +963,12 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.Title = segment.Title;
-                this.Url = "http://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
+                this.Url = "https://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString();
                 this.Sequence = "1";
 
                 if (segment.ItemID != null)
                 {
-                    this.ParentUrl = "http://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
+                    this.ParentUrl = "https://www.biodiversitylibrary.org/item/" + segment.ItemID.ToString();
                     this.Sequence = segment.SequenceOrder.ToString();
                 }
 

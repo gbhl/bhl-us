@@ -61,10 +61,10 @@ namespace MOBOT.BHL.API.BHLApi
             Page page = dal.PageSelectAuto(null, null, pageIDInt);
             if (page != null)
             {
-                page.PageUrl = "http://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
-                page.ThumbnailUrl = "http://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
-                page.FullSizeImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "http://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
+                page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
+                page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
                 page.PageNumbers = dal.IndicatedPageSelectByPageID(null, null, pageIDInt);
                 page.PageTypes = dal.PageTypeSelectByPageID(null, null, pageIDInt);
 
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.API.BHLApi
             try
             {
                 client.Encoding = Encoding.UTF8;
-                text = client.DownloadString("http://www.biodiversitylibrary.org/pageocr/" + pageID);
+                text = client.DownloadString("https://www.biodiversitylibrary.org/pageocr/" + pageID);
             }
             finally
             {
@@ -130,9 +130,9 @@ namespace MOBOT.BHL.API.BHLApi
             Item item = new Api2DAL().ItemSelectByItemID(null, null, itemIDint);
             if (item != null)
             {
-                item.ItemUrl = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
-                item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
+                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
                 CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
@@ -176,10 +176,10 @@ namespace MOBOT.BHL.API.BHLApi
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
-                page.PageUrl = "http://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
-                page.ThumbnailUrl = "http://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
-                page.FullSizeImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "http://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
+                page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
+                page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
                 page.PageTypes = new CustomGenericList<PageType>();
                 page.PageNumbers = new CustomGenericList<PageNumber>();
 
@@ -244,9 +244,9 @@ namespace MOBOT.BHL.API.BHLApi
                             CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                             if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
-                            item.ItemUrl = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                            item.TitleUrl = (item.PrimaryTitleID == null ) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
-                            item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                            item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
+                            item.TitleUrl = (item.PrimaryTitleID == null ) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                            item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
                         }
 
                         break;
@@ -276,7 +276,7 @@ namespace MOBOT.BHL.API.BHLApi
             CustomGenericList<Part> parts = dal.SegmentSelectByItemID(null, null, itemIDint);
             foreach (Part part in parts)
             {
-                part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
@@ -305,7 +305,7 @@ namespace MOBOT.BHL.API.BHLApi
             Title title = dal.TitleSelectAuto(null, null, titleIDint);
             if (title != null)
             {
-                title.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                 title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
                 title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                 title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
@@ -339,9 +339,9 @@ namespace MOBOT.BHL.API.BHLApi
                 CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
-                item.ItemUrl = "http://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "http://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
-                item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "http://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
+                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
             }
 
             return items;
@@ -369,7 +369,7 @@ namespace MOBOT.BHL.API.BHLApi
                         titles = dal.TitleSelectByIdentifier(null, null, identifierType, identifierValue);
                         foreach (Title title in titles)
                         {
-                            title.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                            title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                             title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
                             title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                             title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
@@ -385,7 +385,7 @@ namespace MOBOT.BHL.API.BHLApi
                         titles = dal.TitleSelectByDOI(null, null, identifierValue);
                         foreach (Title title in titles)
                         {
-                            title.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                            title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                             title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
                             title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
                             title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
@@ -458,7 +458,7 @@ namespace MOBOT.BHL.API.BHLApi
             Part part = dal.SegmentSelectForSegmentID(null, null, segmentIDint);
             if (part != null)
             {
-                part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
@@ -515,7 +515,7 @@ namespace MOBOT.BHL.API.BHLApi
                         parts = dal.SegmentSelectByIdentifier(null, null, identifierType, identifierValue);
                         foreach (Part part in parts)
                         {
-                            part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                            part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                             part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                             part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                             part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
@@ -536,7 +536,7 @@ namespace MOBOT.BHL.API.BHLApi
                         parts = dal.SegmentSelectByDOI(null, null, identifierValue);
                         foreach (Part part in parts)
                         {
-                            part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                            part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                             part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                             part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                             part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
@@ -571,10 +571,10 @@ namespace MOBOT.BHL.API.BHLApi
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
-                page.PageUrl = "http://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
-                page.ThumbnailUrl = "http://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
-                page.FullSizeImageUrl = "http://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "http://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
+                page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
+                page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
                 page.PageTypes = new CustomGenericList<PageType>();
                 page.PageNumbers = new CustomGenericList<PageNumber>();
 
@@ -664,7 +664,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach(Title title in titles)
             {
-                title.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
             }
 
             return titles;
@@ -677,7 +677,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach (Part part in parts)
             {
-                part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
@@ -700,7 +700,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach (Creator creator in creators)
             {
-                creator.CreatorUrl = "http://www.biodiversitylibrary.org/creator/" + creator.CreatorID.ToString();
+                creator.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + creator.CreatorID.ToString();
             }
 
             return creators;
@@ -719,7 +719,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach (Title title in titles)
             {
-                title.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
             }
 
             return titles;
@@ -739,7 +739,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach (Part part in parts)
             {
-                part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
@@ -1060,7 +1060,7 @@ namespace MOBOT.BHL.API.BHLApi
                     currentTitle.Items = new CustomGenericList<Item>();
 
                     currentTitle.TitleID = book.TitleID;
-                    currentTitle.TitleUrl = "http://www.biodiversitylibrary.org/bibliography/" + book.TitleID.ToString();
+                    currentTitle.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + book.TitleID.ToString();
                     currentTitle.FullTitle = book.FullTitle;
                     currentTitle.PartNumber = book.PartNumber;
                     currentTitle.PartName = book.PartName;
@@ -1086,7 +1086,7 @@ namespace MOBOT.BHL.API.BHLApi
                 Item newItem = new Item();
 
                 newItem.ItemID = book.ItemID;
-                newItem.ItemUrl = "http://www.biodiversitylibrary.org/item/" + book.ItemID.ToString();
+                newItem.ItemUrl = "https://www.biodiversitylibrary.org/item/" + book.ItemID.ToString();
                 newItem.Volume = book.Volume;
                 newItem.HoldingInstitution = book.HoldingInstitution;
 
@@ -1132,7 +1132,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             foreach (Part part in parts)
             {
-                part.PartUrl = "http://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);

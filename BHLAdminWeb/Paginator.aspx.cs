@@ -198,10 +198,10 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void Page_Load( object sender, EventArgs e )
 		{
-            // Hardcoding an old version of jQuery here because the bookviewer code requires it
-            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+            // Using an old version of jQuery here because the bookviewer code requires it
+            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQuery142Path"]);
 
-			if ( !IsPostBack )
+            if ( !IsPostBack )
 			{
 				loadPageTypes();
 

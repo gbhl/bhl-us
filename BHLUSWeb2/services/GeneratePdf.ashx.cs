@@ -95,7 +95,7 @@ namespace MOBOT.BHL.Web2.services
             sb.Append("When the PDF has been created, an email containing a link to download your PDF, will be sent to this address.");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
-            sb.Append("If you have questions or need to report a problem, please contact us via our Feedback page: http://www.biodiversitylibrary.org/contact");
+            sb.Append("If you have questions or need to report a problem, please contact us via our Feedback page: https://www.biodiversitylibrary.org/contact");
             sb.Append(endOfLine);
             sb.Append(endOfLine);
             sb.Append("Thank you for your interest.");

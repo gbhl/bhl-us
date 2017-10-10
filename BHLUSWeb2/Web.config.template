@@ -9,20 +9,20 @@
     <!-- ############# SETTINGS THAT DIFFER BETWEEN BETA AND PRODUCTION ############# -->
 
     <add key="IsProduction" value="false"/>
-    <add key="BaseUrl" value="http://beta.biodiversitylibrary.org"/>
-    <add key="BibPageUrl" value="http://beta.biodiversitylibrary.org/bibliography/{0}"/>
-    <add key="ItemPageUrl" value="http://beta.biodiversitylibrary.org/item/{0}"/>
-    <add key="PagePageUrl" value="http://beta.biodiversitylibrary.org/page/{0}"/>
-    <add key="PartPageUrl" value="http://beta.biodiversitylibrary.org/part/{0}"/>
-    <add key="AuthorPageUrl" value="http://beta.biodiversitylibrary/creator/{0}"/>
+    <add key="BaseUrl" value="https://beta.biodiversitylibrary.org"/>
+    <add key="BibPageUrl" value="https://beta.biodiversitylibrary.org/bibliography/{0}"/>
+    <add key="ItemPageUrl" value="https://beta.biodiversitylibrary.org/item/{0}"/>
+    <add key="PagePageUrl" value="https://beta.biodiversitylibrary.org/page/{0}"/>
+    <add key="PartPageUrl" value="https://beta.biodiversitylibrary.org/part/{0}"/>
+    <add key="AuthorPageUrl" value="https://beta.biodiversitylibrary/creator/{0}"/>
 
-    <add key="ImageNotFoundPath" value="http://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
-    <add key="ImageNotFoundThumbPath" value="http://beta.biodiversitylibrary.org/images/image_not_found_thumb.jpg"/>
+    <add key="ImageNotFoundPath" value="https://beta.biodiversitylibrary.org/images/image_not_found.jpg"/>
+    <add key="ImageNotFoundThumbPath" value="https://beta.biodiversitylibrary.org/images/image_not_found_thumb.jpg"/>
 
     <add key="PdfUrl" value="http://SITE_SERVICES_WEBSERVICE_URL/pdf{0}/{1}"/>
 
     <!-- OAI Settings -->
-    <add key="OAIBaseUrl" value="http://beta.biodiversitylibrary.org/oai"/>
+    <add key="OAIBaseUrl" value="https://beta.biodiversitylibrary.org/oai"/>
 
     <!-- Feature toggle for ElasticSearch implementation -->
     <add key="UseElasticSearch" value="false"/>
@@ -68,7 +68,7 @@
     <add key="TaxonFinderRequestText" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;freeText=" />
 
     <!-- TaxonFinder name service request URL that contains pointer (url) to text to be evaluated -->
-    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=http://www.biodiversitylibrary.org/pageocr/{0}" />
+    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=https://www.biodiversitylibrary.org/pageocr/{0}" />
 
     <!-- Base address of GNRD name service -->
     <add key="GNRDBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
@@ -95,15 +95,15 @@
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
     <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>
 
-    <add key="WikiPageAbout" value="http://biodivlib.wikispaces.com/About"/>
-    <add key="WikiPagePermissions" value="http://biodivlib.wikispaces.com/Permissions"/>
+    <add key="WikiPageAbout" value="https://biodivlib.wikispaces.com/About"/>
+    <add key="WikiPagePermissions" value="https://biodivlib.wikispaces.com/Permissions"/>
     <add key="projectUpdatesFeedLocation" value="http://blog.biodiversitylibrary.org/feeds/posts/default?alt=rss"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
-    <add key="PdfGenDownloadIA" value="http://www.archive.org/download/{0}/{1}.pdf"/>
+    <add key="PdfGenDownloadIA" value="https://www.archive.org/download/{0}/{1}.pdf"/>
     <!-- jQuery libraries -->
-    <add key="jQueryPath" value="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"/>
-    <add key="jQueryUIPath" value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"/>
-    <add key="jQueryUICSSPath" value="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css"/>
+    <add key="jQueryPath" value="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"/>
+    <add key="jQueryUIPath" value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"/>
+    <add key="jQueryUICSSPath" value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css"/>
     <add key="jqGridCSSPath" value="/css/jqgridtheme/ui.jqgrid.css"/>
     <add key="jqGridLocalePath" value="/js/libs/grid.locale-en.js"/>
     <add key="jqGridPath" value="/js/libs/jquery.jqGrid.min.js"/>

@@ -88,7 +88,7 @@
                 </td>
                 <td valign="top">
                     <asp:TextBox ID="txtCollectionURL" ClientIDMode="Static" runat="server" Width="400px" MaxLength="50"></asp:TextBox><br />
-                    This value is used to create a stable URL of the form http://www.biodiversitylibrary.org/collection/&lt;URL&gt;<br />
+                    This value is used to create a stable URL of the form https://www.biodiversitylibrary.org/collection/&lt;URL&gt;<br />
                     <b><i>Once a URL value has been assigned, it CANNOT be changed!</i></b>
                 </td>
             </tr>
@@ -132,7 +132,7 @@
                     Display Collection At: 
                 </td>
                 <td>
-                    <asp:CheckBox ID="chkBHL" ClientIDMode="Static" runat="server" Text="http://www.biodiversitylibrary.org" TextAlign="Right" onclick="validateBHLDisplay(this);" Checked="true" />&nbsp;&nbsp;&nbsp;
+                    <asp:CheckBox ID="chkBHL" ClientIDMode="Static" runat="server" Text="https://www.biodiversitylibrary.org" TextAlign="Right" onclick="validateBHLDisplay(this);" Checked="true" />&nbsp;&nbsp;&nbsp;
                     <asp:CheckBox ID="chkITunes" ClientIDMode="Static" runat="server" Text="iTunesU" TextAlign="Right" onclick="validateITunesUDisplay(this);" />
                 </td>
             </tr>
