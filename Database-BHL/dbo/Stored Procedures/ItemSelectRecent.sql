@@ -15,7 +15,7 @@ BEGIN
 	DECLARE @Institution nvarchar(10)
 	
 	SET @NumRows = @Top
-	SET @Language = @LanguageCode
+	SET @Language = CASE WHEN LOWER(@LanguageCode) = 'all' THEN '' ELSE @LanguageCode END
 	SET @Institution = @InstitutionCode
 
 	SELECT DISTINCT TOP (@NumRows) t.TitleID, 
