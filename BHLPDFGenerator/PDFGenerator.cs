@@ -136,12 +136,20 @@ namespace MOBOT.BHL.BHLPDFGenerator
 
                             if (pageUrls.Count > 0)
                             {
-                                this.LogMessage("Generating file for PDF: " + pdf.PdfID);
+                                this.LogMessage("Generating file for PDF " + pdf.PdfID);
 
                                 // Generate the PDF
                                 PDFDocument pdfDoc = new PDFDocument(pdf, pageUrls,
                                     configParms.PdfFilePath, configParms.PdfUrl);
                                 pdfDoc.GenerateFile(configParms.RetryImageWait);
+
+                                this.LogMessage(string.Format("Generated file for PDF {0} with {1} image errors.", 
+                                    pdf.PdfID.ToString(), pdf.NumberImagesMissing.ToString()));
+                                foreach(string error in pdfDoc.ImageErrors)
+                                {
+                                    this.LogMessage(string.Format("Image error for PDF {0}\r\n{1}",
+                                        pdf.PdfID.ToString(), error));
+                                }
 
                                 // Send email to the PDF requestor
                                 String emailBody = this.GetRequestorEmailBody(pdf.PdfID, pdfDoc.FileUrl,

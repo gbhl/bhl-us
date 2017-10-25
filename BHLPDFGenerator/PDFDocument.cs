@@ -74,6 +74,13 @@ namespace MOBOT.BHL.BHLPDFGenerator
             set { _numberOcrMissing = value; }
         }
 
+        private List<string> _imageErrors = new List<string>();
+        public List<string> ImageErrors
+        {
+            get { return _imageErrors; }
+            set { _imageErrors = value; }
+        }
+
         private List<String> _pageLabels = new List<string>();
 
         #endregion Attributes
@@ -412,6 +419,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
         private void AddImageToPDF(Document pdf, String imagePath, int retryImageWait)
         {
             iTextSharp.text.Image image = null;
+            bool downloadFailed = false;
 
             try
             {
@@ -426,10 +434,18 @@ namespace MOBOT.BHL.BHLPDFGenerator
                         image = iTextSharp.text.Image.GetInstance(new Uri(imagePath));
                         tryDownload = false;    // no need to continue downloads
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        this.ImageErrors.Add(string.Format(
+                            "Image: {0}\r\nAttempt: {1}\r\nMessage: {2}\r\nStack Trace: {3}",
+                            imagePath, attempts.ToString(), ex.Message, ex.StackTrace));
+
                         // If three attempts have been made and no image has been obtained, just rethrow the error
-                        if (attempts >= 3) throw;
+                        if (attempts >= 3)
+                        {
+                            downloadFailed = true;
+                            throw ex;
+                        }
                         System.Threading.Thread.Sleep(retryImageWait);   // Wait before re-trying the download
                     }
                 }
@@ -446,8 +462,16 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // "chunk" after the image.  This is also why extra space is added to the page height.
                 pdf.Add(new Chunk("", new iTextSharp.text.Font(iTextSharp.text.Font.HELVETICA, 1, iTextSharp.text.Font.NORMAL, iTextSharp.text.Color.BLACK)));
             }
-            catch
+            catch (Exception ex)
             {
+                if (!downloadFailed)
+                {
+                    // Not a download error, so we need to log it (download errors logged elsewhere)
+                    this.ImageErrors.Add(string.Format(
+                        "Image: {0}\r\nMessage: {1}\r\nStack Trace: {2}",
+                        imagePath, ex.Message, ex.StackTrace));
+                }
+
                 // Error getting the image, add a "Page Unavailable" placeholder
                 this._numberImagesMissing++;
                 SetStandardPageSize(pdf);
