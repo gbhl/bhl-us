@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.MonthlyStatsSelectDetailed
+﻿CREATE PROCEDURE [dbo].[MonthlyStatsSelectDetailed]
 
 @BHLMemberLibraryOnly bit
 
@@ -22,7 +22,7 @@ FROM (	SELECT	InstitutionCode,
 				[Month], 
 				sum(StatValue) AS StatValue
 		FROM	dbo.Monthlystats WITH (NOLOCK)
-		WHERE	InstitutionCode <> 'N/A'
+		WHERE	InstitutionCode IS NOT NULL
 		GROUP BY InstitutionCode, StatType, [Year], [Month]
 		) x INNER JOIN dbo.Institution inst WITH (NOLOCK)
 			ON x.InstitutionCode = inst.InstitutionCode
