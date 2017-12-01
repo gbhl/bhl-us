@@ -213,9 +213,65 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		#endregion
+        /// <summary>
+        /// Return a list of all pages that fall between the start and end page.  If the start and end pages
+        /// are not part of the specified item, or do not belong to the same item, nothing is returned.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="startPageID"></param>
+        /// <param name="endPageID"></param>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        public CustomGenericList<Page> PageSelectRangeForPagesAndItem(SqlConnection sqlConnection, 
+            SqlTransaction sqlTransaction, int startPageID, int endPageID, int? itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
 
-		public CustomGenericList<CustomDataRow> PageResolve( SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectRangeForPagesAndItem", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, false, startPageID),
+                    CustomSqlHelper.CreateInputParameter("EndPageID", SqlDbType.Int, null, false, endPageID),
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Return the page IDs that match the specified Item and Page Number.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="itemID"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        public CustomGenericList<Page> PageSelectByItemAndPageNumber(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int itemID, string volume, string pageNumber)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectByItemAndPageNumber", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                    CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 20, false, volume),
+                    CustomSqlHelper.CreateInputParameter("PageNumber", SqlDbType.NVarChar, 20, false, pageNumber)))
+            {
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        #endregion
+
+        public CustomGenericList<CustomDataRow> PageResolve( SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
 			int titleID, string volume, string issue, string year, string startPage )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 

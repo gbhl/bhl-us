@@ -20,12 +20,12 @@
 
 
 GO
-CREATE NONCLUSTERED INDEX [IA_Author_IsActive]
-    ON [dbo].[Author]([IsActive] ASC)
-    INCLUDE([AuthorID]);
-
-
+CREATE NONCLUSTERED INDEX [IX_Author_IsActive] 
+	ON [dbo].[Author]([IsActive] ASC)
+	INCLUDE ([AuthorID],[StartDate],[EndDate]); 
 GO
+
+
 CREATE NONCLUSTERED INDEX IX_Author_StartDateEndDate
 	ON dbo.Author (StartDate, EndDate)
 	INCLUDE (AuthorID)

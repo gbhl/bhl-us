@@ -37,6 +37,7 @@
     <!-- Server name of upload path for MARC files -->
     <add key="MarcUploadServer" value="\\SITE_SERVER" />
     <!-- File paths for Citation file uploads -->
+    <add key="CitationTemplatePath" value="SITE_ROOT_FOLDER\Upload\Citation\" />
     <add key="CitationNewPath" value="SITE_ROOT_FOLDER\Upload\Citation\New\" />
     <add key="CitationCompletePath" value="SITE_ROOT_FOLDER\Upload\Citation\Complete\" />
     <add key="CitationErrorPath" value="SITE_ROOT_FOLDER\Upload\Citation\Error\" />
@@ -65,12 +66,13 @@
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
+    <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
     <add key="jQueryUIPath" value="/Scripts/jquery-ui-1.11.4/jquery-ui.min.js" />
     <add key="jQueryUICSSPath" value="/styles/jquery-ui-1.11.4/jquery-ui.min.css" />
-    <add key="jQueryDataTablesPath" value="/js/jquery.dataTables.min.js" />
+    <add key="jQueryDataTablesPath" value="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />
     <add key="jQueryJEditablePath" value="/js/jquery.jeditable.1.7.3.min.js" />
     <add key="jqGridCSSPath" value="/styles/jqgridtheme/ui.jqgrid.css" />
-    <add key="jQueryDataTablesCSSPath" value="/styles/jquery.dataTables.css" />
+    <add key="jQueryDataTablesCSSPath" value="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     <add key="jqGridLocalePath" value="/js/grid.locale-en.js" />
     <add key="jqGridPath" value="/js/jquery.jqGrid.min.js" />
     <!-- Required for forms with large numbers of fields (such as the paginator) -->

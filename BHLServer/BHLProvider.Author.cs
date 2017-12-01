@@ -45,6 +45,12 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
 
+        public CustomGenericList<Author> AuthorResolve(string fullName, string lastName, string firstName,
+            string startDate, string endDate)
+        {
+            return new AuthorDAL().AuthorResolve(null, null, fullName, lastName, firstName, startDate, endDate);
+        }
+
         public int SaveAuthor(Author author, int userId)
         {
             return new AuthorDAL().Save(null, null, author, userId);

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE import.ImportFileDeleteByImportFileID
+﻿CREATE PROCEDURE [import].[ImportFileDeleteByImportFileID]
 
 @ImportFileID int
 
@@ -10,6 +10,10 @@ SET NOCOUNT ON
 
 BEGIN TRY
 	BEGIN TRAN
+
+	DELETE	import.ImportRecordPage
+	FROM	import.ImportRecordPage p INNER JOIN import.ImportRecord r ON p.ImportRecordID = r.ImportRecordID
+	WHERE	r.ImportFileID = @ImportFileID
 
 	DELETE	import.ImportRecordCreator
 	FROM	import.ImportRecordCreator c INNER JOIN import.ImportRecord r ON c.ImportRecordID = r.ImportRecordID
@@ -38,8 +42,3 @@ BEGIN CATCH
 END CATCH
 
 END
-
-
-GO
-
-

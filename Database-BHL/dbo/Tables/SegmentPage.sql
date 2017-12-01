@@ -14,9 +14,9 @@
 
 
 GO
-CREATE NONCLUSTERED INDEX [<Name of Missing Index, sysname,>]
-    ON [dbo].[SegmentPage]([SegmentID] ASC)
-    INCLUDE([PageID]);
+CREATE NONCLUSTERED INDEX IX_SegmentPage_SegmentID 
+	ON [dbo].[SegmentPage]([SegmentID] ASC)
+	INCLUDE ([PageID], [SequenceOrder])
 GO
 
 CREATE NONCLUSTERED INDEX [IX_SegmentPage_PageID]

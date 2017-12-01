@@ -123,6 +123,7 @@
     <Compile Include="Generated\ImportRecordDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordErrorLogDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordKeywordDAL.Auto.cs" />
+    <Compile Include="Generated\ImportRecordPageDAL.Auto.cs" />
     <Compile Include="Generated\ImportRecordStatusDAL.Auto.cs" />
     <Compile Include="Generated\InstitutionRoleDAL.Auto.cs" />
     <Compile Include="Generated\ItemCollectionDAL.Auto.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="ImportRecordDAL.cs" />
     <Compile Include="ImportRecordErrorLogDAL.cs" />
     <Compile Include="ImportRecordKeywordDAL.cs" />
+    <Compile Include="ImportRecordPageDAL.cs" />
     <Compile Include="ImportRecordStatusDAL.cs" />
     <Compile Include="InstitutionRoleDAL.cs" />
     <Compile Include="Interfaces\IAnnotatedItemDAL.Auto.cs" />

@@ -16,13 +16,17 @@
 					null,
 					null,
 					null,
+                    null,
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false }
 				]
-                ,"aaSorting": [[3,'desc']]
+                ,"aaSorting": [[4,'desc']]
 			} );
 		} );
 	</script>
@@ -32,7 +36,7 @@
     <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
 }
 @{
-    ViewBag.Title = "Citation Import History";
+    ViewBag.Title = "Segment Import History";
 }
 
 <p>
@@ -45,7 +49,7 @@
 {
     
     <div style="margin-bottom:10px">
-        <div>Content Provider: @Html.DropDownListFor(m => m.Institution, new SelectList(ViewBag.InstitutionList, "InstitutionCode", "InstitutionName"), "-- All --")</div>
+        <div>Contributor: @Html.DropDownListFor(m => m.Institution, new SelectList(ViewBag.InstitutionList, "InstitutionCode", "InstitutionName"), "-- All --")</div>
         <div>Import Status: @Html.DropDownListFor(m => m.ImportFileStatus, new SelectList(ViewBag.ImportFileStatusList, "ImportFileStatusID", "StatusName"), "-- All --")</div>
         <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
         <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
@@ -54,19 +58,23 @@
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
 	    <thead>
             <tr>
-                <th colspan="4" style="border-bottom:0px"></th>
-                <th colspan="5" style="border-bottom:0px">Records</th>
+                <th colspan="5" style="border-bottom:0px"></th>
+                <th colspan="8" style="border-bottom:0px">Records</th>
             </tr>
 		    <tr>
-			    <th width="25%">Filename</th>
-			    <th width="30%">Contributor</th>
+			    <th width="20%">Filename</th>
+			    <th width="20%">Contributor</th>
 			    <th width="10%">Status</th>
+                <th width="16%">User</th>
                 <th width="10%">Date</th>
-			    <th width="5%">Total</th>
-			    <th width="5%">New</th>
-			    <th width="5%">Import</th>
-			    <th width="5%">Reject</th>
-			    <th width="5%">Error</th>
+			    <th width="3%">Total</th>
+			    <th width="3%">New</th>
+			    <th width="3%">Import</th>
+                <th width="3%">Invalid</th>
+                <th width="3%">Incomplete</th>
+                <th width="3%">Duplicate</th>
+			    <th width="3%">Reject</th>
+			    <th width="3%">Error</th>
 		    </tr>
 	    </thead>
 	    <tbody>
@@ -77,12 +85,16 @@
                     <td><a href="/citationimport/review/@importFile.ImportFileID">@importFile.ImportFileNameClean</a></td>
                     <td>@importFile.ContributorName</td>
                     <td>@importFile.StatusName</td>
-                    <td>@importFile.LastModifiedDate</td>
-                    <td>@importFile.TotalRecords</td>
-                    <td>@importFile.NewRecords</td>
-                    <td>@importFile.ImportedRecords</td>
-                    <td>@importFile.RejectedRecords</td>
-                    <td>@importFile.ErrorRecords</td>
+                    <td>@importFile.CreationUser</td>
+                    <td>@importFile.LastModifiedDate.ToString("MM/dd/yyyy hh:mm:sstt")</td>
+                    <td class="importHistAlign">@importFile.TotalRecords</td>
+                    <td class="importHistAlign">@importFile.NewRecords</td>
+                    <td class="importHistAlign">@importFile.ImportedRecords</td>
+                    <td class="importHistAlign">@importFile.InvalidRecords</td>
+                    <td class="importHistAlign">@importFile.IncompleteRecords</td>
+                    <td class="importHistAlign">@importFile.DuplicateRecords</td>
+                    <td class="importHistAlign">@importFile.RejectedRecords</td>
+                    <td class="importHistAlign">@importFile.ErrorRecords</td>
                 </tr>
             }
 
@@ -92,15 +104,21 @@
 			    <th>Filename</th>
 			    <th>Contributor</th>
 			    <th>Status</th>
+                <th>User</th>
 			    <th>Date</th>
 			    <th>Total</th>
 			    <th>New</th>
 			    <th>Import</th>
+                <th>Invalid</th>
+                <th>Incomplete</th>
+                <th>Duplicate</th>
 			    <th>Reject</th>
 			    <th>Error</th>
 		    </tr>
-                <th colspan="4" style="border-top:0px"></th>
-                <th colspan="5" style="border-top:0px">Records</th>
+            <tr>
+                <th colspan="5" style="border-top:0px"></th>
+                <th colspan="8" style="border-top:0px">Records</th>
+            </tr>
 	    </tfoot>
     </table>
 

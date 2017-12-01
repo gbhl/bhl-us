@@ -1,7 +1,7 @@
-	
-// Generated 1/10/2014 11:05:49 AM
+
+// Generated 9/20/2017 1:00:17 PM
 // Do not modify the contents of this code file.
-// Interface IImportRecordCreatorDAL based upon ImportRecordCreator.
+// Interface IImportRecordCreatorDAL based upon import.ImportRecordCreator.
 
 #region using
 
@@ -19,7 +19,13 @@ namespace MOBOT.BHL.DAL
 		ImportRecordCreator ImportRecordCreatorSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			int importRecordCreatorID);
 
+		ImportRecordCreator ImportRecordCreatorSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
+			int importRecordCreatorID);
+
 		CustomGenericList<CustomDataRow> ImportRecordCreatorSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+			int importRecordCreatorID);
+
+		CustomGenericList<CustomDataRow> ImportRecordCreatorSelectAutoRaw(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int importRecordCreatorID);
 
 		ImportRecordCreator ImportRecordCreatorInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
@@ -31,11 +37,29 @@ namespace MOBOT.BHL.DAL
 			string endYear,
 			string authorType,
 			int creationUserID,
-			int lastModifiedUserID);
+			int lastModifiedUserID,
+			int? authorID);
+
+		ImportRecordCreator ImportRecordCreatorInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
+			int importRecordID,
+			string fullName,
+			string firstName,
+			string lastName,
+			string startYear,
+			string endYear,
+			string authorType,
+			int creationUserID,
+			int lastModifiedUserID,
+			int? authorID);
 
 		ImportRecordCreator ImportRecordCreatorInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecordCreator value);
 
+		ImportRecordCreator ImportRecordCreatorInsertAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, ImportRecordCreator value);
+
 		bool ImportRecordCreatorDeleteAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+			int importRecordCreatorID);
+
+		bool ImportRecordCreatorDeleteAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
 			int importRecordCreatorID);
 
 		ImportRecordCreator ImportRecordCreatorUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
@@ -47,9 +71,30 @@ namespace MOBOT.BHL.DAL
 			string startYear,
 			string endYear,
 			string authorType,
-			int lastModifiedUserID);
+			int lastModifiedUserID,
+			int? authorID);
+
+		ImportRecordCreator ImportRecordCreatorUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName,
+			int importRecordCreatorID,
+			int importRecordID,
+			string fullName,
+			string firstName,
+			string lastName,
+			string startYear,
+			string endYear,
+			string authorType,
+			int lastModifiedUserID,
+			int? authorID);
 
 		ImportRecordCreator ImportRecordCreatorUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecordCreator value);
+
+		ImportRecordCreator ImportRecordCreatorUpdateAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, ImportRecordCreator value);
+
+		CustomDataAccessStatus<ImportRecordCreator> ImportRecordCreatorManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, ImportRecordCreator value, int userId);
+
+		CustomDataAccessStatus<ImportRecordCreator> ImportRecordCreatorManageAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string connectionKeyName, ImportRecordCreator value, int userId);
+
+
 	}
 }
-// end of source generation
+

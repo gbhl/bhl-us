@@ -300,6 +300,42 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        /// <summary>
+        /// Find item, given some limited metadata.  Used during the ImportRecord process.
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="title"></param>
+        /// <param name="issn"></param>
+        /// <param name="isbn"></param>
+        /// <param name="oclc"></param>
+        /// <param name="doi"></param>
+        /// <param name="volume"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public CustomGenericList<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string issn, string isbn, string oclc, string volume, string year)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("import.ItemResolve", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("JournalTitle", SqlDbType.NVarChar, 2000, false, title),
+                    CustomSqlHelper.CreateInputParameter("ISSNValue", SqlDbType.NVarChar, 2000, false, issn),
+                    CustomSqlHelper.CreateInputParameter("ISBNValue", SqlDbType.NVarChar, 2000, false, isbn),
+                    CustomSqlHelper.CreateInputParameter("OCLCValue", SqlDbType.NVarChar, 2000, false, oclc),
+                    CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 2000, false, volume),
+                    CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 2000, false, year)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
         #endregion
 
         /// <summary>

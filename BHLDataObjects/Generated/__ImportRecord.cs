@@ -1,7 +1,7 @@
 
-// Generated 5/30/2014 11:29:00 AM
+// Generated 11/7/2017 10:02:12 AM
 // Do not modify the contents of this code file.
-// This abstract class __ImportRecord is based upon ImportRecord.
+// This abstract class __ImportRecord is based upon import.ImportRecord.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportRecord : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -84,6 +84,11 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="titleID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="endPageID"></param>
+		/// <param name="segmentID"></param>
 		public __ImportRecord(int importRecordID, 
 			int importFileID, 
 			int importRecordStatusID, 
@@ -122,7 +127,12 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			int? titleID, 
+			int? itemID, 
+			int? startPageID, 
+			int? endPageID, 
+			int? segmentID) : this()
 		{
 			_ImportRecordID = importRecordID;
 			ImportFileID = importFileID;
@@ -163,6 +173,11 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			TitleID = titleID;
+			ItemID = itemID;
+			StartPageID = startPageID;
+			EndPageID = endPageID;
+			SegmentID = segmentID;
 		}
 		
 		#endregion Constructors
@@ -384,7 +399,32 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+					case "TitleID" :
+					{
+						_TitleID = (int?)column.Value;
+						break;
+					}
+					case "ItemID" :
+					{
+						_ItemID = (int?)column.Value;
+						break;
+					}
+					case "StartPageID" :
+					{
+						_StartPageID = (int?)column.Value;
+						break;
+					}
+					case "EndPageID" :
+					{
+						_EndPageID = (int?)column.Value;
+						break;
+					}
+					case "SegmentID" :
+					{
+						_SegmentID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -392,7 +432,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportRecordID
 		
@@ -1477,9 +1517,144 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region TitleID
+		
+		private int? _TitleID = null;
+		
+		/// <summary>
+		/// Column: TitleID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("TitleID", DbTargetType=SqlDbType.Int, Ordinal=40, NumericPrecision=10, IsNullable=true)]
+		public int? TitleID
+		{
+			get
+			{
+				return _TitleID;
+			}
+			set
+			{
+				if (_TitleID != value)
+				{
+					_TitleID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion TitleID
+		
+		#region ItemID
+		
+		private int? _ItemID = null;
+		
+		/// <summary>
+		/// Column: ItemID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("ItemID", DbTargetType=SqlDbType.Int, Ordinal=41, NumericPrecision=10, IsNullable=true)]
+		public int? ItemID
+		{
+			get
+			{
+				return _ItemID;
+			}
+			set
+			{
+				if (_ItemID != value)
+				{
+					_ItemID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ItemID
+		
+		#region StartPageID
+		
+		private int? _StartPageID = null;
+		
+		/// <summary>
+		/// Column: StartPageID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("StartPageID", DbTargetType=SqlDbType.Int, Ordinal=42, NumericPrecision=10, IsNullable=true)]
+		public int? StartPageID
+		{
+			get
+			{
+				return _StartPageID;
+			}
+			set
+			{
+				if (_StartPageID != value)
+				{
+					_StartPageID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion StartPageID
+		
+		#region EndPageID
+		
+		private int? _EndPageID = null;
+		
+		/// <summary>
+		/// Column: EndPageID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("EndPageID", DbTargetType=SqlDbType.Int, Ordinal=43, NumericPrecision=10, IsNullable=true)]
+		public int? EndPageID
+		{
+			get
+			{
+				return _EndPageID;
+			}
+			set
+			{
+				if (_EndPageID != value)
+				{
+					_EndPageID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion EndPageID
+		
+		#region SegmentID
+		
+		private int? _SegmentID = null;
+		
+		/// <summary>
+		/// Column: SegmentID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("SegmentID", DbTargetType=SqlDbType.Int, Ordinal=44, NumericPrecision=10, IsNullable=true)]
+		public int? SegmentID
+		{
+			get
+			{
+				return _SegmentID;
+			}
+			set
+			{
+				if (_SegmentID != value)
+				{
+					_SegmentID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -1559,7 +1734,12 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.TitleID == TitleID &&
+					o.ItemID == ItemID &&
+					o.StartPageID == StartPageID &&
+					o.EndPageID == EndPageID &&
+					o.SegmentID == SegmentID 
 				)
 				{
 					o = null;
@@ -1698,10 +1878,16 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string TitleID = "TitleID";	
+			public const string ItemID = "ItemID";	
+			public const string StartPageID = "StartPageID";	
+			public const string EndPageID = "EndPageID";	
+			public const string SegmentID = "SegmentID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

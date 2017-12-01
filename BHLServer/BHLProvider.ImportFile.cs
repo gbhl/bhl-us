@@ -1,8 +1,6 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Utility;
-using System;
 
 namespace MOBOT.BHL.Server
 {
@@ -18,9 +16,14 @@ namespace MOBOT.BHL.Server
             return new ImportFileDAL().ImportFileSelectAuto(null, null, importFileID);
         }
 
-        public ImportFile ImportFileInsertAuto(int fileStatusID, string fileName, string contributor, int userID)
+        public ImportFile ImportFileSelectById(int importFileID)
         {
-            return new ImportFileDAL().ImportFileInsertAuto(null, null, fileStatusID, fileName, contributor, userID, userID);
+            return new ImportFileDAL().ImportFileSelectByID(null, null, importFileID);
+        }
+
+        public ImportFile ImportFileInsertAuto(int fileStatusID, string fileName, string contributor, int userID, int? segmentGenreID)
+        {
+            return new ImportFileDAL().ImportFileInsertAuto(null, null, fileStatusID, fileName, contributor, userID, userID, segmentGenreID);
         }
 
         public ImportFile ImportFileUpdateAuto(ImportFile importFile)
@@ -31,12 +34,6 @@ namespace MOBOT.BHL.Server
         public void ImportFileDelete(int importFileID)
         {
             new ImportFileDAL().ImportFileDeleteByImportFileID(null, null, importFileID);
-        }
-
-        public void ImportRecordSave(ImportRecord citation, int userID)
-        {
-            citation.Year = DataCleaner.CleanYear(citation.Year);
-            new ImportRecordDAL().ImportRecordSave(null, null, citation, userID);
         }
 
         public void ImportFilePublishToProduction(int importFileID, int userID)

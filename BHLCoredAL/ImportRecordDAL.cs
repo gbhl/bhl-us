@@ -72,6 +72,26 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
+                if (citation.Pages.Count > 0)
+                {
+                    ImportRecordPageDAL importRecordPageDAL = new ImportRecordPageDAL();
+                    foreach(ImportRecordPage page in citation.Pages)
+                    {
+                        if (page.ImportRecordID == 0) page.ImportRecordID = updatedCitation.ReturnObject.ImportRecordID;
+                        importRecordPageDAL.ImportRecordPageManageAuto(sqlConnection, sqlTransaction, page, userID);
+                    }
+                }
+
+                if (citation.Errors.Count > 0)
+                {
+                    ImportRecordErrorLogDAL importRecordErrorLogDAL = new ImportRecordErrorLogDAL();
+                    foreach(ImportRecordErrorLog error in citation.Errors)
+                    {
+                        if (error.ImportRecordID == 0) error.ImportRecordID = updatedCitation.ReturnObject.ImportRecordID;
+                        importRecordErrorLogDAL.ImportRecordErrorLogManageAuto(sqlConnection, sqlTransaction, error, userID);
+                    }
+                }
+
                 CustomSqlHelper.CommitTransaction(sqlTransaction, isTransactionCoordinator);
             }
             catch

@@ -23,7 +23,7 @@ SELECT	i.[ItemID],
 		ISNULL(i.CopyrightRegion, '') AS CopyrightRegion,
 		ISNULL(i.CopyrightComment, '') AS CopyrightComment,
 		ISNULL(i.CopyrightEvidence, '') AS CopyrightEvidence,
-		(SELECT COUNT(*) FROM dbo.Segment WHERE ItemID = i.ItemID AND SegmentStatusID IN (10,20)) AS NumberOfSegments,
+		(SELECT COUNT(*) FROM dbo.SearchCatalogSegment WHERE ItemID = i.ItemID) AS NumberOfSegments,
 		c.FirstPageID
 FROM	[dbo].[Item] i 
 		LEFT JOIN [dbo].[ItemSource] s ON i.[ItemSourceID] = s.[ItemSourceID]

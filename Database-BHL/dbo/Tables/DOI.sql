@@ -28,90 +28,11 @@ CREATE NONCLUSTERED INDEX [IX_DOI_EntityIsValid]
 
 
 GO
-CREATE TRIGGER dbo.DOI_AuditBasic_Insert ON [dbo].[DOI]
- AFTER Insert
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- SET ARITHABORT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
 
-DECLARE @AuditTime DATETIME
-SET @AuditTime = GetDate()
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.DOI', 'I',@UserSQL, Inserted.DOIID,NULL
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
+CREATE NONCLUSTERED INDEX IX_DOI_TypeIDNameValidStatus 
+	ON [dbo].[DOI]([DOIEntityTypeID],[DOIName],[IsValid],[DOIStatusID])
 GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[DOI_AuditBasic_Insert]', @order = N'last', @stmttype = N'insert';
 
-
+CREATE NONCLUSTERED INDEX IX_DOI_NameIsValid 
+	ON [dbo].[DOI]([DOIName],[IsValid])
 GO
-CREATE TRIGGER dbo.DOI_AuditBasic_Update ON [dbo].[DOI]
- AFTER Update
- NOT FOR REPLICATION
- AS 
- BEGIN 
- SET NOCOUNT ON 
- -- patterned after AutoAudit created by Paul Nielsen 
- -- www.SQLServerBible.com 
-
-DECLARE @AuditTime DATETIME, @IsDirty BIT
-SET @AuditTime = GetDate()
-
-SET @IsDirty = 0
-
- BEGIN TRY 
- DECLARE @UserSQL nvarchar(max)
- SET @UserSQL = ''
- IF (SUSER_NAME() <> 'BotanicusService' AND SUSER_NAME() <> 'BHLWebUser' AND SUSER_NAME() <> 'MOBOT\SQLSERVER')
- BEGIN
-  -- capture SQL Statement
-  DECLARE @ExecStr varchar(50)
-  DECLARE  @inputbuffer TABLE (EventType nvarchar(30), Parameters int, EventInfo nvarchar(max))
-  SET @ExecStr = 'DBCC INPUTBUFFER(@@SPID) with no_infomsgs'
-  INSERT INTO @inputbuffer EXEC (@ExecStr)
-  SELECT @UserSQL = EventInfo FROM @inputbuffer
- END
-
- INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, EntityKey1, ApplicationUserID)
- SELECT @AuditTime, SUSER_SNAME(), 'dbo.DOI', 'U',@UserSQL, Inserted.DOIID,NULL
- FROM Inserted
-
- END TRY 
- BEGIN CATCH 
-   DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
-   SET @ErrorMessage = ERROR_MESSAGE()  
-   SET @ErrorSeverity = ERROR_SEVERITY() 
-   SET @ErrorState = ERROR_STATE()  
-   RAISERROR(@ErrorMessage,@ErrorSeverity,@ErrorState) WITH LOG
- END CATCH 
- END 
-GO
-EXECUTE sp_settriggerorder @triggername = N'[dbo].[DOI_AuditBasic_Update]', @order = N'last', @stmttype = N'update';
-

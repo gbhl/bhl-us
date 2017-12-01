@@ -28,6 +28,7 @@
     <RestorePackages>true</RestorePackages>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1008,6 +1009,7 @@
     <Content Include="styles\ui.jqdatatable.css" />
     <Content Include="styles\ui.jqgrid.css" />
     <Content Include="NoteTypeEdit.aspx" />
+    <Content Include="Upload\Citation\ImportSegmentTemplate.txt" />
     <Content Include="UserRegistrationEmail.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1071,6 +1073,9 @@
     <Content Include="Views\Report\ReportingStats.cshtml" />
     <Content Include="Views\Report\Orphans.cshtml" />
     <Content Include="Services\UtilityService.ashx" />
+    <Content Include="Views\CitationImport\SelectFile.cshtml" />
+    <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
+    <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

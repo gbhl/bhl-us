@@ -105,7 +105,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         private void CitationImportHistoryInit(CitationImportHistoryModel model)
         {
             CitationService service = new CitationService();
-            ViewBag.PageTitle += "Citation Import History";
+            ViewBag.PageTitle += "Segment Import History";
             ViewBag.InstitutionList = service.InstitutionList();
             ViewBag.ImportFileStatusList = service.ImportFileStatusList();
             ViewBag.ReportDateRangeList = service.ReportDateRangeList();

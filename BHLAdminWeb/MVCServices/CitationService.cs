@@ -1,17 +1,24 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MOBOT.BHL.AdminWeb.MVCServices
 {
     public class CitationService
     {
+        public class ImportFileException : Exception
+        {
+            public ImportFileException() : base() { }
+            public ImportFileException(string message) : base(message) { }
+            public ImportFileException(string message, System.Exception inner) : base(message, inner) { }
+        }
+
         #region DropDownList data
 
         /// <summary>
-        /// Provide the list of data sources to be used during the citation import process
+        /// Provide the list of data sources to be used during the segment import process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> DataSourceTypeList()
@@ -25,13 +32,19 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of institutions (read from the DB) to be used during the citation import process
+        /// Provide the list of institutions (read from the DB) to be used during the segment import process
         /// </summary>
         /// <returns></returns>
         public CustomGenericList<Institution> InstitutionList()
         {
             BHLProvider provider = new BHLProvider();
             return provider.InstituationSelectAll();
+        }
+
+        public CustomGenericList<SegmentGenre> GenreList()
+        {
+            BHLProvider provider = new BHLProvider();
+            return provider.SegmentGenreSelectAll();
         }
 
         public CustomGenericList<ImportFileStatus> ImportFileStatusList()
@@ -46,7 +59,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Returns the list of record statuses (encoded as JSON) to be used during the citation review process
+        /// Returns the list of record statuses (encoded as JSON) to be used during the segment review process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> GetImportRecordStatuses()
@@ -63,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of row/column delimiters to be used during the citation import process
+        /// Provide the list of row/column delimiters to be used during the segment import process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> RowColumnDelimiterList()
@@ -82,7 +95,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of code pages to be used during the citation import process
+        /// Provide the list of code pages to be used during the segment import process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> CodePageList()
@@ -244,7 +257,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of code pages to be used during the citation import process
+        /// Provide the list of columns available for mapping during the segment import process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> MappedColumnList()
@@ -259,21 +272,24 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORSTARTDATE.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORSTARTDATE.name);
             //mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORTYPE.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORTYPE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ABSTRACT.name.ToString(), Models.CitationImportModel.MappedColumn.ABSTRACT.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ADDITIONALPAGES.name.ToString(), Models.CitationImportModel.MappedColumn.ADDITIONALPAGES.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOI.name.ToString(), Models.CitationImportModel.MappedColumn.DOI.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEPAGERANGE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEENDPAGE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLEENDPAGEID.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLEENDPAGEID.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGEID.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLESTARTPAGEID.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ARTICLETITLE.name.ToString(), Models.CitationImportModel.MappedColumn.ARTICLETITLE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.AUTHORNAMES.name.ToString(), Models.CitationImportModel.MappedColumn.AUTHORNAMES.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name.ToString(), Models.CitationImportModel.MappedColumn.BOOKJOURNALTITLE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name.ToString(), Models.CitationImportModel.MappedColumn.COPYRIGHTSTATUS.name);
-            mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOI.name.ToString(), Models.CitationImportModel.MappedColumn.DOI.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DOWNLOADURL.name.ToString(), Models.CitationImportModel.MappedColumn.DOWNLOADURL.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name.ToString(), Models.CitationImportModel.MappedColumn.DUEDILIGENCE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.EDITION.name.ToString(), Models.CitationImportModel.MappedColumn.EDITION.name);
-            mappedColumns.Add(Models.CitationImportModel.MappedColumn.GENRE.name.ToString(), Models.CitationImportModel.MappedColumn.GENRE.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISBN.name.ToString(), Models.CitationImportModel.MappedColumn.ISBN.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSN.name.ToString(), Models.CitationImportModel.MappedColumn.ISSN.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.ISSUE.name.ToString(), Models.CitationImportModel.MappedColumn.ISSUE.name);
+            mappedColumns.Add(Models.CitationImportModel.MappedColumn.ITEMID.name.ToString(), Models.CitationImportModel.MappedColumn.ITEMID.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.JOURNALENDYEAR.name.ToString(), Models.CitationImportModel.MappedColumn.JOURNALENDYEAR.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.JOURNALSTARTYEAR.name.ToString(), Models.CitationImportModel.MappedColumn.JOURNALSTARTYEAR.name);
             mappedColumns.Add(Models.CitationImportModel.MappedColumn.KEYWORDS.name.ToString(), Models.CitationImportModel.MappedColumn.KEYWORDS.name);
@@ -297,7 +313,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         }
 
         /// <summary>
-        /// Provide the list of data sources to be used during the citation import process
+        /// Provide the list of data sources to be used during the segment import process
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> ReportDateRangeList()

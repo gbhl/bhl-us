@@ -241,5 +241,10 @@ namespace MOBOT.BHL.Server
         {
             return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
         }
+
+        public CustomGenericList<Segment> SegmentResolve(string doi, int startPageID)
+        {
+            return new SegmentDAL().SegmentResolve(null, null, doi, startPageID);
+        }
     }
 }

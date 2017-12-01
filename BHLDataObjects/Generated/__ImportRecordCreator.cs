@@ -1,7 +1,7 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 9/20/2017 1:00:17 PM
 // Do not modify the contents of this code file.
-// This abstract class __ImportRecordCreator is based upon ImportRecordCreator.
+// This abstract class __ImportRecordCreator is based upon import.ImportRecordCreator.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportRecordCreator : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -57,6 +57,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="authorID"></param>
 		public __ImportRecordCreator(int importRecordCreatorID, 
 			int importRecordID, 
 			string fullName, 
@@ -68,7 +69,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			int? authorID) : this()
 		{
 			_ImportRecordCreatorID = importRecordCreatorID;
 			ImportRecordID = importRecordID;
@@ -82,6 +84,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			AuthorID = authorID;
 		}
 		
 		#endregion Constructors
@@ -168,7 +171,12 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+					case "AuthorID" :
+					{
+						_AuthorID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -176,7 +184,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportRecordCreatorID
 		
@@ -239,7 +247,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: FullName;
-		/// DBMS data type: nvarchar(30);
+		/// DBMS data type: nvarchar(300);
 		/// </summary>
 		[ColumnDefinition("FullName", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=300)]
 		public string FullName
@@ -508,9 +516,36 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region AuthorID
+		
+		private int? _AuthorID = null;
+		
+		/// <summary>
+		/// Column: AuthorID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("AuthorID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		public int? AuthorID
+		{
+			get
+			{
+				return _AuthorID;
+			}
+			set
+			{
+				if (_AuthorID != value)
+				{
+					_AuthorID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion AuthorID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -563,7 +598,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.AuthorID == AuthorID 
 				)
 				{
 					o = null;
@@ -675,10 +711,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string AuthorID = "AuthorID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

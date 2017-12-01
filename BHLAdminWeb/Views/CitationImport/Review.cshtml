@@ -4,48 +4,300 @@
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryJEditablePath"])" type="text/javascript"></script>
 	<script type="text/javascript" charset="utf-8">
+        function formatDetails ( d ) {
+            if (typeof d !== 'undefined') {
+                var segDetails = "";
+                if (d.segmentID !== "") segDetails += formatDetail("Segment ID", d.segmentID);
+                if (d.itemID !== "") segDetails += formatDetail("Item ID", d.itemID);
+                segDetails += formatDetailAuthor("Authors", d.authors, d.status === "Imported");
+                if (d.keywords !== "") segDetails += formatDetailKeyword("Keywords", d.keywords);
+                if (d.translatedTitle !== "") segDetails += formatDetail("Translated Title", d.translatedTitle);
+                if (d.series !== "") segDetails += formatDetail("Series", d.series);
+                if (d.edition !== "") segDetails += formatDetail("Edition", d.edition);
+                if (d.publicationName === "" && d.publicationPlace === "") segDetails += formatDetail("Publication Details", d.publicationDetails);
+                if (d.publisherName !== "") segDetails += formatDetail("Publisher Name", d.publisherName);
+                if (d.publisherPlace !== "") segDetails += formatDetail("Publication Place", d.publisherPlace);
+                if (d.language !== "") segDetails += formatDetail("Language", d.language);
+                if (d.issn !== "") segDetails += formatDetail("ISSN", d.issn);
+                if (d.isbn !== "") segDetails += formatDetail("ISBN", d.isbn);
+                if (d.oclc !== "") segDetails += formatDetail("OCLC", d.oclc);
+                if (d.lccn !== "") segDetails += formatDetail("LCCN", d.lccn);
+                if (d.doi !== "") segDetails += formatDetail("Article DOI", d.doi);
+                if (d.rights !== "") segDetails += formatDetail("Rights", d.rights);
+                if (d.dueDiligence !== "") segDetails += formatDetail("Due Diligence", d.dueDiligence);
+                if (d.copyrightStatus !== "") segDetails += formatDetail("Copyright", d.copyrightStatus);
+                if (d.license !== "") segDetails += formatDetail("License", d.license);
+                if (d.licenseUrl !== "") segDetails += formatDetail("License Url", d.licenseUrl);
+                if (d.url !== "") segDetails += formatDetail("Url", d.url);
+                if (d.summary !== "") segDetails += formatDetail("Abstract", d.summary);
+                if (d.notes !== "") segDetails += formatDetail("Notes", d.notes);
+                if (d.errors !== "") segDetails += formatDetailError("ERRORS", d.errors);
+                return "<div class='container'>" + segDetails + "</div>";
+            }
+            else return "";
+        }
+
+        function formatDetail(label, value)
+        {
+            var detail = formatLabel(label);
+            return detail + value + "</div>";
+        }
+
+        function formatDetailAuthor(label, value, isImported)
+        {
+            var detail = formatLabel(label);
+            if (value !== "") {
+                var values = value.split("+++");
+                values.forEach(function(val) {
+                    var valDetail = val.split("|");
+                    detail += valDetail[1].trim();
+                    detail += " <span id='selectedAuthorViewDiv" + valDetail[0].trim() + "' style='display:" + ((valDetail[2].trim() === "") ? "none" : "inline") + "'>(<a id='selectedAuthorViewLink" + valDetail[0].trim() + "' target='_blank' href='/AuthorEdit.aspx?id=" + valDetail[2].trim() + "'>BHL ID <span id='selectedAuthorViewSpan" + valDetail[0].trim() + "'>" + valDetail[2].trim() + "</span></a> - <span id='selectedAuthorNameViewSpan" + valDetail[0].trim() + "'>" + valDetail[3].trim() + "</span>)</span>";
+                    // Only add this link for non-Imported rows
+                    if (!isImported) detail += " <a href='' id='selectedAuthorEditLink" + valDetail[0].trim() + "' data-toggle='modal' data-target='#authorSearchModal' data-authorrecordid='" + valDetail[0].trim() + "' data-selectedid='" + valDetail[2].trim() + "' data-selectedname='" + ((valDetail[2].trim()) === "" ? "None" : valDetail[3].trim()) + "' data-authorname='" + valDetail[1].replace("'", "\'").trim() + "'>Link</a>";
+                    detail += "<br/>";
+                });
+            }
+            else
+            {
+                detail += "<br/>";
+            }
+            return detail + "</div>";
+        }
+
+        function formatDetailKeyword(label, value)
+        {
+            var detail = formatLabel(label);
+            var values = value.split("+++");
+            values.forEach(function(val) { detail += val + "<br/>"; });
+            return detail + "</div>";
+        }
+
+        function formatDetailError(label, value)
+        {
+            var detail = formatLabel(label, 'ErrorText');
+            var values = value.split("+++");
+            values.forEach(function(val) { detail += val + "<br/>"; });
+            return detail + "</div>";
+        }
+
+        function formatLabel(label, style)
+        {
+            style = (typeof style !== 'undefined') ?  style + ' ' : '';
+            return "<div class='" + style + "col-sm-3'>" + label + "</div><div class='" + style + "col-sm-8'>";
+        }
+
 		$(document).ready(function() {
-			
-			var oTable = $('#recordlist').dataTable( {
-				"bProcessing": true,
-				"bServerSide": true,
-				"bFilter": false,
-				"bLengthChange": false,
-				"iDisplayLength": 100,
-                "sDom": '<"H"lfrip>t<"F"ip>',
-				"sPaginationType": "full_numbers",
-				"sAjaxSource": '/CitationImport/GetRecords?importFileID=@Model.ImportFileID'
-					
-				,"aoColumns": [
-					{ "bVisible": false }, /* ID column */
-                    { "bSortable": false },
-					null,
-					{ "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false, "sClass": "editCol" }
-				]						
-				,"fnDrawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/CitationImport/UpdateRecordStatus', { 
+
+			var oTable = $('#recordlist').DataTable( {
+				"processing": true
+				,"serverSide": true
+				,"filter": false
+				,"lengthChange": false
+				,"displayLength": 100
+                ,"scrollY": 500
+                ,"scrollX": true
+				,"paginationType": "full_numbers"
+				,"ajaxSource": '/CitationImport/GetRecords?importFileID=@Model.ImportFileID'
+				,"columns": [
+					{ "data": "id", "visible": false } /* ID column */
+                    ,{ "data": null, "sortable": false, "defaultContent": "", "class": "import-detail", "defaultcontent": "" }
+					,{ "data": "title", "sortable": true }
+					,{ "data": "journal", "sortable": true }
+					,{ "data": "year", "sortable": false }
+					,{ "data": "volume", "sortable": false }
+					,{ "data": "issue", "sortable": false }
+					,{ "data": "startPageID", "sortable": false
+                      ,"mRender" : function (id, type, full) {
+                            if (id != '')
+                                return "<a href='#' title='Show First Page Image' onclick='window.open(\"@System.Configuration.ConfigurationManager.AppSettings["BaseUrl"]/pagethumb/" + id + ",500,800\", \"Page " + id + "\", \"resizeable=0,scrollbars=1,height=800,width=500,status=0,toolbar=0,menubar=0,location=0\");'><img src='/images/textpage.png' /></a>";
+                            else
+                                return "";
+                        }
+                    }
+					,{ "data": "startPage", "sortable": false }
+					,{ "data": "endPage", "sortable": false }
+					,{ "data": "status", "sortable": true, "sClass": "editCol" }
+				]
+				,"drawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/CitationImport/UpdateRecordStatus', {
 					"callback": function (sValue, settings) {
-						var aPos = oTable.fnGetPosition(this);
-						oTable.fnUpdate( sValue, aPos[0], aPos[2], false );
-					},					
+                        oTable.row(this.parentNode).data().status = sValue;
+					},
 					"submitdata": function (value, settings) {
 						return {
-						    "importRecordID": oTable.fnGetData(oTable.fnGetPosition(this)[0], 0),
+						    "importRecordID": oTable.row(this.parentNode).data().id,
                             "originalValue": this.revert
 						};
 					},
-					"height": "14px", 
+					"height": "12px",
 					"width": "100%",
 					"data" : $(".importRecordStatus").html(),
 					"type" : "select"
-					} ); 
+					} );
 				}
 			} );
+
+            var detailRows = [];
+
+            $('#recordlist tbody').on( 'click', 'tr td.import-detail', function () {
+                var tr = $(this).closest('tr');
+                var row = oTable.row( tr );
+                var idx = $.inArray( tr.attr('id'), detailRows );
+ 
+                if ( row.child.isShown() ) {
+                    tr.removeClass( 'import-detail-row' );
+                    row.child.hide();
+ 
+                    // Remove from the 'open' array
+                    detailRows.splice( idx, 1 );
+                }
+                else {
+                    tr.addClass( 'import-detail-row' );
+                    if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); }
+
+                    // Add to the 'open' array
+                    if ( idx === -1 ) {
+                        detailRows.push( tr.attr('id') );
+                    }
+                }
+            } );
+
+            var expanded = false;
+
+            $('thead').on( 'click', 'tr th.import-detail', function () {
+                expanded = !expanded;
+                $('#recordlist > tbody > tr').each(function(i) {
+                    var tr = $(this).closest('tr');
+                    var row = oTable.row( tr );
+                    var idx = $.inArray( tr.attr('id'), detailRows );
+
+                    if ( row.child.isShown() && !expanded) {
+                        tr.removeClass( 'import-detail-row' );
+                        row.child.hide();
+ 
+                        // Remove from the 'open' array
+                        detailRows.splice( idx, 1 );
+                    }
+                    else if (!row.child.isShown() && expanded) {
+                        tr.addClass( 'import-detail-row' );
+                        //row.child( formatDetails(row.data())).show();
+                        if (row.child()) { row.child.show(); } else { row.child(formatDetails(row.data())).show(); }
+ 
+                        // Add to the 'open' array
+                        if ( idx === -1 ) {
+                            detailRows.push( tr.attr('id') );
+                        }
+                    }
+                });
+            } );
+
+            // On each draw, loop over the 'detailRows' array and show any child rows
+            oTable.on( 'draw', function () {
+                $.each( detailRows, function ( i, id ) {
+                    $('#'+id+' td.import-detail').trigger( 'click' );
+                } );
+            } );
+
+            // Save newly selected linked author information
+            $(document).on('click', '.modal-footer .btn-primary', function(e) {
+                var modal = $('#authorSearchModal');
+                var authorRecordId = modal.find('.modal-header #authorRecordID').val().trim();
+                var selectedId = modal.find('.modal-body #selectedAuthorID').text().trim();
+                var selectedName = modal.find('.modal-body #selectedAuthorName').text().trim();
+
+                $.ajax('/CitationImport/UpdateRecordCreatorID?importRecordCreatorID=' + authorRecordId + '&value=' + selectedId)
+                    .done(function() {
+                        var link = $('#selectedAuthorViewLink' + authorRecordId);
+                        var span = $('#selectedAuthorViewSpan' + authorRecordId);
+                        var name = $('#selectedAuthorNameViewSpan' + authorRecordId);
+                        var edit = $('#selectedAuthorEditLink' + authorRecordId);
+                        var div = $('#selectedAuthorViewDiv' + authorRecordId);
+                        link.attr('href', '/AuthorEdit.aspx?id=' + selectedId);
+                        span.text(selectedId);
+                        name.text(selectedName);
+                        edit.data('selectedid', selectedId);
+                        edit.data('selectedname', selectedName);
+
+                        if (selectedId === "") div.hide(); else div.show();
+                    })
+                    .fail(function() {
+                        alert('Error updating the ID for this author!  Please try again.');
+                    });
+            });
 		} );
+
+        $(document).on('show.bs.modal', '#authorSearchModal', function(event) {
+            var button = $(event.relatedTarget); // Link that triggered the modal
+            // Extract info from data-* attributes
+            var authorRecordId = button.data('authorrecordid');
+            var authorName = button.data('authorname');
+            var selectedId = button.data('selectedid');
+            var selectedName = button.data('selectedname');
+
+            var modal = $(this);
+            modal.find('.modal-header h4').text('Link Author ID for "' + authorName + '"');
+            modal.find('.modal-header #authorRecordID').val(authorRecordId);
+            modal.find('.modal-body input').val(authorName);
+            modal.find('.modal-body #selectedAuthorID').text(selectedId);
+            modal.find('.modal-body #selectedAuthorName').text(selectedName);
+
+            $('#srchAuthorResult').hide();
+        });
+
+        $(document).on('keypress', '.modal-body #author-name', function(e) {
+            // Author search on Enter keypress
+            if(e.which == 13) {
+                e.preventDefault();
+                $('#authorSearchButton').click();
+            }
+        });
+
+        $(document).on('click', '#clearAuthorSelection', function(event) {
+            var modal = $('#authorSearchModal');
+            modal.find('.modal-body #selectedAuthorID').text('');
+            modal.find('.modal-body #selectedAuthorName').text('None');
+        });
+
+        $(document).on('click', '#authorSearchButton', function(event) {
+            var modal = $('#authorSearchModal');
+            var authorName = modal.find('.modal-body input').val();
+
+            if (authorName === "") {
+                alert("Please specify an Author Name.");
+                return;
+            }
+
+            $.getJSON("/services/authorservice.ashx", "op=AuthorSearch&authorID=&authorName=" + authorName,  function(data) {
+                var authors = eval(data);
+
+                // Clear rows already in table
+                var tbody = $("#srchAuthorResultTable tbody");
+                var rows = $("#srchAuthorResultTable tr");
+                for (var j = (rows.length - 1); j >= 1; j--) rows[j].parentNode.removeChild(rows[j]);
+
+                // Build the table of authors
+                for (var i = 0; i < authors.length; i++) {
+                    var authorFullName = authors[i].FullName + ' ' + authors[i].Numeration + ' ' + authors[i].Unit + ' ' + authors[i].Title + ' ' + authors[i].Location + ' ' + authors[i].FullerForm + ' ' + authors[i].Dates;
+
+                    var tbody = $("#srchAuthorResultTable tbody");
+                    var td1 = $("<td/>").append(authors[i].AuthorID);
+                    var a = $("<a/>")
+                            .attr("href", "#").attr("onClick", "selectAuthor('" + authors[i].AuthorID + "','" + authorFullName + "')")
+                            .append(authorFullName);
+                    var td2 = $("<td/>").append(a);
+                    var row = $("<tr/>").attr("align", "left").append(td1).append(td2);
+                    tbody.append(row);
+                }
+
+                $('#srchAuthorResult').show();
+            });
+        });
+
+        function selectAuthor(id, name)
+        {
+            var modal = $('#authorSearchModal');
+            modal.find('.modal-body #selectedAuthorID').text(id);
+            modal.find('.modal-body #selectedAuthorName').text(name);
+        }
 	</script>
 }
 @section CSS
@@ -53,14 +305,60 @@
     <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
 }
 @{
-    ViewBag.Title = "Import Citations - Review";
+    ViewBag.Title = "Import Segments - Review";
 }
+
+<div class="modal" id="authorSearchModal" tabindex="-1" role="dialog" aria-labelledby="authorSearchLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="authorSearchLabel">Link Author ID</h4>
+                <input type="hidden" id="authorRecordID" />
+            </div>
+            <div class="modal-body">
+                <div class="panel">
+                    <label class="control-label">Selected:</label>&nbsp;<button id="clearAuthorSelection" class="btn btn-xs btn-primary">Clear Selection</button>
+                    <div><span id="selectedAuthorID"></span>&nbsp;<span id="selectedAuthorName">None</span></div>
+                </div>
+                <form class="panel">
+                    <div class="form-inline">
+                        <label for="author-name" class="control-label">Search For:</label>
+                        <input type="text" class="form-control" id="author-name">
+                        <button type="button" class="btn btn-primary" id="authorSearchButton">Search</button>
+                    </div>
+                </form>
+                <div id="srchAuthorResult" style="display:none;">
+                    <label class="control-label">Click an author record to select it.</label>
+                    <div class="table-bordered" style="overflow-y:scroll; height:150px;">
+                        <table id="srchAuthorResultTable" cellpadding="3" cellspacing="3" width="100%">
+                            <tbody>
+                                <tr class="SearchResultsHeader" align="left">
+                                    <th scope="col">Author&nbsp;ID</th>
+                                    <th scope="col">Name</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <p>
     <a href="/">< Return to Dashboard</a><br />
-    <a href="/report/citationimporthistory">< View Citation Import History</a>
+    <a href="/report/citationimporthistory">< View Segment Import History</a>
+    <span style="float:right">
+        <a href="#" title="How to Use This Page" onclick="window.open('/ImportCitationReviewHelp.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');">How To Use This Page</a>
+    </span>
 </p>
-<span class="pageHeader">@ViewBag.Title</span><hr />
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
 
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
@@ -69,18 +367,27 @@
 
     <div class="importRecordStatus" style="display:none">@Html.Raw(ViewBag.ImportRecordStatuses)</div>
 
-    <div style="margin:10px 0px">
-        <div style="display:inline">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
-        <div style="float:right"><a href="/services/citationimportservice.ashx?fid=@Model.ImportFileID"><strong>Download ALL citation details</strong></a></div>
+    <div>
+        <div style="margin:10px 0px">
+            <div style="display:inline">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
+            <div style="float:right"><a href="/services/citationimportservice.ashx?fid=@Model.ImportFileID"><strong>Download ALL segment details</strong></a></div>
+        </div>
+        @if (Model.IsOldFile)
+        {
+            <div style="margin:10px 0px 10px 0px; color:red; text-align:center">
+                This batch is older than 7 days.  You may want to perform a new review to identify data ingested since @Model.FileCreationDate .
+            </div>
+        }
+        <div style="margin:0px 0px; float:left;">
+            <div>Genre: @Html.DisplayFor(m => m.GenreName)</div>
+            <div style="margin:10px 0px">Created: @Html.DisplayFor(m => m.FileCreationDate)</div>
+        </div>
     </div>
 
-    <div style="margin-bottom:20px">
+    <div style="margin-bottom:10px;float:right;">
         <div style="display:inline">
-            <input type="submit" name="btnImport" id="btnImport" value="Import File" />
-            <input type="submit" name="btnReject" id="btnReject" value="Reject File" />
-        </div>
-        <div style="float:right">
-            <a href="#" title="About Library Stats" onclick="window.open('/ImportCitationReviewHelp.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');">How To Use This Page</a>
+            <input type="submit" name="btnImport" id="btnImport" value="Import Records" />
+            <input type="submit" name="btnReject" id="btnReject" value="Reject Records" />
         </div>
     </div>
 
@@ -88,32 +395,21 @@
 	    <thead>
 		    <tr>
 			    <th></th>
-                <th width="10%">Genre</th>
-			    <th width="35%">Title</th>
+                <th class="import-detail"></th>
+			    <th width="26%">Title</th>
 			    <th width="25%">Journal</th>
-			    <th width="5%">Volume</th>
-			    <th width="5%">Series</th>
-			    <th width="5%">Issue</th>
-			    <th width="5%">Year</th>
+                <th width="4%">Year</th>
+			    <th width="4%">Vol</th>
+			    <th width="4%">Issue</th>
+                <th width="2%"></th>
+                <th width="10%">Start Page</th>
+                <th width="5%">End Page</th>
 			    <th width="10%">Status</th>
 		    </tr>
 	    </thead>
 	    <tbody>
 					
 	    </tbody>
-	    <tfoot>
-		    <tr>
-			    <th></th>
-                <th>Genre</th>
-			    <th>Title</th>
-			    <th>Journal</th>
-			    <th>Volume</th>
-			    <th>Series</th>
-			    <th>Issue</th>
-			    <th>Year</th>
-			    <th>Status</th>
-		    </tr>
-	    </tfoot>
     </table>
 
 }

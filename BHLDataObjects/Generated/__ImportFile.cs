@@ -1,7 +1,7 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 9/20/2017 9:55:25 AM
 // Do not modify the contents of this code file.
-// This abstract class __ImportFile is based upon ImportFile.
+// This abstract class __ImportFile is based upon import.ImportFile.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportFile : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -53,6 +53,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="segmentGenreID"></param>
 		public __ImportFile(int importFileID, 
 			int importFileStatusID, 
 			string importFileName, 
@@ -60,7 +61,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			int? segmentGenreID) : this()
 		{
 			_ImportFileID = importFileID;
 			ImportFileStatusID = importFileStatusID;
@@ -70,6 +72,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			SegmentGenreID = segmentGenreID;
 		}
 		
 		#endregion Constructors
@@ -136,7 +139,12 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+					case "SegmentGenreID" :
+					{
+						_SegmentGenreID = (int?)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportFileID
 		
@@ -364,9 +372,36 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region SegmentGenreID
+		
+		private int? _SegmentGenreID = null;
+		
+		/// <summary>
+		/// Column: SegmentGenreID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("SegmentGenreID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10, IsNullable=true)]
+		public int? SegmentGenreID
+		{
+			get
+			{
+				return _SegmentGenreID;
+			}
+			set
+			{
+				if (_SegmentGenreID != value)
+				{
+					_SegmentGenreID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SegmentGenreID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -415,7 +450,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.SegmentGenreID == SegmentGenreID 
 				)
 				{
 					o = null;
@@ -523,10 +559,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string SegmentGenreID = "SegmentGenreID";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

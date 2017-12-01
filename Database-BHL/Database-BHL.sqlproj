@@ -1308,5 +1308,18 @@
     <None Include="srchindex\Stored Procedures\SearchName.sql" />
     <None Include="srchindex\Stored Procedures\SearchPublicationAdvanced.sql" />
     <None Include="srchindex\Stored Procedures\SearchPublication.sql" />
+    <None Include="import\Tables\ImportRecordPage.sql" />
+    <None Include="import\Stored Procedures\ImportRecordPageUpdateAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordPageSelectAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordPageInsertAuto.sql" />
+    <None Include="import\Stored Procedures\ImportRecordPageDeleteAuto.sql" />
+    <None Include="import\Stored Procedures\ImportFileSelectById.sql" />
+    <None Include="import\Stored Procedures\PageSelectRangeForPagesAndItem.sql" />
+    <None Include="import\Stored Procedures\ItemResolve.sql" />
+    <None Include="import\Stored Procedures\PageSelectByItemAndPageNumber.sql" />
+    <None Include="import\Stored Procedures\AuthorResolve.sql" />
+    <None Include="import\Stored Procedures\SegmentResolve.sql" />
+    <None Include="import\Functions\fnErrorStringForImportRecord.sql" />
+    <None Include="import\Stored Procedures\ImportRecordCreatorPublishToProduction.sql" />
   </ItemGroup>
 </Project>
