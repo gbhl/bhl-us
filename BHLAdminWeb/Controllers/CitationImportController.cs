@@ -242,7 +242,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     sortColumn = "Status";
                     break;
                 default:
-                    sortColumn = string.Format("JournalTitle {0},Year {0},Volume {0},Issue {0},RIGHT(SPACE(20) + StartPage,20)", sSortDir_0);
+                    sortColumn = string.Format("JournalTitle {0},Year {0},RIGHT(SPACE(20) + Volume, 20) {0},RIGHT(SPACE(20) + Issue,20) {0},RIGHT(SPACE(20) + StartPage,20)", sSortDir_0);
                     break;
             }
 
