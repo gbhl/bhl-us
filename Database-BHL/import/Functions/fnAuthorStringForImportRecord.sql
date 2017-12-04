@@ -34,7 +34,7 @@ BEGIN
 			LEFT JOIN dbo.Author a ON c.AuthorID = a.AuthorID AND a.IsActive = 1
 			LEFT JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID AND n.IsPreferredName = 1
 	WHERE	ImportRecordID = @ImportRecordID
-	ORDER BY c.FullName, c.LastName, c.FirstName
+	ORDER BY c.ImportRecordCreatorID
 
 	SET @AuthorString = CASE WHEN LEN(@AuthorString) >= LEN(@Delimiter) THEN SUBSTRING(@AuthorString, 1, LEN(@AuthorString) - LEN(@Delimiter) - 1) ELSE @AuthorString END
 
