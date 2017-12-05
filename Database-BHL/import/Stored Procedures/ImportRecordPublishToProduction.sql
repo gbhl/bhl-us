@@ -149,7 +149,7 @@ BEGIN TRY
 			)
 	SELECT	ItemID,
 			@SegmentStatusNewID,
-			1 AS SequenceOrder,
+			10000 AS SequenceOrder,
 			@SegmentGenreID,
 			Title,
 			TranslatedTitle,
@@ -211,6 +211,24 @@ BEGIN TRY
 
 	-- Save the ID of the newly inserted segment record
 	SELECT @NewSegmentID = SCOPE_IDENTITY()
+
+	-- Make sure any new (unsequenced) segments attached to the same item as this new
+	-- segment have unique SequenceOrder values
+	UPDATE	dbo.Segment
+	SET		SequenceOrder = x.SequenceOrder
+	FROM	dbo.Segment s
+			INNER JOIN (SELECT	SegmentID,
+								ROW_NUMBER() OVER (ORDER BY 
+										RIGHT(SPACE(100) + Volume, 100), 
+										RIGHT(SPACE(100) + Series, 100), 
+										RIGHT(SPACE(100) + Issue, 100), 
+										RIGHT(SPACE(20) + StartPageNumber, 20)
+									) + 9999 AS SequenceOrder
+						FROM	dbo.Segment
+						WHERE	ItemID IN (SELECT ItemID FROM import.ImportRecord WHERE ImportRecordID = @ImportRecordID)
+						AND		SequenceOrder >= 10000
+						) x
+					ON s.SegmentID = x.SegmentID
 				
 	-- Insert SegmentInstitution record
 	INSERT	dbo.SegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID, CreationUserID, LastModifiedUserID)
