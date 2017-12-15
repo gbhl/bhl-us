@@ -142,36 +142,312 @@ namespace BHL.Search.Elastic
         /// name like "smith".
         /// 
         /// Logically, the search will fit the following pattern:
+        /// (query) AND limit1:"limitvalue1" AND limit2:"limitvalue2"
+        /// </summary>
+        /// <param name="query">Query string</param>
+        /// <param name="limits">List of field/value pairs on which to limit the search</param>
+        public SearchResult SearchCatalog(string query, List<Tuple<string, string>> limits = null)
+        {
+            ISearchResponse<dynamic> results = null;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                // Initialize the query object
+                SearchDescriptor<dynamic> searchDesc = InitializeQuery();
+
+                // Remove operators from the end of the query string
+                if (query.EndsWith(" AND", false, System.Globalization.CultureInfo.CurrentCulture) ||
+                    query.EndsWith(" NOT", false, System.Globalization.CultureInfo.CurrentCulture)) query = query.Substring(0, query.Length - 4);
+                if (query.EndsWith(" OR", false, System.Globalization.CultureInfo.CurrentCulture)) query = query.Substring(0, query.Length - 3);
+
+                // Query used by the "suggest" feature should not include faceting values
+                string suggestQuery = query;
+
+                // Add limits to the query string.
+                // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
+                //      (cat OR dog) AND type:pet AND age:5
+                if (limits != null)
+                {
+                    query = string.Format("({0})", query);
+                    foreach (Tuple<string, string> limit in limits)
+                    {
+                        query = string.Format("{0} AND {1}:\"{2}\"", query, limit.Item1, limit.Item2);
+                    }
+                }
+
+                // Fields to be searched
+                List<Field> fields = new List<Field>();
+                fields.Add(new Field("_all"));
+                // Add fields to be boosted
+                fields.Add(new Field(ESField.TITLE + "^2"));
+                fields.Add(new Field(ESField.TEXT + "^-2"));
+
+                // Construct the query.
+                searchDesc.Query(q => q
+                    .QueryString(qu => qu
+                        .Query(query)
+                        .Fields(fields.ToArray())
+                        .DefaultOperator(Operator.And)
+                    )
+                );
+
+                //// TODO: Validate the query string.  Check validateResponse.Valid for result.
+                //var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
+                //    .Explain()
+                //        .Query(q => q
+                //            .QueryString(qu => qu
+                //                .Query(query)
+                //                .Fields(fields.ToArray())
+                //                .DefaultOperator(Operator.And))));
+
+                // Set sort, aggregate (facet), and highlight fields
+                SetSortField(searchDesc);
+                SetAggregateFields(searchDesc);
+                SetHighlightFields(searchDesc);
+
+                // Set the fields to use when determining alternate search suggestions
+                if (_suggest)
+                {
+                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
+                    suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery)));
+                    SetSuggestFields(searchDesc, suggestFields);
+                }
+
+                // Execute the query
+                results = ExecuteQuery(searchDesc);
+                if (Debug) WriteDebuggingInfo(query, limits, results);
+            }
+
+            // Build and return the result object
+            return GetSearchResult(results);
+        }
+
+        /// <summary>
+        /// Submit an Item query that searches on all specified field/value combinations.
+        /// If limit values are specified, results are filtered by those limits.
+        /// </summary>
+        /// <param name="query"></param>
+        //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchItem(string title, string author, string volume, string year, string keyword,
+            string language, string collection, List<Tuple<string, string>> limits = null)
+        {
+            ISearchResponse<dynamic> results = null;
+
+            if (!string.IsNullOrWhiteSpace(title) ||
+                !string.IsNullOrWhiteSpace(author) ||
+                !string.IsNullOrWhiteSpace(volume) ||
+                !string.IsNullOrWhiteSpace(year) ||
+                !string.IsNullOrWhiteSpace(keyword) ||
+                !string.IsNullOrWhiteSpace(language) ||
+                !string.IsNullOrWhiteSpace(collection))
+            {
+                // Initialize the query object
+                SearchDescriptor<dynamic> searchDesc = InitializeQuery();
+
+                // Build the query.  Since we have search terms targeted to specific fields, use a
+                // Boolean query instead of a Query_String query.
+                List<QueryContainer> mustQueries = new List<QueryContainer>();
+                List<QueryContainer> shouldQueries = new List<QueryContainer>();
+                if (!string.IsNullOrWhiteSpace(title))
+                {
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = title, Boost = 2 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = title });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = title });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = title });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = title });
+                }
+
+                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = author });
+                if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = volume });
+                if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = year });
+                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = keyword });
+                if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
+                if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
+
+                if (limits != null)
+                {
+                    foreach (Tuple<string, string> limit in limits)
+                    {
+                        mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2 });
+                    }
+                }
+
+                // Set MinimumShouldMatch to ensure that at least one of the "Should" conditions matches
+                searchDesc.Query(q => q
+                    .Bool(b => b
+                        .Should(shouldQueries.ToArray())
+                        .MinimumShouldMatch(shouldQueries.Count > 0 ? 1 : 0)
+                        .Must(mustQueries.ToArray())
+                    )
+                );
+
+                // Set sort, aggregate (facet), and highlight fields
+                SetSortField(searchDesc);
+                SetAggregateFields(searchDesc);
+                SetHighlightFields(searchDesc);
+
+                List<Tuple<string, string>> args = new List<Tuple<string, string>>();
+                if (!string.IsNullOrWhiteSpace(title)) args.Add(new Tuple<string, string>(ESField.TITLE, title));
+                if (!string.IsNullOrWhiteSpace(author)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author));
+                if (!string.IsNullOrWhiteSpace(volume)) args.Add(new Tuple<string, string>(ESField.VOLUME, volume));
+                if (!string.IsNullOrWhiteSpace(year)) args.Add(new Tuple<string, string>(ESField.DATES, year));
+                if (!string.IsNullOrWhiteSpace(keyword)) args.Add(new Tuple<string, string>(ESField.KEYWORD, keyword));
+                if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
+                if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
+
+                // Set the fields to use when determining alternate search suggestions
+                if (_suggest)
+                {
+                    SetSuggestFields(searchDesc, args);
+                }
+
+                // Execute the query
+                results = ExecuteQuery(searchDesc);
+                if (Debug) WriteDebuggingInfo(args, limits, results);
+            }
+
+            // Build and return the result object
+            return GetSearchResult(results);
+        }
+
+        public SearchResult SearchAuthor(string query)
+        {
+            return SearchSimple(query, null);
+        }
+
+        public SearchResult SearchKeyword(string query)
+        {
+            return SearchSimple(query, null);
+        }
+
+        public SearchResult SearchName(string query)
+        {
+            return SearchSimple(query, null);
+        }
+
+        public SearchResult SearchPage(string query, List<Tuple<string, string>> limits = null)
+        {
+            return SearchSimple(query, limits);
+        }
+
+        /// <summary>
+        /// Provides "simple" search over the authors, keywords, names, or pages index.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="limits"></param>
+        /// <returns></returns>
+        public SearchResult SearchSimple(string query, List<Tuple<string, string>> limits = null)
+        {
+            ISearchResponse<dynamic> results = null;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                // Initialize the query object
+                SearchDescriptor<dynamic> searchDesc = InitializeQuery();
+
+                // Remove operators from the end of the query string
+                if (query.EndsWith(" AND", false, System.Globalization.CultureInfo.CurrentCulture) ||
+                    query.EndsWith(" NOT", false, System.Globalization.CultureInfo.CurrentCulture)) query = query.Substring(0, query.Length - 4);
+                if (query.EndsWith(" OR", false, System.Globalization.CultureInfo.CurrentCulture)) query = query.Substring(0, query.Length - 3);
+
+                // Query used by the "suggest" feature should not include faceting values
+                string suggestQuery = query;
+
+                // Add limits to the query string.
+                // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
+                //      (cat OR dog) AND type:pet AND age:5
+                if (limits != null)
+                {
+                    query = string.Format("({0})", query);
+                    foreach (Tuple<string, string> limit in limits)
+                    {
+                        query = string.Format("{0} AND {1}:{2}", query, limit.Item1, limit.Item2);
+                    }
+                }
+
+                List<Field> fields = new List<Field>();
+                fields.Add(new Field("_all"));
+                // If necessary, add fields to be boosted here - i.e. "fields.Add(new Field("title^2"))
+
+                // Construct the query.
+                searchDesc.Query(q => q
+                    .QueryString(qu => qu
+                        .Query(query)
+                        .Fields(fields.ToArray())
+                        .DefaultOperator(Operator.And)
+                    )
+                );
+
+                //// TODO: Validate the query string.  Check validateResponse.Valid for result.
+                //var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
+                //    .Explain()
+                //        .Query(q => q
+                //            .QueryString(qu => qu
+                //                .Query(query)
+                //                .Fields(fields.ToArray())
+                //                .DefaultOperator(Operator.And))));
+
+                // Set sort, aggregate (facet), and highlight fields
+                SetSortField(searchDesc);
+                SetAggregateFields(searchDesc);
+                SetHighlightFields(searchDesc);
+
+                // Set the fields to use when determining alternate search suggestions
+                if (_suggest)
+                {
+                    List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
+                    suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(suggestQuery)));
+                    SetSuggestFields(searchDesc, suggestFields);
+                }
+
+                // Execute the query
+                results = ExecuteQuery(searchDesc);
+                if (Debug) WriteDebuggingInfo(query, null, results);
+            }
+
+            // Build and return the result object
+            return GetSearchResult(results);
+        }
+
+        #region Boolean Query Implementations (Removed)
+
+        /*
+
+        /// <summary>
+        /// Submit a query.  If limit values are specified, filter the results by those limits.
+        /// For example, if query = "birds" with a limit of "searchAuthors:smith", this method
+        /// will return the results of a search for items that match "birds" and have an author
+        /// name like "smith".
+        /// 
+        /// Logically, the search will fit the following pattern:
         /// (query) AND (limit1:limitvalue1 AND limit2:limitvalue2)
         /// </summary>
         /// <param name="query">Query string</param>
         /// <param name="limits">List of field/value pairs on which to limit the search</param>
         public SearchResult SearchCatalog(string query, List<Tuple<string, string>> limits = null)
         {
-            /*
-             * The following queries the _all field, while also applying boost values to
-             * the "title" and "text" fields.  _all and the boost fields are combined into
-             * a "should" boolean query (where the minimum is 1), and the limiting/faceting
-             * fields are combined into a "must" boolean query.
-             * Example raw ElasticSearch query:
-              POST items/_search
-              {
-                "query": {
-                  "bool": {
-                    "should": [
-                      { "match": { "_all": { "query": "fish" } } },
-                      { "match": { "title": { "query": "fish", "boost": "2" } } },
-                      { "match": { "text": { "query": "fish", "boost": "-2" } } }
-                    ],
-                    "minimum_number_should_match": 1, 
-                    "must": [
-                      { "match": { "language": { "query": "English" } } },
-                      { "match": { "collections": { "query": "MBLWHOI Library, Woods Hole" } } }
-                    ]      
-                  }
-                }
-              }
-             */
+            // * The following queries the _all field, while also applying boost values to
+            // * the "title" and "text" fields.  _all and the boost fields are combined into
+            // * a "should" boolean query (where the minimum is 1), and the limiting/faceting
+            // * fields are combined into a "must" boolean query.
+            // * Example raw ElasticSearch query:
+            //  POST items/_search
+            //  {
+            //    "query": {
+            //      "bool": {
+            //        "should": [
+            //          { "match": { "_all": { "query": "fish" } } },
+            //          { "match": { "title": { "query": "fish", "boost": "2" } } },
+            //          { "match": { "text": { "query": "fish", "boost": "-2" } } }
+            //        ],
+            //        "minimum_number_should_match": 1, 
+            //        "must": [
+            //          { "match": { "language": { "query": "English" } } },
+            //          { "match": { "collections": { "query": "MBLWHOI Library, Woods Hole" } } }
+            //        ]      
+            //      }
+            //    }
+            //  }
 
             // Initialize the query object
             SearchDescriptor<dynamic> searchDesc = InitializeQuery();
@@ -208,16 +484,14 @@ namespace BHL.Search.Elastic
                 )
             );
 
-            /*
-            // TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
-            var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
-                .Explain()
-                .Query(q => q
-                .Bool(b => b
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(1)
-                    .Must(mustQueries.ToArray()))));
-            */
+            //// TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
+            //var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
+            //    .Explain()
+            //    .Query(q => q
+            //    .Bool(b => b
+            //        .Should(shouldQueries.ToArray())
+            //        .MinimumShouldMatch(1)
+            //        .Must(mustQueries.ToArray()))));
 
             // Set sort, aggregate (facet), and highlight fields
             SetSortField(searchDesc);
@@ -228,7 +502,7 @@ namespace BHL.Search.Elastic
             if (_suggest)
             {
                 List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                suggestFields.Add(new Tuple<string, string>(ESField.ALL, query));
+                suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(query)));
                 SetSuggestFields(searchDesc, suggestFields, limits);
             }
 
@@ -240,258 +514,40 @@ namespace BHL.Search.Elastic
             return GetSearchResult(results);
         }
 
-        /// <summary>
-        /// Submit an Item query that searches on all specified field/value combinations.
-        /// If limit values are specified, results are filtered by those limits.
-        /// </summary>
-        /// <param name="query"></param>
-        //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
-        public SearchResult SearchItem(string title, string author, string volume, string year, string keyword,
-            string language, string collection, List<Tuple<string, string>> limits = null)
-        {
-            // Initialize the query object
-            SearchDescriptor<dynamic> searchDesc = InitializeQuery();
-
-            // Build the query
-            List<QueryContainer> mustQueries = new List<QueryContainer>();
-            List<QueryContainer> shouldQueries = new List<QueryContainer>();
-            if (!string.IsNullOrWhiteSpace(title))
-            {
-                shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = title, Boost = 2 });
-                shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = title });
-                shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = title });
-                shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = title });
-                shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = title });
-            }
-
-            if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = author });
-            if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = volume });
-            if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = year });
-            if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = keyword });
-            if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
-            if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
-
-            if (limits != null)
-            {
-                foreach (Tuple<string, string> limit in limits)
-                {
-                    mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2 });
-                }
-            }
-
-            // Set MinimumShouldMatch to ensure that at least one of the "Should" conditions matches
-            searchDesc.Query(q => q
-                .Bool(b => b
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(shouldQueries.Count > 0 ? 1 : 0)
-                    .Must(mustQueries.ToArray())
-                )
-            );
-
-            // Set sort, aggregate (facet), and highlight fields
-            SetSortField(searchDesc);
-            SetAggregateFields(searchDesc);
-            SetHighlightFields(searchDesc);
-
-            List<Tuple<string, string>> args = new List<Tuple<string, string>>();
-            if (!string.IsNullOrWhiteSpace(title)) args.Add(new Tuple<string, string>(ESField.TITLE, title));
-            if (!string.IsNullOrWhiteSpace(author)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author));
-            if (!string.IsNullOrWhiteSpace(volume)) args.Add(new Tuple<string, string>(ESField.VOLUME, volume));
-            if (!string.IsNullOrWhiteSpace(year)) args.Add(new Tuple<string, string>(ESField.DATES, year));
-            if (!string.IsNullOrWhiteSpace(keyword)) args.Add(new Tuple<string, string>(ESField.KEYWORD, keyword));
-            if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
-            if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
-
-            // Set the fields to use when determining alternate search suggestions
-            if (_suggest)
-            {
-                SetSuggestFields(searchDesc, args, limits);
-            }
-
-            // Execute the query
-            ISearchResponse<dynamic> results = ExecuteQuery(searchDesc);
-            if (Debug) WriteDebuggingInfo(args, limits, results);
-
-            // Build and return the result object
-            return GetSearchResult(results);
-        }
-
         public SearchResult SearchAuthor(string query)
         {
-            // Initialize the query object
-            SearchDescriptor<dynamic> searchDesc = InitializeQuery();
-
-            // Need to include highlight fields in the query in order for highlighting to work correctly
-            List<QueryContainer> shouldQueries = new List<QueryContainer>();
-            foreach (string highlight in _highlightFields)
-            {
-                shouldQueries.Add(new MatchQuery { Field = highlight, Query = query });
-            }
-
-            List<QueryContainer> mustQueries = new List<QueryContainer>();
-            mustQueries.Add(new MatchQuery { Field = ESField.ALL, Query = query });
-
-            // Construct the complete query.
-            searchDesc.Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0)
-                )
-            );
-
-            /*
-            // TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
-            var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
-                .Explain()
-                .Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0))));
-            */
-
-            // Set sort, aggregate (facet), and highlight fields
-            SetSortField(searchDesc);
-            SetAggregateFields(searchDesc);
-            SetHighlightFields(searchDesc);
-
-            // Set the fields to use when determining alternate search suggestions
-            if (_suggest)
-            {
-                List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                suggestFields.Add(new Tuple<string, string>(ESField.ALL, query));
-                SetSuggestFields(searchDesc, suggestFields);
-            }
-
-            // Execute the query
-            ISearchResponse<dynamic> results = ExecuteQuery(searchDesc);
-            if (Debug) WriteDebuggingInfo(query, null, results);
-
-            // Build and return the result object
-            return GetSearchResult(results);
+            return SearchSimple(query, null);
         }
 
         public SearchResult SearchKeyword(string query)
         {
-            // Initialize the query object
-            SearchDescriptor<dynamic> searchDesc = InitializeQuery();
-
-            // Need to include highlight fields in the query in order for highlighting to work correctly
-            List<QueryContainer> shouldQueries = new List<QueryContainer>();
-            foreach (string highlight in _highlightFields)
-            {
-                shouldQueries.Add(new MatchQuery { Field = highlight, Query = query });
-            }
-
-            List<QueryContainer> mustQueries = new List<QueryContainer>();
-            mustQueries.Add(new MatchQuery { Field = ESField.ALL, Query = query });
-
-            // Construct the complete query.
-            searchDesc.Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0)
-                )
-            );
-
-            /*
-            // TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
-            var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
-                .Explain()
-                .Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0))));
-            */
-
-            // Set sort, aggregate (facet), and highlight fields
-            SetSortField(searchDesc);
-            SetAggregateFields(searchDesc);
-            SetHighlightFields(searchDesc);
-
-            // Set the fields to use when determining alternate search suggestions
-            if (_suggest)
-            {
-                List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                suggestFields.Add(new Tuple<string, string>(ESField.ALL, query));
-                SetSuggestFields(searchDesc, suggestFields);
-            }
-
-            // Execute the query
-            ISearchResponse<dynamic> results = ExecuteQuery(searchDesc);
-            if (Debug) WriteDebuggingInfo(query, null, results);
-
-            // Build and return the result object
-            return GetSearchResult(results);
+            return SearchSimple(query, null);
         }
 
         public SearchResult SearchName(string query)
         {
-            // Initialize the query object
-            SearchDescriptor<dynamic> searchDesc = InitializeQuery();
-
-            // Need to include highlight fields in the query in order for highlighting to work correctly
-            List<QueryContainer> shouldQueries = new List<QueryContainer>();
-            foreach (string highlight in _highlightFields)
-            {
-                shouldQueries.Add(new MatchQuery { Field = highlight, Query = query });
-            }
-
-            List<QueryContainer> mustQueries = new List<QueryContainer>();
-            mustQueries.Add(new MatchQuery { Field = ESField.ALL, Query = query });
-
-            // Construct the complete query.
-            searchDesc.Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0)
-                )
-            );
-
-            /*
-            // TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
-            var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
-                .Explain()
-                .Query(q => q
-                .Bool(b => b
-                    .Must(mustQueries.ToArray())
-                    .Should(shouldQueries.ToArray())
-                    .MinimumShouldMatch(0))));
-            */
-
-            // Set sort, aggregate (facet), and highlight fields
-            SetSortField(searchDesc);
-            SetAggregateFields(searchDesc);
-            SetHighlightFields(searchDesc);
-
-            // Set the fields to use when determining alternate search suggestions
-            if (_suggest)
-            {
-                List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                suggestFields.Add(new Tuple<string, string>(ESField.ALL, query));
-                SetSuggestFields(searchDesc, suggestFields);
-            }
-
-            // Execute the query
-            ISearchResponse<dynamic> results = ExecuteQuery(searchDesc);
-            if (Debug) WriteDebuggingInfo(query, null, results);
-
-            // Build and return the result object
-            return GetSearchResult(results);
+            return SearchSimple(query, null);
         }
 
         public SearchResult SearchPage(string query, List<Tuple<string, string>> limits = null)
+        {
+            return SearchSimple(query, limits);
+        }
+
+        /// <summary>
+        /// Provides "simple" search over the authors, keywords, names, or pages index.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="limits"></param>
+        /// <returns></returns>
+        public SearchResult SearchSimple(string query, List<Tuple<string, string>> limits = null)
         {
             // Initialize the query object
             SearchDescriptor<dynamic> searchDesc = InitializeQuery();
 
             // Build the limit queries
             List<QueryContainer> mustQueries = new List<QueryContainer>();
-            limits = limits ?? new List<Tuple<string, string>>();
+            //limits = limits ?? new List<Tuple<string, string>>();
             if (limits != null)
             {
                 foreach (Tuple<string, string> limit in limits)
@@ -518,14 +574,14 @@ namespace BHL.Search.Elastic
                 )
             );
 
-            /*
-            // TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
-            var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
-                .Explain()
-                .Query(q => q
-                .Bool(b => b
-                    .Must(queries.ToArray()))));
-            */
+            //// TODO: Rather than trying to parse user-supplied query strings, let ES do it.  Check validateResponse.Valid for result.
+            //var validateResponse = _es.ValidateQuery<dynamic>(descriptor => descriptor
+            //    .Explain()
+            //    .Query(q => q
+            //    .Bool(b => b
+            //        .Must(mustQueries.ToArray())
+            //        .Should(shouldQueries.ToArray())
+            //        .MinimumShouldMatch(0))));
 
             // Set sort, aggregate (facet), and highlight fields
             SetSortField(searchDesc);
@@ -536,17 +592,21 @@ namespace BHL.Search.Elastic
             if (_suggest)
             {
                 List<Tuple<string, string>> suggestFields = new List<Tuple<string, string>>();
-                suggestFields.Add(new Tuple<string, string>(ESField.ALL, query));
+                suggestFields.Add(new Tuple<string, string>(ESField.ALL, CleanSuggestString(query)));
                 SetSuggestFields(searchDesc, suggestFields);
             }
 
             // Execute the query
             ISearchResponse<dynamic> results = ExecuteQuery(searchDesc);
-            if (Debug) WriteDebuggingInfo(query, limits, results);
+            if (Debug) WriteDebuggingInfo(query, null, results);
 
             // Build and return the result object
             return GetSearchResult(results);
         }
+
+        */
+
+        #endregion Boolean Query Implementations (Removed)
 
         private SearchDescriptor<dynamic> InitializeQuery()
         {
@@ -601,6 +661,20 @@ namespace BHL.Search.Elastic
             );
         }
 
+        /// <summary>
+        /// Remove "noise" from the term that ElasticSearch's "suggest" feature will evaluate.
+        /// "suggest" does not recognize AND/OR/NOT as operators, so remove them.
+        /// Punctuation (paretheses, quotes, etc) is ignored, so no need to remove.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private string CleanSuggestString(string query)
+        {
+            string cleanQuery = string.Empty;
+            cleanQuery = query.Replace(" AND ", " ").Replace(" OR ", " ").Replace(" NOT ", " ");
+            return cleanQuery;
+        }
+
         private void SetAggregateFields(SearchDescriptor<dynamic> searchDesc)
         {
             var aggFuncs = new List<Func<AggregationContainerDescriptor<dynamic>, IAggregationContainer>>();
@@ -622,8 +696,6 @@ namespace BHL.Search.Elastic
             var highlightFieldFuncs = new List<Func<HighlightFieldDescriptor<dynamic>, IHighlightField>>();
             foreach (string highlight in _highlightFields)
             {
-                // Require field match is needed when using a QueryString query
-                //highlightFieldFuncs.Add(f => f.Field(highlight).RequireFieldMatch(false));
                 highlightFieldFuncs.Add(f => f.Field(highlight));
             }
 
@@ -633,6 +705,8 @@ namespace BHL.Search.Elastic
                     .Fields(highlightFieldFuncs.ToArray())
                     .PreTags("<b>")
                     .PostTags("</b>")
+                    .NumberOfFragments(5)
+                    .RequireFieldMatch(false)
                 );
             }
         }
@@ -653,99 +727,102 @@ namespace BHL.Search.Elastic
         private SearchResult GetSearchResult(ISearchResponse<dynamic> results)
         {
             SearchResult result = new SearchResult();
-
-            // Get metadata about search results
             result.PageSize = this._numResults;
             result.StartPage = this._startPage;
-            result.TotalHits = results.HitsMetaData.Total;
-            result.TotalPages = (result.TotalHits / (long)result.PageSize) + 1;
-            result.IsValid = results.IsValid;
-            if (_debug || !results.IsValid) result.DebugInfo = results.DebugInformation;
 
-            if (results.OriginalException != null)
-                result.ErrorMessage = results.OriginalException.Message;
-            else if (results.ServerError != null)
-                result.ErrorMessage = results.ServerError.Error.Reason;
-
-            // Get the search hits
-            foreach (var hit in results.Hits)
+            if (results != null)
             {
-                switch (hit.Type)
-                {
-                    case ESType.ITEM:
-                        string title = hit.Source.title;
-                        ItemHit item = hit.Source.ToObject<ItemHit>();
-                        item.Score = hit.Score;
-                        item.Highlights = GetHighlights(hit);
-                        result.Items.Add(item);
-                        break;
-                    case ESType.PAGE:
-                        PageHit page = hit.Source.ToObject<PageHit>();
-                        page.Score = hit.Score;
-                        page.Highlights = GetHighlights(hit);
-                        result.Pages.Add(page);
-                        break;
-                    case ESType.NAME:
-                        NameHit name = hit.Source.ToObject<NameHit>();
-                        name.Score = hit.Score;
-                        name.Highlights = GetHighlights(hit);
-                        result.Names.Add(name);
-                        break;
-                    case ESType.AUTHOR:
-                        AuthorHit author = hit.Source.ToObject<AuthorHit>();
-                        author.Score = hit.Score;
-                        author.Highlights = GetHighlights(hit);
-                        result.Authors.Add(author);
-                        break;
-                    case ESType.KEYWORD:
-                        KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
-                        keyword.Score = hit.Score;
-                        keyword.Highlights = GetHighlights(hit);
-                        result.Keywords.Add(keyword);
-                        break;
-                }
-            }
+                // Get metadata about search results
+                result.TotalHits = results.HitsMetaData.Total;
+                result.TotalPages = (result.TotalHits / (long)result.PageSize) + 1;
+                result.IsValid = results.IsValid;
+                if (_debug || !results.IsValid) result.DebugInfo = results.DebugInformation;
 
-            // Get facets
-            foreach (var agg in results.Aggregations)
-            {
-                BucketAggregate aggBucket = (BucketAggregate)agg.Value;
-                foreach (KeyedBucket<object> bucket in aggBucket.Items)
-                {
-                    string facetCategory = agg.Key;
-                    SearchField facetCategoryEnum = GetSearchFieldEnum(facetCategory);
+                if (results.OriginalException != null)
+                    result.ErrorMessage = results.OriginalException.Message;
+                else if (results.ServerError != null)
+                    result.ErrorMessage = results.ServerError.Error.Reason;
 
-                    if (result.Facets.ContainsKey(facetCategoryEnum))
+                // Get the search hits
+                foreach (var hit in results.Hits)
+                {
+                    switch (hit.Type)
                     {
-                        result.Facets[facetCategoryEnum].Add(bucket.Key.ToString(), bucket.DocCount);
-                    }
-                    else
-                    {
-                        Dictionary<string, long?> facetValue = new Dictionary<string, long?>();
-                        facetValue.Add(bucket.Key.ToString(), bucket.DocCount);
-                        result.Facets.Add(facetCategoryEnum, facetValue);
+                        case ESType.ITEM:
+                            string title = hit.Source.title;
+                            ItemHit item = hit.Source.ToObject<ItemHit>();
+                            item.Score = hit.Score;
+                            item.Highlights = GetHighlights(hit);
+                            result.Items.Add(item);
+                            break;
+                        case ESType.PAGE:
+                            PageHit page = hit.Source.ToObject<PageHit>();
+                            page.Score = hit.Score;
+                            page.Highlights = GetHighlights(hit);
+                            result.Pages.Add(page);
+                            break;
+                        case ESType.NAME:
+                            NameHit name = hit.Source.ToObject<NameHit>();
+                            name.Score = hit.Score;
+                            name.Highlights = GetHighlights(hit);
+                            result.Names.Add(name);
+                            break;
+                        case ESType.AUTHOR:
+                            AuthorHit author = hit.Source.ToObject<AuthorHit>();
+                            author.Score = hit.Score;
+                            author.Highlights = GetHighlights(hit);
+                            result.Authors.Add(author);
+                            break;
+                        case ESType.KEYWORD:
+                            KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
+                            keyword.Score = hit.Score;
+                            keyword.Highlights = GetHighlights(hit);
+                            result.Keywords.Add(keyword);
+                            break;
                     }
                 }
-            }
 
-            // Get suggestions
-            foreach (var suggestResults in results.Suggest)
-            {
-                foreach (var suggestion in suggestResults.Value)
+                // Get facets
+                foreach (var agg in results.Aggregations)
                 {
-                    foreach (var option in suggestion.Options)
+                    BucketAggregate aggBucket = (BucketAggregate)agg.Value;
+                    foreach (KeyedBucket<object> bucket in aggBucket.Items)
                     {
-                        SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
-                        if (result.Suggestions.ContainsKey(suggestKey))
+                        string facetCategory = agg.Key;
+                        SearchField facetCategoryEnum = GetSearchFieldEnum(facetCategory);
+
+                        if (result.Facets.ContainsKey(facetCategoryEnum))
                         {
-                            if (!result.Suggestions[suggestKey].Contains(option.Text))
-                                result.Suggestions[suggestKey].Add(option.Text);
+                            result.Facets[facetCategoryEnum].Add(bucket.Key.ToString(), bucket.DocCount);
                         }
                         else
                         {
-                            result.Suggestions.Add(suggestKey, new List<string> { option.Text });
+                            Dictionary<string, long?> facetValue = new Dictionary<string, long?>();
+                            facetValue.Add(bucket.Key.ToString(), bucket.DocCount);
+                            result.Facets.Add(facetCategoryEnum, facetValue);
                         }
+                    }
+                }
 
+                // Get suggestions
+                foreach (var suggestResults in results.Suggest)
+                {
+                    foreach (var suggestion in suggestResults.Value)
+                    {
+                        foreach (var option in suggestion.Options)
+                        {
+                            SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
+                            if (result.Suggestions.ContainsKey(suggestKey))
+                            {
+                                if (!result.Suggestions[suggestKey].Contains(option.Text))
+                                    result.Suggestions[suggestKey].Add(option.Text);
+                            }
+                            else
+                            {
+                                result.Suggestions.Add(suggestKey, new List<string> { option.Text });
+                            }
+
+                        }
                     }
                 }
             }

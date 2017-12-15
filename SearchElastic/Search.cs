@@ -130,13 +130,22 @@ namespace BHL.Search.Elastic
                 ESField.VOLUME };
             List<string> facetFields = new List<string> { ESField.GENRE, ESField.MATERIALTYPE, ESField.AUTHORS,
                 ESField.DATERANGES, ESField.CONTRIBUTORS_RAW, ESField.KEYWORDS_RAW, ESField.LANGUAGE };
-            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
-                ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.KEYWORDS, ESField.PUBLICATIONPLACE,
-                ESField.PUBLISHER, ESField.SEARCHAUTHORS, ESField.TITLE, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.TEXT };
 
+            // Highlight only the queried fields
+            List<string> highlightFields = new List<string>();
+            if (!string.IsNullOrWhiteSpace(title)) {
+                highlightFields.Add(ESField.ASSOCIATIONS);
+                highlightFields.Add(ESField.TITLE);
+                highlightFields.Add(ESField.TRANSLATEDTITLE);
+                highlightFields.Add(ESField.UNIFORMTITLE);
+                highlightFields.Add(ESField.VARIANTS);
+            }
+            if (!string.IsNullOrWhiteSpace(author)) highlightFields.Add(ESField.SEARCHAUTHORS);
+            if (!string.IsNullOrWhiteSpace(keyword)) highlightFields.Add(ESField.KEYWORDS);
+            if (!string.IsNullOrWhiteSpace(collection)) highlightFields.Add(ESField.COLLECTIONS);
+
+            // Perform the search
             ConfigureSearch(ESIndex.ITEMS, returnFields, facetFields, highlightFields);
-
             ISearchResult result = _esSearch.SearchItem(title, author, volume, year, keyword, language, collection, searchLimits);
 
             // Add the query parameters to the result

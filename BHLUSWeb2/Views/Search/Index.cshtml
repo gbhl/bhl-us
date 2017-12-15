@@ -53,10 +53,10 @@
 @Html.HiddenFor(m => m.Params.Subject)
 @Html.HiddenFor(m => m.Params.Language)
 @Html.HiddenFor(m => m.Params.Collection)
-@Html.HiddenFor(m => m.ItemPage)
-@Html.HiddenFor(m => m.AuthorPage)
-@Html.HiddenFor(m => m.KeywordPage)
-@Html.HiddenFor(m => m.NamePage)
+@Html.HiddenFor(m => m.ItemPage, new { @id="ItemPage" })
+@Html.HiddenFor(m => m.AuthorPage, new { @id="AuthorPage" })
+@Html.HiddenFor(m => m.KeywordPage, new { @id="KeywordPage" })
+@Html.HiddenFor(m => m.NamePage, new { @id="NamePage" })
     
 <div id="page-title-query-details">
     <div class="content column-wrap">
@@ -96,7 +96,7 @@
                                 @foreach (var facet in Model.Params.GenreFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f=>facet.Checked, new { @value="~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick="$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f=>facet.Checked, new { @value="~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -108,7 +108,7 @@
                                 @foreach (var facet in Model.Params.MaterialTypeFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -120,7 +120,7 @@
                                 @foreach (var facet in Model.Params.AuthorFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -132,7 +132,7 @@
                                 @foreach (var facet in Model.Params.DateRangeFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -144,7 +144,7 @@
                                 @foreach (var facet in Model.Params.ContributorFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -156,7 +156,7 @@
                                 @foreach (var facet in Model.Params.KeywordFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
@@ -168,19 +168,11 @@
                                 @foreach (var facet in Model.Params.LanguageFacets)
                                 {
                                     <div style="font-size:12px;margin: 5px 0px 5px 15px">
-                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @onclick = "$('#searchForm').submit();" })@facet.Value (@facet.NumHits)
+                                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px", @class = "facetCheckBox" })@facet.Value (@facet.NumHits)
                                     </div>
                                 }
                             </div>
                         }
-                        <!--
-                        <div class="facetHead" style="font-size:14px;margin: 15px 0px 15px 0px"><img src="images/bib_minus.gif">&nbsp;Illustrations</div>
-                        <div class="facetBody">
-                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" style="margin: 0px 5px 0px 0px;">With Illustrations</div>
-                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" style="margin: 0px 5px 0px 0px;">Without Illustrations</div>
-                            <div style="font-size:12px;margin: 5px 0px 5px 15px"><input type="radio" name="ill" checked style="margin: 0px 5px 0px 0px;">With and Without</div>
-                        </div>
-                        -->
                     </div>
                     }
                     <div class="content column-wrap">
@@ -366,7 +358,7 @@
 
                                                 @if (Model.ItemResult.StartPage > 1)
                                                 {
-                                                    <a onclick="$('#ItemPage').val(@(Model.ItemResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                    <a onclick="$('#ItemPage').val(@(Model.ItemResult.StartPage - 1));pagerClick('titles');" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
                                                 @for (long x = start; x <= end; x++)
                                                 {
@@ -376,12 +368,12 @@
                                                     }
                                                     else
                                                     {
-                                                        <a onclick="$('#ItemPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                        <a onclick="$('#ItemPage').val(@(x));pagerClick('titles');" href="#">@x</a>
                                                     }
                                                 }
                                                 @if (Model.ItemResult.StartPage < Model.ItemResult.TotalPages)
                                                 {
-                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#ItemPage').val('@(Model.ItemResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#ItemPage').val('@(Model.ItemResult.StartPage + 1)');pagerClick('titles');" href="#" style="font-size:9px">Next ></a>
                                                 }
                                             </div>
                                         </div>
@@ -439,7 +431,7 @@
 
                                                 @if (Model.AuthorResult.StartPage > 1)
                                                 {
-                                                    <a onclick="$('#AuthorPage').val(@(Model.AuthorResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                    <a onclick="$('#AuthorPage').val(@(Model.AuthorResult.StartPage - 1));pagerClick('authors');" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
                                                 @for (long x = start; x <= end; x++)
@@ -450,12 +442,12 @@
                                                     }
                                                     else
                                                     {
-                                                        <a onclick="$('#AuthorPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                        <a onclick="$('#AuthorPage').val(@(x));pagerClick('authors');" href="#">@x</a>
                                                     }
                                                 }
                                                 @if (Model.AuthorResult.StartPage < Model.AuthorResult.TotalPages)
                                                 {
-                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#AuthorPage').val('@(Model.AuthorResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#AuthorPage').val('@(Model.AuthorResult.StartPage + 1)');pagerClick('authors');" href="#" style="font-size:9px">Next ></a>
                                                 }
                                             </div>
                                         </div>
@@ -513,7 +505,7 @@
 
                                                 @if (Model.KeywordResult.StartPage > 1)
                                                 {
-                                                    <a onclick="$('#KeywordPage').val(@(Model.KeywordResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                    <a onclick="$('#KeywordPage').val(@(Model.KeywordResult.StartPage - 1));pagerClick('subjects');" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
                                                 @for (long x = start; x <= end; x++)
@@ -524,12 +516,12 @@
                                                     }
                                                     else
                                                     {
-                                                        <a onclick="$('#KeywordPage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                        <a onclick="$('#KeywordPage').val(@(x));pagerClick('subjects');" href="#">@x</a>
                                                     }
                                                 }
                                                 @if (Model.KeywordResult.StartPage < Model.KeywordResult.TotalPages)
                                                 {
-                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#KeywordPage').val('@(Model.KeywordResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#KeywordPage').val('@(Model.KeywordResult.StartPage + 1)');pagerClick('subjects');" href="#" style="font-size:9px">Next ></a>
                                                 }
                                             </div>
                                         </div>
@@ -605,7 +597,7 @@
 
                                                 @if (Model.NameResult.StartPage > 1)
                                                 {
-                                                    <a onclick="$('#NamePage').val(@(Model.NameResult.StartPage - 1));$('#searchForm').submit();" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
+                                                    <a onclick="$('#NamePage').val(@(Model.NameResult.StartPage - 1));pagerClick('names');" href="#" style="font-size:9px">< Prev</a><text>&nbsp;&nbsp;</text>
                                                 }
 
                                                 @for (long x = start; x <= end; x++)
@@ -616,12 +608,12 @@
                                                     }
                                                     else
                                                     {
-                                                        <a onclick="$('#NamePage').val(@(x));$('#searchForm').submit();" href="#">@x</a>
+                                                        <a onclick="$('#NamePage').val(@(x));pagerClick('names');" href="#">@x</a>
                                                     }
                                                 }
                                                 @if (Model.NameResult.StartPage < Model.NameResult.TotalPages)
                                                 {
-                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#NamePage').val('@(Model.NameResult.StartPage + 1)');$('#searchForm').submit();" href="#" style="font-size:9px">Next ></a>
+                                                    <text>&nbsp; &nbsp;</text><a onclick="$('#NamePage').val('@(Model.NameResult.StartPage + 1)');pagerClick('names');" href="#" style="font-size:9px">Next ></a>
                                                 }
                                             </div>
                                         </div>
@@ -638,7 +630,6 @@
                 </div>
                 }
             </div>
-            <!-- Added MWL -->
         </div>
         <div class="col-sm-2">
             <p>
@@ -686,7 +677,6 @@
 -->
 
 @section scripts {
-    <!--<script src="/js/libs/jquery.history.min.js"></script>-->
     <script src="/js/libs/jquery.hoverintent.min.js"></script>
     <script src="/js/libs/jquery.text-overflow.min.js"></script>
     <script src="/js/libs/bootstrap.min.js"></script>
@@ -783,6 +773,16 @@
                 });
             });
         });
+
+        $(".facetCheckBox").click(function () {
+            $('#ItemPage').val('1');  // Reset faceted results to first page
+            $('#searchForm').submit();
+        });
+
+        function pagerClick(tab) {
+            $('#searchForm').attr('action', '/search#' + tab);  // set tab to which to return
+            $('#searchForm').submit();
+        }
 
     //]]>
     </script>

@@ -383,6 +383,8 @@
     <Content Include="images\image_not_found.jpg" />
     <Content Include="images\image_not_found_thumb.jpg" />
     <Content Include="images\jisc-logo.png" />
+    <Content Include="images\Loading-Blue-200x200.gif" />
+    <Content Include="images\Loading-Grey-200x150.gif" />
     <Content Include="images\magnify-icon-normal.png" />
     <Content Include="images\magnify-icon-over.png" />
     <Content Include="images\mendeley.png" />

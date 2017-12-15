@@ -140,19 +140,20 @@ namespace MOBOT.BHL.Web2.Controllers
             search.NumResults = pageSize;
             search.Highlight = true;
             search.Suggest = true;
+            string searchTerm = model.Params.SearchTerm ?? "";
 
             if (string.IsNullOrWhiteSpace(model.Params.SearchCategory))
             {
                 // Standard search
                 search.StartPage = model.AuthorPage;
-                model.AuthorResult = search.SearchAuthor(model.Params.SearchTerm);
+                model.AuthorResult = search.SearchAuthor(searchTerm);
                 search.StartPage = model.KeywordPage;
-                model.KeywordResult = search.SearchKeyword(model.Params.SearchTerm);
+                model.KeywordResult = search.SearchKeyword(searchTerm);
                 search.StartPage = model.NamePage;
-                model.NameResult = search.SearchName(model.Params.SearchTerm);
+                model.NameResult = search.SearchName(searchTerm);
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
-                model.ItemResult = search.SearchItem(model.Params.SearchTerm, limits);
+                model.ItemResult = search.SearchItem(searchTerm, limits);
             }
             else
             {
@@ -160,25 +161,25 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (model.Params.SearchCategory.Equals("A"))
                 {
                     search.StartPage = model.AuthorPage;
-                    model.AuthorResult = search.SearchAuthor(model.Params.SearchTerm);
+                    model.AuthorResult = search.SearchAuthor(searchTerm);
                 }
                 if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
                 {
                     search.StartPage = model.NamePage;
-                    model.NameResult = search.SearchName(model.Params.SearchTerm);
+                    model.NameResult = search.SearchName(searchTerm);
                 }
                 if (model.Params.SearchCategory.Equals("T"))
                 {
                     search.StartPage = model.ItemPage;
                     search.Facet = true;
-                    model.ItemResult = search.SearchItem(model.Params.SearchTerm, model.Params.LastName,
+                    model.ItemResult = search.SearchItem(searchTerm, model.Params.LastName,
                         model.Params.Volume, model.Params.Year, model.Params.Subject, model.Params.Language, 
                         model.Params.Collection, limits);
                 }
                 if (model.Params.SearchCategory.Equals("S"))
                 {
                     search.StartPage = model.KeywordPage;
-                    model.KeywordResult = search.SearchKeyword(model.Params.SearchTerm);
+                    model.KeywordResult = search.SearchKeyword(searchTerm);
                 }
             }
 
