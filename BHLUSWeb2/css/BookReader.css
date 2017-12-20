@@ -121,7 +121,7 @@
 
 #BRpager .ui-slider-handle
 {
-	background:url(../images/bg_br_slider_handle.png) no-repeat;
+	background:url("../images/bhlau images/bg_br_slider_handle.png") no-repeat;
 	width:39px;
 	height:38px;
 	position:absolute;
@@ -220,7 +220,7 @@
     border-style: solid solid solid none;
     border-color: rgb(51, 51, 34);
     border-width: 1px 1px 1px 0px;
-    background: transparent url(../images/right_edges.png) repeat scroll 0% 0%;
+    background: transparent url("../images/bhlau images/right_edges.png") repeat scroll 0% 0%;
     position: absolute;
 }
 
@@ -228,7 +228,7 @@
     border-style: solid none solid solid;
     border-color: rgb(51, 51, 34);
     border-width: 1px 0px 1px 1px;
-    background: transparent url(../images/left_edges.png) repeat scroll 0% 0%;
+    background: transparent url("../images/bhlau images/left_edges.png") repeat scroll 0% 0%;
     position: absolute;
 }
 
@@ -236,7 +236,7 @@
     border-style: solid none solid solid;
     border-color: rgb(51, 51, 34);
     border-width: 1px 0px 1px 1px;
-    background: transparent url(../images/left_edges.png) repeat scroll 0% 0%;
+    background: transparent url("../images/bhlau images/left_edges.png") repeat scroll 0% 0%;
     position: absolute;
 }
 
@@ -390,7 +390,7 @@
 
 .BRicon.loading, .BRicon.loading:hover, .BRicon.loading:active
 {
-	background:#455667 url(../images/bg_loading_bricon.gif) center center no-repeat;
+	background:#455667 url("../images/bhlau images/bg_loading_bricon.gif") center center no-repeat;
 }
 
 /* footer stuff, from Rebecca's demo */
@@ -457,7 +457,7 @@ a.BRblack:visited   { color: #000000 }
 }
 
 .BRfliparea {
-    background-image: url(../images/transparent.png);
+    background-image: url("../images/bhlau images/transparent.png");
 }
 
 .BRtwoPagePopUp {    

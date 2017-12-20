@@ -1,236 +1,223 @@
-﻿<%@ Page Title="Biodiversity Heritage Library" Language="C#" MasterPageFile="~/Book.Master" AutoEventWireup="true"
-    CodeBehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web2.TitlePage" %>
+﻿<%@ Page Title="Biodiversity Heritage Library" Language="C#" MasterPageFile="~/Book.Master" AutoEventWireup="true" CodeBehind="TitlePage.aspx.cs" Inherits="MOBOT.BHL.Web2.TitlePage" %>
 <%@ Import Namespace="MOBOT.BHL.DataObjects" %>
 <%@ Register TagPrefix="uc" TagName="COinS" Src="~/controls/COinSControl.ascx" %>
 <%@ Register TagPrefix="uc" TagName="Mendeley" Src="~/controls/MendeleyShareControl.ascx" %>
 <asp:content id="mainContent" contentplaceholderid="mainContentPlaceHolder" runat="server">
     <div id="page-title">
         <div id="volumebar"  style="float:right;" class="js-invisible no-js-hide">
-        <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
-        <uc:Mendeley id="mendeley" runat="server" />
-        <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
-            <div class="buttondrop download">Download Contents<div class="play"></div></div> 
-             <div class="downloadcontents">
-                <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">Bibliographic Information</a></div>
-                <div><a href="#" class="selectpages">Select pages to download</a></div>
-                <div><a href="#" class="downloadbook">Download Book</a></div>
-                <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
-             </div>
-            <div class="jqmWindow" id="download-dialog">
-                <div class="head">
-                    <a class="jqmClose" title="Close Dialog">Close Dialog</a>
-                    <h2>Download book</h2>
-                    <hr />
+            <a href="/contact/" title="Report an error" class="report"><img alt="Report an error" src="/images/rpterror.png" /></a>
+            <uc:Mendeley id="mendeley" runat="server" />
+            <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
+                <div class="buttondrop download">Download Contents<div class="play"></div></div> 
+                <div class="downloadcontents">
+                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">Bibliographic Information</a></div>
+                    <div><a href="#" class="selectpages">Select pages to download</a></div>
+                    <div><a href="#" class="downloadbook">Download Book</a></div>
+                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
                 </div>
-                <a class="large-icon pdf" href="<%= string.Format("https://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
-                <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
-                <a class="large-icon jp2" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
-                <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download OCR</a>                
-            </div>
-        <% } %>
+                <div class="jqmWindow" id="download-dialog">
+                    <div class="head">
+                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                        <h2>Download book</h2>
+                        <hr />
+                    </div>
+                    <a class="large-icon pdf" href="<%= string.Format("https://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
+                    <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
+                    <a class="large-icon jp2" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
+                    <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download OCR</a>                
+                </div>
+            <% } %>
 
-        <% if (ddlVolumes.Items.Count > 1) { %>
-             <div id="volumedd">
-                <div class="play"></div>
-                <asp:DropDownList ID="ddlVolumes" runat="server" EnableViewState="false" ClientIDMode="Static"/>
-            </div>
-        <% } %>
+            <% if (ddlVolumes.Items.Count > 1) { %>
+                 <div id="volumedd">
+                    <div class="play"></div>
+                    <asp:DropDownList ID="ddlVolumes" runat="server" EnableViewState="false" ClientIDMode="Static"/>
+                </div>
+            <% } %>
         </div>
-  
         <div id="titletext">
             <a class="ellipsis journaltitlelink" href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>"><%: PageSummary.FullTitle %></a>
             <a id="articleTitleLink" class="ellipsis articletitlelink" href="#"></a>
         </div>
-        
     <uc:COinS ID="COinS" runat="server" />
-</div> <!-- page-title -->
+    </div> <!-- page-title -->
 
-
-<div id="bookviewercontainer">
-    <div id="left-panel2">
-        <div class="left-panel-boxes">
-
-            <div id="leftpanetabswrapper" class="tabs_wrapper">
-                <div id="leftpanetabs">
-                    <ul>
-                        <li class="panel-box-heading active" id="pagestab"><span>Pages</span></li>
-                        <li class="panel-box-heading" id="segmentstab"><span>Table of Contents</span></li>
-                    </ul>
-                </div>
-                <div id="leftpanetabs_content">
-                    <div id="pagestabcontent" class="optionbox">
-                        <asp:ListBox ID="lstPages" runat="server" EnableViewState="false" ClientIDMode="Static" cssClass="ui-pg-selbox pagelist"></asp:ListBox>
-                    </div>
-                    <div id="segmentstabcontent" class="optionbox">
-                        <!-- iDevices -->
-                        <asp:ListBox ID="lbSegments" runat="server" EnableViewState="false" ClientIDMode="Static" cssClass="ui-pg-selbox pagelist"></asp:ListBox>
-                        <!-- non-iDevices -->
-                        <div id="lstSegments" class="ui-pg-selbox pagelist">
+    <div id="bookviewercontainer">
+        <div id="left-panel2">
+            <div class="left-panel-boxes">
+                <div id="leftpanetabswrapper" class="tabs_wrapper">
+                    <div id="leftpanetabs">
                         <ul>
-                            <% foreach (Segment segment in Segments)
-                            { %>
-                                <li id="<%= segment.SegmentID %>">
-                                    <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="#" style="text-decoration:none"><%= segment.Title %></a>
-                                    <div class="segListVolPage">
-                                        <% if (segment.Volume != string.Empty) { %>Volume <%= segment.Volume %><%} %>
-                                        <% if (segment.Volume != string.Empty && segment.StartPageNumber != string.Empty) { %>, <%} %>
-                                        <% if (segment.StartPageNumber != string.Empty) { %>Page <%= segment.StartPageNumber%><%} %>
-                                    </div>
-                                </li>
-                                <%
-                            } %>
-                        </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="showmore">
-                <a href="#">Show More</a>
-            </div>
-
-            <div class="panel-box-heading">
-                URL for Current Page
-            </div>
-            <div class="urlbox"><a id="currentpageURL" href="https://biodiversitylibrary.org/page/4254470">https://biodiversitylibrary.org/page/4254470</a></div>
-
-            <div class="flickrbox">
-                <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
-            </div>
-        </div>
-
-      <div id="names-container-div" class="left-panel-boxes limit-height">
-        <div class="panel-box-heading">
-          Scientific Names on this Page
-        </div>
-        <div class="optionbox">
-          <h3 id="pagename" class="panel-box-childhead">
-            Page No. 09
-          </h3>
-          <div id="names-panel"></div>
-        </div>
-        <span class="ubiolink">Indexed by <a href="http://www.globalnames.org/">Global Names</a> <a href="http://www.globalnames.org/"><img src="/images/GNA_revised_icon_14.png" /></a></span>
-      </div>
-    </div> <!-- left-panel2 -->
-
-    <div id="BRtoolbarwrapper"></div>
-
-    <div id="bookwrapper">
-        <div id="right-panel2">
-            <!-- <div id="right-panel-tab" title="OCR Text"><a href="#right-panel"><</a></div> -->
-            <div id="right-panel-content">
-                <div id="pageOCR-panel"> </div>
-            </div>
-        </div> <!-- right-panel -->
-
-        <div id="bookcontent">
-            <div id="toolbar-top" class="column-wrap">
-                <div id="mypdfbar" class="disabled">
-                    <div style="position: absolute; top: 15px; left: 440px; font-size:13px;"> Click/Shift+Click pages to select for download </div>
-
-                    <div id="BRtoolbar-pdfzoombuttons">
-                        <a class="BRicon zoom_out" bt-xtitle="Zoom Out">zoom out</a>
-                        <span class="zoomlabel">Zoom</span>
-                        <a class="BRicon zoom_in" bt-xtitle="Zoom In">zoom in</a>
-                    </div>
-
-                    <span class="cancelpdf button">Cancel</span>
-                    <span class="generate button">Generate</span>
-                    <span class="review button">Review</span>
-                    <span class="counter">No Pages Added</span>
-                </div>
-                <div class="jqmWindow" id="review-dialog">
-                    <div class="head">
-                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
-                        <a class="button generate modal">Generate My PDF</a>
-                        <h2>Review My PDF</h2>
-                        <span id="page-count"></span>
-                        <a class='dicon list-view' title='List View'>List View</a>
-                        <a class='dicon icon-view' title='Icon View'>Icon View</a>
-                        <hr />
-                    </div>
-                    <div class="body">
-                        <ul>
+                            <li class="panel-box-heading active" id="pagestab"><span>Pages</span></li>
+                            <li class="panel-box-heading" id="segmentstab"><span>Table of Contents</span></li>
                         </ul>
                     </div>
+                    <div id="leftpanetabs_content">
+                        <div id="pagestabcontent" class="optionbox">
+                            <asp:ListBox ID="lstPages" runat="server" EnableViewState="false" ClientIDMode="Static" cssClass="ui-pg-selbox pagelist"></asp:ListBox>
+                        </div>
+                        <div id="segmentstabcontent" class="optionbox">
+                            <!-- iDevices -->
+                            <asp:ListBox ID="lbSegments" runat="server" EnableViewState="false" ClientIDMode="Static" cssClass="ui-pg-selbox pagelist"></asp:ListBox>
+                            <!-- non-iDevices -->
+                            <div id="lstSegments" class="ui-pg-selbox pagelist">
+                            <ul>
+                                <% foreach (Segment segment in Segments)
+                                { %>
+                                    <li id="<%= segment.SegmentID %>">
+                                        <a class="viewSegLinkTitle" id="<%= segment.StartPageID %>" href="#" style="text-decoration:none"><%= segment.Title %></a>
+                                        <div class="segListVolPage">
+                                            <% if (segment.Volume != string.Empty) { %>Volume <%= segment.Volume %><%} %>
+                                            <% if (segment.Volume != string.Empty && segment.StartPageNumber != string.Empty) { %>, <%} %>
+                                            <% if (segment.StartPageNumber != string.Empty) { %>Page <%= segment.StartPageNumber%><%} %>
+                                        </div>
+                                    </li>
+                                    <%
+                                } %>
+                            </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="jqmWindow" id="generate-dialog">
-                    <div class="head">
-                        <a class="jqmClose" title="Close Dialog">Close Dialog</a>
-                        <a class="button finish">Finish</a>
-                        <a class="button review modal">Review My PDF</a>
-                        <h2>Generate My PDF</h2>
-                        <hr />
-                    </div>
-                    <div class="body form">
-                        <div class="intro">
-                            <p>If you are generating a PDF of a journal article or book chapter, please feel free to enter the title and author information. The information you enter here will be stored in the downloaded file to assist you in managing your downloaded PDFs locally.<br /><br /></p>
-                        </div>
-                        <div class="success">
-                            <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
-                            <p>For your reference, the confirmation number for this request is <span id="pdfId"></span>.</p>
-                            <div style="float:left;margin:0;width:49%">
-                                <h3>Join Our Mailing List</h3>
-                                <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                                <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
-                            </div>
-
-                            <div style="float:left;margin:0;width:49%">
-                                <h3>Help Support <span>BHL</span></h3>
-                                <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
-                                <a class="featurebutton-home" title="Donate" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
-                            </div>
-                        </div>
-                        <div class="failure">
-                            <p>There was an issue with the request. Please try again and if the problem persists, please send us <a href="/contact">feedback</a>.</p>
-                            <p>For your reference, the confirmation number for this request is <span id="pdfIdFail"></span>.</p>
-                        </div>
-                        <div class="required">
-                            <label for="tbEmail">Email Address<span class="required">(required)</span></label>
-                            <div class="field-wrap">
-                                <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:322px; top:6.5px;"></span>
-                            </div>
-                            <label for="grpImageOCR">Include</label>
-                            <div class="field-wrap">
-                                <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and OCR text" />
-                            </div>
-                        </div>
-                        <div class="optional">
-                            <span>Optional</span>
-                            <label for="tbTitle">Article/Chapter Title</label>
-                            <div class="field-wrap">
-                                <input class="field" type="text" id="tbTitle" name="tbTitle" /><span id="tbTitleErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:312px; top:6.5px;"></span>
-                            </div>
-                            <label for="tbAuthors">Author(s)</label>
-                            <div class="field-wrap">
-                                <input class="field" type="text" id="tbAuthors" name="tbAuthors" /><span class="example">Example: Charles Darwin, Carl Linnaeus</span>
-                            </div>
-                            <label for="tbSubjects">Subject(s)</label>
-                            <div class="field-wrap">
-                                <input class="field" type="text" id="tbSubjects" name="tbSubjects" /><span class="example">Example: Birds, Classification, Mammals</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="showmore">
+                    <a href="#">Show More</a>
+                </div>
+                <div class="panel-box-heading">
+                    URL for Current Page
+                </div>
+                <div class="urlbox"><a id="currentpageURL" href="#"></a></div>
+                <div class="flickrbox">
+                    <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
                 </div>
             </div>
+            <div id="names-container-div" class="left-panel-boxes limit-height">
+                <div class="panel-box-heading">
+                    Scientific Names on this Page
+                </div>
+                <div class="optionbox">
+                    <h3 id="pagename" class="panel-box-childhead"></h3>
+                    <div id="names-panel"></div>
+                </div>
+                <span class="ubiolink">Indexed by <a href="http://www.globalnames.org/">Global Names</a> <a href="http://www.globalnames.org/"><img src="/images/GNA_revised_icon_14.png" /></a></span>
+            </div>
+        </div> <!-- left-panel2 -->
 
-            <div id="BookReader"></div>
+        <div id="BRtoolbarwrapper"></div>
 
-            <div class="bookattribution">Contributed by <asp:PlaceHolder ID="attributionPlaceHolder" runat="server" /></div>
-       
-        </div> <!-- bookcontent -->
+        <div id="bookwrapper">
+            <div id="right-panel2">
+                <div id="right-panel-content">
+                    <div id="pageOCR-panel"> </div>
+                    <div id="pageSearch-panel">
+                        <p>DO SEARCH INSIDZZZZ THE BOOK HERE!!!!!</p>
+                    </div>
+                </div>
+            </div> <!-- right-panel2 -->
+            <div id="bookcontent">
+                <div id="toolbar-top" class="column-wrap">
+                    <div id="mypdfbar" class="disabled">
+                        <div style="position: absolute; top: 15px; left: 440px; font-size:13px;"> Click/Shift+Click pages to select for download </div>
 
+                        <div id="BRtoolbar-pdfzoombuttons">
+                            <a class="BRicon zoom_out" title="Zoom Out">zoom out</a>
+                            <span class="zoomlabel">Zoom</span>
+                            <a class="BRicon zoom_in" title="Zoom In">zoom in</a>
+                        </div>
+
+                        <span class="cancelpdf button">Cancel</span>
+                        <span class="generate button">Generate</span>
+                        <span class="review button">Review</span>
+                        <span class="counter">No Pages Added</span>
+                    </div>
+                    <div class="jqmWindow" id="review-dialog">
+                        <div class="head">
+                            <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                            <a class="button generate modal">Generate My PDF</a>
+                            <h2>Review My PDF</h2>
+                            <span id="page-count"></span>
+                            <a class='dicon list-view' title='List View'>List View</a>
+                            <a class='dicon icon-view' title='Icon View'>Icon View</a>
+                            <hr />
+                        </div>
+                        <div class="body">
+                            <ul>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="jqmWindow" id="generate-dialog">
+                        <div class="head">
+                            <a class="jqmClose" title="Close Dialog">Close Dialog</a>
+                            <a class="button finish">Finish</a>
+                            <a class="button review modal">Review My PDF</a>
+                            <h2>Generate My PDF</h2>
+                            <hr />
+                        </div>
+                        <div class="body form">
+                            <div class="intro">
+                                <p>If you are generating a PDF of a journal article or book chapter, please feel free to enter the title and author information. The information you enter here will be stored in the downloaded file to assist you in managing your downloaded PDFs locally.<br /><br /></p>
+                            </div>
+                            <div class="success">
+                                <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
+                                <p>For your reference, the confirmation number for this request is <span id="pdfId"></span>.</p>
+                                <div style="float:left;margin:0;width:49%">
+                                    <h3>Join Our Mailing List</h3>
+                                    <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
+                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                                </div>
+                                <div style="float:left;margin:0;width:49%">
+                                    <h3>Help Support <span>BHL</span></h3>
+                                    <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
+                                    <a class="featurebutton-home" title="Donate" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
+                                </div>
+                            </div>
+                            <div class="failure">
+                                <p>There was an issue with the request. Please try again and if the problem persists, please send us <a href="/contact">feedback</a>.</p>
+                                <p>For your reference, the confirmation number for this request is <span id="pdfIdFail"></span>.</p>
+                            </div>
+                            <div class="required">
+                                <label for="tbEmail">Email Address<span class="required">(required)</span></label>
+                                <div class="field-wrap">
+                                    <input class="field required email" type="text" id="tbEmail" name="tbEmail" /><span id="tbEmailErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:322px; top:6.5px;"></span>
+                                </div>
+                                <label for="grpImageOCR">Include</label>
+                                <div class="field-wrap">
+                                    <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and OCR text" />
+                                </div>
+                            </div>
+                            <div class="optional">
+                                <span>Optional</span>
+                                <label for="tbTitle">Article/Chapter Title</label>
+                                <div class="field-wrap">
+                                    <input class="field" type="text" id="tbTitle" name="tbTitle" /><span id="tbTitleErr" style="color:#8a1826; font-size:12px; font-family:Georgia,Times,serif; position:absolute; left:312px; top:6.5px;"></span>
+                                </div>
+                                <label for="tbAuthors">Author(s)</label>
+                                <div class="field-wrap">
+                                    <input class="field" type="text" id="tbAuthors" name="tbAuthors" /><span class="example">Example: Charles Darwin, Carl Linnaeus</span>
+                                </div>
+                                <label for="tbSubjects">Subject(s)</label>
+                                <div class="field-wrap">
+                                    <input class="field" type="text" id="tbSubjects" name="tbSubjects" /><span class="example">Example: Birds, Classification, Mammals</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="BookReader"></div>
+
+                <div class="bookattribution">Contributed by <asp:PlaceHolder ID="attributionPlaceHolder" runat="server" /></div>
+            </div> <!-- bookcontent -->
+        </div> <!-- bookwrapper -->
     </div> <!-- bookwrapper -->
-</div> <!-- bookwrapper -->
 
-    <asp:PlaceHolder ID="plhAnnotations" runat="server" Visible="false">
     <div id="AnnotationBoxPlaceholder" class="active">
-        <div id="AnnotationBox" class="active">
-            
-             <div id="toggleAnnotationBox">                                                              <%--header--%>
-                    <img id="hide-annotations" src="../Images/up.gif" alt="hide"/>
-                     <img id="show-annotations" src="../Images/down.gif" alt="show" style="display:none"/>
-             </div>
+        <div id="AnnotationBox" class="active" style="display:none">
+            <!--
+            <div id="toggleAnnotationBox">
+                <img id="hide-annotations" src="../Images/up.gif" alt="hide"/>
+                <img id="show-annotations" src="../Images/down.gif" alt="show" style="display:none"/>
+            </div>
+            -->
             <div id="header">
                 <a href="/collection/darwinlibrary" title="Collection"><img src="/images/darwin_book_header.png" alt="Charles Darwin's Library"/></a>
                 <div id="indicator"><asp:Literal ID="ltlBookIndicator" runat="server" Text=""></asp:Literal><span style="float:right"><a href="/browse/collection/darwinlibrary" title="Books">Book List</a>&nbsp; | &nbsp;<a href="/collection/darwinlibrary">Help</a></span></div>
@@ -239,56 +226,48 @@
                 <div id="pageScroller">
                     <a id="aPrev" href="javascript:void(0);" title="Previous"><span class="pagescrollerarrow">&laquo;</span>previous</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id="aNext" href="javascript:void(0);" title="Next">next<span class="pagescrollerarrow">&raquo;</span></a>
                 </div>
-                <div id="no-annotations-stub" style="display:none;">No Marks</div>                    <%--display when no Annotations--%>
-                <div id="stub" style="display:none;">Marks</div>                                      <%--display when Annotation Box is collapsed--%>
-            <div id="content">
-
-                <div id="notes"></div>
-                <div id="phantom-legend">&nbsp;</div>                                                   <%--handle offset when box is collapsed--%>
-
-                <div id="legendcontainer">
-                <div id="toggle_legend">
-                    <img id="show_legend" src="../Images/bib_plus.gif" alt="hide legend" style="display:none"/>
-                        <img id="hide_legend" src="../Images/bib_minus.gif" alt="show legend"/>
-                        key
-                </div>
-                <div id="legend-items">
-                    <div id="items">
-                         <div>
-                                <span class="left-column" style="padding-right:4px;">&#8249;</span>
-                                <span class="right-column" style="padding-left:1px;">&#8250;</span>
-                                <span class="special-char-text" style="padding-right:10px;">deleted</span>
-                                <span class="special-char">&#65517;</span> <span class="special-char-text" style="padding-right:10px;">pinholes visible</span>
-                                <span class="special-char">&#10719;</span> <span class="special-char-text">line connects passages</span>
+                <div id="no-annotations-stub" style="display:none;">No Marks</div>  <!--display when no Annotations-->
+                <div id="stub" style="display:none;">Marks</div>    <!--display when Annotation Box is collapsed-->
+                <div id="content">
+                    <div id="notes"></div>
+                    <div id="phantom-legend">&nbsp;</div>   <!--handle offset when box is collapsed-->
+                    <div id="legendcontainer">
+                        <div id="toggle_legend">
+                            <img id="show_legend" src="../Images/bib_plus.gif" alt="hide legend" style="display:none"/>
+                            <img id="hide_legend" src="../Images/bib_minus.gif" alt="show legend"/>
+                            key
+                        </div>
+                        <div id="legend-items">
+                            <div id="items">
+                                    <div>
+                                    <span class="left-column" style="padding-right:4px;">&#8249;</span>
+                                    <span class="right-column" style="padding-left:1px;">&#8250;</span>
+                                    <span class="special-char-text" style="padding-right:10px;">deleted</span>
+                                    <span class="special-char">&#65517;</span> <span class="special-char-text" style="padding-right:10px;">pinholes visible</span>
+                                    <span class="special-char">&#10719;</span> <span class="special-char-text">line connects passages</span>
+                                </div>
+                                <div>
+                                    <span class="left-column">&#171;</span>
+                                    <span class="right-column">&#187;</span>
+                                    <span class="special-char-text" style="padding-right:6px;">inserted</span>
+                                    <span class="special-char">&#8657;</span> <span class="special-char-text" style="padding-right:10px;">count up from last line</span>
+                                    <span class="special-char">&#247;*</span> <span class="special-char-text">long division</span>
+                                </div>
                             </div>
-                            <div>
-                                <span class="left-column">&#171;</span>
-                                <span class="right-column">&#187;</span>
-                                <span class="special-char-text" style="padding-right:6px;">inserted</span>
-                                <span class="special-char">&#8657;</span> <span class="special-char-text" style="padding-right:10px;">count up from last line</span>
-                                <span class="special-char">&#247;*</span> <span class="special-char-text">long division</span>
-                            </div>
+                        </div>
+                    </div> <!-- legendcontainer -->
+                    <div id="copyrightcontainer">
+                        <div id="copyrighttitle">Credit</div>
+                        <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="https://darwin.amnh.org" title="AMNH" target="_blank">darwin.amnh.org</a>)</div>
                     </div>
-                </div>
-
-                </div> <!-- legendcontainer -->
-
-                <div id="copyrightcontainer">
-                <div id="copyrighttitle">Credit</div>
-                <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="https://darwin.amnh.org" title="AMNH" target="_blank">darwin.amnh.org</a>)</div>
-                </div>
-            </div> <!-- content --> 
+                </div> <!-- content --> 
             </div> <!-- contentbox --> 
         </div>
         <div id="annotation-not-available">Annotation Not Available</div>
-    <asp:Literal ID="ltlAnnotationContent" runat="server"></asp:Literal>
+        <asp:Literal ID="ltlAnnotationContent" runat="server"></asp:Literal>
     </div> <!-- AnnotationBoxPlaceholder -->
-
-</asp:PlaceHolder>
-
-
-
 </asp:content>
+
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=3" />
@@ -345,8 +324,6 @@
         $("#lbSegments").hide();
     }
 
-    var trackComment;
-
     $(document).ready(function () {
         br = new BookReader();
 
@@ -366,7 +343,7 @@
         var newpageOCR = $("#pageOCR-panel");
         var newpageReaderComments = $("#pageReaderComments-panelInner");
         var pageNames = $("#names-panel");
-
+        
         // On Hide Action for Dialogs
         function onHideAction(hash) {
             if(isModalDialogChange) {
@@ -395,13 +372,11 @@
             isModalDialogChange = false;
         };
 
-
         function selectPagesToDownload() {
             if (actionMode == actionModeType.Select) return;
 
             $('.BRtoolbar-container').hide();
             $('#toolbar-top').show();
-            //$(".downloadcontents").slideUp("fast"); 
 
             // Set up zoom actions on PDF toolbar
             var pdfToolbar = $('#toolbar-top');
@@ -415,21 +390,20 @@
 
             $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
             resetAnnotationsBox();
+            resetSearchBox();
             resetPageOCRBox();
 
             $(".pagetoolbox").show();
             setInterval('fixIEDisplayIssue()', 1000);
-
         }
+
         function cancelSelectPages() {
             if (actionMode == actionModeType.Read) return;
 
             actionMode = actionModeType.Read;
-
             $('.BRtoolbar-container').show();
             $('#toolbar-top').hide();
 
-            //$(".pagetoolbox:not(.selected)").hide();
             $('.pagetoolbox.selected').each(function () {
                 $(this).trigger(pageToolBoxEvent);
             });
@@ -439,138 +413,124 @@
         }
 
         function updateOCR(index){
-                        newpageOCR.text("");
-                        newpageOCR.addClass('loading');
-                        $.ajax({
-                            type: 'get',
-                            url: '/pagesummary/',
-                            data: {
-                                'op': 'GetPageOcrText',
-                                'pageID': pages[index].PageID
-                            },
-                            success: function (data) {
-                                        //pageToolboxBodyWrap.addClass('ocr');
-
-                                newpageOCR.text("");
-                                        var header = $('<div/>', { 'class' : 'header' }).appendTo(newpageOCR);
+            newpageOCR.text("");
+            newpageOCR.addClass('loading');
+            $.ajax({
+                type: 'get',
+                url: '/pagesummary/',
+                data: {
+                    'op': 'GetPageOcrText',
+                    'pageID': pages[index].PageID
+                },
+                success: function (data) {
+                    newpageOCR.text("");
+                    var header = $('<div/>', { 'class' : 'header' }).appendTo(newpageOCR);
                                         
-                                        if(data.success && (data.ocrText != "OCR text unavailable for this page.")) {
-                                            header.append(
-                                                $('<a/>', {
-                                                    'class' : 'BRicon pop_ocr',
-                                                    'title' : 'View text in Window',
-                                                    'text' : 'View text in Window'
-                                                }).click(function() {
-                                                    if((typeof ocrPopUp == undefined) || !ocrPopUp || ocrPopUp.closed) {
-                                                        ocrPopUp = window.open('about:blank', '_blank', 'width=650,height=440,scrollbars=yes');
+                    if (data.success && (data.ocrText != "OCR text unavailable for this page."))
+                    {
+                        header.append(
+                            $('<a/>', {
+                                'class' : 'BRicon pop_ocr',
+                                'title' : 'View text in Window',
+                                'text' : 'View text in Window'
+                            }).click(function() {
+                                if ((typeof ocrPopUp == undefined) || !ocrPopUp || ocrPopUp.closed)
+                                {
+                                    ocrPopUp = window.open('about:blank', '_blank', 'width=650,height=440,scrollbars=yes');
 
-                                                        var html = '<html><head><title>Text on: ' + br.getPageName(index) + '</title></head>'
-                                                        html += '<body><div style="font:14px Georgia, Times, serif;">' + $.trim(data.ocrText).replace(/\n/g, '<br>') + '</div>'
-                                                        html += '</body></html>';
+                                    var html = '<html><head><title>Text on: ' + br.getPageName(index) + '</title></head>'
+                                    html += '<body><div style="font:14px Georgia, Times, serif;">' + $.trim(data.ocrText).replace(/\n/g, '<br>') + '</div>'
+                                    html += '</body></html>';
 
-                                                        ocrPopUp.document.write(html);
-                                                    }
-                                                }));
-                                        }
+                                    ocrPopUp.document.write(html);
+                                }
+                            })
+                        );
+                    }
                                             
-                                        header.append(                                          
-                                            $('<h5/>', { 
-                                                'text' : 'Viewing Page as Text'
-                                            })).append(
-                                            $('<em/>', {
-                                                'text' : 'This text is generated from uncorrected OCR and as such, may contain, inconsistencies with the actual content of the original page.'
-                                            }));
+                    header.append(                                          
+                        $('<h5/>', { 
+                            'text' : 'Viewing Page as Text'
+                        })).append(
+                        $('<em/>', {
+                            'text' : 'This text is generated from uncorrected OCR and as such, may contain, inconsistencies with the actual content of the original page.'
+                        }));
                                         
-                                        var text = $('<div/>', { 'class': 'text' })
-                                            .html('<span>' + $.trim(data.ocrText).replace(/\n/g, '<br />') + '<br /><br /><br /><br /><br /></span>')
-                                            .appendTo(newpageOCR);
+                    var text = $('<div/>', { 'class': 'text' })
+                        .html('<span>' + $.trim(data.ocrText).replace(/\n/g, '<br />') + '<br /><br /><br /><br /><br /></span>')
+                        .appendTo(newpageOCR);
 
-                                        // Create BeautyTips if canvas exists & not IE (results in singlepage view scrolling to top).
-                                        if(Modernizr.canvas && !$.browser.msie) {
-                                            $('.pop_ocr').bt({
-                                                padding: 10,
-                                                spikeLength:10,
-                                                spikeGirth:13,
-                                                fill: '#266099',
-                                                strokeWidth: 0,
-                                                shrinkToFit: true,
-                                                positions: ['most'],
-                                                overlap: -1,
-                                                cssStyles: { color: '#fff' },
-                                                hoverIntentOpts: {
-                                                    interval: 500,
-                                                    timeout: 0
-                                                },
-                                                showTip: function(box) {
-                                                    if(!isAnimating) {
-                                                        $(box).show();
-                                                    }
-                                                }
-                                            });
-                                        }
-
-                                        newpageOCR.removeClass('loading');
+                    // Create BeautyTips if canvas exists & not IE (results in singlepage view scrolling to top).
+                    if(Modernizr.canvas && !$.browser.msie) {
+                        $('.pop_ocr').bt({
+                            padding: 10,
+                            spikeLength:10,
+                            spikeGirth:13,
+                            fill: '#266099',
+                            strokeWidth: 0,
+                            shrinkToFit: true,
+                            positions: ['most'],
+                            overlap: -1,
+                            cssStyles: { color: '#fff' },
+                            hoverIntentOpts: {
+                                interval: 500,
+                                timeout: 0
                             },
-                            error: function (data) {
-                                newpageOCR.removeClass('loading');
-                                isAnimating = false;
-                               
+                            showTip: function(box) {
+                                if(!isAnimating) {
+                                    $(box).show();
+                                }
                             }
-                           
-                            });
+                        });
+                    }
 
-
-                        
+                    newpageOCR.removeClass('loading');
+                },
+                error: function (data) {
+                    newpageOCR.removeClass('loading');
+                    isAnimating = false;
+                }
+            });
         }
 
         function updatePageNames(index){
-                        pageNames.text("Loading...");
-                        pageNames.addClass('loading');
-                        $.ajax({
-                            type: 'get',
-                            url: '/pagesummary/',
-                            data: {
-                                'op': 'GetPageNameList',
-                                'pageID': pages[index].PageID
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                       if(data.length > 0) {
-                                              pageNames.empty();
-                                              $.each(data, function(index, name) {
-                                                var ubioLink = $('<span/>', { 'class' : 'ubio-links' }).append(
-                                                    $('<a/>', { 
-                                                        'href' : '/name/' + name.UrlName,
-                                                        'text' : name.ResolvedNameString
-                                                    })).appendTo(pageNames);
+            pageNames.text("Loading...");
+            pageNames.addClass('loading');
+            $.ajax({
+                type: 'get',
+                url: '/pagesummary/',
+                data: {
+                    'op': 'GetPageNameList',
+                    'pageID': pages[index].PageID
+                },
+                success: function (data, textStatus, jqXHR) {
+                    if(data.length > 0) {
+                        pageNames.empty();
+                        $.each(data, function(index, name) {
+                            var ubioLink = $('<span/>', { 'class' : 'ubio-links' }).append(
+                                $('<a/>', { 
+                                    'href' : '/name/' + name.UrlName,
+                                    'text' : name.ResolvedNameString
+                                })).appendTo(pageNames);
 
-                                                if(name.EOLID > 0) {
-                                                    ubioLink.append(
-                                                        " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
-                                                }
-                                            });
-
-                                       
-                                        } else {
-                                            pageNames.empty();
-                                            pageNames.append($('<span/>', { 'text' : 'No Scientific Names found' }));
-                                        } 
-                                        pageNames.removeClass('loading');
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                pageNames.empty();
-                                pageNames.removeClass('loading');
-                                isAnimating = false;
+                            if(name.EOLID > 0) {
+                                ubioLink.append(
+                                    " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
                             }
-                           
-                            });
-
+                        });
+                    } else {
+                        pageNames.empty();
+                        pageNames.append($('<span/>', { 'text' : 'No Scientific Names found' }));
+                    } 
+                    pageNames.removeClass('loading');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    pageNames.empty();
+                    pageNames.removeClass('loading');
+                    isAnimating = false;
+                }
+            });
         }
-
-          
-
-
-
-
 
         // Create Modal Dialogs
         $('#download-dialog').jqm({
@@ -627,8 +587,7 @@
             if(pdfPages.length > 0) {
                 $('#generate-dialog').jqmShow();
             }
-        });
-        
+        });        
 
         // Click Binder for PDF Generate button on Dialog
         $('#review-dialog .generate').click(function() {
@@ -713,7 +672,6 @@
             $(segLink).parent().css("color","HighlightText");
             $(segLink).css("color", "HighlightText");
             $(segLink).parent().children(".segListVolPage").css("color","#BFBFBF");
-
             $("#lbSegments").val($(segLink).attr("id"));
         }
 
@@ -742,7 +700,6 @@
             $("#lstSegments").height(newHeight);
             $("#lstSegments ul").height(newHeight);
         });
-
 
         // Function used to change the way pdfs are viewed (list/icon) on the Review Dialog
         function changePdfMode (mode, redraw) {
@@ -865,7 +822,6 @@
                             });
 
                             // close off the PDF selection stuff.
-                            //cancelSelectPages();
                             cancelPdfSelection = true;
 
                         } else {
@@ -952,8 +908,6 @@
             return spreadIndices;
         }
 
-        //Test for adding function to br //SCS
-
         br.bhlPageID = function(index){
          if (pages && (index >= 0) && pages[index].PageID) {             
                               
@@ -1020,8 +974,7 @@
             $("#pagename").text(br.getPageName(br.currentIndex()));
             if (typeof renderAnnotations == "function") renderAnnotations(index+1);
         }  
-
-
+        
         // For a given "accessible page index" return the page number in the book.
         //
         // For example, index 5 might correspond to "Page 1" if there is front matter such
@@ -1040,7 +993,6 @@
             }
             return -1;
         }
-
 
         // Return the index number for the leaf
         br.leafNumToIndex = function (leaf) {
@@ -1134,7 +1086,6 @@
                 pageToolbox.addClass('selected').css('display', 'block'); // .addClass('active')
             }
 
-
             // Hard coded dimensions due to inability to ensure correct dimensions
             pageToolbox.data('info', {
                 index: index,
@@ -1169,62 +1120,54 @@
         br.imagesBaseURL = '/images/';
         br.titleLeaf = <%: StartPage %>;
 
-/*        var old_initToolbar = br.initToolbar;
-         br.initToolbar = function() {
-            old_initToolbar.apply(this, arguments);
-            $('#BRtoolbar').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a class='BRButton' title='Show OCR'>Show OCR</a></div>");
-         }*/
+        BookReader.prototype.addPageToolBox = function (index, page) {
+            var pageToolbox = this.getPageToolbox(index);
+            pageToolbox.appendTo(page);
+        }
+        BookReader.prototype.add2upPageToolBox = function (index, page) {
+            return;
+        }
 
-
-BookReader.prototype.addPageToolBox = function (index, page) {
-    var pageToolbox = this.getPageToolbox(index);
-    pageToolbox.appendTo(page);
-    //this.positionPageToolBox(pageToolbox);
-}
-BookReader.prototype.add2upPageToolBox = function (index, page) {
-    return;
-}
-
-BookReader.prototype.scrollDown = function() {
-    br.next();
-}
-BookReader.prototype.scrollUp = function() {
-    br.prev();
-}
-
+        BookReader.prototype.scrollDown = function() {
+            br.next();
+        }
+        BookReader.prototype.scrollUp = function() {
+            br.prev();
+        }
 
         // Bookviewer crashes ie6, dont even attempt to load it
-        if(!$('html').is('.ie6')) {
+        if (!$('html').is('.ie6')) {
             br.init();
 
-            //$('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show OCR</a></div>");
             var BRtoolbar = $("#BRtoolbar").detach();
             BRtoolbar.appendTo("#BRtoolbarwrapper");
-            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> </div>");
+            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> </div>");
             var PDFtoolbar = $("#toolbar-top").detach();
-            PDFtoolbar.prependTo("#BRtoolbar"); 
+            PDFtoolbar.prependTo("#BRtoolbar");
             $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
             var AnnotationBox = $("#AnnotationBox").detach();
             AnnotationBox.appendTo("#right-panel-content");
 
+            if (!<%=System.Configuration.ConfigurationManager.AppSettings["UseElasticSearch"].ToLower()%>) $("#showSearchButton").hide();
+
             // Print page 
-            var printPageButton = $('.page_print'); 
-            printPageButton.click(function() {
+            var printPageButton = $('.page_print');
+            printPageButton.click(function () {
                 $('<img/>', { src: br.getPageURI(br.currentIndex()) })
                     .printElement({
-                        printMode:'popup',
+                        printMode: 'popup',
                         printBodyOptions: {
                             classNameToAdd: 'printPopup'
                         },
                         "leaveOpen": true,
                         pageTitle: '<%: PageSummary.ShortTitle %>' + ((pages[br.currentIndex()].WebDisplay) ? ' - ' + pages[br.currentIndex()].WebDisplay : '')
-                    });                
+                    });
             });
-            
+
             // Toggle left hand container for Pages 
-            var showPagesButton = $('#showPagesButton'); 
-            showPagesButton.click(function() {
-                $("#left-panel2").toggle("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+            var showPagesButton = $('#showPagesButton');
+            showPagesButton.click(function () {
+                $("#left-panel2").toggle("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                 if (showPagesButton.attr("title") == "Show Pages") {
                     showPagesButton.attr("title", "Hide Pages");
                     showPagesButton.text("Hide Pages");
@@ -1237,49 +1180,72 @@ BookReader.prototype.scrollUp = function() {
             });
 
             // Toggle right hand container for OCR 
-            var showOCRButton = $('#showOCRButton'); 
-            showOCRButton.click(function() {
+            var showOCRButton = $('#showOCRButton');
+            showOCRButton.click(function () {
                 newpageOCR.text("");
-                //$("#right-panel2").toggle("fast", function() {br.centerPageView();});
                 if (showOCRButton.attr("title") == "Show OCR") {
-                    updateOCR(br.currentIndex()); 
-                    $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+                    updateOCR(br.currentIndex());
+                    $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageOCR-panel").show();
                     showOCRButton.attr("title", "Hide OCR");
                     showOCRButton.html("Hide<br/>OCR");
                     showOCRButton.addClass("displayed");
                 } else {
-                    $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+                    $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     showOCRButton.attr("title", "Show OCR");
                     showOCRButton.html("Show<br/>OCR");
                     showOCRButton.removeClass("displayed");
                 }
 
                 resetAnnotationsBox();
+                resetSearchBox();
+            });
+
+            // Toggle right hand container for Search 
+            var showSearchButton = $('#showSearchButton');
+            showSearchButton.click(function () {
+                //newpageOCR.text("");
+                if (showSearchButton.attr("title") == "Search Inside") {
+                    //updateOCR(br.currentIndex()); 
+                    $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
+                    $("#pageSearch-panel").show();
+                    showSearchButton.attr("title", "Hide Search");
+                    showSearchButton.html("Hide Search");
+                    showSearchButton.addClass("displayed");
+                } else {
+                    $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
+                    showSearchButton.attr("title", "Search Inside");
+                    showSearchButton.html("Search Inside");
+                    showSearchButton.removeClass("displayed");
+                }
+
+                resetPageOCRBox();
+                resetAnnotationsBox();
             });
 
             // Toggle right hand container for Annotations
             var showAnnotationsButton = $("#showAnnotationsButton");
-            showAnnotationsButton.click(function() {
-                //$("#right-panel2").toggle("fast", function() {br.centerPageView();});
+            showAnnotationsButton.click(function () {
                 if (showAnnotationsButton.attr("title") == "Show Annotations") {
-                    $("#right-panel2").show("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+                    $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#AnnotationBox").show();
                     showAnnotationsButton.attr("title", "Hide Annotations");
                     showAnnotationsButton.html("Hide<br/>Annotations");
                     showAnnotationsButton.addClass("displayed");
                 } else {
-                    $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+                    $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     showAnnotationsButton.attr("title", "Show Annotations");
                     showAnnotationsButton.html("Show<br/>Annotations");
                     showAnnotationsButton.removeClass("displayed");
                 }
 
                 resetPageOCRBox();
+                resetSearchBox();
             });
-            if ($("#AnnotationBox").length == 0) {
+
+            if ("<%=HasAnnotations.ToLower()%>" === "false") {
                 showAnnotationsButton.hide();
-            } else if ($("#AnnotationBox").length > 0) {
+            } else {
                 showAnnotationsButton.trigger('click');
                 window.setTimeout("br.centerPageView()", 500);
             }
@@ -1304,8 +1270,6 @@ BookReader.prototype.scrollUp = function() {
         var rightPanelHeight = $("#right-panel2").height();
         var pageOCRHeaderHeight = $("#pageOCR-panel .header").height();
         var pageReaderCommentsHeaderHeight = $("#pageReaderComments-panel .header").height();
-        //$("#pageOCR-panel .text").height(rightPanelHeight-pageOCRHeaderHeight-50);
-
         updateUIHeights(); 
     });
 
@@ -1346,7 +1310,6 @@ BookReader.prototype.scrollUp = function() {
         }
         finalHeight += lphh;
 
-        //$("#lzfstPages").attr("size",4);
         $("#names-panel").height(leftPanelHeight/3);
         var isiPad = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i) != null;
         if (!isiPad) {
@@ -1372,6 +1335,13 @@ BookReader.prototype.scrollUp = function() {
         $("#showAnnotationsButton").removeClass("displayed");
     }
 
+    function resetSearchBox() {
+        $("#pageSearch-panel").hide();
+        $("#showSearchButton").attr("title", "Search Inside");
+        $("#showSearchButton").html("Search<br/>Inside");
+        $("#showSearchButton").removeClass("displayed");
+    }
+
     function resetPageOCRBox() {
         $("#pageOCR-panel").hide();
         $("#showOCRButton").attr("title", "Show OCR");
@@ -1380,7 +1350,6 @@ BookReader.prototype.scrollUp = function() {
     }
 
     function fixIEDisplayIssue() {
-
         var pageWidth = $('.BRpagedivthumb img').css('width');
         var pageHeight = $('.BRpagedivthumb img').css('height');
 
@@ -1392,278 +1361,247 @@ BookReader.prototype.scrollUp = function() {
         }
     }
 
-$(document).ready(function(){
+    $(document).ready(function(){
+        	    //	Called when we click on the tab itself
+	    $('#pagestab').click(function() {
 
-	//	Called when we click on the tab itself
-	$('#pagestab').click(function() {
+            if ($('#pagestab').hasClass('active')) return false; 
 
-        if ($('#pagestab').hasClass('active')) return false; 
+		    $('#pagestabcontent').show();
+            $('#segmentstabcontent').hide();
+            $('#pagestab').toggleClass("active");
+            $('#segmentstab').toggleClass("active");
 
-		$('#pagestabcontent').show();
-        $('#segmentstabcontent').hide();
-        $('#pagestab').toggleClass("active");
-        $('#segmentstab').toggleClass("active");
-
-		//	Do nothing when tab is clicked
-		return false;
-	});
-	//	Called when we click on the tab itself
-	$('#segmentstab').click(function() {
+		    //	Do nothing when tab is clicked
+		    return false;
+	    });
+	    //	Called when we click on the tab itself
+	    $('#segmentstab').click(function() {
         
-        if ($('#segmentstab').hasClass('active')) return false; 
+            if ($('#segmentstab').hasClass('active')) return false; 
 
-		$('#pagestabcontent').hide();
-        $('#segmentstabcontent').show();
-        $('#pagestab').toggleClass("active");
-        $('#segmentstab').toggleClass("active");
+		    $('#pagestabcontent').hide();
+            $('#segmentstabcontent').show();
+            $('#pagestab').toggleClass("active");
+            $('#segmentstab').toggleClass("active");
 
-		//	Do nothing when tab is clicked
-		return false;
-	});
-    var segmentCount = <%: SegmentCount %>; 
-    if (segmentCount == 0) {
-        $('#segmentstab').hide();
-    }
-});
+		    //	Do nothing when tab is clicked
+		    return false;
+	    });
+        var segmentCount = <%: SegmentCount %>; 
+        if (segmentCount == 0) {
+            $('#segmentstab').hide();
+        }
+    });
 
 //]]>
-
-
 </script>
 
 <script type="text/javascript">
-    <!--
-        var pageSequence = [<asp:Literal ID="ltlPageSequence" runat="server"></asp:Literal>];   <%--List of references to annotated pages in sequence; --%>
+<!--
+    var pageSequence = [<asp:Literal ID="ltlPageSequence" runat="server"></asp:Literal>];   <%--List of references to annotated pages in sequence; --%>
 
-        //initialize annotation box
-         $testlist = $("#testlist");
-        var $_AnnotationBox = $('#AnnotationBox'),
-            $_toggleAnnotationBox = $('#AnnotationBox #toggleAnnotationBox'),
-            $_hide_annotations = $('#AnnotationBox #hide-annotations'),
-            $_stub = $('#AnnotationBox #stub'),
-            $_show_annotations = $('#AnnotationBox #show-annotations'),
-            $_related_annotations = $('#related-annotations'),
-            $_annotationBoxContent = $('#AnnotationBox #content'),
-            $_noAnnotationsStub = $('#no-annotations-stub');
+    //initialize annotation box
+    var $_AnnotationBox = $('#AnnotationBox'),
+        //$_toggleAnnotationBox = $('#AnnotationBox #toggleAnnotationBox'),
+        $_hide_annotations = $('#AnnotationBox #hide-annotations'),
+        $_stub = $('#AnnotationBox #stub'),
+        $_show_annotations = $('#AnnotationBox #show-annotations'),
+        $_related_annotations = $('#related-annotations'),
+        $_annotationBoxContent = $('#AnnotationBox #content'),
+        $_noAnnotationsStub = $('#no-annotations-stub');
 
-            //set show/hide for Annotation Box
-            $_toggleAnnotationBox.click(
-                                        function(){
-                                                    $_annotationBoxContent.toggle(50, toggleAnnotationBody());
-                                                  }
-                                       );    
+    ////set show/hide for Annotation Box
+    //$_toggleAnnotationBox.click(function(){
+    //    $_annotationBoxContent.toggle(50, toggleAnnotationBody());
+    //});    
+
+    //initialize legend box
+    var $_toggle_legend = $('#toggle_legend'),
+        $_hide_legend = $('#hide_legend'),
+        $_show_legend = $('#show_legend'),
+        $_legend_items = $('#legend-items'),
+        $_copyright = $('#AnnotationBox #copyright'),
+        $_phantom_legend = $('#phantom-legend');
+
+    //set show/hide for legend
+    //use phantom_legend to keep rest of Annotation Box content evenly spaced
+    $_toggle_legend.click(function() {
+        if ($_phantom_legend.height() > 0)
+            $_phantom_legend.height($_legend_items.outerHeight());
+        $_legend_items.toggle(50, function() {
+            $_phantom_legend.toggle(0);
+            $_hide_legend.toggle();
+            $_show_legend.toggle();
+        });  
+    });
+
+    function changePage(index)
+    {
+        br.jumpToIndex(index-1); //Page Annotation index starts at 1, not zero so need to remove one.
+    }
+
+    function toggleAnnotationBody()
+    {
+        $_hide_annotations.toggle();
+        $_AnnotationBox.toggleClass('active');
+        $_show_annotations.toggle();
+    }
+
+    function setActive()
+    {
+        $_AnnotationBox.toggleClass('active', true);
+        $_AnnotationBox.toggleClass('inactive', false);
+        $_annotationBoxContent.show();
+        $_noAnnotationsStub.hide();
+    }
+
+    function setInactive()
+    {
+        $_AnnotationBox.toggleClass('inactive', true);
+        $_AnnotationBox.toggleClass('active', false);
+        $_annotationBoxContent.hide();
+        $_noAnnotationsStub.show();
+    }
+
+    function renderAnnotations(newSequence)
+    {
+        //all the annotation content has been written to the page on Page Load, and hidden
+        //retrieve appropriate section by newSequence
+        //if ($("#AnnotationBox").css("display") == "none")
+        //{
+        //    $("#AnnotationBox").css("top", "0").css("display", "block");
+        //}
+
+        //Set Annotation Box
+        var notes = $("#AnnotationBox #notes");
+
+        //set notes
+        var _newVal = $("#pageAnnotations_" + newSequence).html();
+        if (_newVal) 
+        {
+            notes.html(_newVal);
+            setActive();
+        }
+        else
+        {
+            setInactive();
+        }
+
+        set_scrollers(newSequence);
+    }
+
+    function set_scrollers(newSequence)
+    {              
+        /********************************************************************************
+        * sets controls for going to first available annotated page in either direction *
+        * If user has browsed to an unannotated page, have to determine where that page *
+        * lies in the sequence, to determine its adjacent annotated pages. If we've     *
+        * browsed to a page outside of the sequence, relabel the the controls to either *
+        * "first" or "last"                                                             *
+        ********************************************************************************/
+        var aPrev = $("#AnnotationBox #pageScroller #aPrev"),
+            aNext = $("#AnnotationBox #pageScroller #aNext");
+
+        pIndex = map_sequence(newSequence, pageSequence);
+
+        if (pIndex[0] >= 0) 
+        {
+            aPrev.html("<span class='pagescrollerarrow'>&laquo;</span>" + (pIndex[0] == (pageSequence.length - 1) ? "last marked page" : "previous marked page"));
+
+            aPrev.attr('href', 'javascript:changePage(' + (pageSequence[pIndex[0]]) + ');');
+            if (aPrev.is(':hidden')) 
+            {
+                aPrev.show();
+            }
+        }
+        else              //no previous annotation, disable control
+            aPrev.hide();
+
+        if (pIndex[1] >= 0)
+        {
+            aNext.html((pIndex[1] == 0 ? "first marked page" : "next marked page") + "<span class='pagescrollerarrow'>&raquo;</span>");
+            aNext.attr('href', 'javascript:changePage(' + (pageSequence[pIndex[1]]) + '); ');
+            if (aNext.is(':hidden')) 
+            {
+                aNext.show();
+            }
+        }
+        else              //no next annotation, disable control
+            aNext.hide();    
+    }
         
-        //initialize legend box
-        var $_toggle_legend = $('#toggle_legend'),
-            $_hide_legend = $('#hide_legend'),
-            $_show_legend = $('#show_legend'),
-            $_legend_items = $('#legend-items'),
-            $_copyright = $('#AnnotationBox #copyright'),
-            $_phantom_legend = $('#phantom-legend');
-
-            //set show/hide for legend
-            //use phantom_legend to keep rest of Annotation Box content evenly spaced
-            $_toggle_legend.click(
-                                    function(){
-                                                if ($_phantom_legend.height() > 0)
-                                                    $_phantom_legend.height($_legend_items.outerHeight());
-                                                $_legend_items.toggle(50,
-                                                                        function()
-                                                                        {
-                                                                            $_phantom_legend.toggle(0);
-                                                                            $_hide_legend.toggle();
-                                                                            $_show_legend.toggle();
-                                                                        }
-                                                                      );  
-                                            }
-                                  );
-/*
-        var CUTOFF = $(window).height() - 100;
-        window.onresize=function(){
-            window.status = $(window).height() + ", " + CUTOFF;
-            if ($(window).height() < CUTOFF)
-            {
-                $_annotationBoxContent.css("overflow","auto");
-            }
-            else
-            {
-                $_annotationBoxContent.css("overflow","visible");
-             }
-        };
-*/
-
-          function changePage(index)
-          {
-            br.jumpToIndex(index-1); //Page Annotation index starts at 1, not zero so need to remove one.
-          }
-
-        function toggleAnnotationBody()
+    function onRelatedItemHover(id)
+    {
+        return;
+        // find containing page block and extract id for display
+        var $_relatedAnnotation = $('#Annotation_' + id);
+        var $page = $_relatedAnnotation.parentsUntil('#AnnotationRepository');
+        if ($page.attr('id'))
+            changePage($page.attr('id').replace("pageAnnotations_", ''));
+        else
         {
-            $_hide_annotations.toggle();
-            $_AnnotationBox.toggleClass('active');
-            //$_stub.toggle();
-            $_show_annotations.toggle();
-        }
-
-        function setActive()
-        {
-            $_AnnotationBox.toggleClass('active', true);
-            $_AnnotationBox.toggleClass('inactive', false);
-            $_annotationBoxContent.show();
-            //$_toggleAnnotationBox.show();
-
-            $_noAnnotationsStub.hide();
-        }
-
-        function setInactive()
-        {
-            $_AnnotationBox.toggleClass('inactive', true);
-            $_AnnotationBox.toggleClass('active', false);
-            $_annotationBoxContent.hide();
-            //$_toggleAnnotationBox.hide();
-
-            $_noAnnotationsStub.show();
-        }
-
-        function renderAnnotations(newSequence)
-        {
-            //all the annotation content has been written to the page on Page Load, and hidden
-            //retrieve appropriate section by newSequence
-
-            if ($("#AnnotationBox").css("display") == "none")
-            {
-               $("#AnnotationBox").css("top", "0").css("display", "block");
-            }
-
-            //Set Annotation Box
-            var notes = $("#AnnotationBox #notes");
-
-            //set notes
-            var _newVal = $("#pageAnnotations_" + newSequence).html();
-            if (_newVal) 
-            {
-                notes.html(_newVal);
-                setActive();
-            }
-            else
-            {
-                setInactive();
-            }
-
-            set_scrollers(newSequence);
-        }
-
-        function set_scrollers(newSequence)
-        {              
-               /********************************************************************************
-               * sets controls for going to first available annotated page in either direction *
-               * If user has browsed to an unannotated page, have to determine where that page *
-               * lies in the sequence, to determine its adjacent annotated pages. If we've     *
-               * browsed to a page outside of the sequence, relabel the the controls to either *
-               * "first" or "last"                                                             *
-               ********************************************************************************/
-              var aPrev = $("#AnnotationBox #pageScroller #aPrev"),
-                  aNext = $("#AnnotationBox #pageScroller #aNext");
-
-              pIndex = map_sequence(newSequence, pageSequence);
-
-              if (pIndex[0] >= 0) 
-              {
-                  aPrev.html("<span class='pagescrollerarrow'>&laquo;</span>" + (pIndex[0] == (pageSequence.length - 1) ? "last marked page" : "previous marked page"));
-
-                  aPrev.attr('href', 'javascript:changePage(' + (pageSequence[pIndex[0]]) + ');');
-                  if (aPrev.is(':hidden')) 
-                  {
-                      aPrev.show();
-                  }
-              }
-              else              //no previous annotation, disable control
-                  aPrev.hide();
-
-              if (pIndex[1] >= 0)
-              {
-                    aNext.html((pIndex[1] == 0 ? "first marked page" : "next marked page") + "<span class='pagescrollerarrow'>&raquo;</span>");
-                    aNext.attr('href', 'javascript:changePage(' + (pageSequence[pIndex[1]]) + '); ');
-                    if (aNext.is(':hidden')) 
-                    {
-                        aNext.show();
-                    }
-              }
-              else              //no next annotation, disable control
-                  aNext.hide();    
-        }
-        
-        function onRelatedItemHover(id)
-        {
-            return;
-            // find containing page block and extract id for display
-            var $_relatedAnnotation = $('#Annotation_' + id);
-            var $page = $_relatedAnnotation.parentsUntil('#AnnotationRepository');
-            if ($page.attr('id'))
-                changePage($page.attr('id').replace("pageAnnotations_", ''));
-            else
-            {
-                var $_relatedItem = $('#related-item' + id);
-                var pos = $_relatedItem.offset();
-                var $_not_avail = $('#annotation-not-available');
-                $_not_avail.offset({top:pos.top - 35, left:pos.left});
-                $_not_avail.show();
-            }
-        }
-
-        function onRelatedItemBlur()
-        {
-            return;
+            var $_relatedItem = $('#related-item' + id);
+            var pos = $_relatedItem.offset();
             var $_not_avail = $('#annotation-not-available');
-            $_not_avail.hide();
+            $_not_avail.offset({top:pos.top - 35, left:pos.left});
+            $_not_avail.show();
         }
+    }
 
-        function onRelatedItemClick(id)
+    function onRelatedItemBlur()
+    {
+        return;
+        var $_not_avail = $('#annotation-not-available');
+        $_not_avail.hide();
+    }
+
+    function onRelatedItemClick(id)
+    {
+        // find containing page block and extract id for display
+        var $_relatedAnnotation = $('#Annotation_' + id);
+        var $page = $_relatedAnnotation.parentsUntil('#AnnotationRepository');
+        if ($page.attr('id'))
+            changePage($page.attr('id').replace("pageAnnotations_", ''));
+    }
+
+    function map_sequence(x, set)
+    {
+        var left = 0, right = set.length - 1;
+        if (x < set[left]) return new Array(-1, left);
+        if (x > set[right]) return new Array(right, -1);
+        if (x == set[left]) return new Array(-1, right == 0 ? -1 : 1);
+        if (x == set[right]) return new Array(right == 0 ? -1 : right - 1, -1);
+
+        for (y=0; y<=right; y++)
         {
-            // find containing page block and extract id for display
-            var $_relatedAnnotation = $('#Annotation_' + id);
-            var $page = $_relatedAnnotation.parentsUntil('#AnnotationRepository');
-            if ($page.attr('id'))
-                changePage($page.attr('id').replace("pageAnnotations_", ''));
+            var start = y - 1, end = -1;
+            if (x < set[y]) end = y;
+            if (x == set[y]) end = y + 1;
+            if (end != -1) return new Array(start, end);
         }
+    }
+-->
+</script>
+<script type="text/javascript">
+<!--
+    function toggleSubjectSection(id) {
+        var subjItems = Array($('#subject-section-' + id),
+                                $('#show-subjects' + id),
+                                $('#hide-subjects' + id));
+        for (i in subjItems) {
+            subjItems[i].toggle();
+        }
+    }
 
-        function map_sequence(x, set)
-        {
-            var left = 0, right = set.length - 1;
-            if (x < set[left]) return new Array(-1, left);
-            if (x > set[right]) return new Array(right, -1);
-            if (x == set[left]) return new Array(-1, right == 0 ? -1 : 1);
-            if (x == set[right]) return new Array(right == 0 ? -1 : right - 1, -1);
-
-            for (y=0; y<=right; y++)
-            {
-                var start = y - 1, end = -1;
-                if (x < set[y]) end = y;
-                if (x == set[y]) end = y + 1;
-                if (end != -1) return new Array(start, end);
-            }
+    function toggleConceptSection(id) {
+        var subjItems = Array($('#concept-section-' + id),
+                                $('#show-concepts' + id),
+                                $('#hide-concepts' + id));
+        for (i in subjItems) {
+            subjItems[i].toggle();
         }
-    -->
-    </script>
-    <script type="text/javascript">
-    <!--
-        function toggleSubjectSection(id) {
-            var subjItems = Array($('#subject-section-' + id),
-                                  $('#show-subjects' + id),
-                                  $('#hide-subjects' + id));
-            for (i in subjItems) {
-                subjItems[i].toggle();
-            }
-        }
-
-        function toggleConceptSection(id) {
-            var subjItems = Array($('#concept-section-' + id),
-                                  $('#show-concepts' + id),
-                                  $('#hide-concepts' + id));
-            for (i in subjItems) {
-                subjItems[i].toggle();
-            }
-        }
-    -->
-    </script>
+    }
+-->
+</script>
 </asp:content>

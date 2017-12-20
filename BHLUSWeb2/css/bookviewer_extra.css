@@ -454,8 +454,13 @@ a.BRButton:hover, a.BRButton:active
 .BRButton.displayed {
     background: #455666;
 }
+a.BRButtonFeatured {
+    color: yellow;
+    font-weight: bold;
+}
 #showOCRButton.BRButton { width: 50px; margin-right: 5px; }
 #showAnnotationsButton.BRButton { width: 85px; margin-right: 5px; }
+#showSearchButton.BRButton { width: 70px; margin-right: 5px; }
 
 
 #BRtoolbar {

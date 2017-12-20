@@ -390,7 +390,8 @@ namespace MOBOT.BHL.Web2
                     {
                         if (currentSequence > 0)                            //already set, close current block before opening new one
                         {
-                            sbPageBlock.Append("\n\t</div>\n\t</div>");
+                            //sbPageBlock.Append("\n\t</div>\n\t</div>");
+                            sbPageBlock.Append("\n\t</div>");
                         }
 
                         //open new block
@@ -548,7 +549,6 @@ Append("</a>").
 
                 ltlAnnotationContent.Text = sbPageBlock.ToString();
                 ltlPageSequence.Text = sbScrollItems.ToString();
-                plhAnnotations.Visible = true;
             }
         }
     
