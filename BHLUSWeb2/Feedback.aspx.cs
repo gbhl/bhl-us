@@ -148,7 +148,7 @@ namespace MOBOT.BHL.Web2
 
                     string subject = "BHL Feedback (# " + newIssue.Id.ToString() + ") Received";
                     if (subjectScanReq.Checked) subject = "BHL Scanning Request (# " + newIssue.Id.ToString() + ") Received";
-                    //this.SendEmail(emailTextBox.Text, subject, Server.HtmlDecode(issueLongDesc));
+                    if (emailTextBox.Text.Trim().Length > 0) this.SendEmail(emailTextBox.Text, subject, Server.HtmlDecode(issueLongDesc));
                     this.ShowConfirmationMessage(subject, Server.HtmlDecode(issueLongDesc));
 
                     if (subjectScanReq.Checked)

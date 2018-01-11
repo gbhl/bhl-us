@@ -335,6 +335,14 @@ namespace MOBOT.BHL.BHLPDFGenerator
             sb.Append(endOfLine);
             sb.Append("If you have questions or need to report an error, please contact us via our Feedback page: https://www.biodiversitylibrary.org/feedback.aspx");
             sb.Append(endOfLine);
+            sb.Append(endOfLine);
+            sb.Append("**Please Support BHL**");
+            sb.Append(endOfLine);
+            sb.Append("BHL depends on the financial support of its patrons. Help us continue to provide free services like custom PDFs with a tax-deductible donation: https://s.si.edu/donate-bhl02");
+            sb.Append(endOfLine);
+            sb.Append(endOfLine);
+            sb.Append("Join our mailing list to receive the latest BHL news and content highlights: https://s.si.edu/bhl-mailinglist02");
+            sb.Append(endOfLine);
 
             return sb.ToString();
         }

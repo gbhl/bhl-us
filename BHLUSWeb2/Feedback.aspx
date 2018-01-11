@@ -142,16 +142,7 @@
             </div>
 
             <div>
-	            <p>BHL is voluntarily staffed by our Partner Libraries (http://biodivlib.wikispaces.com/BHL+Consortium). We are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information or clarification.</p>
-	            <p>In the meantime, you may find useful information on our Help Pages (http://biodivlib.wikispaces.com/help). For example:</p>
-	            <ul style="list-style-type:disc;margin-left:30px;">
-		            <li><a href="http://biodivlib.wikispaces.com/Guidelines+for+Submitting+Scanning+Requests" target="_blank">When will the title I requested be available in BHL? What is the Scan Request process?</a></li>
-		            <li><a href="http://biodivlib.wikispaces.com/Download+How+To" target="_blank">How can I download a book / series of pages / single image from BHL?</a></li>
-		            <li><a href="http://biodivlib.wikispaces.com/Licensing+and+Copyright#reuse" target="_blank">Can I reuse your images? If I do, how would BHL like me to attribute them?</a></li>
-		            <li><a href="http://biodivlib.wikispaces.com/Help#Using%20DOIs%20and%20Stable%20URLs" target="_blank">What link should I use when I cite BHL items in my published research?</a></li>
-		            <li><a href="http://biodivlib.wikispaces.com/Get+Involved" target="_blank">Where can I find information about supporting the BHL as an individual or institution?</a></li>
-	            </ul>
-	            <p>Thank you for your continued use and support of the Biodiversity Heritage Library. We appreciate your feedback!</p>
+                <p>Thank you for your feedback! BHL is voluntarily staffed by our Partner Libraries and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
             </div>
         </div>
 

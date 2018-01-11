@@ -616,6 +616,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="PDFSize" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="Volume" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="FileRootFolder" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Sponsor" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="ItemSequence" nillable="true" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="PageID" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="FileNamePrefix" type="s:string" />
@@ -1237,6 +1238,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="PartNumber" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="PartName" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="BibliographicLevelID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MaterialTypeID" nillable="true" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
