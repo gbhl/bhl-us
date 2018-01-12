@@ -109,72 +109,35 @@
                 <div id="right-panel-content">
                     <div id="pageOCR-panel"> </div>
 
-                    <div id="pageSearch-panel" style="background-color:#2b3c4c; height:600px;">
-                        <div style="margin: 0px 0 0 0; padding: 15px 0 15px 0; background-color:#455666"> <!-- search header -->
-                            <div style="margin: 0px 0px 5px 15px; font-size:16px">Search Inside This Book:</div>
-                            <div style="margin: 0px 0px 0px 15px;"><input type="text" style="width:250px" value="Mollusca" /> <input type="button" value="Search" onclick="$('#searchResults').show();" /></div>
-                        </div>
-                        <div id="searchResults" style="display:none">
-                            <div> <!-- search sub-title -->
-                                <div style="padding: 10px 0px 10px 15px; font-size:14px">Results For:  <span>Mollusca</span></div>
+                    <!-- Search Panel -->
+                    <div id="pageSearch-panel">
+                        <div class="sibHeader">
+                            <div class="sibHeaderTitle">Search Inside This Book:</div>
+                            <div class="sibHeaderText">
+                                <input id="sibSearchText" type="text" value="" /> <input id="sibSearchBtn" class="sibBtn" type="button" value="Search" />
                             </div>
+                        </div>
+                        <div id="searchResults">
+                            <div>
+                                <div class="sibResultsHeader">Results For:  <span id="sibTextEcho"></span> <span id="sibNumResults"></span></div>
+                            </div>
+
                             <!-- facets -->
                             <!--
-                            <div style="padding:0px 0px 10px 0px; font-size:12px">
-                                <div style="margin:5px 10px 5px 10px; border-color:#222F3B; border-style:solid; border-width:1px; background-color: #19232C">
-                                    <div style="padding: 5px 0px 5px 15px;background-color: #1E2B36; font-size:13px;">Narrow Search By:</div>
-                                    <div style="margin: 0px 0px 3px 15px"><img src="/images/bib_minus.gif" /> Type</div>
-                                    <div style="margin: 0px 0px 5px 30px; font-size:13px; font-style:italic"><input type="checkbox" /> Text (38) <input type="checkbox" /> Illustration (5) <input type="checkbox" /> Drawing (4) <input type="checkbox" /> Cover (2) <input type="checkbox" /> Title Page(1)</div>
-                                    <hr style="margin:3px 15px 3px 15px" />
-                                    <div style="margin: 0px 0px 3px 15px"><img src="/images/bib_minus.gif" /> Name</div>
-                                    <div style="margin: 0px 0px 5px 30px; font-size:13px; font-style:italic"><input type="checkbox" /> Mollusca (7) <input type="checkbox" /> Lepidoptera (4) <input type="checkbox" /> Brachiopoda (3) <input type="checkbox" /> Astraea (2) <input type="checkbox" /> Brachiopod (2)</div>
+                            <div class="sibFacetContainer">
+                                <div class="sibFacetBox">
+                                    <div class="sibFacetHeader">Narrow Search By:</div>
+                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Type</div>
+                                    <div class="sibFacetValues"><input type="checkbox" /> Text (38) <input type="checkbox" /> Illustration (5) <input type="checkbox" /> Drawing (4) <input type="checkbox" /> Cover (2)</div>
+                                    <hr />
+                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Name</div>
+                                    <div class="sibFacetValues"><input type="checkbox" /> Mollusca (7) <input type="checkbox" /> Lepidoptera (4) <input type="checkbox" /> Brachiopoda (3) <input type="checkbox" /> Astraea (2)</div>
                                 </div>
                             </div>
                             -->
-                            <style>
-                                .sibResult b { color:#fcd3a1; }
-                            </style>
-                            <div style="padding:0px 0px 10px 0px; font-size:12px; max-height:450px; overflow:auto;"> <!-- search results -->
-                                <div style="margin:5px 10px 5px 10px; border-color:#222F3B; border-style:solid; border-width:1px; background-color: #19232C">
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 6 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . New Fossil <b>Mollusca</b>, 51, 96. Rocks of Mount Cargill, Dunedin, 44, 163. Bathgate, A ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 10 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . GUDEX, M. C. Fossil <b>Mollusca</b> from Blue Chffs, Canterbury, 46, 278.  Striated Stones from St ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 11 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... <b>Mollusca</b> from Kermadec Islands, and on the " Sinusigera Apex,\" 43, Proc. II, 57. Suter's Manual ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... of the N.Z. <b>Mollusca</b>, Com- mentary on, 47, 417. Ironside, A. F. Anatomical Structure of ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 13 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... Fossil Species of <b>Mollusca</b>, 51, 253, Marshall, P. ; Speight, R. ; and Cotton, C. A, Younger Rock ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... , 598. Mestayer, M. K. Astraea hdiotropium Martyn, Younger Stages of, 50, 191. <b>Mollusca</b> ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... from Dredgings taken off the Northern Coast of N.Z., 48, 122. <b>Mollusca</b> from various Dredgings ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . Murdoch. R., and Marshall, P. New Fossil Species of <b>Mollusca</b>, 51, 253. N. Neil, W. T ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 16 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... Species of the Family, 51, 68. MoUusca, New Species of Tertiary, 45, 294. <b>Mollusca</b>, Two ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 23 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . Ben- ham), 42, 354. Palaeontology — -conUnvpd. <b>Mollusca</b> from Bluecliffs, South Canterbury ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... , List of Fossil (M. C. Gude.v), 46, 278. <b>Mollusca</b>, New Fossil (J. A. Bartrum), 51, 96 ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . <b>Mollusca</b>, New Fossil, Species of ( P ?ilarshall and R. Murdoch), 51, 253. <b>Mollusca</b>, New Fossil ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... . , Two (H. Suter), 43, 595. <b>Mollusca</b>, New Species of Tertiary (H. Suter),  45, 294. Molluscan ...</div>
-                                    </div>
-                                    <div style="margin: 5px 0px 5px 15px"> <!-- one result -->
-                                        <div><a href="#" style="color:#98CDCF">Page 26 (Text)</a></div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... 26 INDEX. <b>MOLLUSCA</b>. Amphibola crenata Martyn, Structure of (W. C. Farnie), 51, 69 ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... (T. Iredale), 47, 498. Marine <b>Mollusca</b> from the Kermadec Islands, and on the " Sinusigera Apex ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... " (T. Iredale), 43, Proc. II, 57. <b>Mollusca</b> from Dredgings taken off the Coast of N.Z ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... ., Snares Islands, and Bounty Islands (M. K. Mestayer), 51, 130.  <b>Mollusca</b> from Dredgings taken ...</div>
-                                        <div class="sibResult" style="margin:3px 0px 3px 20px; font-style:italic">... off the Northern Coast of N.Z. (M. K. Mestayer), 48, 122.  <b>Mollusca</b> from Kermadec Islands (W. R ...</div>
-                                    </div>
+
+                            <div class="sibResultsContainer">
+                                <div class="sibResultsBox">
                                  </div>
                             </div>
                         </div>
@@ -281,12 +244,6 @@
 
     <div id="AnnotationBoxPlaceholder" class="active">
         <div id="AnnotationBox" class="active" style="display:none">
-            <!--
-            <div id="toggleAnnotationBox">
-                <img id="hide-annotations" src="../Images/up.gif" alt="hide"/>
-                <img id="show-annotations" src="../Images/down.gif" alt="show" style="display:none"/>
-            </div>
-            -->
             <div id="header">
                 <a href="/collection/darwinlibrary" title="Collection"><img src="/images/darwin_book_header.png" alt="Charles Darwin's Library"/></a>
                 <div id="indicator"><asp:Literal ID="ltlBookIndicator" runat="server" Text=""></asp:Literal><span style="float:right"><a href="/browse/collection/darwinlibrary" title="Books">Book List</a>&nbsp; | &nbsp;<a href="/collection/darwinlibrary">Help</a></span></div>
@@ -339,7 +296,7 @@
 
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
-    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=3" />
+    <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=5" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
@@ -600,6 +557,65 @@
                 }
             });
         }
+
+        // Check for Enter in Search Inside text box
+        $("#sibSearchText").keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') $("#sibSearchBtn").click();
+        });
+
+        // Click binder for search button
+        $("#sibSearchBtn").click(function () {
+            var resultsBox = $(".sibResultsBox");
+            $("#sibTextEcho").html($("#sibSearchText").val());
+
+            resultsBox.html("Loading...");
+            $("#searchResults").show();
+
+            $.ajax({
+                type: 'get',
+                url: '/search/pages',
+                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PageSummary.ItemID %>,
+                success: function (data, textStatus, jqXHR) {
+                    if (data.length > 0) {
+                        $("#sibNumResults").html("(" + data.length + ")");
+                        resultsBox.empty();
+                        $.each(data, function (index, hit) {
+                            // Build this for each hit
+                            // <div class="sibResultBox">
+                            //     <div><a href="#" class="sibResultPage">Page NN</a></div>
+                            //     <div class="sibResultText">... hit text ...</div>
+                            //     <div class="sibResultText">... hit text ...</div>
+                            // </div>
+
+                            var resultBox = $("<div/>", { "class": "sibResultBox" });
+                            var resultPageDesc = $("<div/>")
+                                .append($("<a/>", {
+                                    "class": "sibResultPage",
+                                    "href": "javascript:changePage(" + hit.Sequence + ")",
+                                    "text": hit.PageDescription
+                                }));
+                            resultBox.append(resultPageDesc);
+
+                            $.each(hit.Highlights, function (index2, highlight) {
+                                resultBox.append($("<div/>", { "class": "sibResultText" }).append("... " + highlight.Item2 + " ..."));
+                            });
+
+                            resultBox.appendTo(resultsBox);
+                        });
+                    } else {
+                        resultsBox.empty();
+                        resultsBox.append($('<span/>', { 'text': 'No results found' }));
+                    }
+                    resultsBox.removeClass('loading');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    resultsBox.empty();
+                    resultsBox.append($('<span/>', { 'text': 'Error!  Please try again.' }));
+                    isAnimating = false;
+                }
+            });
+        });
 
         // Create Modal Dialogs
         $('#download-dialog').jqm({
@@ -1480,11 +1496,6 @@
         $_annotationBoxContent = $('#AnnotationBox #content'),
         $_noAnnotationsStub = $('#no-annotations-stub');
 
-    ////set show/hide for Annotation Box
-    //$_toggleAnnotationBox.click(function(){
-    //    $_annotationBoxContent.toggle(50, toggleAnnotationBody());
-    //});    
-
     //initialize legend box
     var $_toggle_legend = $('#toggle_legend'),
         $_hide_legend = $('#hide_legend'),
@@ -1535,13 +1546,6 @@
 
     function renderAnnotations(newSequence)
     {
-        //all the annotation content has been written to the page on Page Load, and hidden
-        //retrieve appropriate section by newSequence
-        //if ($("#AnnotationBox").css("display") == "none")
-        //{
-        //    $("#AnnotationBox").css("top", "0").css("display", "block");
-        //}
-
         //Set Annotation Box
         var notes = $("#AnnotationBox #notes");
 

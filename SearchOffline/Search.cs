@@ -32,7 +32,7 @@ namespace BHL.Search.Offline
             return result;
         }
 
-        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, string language, string collection, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = GetOfflineSearchResult();
             if (!string.IsNullOrWhiteSpace(title)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title));
@@ -40,8 +40,8 @@ namespace BHL.Search.Offline
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
             if (!string.IsNullOrWhiteSpace(keyword)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword));
-            if (!string.IsNullOrWhiteSpace(language)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language));
-            if (!string.IsNullOrWhiteSpace(collection)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection));
+            if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
+            if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
             result.QueryLimits = limits;
             return result;
         }

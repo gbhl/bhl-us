@@ -33,6 +33,7 @@
         Title,
         Volume,
         // Page fields
+        ItemID,
         PageNames,
         PageTypes,
         // Author fields

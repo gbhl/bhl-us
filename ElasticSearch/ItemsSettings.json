@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "tokenizer": "icu_tokenizer",
+          "filter":  [ "lowercase", "icu_folding" ]
+        }
+      }
+    }
+  }
+}

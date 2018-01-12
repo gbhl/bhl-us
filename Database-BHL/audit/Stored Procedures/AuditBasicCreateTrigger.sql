@@ -1,9 +1,15 @@
-﻿CREATE PROC [audit].[AuditBasicCreateTrigger] (
+﻿CREATE PROCEDURE [audit].[AuditBasicCreateTrigger] (
    @SchemaName SYSNAME = 'dbo',
    @TableName SYSNAME,
    @PKColumnName1 SYSNAME,
    @PKColumnName2 SYSNAME,
    @PKColumnName3 SYSNAME,
+   @ParentSchema1 SYSNAME = NULL,
+   @ParentTable1 SYSNAME = NULL,
+   @ParentTable1Key SYSNAME = NULL,
+   @ParentSchema2 SYSNAME = NULL,
+   @ParentTable2 SYSNAME = NULL,
+   @ParentTable2Key SYSNAME = NULL,
    @BuildOnly NCHAR(1) = ''
 ) 
 AS 
@@ -20,11 +26,25 @@ AS
 --	@PKColumnName1 - key column to capture in audit table
 --	@PKColumnName2 - key column to capture in audit table
 --	@PKColumnName3 - key column to capture in audit table
+--  @ParentSchema1 - schema of a table referenced by a foreign key
+--  @ParentTable1 - name of a table referenced by a foreign key
+--  @ParentTable1Key - key column of a table referenced by a foreign key
+--  @ParentSchema2 - schema of a table referenced by a foreign key
+--  @ParentTable2 - name of a table referenced by a foreign key
+--  @ParentTable2Key - key column of a table referenced by a foreign key
 --	@BuildOnly - specifies which triggers to build
 --		'' to build insert, update, and delete triggers
 --		'I' to build only the insert trigger
 --		'U' to build only the update trigger
 --		'D' to build only the delete trigger
+--
+--  The point of the Parent* parameters is to capture the tables referenced
+--  by foreign keys in the table that was just inserted/updated/deleted.
+--		For example, the TitleItem table defines the relationships between
+--		Titles and Items.  If a TitleItem row is deleted, audit entries should 
+--		be written for the TitleItem row, the related Item row, and the related 
+--		Title row.  An operation code of 'E' will denote the audit entries for 
+--		related rows. 
 --
 --------------------------------------------------------------------
 BEGIN
@@ -97,7 +117,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 			
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -179,7 +199,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -258,7 +278,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -290,6 +310,30 @@ BEGIN
 			+ ' FROM Deleted ' + Char(13) + Char(10)
 		   + Char(13) + Char(10)
 
+	IF (@ParentTable1 IS NOT NULL)
+	BEGIN
+
+		SELECT @SQL = @SQL + 
+				 ' INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, '
+				+ 'EntityKey1, ApplicationUserID)' + Char(13) + Char(10)
+				+ ' SELECT @AuditTime, SUSER_SNAME(), ''' + @ParentSchema1 + '.' + @ParentTable1 + ''', ''E'','
+				+ '@UserSQL, deleted.' + @ParentTable1Key + ', NULL ' + Char(13) + Char(10)
+				+ ' FROM Deleted ' + Char(13) + Char(10)
+				+ Char(13) + Char(10) 
+	END
+
+	IF (@ParentTable2 IS NOT NULL)
+	BEGIN
+
+		SELECT @SQL = @SQL + 
+				 ' INSERT audit.AuditBasic (AuditDate, SystemUserID, EntityName, Operation, SQLStatement, '
+				+ 'EntityKey1, ApplicationUserID)' + Char(13) + Char(10)
+				+ ' SELECT @AuditTime, SUSER_SNAME(), ''' + @ParentSchema2 + '.' + @ParentTable2 + ''', ''E'','
+				+ '@UserSQL, deleted.' + @ParentTable2Key + ', NULL ' + Char(13) + Char(10)
+				+ ' FROM Deleted ' + Char(13) + Char(10)
+				+ Char(13) + Char(10) 
+	END
+
 	SELECT @SQL = @SQL + 
 	   + ' END TRY ' + Char(13) + Char(10)
 	   + ' BEGIN CATCH ' + Char(13) + Char(10)
@@ -313,5 +357,3 @@ BEGIN
 END
   
 END
-
-

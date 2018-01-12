@@ -21,7 +21,7 @@ namespace BHL.Search.Elastic
         private string _sortField = ESSortField.SCORE;
 
         // Fields on which to facet.
-        private List<string> _facetFields = new List<string>();
+        private List<Tuple<string, ESFacetSortOrder>> _facetFields = new List<Tuple<string, ESFacetSortOrder>>();
 
         // Fields in which to highlight results
         private List<string> _highlightFields = new List<string>();
@@ -36,7 +36,7 @@ namespace BHL.Search.Elastic
         private int _startPage = 1;
 
         // Number of values to return for each facet
-        private int _numFacets = 10;
+        private int _numFacets = 30;
 
         // True to enable debugging output
         private bool _debug = false;
@@ -65,10 +65,10 @@ namespace BHL.Search.Elastic
             set { _sortField = string.IsNullOrWhiteSpace(value) ? ESSortField.SCORE : value; }
         }
 
-        public List<string> FacetFields
+        public List<Tuple<string, ESFacetSortOrder>> FacetFields
         {
             get { return _facetFields; }
-            set { _facetFields = value ?? new List<string>(); }
+            set { _facetFields = value ?? new List<Tuple<string, ESFacetSortOrder>>(); }
         }
 
         public List<string> HighlightFields
@@ -128,7 +128,7 @@ namespace BHL.Search.Elastic
             _typeName = ESType.ALL;
             _returnFields = new List<string>();
             _sortField = ESSortField.SCORE;
-            _facetFields = new List<string>();
+            _facetFields = new List<Tuple<string, ESFacetSortOrder>>();
             _highlightFields = new List<string>();
             _suggest = false;
             _numResults = 100;
@@ -166,12 +166,17 @@ namespace BHL.Search.Elastic
                 // Add limits to the query string.
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
-                if (limits != null)
+                string queryString = string.Empty;
+                if (limits == null)
                 {
-                    query = string.Format("({0})", query);
+                    queryString = CleanQuery(query);
+                }
+                else
+                {
+                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        query = string.Format("{0} AND {1}:\"{2}\"", query, limit.Item1, limit.Item2);
+                        queryString = string.Format("{0} AND {1}:\"{2}\"", queryString, limit.Item1, limit.Item2);
                     }
                 }
 
@@ -179,13 +184,28 @@ namespace BHL.Search.Elastic
                 List<Field> fields = new List<Field>();
                 fields.Add(new Field("_all"));
                 // Add fields to be boosted
-                fields.Add(new Field(ESField.TITLE + "^2"));
-                fields.Add(new Field(ESField.TEXT + "^-2"));
+                fields.Add(new Field(ESField.TITLE + "^15"));
+                fields.Add(new Field(ESField.ISSN + "^15"));
+                fields.Add(new Field(ESField.ISBN + "^15"));
+                fields.Add(new Field(ESField.OCLC + "^15"));
+                fields.Add(new Field(ESField.DOI + "^15"));
+                fields.Add(new Field(ESField.TRANSLATEDTITLE + "^10"));
+                fields.Add(new Field(ESField.UNIFORMTITLE + "^10"));
+                fields.Add(new Field(ESField.VARIANTS + "^10"));
+                fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
+                fields.Add(new Field(ESField.COLLECTIONS + "^5"));
+                fields.Add(new Field(ESField.CONTAINER + "^5"));
+                fields.Add(new Field(ESField.CONTRIBUTORS + "^5"));
+                fields.Add(new Field(ESField.KEYWORDS + "^5"));
+                fields.Add(new Field(ESField.PUBLICATIONPLACE + "^5"));
+                fields.Add(new Field(ESField.PUBLISHER + "^5"));
+                fields.Add(new Field(ESField.SEARCHAUTHORS + "^5"));
+                fields.Add(new Field(ESField.TEXT));
 
                 // Construct the query.
                 searchDesc.Query(q => q
                     .QueryString(qu => qu
-                        .Query(query)
+                        .Query(queryString)
                         .Fields(fields.ToArray())
                         .DefaultOperator(Operator.And)
                     )
@@ -215,7 +235,7 @@ namespace BHL.Search.Elastic
 
                 // Execute the query
                 results = ExecuteQuery(searchDesc);
-                if (Debug) WriteDebuggingInfo(query, limits, results);
+                if (Debug) WriteDebuggingInfo(queryString, limits, results);
             }
 
             // Build and return the result object
@@ -250,17 +270,17 @@ namespace BHL.Search.Elastic
                 List<QueryContainer> shouldQueries = new List<QueryContainer>();
                 if (!string.IsNullOrWhiteSpace(title))
                 {
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = title, Boost = 2 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = title });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = title });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = title });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = title });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title), Boost = 10 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title) });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 5 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 5 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 5 });
                 }
 
-                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = author });
-                if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = volume });
-                if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = year });
-                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = keyword });
+                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author) });
+                if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = CleanQuery(volume) });
+                if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = CleanQuery(year) });
+                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword) });
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
@@ -291,7 +311,7 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(author)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author));
                 if (!string.IsNullOrWhiteSpace(volume)) args.Add(new Tuple<string, string>(ESField.VOLUME, volume));
                 if (!string.IsNullOrWhiteSpace(year)) args.Add(new Tuple<string, string>(ESField.DATES, year));
-                if (!string.IsNullOrWhiteSpace(keyword)) args.Add(new Tuple<string, string>(ESField.KEYWORD, keyword));
+                if (!string.IsNullOrWhiteSpace(keyword)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
 
@@ -356,12 +376,17 @@ namespace BHL.Search.Elastic
                 // Add limits to the query string.
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
-                if (limits != null)
+                string queryString = string.Empty;
+                if (limits == null)
                 {
-                    query = string.Format("({0})", query);
+                    queryString = CleanQuery(query);
+                }
+                else
+                {
+                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        query = string.Format("{0} AND {1}:{2}", query, limit.Item1, limit.Item2);
+                        queryString = string.Format("{0} AND {1}:{2}", queryString, limit.Item1, limit.Item2);
                     }
                 }
 
@@ -372,7 +397,7 @@ namespace BHL.Search.Elastic
                 // Construct the query.
                 searchDesc.Query(q => q
                     .QueryString(qu => qu
-                        .Query(query)
+                        .Query(queryString)
                         .Fields(fields.ToArray())
                         .DefaultOperator(Operator.And)
                     )
@@ -402,7 +427,7 @@ namespace BHL.Search.Elastic
 
                 // Execute the query
                 results = ExecuteQuery(searchDesc);
-                if (Debug) WriteDebuggingInfo(query, null, results);
+                if (Debug) WriteDebuggingInfo(queryString, null, results);
             }
 
             // Build and return the result object
@@ -670,17 +695,51 @@ namespace BHL.Search.Elastic
         /// <returns></returns>
         private string CleanSuggestString(string query)
         {
-            string cleanQuery = string.Empty;
-            cleanQuery = query.Replace(" AND ", " ").Replace(" OR ", " ").Replace(" NOT ", " ");
-            return cleanQuery;
+            string cleanSuggestQuery = string.Empty;
+            cleanSuggestQuery = query.Replace(" AND ", " ").Replace(" OR ", " ").Replace(" NOT ", " ");
+            return cleanSuggestQuery;
+        }
+
+        /// <summary>
+        /// Remove any ElasticSearch special characters and punctuation in the query.
+        /// ElasticSearch special characters that are affected are: + - & | ! { } [ ] ~ \ ^ ? : \\ /
+        /// ElasticSearch special characters that are NOT affected are: ( ) *
+        /// Punctuation that will be affected are: . , ; @ # $ % = < >
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        private string CleanQuery(string query)
+        {
+            // Remove any ellipsis
+            string queryToClean = (query.Replace("...", "").Length > 0 ? query.Replace("...", " ") : query);
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            string[] special = { "+", "-", "&", "|", "!", "{", "}", "[", "]", "~", "\\", "^", "?", ":", "/"};
+            string[] punctuation = { ",", ";", "@", "#", "$", "%", "=", "<", ">" };
+            foreach (char letter in queryToClean)
+            {
+                // Use this to escape special characters
+                //sb.Append(Array.IndexOf(special, letter.ToString()) >= 0 ? "\\" + letter.ToString() : letter.ToString());
+
+                // Use this to remove special characters and punctuation
+                sb.Append(
+                    Array.IndexOf(special, letter.ToString()) >= 0 || Array.IndexOf(punctuation, letter.ToString()) >= 0
+                    ? " "
+                    : letter.ToString());
+            }
+            return sb.ToString();
         }
 
         private void SetAggregateFields(SearchDescriptor<dynamic> searchDesc)
         {
             var aggFuncs = new List<Func<AggregationContainerDescriptor<dynamic>, IAggregationContainer>>();
-            foreach (string facet in _facetFields)
+            foreach (Tuple<string, ESFacetSortOrder> facet in _facetFields)
             {
-                aggFuncs.Add(a => a.Terms(facet, t => t.Field(facet).Size(_numFacets)));
+                aggFuncs.Add(a => a
+                    .Terms(facet.Item1, t => t
+                        .Field(facet.Item1)
+                        .Size(_numFacets)
+                        .Order(facet.Item2 == ESFacetSortOrder.COUNT ? TermsOrder.CountDescending : TermsOrder.TermAscending)));
             }
 
             searchDesc.Aggregations(aggDescriptor =>
@@ -906,6 +965,8 @@ namespace BHL.Search.Elastic
                     searchField = SearchField.Issue; break;
                 case ESField.AUTHORS:
                     searchField = SearchField.ItemAuthors; break;
+                case ESField.FACETAUTHORS:
+                    searchField = SearchField.ItemAuthors; break;
                 case ESField.KEYWORDS:
                     searchField = SearchField.ItemKeywords; break;
                 case ESField.KEYWORD:
@@ -1005,7 +1066,14 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("TYPE: {0}", TypeName));
             Console.WriteLine(string.Format("RETURN FIELDS: {0}", string.Join(",", ReturnFields.ToArray())));
             Console.WriteLine(string.Format("SORT FIELDS: {0}", SortField));
-            Console.WriteLine(string.Format("FACET FIELDS: {0}", string.Join(",", FacetFields.ToArray())));
+
+            string facetFields = string.Empty;
+            foreach(Tuple<string, ESFacetSortOrder> facet in FacetFields)
+            {
+                facetFields += (facetFields.Length > 0 ? "," : "") + facet.Item1; 
+            }
+            Console.WriteLine(string.Format("FACET FIELDS: {0}", facetFields));
+
             Console.WriteLine(string.Format("HIGHLIGHT FIELDS: {0}", string.Join(",", HighlightFields.ToArray())));
             Console.WriteLine(string.Format("SUGGEST: {0}", Suggest ? "TRUE" : "FALSE"));
             Console.WriteLine(string.Format("RESULTS: {0} returned out of {1} total hits",

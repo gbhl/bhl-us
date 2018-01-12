@@ -480,6 +480,10 @@
     <Content Include="Views\Search\Advanced.cshtml" />
     <Content Include="Views\Shared\_DonateFeature.cshtml" />
     <Content Include="Views\Shared\_CollectionFeature.cshtml" />
+    <Content Include="Views\Shared\_SearchFacet.cshtml" />
+    <Content Include="Views\Shared\_SearchPager.cshtml" />
+    <Content Include="Views\Shared\_DonateFeatureSmall.cshtml" />
+    <Content Include="Views\Shared\_CollectionFeatureSmall.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>

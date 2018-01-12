@@ -1255,6 +1255,58 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {
     height:auto;
 }
+.featurebox-small {
+    min-height: 0;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #ccd4d9;
+    width: 100%;
+    background-color: #fafaf7;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    float: left;
+    margin: 0px 0 0 0;
+}
+.featurebox-small h3 {
+    margin: 0;
+    font: 16px Georgia;
+    color: #8b8e92;
+}
+.featurebox-small h4 {
+    margin: 16px 0 16px 0;
+    font: 14px Georgia;
+    color: #3e92c6;
+}
+.featurebutton-small {
+    width: 90%;
+    text-align: center;
+    border: 1px solid #3e5d77;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font: 14px Georgia;
+    padding: 7px 0;
+    color: #fff;
+    background: #5989b1;
+    background: -moz-linear-gradient(top, #5989b1 0%, #4679a4 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5989b1), color-stop(100%,#4679a4));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5989b1', endColorstr='#4679a4',GradientType=0 );
+    text-decoration: none;
+    display: block;
+}
+.featurebutton-small:hover {
+    background: -moz-linear-gradient(top, #507ea4 0%, #2c5b83 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#507ea4), color-stop(100%,#2c5b83));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#507ea4', endColorstr='#2c5b83',GradientType=0 );
+    border: 1px solid #182937;
+    color: #ffffff;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+.featurebutton-small:active, .featurebutton-small:visited {
+    color: #ffffff;
+}
 .featurebox-home
 {
     padding:26px;
@@ -2419,6 +2471,13 @@ ul.creator-titles li
 {
     color:#fff;
 }
+#searchaside {
+    float: left;
+    margin: 0 0 36px 50px;
+    width: 260px; /* force the width for IE */
+}
+
+/* /search.aspx */
 .searchtitlelinks
 {
     text-decoration:none;
@@ -2452,18 +2511,107 @@ ul.creator-titles li
     background: linear-gradient(to bottom,  #154179 1%,#1f3d68 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#154179', endColorstr='#1f3d68',GradientType=0 );
 }
-#searchaside
-{
-    float:left;
-    margin: 0 0 36px 50px;
-    width: 260px; /* force the width for IE */
+
+/* /search */
+.searchResultLabel {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.searchInstead {
+    font-size: 12px;
+}
+.searchNoResults {
+    font-weight: bold;
+}
+.searchError {
+    font-weight: bold;
+}
+.pubResultContainer {
+    margin: 25px 0px 10px 0px;
+}
+.pubResult {
+    margin: 0px 0px 15px 0px;
+    padding: 0px 0px 15px 0px;
+    border-bottom: 1px solid #d6d2d1;
+}
+.pubResultLinks {
+    margin: 25px 0px 0px 0px;
+}
+.pubResultLine {
+    margin-bottom:2px;
+}
+.nonPubResult {
+    margin: 25px 0px 25px 0px;
+}
+.nonPubResultLine {
+    margin: 15px 0px 15px 15px;
+}
+.highlightContainer {
+    font-size: 12px;
+    font-style: italic;
+}
+.highlightHead {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+.highlightBody {
+    display: none;
+}
+.highlightLabel {
+    margin-bottom: 2px;
+    display: inline;
+}
+.highlightText {
+    margin-bottom: 2px;
+    display: inline;
+}
+.facetLabel {
+    font-size: 16px;
+}
+.facetHead {
+    font-size: 14px;
+    margin: 15px 0px 15px 0px;
+}
+.facetHeadMore {
+    font-size: 12px;
+    margin: 5px 0px 5px 15px;
+}
+.facetHeadMore a:hover {
+    cursor: pointer;
+}
+.facetItem {
+    font-size: 12px;
+    margin: 5px 0px 5px 15px;
+}
+.searchPagerContainer {
+    margin: 0px 0px 25px 0px;
+}
+.searchPager {
+    margin: 0px 0px 0px 15px;
+}
+.searchPagerControl {
+    font-size: 9px;
+    display: inline;
+    color: #265f99;
+    text-decoration: underline;
+}
+.searchPagerPage {
+    display: inline;
+    color: #265f99;
+    text-decoration: underline;
+}
+.searchPagerPage:hover,
+.searchPagerControl:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #23527c;
+    outline: 0;
 }
 
 /*Darwin's Library Concepts */
-section .column3 
-{
-  width:300px;
-  float: left;   
+section .column3 {
+    width: 300px;
+    float: left;
 }
 .column3 a
 {

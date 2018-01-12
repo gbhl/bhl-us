@@ -54,7 +54,7 @@ namespace BHL.Search.Elastic
         /// <summary>
         /// Fields on which to facet.
         /// </summary>
-        List<string> FacetFields { set; get; }
+        List<Tuple<string, ESFacetSortOrder>> FacetFields { set; get; }
 
         /// <summary>
         /// Fields in which to highlight hits.

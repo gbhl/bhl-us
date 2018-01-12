@@ -9,5 +9,6 @@
         public const string KEYWORD = "keyword";
         public const string NAME = "name";
         public const string PRIMARYAUTHOR = "primaryAuthorName";
+        public const string SEQUENCE = "sequence";
     }
 }
