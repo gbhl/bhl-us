@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [audit].[AuditBasicCreateAllTriggers]
+﻿CREATE PROCEDURE [audit].[AuditBasicCreateAllTriggers]
 
 AS
 -----------------------------------------------------------------------------
@@ -29,8 +28,6 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Page', 'PageID', NULL, NULL, 'I'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Page', 'PageID', NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'IndicatedPage', 'PageID', 'Sequence', NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Page_PageType', 'PageID', 'PageTypeID', NULL
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Location', 'LocationName', NULL, NULL, 'I'
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Location', 'LocationName', NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Collection', 'CollectionID', NULL, NULL, 'I'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Collection', 'CollectionID', NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'ItemCollection', 'ItemCollectionID', NULL, NULL
@@ -51,6 +48,9 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AspNetUsers', 'Id', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionRole', 'InstitutionRoleID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'ItemInstitution', 'ItemInstitutionID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'SegmentInstitution', 'SegmentInstitutionID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NoteType', 'NoteTypeID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleNote', 'TitleNoteID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'MaterialType', 'MaterialTypeID', NULL, NULL
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Author', 'AuthorID', NULL, NULL, 'I'

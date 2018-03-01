@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
+﻿CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
 
 AS
 
@@ -19,7 +18,6 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemLanguage'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Page'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'IndicatedPage'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Page_PageType'
-exec [audit].[AuditBasicDropTrigger] 'dbo', 'Location'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Collection'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemCollection'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleCollection'
@@ -38,6 +36,9 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'AspNetUsers'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionRole'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'SegmentInstitution'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'NoteType'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleNote'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'MaterialType'
 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Author'

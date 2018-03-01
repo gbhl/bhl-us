@@ -97,7 +97,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 			
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -179,7 +179,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -258,7 +258,7 @@ BEGIN
 			' SET @UserSQL = ''''' + Char(13) + Char(10)
 
 	SELECT @SQL = @SQL + 
-			 ' IF (SUSER_NAME() <> ''BotanicusService'' AND SUSER_NAME() <> ''BHLWebUser'' AND SUSER_NAME() <> ''MOBOT\SQLSERVER'')' + Char(13) + Char(10)
+			 ' IF (CHARINDEX(''WSDSQL'', SUSER_NAME()) = 0 AND CHARINDEX(''\'', SUSER_NAME()) > 0)' + Char(13) + Char(10)
 		   + ' BEGIN' + Char(13) + Char(10)
 		   + '  -- capture SQL Statement' + Char(13) + Char(10)
 		   + '  DECLARE @ExecStr varchar(50)' + Char(13) + Char(10)
@@ -313,5 +313,4 @@ BEGIN
 END
   
 END
-
 
