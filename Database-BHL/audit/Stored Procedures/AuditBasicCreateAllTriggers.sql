@@ -55,7 +55,7 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'MaterialType', 'MaterialTypeID', 
 -- Added for Segment additions to data model
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Author', 'AuthorID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'I'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Author', 'AuthorID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'U'
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AuthorName', 'AuthorNameID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AuthorName', 'AuthorNameID', NULL, NULL, 'dbo', 'Author', 'AuthorID'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AuthorType', 'AuthorTypeID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AuthorRole', 'AuthorRoleID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AuthorIdentifier', 'AuthorIdentifierID', NULL, NULL, 'dbo', 'Author', 'AuthorID', 'dbo', 'Identifier', 'IdentifierID'
