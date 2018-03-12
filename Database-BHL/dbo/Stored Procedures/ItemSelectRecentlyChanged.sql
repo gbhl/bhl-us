@@ -13,6 +13,7 @@ SET NOCOUNT ON
 CREATE TABLE #tmpAuditInfo 
 (
 	AuditDate datetime NOT NULL,
+	Operation nchar(1) NOT NULL,
 	EntityName nvarchar(50) NOT NULL, 
 	EntityKey1 nvarchar(100) NULL,
 	EntityKey2 nvarchar(100) NULL,
@@ -22,7 +23,7 @@ CREATE TABLE #tmpAuditInfo
 -- Get any recent auditing entries related to the entities/keys that we just collected
 -- Current auditing table (last 15 days)
 INSERT #tmpAuditInfo
-SELECT	AuditDate, EntityName, EntityKey1, EntityKey2, EntityKey3
+SELECT	AuditDate, Operation, EntityName, EntityKey1, EntityKey2, EntityKey3
 FROM	audit.AuditBasic with (nolock)
 WHERE	AuditDate >= @StartDate
 
@@ -58,6 +59,7 @@ SELECT DISTINCT i.ItemID
 FROM	dbo.TitleAuthor ta WITH (NOLOCK) INNER JOIN dbo.Item i WITH (NOLOCK) ON ta.TitleID = i.PrimaryTitleID
 		INNER JOIN #tmpAuditInfo a ON ta.AuthorID = a.EntityKey1
 WHERE	a.EntityName = 'dbo.Author'
+AND		Operation <> 'E'
 
 UNION
 
@@ -117,6 +119,7 @@ SELECT DISTINCT i.ItemID
 FROM	#tmpAuditInfo a INNER JOIN dbo.TitleKeyword k ON a.EntityKey1 = k.KeywordID
 		INNER JOIN dbo.Item i ON k.TitleID = i.PrimaryTitleID
 WHERE	a.EntityName = 'dbo.Keyword'
+AND		Operation <> 'E'
 
 UNION
 
