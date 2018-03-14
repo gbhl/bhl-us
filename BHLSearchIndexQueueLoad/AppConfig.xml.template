@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <AppSettings>
+    <MQAddress>MESSAGE QUEUE SERVER ADDRESS</MQAddress>
+    <MQPort>MESSAGE QUEUE SERVER PORT</MQPort>
+    <MQUser>MESSAGE QUEUE USERNAME</MQUser>
+    <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
+    <MQQueueName>bhl.index</MQQueueName>
+
+    <!-- 
+      Set these to MM-DD-YYYY values to queue messages for indexing entities that changed 
+      during a particular timeframe 
+    -->
+    <StartDate></StartDate>
+    <EndDate></EndDate>
+
+    <!-- Email settings -->
+    <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
+    <SmtpPort>MAIL SERVER PORT</SmtpPort>
+    <SmtpEnableSsl>false</SmtpEnableSsl>
+    <SmtpDefaultCredentials>false</SmtpDefaultCredentials>
+    <SmtpUsername></SmtpUsername>
+    <SmtpPassword></SmtpPassword>
+    <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
+    <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+
+    <!-- Connection key-->
+    <ConnectionKey>QA</ConnectionKey>
+
+  </AppSettings>
+  <ConnectionStrings>
+    <PRODUCTION>PRODUCTION DATABASE CONNECTION STRING</PRODUCTION>
+    <QA>QA DATABASE CONNECTION STRING</QA>
+  </ConnectionStrings>
+</configuration>
