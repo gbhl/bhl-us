@@ -1,0 +1,33 @@
+﻿@{
+    var facetLabel = ViewData["facetLabel"] as string;
+    var facetData = ViewData["facetData"] as List<MOBOT.BHL.Web2.Models.FacetParam>;
+}
+@if (facetData.Count > 0)
+{
+    <div class="facetHead"><img src="images/bib_minus.gif">&nbsp;@facetLabel</div>
+    <div class="facetBody">
+        @for (int x = 0; x < (facetData.Count > 10 ? 10 : facetData.Count); x++)
+        {
+            var facet = facetData[x];
+            <div class="facetItem">
+                @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px;", @class = "facetCheckBox" })@Html.Raw(Server.HtmlEncode(facet.Value)) (@facet.NumHits)
+            </div>
+        }
+
+        @if (facetData.Count > 10)
+        {
+            <div style="display:none">
+                @for (int x = 10; x < facetData.Count; x++)
+                {
+                    var facet = facetData[x];
+                    <div class="facetItem">
+                        @Html.CheckBoxFor(f => facet.Checked, new { @value = "~" + @facet.Type + "_" + @facet.Value + "~", @style = "margin: 0px 5px 0px 0px;", @class = "facetCheckBox" })@Html.Raw(Server.HtmlEncode(facet.Value)) (@facet.NumHits)
+                    </div>
+                }
+            </div>
+            <div class="facetHeadMore">
+                <a>more…</a>
+            </div>
+        }
+    </div>
+}

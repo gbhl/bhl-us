@@ -22,8 +22,9 @@ namespace MOBOT.BHL.Web2.Models
             get
             {
                 return new MVCServices.SearchService().GetSearchCriteriaLabel(
-                    Params.SearchCategory, Params.SearchTerm, Params.Language, Params.LastName, 
-                    Params.Volume, Params.Year, Params.Subject, Params.Collection);
+                    Params.SearchCategory, Params.SearchTerm, (Params.Language != null ? Params.Language.Item1 : string.Empty), 
+                    Params.LastName, Params.Volume, Params.Year, Params.Subject, 
+                    (Params.Collection != null ? Params.Collection.Item1 : string.Empty));
 
             }
         }
@@ -39,8 +40,8 @@ namespace MOBOT.BHL.Web2.Models
                 if (!string.IsNullOrWhiteSpace(Params.Volume)) qsParams.Add(string.Format("{0}={1}", "vol", Params.Volume));
                 if (!string.IsNullOrWhiteSpace(Params.Year)) qsParams.Add(string.Format("{0}={1}", "yr", Params.Year));
                 if (!string.IsNullOrWhiteSpace(Params.Subject)) qsParams.Add(string.Format("{0}={1}", "subj", Params.Subject));
-                if (!string.IsNullOrWhiteSpace(Params.Language)) qsParams.Add(string.Format("{0}={1}", "lang", Params.Language));
-                if (!string.IsNullOrWhiteSpace(Params.Collection)) qsParams.Add(string.Format("{0}={1}", "col", Params.Collection));
+                if (Params.Language != null) qsParams.Add(string.Format("{0}={1}", "lang", Params.Language.Item1));
+                if (Params.Collection != null) qsParams.Add(string.Format("{0}={1}", "col", Params.Collection.Item1));
 
                 return string.Join("&", qsParams.ToArray());
             }
@@ -151,8 +152,8 @@ namespace MOBOT.BHL.Web2.Models
             Volume = string.Empty;
             Year = string.Empty;
             Subject = string.Empty;
-            Language = string.Empty;
-            Collection = string.Empty;
+            Language = null;
+            Collection = null;
         }
 
         public string SearchCategory { get; set; }
@@ -161,8 +162,8 @@ namespace MOBOT.BHL.Web2.Models
         public string Volume { get; set; }
         public string Year { get; set; }
         public string Subject { get; set; }
-        public string Language { get; set; }
-        public string Collection { get; set; }
+        public Tuple<string, string> Language { get; set; }
+        public Tuple<string, string> Collection { get; set; }
 
         private List<FacetParam> _genreFacets = new List<FacetParam>();
         public List<FacetParam> GenreFacets {

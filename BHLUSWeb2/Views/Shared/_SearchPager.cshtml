@@ -1,0 +1,49 @@
+﻿@{
+    var result = ViewData["searchResult"] as BHL.Search.ISearchResult;
+    var currentPageField = ViewData["currentPageField"] as string;
+    var searchTab = ViewData["searchTab"] as string;    
+}
+@if (result.TotalHits > result.PageSize)
+{
+    <div class="searchPagerContainer">
+        <div class="searchPager">
+            @{
+                long start = 1;
+                long end = (result.TotalPages > 10) ? 10 : result.TotalPages;
+                if (result.StartPage - 5 > 1)
+                {
+                    if ((result.StartPage + 4) <= result.TotalPages)
+                    {
+                        start = result.StartPage - 5; end = result.StartPage + 4;
+                    }
+                    else
+                    {
+                        start = result.TotalPages - 9; end = result.TotalPages;
+                    }
+                }
+            }
+
+            @if (result.StartPage > 1)
+            {
+                <div onclick="$('#@currentPageField').val(@(result.StartPage - 1));pagerClick('@searchTab');" href="#" class="searchPagerControl">< Prev</div><text>&nbsp;&nbsp;</text>
+            }
+
+            @for (long x = start; x <= end; x++)
+            {
+                if (x == result.StartPage)
+                {
+                    <text>@x</text>
+                }
+                else
+                {
+                    <div onclick="$('#@currentPageField').val(@(x));pagerClick('@searchTab');" href="#" class="searchPagerPage">@x</div>
+                }
+            }
+            @if (result.StartPage < result.TotalPages)
+            {
+                <text>&nbsp; &nbsp;</text><div onclick="$('#@currentPageField').val('@(result.StartPage + 1)');pagerClick('@searchTab');" href="#" class="searchPagerControl">Next ></div>
+            }
+        </div>
+    </div>
+}
+

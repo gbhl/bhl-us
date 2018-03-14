@@ -470,3 +470,132 @@ a.BRblack:visited   { color: #000000 }
 	-moz-border-radius:5px;
 	border-radius:5px;
 }
+
+#pageSearch-panel {
+    background-color: #2b3c4c;
+    height: 600px;
+}
+
+/* Search Within Book */
+.sibHeader {
+    margin: 0px 0 0 0;
+    padding: 15px 0 15px 0;
+    background-color: #455666;
+}
+
+.sibHeaderTitle {
+    margin: 0px 0px 5px 15px;
+    font-size: 16px;
+}
+
+.sibHeaderText {
+    margin: 0px 0px 0px 15px;
+}
+
+.sibHeaderText input[type="text"] {
+    width: 250px;
+}
+
+.sibHeaderText input[type="button"] {
+}
+
+.sibFacetContainer {
+    padding: 0px 0px 10px 0px;
+    font-size: 12px;
+}
+
+.sibFacetBox {
+    margin: 5px 10px 5px 10px;
+    border-color: #222F3B;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #19232C;
+}
+
+.sibFacetBox hr {
+    margin: 3px 15px 3px 15px;
+}
+
+.sibFacetHeader {
+    padding: 5px 0px 5px 15px;
+    background-color: #1E2B36;
+    font-size: 13px;
+}
+
+.sibFacetLabel {
+    margin: 0px 0px 3px 15px;
+}
+
+.sibFacetValues {
+    margin: 0px 0px 5px 30px;
+    font-size: 13px;
+    font-style: italic;
+}
+
+#searchResults {
+    display: none;
+}
+
+.sibResultsHeader {
+    padding: 10px 0px 10px 15px;
+    font-size: 14px;
+}
+
+.sibResultsContainer {
+    padding: 0px 0px 10px 0px;
+    font-size: 12px;
+    max-height: 450px;
+    overflow: auto;
+}
+
+.sibResultsBox {
+    margin: 5px 10px 5px 10px;
+    border-color: #222F3B;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #19232C;
+}
+
+.sibResultBox {
+    margin: 5px 0px 5px 15px;
+}
+
+.sibResultPage, .sibResultPage:hover, .sibResultPage:visited {
+    color: #98CDCF;
+}
+
+.sibResultText {
+    margin: 3px 0px 3px 20px;
+    font-style: italic;
+}
+
+.sibResultText b {
+    color: #fcd3a1;
+}
+
+.sibBtn {
+    background: #525c6b;
+    background-image: -webkit-linear-gradient(top, #525c6b, #2b3038);
+    background-image: -moz-linear-gradient(top, #525c6b, #2b3038);
+    background-image: -ms-linear-gradient(top, #525c6b, #2b3038);
+    background-image: -o-linear-gradient(top, #525c6b, #2b3038);
+    background-image: linear-gradient(to bottom, #525c6b, #2b3038);
+    -webkit-border-radius: 10;
+    -moz-border-radius: 10;
+    border-radius: 6px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 2px 3px 2px 3px;
+    text-decoration: none;
+}
+
+.sibBtn:hover {
+    background: #7994a3;
+    background-image: -webkit-linear-gradient(top, #7994a3, #5b6e7a);
+    background-image: -moz-linear-gradient(top, #7994a3, #5b6e7a);
+    background-image: -ms-linear-gradient(top, #7994a3, #5b6e7a);
+    background-image: -o-linear-gradient(top, #7994a3, #5b6e7a);
+    background-image: linear-gradient(to bottom, #7994a3, #5b6e7a);
+    text-decoration: none;
+}

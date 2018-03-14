@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ESFacetSortOrder.cs" />
     <Compile Include="ESField.cs" />
     <Compile Include="ESIndex.cs" />
     <Compile Include="ESOperator.cs" />

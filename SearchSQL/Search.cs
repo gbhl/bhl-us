@@ -63,12 +63,14 @@ namespace BHL.Search.SQL
             */
         }
 
-        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, string language, string collection, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = new SearchResult();
 
             long totalHits = 0;
-            result.Items = new DataAccess(_connectionString).SearchItem(title, author, volume, year, keyword, language, collection, out totalHits, StartPage, NumResults);
+            result.Items = new DataAccess(_connectionString).SearchItem(title, author, volume, year, keyword, 
+                (language != null ? language.Item1 : null), 
+                (collection != null ? collection.Item1 : null), out totalHits, StartPage, NumResults);
             GetSearchResultStats(result, totalHits);
 
             if (!string.IsNullOrWhiteSpace(title)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title));
@@ -76,8 +78,8 @@ namespace BHL.Search.SQL
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
             if (!string.IsNullOrWhiteSpace(keyword)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword));
-            if (!string.IsNullOrWhiteSpace(language)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language));
-            if (!string.IsNullOrWhiteSpace(collection)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection));
+            if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item1));
+            if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item1));
             result.QueryLimits = limits;
             return result;
         }

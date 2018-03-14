@@ -32,6 +32,7 @@ build/
 [Ww]eb.[Rr]elease.[Cc]onfig
 [Rr]emoting.[Cc]onfig
 [Aa]pp.[Cc]onfig
+[Aa]pp[Cc]onfig.xml
 
 # BHL projects
 EOL Data Export/
@@ -134,6 +135,7 @@ csx
 AppPackages/
 
 # Others
+logs/
 sql/
 *.Cache
 ClientBin/

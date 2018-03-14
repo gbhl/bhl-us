@@ -16,61 +16,111 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Index
         [HttpGet]
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm, string searchCat, string lname, string vol, string yr, 
+            string subj, string lang, string col, string ppage, string apage, string kpage, string npage, 
+            string[] facet)
         {
             SearchModel model = new SearchModel();
             model.Params.SearchTerm = searchTerm;
 
             // Get the search arguments
-            model.Params.SearchCategory = (Request["SearchCat"] ?? string.Empty).Trim().ToUpper();
-            model.Params.LastName = Request["lname"] ?? string.Empty;
-            model.Params.Volume = Request["vol"] ?? string.Empty; ;
-            model.Params.Year = Request["yr"] ?? string.Empty; ;
-            model.Params.Subject = Request["subj"] ?? string.Empty; ;
-            model.Params.Language = Request["lang"] ?? string.Empty;
-            model.Params.Collection = Request["col"] ?? string.Empty; ;
+            model.Params.SearchCategory = (searchCat ?? string.Empty).Trim().ToUpper();
+            model.Params.LastName = lname ?? string.Empty;
+            model.Params.Volume = vol ?? string.Empty; ;
+            model.Params.Year = yr ?? string.Empty; ;
+            model.Params.Subject = subj ?? string.Empty; ;
+            if (!string.IsNullOrWhiteSpace(lang))
+            {
+                string[] langParts = lang.Split('|');
+                string languageName = string.Empty;
+
+                // Get the language name
+                if (langParts.Length == 1)
+                {
+                    Language language = new BHLProvider().LanguageSelectAuto(langParts[0]);
+                    if (language != null) languageName = language.LanguageName;
+                }
+                else
+                {
+                    languageName = langParts[1];
+                }
+
+                model.Params.Language = new Tuple<string, string>(langParts[0], languageName);
+            }
+            if (!string.IsNullOrWhiteSpace(col))
+            {
+                string[] colParts = col.Split('|');
+                string collectionName = string.Empty;
+
+                // Get the collection name
+                if (colParts.Length == 1)
+                {
+                    Collection collection = new BHLProvider().CollectionSelectAuto(Convert.ToInt32(colParts[0]));
+                    if (collection != null) collectionName = collection.CollectionName;
+                }
+                else
+                {
+                    collectionName = colParts[1];
+                }
+
+                model.Params.Collection = new Tuple<string, string>(colParts[0], collectionName);
+            }
             int startPage;
-            if (!Int32.TryParse(Request["ppage"] ?? "1", out startPage)) startPage = 1;
+            if (!Int32.TryParse(ppage ?? "1", out startPage)) startPage = 1;
             model.ItemPage = startPage;
-            if (!Int32.TryParse(Request["apage"] ?? "1", out startPage)) startPage = 1;
+            if (!Int32.TryParse(apage ?? "1", out startPage)) startPage = 1;
             model.AuthorPage = startPage;
-            if (!Int32.TryParse(Request["kpage"] ?? "1", out startPage)) startPage = 1;
+            if (!Int32.TryParse(kpage ?? "1", out startPage)) startPage = 1;
             model.KeywordPage = startPage;
-            if (!Int32.TryParse(Request["npage"] ?? "1", out startPage)) startPage = 1;
+            if (!Int32.TryParse(npage ?? "1", out startPage)) startPage = 1;
             model.NamePage = startPage;
 
             // For annotation searches, use the non-elasticsearch search page
             if (model.Params.SearchCategory == "O") return new RedirectResult("~/search.aspx?" + Request.QueryString);
 
-            return SearchAction(model, null);
-        }
-
-        [HttpPost]
-        public ActionResult Index(SearchModel model)
-        {
-            // Convert the selected facets to limits for search
+            // Add facets to the search
             List<Tuple<SearchField, string>> limits = null;
-            string selectedFacets = Request["facet.Checked"];
-            if (selectedFacets != null)
+            if (facet != null)
             {
-                List<string> facets = selectedFacets.Replace("false", "").Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                for (int x = facets.Count - 1; x >= 0; x--)
-                {
-                    if (facets[x].StartsWith(",")) facets.RemoveAt(x);
-                }
-
-                if (facets.Count > 0) limits = new List<Tuple<SearchField, string>>();
-                foreach (var facet in facets)
+                if (facet.Length > 0) limits = new List<Tuple<SearchField, string>>();
+                foreach (var f in facet)
                 {
                     limits.Add(
                         new Tuple<SearchField, string>(
-                            (SearchField)Enum.Parse(typeof(SearchField), facet.Split('_')[0], true),
-                            facet.Split('_')[1]));
+                            (SearchField)Enum.Parse(typeof(SearchField), f.Split('_')[0], true),
+                            f.Split('_')[1]));
                 }
             }
 
             return SearchAction(model, limits);
         }
+
+        //[HttpPost]
+        //public ActionResult Index(SearchModel model)
+        //{
+        //    // Convert the selected facets to limits for search
+        //    List<Tuple<SearchField, string>> limits = null;
+        //    string selectedFacets = Request["facet.Checked"];
+        //    if (selectedFacets != null)
+        //    {
+        //        List<string> facets = selectedFacets.Replace("false", "").Split(new char[] { '~' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        //        for (int x = facets.Count - 1; x >= 0; x--)
+        //        {
+        //            if (facets[x].StartsWith(",")) facets.RemoveAt(x);
+        //        }
+
+        //        if (facets.Count > 0) limits = new List<Tuple<SearchField, string>>();
+        //        foreach (var facet in facets)
+        //        {
+        //            limits.Add(
+        //                new Tuple<SearchField, string>(
+        //                    (SearchField)Enum.Parse(typeof(SearchField), facet.Split('_')[0], true),
+        //                    facet.Split('_')[1]));
+        //        }
+        //    }
+
+        //    return SearchAction(model, limits);
+        //}
 
         // GET: Advanced
         public ActionResult Advanced()
@@ -120,20 +170,70 @@ namespace MOBOT.BHL.Web2.Controllers
             return new RedirectResult("~/search?" + queryString);
         }
 
+        [HttpGet]
+        public ActionResult Pages(string q, int itemId)
+        {
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.NumResults = 5000;
+            search.Highlight = true;
+            search.Suggest = false;
+            search.SortField = SortField.Sequence;
+            List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+            Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemId.ToString());
+            limits.Add(itemLimit);
+            List<IHit> pages = search.SearchPage(q ?? "", limits).Pages;
+            pages = CleanPageResults(pages);
+
+            return Json(pages, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Clean up the page results by constructing proper page descriptions
+        /// </summary>
+        /// <param name="pages"></param>
+        /// <returns></returns>
+        private List<IHit> CleanPageResults(List<IHit> pages)
+        {
+            foreach(IHit page in pages)
+            {
+                string pageDescription = string.Empty;
+                string pageIndicators = string.Empty;
+                string pageTypes = string.Empty;
+                foreach(string indicator in ((PageHit)page).pageIndicators)
+                {
+                    if (!string.IsNullOrWhiteSpace(pageIndicators)) pageIndicators += ",";
+                    pageIndicators += indicator;
+                }
+                foreach(string type in ((PageHit)page).PageTypes)
+                {
+                    if (!string.IsNullOrWhiteSpace(pageTypes)) pageTypes += ",";
+                    pageTypes += type;
+                }
+
+                if (!string.IsNullOrWhiteSpace(pageIndicators) && !string.IsNullOrWhiteSpace(pageTypes))
+                {
+                    pageDescription = string.Format("{0} ({1})", pageIndicators, pageTypes);
+                }
+                else if(!string.IsNullOrWhiteSpace(pageIndicators))
+                {
+                    pageDescription = pageIndicators;
+                }
+                else
+                {
+                    pageDescription = pageTypes;
+                }
+
+                ((PageHit)page).PageDescription = pageDescription;
+            }
+
+            return pages;
+        }
+
         public ActionResult SearchAction(SearchModel model, List<Tuple<SearchField, string>> limits)
         {
             int pageSize = 10;
 
             if (SearchRedirect()) return new RedirectResult("~/search.aspx?" + Request.QueryString);
-
-            // Get featured collection name
-            BHLProvider provider = new BHLProvider();
-            Collection collection = provider.CollectionSelectFeatured();
-            if (collection != null)
-            {
-                ViewBag.CollectionName = collection.CollectionName;
-                ViewBag.CollectionUrl = string.IsNullOrWhiteSpace(collection.CollectionURL) ? collection.CollectionID.ToString() : collection.CollectionURL;
-            }
 
             // Submit the request to ElasticSearch here
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -180,23 +280,6 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.KeywordPage;
                     model.KeywordResult = search.SearchKeyword(searchTerm);
-                }
-            }
-
-            if (model.Params.SearchCategory == "M" && model.NameResult.Names.Count == 1)
-            {
-                if (model.NameResult.IsValid)
-                {
-                    // Only one result to a name-only search... redirect directly 
-                    // to the bibliography for that name
-                    return new RedirectResult("~/name/" +
-                        Server.HtmlEncode(((NameHit)model.NameResult.Names[0]).Name
-                            .Replace(' ', '_')
-                            .Replace('.', '$')
-                            .Replace('?', '^')
-                            .Replace('&', '~')
-                        )
-                    );
                 }
             }
 

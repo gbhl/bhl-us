@@ -1,0 +1,18 @@
+{
+	"name" : {
+		"properties" : {
+			"count" : {
+				"type" : "long",
+				"include_in_all" : false
+			},
+			"id" : {
+				"type" : "long",
+				"include_in_all" : false
+			},
+			"name" : {
+				"type" : "text",
+				"analyzer" : "default"
+			}
+		}
+	}
+}

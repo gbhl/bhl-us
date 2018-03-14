@@ -1321,5 +1321,7 @@
     <None Include="import\Stored Procedures\SegmentResolve.sql" />
     <None Include="import\Functions\fnErrorStringForImportRecord.sql" />
     <None Include="import\Stored Procedures\ImportRecordCreatorPublishToProduction.sql" />
+    <None Include="dbo\Functions\fnAuthorFacetStringForTitle.sql" />
+    <None Include="dbo\Functions\fnAuthorFacetStringForSegment.sql" />
   </ItemGroup>
 </Project>

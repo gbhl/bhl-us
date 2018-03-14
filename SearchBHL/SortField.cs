@@ -9,5 +9,6 @@
         Keyword,
         Name,
         PrimaryAuthor,
+        Sequence
     }
 }
