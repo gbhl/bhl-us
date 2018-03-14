@@ -1321,5 +1321,8 @@
     <None Include="import\Stored Procedures\SegmentResolve.sql" />
     <None Include="import\Functions\fnErrorStringForImportRecord.sql" />
     <None Include="import\Stored Procedures\ImportRecordCreatorPublishToProduction.sql" />
+    <None Include="dbo\Tables\SearchIndexQueueLog.sql" />
+    <None Include="audit\Stored Procedures\AuditBasicSelectForSearchIndexQueue.sql" />
+    <None Include="dbo\Stored Procedures\SearchIndexQueueLogInsert.sql" />
   </ItemGroup>
 </Project>
