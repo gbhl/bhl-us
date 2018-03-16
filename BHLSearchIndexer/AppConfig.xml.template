@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <ConnectionStrings>
+    <PRODUCTION>PRODUCTION DATABASE CONNECTION STRING</PRODUCTION>
+    <QA>QA DATABASE CONNECTION STRING</QA>
+  </ConnectionStrings>
+  <AppSettings>
+    <!-- Database connection key-->
+    <ConnectionKey>QA</ConnectionKey>
+
+    <!-- Search server connection string -->
+    <ElasticSearchServerAddress>SEARCH SERVER ADDRESS</ElasticSearchServerAddress>>
+
+    <!-- Message queue connection settings -->
+    <MQAddress>MESSAGE QUEUE SERVER ADDRESS</MQAddress>
+    <MQPort>MESSAGE QUEUE SERVER PORT</MQPort>
+    <MQUser>MESSAGE QUEUE USERNAME</MQUser>
+    <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
+    <MQQueueName>bhl.index</MQQueueName>
+
+    <!-- Email settings -->
+    <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
+    <SmtpPort>MAIL SERVER PORT</SmtpPort>
+    <SmtpEnableSsl>false</SmtpEnableSsl>
+    <SmtpDefaultCredentials>false</SmtpDefaultCredentials>
+    <SmtpUsername></SmtpUsername>
+    <SmtpPassword></SmtpPassword>
+    <EmailFromAddress>noreply@biodiversitylibrary.org</EmailFromAddress>
+    <EmailToAddresses>EMAIL RECIPIENT EMAIL ADDRESSES</EmailToAddresses>  <!-- comma-separated -->
+
+    <!-- Location of OCR files.
+          Valid values are "remote" or "local".
+          If "remote", text will be retreived using http://www.biodiversitylibrary.org/pageocr/XXXX.
+          If "local", text will be retreived directly from the file server. -->
+    <OCRLocation>local</OCRLocation>
+
+    <!-- Debugging settings
+          Set <Debug> to true to run in debug mode, false otherwise.
+          In debug mode, documents are written to the file system folder specified in <DocFolder>. -->
+    <Debug>false</Debug>
+    <DocFolder>FOLDER IN WHICH TO PLACE DEBUG FILES</DocFolder>
+
+    <!-- true to index documents that are created, false otherwise -->
+    <DoIndex>true</DoIndex>
+
+    <!-- true to only index item/segment/author/name/keyword metadata (no page information), false otherwise -->
+    <MetadataOnly>false</MetadataOnly>
+
+    <!-- Set to true or false to indicate whether all data should be indexed.
+          NOTE: It should be rare to index all data, as a complete reindexing takes 30+ hours.
+          
+          There are additional settings below that affect a "full" index.  Specifically, the
+          data to be indexed can be read from either the database or text files, and it can
+          be limited to some or all entity types (Items, Segments, Authors, Keywords, Names).
+          These settings allow a "full" index to be limited to a smaller set of data.
+          -->
+    <DoFullIndex>false</DoFullIndex>
+
+    <!-- ################################################################ 
+          
+          The settings below affect what data is processed if a "Full" 
+          index is specified by setting <DoFullIndex> to true.    
+    
+         ################################################################ -->    
+    
+    <!-- Set these to true or false to index different types of documents -->
+    <IndexItems>true</IndexItems>
+    <IndexSegments>true</IndexSegments>
+    <IndexAuthors>true</IndexAuthors>
+    <IndexKeywords>true</IndexKeywords>
+    <IndexNames>true</IndexNames>
+
+    <!-- Set these values to the desired starting ID for each type of document.
+         Useful for restarting the process where it last halted -->
+    <StartItem>0</StartItem>
+    <StartSegment>0</StartSegment>
+    <StartAuthor>0</StartAuthor>
+    <StartKeyword>0</StartKeyword>
+    <StartName>0</StartName>
+
+    <!-- Set these values to either DATABASE or FILE to specify the source of the data to be indexed.
+        "DB" will read the data to be indexed from the database.
+        "FILE" will read the data to be indexed from a file in the "data" folder. -->
+    <ItemSource>DB</ItemSource>
+    <SegmentSource>DB</SegmentSource>
+    <AuthorSource>DB</AuthorSource>
+    <KeywordSource>DB</KeywordSource>
+    <NameSource>DB</NameSource>
+
+  </AppSettings>
+</configuration>

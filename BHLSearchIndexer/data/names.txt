@@ -1,0 +1,5532 @@
+﻿227	Alsine	1
+955	Agaricus	5
+1268	Arabis	2
+1504	Atriplex patula	1
+2352	Acacia	1
+2596	Psilocybe	2
+4737	Atriplex	2
+4760	Aecidium	2
+6362	Alope	1
+6822	Anagallis	5
+7577	Affinis	1
+8117	Alisma	1
+10004	Arius felis	2
+10214	Amnicola limosa	1
+10811	Aristolochia	3
+10826	Allium	1
+12130	Asclepias	3
+13508	Admete	1
+14599	Alyssum	1
+14661	Auxis	1
+15250	Aristolochia serpentaria	1
+16266	Aix	16
+17300	Antilocapridae	1
+17997	Ampullaria	3
+18541	Alosa sapidissima	3
+18569	Arnica	1
+19616	Aspergillus	2
+21999	Aplacophora	1
+22181	Anomia ephippium	1
+24300	Armeria	1
+24402	Spirogyra	1
+25009	Apogon	1
+25414	Polypodium	1
+26112	Actiniaria	2
+27185	Arabes	10
+28806	Amphiacantha longa	1
+29434	Artemisia	2
+29533	Aurelianus	1
+29636	Acides	1
+30145	Aetius	1
+30855	Acilius	1
+31112	Acanella normani	1
+31240	Ascaris lumbricoides	1
+31656	Apodida	1
+32749	Anisocirrus	1
+34062	Armillaria mellea	1
+35331	Clavaria	2
+36242	Amanita	14
+36823	Arctia caja	1
+37405	Allium cepa	6
+37502	Animalia	2
+39784	Alopex lagopus	1
+40024	Adamus	1
+41917	Atha	1
+42032	Auricula	3
+42501	Arundinaria tecta	2
+43652	Argyromoeba	1
+46691	Asparagus	2
+47495	Alona quadrangularis	1
+47505	Aurospio dibranchiata	1
+48558	Argania	1
+51127	Aspidiotus citri	2
+51456	Acholoe	2
+53539	Amphidinium	1
+54249	Asteriscus	1
+54570	Asterias	1
+60654	Chelone	1
+61117	Ascidia	2
+62101	Azelia	1
+65250	Andrena vicina	1
+67951	Cynanchum	1
+70080	Appollon	1
+70655	Arhynchite inamoenus	1
+71188	Albula vulpes	2
+73490	Amiurus nebulosus	1
+74308	Alcyonium	1
+76072	Amnicola	2
+77796	Actinaria	1
+78091	Astroscopus	2
+79415	Quercus	6
+79578	Alcyonaria	4
+79866	Anchovia	8
+81221	Achromobacter	2
+82115	Amblyomma	1
+83659	Apteryx	1
+84936	Aetole bella	1
+88955	Aciptilus	1
+90189	Arctocephalus	2
+91100	Acipenser	1
+92345	Asmunda	2
+92947	Aptera	2
+94871	Appendicularia	2
+96432	Aulactinia incubans	1
+96747	Agatha virgo	1
+97248	Apion minimum	1
+98872	Alaria	1
+99200	Armillaria	3
+99527	Accipenser	2
+100310	Allopora campyleca	1
+100557	Anarrhichas lepturus	1
+103444	Acanthephyra chacei	1
+106862	Agaricus olearius	1
+108937	Arctophoca townsendi	1
+110351	Anthopleura handi	1
+110429	Aspidogaster conchicola	1
+112252	Aegeria	2
+113370	Amoebea	1
+119604	Orchis	5
+122053	Argas	1
+123938	Agarum	2
+124395	Apis indica	1
+127156	Acridium	1
+127732	Antonides	1
+129062	Aspidiotus ficus	1
+129702	Adjutor	2
+130585	Audouinia tentaculata	2
+131587	Acarus	5
+133044	Aricia marmorata	1
+133951	Rumex	1
+134782	Asellus	1
+135330	Anobium pertinax	1
+138728	Alepocephalus bairdii	1
+140013	Clitocybe	3
+142664	Archippus	5
+144905	Aplodontia rufa	1
+145411	Apseudidae	1
+145636	Antrozous pallidus	1
+146400	Amoura	1
+148711	Pleurotus	2
+149371	Angiospermae	1
+149796	Asterina	1
+151410	Anguilla chrisypa	1
+153766	Arsace	1
+155463	Anagallis tenella	1
+156543	Acanthocybium solandri	1
+156783	Acaridae	1
+159358	Alisma plantago	2
+159533	Phaeophyceae	3
+160189	Aster andrewsii	2
+161657	Argyrosomus	1
+161715	Lepiota	2
+162755	Agonus vulsus	1
+166257	Antilocapra americana	1
+167114	Architeuthis	1
+167490	Alces	1
+170375	Archiannelida	2
+170655	Ambloplites rupestris	2
+172994	Aphrophora	5
+173320	Analis	6
+173748	Aretia	1
+176992	Dendrobium	1
+178125	Actinia holsatica	1
+179464	Arthropoda	7
+189591	Apoica pallida	1
+191183	Allolobophora	1
+191336	Artemesia	1
+192930	Actiniidae	1
+193959	Aphis mali	1
+194620	Omphalia	1
+195678	Amphinomida	1
+196507	Anostoma	1
+196980	Argyropelecus	1
+199408	ACUTA	1
+199451	Anthomyia	2
+200051	Aspasia	1
+201183	Astromma	1
+204412	Ampelopsis quinquefolia	1
+206103	Ammospermophilus harrisii	1
+206125	Ascomycetes	1
+206955	Aplexa	1
+210870	Acanthocephala	3
+211948	Campanula	1
+212362	Arachnida	8
+212904	Arimaspes	2
+218275	Arctica islandica	1
+221194	Amathis	2
+222169	Alaus	1
+225069	Acus	1
+226557	Argulus	1
+227496	Acineta	1
+227702	Agraulis	1
+230219	Amara communis	1
+235325	Ametropus	1
+236345	Actinodiscidae	1
+236531	Acella	2
+240106	Agrotis messoria	1
+240377	Anthocomus	1
+241987	Anculosa	1
+247381	Ascothoracica	1
+247569	Asplenium andrewsii	1
+248560	Bovista	4
+248631	Ammospermophilus interpres	1
+250113	Amphithoe	1
+251248	Atticus	1
+251536	Anagallis arvensis	11
+251929	Anoplonereis	1
+252215	Atriplex pacifica	1
+253426	Argenis	1
+255968	Anytus	1
+261823	Amphioxus lanceolatus	1
+262537	Pittonia	1
+263006	Apis	2
+263651	Ascidiacea	2
+263754	Antinoella sarsi	1
+264385	Ascothoracida	1
+267582	Arabellidae	1
+269165	Aphredoderus	1
+269265	Amphioxus	3
+271795	Acarina	1
+272694	Brassica	2
+273212	Artemisina archegona	1
+278279	Abramis brama	1
+279919	Acies	1
+282717	Anguilla rostrata	4
+284248	Agrotis nanalis	1
+285310	Apatura clyton	1
+285587	Peziza	6
+286232	Ascelichthys rhodorus	1
+286638	Araxes	1
+288761	Alosa praestabilis	1
+289281	Aeschna juncea	1
+291822	Clavaria cinerea	1
+292493	Acicuia	1
+293563	Apoderus coryli	1
+296083	Asterias forbesi	2
+296289	Asilus	2
+301634	Aricia	1
+302293	Amphitrite affinis	1
+302535	Anthuridae	1
+303608	Ascidicola	2
+305694	Asterids	1
+310540	Annelida	13
+310588	Anchomenus	1
+312290	Astronesthes	1
+315042	Apelles	1
+315700	Anguilla australis	1
+316501	Aplidium	3
+317384	Altes	2
+318585	Ancora	5
+319041	Agrotis	4
+319575	Anisotoma	1
+325064	Ariarathus	1
+327942	Aristippe	3
+329230	Aedia	1
+329857	Atopomelus	3
+340191	Agriphila	1
+341333	Arthemis	5
+344056	Agrotis collaris	1
+344252	Anisodactylus binotatus	1
+345724	Antipatharia	1
+346459	Actium	1
+346721	Utricularia	8
+346870	Amphiura diomedeae	1
+348035	Asterina gibbosa	1
+348377	Alloptes	2
+350461	Anchomenus albipes	1
+350935	Amiurus catus	1
+352720	Ancylus	4
+354116	Audouinella purpurea	2
+354715	Amphiamblys	5
+356303	Alaba	1
+357536	Alosa	4
+357794	Adociidae	1
+359893	Adocia dubia	1
+361402	Anguilla anguilla	1
+364841	Ascaris	1
+366954	Antiblemma flavipunctalis	1
+368630	Anguilla vulgaris	3
+370109	Ammospermophilus leucurus	1
+370944	Ammotretis	2
+371681	Aspredo	2
+375227	Anthomyia raphani	1
+377652	Acroperus	1
+378193	Anthophora	1
+378255	Adephaga	2
+383173	Aves	20
+383927	Acerina	2
+384259	Ascalaphus	1
+384688	Antigenes	1
+385504	Lappa	1
+385878	Amphiura otteri	1
+388880	Acolasia hinna	2
+391489	Armadilloniscus coronacapitalis	2
+392755	Apopappus	4
+393459	Amphipoda	4
+393507	Amphipeplea	3
+393762	Anodon	2
+394898	Analges	4
+395472	Tricholoma	2
+400607	Atriplex spicata	1
+401497	Amphibia	25
+402549	Aphis lanigera	1
+407552	Attacinae	1
+408850	Autographa oxygramma	2
+410960	Atomogaster	1
+412186	Ameiurus nebulosus	2
+413732	Grevillea	1
+418141	Andrena	4
+420078	Acida	2
+420703	Ameletus	3
+421936	Ammospermophilus nelsoni	1
+423877	Aspidogaster	1
+429560	Allopora brochi	1
+429578	Aetole	1
+431478	Abraliopsis	3
+432001	Antiblemma	1
+436234	Aplousobranchia	1
+440680	Solanum	2
+443293	Arripis salar	2
+447330	Anomalops	3
+448162	Auster	2
+449162	Argynnis	6
+452059	Arthmius	1
+456080	Amphiporus	1
+466692	Anthozoa	3
+467260	Antarcticus	1
+469477	Aplodontidae	1
+473641	Anthocharis	1
+474482	Anamosa	2
+475456	Apis acraensis	1
+478265	Acheron	1
+480125	Atychia	1
+482781	Acoela	1
+483078	Apeltes quadracus	1
+486764	Atriplex oppositifolia	1
+488359	Epidendrum	1
+496748	Mycena	1
+497396	Aricidea suecica	1
+498335	Russula	14
+498818	Adeps	4
+502110	Ambloplites	3
+506320	Aletia	1
+507332	Asterias vulgaris	2
+508599	Apollon	5
+510977	Aepus	1
+511410	Aglaura	1
+512235	Sedum	2
+513141	Aspis	3
+514033	Ameiurus	2
+516332	Anomalops katoptron	1
+517271	Amaroucium aequalisiphonis	1
+517833	Amphipholis squamata	1
+522020	Argyrea	2
+523114	Actinophrys	1
+523855	Erigeron	1
+523875	Aphididae	3
+524234	Aleria	4
+525498	Asteridea	3
+525916	Ammannia latifolia	1
+525959	Ammannia humilis	2
+525999	Arthria	1
+527908	Anthias	1
+528909	Axinomimus tuscarus	1
+529043	Articulata	1
+533459	Anthomyidae	3
+535206	Amphiodia psara	1
+539622	Asterostomatidae	1
+540177	Agariciidae	1
+541412	Ascidi	1
+542744	Acerina cernua	1
+543332	Avenzoaria	1
+545246	Aplecta	1
+548772	Alcyonacea	2
+549619	Alepidosaurus	1
+549862	Glyceria	1
+550114	Amphion	1
+551981	Alcyonium digitatum	1
+553341	Amiurus melas	1
+553461	Antistius	1
+558690	Arabis pedicellata	1
+560222	Apodemia	1
+561389	Artedius fenestralis	1
+564168	Alceste	2
+567440	Herpestis	1
+567482	Aplocnemus	1
+568176	Arachnoidea	1
+568306	Anoplonotus	2
+569241	Hebeloma	2
+571460	Artiodactyla	3
+574009	Asteroidea	3
+575032	Architeuthis harveyi	1
+575564	Astrangia	2
+577699	Audouinia	3
+580423	Crato	1
+581167	Alaus oculatus	1
+581809	Avoca	3
+584519	Aristolochia sipho	3
+584835	Verum	130
+584951	Apis mellifica	1
+586830	Anisodactylus	3
+587290	Atherina stipes	2
+590620	Antrozous	1
+590943	Aegeria pini	1
+591238	Amphiuridae	1
+591821	Ateuchus	1
+591846	Amphiura	1
+594654	Alpheidae	1
+596790	Antias	1
+597479	Amphiacantha	2
+598042	Aricidea quadrilobata	1
+598111	Aglaophenia	1
+600911	Aristeus	3
+602510	Allopora polyorchis	1
+604078	Amaura	1
+605423	Aletia argillacea	1
+605755	Athenes	24
+606665	Amplexidiscus fenestrafer	2
+608199	Hepaticae	1
+609846	Apis manicata	1
+616160	Animes	1
+621894	Acrothoracica	1
+622179	Apathus	3
+623451	Colchicum	1
+625968	Antha	1
+626931	Ancistrosyllis	1
+628078	Ascidicola rosea	1
+628296	Acari	4
+629565	Antiasidae	1
+629771	Aponobranchus	2
+629849	Actaeopyramis	1
+633803	Aspar	3
+641151	Anarta	1
+641220	Amiurus	5
+642101	Alpheus	2
+642221	Agromyza	1
+642414	Anguilla aucklandii	1
+642598	Aello	1
+643242	Astrophiura	1
+644708	Agrotis semiclarata	1
+646172	Acanthephyra	2
+646789	Autolytus prolifer	1
+648473	Antigaster	4
+650947	Allopora moseleyana	1
+653920	Amphiura squamata	1
+654243	Agnus	1
+655375	Abeona aurora	1
+655495	Argyropelecus hemigymnus	1
+656872	Anchovia brownii	2
+657563	Apatura	2
+659899	Spiranthes	1
+660771	Acerra	1
+661058	Aglaophenia carinifera	1
+663618	Amara erratica	1
+664140	Agarum cribrosum	6
+664308	Artibeus jamaicensis	1
+667098	Brosmius brosme	1
+667424	Buccinum	7
+668013	Batrachospermum	1
+668123	Bombyx	2
+668394	Boletus variegatus	1
+668532	Basidiomycetes	4
+668567	Begonia	2
+668945	Bignonia	1
+670015	Boletus	4
+671770	Pteridophyta	2
+671936	Bacillus anthracis	1
+672429	Juncus	1
+673372	Blepharocysta	1
+673589	Blatta germanica	2
+673782	Bastia	19
+674456	Batava	1
+674693	Baetisca	1
+674731	Bauhinus	1
+675050	Baiomys	3
+675072	Brachialis	1
+675977	Bucephalus	3
+676061	Bangia	1
+679596	Bacillus	10
+681546	Banksia	1
+681927	Bdellorhynchus	1
+682721	Brada	1
+683588	Brasenia peltata	2
+686754	Buteo	1
+688263	Botis dapalis	1
+689153	Billbergia	1
+690874	Bombyx dispar	2
+692106	Bolitophila	3
+695252	Boletus granulatus	1
+696769	Boletus badius	1
+696993	Brachycera	1
+697934	Broscus	1
+698505	Borrichius	4
+699108	Blechrus	1
+699548	Bacille	26
+701984	Baeri	1
+702284	Bryophyta	1
+702377	Botis annaphilalis	1
+702489	Barca	1
+702857	Benthoteuthis	1
+703977	Batrachia	1
+704546	Bison bison	1
+710477	Bombyx mori	1
+711158	Bidens cernua	1
+712989	Bulimus	3
+713232	Parnassia	1
+713238	Biala	2
+714873	Bombus	2
+715943	Boletus scaber	1
+716072	Bathyphelliidae	1
+716618	Banksianus	1
+716752	Brachys	1
+716876	Becquerelia	1
+716992	Bagrus	2
+719160	Balaenoptera acutorostrata	1
+721850	Boletus subtomentosus	1
+722124	Balistes vetula	1
+723319	Bombylius major	1
+726118	Brassica rapa	1
+726149	Bosmina	1
+728091	Bharata	1
+728136	Drosera	2
+728211	Bryozoa	6
+728976	Bitis arietans	4
+729286	Balaena mysticetus	1
+730118	Barbus	1
+730160	Lacordaire	6
+732329	Brosmius americanus	1
+733268	Baldra	2
+734871	Brassica campestris	1
+734941	Baridius	1
+735648	Buccinum undatum	2
+735771	Boleosoma	1
+737882	Bombycidae	1
+739282	Brachiopsis	1
+742477	Bacillus perfringens	1
+742554	Buchholzia	2
+743692	Bacillus coli communis	1
+745831	Bimeria tenella	1
+748063	Bosca	1
+748722	Balanus tintinnabulum	1
+750424	Bomolocha	2
+751527	Boletus chrysenteron	1
+752064	Lobelia	1
+752843	Balanidae	1
+753629	Bradypus	1
+756020	Boletus edulis	1
+757150	Boletus elegans	1
+758854	Bolocera paucicornis	1
+758969	Balanus	1
+759674	Botis	3
+761223	Bairdiella	4
+762745	Puccinia	2
+762853	Bassozetus	1
+763525	Brisaster fragilis	1
+763982	Bembidium	1
+765430	Ceratophyllum	1
+767264	Brachinus crepitans	1
+767509	Columella	2
+768227	Beroida	1
+769819	Balaenoptera physalus	2
+770277	Bairdiella chrysura	17
+772327	Boletus felleus	1
+772596	Balaninus	1
+772762	Bdellium	1
+775329	Hydrocotyle	1
+776028	Calcarea	2
+776482	Betaeus macginitieae	1
+776667	Bugula longirostrata	1
+779424	Sphagnum	2
+779842	Balmes	5
+783349	Barnacles	1
+785098	Bonelliopsis alaskana	1
+785995	Boletus bovinus	1
+786772	Bovista plumbea	2
+787209	Basa	1
+792818	Ballus	1
+793826	Bothus	1
+794160	Barnea	2
+794293	Bungarus	2
+800952	Boreus hiemalis	1
+801630	Brevoortia patronus	1
+802028	Brassica napus	1
+802212	Bugula pacifica	1
+802419	Bactra	1
+805687	Basilarchia	3
+805897	Brachyopsis verrucosus	1
+807246	Bruchus pisi	1
+809645	Bassariscus astutus	1
+809728	Bitis	2
+810554	Beroe	2
+811313	Botaurus	1
+811500	Brachiopoda	12
+812062	Bombyciae	1
+812901	Bidens chrysanthemoides	1
+814633	Balaenoptera borealis	2
+814664	Balaenopteridae	1
+816421	Brachelytra	2
+818312	Biblia	1
+818792	Brassica oleracea capitata	1
+819210	Bulinus	3
+819507	Pseudomonas	5
+819767	Balanus amphitrite saltonensis	1
+821428	Bimeria pusilla	1
+826809	Brachystomia	2
+828164	Bolocera	5
+829303	Bacillus prodigiosus	1
+829586	Bidens beckii	1
+830186	Bertramia	1
+830722	Boletus pachypus	1
+830988	Bougainvilliidae	1
+831080	Brachyura	4
+831136	Bunodactis	1
+831593	Brachinus	2
+832618	Rubus	1
+832835	Bugula	1
+835178	Buceros	1
+835812	Balanus panamensis	1
+835910	Baetis	1
+836053	Bonaci	2
+836882	Brementia balneolensis	4
+838078	Blarina	1
+838822	Boletus piperatus	1
+839546	Bothrops lanceolatus	1
+839746	Betaeus setosus	1
+840486	Bacillus hoplosternus	6
+845658	Bolinopsis	1
+846024	Bolitophila luminosa	1
+847409	Bittacus	1
+847629	Belone exilis	1
+850168	Basilichthys	2
+854287	Balanoglossus	1
+855174	Bonnierilla	1
+855633	Balanus amphitrite	1
+857982	Boletus lupinus	1
+859346	Botis turmalis	1
+859598	Boletus luteus	1
+860143	Basta	1
+864538	Berndtia purpurea	1
+866351	Balaenidae	1
+866568	Bulimnea	2
+867415	Berardius bairdii	1
+867580	Boletus cyanescens	1
+868232	Batrachus tau	1
+868516	Benthodesmus	1
+871712	Balanus glandula	1
+872033	Bonelliidae	1
+872110	Baiomys taylori	1
+874576	Leptothrix	1
+875137	Bomolocha fecialis	1
+876898	Bothriuridae	1
+879352	Buthus hirsutus	3
+879579	Bulimnea megasoma	1
+879949	Belone acus	2
+884085	Breyeriidae	1
+884558	Brevis	3
+885352	Belone vulgaris	1
+885861	Blanchardi	1
+887360	Bambusa affinis	1
+887362	Botis commortalis	1
+888877	Bathothauma	1
+893025	Balandra	1
+894482	Beccaria	2
+895484	Bactropus	2
+896886	Bernoullius	1
+897080	Beadlea	1
+897569	Balistes	1
+899847	Bugulidae	1
+903931	Branchiobdella astaci	2
+904773	Bodianus rufus	2
+907116	Bovidae	1
+907904	Bombycia	1
+910200	Belone	1
+911488	Bodianus	1
+913614	Bdellorhynchus polymorphus	1
+914447	Blasturus	2
+914690	Bittium	1
+915164	Brementia	7
+916451	Cordyceps	1
+917303	Bassa	1
+918480	Cecidomyia clausilia	1
+920773	Cladophora	1
+921331	Celtis	3
+921811	Clausia lubbocki	2
+921884	Cydippida	1
+922660	Convolvulus	3
+922835	Camerarius	1
+923278	Cornus	1
+923455	Cychrus	1
+924226	Fischeri	1
+924548	Capitella capitata	1
+924798	Crambus occidentalis	1
+925560	Clematis vitalba	1
+925988	Ceratium	2
+926303	Cercopithecus	2
+927054	Calamus	3
+927752	Clupea	4
+928615	Conferva	1
+929156	Cicer	1
+929710	Cordyline	1
+930942	Cingulina	2
+931082	Clematis	2
+932379	Caranx georgianus	1
+933960	Coturnix	1
+934564	Glandula	1
+935449	Chiloceras	1
+936384	Chlaenius	1
+936664	Cistus	1
+936687	Carabidae	2
+936763	Polygonum	1
+937312	Cantharis	2
+937722	Callionymus lyra	1
+937963	Crinoidea	4
+938957	Canis latrans	1
+939677	Casta	2
+940127	Calathus	2
+940585	Coccidiascus	1
+940760	Catocala	5
+941398	Chama	1
+941624	Eubulus	1
+941819	Callitriche	1
+943336	Coccus polonicus	1
+944068	Caloptenus italicus	2
+944390	Compsoneura	1
+945668	Crinon	20
+948670	Ceto	1
+949024	Clytus arietis	1
+949132	Clupea sagax	1
+949705	Callidium insubricum	1
+950807	Catastomus commersoni	1
+953221	Crassostrea	4
+953399	Cottus gobio	1
+954846	Clerus	1
+956040	Chaetodipus goldmani	1
+957947	Cassida nebulosa	1
+958551	Coleophora	1
+960364	Clethrionomys gapperi	1
+961793	Corixa	1
+966057	Clitocybe inversa	3
+966243	Corallimorpharia	1
+966850	Chauliognathus	1
+968171	Christia	1
+968835	Clavaria coralloides	1
+969214	Cumberlandia	1
+969370	Cortinarius	3
+969618	Cantharellus	3
+969696	Collybia	6
+970099	Cidaris	2
+972235	Cellaria diffusa	1
+972588	Coprinus	6
+975491	Cystobia	1
+976731	Cyanophyceae	1
+977330	Cranchia	1
+980295	Cachalot	2
+980298	Corynebacterium	1
+980809	Chelura terebrans	1
+982465	Clausilia parvula	1
+982975	Calliteuthis	2
+983450	Chilodactylus	2
+984901	Calosoma scrutator	1
+986991	Cypris	2
+988814	Crassostrea virginia	3
+988892	Chordata	2
+990171	Cellularia	2
+993193	Corticium	1
+996686	Coregonus fera	1
+999042	Cephalanthera	1
+999433	Chrysaora	1
+1001686	Chaetopterus variopedatus	1
+1002036	Caletes	1
+1002758	Clitopilus	4
+1003175	Cyprinus carpio	4
+1004939	Cicindela maritima	1
+1005226	Culicoides	2
+1007633	Castor canadensis	1
+1010445	Coregonus albus	1
+1010705	Chaerocampa	1
+1013778	Columba	1
+1014212	Ceramaster granularis	1
+1018661	Chiton	1
+1019258	Clavaria fragilis	1
+1019819	Cordulia alpestris	1
+1021413	Cadmus	1
+1023086	Cardanus	1
+1026069	Carassius	2
+1027619	Coregonus clupeiformis	1
+1029349	Cetonia floricola	2
+1032580	Culex	3
+1033157	Convolutidae	1
+1034208	Corynorhinus townsendii	1
+1038056	Cicuta bulbifera	2
+1042760	Cryptolechia	1
+1046384	Compa	2
+1047431	Chrysopa vulgaris	1
+1048268	Chiton fascicularis	1
+1051286	Cynomyia	1
+1052789	Mirabilis	4
+1053060	Cyclothone	1
+1053309	Castilleja exilis	2
+1053418	Cycloseris mexicana	1
+1054377	Catostomus	1
+1054408	Gleditschia	1
+1054492	Cyclopterus	1
+1056030	Cicindela	2
+1056306	Clupea harengus	2
+1058474	Coluridae	1
+1058830	Callitriche heterophylla	1
+1060064	Cochlodinium	1
+1060263	Coccus ilicis	1
+1060593	Coccomyxa	1
+1060871	Capitella	1
+1061832	Cicada orni	1
+1063874	Coridodax pullus	2
+1064326	Cercaria	6
+1064473	Conodon	1
+1066217	Clivina	1
+1066330	Cyprinodon variegatus	1
+1068488	Cratogeomys castanops	1
+1070993	Chrysallida	1
+1071021	Colpocephalum zebra	1
+1072726	Chrysops	1
+1075952	Clythra	1
+1078971	Christinus	1
+1080804	Crioceris asparagi	1
+1082049	Californica	1
+1085012	Castilleja stricta	1
+1085197	Corynidae	1
+1085954	Cavernularia obesa	1
+1086991	Criseis	1
+1088312	Cyclostoma	2
+1089134	Carazziella	1
+1089598	Cyprinus	3
+1089804	Callorhinus ursinus	1
+1090902	Corvus frugilegus	1
+1092341	Chaetognatha	1
+1093066	Carnivora	4
+1102606	Cyclosalpa	1
+1103185	Cardamine hirsuta	1
+1104110	Caprellidae	2
+1104399	Cockerelliella	1
+1104742	Ctenucha virginica	2
+1110164	Crataegus coloradensis	1
+1111416	Ctenostoma	1
+1114237	Crangon handi	1
+1114653	Conepatus leuconotus	1
+1117995	Cynomys gunnisoni	1
+1118561	Corallina officinalis	2
+1120195	Cetonia aenea	1
+1122570	Chela	5
+1123549	Chocorna	1
+1125189	Cottus bubalis	1
+1129410	Cetonia aurata	4
+1129604	Crepidula plana	1
+1129924	Catocala unijuga	1
+1133792	Calanoida	2
+1134171	Calopteryx	2
+1134676	Cirratulus	2
+1135006	Clupea pallasi	1
+1135054	Cottus scorpius	1
+1135084	Calliophrys	1
+1138666	Ceratina	1
+1139711	Ctenodiscus crispatus	1
+1143869	Clytus speciosus	1
+1146155	Ceratium tripos	1
+1147260	Corethra	6
+1148535	Yucca	3
+1150184	Cricetidae	1
+1153594	Plantae	3
+1153604	Cyrnus	1
+1154399	Crois	1
+1156650	Crambidae	1
+1158522	Clytia	1
+1159322	Cyprinus leuciscus	1
+1159808	Cordus	2
+1160067	Ctesias	1
+1162807	Chortophila floccosa	1
+1163439	Colanthura squamosissima	1
+1164697	Cymatogaster rosaceus	1
+1169988	Ceratocephale loveni	1
+1172503	Conica	2
+1172618	Cultus	1
+1172914	Chionoecetes tanneri	4
+1173623	Caloptenus	1
+1174318	Cynomys ludovicianus	1
+1174673	Calosoma	2
+1175001	Calliostoma	1
+1176123	Curculionides	1
+1176230	Colius	1
+1176895	Carcharias	2
+1183979	Cunina	1
+1184286	Cervidae	1
+1185019	Cecidomyia	4
+1185529	Columbiana	2
+1190217	Chauliacia	1
+1191552	Chirostoma	2
+1192829	Chrysops sepulchralis	2
+1195398	Corallinaceae	2
+1199035	Cyrtoneura	1
+1199808	Cynoscion	4
+1202379	Clupea harengus pallasi	1
+1203379	Cestida	1
+1210078	Cucumaria tenuicoriata	1
+1210255	Crassus	2
+1215417	Crangon hakodatei	1
+1216216	Crocodilus	2
+1216730	Claviger	1
+1216942	Cypridina	39
+1218013	Clathrinida	1
+1219020	Chrysophanus nais	1
+1221106	Chriodorus atherinoides	1
+1222156	Cynocephalus	2
+1223097	Cestus	1
+1224201	Ceratomyxa	5
+1225153	Chiroteuthis	1
+1229591	Curculio	1
+1229959	Campestris	2
+1234499	Carpocapsa pomonella	1
+1235396	Caligus diaphanus	1
+1239256	Lathyrus	1
+1242236	Cerianthus borealis	2
+1243076	Chrysothrix	1
+1244552	Capitellida	1
+1244944	Clavelina	1
+1254210	Chrysomela	3
+1256070	Corymbites	1
+1256818	Crassulaceae	1
+1256875	Chromophyton	2
+1257022	Centropomus undecimalis	1
+1257161	Cyperus phymatodes	1
+1257357	Caprella paulina	1
+1258357	Christiania	8
+1258607	Cornua	2
+1258746	Clavicornia	1
+1259451	Corsa	1
+1259726	Cynoscion regalis	2
+1260582	Caricea	1
+1261089	Clavaria botrytes	1
+1261784	Cerura vinula	2
+1264149	Clavidae	1
+1269461	Chionoecetes opilio	1
+1271737	Caligus	6
+1278942	Cleanthe	2
+1282563	Cyclostomata	1
+1282911	Coriscidae	1
+1288052	Capromyidae	1
+1288277	Colonna	2
+1288592	Cyclopterus lumpus	2
+1290029	Cymindis	1
+1290349	Colpocephalum	1
+1291699	Campanularia	3
+1292344	Carex aquatilis	1
+1293448	Canidae	1
+1294372	Ceratophyllum demersum	1
+1296709	Cheiranthus incanus	1
+1298342	Caligoida	2
+1298399	Carabus	3
+1300738	Coenonympha elko	1
+1300928	Carcharias lamia	1
+1301112	Cavia	2
+1301213	Colias edusa	2
+1302673	Chondromyces crocatus	2
+1303041	Cyclopodia	11
+1306023	Contraria	3
+1307717	Cardamine rotundifolia	1
+1308252	Calantica polita	1
+1309854	Crago	1
+1310574	Coronaria	1
+1311410	Chironomus	13
+1311695	Chrysura	2
+1313828	Cecrops	1
+1318515	Ctenophora	2
+1320010	Ciliata	1
+1325320	Crataegus cerronis	1
+1327693	Caridea	1
+1330098	Clausia	3
+1331031	Crambus attenuatus	1
+1331833	Cosmia	2
+1332354	Ceroplatus	1
+1332443	Cirripedia	7
+1335092	Chilopoda	1
+1336305	Cicindela campestris	1
+1336484	Chemnitzia	2
+1336515	Conepatus mesoleucus	1
+1338975	Craterellus	1
+1339007	Clavaria abietina	1
+1340560	Celtis occidentalis	2
+1342700	Cortinarius camphoratus	1
+1344304	Cetonia morio	1
+1344364	Cythereis glauca	1
+1344746	Chydorus	2
+1346959	Cucumariidae	1
+1347459	Crotophaga	1
+1349954	Carpocapsa	1
+1352255	Craterellus cornucopioides	1
+1353539	Cellariidae	1
+1353551	Campanula carpatica	3
+1354306	Cestoda	1
+1358660	Cilissa	2
+1362767	Chrysomela asparagi	1
+1362989	Callidium variabile	1
+1365524	Culicoides javanicus	1
+1367739	Cythereis	3
+1373675	Carius	1
+1375622	Cavea	3
+1376475	Cyclopina	1
+1379383	Catostomus commersonii	3
+1380560	Thorea	1
+1381354	Corynorhinus rafinesquii	1
+1381943	Cambarus uhleri	3
+1382387	Callimorpha	2
+1382458	Chriodorus	2
+1382625	Cerambyx bajulus	1
+1383855	Crinis	1
+1384049	Culex punctor	1
+1384942	Circulare	1
+1385098	Cladiella	1
+1385574	Chlorophyceae	1
+1385981	Clytie	2
+1386122	Coryphaena hippurus	1
+1389228	Ceratodus	1
+1391912	Cephalopoda	8
+1392199	Clethrionomys rutilus	1
+1402253	Mariposa	1
+1402386	Chirus	1
+1402918	Chelonia	8
+1402969	Chlamydococcus	1
+1404584	Cypselus apus	1
+1406023	Chrysomela populi	1
+1407112	Cynipidae	5
+1407399	Canis lupus	1
+1407412	Ceratothrix	1
+1410042	Choeronycteris mexicana	1
+1411689	Chelostoma	2
+1411962	Casinaria	1
+1413038	Catocala grynea	1
+1414977	Caligidae	1
+1418931	Caenis diminuta	2
+1421033	Cervus canadensis	1
+1423024	Cyclodus	4
+1424880	Chalicodoma	1
+1428797	Cantharis tumlongana	1
+1429299	Calochromus	1
+1429471	Capitellidae	1
+1430870	Calchas	1
+1435725	Chactidae	1
+1436684	Cynomys leucurus	1
+1442088	Corethra plumicornis	2
+1442241	Crispus	1
+1449558	Catenicella	1
+1453019	Crambus vulgivagellus	1
+1453199	Clupea sprattus	1
+1457755	Cymatophora caniplaga	1
+1458026	Ceriantharia	1
+1458094	Cucumaria	1
+1461264	Concilium	1
+1461973	Ciris	1
+1463635	Colossendeis	1
+1465335	Cudonia	2
+1465875	Crangonidae	1
+1468256	Chloroscombrus	1
+1470605	Chrysopa	2
+1478412	Clonorchis	1
+1480918	Pepo	1
+1481208	Crambus	4
+1488405	Corystes	1
+1488634	Conodon serrifer	1
+1489166	Celsus	4
+1490372	Chloromyxum	7
+1490951	Corixa mercenaria	1
+1495393	Chelidonaria urbica	1
+1503957	Cheylabis	1
+1504686	Clausilia bidentata	1
+1504909	Clavaria ligula	1
+1504913	Carangus hippos	1
+1506135	Raphanus	1
+1506281	Cetonia	3
+1509480	Coccyzus cinereus	2
+1510190	Callorhynchus	1
+1510522	Chrysogorgiidae	1
+1512048	Corvus corone	1
+1514603	Coenonympha pamphilus	1
+1518635	Cyclopodia similis	1
+1520435	Campodea	3
+1521449	Conchoecia	1
+1525773	Cyperus virens	1
+1527104	Callopora craticula	2
+1528377	Chirodiscus	4
+1530149	COMBE	2
+1531731	Maricopa	4
+1532804	Ceroplastes rusci	1
+1534390	Crossaster	1
+1534678	Cardium edule	1
+1537651	Copris	1
+1538226	Cerura	1
+1544060	Charta	1
+1546863	Coris julis	1
+1548102	Coluber natrix	1
+1548474	Cyprinus auratus	2
+1548779	Collius	1
+1552527	Cnidaria	4
+1553570	Carazziella calafia	1
+1556589	Crustacea	37
+1556776	Chrysomphalus ficus	1
+1560945	Larrea	1
+1562982	Cumacea	2
+1565448	Crassostrea virginica	16
+1565481	Cometes	2
+1565662	Chironomidae	2
+1567380	Coccyzus	2
+1567444	Calles	1
+1568927	Calamus arctifrons	1
+1569289	Caulobacter	2
+1570852	Cyclodostomia	1
+1574024	Coregonus	26
+1574482	Coluber	1
+1578294	Chalcididae	1
+1579140	Cecidomyia leguminicola	2
+1579283	Siliqua	1
+1581287	Chirurgus	1
+1584080	Coregonus hoyi	1
+1585973	Crangon	2
+1589303	Cryptorhynchus lapathi	1
+1590618	Cardium corbis	2
+1592404	Chionea araneoides	1
+1593837	Calopteryx splendens	1
+1594432	Centroptilum	1
+1597630	Trifolium	1
+1599705	Cerastes	1
+1600309	Campylochirus	2
+1601010	Coryne corrugata	1
+1604228	Chloromyxum leydigi	3
+1604870	Colias philodice	3
+1606588	Ceryle alcyon	2
+1608027	Cirratulus cirratus	1
+1608291	Clypeasteroida	1
+1608446	Smilax	1
+1608532	Ceratopogon	1
+1610717	Chlamys varia	1
+1612356	Conger vulgaris	4
+1618422	Cruoriopsis	2
+1618931	Caloptenus spretus	1
+1619942	Clivinia fossor	1
+1621950	Castoridae	1
+1627170	Cavernularia	5
+1627879	Cerura occidentalis	1
+1629064	Cicatricula	1
+1629913	Charma	12
+1630180	Circulum	3
+1631404	Cryptocephalus	1
+1633255	Carcharias lamiella	1
+1638122	Cleodora	1
+1638520	Cyaxares	1
+1639790	Cardiophorus	1
+1640677	Carausius morosus	2
+1642358	Crepidula	1
+1642971	Caloneura	1
+1647506	Claviger foveolatus	1
+1648506	Cambarus diogenes	1
+1648581	Caenis	6
+1649845	Clathrinidae	1
+1650763	Centrarchus hexacanthus	1
+1650853	Cillenus	1
+1651083	Coccidae	1
+1654515	Catocala crataegi	1
+1655416	Cerianthus	6
+1656568	Chirotonetes	4
+1656892	Caranx	3
+1657320	Caranx latus	1
+1658033	Coenosia	2
+1658133	Clivina fossor	1
+1658496	Vaucheria	1
+1659781	Callolongchaeus	1
+1661466	Callophyllis cristata	1
+1667926	Cryptotis parva	1
+1668509	Columba livia	1
+1669573	Coleoptera	15
+1670098	Cydippe	1
+1670244	Corynomma	1
+1672879	Choetopterus	2
+1674201	Coriacea	1
+1677915	Cerura borealis	2
+1679466	Crassostrea iredalei	1
+1683875	Copidoplana tripyla	1
+1684031	Clavaria fumosa	1
+1684653	Cardamine rhomboidea	1
+1685365	Choroterpes	2
+1687316	Cochlophora	2
+1687564	Cerostoma	1
+1689251	Chaunoteuthis	1
+1692985	Comys	1
+1694385	Cynomys parvidens	1
+1695285	Crassostrea gigas	12
+1697008	Cystophora cristata	1
+1697246	Celleporella hyalina	2
+1698073	Chalcis nigra	1
+1699647	Columellaia	1
+1702571	Chelostoma florisomne	1
+1705963	Coccidiascus legeri	1
+1710675	Cyprinodon	2
+1712448	Condylura cristata	1
+1712598	Collozoum	1
+1715877	Campanella	1
+1718063	Crocodilia	4
+1718394	Clavaria pistillaris	1
+1719230	Cicadomyces	1
+1722058	Cricotopus trifasciatus	2
+1727669	Colinus	1
+1727943	Culex equinus	1
+1729171	Cantharellus aurantiacus	1
+1729640	Coregonus albula	1
+1731941	Cychrus rostratus	2
+1737002	Craspedotella	1
+1737884	Cuneus	2
+1738363	Copepoda	4
+1743294	Carassius auratus	1
+1747596	Cypridina hilgendorfii	4
+1747878	Coelenterata	5
+1749493	Caprella laeviuscula	1
+1749775	Columba palumbus	1
+1750936	Clinostomus funduloides	1
+1754014	Cetacea	13
+1757115	Cyrtophium	1
+1757501	Chrysomelidae	2
+1758605	Catocala nebraskae	1
+1758901	Campylaspis rubicunda	1
+1761402	Cicindelidae	1
+1764017	Colinus virginianus insulanus	1
+1765803	Chortophila	1
+1766085	Careliopsis	2
+1767925	Clupea tyrannus	1
+1769588	Chironomus cayugae	1
+1769631	Chiroptera	1
+1770251	Coccidomyces dactylopii	1
+1771303	Chocorua	1
+1774439	Cyathura munda	1
+1774767	Clupea caspia	1
+1779062	Calantica	1
+1779968	Cheilostomata	1
+1785844	Caecianiropsis psammophila	2
+1788815	Chrysophanus	1
+1790123	Chionoecetes	2
+1790406	Clitocybe tumulosa	1
+1791548	Deilinia glomeraria	1
+1791887	Diospyros	1
+1792467	Delphinoidea	1
+1793200	Diptera	9
+1794125	Dianthus	1
+1794590	Decticus	1
+1795017	Diastrophus	1
+1795126	Depressaria ciliella	1
+1798038	Danus	2
+1798607	Dipodomys merriami	1
+1798812	Desmodium	1
+1799695	Discopleura capillacea	2
+1799722	Dracaena	1
+1800061	Dendrophyllia	1
+1800911	Doliolum	1
+1803612	Doryphora	1
+1804027	Diraphia maculipennis	1
+1806938	Dermanyssus	4
+1807303	Diphyes	2
+1807737	Dromiidae	1
+1807892	Decapoda	4
+1810760	Danais	6
+1812616	Dexidae	1
+1812678	Dinophilus	1
+1813437	Drusus	13
+1813485	Dicrocoelium	1
+1813626	Didymium	1
+1814112	Diastropha	1
+1814466	Distaplia smithi	1
+1814974	Draparnaldia	3
+1815473	Doroixys	1
+1817598	Dentalium vulgare	1
+1817790	DEBILIS	1
+1818324	Deilinia	1
+1820944	Zacatecas	8
+1821034	Dipodomys ordii	1
+1821083	Delphis	1
+1822161	Dipodomys heermanni	1
+1823557	Depressaria emeritella	1
+1826581	Delphinidae	1
+1829171	Dipylidium	1
+1829948	Dicrostonyx exsul	1
+1832881	Dorosoma cepedianum	1
+1833444	Dendrophylliidae	1
+1833961	Delphinapterus leucas	1
+1834192	Dipodomys venustus	1
+1837063	Dectes	1
+1839773	Limnobium	1
+1840117	Doryodes	1
+1840500	Ditrachyceros	1
+1841397	Dasypodidae	1
+1841695	Dermocystidium	2
+1842019	Dasypoda	2
+1843291	Dama virginiana	1
+1843332	Diplax striolata	1
+1849776	Diabrotica longicornis	1
+1852196	Diabrotica	1
+1852948	Dipodomys nitratoides	1
+1854917	Dianea	1
+1858082	Desmosomatidae	1
+1859876	Depressaria nervosa	1
+1863120	Dulzura	1
+1866167	Demetrias	1
+1866279	Distylia rugosa	1
+1868246	Dortmanna	1
+1868666	Dendrodoa subpedunculata	1
+1876788	Discorbidae	1
+1877714	Dermatium	1
+1878063	Dictyoptilus	1
+1878989	Depressaria	1
+1880526	Diplophos	1
+1884807	Dermoglyphus elongatus	1
+1885060	Daphnia	3
+1889738	Diopatra	1
+1891652	Diplogonoporus	1
+1893939	Digitus	1
+1894320	Depressaria georgiella	1
+1894711	Docophorus	2
+1896321	Decatoma	3
+1897004	Dermoglyphus	1
+1897185	Dasaratha	2
+1898775	Diplodus	1
+1899201	Dendrogaster arctica	1
+1899238	Dyschirius	1
+1899284	Doliella	2
+1900665	Dejoces	1
+1902764	Dicynodon	1
+1905935	Diacrotricha	1
+1906010	Dexia rustica	1
+1907425	Delphinus bairdii	1
+1908421	Diomedes	1
+1908555	Distoma	2
+1909769	Dineutus emarginatus	1
+1911020	Donacia	4
+1911032	Doules	1
+1916785	Drasteria	1
+1918623	Dasytes	5
+1918843	Dendrodoa tuberculata	1
+1921412	Dipodomys elephantinus	1
+1921770	Dipnoi	1
+1922531	Diplandros singularis	1
+1923472	Drilonereis nuda	1
+1927581	Dendrochirotida	1
+1931627	Depressaria atrodorsella	1
+1932259	Depressaria posticella	1
+1932979	Dicrostonyx hudsonius	1
+1933026	Dupo	1
+1935404	Disopus	1
+1939106	Dorsalis	8
+1939674	Decarthron formiceti	1
+1939783	Dasypterus	1
+1943122	Devonia	1
+1944716	Dacentrus	1
+1945233	Didelphis marsupialis	1
+1945460	Depressaria sabulella	1
+1950089	Dipodomys panamintinus	1
+1950790	Ditrema atripes	1
+1952333	Dentalium	2
+1953628	Desmids	2
+1954868	Doropygus	2
+1955345	Dajaca	1
+1956117	Delphinus delphis	1
+1958112	Discobasis	1
+1959320	Dulichium spathaceum	1
+1960152	Drilus	1
+1961829	Diastylis cornuta	1
+1967292	Fontinalis	1
+1967585	Discorbis	1
+1967722	Dipodomys deserti	1
+1968956	Dermocystidium marinum	1
+1969311	Dermacentor	1
+1972977	Molle	1
+1973901	Dasychira	1
+1974807	Diplopsalis	1
+1974843	Dipodomys ingens	1
+1974886	Dasypus novemcinctus	2
+1975552	Didelphidae	1
+1975733	Dendrogaster	2
+1978911	Distorta	1
+1979627	Dryomyza pallida	1
+1981131	Dictyoneuridae	1
+1982192	Dryomyza	1
+1982355	Dipodomys microps	1
+1982895	Daldorfia	1
+1983294	Dicrostonyx groenlandicus	1
+1984056	Diastylis abbreviata	1
+1984975	Dioctria	1
+1986550	Dipodomys	4
+1987033	Diraphia	1
+1988703	Dunkeria	2
+1990767	Dipodomys stephensi	1
+1991232	Diplopoda	1
+1992663	Dyticus	1
+1992849	Dasybranchus glabrus	1
+1993340	Dufouri	1
+1997235	Dendrobium micholitzii	1
+1997520	Disciadidae	1
+2000312	Dictyocicada	1
+2000949	Deleatidium	2
+2001320	Dipodomys elator	2
+2002372	Dilutus	1
+2007791	Dendrogaster arbusculus	1
+2007962	Deimatidae	1
+2015382	Dipodomys agilis	1
+2016245	Dicranota	1
+2018865	Dichirotrichus	1
+2020505	Dermestes	1
+2024442	Dromius	3
+2025265	Dendrogastridae	1
+2025613	Donaciinae	1
+2025643	Davainea	1
+2027522	Depressaria argillacea	1
+2033470	Dorvilleidae	2
+2034657	Dermestes lardarius	1
+2036028	Eryngium	1
+2036233	Epimedium	1
+2039813	Elaphomyces	2
+2040243	Exogone gemmifera	1
+2042198	Empis geniculata	1
+2043605	Euryalida	1
+2044634	Elodea canadensis	2
+2045064	Epidendrum anceps	1
+2046439	Eleocharis tenuis	1
+2046895	Eleocharis	1
+2047199	Eulimella	3
+2047694	Scirpus	4
+2047955	Eupomotis	1
+2048429	Erebia glacialis	1
+2048780	Elacate	2
+2049936	Ectoprocta	1
+2053540	Eudorina	1
+2054833	Eudryas	1
+2055026	Elius	1
+2057071	Eleocharis simplex	1
+2058326	Echenais	1
+2058394	Eschrichtidae	1
+2058535	Echinodorus rostratus	1
+2059164	Eumenes pomiformis	2
+2059316	Eumenes	2
+2059594	Elegia	2
+2064440	Eunicida	1
+2065544	Eutamias quadrivittatus	1
+2067890	Epeorus	1
+2068688	Equus	2
+2070187	Echinus	2
+2071386	Encope	1
+2073448	Elephas	3
+2075275	Escherichia coli	2
+2076157	Erichsoni	2
+2077018	Eristalis	1
+2078759	Eleocharis compressa	2
+2079336	Enterognathus	1
+2081299	Elphidium	2
+2081869	Epidendrum oaxacanum	1
+2082822	Ephemerella	4
+2085408	Ephemeropsis	3
+2087218	Epidermoptes	1
+2087372	Echinoidea	3
+2089379	Eleocharis olivacea	1
+2092685	Elodes	1
+2092831	Euphrosine	1
+2092948	Escalera	1
+2098134	Elaphrus	1
+2099129	Eutamias ruficaudus	1
+2099325	Ehlersia	1
+2100547	Eleocharis equisetoides	1
+2100716	Lasiocampa	2
+2100725	Eccoptogaster rugulosus	1
+2102075	Ecdicius	3
+2105001	Ebaeus	1
+2105780	Eutamias quadrimaculatus	1
+2106200	Euryzonus	4
+2110128	Eustathia	1
+2114815	Esox	7
+2114857	Eleocharis intermedia	1
+2115517	Echinodorus parvulus	2
+2115568	Eristalis tenax	1
+2116666	Epinephelus	1
+2116911	Euryleptidae	1
+2116996	Euphrosinidae	2
+2117139	Eutamias speciosus	1
+2117241	Echidna	7
+2120220	Eleocharis acicularis	1
+2120433	Eutamias panamintinus	1
+2122529	Eucarida	1
+2124592	Eunoe spinulosa	1
+2125031	Exogone	7
+2125441	Eutamias palmeri	1
+2126333	Euryalidae	1
+2126394	Elongatus	4
+2126922	Elodiamea	2
+2127270	Ennius	1
+2129684	Encope ecuadorensis	1
+2130331	Eudistoma diaphanes	1
+2130859	Empis luctuosa	2
+2133900	Eptesicus fuscus	1
+2135223	Echiniscus kofordi	1
+2135561	Euplotes patella	1
+2137131	Eucera	1
+2137207	Eragrostis reptans	1
+2138342	Erycinidae	1
+2139844	Echiuroinea	1
+2144036	Eunice viridis	1
+2144916	Eccoptogaster	1
+2145080	Euphausiacea	1
+2146304	Elpidiidae	1
+2146419	Endropia	1
+2146990	Eustoma	1
+2147346	Eurytoma	1
+2147598	Eltaninactis	1
+2148186	Edentata	6
+2148250	Enoploteuthis	1
+2152241	Eleocharis microcarpa	1
+2152715	Eolis	1
+2153055	Eupleura	1
+2155557	Elasipodida	1
+2156002	Euglena	1
+2157064	Eupomotis gibbosus	2
+2157722	Evalea elegans	1
+2159252	Ephydridae	2
+2159315	Empidonax fulvifrons fusciceps	1
+2164498	Erethizon dorsatum	1
+2164658	Eudistoma psammion	1
+2167666	Erethizontidae	1
+2169127	Eleocharis palustris	1
+2170092	Eutamias sonomae	1
+2171496	Esox lucius	2
+2172183	Eubalaena glacialis	1
+2172438	Eleocharis melanocarpa	2
+2173138	Eudamus	2
+2173546	Echinodermata	14
+2175120	Elasmobranchii	1
+2175372	Ereutho	4
+2176333	Epinephelus morio	1
+2176871	Eumetopias jubata	1
+2177098	Eutamias merriami	1
+2177178	Eumops perotis	1
+2177458	Epinephele	1
+2178358	Eunoe nodosa	1
+2179667	Exigua	1
+2180040	Elphidiidae	1
+2180139	Laminaria	47
+2182002	Eutamias	1
+2185205	Echiuridae	1
+2185322	Enhydra lutris	1
+2187231	Eacles imperialis	1
+2188300	Eustoma andrewsii	2
+2188579	Eutima	1
+2190763	Exuperius	1
+2190781	Eucleoteuthis	1
+2191886	Ephippus	1
+2191912	Eurycypris pubera	1
+2192912	Engraulis encrasicholus	1
+2193651	Epizeuxis lubricalis	1
+2194859	Erignathus barbatus	1
+2195817	Enterocola pterophora	3
+2197557	Euclymeninae	1
+2199226	Eucrangonyx	1
+2199676	Euthelepus	2
+2200152	Elodia	1
+2200825	Euproctis chrysorrhea	1
+2204870	Eumetazoa	1
+2205102	Euphasia	1
+2207572	Eacles	1
+2208144	Euchone incolor	1
+2209322	Exogyra	1
+2210104	Eutamias minimus	1
+2210830	Echiura	1
+2210853	Euprymna	1
+2214000	Erigeron macranthus	1
+2219655	Eschrichtius gibbosus	1
+2219761	Eulimella tenuis	1
+2219891	Etheostoma	1
+2221566	Eutamias dorsalis	1
+2222013	Exogone hebes	5
+2229221	Entozoon	1
+2231721	Eurymedusa	1
+2236426	Euryala	1
+2239692	Errinopora zarhyncha	1
+2239782	Epeolus	1
+2241145	Eunicidae	2
+2241691	Eutamias amoenus	1
+2243670	Ecdyurus	2
+2251166	Ebalia jordani	1
+2255081	Euceratia	1
+2258249	Evalina	2
+2261248	Eleocharis rostellata	1
+2261414	Eumops underwoodi	1
+2261676	Echiniscus cavagnaroi	1
+2264607	Euthynnus	1
+2267044	Eurylepta aurantiaca	1
+2267280	Eupithecia absinthiata	1
+2267542	Eunice biannulata	1
+2271624	Eurycopidae	1
+2271626	Ephyra	1
+2273675	Epizeuxis	1
+2275390	Eryngium virginianum	1
+2275854	Erichsonella	1
+2276385	Euderma maculatum	1
+2276530	Echinoderes	1
+2277836	Epidendrum strobiliferum	1
+2279901	Exogone verugera	1
+2281481	Euproctis	1
+2283096	Egila	2
+2284063	Malus	1
+2284155	Ectobia	1
+2284428	Eccoptogaster multistriatus	1
+2284474	Echinococcus	1
+2284658	Eutamias umbrinus	1
+2288653	Engraulis	2
+2288959	Enterocola	7
+2290429	Empis	3
+2291107	Elops saurus	2
+2292266	Eunice pennata	1
+2292937	Evalea	2
+2294840	Encyrtinae	1
+2295912	Etheostoma iowae	1
+2297065	Elianus	1
+2297539	Euphranor	1
+2304100	Euchalarodus putnami	1
+2305066	Eupista	5
+2308486	Entoprocta	1
+2309462	Ephemeridae	1
+2309806	Euchone	1
+2311237	Echinorhynchus	2
+2316840	Enterobacter	2
+2317495	Egnatius	1
+2320607	Entobius	1
+2323472	Fritillaria	1
+2323755	Fasciola	1
+2324803	Ficus indica	1
+2325493	Fucus serratus	1
+2326218	Fistulina	4
+2327072	Fabricii	1
+2327464	Franseria	1
+2327569	Felis pardalis	1
+2327653	Fescenninus	1
+2329282	Feresa occulta	1
+2329759	Fibulariidae	1
+2330966	Flammula	4
+2332498	Flustridae	1
+2333081	Flavius	1
+2335033	Frondicularia gigas	1
+2335813	Firola	1
+2342005	Fruva	1
+2342321	Felis wiedii	1
+2342959	Fulgorina	1
+2343327	Formica rufa	2
+2344686	Folius	1
+2345002	Formica nigra	1
+2347963	Flabelligera commensalis	1
+2348979	Fungiidae	1
+2351169	Fringilla	1
+2352002	Fontenellus	1
+2352275	Fulgentius	1
+2353281	Formica fusca	1
+2355391	Ficus religiosa	3
+2355619	Fistularia serrata	2
+2363728	Pyrosoma	9
+2365822	Flagellata	4
+2367345	Felidae	1
+2367780	Felis concolor	1
+2367969	Fredericella	2
+2369223	Fistularia tabaccaria	1
+2371009	Folinella	2
+2372081	Fuirena squarrosa	2
+2374873	Fragilis	2
+2379068	Fistularia	1
+2381302	Foraminiferida	1
+2385133	Fera	1
+2385466	Forficula	1
+2390167	Fridericia	1
+2398663	Fundulus heteroclitus	2
+2399930	Furca	1
+2400622	Falculifer	1
+2404065	Flustra	1
+2410009	Flabellidae	1
+2410590	Flabelligera	1
+2413912	Fescennia	1
+2416597	Frenzelina	1
+2416728	Fabrecia	1
+2416908	Freyana	1
+2417317	Formica sanguinea	1
+2420408	Felis yagouaroundi	1
+2421915	Fausta	1
+2422411	Favettea	2
+2422789	Filograna	3
+2424900	Flabelligeridae	2
+2426733	Flabelligerida	1
+2429744	Foraminifera	8
+2432577	Felis onca	1
+2432618	Funicularia	1
+2437061	Forestus	1
+2437800	Fulgur	1
+2440721	Flavobacterium	1
+2442262	Fasciolopsis	1
+2444224	Primus	8
+2444780	Formica cinerea	1
+2444848	Fayoliella	1
+2446024	Fario	2
+2447127	Filograna implexa	4
+2450588	Fundulus	10
+2452520	Gelatina	1
+2453162	Gobius niger	4
+2454343	Gerardia	2
+2455762	Gigartina	2
+2456677	Gobius elongatus	3
+2457128	Gnathophausia	2
+2457454	Gratiola	1
+2458148	Gela	2
+2459617	Gaurotes cyanipennis	1
+2460611	Geaster	2
+2461167	Geum	3
+2461691	Gallus	6
+2465031	Ganga	12
+2466391	Gomphidius	6
+2466770	Gyrodactylus	2
+2467399	Gorilla	4
+2467881	Gobiesox rhessodon	1
+2467892	Gerardia purpurea	3
+2470055	Goe	1
+2470645	Glaucomys sabrinus	1
+2470772	Gleditschia triacanthos	1
+2471386	Geomys arenarius	1
+2475020	Gasteropoda	5
+2475027	Gastrotricha	1
+2475141	Geometra	1
+2475463	Gaura	1
+2475752	Garreta	7
+2476123	Glyceria canadensis	2
+2481250	Geophilus	1
+2481701	Galenus	12
+2483114	Gobius paganellus	1
+2484778	Pinus	2
+2487611	Gymnodinium	1
+2488446	Gracilis	1
+2489067	Gorgonia	1
+2490902	Geomys cumberlandius	1
+2492086	Gordiacea	3
+2492191	Solidago	3
+2492998	Graphiphora	3
+2493869	Sarcoptes	1
+2495658	Passiflora	1
+2496376	Gelechia maculimarginella	1
+2496721	Gerres gula	1
+2497054	Galiteuthis	1
+2498651	Indica	1
+2500248	Gastrodelphys	2
+2502061	Gyrostachys simplex	3
+2504578	Gerres cinereus	1
+2506472	Gigantorhynchus	1
+2508654	Globosa	1
+2509751	Gammarus	3
+2510072	Goniodes	4
+2512010	Gigas	1
+2512303	Gazzetta	1
+2513730	Glandina	2
+2515131	Gyropus	1
+2516041	Geomys fontanelus	1
+2519268	Gulo luscus	1
+2520814	Garrulus glandarius	1
+2521367	Getes	3
+2522376	Glossina	1
+2526205	Galium aparine	1
+2527276	Gobius ferrugineus	1
+2527551	Goniocotes	1
+2527692	Gloriosa	2
+2529909	Gobius pictus	1
+2529959	Gobius quagga	2
+2530379	Gonyaulax catenella	1
+2530429	Goniodes dissimilis	1
+2531329	Gadus morhua	1
+2534972	Gadus morrhua	3
+2538722	Gadus pollachius	1
+2538880	Helvella	2
+2542102	Galgacus	1
+2542476	Gonyaulax	1
+2542545	Gryphaea angulata	1
+2543644	Gongylus	1
+2544727	Gadus australis	1
+2544769	Gennadius	1
+2545044	Gobius	5
+2545306	Gemmiger	2
+2545860	Gilsonia	1
+2547250	Geryonia	1
+2547394	Gonorhynchus greyi	1
+2547484	Gloiosiphonia	2
+2547793	Gryllacris	1
+2547886	Grossa	2
+2549059	Glyphipteryx impigritella	1
+2550998	Genypterus blacodes	2
+2552691	Geomys personatus	1
+2553190	Geum flavum	1
+2553913	Gobius jozo	1
+2553955	Gymnolaemata	1
+2555356	Gelechia	5
+2555653	Gobius minutus	5
+2557141	Goregonus	1
+2558277	Gracilaria	2
+2559015	Gasteromycetes	1
+2559288	Geomys pinetis	1
+2559334	Glyptocephalus cynoglossus	1
+2559423	Glaucothoe	1
+2560453	Glugeidae	2
+2560657	Glyptocephalus	2
+2562014	Gastrodiscus	1
+2562284	Geum album	1
+2562446	Grampidelphis griseus	1
+2564374	Gyrinus	3
+2564412	Gibbula	1
+2567999	Geomys colonus	1
+2572047	Gastrophysema	1
+2575132	Gobiosoma ios	1
+2576158	Globicephala macrorhyncha	1
+2576390	Glugea heraldi	2
+2579096	Gomphidius viscidus	2
+2579805	Gobius depressus	1
+2579878	Gorgone	1
+2581923	Gadus virens	3
+2582513	Gellius	1
+2585420	Glugea	2
+2586426	Gorgonacea	1
+2593457	Golfingiidae	1
+2594066	Globicephala melaena	1
+2595509	Gnophos sordaria	1
+2595527	Geomys bursarius	1
+2595965	Glaucomys volans	1
+2596413	Glycimeris	2
+2598002	Grystes	3
+2598070	Gerres	1
+2599399	Galathowenia	1
+2599598	Galaxias fasciatus	1
+2601468	Gyromitra	4
+2601552	Gambusia	10
+2604165	Gabucinia delibata	1
+2606466	Geomyidae	1
+2607826	Gastrostomum	2
+2608923	Gallus gallus	2
+2613835	Gadus cimbrius	1
+2614274	Gyromitra gigas	2
+2615458	Gymnospermae	1
+2615900	Glyphipteryx	1
+2617991	Gelechia formosella	1
+2618552	Gregarina	4
+2622157	Gabucinia	2
+2622565	Glossina palpalis	1
+2623403	Gadus	2
+2623862	Gephyrea	1
+2624596	Galeria	1
+2626014	Gunenotophorus	1
+2626172	Gambusia affinis	7
+2626436	Galathowenia oculata	1
+2628512	Gobius microps	1
+2630435	Granuloreticulosa	1
+2630504	Pandorina	2
+2633536	Gibbula magus	1
+2642039	Gadidae	2
+2642152	Globicephala scammonii	1
+2649375	Melampyrum	1
+2652177	Habenaria	1
+2654217	Haliclonidae	1
+2654388	Heterocera	4
+2655075	Hygrophorus agathosmus	2
+2656075	Hartingia	1
+2657686	Hebes	1
+2657975	Hypholoma fasciculare	1
+2658099	Helicopsyche	1
+2659089	Holothuria hawaiiensis	1
+2659198	Hylobates	1
+2659321	Harpe	8
+2660276	Hyacinthus	1
+2660371	Hadrurus arizonensis pallidus	10
+2660699	Helia	1
+2660880	Ursus	1
+2661064	Liparis	1
+2661619	Halichoerus grypus	1
+2661991	Hyetodesia	1
+2665457	Hyblaea puera	1
+2665903	Hadena perpenoa	1
+2666836	Heteropoda	2
+2667286	Hesionidae	1
+2671435	Hanneton	4
+2673889	Holosteum	1
+2674541	Halichondriidae	1
+2674931	Hydnum imbricatum	2
+2677166	Hydrochus	1
+2677365	Habenaria viridis	1
+2678522	Holacanthus ciliaris	1
+2679133	Hydrotea	1
+2679735	Hyris	1
+2681847	Helvella lacunosa	1
+2683719	Heriades	1
+2684033	Hydrocotyle umbellata	1
+2684354	Holothuria	2
+2686466	Hemiptera	3
+2688534	Hydnum	8
+2690103	Hylesinus fraxini	2
+2691010	Hippodamia	1
+2694734	Herophilus	3
+2695417	Hoplophorus	1
+2695732	Hippocampus antiquorum	2
+2696343	Hippocampus erectus	2
+2696542	Hygrophorus	4
+2698145	Haliclona	2
+2698591	Odontura	1
+2699738	Hadrurus hirsutus	22
+2700665	Haliotis rufescens	1
+2701210	Heliothis armigera	1
+2701671	Hygrophorus conicus	1
+2701685	Hemiura	3
+2704740	Haplotaxida	1
+2704792	Hymenomycetes	1
+2708065	Homaloptera	1
+2708613	Heliozoa	1
+2709539	Holocentrum	1
+2710244	Hadrurus obscurus	13
+2710299	Heliodines extraneella	1
+2712192	Habrosyne scripta	2
+2716233	Heteropsorus	1
+2716711	Hyantis	1
+2720126	Haplo	5
+2721523	Hadrurus concolorous	13
+2723599	Hydnum coralloides	2
+2724542	Helicidae	1
+2725334	Heterandria formosa	1
+2725508	Hydrophilus triangularis	1
+2728253	Hydrallmannia	1
+2731255	Hemirhamphus balao	1
+2732083	Heteranthera	3
+2732828	Hirudo medicinalis	1
+2733554	Hexagenia	1
+2733961	Hippoglossoides exilis	1
+2734114	Hydrocotyle repanda	1
+2734393	Hexactinellida	1
+2738392	Hyperoodon bidens	2
+2738419	Haltica	4
+2740282	Hyperalges	2
+2740520	Habenaria chlorantha	1
+2745015	Heliophila oxygala	1
+2747337	Haplostoma	2
+2752358	Homoioptera	1
+2754766	Hyperoodon ampullatus	1
+2760230	Hippasteria	1
+2760589	Hoplia	2
+2762855	Histiophorus	4
+2762985	Hydrophoria	1
+2763082	Helie	1
+2763555	Holothuriidae	1
+2763670	Hygrophorus chlorophanus	1
+2763690	Heteranthera limosa	2
+2764283	Hydrophilus	2
+2768958	Hadrurus spadix	12
+2769289	Haliotis cracherodii	2
+2769719	Haliotis	3
+2770314	Haplostoma banyulensis	2
+2771245	Homoptera	2
+2773589	Hottonia	1
+2774665	Hebeloma crustuliniforme	1
+2774774	Henricus	7
+2775088	Henneguya	1
+2776007	Hippobosca	3
+2776570	Hadrurus arizonensis arizonensis	9
+2777320	Hemaris	1
+2778249	Hippasteria phrygiana	1
+2779448	Hippoglossus vulgaris	1
+2781129	Hibernica	1
+2783130	Hypholoma capnoides	1
+2784863	Heliodines	1
+2786953	Homarus	1
+2788602	Haloporphyrus viola	1
+2789030	Homalomyia	1
+2789881	Hirudinea	1
+2790455	Hadrurus	40
+2791448	Hydrocotyle ranunculoides	1
+2792762	Hyphantria textor	2
+2798526	Hippa	2
+2798774	Hemialges	2
+2799809	Heliconius	1
+2799876	Halictoides	2
+2801019	Heterocarpus	1
+2801026	Heptagenia	1
+2808701	Heteranthera reniformis	2
+2811039	Halicmetus	1
+2812844	Halichondrida	1
+2814656	Haplosporidiidae	3
+2815868	Hydroid	2
+2816954	Heteromeyenia	1
+2817712	Halys	1
+2818536	Harpalus	4
+2819771	Hucho	1
+2828872	Hydrozoa	10
+2830200	Haematopota	1
+2831484	Henricia sanguinolenta	1
+2832377	Hydrocotyle interrupta	1
+2834800	Hydracarina	1
+2837771	Hepialus virescens	1
+2838782	Haliotis tuberculata	1
+2840624	Heteromyidae	1
+2842008	Hexanchus	1
+2842333	Hymenoptera	6
+2842879	Heurnius	1
+2845662	Hyparpax aurora	1
+2845687	Hadrurus aztecus	11
+2846437	Habrophlebia	2
+2846775	Hippolytidae	1
+2849049	Hydrellia	3
+2851887	Hemirhamphus	1
+2852376	Hippoglossoides elassodon	1
+2853067	Hyphasis	1
+2855018	Heteroteuthis	2
+2856482	Holothuroidea	2
+2858467	Hauchiella	3
+2858982	Hydrocampa	2
+2859971	Heptacarpus pugettensis	2
+2864699	Halidaya	1
+2864970	Heterophenacia	1
+2866883	Hylemyia	2
+2867801	Heliastes	14
+2869456	Hylesinus	1
+2872897	Halictus	4
+2877230	Hippobosca equina	2
+2878105	Hippobosca maculata	1
+2878755	Homaloneura	1
+2879589	Hadrurus pinteri	11
+2882633	Heptageniini	3
+2882651	Hydroida	3
+2883528	Hemerobius	1
+2884401	Hylobius abietis	1
+2885068	Hymedesmia	1
+2887235	Halichondria panicea	1
+2887565	Haldra	2
+2889368	Halocypris	1
+2890188	Henricia	3
+2892473	Hadrurus arizonensis	11
+2895386	Helvella infula	1
+2895488	Hercyna	1
+2896546	Heterostropha	1
+2901859	Heteranthera dubia	1
+2908512	Heterophyes	1
+2910655	Homarus americanus	5
+2911736	Haplomylomys	7
+2912271	Hensenioteuthis	1
+2917935	Hypholoma velutinum	1
+2918174	Halicore	1
+2919580	Hyrax	5
+2919944	Haplosporida	4
+2921678	Habrosyne	1
+2921914	Hibernicus	1
+2924939	Hypena scabra	2
+2928870	Histioteuthis	1
+2931355	Heliophila farcta	1
+2932459	Ilysanthes gratioloides	1
+2932749	INSECTA	8
+2933225	Ijima	2
+2933545	Indicus	1
+2935575	Isse	1
+2937392	Ividia	1
+2938305	Inium	1
+2942026	Ixodes	2
+2942545	Isochrysis galbana	1
+2946704	Ignota	1
+2948142	Isatis tinctoria	1
+2948284	Icosteus	1
+2948606	Isanthidae	1
+2949127	Itini	1
+2949700	Ichthyocolla	1
+2952162	Ija	1
+2952475	Iguana tuberculata	1
+2954384	Idas	1
+2955672	Isesthes	1
+2955676	Iguana	1
+2956114	Ibla	2
+2956747	Idoteidae	1
+2959121	Idmidronea	6
+2962686	Iphiana	2
+2967548	Idmidronea atlantica	7
+2967639	Invertebrata	5
+2969904	Idionycteris phyllotis	1
+2971949	Ioglossus	1
+2980536	Infinita	1
+2981746	Ichthyococcus	1
+2982009	Illex illecebrosus	1
+2983030	Ivara	2
+2983097	Imogine	1
+2983724	Idiacanthus	1
+2984417	Idolocoris	1
+2984525	Inachus	2
+2987639	Idotea	2
+2987837	Ivania	1
+2988341	Isistius	1
+2993034	Incus	1
+2994619	Isopoda	8
+2995964	Idmonea	1
+2996385	Iridogorgia bella	1
+2997192	Khasia	1
+2999586	Icaria guttatipennis	1
+3002551	Insectivora	6
+3002891	Ingrassia	1
+3003815	Isia	1
+3005984	Rhizomorpha	1
+3007899	Junonia coenia	1
+3009572	Jornandes	1
+3009751	Toluca	1
+3010430	Jussiaea decurrens	1
+3010661	Jasmineira	1
+3012186	Janira alta	1
+3014170	Jezabel	2
+3014189	Jno	3
+3015806	Jolya	3
+3016196	Jaeropsis dubia	1
+3016513	Janiralata davisi	1
+3019819	Jambolana	1
+3020060	Japyx	1
+3027160	Joubertia	1
+3028163	Jordaniella	2
+3035812	Krameria	1
+3036116	Kogia goodei	3
+3036443	Tradescantia	1
+3039667	Phaseolus	1
+3039707	Klephtes	1
+3041997	Kogia breviceps	1
+3043048	Kophene	3
+3046162	Kramerella	2
+3047203	Kinorhyncha	1
+3047236	Keratoisis	2
+3048311	Kallima	2
+3050925	Kogiidae	1
+3054754	Kalpa	1
+3055592	Mulleri	1
+3061047	Lactarius turpis	1
+3061115	Licinus	1
+3061298	Laminaria ochroleuca	2
+3061384	Laminaria hyperborea	2
+3061815	Lobelia paludosa	1
+3062606	Lumbricus	1
+3065093	Lycodes	1
+3068951	Lacinia	1
+3070189	Lithoglyptidae	1
+3071224	Lepidopus caudatus	2
+3071988	Limosella	1
+3072296	Leptostylis	1
+3072698	Leptoplanidae	1
+3073230	Leersia	1
+3074219	Livoneca sinuata	1
+3074544	Lepra	1
+3074646	Lactarius flexuosus	1
+3075419	Lotus corniculatus	1
+3076183	Lemna trisulca	2
+3077267	Libythea	1
+3077361	Laminaria digitata	6
+3077601	Lutra canadensis	1
+3077853	Leuckartia	1
+3078072	Lithocolletis	2
+3079517	Lemna minor	1
+3079832	Lepus californicus	1
+3079859	Lepus othus	1
+3081007	Lacertilia	5
+3081190	Lactarius vellereus	1
+3081517	Lasius fuliginosus	1
+3081540	Leptura livida	1
+3081723	Littorina rudis	1
+3082956	Lethrus cephalotes	1
+3085034	Lepus alleni	1
+3087264	Lepidium sativum	1
+3087806	Liber	3
+3088190	Lactarius deliciosus	1
+3088245	Lympha	2
+3089235	Leucania	1
+3089309	Lionychus	1
+3091617	Laurentius	2
+3091700	Lebia grandis	2
+3092426	Labiatae	1
+3092823	Leptonycteris nivalis	1
+3093800	Lycopus	1
+3095284	Lytta	1
+3095582	Luciola	5
+3096011	Laxe	1
+3096111	Ligula	1
+3099007	Lamium amplexicaule	1
+3099860	Lunatia lewisii	1
+3102792	Lamium	1
+3102811	Lysidice	2
+3103340	Leachia	1
+3103509	Laminaria saccharina	1
+3105047	Lactarius subdulcis	1
+3105441	Lepus gaillardi	1
+3106236	Lychnocanium	1
+3108531	Micranthemum	1
+3110139	Listriolobus pelodes	1
+3110141	Lathyrus palustris	2
+3110754	Levana	4
+3111429	Lymnaea columella	4
+3115549	Laminaria longicruris	5
+3115781	Lampadioteuthis	1
+3117982	Lotella	4
+3118255	Lepralia americana	2
+3118752	Lemanea	2
+3119209	Littorina scutulata	1
+3119403	Lymnaea modicella	1
+3120278	Leptina ophthalmica	1
+3120948	Limneus	3
+3121453	Limenitis arthemis	2
+3122100	Lepomis	1
+3124056	Liparis elata	1
+3124906	Lemmus nigripes	1
+3125842	Lepidopus	1
+3127412	Lactarius	5
+3131671	Lucanus dama	1
+3132385	Lasionycteris noctivagans	1
+3132916	Lathyrus odoratus	2
+3136991	Lunatia	1
+3137008	Lepiota procera	1
+3137887	Lymneus	3
+3141021	Lycodopsis	1
+3142211	Lepiota granulosa	1
+3143585	Laminariales	1
+3143801	Lemna polyrrhiza	2
+3145152	Leptophlebia	2
+3146703	Lopholatilus	1
+3147017	Ludwigia	1
+3147360	Lagophylla	1
+3147683	Leipomeles lamellaria	1
+3151121	Lymantria dispar	4
+3151164	Lepidoptera	17
+3151813	Locellina	1
+3153120	Leius	1
+3155035	Labienus	1
+3157186	Luciola italica	2
+3158029	Lafoeidae	1
+3163763	Lasiurus seminolus	1
+3166508	Lithothamnion	8
+3168183	Lycoperdon caelatum	1
+3171164	Lancella	2
+3171474	Limax	1
+3173087	Lamproptilia	1
+3174537	Ludwigia palustris	3
+3174653	Limnobia xanthoptera	1
+3175361	Lithospermum albicans	1
+3176847	Lactarius volemus	1
+3181176	Lipeurus	3
+3181236	Leucanthiza	1
+3181958	Lobelia dortmanna	1
+3183703	Libanius	4
+3183987	Lepus insonus	1
+3186573	Lactarius torminosus	1
+3188746	Latris hecateia	1
+3191427	Lumara	2
+3192035	Laconia	1
+3193471	Leptoplana acticola	1
+3194571	Lamia amputator	1
+3195881	Lucis	1
+3196669	Limnea	19
+3197748	Lankesteria	2
+3199647	Leptastrea purpurea	1
+3201213	Lepidopsetta	1
+3202165	Leistus	1
+3203713	Leucophloeus actites	1
+3203826	Liparis ranula	1
+3204455	Limenitis eros	1
+3205444	Leiopus nebulosus	1
+3209782	Libellula coerulescens	1
+3210502	Labidocera aestiva	1
+3211581	Lysacme	2
+3215008	Labrorostratus	1
+3216444	Labrorostratus parasiticus	2
+3219749	Lactarius piperatus	1
+3219958	Limnophora	1
+3220071	Lindenius	1
+3220608	Liguriella	1
+3220722	Lynx rufus	1
+3220725	Leptoclinum	4
+3220942	Lernaeopodoida	1
+3222786	Lipura	1
+3223826	Laphygma frugiperda	1
+3224628	Lampyris noctiluca	5
+3225441	Lutjanus blackfordii	1
+3226217	Libavius	1
+3230921	Lampyridae	2
+3232768	Lyperosia	1
+3233043	Lagenorhynchus obliquidens	1
+3235298	Latium	1
+3235814	Leptotheca elongata	2
+3237785	Lispa	1
+3239102	Listrophorus	3
+3240055	Lymnaea elodes	3
+3240952	Lagomorpha	1
+3241278	Leptoiulus belgicus	1
+3241397	Leptodiscus	1
+3241614	Leersia oryzoides	1
+3242916	Lacus	1
+3244021	Lamprogrammus	1
+3248306	Laminaria brasiliensis	2
+3248392	Lepechinella arctica	1
+3249118	Lycoteuthis	1
+3249609	Ligur	1
+3250729	Lachnosterna fusca	2
+3252001	Lynx canadensis	1
+3252036	Lobelia cardinalis	2
+3253547	Lepiota excoriata	1
+3253938	Lysidice ninetta	1
+3254409	Leucippe	1
+3255166	Lycaena	2
+3255270	Lepiota rhacodes	1
+3257464	Leptoceridae	2
+3259176	Veronia	2
+3259573	Leptoplana saxicola	1
+3261018	Leurynnis	1
+3263465	Lepus europaeus	1
+3269592	Lucioperca	2
+3269713	Ludovicus	3
+3271311	Liostomus	1
+3273064	Leporidae	1
+3273582	Lecudina	3
+3274761	Labrichthys	1
+3275433	Lymnea	2
+3275490	Leptoplana sciophila	1
+3275547	Lamellibranchiata	4
+3276618	Leucariste	6
+3277107	Lumbrineris hebes	1
+3279311	Lumbrineris fragilis	1
+3286670	Lampyris	3
+3287085	Leptis	3
+3288169	Lyriope	1
+3288779	Lithoglyptes mitis	1
+3292633	Leptotheca	2
+3296752	Longicornia	1
+3300050	Lactarius scrobiculatus	1
+3300926	Loligo pealei	1
+3301241	Lachnus	2
+3303613	Lissodelphis borealis	1
+3306403	Lepus townsendii	1
+3306577	Labrax	1
+3309018	Labidocarpus	2
+3309328	Lysilla	3
+3309831	Loripes	1
+3310222	Lybia	1
+3310739	Lacuna vincta	1
+3311073	Lepeoptheirus	1
+3311150	Lactarius controversus	1
+3311658	Layia	1
+3315899	Licnophora	4
+3317660	Loricera	2
+3321720	Lepus americanus	1
+3323971	Lemonias	1
+3324061	Lota maculosa	3
+3326824	Lacon	1
+3327666	Limosa limosa	1
+3331633	Leptolimnea	2
+3334539	Lineus	1
+3335420	Leptodora	1
+3336133	Lohita	1
+3336256	Ligia	4
+3337056	Lamprococcus	1
+3337530	Lagena	1
+3337917	Lycocercus	1
+3337963	Saccharum	1
+3340241	Littorina littoralis	1
+3341823	Leptophytum laeve	7
+3342088	Lioptilus grandis	1
+3342802	Laemobothrium	1
+3343151	Lutjanus	2
+3344851	Lajoyei	1
+3347323	Longchaeus	1
+3347335	Liocranchia	1
+3348507	Lorius	1
+3349163	Lepidosiren	4
+3350567	Leistus spinibarbis	1
+3352191	Leptodera	1
+3352275	Lepidosteus	1
+3356421	Lagurus curtatus	1
+3356945	Leucania pseudargyria	2
+3357359	Littorina littorea	1
+3358188	Liomys irroratus	1
+3358427	Letharcus	1
+3360288	Lagenorhynchus acutus	1
+3360727	Lumbriconereis	1
+3361094	Loligo	3
+3361757	Lycocerus	1
+3364910	Lumbrineris impatiens	1
+3365140	Labidognathus	1
+3365491	Licinius	2
+3370748	Leucosiidae	1
+3373517	Lutraria	1
+3374461	Larvacea	1
+3374795	Lepus arcticus	1
+3375296	Larentia	1
+3375588	Littorina	1
+3378928	Lithophyllum orbiculatum	4
+3381170	Rivularia	2
+3386965	Leucothea	1
+3387696	Lagenorhynchus thicolea	1
+3388261	Lepidonotus	1
+3388422	Limnaea stagnalis	1
+3388423	Leptasterias groenlandica	1
+3388635	Latax lutris nereis	1
+3391176	Lissocrangon	1
+3391369	Leptophlebiinae	3
+3393464	Lutjanus campechianus	1
+3397809	Latris	1
+3401087	Lycodes vahlii	1
+3402734	Lernaeoceridae	1
+3407383	Lemmus trimucronatus	1
+3408090	Lacerta muralis	1
+3408426	Leptasterias	3
+3410240	Lumbrineridae	2
+3411963	Lafoea adnata	1
+3412254	Lyctus	1
+3413029	Lymnaeum	1
+3416307	Lymantria	1
+3416414	Leptina	1
+3417217	Lachnini	1
+3417957	Lychnopoles	1
+3418487	Limenitis	4
+3419578	Lestes viridis	1
+3423013	Lynx	1
+3424744	Lophorina superba	1
+3425196	Lagenorhynchus albirostris	1
+3426184	Lymnea stagnalis	1
+3429603	Myriophyllum	5
+3429908	Monilia albicans	1
+3430388	Myriolepis zonifer	1
+3431461	Microtus nesophilus	1
+3432340	Microspora	1
+3433686	Mycetes	2
+3434642	Membranipora	1
+3435381	Monilia	1
+3436045	Myrmecocystus melliger	1
+3436970	Mephitis mephitis	1
+3437583	Miliolina	1
+3437821	Marasmius	2
+3440059	Maldane glebifex	1
+3440101	Musca	5
+3441935	Metchnikovella	16
+3442461	Marsilia	1
+3442759	Minima	1
+3443021	Metoecus	1
+3444255	Marasmius urens	1
+3444803	Mytilus galloprovincialis	1
+3444920	Mactra solidissima	1
+3444999	Metrosideros	1
+3445836	Mordella	4
+3446966	Mirounga angustirostris	1
+3447023	Massa	6
+3447401	Mytilus californianus	2
+3447548	Micrococcus	4
+3447577	Morus	1
+3448111	Memoria	1
+3449134	Mentha aquatica	2
+3449146	Monocystis lumbrici	1
+3451971	Megaptera novaeangliae	1
+3452438	Moly	1
+3452991	Mellita	1
+3453031	Membranoptera alata	4
+3453614	Metoecus paradoxus	1
+3454152	Myiarchus ferox	1
+3454981	Macropis labiata	1
+3455548	Munis	1
+3456775	Monacanthus	1
+3457355	Myotis evotis	1
+3458740	Maxima	5
+3458982	Myxomycetes	1
+3459289	Moschus	1
+3459484	Mardonius	2
+3460589	Micropterus	2
+3460640	Marsilea	1
+3460723	Meschia	7
+3462722	Mercenaria mercenaria	7
+3463092	Meloe	2
+3464415	Mustelidae	1
+3464458	Mesoplodon europaeus	1
+3464793	Microgadus	1
+3464994	Metabola	1
+3465760	Mastodontes	3
+3465929	Microdon globosus	1
+3467553	Mirabilis glutinosa	1
+3468327	Machimus pilipes	1
+3469984	Mixonus	1
+3471991	Mustela rixosa	1
+3473611	Mentha viridis	1
+3474265	Marsyas	2
+3476253	Melitaea phaeton	1
+3477832	Myagrum sativum	1
+3478432	Magnolia	3
+3478673	Mydaea floricola	1
+3479089	Morchella esculenta	1
+3479667	Maculosa	1
+3480112	Mentha rotundifolia	1
+3481023	Mimulus minor	1
+3481229	Masoreus	1
+3483125	Morchella	2
+3483883	Myites	1
+3484134	Modiolus	4
+3484593	Melia	2
+3484885	Myxobolus musculi	5
+3485066	Murena	1
+3485911	Miastor	1
+3487038	Mantis religiosa	3
+3487569	Myxicola infundibulum	4
+3488920	Marmota flaviventris	1
+3491172	Micropterus dolomieu	2
+3493312	Macrophya albicincta	1
+3493392	Mytilus edulis	3
+3494198	Mammalia	51
+3494615	Marasmius oreades	1
+3495624	Myotis sodalis	1
+3495972	Microsporea	1
+3496366	Microtus xanthognathus	1
+3500149	Pedicularis	2
+3501707	Mydaea urbana	1
+3502329	Meganyctiphanes	1
+3502333	Meriones	1
+3503998	Melophagus	4
+3507576	Metchnikovellidae	1
+3509154	Metridium senile	5
+3509757	Megachile lanata	1
+3509839	Microtus ludovicianus	1
+3510033	Maldanidae	2
+3510168	Merluccius bilinearis	2
+3510622	Marsupialia	4
+3512114	Mesephemera	1
+3513884	Musca cerasi	1
+3514629	Melitaea	1
+3515114	Myriophyllum tenellum	1
+3515456	Myotis thysanodes	1
+3515965	Marmota	1
+3517901	Microtus mexicanus	1
+3518713	Monitus	1
+3519515	Micrococcus luteus	1
+3524045	Mumiola	1
+3524400	Myxobolus pfeifferi	2
+3525466	Microtus richardsoni	1
+3525976	Myiarchus crinitus	5
+3526794	Monoceros	1
+3527846	Maurus	1
+3527868	Monocentris japonica	1
+3529897	Myxicola	5
+3530395	Myxosporidia	18
+3530794	Macrura	1
+3531623	Musca vomitoria	1
+3532357	Macropis	3
+3532952	Manucodia atra	1
+3533102	Myocastor coypus	1
+3533326	Microsporida	1
+3536603	Michaelia	1
+3538197	Menidia	6
+3539121	Mellitidae	1
+3539735	Myriophyllum verticillatum	1
+3540578	Meyenia	1
+3541173	Micropterus salmoides	2
+3541541	Mustela erminea	1
+3541817	Melittia	1
+3542855	Myiarchus cinerascens	4
+3542956	Megaptera	2
+3544414	Microchelys	2
+3544981	Mustelus	4
+3545146	Melanitis	1
+3545634	Marmota caligata	1
+3545913	Myxa	2
+3547924	Myiarchus brachyurus	2
+3548245	Microtus parvulus	1
+3548434	Microcosmus	2
+3548918	Mydaea	2
+3550323	Malacosoma neustria	2
+3551423	Marphysa stylobranchiata	1
+3552102	Mexcala	2
+3552193	Mamestra	6
+3552435	Marane	1
+3553075	Mesnilia	2
+3554226	Myotis lucifugus	1
+3554871	Mischocyttarus labiatus	1
+3554894	Malachius spinosus	1
+3555959	Microtus miurus	1
+3558278	Musculus	1
+3560351	Microtus abbreviatus	1
+3561806	Myriophyllum spicatum	1
+3562171	Megninia	3
+3564604	Maja	2
+3564854	Microtus montanus	1
+3565197	Mesochorus confusus	1
+3566436	Metabletus	1
+3566896	Micrococcus prodigiosus	2
+3566985	Modiolus modiolus	2
+3567062	Mangala	2
+3568205	Macacus	5
+3571944	Magius	1
+3572306	Megalops	2
+3573909	Mustela frenata	1
+3575550	Maldane	1
+3577283	Mesochorus	1
+3579737	Monodonta lineata	1
+3582470	Munna halei	1
+3582813	Mustela macrodon	1
+3583373	Mnemiopsis	1
+3584786	Musculus lateralis	4
+3585671	Microsorex hoyi	1
+3586274	Majidae	2
+3588647	Myotis occultus	1
+3589505	Monoptygma	1
+3592501	Merlucius	1
+3593205	Manis	1
+3593957	Metridium	4
+3594815	Michaelichus	2
+3597154	Mecynostoma	3
+3599007	Microtus	1
+3599269	Myrmecophaga tetradactyla	1
+3601317	Minuta	1
+3603929	Monterosato	6
+3604309	Manati	1
+3605699	Megacalanidae	1
+3606307	Monodontidae	1
+3606900	Miastor metraloas	1
+3607007	Mus musculus	1
+3608251	Menidia notata	2
+3609592	Microtus townsendii	1
+3610864	Meleagris gallopavo	1
+3611030	Mormula	1
+3611386	Myriophyllum scabratum	1
+3611651	Marphysa	1
+3615864	Menobranchus	2
+3616230	Muscides	8
+3620273	Mastigophora	1
+3622791	Myriochele	1
+3623660	Mycetobia	1
+3624218	Myctophum crenulare	2
+3625825	Mustela	1
+3626775	Methodes	2
+3627313	Microtus longicaudus	1
+3628544	Mordellidae	1
+3629547	Meganeura	1
+3631262	Macaria granitata	1
+3632040	Monachus tropicalis	1
+3635781	Myotis velifer	1
+3638028	Mexia	2
+3638712	Microtus chrotorrhinus	1
+3640400	Microtus pinetorum	1
+3640457	Myotis austroriparius	1
+3642378	Miscodera	2
+3645903	Mytilicola	2
+3647328	Microtus oeconomus	1
+3647577	Mya arenaria	7
+3647578	Myiarchus	21
+3648232	Mytilus	4
+3648632	Myxobolus	6
+3649282	Mercenaria	3
+3649511	Myiarchus nuttingi inquietus	2
+3650316	Meton	1
+3651110	Myrmecophaga	1
+3653306	Megasoma	1
+3657764	Mesalges	1
+3658087	Merou	55
+3658499	Munnopsis typica	1
+3659061	Myiarchus nuttingi	3
+3659156	Microtus pennsylvanicus	1
+3662460	Megascolecidae	2
+3663023	Myiarchus yucatanensis	2
+3665486	Musca cadaverum	1
+3666781	Muscicapa	1
+3667900	Microtus oregoni	1
+3669793	Mustelus canis	2
+3670456	Mesosoma	8
+3672526	Menestra	1
+3673418	Mitre	1
+3673724	Mercenaria violacea	1
+3676689	Minchinia	11
+3679685	Munnidae	1
+3682161	Myriophyllum heterophyllum	1
+3683485	Mesoplodon	1
+3684176	Merops apiaster	1
+3684382	Myriophyllum ambiguum	2
+3687898	Macrotus californicus	1
+3688452	Myzostomida	1
+3694447	Misippus	4
+3695307	Mamala	1
+3697320	Melophagus ovinus	1
+3698832	Microdipodops megacephalus	1
+3699236	Munna ubiquita	1
+3699787	Molossidae	1
+3701668	Macropteryx	1
+3703689	Melecta	1
+3703954	Mugil	1
+3704332	Merluccius albidus	1
+3704989	Myiarchus stolidus	1
+3705060	Martes americana	1
+3705251	Motella tricirrata	1
+3706196	Mentha piperita	1
+3709221	Myonia	1
+3709619	Mycale	1
+3711835	Microspira	2
+3713744	Microdipodops	2
+3714169	Mephitis macroura	1
+3714684	Mesoplodon stejnegeri	1
+3715586	Mesnilia martinensis	3
+3716257	Metellus	1
+3717303	Meganyctiphanes norvegica	1
+3718307	Myrina	2
+3718605	Monacanthus hispidus	1
+3720626	Musca meteorica	1
+3720774	Monodon monoceros	1
+3722074	Myotis yumanensis	1
+3724043	Myrmica	1
+3725113	Mollusca	11
+3729418	Myxidium bergense	1
+3729511	Milda	4
+3730561	Microspalax	1
+3732344	Midias	1
+3734662	Micropeza	1
+3736012	Mallophaga	8
+3736387	Mustela vison	1
+3737852	Miralda	2
+3742163	Myocoptes	2
+3743714	Merluccius	1
+3743919	Megninia cubitalis	1
+3744215	Munna chromatocephala	1
+3744648	Menestho	2
+3745192	Marmota monax	1
+3745391	Mola mola	1
+3745843	Mischoptera	1
+3746505	Marphysa sanguinea	1
+3746889	Micranthemum nuttallii	1
+3747247	Muridae	1
+3750408	Myotis	1
+3751867	Mammula	1
+3752071	Monotremata	3
+3754973	Macrotolagus	1
+3755414	Malacocottus	1
+3755421	Mustela nigripes	1
+3758112	Marmota vancouverensis	1
+3764231	Murchisonella	1
+3765119	Minchinia nelsoni	21
+3766348	Megadontomys	3
+3767574	Microtus ochrogaster	1
+3768770	Myctophum	1
+3769044	Membranoptera	1
+3770569	Monostaechas fisheri	1
+3770960	Malthopsis	1
+3777627	Menopoma	1
+3777930	Microgaster	1
+3780813	Manlius	8
+3782097	Mugil albula	1
+3785388	Myotis keenii	1
+3786858	Myxidium	4
+3787616	Myotis volans	1
+3788438	Mesoneta	1
+3788738	Metridia	1
+3789275	Muroena	1
+3790501	Megachile	1
+3790999	Macrothrix	1
+3792093	Margarites	1
+3793239	Micropterus dolmieu	1
+3794968	Mellita kanakoffi	1
+3795012	Malacostraca	1
+3801463	Myriapoda	4
+3813166	Magelona	1
+3814037	Metorchis	1
+3814381	Mesoplodon densirostris	1
+3816539	Mamestra bisulca	1
+3817568	Microtus coronarius	1
+3817590	Mertensia nevadensis	1
+3819534	Myiarchus ferox panamensis	1
+3820234	Mesoplodon bidens	1
+3822522	Myotis californicus	1
+3824196	Mopsea	1
+3824883	Menopon	1
+3827076	Mulinia lateralis	1
+3827579	Mustelus antarcticus	1
+3827655	Monocentris	2
+3828763	Ninoe nigripes	1
+3828797	Nuphar	3
+3829038	Nitella	1
+3832491	Nesaea	1
+3834024	Napaeozapus insignis	1
+3834104	Nepeta	1
+3834226	Nymphes	1
+3834834	Nigrum	1
+3835030	Nostoc lichenoides	1
+3835585	Neottia spiralis	1
+3836343	Naja tripudians	2
+3838412	Noctua subterranea	1
+3839371	Noctiluca miliaris	1
+3840154	Notropis	3
+3840214	Neotetracus sinensis	1
+3840822	Nematoscelis	1
+3841108	Neotoma	2
+3842440	Naja	2
+3842868	Neurotrichus gibbsii	1
+3844107	Numida meleagris	1
+3844339	Neottis	2
+3845407	Nais	1
+3845842	Norvegica	1
+3846475	Neptomenus brama	2
+3848068	Neumannella	2
+3848322	Neumannia	1
+3848703	Nasua narica	1
+3849006	Notonecta glauca	1
+3849572	Nyctiphanes	3
+3849920	Nematus	2
+3850367	Nereis	1
+3853076	Nodosariidae	1
+3853629	Notoxenoides	2
+3854739	Nemognatha	1
+3856897	Neotoma magister	1
+3857572	Nemateleotris magnifica	1
+3860841	Notopodium	1
+3863381	Noctua	1
+3864013	Notodelphys	3
+3865604	Nematopsis ostrearum	3
+3868731	Nealges	1
+3870614	Nemexia herbacea	1
+3871731	Neotoma mexicana	1
+3871771	Nirmus	2
+3871976	Notiophilus	1
+3874872	Nelumbium luteum	1
+3877183	Numidica	1
+3880068	Neotoma lepida	1
+3880071	Nycteribiidae	1
+3883883	Nasica	1
+3888806	Nereis zonata	1
+3889511	Nassa reticulata	1
+3890476	Nephtys incisa	1
+3890512	Ninus	2
+3893484	Neuroptera	5
+3894553	Neotoma fuscipes	1
+3895315	Nason	1
+3896577	Neofiber alleni	1
+3896984	Nemertina	1
+3898502	Neanura	1
+3904286	Nauplius	3
+3904629	Notropis cornutus	1
+3904879	Neotoma isthmica	1
+3906276	Nematopsis prytherchi	1
+3908178	Naias flexilis	2
+3909361	Nemexia	1
+3912613	Nemateleotris	1
+3914034	Nitidula	1
+3915501	Nymphonidae	1
+3917175	Nycterobius	1
+3917368	Nymphon heterodenticulatum	1
+3917923	Nauclea orientalis	1
+3918126	Nymphon	1
+3918150	Nemichthys	1
+3918213	Neotoma cinerea	1
+3919143	Nosema	1
+3920235	Neotoma picta	2
+3923118	Nephtys hystricis	1
+3923984	Notropis hudsonius	3
+3926122	Nebria	1
+3926681	Nepticula	1
+3927176	Nemestrinus	1
+3928196	Nicias	1
+3928275	Nemexia herbacea melica	1
+3931388	Nycticeius	1
+3932393	Nannorchilus	2
+3933411	Nasca	2
+3933537	Nemertes	1
+3933795	Nereidae	1
+3933977	Nematus pedunculi	1
+3936894	Noctiluca	13
+3937185	Nematoda	1
+3938167	Notropis cayuga	2
+3941205	Nihoa	1
+3942367	Nedra	2
+3946607	Neotoma albigula	1
+3946801	Notacanthus phasganorus	1
+3947350	Nicara	1
+3947852	Nisoniades	1
+3948351	Neoleanira tetragona	1
+3951563	Nocardia	3
+3953378	Nycteribia	4
+3955034	Nicippe	1
+3955964	Naja haje	2
+3956956	Neotoma micropus	1
+3960270	Notomastus tenuis	1
+3960615	Nematoidea	2
+3961139	Noctuidae	1
+3964149	Nymphula	4
+3967200	Neotoma stephensi	1
+3968127	Notiosorex crawfordi	1
+3968735	Orchis mascula	2
+3970218	Ostrea gigas	1
+3970407	Ophrys	4
+3970860	Ophelina acuminata	1
+3971392	Oncorhynchus chouicha	1
+3971634	Ophrys aranifera	1
+3972052	Oryzomys couesi	1
+3973688	Oreana	1
+3973802	Opheliidae	1
+3974109	Origo	3
+3974225	Oligochaeta	2
+3974718	Oreamnos americanus	1
+3976001	Odostomiella	2
+3979034	Oceanea	1
+3979104	Onychoteuthis	1
+3979532	Ophiura robusta	1
+3979704	Orobitis	1
+3980991	Ornithorhynchus	1
+3983371	Onychomys	2
+3985605	Orontium aquaticum	2
+3986629	Orca	2
+3986694	Oriens	1
+3988602	Ophionereis	1
+3988637	Otariidae	1
+3989868	Ophiothrix	2
+3990640	Octocorallia	3
+3991388	Ophrys apifera	3
+3994807	Occultus	1
+3996159	Ostracium	1
+3999644	Oryzomys palustris	1
+4001200	Ocypodidae	1
+4001980	Opheodesoma	1
+4003179	Orchis pyramidalis	2
+4004552	Orgyia antiqua	1
+4005766	Ovibos moschatus	1
+4006045	Ocala	1
+4007143	Ostrea edulis	10
+4007718	Orthodes infirma	1
+4014438	Orphnurgus insignis	1
+4014829	Onychomys leucogaster	1
+4015777	Oncorhynchus tsawytscha	1
+4016376	Orcynus	1
+4017073	Onuphidae	2
+4019818	Oligoplites saurus	1
+4020521	Ovis dalli	1
+4024208	Ophiura signata	1
+4024470	Oligoneuria	5
+4025906	Odynerus	1
+4026744	Onychomys torridus	2
+4027509	Ondatra zibethicus	1
+4032652	Orchestia	1
+4032979	Ophelina abranchiata	1
+4033283	Ophioscolex glacialis	1
+4035402	Ophiacantha	2
+4036401	Ophioidina	2
+4037395	Orchis morio	2
+4037765	Oniscigaster	1
+4039660	Odostomia	5
+4039925	Odontosyllis ctenostoma	2
+4040698	Oaxus	1
+4041740	Ophiuridae	1
+4043052	Obtortio	2
+4043920	Oncorhynchus	8
+4047080	Oria sanguinea	1
+4049285	Orgyia	2
+4049483	Ophiurida	2
+4050621	Odontosyllis enopla	1
+4052377	Orthoptera	3
+4053955	Obrussa	1
+4055941	Obliquus	1
+4056568	Ostrea	3
+4059562	Oweniidae	1
+4060066	Ocypus olens	2
+4061045	Oplophoridae	1
+4061412	Oncorhynchus tschawytscha	6
+4066041	Orycteropus	1
+4066149	Ossa	1
+4068015	Orbinidae	1
+4070749	Ochotonidae	1
+4070853	Ovis canadensis	1
+4070942	Orbiniida	1
+4072479	Onychophora	1
+4077420	Oryzomys	1
+4081487	Ophiura sarsi	1
+4083485	Ostrea virginica	2
+4083712	Othonops eos	1
+4084601	Odacantha	1
+4086854	Onychomys torridus tularensis	1
+4090309	Octopus	3
+4090335	Oria	1
+4090417	Ophrys muscifera	2
+4091447	Osmerus	1
+4092681	Ooneides	5
+4093083	Opheliida	1
+4093533	Odontosyllis	2
+4095063	Olisthopus	1
+4096094	Odontophora	1
+4096987	Obeliscus	1
+4098130	Oxythyrea	2
+4099846	Ophiura	1
+4100427	Ostracoda	4
+4102154	Oxyuris	1
+4103058	Ophiuroidea	3
+4103926	Ophioseides	9
+4104351	Ochetostoma octomyotum	1
+4104898	Ochotona princeps	1
+4106629	Onychopterus	2
+4108839	Osmia	4
+4111006	Ophiacantha bidentata	1
+4111217	Octopodoteuthis	1
+4116548	Oligorus gigas	2
+4116805	Ophiuridea	1
+4118154	Orbiniidae	1
+4119668	Octobranchus	1
+4119674	Oceanida	2
+4120280	Opisthopista	1
+4120726	Orya	2
+4121014	Ophiopholis aculeata	1
+4122542	Octochaetidae	1
+4126064	Oncocnemis	2
+4126380	Opisthorchis	1
+4126412	Osphyra	1
+4126626	Olibrus	1
+4130631	Ochotona collaris	1
+4130723	Ophiopsila	2
+4131030	Ostrea lurida	3
+4132559	Oligognathus	1
+4134514	Oceanica	2
+4135367	Orinella	2
+4135604	Oedischia	1
+4135626	Ooneides amela	9
+4137852	Oscines	2
+4138664	Ophiacanthidae	1
+4140293	Otopleura	2
+4140653	Onuphis opalina	1
+4141925	Pirola	1
+4142399	Passiflora coerulea	1
+4142461	Phyto	1
+4142579	Potamogeton	30
+4145881	Plancus	3
+4146219	Polia	1
+4147307	Psalliota campestris	1
+4148755	Polyporus	6
+4148922	Pteromalus	2
+4149479	Phocoena phocoena	1
+4149609	Pentagenia	1
+4149866	Phylloxera vastatrix	1
+4149991	Phos	3
+4150259	Polycirrus caliendrum	1
+4150973	Peronospora	1
+4151061	Penthorum sedoides	2
+4151714	Pista brevibranchia	2
+4152104	Polyrhabdina	4
+4152208	Proxima	1
+4152912	Pteronyssus	2
+4152998	Psychopsis mimica	1
+4153299	Perca	4
+4153564	Plasmodium	4
+4154209	Pentstemon	2
+4154373	Pilea pumila	1
+4155993	Pseudomonas enalia	2
+4157150	Perognathus apache	1
+4157156	Planorbis	8
+4158487	Polycystina	3
+4158670	Puccinia graminis	2
+4158845	Palaemonidae	1
+4162791	Pholiota	2
+4163056	Periplasma	1
+4164153	Polychoerus carmelensis	1
+4164215	Palingenia	5
+4164646	Pista	12
+4164996	Protococcus	1
+4165126	Perognathus fasciatus	1
+4166573	Papula	1
+4166741	Pene	1
+4167586	Parum	1
+4169815	Pleurogoniidae	1
+4170312	Pista elongata	1
+4170487	Pteropus	1
+4171157	Plagiodera	1
+4171347	Phocoenoides dalli	1
+4172082	Pimephales	2
+4172519	Persea	1
+4174278	Penaeidae	1
+4175465	Parus wollweberi	1
+4176371	Polistes	7
+4176614	Paragorgia	1
+4176705	Phoca	2
+4178397	Peromyscus californicus	2
+4178526	Panorpa	1
+4179267	Polyxenus lagurus	1
+4181676	Phallus impudicus	3
+4181919	Panagaeus	1
+4182704	Pyrgiscus	2
+4183431	Plectoptera	2
+4187720	Podalirius	1
+4187779	Polyipnus	1
+4187998	Prodenia lineatella	1
+4188674	Pontederia cordata	4
+4188794	Pyxidium	1
+4189765	Potamogeton crispus	23
+4190440	Pholas dactylus	4
+4190830	Planorbella	1
+4192640	Peromyscus levipes	1
+4192802	Pterolichus	7
+4193281	Potamogeton densus	1
+4193788	Polynoe	3
+4194489	Petromyzon	2
+4196226	Papilio	13
+4196306	Prosopis	3
+4196584	Pison	8
+4197724	Pluteus	4
+4198061	Phyllodoce	1
+4198890	Panus	1
+4200522	Potamophila	1
+4201539	Pylades	1
+4202624	Pennatulidae	1
+4204568	Peyssonnelia	6
+4205097	Ptinus	2
+4205490	Potamogeton compressus	1
+4205669	Polygonum hydropiperoides	1
+4206011	Peromyscus sitkensis	1
+4206290	Plusia	3
+4207639	Pandeidae	1
+4207911	Pentacheles	1
+4208188	Pennatula	15
+4208334	Photinus	9
+4209378	Pieris	2
+4210211	Protula superba	1
+4211889	Pseudechiniscus goedeni	1
+4213889	Potamogeton natans	5
+4214361	Potamogeton pectinatus	18
+4215978	Porphyrio	1
+4216130	Photobacter splendidum	1
+4217374	Potamogeton lucens	4
+4217441	Photinus marginellus	1
+4217560	Proserpinaca	1
+4218621	Phryganeopsis brunnea	1
+4219659	Paranthura elegans	1
+4219734	Ptychodera	4
+4220216	Polygonum amphibium	1
+4222115	Plutellus davisi	1
+4225363	Pagrus unicolor	1
+4225813	Prionospio	1
+4227235	Protophytes	1
+4228210	Pericelis	1
+4228778	Pygospio	1
+4228907	Ponda	1
+4229000	Phormium	1
+4229908	Peromyscus mexicanus teapensis	1
+4231170	Psychoda	1
+4231305	Phyllitis scolopendrium	1
+4231602	Potamogeton fluitans	1
+4234033	Philampelus	1
+4234238	Plocamopherus	1
+4234902	Plumatella repens	2
+4235501	Paradoneis lyra	1
+4236684	Photobacteria	1
+4236900	Paxillus involutus	2
+4237132	Paramaecium	1
+4238557	Perognathus fallax	1
+4239095	Polybia rejecta	2
+4239426	Paraphelliactis pabista	1
+4240321	Pyrgolidium	2
+4240651	Potamogeton hybridus	1
+4241070	Pleuronectes	2
+4243591	Passer domesticus	1
+4246796	Primnoa reseda	1
+4249174	Pteroptus	1
+4252303	Plutellus	1
+4252385	Perognathus amplus	1
+4253344	Poricthys	1
+4253720	Perognathus californicus	2
+4254257	Pteroides	1
+4255389	Perognathus hispidus	1
+4255460	Pseudopolydora kempi	1
+4256278	Pholiota squarrosa	1
+4256816	Porichthys	2
+4257585	Proserpinaca palustris	1
+4258874	Pseudechiniscus	1
+4259572	Physa gyrina	3
+4263421	Papilio philenor	2
+4263812	Pissodes notatus	1
+4264010	Polycyclus	1
+4264058	Pleurobrachia	1
+4265407	Physostomum	1
+4265558	Polypodium serpens	1
+4266597	Polynema	3
+4266674	Proximum	1
+4268187	Potamogeton perfoliatus	9
+4268668	Potamogeton pusillus	2
+4269919	Phocoena vomerina	1
+4271259	Protophyta	3
+4271634	Panope	1
+4273600	Potamogeton gramineus	1
+4278658	Polynoidae	3
+4279245	Porphyrion	2
+4279938	Polychaeta	7
+4280451	Polygonaceae	1
+4280982	Platysomatichthys stomias	1
+4281380	Papilio palamedes	1
+4281498	Pelexia	1
+4284617	Pectoralis	2
+4285523	Pterophorus	1
+4289595	Prosthiostomidae	1
+4290522	Petalidium	1
+4291211	Physa concolor	1
+4291224	Phyllodoce hartmanae	1
+4293316	Petrocelis	2
+4297258	Potamogeton rufescens	1
+4298784	Parophrys ischyrus	1
+4299143	Papillon	4
+4299186	Phrissopoda	1
+4299417	Pomolobus	2
+4300554	Proboscidea	2
+4303180	Polystichus	1
+4304457	Purpura lapillus	1
+4305715	Potamogeton amplifolius	9
+4306244	Paratenetus gibbipennis	1
+4306267	Polymastia	2
+4312106	Penaeus setiferus	1
+4312512	Polyommatus	1
+4314162	Platyptilus	1
+4317286	Polybia	3
+4317324	Pogonus	1
+4317467	Ptilosarcus gurneyi	1
+4318544	Papago	1
+4319328	Primula sinensis	1
+4320809	Prosena	2
+4321800	Parnasos	1
+4322881	Polyergus rufescens	1
+4323047	Phormium tenax	1
+4324281	Phasis	1
+4324702	Porcellio	1
+4325240	Pneumodermon	1
+4328167	Philopteridae	1
+4328212	Procyon lotor	1
+4329987	Pica pica	1
+4333957	Perca fluviatilis	3
+4335088	Pandalidae	1
+4336051	Phakellia	2
+4336845	Phalacrus	1
+4339022	Polyergus	2
+4339306	Phora	1
+4340615	Psophus stridulus	2
+4341470	Pimephales notatus	2
+4342416	Potamogeton lonchites	1
+4342442	Perognathus	4
+4345731	Pterostichus	1
+4346771	Peromyscus aztecus	1
+4348900	Pleurotus ulmarius	1
+4350086	Peromyscus yucatanicus	1
+4350589	Platyrhina exasperata	1
+4357111	Paxillus	4
+4357438	Potamidae	1
+4357495	Pseudamphistomum	1
+4358779	Physa	17
+4359287	Peltandra	1
+4359302	Pterophryne	1
+4360387	Procyonidae	1
+4360495	Pyractomena lucifera	1
+4363831	Perognathus alticola	1
+4366025	Penicillidia	1
+4366876	Polydora	2
+4367455	Platyhelminthes	2
+4367529	Psalliota	2
+4367802	Pyroteuthis	1
+4371119	Pyrameis cardui	2
+4373897	Pennatula grandis	1
+4374792	Polygonum arifolium	1
+4376249	Pycnogonida	2
+4376894	Pseudalloptes	1
+4377064	Parascalops breweri	1
+4377819	Physa heterostropha	8
+4380035	Polycrates	1
+4380651	Pennsylvanica	1
+4387256	Physa integra	2
+4390337	Pleretes	1
+4392154	Pulmonata	1
+4393172	Phryganeopsis	2
+4393704	Pelecypoda	1
+4394112	Pomacanthus arcuatus	2
+4394386	Polygonum sagittatum	1
+4395372	Pavonaria	1
+4395620	Pinus palustris	1
+4399909	Platyrhina triseriata	1
+4400096	Percina	2
+4404091	Phyllophora truncata	4
+4405426	Pista cretacea	2
+4407655	Pleuromma	1
+4410807	Perispasta immixtalis	1
+4412072	Psammocora	1
+4412147	Physella	2
+4412451	Polypus	2
+4414575	Potamanthus	3
+4415935	Perdrix	1
+4418395	Phoxinus	1
+4418648	Passiflora gracilis	1
+4420771	Polycirrus pallidus	1
+4421679	Potamogeton zosterifolius	7
+4424644	Praopus	1
+4424665	Platanista	1
+4424944	Pyramus	2
+4424998	Phyllostomidae	1
+4425679	Phocidae	1
+4426550	Pleuronectes platessa	2
+4426999	Pararge	1
+4427608	Phyllotreta	1
+4428493	Panaeolus	1
+4428878	Physeter	2
+4429169	Schinus	2
+4429524	Polycirrus aurantiacus	2
+4431147	Paludina limosa	2
+4432675	Parechinus	1
+4432762	Pericelis hymanae	1
+4434585	Paludina vivipara	6
+4436530	Paralithodes platypus	2
+4437831	Plusia falcifera	1
+4438746	Populus candicans	1
+4440421	Phyllaphis	2
+4442748	Palpifer	1
+4443686	Pyrophorus noctilucus	4
+4445420	Papilio hero	1
+4449606	Phycodrys rubens	4
+4449695	Pleurogyne fontana	1
+4450087	Plutella	1
+4452080	Pterophoridae	1
+4452823	Peromyscus polionotus	1
+4454526	Polycirrus californicus	2
+4455577	PuA	1
+4456360	Pterodectes	3
+4457152	Palatka	3
+4458536	Perodipus ingens	2
+4459320	Polymitarcys virgo	1
+4459641	Paramunna quadratifrons	1
+4460342	Pennatulacea	4
+4461223	Pyramidellidae	1
+4463253	Psilocybe spadicea	1
+4463329	Pratincola rubetra	1
+4465805	Plusia gamma	1
+4465837	Saccharomyces	2
+4466144	Protozoa	17
+4469369	Panis	2
+4472011	Pseudostichopus propinquus	1
+4472107	Peromyscus maniculatus	1
+4472159	Pelopaeus	2
+4472639	Photinus consanguineus	1
+4473222	Paludina integra	3
+4476033	Physa ancillaria	4
+4479555	Peromyscus attwateri	2
+4483036	Pandalopsis aleutica	1
+4483083	Phallusia	1
+4484096	Potamogeton americanus	10
+4484523	Pachyta	2
+4485797	Paralithodes brevipes	1
+4485827	Psychopsis	3
+4486918	Photobacterium indicum	1
+4487840	Polyporus ovinus	2
+4487866	Philoscia	2
+4491663	Protonyssus	2
+4491992	Pennatula aculeata	4
+4493157	Polydora narica	1
+4493773	Pericelidae	1
+4494352	Ptychochilus	1
+4495286	Peltandra virginica	1
+4495857	Polymitarcys	5
+4497384	Pinna bicolor	1
+4498359	Podocyrtis	1
+4498563	Potamogeton heterophyllus	6
+4500029	Petrus	6
+4502890	Parce	5
+4506208	Pionosyllis	1
+4507436	Peromyscus gossypinus	1
+4511297	Papilio cinxia	1
+4513544	Pieris pallida	1
+4513600	Perodipus	7
+4515068	Pelophila	1
+4516868	Perognathus nelsoni	1
+4519789	Processus	1
+4520433	Porocrinus	1
+4520984	Peromyscus gymnotis	1
+4524143	Prionotus stephanophrys	1
+4525868	Polypterus	1
+4526207	Protobranchia	1
+4526304	Paludina	9
+4526619	Peromyscus megalops	1
+4528026	Pelagiidae	1
+4528334	Phaeophyta	1
+4530697	Patella vulgata	1
+4535226	Peromyscus pectoralis	1
+4535602	Phasmatoteuthis	1
+4537466	Peristichia	2
+4539246	Papilio cresphontes	1
+4539434	Phengodes	3
+4543276	Pista maculata	2
+4544090	Plasmodium vivax	1
+4544099	Phoca fasciata	1
+4544819	Photuris	8
+4548961	Paludina lustrica	1
+4551242	Paralithodes camtschatica	4
+4552049	Phoca groenlandica	1
+4552826	Pilidium	2
+4553892	Perognathus longimembris	1
+4562707	Physa fontinalis	1
+4563136	Potamogeton obtusifolius	2
+4564260	Phocion	2
+4566163	Physodon	1
+4566185	Protophasma	1
+4570718	Patis	1
+4571898	Polycirrus denticulatus	1
+4573364	Pecari	1
+4573635	Psolus	1
+4575181	Perognathus parvus	1
+4575283	Primnoidae	1
+4581089	Packardia	2
+4582015	Paralepis	1
+4583701	Polyclinidae	1
+4584053	Plectroscelis	1
+4584395	Pyrocystis	1
+4584421	Parazoa	1
+4586020	Prosopistoma	5
+4588441	Platyderus	1
+4588564	Perca flavescens	4
+4589275	Prototroctes oxyrhynchus	1
+4589591	Peromyscus boylii	1
+4590211	Polycarpa tenera	1
+4590828	Peripatus	1
+4591634	Phoronis	1
+4595649	Phycis	1
+4597746	Perognathus spinatus	1
+4598567	Pipistrellus subflavus	1
+4600457	Podagrica	1
+4600630	Pinipestis	1
+4603649	Perispasta	1
+4605056	Palmipes membranaceus	1
+4606995	Polycirrus arenivorus	4
+4607651	Pandalus latirostris	1
+4610545	Photinus ardens	1
+4610585	Perognathus flavus	1
+4612483	Pleuronichthys	1
+4613975	Psylla	5
+4614120	Potamocottus bendirei	1
+4615543	Protalges	1
+4616029	Pinus australis	1
+4617120	Polynema natans	1
+4617875	Pandion haliaetus	1
+4620915	Proboscidia	1
+4622616	Psolidae	1
+4623507	Paradoxus	1
+4624129	Psammocora contigua	1
+4625320	Palamedes	1
+4628719	Peromyscus melanophrys	4
+4634126	Peromyscus floridanus	1
+4634175	Pomadasys	2
+4637062	Platyptilus albicans	2
+4637096	Peromyscus truei	2
+4637757	Protis	1
+4637954	Poraniopsis inflata	1
+4639723	Pogonocherus mixtus	1
+4644039	Phycis chesteri	1
+4644498	Philanthus	1
+4648637	Polydora brachycephala	1
+4651626	Prosopis variegata	1
+4652745	Platygaster	1
+4652794	Parathelepus	1
+4652810	Violacea	2
+4653594	Phryganea	1
+4654843	Paralges	1
+4659402	Prionospio steenstrupi	1
+4661244	Phytonomus	1
+4662022	Polycitoridae	1
+4664235	Polycirrus tenuisetis	1
+4667964	Pomacanthus aureus	1
+4668548	Phenacomys	1
+4670497	Perognathus flavescens	2
+4670883	Prodenia	1
+4671162	Politolana polita	1
+4672211	Phyllodoce maculata	1
+4673196	Pinnipedia	1
+4673210	Peromyscus melanotis	1
+4673381	Pista cristata	2
+4674169	Paraonidae	1
+4675907	Potamilla	1
+4676201	Phyllirrhoe	2
+4676205	Poa cynosuroides	1
+4683683	Pyrrhocoris	4
+4684858	Pagurus	1
+4686668	Pandalus	1
+4689830	Ptilota serrata	4
+4690165	Peromyscus polius	1
+4690315	Pipistrellus hesperus	1
+4694580	Platessa vulgaris	2
+4700979	Phenacia	2
+4701889	Peltorhamphus novaezealandiae	1
+4706249	Potamogeton pauciflorus	1
+4707618	Packardia nigripunctata	1
+4707764	Plana	1
+4708280	Peromyscus melanocarpus	2
+4711977	Plumatella	1
+4712262	Phrynophiurida	1
+4712618	Papilio memnon	3
+4712798	Pterophagus	1
+4714557	Polycirrus arcticus	1
+4715004	Pyrgopsis	1
+4715159	Paralepis coruscans	1
+4715660	Potamogeton pulcher	1
+4717892	Perognathus formosus	1
+4718136	Pseudomonas aeruginosa	1
+4720309	Percina caprodes	4
+4721222	Pyrgolampros	2
+4722539	Psalliota silvatica	1
+4727605	Parthenia	1
+4727813	Pennatula borealis	1
+4728220	Pseudothelphusa	1
+4729315	Pakeha	1
+4730129	Phenacomys longicaudus	1
+4730172	Pyramidella	3
+4732106	Phyllodocida	1
+4732235	Plutelloptera	1
+4733387	Photophorus	1
+4733915	Perognathus baileyi	1
+4739219	Patrobus septentrionis	1
+4740034	Plusia precationis	2
+4740483	Phacelia monosperma	1
+4741427	Pelagia	1
+4744100	Phthartus	4
+4744269	Peromyscus	19
+4745313	Pollachius virens	1
+4745655	Psodos alpinata	1
+4746296	Paedephemera	1
+4746402	Photodrilus	1
+4746458	Pleuronectes flesus	1
+4747887	Protoperla	1
+4751767	Physeteridae	1
+4752487	Pertinax	1
+4756601	Pseudothyatira	1
+4758906	Porella proboscidea	2
+4761171	Platessa ferruginea	1
+4762825	Pseudorissoina	1
+4764262	Phyllaphis fagi	1
+4765023	Pteropoda	4
+4766289	Potamogeton robbinsii	1
+4767522	Pharcidella	1
+4770499	Parthenina	1
+4771507	Prodoxus decipiens	1
+4775881	Phoca hispida	1
+4776386	Polybia catillifex	1
+4776526	Physeter macrocephalus	1
+4776990	Paramoecium	4
+4777043	Physa elliptica	1
+4778694	Planorbina	1
+4780176	Phyllodocidae	2
+4781999	Paraleptosphaeroma glynni	1
+4782799	Perognathus merriami	1
+4785057	Potamogeton filiformis	4
+4786237	Pyrocypris	1
+4788139	Philonthus palliatus	1
+4788337	Psyllidae	1
+4789612	Peromyscus crinitus	1
+4790770	Porites compressa	1
+4791277	Protokollaria	1
+4792581	Puffinus	1
+4792583	Pilargidae	1
+4792646	Plutella albidorsella	1
+4794318	Perigrapha	3
+4794877	Proctophyllode	3
+4795169	Porifera	2
+4796189	Pyrophorus	11
+4797416	Perognathus inornatus	1
+4797440	Pholiota mutabilis	1
+4797453	Protagrion	1
+4798761	Pholoe	1
+4800709	Phoca vitulina	2
+4801756	Psylla pyri	2
+4802416	Perognathus intermedius	1
+4803808	Perissodactyla	1
+4804042	Pseudorca crassidens	1
+4805526	Pista corrientis	2
+4806069	Pista fasciata	1
+4807056	Podura	1
+4808697	Pocilloporidae	1
+4812488	Phyllocnistis	2
+4814978	Ptychodactiaria	1
+4816812	Pterocolus	1
+4818997	Pandalus platyceros	4
+4821127	Paludina georgiana	2
+4821151	PINALES	1
+4821162	Protothelepus	2
+4821780	Paramuriceidae	1
+4823142	Pieris napi	1
+4823428	Photuris pennsylvanica	3
+4824474	Polycladida	1
+4825621	Perognathus flavescens perniger	1
+4826204	Polemon	1
+4831810	Pseudechiniscus raneyi	1
+4831854	Phalaena cynthia	1
+4833990	Phasina	1
+4834964	Polycirrinae	1
+4835795	Polycirrus	10
+4836991	Pleurogonium	1
+4837237	Physeter catodon	1
+4838271	Ptycheulimella	1
+4838788	Pallenidae	1
+4839500	Platynereis dumerilii	1
+4840583	Priene	1
+4840839	Peromyscus eremicus	4
+4846769	Phylloplana chloranota	1
+4847752	Paraponyx	4
+4847849	Pholas	19
+4848296	Peromyscus nuttalli	1
+4848946	Prodigiosus	3
+4852266	Pedicellaria	1
+4852311	Paralithodes	1
+4856750	Philenor	2
+4856846	Peromyscus nasutus	1
+4859128	Prosopistoma foliaceum	1
+4862106	Photinus pyralis	4
+4863708	Psychodidae	1
+4863945	Phthirius pubis	1
+4864452	Pyrgulina	1
+4864996	Peromyscus merriami	1
+4865706	Prophioseides	1
+4866816	Pseudopolydora	1
+4868233	Psophus	1
+4868781	Pista mirabilis	2
+4870991	Paedophylax hebes	1
+4871430	Plumulariidae	1
+4871552	Pyralidae	3
+4872178	Patrobus	1
+4872696	Percopsis guttatus	2
+4878530	Peromyscus leucopus	1
+4878675	Pista alata	3
+4882812	Panurgus	3
+4883068	Porosporidae	2
+4885252	Potamogeton spirillus	1
+4887745	Planocera sandiegensis	1
+4888598	Pelion	1
+4891080	Pyrodinium	1
+4891392	Polyzoa	15
+4892530	Pelexia setacea	2
+4893249	Phenacomys albipes	1
+4894015	Parafavella	1
+4895805	Paterculus	2
+4899464	Pterygioteuthis	1
+4901032	Parexogone	3
+4906037	Perognathus penicillatus	1
+4907166	Peromyscus spicilegus	2
+4907958	Puer	1
+4908765	Pedicularis procera	1
+4911206	Parthenope	3
+4914614	Pomatias	1
+4915940	Potamonidae	1
+4918491	Parmula	1
+4919454	Paracentrotus lividus	1
+4923549	Philodice	1
+4927490	Pomatomus saltatrix	1
+4930399	Pelix	1
+4931511	Plutella vanella	1
+4934191	Planorbula	1
+4935356	Placopecten magellanicus	9
+4935708	Peromyscus bullatus	1
+4938370	Prenes	1
+4939209	Phylloplana	1
+4939729	Perca americana	1
+4942617	Psolus californicus	1
+4942976	Plusia rectangula	1
+4942985	Pogonocherus	1
+4943405	Peltogaster	1
+4949702	Pelexia cranichoides	1
+4950119	Phryganea grandis	1
+4951221	Placopecten	9
+4951489	Podagrica fuscipes	1
+4952337	Planocera	1
+4953152	Palingenia longicauda	1
+4954223	Peracarida	1
+4955794	Pristonychus	1
+4957416	Peromyscus difficilis	1
+4957767	Percopsis	2
+4958684	Perdix	1
+4958908	Qii	1
+4958986	Quercus coccifera	1
+4959321	Quercus agrifolia	1
+4960491	Quercus alba	1
+4960853	Quirinus	1
+4962389	Quera	1
+4964792	Quercus prinoides	1
+4966346	Quintius	1
+4972458	Rhizopogon	2
+4973172	Recens	1
+4973605	Ricinus	1
+4973725	Recula	1
+4975306	Ranunculus aquatilis	1
+4975823	Russula integra	2
+4976982	Rhynchonella	1
+4977864	Robertus	4
+4978182	Regia	3
+4979188	Ranatra	1
+4979986	Ricinus communis	1
+4983074	Rana esculenta	2
+4983727	Ranis	1
+4984832	Renia pastoralis	1
+4989419	Riparia	1
+4991572	Ribes nigrum	1
+4992206	Rhynchota	3
+4992729	Rickettsia	1
+4993748	Russula ochroleuca	2
+4993901	Rhodope	1
+4994352	Ranunculus hederaceus	1
+4994358	Rugosa	1
+4995184	Rhizopogon luteolus	1
+4996374	Rhinocerotis	1
+4998107	Ranunculus sceleratus	1
+4999593	Ruyschiana	1
+5000345	Rossia	1
+5000398	Rotalia	1
+5010912	Ruminantia	2
+5011081	Rosalina	1
+5011439	Reithrodontomys montanus	1
+5013865	Raja nasuta	1
+5014982	Rumina decollata	1
+5018919	Russula nigricans	2
+5021597	Raphitoma	1
+5021748	Roccus	2
+5021967	Reithrodontomys humulis	1
+5022247	Radiata	2
+5022599	Rhizopus	1
+5024356	Rhizopogon rubescens	1
+5024898	Radiolaria	2
+5025847	Ranunculus flammula	1
+5027138	Randallia gilberti	1
+5028184	Roccus lineatus	2
+5028535	Ranunculus ambigens	2
+5029954	Reptilia	14
+5029988	Roscius	1
+5030546	Raia rhina	1
+5031752	Rhizopoda	10
+5035339	Rhynchites	1
+5035706	Reteporidae	1
+5040222	Rhabdoptilus	1
+5042367	Richardus	3
+5046016	Ronco	1
+5046359	Rhipicephalus	1
+5047366	Romana	1
+5052360	Rhogas	6
+5054240	Ravenna	1
+5058481	Renia	1
+5059554	Rissoa	1
+5062899	Russula consobrina	2
+5064193	Rattus norvegicus	1
+5064899	RHODOPHYTA	2
+5065703	Reithrodontomys megalotis	1
+5067654	Robulus strongi	1
+5068620	Rhithrogena	1
+5068923	Ranunculus cymbalaria	1
+5073037	Rhizostoma	1
+5074749	Rhizobiaceae	1
+5080207	Rhagium indagator	2
+5080330	Ravana	1
+5081070	Recta	1
+5081505	Rumina	1
+5081853	Rhynchotes	3
+5083685	Rissoa membranacea	1
+5088122	Rivoltasia	1
+5088191	Rotifer	3
+5088954	Rhipicentor	1
+5090185	Rhipidioptera	1
+5091767	Rhianus	1
+5096191	Rotalina	1
+5096345	Rhombus maximus	2
+5103740	Rhizangiidae	1
+5105225	Ranunculus pusillus	1
+5107141	Russula vinosa	2
+5107998	Rodentia	3
+5112202	Reithrodontomys fulvescens	1
+5113027	Reithrodontomys raviventris	1
+5118034	Rhingia	1
+5118255	Rattus rattus	1
+5123614	Rangifer tarandus	1
+5133422	Spirillum	4
+5134680	Spongia	1
+5134867	Sagittaria	3
+5135952	Spermophilus beecheyi	1
+5136171	Scorpionida	2
+5136988	Similis	1
+5137331	Salvinia	1
+5137583	Spilogale putorius	1
+5137681	Solus	1
+5137940	Sciurus kaibabensis	2
+5138786	Schizomavella auriculata	3
+5139052	Sarcophaga dimidiata	1
+5139120	Syringoderma	2
+5139737	Sauroglossum cranichoides	1
+5139779	Saperda populnea	1
+5139988	Simulia	1
+5140044	Sidalcea campestris	1
+5140579	Sagittaria graminea	1
+5142520	Sidalcea oregana	1
+5143448	Sebastichthys	1
+5143618	Sepiolini	1
+5144901	Sium	1
+5145474	Sarcina	1
+5146983	Sidalcea nervata	1
+5147377	Syrnola	2
+5149414	Succinea	2
+5149701	Spatularia	3
+5150909	Stenobothrus bicolor	3
+5151377	Sparassis	2
+5153828	Sibbaldius sulfureus	1
+5154423	Symphyla	1
+5155343	Synedra pulchella	1
+5155411	Scleranthus perennis	1
+5155902	Saccocirridae	1
+5156987	Sphagnum squarrosum	1
+5159110	Sciurus	2
+5159266	Scalibregmidae	2
+5159331	Sorex tenellus	1
+5160468	Saccoina	2
+5162641	Sape	1
+5163716	Sorex trowbridgii	1
+5165815	Salmo fario	2
+5168504	Scirpus atrovirens	2
+5168747	Segmentina	1
+5169515	Sagittaria lancifolia	1
+5169712	Saururus	1
+5170757	Salvelinus fontinalis	2
+5170777	Scionopsis	1
+5171608	Stenella styx	1
+5171929	Sorastrum	1
+5171930	Sidera moringa	1
+5172249	Sebastichthys maliger	1
+5172698	Stropharia semiglobata	1
+5173693	Sphaeralcea parvifolia	1
+5173810	Schizomycetes	3
+5173895	Salmo gairdneri	1
+5175080	Serpulidae	2
+5175082	Synaptidae	1
+5175802	Streptanthus	1
+5176512	Senex	2
+5177122	Sagittaria variabilis	2
+5178918	Spirorbis	7
+5180110	Sigmodon hispidus	1
+5180210	Smilax aspera	1
+5181164	Sylvilagus palustris	1
+5181312	Schistostega	2
+5184558	Strongylocentrotus droebachiensis	5
+5184679	Spatangoida	1
+5185183	Saccus	1
+5185635	Simocephalus	1
+5188257	Scytalina cerdale	1
+5188311	Sorex fumeus	1
+5188985	Sibbaldius	1
+5189523	Spirochaeta pallida	1
+5190174	Strongylognathus testaceus	1
+5190333	Spisula solidissima	4
+5190949	Streptanthus pedicellatus	1
+5191998	Sesia	2
+5193017	Sium angustifolium	2
+5193029	Simo	3
+5194533	Spongilla fluviatilis	1
+5195177	Spiralinella	2
+5196665	Sabal	1
+5197375	Scirpus validus	1
+5197517	Symphrasis	1
+5198182	Stenolophus	1
+5198968	Scomber scomber	1
+5199367	Siphonogorgia lobata	1
+5200466	Sorex lyelli	1
+5200857	Sepedon	3
+5203371	Selenidium	11
+5203936	Spinax niger	1
+5206237	Sylvanus	1
+5206322	Sphaerites glabratus	1
+5206415	Scheuchzeria palustris	2
+5206594	Streblosoma spiralis	1
+5207742	Scarabaeus	2
+5209124	Salva	1
+5209741	Stegopoma	1
+5211237	Spermophilus richardsonii	1
+5211513	Stenella frontalis	1
+5213107	Sphecodes	2
+5214066	Solen	3
+5214464	Spermatophyta	1
+5215185	Sigmodon	1
+5215191	Sarcophaga	3
+5216081	Sciurus arizonensis	1
+5217564	Sauroglossum elatum	1
+5217840	Scleractinia	1
+5218691	Sorex bendirii	1
+5218755	Solenodon	2
+5218865	Sarcomastigophora	1
+5220550	Stomis	2
+5220833	Spionidae	5
+5221648	Symbiotes	8
+5223091	Stelis	2
+5223291	Sciuridae	1
+5224805	Sporotrichum	1
+5227401	Senecio jacobaea	1
+5228115	Stomatopoda	1
+5228272	Spragueia	1
+5232144	Salmo irideus	2
+5232576	Salix nigra	1
+5233922	Salmo iridea	1
+5234433	Styela barnharti	1
+5234839	Sphagnum rigidum	1
+5238305	Spongilla	7
+5239248	Sphingonothus	1
+5240154	Sylvilagus audubonii	1
+5242056	Scomberomorus regalis	1
+5243455	Soricidae	1
+5244203	Spathularia flavida	3
+5245069	Scolecida	9
+5248523	Saperda	5
+5249324	Synapseudes	1
+5249453	Serolidae	1
+5251068	Simia	1
+5251804	Strongylocentrotus	1
+5252220	Sharpius	1
+5254034	Siphonosoma parvum	1
+5255219	Sarcoptes scabiei	1
+5256404	Sepiola	1
+5257641	Stylochoplana heathi	1
+5258184	Sorex hydrodromus	1
+5259040	Schizocystis	1
+5259149	Stolonica	1
+5261619	Stratiomyiidae	1
+5262602	Sulcoturbonilla	2
+5262842	Syllis cornuta	1
+5264679	Spiroclimax	2
+5264810	Stenella attenuata	1
+5264874	Spermophilus mohavensis	1
+5265423	Scrupocellaria	1
+5265958	Senodon	1
+5268627	Sphaerozoum ovodimare	1
+5268628	Salmo salvelinus	1
+5269547	Saxidomus	3
+5271411	Sarcophagidae	1
+5272995	Sarcina noctiluca	1
+5273518	Scyphacidae	1
+5274664	Sylvilagus floridanus	1
+5276552	Sciurus aberti	2
+5276618	Simulium pictipes	1
+5279480	Salenioida	1
+5279654	Sorex alaskanus	1
+5279961	Scapanus latimanus	1
+5281702	Soter	1
+5282198	Sitaris muralis	1
+5285405	Schizoporella	1
+5286365	Spio martinensis	6
+5289947	Schistomeringos caeca	1
+5290133	Saperda moesta	1
+5292696	Spiophanes cirrata	2
+5293039	Scyllium	2
+5293370	Sonchus asper	1
+5293899	Scaphopoda	1
+5294151	Solitariae	1
+5295083	Solaster	1
+5297291	Sergestes	5
+5299055	Syrphus balteatus	1
+5299694	Spermophilus spilosoma	1
+5303702	Sion	3
+5305033	Sorex pribilofensis	1
+5308529	Sodus	1
+5310805	Sterna caspia	1
+5311263	Spermophilus franklinii	1
+5312547	Scirpus pungens	1
+5312990	Staphylinus	1
+5314236	Simulium	1
+5314946	Steno bredanensis	1
+5315078	Salmo quinnat	2
+5315130	Sapphirina	2
+5319157	Somnolentus	1
+5319489	Sciurus carolinensis	1
+5321447	Sphaeromatidae	2
+5322283	Sylvilagus idahoensis	1
+5323098	Sorex dispar	1
+5324081	Stauromedusae	1
+5324348	Strongylus	1
+5325331	Syringodermatales	2
+5326014	Scalibregma inflatum	1
+5328004	Sparganium simplex	1
+5330310	Strophostoma	1
+5331705	Syphax	1
+5331966	Strioturbonilla	2
+5332627	Scorpiones	2
+5334700	Sylvilagus bachmani	1
+5334804	Sinum	1
+5336896	Solifugae	1
+5337388	Stauropus fagi	1
+5337783	Selis	1
+5337792	Saturninus	2
+5338044	Stomoxys calcitrans	1
+5338375	Sphagnum cymbifolium	1
+5338662	Sebastichthys rhodochloris	1
+5339271	Stylops	1
+5340239	Spionida	1
+5341563	Scomberomorus cavalla	1
+5346139	Sipunculus	1
+5347878	Spelerpes	1
+5352323	Saururus cernuus	1
+5354048	Saropoda	1
+5354123	Spermophilus variegatus	1
+5354264	Sorex	1
+5354541	Sigmodon ochrognathus	1
+5354655	Seriola stearnsii	1
+5355615	Spermophilus columbianus	1
+5355900	Sycotypus	1
+5356968	Stylopsis	2
+5357104	Synaptomys cooperi	1
+5358573	Sciurus niger	1
+5358861	Salmo oquassa	1
+5359236	Signata	1
+5363887	Solenopsis	1
+5364137	Scolopendra	3
+5364689	Synodus cubanus	2
+5364724	Saperda cretata	1
+5365206	Siredon	1
+5365517	Spiophanes malayensis	3
+5366396	Sibbaldus musculus	1
+5366823	Stomega	2
+5369456	Spermophilus lateralis	1
+5369649	Salda	1
+5371555	Sagittaria natans	1
+5371815	Sabellida	1
+5374047	Scirpus fluviatilis	1
+5374153	Sicyonia longicauda	1
+5374345	Saxidomus nuttalli	1
+5375953	Sorex ornatus	1
+5376674	Sylvilagus nuttallii	1
+5378800	Salvelinus	3
+5379501	Sitaris	6
+5381929	Syringobia chelopus	1
+5382873	Sphagnum compactum	1
+5383771	Stylasteridae	2
+5386646	Solenodon cubanus	2
+5388358	Sarcophaga nurus	1
+5389671	Silpha	1
+5390499	Stylasterina	1
+5391398	Salmo fontinalis	9
+5391563	Salvini	1
+5392933	Synidotea media	1
+5393153	Sorex merriami	1
+5394272	Spermophilus armatus	1
+5397061	Sphaerothuria	1
+5399339	Sebastichthys miniatus	1
+5401121	Spilaptera	2
+5402436	Sonorella wolcottiana	2
+5404498	Squalius	1
+5405970	Spinax	1
+5408999	Sarsia	3
+5409077	Selene vomer	2
+5409522	Sorex palustris	1
+5412996	Sphingonotus	4
+5415331	Saturnia pyri	1
+5417885	Sorex cinereus	1
+5418121	Stagnicola	1
+5419406	Sparus	1
+5422557	Stenella graffmani	1
+5423643	Spermophilus mexicanus	1
+5426057	Sorex nanus	1
+5426262	Spermophilus brunneus	1
+5426998	Sternoptyx	1
+5428811	Spiophanes	8
+5429686	Sorex longirostris	1
+5430546	Sauria	1
+5431589	Streblosoma	4
+5435149	Spermophilus tereticaudus	1
+5436255	Sidalcea crenulata	2
+5438580	Seriola dumerili	2
+5438665	Sipunculidae	1
+5440326	Salenia	1
+5446175	Saxidomus nuttali	1
+5448410	Sorex gaspensis	1
+5450306	Spermophilus tridecemlineatus	1
+5451007	Spermophilus undulatus	1
+5451771	Scalopus aquaticus	1
+5452048	Sparganium eurycarpum	4
+5455293	Styelidae	1
+5455474	Salmo	14
+5455478	Stenella microps	1
+5457930	Sulcorinella	2
+5459079	Sycia	1
+5461749	Scabra	1
+5462974	Synoeca cyanea	1
+5463385	Suberitechinus	1
+5463568	Sialis	1
+5464672	Scorpionidae	1
+5465242	Saxidomus nuttallii	1
+5466521	Synaptomys borealis	1
+5468762	Sertulariidae	1
+5469715	Scirpus debilis	1
+5469885	Sepedon fuscipennis	2
+5470418	Serapis	1
+5472479	SICA	1
+5472941	Sorex vagrans	1
+5472956	Stenobothrus	3
+5474346	Spilogaster	2
+5475604	Sparassis crispa	1
+5475742	Sirenia	8
+5477712	Syngnathus	1
+5479358	Sphaerodoridae	1
+5479957	Stenoneura	1
+5480225	Sidera	2
+5480633	Stichopodidae	1
+5481289	Spiophanes kroyeri	1
+5481437	Siluridae	1
+5482299	Silanus	2
+5483954	Sphaeralcea ambigua	1
+5484274	Scomber australasicus	2
+5484587	Saprospira	1
+5485033	Syrphus	3
+5486470	Saleniidae	1
+5487141	Sarcophaga georgiana	1
+5489984	Scirpus supinus	1
+5491880	Scarus	1
+5493052	Stelleroidea	1
+5493175	Saluda	2
+5494040	Sciurus griseus	1
+5494372	Sipuncula	1
+5496151	Siphlurus	4
+5502112	Spongilla fragilis	1
+5503755	Spilosoma menthastri	1
+5505594	Sigalionidae	1
+5505861	Sepus	1
+5506748	Sceloporus merriami	1
+5507382	Sepietta	2
+5508079	Strangalia	2
+5508593	Schoenomyza	1
+5509119	Saxidomus giganteus	1
+5511646	Schinia buxea	1
+5513432	Sacculina	1
+5515317	Sebastichthys proriger	1
+5516413	Spiloptilus	1
+5517578	Scyphozoa	2
+5519318	Stenamma	1
+5519453	Sylvilagus	1
+5522958	Satyrus	1
+5526234	Spermophilus saturatus	1
+5528512	Syllis	3
+5530068	Spermophilus beldingi	1
+5530338	Stomis pumicatus	1
+5531002	Sphodrus	1
+5532365	Sedum telephium	1
+5536089	Scapanus townsendii	1
+5537806	Scaritides	1
+5542512	Siphonosoma	1
+5544547	Synapseudes intumescens	1
+5546179	Sylvilagus aquaticus	1
+5548385	Sauroglossum	1
+5549528	Sawara	1
+5551348	Sergestes challengeri	1
+5551403	Squatina	1
+5553110	Schizothaerus	1
+5556029	Sericeum	1
+5558297	Solenobia triquetrella	1
+5560666	Scoloplos	2
+5560776	Sticholonche	2
+5562643	Sarcophaga carnaria	1
+5562764	Styloptygma	2
+5564409	Struthio camelus	1
+5564740	Scaeva	1
+5568259	Stolidobranchia	1
+5569467	Syndisyrinx	1
+5572262	Strangalia attenuata	1
+5572444	Sethocephalus	1
+5572558	Solenobia	1
+5573305	Sporozoa	13
+5573349	Scrupocellariidae	1
+5574853	Squalus acanthias	1
+5576119	Salmo salar	7
+5576846	Sagittaria heterophylla	1
+5580856	Syllidae	2
+5582055	Scoliopteryx	1
+5583352	Stenella longirostris	1
+5584161	Stenella plagiodon	1
+5586364	Salmo carpio	2
+5586993	Salassia	1
+5587646	Synodontis	2
+5589892	Scirpus subterminalis	1
+5590186	Sabellidae	2
+5593687	Speranza	1
+5594217	Sebastichthys mystinus	1
+5596150	Scirpus lineatus	1
+5596607	Smicra	1
+5600471	Spermophilus washingtoni	1
+5600604	Salmo namaycush	4
+5600919	Streblosoma intestinale	1
+5604734	Sarcodina	1
+5612594	Semotilus atromaculatus	1
+5613991	Salmonidae	3
+5616207	Sphaerosyllis	1
+5616810	Sorex arcticus	1
+5619020	Sidalcea glaucescens	1
+5619559	Syllides minutus	1
+5619604	Spermospiza	1
+5619686	Scolelepis	4
+5620226	Sollasellidae	1
+5620811	Sargus	1
+5622420	Sterna hirundo	1
+5624384	Scapanus orarius	1
+5624459	Sylvilagus transitionalis	1
+5624712	Spiophanes bombyx	2
+5624795	Serpentisaccus magnificae	2
+5627932	Sciomyzidae	2
+5631896	Scoloplos fragilis	1
+5635083	Sphaerodoropsis minuta	1
+5636914	Syrnolina	2
+5638240	Struthius	1
+5641217	Spermophilus townsendii	1
+5641848	Spilogale gracilis	1
+5645431	Syrphus philadelphicus	1
+5646805	Schizocarpus	3
+5647033	Sorex jacksoni	1
+5650032	Stomias	2
+5653366	Saccocirrus sonomacus	2
+5653849	Stylostomum sanjuania	1
+5655235	Tillandsia	1
+5655793	Thecla	4
+5656206	Triplosoba	4
+5657186	Tricholoma columbetta	1
+5657451	Talitrus	2
+5659025	Trochus	1
+5659292	Trapa natans	1
+5659593	Tenebrio molitor	1
+5660068	Typha latifolia	1
+5661099	Turbellaria	7
+5661229	Telles	18
+5661257	Tetanocera clara	2
+5661311	Trutta fario	1
+5662667	Tartare	2
+5663055	Trachynotus carolinus	1
+5663866	Thonia	1
+5668917	Tadarida brasiliensis	1
+5669177	Terrapene	1
+5671806	Thomomys talpoides	1
+5672307	Thomomys umbrinus	1
+5675846	Trigla	1
+5675929	Thecopterus aleuticus	1
+5676171	TYPHACEAE	1
+5679408	Tenera	1
+5679801	Trematoda	7
+5681415	Tardigrada	3
+5682315	Taenia	2
+5682914	Tayassu tajacu	1
+5683232	Troilus	1
+5684040	Totanus flavipes	1
+5686598	Tursiops nuuanu	1
+5686838	Tubella	1
+5688478	Tautoga	1
+5691657	Thais haemostoma	1
+5694839	Tintinnus	1
+5694975	Thysanura	2
+5697686	Thalpochares	1
+5700603	Turdus	1
+5702411	Thyreophora	1
+5702848	Typha angustifolia	1
+5703035	Tempora	2
+5703543	Trypeta	1
+5705929	Trypanosyllis intermedia	1
+5706771	Terebratellidae	1
+5708966	Tenuicornis	1
+5711067	Tetrodon	1
+5715405	Tortrix	1
+5716786	Tragula	2
+5720513	Thecarthra semaphora	1
+5720867	Toxadocia zumi	1
+5722400	Telson	14
+5722411	Thysbe	1
+5723465	Turris	1
+5724541	Terebellidae	1
+5725173	Tetrophthalmus	5
+5727357	Thelepus	6
+5731928	Tuberculose	4
+5738216	Teleostei	2
+5739804	Taphria	3
+5740894	Trichechidae	1
+5747366	Triquetra	1
+5748051	Tortrix viridana	2
+5750354	Troglodytidae	1
+5752835	Tubulipora flabellaris	1
+5753502	Tomopteris	2
+5756572	Tricholoma saponaceum	1
+5763213	Thraulus	2
+5763774	Tachypus	1
+5764154	Trechus	1
+5767706	Tatua	2
+5767754	Tapes philippinarum	1
+5768748	Trichobranchidae	1
+5770086	Tachys	1
+5770643	Tenonia kitsapensis	2
+5774341	Thaumatolampas	1
+5774822	Tanytarsus flavellus	1
+5777186	Truncatulina	1
+5777659	Tipula pratorum	1
+5779532	Tulpius	2
+5780336	Tiberia	2
+5782602	Tyrannula	1
+5782937	Thomomys townsendii	1
+5791629	Thamnasteria	3
+5792678	Trygon	1
+5794558	Trichodectes	1
+5796502	Tetragoneuria	1
+5797153	Tridacna gigas	2
+5798013	Trichechus manatus	1
+5799579	Trichodectes canis	1
+5802888	Thecopterus	2
+5803249	Thetis	2
+5810256	Thecarthra	1
+5811480	Tachinidae	1
+5812000	Todirostrum cinereum finitimum	1
+5812791	Thera	1
+5818450	Tarache	2
+5818666	Tanaidae	1
+5821265	Timoleon	1
+5822115	Tychea	1
+5823715	Teleostomi	1
+5827644	Thomomys bottae	1
+5829614	Tricholoma virgatum	1
+5829886	Tanipeza	1
+5830063	Tabanus zonalis	1
+5835924	Taxidea taxus	1
+5836423	Trygon thalassia	1
+5838633	Tabanides	1
+5839756	Tunion	1
+5840010	Turritella communis	1
+5841094	Terebratula	1
+5846630	Torrez	1
+5848177	Theresia	1
+5848805	Trypetesa	1
+5850475	Thomomys monticola	1
+5850551	Typosyllis farallonensis	1
+5850867	Tropidonatus	1
+5852821	Tachys bistriatus	1
+5853015	Trichius	1
+5853227	Tipula pini	1
+5853870	Tinea granella	1
+5854132	Turbonilla	5
+5857378	Trichoecius	1
+5859687	Trypoxylon	1
+5859895	Thelidioteuthis	1
+5861142	Tunicata	1
+5863272	Triplophos	1
+5863773	Totanus littoreus	1
+5864338	Toxeuma	1
+5866165	Trebius	1
+5870299	Tritonalia	1
+5870984	Tealia	2
+5873924	Thomomys bulbivorus	1
+5874202	Tamias striatus	1
+5874336	Thyrsites atun	1
+5874645	Tineidae	1
+5877128	Terias mexicana	2
+5878331	Thylacinus	2
+5878757	Trypoxylon rejector	1
+5882270	Tetraneuris linearifolia	2
+5882644	Trichopteryx	1
+5882760	Theria	1
+5882950	Thaumaleus germanicus	1
+5883659	Tomopterus	1
+5887261	Tectibranchiata	1
+5889445	Tanaidacea	3
+5890345	Tritella laevis	1
+5894396	Tetraneuris linearifolia dodgei	1
+5894591	Talpidae	1
+5894714	Trichotaphe	1
+5895517	Tamiasciurus douglasii	1
+5896553	Tinea spilotella	1
+5901588	Tubulipora	4
+5902576	Treponema pallidum	1
+5903091	Tricholoma sulphureum	1
+5903101	Trachurus	1
+5904771	Tursiops	3
+5904908	Tenrec	2
+5904914	Theodorus	2
+5905275	Tadarida femorosacca	1
+5906285	Terebellides	9
+5907507	Tursiops gillii	1
+5914294	Taenia solium	2
+5919948	Tropinota squalida	1
+5922681	Tanais stanfordi	1
+5926940	Terebellides klemani	1
+5927028	Trypetesidae	1
+5927051	Trypetesa lateralis	1
+5933140	Thelepinae	1
+5935869	Turtur capicola	1
+5936169	Tricholoma personatum	1
+5936215	Thelepides	2
+5936428	Taeniocampa	1
+5938202	Trachynotus glaucus	1
+5945628	Trinotum	4
+5946608	Terebellinae	1
+5947827	Tharyx multifilis	1
+5948260	Triptychus	2
+5950752	Tinea vivipara	1
+5951487	Thermes	2
+5952679	Terebratulina	4
+5957074	Tabanus affinis	2
+5959191	Tanytarsus	1
+5963890	Trouessartia	2
+5964595	Thalarctos maritimus	1
+5964850	Trabecula	2
+5967997	Trullus	1
+5971612	Tabanus	3
+5971720	Thyreus	1
+5973400	Tayassuidae	1
+5975062	Trochilium	2
+5975270	Tetrodon nephelus	1
+5976512	Tursiops truncatus	2
+5979111	Tautoga onitis	1
+5980258	Thyatira	2
+5983901	Talis	1
+5985028	Thoracica	2
+5985839	Tanysphyrus	1
+5986010	Terebellides intoshi	4
+5987619	Thaliacea	1
+5988805	Tamiasciurus hudsonicus	1
+5991457	Turrilites	1
+5991504	Tillina magna	1
+5993166	Totanus totanus	1
+5995446	Uncinus	1
+5995455	Unico	1
+5995542	Utricularia purpurea	1
+5995696	Utricularia inflata	1
+5996763	Unica	1
+5997633	Urosalpinx	1
+5998148	Utricularia vulgaris	6
+5998229	Utricularia minor	1
+5998427	Utricularia subulata	1
+5999604	Ursus horribilis	2
+6000257	Utricularia cornuta	1
+6001137	Utricularia clandestina	1
+6001354	Uropsilus	1
+6002150	Uranidea pollicaris	1
+6002639	Umbelliferae	1
+6003932	Upeneus balteatus	2
+6004174	Urophycis tenuis	1
+6004294	Utricularia resupinata	1
+6005647	Utricularia intermedia	1
+6007498	Urolophus	1
+6008160	Urechidae	1
+6010590	Ulfa	2
+6011790	Utricularia gibba	2
+6012325	Umbra limi	3
+6013029	Uropsila	2
+6014060	Uranidea rhothea	1
+6015367	Ursus americanus	1
+6015514	Urania leilus	1
+6015595	Urticina crassicornis	1
+6015717	Urocyon littoralis	1
+6018481	Urocyon cinereoargenteus	1
+6018681	Urophycis chuss	1
+6021226	Ungulata	1
+6022900	Ultimus	2
+6023250	Uranidea	2
+6024382	Utricularia biflora	1
+6024820	Umagillidae	1
+6026901	Uinta	1
+6027287	Uronema curvata	2
+6027504	Utricularia striata	1
+6028170	Ursidae	1
+6034717	Vix	3
+6035991	Virgularia mirabilis	1
+6036121	Volvox	2
+6036203	Varta	1
+6038139	Venas	23
+6038257	Veretillum	1
+6042102	Vipera aspis	2
+6042931	Volvaria speciosa	1
+6042959	Vicia faba	1
+6044035	Valenciennellus	1
+6044083	Vorticella	1
+6044538	Ventriculus	2
+6045193	Vipera	1
+6045196	Veneta	1
+6046673	Ventralis	8
+6046781	Voluspa	2
+6046827	Vespertilionidae	1
+6054478	Vahlkampfia	1
+6054875	Vagabunda	1
+6057056	Ventrale	1
+6057441	Vimen	1
+6058674	Vertebrata	35
+6063762	Volvox globator	3
+6070876	Velleius	3
+6072469	Valsa stellulata	1
+6072637	Valerius	2
+6073476	Vespertilio	2
+6073573	Viola kelloggii	1
+6077108	Volvaria	2
+6078513	Viles	2
+6083207	Vilia	2
+6084097	Viatica	1
+6085667	Venusia	2
+6087068	Viola senecta	1
+6090383	Vossius	2
+6090838	Vicina	1
+6091896	Venerupis	1
+6092051	Vinciguerria	1
+6092138	Vulpes fulva	1
+6096144	Vulgare	1
+6097189	Viviparus	1
+6097344	Varchia	1
+6097628	Vulpes macrotis	1
+6107370	Visma	2
+6109443	Valkeria	1
+6109628	Vulpes velox	1
+6111959	Vivipara	1
+6120577	Veretillum cynomorium	2
+6123330	Vidua paradisea	1
+6123386	Velletia	1
+6124680	Vagna	2
+6124828	Variabilis	1
+6127671	Wistaria	1
+6129280	Watasenia	3
+6130927	Watsonius	1
+6131407	Welaka	1
+6131450	Williamsonii	1
+6132596	Wolga	2
+6137014	Watasenia scintillans	1
+6140473	Willia anomala	1
+6141568	Weltneria	1
+6141699	Willemoesia	1
+6142954	Xylomiges	2
+6143327	Xylocopa	2
+6143649	Xenocoeloma	1
+6143977	Xyloryctes satyrus	1
+6144114	Xolalges	2
+6150189	Xysta didyma	1
+6154195	Xiphias	1
+6155142	XYRIDACEAE	1
+6156699	Xyris caroliniana	1
+6158100	Xoloptes	1
+6158348	Xenichthys	1
+6161964	Xiphister	1
+6162969	Xysta	1
+6164468	Xenopneusta	1
+6165526	Xestospongia trindanea	1
+6166974	Xystreurys liolepis	1
+6167200	Xyloryctes	1
+6170521	Yama	3
+6172948	Yetus	1
+6175416	Zalophus	1
+6175638	Zizania aquatica	3
+6176564	Zosterops	1
+6177796	Zapus hudsonius	1
+6178896	Zannichellia palustris	2
+6183339	Zapus trinotatus	1
+6186560	Ziphiidae	1
+6187680	Zelus	1
+6189613	Zabulon	2
+6190767	Zelleria	1
+6193017	Zygaena filipendula	1
+6194792	Zonites algirus	1
+6196236	Zapodidae	1
+6196743	Zapus princeps	1
+6197534	Zygonectes	3
+6198116	Zygmena	1
+6199041	Ziphius cavirostris	2
+6199763	Zabrus	1
+6201892	Zanclopus	2
+6238313	Lyngbya	1
+6238325	Medusa	1
+6238327	Cladocera Latreille, 1829	3
+6238432	Victoria	7
+6238470	Marcia	1
+6238473	Linnaeus	14
+6238493	Marietta	2
+6238595	Echini	1
+6238605	Infusoria	7
+6238673	Claudius	1
+6238694	Americana	2
+6238707	Illinois Wilson 1910	1
+6238709	Julius	2
+6238710	Louisa	1
+6238727	Malleus	2
+6238748	Europa	3
+6238751	Marius	7
+6238770	Chironomid	1
+6238775	Proteus	3
+6238776	Lina	7
+6238781	Prima Foord, 2008	6
+6239118	Himalaya	1
+6239127	Medium	3
+6239172	Staudinger, ia aspilatella (Ragonot, 1887)	3
+6239209	Kallima inachis	1
+6239228	Felis	1
+6239264	Drusilla	1
+6239313	Carnivorous	3
+6239337	Chalcid	3
+6239601	Haltica fulvipes	1
+6239683	Locusta viridissima	1
+6239747	Apis unicolor Latreille	1
+6239859	Phi Saussure 1855	1
+6240033	Callidryas eubule	2
+6240198	Tasmania	3
+6240232	Xylina	1
+6240433	Colobesthes guttifascia Walker, 1851	1
+6240612	Oniscus murarius	1
+6240616	Limulus	2
+6240705	Terebellides ypsilon Grube, 1878	1
+6240799	Mais Adans.	93
+6240818	Schmidt	1
+6240835	Melania	1
+6240865	Macacus sinicus	2
+6240946	Sus	1
+6241007	Ips	2
+6241138	Regulus	1
+6241511	Calaenas nicobarica	1
+6241575	Australis	1
+6241699	Doria	1
+6241799	Serranus formosus	1
+6241868	Zeus	1
+6242068	Tria	5
+6242151	Cybium	3
+6242390	Coronaria Guett.	1
+6242553	Taurus	1
+6242757	Punta	1
+6242846	Homo	1
+6242851	Pyramidella subulata A. Ad.	1
+6242861	Nerita	1
+6243084	Dies Barnard 1951	1
+6243482	Bacchus	2
+6243508	Venus	1
+6243690	Anomia	2
+6243754	Aurelia	1
+6243807	Casella	3
+6243810	Charis	1
+6243831	Erasmus	5
+6243832	Principia P.L. Brenckle in Brenckle et al., 1982	1
+6243833	Australasia	2
+6243843	Lamina	1
+6243974	Termes	1
+6243989	Albina	3
+6244138	Victoria regia	1
+6244210	Regina	1
+6244465	Molluscoidea	1
+6244499	Grampus	2
+6244851	Europaea	1
+6245182	Danais archippus	1
+6245502	Severus	2
+6245508	Parnassus Reuter 1884	1
+6245582	Fiscus	3
+6245730	Phila	6
+6246855	Folia	1
+6246983	Lingua	1
+6247100	Paludinae	1
+6247125	Caligula	7
+6247195	Coati de Lacepède 1799	1
+6247230	Cassius	2
+6247233	Torquatus Goodman, Porter, Czelusniak et al., 1998	1
+6247839	Calais DC.	1
+6248073	Ceux	8
+6248102	Rosalia	1
+6248167	Liban	1
+6248300	Ovis	1
+6248460	Alismaceae	2
+6248794	Totanus calidris	1
+6249352	Cholera	1
+6249630	Thais (Thais) aperta Blainville, 1832	1
+6249640	Turbo setosus	2
+6250618	Steno	1
+6250801	Ella	1
+6251271	Alia	1
+6251654	Scotia	11
+6251879	Octavius	2
+6251995	Vena	2
+6252000	Labrum	3
+6253180	Equisetineae Rabenh.	1
+6253300	Utricularia vulgaris L.	1
+6253528	Micropterus salminoides	2
+6253560	Sitaris humeralis	2
+6253601	Lyda pyri (Schr. )	1
+6253611	Polistes gallica	4
+6253612	Chalicodoma muraria	2
+6253625	Termes bellicosus	2
+6253643	Bruchus granarius	1
+6253652	Thecla rubi	1
+6253653	Tipula	3
+6253766	Attila	1
+6253801	Ophidia	1
+6254142	Lucius	4
+6254159	Lazarus	1
+6254178	Dela Adans.	2
+6254182	Tiberius	3
+6254308	Tunica Ludw.	1
+6254313	Pensacola	6
+6254315	Angelina	2
+6254360	Barbara	1
+6254376	Colonia	1
+6254391	Hela Hudec & Lezhawa 1970	23
+6254684	Lepus campestris	2
+6254748	Myiarchus mexicanus	2
+6254902	Montezuma	2
+6254966	Sonoma	2
+6255085	Leucichthys artedi (Lesueur, 1818)	1
+6255096	Amia calva	2
+6255101	Janus	1
+6255103	Pamela	1
+6255500	Zosterops flavissima (nec Hartert )	1
+6255522	Truncatulina lobatula (Walker & Jacob, 1798)	1
+6255990	Lucia	1
+6256271	Nonionina umbilicatula (Montagu)	1
+6256399	Georgiana	1
+6256473	Colona	1
+6256732	Cobitis fossilis (non Linnaeus, 1758)	1
+6256984	Lycides	1
+6257433	Coleopteron	1
+6257480	Arcturus	1
+6257748	Planorbis bicarinatus	2
+6257852	Geaster fornicatus (Huds.) Hook. 1829	1
+6258145	Eriophorum gracile Koch	1
+6258604	Romulus	4
+6258839	Lepomis pallidus	4
+6258840	Cambarus viridis	1
+6258881	Percina caprodes (Rafinesque, 1818)	1
+6258882	Boleosoma nigrum	3
+6258885	Cayuga	1
+6258957	Leptodora hyalina	1
+6259025	Morula	2
+6259210	Eunice fucata	1
+6259366	Querquedula crecca	1
+6259484	Salta Adr.Sanchez	1
+6259550	Glugea bombycis	1
+6259575	Sirius Hedley 1900	1
+6259597	Salmo salar Linnaeus, 1758	1
+6259832	Festa	1
+6259852	Helix nemoralis	1
+6259867	Pleretes matronula	1
+6260002	Victoria regia Lindl.	1
+6260003	Cordulegaster annulata (Latreille, 1805)	2
+6260163	Atta	1
+6260164	Selina	1
+6260181	Xylomiges conspicillaris	1
+6260207	Vanessa levana	1
+6260239	Cela	7
+6260249	Zeus faber	2
+6260328	Pleurobranchus aurantiacus	1
+6260397	Anguillulina tritici	3
+6260490	Couleuvre	3
+6260516	Cyclostoma elegans	1
+6260560	Agrotis baja	1
+6260607	Simulia maculata Meig.	1
+6260642	Rhynchites betuleti Panz., 1813	1
+6260648	Euprepia caja	1
+6260797	Ira	1
+6260931	Corbula gibba (Olivi, 1792)	1
+6260985	Corsica	2
+6261031	Ita	1
+6261085	Verona	1
+6261317	Phyllirhoe bucephala	1
+6261347	Hyallela	1
+6261461	Amelia	2
+6261497	Ophelia	2
+6261936	Agrotis subgothica	1
+6262036	Lycaena agestis	1
+6262039	Nematus ventricosus	1
+6262364	Titus	1
+6262509	Lema merdigera Linn.	1
+6262830	Oceanus	3
+6262979	Aricia allous Hübner 1827/41	1
+6263152	Rhynchospora alba (L.) Vahl	1
+6263183	Silene	1
+6263204	Ceratophyllum demersum L.	3
+6263292	Physa hypnorum	3
+6263570	Gasterosteus aculeatus Linnaeus, 1758	1
+6263590	Myrmecoleon formicarius (Linnaeus, 1767)	1
+6263659	Grystes nigricans (Cuvier, 1828)	1
+6263667	Proteus anguineus	1
+6264057	Heterandria formosa Girard, 1859	1
+6264181	Cottus scorpio	1
+6265634	Omnia Enderlein 1925	1
+6265983	Fortuna Schlickum & Strauch 1972	1
+6266611	Felix	1
+6266723	Gracilaria syringella	1
+6267054	Helix aspersa	1
+6267480	Satyrus semele nat. siciliana Oberthur 1914	1
+6267703	Ajax R. A. Salisbury ex A. H. Haworth	1
+6267795	Annapolis	1
+6269098	Ge	4
+6269219	Burmeister	1
+6269548	Lucina transversa Bronn 1931	1
+6269956	Atlanta	1
+6270401	Chione occidentalis Müll. Arg.	1
+6270419	Paludina decisa (Say )	13
+6270497	Stenobothrus bicolor Thomas, C., 1872	2
+6270683	Ceria conopsoides	1
+6270922	Renilla	1
+6271064	Odynerus murarius	1
+6271279	Phalacrocorax graculus	1
+6271534	Alexis	1
+6271720	Harmodius	1
+6273110	Seli Aprostocetus acutiventris (Girault 1913)	1
+6273507	Placentalia	1
+6273509	Ichthyosauria	1
+6273631	Cambarus propinquus	1
+6273719	Plesiosauria	1
+6273730	Fulgur carica	1
+6273792	Chone infundibuliformis	1
+6274656	Encope laevis H.L. Clark, 1948	1
+6274785	Colletes	1
+6276945	Norma	2
+6277126	Chelone midas	2
+6277715	Sion Adans.	1
+6277817	Scabiosa arvensis L.	1
+6278518	Lois	2
+6279527	Nymphea odorata	1
+6279701	Viola stricta	1
+6279832	Pentastemon	1
+6279893	Gymnadenia conopea Perard	1
+6279909	Bavaria	1
+6280351	Libythea bachmanni	1
+6280748	Potamogeton natans L.	3
+6282439	Cardamine hirsuta L.	1
+6282466	Palestrina	7
+6282617	Myiarchus lawrencei olivascens	1
+6282660	Pitangus derbianus	1
+6283555	Charon equi Hsiung 1930	1
+6283609	Limnea peregra	1
+6284090	Reticulum	1
+6284105	Placentia	1
+6284168	Pompilus viaticus	1
+6284976	Psylla annulata Fitch, 1851	1
+6285393	Pyractomena angulata	1
+6285708	Terias nicippe	2
+6285821	Drasteria erechtea	2
+6286033	Gracilaria stigmatella Fabr.	1
+6286261	Gelechia cinerella	1
+6286723	Chironomus aberrans	1
+6286741	Boehmeria cilindrica	1
+6286850	Lispa tentaculata	1
+6286851	Lispe sociabilis Loew, 1862	1
+6287526	Caenis halterata (Fabricius, 1777)	1
+6287592	Nematus septentrionalis	1
+6287988	Paludina multilineata	1
+6288022	Trochus dolabratus Linnaeus 1758	1
+6288031	Orina A Adams 1870	1
+6288070	Parthenia armata Cptr.	1
+6288219	Cassius Kuwert, 1891	3
+6288341	Tapes staminea	1
+6288388	Proserpinaca pectinata Lam.	1
+6288826	Spinulosa	1
+6289419	Unio radiatus	1
+6289721	Catenicella ventricosa	3
+6290165	Oxus	2
+6290181	Diplotaxis tenuifolia (L.) DC.	2
+6290483	Juncus effusus L.	1
+6291727	Mya arenaria Linnaeus, 1758	2
+6293368	Matsya	1
+6294219	Nasturtium officinale R. Br.	2
+6295008	Typha latifolia L.	1
+6295022	Lestes fusca (Van der Linden )	1
+6295124	Psylla rubi Walsh & Riley	1
+6295125	Psylla tripunctata Kuwayama, 1908	1
+6295197	Eriophorum alpinum L.	1
+6295243	Eriophorum vaginatum L.	1
+6295340	Grystes nigricans	2
+6295715	Helix acuta	1
+6295758	Paramecium bursaria (Ehr.)	1
+6296285	Tortrix ribeana	1
+6296309	Lithosia griseola	1
+6297087	Aphis salicti	1
+6297177	Balistes carolinensis Gronow, 1854	1
+6297245	Pomacanthus arcuatus (Linnaeus, 1758)	1
+6297895	Tinea purella Chrétien 1908	1
+6297955	Tenthredo lutea Linnaeus 1758	1
+6298064	Nerita vivipara O. F. Müller, 1774	1
+6298093	Dermestes paniceum Linnaeus, 1758	1
+6298148	Curculio lineatus	1
+6298154	Curculio granarius	1
+6298412	Limnea stagnalis	2
+6299989	Pseudochirus cooki	1
+6302083	Odostomia nitens Jeffreys, 1870	1
+6302518	Spelerpes porphyriticus	2
+6302575	Spheroides maculatus	1
+6303610	Potamogeton heterophyllus Schreb.	1
+6304768	Trivia europaea	1
+6305016	Paludina ponderosa	4
+6305436	Canis niger	1
+6306254	Batistes capriscus	1
+6306255	Habenaria chlorantha (Custer) Bab.	2
+6306569	Hylesinus micans	1
+6306807	Rhynchites betulae	1
+6306991	Aphis aceris Linnaeus, 1761	1
+6307168	Silpha laevigata Fabricius, 1775	1
+6307352	Cnethcampa pityocampa	1
+6307410	Desoria glacialis Nicolet, 1841	1
+6307463	Eccoptogaster pruni	1
+6308885	Herpestis amplexicaulis	1
+6309962	Pennatularia	1
+6310868	Balanus amphitrite Darwin, 1854	2
+6311554	Pseudopolydora gibbsi Light 1974	1
+6311571	Spio bombyx Claparède, 1870	1
+6311593	Pseudopolydora kempi californica Light, 1969	1
+6311785	Cetonia inda	1
+6311796	Cupes capitata Fabricius, 1801	2
+6311818	Butalis cerealella	2
+6314368	Formica ligniperda	1
+6314396	Acroperus leucocephalus (Koch, 1841)	1
+6314434	Leptotheca perlata Gurley, 1893	1
+6314482	Hyalinia glabra	1
+6315342	Cambarus virilis	1
+6315557	Saxidomus squalidus Deshayes, 1853	1
+6316577	Lymnaea obrussa	1
+6316833	Cingula cingillis (Montagu, 1803)	1
+6317115	Liotheidae	1
+6317483	Peromyscus gratus gentilis	1
+6317484	Peromyscus zelotes	1
+6317888	Helix pisana	1
+6318002	Glycymeris generosa (Gould )	1
+6318019	Thais	1
+6318020	Purpura crispata	2
+6318343	Odonates	1
+6318931	Limnanthemum lacunosum (Vent.) Griseb.	1
+6319085	Rosa hispida hort. ex Poir.	1
+6319126	Anthocharis genutia	1
+6319754	Carex riparia Curtis	1
+6320387	Bulla hypnorum Linnaeus, 1758	1
+6320504	Paludina elongata	1
+6321072	Limnaea speciosa (Rossm. )	1
+6322193	Lachnolaimus suillus Cuvier, 1829	1
+6322506	Carabus gibbus Fabricius, 1794	1
+6325648	Palingenia virgo	1
+6325752	Baetis cerea Pictet, 1843	1
+6326940	Pteroglossus sulcatus Cab.	1
+6327412	Odostomia dolioliformis Jeff.	1
+6328032	Phallusia mentula	1
+6328210	Macrosila cingulata (Linn. )	2
+6329409	Icaria variegata	2
+6329643	Debora Power 1879	1
+6329705	Helix pomata	1
+6330804	Gemellaria loriculata (L. )	1
+6331943	Nemo	1
+6333067	Chrysomela tenebricosa	1
+6333952	Anapta inermis Fisher, 1907	1
+6335675	Physa castanea (Gassies, not Lam. )	1
+6335721	Eragrostis reptans (Michx.) Nees	1
+6336328	Pseudaglossa lubricalis Gey.	1
+6337616	Ophion luteum agg.	1
+6337870	Palometa Jordan & Evermann 1896	2
+6337919	Anisota rubicunda	2
+6340966	Epinephele jurtina	1
+6341649	Pieris brassicae (Linnaeus, 1758)	4
+6342188	Stenobothrus pulvinatus (Fischer von Waldheim, 1846)	2
+6342362	Epacromia strepens	1
+6342380	Samia gloveri	1
+6343216	Tinea granella Linnaeus, 1758	1
+6343287	Alaus oculatus (Linnaeus)	1
+6343400	Myotis subulatus	1
+6343486	Atta barbara (Linnaeus)	1
+6343530	Hemimetabola	1
+6344005	Gonorhynchus greyi (non Richardson, 1845)	1
+6344921	Porzana bailloni	1
+6344958	Rhombosolea monopus Günther, 1862	2
+6344963	Hemiramphus intermedius (non Cantor, 1842)	1
+6345579	Nebria brevicollis Fabricius	1
+6347028	Rhynchote	1
+6348043	Conocephalus mandibularis Charpentier, 1825	1
+6348812	Caprella acutifrons Latreille, 1816	1
+6350961	Stenodictya lobata	1
+6351117	Calyptraea chinensis Linnaeus, 1758	1
+6351373	Lithothamnium R. A. Philippi	2
+6355217	Centropristis atrarius	2
+6355220	Stenotomus argyrops	2
+6355672	Sagittaria calycina Engelm.	1
+6357427	Epidermoptes bifurcatus Rivolta, 1876	1
+6358660	Melania virginica	1
+6364916	Chartergus apicalis F.	1
+6372269	Trapa natans L.	1
+6374000	Natica concinna	1
+6374835	Ker Muma 1964	1
+6375783	Nymphaea advena Ait.	2
+6377140	Bulimnaea megasoma (Say, 1824)	2
+6377150	Limnaea caperata (Say )	2
+6377166	Limnaeus desidiosus	1
+6377174	Limnaeus elodes	1
+6377499	Schizothaerus nuttallii (Conrad, 1837)	3
+6380119	Hydrocotyle americana L.	1
+6380152	Polygonum arifolium L.	1
+6381219	Pagrus unicolor (Quoy & Gaimard, 1824)	1
+6385728	Ursus middendorffi	1
+6386936	Sigmodon minimus	1
+6387536	Aegeria acerni Clem.	3
+6387559	Melasoma scripta	1
+6387619	Pilidium gyrans group	1
+6391559	Cervus nannodes	1
+6392158	Trachurus trachurus (Linnaeus, 1758)	2
+6392394	Ctenolabrus adspersus Walb.	1
+6392410	Pomacentrus rubicundus	1
+6392413	Pleuronectes glaber	1
+6392503	Myxobolus lintoni Gurley, 1893	1
+6392505	Myxobolus oblongus Gurley, 1893	1
+6392507	Myxobolus gigas Auerbach, 1906	1
+6392512	Chloromyxum quadratum Thélohan, 1895	1
+6392576	Chloromyxum funduli Hahn, 1915	3
+6392588	Lentospora cerebralis Plehn 1905	1
+6392647	Cyprinodon variegalus	1
+6396041	Gibbula umbilicata	1
+6398580	Fiber zibethecus	1
+6404914	Eccoptogaster destructor	1
+6404996	Poa fluitans (L.) Scop.	1
+6405208	Telmatodytes palustris (A. Wilson, 1810)	1
+6406372	Ursus kenaiensis	1
+6407133	Belone longirostris Schinz, 1822	1
+6407232	Fistularia serrata Cuvier, 1816	1
+6407943	Sertularella halecina	1
+6408046	Mustela pennanti	1
+6408978	Myiarchus platyrhynchus Ridgway 1885	1
+6414542	Daphne pulex	1
+6415153	Textularia variabilis Williamson, 1858	1
+6417709	Pterobalæna minor	1
+6419067	Caryoborus arihriticus Fabr.	1
+6419262	Euryomia inda	1
+6419710	Dermatobia noxialis	1
+6419714	Epidermoptes bihamatus Trouessart & Neuman, 1887	1
+6419727	Pleurotus ostreatus (Jacq.) P. Kumm. 1871	1
+6420471	Limnophora triangulifera	1
+6420804	Ophioidina elongata Mingazzini 1893	1
+6420823	Frenzelina conformis (Diesing 1851)	1
+6421031	Tursiops subridens Flower, 1884	1
+6424715	Noctua asteris Denis & Schiffermuller, 1775	1
+6425198	Depressaria applana Dufrane 1949	1
+6425712	Dalla riza Mabille 1889	1
+6428602	Myiarchus cooperi	1
+6428604	Myiarchus inquietus [author unknown] 1889	2
+6431026	Sphyraena picuda Bloch & Schneider, 1801	1
+6431033	Baca Raf.	1
+6431040	Habenaria bifolia (L.) R. Br.	1
+6431623	Acmaea pelta (Rathke, 1833)	1
+6431689	Lutraria capax Gould, 1850	1
+6436305	Grapta umbrosa	1
+6436712	Xyris flexuosa Muhl. ex Elliott	1
+6439523	Lymnea acuminata	1
+6440716	Tadarida molossa	1
+6441121	Grystes salmoides (Lacepède, 1802)	2
+6441689	Amiurus albidus Lesuour.	4
+6443700	Carex trachycarpa Cheeseman	1
+6443865	Senega officinalis	1
+6444094	Brasenia peltata Pursh	1
+6444738	Acanthurus chirurgus (Bloch, 1787)	2
+6444974	Gryllus devastator Licht	1
+6445545	Calliostoma conuloides	1
+6445897	Leptovignea elongata (L.) Fedde & J.Schust.	1
+6445900	Amphipeplea involuta (Harv. )	1
+6446499	Staphylinus brunnipes Fabricius, 1781	1
+6449669	Lepus floridanus Allen, 1890	2
+6449736	Cervus merriami	1
+6449763	Sciuropterus volans querceti	1
+6450679	Physa fragilis Mighels & Adams 1842	1
+6451315	Physa osculans Aid.	1
+6451320	Physa globosa	3
+6452135	Chaetopterus insignis Baird, 1864	1
+6456273	Solanum dulcamara L.	1
+6457129	Homorus omeri Connolly 1928	1
+6458774	Acanthocybium solanderi (Cuvier, 1832)	1
+6458878	Oncorhynchus quinnat	1
+6464093	Paludina bengalensis	3
+6464274	Turbo saxosus	1
+6465504	Acarus plumiger Koch, 1836	1
+6466080	Pseudotriacis microdon	1
+6466135	Scarus coeruleus (Edwards, 1771)	1
+6466767	Carex aequabilis Boott	1
+6466840	Grampus orca	1
+6467241	Catostommus commersoni	1
+6467481	Retropinna richardsoni Rich.	1
+6470358	Sinapis laevigata	1
+6471009	Tropidonotus sipedon HOLBROOK 1852	1
+6474214	Agonostoma forsteri Bl. Schn.	2
+6474932	Cybium maculatum (Mitchill, 1815)	1
+6476369	Paludina lineata Val.	1
+6478483	Limnanthemum trachyspermum	1
+6479372	Periphyllus testudo	1
+6481219	Echinodorus radicans (Nutt.) Engelm.	1
+6484221	Podocopina	1
+6491157	Cythereis (P.) torquata	1
+6492868	Cloeon dimidiatum Curtis, 1834	1
+6493295	Spermosyllis torulosa Claparède, 1864	1
+6495093	Acholoe astericola (Delle Chiaje, 1841)	1
+6496657	Lyda laricis Giraud, 1861	1
+6497699	Pteronus pini	1
+6498393	Statice virgata	1
+6504260	Potamogeton americanum	2
+6505650	Jussiaea decumbens	1
+6507223	Stolephorus brownii Puyo, 1949	2
+6507225	Centropomus undecimalis (Bloch, 1792)	1
+6507228	Scomberomorus caballa (Cuvier, 1832)	1
+6512045	Ursus eulophus	1
+6512222	Tetrophthalmus chilensis Grosse, 1885	1
+6513565	Heliconia charitonia Linn	1
+6513593	Trochilium denudatum Harr.	1
+6513611	Philampelus satellitia	1
+6514990	Mugil brasiliensis (non Spix & Agassiz, 1831)	1
+6515053	Balaninus brassicae	1
+6515904	Feronia maura	1
+6516652	Stylorhynchus longicollis	1
+6522655	Meganyctiphanes norvegica (M. Sars, 1857)	3
+6525299	Tricholoma rutilans (Schaeff.) P. Kumm. 1871	1
+6525309	Lactarius trivialis (Fr.) Fr. 1838	1
+6530839	Menipea pribilofi	1
+6536657	Agrotis repentis	1
+6538624	Anisocirrus decipiens Gravier, 1906	1
+6540688	Orya barbarica	1
+6546091	Caranx crysos (Mitchill, 1815)	1
+6547766	Paludina carinata	3
+6550135	Meyenia crateriformis Potts, 1882	1
+6550275	Lasiurus cinereus (Beauvois, 1796)	1
+6550597	Paludina intertexta (Say )	2
+6550682	Physa aurea	1
+6550854	Physa microstoma Haldeman, 1843	3
+6552299	Euthynnus alleteratus (Rafinesque, 1810)	1
+6554205	Terebellides sieboldi Kinberg, 1866	1
+6554301	Terebella californica (Moore, 1904)	1
+6554345	Polycirrus nervosus Marenzeller, 1884	1
+6554353	Polycirrus luminosus Verrill, 1900	1
+6554357	Lysilla inermis Ehlers, 1913	1
+6568640	Goregonus albus	2
+6569201	Paragorgia arborea (Linnaeus, 1758)	1
+6569211	Eutamias alpinus	1
+6574766	Anchovia mitchilli	12
+6576634	Pelopaeus madraspatanus	1
+6587763	Lepus truei Allen 1890	1
+6587798	Neotoma tenuicauda Merriam 1892	1
+6587813	Sciurus apache	1
+6587980	Veretillum cynomorium (Pallas, 1766)	1
+6592497	Michaelia heteropus (Michael, 1881)	1
+6596135	Thaumatolampas diadema	1
+6596138	Cavernularia haberi	1
+6596139	Pterygioteuthis margaritifera	1
+6597363	Peromyscus boylei	1
+6598726	Oncorhynchus chouicha Jordan & Gilbert, 1883	1
+6599974	Tricholoma albobrunneum (Pers.) P. Kumm. 1871	1
+6603082	Notropis megalepis Smith 1962	1
+6604167	Mydas clavatus (Drury, 1773)	1
+6606396	Callophyllis crispata Okamura	1
+6607729	Clavaria apiculata Fr. 1818	1
+6613490	Daphne magna	1
+6613540	Buchholzia fusca	1
+6615027	Depressaria yeatiana	1
+6624071	Onuphis conchylega Audouin and Milne-Edwards, 1833	1
+6632613	Oliva tesselata Lamarck, 1811	1
+6634627	Leuciscus rutilis	1
+6634706	Muraenoides gunnellus	1
+6634717	Bairdiella chrysoura (Lacepède, 1802)	2
+6636612	Holacanthus ciliaris (Linnaeus, 1758)	1
+6637326	Vejovidae	4
+6638704	Clupea caspia Eichwald, 1838	1
+6641959	Cirratulus luxuriosus Moore, 1904	1
+6662076	Holometabola	1
+6663923	Epinephelus nigritus (non Holbrook, 1855)	1
+6666970	Lutra mira	1
+6668072	Cyperus phymatodes Muhl.	1
+6669091	Stenella helminthophora	1
+6669547	Neotoma ferruginea	1
+6669788	Aedia limitaris Walker 1864	1
+6674049	Phycis earllii Bean, 1880	1
+6674187	Ariopsis milberti ?	1
+6674273	Photoblepharon palpebratum (Boddaert, 1781)	1
+6692158	Gymnancycla canella	1
+6694372	Crassotrea virginica	1
+6695462	Glandina guttata	2
+6695528	Utricularia biflora Lam.	1
+6696943	Cantharellula infundibuliformis Singer 1969	1
+6696966	Boletus castaneus Weber 1787	1
+6699221	Tyrannula mexicana Kaup	1
+6700905	Pelopaeus vindex Lepeletier de Saint Fargeau, 1845	1
+6701430	Schizomavella auriculata (Hassall, 1842)	1
+6709792	Gracilaria purpuriella Chamb.	1
+6720278	Ritterella rubra Abbott & Trason, 1968 (preoccupied)	2
+6720508	Jaeropsidae	1
+6721514	Myiarchus nigriceps	3
+6722435	Myiarchus lawrencei bangsi	1
+6722459	Serphophaga cinerea cana	1
+6722715	Eubalæna Sieboldii	1
+6722957	Eulima crassula A. Adams, 1863	1
+6724428	Chrysaora gilberti Kishinouye 1899	1
+6724430	Dermocystidium marinum Machin, Owen, Collier, 1950	1
+6724443	Grampus rectipinna	1
+6725648	Mystacida trifasciata Thevenet, 1871	1
+6726547	Callimorpha hera	2
+6733145	Pornatomus saltatrix	1
+6738262	Branchiobdella astaci Odier, 1823	1
+6741331	Dromidia segnipes Weymouth, 1910	1
+6748497	Depressaria parilella	2
+6751622	Alosa vulgaris	3
+6751751	Pterolichus corniger Trouessart & Neuman, 1888	1
+6751752	Neumania chelifer Trouessart & Neuman, 1888	1
+6754472	Sciurus poliopus	1
+6773192	Monocystis mitis	1
+6773193	Chytridiopsis socius Schneider 1884	1
+6773204	Pygospio seticornis Oerst.	1
+6777895	Rhinonemus caudacuta (Storer, 1848)	1
+6781725	Psylla carpini Fitch	1
+6781747	Marasmius scorodonius (Fr.) Fr. 1836	1
+6786106	Labidognathus parasiticus Caullery, 1914	1
+6786195	Perezia lankesteriae L. Léger & Duboscq 1909	1
+6786209	Xenocoeloma Caullery & Mesnil 1915	1
+6791206	Lachnus australi (Ashmead, 1881)	1
+6797343	Labidocarpus rollinati Trouessart, 1895	1
+6799140	Atopomelus locusta Trouessart, 1917	3
+6813048	Eutamias cinereicollis	1
+6817625	Epinephalus fasciatus (Forsskål, 1775)	1
+6817699	Hoemulon gibbosum Bl.	1
+6819711	Gobius paradoxus Günther, 1861	1
+6820858	Becquerelia superba	1
+6822873	Squalus cephalus	1
+6833024	Coregonus williamsonii Gir.	1
+6835619	Gracilaria rhodinella Herrich-Schaffer, 1855	1
+6836982	Trophonia capulata Moore, 1909	1
+6836983	Brada pilosa Moore, 1906	1
+6837739	Celleporella hyalina (Linnaeus, 1767)	1
+6838262	Dunaliella euchlora	1
+6840017	Cryptophialus coronatus Tomlinson, 1960	1
+6840321	Lithoglyptes spinatus Tomlinson & Newman, 1960	1
+6842262	Funduhs heteroditus	1
+6849770	Neotoma parvidens	1
+6856787	Fruva obsoleta Grote 1877	1
+6857835	Primnoa reseda (Pallas, 1766)	1
+6861149	Neotoma tropicalis	1
+6865241	Gadus australis Hutton, 1872	1
+6866369	Diplodus holbrooki (Bean, 1878)	1
+6872611	Peromyscus allex	2
+6883743	Erythrina fulgens Loisel.	1
+6889841	Columnea serrata (Klotzsch ex Oerst.) Hanst.	1
+6893165	Caulolatilus microps Goode and Bean, 1878	1
+6894910	Stirparia ciliata	1
+6894975	Lernaeopoda gibber	1
+6895386	Cavernularia obesa Valenciennes in M. Edwards & Haime, 1850	1
+6897416	Onychomys leucogaster albescens	1
+6897916	Spiophanes longicirris Caullery, 1915	1
+6898070	Sciurus chiricahuae Goldman 1933	1
+6902026	Peromyscus banderanus	1
+6902213	Peromyscus lepturus	2
+6902218	Peromyscus lophurus	1
+6902219	Peromyscus simulatus	1
+6903044	Thomomys baileyi	1
+6904880	Peromyscus allophylus	1
+6905228	Siphonomecus ingens Fisher, 1947	1
+6930991	Scutia maritima Perkins	1
+6938751	Pothos digitata Jacq.	1
+6938928	Nuphar sagittaefolium	1
+6943731	Halicornaria sinuosa Fraser, 1925	1
+6949223	Bacidia obscurata (Sommerf.) Zahlbr. 1905	1
+6962731	Cybianthus lawrencei	2
+6966715	Pentstemon formosus	2
+6974935	Belone latimanus Poey	1
+6987366	Notonecta unifasciata Guerin-meneville, 1857	1
+7018741	Pentstemon superbus	1
+7032679	Cythereis (P.)falcata	1
+7053622	Altica fulvipes	4
+7083995	Potamogeton heterophyllus var. terrestris	1
+7097979	Ips varius Marsham, 1802	1
+7112469	Clavaria villosa Schumach. 1803	1
+7114780	Saccopsis alleni Brumpt, 1897	1
+7117098	Polybia cubensis de Saussure 1854	1
+7118138	Myxobolus strongylurus	1
+7118625	Perla coarctata (Klapálek, 1912)	1
+7137472	Uca (Leptuca) oerstedi Rathbun, 1904	1
+7140407	Pseudotriakis microdon de Brito Capello, 1868	1
+7148015	Prototroctes oxyrhynchus Günther, 1870	1
+7148017	Anthias richardsoni Gthr.	1
+7149957	Tanypus pusillus Loew, 1866	1
+7153309	Pyractomena borealis (Randall, 1828)	1
+7154619	Lepus merriami	1
+7158613	Russula graveolens Romell 1885	1
+7159472	Symbiotes avus Trouessart, 1887	1
+7159483	Protalges robini Trouessart, 1885	1
+7159496	Favettea heteroclyta Trouessart, 1916	1
+7163512	Astroschema sublaeve Lütken & Mortensen, 1899	1
+7166837	Cynips affinis	2
+7167996	Nealges poppei Trouessart, 1887	1
+7170096	Dasypterus floridanus	1
+7179576	Gryllacris combusta	1
+7183317	Tinea malinella	1
+7199849	Mychophilus curvatus Chatton & Brément, 1909	1
+7206247	Cerambyx linearis Linné, 1761	1
+7206373	Photoblepharon palpebratus (Boddaert, 1781)	1
+7206374	Photinus castus	1
+7206375	Argyropelecus affinis Garman, 1899	1
+7206376	Cypridina luciferin	1
+7206377	Tinea lacteella Fabricius 1794	1
+7206378	Bostrichus calligraphus Duftschmid, 1825	1
+7206379	Aleyrodes proletella (Linnaeus, 1758)	1
+7206380	Apis florisomne Linnaeus, 1758	1
+7206382	Strongylium testaceum Mäklin FW 1864	1
+7206383	Byrrhus museorum Linnaeus, 1767	1
+7206384	Tortrix ivana Fernald 1901	1
+7206385	Phaenax auricoma Rothschild, 1878	1
+7216758	Onychomys torridus canus	1
+7216759	Peromyscus musculus nigrescens	1
+7216761	Peromyscus goldmani	1
+7216776	Peromyscus banderanus vicinior	1
+7216777	Peromyscus banderanus angelensis (Saussure 1904)	1
+7216778	Peromyscus yucatanicus badius	1
+7216781	Peromyscus xenurus	1
+7216782	Peromyscus felipensis	1
+7216783	Peromyscus amplus	1
+7216871	Perodipus streatori Merriam, 1894	1
+7216907	Lepus gabbi	1
+7216910	Lepus festinus	1
+7216913	Lepus tularensis	2
+7216921	Canis goldmani	2
+7224337	Ereutho plumosa Wollebæk, 1912	1
+7224952	Microstomum philadelphicum Leidy 1851	1
+7231620	Carpilodes virgatus	1
+7249848	Sciurus poliopus senex	1
+7249858	Peromyscus sonoriensis blandus	1
+7249859	Peromyscus attwateri pectoralis	1
+7249873	Liomys parviceps	1
+7249881	Ursus americanus eremicus	1
+7260728	Microgadus pruinosus	1
+7260729	Mugil perusii Valenciennes, 1836	1
+7260730	Epinephelus ascensionis (Osbeck, 1765)	1
+7260731	Scarus guacamaia Cuvier, 1829	1
+7260852	Clupanodon caeruleus (Girard, 1854)	1
+7260853	Henneguya nuesslini	1
+7260854	Chironomus aberratus Keyi, 1961	1
+7260855	Tanypus flaveolus Williston, 1896	1
+7270039	Vejovinae	1
+7270048	Peromyscus crinitis	1
+7275153	Eudamus electra Lintner, 1881	1
+7277579	Phenacomys silvicola	1
+7292627	Phora americana Schmitz and Wirth, 1954	1
+7295736	Sturmia occidentalis Coquillett, 1897	1
+7296037	Gelechia beneficentella	1
+7297457	Polycirrus arenivorus Caullery, 1916	1
+7310596	Cyathoceras quaylei	1
+7317502	Elphidium concinnum Khalilov 1957	1
+7323059	Nisella verticillata Johnson, 1899	1
+7328004	Menipea erecta	1
+7328005	Flustra lichenoides	1
+7337723	Cryptolaria symmetrica	1
+7342632	Stichopus tropicalis	1
+7348920	Sciuropterus volans goldmani	1
+7352636	Xantho lacunosus Rathbun, 1906	1
+7353143	Retepora pacifica	1
+7377623	Bugula curvirostrata	1
+7377624	Bugula laxa	1
+7377951	Idmidronea atlantica (Forbes, in Johnston, 1847)	1
+7379573	Maldane coronata Moore, 1903	1
+7391953	Sibinia setosa (LeConte, 1876)	1
+7405158	Lytocarpus similis Nutting	1
+7427679	Myiarchus crinitus residuus Howe	1
+7430585	Pavonia triloba Hochst. ex Webb	1
+7438651	Astrangia tangolaensis	1
+7438654	Astrangia caboensis Durham 1947	1
+7438935	Stauronereis moniloceras Moore, 1909	1
+7438971	Eunotomastus gordiodes Moore, 1909	1
+7439124	Naineris robustus Moore, 1909	1
+7439196	Dendraster mexicanus H.L. Clark, 1948	1
+7439441	Echinocyamus (Mortonia) terminalis Grant & Hertlein, 1938	1
+7439447	Joeropsis dubia paucispinis Menzies, 1951C	1
+7444910	Leptophytum laeve (Foslie) Adey	1
+7444911	Porella proboscidea Hincks, 1888	2
+7444912	Alcyonium sidereum Verrill, 1922	1
+7448356	Hadrurus arizonensis austrinus Williams 1970	5
+7448467	Elphidium excubitor Nicol 1944	1
+7448468	Stegopoma gilberti Nutting 1905	1
+7448469	Antennella complexa	1
+7448470	Antennularia verticillata	1
+7448471	Lytocarpus hawaiiensis Nutting	1
+7448472	Allopora campyleca paragea Fisher 1938	1
+7448473	Allopora petrograpta Fisher, 1938	1
+7448474	Cryptohelia gigantea Fisher 1938	1
+7448475	Stylaster cancellatus Fisher, 1938	1
+7448477	Stylaster scabiosa	1
+7448479	Bathyphellia australis Dunn, 1983	1
+7448480	Balanophyllia cedrosensis Durham, 1947	1
+7448481	Astrangia browni Palmer, 1928	1
+7448482	Prosthiostomum katoi Poulte 1975	1
+7448483	Eunice interrupta Treadwell, 1906	1
+7448484	Ramiellona strigosa	1
+7448485	Plutellus blacki Macnab & McK.-F.	1
+7448486	Cythereis (Cythereis) discophora Skogsberg, 1928	1
+7448487	Cythereis (Cythereis) ephippiata Skogsberg, 1928	1
+7448488	Cythereis (Cythereis) frequens Skogsberg, 1928	1
+7448489	Cythereis (Cythereis) longiductus Skogsberg, 1928	1
+7448490	Cythereis (Cythereis) megalodiscus Skogsberg, 1928	1
+7448491	Cythereis montgomeryensis	1
+7448492	Cythereis (C.) pacifica	1
+7448493	Cythereis (P.) polita	1
+7448494	Cythereis (P.) radiata	1
+7448495	Cythereis (C.) recurvirostra	1
+7448496	Cythereis (Procythereis) robusta	1
+7448497	Cythereis spinifera	1
+7448498	Cythereis (Cythereis) taeniata Skogsberg, 1928	2
+7448499	Cythereis (Cythereis) theeli Skogsberg, 1928	1
+7448501	Cryptophialus epacrus Tomlinson, 1973	1
+7448502	Cryptophialus heterodontus Tomlinson, 1969	1
+7448503	Cryptophialus rossi Tomlinson, 1973	1
+7448504	Cryptophialus unguiculus Tomlinson, 1969	1
+7448505	Cryptophialus wainwrighti Tomlinson, 1969	1
+7448506	Cryptophialus zulloi Tomlinson, 1973	1
+7448507	Berndtia nodosa Tomlinson, 1967	2
+7448508	Kochlorine ulula Tomlinson, 1973	1
+7448509	Lithoglyptes hirsutus	1
+7448510	Weltneria aapta Tomlinson, 1969	1
+7448511	Balanus durhami	1
+7448512	Balanus (Megabalanus) tintinnabulum clippertonensis Zullo 1969	1
+7448513	Serolis menziesi Hessler 1970	1
+7448514	Pseudothelphusa sonorensis Miles, 1967	1
+7448515	Argyrotheca lowei Hertlein & Grant, 1944	1
+7448517	Dendraster laevis H. L. Clark, 1948	1
+7448519	Mesothuria (Diplasiothuria) carnosa Fisher, 1907	1
+7448520	Laetmogone biserialis Fisher, 1907	1
+7448524	Lithoglyptes hirsuta Tomlinson, 1963	1
+7452493	Ephemerellini	3
+7463586	Paepalanthus brunneus Moldenke	1
+7470047	Velinea gracilis Vosmaer, 1883	1
+7472288	Silis atrithorax Pic 1917	2
+7472289	Synallecula elongata	1
+7472290	Synallecula obacuripalpis Pic 1917	2
+7472291	Blanchardia pulchella Brongniart, 1893	2
+7472292	Microcyema vespa van Beneden, 1882	1
+7472293	Exogone brevicornis Webst. & Bened.	1
+7472294	Exogone longicornis Westheide, 1974	2
+7472295	Culicoides javanicus Salm, 1918	1
+7472296	Machimus pallipes Ricardo, 1922	1
+7472297	Euryzonus ventricosus Trouessart, 1917	1
+7472298	Carabus purpurescens	1
+7472299	Synallecula elongata Pic 1952	1
+7479632	Nemexia melica	2
+7495016	Iria inornata Stål	1
+7503193	Rybaxis conjuncta (LeConte, 1849)	1
+7517357	Minchinia costalis Wood & Andrews, 1962	1
+7521720	Minchinia mercenariae	1
+7601483	Leiopus texanus Aurivillius, 1923	3
+7605699	Bambusa affinis Munro	1
+7613194	Aricia morio Zetterstedt, 1845	1
+7613196	Lathridius desertus Fall	1
+7613197	Agriphila bistrialis Geyer 1832	1
+7613202	Aspistes analis Kirby, 1837	1
+7786704	Lytta vesicatoria	1
+7800911	None	19
+7801113	Grapevine associated Partitivirus-2	3
+7801334	Trichina spiralis	3
+7801370	Tineina	1
+7801517	Galaxias attenuatus	2
+7801814	Cestodes	1
+7802651	Listera R. Br.	1
+7802939	Daphne passerina E.H.L. Krause	1
+7803094	Leucania unipuncta	1
+7803371	Apis fasciata	1
+7803960	Dermanyssus avium	1
+7804261	Toninia arenaria Räsänen 1944	1
+7805063	Spilosoma fuliginosa	1
+7807500	Lymnaea auricularia (L.)	1
+7807806	Helleborine Moench	1
+7808417	Prosopistoma punctifrons	1
+7808912	Picus major	1
+7810105	Ostrea virginiana	1
+7813071	Limax arborum	1
+7813317	Protococcus nivalis	1
+7813918	Apis floralis	1
+7813948	Grapta comma	1
+7814043	Chrysomela cerealis	1
+7818327	Phocaena communis Lesson, 1827	1
+7818340	Rhynchites betuleti	1
+7818621	Doropygus gibber	2
+7819246	Lumbriconereis erecta	1
+7819247	Maldane disparidentata	1
+7820695	Brachiopod	3
+7822131	Pyrosoma elegans	1
+7822142	Leptoclinum maculatum	1
+7822614	Nassa incrassata	1
+7825137	Nereis cultrifera	1
+7826047	Lytta cinerea	1
+7826048	Nochotta oleracea S.G. Gmel.	1
+7826066	Lampyris italica	1
+7829386	Nereis dumerilii	1
+7830531	Lyria (Lyria) cordis Bayer, 1971	1
+7830696	Coccus aesculi Kollar, 1848	1
+7830868	Argynnis dia	1
+7830917	Bryophila glandifera	1
+7831197	Nematus viminalis	1
+7832066	Sarcophaga bivittata Kano & Lopes, 1971	1
+7832733	Collybia palmarum (Murrill) Murrill 1939	1
+7832869	Paeon elongatus Wilson C.B., 1932	1
+7833030	Collybia sedula P. W. Graff 1935	1
+7833053	Tribonium conspurcatum (Burmeister 1838)	1
+7833105	Crella gracilis Alander, 1942	1
+7834494	Chelonia caja	1
+7836527	Phytonomus punctatus	1
+7839602	Argynnis idalia	1
+7842232	Tipula latifolia Alexander, 1944	1
+7842724	Ebo dispar Schick, 1965	1
+7845695	Phasianella pullus	1
+7846563	Ostrea angulata	1
+7846965	Physa scalaris	1
+7856130	Porina concamerata (Stirt.) Zahlbr. 1922	1
+7858109	Leccinum palustre M. Korhonen 1995	1
+7859435	Elodes virginica (Linnaeus) Maximowicz	1
+7865163	Cyathocormus mirabilis	1
+7867503	Bacillus subtilis str. 10	1
+7880980	Corvus cornix Linnaeus 1758	1
+7887791	Anomia Linnaeus, 1758	1
+7887856	Noctua segetum	1
+7894899	Paludina fasciata	1
+7896457	Holosticha flava	2
+7897766	Botys flavinotalis	1
+7898151	Scirpophaga cinerea Zeller 1863	1
+7898297	Lepeophtheirus insignis	1
+7899227	Decatoma flava	1
+7900034	Lucioperca canadensis	1
+7900473	Sciurus aberti mimus Merriam, 1904	1
+7901382	Cicada rosae	1
+7901800	Stilicus (Stilidentus) brahmanus Coiffait 1978	1
+7903438	Perognathus californicus ochrus	1
+7903482	Perizonopus montanus Verhoeff, 1941	2
+7903494	Petrodromus venustus Thomas 1903	1
+7903879	Perognathus xanthonotus	1
+7905024	Aglaophenia calycifera	1
+7905234	Lithoglyptes spinatus	1
+7906733	Sphyrna tiburo (Lin.1758)	1
+7909764	Pinnaxodes meinerti	2
+7909765	Lophopanopeus nicaraguensis	2
+7909771	Corvina goldmani Bleeker, 1854	2
+7909788	Hydrodendrium gorgonoides	1
+7914424	Eriophorum polystachyon L.	1
+7916031	Attelabus curculionides	1
+7918763	Bostra foliacea (Blanchard 1851)	1
+7918991	Miris albidus Hahn, 1834	1
+7920751	Lachnea pinguis (Bull.) Sacc. 1889	3
+7920752	Ozineus elongatus Bates, 1863	1
+7920754	Vignea exilis (Dewey) Raf.	1
+7920943	Ostrea canadensis	2
+7921146	Licea rugosa Nann. -Bremek. & Y. Yamam. 1987	1
+7921212	Saxidomus aratus	1
+7923110	Aeshna cyanea (Muller, 1764)	1
+7924275	Moxostoma macrolepidotum (Le Sueur, 1817)	1
+7926252	Brixia propinqua Van Stalle, 1983	1
+7926334	Chaerocampa elpenor	1
+7932820	Ulva umbilicata S. F. Gray, nom. illeg.	1
+7934420	Bahita spiralis Zanol 1999	1
+7936230	Eulimella scillae (Scacchi, 1835)	1
+7937689	Rochelia virginiana (L.) Roem. & Schult.	1
+7938860	Lipeurus heterographus	1
+7940015	Atomaria ochracea Zimmermann	1
+7941340	Argia serva Hagen in Selys, 1865	1
+7944866	Pelea ovata H. St. John & E.P. Hume	1
+7948085	Nectes obscurus	2
+7948305	Syringobia ovalis	1
+7949324	Caenis maxima	2
+7961821	Stipa californica Vasey ex S. Watson	1
+7962818	Leptoclinum commune	2
+7963236	Aglaophenia megalocarpa	1
+7969092	Psolidium panamense	1
+7974379	Acraea flaveola Van Someren 1936	1
+7974766	Trichoptilus ochrodactylus	1
+7976888	Sergestes prehensilis	2
+7979574	Ereutho smitti	2
+7980763	Vibrio sp. kba12	1
+7980933	Elymus humilis (Keng & S.L. Chen) S.L. Chen	1
+7980936	Lizonia fragilis (Berk.) Sacc. 1882	8
+7982318	Alloptes crassipes (G. Canestrini, 1878)	1
+7983148	Megninia veliger	1
+7983149	Pterodectes cylindricus	1
+7988943	Endopachys vaughani	1
+7989385	Stylaster tenuis	1
+8001562	Erginus rubellus (O. Fabricius, 1780)	2
+8007047	Pilea cellulosa Urb.	3
+8018807	Elphidium hannai	1
+8027017	Dermoglyphus varians (Trouessart, 1886)	1
+8028781	Pyramidella nitidula (A. Adams, 1860)	1
+8041828	Wiata prima Dworakowska, 1981	1
+8048091	Polyrhabdina brasili Caullery and Mesnil, 1914	2
+8050247	Mammea emarginata DC.	4

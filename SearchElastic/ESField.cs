@@ -15,6 +15,7 @@
         public const string DATERANGES = "dateRanges";
         public const string DATES = "dates";
         public const string DOI = "doi";
+        public const string FACETAUTHORS = "facetAuthors";
         public const string GENRE = "genre";
         public const string HASEXTERNALCONTENT = "hasExternalContent";
         public const string HASLOCALCONTENT = "hasLocalContent";
@@ -53,8 +54,10 @@
         // Page index
         public const string NAMES = "names";
         public const string NAMES_RAW = "names.raw";
+        public const string PAGEINDICATORS = "pageIndicators";
         public const string PAGETYPES = "pageTypes";
         public const string SEGMENTS = "segments";
+        public const string SEQUENCE = "sequence";
         public const string TEXTPATH = "textPath";
 
         // Author index

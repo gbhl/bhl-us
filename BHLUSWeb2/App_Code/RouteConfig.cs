@@ -31,6 +31,7 @@ namespace MOBOT.BHL.Web2
             {
                 // Use new routes to MVC views if elasticsearch is enabled
                 routes.MapRoute("Search", "search", new { controller = "Search", action = "Index" });
+                routes.MapRoute("SearchPage", "search/pages", new { controller = "Search", action = "Pages" });
 
                 routes.MapRoute("Advanced-Search-Tab", "advsearch/{searchtype}",
                     new { controller = "Search", action = "Advanced" },

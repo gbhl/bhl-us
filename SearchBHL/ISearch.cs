@@ -63,7 +63,7 @@ namespace BHL.Search
         /// <param name="collection"></param>
         /// <returns>Object containing the publications returned by the search.</returns>
         ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, 
-            string language, string collection, List<Tuple<SearchField, string>> limits = null);
+            Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
         /// Search for publications

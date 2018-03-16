@@ -1,0 +1,41 @@
+﻿178	California Academy of Sciences.	California Academy of Sciences.
+1216	Huxley, Thomas Henry,	Huxley, Thomas Henry,
+1479	Harvey, E. Newton (Edmund Newton),	Harvey, E. Newton (Edmund Newton),
+1810	Haldeman, Samuel Stehman,	Haldeman, Samuel Stehman,
+3378	United States. National Oceanic and Atmospheric Administration.	United States. National Oceanic and Atmospheric Administration.
+3488	Allen, Alfred.	Allen, Alfred.
+3489	Postal Microscopical Society.	Postal Microscopical Society.
+3490	Wesley Naturalists' Society.	Wesley Naturalists' Society.
+3542	Graber, Vitus,	Graber, Vitus,
+3545	Académie des sciences, agriculture, arts & belles-lettres dAix	Académie des sciences, agriculture, arts & belles-lettres dAix
+3640	Lindblad, Matts Adolf,	Lindblad, Matts Adolf,
+3641	Romell, Lars,	Romell, Lars,
+3642	Sandeberg, Herman.	Sandeberg, Herman.
+3715	Babb, Ivar.	Babb, Ivar.
+3716	De Luca, Michael.	De Luca, Michael.
+44692	Ashmead, W H|Ashmead, William H.	Ashmead, William H.
+44756	Van Duzee, M C	Van Duzee, M C
+45270	Ross, Clarence S|Ross, E S	Ross, Clarence S
+46810	Alexander, Charles P	Alexander, Charles P
+47174	Grunsky, Charles E	Grunsky, Charles E
+47175	Everman, Barton Warren|Evermann, Barton Warren	Evermann, Barton Warren
+50171	Van Denburgh, John	Van Denburgh, John
+51042	Hagen, H A	Hagen, H A
+51495	Neveu-Lemaire, M	Neveu-Lemaire, M
+52323	Roule, L	Roule, L
+53823	Neumann, L G	Neumann, L G
+53980		Rathbun, Mary Jane
+54002	Ashmead	Ashmead
+54344	Trouessart, E L	Trouessart, E L
+54618	Lameere, A	Lameere, A
+55839	Lovett, A L	Lovett, A L
+57429	Hood, John	Hood, John
+57881	Cook, A	Cook, A
+66216	Trouessart, E-L	Trouessart, E-L
+70615	Kelsey, Lewis P	Kelsey, Lewis P
+105418	Audubon Association of the Pacific.	Audubon Association of the Pacific.
+105419	Audubon Society of the Pacific.	Audubon Society of the Pacific.
+105420	Golden Gate Audubon Society.	Golden Gate Audubon Society.
+105478	British Museum (Natural History). Department of Botany.	British Museum (Natural History). Department of Botany.
+105479	Smith, Annie Lorrain.	Smith, Annie Lorrain.
+105480	University of Alberta. Department of Entomology.	University of Alberta. Department of Entomology.

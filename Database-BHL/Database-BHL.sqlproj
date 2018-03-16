@@ -1324,5 +1324,16 @@
     <None Include="dbo\Tables\SearchIndexQueueLog.sql" />
     <None Include="audit\Stored Procedures\AuditBasicSelectForSearchIndexQueue.sql" />
     <None Include="dbo\Stored Procedures\SearchIndexQueueLogInsert.sql" />
+    <None Include="dbo\Functions\fnAuthorFacetStringForTitle.sql" />
+    <None Include="dbo\Functions\fnAuthorFacetStringForSegment.sql" />
+    <None Include="srchindex\Stored Procedures\ItemSelectIDs.sql" />
+    <None Include="srchindex\Stored Procedures\ItemSelectDocumentForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\SegmentSelectIDs.sql" />
+    <None Include="srchindex\Stored Procedures\SegmentSelectDocumentForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\PageSelectToIndexForItem.sql" />
+    <None Include="srchindex\Stored Procedures\PageSelectToIndexForSegment.sql" />
+    <None Include="srchindex\Stored Procedures\AuthorSelectDocumentsForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\KeywordSelectDocumentsForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\NameSelectDocumentsForIndex.sql" />
   </ItemGroup>
 </Project>

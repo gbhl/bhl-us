@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BHLSearchIndexer": {
+      "commandName": "Project",
+      "commandLineArgs": "AppConfig.xml"
+    }
+  }
+}

@@ -241,7 +241,59 @@ namespace MOBOT.BHL.Web2.Controllers
             return PartialView();
         }
 
+        public ActionResult _DonateFeatureSmall()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SearchFacet()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SearchPager()
+        {
+            return PartialView();
+        }
+
         public ActionResult _CollectionFeature()
+        {
+            Collection collection = GetFeaturedCollection();
+
+            if (collection == null)
+            {
+                ViewBag.CollectionDisplay = "none";
+            }
+            else
+            {
+                ViewBag.CollectionDisplay = "block";
+                ViewBag.CollectionUrlRoot = (string.IsNullOrWhiteSpace(collection.HtmlContent)) ? "/browse" : string.Empty;
+                ViewBag.CollectionUrl = collection.CollectionURL == string.Empty ? collection.CollectionID.ToString() : collection.CollectionURL;
+                ViewBag.CollectionName = collection.CollectionName;
+                ViewBag.CollectionImageUrl = collection.ImageURL;
+            }
+
+            return PartialView();
+        }
+
+        public ActionResult _CollectionFeatureSmall()
+        {
+            // Get featured collection name
+            Collection collection = GetFeaturedCollection();
+            if (collection == null)
+            {
+                ViewBag.CollectionDisplay = "none";
+            }
+            {
+                ViewBag.CollectionDisplay = "block";
+                ViewBag.CollectionName = collection.CollectionName;
+                ViewBag.CollectionUrl = string.IsNullOrWhiteSpace(collection.CollectionURL) ? collection.CollectionID.ToString() : collection.CollectionURL;
+            }
+
+            return PartialView();
+        }
+
+        private Collection GetFeaturedCollection()
         {
             string cacheKey = "FeaturedCollection";
             Collection collection = null;
@@ -265,20 +317,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
             }
 
-            if (collection == null)
-            {
-                ViewBag.CollectionDisplay = "none";
-            }
-            else
-            {
-                ViewBag.CollectionDisplay = "block";
-                ViewBag.CollectionUrlRoot = (string.IsNullOrWhiteSpace(collection.HtmlContent)) ? "/browse" : string.Empty;
-                ViewBag.CollectionUrl = collection.CollectionURL == string.Empty ? collection.CollectionID.ToString() : collection.CollectionURL;
-                ViewBag.CollectionName = collection.CollectionName;
-                ViewBag.CollectionImageUrl = collection.ImageURL;
-            }
-
-            return PartialView();
+            return collection;
         }
     }
 }

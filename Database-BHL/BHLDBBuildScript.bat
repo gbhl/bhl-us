@@ -184,6 +184,8 @@ REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAssociationStringForTitle.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForSegment.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorSearchStringForTitle.sql"
@@ -1198,11 +1200,20 @@ sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTopUser.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTypesByDate.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestTypeSelectByApplication.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\DailyTasks.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\AuthorSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectDocumentForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectIDs.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\KeywordSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\NameSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\PageSelectToIndexForItem.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\PageSelectToIndexForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchKeyword.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchName.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublication.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublicationAdvanced.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectDocumentForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectIDs.sql"
 
 GOTO DONE
 
