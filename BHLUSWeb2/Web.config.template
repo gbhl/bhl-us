@@ -97,7 +97,7 @@
 
     <add key="WikiPageAbout" value="https://biodivlib.wikispaces.com/About"/>
     <add key="WikiPagePermissions" value="https://biodivlib.wikispaces.com/Permissions"/>
-    <add key="projectUpdatesFeedLocation" value="http://blog.biodiversitylibrary.org/feeds/posts/default?alt=rss"/>
+    <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
     <add key="PdfGenDownloadIA" value="https://www.archive.org/download/{0}/{1}.pdf"/>
     <!-- jQuery libraries -->
