@@ -14,6 +14,7 @@ namespace BHL.SearchIndexer
             associations = new List<string>();
             variants = new List<string>();
             contributors = new List<string>();
+            titleContributors = new List<string>();
             collections = new List<string>();
             dates = new List<string>();
             dateRanges = new List<string>();
@@ -65,5 +66,16 @@ namespace BHL.SearchIndexer
         [Keyword(Ignore = true)]
         public string barcode { get; set; }
 
+        [Keyword(Ignore = true)]
+        public string publicationDetails { get; set; }
+
+        [Keyword(Ignore = true)]
+        public string editionStatement { get; set; }
+
+        [Keyword(Ignore = true)]
+        public List<string> titleContributors { get; set; }
+
+        [Keyword(Ignore = true)]
+        public int firstPageId { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace BHL.SearchIndexQueueLoad
         public DateTime AuditDate { get; set; }
         public string Operation { get; set; }
         public string IndexEntity { get; set; }
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace BHL.SearchIndexQueueLoad
                             change.AuditDate = reader.GetDateTime(reader.GetOrdinal("AuditDate"));
                             change.Operation = reader.GetString(reader.GetOrdinal("Operation"));
                             change.IndexEntity = reader.GetString(reader.GetOrdinal("IndexEntity"));
-                            change.Id = reader.GetInt32(reader.GetOrdinal("EntityID"));
+                            change.Id = reader.GetString(reader.GetOrdinal("EntityID"));
                             changeSet.Changes.Add(change);
 
                             if (changeSet.Changes.Count == 1)

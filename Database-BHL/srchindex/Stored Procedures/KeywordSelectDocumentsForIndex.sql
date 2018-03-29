@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [srchindex].[KeywordSelectDocumentsForIndex]
 
-@StartID int
+@StartID int,
+@EndID int = NULL
 
 AS 
 
@@ -25,7 +26,8 @@ WHERE	KeywordID IN (
 					INNER JOIN dbo.Segment s WITH (NOLOCK) ON sk.SegmentID = s.SegmentID
 			WHERE   s.SegmentStatusID IN(10, 20)
 			) x
-	WHERE	KeywordID > @StartID
+	WHERE	KeywordID >= @StartID
+	AND		(KeywordID <= @EndID OR @EndID IS NULL)
     ORDER BY KeywordID
     )
 ORDER BY KeywordID

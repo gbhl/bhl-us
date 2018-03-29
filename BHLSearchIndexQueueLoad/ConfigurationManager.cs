@@ -2,26 +2,26 @@
 
 namespace BHL.SearchIndexQueueLoad
 {
-    static public class ConfigurationManager
+    public class ConfigurationManager
     {
         private static IConfigurationRoot _configuration;
 
-        static ConfigurationManager()
+        public ConfigurationManager(string fileName)
         {
             // Define the sources of configuration information for the application.
             var builder = new ConfigurationBuilder()
-                .AddXmlFile("AppConfig.xml");
+                .AddXmlFile(fileName);
 
             // Create the configuration object to be used to retrieve configuration information.
             _configuration = builder.Build();
         }
 
-        static public string AppSettings(string key)
+        public string AppSettings(string key)
         {
             return _configuration.GetSection("AppSettings")[key];
         }
 
-        static public string ConnectionStrings(string key)
+        public string ConnectionStrings(string key)
         {
             return _configuration.GetConnectionString(key);
         }

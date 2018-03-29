@@ -1335,5 +1335,11 @@
     <None Include="srchindex\Stored Procedures\AuthorSelectDocumentsForIndex.sql" />
     <None Include="srchindex\Stored Procedures\KeywordSelectDocumentsForIndex.sql" />
     <None Include="srchindex\Stored Procedures\NameSelectDocumentsForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogDelete.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogSegmentDelete.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogCreatorDelete.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogKeywordDelete.sql" />
+    <None Include="srchindex\Stored Procedures\PageSelectByItem.sql" />
+    <None Include="srchindex\Stored Procedures\SegmentSelectByItem.sql" />
   </ItemGroup>
 </Project>

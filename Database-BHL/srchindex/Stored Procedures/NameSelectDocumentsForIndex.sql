@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [srchindex].[NameSelectDocumentsForIndex]
 
-@StartID int
+@StartID int,
+@EndID int = NULL
 
 AS 
 
@@ -17,7 +18,8 @@ FROM	dbo.NameResolved r WITH (NOLOCK)
 		LEFT JOIN dbo.NamePage np WITH (NOLOCK) ON n.NameID = np.NameID
 		LEFT JOIN dbo.Page p WITH (NOLOCK) ON np.PageID = p.PageID
 		LEFT JOIN dbo.Item i WITH (NOLOCK) ON p.ItemID = i.ItemID
-WHERE	r.NameResolvedID > @StartID
+WHERE	r.NameResolvedID >= @StartID
+AND		(r.NameResolvedID <= @EndID OR @EndID IS NULL)
 GROUP BY r.NameResolvedID,
         r.ResolvedNameString
 ORDER BY r.NameResolvedID

@@ -33,6 +33,7 @@ build/
 [Rr]emoting.[Cc]onfig
 [Aa]pp.[Cc]onfig
 [Aa]pp[Cc]onfig.xml
+[Aa]pp[Cc]onfig*.xml
 
 # BHL projects
 EOL Data Export/

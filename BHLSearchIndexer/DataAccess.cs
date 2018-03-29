@@ -91,9 +91,9 @@ namespace BHL.SearchIndexer
             return items;
         }
 
-        public Item GetItemDocument(int itemId)
+        public List<Item> GetItemDocuments(int itemId)
         {
-            Item item = null;
+            List<Item> items = new List<Item>();
 
             SqlConnection sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
@@ -109,9 +109,9 @@ namespace BHL.SearchIndexer
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
-                            item = new Item();
+                            Item item = new Item();
                             item.titleId = reader.GetInt32(reader.GetOrdinal("TitleID"));
                             item.itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
                             item.id = string.Format("i-{0}-{1}", item.titleId.ToString(), item.itemId.ToString());
@@ -140,16 +140,21 @@ namespace BHL.SearchIndexer
                             item.associations = GetFieldList(reader, "Associations", '|');
                             item.variants = GetFieldList(reader, "Variants", '|');
                             item.contributors = GetFieldList(reader, "Contributors", '|');
+                            item.titleContributors = GetFieldList(reader, "TitleContributors", '|');
                             item.volume = reader.GetString(reader.GetOrdinal("Volume"));
+                            item.editionStatement = reader.GetString(reader.GetOrdinal("EditionStatement"));
+                            item.publicationDetails = reader.GetString(reader.GetOrdinal("PublicationDetails"));
                             item.publisher = reader.GetString(reader.GetOrdinal("PublisherName"));
                             item.publicationPlace = GetCleanPublisherPlace(reader.GetString(reader.GetOrdinal("PublisherPlace")));
                             item.dates = GetCleanDates(reader.GetString(reader.GetOrdinal("Date")));
                             item.dateRanges = GetDateRanges(item.dates);
                             item.url = reader.GetString(reader.GetOrdinal("Url"));
-                            item.hasSegments = reader.GetInt16(reader.GetOrdinal("HasSegments")) == 1;
-                            item.hasLocalContent = reader.GetInt16(reader.GetOrdinal("HasLocalContent")) == 1;
-                            item.hasExternalContent = reader.GetInt16(reader.GetOrdinal("HasExternalContent")) == 1;
-                            item.hasIllustrations = reader.GetInt16(reader.GetOrdinal("HasIllustrations")) == 1;
+                            item.firstPageId = reader.GetInt32(reader.GetOrdinal("FirstPageID"));
+                            item.hasSegments = reader.GetInt32(reader.GetOrdinal("HasSegments")) == 1;
+                            item.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
+                            item.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
+                            item.hasIllustrations = reader.GetInt32(reader.GetOrdinal("HasIllustrations")) == 1;
+                            items.Add(item);
                         }
                     }
                 }
@@ -160,7 +165,7 @@ namespace BHL.SearchIndexer
                 sqlConnection.Dispose();
             }
 
-            return item;
+            return items;
         }
 
         public List<int> GetSegments(int startSegment = 1, bool readFromFile = false)
@@ -247,8 +252,22 @@ namespace BHL.SearchIndexer
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "srchindex.SegmentSelectDocumentForIndex";
-                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
-                    sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+                    if (itemId != null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@ItemID", DBNull.Value);
+                    }
+                    if (segmentId != null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@SegmentID", DBNull.Value);
+                    }
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
@@ -286,9 +305,9 @@ namespace BHL.SearchIndexer
                             {
                                 segment.startPageId = reader.GetInt32(reader.GetOrdinal("StartPageID"));
                             }
-                            segment.hasLocalContent = reader.GetInt16(reader.GetOrdinal("HasLocalContent")) == 1;
-                            segment.hasExternalContent = reader.GetInt16(reader.GetOrdinal("HasExternalContent")) == 1;
-                            segment.hasIllustrations = reader.GetInt16(reader.GetOrdinal("HasIllustrations")) == 1;
+                            segment.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
+                            segment.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
+                            segment.hasIllustrations = reader.GetInt32(reader.GetOrdinal("HasIllustrations")) == 1;
 
                             segments.Add(segment);
                         }
@@ -431,7 +450,7 @@ namespace BHL.SearchIndexer
             return authors;
         }
 
-        public List<Author> GetAuthorDocumentsFromDatabase(int startAuthor = 1)
+        public List<Author> GetAuthorDocumentsFromDatabase(int startAuthor = 1, int? endAuthor = null)
         {
             List<Author> authors = new List<Author>();
 
@@ -447,6 +466,7 @@ namespace BHL.SearchIndexer
                     sqlCommand.CommandTimeout = 300;
                     sqlCommand.CommandText = "srchindex.AuthorSelectDocumentsForIndex";
                     sqlCommand.Parameters.AddWithValue("@StartID", startAuthor);
+                    sqlCommand.Parameters.AddWithValue("@EndID", endAuthor);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
@@ -510,7 +530,7 @@ namespace BHL.SearchIndexer
             return keywords;
         }
 
-        public List<Keyword> GetKeywordDocumentsFromDatabase(int startKeyword = 1)
+        public List<Keyword> GetKeywordDocumentsFromDatabase(int startKeyword = 1, int? endKeyword = null)
         {
             List<Keyword> keywords = new List<Keyword>();
 
@@ -526,6 +546,7 @@ namespace BHL.SearchIndexer
                     sqlCommand.CommandTimeout = 300;
                     sqlCommand.CommandText = "srchindex.KeywordSelectDocumentsForIndex";
                     sqlCommand.Parameters.AddWithValue("@StartID", startKeyword);
+                    sqlCommand.Parameters.AddWithValue("@EndID", endKeyword);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
@@ -595,7 +616,7 @@ namespace BHL.SearchIndexer
             return names;
         }
 
-        public List<Name> GetNameDocumentsFromDatabase(int startName = 1)
+        public List<Name> GetNameDocumentsFromDatabase(int startName = 1, int? endName = null)
         {
             List<Name> names = new List<Name>();
 
@@ -611,6 +632,7 @@ namespace BHL.SearchIndexer
                     sqlCommand.CommandTimeout = 300;
                     sqlCommand.CommandText = "srchindex.NameSelectDocumentsForIndex";
                     sqlCommand.Parameters.AddWithValue("@StartID", startName);
+                    sqlCommand.Parameters.AddWithValue("@EndID", endName);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
@@ -697,6 +719,398 @@ namespace BHL.SearchIndexer
             */
 
             return names;
+        }
+
+        /// <summary>
+        /// Delete the specified record from the SearchCatalog tables
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <param name="itemId"></param>
+        public void DeleteItem(int titleId, int itemId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogDelete";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete the specified record from the SearchCatalog tables
+        /// </summary>
+        /// <param name="segmentId"></param>
+        public void DeleteSegment(int segmentId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogSegmentDelete";
+                    sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete the specified record from the SearchCatalog tables
+        /// </summary>
+        /// <param name="authorId"></param>
+        public void DeleteAuthor(int authorId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogCreatorDelete";
+                    sqlCommand.Parameters.AddWithValue("@AuthorID", authorId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete the specified record from the SearchCatalog tables
+        /// </summary>
+        /// <param name="keywordId"></param>
+        public void DeleteKeyword(int keywordId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogKeywordDelete";
+                    sqlCommand.Parameters.AddWithValue("@KeywordID", keywordId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Add or update the specified record in the SearchCatalog tables
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="fullTitle"></param>
+        /// <param name="uniformTitle"></param>
+        /// <param name="publicationDetails"></param>
+        /// <param name="publisherPlace"></param>
+        /// <param name="publisherName"></param>
+        /// <param name="volume"></param>
+        /// <param name="editionStatement"></param>
+        /// <param name="dates"></param>
+        /// <param name="subjects"></param>
+        /// <param name="associations"></param>
+        /// <param name="variants"></param>
+        /// <param name="authors"></param>
+        /// <param name="searchAuthors"></param>
+        /// <param name="titleContributors"></param>
+        /// <param name="itemContributors"></param>
+        /// <param name="firstPageId"></param>
+        /// <param name="hasSegments"></param>
+        /// <param name="hasLocalContent"></param>
+        /// <param name="hasExternalContent"></param>
+        /// <param name="hasIllustrations"></param>
+        public void UpsertItem(int titleId, int itemId, string fullTitle, string uniformTitle,
+            string publicationDetails, string publisherPlace, string publisherName, string volume,
+            string editionStatement, string dates, string subjects, string associations, string variants,
+            string authors, string searchAuthors, string titleContributors, string itemContributors,
+            int firstPageId, int hasSegments, int hasLocalContent, int hasExternalContent,
+            int hasIllustrations)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogInsertUpdate";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
+                    sqlCommand.Parameters.AddWithValue("@FullTitle", fullTitle);
+                    sqlCommand.Parameters.AddWithValue("@UniformTitle", uniformTitle);
+                    sqlCommand.Parameters.AddWithValue("@PublicationDetails", publicationDetails);
+                    sqlCommand.Parameters.AddWithValue("@PublisherPlace", publisherPlace);
+                    sqlCommand.Parameters.AddWithValue("@PublisherName", publisherName);
+                    sqlCommand.Parameters.AddWithValue("@Volume", volume);
+                    sqlCommand.Parameters.AddWithValue("@EditionStatement", editionStatement);
+                    sqlCommand.Parameters.AddWithValue("@Dates", dates);
+                    sqlCommand.Parameters.AddWithValue("@Subjects", subjects);
+                    sqlCommand.Parameters.AddWithValue("@Associations", associations);
+                    sqlCommand.Parameters.AddWithValue("@Variants", variants);
+                    sqlCommand.Parameters.AddWithValue("@Authors", authors);
+                    sqlCommand.Parameters.AddWithValue("@SearchAuthors", searchAuthors);
+                    sqlCommand.Parameters.AddWithValue("@TitleContributors", titleContributors);
+                    sqlCommand.Parameters.AddWithValue("@ItemContributors", itemContributors);
+                    sqlCommand.Parameters.AddWithValue("@FirstPageID", firstPageId);
+                    sqlCommand.Parameters.AddWithValue("@HasSegments", hasSegments);
+                    sqlCommand.Parameters.AddWithValue("@HasLocalContent", hasLocalContent);
+                    sqlCommand.Parameters.AddWithValue("@HasExternalContent", hasExternalContent);
+                    sqlCommand.Parameters.AddWithValue("@HasIllustrations", hasIllustrations);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Add or update the specified record in the SearchCatalog tables
+        /// </summary>
+        /// <param name="segmentId"></param>
+        /// <param name="itemId"></param>
+        /// <param name="title"></param>
+        /// <param name="translatedTitle"></param>
+        /// <param name="containerTitle"></param>
+        /// <param name="publicationDetails"></param>
+        /// <param name="volume"></param>
+        /// <param name="series"></param>
+        /// <param name="issue"></param>
+        /// <param name="date"></param>
+        /// <param name="subjects"></param>
+        /// <param name="authors"></param>
+        /// <param name="searchAuthors"></param>
+        /// <param name="contributors"></param>
+        /// <param name="hasLocalContent"></param>
+        /// <param name="hasExternalContent"></param>
+        /// <param name="hasIllustrations"></param>
+        public void UpsertSegment(int segmentId, int itemId, string title, string translatedTitle,
+            string containerTitle, string publicationDetails, string volume, string series, string issue,
+            string date, string subjects, string authors, string searchAuthors, string contributors,
+            int hasLocalContent, int hasExternalContent, int hasIllustrations)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogSegmentInsertUpdate";
+                    sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
+                    sqlCommand.Parameters.AddWithValue("@Title", title);
+                    sqlCommand.Parameters.AddWithValue("@TranslatedTitle", translatedTitle);
+                    sqlCommand.Parameters.AddWithValue("@ContainerTitle", containerTitle);
+                    sqlCommand.Parameters.AddWithValue("@PublicationDetails", publicationDetails);
+                    sqlCommand.Parameters.AddWithValue("@Volume", volume);
+                    sqlCommand.Parameters.AddWithValue("@Series", series);
+                    sqlCommand.Parameters.AddWithValue("@Issue", issue);
+                    sqlCommand.Parameters.AddWithValue("@Date", date);
+                    sqlCommand.Parameters.AddWithValue("@Subjects", subjects);
+                    sqlCommand.Parameters.AddWithValue("@Authors", authors);
+                    sqlCommand.Parameters.AddWithValue("@SearchAuthors", searchAuthors);
+                    sqlCommand.Parameters.AddWithValue("@Contributors", contributors);
+                    sqlCommand.Parameters.AddWithValue("@HasLocalContent", hasLocalContent);
+                    sqlCommand.Parameters.AddWithValue("@HasExternalContent", hasExternalContent);
+                    sqlCommand.Parameters.AddWithValue("@HasIllustrations", hasIllustrations);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Add or update the specified record in the SearchCatalog tables
+        /// </summary>
+        /// <param name="authorId"></param>
+        /// <param name="authorName"></param>
+        public void UpsertAuthor(int authorId, string authorName)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogCreatorInsertUpdate";
+                    sqlCommand.Parameters.AddWithValue("@AuthorID", authorId);
+                    sqlCommand.Parameters.AddWithValue("@AuthorName", authorName);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Add or update the specified record in the SearchCatalog tables
+        /// </summary>
+        /// <param name="keywordId"></param>
+        /// <param name="keyword"></param>
+        public void UpsertKeyword(int keywordId, string keyword)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogKeywordInsertUpdate";
+                    sqlCommand.Parameters.AddWithValue("@KeywordID", keywordId);
+                    sqlCommand.Parameters.AddWithValue("@Keyword", keyword);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a list of Page IDs related to the specified Item
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        public List<int> GetPagesForItem(int itemID)
+        {
+            List<int> pages = new List<int>();
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.PageSelectByItem";
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemID);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            pages.Add(reader.GetInt32(reader.GetOrdinal("PageID")));
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return pages;
+        }
+
+        /// <summary>
+        /// Get a list of Segment IDs related to the specified Item
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        public List<int> GetSegmentsForItem(int itemID)
+        {
+            List<int> segments = new List<int>();
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SegmentSelectByItem";
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemID);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            segments.Add(reader.GetInt32(reader.GetOrdinal("SegmentID")));
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return segments;
         }
 
         /// <summary>

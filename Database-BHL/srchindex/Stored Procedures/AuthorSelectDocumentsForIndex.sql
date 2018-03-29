@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [srchindex].[AuthorSelectDocumentsForIndex]
 
-@StartID int
+@StartID int,
+@EndID int = NULL
 
 AS 
 
@@ -32,7 +33,8 @@ AND		a.AuthorID IN (
 						INNER JOIN dbo.Segment s WITH (NOLOCK) ON sa.SegmentID = s.SegmentID
 				WHERE   s.SegmentStatusID IN (10, 20)
 				) x
-	    WHERE AuthorID > @StartID
+	    WHERE	AuthorID >= @StartID
+		AND		(AuthorID <= @EndID OR @EndID IS NULL)
 		ORDER BY AuthorID
 		)
 ORDER BY a.AuthorID

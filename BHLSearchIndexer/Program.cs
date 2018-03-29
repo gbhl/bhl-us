@@ -68,8 +68,6 @@ namespace BHL.SearchIndexer
         {
             // TODO:  Consider a logging table to track last successful index operation
             // TODO:  Multi-threading (for full indexing)?
-            // TODO:  Create several version of AppConfig.xml for various scenarios (Dev/Prod/Full/Incremental).
-            // TODO:  Add appropriate exceptions to git.ignore for multiple AppConfig files.
 
             if (ReadCommandLineArguments(args))
             {
@@ -110,7 +108,8 @@ namespace BHL.SearchIndexer
 
                     using (QueueIO queueIO = new QueueIO(_mqAddress, _mqPort, _mqUser, _mqPw))
                     {
-                        queueIO.GetMessage(_mqQueueName, new IndexMessageProcessor());
+                        queueIO.GetMessage(_mqQueueName, new IndexMessageProcessor(
+                            _esConnectionString, _dbConnectionString, _ocrLocation));
                         Console.WriteLine("Press any key to stop monitoring the index queue");
                         Console.ReadKey();
                     }
@@ -137,10 +136,10 @@ namespace BHL.SearchIndexer
 
                 try
                 {
-                    Item itemDoc = dataAccess.GetItemDocument(itemId);
+                    List<Item> itemDocs = dataAccess.GetItemDocuments(itemId);
                     List<Page> pageDocs = new List<Page>();
                     List<Item> segmentDocs = new List<Item>();
-                    if (itemDoc != null)
+                    if (itemDocs.Count > 0)
                     {
                         if (!_metadataOnly)
                         {
@@ -148,18 +147,15 @@ namespace BHL.SearchIndexer
                             pageDocs = dataAccess.GetPageDocuments(ElasticSearch.PageSource.Book, itemId,
                                 _ocrLocation == "remote");
 
-                            // Add the full text of the book to the item document
+                            // Add the full text of the book to the item documents
                             StringBuilder fullText = new StringBuilder();
-                            foreach (Page pageDoc in pageDocs)
-                            {
-                                fullText.AppendLine(pageDoc.text);
-                            }
-                            itemDoc.text = fullText.ToString();
+                            foreach (Page pageDoc in pageDocs) fullText.AppendLine(pageDoc.text);
+                            foreach (Item itemDoc in itemDocs) itemDoc.text = fullText.ToString();
 
                             // Get the segments for the item
                             if (_indexSegments)
                             {
-                                segmentDocs = dataAccess.GetSegmentDocuments(itemId.ToString(), "NULL");
+                                segmentDocs = dataAccess.GetSegmentDocuments(itemId.ToString(), null);
 
                                 // Add the segmentId to each page in the segment.
                                 // Get the full text for the segment.
@@ -189,7 +185,7 @@ namespace BHL.SearchIndexer
                     if (_debug)
                     {
                         // Write the documents to JSON files
-                        ExportDocuments(ElasticSearch.ESIndex.ITEMS, itemDoc, "item", itemId);
+                        ExportDocuments(ElasticSearch.ESIndex.ITEMS, itemDocs, "item", itemId);
                         ExportDocuments(ElasticSearch.ESIndex.PAGES, pageDocs, "itempages", itemId);
                         if (_indexSegments) ExportDocuments(ElasticSearch.ESIndex.ITEMS, segmentDocs, "segments", itemId);
                     }
@@ -199,13 +195,13 @@ namespace BHL.SearchIndexer
                         if (_metadataOnly)
                         {
                             ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
-                            esItems.Update(itemDoc);
+                            foreach(Item itemDoc in itemDocs) esItems.Update(itemDoc);
                         }
                         else
                         {
                             // Index the documents
                             ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
-                            esItems.Index(itemDoc);
+                            esItems.IndexMany(itemDocs);
                             ElasticSearch esPages = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.PAGES);
                             esPages.IndexMany(pageDocs);
                             if (_indexSegments)
@@ -251,7 +247,7 @@ namespace BHL.SearchIndexer
                     // If this segment has not already been indexed
                     if (!_indexedSegments.Contains(segmentId))
                     {
-                        Item segmentDoc = dataAccess.GetSegmentDocuments("NULL", segmentId.ToString()).First();
+                        Item segmentDoc = dataAccess.GetSegmentDocuments(null, segmentId.ToString()).First();
 
                         List<Page> pageDocs = new List<Page>();
                         if (segmentDoc != null)
@@ -264,10 +260,7 @@ namespace BHL.SearchIndexer
 
                                 // Add the full text of the book to the segment document
                                 StringBuilder fullText = new StringBuilder();
-                                foreach (Page pageDoc in pageDocs)
-                                {
-                                    fullText.AppendLine(pageDoc.text);
-                                }
+                                foreach (Page pageDoc in pageDocs) fullText.AppendLine(pageDoc.text);
                                 segmentDoc.text = fullText.ToString();
                             }
                         }
@@ -437,7 +430,7 @@ namespace BHL.SearchIndexer
                     }
 
                     Log.Information("Start Getting Authors");
-                    authors = dataAccess.GetAuthorDocuments(authors.Last().id, _authorSource == INDEXSOURCE.FILE);
+                    authors = dataAccess.GetAuthorDocuments(authors.Last().id + 1, _authorSource == INDEXSOURCE.FILE);
                     Log.Information("Done Getting Authors");
                 }
             }
@@ -497,7 +490,7 @@ namespace BHL.SearchIndexer
                     }
 
                     Log.Information("Start Getting Keywords");
-                    keywords = dataAccess.GetKeywordDocuments(keywords.Last().id, _keywordSource == INDEXSOURCE.FILE);
+                    keywords = dataAccess.GetKeywordDocuments(keywords.Last().id + 1, _keywordSource == INDEXSOURCE.FILE);
                     Log.Information("Done Getting Keywords");
                 }
             }
@@ -557,7 +550,7 @@ namespace BHL.SearchIndexer
                     }
 
                     Log.Information("Start Getting Names");
-                    names = dataAccess.GetNameDocuments(names.Last().id, _nameSource == INDEXSOURCE.FILE);
+                    names = dataAccess.GetNameDocuments(names.Last().id + 1, _nameSource == INDEXSOURCE.FILE);
                     Log.Information("Done Getting Names");
                 }
             }

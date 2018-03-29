@@ -125,6 +125,7 @@ namespace BHL.SearchIndexer
             }
         }
 
+        /*
         public void Delete(Name document)
         {
             if (document != null)
@@ -132,6 +133,18 @@ namespace BHL.SearchIndexer
                 IDeleteResponse response = _es.Delete<Name>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
+                if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
+            }
+        }
+        */
+
+        public void Delete(object document)
+        {
+            if (document != null)
+            {
+                IDeleteResponse response = _es.Delete<object>(document, d => d
+                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
             }
         }

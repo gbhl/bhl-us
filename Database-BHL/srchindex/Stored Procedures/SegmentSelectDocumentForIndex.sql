@@ -9,6 +9,37 @@ BEGIN
 
 SET NOCOUNT ON
 
+CREATE TABLE #tmpSegment
+	(
+	SegmentID int NOT NULL,
+	Title nvarchar(2000) NOT NULL,
+	TranslatedTitle nvarchar(2000) NOT NULL,
+	SortTitle nvarchar(2000) NOT NULL,
+	ContainerTitle nvarchar(2000) NOT NULL,
+	Authors nvarchar(max) NOT NULL,
+	FacetAuthors nvarchar(max) NOT NULL,
+	SearchAuthors nvarchar(max) NOT NULL,
+	Subjects nvarchar(max) NOT NULL,
+	Contributors nvarchar(max) NOT NULL,
+	Volume nvarchar(100) NOT NULL,
+	Series nvarchar(100) NOT NULL,
+	Issue nvarchar(100) NOT NULL,
+	PublisherName nvarchar(300) NOT NULL,
+	PublisherPlace nvarchar(200) NOT NULL,
+	HasLocalContent int NOT NULL,
+	HasExternalContent int NOT NULL,
+	HasIllustrations int NOT NULL,
+	LanguageName nvarchar(20) NOT NULL,
+	GenreName nvarchar(50) NOT NULL,
+	MaterialTypeLabel nvarchar(60) NOT NULL,
+	DOIName nvarchar(50) NOT NULL,
+	Url nvarchar(200) NOT NULL,
+	StartPageID int NULL,
+	PageRange nvarchar(50) NOT NULL,
+	[Date] nvarchar(20) NOT NULL
+	)
+
+INSERT	#tmpSegment
 SELECT	s.SegmentID,
 		RTRIM(s.Title) AS Title,
 		RTRIM(s.TranslatedTitle) AS TranslatedTitle,
@@ -28,14 +59,13 @@ SELECT	s.SegmentID,
 		RTRIM(CASE WHEN s.Url = '' THEN 0 ELSE 1 END) AS HasExternalContent,
 		0 AS HasIllustrations,
 		ISNULL(l.LanguageName, '') AS LanguageName,
-		g.GenreName,
+		ISNULL(g.GenreName, '') AS GenreName,
 		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		ISNULL(d.DOIName, '') AS DOIName,
 		ISNULL(s.Url, '') AS Url,
 		s.StartPageID,
 		CASE WHEN ISNULL(PageRange, '') = '' THEN StartPageNumber +'--' + EndPageNumber ELSE PageRange END AS PageRange,
 		RTRIM(s.[Date]) AS [Date]
-INTO	#tmpSegment
 FROM	dbo.Segment s WITH(NOLOCK)
 		LEFT JOIN dbo.Language l WITH(NOLOCK) ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentGenre g WITH(NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID
