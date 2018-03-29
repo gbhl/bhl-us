@@ -1341,5 +1341,9 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogKeywordDelete.sql" />
     <None Include="srchindex\Stored Procedures\PageSelectByItem.sql" />
     <None Include="srchindex\Stored Procedures\SegmentSelectByItem.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogKeywordInsertUpdate.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogCreatorInsertUpdate.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogSegmentInsertUpdate.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogInsertUpdate.sql" />
   </ItemGroup>
 </Project>
