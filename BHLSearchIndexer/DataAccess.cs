@@ -149,7 +149,10 @@ namespace BHL.SearchIndexer
                             item.dates = GetCleanDates(reader.GetString(reader.GetOrdinal("Date")));
                             item.dateRanges = GetDateRanges(item.dates);
                             item.url = reader.GetString(reader.GetOrdinal("Url"));
-                            item.firstPageId = reader.GetInt32(reader.GetOrdinal("FirstPageID"));
+                            if (!reader.IsDBNull(reader.GetOrdinal("FirstPageID")))
+                            {
+                                item.firstPageId = reader.GetInt32(reader.GetOrdinal("FirstPageID"));
+                            }
                             item.hasSegments = reader.GetInt32(reader.GetOrdinal("HasSegments")) == 1;
                             item.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
                             item.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
@@ -864,7 +867,7 @@ namespace BHL.SearchIndexer
             string publicationDetails, string publisherPlace, string publisherName, string volume,
             string editionStatement, string dates, string subjects, string associations, string variants,
             string authors, string searchAuthors, string titleContributors, string itemContributors,
-            int firstPageId, int hasSegments, int hasLocalContent, int hasExternalContent,
+            int? firstPageId, int hasSegments, int hasLocalContent, int hasExternalContent,
             int hasIllustrations)
         {
             SqlConnection sqlConnection = new SqlConnection(_connectionString);
@@ -895,7 +898,14 @@ namespace BHL.SearchIndexer
                     sqlCommand.Parameters.AddWithValue("@SearchAuthors", searchAuthors);
                     sqlCommand.Parameters.AddWithValue("@TitleContributors", titleContributors);
                     sqlCommand.Parameters.AddWithValue("@ItemContributors", itemContributors);
-                    sqlCommand.Parameters.AddWithValue("@FirstPageID", firstPageId);
+                    if (firstPageId == null)
+                    {
+                        sqlCommand.Parameters.AddWithValue("@FirstPageID", DBNull.Value);
+                    }
+                    else
+                    {
+                        sqlCommand.Parameters.AddWithValue("@FirstPageID", firstPageId);
+                    }
                     sqlCommand.Parameters.AddWithValue("@HasSegments", hasSegments);
                     sqlCommand.Parameters.AddWithValue("@HasLocalContent", hasLocalContent);
                     sqlCommand.Parameters.AddWithValue("@HasExternalContent", hasExternalContent);

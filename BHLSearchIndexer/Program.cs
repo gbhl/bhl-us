@@ -67,6 +67,7 @@ namespace BHL.SearchIndexer
         static void Main(string[] args)
         {
             // TODO:  Consider a logging table to track last successful index operation
+            // TODO:  Think about what gets logged for incremental updates
             // TODO:  Multi-threading (for full indexing)?
 
             if (ReadCommandLineArguments(args))

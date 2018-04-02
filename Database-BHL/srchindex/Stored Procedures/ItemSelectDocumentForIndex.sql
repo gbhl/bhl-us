@@ -49,7 +49,8 @@ CREATE TABLE #tmpItem
 	)
 
 INSERT	#tmpItem
-SELECT	t.TitleID,
+SELECT DISTINCT
+		t.TitleID,
 		i.ItemID,
 		t.FullTitle,
 		ISNULL(RTRIM(dbo.fnAuthorSearchStringForTitle(t.TitleID, 1)) + ' ', '') AS Authors,

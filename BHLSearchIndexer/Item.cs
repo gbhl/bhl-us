@@ -76,6 +76,6 @@ namespace BHL.SearchIndexer
         public List<string> titleContributors { get; set; }
 
         [Keyword(Ignore = true)]
-        public int firstPageId { get; set; }
+        public int? firstPageId { get; set; }
     }
 }
