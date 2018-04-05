@@ -48,7 +48,8 @@ BEGIN
 			HasLocalContent = @HasLocalContent,
 			HasExternalContent = @HasExternalContent,
 			HasIllustrations = @HasIllustrations,
-			SearchText = @SearchText
+			SearchText = @SearchText,
+			LastModifiedDate = GETDATE()
 	WHERE	SegmentID = @SegmentID
 END
 ELSE

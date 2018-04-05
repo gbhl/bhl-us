@@ -478,17 +478,21 @@ SELECT @LastAuditDate = MAX(AuditDate), @LastAuditID = MAX(AuditID) FROM #Raw
 
 -- ### Ignore some entries that identify records related to deletes of other records ###
 
--- Example:  If a TitleAuthor record is deleted, records with an Operation code of "E" will
--- be created for both the related Title and the related Author.  For indexing purposes, we
--- only care about how the change affects the Title, not the Author.  Therefore, we can ignore
--- records where Operation = "E" and EntityName = "dbo.Author".
+-- Example:  If a TitleInstitution record is deleted, records with an Operation code of "E" will
+-- be created for both the related Title and the related Institution.  For indexing purposes, we
+-- only care about how the change affects the Title, not the Institution.  Therefore, we can ignore
+-- records where Operation = "E" and EntityName = "dbo.Institution".
 
-DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Author'
-DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Keyword'
+--DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Author'
+--DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Keyword'
 DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Collection'
 DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Institution'
 DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Identifier'
 DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Language'
+-- Apr 3, 2018: 'E' only relates to 'Page' for SegmentPage and NamePage (these
+-- are not important).   If a change means that 'E' relates to 'Page' for 
+-- Page_PageType deletes in the future, then we should NOT do the following.
+DELETE #Raw WHERE Operation = 'E' AND EntityName = 'dbo.Page'
 
 -- ### Get initial reduced list of entities to be updated in the search indexes ###
 SELECT	MIN(AuditID) AS AuditID,

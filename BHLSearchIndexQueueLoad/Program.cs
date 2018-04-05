@@ -19,6 +19,8 @@ namespace BHL.SearchIndexQueueLoad
         private static string _mqUser = string.Empty;
         private static string _mqPw = string.Empty;
         private static string _mqQueueName = string.Empty;
+        private static string _mqErrorExchangeName = string.Empty;
+        private static string _mqErrorQueueName = string.Empty;
 
         private static string _smtpHost = string.Empty;
         private static int _smtpPort= 0;
@@ -68,7 +70,10 @@ namespace BHL.SearchIndexQueueLoad
 
                                 try
                                 {
-                                    queueUtil.PutMessage(queueMsg, _mqQueueName);
+                                    queueUtil.PutMessage(queueMsg, 
+                                        queueName: _mqQueueName,
+                                        errorQueueName: _mqErrorQueueName,
+                                        errorExchangeName: _mqErrorExchangeName);
                                 }
                                 catch (Exception ex)
                                 {
@@ -193,6 +198,8 @@ namespace BHL.SearchIndexQueueLoad
             _mqUser = new ConfigurationManager(_configFile).AppSettings("MQUser");
             _mqPw = new ConfigurationManager(_configFile).AppSettings("MQPassword");
             _mqQueueName = new ConfigurationManager(_configFile).AppSettings("MQQueueName");
+            _mqErrorExchangeName = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeName");
+            _mqErrorQueueName = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueName");
 
             _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
             _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));

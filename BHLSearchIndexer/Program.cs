@@ -1,4 +1,6 @@
 ﻿using BHL.QueueUtility;
+using MailKit.Net.Smtp;
+using MimeKit;
 using Newtonsoft.Json;
 using Serilog;
 using System;
@@ -23,6 +25,8 @@ namespace BHL.SearchIndexer
         private static string _mqUser = string.Empty;
         private static string _mqPw = string.Empty;
         private static string _mqQueueName = string.Empty;
+        private static string _mqErrorExchangeName = string.Empty;
+        private static string _mqErrorQueueName = string.Empty;
 
         private static string _smtpHost = string.Empty;
         private static int _smtpPort = 0;
@@ -62,14 +66,10 @@ namespace BHL.SearchIndexer
         private static string _nameSource = INDEXSOURCE.DB;
 
         private static HashSet<int> _indexedSegments = new HashSet<int>();
-
+        private static ILogger _logger;
 
         static void Main(string[] args)
         {
-            // TODO:  Consider a logging table to track last successful index operation
-            // TODO:  Think about what gets logged for incremental updates
-            // TODO:  Multi-threading (for full indexing)?
-
             if (ReadCommandLineArguments(args))
             {
                 ReadConfig();
@@ -77,11 +77,11 @@ namespace BHL.SearchIndexer
                 if (_doFullIndex)
                 {
                     // Index everything
-                    Log.Logger = new LoggerConfiguration()
-                    .WriteTo.RollingFile("logs/BHLSearchIndexer-Full-{Date}.log", shared: true)
-                    .CreateLogger();
+                    _logger = new LoggerConfiguration()
+                        .WriteTo.RollingFile("logs/BHLSearchIndexer-Full-{Date}.log", shared: true)
+                        .CreateLogger();
 
-                    Log.Information("Full Indexing Started");
+                    _logger.Information("Full Indexing Started");
 
                     /*
                     IndexSimple<Author>(ElasticSearch.ESIndex.AUTHORS, "Author", _startAuthor, _authorSource,
@@ -96,26 +96,35 @@ namespace BHL.SearchIndexer
 
                     if (_doIndex) OptimizeIndexes();
 
-                    Log.Information("Full Indexing Complete");
+                    _logger.Information("Full Indexing Complete");
                 }
                 else
                 {
                     // Read messages from queue and index appropriate entities
-                    Log.Logger = new LoggerConfiguration()
-                    .WriteTo.RollingFile("logs/BHLSearchIndexer-Incremental-{Date}.log", shared: true)
-                    .CreateLogger();
+                    _logger = new LoggerConfiguration()
+                        .WriteTo.RollingFile("logs/BHLSearchIndexer-Incremental-{Date}.log", shared: true)
+                        .CreateLogger();
 
-                    Log.Information("Index Queue Monitoring Started");
+                    _logger.Information("Index Queue Monitoring Started");
 
-                    using (QueueIO queueIO = new QueueIO(_mqAddress, _mqPort, _mqUser, _mqPw))
+                    try
                     {
-                        queueIO.GetMessage(_mqQueueName, new IndexMessageProcessor(
-                            _esConnectionString, _dbConnectionString, _ocrLocation));
-                        Console.WriteLine("Press any key to stop monitoring the index queue");
-                        Console.ReadKey();
+                        using (QueueIO queueIO = new QueueIO(_mqAddress, _mqPort, _mqUser, _mqPw, _logger))
+                        {
+                            queueIO.GetMessage(_mqQueueName, _mqErrorExchangeName, _mqErrorQueueName,
+                                new IndexMessageProcessor(_esConnectionString, _dbConnectionString, 
+                                    _ocrLocation));
+                            Console.WriteLine("Press any key to stop monitoring the index queue");
+                            Console.ReadKey();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex, "Error processing the Search Index Queue.  INDEXING WILL HALT.");
+                        SendEmailErrorNotification();
                     }
 
-                    Log.Information("Index Queue Monitoring Stopped");
+                    _logger.Information("Index Queue Monitoring Stopped");
                 }
             }
         }
@@ -126,9 +135,9 @@ namespace BHL.SearchIndexer
 
             int itemCount = 0;
 
-            Log.Information("Start Getting Items");
+            _logger.Information("Start Getting Items");
             List<int> itemIds = dataAccess.GetItems(_startItem, _itemSource == INDEXSOURCE.FILE);
-            Log.Information("Done Getting Items");
+            _logger.Information("Done Getting Items");
 
             foreach (int itemId in itemIds)
             {
@@ -216,16 +225,16 @@ namespace BHL.SearchIndexer
                     itemCount++;
                     if ((itemCount % 250) == 0)
                     {
-                        Log.Information("{NumItems} Items Indexed (most recent {ItemID})", itemCount, itemId);
+                        _logger.Information("{NumItems} Items Indexed (most recent {ItemID})", itemCount, itemId);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "ERROR Indexing Item {ItemID}", itemId);
+                    _logger.Error(ex, "ERROR Indexing Item {ItemID}", itemId);
                 }
             }
 
-            Log.Information("{NumItems} Total Items Indexed", itemCount);
+            _logger.Information("{NumItems} Total Items Indexed", itemCount);
         }
 
         private static void IndexSegments()
@@ -234,9 +243,9 @@ namespace BHL.SearchIndexer
 
             int segmentCount = 0;
 
-            Log.Information("Start Getting Segments");
+            _logger.Information("Start Getting Segments");
             List<int> segmentIds = dataAccess.GetSegments(_startSegment, _segmentSource == INDEXSOURCE.FILE);
-            Log.Information("Done Getting Segments");
+            _logger.Information("Done Getting Segments");
 
             foreach (int segmentId in segmentIds)
             {
@@ -296,16 +305,16 @@ namespace BHL.SearchIndexer
                     segmentCount++;
                     if ((segmentCount % 500) == 0)
                     {
-                        Log.Information("{NumSegments} Segments Indexed (most recent {SegmentID})", segmentCount, segmentId);
+                        _logger.Information("{NumSegments} Segments Indexed (most recent {SegmentID})", segmentCount, segmentId);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "ERROR Indexing Segment {SegmentID}", segmentId);
+                    _logger.Error(ex, "ERROR Indexing Segment {SegmentID}", segmentId);
                 }
             }
 
-            Log.Information("{NumSegments} Total Segments Indexed", segmentCount);
+            _logger.Information("{NumSegments} Total Segments Indexed", segmentCount);
         }
 
         /*
@@ -328,14 +337,14 @@ namespace BHL.SearchIndexer
             int entityCount = 0;
             DataAccess dataAccess = new DataAccess(_dbConnectionString);
 
-            Log.Information("Start Indexing Authors");
+            _logger.Information("Start Indexing Authors");
 
             try
             {
                 // Read list of documents to index
-                Log.Information("Start Getting {Type}s", entityType);
+                _logger.Information("Start Getting {Type}s", entityType);
                 var entities = (List<T>)GetDocuments(startEntity, entitySource == INDEXSOURCE.FILE);
-                Log.Information("Done Getting {Type}s", entityType);
+                _logger.Information("Done Getting {Type}s", entityType);
 
                 int nextStartEntity = startEntity;
                 {
@@ -363,23 +372,23 @@ namespace BHL.SearchIndexer
                             es.IndexMany(entitySelection);
                         }
 
-                        Log.Information("Last {Type} Indexed {ID}", entityType, entitySelection.Last().id);
-                        Log.Information("{NumIndexed} {Type}s Indexed", ((batchNumber - 1) * numPerBatch) + entitySelection.Count, entityType);
+                        _logger.Information("Last {Type} Indexed {ID}", entityType, entitySelection.Last().id);
+                        _logger.Information("{NumIndexed} {Type}s Indexed", ((batchNumber - 1) * numPerBatch) + entitySelection.Count, entityType);
                         entityCount += entitySelection.Count;
                         batchNumber++;
                     }
 
-                    Log.Information("Start Getting {Type}s", entityType);
+                    _logger.Information("Start Getting {Type}s", entityType);
                     entities = GetDocuments(entities.Last().id, entitySource == INDEXSOURCE.FILE);
-                    Log.Information("Done Getting {Type}s", entityType);
+                    _logger.Information("Done Getting {Type}s", entityType);
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, string.Format("ERROR Indexing {0}s. ABORTING operation.", entityType));
+                _logger.Error(ex, string.Format("ERROR Indexing {0}s. ABORTING operation.", entityType));
             }
 
-            Log.Information("{NumIndexed} Total {Type}s Indexed", entityCount, entityType);
+            _logger.Information("{NumIndexed} Total {Type}s Indexed", entityCount, entityType);
         }
         */
 
@@ -388,14 +397,14 @@ namespace BHL.SearchIndexer
             int authorCount = 0;
             DataAccess dataAccess = new DataAccess(_dbConnectionString);
 
-            Log.Information("Start Indexing Authors");
+            _logger.Information("Start Indexing Authors");
 
             try
             {
                 // Read list of authors
-                Log.Information("Start Getting Authors");
+                _logger.Information("Start Getting Authors");
                 List<Author> authors = dataAccess.GetAuthorDocuments(_startAuthor, _authorSource == INDEXSOURCE.FILE);
-                Log.Information("Done Getting Authors");
+                _logger.Information("Done Getting Authors");
 
                 int nextStartAuthor = _startAuthor;
                 while (authors.Count > 0)
@@ -424,23 +433,23 @@ namespace BHL.SearchIndexer
                             es.IndexMany(authorSelection);
                         }
 
-                        Log.Information("Last Author Indexed {AuthorID}", authorSelection.Last().id);
-                        Log.Information("{NumAuthors} Authors Indexed", ((batchNumber - 1) * numPerBatch) + authorSelection.Count);
+                        _logger.Information("Last Author Indexed {AuthorID}", authorSelection.Last().id);
+                        _logger.Information("{NumAuthors} Authors Indexed", ((batchNumber - 1) * numPerBatch) + authorSelection.Count);
                         authorCount += authorSelection.Count;
                         batchNumber++;
                     }
 
-                    Log.Information("Start Getting Authors");
+                    _logger.Information("Start Getting Authors");
                     authors = dataAccess.GetAuthorDocuments(authors.Last().id + 1, _authorSource == INDEXSOURCE.FILE);
-                    Log.Information("Done Getting Authors");
+                    _logger.Information("Done Getting Authors");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Indexing Authors. ABORTING operation.");
+                _logger.Error(ex, "ERROR Indexing Authors. ABORTING operation.");
             }
 
-            Log.Information("{NumAuthors} Total Authors Indexed", authorCount);
+            _logger.Information("{NumAuthors} Total Authors Indexed", authorCount);
         }
 
         private static void IndexKeywords()
@@ -448,14 +457,14 @@ namespace BHL.SearchIndexer
             int keywordCount = 0;
             DataAccess dataAccess = new DataAccess(_dbConnectionString);
 
-            Log.Information("Start Indexing Keywords");
+            _logger.Information("Start Indexing Keywords");
 
             try
             {
                 // Read list of keywords
-                Log.Information("Start Getting Keywords");
+                _logger.Information("Start Getting Keywords");
                 List<Keyword> keywords = dataAccess.GetKeywordDocuments(_startKeyword, _keywordSource == INDEXSOURCE.FILE);
-                Log.Information("Done Getting Keywords");
+                _logger.Information("Done Getting Keywords");
 
                 int nextStartKeyword = _startKeyword;
                 while (keywords.Count > 0)
@@ -484,23 +493,23 @@ namespace BHL.SearchIndexer
                             es.IndexMany(keywordSelection);
                         }
 
-                        Log.Information("Last Keyword Indexed {KeywordID}", keywordSelection.Last().id);
-                        Log.Information("{NumKeywords} Keywords Indexed", ((batchNumber - 1) * numPerBatch) + keywordSelection.Count);
+                        _logger.Information("Last Keyword Indexed {KeywordID}", keywordSelection.Last().id);
+                        _logger.Information("{NumKeywords} Keywords Indexed", ((batchNumber - 1) * numPerBatch) + keywordSelection.Count);
                         keywordCount += keywordSelection.Count;
                         batchNumber++;
                     }
 
-                    Log.Information("Start Getting Keywords");
+                    _logger.Information("Start Getting Keywords");
                     keywords = dataAccess.GetKeywordDocuments(keywords.Last().id + 1, _keywordSource == INDEXSOURCE.FILE);
-                    Log.Information("Done Getting Keywords");
+                    _logger.Information("Done Getting Keywords");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Indexing Keywords. ABORTING operation.");
+                _logger.Error(ex, "ERROR Indexing Keywords. ABORTING operation.");
             }
 
-            Log.Information("{NumKeywords} Total Keywords Indexed", keywordCount);
+            _logger.Information("{NumKeywords} Total Keywords Indexed", keywordCount);
         }
 
         private static void IndexNames()
@@ -508,14 +517,14 @@ namespace BHL.SearchIndexer
             int nameCount = 0;
             DataAccess dataAccess = new DataAccess(_dbConnectionString);
 
-            Log.Information("Start Indexing Names");
+            _logger.Information("Start Indexing Names");
 
             try
             {
                 // Read list of names
-                Log.Information("Start Getting Names");
+                _logger.Information("Start Getting Names");
                 List<Name> names = dataAccess.GetNameDocuments(_startName, _nameSource == INDEXSOURCE.FILE);
-                Log.Information("Done Getting Names");
+                _logger.Information("Done Getting Names");
 
                 int nextStartName = _startName;
                 while (names.Count > 0)
@@ -544,23 +553,23 @@ namespace BHL.SearchIndexer
                             es.IndexMany(nameSelection);
                         }
 
-                        Log.Information("Last Name Indexed {NameID}", nameSelection.Last().id);
-                        Log.Information("{NumNames} Names Indexed", ((batchNumber - 1) * numPerBatch) + nameSelection.Count);
+                        _logger.Information("Last Name Indexed {NameID}", nameSelection.Last().id);
+                        _logger.Information("{NumNames} Names Indexed", ((batchNumber - 1) * numPerBatch) + nameSelection.Count);
                         nameCount += nameSelection.Count;
                         batchNumber++;
                     }
 
-                    Log.Information("Start Getting Names");
+                    _logger.Information("Start Getting Names");
                     names = dataAccess.GetNameDocuments(names.Last().id + 1, _nameSource == INDEXSOURCE.FILE);
-                    Log.Information("Done Getting Names");
+                    _logger.Information("Done Getting Names");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Indexing Names. ABORTING operation.");
+                _logger.Error(ex, "ERROR Indexing Names. ABORTING operation.");
             }
 
-            Log.Information("{NumNames} Total Names Indexed", nameCount);
+            _logger.Information("{NumNames} Total Names Indexed", nameCount);
         }
 
         private static void OptimizeIndexes()
@@ -580,7 +589,7 @@ namespace BHL.SearchIndexer
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Optimizing Indexes.");
+                _logger.Error(ex, "ERROR Optimizing Indexes.");
             }
         }
 
@@ -595,7 +604,7 @@ namespace BHL.SearchIndexer
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "ERROR Writing Document {0}{1}.json to Disk.", documentType, documentId.ToString("000000"));
+                _logger.Error(ex, "ERROR Writing Document {0}{1}.json to Disk.", documentType, documentId.ToString("000000"));
             }
         }
 
@@ -642,6 +651,8 @@ namespace BHL.SearchIndexer
             _mqUser = new ConfigurationManager(_configFile).AppSettings("MQUser");
             _mqPw = new ConfigurationManager(_configFile).AppSettings("MQPassword");
             _mqQueueName = new ConfigurationManager(_configFile).AppSettings("MQQueueName");
+            _mqErrorExchangeName = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeName");
+            _mqErrorQueueName = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueName");
 
             _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
             _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));
@@ -679,6 +690,43 @@ namespace BHL.SearchIndexer
             _authorSource = new ConfigurationManager(_configFile).AppSettings("AuthorSource");
             _keywordSource = new ConfigurationManager(_configFile).AppSettings("KeywordSource");
             _nameSource = new ConfigurationManager(_configFile).AppSettings("NameSource");
+        }
+
+        /// <summary>
+        /// Send an email notification
+        /// </summary>
+        /// <param name="message"></param>
+        private static void SendEmailErrorNotification()
+        {
+            try
+            {
+                string thisComputer = Environment.MachineName;
+
+                var mimeMessage = new MimeMessage();
+                mimeMessage.From.Add(new MailboxAddress("", _emailFromAddress));
+                string[] toAddresses = _emailToAddresses.Split(',');
+                foreach (string toAddress in toAddresses)
+                {
+                    mimeMessage.To.Add(new MailboxAddress("", toAddress));
+                }
+                mimeMessage.Subject = "BHLSearchIndexer: Index Queue Processing on " + thisComputer + " halted with errors";
+                mimeMessage.Body = new TextPart("plain")
+                {
+                    Text = "An error occurred while reading messages from the index queue.  See the BHLSearchIndexer logs for detailed information."
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect(_smtpHost, _smtpPort, _smtpEnableSsl);
+                    if (!string.IsNullOrWhiteSpace(_smtpUser)) client.Authenticate(_smtpUser, _smtpPw);
+                    client.Send(mimeMessage);
+                    client.Disconnect(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Could not send Email");
+            }
         }
 
         /// <summary>

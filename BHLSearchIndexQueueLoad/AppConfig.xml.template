@@ -5,7 +5,9 @@
     <MQPort>MESSAGE QUEUE SERVER PORT</MQPort>
     <MQUser>MESSAGE QUEUE USERNAME</MQUser>
     <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
-    <MQQueueName>bhl.index</MQQueueName>
+    <MQQueueName>MESSAGE QUEUE NAME</MQQueueName>
+    <MQErrorExchangeName>MESSAGE QUEUE ERROR EXCHANGE NAME </MQErrorExchangeName>
+    <MQErrorQueueName>MESSAGE QUEUE ERROR QUEUE NAME</MQErrorQueueName>
 
     <!-- 
       Set these to MM-DD-YYYY values to queue messages for indexing entities that changed 

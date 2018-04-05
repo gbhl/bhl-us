@@ -278,6 +278,10 @@ namespace BHL.SearchIndexer
                         {
                             Item segment = new Item();
                             segment.segmentId = reader.GetInt32(reader.GetOrdinal("SegmentID"));
+                            if (!reader.IsDBNull(reader.GetOrdinal("ItemID")))
+                            {
+                                segment.itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                            }
                             segment.id = string.Format("s-{0}", segment.segmentId.ToString());
                             segment.title = reader.GetString(reader.GetOrdinal("Title"));
                             segment.translatedTitle = reader.GetString(reader.GetOrdinal("TranslatedTitle"));

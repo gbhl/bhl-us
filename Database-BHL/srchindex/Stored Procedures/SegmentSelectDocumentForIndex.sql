@@ -12,6 +12,7 @@ SET NOCOUNT ON
 CREATE TABLE #tmpSegment
 	(
 	SegmentID int NOT NULL,
+	ItemID int NULL,
 	Title nvarchar(2000) NOT NULL,
 	TranslatedTitle nvarchar(2000) NOT NULL,
 	SortTitle nvarchar(2000) NOT NULL,
@@ -41,6 +42,7 @@ CREATE TABLE #tmpSegment
 
 INSERT	#tmpSegment
 SELECT	s.SegmentID,
+		s.ItemID,
 		RTRIM(s.Title) AS Title,
 		RTRIM(s.TranslatedTitle) AS TranslatedTitle,
 		ISNULL(s.SortTitle, '') AS SortTitle,

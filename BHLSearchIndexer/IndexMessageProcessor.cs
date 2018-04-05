@@ -20,8 +20,6 @@ namespace BHL.SearchIndexer
 
         public bool ProcessMessage(string message)
         {
-            // TODO:  Determine what to do with a failed message (Submit a NACK? Requeue? Add message to an error queue?)
-
             bool messageProcessed = true;
 
             // Parse Operation, Entity Type, and ID from the message
@@ -76,16 +74,22 @@ namespace BHL.SearchIndexer
                     else
                     {
                         // Invalid Id in message
+                        throw new Exception(string.Format("Invalid id '{0}' in message '{1}'", 
+                            id, message));
                     }
                 }
                 else
                 {
                     // Invalid Operation or Index Entity in message
+                    throw new Exception(
+                        string.Format("Invalid operation '{0}' or entity '{1}' in message '{2}'", 
+                        operation, indexEntity, message));
                 }
             }
             else
             {
                 // Improper message format
+                throw new Exception(string.Format("Improperly formatted message '{0}'", message));
             }
 
             return messageProcessed;
@@ -139,7 +143,7 @@ namespace BHL.SearchIndexer
                 case "keyword":
                     DeleteKeyword(id);
                     break;
-                case "name":
+                case "nameresolved":
                     DeleteName(id);
                     break;
             }
@@ -151,14 +155,16 @@ namespace BHL.SearchIndexer
         /// <param name="id"></param>
         private void IndexItem(string id)
         {
+            string itemId = id.Split('-')[1];
+
             DataAccess dataAccess = new DataAccess(_dbConnectionstring);
-            List<Item> items = dataAccess.GetItemDocuments(Convert.ToInt32(id));
+            List<Item> items = dataAccess.GetItemDocuments(Convert.ToInt32(itemId));
 
             if (items.Count > 0)
             {
                 // Get the pages for the item
                 List<Page> pages = dataAccess
-                    .GetPageDocuments(ElasticSearch.PageSource.Book, Convert.ToInt32(id), _ocrLocation == "remote");
+                    .GetPageDocuments(ElasticSearch.PageSource.Book, Convert.ToInt32(itemId), _ocrLocation == "remote");
 
                 // Add the full text of the book to the item documents
                 StringBuilder fullText = new StringBuilder();
@@ -187,9 +193,8 @@ namespace BHL.SearchIndexer
                 }
 
                 // Update the search indexes
-                ElasticSearch es = new ElasticSearch(_searchConnectionString);
-                es.IndexMany(items);
-                es.IndexMany(pages);
+                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).IndexMany(items);
+                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).IndexMany(pages);
             }
         }
 
@@ -224,7 +229,7 @@ namespace BHL.SearchIndexer
         /// <param name="id"></param>
         private void IndexSegment(string id)
         {
-            DataAccess dataAccess = new DataAccess(_searchConnectionString);
+            DataAccess dataAccess = new DataAccess(_dbConnectionstring);
             List<Item> segments = dataAccess.GetSegmentDocuments(null, id);
 
             if (segments.Count > 0)
@@ -256,9 +261,8 @@ namespace BHL.SearchIndexer
                 }
 
                 // Update the search indexes
-                ElasticSearch es = new ElasticSearch(_searchConnectionString);
-                es.IndexMany(segments);
-                es.IndexMany(pages);
+                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).IndexMany(segments);
+                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).IndexMany(pages);
             }
         }
 
@@ -292,7 +296,7 @@ namespace BHL.SearchIndexer
             }
 
             // Update the search indexes
-            if (authors.Count > 0) new ElasticSearch(_searchConnectionString).IndexMany(authors);
+            if (authors.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.AUTHORS).IndexMany(authors);
         }
 
         /// <summary>
@@ -322,7 +326,7 @@ namespace BHL.SearchIndexer
             foreach (Keyword keyword in keywords) dataAccess.UpsertKeyword(keyword.id, keyword.keyword);
 
             // Update the search indexes
-            if (keywords.Count > 0) new ElasticSearch(_searchConnectionString).IndexMany(keywords);
+            if (keywords.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.KEYWORDS).IndexMany(keywords);
         }
 
         /// <summary>
@@ -349,7 +353,7 @@ namespace BHL.SearchIndexer
                 .GetNameDocumentsFromDatabase(Convert.ToInt32(id), Convert.ToInt32(id));
 
             // Update the search indexes
-            if (names.Count > 0) new ElasticSearch(_searchConnectionString).IndexMany(names);
+            if (names.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.NAMES).IndexMany(names);
         }
 
         /// <summary>

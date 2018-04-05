@@ -1,6 +1,8 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace BHL.QueueUtility
@@ -16,36 +18,44 @@ namespace BHL.QueueUtility
 
         private IConnection _connection = null;
         private IModel _channel = null;
+        private ILogger _logger;
 
         public string Host { get => _host; set => _host = value; }
         public int Port { get => _port; set => _port = value; }
         public string UserName { get => _userName; set => _userName = value; }
         public string Password { get => _password; set => _password = value; }
 
-        public QueueIO()
+        public QueueIO(ILogger logger = null)
         {
+            _logger = logger;
+
             InitQueue();
         }
 
-        public QueueIO(string hostname)
+        public QueueIO(string hostname, ILogger logger = null)
         {
             Host = hostname;
+            _logger = logger;
+
             InitQueue();
         }
 
-        public QueueIO(string hostname, int port)
+        public QueueIO(string hostname, int port, ILogger logger = null)
         {
             Host = hostname;
             Port = port;
+            _logger = logger;
+
             InitQueue();
         }
 
-        public QueueIO(string hostName, int port, string userName, string password)
+        public QueueIO(string hostName, int port, string userName, string password, ILogger logger = null)
         {
             Host = hostName;
             Port = port;
             UserName = userName;
             Password = password;
+            _logger = logger;
 
             InitQueue();
         }
@@ -70,15 +80,24 @@ namespace BHL.QueueUtility
             _channel = _connection.CreateModel();
         }
 
-        public void PutMessage(string message, string queueName, string exchangeName = "")
+        public void PutMessage(string message, string queueName, string exchangeName = "",
+            string errorQueueName = "", string errorExchangeName = "")
         {
             try
             {
+                // Set up the exchange and queues for handling errors
+                _channel.QueueDeclare(queue: errorQueueName,
+                    durable: true, exclusive: false, autoDelete: false, arguments: null);
+                _channel.ExchangeDeclare(errorExchangeName, "fanout", true, false);
+                _channel.QueueBind(errorQueueName, errorExchangeName, "");
+
+                // Set up the queue to which to write, including the exchange to which to route errors
+                Dictionary<string, object> args = new Dictionary<string, object>()
+                {
+                    { "x-dead-letter-exchange", errorExchangeName }
+                };
                 _channel.QueueDeclare(queue: queueName,
-                                        durable: true,
-                                        exclusive: false,
-                                        autoDelete: false,
-                                        arguments: null);
+                    durable: true, exclusive: false, autoDelete: false, arguments: args);
                 _channel.ConfirmSelect();
 
                 var body = Encoding.UTF8.GetBytes(message);
@@ -100,15 +119,24 @@ namespace BHL.QueueUtility
             }
         }
 
-        public void GetMessage(string queueName, IMessageProcessor processor)
+        public void GetMessage(string queueName, string errorExchangeName, string errorQueueName,
+            IMessageProcessor processor)
         {
             try
             {
+                // Set up the exchange and queues for handling errors
+                _channel.QueueDeclare(queue: errorQueueName,
+                    durable: true, exclusive: false, autoDelete: false, arguments: null);
+                _channel.ExchangeDeclare(errorExchangeName, "fanout", true, false);
+                _channel.QueueBind(errorQueueName, errorExchangeName, "");
+
+                // Set up the queue to read, including the exchange to which to route errors
+                Dictionary<string, object> args = new Dictionary<string, object>()
+                {
+                    { "x-dead-letter-exchange", errorExchangeName }
+                };
                 _channel.QueueDeclare(queue: queueName,
-                                        durable: true,
-                                        exclusive: false,
-                                        autoDelete: false,
-                                        arguments: null);
+                    durable: true, exclusive: false, autoDelete: false, arguments: args);
 
                 _channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 
@@ -118,13 +146,28 @@ namespace BHL.QueueUtility
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body);
 
-                    if (processor.ProcessMessage(message))
+                    bool processed = false;
+                    try
+                    {
+                        processed = processor.ProcessMessage(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log message processing error
+                        if (_logger != null)
+                        {
+                            _logger.Error(ex, "Error processing the Search Index Queue message '{Message}'", message);
+                        }
+                    }
+
+                    if (processed)
                     {
                         _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
                     }
                     else
                     {
-                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
+                        // requeue = false, so rejected messages will be sent to the error queue
+                        _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: false);
                     }
                 };
 

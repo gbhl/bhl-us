@@ -62,7 +62,8 @@ BEGIN
 			HasLocalContent = @HasLocalContent,
 			HasExternalContent = @HasExternalContent,
 			HasIllustrations = @HasIllustrations,
-			SearchText = @SearchText
+			SearchText = @SearchText,
+			LastModifiedDate = GETDATE()
 	WHERE	TitleID = @TitleID
 	AND		ItemID = @ItemID
 END
