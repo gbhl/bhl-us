@@ -29,6 +29,7 @@ namespace BHL.SearchIndexQueueLoad
                 {
                     sqlCommand.Connection = sqlConnection;
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
                     sqlCommand.CommandText = "audit.AuditBasicSelectForSearchIndexQueue";
 
                     // Add StartDate and EndDate parameters, if specified

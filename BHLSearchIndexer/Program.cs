@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace BHL.SearchIndexer
@@ -77,8 +78,9 @@ namespace BHL.SearchIndexer
                 if (_doFullIndex)
                 {
                     // Index everything
+                    string logPath = "logs/BHLSearchIndexer-Full-" + _connectionKey + "-{Date}.log";
                     _logger = new LoggerConfiguration()
-                        .WriteTo.RollingFile("logs/BHLSearchIndexer-Full-{Date}.log", shared: true)
+                        .WriteTo.RollingFile(logPath, shared: true)
                         .CreateLogger();
 
                     _logger.Information("Full Indexing Started");
@@ -101,8 +103,9 @@ namespace BHL.SearchIndexer
                 else
                 {
                     // Read messages from queue and index appropriate entities
+                    string logPath = "logs/BHLSearchIndexer-Incremental-" + _connectionKey + "-{Date}.log";
                     _logger = new LoggerConfiguration()
-                        .WriteTo.RollingFile("logs/BHLSearchIndexer-Incremental-{Date}.log", shared: true)
+                        .WriteTo.RollingFile(logPath, shared: true)
                         .CreateLogger();
 
                     _logger.Information("Index Queue Monitoring Started");

@@ -4,6 +4,7 @@ using MimeKit;
 using Serilog;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace BHL.SearchIndexQueueLoad
 {
@@ -40,14 +41,18 @@ namespace BHL.SearchIndexQueueLoad
 
             if (ReadCommandLineArguments(args))
             {
-                Log.Logger = new LoggerConfiguration()
-                    .WriteTo.RollingFile("logs/BHLSearchIndexer-{Date}.log", shared: true)
-                    .CreateLogger();
-                Log.Information("Queuing Started");
-
                 try
                 {
                     ReadConfig();
+
+                    string logPath = Path.GetDirectoryName(new Uri(Assembly.GetEntryAssembly().Location).LocalPath) +
+                        "/logs/BHLSearchIndexQueueLoad-" + _connectionKey + "-{Date}.log";
+
+                    Log.Logger = new LoggerConfiguration()
+                        .WriteTo.RollingFile(logPath, shared: true)
+                        .CreateLogger();
+                    Log.Information("Queuing Started");
+
 
                     DataAccess dataAccess = new DataAccess(new ConfigurationManager(_configFile).ConnectionStrings(_connectionKey));
 
