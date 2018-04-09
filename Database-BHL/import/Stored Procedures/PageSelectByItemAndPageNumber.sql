@@ -2,6 +2,7 @@
 
 @ItemID int,
 @Volume nvarchar(20),
+@Issue nvarchar(10),
 @PageNumber nvarchar(20)
 
 AS
@@ -26,6 +27,12 @@ AND		(
 		(ISNULL(i.StartVolume, 'ITMVOLNULL') = ISNULL(@Volume, 'VARNULL') AND ISNULL(p.Volume, '') = '') OR
 		(ISNULL(i.StartVolume, '') = '' AND ISNULL(p.Volume, '') = '') OR
 		ISNULL(@Volume, '') = ''
+		)
+AND		(
+		ISNULL(p.Issue, 'PGISSNULL') = ISNULL(@Issue, 'VARNULL') OR
+		(ISNULL(i.StartIssue, 'ITMVOLNULL') = ISNULL(@Issue, 'VARNULL') AND ISNULL(p.Issue, '') = '') OR
+		(ISNULL(i.StartIssue, '') = '' AND ISNULL(p.Issue, '') = '') OR
+		ISNULL(@Issue, '') = ''
 		)
 
 END

@@ -222,7 +222,7 @@ namespace MOBOT.BHL.Server
             if (citation.ItemID == null && startPageID == -1 && endPageID == -1)
             {
                 CustomGenericList<Item> items = ItemResolve(citation.JournalTitle, citation.ISSN,
-                    citation.ISBN, citation.OCLC, citation.Volume, citation.Year);
+                    citation.ISBN, citation.OCLC, citation.Volume, citation.Issue, citation.Year);
                 if (items.Count == 1) citation.ItemID = items[0].ItemID;
             }
 
@@ -230,7 +230,8 @@ namespace MOBOT.BHL.Server
             // If the IDs are not found, this citation is valid, but incomplete.
             if (citation.ItemID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage))
             {
-                CustomGenericList<Page> startPageIDs = PageSelectByItemAndPageNumber((int)citation.ItemID, citation.Volume, citation.StartPage);
+                CustomGenericList<Page> startPageIDs = PageSelectByItemAndPageNumber(
+                    (int)citation.ItemID, citation.Volume, citation.Issue, citation.StartPage);
                 if (startPageIDs.Count == 1)
                 {
                     startPageID = startPageIDs[0].PageID;
@@ -240,7 +241,8 @@ namespace MOBOT.BHL.Server
 
             if (citation.ItemID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage))
             {
-                CustomGenericList<Page> endPageIDs = PageSelectByItemAndPageNumber((int)citation.ItemID, citation.Volume, citation.EndPage);
+                CustomGenericList<Page> endPageIDs = PageSelectByItemAndPageNumber(
+                    (int)citation.ItemID, citation.Volume, citation.Issue, citation.EndPage);
                 if (endPageIDs.Count == 1)
                 {
                     endPageID = endPageIDs[0].PageID;

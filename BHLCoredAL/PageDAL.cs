@@ -248,10 +248,12 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
         /// <param name="itemID"></param>
+        /// <param name="volume"></param>
+        /// <param name="issue"></param>
         /// <param name="pageNumber"></param>
         /// <returns></returns>
         public CustomGenericList<Page> PageSelectByItemAndPageNumber(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, int itemID, string volume, string pageNumber)
+            SqlTransaction sqlTransaction, int itemID, string volume, string issue, string pageNumber)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -259,6 +261,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("import.PageSelectByItemAndPageNumber", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
                     CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 20, false, volume),
+                    CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 10, false, issue),
                     CustomSqlHelper.CreateInputParameter("PageNumber", SqlDbType.NVarChar, 20, false, pageNumber)))
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())

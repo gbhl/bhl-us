@@ -141,9 +141,10 @@ namespace BHLCoreDALTest
             // Matching record
             int itemID = 22024;
             string volume = "12";
+            string issue = "";
             string pageNumber = "382";
             CustomGenericList<Page> actual = new CustomGenericList<Page>();
-            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 1);
         }
 
@@ -156,9 +157,10 @@ namespace BHLCoreDALTest
             // Matching record
             int itemID = 22024;
             string volume = "";
+            string issue = "";
             string pageNumber = "382";
             CustomGenericList<Page> actual = new CustomGenericList<Page>();
-            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 1);
         }
 
@@ -171,9 +173,10 @@ namespace BHLCoreDALTest
             // No matching record
             int itemID = 22024;
             string volume = "13";
+            string issue = "";
             string pageNumber = "382";
             CustomGenericList<Page> actual = new CustomGenericList<Page>();
-            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 0);
         }
 
@@ -186,9 +189,10 @@ namespace BHLCoreDALTest
             // No matching record
             int itemID = 22024;
             string volume = "12";
+            string issue = "";
             string pageNumber = "450";
             CustomGenericList<Page> actual = new CustomGenericList<Page>();
-            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, pageNumber);
+            actual = target.PageSelectByItemAndPageNumber(sqlConnection, sqlTransaction, itemID, volume, issue, pageNumber);
             Assert.IsTrue(actual.Count == 0);
         }
     }

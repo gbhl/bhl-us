@@ -5,6 +5,7 @@
 @ISBNValue nvarchar(250),
 @OCLCValue nvarchar(250),
 @Volume nvarchar(100),
+@Issue nvarchar(10),
 @Year nvarchar(20)
 
 AS
@@ -38,7 +39,17 @@ FROM	dbo.Title t
 WHERE	t.TitleID IN (SELECT TitleID FROM #Title)
 AND		t.PublishReady = 1
 AND		i.ItemStatusID = 40
-AND		(i.StartVolume = @Volume OR @Volume = '')
-AND		(i.Year = @Year OR @Year = '')
+AND		(RIGHT(SPACE(20) + @Year, 20) BETWEEN RIGHT(SPACE(20) + i.[Year], 20) AND RIGHT(SPACE(20) + i.EndYear, 20)
+		OR i.[Year] = @Year
+		OR i.EndYear = @Year
+		OR ISNULL(@Year, '') = '')
+AND		(RIGHT(SPACE(100) + @Volume, 10) BETWEEN RIGHT(SPACE(100) + i.StartVolume, 10) AND RIGHT(SPACE(100) + i.EndVolume, 10)
+		OR i.StartVolume = @Volume
+		OR i.EndVolume = @Volume
+		OR ISNULL(@Volume, '') = '')
+AND		(RIGHT(SPACE(10) + @Issue, 10) BETWEEN RIGHT(SPACE(10) + i.StartIssue, 10) AND RIGHT(SPACE(10) + i.EndIssue, 10)
+		OR i.StartIssue = @Issue
+		OR i.EndIssue = @Issue
+		OR ISNULL(@Issue, '') = '')
 
 END

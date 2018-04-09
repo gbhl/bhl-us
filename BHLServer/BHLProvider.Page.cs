@@ -89,9 +89,9 @@ namespace MOBOT.BHL.Server
             return GetPageDalInstance().PageSelectRangeForPagesAndItem(null, null, startPageID, endPageID, itemID);
         }
 
-        public CustomGenericList<Page> PageSelectByItemAndPageNumber(int itemID, string volume, string pageNumber)
+        public CustomGenericList<Page> PageSelectByItemAndPageNumber(int itemID, string volume, string issue, string pageNumber)
         {
-            return GetPageDalInstance().PageSelectByItemAndPageNumber(null, null, itemID, volume, pageNumber);
+            return GetPageDalInstance().PageSelectByItemAndPageNumber(null, null, itemID, volume, issue, pageNumber);
         }
 
         #endregion

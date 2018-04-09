@@ -314,7 +314,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="year"></param>
         /// <returns></returns>
         public CustomGenericList<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string title, string issn, string isbn, string oclc, string volume, string year)
+            string title, string issn, string isbn, string oclc, string volume, string issue, string year)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -326,6 +326,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("ISBNValue", SqlDbType.NVarChar, 2000, false, isbn),
                     CustomSqlHelper.CreateInputParameter("OCLCValue", SqlDbType.NVarChar, 2000, false, oclc),
                     CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 2000, false, volume),
+                    CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 2000, false, issue),
                     CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 2000, false, year)))
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())

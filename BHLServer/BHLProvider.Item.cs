@@ -102,9 +102,9 @@ namespace MOBOT.BHL.Server
         }
 
         public CustomGenericList<Item> ItemResolve(string title, string issn, string isbn, string oclc,
-            string volume, string year)
+            string volume, string issue, string year)
         {
-            return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, year);
+            return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, issue, year);
         }
 
         #endregion
