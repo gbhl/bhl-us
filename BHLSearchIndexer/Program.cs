@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
+using System.Threading;
 
 namespace BHL.SearchIndexer
 {
@@ -66,6 +68,8 @@ namespace BHL.SearchIndexer
         private static string _keywordSource = INDEXSOURCE.DB;
         private static string _nameSource = INDEXSOURCE.DB;
 
+        private static bool _haltIncremental = false;
+
         private static HashSet<int> _indexedSegments = new HashSet<int>();
         private static ILogger _logger;
 
@@ -117,8 +121,17 @@ namespace BHL.SearchIndexer
                             queueIO.GetMessage(_mqQueueName, _mqErrorExchangeName, _mqErrorQueueName,
                                 new IndexMessageProcessor(_esConnectionString, _dbConnectionString, 
                                     _ocrLocation));
-                            Console.WriteLine("Press any key to stop monitoring the index queue");
-                            Console.ReadKey();
+                                    
+                            // Register event handlers for SIGTERM and SIGINT (termination signals)
+                            AssemblyLoadContext.Default.Unloading += SigTermEventHandler;
+                            Console.CancelKeyPress += CancelHandler;
+
+                            while (!_haltIncremental)
+                            {
+                                Thread.Sleep(10000);
+                                //Console.WriteLine("Press enter to stop monitoring the index queue");
+                                //Console.Read();
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -609,6 +622,25 @@ namespace BHL.SearchIndexer
             {
                 _logger.Error(ex, "ERROR Writing Document {0}{1}.json to Disk.", documentType, documentId.ToString("000000"));
             }
+        }
+
+        /// <summary>
+        ///  Capture SIGTERM signal sent by service termination (systemd on Linux)
+        /// </summary>
+        /// <param name="obj"></param>
+        private static void SigTermEventHandler(AssemblyLoadContext obj)
+        {
+            _haltIncremental = true;
+        }
+
+        /// <summary>
+        ///  Capture SIGINT (Ctrl-C) signal
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void CancelHandler(object sender, ConsoleCancelEventArgs e)
+        {
+            _haltIncremental = true;
         }
 
         /// <summary>
