@@ -110,6 +110,8 @@
                                         {
                                             <div class="row">
                                                 <div class="col-sm-10 pubResultContainer">
+                                                    @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "titles" } })
+
                                                     @foreach (BHL.Search.ItemHit item in Model.ItemResult.Items)
                                                     {
                                                         <div class="pubResult">
@@ -117,35 +119,39 @@
                                                                 <div class="col-sm-9">
                                                                     @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
                                                                     {
-                                                                        <div><a href="~/bibliography/@item.TitleId">@Html.Raw(Server.HtmlEncode(item.Title))</a></div>
+                                                                        <div>
+                                                                        @if (string.IsNullOrWhiteSpace(item.Url))
+                                                                        {
+                                                                            <a href="~/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a target="_blank" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                        }
+                                                                        </div>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <div><a href="~/part/@item.SegmentId">@Html.Raw(Server.HtmlEncode(item.Title))</a></div>
+                                                                        <div>
+                                                                        @if (string.IsNullOrWhiteSpace(item.Url))
+                                                                        {
+                                                                            <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a target="_blank" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                        }
+                                                                        </div>
                                                                     }
                                                                 </div>
                                                                 <div class="col-sm-3 pubResultLinks">
                                                                     @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
                                                                     {
-                                                                        if (string.IsNullOrWhiteSpace(item.Url))
-                                                                        {
-                                                                            <a class="titleviewbook" href="~/item/@item.ItemId">View Book</a>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <a class="titleviewbook" target="_blank" href="/item/@item.ItemId">View Book (External)</a>
-                                                                        }
+                                                                        <a class="titleviewbook" href="~/bibliography/@item.TitleId">View Metadata</a>
                                                                     }
                                                                     else
                                                                     {
-                                                                        if (string.IsNullOrWhiteSpace(item.Url))
-                                                                        {
-                                                                            <a class="titleviewbook" href="~/page/@item.StartPageId">View @Html.Raw(Server.HtmlEncode(item.Genre))</a>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <a class="titleviewbook" target="_blank" href="@item.Url">View @Html.Raw(Server.HtmlEncode(item.Genre)) (External)</a>
-                                                                        }
+                                                                        <a class="titleviewbook" href="~/part/@item.SegmentId">View Metadata</a>
                                                                     }
                                                                 </div>
                                                             </div>
@@ -288,6 +294,7 @@
                                         else
                                         {
                                             <div class="nonPubResult">
+                                                @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.AuthorResult }, { "currentPageField", "AuthorPage" }, { "searchTab", "authors" } })
                                                 @foreach (BHL.Search.AuthorHit author in Model.AuthorResult.Authors)
                                                 {
                                                     <div class="nonPubResultLine"><a href="/creator/@author.Id">@author.PrimaryAuthorName</a></div>
@@ -321,6 +328,7 @@
                                         else
                                         {
                                             <div class="nonPubResult">
+                                                @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.KeywordResult}, { "currentPageField", "KeywordPage" }, { "searchTab", "subjects" } })
                                                 @foreach (BHL.Search.KeywordHit keyword in Model.KeywordResult.Keywords)
                                                 {
                                                     <div class="nonPubResultLine"><a href="/subject/@Server.UrlEncode(keyword.Keyword)">@keyword.Keyword</a></div>
@@ -367,6 +375,7 @@
                                         {
                                             <div class="row">
                                                 <div class="nonPubResult">
+                                                    @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.NameResult }, { "currentPageField", "NamePage" }, { "searchTab", "names" } })
                                                     @foreach (BHL.Search.NameHit name in Model.NameResult.Names)
                                                     {
                                                         <div class="nonPubResultLine">
@@ -376,8 +385,8 @@
                                                         </div>
                                                     }
                                                 </div>
+                                                @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.NameResult }, { "currentPageField", "NamePage" }, { "searchTab", "names" } })
                                             </div>
-                                            @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.NameResult }, { "currentPageField", "NamePage" }, { "searchTab", "names" } })
                                         }
                                     }
                                     else

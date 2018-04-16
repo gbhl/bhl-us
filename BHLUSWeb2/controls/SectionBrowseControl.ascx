@@ -2,7 +2,9 @@
 <asp:Repeater ID="sectionRepeater" runat="server">
     <ItemTemplate>
         <li class="titlelisting">
-            <a href="/part/<%# Eval("SegmentID")%>" title="Segment"><%# Eval("Title") %></a>
+            <%# (Eval("StartPageID") == null && Eval("URL").ToString() == string.Empty) ?  Eval("Title") : "" %>
+            <%# (Eval("StartPageID") != null && Eval("URL").ToString() == string.Empty) ? "<a class=\"title\" href=\"/page/" + Eval("StartPageID").ToString() + "\" \\>" + Eval("Title").ToString() + "</a>" : "" %>
+            <%# (Eval("StartPageID") == null && Eval("URL").ToString() != string.Empty) ? "<div class=\"title\">[EXTERNAL] <a target=\"_blank\" href=\"" + Eval("URL").ToString() + "\" \\>" + Eval("Title").ToString() + "</a></div>" : "" %>
             <%# Eval("Authors") == string.Empty ? "" : "<div class=\"titledetails\">By: " + Eval("Authors").ToString().Replace("|", " - ")+"</div>" %>
             <%# Eval("GenreName") == string.Empty ? "" : "<div class=\"titledetails\">Type: " + Eval("GenreName").ToString()+"</div>" %>
             <%# Eval("ContainerTitle") == string.Empty ? "" : "<div class=\"titledetails\">In: " + Eval("ContainerTitle").ToString()+"</div>" %>
@@ -13,9 +15,9 @@
             <%# Eval("PageRange") == string.Empty ? "" : "<div class=\"titledetails\">Page Range: " + Eval("PageRange") + "</div>"%>
             <%# Eval("PublicationDetails") == string.Empty ? "" : "<div class=\"titledetails\">Publication info: " + Eval("PublicationDetails") + "</div>"%>
             <%# Eval("Keywords") == string.Empty ? "" : "<div class=\"titledetails\">Subjects: " + Eval("Keywords").ToString().Replace("|", "&nbsp;&nbsp;") + "</div>"%>
-            <%# Eval("StartPageID") == null ? "":"<a class=\"titleviewbook\" href=\"/page/" + Eval("StartPageID")+ "\">View "+  Eval("GenreName")+ "</a> "%>
-            <%# Eval("URL") == string.Empty ? "":"<a target=\"_blank\" class=\"titleviewbook\" href=\"" + Eval("URL")+ "\">View "+  Eval("GenreName")+ " (External)</a>" %>
-            <%# Eval("DownloadURL") == string.Empty ? "":"<a class=\"titleviewbook\" href=\"" + Eval("DownloadURL")+ "\">Download "+  Eval("GenreName")+ "</a>" %>
+            <a class="titleviewbook" href="/part/<%# Eval("SegmentID")%>">View Metadata</a>
+            <%# (!string.IsNullOrWhiteSpace(Eval("URL").ToString()) && Eval("StartPageID") != null) ? "<a target=\"_blank\" class=\"titleviewbook\" href=\"" + Eval("URL")+ "\">View Alternate [External]</a>" : "" %>
+            <%# Eval("DownloadURL") == string.Empty ? "":"<a class=\"titleviewbook\" href=\"" + Eval("DownloadURL")+ "\">Download</a>" %>
         </li>
 	</ItemTemplate>
 	<HeaderTemplate>

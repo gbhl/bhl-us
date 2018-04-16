@@ -20,6 +20,12 @@ namespace MOBOT.BHL.Web2.Controllers
             string subj, string lang, string col, string ppage, string apage, string kpage, string npage, 
             string[] facet)
         {
+            // Prevent browser Back button page caching
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1
+            Response.Cache.AppendCacheExtension("no-store, must-revalidate");
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0
+            Response.AppendHeader("Expires", "0"); // Proxies
+
             SearchModel model = new SearchModel();
             model.Params.SearchTerm = searchTerm;
 
@@ -174,10 +180,10 @@ namespace MOBOT.BHL.Web2.Controllers
         public ActionResult Pages(string q, int itemId)
         {
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-            search.NumResults = 5000;
+            search.NumResults = Convert.ToInt32(ConfigurationManager.AppSettings["PageResultPageSize"]); ;
             search.Highlight = true;
             search.Suggest = false;
-            search.SortField = SortField.Sequence;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
             List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
             Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemId.ToString());
             limits.Add(itemLimit);
@@ -231,13 +237,15 @@ namespace MOBOT.BHL.Web2.Controllers
 
         public ActionResult SearchAction(SearchModel model, List<Tuple<SearchField, string>> limits)
         {
-            int pageSize = 10;
-
             if (SearchRedirect()) return new RedirectResult("~/search.aspx?" + Request.QueryString);
+
+            int publicationPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PublicationResultPageSize"]);
+            int authorPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorResultPageSize"]);
+            int keywordPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["KeywordResultPageSize"]);
+            int namePageSize = Convert.ToInt32(ConfigurationManager.AppSettings["NameResultPageSize"]);
 
             // Submit the request to ElasticSearch here
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-            search.NumResults = pageSize;
             search.Highlight = true;
             search.Suggest = true;
             string searchTerm = model.Params.SearchTerm ?? "";
@@ -246,13 +254,21 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 // Standard search
                 search.StartPage = model.AuthorPage;
+                search.NumResults = authorPageSize;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
                 model.AuthorResult = search.SearchAuthor(searchTerm);
                 search.StartPage = model.KeywordPage;
+                search.NumResults = keywordPageSize;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
                 model.KeywordResult = search.SearchKeyword(searchTerm);
                 search.StartPage = model.NamePage;
+                search.NumResults = namePageSize;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
                 model.NameResult = search.SearchName(searchTerm);
                 search.Facet = true;
                 search.StartPage = model.ItemPage;
+                search.NumResults = publicationPageSize;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
                 model.ItemResult = search.SearchItem(searchTerm, limits);
             }
             else
@@ -261,16 +277,19 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (model.Params.SearchCategory.Equals("A"))
                 {
                     search.StartPage = model.AuthorPage;
+                    search.NumResults = authorPageSize;
                     model.AuthorResult = search.SearchAuthor(searchTerm);
                 }
                 if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
                 {
                     search.StartPage = model.NamePage;
+                    search.NumResults = namePageSize;
                     model.NameResult = search.SearchName(searchTerm);
                 }
                 if (model.Params.SearchCategory.Equals("T"))
                 {
                     search.StartPage = model.ItemPage;
+                    search.NumResults = publicationPageSize;
                     search.Facet = true;
                     model.ItemResult = search.SearchItem(searchTerm, model.Params.LastName,
                         model.Params.Volume, model.Params.Year, model.Params.Subject, model.Params.Language, 
@@ -279,6 +298,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 if (model.Params.SearchCategory.Equals("S"))
                 {
                     search.StartPage = model.KeywordPage;
+                    search.NumResults = keywordPageSize;
                     model.KeywordResult = search.SearchKeyword(searchTerm);
                 }
             }
