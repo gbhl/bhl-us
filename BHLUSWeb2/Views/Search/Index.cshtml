@@ -117,10 +117,10 @@
                                                         <div class="pubResult">
                                                             <div class="row">
                                                                 <div class="col-sm-9">
+                                                                    <div style="padding-bottom:10px">
                                                                     @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
                                                                     {
-                                                                        <div>
-                                                                        @if (string.IsNullOrWhiteSpace(item.Url))
+                                                                        if (string.IsNullOrWhiteSpace(item.Url))
                                                                         {
                                                                             <a href="~/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                         }
@@ -128,12 +128,10 @@
                                                                         {
                                                                             <a target="_blank" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                         }
-                                                                        </div>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <div>
-                                                                        @if (string.IsNullOrWhiteSpace(item.Url))
+                                                                        if (string.IsNullOrWhiteSpace(item.Url))
                                                                         {
                                                                             <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                         }
@@ -141,22 +139,26 @@
                                                                         {
                                                                             <a target="_blank" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                         }
-                                                                        </div>
                                                                     }
+                                                                    </div>
                                                                 </div>
                                                                 <div class="col-sm-3 pubResultLinks">
                                                                     @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial"))
                                                                     {
-                                                                        <a class="titleviewbook" href="~/bibliography/@item.TitleId">View Metadata</a>
+                                                                        <a class="titleviewbook" style="position:relative;top:-25px;" href="~/bibliography/@item.TitleId">View Metadata</a>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <a class="titleviewbook" href="~/part/@item.SegmentId">View Metadata</a>
+                                                                        <a class="titleviewbook" style="position:relative;top:-25px;" href="~/part/@item.SegmentId">View Metadata</a>
                                                                     }
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-sm-12">
+                                                                    @if (!string.IsNullOrWhiteSpace(item.Genre))
+                                                                    {
+                                                                        <div class="pubResultLine">Type: @Html.Raw(Server.HtmlEncode(item.Genre))</div>
+                                                                    }
                                                                     @if (!string.IsNullOrWhiteSpace(item.Volume) && (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial")))
                                                                     {
                                                                         <div class="pubResultLine">Volume: @Html.Raw(Server.HtmlEncode(item.Volume))</div>
@@ -169,10 +171,6 @@
                                                                     }
                                                                     @if (!(item.Genre.Contains("Monograph") || item.Genre.Contains("Serial")))
                                                                     {
-                                                                        if (!string.IsNullOrWhiteSpace(item.Genre))
-                                                                        {
-                                                                            <div class="pubResultLine">Type: @Html.Raw(Server.HtmlEncode(item.Genre))</div>
-                                                                        }
                                                                         if (!string.IsNullOrWhiteSpace(item.Container))
                                                                         {
                                                                             <div class="pubResultLine">In: @Html.Raw(Server.HtmlEncode(item.Container))</div>
