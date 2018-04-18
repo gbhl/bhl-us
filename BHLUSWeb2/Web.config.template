@@ -131,6 +131,16 @@
     <!-- Search results settings -->
     <add key="MaximumDefaultResults" value="100"/>
     <add key="MaximumExpandedResults" value="500"/>
+    <add key="PublicationResultPageSize" value="10" />
+    <add key="AuthorResultPageSize" value="20" />
+    <add key="KeywordResultPageSize" value="20" />
+    <add key="NameResultPageSize" value="20" />
+    <add key="PageResultPageSize" value="5000" />
+    <add key="PublicationResultDefaultSort" value="Score" /> <!-- Valid values: Score, Author, Date, Title -->
+    <add key="AuthorResultDefaultSort" value="PrimaryAuthor" /> <!-- Valid values: Score, PrimaryAuthor -->
+    <add key="KeywordResultDefaultSort" value="Keyword" /> <!-- Valid values: Score, Keyword -->
+    <add key="NameResultDefaultSort" value="Name" /> <!-- Valid values: Score, Name -->
+    <add key="PageResultDefaultSort" value="Sequence" /> <!-- Valid values: Score, Sequence -->
     <!-- Gemini settings for feedback page -->
     <add key="GeminiURL" value="issue tracking service URL"/>
     <add key="GeminiUser" value="issue tracking service username"/>

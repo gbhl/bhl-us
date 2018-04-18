@@ -226,6 +226,12 @@ a.ExtLink
     background-clip: border-box;
     background-color: transparent;
 }
+a.ExtLinkBrowse 
+{
+    background: url("/images/extlink16.png") right top no-repeat;
+    padding-right: 20px;
+    display: inline-block;
+}
 #altmetricbadge
 {
     margin-top:38px;
@@ -1891,8 +1897,10 @@ ul.data.collections li .collectiontitle
 }
 #content a.title, .titlelisting  a.title
 {
-    width: 540px;
+    width: 440px;
     display:block;
+    line-height:normal;
+    padding-bottom:6px;
 }
 #content .titledetails, .titlelisting .titledetail
 {
@@ -1903,8 +1911,6 @@ ul.data.collections li .collectiontitle
 #content .titleviewbook, .titlelisting .titleviewbook
 {
     float:right;
-    position:relative;
-    top:-25px;
     text-decoration:none;
     text-align:center;
     border:1px solid #c9c4bf;

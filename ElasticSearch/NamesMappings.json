@@ -11,7 +11,12 @@
 			},
 			"name" : {
 				"type" : "text",
-				"analyzer" : "default"
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				}
 			}
 		}
 	}

@@ -351,6 +351,7 @@
     <Content Include="images\envelope_icon.png" />
     <Content Include="images\eol_11px.png" />
     <Content Include="images\eol_15px.png" />
+    <Content Include="images\extlink16.png" />
     <Content Include="images\extlnk.gif" />
     <Content Include="images\facebook-icon-normal.png" />
     <Content Include="images\facebook-icon-over.png" />

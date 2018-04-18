@@ -10,7 +10,7 @@
             <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div></div> 
                 <div class="downloadcontents">
-                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">Bibliographic Information</a></div>
+                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">View Metadata</a></div>
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
                     <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
@@ -1294,6 +1294,7 @@
                     //updateOCR(br.currentIndex()); 
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageSearch-panel").show();
+                    $("#sibSearchText").focus();
                     showSearchButton.attr("title", "Hide Search");
                     showSearchButton.html("Hide Search");
                     showSearchButton.addClass("displayed");

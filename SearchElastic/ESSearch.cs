@@ -189,9 +189,9 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.ISBN + "^15"));
                 fields.Add(new Field(ESField.OCLC + "^15"));
                 fields.Add(new Field(ESField.DOI + "^15"));
-                fields.Add(new Field(ESField.TRANSLATEDTITLE + "^10"));
-                fields.Add(new Field(ESField.UNIFORMTITLE + "^10"));
-                fields.Add(new Field(ESField.VARIANTS + "^10"));
+                fields.Add(new Field(ESField.TRANSLATEDTITLE + "^15"));
+                fields.Add(new Field(ESField.UNIFORMTITLE + "^15"));
+                fields.Add(new Field(ESField.VARIANTS + "^15"));
                 fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
                 fields.Add(new Field(ESField.COLLECTIONS + "^5"));
                 fields.Add(new Field(ESField.CONTAINER + "^5"));
@@ -272,9 +272,9 @@ namespace BHL.Search.Elastic
                 {
                     shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title), Boost = 10 });
                     shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title) });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 5 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 5 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 5 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 10 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 10 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 10 });
                 }
 
                 if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author) });
