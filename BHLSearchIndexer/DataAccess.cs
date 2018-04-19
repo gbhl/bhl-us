@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BHL.SearchIndexer
 {
@@ -1198,9 +1199,12 @@ namespace BHL.SearchIndexer
             else
             {
                 // If on the Red Hat server, replace the drive letter with a folder name
-                if (textPath.Contains("B:"))
+                Regex rgx = new Regex("[a-zA-Z]:");
+                if (rgx.IsMatch(textPath))
+                //if (textPath.Contains("B:"))
                 {
-                    textPath = textPath.Replace("B:", "/data");
+                    textPath = rgx.Replace(textPath, "/data");
+                    //textPath = textPath.Replace("B:", "/data");
                     if (File.Exists(textPath))
                     {
                         ocrText = File.ReadAllText(textPath, Encoding.UTF8);
