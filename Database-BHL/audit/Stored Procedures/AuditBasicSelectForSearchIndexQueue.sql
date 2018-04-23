@@ -179,6 +179,7 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON ti.TitleID = t.TitleID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Author'
+AND		Operation <> 'E'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
 UNION
@@ -213,6 +214,7 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON ti.TitleID = t.TitleID
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.Keyword'
+AND		Operation <> 'E'
 AND		i.ItemStatusID = 40
 AND		t.PublishReady = 1
 UNION
