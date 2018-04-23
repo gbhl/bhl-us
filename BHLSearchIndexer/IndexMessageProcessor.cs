@@ -217,9 +217,10 @@ namespace BHL.SearchIndexer
             new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).Delete(item);
 
             // Deleted pages and segments
-            List<int> pages = dataAccess.GetPagesForItem(Convert.ToInt32(itemId));
+            //List<int> pages = dataAccess.GetPagesForItem(Convert.ToInt32(itemId));
+            DeletePagesForItem(itemId);
             List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
-            foreach (int page in pages) DeletePage(page);
+            //foreach (int page in pages) DeletePage(page);
             foreach (int segment in segments) DeleteSegment(segment.ToString());
         }
 
@@ -376,6 +377,16 @@ namespace BHL.SearchIndexer
             // Delete from searchindex
             Page page = new Page { id = id };
             new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).Delete(page);
+        }
+
+        /// <summary>
+        /// Delete all pages associated with the specified item from the search indexes
+        /// </summary>
+        /// <param name="id"></param>
+        private void DeletePagesForItem(string id)
+        {
+            // Delete from search index
+            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).DeleteAll(id);
         }
     }
 }

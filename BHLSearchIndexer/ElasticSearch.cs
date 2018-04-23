@@ -193,6 +193,13 @@ namespace BHL.SearchIndexer
         }
         */
 
+        public void DeleteAll(string id)
+        {
+            IDeleteByQueryRequest dq = new DeleteByQueryRequest(_indexName);
+            dq.Query = new QueryContainer(new MatchQuery { Field = "itemId", Query = id });
+            _es.DeleteByQuery(dq);
+        }
+
         private string GetIndexErrorString(IResponse response)
         {
             return string.Format(
