@@ -16,6 +16,8 @@ namespace BHL.QueueUtility
         private string _userName = "guest";
         private string _password = "guest";
 
+        private ushort _prefetchCount = 1;
+
         private IConnection _connection = null;
         private IModel _channel = null;
         private ILogger _logger;
@@ -24,6 +26,7 @@ namespace BHL.QueueUtility
         public int Port { get => _port; set => _port = value; }
         public string UserName { get => _userName; set => _userName = value; }
         public string Password { get => _password; set => _password = value; }
+        public ushort PrefetchCount { get => _prefetchCount; set => _prefetchCount = value; }
 
         public QueueIO(ILogger logger = null)
         {
@@ -138,7 +141,7 @@ namespace BHL.QueueUtility
                 _channel.QueueDeclare(queue: queueName,
                     durable: true, exclusive: false, autoDelete: false, arguments: args);
 
-                _channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+                _channel.BasicQos(prefetchSize: 0, prefetchCount: _prefetchCount, global: false);
 
                 var consumer = new EventingBasicConsumer(_channel);
                 consumer.Received += (model, ea) =>

@@ -30,6 +30,7 @@ namespace BHL.SearchIndexer
         private static string _mqQueueName = string.Empty;
         private static string _mqErrorExchangeName = string.Empty;
         private static string _mqErrorQueueName = string.Empty;
+        private static ushort _mqPrefetchCount = 1;
 
         private static string _smtpHost = string.Empty;
         private static int _smtpPort = 0;
@@ -118,6 +119,7 @@ namespace BHL.SearchIndexer
                     {
                         using (QueueIO queueIO = new QueueIO(_mqAddress, _mqPort, _mqUser, _mqPw, _logger))
                         {
+                            queueIO.PrefetchCount = _mqPrefetchCount;
                             queueIO.GetMessage(_mqQueueName, _mqErrorExchangeName, _mqErrorQueueName,
                                 new IndexMessageProcessor(_esConnectionString, _dbConnectionString, 
                                     _ocrLocation));
@@ -688,6 +690,7 @@ namespace BHL.SearchIndexer
             _mqQueueName = new ConfigurationManager(_configFile).AppSettings("MQQueueName");
             _mqErrorExchangeName = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeName");
             _mqErrorQueueName = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueName");
+            _mqPrefetchCount = Convert.ToUInt16(new ConfigurationManager(_configFile).AppSettings("MQPrefetchCount"));
 
             _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
             _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));

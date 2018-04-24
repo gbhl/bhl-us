@@ -19,7 +19,7 @@
     <MQQueueName>MESSAGE QUEUE NAME</MQQueueName>
     <MQErrorExchangeName>MESSAGE QUEUE ERROR EXCHANGE NAME </MQErrorExchangeName>
     <MQErrorQueueName>MESSAGE QUEUE ERROR QUEUE NAME</MQErrorQueueName>
-
+    <MQPrefetchCount>5</MQPrefetchCount> <!-- Number of unacknowledged messages to read from the queue at once -->
 
     <!-- Email settings -->
     <SmtpHost>MAIL SERVER ADDRESS</SmtpHost>
