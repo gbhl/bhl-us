@@ -5,9 +5,12 @@
     <MQPort>MESSAGE QUEUE SERVER PORT</MQPort>
     <MQUser>MESSAGE QUEUE USERNAME</MQUser>
     <MQPassword>MESSAGE QUEUE PASSWORD</MQPassword>
-    <MQQueueName>MESSAGE QUEUE NAME</MQQueueName>
-    <MQErrorExchangeName>MESSAGE QUEUE ERROR EXCHANGE NAME </MQErrorExchangeName>
-    <MQErrorQueueName>MESSAGE QUEUE ERROR QUEUE NAME</MQErrorQueueName>
+    <MQQueue>NAME OF MESSAGE QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQQueue>
+    <MQErrorExchange>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorExchange>
+    <MQErrorQueue>NAME OF MESSAGE QUEUE ERROR QUEUE FOR ITEMS/AUTHORS/KEYWORDS</MQErrorQueue>
+    <MQQueueNames>NAME OF MESSAGE QUEUE FOR NAMES</MQQueueNames>
+    <MQErrorExchangeNames>NAME OF MESSAGE QUEUE ERROR EXCHANGE FOR NAMES</MQErrorExchangeNames>
+    <MQErrorQueueNames>NAME OF MESSAGE QUEUE ERROR QUEUE FOR NAMES</MQErrorQueueNames>
 
     <!-- 
       Set these to MM-DD-YYYY values to queue messages for indexing entities that changed 

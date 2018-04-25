@@ -19,9 +19,12 @@ namespace BHL.SearchIndexQueueLoad
         private static int _mqPort = 0;
         private static string _mqUser = string.Empty;
         private static string _mqPw = string.Empty;
-        private static string _mqQueueName = string.Empty;
-        private static string _mqErrorExchangeName = string.Empty;
-        private static string _mqErrorQueueName = string.Empty;
+        private static string _mqQueue = string.Empty;
+        private static string _mqErrorExchange = string.Empty;
+        private static string _mqErrorQueue = string.Empty;
+        private static string _mqQueueNames = string.Empty;
+        private static string _mqErrorExchangeNames = string.Empty;
+        private static string _mqErrorQueueNames = string.Empty;
 
         private static string _smtpHost = string.Empty;
         private static int _smtpPort= 0;
@@ -75,10 +78,26 @@ namespace BHL.SearchIndexQueueLoad
 
                                 try
                                 {
-                                    queueUtil.PutMessage(queueMsg, 
-                                        queueName: _mqQueueName,
-                                        errorQueueName: _mqErrorQueueName,
-                                        errorExchangeName: _mqErrorExchangeName);
+                                    switch (change.IndexEntity)
+                                    {
+                                        case "nameresolved":
+                                            // Name messages belong on a queue separate from the other messages
+                                            queueUtil.PutMessage(queueMsg,
+                                                queueName: _mqQueueNames,
+                                                errorQueueName: _mqErrorQueueNames,
+                                                errorExchangeName: _mqErrorExchangeNames);
+                                            break;
+                                        case "item":
+                                        case "segment":
+                                        case "author":
+                                        case "keyword":
+                                        default:
+                                            queueUtil.PutMessage(queueMsg,
+                                                queueName: _mqQueue,
+                                                errorQueueName: _mqErrorQueue,
+                                                errorExchangeName: _mqErrorExchange);
+                                            break;
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
@@ -202,9 +221,12 @@ namespace BHL.SearchIndexQueueLoad
             _mqPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("MQPort"));
             _mqUser = new ConfigurationManager(_configFile).AppSettings("MQUser");
             _mqPw = new ConfigurationManager(_configFile).AppSettings("MQPassword");
-            _mqQueueName = new ConfigurationManager(_configFile).AppSettings("MQQueueName");
-            _mqErrorExchangeName = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeName");
-            _mqErrorQueueName = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueName");
+            _mqQueue = new ConfigurationManager(_configFile).AppSettings("MQQueue");
+            _mqErrorExchange = new ConfigurationManager(_configFile).AppSettings("MQErrorExchange");
+            _mqErrorQueue = new ConfigurationManager(_configFile).AppSettings("MQErrorQueue");
+            _mqQueueNames = new ConfigurationManager(_configFile).AppSettings("MQQueueNames");
+            _mqErrorExchangeNames = new ConfigurationManager(_configFile).AppSettings("MQErrorExchangeNames");
+            _mqErrorQueueNames = new ConfigurationManager(_configFile).AppSettings("MQErrorQueueNames");
 
             _smtpHost = new ConfigurationManager(_configFile).AppSettings("SmtpHost");
             _smtpPort = Convert.ToInt32(new ConfigurationManager(_configFile).AppSettings("SmtpPort"));
