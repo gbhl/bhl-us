@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Part>
+      <PartUrl>https://www.biodiversitylibrary.org/part/8409</PartUrl>
+      <PartID>8409</PartID>
+      <ItemID>35600</ItemID>
+      <StartPageID>8796139</StartPageID>
+      <SequenceOrder>1</SequenceOrder>
+      <GenreName>Article</GenreName>
+      <Title>Mites of Utah mammals</Title>
+      <TranslatedTitle />
+      <ContainerTitle>Brigham Young University Science Bulletin Biol</ContainerTitle>
+      <PublicationDetails />
+      <PublisherName />
+      <PublisherPlace />
+      <Notes />
+      <Volume>8</Volume>
+      <Series />
+      <Issue />
+      <Date>1966</Date>
+      <PageRange>1--123</PageRange>
+      <StartPageNumber>1</StartPageNumber>
+      <EndPageNumber>123</EndPageNumber>
+      <Language />
+      <ExternalUrl />
+      <DownloadUrl />
+      <RightsStatus />
+      <RightsStatement />
+      <LicenseName />
+      <LicenseUrl />
+      <Doi />
+      <Authors />
+      <Contributors>
+        <Contributor>
+          <ContributorName>BioStor</ContributorName>
+        </Contributor>
+      </Contributors>
+    </Part>
+    <Part>
+      <PartUrl>https://www.biodiversitylibrary.org/part/8410</PartUrl>
+      <PartID>8410</PartID>
+      <ItemID>35600</ItemID>
+      <StartPageID>8796269</StartPageID>
+      <SequenceOrder>2</SequenceOrder>
+      <GenreName>Article</GenreName>
+      <Title>Rhynchophora beetles of the Nevada test site</Title>
+      <TranslatedTitle />
+      <ContainerTitle>Brigham Young University Science Bulletin Biol</ContainerTitle>
+      <PublicationDetails />
+      <PublisherName />
+      <PublisherPlace />
+      <Notes />
+      <Volume>8</Volume>
+      <Series />
+      <Issue />
+      <Date>1966</Date>
+      <PageRange>1--32</PageRange>
+      <StartPageNumber>1</StartPageNumber>
+      <EndPageNumber>32</EndPageNumber>
+      <Language />
+      <ExternalUrl />
+      <DownloadUrl />
+      <RightsStatus />
+      <RightsStatement />
+      <LicenseName />
+      <LicenseUrl />
+      <Doi />
+      <Authors>
+        <Creator>
+          <CreatorID>44149</CreatorID>
+          <Name>Tanner, Vasco M</Name>
+          <Numeration />
+          <Unit />
+          <Title />
+          <Location />
+          <FullerForm />
+          <Dates />
+        </Creator>
+      </Authors>
+      <Contributors>
+        <Contributor>
+          <ContributorName>BioStor</ContributorName>
+        </Contributor>
+      </Contributors>
+    </Part>
+    <Part>
+      <PartUrl>https://www.biodiversitylibrary.org/part/8411</PartUrl>
+      <PartID>8411</PartID>
+      <ItemID>35600</ItemID>
+      <StartPageID>8796347</StartPageID>
+      <SequenceOrder>3</SequenceOrder>
+      <GenreName>Article</GenreName>
+      <Title>Male sphaeropthalmine mutillid wasps of the Nevada test site</Title>
+      <TranslatedTitle />
+      <ContainerTitle>Brigham Young University Science Bulletin Biol</ContainerTitle>
+      <PublicationDetails />
+      <PublisherName />
+      <PublisherPlace />
+      <Notes />
+      <Volume>8</Volume>
+      <Series />
+      <Issue />
+      <Date>1967</Date>
+      <PageRange>1--26</PageRange>
+      <StartPageNumber>1</StartPageNumber>
+      <EndPageNumber>26</EndPageNumber>
+      <Language />
+      <ExternalUrl />
+      <DownloadUrl />
+      <RightsStatus />
+      <RightsStatement />
+      <LicenseName />
+      <LicenseUrl />
+      <Doi />
+      <Authors />
+      <Contributors>
+        <Contributor>
+          <ContributorName>BioStor</ContributorName>
+        </Contributor>
+      </Contributors>
+    </Part>
+  </Result>
+</Response>

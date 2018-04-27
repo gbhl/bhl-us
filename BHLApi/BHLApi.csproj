@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api3.cs" />
     <Compile Include="Api2.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="ServiceResponse.cs" />

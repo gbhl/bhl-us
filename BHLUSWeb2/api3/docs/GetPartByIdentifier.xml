@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Part>
+      <PartUrl>https://www.biodiversitylibrary.org/part/1809</PartUrl>
+      <PartID>1809</PartID>
+      <ItemID>22120</ItemID>
+      <StartPageID>3053534</StartPageID>
+      <SequenceOrder>17</SequenceOrder>
+      <GenreName>Article</GenreName>
+      <Title>Notes on Hemiptera taken by W. J. Palmer, near Lake Temagami, Ont</Title>
+      <TranslatedTitle />
+      <ContainerTitle>The Canadian Entomologist</ContainerTitle>
+      <PublicationDetails />
+      <PublisherName />
+      <PublisherPlace />
+      <Notes />
+      <Volume>38</Volume>
+      <Series />
+      <Issue />
+      <Date>1906</Date>
+      <PageRange>406--411</PageRange>
+      <StartPageNumber>406</StartPageNumber>
+      <EndPageNumber>411</EndPageNumber>
+      <Language />
+      <ExternalUrl />
+      <DownloadUrl />
+      <RightsStatus />
+      <RightsStatement />
+      <LicenseName />
+      <LicenseUrl />
+      <Doi />
+      <Authors>
+        <Creator>
+          <CreatorID>39670</CreatorID>
+          <Name>P., Van Duzee E</Name>
+          <Numeration />
+          <Unit />
+          <Title />
+          <Location />
+          <FullerForm />
+          <Dates />
+        </Creator>
+      </Authors>
+      <Contributors>
+        <Contributor>
+          <ContributorName>BioStor</ContributorName>
+        </Contributor>
+      </Contributors>
+      <Subjects />
+      <Identifiers>
+        <PartIdentifier>
+          <IdentifierName>BioStor</IdentifierName>
+          <IdentifierValue>72491</IdentifierValue>
+        </PartIdentifier>
+        <PartIdentifier>
+          <IdentifierName>ISSN</IdentifierName>
+          <IdentifierValue>0008-347X</IdentifierValue>
+        </PartIdentifier>
+      </Identifiers>
+      <Pages>
+        <Page>
+          <PageID>3053534</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053534</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053534</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053534</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053534</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>406</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+        <Page>
+          <PageID>3053535</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053535</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053535</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053535</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053535</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>407</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+        <Page>
+          <PageID>3053536</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053536</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053536</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053536</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053536</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>408</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+        <Page>
+          <PageID>3053537</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053537</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053537</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053537</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053537</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>409</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+        <Page>
+          <PageID>3053538</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053538</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053538</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053538</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053538</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>410</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+        <Page>
+          <PageID>3053539</PageID>
+          <ItemID>0</ItemID>
+          <Volume>38</Volume>
+          <Year>1906</Year>
+          <PageUrl>https://www.biodiversitylibrary.org/page/3053539</PageUrl>
+          <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3053539</ThumbnailUrl>
+          <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3053539</FullSizeImageUrl>
+          <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3053539</OcrUrl>
+          <PageTypes>
+            <PageType>
+              <PageTypeName>Text</PageTypeName>
+            </PageType>
+          </PageTypes>
+          <PageNumbers>
+            <PageNumber>
+              <Prefix>Page</Prefix>
+              <Number>411</Number>
+            </PageNumber>
+          </PageNumbers>
+        </Page>
+      </Pages>
+      <RelatedParts />
+    </Part>
+  </Result>
+</Response>

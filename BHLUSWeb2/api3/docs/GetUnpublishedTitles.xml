@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Status>ok</Status>
+  <Result>
+    <Title>
+      <TitleID>79</TitleID>
+    </Title>
+    <Title>
+      <TitleID>251</TitleID>
+    </Title>
+    <Title>
+      <TitleID>725</TitleID>
+    </Title>
+    <Title>
+      <TitleID>729</TitleID>
+    </Title>
+    <Title>
+      <TitleID>739</TitleID>
+    </Title>
+    <Title>
+      <TitleID>953</TitleID>
+    </Title>
+    <Title>
+      <TitleID>954</TitleID>
+    </Title>
+    <Title>
+      <TitleID>961</TitleID>
+    </Title>
+  </Result>
+</Response>

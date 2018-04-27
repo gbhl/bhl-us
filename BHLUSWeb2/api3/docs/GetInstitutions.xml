@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Status>ok</Status>
+  <Result>
+    <Institution>
+      <InstitutionCode>AMNH</InstitutionCode>
+      <InstitutionName>American Museum of Natural History Library</InstitutionName>
+      <InstitutionUrl>http://library.amnh.org</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BSTOR</InstitutionCode>
+      <InstitutionName>BioStor</InstitutionName>
+      <InstitutionUrl>http://biostor.org</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CORN</InstitutionCode>
+      <InstitutionName>Cornell University Library</InstitutionName>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HUMCZ</InstitutionCode>
+      <InstitutionName>Harvard University, MCZ, Ernst Mayr Library</InstitutionName>
+      <InstitutionUrl>http://library.mcz.harvard.edu/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NYBG</InstitutionCode>
+      <InstitutionName>Mertz Library, The New York Botanical Garden</InstitutionName>
+      <InstitutionUrl>http://library.nybg.org/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MO</InstitutionCode>
+      <InstitutionName>Missouri Botanical Garden, Peter H. Raven Library</InstitutionName>
+      <InstitutionUrl>http://www.mobot.org/MOBOT/molib/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MV</InstitutionCode>
+      <InstitutionName>Museum Victoria</InstitutionName>
+      <InstitutionUrl>www.museumvictoria.com.au</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NHM</InstitutionCode>
+      <InstitutionName>Natural History Museum Library, London</InstitutionName>
+      <InstitutionUrl>http://www.nhm.ac.uk/research-curation/library/index.html</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SCIELO</InstitutionCode>
+      <InstitutionName>SciELO - Scientific Electronic Library Online</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SI</InstitutionCode>
+      <InstitutionName>Smithsonian Libraries</InstitutionName>
+      <InstitutionUrl>http://www.sil.si.edu</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNKNOWN</InstitutionCode>
+      <InstitutionName>Unknown</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+  </Result>
+</Response>
