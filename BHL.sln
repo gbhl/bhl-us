@@ -80,6 +80,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchOffline", "SearchOffl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchSQL", "SearchSQL\SearchSQL.csproj", "{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLApiDataObjects3", "BHLApiDataObjects3\BHLApiDataObjects3.csproj", "{C5A231C5-6079-4204-B023-AC180388C10A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -402,6 +404,18 @@ Global
 		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|x86.ActiveCfg = Release|Any CPU
 		{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}.Release|x86.Build.0 = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Debug|x86.Build.0 = Debug|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|x86.ActiveCfg = Release|Any CPU
+		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

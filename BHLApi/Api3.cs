@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects2;
+﻿using CustomDataAccess;
 using MOBOT.BHL.API.BHLApiDAL;
+using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
+using System;
+using System.Text;
 
 namespace MOBOT.BHL.API.BHLApi
 {
@@ -38,7 +36,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the names from the DAL
-            return new Api2DAL().NamePageSelectByPageID(null, null, pageIDInt);
+            return new Api3DAL().NamePageSelectByPageID(null, null, pageIDInt);
         }
 
         public Page GetPageMetadata(string pageID, string includeOcr, string includeNames)
@@ -57,7 +55,7 @@ namespace MOBOT.BHL.API.BHLApi
             bool ocr = (includeOcr.ToLower() == "t" || includeOcr.ToLower() == "true");
             bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
 
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             Page page = dal.PageSelectAuto(null, null, pageIDInt);
             if (page != null)
             {
@@ -103,12 +101,12 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Item methods
 
-        public Item GetItemMetadata(string itemID, string includePages)
+        public CustomGenericList<Item> GetItemMetadata(string itemID, string includePages)
         {
             return this.GetItemMetadata(itemID, includePages, "f", "f");
         }
 
-        public Item GetItemMetadata(string itemID, string includePages, string includeOcr, string includeSegments)
+        public CustomGenericList<Item> GetItemMetadata(string itemID, string includePages, string includeOcr, string includeSegments)
         {
             // Validate the parameters
             int itemIDint;
@@ -127,23 +125,23 @@ namespace MOBOT.BHL.API.BHLApi
             includeSegments = (includeSegments ?? "");
             bool segments = (includeSegments.ToLower() == "t" || includeSegments.ToLower() == "true");
 
-            Item item = new Api2DAL().ItemSelectByItemID(null, null, itemIDint);
+            Item item = new Api3DAL().ItemSelectByItemID(null, null, itemIDint);
             if (item != null)
             {
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
-                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(itemID, includeOcr);
                 if (segments) item.Parts = this.GetItemSegments(itemID);
             }
 
-            return item;
+            return new CustomGenericList<Item> { item };
         }
 
         private CustomGenericList<Page> GetItemPages(string itemID, string includeOcr)
@@ -162,7 +160,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Get the pages
             CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api2DAL().PageSelectByItemID(null, null, itemIDint);
+            CustomGenericList<PageDetail> pageDetails = new Api3DAL().PageSelectByItemID(null, null, itemIDint);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -221,7 +219,7 @@ namespace MOBOT.BHL.API.BHLApi
             return pages;
         }
 
-        public Item GetItemByIdentifier(string identifierType, string identifierValue)
+        public CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue)
         {
             Item item;
 
@@ -230,13 +228,13 @@ namespace MOBOT.BHL.API.BHLApi
                 case "barcode":
                 case "ia":
                     {
-                        Api2DAL dal = new Api2DAL();
+                        Api3DAL dal = new Api3DAL();
                         item = dal.ItemSelectByBarcode(null, null, identifierValue);
                         if (item != null)
                         {
-                            CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                            CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                             if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                            CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                            CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                             if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                             item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -250,7 +248,7 @@ namespace MOBOT.BHL.API.BHLApi
                     throw new Exception("identifierType must be one of the following values: barcode, ia");
             }
 
-            return item;
+            return new CustomGenericList<Item> { item };
         }
 
         public CustomGenericList<Part> GetItemSegments(string itemID)
@@ -262,7 +260,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
             }
 
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             CustomGenericList<Part> parts = dal.SegmentSelectByItemID(null, null, itemIDint);
             foreach (Part part in parts)
             {
@@ -278,7 +276,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Title methods
 
-        public Title GetTitleMetadata(string titleID, string includeItems)
+        public CustomGenericList<Title> GetTitleMetadata(string titleID, string includeItems)
         {
             // Validate the parameters
             int titleIDint;
@@ -291,7 +289,7 @@ namespace MOBOT.BHL.API.BHLApi
             // is considering a value of "false"
             bool items = (includeItems.ToLower() == "t" || includeItems.ToLower() == "true");
 
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             Title title = dal.TitleSelectAuto(null, null, titleIDint);
             if (title != null)
             {
@@ -308,7 +306,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            return title;
+            return new CustomGenericList<Title> { title };
         }
 
         public CustomGenericList<Item> GetTitleItems(string titleID)
@@ -321,12 +319,12 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the items
-            CustomGenericList<Item> items = new Api2DAL().ItemSelectByTitleID(null, null, titleIDint);
+            CustomGenericList<Item> items = new Api3DAL().ItemSelectByTitleID(null, null, titleIDint);
             foreach (Item item in items)
             {
-                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -355,7 +353,7 @@ namespace MOBOT.BHL.API.BHLApi
                     {
                         if (identifierType.ToLower() == "lccn") identifierType = "dlc";
 
-                        Api2DAL dal = new Api2DAL();
+                        Api3DAL dal = new Api3DAL();
                         titles = dal.TitleSelectByIdentifier(null, null, identifierType, identifierValue);
                         foreach (Title title in titles)
                         {
@@ -371,7 +369,7 @@ namespace MOBOT.BHL.API.BHLApi
                     }
                 case "doi":
                     {
-                        Api2DAL dal = new Api2DAL();
+                        Api3DAL dal = new Api3DAL();
                         titles = dal.TitleSelectByDOI(null, null, identifierValue);
                         foreach (Title title in titles)
                         {
@@ -395,16 +393,16 @@ namespace MOBOT.BHL.API.BHLApi
         public CustomGenericList<Title> TitleSearchSimple(string title, bool fullText)
         {
             if (fullText)
-                return new Api2DAL().SearchTitleSimple(null, null, title);
+                return new Api3DAL().SearchTitleSimple(null, null, title);
             else
-                return new Api2DAL().TitleSelectSearchSimple(null, null, title);
+                return new Api3DAL().TitleSelectSearchSimple(null, null, title);
         }
 
         #endregion Title methods
 
         #region Segment methods
 
-        public Part GetSegmentMetadata(string segmentID)
+        public CustomGenericList<Part> GetSegmentMetadata(string segmentID)
         {
             // Validate the parameters
             int segmentIDint;
@@ -413,7 +411,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
             }
 
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             Part part = dal.SegmentSelectForSegmentID(null, null, segmentIDint);
             if (part != null)
             {
@@ -430,7 +428,7 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
             }
 
-            return part;
+            return new CustomGenericList<Part> { part };
         }
 
         public CustomGenericList<Name> GetSegmentNames(string segmentID)
@@ -443,7 +441,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the names from the DAL
-            return new Api2DAL().NameSegmentSelectBySegmentID(null, null, segmentIDInt);
+            return new Api3DAL().NameSegmentSelectBySegmentID(null, null, segmentIDInt);
         }
 
         public CustomGenericList<Part> GetSegmentByIdentifier(string identifierType, string identifierValue)
@@ -465,7 +463,7 @@ namespace MOBOT.BHL.API.BHLApi
                     {
                         if (identifierType.ToLower() == "lccn") identifierType = "dlc";
 
-                        Api2DAL dal = new Api2DAL();
+                        Api3DAL dal = new Api3DAL();
                         parts = dal.SegmentSelectByIdentifier(null, null, identifierType, identifierValue);
                         foreach (Part part in parts)
                         {
@@ -486,7 +484,7 @@ namespace MOBOT.BHL.API.BHLApi
                     }
                 case "doi":
                     {
-                        Api2DAL dal = new Api2DAL();
+                        Api3DAL dal = new Api3DAL();
                         parts = dal.SegmentSelectByDOI(null, null, identifierValue);
                         foreach (Part part in parts)
                         {
@@ -516,7 +514,7 @@ namespace MOBOT.BHL.API.BHLApi
         {
             // Get the pages
             CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api2DAL().PageSelectBySegmentID(null, null, segmentID);
+            CustomGenericList<PageDetail> pageDetails = new Api3DAL().PageSelectBySegmentID(null, null, segmentID);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -579,14 +577,14 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Subject> SubjectSearch(string subject, bool fullText)
         {
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             if (fullText)
                 return dal.SearchTitleKeyword(null, null, subject);
             else
                 return dal.TitleKeywordSelectLikeTag(null, null, subject);
         }
 
-        public CustomGenericList<object> GetSubjectPublications(string subject)
+        public CustomGenericList<Publication> GetSubjectPublications(string subject)
         {
             throw new NotImplementedException();
         }
@@ -600,9 +598,9 @@ namespace MOBOT.BHL.API.BHLApi
             CustomGenericList<Creator> creators = null;
 
             if (fullText)
-                creators = new Api2DAL().SearchAuthor(null, null, name);
+                creators = new Api3DAL().SearchAuthor(null, null, name);
             else 
-                creators = new Api2DAL().AuthorSelectNameStartsWith(null, null, name);
+                creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
 
             foreach (Creator creator in creators)
             {
@@ -612,7 +610,7 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public CustomGenericList<object> GetAuthorPublications(string creatorID)
+        public CustomGenericList<Publication> GetAuthorPublications(string creatorID)
         {
             throw new NotImplementedException();
         }
@@ -622,135 +620,152 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Name Services
 
-        // These methods are rewrites of the original Name Service methods.  The method signatures
-        // are unchanged from the originals, but the return objects are from the BHLApiDataObjects2
-        // namespace, instead of the orignal BHLApiDataObjects namespace.
+        // These methods are parallels of the original Name Service methods, though the method
+        // signatures and response formats have changed somewhat.
 
-        public Name NameGetDetail(string nameBankID, string nameConfirmed)
+        public Name GetNameDetail(string nameConfirmed)
         {
             // Validate the input
-            if (nameBankID == string.Empty && nameConfirmed == string.Empty) throw new Exception("Please supply a Name or Namebank ID.");
+            if (string.IsNullOrWhiteSpace(nameConfirmed)) throw new Exception("Please supply a Name.");
 
-            double nameBankIDDouble;
-            if (!string.IsNullOrEmpty(nameBankID))
+            CustomGenericList<PageDetail> pageDetails = null;
+            pageDetails = new Api3DAL().PageSelectByNameConfirmed(null, null, nameConfirmed);
+
+            return GetNameDetailFromPageDetails(pageDetails);
+        }
+
+        public Name GetNameDetailByIdentifier(string identifierType, string identifierValue)
+        {
+            // Validate the input
+            if (string.IsNullOrWhiteSpace(identifierType) || string.IsNullOrWhiteSpace(identifierValue)) throw new Exception("Please supply an identifier Type and Name.");
+
+            string identifierName = string.Empty;
+            switch (identifierType)
             {
-                if (!Double.TryParse(nameBankID, out nameBankIDDouble))
-                {
-                    throw new Exception("nameBankID (" + nameBankID + ") must be a valid integer value.");
-                }
+                case "namebank":
+                    identifierName = "NameBank"; break;
+                case "eol":
+                    identifierName = "EOL"; break;
+                case "gni":
+                    identifierName = "GNI"; break;
+                case "ion":
+                    identifierName = "Index to Organism Names"; break;
+                case "col":
+                    identifierName = "Catalogue of Life"; break;
+                case "gbif":
+                    identifierName = "GBIF Taxonomic Backbone"; break;
+                case "itis":
+                    identifierName = "ITIS"; break;
+                case "ipni":
+                    identifierName = "The International Plant Names Index"; break;
+                case "worms":
+                    identifierName = "WoRMS"; break;
             }
 
+            if (string.IsNullOrWhiteSpace(identifierName)) throw new Exception("Please supply one of the following identifier Types: namebank, eol, gni, ion, col, gbif, itis, ipni, worms.");
+
+            CustomGenericList<PageDetail> pageDetails = null;
+            pageDetails = new Api3DAL().PageSelectByNameIdentifier(null, null, identifierName, identifierValue);
+
+            return GetNameDetailFromPageDetails(pageDetails);
+        }
+
+        private Name GetNameDetailFromPageDetails(CustomGenericList<PageDetail> pageDetails)
+        {
             Name name = null;
             Title currentTitle = null;
             Item currentItem = null;
             Page currentPage = null;
 
-            try
+            if (pageDetails.Count > 0)
             {
-                CustomGenericList<PageDetail> pageDetails = null;
-                if (!string.IsNullOrEmpty(nameBankID))
-                {
-                    pageDetails = new Api2DAL().PageSelectByNameBankID(null, null, nameBankID);
-                }
-                else
-                {
-                    pageDetails = new Api2DAL().PageSelectByNameConfirmed(null, null, nameConfirmed);
-                }
+                // Get the name information
+                name = new Name();
+                name.Identifiers.Add(new Identifier("NameBank", pageDetails[0].NameBankID));
+                name.NameConfirmed = pageDetails[0].NameConfirmed;
+                name.Titles = new CustomGenericList<Title>();
 
-                if (pageDetails.Count > 0)
+                currentTitle = new Title();
+                currentItem = new Item();
+                currentPage = new Page();
+
+                // Get the title, item, and page information
+                foreach (PageDetail pageDetail in pageDetails)
                 {
-                    // Get the name information
-                    name = new Name();
-                    name.NameBankID = pageDetails[0].NameBankID;
-                    name.NameConfirmed = pageDetails[0].NameConfirmed;
-                    name.Titles = new CustomGenericList<Title>();
-
-                    currentTitle = new Title();
-                    currentItem = new Item();
-                    currentPage = new Page();
-
-                    // Get the title, item, and page information
-                    foreach (PageDetail pageDetail in pageDetails)
+                    if (pageDetail.TitleID != currentTitle.TitleID)
                     {
-                        if (pageDetail.TitleID != currentTitle.TitleID)
-                        {
-                            // Add a new title
-                            Title title = new Title();
-                            title.TitleID = pageDetail.TitleID;
-                            title.ShortTitle = pageDetail.PublicationTitle;
-                            title.PublisherPlace = pageDetail.PublisherPlace;
-                            title.PublisherName = pageDetail.PublisherName;
-                            title.PublicationDate = pageDetail.PublicationDate;
-                            title.CallNumber = pageDetail.CallNumber;
-                            title.TitleUrl = pageDetail.TitleUrl;
-                            title.Items = new CustomGenericList<Item>();
-                            name.Titles.Add(title);
-                            currentTitle = title;
-                        }
+                        // Add a new title
+                        Title title = new Title();
+                        title.TitleID = pageDetail.TitleID;
+                        title.ShortTitle = pageDetail.PublicationTitle;
+                        title.PublisherPlace = pageDetail.PublisherPlace;
+                        title.PublisherName = pageDetail.PublisherName;
+                        title.PublicationDate = pageDetail.PublicationDate;
+                        title.CallNumber = pageDetail.CallNumber;
+                        title.TitleUrl = pageDetail.TitleUrl;
+                        title.Items = new CustomGenericList<Item>();
+                        name.Titles.Add(title);
+                        currentTitle = title;
+                    }
 
-                        if (pageDetail.ItemID != currentItem.ItemID)
-                        {
-                            // Add a new item
-                            Item item = new Item();
-                            item.ItemID = pageDetail.ItemID;
-                            item.Source = pageDetail.Source;
-                            item.SourceIdentifier = pageDetail.SourceIdentifier;
-                            item.Volume = pageDetail.VolumeInfo;
-                            item.HoldingInstitution = pageDetail.HoldingInstitution;
-                            item.ItemUrl = pageDetail.ItemUrl;
-                            item.Pages = new CustomGenericList<Page>();
-                            currentTitle.Items.Add(item);
-                            currentItem = item;
-                        }
+                    if (pageDetail.ItemID != currentItem.ItemID)
+                    {
+                        // Add a new item
+                        Item item = new Item();
+                        item.ItemID = pageDetail.ItemID;
+                        item.Source = pageDetail.Source;
+                        item.SourceIdentifier = pageDetail.SourceIdentifier;
+                        item.Volume = pageDetail.VolumeInfo;
+                        item.HoldingInstitution = pageDetail.HoldingInstitution;
+                        item.ItemUrl = pageDetail.ItemUrl;
+                        item.Pages = new CustomGenericList<Page>();
+                        currentTitle.Items.Add(item);
+                        currentItem = item;
+                    }
 
-                        if (pageDetail.PageID != currentPage.PageID)
-                        {
-                            // Add a new page
-                            Page page = new Page();
-                            page.PageID = pageDetail.PageID;
-                            page.ItemID = pageDetail.ItemID;
-                            page.Year = pageDetail.Year;
-                            page.Volume = pageDetail.Volume;
-                            page.Issue = pageDetail.Issue;
-                            page.PageUrl = pageDetail.PageUrl;
-                            page.ThumbnailUrl = pageDetail.ThumbnailUrl;
-                            page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
-                            page.OcrUrl = pageDetail.OcrUrl;
-                            page.PageNumbers = new CustomGenericList<PageNumber>();
-                            page.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
+                    if (pageDetail.PageID != currentPage.PageID)
+                    {
+                        // Add a new page
+                        Page page = new Page();
+                        page.PageID = pageDetail.PageID;
+                        page.ItemID = pageDetail.ItemID;
+                        page.Year = pageDetail.Year;
+                        page.Volume = pageDetail.Volume;
+                        page.Issue = pageDetail.Issue;
+                        page.PageUrl = pageDetail.PageUrl;
+                        page.ThumbnailUrl = pageDetail.ThumbnailUrl;
+                        page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
+                        page.OcrUrl = pageDetail.OcrUrl;
+                        page.PageNumbers = new CustomGenericList<PageNumber>();
+                        page.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
 
-                            // Get the page types
-                            page.PageTypes = new CustomGenericList<PageType>();
-                            if (pageDetail.PageTypeName != String.Empty)
+                        // Get the page types
+                        page.PageTypes = new CustomGenericList<PageType>();
+                        if (pageDetail.PageTypeName != String.Empty)
+                        {
+                            string[] pageTypes = pageDetail.PageTypeName.Split(',');
+                            foreach (string pageType in pageTypes)
                             {
-                                string[] pageTypes = pageDetail.PageTypeName.Split(',');
-                                foreach (string pageType in pageTypes)
+                                if (pageType != string.Empty)
                                 {
-                                    if (pageType != string.Empty)
-                                    {
-                                        PageType pageTypeItem = new PageType();
-                                        pageTypeItem.PageTypeName = pageType;
-                                        page.PageTypes.Add(pageTypeItem);
-                                    }
+                                    PageType pageTypeItem = new PageType();
+                                    pageTypeItem.PageTypeName = pageType;
+                                    page.PageTypes.Add(pageTypeItem);
                                 }
                             }
+                        }
 
-                            currentItem.Pages.Add(page);
-                            currentPage = page;
-                        }
-                        else
-                        {
-                            currentPage.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
-                        }
+                        currentItem.Pages.Add(page);
+                        currentPage = page;
+                    }
+                    else
+                    {
+                        currentPage.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
                     }
                 }
+            }
 
-                return name;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return name;
         }
 
         public CustomGenericList<Name> NameSearch(string name)
@@ -760,7 +775,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("Please supply a name for which to search.");
             }
 
-            return new Api2DAL().NameResolvedSelectByNameLike(null, null, name);
+            return new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
         }
 
         /// <summary>
@@ -805,7 +820,7 @@ namespace MOBOT.BHL.API.BHLApi
         public CustomGenericList<Language> GetLanguages()
         {
             // Get the languages from the DAL
-            return new Api2DAL().LanguageSelectWithPublishedItems(null, null);
+            return new Api3DAL().LanguageSelectWithPublishedItems(null, null);
         }
 
         #endregion Language methods
@@ -815,18 +830,18 @@ namespace MOBOT.BHL.API.BHLApi
         public CustomGenericList<Collection> GetCollections()
         {
             // Get the collections from the DAL
-            return new Api2DAL().CollectionSelectActive(null, null);
+            return new Api3DAL().CollectionSelectActive(null, null);
         }
 
         #endregion Collection methods
 
         #region Search methods
 
-        public CustomGenericList<object> SearchPublication()
+        public CustomGenericList<Publication> SearchPublication(string title, string authorLastName, string volume,
+            string year, string subject, string languageCode, string collectionID, bool fullText)
         {
             throw new NotImplementedException();
         }
-
 
         /*
         public CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
@@ -1003,7 +1018,7 @@ namespace MOBOT.BHL.API.BHLApi
             SubjectSearch = 471,
             NameSearch = 472,
             TitleSearchSimple = 473,
-            SearchPublications = 474,
+            PublicationSearch = 474,
             SearchWithinItem = 475,
             GetLanguages = 480,
             GetInstitutions = 481,
@@ -1054,7 +1069,7 @@ namespace MOBOT.BHL.API.BHLApi
             try
             {
                 Guid apiKeyValue = new Guid(key);
-                apiKey = new Api2DAL().ApiKeySelectByKey(null, null, apiKeyValue);
+                apiKey = new Api3DAL().ApiKeySelectByKey(null, null, apiKeyValue);
             }
             catch
             {
@@ -1076,7 +1091,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Institution> GetInstitutions()
         {
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
             CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
             return institutions;
         }

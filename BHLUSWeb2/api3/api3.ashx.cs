@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Services;
 using MOBOT.BHL.API.BHLApi;
 using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects2;
+using MOBOT.BHL.API.BHLApiDataObjects3;
 
 namespace MOBOT.BHL.Web2.api3
 {
@@ -72,7 +72,7 @@ namespace MOBOT.BHL.Web2.api3
                     String includePages = context.Request.QueryString["pages"] ?? "f";
                     String includeOcr = context.Request.QueryString["ocr"] ?? "f";
                     String includeParts = context.Request.QueryString["parts"] ?? "f";
-                    ServiceResponse<Item> serviceResponse = new ServiceResponse<Item>();
+                    ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
                     serviceResponse.Result = this.GetItemMetadata(itemID, includePages, includeOcr, includeParts, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -81,7 +81,7 @@ namespace MOBOT.BHL.Web2.api3
                 {
                     String identifierType = context.Request.QueryString["type"];
                     String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<Item> serviceResponse = new ServiceResponse<Item>();
+                    ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
                     serviceResponse.Result = this.GetItemByIdentifier(identifierType, identifierValue, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -100,7 +100,7 @@ namespace MOBOT.BHL.Web2.api3
                 {
                     String titleID = context.Request.QueryString["titleid"];
                     String includeItems = context.Request.QueryString["items"] ?? "f";
-                    ServiceResponse<Title> serviceResponse = new ServiceResponse<Title>();
+                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
                     serviceResponse.Result = this.GetTitleMetadata(titleID, includeItems, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -135,7 +135,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetPartMetadata", true) == 0)
                 {
                     String partID = context.Request.QueryString["partid"];
-                    ServiceResponse<Part> serviceResponse = new ServiceResponse<Part>();
+                    ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
                     serviceResponse.Result = this.GetPartMetadata(partID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -170,7 +170,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetSubjectPublications", true) == 0)
                 {
                     String subject = context.Request.QueryString["subject"];
-                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
+                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
                     serviceResponse.Result = this.GetSubjectPublications(subject, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -188,19 +188,27 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetAuthorPublications", true) == 0)
                 {
                     String creatorID = context.Request.QueryString["creatorID"];
-                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
+                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
                     serviceResponse.Result = this.GetAuthorPublications(creatorID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
                 // ------- Name operations -------
 
-                if (String.Compare(operation, "NameGetDetail", true) == 0)
+                if (String.Compare(operation, "GetNameDetail", true) == 0)
                 {
-                    String nameBankID = context.Request.QueryString["nameBankID"];
                     String nameConfirmed = context.Request.QueryString["name"];
                     ServiceResponse<Name> serviceResponse = new ServiceResponse<Name>();
-                    serviceResponse.Result = this.NameGetDetail(nameBankID, nameConfirmed, key);
+                    serviceResponse.Result = this.GetNameDetail(nameConfirmed, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                if (String.Compare(operation, "GetNameDetailByIdentifier", true) == 0)
+                {
+                    String identifierType = context.Request.QueryString["type"];
+                    String identifierValue = context.Request.QueryString["value"];
+                    ServiceResponse<Name> serviceResponse = new ServiceResponse<Name>();
+                    serviceResponse.Result = this.GetNameDetailByIdentifier(identifierType, identifierValue, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -234,45 +242,22 @@ namespace MOBOT.BHL.Web2.api3
 
                 if (string.Compare(operation, "PublicationSearch", true) == 0)
                 {
-                    throw new NotImplementedException();
-                }
-
-                /*
-                if (String.Compare(operation, "BookSearch", true) == 0)
-                {
-                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
+                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
                     String title = context.Request.QueryString["title"];
                     String authorLastName = context.Request.QueryString["authorname"];
                     String volume = context.Request.QueryString["volume"];
-                    String edition = context.Request.QueryString["edition"];
                     String year = context.Request.QueryString["year"];
                     String subject = context.Request.QueryString["subject"];
                     String language = context.Request.QueryString["language"];
-                    String collection = context.Request.QueryString["collectionid"];
-                    serviceResponse.Result = this.SearchBook((title ?? string.Empty), (authorLastName ?? string.Empty), 
-                        (volume ?? string.Empty), (edition ?? string.Empty), (year ?? string.Empty), (subject ?? string.Empty),
-                        (language ?? string.Empty), (collection ?? string.Empty), 
-                        Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
-                    response = serviceResponse.Serialize(outputType);
-                }
+                    String collection = context.Request.QueryString["collection"];
 
-                if (String.Compare(operation, "PartSearch", true) == 0)
-                {
-                    ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    String title = context.Request.QueryString["title"];
-                    String containerTitle = context.Request.QueryString["containerTitle"];
-                    String author = context.Request.QueryString["authorname"];
-                    String date = context.Request.QueryString["date"];
-                    String volume = context.Request.QueryString["volume"];
-                    String series = context.Request.QueryString["series"];
-                    String issue = context.Request.QueryString["issue"];
-                    serviceResponse.Result = this.SearchPart((title ?? string.Empty), (containerTitle ?? string.Empty),
-                        (author ?? string.Empty), (date ?? string.Empty), (volume ?? string.Empty), (series ?? string.Empty),
-                        (issue ?? string.Empty), Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), 
-                        key);
+                    serviceResponse.Result = this.PublicationSearch((title ?? string.Empty), (authorLastName ?? string.Empty),
+                        (volume ?? string.Empty), (year ?? string.Empty), (subject ?? string.Empty),
+                        (language ?? string.Empty), (collection ?? string.Empty),
+                        Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+
                     response = serviceResponse.Serialize(outputType);
                 }
-                */
 
                 // ------- Institution operations -------
 
@@ -361,7 +346,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetPageOcrText(pageID);
         }
 
-        private Item GetItemMetadata(string itemID, string includePages, string includeOcr, string includeParts, string apiKey)
+        private CustomGenericList<Item> GetItemMetadata(string itemID, string includePages, string includeOcr, string includeParts, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetItemMetadata, apiKey, 
                 itemID + "|" + includePages + "|" + includeOcr + "|" + includeParts);
@@ -369,7 +354,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetItemMetadata(itemID, includePages, includeOcr, includeParts);
         }
 
-        private Item GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
+        private CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetItemByIdentifier, apiKey, identifierType + "|" + identifierValue);
             Api3 api = new Api3();
@@ -383,7 +368,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetItemSegments(itemID);
         }
 
-        private Title GetTitleMetadata(string titleID, string includeItems, string apiKey)
+        private CustomGenericList<Title> GetTitleMetadata(string titleID, string includeItems, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, titleID);
             Api3 api = new Api3();
@@ -411,7 +396,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.TitleSearchSimple(title, fullText);
         }
 
-        private Part GetPartMetadata(string partID, string apiKey)
+        private CustomGenericList<Part> GetPartMetadata(string partID, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, partID);
             Api3 api = new Api3();
@@ -439,14 +424,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.SubjectSearch(subject, fullText);
         }
 
-        private CustomGenericList<Title> GetSubjectPublications(string subject, string apiKey)
+        private CustomGenericList<Publication> GetSubjectPublications(string subject, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetSubjectPublications, apiKey, subject);
             Api3 api = new Api3();
-
-            throw new NotImplementedException();
-
-            // return api.GetSubjectPublications(subject);
+            return api.GetSubjectPublications(subject);
         }
 
         private CustomGenericList<Creator> AuthorSearch(string name, bool fullText, string apiKey)
@@ -456,26 +438,25 @@ namespace MOBOT.BHL.Web2.api3
             return api.AuthorSearch(name, fullText);
         }
 
-        private CustomGenericList<Title> GetAuthorPublications(string creatorID, string apiKey)
+        private CustomGenericList<Publication> GetAuthorPublications(string creatorID, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetAuthorPublications, apiKey, creatorID);
             Api3 api = new Api3();
-
-            throw new NotImplementedException();
-
-            //return api.GetAuthorPublications(creatorID);
+            return api.GetAuthorPublications(creatorID);
         }
 
-        private Name NameGetDetail(string nameBankID, string nameConfirmed, string apiKey)
+        private Name GetNameDetail(string nameConfirmed, string apiKey)
         {
-            Api3.APIRequestType requestType;
-            requestType = string.IsNullOrEmpty(nameConfirmed) ? Api3.APIRequestType.GetNameDetailByIdentifier : Api3.APIRequestType.GetNameDetail;
-            ValidateUser(requestType, apiKey, (string.IsNullOrEmpty(nameConfirmed) ? nameBankID : nameConfirmed));
+            ValidateUser(Api3.APIRequestType.GetNameDetail, apiKey, nameConfirmed);
             Api3 api = new Api3();
+            return api.GetNameDetail(nameConfirmed);
+        }
 
-            throw new NotImplementedException();    // need to change params
-
-            return api.NameGetDetail(nameBankID, nameConfirmed);
+        private Name GetNameDetailByIdentifier(string identifierType, string identifierValue, string apiKey)
+        {
+            ValidateUser(Api3.APIRequestType.GetNameDetailByIdentifier, apiKey, identifierType + "|" + identifierValue);
+            Api3 api = new Api3();
+            return api.GetNameDetailByIdentifier(identifierType, identifierValue);
         }
 
         private CustomGenericList<Name> NameSearch(string name, string apiKey)
@@ -499,31 +480,15 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetCollections();
         }
 
-        private CustomGenericList<object> SearchPublication()
-        {
-            throw new NotImplementedException();
-        }
-
-        /*
-        private CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
+        private CustomGenericList<Publication> PublicationSearch(string title, string authorLastName, string volume,
             string year, string subject, string languageCode, string collectionID, bool fullText, string apiKey)
         {
-            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}", title, authorLastName, volume, edition,
+            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}", title, authorLastName, volume,
                 (year == null ? "" : year.ToString()), subject, languageCode, (collectionID == null ? "" : collectionID.ToString()));
-            ValidateUser(Api3.APIRequestType.SearchBook, apiKey, args);
+            ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
             Api3 api = new Api3();
-            return api.SearchBook(title, authorLastName, volume, edition, year, subject, languageCode, collectionID, 500, fullText);
+            return api.SearchPublication(title, authorLastName, volume, year, subject, languageCode, collectionID, fullText);
         }
-
-        private CustomGenericList<Part> SearchPart(string title, string containerTitle, string author, string date, string volume,
-            string series, string issue, bool fullText, string apiKey)
-        {
-            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}", title, containerTitle, author, date, volume, series, issue);
-            ValidateUser(Api3.APIRequestType.SearchPart, apiKey, args);
-            Api3 api = new Api3();
-            return api.SearchSegment(title, containerTitle, author, date, volume, series, issue, 500, "Title", fullText);
-        }
-        */
 
         private CustomGenericList<Institution> GetInstitutions(string apiKey)
         {

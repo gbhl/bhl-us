@@ -70,7 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api2DAL.cs" />
+    <Compile Include="Api3DAL.cs" />
     <Compile Include="Interfaces\IApi2DAL.cs" />
+    <Compile Include="Interfaces\IApi3DAL.cs" />
     <Compile Include="NameDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +80,10 @@
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects3\BHLApiDataObjects3.csproj">
+      <Project>{c5a231c5-6079-4204-b023-ac180388c10a}</Project>
+      <Name>BHLApiDataObjects3</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>

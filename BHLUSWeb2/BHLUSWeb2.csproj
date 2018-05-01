@@ -1024,6 +1024,10 @@
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects3\BHLApiDataObjects3.csproj">
+      <Project>{c5a231c5-6079-4204-b023-ac180388c10a}</Project>
+      <Name>BHLApiDataObjects3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLApi\BHLApi.csproj">
       <Project>{1C2EAD88-F194-4DF0-A82B-3D402F7ABC21}</Project>
       <Name>BHLApi</Name>

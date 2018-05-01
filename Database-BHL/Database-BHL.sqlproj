@@ -1345,5 +1345,6 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogCreatorInsertUpdate.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogSegmentInsertUpdate.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogInsertUpdate.sql" />
+    <None Include="dbo\Stored Procedures\ApiPageSelectByNameIdentifier.sql" />
   </ItemGroup>
 </Project>
