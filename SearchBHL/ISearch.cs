@@ -74,11 +74,13 @@ namespace BHL.Search
         ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
-        /// Search for pages
+        /// Search for pages.  May not be supported by all search providers.
         /// </summary>
         /// <param name="query"></param>
+        /// <param name="limits"></param>
+        /// <param name="includeText">True to include page text in search results</param>
         /// <returns>Object containing the pages returned by the search</returns>
-        ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null);
+        ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null, bool includeText = false);
 
         /// <summary>
         /// Search for authors

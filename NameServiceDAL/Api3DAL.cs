@@ -1,6 +1,7 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -624,6 +625,35 @@ namespace MOBOT.BHL.API.BHLApiDAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSearchAuthor", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("AuthorName", SqlDbType.NVarChar, 4000, false, name)))
             {
+                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                {
+                    CustomGenericList<Creator> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public CustomGenericList<Creator> AuthorSelectForList(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            List<int> authorIds)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                // Set up table-valued stored procedure parameter
+                DataTable idTable = new DataTable();
+                idTable.Columns.Add("ID", typeof(int));
+                foreach (int authorId in authorIds) idTable.Rows.Add(authorId);
+
+                command.CommandText = "ApiAuthorSelectForList";
+                command.CommandType = CommandType.StoredProcedure;
+                SqlParameter parameter = command.Parameters.AddWithValue("@IDs", idTable);
+                parameter.SqlDbType = SqlDbType.Structured;
+                parameter.TypeName = "dbo.SearchIDTable";
+
                 using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
                 {
                     CustomGenericList<Creator> list = helper.ExecuteReader(command);

@@ -259,6 +259,15 @@ namespace MOBOT.BHL.Web2.api3
                     response = serviceResponse.Serialize(outputType);
                 }
 
+                if (string.Compare(operation, "PageSearch", true) == 0)
+                {
+                    ServiceResponse<CustomGenericList<Page>> serviceResponse = new ServiceResponse<CustomGenericList<Page>>();
+                    String text = context.Request.QueryString["text"];
+                    String itemID = context.Request.QueryString["itemID"];
+                    serviceResponse.Result = this.PageSearch(itemID, text, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
                 // ------- Institution operations -------
 
                 if (String.Compare(operation, "GetInstitutions", true) == 0)
@@ -420,7 +429,7 @@ namespace MOBOT.BHL.Web2.api3
         private CustomGenericList<Subject> SubjectSearch(string subject, bool fullText, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
-            Api3 api = new Api3();
+            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SubjectSearch(subject, fullText);
         }
 
@@ -434,8 +443,15 @@ namespace MOBOT.BHL.Web2.api3
         private CustomGenericList<Creator> AuthorSearch(string name, bool fullText, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
-            Api3 api = new Api3();
+            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.AuthorSearch(name, fullText);
+        }
+
+        private CustomGenericList<Page> PageSearch(string itemID, string text, string apiKey)
+        {
+            ValidateUser(Api3.APIRequestType.PageSearch, apiKey, string.Format("{0}|{1}", itemID, text));
+            Api3 api = new Api3();
+            return api.PageSearch(itemID, text);
         }
 
         private CustomGenericList<Publication> GetAuthorPublications(string creatorID, string apiKey)
@@ -462,7 +478,7 @@ namespace MOBOT.BHL.Web2.api3
         private CustomGenericList<Name> NameSearch(string name, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.NameSearch, apiKey, name);
-            Api3 api = new Api3();
+            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.NameSearch(name);
         }
 
@@ -486,7 +502,7 @@ namespace MOBOT.BHL.Web2.api3
             string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}", title, authorLastName, volume,
                 (year == null ? "" : year.ToString()), subject, languageCode, (collectionID == null ? "" : collectionID.ToString()));
             ValidateUser(Api3.APIRequestType.PublicationSearch, apiKey, args);
-            Api3 api = new Api3();
+            Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SearchPublication(title, authorLastName, volume, year, subject, languageCode, collectionID, fullText);
         }
 

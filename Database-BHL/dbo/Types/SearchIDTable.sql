@@ -1,0 +1,4 @@
+﻿CREATE TYPE dbo.SearchIDTable AS TABLE
+(
+	ID INT NOT NULL
+)

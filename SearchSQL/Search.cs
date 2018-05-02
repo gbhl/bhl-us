@@ -117,7 +117,8 @@ namespace BHL.Search.SQL
             return result;
         }
 
-        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null, 
+            bool includeText = false)
         {
             throw new NotImplementedException();
 

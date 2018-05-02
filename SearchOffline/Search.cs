@@ -68,7 +68,8 @@ namespace BHL.Search.Offline
             return result;
         }
 
-        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null,
+            bool includeText = false)
         {
             SearchResult result = GetOfflineSearchResult();
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, query));

@@ -253,13 +253,15 @@ namespace BHL.Search.Elastic
             return result;
         }
 
-        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null, 
+            bool includeText = false)
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> {
                     ESField.ID, ESField.ITEMID, ESField.SEQUENCE, ESField.PAGEINDICATORS,
                     ESField.PAGETYPES, ESField.SEGMENTS
                     };
+            if (includeText) returnFields.Add(ESField.TEXT);
             List<Tuple<string, ESFacetSortOrder>> facetFields = new List<Tuple<string, ESFacetSortOrder>>();
             List<string> highlightFields = new List<string> { ESField.TEXT };
 

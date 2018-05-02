@@ -93,6 +93,7 @@
     <Folder Include="reqlog\Stored Procedures" />
     <Folder Include="srchindex" />
     <Folder Include="srchindex\Stored Procedures" />
+    <Folder Include="dbo\Types" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Keyword.sql" />
@@ -1051,6 +1052,7 @@
     <None Include="Data\dbo.AspNetUsers.Table.sql" />
     <None Include="Data\dbo.MaterialType.Table.sql" />
     <None Include="Security\Schemas\srchindex.sql" />
+    <None Include="dbo\Types\SearchIDTable.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1346,5 +1348,6 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogSegmentInsertUpdate.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogInsertUpdate.sql" />
     <None Include="dbo\Stored Procedures\ApiPageSelectByNameIdentifier.sql" />
+    <None Include="dbo\Stored Procedures\ApiAuthorSelectForList.sql" />
   </ItemGroup>
 </Project>

@@ -241,6 +241,11 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwMarcDataField.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwTropicosNames.sql"
 
 REM --------------------------------------
+REM  Build Types
+REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Types\SearchIDTable.sql"
+
+REM --------------------------------------
 REM  Build Stored Procedures for Auditing
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicCreateTrigger.sql"
@@ -515,6 +520,7 @@ sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectFromDateToNow.
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectPrimaryKeyNames.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectBySegmentID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectByTitleID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectForList.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectNameStartsWith.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiItemSelectByBarcode.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiItemSelectByItemID.sql"

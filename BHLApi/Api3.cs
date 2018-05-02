@@ -1,8 +1,11 @@
-﻿using CustomDataAccess;
+﻿using BHL.Search;
+using CustomDataAccess;
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Web.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 
 namespace MOBOT.BHL.API.BHLApi
@@ -10,11 +13,17 @@ namespace MOBOT.BHL.API.BHLApi
     public class Api3
     {
         private int _apiApplicationID = 5;  // application ID 5 corresponds to "BHL API v3";
+        private bool _useElasticSearch = true;  // if this is set to false, some API methods will not return data
 
         #region Constructor
 
         public Api3()
         {
+        }
+
+        public Api3(bool useElasticSearch)
+        {
+            _useElasticSearch = useElasticSearch;
         }
 
         public Api3(int applicationID)
@@ -577,11 +586,33 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Subject> SubjectSearch(string subject, bool fullText)
         {
-            Api3DAL dal = new Api3DAL();
-            if (fullText)
-                return dal.SearchTitleKeyword(null, null, subject);
+            CustomGenericList<Subject> subjects = new CustomGenericList<Subject>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+                ISearchResult result = search.SearchKeyword(subject);
+
+                // Build the list of results
+                foreach(KeywordHit hit in result.Keywords)
+                {
+                    subjects.Add(new Subject { SubjectText = hit.Keyword });
+                }
+            }
             else
-                return dal.TitleKeywordSelectLikeTag(null, null, subject);
+            {
+                Api3DAL dal = new Api3DAL();
+                if (fullText)
+                    subjects = dal.SearchTitleKeyword(null, null, subject);
+                else
+                    subjects = dal.TitleKeywordSelectLikeTag(null, null, subject);
+            }
+
+            return subjects;
         }
 
         public CustomGenericList<Publication> GetSubjectPublications(string subject)
@@ -595,12 +626,32 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Creator> AuthorSearch(string name, bool fullText)
         {
-            CustomGenericList<Creator> creators = null;
+            CustomGenericList<Creator> creators = new CustomGenericList<Creator>();
 
-            if (fullText)
-                creators = new Api3DAL().SearchAuthor(null, null, name);
-            else 
-                creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+                ISearchResult result = search.SearchAuthor(name);
+
+                // Build the list of results
+                List<int> creatorIds = new List<int>();
+                foreach (AuthorHit hit in result.Authors)
+                {
+                    creatorIds.Add(Convert.ToInt32(hit.Id));
+                }
+                creators = new Api3DAL().AuthorSelectForList(null, null, creatorIds);
+            }
+            else
+            {
+                if (fullText)
+                    creators = new Api3DAL().SearchAuthor(null, null, name);
+                else
+                    creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
+            }
 
             foreach (Creator creator in creators)
             {
@@ -775,7 +826,94 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("Please supply a name for which to search.");
             }
 
-            return new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
+            CustomGenericList<Name> names = new CustomGenericList<Name>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+                ISearchResult result = search.SearchName(name);
+
+                // Build the list of results
+                foreach (NameHit hit in result.Names)
+                {
+                    names.Add(new Name { NameConfirmed = hit.Name });
+                }
+            }
+            else
+            {
+                names = new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
+            }
+
+            return names;
+        }
+
+        public CustomGenericList<Page> PageSearch(string itemID, string text)
+        {
+            // Validate the parameters
+            int itemIDint;
+            if (!Int32.TryParse(itemID, out itemIDint))
+            {
+                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+            }
+            if (text == String.Empty)
+            {
+                throw new Exception("Please supply text for which to search.");
+            }
+
+            CustomGenericList<Page> pages = new CustomGenericList<Page>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
+
+                List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+                Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
+                limits.Add(itemLimit);
+                ISearchResult result = search.SearchPage(text ?? "", limits, true);
+
+                // Build the list of results
+                foreach (PageHit hit in result.Pages)
+                {
+                    Page page = new Page {
+                        PageID = Convert.ToInt32(hit.Id),
+                        ItemID = itemIDint,
+                        PageUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
+                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
+                        OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        OcrText = hit.Text
+                    };
+
+                    if (hit.PageTypes.Count > 0) page.PageTypes = new CustomGenericList<PageType>();
+                    foreach(string pageType in hit.PageTypes)
+                    {
+                        page.PageTypes.Add(new PageType { PageTypeName = pageType });
+                    }
+
+                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new CustomGenericList<PageNumber>();
+                    foreach(string pageIndicator in hit.pageIndicators)
+                    {
+                        page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
+                    }
+
+                    pages.Add(page);
+                }
+            }
+            else
+            {
+                // There is no non-ElasticSearch implementation
+                throw new NotImplementedException();
+            }
+
+            return pages;
         }
 
         /// <summary>
@@ -1019,7 +1157,7 @@ namespace MOBOT.BHL.API.BHLApi
             NameSearch = 472,
             TitleSearchSimple = 473,
             PublicationSearch = 474,
-            SearchWithinItem = 475,
+            PageSearch = 475,
             GetLanguages = 480,
             GetInstitutions = 481,
             GetCollections = 482
