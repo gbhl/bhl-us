@@ -70,5 +70,29 @@ namespace MOBOT.BHL.API.BHLApiDAL
             SqlTransaction sqlTransaction, string nameConfirmed);
         CustomGenericList<PageDetail> PageSelectByNameIdentifier(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string identifierName, string identifierValue);
+        CustomGenericList<Title> TitleSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int authorID);
+        CustomGenericList<Part> SegmentSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int authorID);
+        CustomGenericList<Title> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string subject);
+        CustomGenericList<Part> SegmentSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string subject);
+        CustomGenericList<Collection> CollectionSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int titleID);
+        CustomGenericList<Collection> CollectionSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemID);
+        CustomGenericList<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
+            int? collectionID, int returnCount);
+        CustomGenericList<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
+            int? collectionID, int returnCount);
+        CustomGenericList<Part> SearchSegment(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string containerTitle, string author, string date, string volume, string series, string issue,
+            int returnCount, string sortBy);
+        CustomGenericList<Part> SearchSegmentFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string containerTitle, string author, string date, string volume, string series, string issue,
+            int returnCount, string sortBy);
     }
 }

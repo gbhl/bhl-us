@@ -170,7 +170,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetSubjectPublications", true) == 0)
                 {
                     String subject = context.Request.QueryString["subject"];
-                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
+                    ServiceResponse<Publications> serviceResponse = new ServiceResponse<Publications>();
                     serviceResponse.Result = this.GetSubjectPublications(subject, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -188,7 +188,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetAuthorPublications", true) == 0)
                 {
                     String creatorID = context.Request.QueryString["creatorID"];
-                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
+                    ServiceResponse<Publications> serviceResponse = new ServiceResponse<Publications>();
                     serviceResponse.Result = this.GetAuthorPublications(creatorID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -242,7 +242,7 @@ namespace MOBOT.BHL.Web2.api3
 
                 if (string.Compare(operation, "PublicationSearch", true) == 0)
                 {
-                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
+                    ServiceResponse<Publications> serviceResponse = new ServiceResponse<Publications>();
                     String title = context.Request.QueryString["title"];
                     String authorLastName = context.Request.QueryString["authorname"];
                     String volume = context.Request.QueryString["volume"];
@@ -433,7 +433,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.SubjectSearch(subject, fullText);
         }
 
-        private CustomGenericList<Publication> GetSubjectPublications(string subject, string apiKey)
+        private Publications GetSubjectPublications(string subject, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetSubjectPublications, apiKey, subject);
             Api3 api = new Api3();
@@ -454,7 +454,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.PageSearch(itemID, text);
         }
 
-        private CustomGenericList<Publication> GetAuthorPublications(string creatorID, string apiKey)
+        private Publications GetAuthorPublications(string creatorID, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetAuthorPublications, apiKey, creatorID);
             Api3 api = new Api3();
@@ -496,7 +496,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetCollections();
         }
 
-        private CustomGenericList<Publication> PublicationSearch(string title, string authorLastName, string volume,
+        private Publications PublicationSearch(string title, string authorLastName, string volume,
             string year, string subject, string languageCode, string collectionID, bool fullText, string apiKey)
         {
             string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}", title, authorLastName, volume,

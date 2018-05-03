@@ -615,9 +615,28 @@ namespace MOBOT.BHL.API.BHLApi
             return subjects;
         }
 
-        public CustomGenericList<Publication> GetSubjectPublications(string subject)
+        public Publications GetSubjectPublications(string subject)
         {
-            throw new NotImplementedException();
+            Api3DAL dal = new Api3DAL();
+            CustomGenericList<Title> titles = dal.TitleSelectByKeyword(null, null, subject);
+            CustomGenericList<Part> parts = dal.SegmentSelectByKeyword(null, null, subject);
+
+            foreach (Title title in titles)
+            {
+                title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
+            }
+            foreach (Part part in parts)
+            {
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+            }
+
+            Publications pubs = new Publications();
+            pubs.Titles = titles;
+            pubs.Parts = parts;
+
+            return pubs;
         }
 
         #endregion Subject methods
@@ -661,11 +680,36 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public CustomGenericList<Publication> GetAuthorPublications(string creatorID)
+        public Publications GetAuthorPublications(string creatorID)
         {
-            throw new NotImplementedException();
-        }
+            // Validate the parameters
+            int creatorIDint;
+            if (!Int32.TryParse(creatorID, out creatorIDint))
+            {
+                throw new Exception("creatorID (" + creatorID + ") must be a valid integer value.");
+            }
 
+            Api3DAL dal = new Api3DAL();
+            CustomGenericList<Title> titles = dal.TitleSelectByAuthor(null, null, creatorIDint);
+            CustomGenericList<Part> parts = dal.SegmentSelectByAuthor(null, null, creatorIDint);
+
+            foreach (Title title in titles)
+            {
+                title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
+                title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
+            }
+            foreach (Part part in parts)
+            {
+                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
+                part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+            }
+
+            Publications pubs = new Publications();
+            pubs.Titles = titles;
+            pubs.Parts = parts;
+
+            return pubs;
+        }
 
         #endregion Author methods
 
@@ -975,18 +1019,11 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Search methods
 
-        public CustomGenericList<Publication> SearchPublication(string title, string authorLastName, string volume,
+        public Publications SearchPublication(string title, string authorName, string volume,
             string year, string subject, string languageCode, string collectionID, bool fullText)
         {
-            throw new NotImplementedException();
-        }
-
-        /*
-        public CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
-            string year, string subject, string languageCode, string collectionID, int returnCount, bool fullText)
-        {
             // Validate the parameters
-            if (title.Trim() == string.Empty && authorLastName.Trim() == string.Empty && collectionID.Trim() == string.Empty)
+            if (title.Trim() == string.Empty && authorName.Trim() == string.Empty && collectionID.Trim() == string.Empty)
             {
                 throw new Exception("Please specific a title, author last name, or collection ID for which to search.");
             }
@@ -1009,21 +1046,77 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            Api2DAL dal = new Api2DAL();
+            Publications pubs = new Publications();
+
+            // TEST WITH:  http://localhost:49275/api3?op=PublicationSearch&title=guide&apikey=12345678-1234-1234-1234-123456789012
+            if (_useElasticSearch)
+            {
+                Tuple<string, string> languageParam = null;
+                Tuple<string, string> collectionParam = null;
+
+                if (!string.IsNullOrWhiteSpace(languageCode))
+                {
+                    languageParam = new Tuple<string, string>(languageCode,
+                        new Api3DAL().GetLanguageName(languageCode));
+                }
+                if (!string.IsNullOrWhiteSpace(collectionID))
+                {
+                    collectionParam = new Tuple<string, string>(collectionID, 
+                        new Api3DAL().GetCollectionName(collectionIDint));
+                }
+
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+                ISearchResult result = search.SearchItem(title, authorName, volume, year, subject,
+                    languageParam, collectionParam);
+
+                // Build the list of results
+                foreach (ItemHit hit in result.Items)
+                {
+                    // TODO:  Add complete Item and Part objects to the Publications object
+                    if (hit.TitleId != 0)
+                    {
+                        pubs.Items.Add(new Item { PrimaryTitleID = hit.TitleId, ItemID = hit.ItemId });
+                    }
+                    else
+                    {
+                        pubs.Parts.Add(new Part { PartID = hit.SegmentId });
+                    }
+                }
+            }
+            else
+            {
+                // TODO: Populate a list of *expanded* Item objects with the SearchBook() results
+                pubs.Titles = this.SearchBook(title, authorName, volume, "", 
+                    (int?)(yearInt == 0 ? (int?)null : yearInt), subject, 
+                    languageCode, (int?)(collectionIDint == 0 ? (int?)null : collectionIDint), 
+                    500, fullText);
+                pubs.Parts = this.SearchSegment(title, "", authorName, year, volume, "", "", 500, "Title", fullText);
+            }
+
+            return pubs;
+        }
+
+        private CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
+            int? year, string subject, string languageCode, int? collectionID, int returnCount, bool fullText)
+        {
+            Api3DAL dal = new Api3DAL();
 
             // Get the list of books
             CustomGenericList<SearchBookResult> books = null;
             if (fullText)
             {
                 books = dal.SearchBookFullText(null, null, title, authorLastName, volume, edition,
-                    (year == string.Empty ? null : (int?)yearInt), subject, languageCode,
-                    (collectionID == string.Empty ? null : (int?)collectionIDint), returnCount);
+                    year, subject, languageCode, collectionID, returnCount);
             }
             else
             {
                 books = dal.SearchBook(null, null, title, authorLastName, volume, edition,
-                    (year == string.Empty ? null : (int?)yearInt), subject, languageCode,
-                    (collectionID == string.Empty ? null : (int?)collectionIDint), returnCount);
+                    year, subject, languageCode, collectionID, returnCount);
             }
 
             // Build the list of titles (with item, creator, and collection information) to return
@@ -1085,16 +1178,10 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Part> SearchSegment(string title, string containerTitle, string author, string date, 
+        private CustomGenericList<Part> SearchSegment(string title, string containerTitle, string author, string date, 
             string volume, string series, string issue, int returnCount, string sortBy, bool fullText)
         {
-            // Validate the parameters
-            if (title.Trim() == string.Empty && author.Trim() == string.Empty)
-            {
-                throw new Exception("Please specific a title or author last name for which to search.");
-            }
-
-            Api2DAL dal = new Api2DAL();
+            Api3DAL dal = new Api3DAL();
 
             // Get the list of segments
             CustomGenericList<Part> parts = null;
@@ -1126,7 +1213,6 @@ namespace MOBOT.BHL.API.BHLApi
 
             return parts;
         }
-        */
 
         #endregion Search methods
 

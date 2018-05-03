@@ -1,20 +1,17 @@
 ﻿using System;
 using CustomDataAccess;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
 {
-    public class Publication : DataObjectBase, ISetValues
+    public class SearchBookResult : DataObjectBase, ISetValues
     {
+
         #region Constructors
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Publication()
+        public SearchBookResult()
         {
         }
 

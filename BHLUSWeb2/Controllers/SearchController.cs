@@ -278,18 +278,21 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.AuthorPage;
                     search.NumResults = authorPageSize;
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
                     model.AuthorResult = search.SearchAuthor(searchTerm);
                 }
                 if ((model.Params.SearchCategory.Equals("N") || model.Params.SearchCategory.Equals("M")))
                 {
                     search.StartPage = model.NamePage;
                     search.NumResults = namePageSize;
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
                     model.NameResult = search.SearchName(searchTerm);
                 }
                 if (model.Params.SearchCategory.Equals("T"))
                 {
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
                     search.Facet = true;
                     model.ItemResult = search.SearchItem(searchTerm, model.Params.LastName,
                         model.Params.Volume, model.Params.Year, model.Params.Subject, model.Params.Language, 
@@ -299,6 +302,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 {
                     search.StartPage = model.KeywordPage;
                     search.NumResults = keywordPageSize;
+                    search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
                     model.KeywordResult = search.SearchKeyword(searchTerm);
                 }
             }

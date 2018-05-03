@@ -547,6 +547,44 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public CustomGenericList<Title> TitleSelectByKeyword(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, string subject
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleSelectByKeyword", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, subject)))
+            {
+                using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
+                {
+                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public CustomGenericList<Part> SegmentSelectByKeyword(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, string subject
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectByKeyword", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, subject)))
+            {
+                using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
+                {
+                    CustomGenericList<Part> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         #endregion Subject methods
 
         #region Author methods
@@ -662,6 +700,42 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public CustomGenericList<Title> TitleSelectByAuthor(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int authorID
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleSelectByAuthor", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
+            {
+                using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
+                {
+                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
+        public CustomGenericList<Part> SegmentSelectByAuthor(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int authorID
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSegmentSelectByAuthor", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
+            {
+                using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
+                {
+                    CustomGenericList<Part> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         #endregion Author methods
 
         #region Institution methods
@@ -727,6 +801,22 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #region Language methods
 
+        public string GetLanguageName(string languageCode)
+        {
+            Language selected = null;
+            CustomGenericList<Language> languages = this.LanguageSelectWithPublishedItems(null, null);
+            foreach (Language language in languages)
+            {
+                if (language.LanguageCode == languageCode)
+                {
+                    selected = language;
+                    break;
+                }
+            }
+
+            return (selected == null ? string.Empty : selected.LanguageName);
+        }
+
         public CustomGenericList<Language> LanguageSelectWithPublishedItems(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -745,12 +835,60 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #region Collection methods
 
+        public string GetCollectionName(int collectionID)
+        {
+            Collection selected = null;
+            CustomGenericList<Collection> collections = this.CollectionSelectActive(null, null);
+            foreach(Collection collection in collections)
+            {
+                if (collection.CollectionID == collectionID)
+                {
+                    selected = collection;
+                    break;
+                }
+            }
+
+            return (selected == null ? string.Empty : selected.CollectionName);
+        }
+
         public CustomGenericList<Collection> CollectionSelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("CollectionSelectActive", connection, transaction))
+            {
+                using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
+        public CustomGenericList<Collection> CollectionSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("CollectionSelectByTitleID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
+        public CustomGenericList<Collection> CollectionSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("CollectionSelectByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
             {
                 using (CustomSqlHelper<Collection> helper = new CustomSqlHelper<Collection>())
                 {
@@ -822,6 +960,122 @@ namespace MOBOT.BHL.API.BHLApiDAL
         }
 
         #endregion Name methods
+
+        #region Search methods
+
+        public CustomGenericList<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
+            int? collectionID, int returnCount)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SearchBook", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("AuthorLastName", SqlDbType.NVarChar, 255, false, authorLastName),
+                CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
+                CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 450, false, edition),
+                CustomSqlHelper.CreateInputParameter("Year", SqlDbType.SmallInt, null, true, year),
+                CustomSqlHelper.CreateInputParameter("Subject", SqlDbType.NVarChar, 50, false, subject),
+                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode),
+                CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, true, collectionID),
+                CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Call the database procedure that implements the multiple-field full-text book search.
+        /// </summary>
+        public CustomGenericList<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
+            int? collectionID, int returnCount)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SearchBookFT", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("AuthorLastName", SqlDbType.NVarChar, 255, false, authorLastName),
+                CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
+                CustomSqlHelper.CreateInputParameter("Edition", SqlDbType.NVarChar, 450, false, edition),
+                CustomSqlHelper.CreateInputParameter("Year", SqlDbType.SmallInt, null, true, year),
+                CustomSqlHelper.CreateInputParameter("Subject", SqlDbType.NVarChar, 50, false, subject),
+                CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, false, languageCode),
+                CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, true, collectionID),
+                CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public CustomGenericList<Part> SearchSegment(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string containerTitle, string author, string date, string volume, string series, string issue,
+            int returnCount, string sortBy)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SearchSegment", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
+                CustomSqlHelper.CreateInputParameter("Author", SqlDbType.NVarChar, 2000, false, author),
+                CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
+                CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
+                CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
+                CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, true, issue),
+                CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount),
+                CustomSqlHelper.CreateInputParameter("SortBy", SqlDbType.NVarChar, 50, true, sortBy),
+                CustomSqlHelper.CreateInputParameter("IncludeNoContent", SqlDbType.SmallInt, null, false, 1)))
+            {
+                using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
+                {
+                    CustomGenericList<Part> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Call the database procedure that implements the multiple-field full-text book search.
+        /// </summary>
+        public CustomGenericList<Part> SearchSegmentFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            string title, string containerTitle, string author, string date, string volume, string series, string issue,
+            int returnCount, string sortBy)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("SearchSegmentAdvancedFT", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+                CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
+                CustomSqlHelper.CreateInputParameter("Author", SqlDbType.NVarChar, 2000, false, author),
+                CustomSqlHelper.CreateInputParameter("Date", SqlDbType.NVarChar, 20, false, date),
+                CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
+                CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
+                CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, true, issue),
+                CustomSqlHelper.CreateInputParameter("ReturnCount", SqlDbType.Int, null, false, returnCount),
+                CustomSqlHelper.CreateInputParameter("SortBy", SqlDbType.NVarChar, 50, true, sortBy),
+                CustomSqlHelper.CreateInputParameter("IncludeNoContent", SqlDbType.SmallInt, null, true, 1)))
+            {
+                using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
+                {
+                    CustomGenericList<Part> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        #endregion Search methods
 
         #region Validation methods
 
