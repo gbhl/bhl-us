@@ -147,9 +147,12 @@
     <add key="GeminiPassword" value="issue tracking service password"/>
     <add key="GeminiProjectId" value="7"/>
     <add key="GeminiDesc" value="A new issue from the web"/>
-
     <!-- Required for forms with large numbers of fields -->
     <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
+    <!-- Google ReCaptcha keys -->
+    <add key="ReCaptchaVerifyUrl" value="https://www.google.com/recaptcha/api/siteverify" />
+    <add key="ReCaptchaSiteKey" value="RECAPTCHA SITE KEY" />
+    <add key="ReCaptchaSecretKey" value="RECAPTCHA SECRET KEY" />
   </appSettings>
   <connectionStrings>
     <remove name="BHL" />

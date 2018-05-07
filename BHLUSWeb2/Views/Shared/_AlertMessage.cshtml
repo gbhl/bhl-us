@@ -1,1 +1,1 @@
-﻿<div id="divAlert" runat="server" visible="false" style="display:@ViewBag.DisplayStyle" class="alertbox">@ViewBag.AlertMessage</div>
+﻿<div id="divAlert" runat="server" visible="false" style="display:@ViewBag.DisplayStyle" class="alertbox">@Html.Raw(ViewBag.AlertMessage)</div>

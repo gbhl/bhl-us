@@ -9,6 +9,9 @@ using CustomDataAccess;
 using Countersoft.Gemini.Commons.Entity;
 using Countersoft.Gemini.Api;
 using Countersoft.Gemini.Commons.Dto;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace MOBOT.BHL.Web2
 {
@@ -86,6 +89,7 @@ namespace MOBOT.BHL.Web2
 
         protected void submitButton_Click(object sender, EventArgs e)
         {
+            errorPanel.Visible = false;
             string issueLongDesc = string.Empty;
 
             // Get Gemini data from web.config file
@@ -142,7 +146,8 @@ namespace MOBOT.BHL.Web2
                 // Only a bot can fill Foo with a value, so ignore that as well.
                 if (!emailTextBox.Text.Trim().ToLower().Contains("kelev.biz") &&
                     !emailTextBox.Text.Trim().ToLower().Contains("email.tst") &&
-                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()))
+                    string.IsNullOrWhiteSpace(fooTextBox.Text.Trim()) &&
+                    ValidateCaptcha(Request.Form["g-recaptcha-response"]))
                 {
                     IssueDto newIssue = serviceManager.Item.Create(data);
 
@@ -169,6 +174,11 @@ namespace MOBOT.BHL.Web2
                         }
                     }
                 }
+                else
+                {
+                    errorPanel.Visible = true;
+                    errorLabel.Text = "There was a problem sending your comment. Please try again.";
+                }
             }
             catch
             {
@@ -177,12 +187,40 @@ namespace MOBOT.BHL.Web2
             }
         }
 
-        /*
-        protected void closeButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Validate the ReCaptcha submission
+        /// </summary>
+        /// <param name="gRecaptchaResponse"></param>
+        /// <returns></returns>
+        private bool ValidateCaptcha(string gRecaptchaResponse)
         {
-            Response.Redirect(createReturnUrl());
+            bool isValid = true;
+
+            string verifyUrl = ConfigurationManager.AppSettings["ReCaptchaVerifyUrl"];
+            string secretKey = ConfigurationManager.AppSettings["ReCaptchaSecretKey"];
+            string verifyParams = string.Format("secret={0}&response={1}", secretKey, gRecaptchaResponse);
+
+            string postResponse = string.Empty;
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                postResponse = webClient.UploadString(verifyUrl, verifyParams);
+            }
+
+            JObject jsonResponse = null;
+            try
+            {
+                jsonResponse = JObject.Parse(postResponse);
+                bool status = (bool)jsonResponse.SelectToken("success");
+                if (status != true) isValid = false;
+            }
+            catch
+            {
+                isValid = false;
+            }
+
+            return isValid;
         }
-        */
 
         private string createReturnUrl()
         {
