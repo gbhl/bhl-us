@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Feedback.aspx.cs" Inherits="MOBOT.BHL.Web2.Feedback" %>
     
 <%@ Register TagPrefix="uc" TagName="NavBar" Src="~/controls/NavBar.ascx" %>
+<asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder" runat="server">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</asp:Content>
 <asp:Content ID="mainContent" ContentPlaceHolderID="mainContentPlaceHolder" runat="server">
+
 <uc:NavBar runat="server" />
 <div id="page-title">
     <h1 class="column-wrap">Questions / Comments / Scanning Requests</h1>
@@ -106,6 +110,9 @@
             </div>
 		    <!-- End Scanning Request Form -->
 
+            <div style="margin-left:164px;">
+                <div class="g-recaptcha" data-sitekey="6LfT11cUAAAAABIA0TU2SP70JqpN9mlNgs2Y6-VY"></div>
+            </div>
             <div>
                 <label class="caption">&nbsp;</label><asp:Button ID="submitButton" runat="server" Text="Submit" OnClientClick="submitClick();" OnClick="submitButton_Click" />
             </div>
