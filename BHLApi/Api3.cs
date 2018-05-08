@@ -138,7 +138,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (item != null)
             {
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
                 CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
@@ -247,7 +247,7 @@ namespace MOBOT.BHL.API.BHLApi
                             if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                             item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                            item.TitleUrl = (item.PrimaryTitleID == null ) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                            item.TitleUrl = (item.TitleID == null ) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                             item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
                         }
 
@@ -337,7 +337,7 @@ namespace MOBOT.BHL.API.BHLApi
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
+                item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
             }
 
@@ -1077,24 +1077,100 @@ namespace MOBOT.BHL.API.BHLApi
                 // Build the list of results
                 foreach (ItemHit hit in result.Items)
                 {
-                    // TODO:  Add complete Item and Part objects to the Publications object
+                    // Add Item and Part objects to the Publications object
                     if (hit.TitleId != 0)
                     {
-                        pubs.Items.Add(new Item { PrimaryTitleID = hit.TitleId, ItemID = hit.ItemId });
+                        Item i = new Item {
+                            TitleID = hit.TitleId,
+                            ItemID = hit.ItemId,
+                            FullTitle = hit.Title,
+                            BibliographicLevel = hit.Genre,
+                            MaterialType = hit.MaterialType,
+                            PublisherPlace = hit.PublicationPlace,
+                            PublisherName = hit.Publisher,
+                            TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + hit.TitleId,
+                            ItemUrl = "https://www.biodiversitylibrary.org/item/" + hit.ItemId,
+                            Volume = hit.Volume                            
+                        };
+
+                        if (hit.Contributors.Count == 1) i.HoldingInstitution = hit.Contributors[0];
+                        if (hit.Dates.Count == 1) i.PublicationDate = hit.Dates[0];
+                        if (hit.Dates.Count > 1) i.PublicationDate = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
+
+                        foreach(string cName in hit.Collections)
+                        {
+                            if (i.Collections == null) i.Collections = new CustomGenericList<Collection>();
+                            i.Collections.Add(new Collection { CollectionName = cName });
+                        }
+                        foreach(string aName in hit.Authors)
+                        {
+                            if (i.Authors == null) i.Authors = new CustomGenericList<Creator>();
+                            i.Authors.Add(new Creator { Name = aName });
+                        }
+
+                        pubs.Items.Add(i);
                     }
                     else
                     {
-                        pubs.Parts.Add(new Part { PartID = hit.SegmentId });
+                        Part p = new Part {
+                            PartID = hit.SegmentId,
+                            ItemID = hit.ItemId,
+                            Title = hit.Title,
+                            ContainerTitle = hit.Container,
+                            GenreName = hit.Genre,
+                            StartPageID = hit.StartPageId,
+                            Volume = hit.Volume,
+                            Series = hit.Series,
+                            Issue = hit.Issue,
+                            PublisherName = hit.Publisher,
+                            PublisherPlace = hit.PublicationPlace,
+                            Language = hit.Language,
+                            Doi = hit.Doi,
+                            PageRange = hit.PageRange
+                        };
+                        if (hit.Dates.Count == 1) p.Date = hit.Dates[0];
+                        if (hit.Dates.Count > 1) p.Date = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
+
+                        foreach (string aName in hit.Authors)
+                        {
+                            if (p.Authors == null) p.Authors = new CustomGenericList<Creator>();
+                            p.Authors.Add(new Creator { Name = aName });
+                        }
+                        foreach(string contributor in hit.Contributors)
+                        {
+                            if (p.Contributors == null) p.Contributors = new CustomGenericList<Contributor>();
+                            p.Contributors.Add(new Contributor { ContributorName = contributor });
+                        }
+
+                        pubs.Parts.Add(p);
                     }
                 }
             }
             else
             {
-                // TODO: Populate a list of *expanded* Item objects with the SearchBook() results
-                pubs.Titles = this.SearchBook(title, authorName, volume, "", 
+                CustomGenericList<Title> titles = this.SearchBook(title, authorName, volume, "", 
                     (int?)(yearInt == 0 ? (int?)null : yearInt), subject, 
                     languageCode, (int?)(collectionIDint == 0 ? (int?)null : collectionIDint), 
                     500, fullText);
+
+                foreach(Title t in titles)
+                {
+                    foreach (Item i in t.Items)
+                    {
+                        Item item = i;
+                        item.TitleID = t.TitleID;
+                        item.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + t.TitleID.ToString();
+                        item.FullTitle = t.FullTitle;
+                        item.BibliographicLevel = t.BibliographicLevel;
+                        item.MaterialType = t.MaterialType;
+                        item.PublisherPlace = t.PublisherPlace;
+                        item.PublisherName = t.PublisherName;
+                        item.PublicationDate = t.PublicationDate;
+                        item.Authors = t.Authors;
+                        pubs.Items.Add(item);
+                    }
+                }
+
                 pubs.Parts = this.SearchSegment(title, "", authorName, year, volume, "", "", 500, "Title", fullText);
             }
 

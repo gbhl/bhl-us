@@ -27,11 +27,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         // Primary title ID for the item
-        private int? _PrimaryTitleID = null;
-        public int? PrimaryTitleID
+        private int? _TitleID = null;
+        public int? TitleID
         {
-            get { return _PrimaryTitleID; }
-            set { _PrimaryTitleID = value; }
+            get { return _TitleID; }
+            set { _TitleID = value; }
         }
 
         private int? _ThumbnailPageID = null;
@@ -230,6 +230,78 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #endregion Properties
 
+        #region Properties (from Title)
+
+        private string _BibliographicLevel = string.Empty;
+        public string BibliographicLevel
+        {
+            get { return _BibliographicLevel; }
+            set { _BibliographicLevel = value; }
+        }
+
+        private string _MaterialType = string.Empty;
+        public string MaterialType
+        {
+            get { return _MaterialType; }
+            set { _MaterialType = value; }
+        }
+
+        private string _FullTitle = null;
+        public string FullTitle
+        {
+            get { return _FullTitle; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 2000);
+                _FullTitle = value;
+            }
+        }
+
+        private string _PublisherPlace = null;
+        public string PublisherPlace
+        {
+            get
+            {
+                return _PublisherPlace;
+            }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 150);
+                _PublisherPlace = value;
+            }
+        }
+
+        private string _PublisherName = null;
+        public string PublisherName
+        {
+            get { return _PublisherName; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 255);
+                _PublisherName = value;
+            }
+        }
+
+        private string _PublicationDate = null;
+        public string PublicationDate
+        {
+            get { return _PublicationDate; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 100);
+                _PublicationDate = value;
+            }
+        }
+
+        CustomGenericList<Creator> _Authors;
+        public CustomGenericList<Creator> Authors
+        {
+            get { return _Authors; }
+            set { _Authors = value; }
+        }
+
+        #endregion Properties (from Title)
+
         #region ISetValues Members
 
         public void SetValues(CustomDataRow row)
@@ -245,7 +317,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "PrimaryTitleID":
                         {
-                            _PrimaryTitleID = (int)column.Value;
+                            _TitleID = (int)column.Value;
                             break;
                         }
                     case "ThumbnailPageID":
@@ -321,6 +393,36 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "ExternalUrl":
                         {
                             _ExternalUrl = (string)column.Value;
+                            break;
+                        }
+                    case "BibliographicLevelName":
+                        {
+                            _BibliographicLevel = (string)column.Value;
+                            break;
+                        }
+                    case "MaterialTypeLabel":
+                        {
+                            _MaterialType = (string)column.Value;
+                            break;
+                        }
+                    case "FullTitle":
+                        {
+                            _FullTitle = (string)column.Value;
+                            break;
+                        }
+                    case "Datafield_260_a":
+                        {
+                            _PublisherPlace = (string)column.Value;
+                            break;
+                        }
+                    case "Datafield_260_b":
+                        {
+                            _PublisherName = (string)column.Value;
+                            break;
+                        }
+                    case "Datafield_260_c":
+                        {
+                            _PublicationDate = (string)column.Value;
                             break;
                         }
                 }
