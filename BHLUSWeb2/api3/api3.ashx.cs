@@ -180,7 +180,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "AuthorSearch", true) == 0)
                 {
                     String name = context.Request.QueryString["authorname"];
-                    ServiceResponse<CustomGenericList<Creator>> serviceResponse = new ServiceResponse<CustomGenericList<Creator>>();
+                    ServiceResponse<CustomGenericList<Author>> serviceResponse = new ServiceResponse<CustomGenericList<Author>>();
                     serviceResponse.Result = this.AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -440,7 +440,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetSubjectPublications(subject);
         }
 
-        private CustomGenericList<Creator> AuthorSearch(string name, bool fullText, string apiKey)
+        private CustomGenericList<Author> AuthorSearch(string name, bool fullText, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.AuthorSearch, apiKey, name);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");

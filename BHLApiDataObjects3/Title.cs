@@ -26,14 +26,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _TitleID = value; }
         }
 
-        private string _BibliographicLevel = string.Empty;
+        private string _BibliographicLevel = null;
         public string BibliographicLevel
         {
             get { return _BibliographicLevel; }
             set { _BibliographicLevel = value; }
         }
 
-        private string _MaterialType = string.Empty;
+        private string _MaterialType = null;
         public string MaterialType
         {
             get { return _MaterialType; }
@@ -174,18 +174,12 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         private string _TitleUrl = null;
         public string TitleUrl
         {
-            get
-            {
-                return _TitleUrl;
-            }
-            set
-            {
-                _TitleUrl = value;
-            }
+            get { return _TitleUrl; }
+            set { _TitleUrl = value; }
         }
 
-        CustomGenericList<Creator> _Authors;
-        public CustomGenericList<Creator> Authors
+        CustomGenericList<Author> _Authors;
+        public CustomGenericList<Author> Authors
         {
             get { return _Authors; }
             set { _Authors = value; }

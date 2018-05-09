@@ -589,7 +589,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #region Author methods
 
-        public CustomGenericList<Creator> AuthorSelectByTitleID(SqlConnection sqlConnection,
+        public CustomGenericList<Author> AuthorSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -598,14 +598,14 @@ namespace MOBOT.BHL.API.BHLApiDAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiAuthorSelectByTitleID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
             {
-                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
                     return helper.ExecuteReader(command);
                 }
             }
         }
 
-        public CustomGenericList<Creator> AuthorSelectBySegmentID(SqlConnection sqlConnection,
+        public CustomGenericList<Author> AuthorSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -614,7 +614,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiAuthorSelectBySegmentID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
-                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
                     return helper.ExecuteReader(command);
                 }
@@ -627,7 +627,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Creator.</returns>
-        public CustomGenericList<Creator> AuthorSelectNameStartsWith(
+        public CustomGenericList<Author> AuthorSelectNameStartsWith(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string name)
@@ -638,9 +638,9 @@ namespace MOBOT.BHL.API.BHLApiDAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiAuthorSelectNameStartsWith", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("FullName", SqlDbType.NVarChar, 255, false, name)))
             {
-                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Creator> list = helper.ExecuteReader(command);
+                    CustomGenericList<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -652,7 +652,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Creator.</returns>
-        public CustomGenericList<Creator> SearchAuthor(
+        public CustomGenericList<Author> SearchAuthor(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string name)
@@ -663,15 +663,15 @@ namespace MOBOT.BHL.API.BHLApiDAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSearchAuthor", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("AuthorName", SqlDbType.NVarChar, 4000, false, name)))
             {
-                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Creator> list = helper.ExecuteReader(command);
+                    CustomGenericList<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Creator> AuthorSelectForList(
+        public CustomGenericList<Author> AuthorSelectForList(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             List<int> authorIds)
@@ -692,9 +692,9 @@ namespace MOBOT.BHL.API.BHLApiDAL
                 parameter.SqlDbType = SqlDbType.Structured;
                 parameter.TypeName = "dbo.SearchIDTable";
 
-                using (CustomSqlHelper<Creator> helper = new CustomSqlHelper<Creator>())
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Creator> list = helper.ExecuteReader(command);
+                    CustomGenericList<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -835,7 +835,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #region Collection methods
 
-        public string GetCollectionName(int collectionID)
+        public string GetCollectionName(string collectionID)
         {
             Collection selected = null;
             CustomGenericList<Collection> collections = this.CollectionSelectActive(null, null);

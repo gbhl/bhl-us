@@ -88,7 +88,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        private string _publisherName;
+        private string _publisherName = null;
         public string PublisherName
         {
             get { return _publisherName; }
@@ -99,7 +99,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        private string _publicationDate;
+        private string _publicationDate = null;
         public string PublicationDate
         {
             get { return _publicationDate; }
@@ -132,8 +132,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        private CustomGenericList<Creator> _authors = null;
-        public CustomGenericList<Creator> Authors
+        private CustomGenericList<Author> _authors = null;
+        public CustomGenericList<Author> Authors
         {
             get { return _authors; }
             set { _authors = value; }

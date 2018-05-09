@@ -17,9 +17,9 @@ namespace MOBOT.BHL.API.BHLApiDAL
             SqlTransaction sqlTransaction, int itemID);
         CustomGenericList<Part> SegmentSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID);
-        CustomGenericList<Creator> AuthorSelectByTitleID(SqlConnection sqlConnection,
+        CustomGenericList<Author> AuthorSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Creator> AuthorSelectBySegmentID(SqlConnection sqlConnection,
+        CustomGenericList<Author> AuthorSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
         Title TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID);
         CustomGenericList<Item> ItemSelectByTitleID(SqlConnection sqlConnection,
@@ -57,9 +57,9 @@ namespace MOBOT.BHL.API.BHLApiDAL
         string title);
         CustomGenericList<Title> SearchTitleSimple(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
                 string title);
-        CustomGenericList<Creator> AuthorSelectNameStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        CustomGenericList<Author> AuthorSelectNameStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string name);
-        CustomGenericList<Creator> SearchAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        CustomGenericList<Author> SearchAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string name);
         CustomGenericList<Subject> TitleKeywordSelectLikeTag(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string subject);

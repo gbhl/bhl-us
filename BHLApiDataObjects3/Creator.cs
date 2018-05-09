@@ -4,14 +4,14 @@ using CustomDataAccess;
 namespace MOBOT.BHL.API.BHLApiDataObjects3
 {
     [Serializable]
-    public class Creator : DataObjectBase, ISetValues
+    public class Author : DataObjectBase, ISetValues
     {
         #region Constructors
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Creator()
+        public Author()
         {
         }
 
@@ -19,11 +19,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties
 
-        private int _CreatorID = default(int);
-        public int CreatorID
+        private string _AuthorID = null;
+        public string AuthorID
         {
-            get { return _CreatorID; }
-            set { _CreatorID = value; }
+            get { return _AuthorID; }
+            set { _AuthorID = value; }
         }
 
         private string _Name = null;
@@ -148,7 +148,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 {
                     case "AuthorID":
                         {
-                            _CreatorID = (int)column.Value;
+                            _AuthorID = column.Value.ToString();
                             break;
                         }
                     case "FullName":

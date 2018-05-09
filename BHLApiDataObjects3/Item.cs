@@ -27,15 +27,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         // Primary title ID for the item
-        private int? _TitleID = null;
-        public int? TitleID
+        private string _TitleID = null;
+        public string TitleID
         {
             get { return _TitleID; }
             set { _TitleID = value; }
         }
 
-        private int? _ThumbnailPageID = null;
-        public int? ThumbnailPageID
+        private string _ThumbnailPageID = null;
+        public string ThumbnailPageID
         {
             get { return _ThumbnailPageID; }
             set { _ThumbnailPageID = value; }
@@ -232,14 +232,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties (from Title)
 
-        private string _BibliographicLevel = string.Empty;
+        private string _BibliographicLevel = null;
         public string BibliographicLevel
         {
             get { return _BibliographicLevel; }
             set { _BibliographicLevel = value; }
         }
 
-        private string _MaterialType = string.Empty;
+        private string _MaterialType = null;
         public string MaterialType
         {
             get { return _MaterialType; }
@@ -293,11 +293,18 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        CustomGenericList<Creator> _Authors;
-        public CustomGenericList<Creator> Authors
+        CustomGenericList<Author> _Authors;
+        public CustomGenericList<Author> Authors
         {
             get { return _Authors; }
             set { _Authors = value; }
+        }
+
+        CustomGenericList<Identifier> _Identifiers;
+        public CustomGenericList<Identifier> Identifiers
+        {
+            get { return _Identifiers; }
+            set { _Identifiers = value; }
         }
 
         #endregion Properties (from Title)
@@ -317,12 +324,12 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "PrimaryTitleID":
                         {
-                            _TitleID = (int)column.Value;
+                            _TitleID = (string)column.Value;
                             break;
                         }
                     case "ThumbnailPageID":
                         {
-                            _ThumbnailPageID = (int?)column.Value;
+                            _ThumbnailPageID = (string)column.Value;
                             break;
                         }
                     case "SourceName":

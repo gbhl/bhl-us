@@ -26,8 +26,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _noteText = value; }
         }
 
-        private short? _noteSequence = null;
-        public short? NoteSequence
+        private string _noteSequence = null;
+        public string NoteSequence
         {
             get { return _noteSequence; }
             set { _noteSequence = value; }
@@ -57,7 +57,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "NoteSequence":
                         {
-                            _noteSequence = (short?)column.Value;
+                            _noteSequence = (string)column.Value;
                             break;
                         }
                     case "NoteTypeName":

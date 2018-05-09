@@ -643,9 +643,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Author methods
 
-        public CustomGenericList<Creator> AuthorSearch(string name, bool fullText)
+        public CustomGenericList<Author> AuthorSearch(string name, bool fullText)
         {
-            CustomGenericList<Creator> creators = new CustomGenericList<Creator>();
+            CustomGenericList<Author> creators = new CustomGenericList<Author>();
 
             if (_useElasticSearch)
             {
@@ -672,9 +672,9 @@ namespace MOBOT.BHL.API.BHLApi
                     creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
             }
 
-            foreach (Creator creator in creators)
+            foreach (Author creator in creators)
             {
-                creator.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + creator.CreatorID.ToString();
+                creator.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + creator.AuthorID.ToString();
             }
 
             return creators;
@@ -1047,8 +1047,6 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Publications pubs = new Publications();
-
-            // TEST WITH:  http://localhost:49275/api3?op=PublicationSearch&title=guide&apikey=12345678-1234-1234-1234-123456789012
             if (_useElasticSearch)
             {
                 Tuple<string, string> languageParam = null;
@@ -1062,7 +1060,7 @@ namespace MOBOT.BHL.API.BHLApi
                 if (!string.IsNullOrWhiteSpace(collectionID))
                 {
                     collectionParam = new Tuple<string, string>(collectionID, 
-                        new Api3DAL().GetCollectionName(collectionIDint));
+                        new Api3DAL().GetCollectionName(collectionID));
                 }
 
                 // Submit the request to ElasticSearch
@@ -1081,16 +1079,17 @@ namespace MOBOT.BHL.API.BHLApi
                     if (hit.TitleId != 0)
                     {
                         Item i = new Item {
-                            TitleID = hit.TitleId,
+                            TitleID = hit.TitleId.ToString(),
                             ItemID = hit.ItemId,
                             FullTitle = hit.Title,
-                            BibliographicLevel = hit.Genre,
-                            MaterialType = hit.MaterialType,
-                            PublisherPlace = hit.PublicationPlace,
-                            PublisherName = hit.Publisher,
+                            BibliographicLevel = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre),
+                            MaterialType = (string.IsNullOrWhiteSpace(hit.MaterialType) ? null : hit.MaterialType),
+                            PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace),
+                            PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher),
                             TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + hit.TitleId,
                             ItemUrl = "https://www.biodiversitylibrary.org/item/" + hit.ItemId,
-                            Volume = hit.Volume                            
+                            Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume),
+                            Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language)
                         };
 
                         if (hit.Contributors.Count == 1) i.HoldingInstitution = hit.Contributors[0];
@@ -1104,44 +1103,78 @@ namespace MOBOT.BHL.API.BHLApi
                         }
                         foreach(string aName in hit.Authors)
                         {
-                            if (i.Authors == null) i.Authors = new CustomGenericList<Creator>();
-                            i.Authors.Add(new Creator { Name = aName });
+                            if (i.Authors == null) i.Authors = new CustomGenericList<Author>();
+                            i.Authors.Add(new Author { Name = aName });
+                        }
+                        if (hit.Oclc.Count > 0)
+                        {
+                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
+                            foreach (string id in hit.Oclc) i.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
+                        }
+                        if (hit.Isbn.Count > 0)
+                        {
+                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
+                            foreach (string id in hit.Isbn) i.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
+                        }
+                        if (hit.Issn.Count > 0)
+                        {
+                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
+                            foreach (string id in hit.Issn) i.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
                         }
 
+                        if (pubs.Items == null) pubs.Items = new CustomGenericList<Item>();
                         pubs.Items.Add(i);
                     }
                     else
                     {
                         Part p = new Part {
+                            PartUrl = "https://www.biodiversitylibrary.org/part/" + hit.SegmentId,
                             PartID = hit.SegmentId,
-                            ItemID = hit.ItemId,
+                            ItemID = (hit.ItemId == 0 ? null : hit.ItemId.ToString()),
+                            StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString()),
                             Title = hit.Title,
-                            ContainerTitle = hit.Container,
-                            GenreName = hit.Genre,
-                            StartPageID = hit.StartPageId,
-                            Volume = hit.Volume,
-                            Series = hit.Series,
-                            Issue = hit.Issue,
-                            PublisherName = hit.Publisher,
-                            PublisherPlace = hit.PublicationPlace,
-                            Language = hit.Language,
-                            Doi = hit.Doi,
-                            PageRange = hit.PageRange
+                            ContainerTitle = (string.IsNullOrWhiteSpace(hit.Container) ? null : hit.Container),
+                            GenreName = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre),
+                            Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume),
+                            Series = (string.IsNullOrWhiteSpace(hit.Series) ? null : hit.Series),
+                            Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue),
+                            PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher),
+                            PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace),
+                            Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language),
+                            Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi),
+                            PageRange = (hit.PageRange == "--" || string.IsNullOrWhiteSpace(hit.PageRange) ? null : hit.PageRange),
+                            ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url),
                         };
                         if (hit.Dates.Count == 1) p.Date = hit.Dates[0];
                         if (hit.Dates.Count > 1) p.Date = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
 
                         foreach (string aName in hit.Authors)
                         {
-                            if (p.Authors == null) p.Authors = new CustomGenericList<Creator>();
-                            p.Authors.Add(new Creator { Name = aName });
+                            if (p.Authors == null) p.Authors = new CustomGenericList<Author>();
+                            p.Authors.Add(new Author { Name = aName });
                         }
                         foreach(string contributor in hit.Contributors)
                         {
                             if (p.Contributors == null) p.Contributors = new CustomGenericList<Contributor>();
                             p.Contributors.Add(new Contributor { ContributorName = contributor });
                         }
+                        if (hit.Oclc.Count > 0)
+                        {
+                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
+                            foreach(string id in hit.Oclc) p.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
+                        }
+                        if (hit.Isbn.Count > 0)
+                        {
+                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
+                            foreach (string id in hit.Isbn) p.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
+                        }
+                        if (hit.Issn.Count > 0)
+                        {
+                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
+                            foreach (string id in hit.Issn) p.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
+                        }
 
+                        if (pubs.Parts == null) pubs.Parts = new CustomGenericList<Part>();
                         pubs.Parts.Add(p);
                     }
                 }
@@ -1153,12 +1186,13 @@ namespace MOBOT.BHL.API.BHLApi
                     languageCode, (int?)(collectionIDint == 0 ? (int?)null : collectionIDint), 
                     500, fullText);
 
-                foreach(Title t in titles)
+                if (titles.Count > 0) pubs.Items = new CustomGenericList<Item>();
+                foreach (Title t in titles)
                 {
                     foreach (Item i in t.Items)
                     {
                         Item item = i;
-                        item.TitleID = t.TitleID;
+                        item.TitleID = t.TitleID.ToString();
                         item.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + t.TitleID.ToString();
                         item.FullTitle = t.FullTitle;
                         item.BibliographicLevel = t.BibliographicLevel;

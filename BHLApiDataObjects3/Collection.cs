@@ -19,8 +19,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties
 
-        private int _collectionID;
-        public int CollectionID
+        private string _collectionID;
+        public string CollectionID
         {
             get { return _collectionID; }
             set { _collectionID = value; }
@@ -48,15 +48,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        private Int16? _canContainTitles;
-        public Int16? CanContainTitles
+        private string _canContainTitles;
+        public string CanContainTitles
         {
             get { return _canContainTitles; }
             set { _canContainTitles = value; }
         }
 
-        private Int16? _canContainItems;
-        public Int16? CanContainItems
+        private string _canContainItems;
+        public string CanContainItems
         {
             get { return _canContainItems; }
             set { _canContainItems = value; }
@@ -75,7 +75,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 {
                     case "CollectionID":
                         {
-                            _collectionID = (int)column.Value;
+                            _collectionID = column.Value.ToString();
                             break;
                         }
                     case "CollectionName":
@@ -90,12 +90,12 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "CanContainTitles":
                         {
-                            _canContainTitles = (Int16)column.Value;
+                            _canContainTitles = column.Value.ToString();
                             break;
                         }
                     case "CanContainItems":
                         {
-                            _canContainItems = (Int16)column.Value;
+                            _canContainItems = column.Value.ToString();
                             break;
                         }
                 }

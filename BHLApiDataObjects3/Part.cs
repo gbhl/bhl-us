@@ -20,7 +20,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         #region Properties
 
         private string _partUrl = string.Empty;
-
         public string PartUrl
         {
             get { return _partUrl; }
@@ -28,231 +27,202 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         private int _partID = default(int);
-
         public int PartID
         {
             get { return _partID; }
             set { _partID = value; }
         }
 
-        private int? _itemID = null;
-
-        public int? ItemID
+        private string _itemID = null;
+        public string ItemID
         {
             get { return _itemID; }
             set { _itemID = value; }
         }
 
-        private int? _startPageID = null;
-
-        public int? StartPageID
+        private string _startPageID = null;
+        public string StartPageID
         {
             get { return _startPageID; }
             set { _startPageID = value; }
         }
 
-        private short _sequenceOrder = default(int);
-
-        public short SequenceOrder
+        private string _sequenceOrder = null;
+        public string SequenceOrder
         {
             get { return _sequenceOrder; }
             set { _sequenceOrder = value; }
         }
 
-        private string _genreName = string.Empty;
-
+        private string _genreName = null;
         public string GenreName
         {
             get { return _genreName; }
             set { _genreName = value; }
         }
 
-        private string _title = string.Empty;
-
+        private string _title = null;
         public string Title
         {
             get { return _title; }
             set { _title = value; }
         }
 
-        private string _translatedTitle = string.Empty;
-
+        private string _translatedTitle = null;
         public string TranslatedTitle
         {
             get { return _translatedTitle; }
             set { _translatedTitle = value; }
         }
 
-        private string _containerTitle = string.Empty;
-
+        private string _containerTitle = null;
         public string ContainerTitle
         {
             get { return _containerTitle; }
             set { _containerTitle = value; }
         }
 
-        private string _publicationDetails = string.Empty;
-
+        private string _publicationDetails = null;
         public string PublicationDetails
         {
             get { return _publicationDetails; }
             set { _publicationDetails = value; }
         }
 
-        private string _publisherName = string.Empty;
-
+        private string _publisherName = null;
         public string PublisherName
         {
             get { return _publisherName; }
             set { _publisherName = value; }
         }
 
-        private string _publisherPlace = string.Empty;
-
+        private string _publisherPlace = null;
         public string PublisherPlace
         {
             get { return _publisherPlace; }
             set { _publisherPlace = value; }
         }
 
-        private string _notes = string.Empty;
-
+        private string _notes = null;
         public string Notes
         {
             get { return _notes; }
             set { _notes = value; }
         }
 
-        private string _volume = string.Empty;
-
+        private string _volume = null;
         public string Volume
         {
             get { return _volume; }
             set { _volume = value; }
         }
 
-        private string _series = string.Empty;
-
+        private string _series = null;
         public string Series
         {
             get { return _series; }
             set { _series = value; }
         }
 
-        private string _issue = string.Empty;
-
+        private string _issue = null;
         public string Issue
         {
             get { return _issue; }
             set { _issue = value; }
         }
 
-        private string _date = string.Empty;
-
+        private string _date = null;
         public string Date
         {
             get { return _date; }
             set { _date = value; }
         }
 
-        private string _pageRange = string.Empty;
-
+        private string _pageRange = null;
         public string PageRange
         {
             get { return _pageRange; }
             set { _pageRange = value; }
         }
 
-        private string _startPageNumber = string.Empty;
-
+        private string _startPageNumber = null;
         public string StartPageNumber
         {
             get { return _startPageNumber; }
             set { _startPageNumber = value; }
         }
 
-        private string _endPageNumber = string.Empty;
-
+        private string _endPageNumber = null;
         public string EndPageNumber
         {
             get { return _endPageNumber; }
             set { _endPageNumber = value; }
         }
 
-        private string _language = string.Empty;
-
+        private string _language = null;
         public string Language
         {
             get { return _language; }
             set { _language = value; }
         }
 
-        private string _externalUrl = string.Empty;
-
+        private string _externalUrl = null;
         public string ExternalUrl
         {
             get { return _externalUrl; }
             set { _externalUrl = value; }
         }
 
-        private string _downloadUrl = string.Empty;
-
+        private string _downloadUrl = null;
         public string DownloadUrl
         {
             get { return _downloadUrl; }
             set { _downloadUrl = value; }
         }
 
-        private string _rightsStatus = string.Empty;
-
+        private string _rightsStatus = null;
         public string RightsStatus
         {
             get { return _rightsStatus; }
             set { _rightsStatus = value; }
         }
 
-        private string _rightsStatement = string.Empty;
-
+        private string _rightsStatement = null;
         public string RightsStatement
         {
             get { return _rightsStatement; }
             set { _rightsStatement = value; }
         }
 
-        private string _licenseName = string.Empty;
-
+        private string _licenseName = null;
         public string LicenseName
         {
             get { return _licenseName; }
             set { _licenseName = value; }
         }
 
-        private string _licenseUrl = string.Empty;
-
+        private string _licenseUrl = null;
         public string LicenseUrl
         {
             get { return _licenseUrl; }
             set { _licenseUrl = value; }
         }
 
-        private string _doi = string.Empty;
-
+        private string _doi = null;
         public string Doi
         {
             get { return _doi; }
             set { _doi = value; }
         }
 
-        private CustomGenericList<Creator> _authors = null;
-
-        public CustomGenericList<Creator> Authors
+        private CustomGenericList<Author> _authors = null;
+        public CustomGenericList<Author> Authors
         {
             get { return _authors; }
             set { _authors = value; }
         }
 
         private CustomGenericList<Contributor> _contributors = null;
-
         public CustomGenericList<Contributor> Contributors
         {
             get { return _contributors; }
@@ -260,7 +230,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         private CustomGenericList<Subject> _subjects = null;
-
         public CustomGenericList<Subject> Subjects
         {
             get { return _subjects; }
@@ -268,7 +237,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         private CustomGenericList<Identifier> _identifiers = null;
-
         public CustomGenericList<Identifier> Identifiers
         {
             get { return _identifiers; }
@@ -276,7 +244,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         private CustomGenericList<Page> _pages = null;
-
         public CustomGenericList<Page> Pages
         {
             get { return _pages; }
@@ -284,7 +251,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         private CustomGenericList<Part> _relatedParts = null;
-
         public CustomGenericList<Part> RelatedParts
         {
             get { return _relatedParts; }
@@ -308,132 +274,132 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "ItemID":
                         {
-                            _itemID = Utility.ZeroIfNull(column.Value);
+                            _itemID = (string)column.Value;
                             break;
                         }
                     case "StartPageID":
                         {
-                            _startPageID = Utility.ZeroIfNull(column.Value);
+                            _startPageID = (string)column.Value;
                             break;
                         }
                     case "SequenceOrder":
                         {
-                            _sequenceOrder = (short)column.Value;
+                            _sequenceOrder = (string)column.Value;
                             break;
                         }
                     case "GenreName":
                         {
-                            _genreName = Utility.EmptyIfNull(column.Value);
+                            _genreName = (string)column.Value;
                             break;
                         }
                     case "Title":
                         {
-                            _title = Utility.EmptyIfNull(column.Value);
+                            _title = (string)column.Value;
                             break;
                         }
                     case "TranslatedTitle":
                         {
-                            _translatedTitle = Utility.EmptyIfNull(column.Value);
+                            _translatedTitle = (string)column.Value;
                             break;
                         }
                     case "ContainerTitle":
                         {
-                            _containerTitle = Utility.EmptyIfNull(column.Value);
+                            _containerTitle = (string)column.Value;
                             break;
                         }
                     case "PublicationDetails":
                         {
-                            _publicationDetails = Utility.EmptyIfNull(column.Value);
+                            _publicationDetails = (string)column.Value;
                             break;
                         }
                     case "PublisherName":
                         {
-                            _publisherName = Utility.EmptyIfNull(column.Value);
+                            _publisherName = (string)column.Value;
                             break;
                         }
                     case "PublisherPlace":
                         {
-                            _publisherPlace = Utility.EmptyIfNull(column.Value);
+                            _publisherPlace = (string)column.Value;
                             break;
                         }
                     case "Notes":
                         {
-                            _notes = Utility.EmptyIfNull(column.Value);
+                            _notes = (string)column.Value;
                             break;
                         }
                     case "Volume":
                         {
-                            _volume = Utility.EmptyIfNull(column.Value);
+                            _volume = (string)column.Value;
                             break;
                         }
                     case "Series":
                         {
-                            _series = Utility.EmptyIfNull(column.Value);
+                            _series = (string)column.Value;
                             break;
                         }
                     case "Issue":
                         {
-                            _issue = Utility.EmptyIfNull(column.Value);
+                            _issue = (string)column.Value;
                             break;
                         }
                     case "Date":
                         {
-                            _date = Utility.EmptyIfNull(column.Value);
+                            _date = (string)column.Value;
                             break;
                         }
                     case "PageRange":
                         {
-                            _pageRange = Utility.EmptyIfNull(column.Value);
+                            _pageRange = (string)column.Value;
                             break;
                         }
                     case "StartPageNumber":
                         {
-                            _startPageNumber = Utility.EmptyIfNull(column.Value);
+                            _startPageNumber = (string)column.Value;
                             break;
                         }
                     case "EndPageNumber":
                         {
-                            _endPageNumber = Utility.EmptyIfNull(column.Value);
+                            _endPageNumber = (string)column.Value;
                             break;
                         }
                     case "LanguageName":
                         {
-                            _language = Utility.EmptyIfNull(column.Value);
+                            _language = (string)column.Value;
                             break;
                         }
                     case "Url":
                         {
-                            _externalUrl = Utility.EmptyIfNull(column.Value);
+                            _externalUrl = (string)column.Value;
                             break;
                         }
                     case "DownloadUrl":
                         {
-                            _downloadUrl = Utility.EmptyIfNull(column.Value);
+                            _downloadUrl = (string)column.Value;
                             break;
                         }
                     case "RightsStatus":
                         {
-                            _rightsStatus = Utility.EmptyIfNull(column.Value);
+                            _rightsStatus = (string)column.Value;
                             break;
                         }
                     case "RightsStatement":
                         {
-                            _rightsStatement = Utility.EmptyIfNull(column.Value);
+                            _rightsStatement = (string)column.Value;
                             break;
                         }
                     case "LicenseName":
                         {
-                            _licenseName = Utility.EmptyIfNull(column.Value);
+                            _licenseName = (string)column.Value;
                             break;
                         }
                     case "LicenseUrl":
                         {
-                            _licenseUrl = Utility.EmptyIfNull(column.Value);
+                            _licenseUrl = (string)column.Value;
                             break;
                         }
                     case "DOIName":
                         {
-                            _doi = Utility.EmptyIfNull(column.Value);
+                            _doi = (string)column.Value;
                             break;
                         }
                     case "Authors":
@@ -441,14 +407,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             string authorString = Utility.EmptyIfNull(column.Value);
                             if (authorString != string.Empty)
                             {
-                                if (this.Authors == null) this.Authors = new CustomGenericList<Creator>();
+                                if (this.Authors == null) this.Authors = new CustomGenericList<Author>();
 
                                 string[] authors = authorString.Split(';');
                                 foreach (string author in authors)
                                 {
                                     if (!string.IsNullOrEmpty(author))
                                     {
-                                        Creator creator = new Creator();
+                                        Author creator = new Author();
                                         creator.Name = author;
                                         this.Authors.Add(creator);
                                     }

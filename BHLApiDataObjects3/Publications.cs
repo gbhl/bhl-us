@@ -22,21 +22,21 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties
 
-        CustomGenericList<Title> _titles = new CustomGenericList<Title>();
+        CustomGenericList<Title> _titles = null;
         public CustomGenericList<Title> Titles
         {
             get { return _titles; }
             set { _titles = value; }
         }
 
-        CustomGenericList<Item> _items = new CustomGenericList<Item>();
+        CustomGenericList<Item> _items = null;
         public CustomGenericList<Item> Items
         { 
             get { return _items; }
             set { _items = value; }
         }
 
-        CustomGenericList<Part> _parts = new CustomGenericList<Part>();
+        CustomGenericList<Part> _parts = null;
         public CustomGenericList<Part> Parts
         {
             get { return _parts; }

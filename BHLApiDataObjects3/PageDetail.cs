@@ -214,7 +214,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties
 
-        private string _NameBankID = string.Empty;
+        private string _NameBankID = null;
         public string NameBankID
         {
             get
