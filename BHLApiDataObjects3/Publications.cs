@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
 {
+    [Serializable]
     public class Publications : DataObjectBase
     {
         #region Constructors

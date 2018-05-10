@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
+    <Compile Include="BHLType.cs" />
     <Compile Include="Collection.cs" />
     <Compile Include="Contributor.cs" />
     <Compile Include="Creator.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="PageNumber.cs" />
     <Compile Include="PageType.cs" />
     <Compile Include="Part.cs" />
+    <Compile Include="Publication.cs" />
     <Compile Include="Publications.cs" />
     <Compile Include="SearchBookResult.cs" />
     <Compile Include="Subject.cs" />

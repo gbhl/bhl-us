@@ -28,5 +28,14 @@
             }
             return (bool)value;
         }
+
+        public static string NullIfEmpty(object value)
+        {
+            if (string.IsNullOrWhiteSpace((string)value))
+            {
+                return null;
+            }
+            return (string)value;
+        }
     }
 }

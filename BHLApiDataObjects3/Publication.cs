@@ -1,17 +1,21 @@
-﻿using System;
-using CustomDataAccess;
+﻿using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
 {
     [Serializable]
-    public class Item : DataObjectBase, ISetValues
+    public class Publication : DataObjectBase
     {
         #region Constructors
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Item()
+        public Publication()
         {
         }
 
@@ -19,8 +23,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties		
 
-        private int _ItemID = default(int);
-        public int ItemID
+        private string _bhlType = null;
+        public string BHLType
+        {
+            get { return _bhlType; }
+            set { _bhlType = value; }
+        }
+
+        private string _ItemID = null;
+        public string ItemID
         {
             get { return _ItemID; }
             set { _ItemID = value; }
@@ -160,24 +171,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _DueDiligence = value; }
         }
 
-        private string _CopyrightStatus = null;
-        public string CopyrightStatus
-        {
-            get { return _CopyrightStatus; }
-            set { _CopyrightStatus = value; }
-        }
-
-        private string _CopyrightRegion = null;
-        public string CopyrightRegion
-        {
-            get { return _CopyrightRegion; }
-            set
-            {
-                if (value != null) value = CalibrateValue(value, 50);
-                _CopyrightRegion = value;
-            }
-        }
-
         private string _ExternalUrl = null;
         public string ExternalUrl
         {
@@ -207,20 +200,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _ItemThumbUrl = value; }
         }
 
-        CustomGenericList<Page> _Pages = null;
-        public CustomGenericList<Page> Pages
-        {
-            get { return _Pages; }
-            set { _Pages = value; }
-        }
-
-        CustomGenericList<Part> _Parts = null;
-        public CustomGenericList<Part> Parts
-        {
-            get { return _Parts; }
-            set { _Parts = value; }
-        }
-
         CustomGenericList<Collection> _Collections = null;
         public CustomGenericList<Collection> Collections
         {
@@ -244,17 +223,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         {
             get { return _MaterialType; }
             set { _MaterialType = value; }
-        }
-
-        private string _FullTitle = null;
-        public string FullTitle
-        {
-            get { return _FullTitle; }
-            set
-            {
-                if (value != null) value = CalibrateValue(value, 2000);
-                _FullTitle = value;
-            }
         }
 
         private string _PublisherPlace = null;
@@ -307,6 +275,167 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _Identifiers = value; }
         }
 
+        private string _partUrl = null;
+        public string PartUrl
+        {
+            get { return _partUrl; }
+            set { _partUrl = value; }
+        }
+
+        private string _partID = null;
+        public string PartID
+        {
+            get { return _partID; }
+            set { _partID = value; }
+        }
+
+        private string _startPageID = null;
+        public string StartPageID
+        {
+            get { return _startPageID; }
+            set { _startPageID = value; }
+        }
+
+        private string _sequenceOrder = null;
+        public string SequenceOrder
+        {
+            get { return _sequenceOrder; }
+            set { _sequenceOrder = value; }
+        }
+
+        private string _genreName = null;
+        public string GenreName
+        {
+            get { return _genreName; }
+            set { _genreName = value; }
+        }
+
+        private string _title = null;
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; }
+        }
+
+        private string _translatedTitle = null;
+        public string TranslatedTitle
+        {
+            get { return _translatedTitle; }
+            set { _translatedTitle = value; }
+        }
+
+        private string _containerTitle = null;
+        public string ContainerTitle
+        {
+            get { return _containerTitle; }
+            set { _containerTitle = value; }
+        }
+
+        private string _publicationDetails = null;
+        public string PublicationDetails
+        {
+            get { return _publicationDetails; }
+            set { _publicationDetails = value; }
+        }
+
+        private string _notes = null;
+        public string Notes
+        {
+            get { return _notes; }
+            set { _notes = value; }
+        }
+
+        private string _series = null;
+        public string Series
+        {
+            get { return _series; }
+            set { _series = value; }
+        }
+
+        private string _issue = null;
+        public string Issue
+        {
+            get { return _issue; }
+            set { _issue = value; }
+        }
+
+        private string _date = null;
+        public string Date
+        {
+            get { return _date; }
+            set { _date = value; }
+        }
+
+        private string _pageRange = null;
+        public string PageRange
+        {
+            get { return _pageRange; }
+            set { _pageRange = value; }
+        }
+
+        private string _startPageNumber = null;
+        public string StartPageNumber
+        {
+            get { return _startPageNumber; }
+            set { _startPageNumber = value; }
+        }
+
+        private string _endPageNumber = null;
+        public string EndPageNumber
+        {
+            get { return _endPageNumber; }
+            set { _endPageNumber = value; }
+        }
+
+        private string _downloadUrl = null;
+        public string DownloadUrl
+        {
+            get { return _downloadUrl; }
+            set { _downloadUrl = value; }
+        }
+
+        private string _rightsStatus = null;
+        public string RightsStatus
+        {
+            get { return _rightsStatus; }
+            set { _rightsStatus = value; }
+        }
+
+        private string _licenseName = null;
+        public string LicenseName
+        {
+            get { return _licenseName; }
+            set { _licenseName = value; }
+        }
+
+        private string _doi = null;
+        public string Doi
+        {
+            get { return _doi; }
+            set { _doi = value; }
+        }
+
+        private CustomGenericList<Contributor> _contributors = null;
+        public CustomGenericList<Contributor> Contributors
+        {
+            get { return _contributors; }
+            set { _contributors = value; }
+        }
+
+        private CustomGenericList<Subject> _subjects = null;
+        public CustomGenericList<Subject> Subjects
+        {
+            get { return _subjects; }
+            set { _subjects = value; }
+        }
+
+        private CustomGenericList<Part> _relatedParts = null;
+        public CustomGenericList<Part> RelatedParts
+        {
+            get { return _relatedParts; }
+            set { _relatedParts = value; }
+        }
+
         #endregion Properties (from Title)
 
         #region ISetValues Members
@@ -319,12 +448,17 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 {
                     case "ItemID":
                         {
-                            _ItemID = (int)column.Value;
+                            _ItemID = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PrimaryTitleID":
                         {
                             _TitleID = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "SegmentID":
+                        {
+                            _partID = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "ThumbnailPageID":
@@ -368,6 +502,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             break;
                         }
                     case "Language":
+                    case "LanguageName":
                         {
                             _Language = Utility.NullIfEmpty(column.Value);
                             break;
@@ -378,6 +513,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             break;
                         }
                     case "Rights":
+                    case "RightsStatement":
                         {
                             _Rights = Utility.NullIfEmpty(column.Value);
                             break;
@@ -387,17 +523,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _DueDiligence = Utility.NullIfEmpty(column.Value);
                             break;
                         }
-                    case "CopyrightStatus":
-                        {
-                            _CopyrightStatus = Utility.NullIfEmpty(column.Value);
-                            break;
-                        }
-                    case "CopyrightRegion":
-                        {
-                            _CopyrightRegion = Utility.NullIfEmpty(column.Value);
-                            break;
-                        }
                     case "ExternalUrl":
+                    case "Url":
                         {
                             _ExternalUrl = Utility.NullIfEmpty(column.Value);
                             break;
@@ -412,17 +539,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _MaterialType = Utility.NullIfEmpty(column.Value);
                             break;
                         }
-                    case "FullTitle":
-                        {
-                            _FullTitle = Utility.NullIfEmpty(column.Value);
-                            break;
-                        }
                     case "Datafield_260_a":
+                    case "PublisherPlace":
                         {
                             _PublisherPlace = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_b":
+                    case "PublisherName":
                         {
                             _PublisherName = Utility.NullIfEmpty(column.Value);
                             break;
@@ -432,10 +556,142 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _PublicationDate = Utility.NullIfEmpty(column.Value);
                             break;
                         }
+                    case "StartPageID":
+                        {
+                            _startPageID = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "SequenceOrder":
+                        {
+                            _sequenceOrder = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "GenreName":
+                        {
+                            _genreName = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Title":
+                    case "FullTitle":
+                        {
+                            _title = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "TranslatedTitle":
+                        {
+                            _translatedTitle = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "ContainerTitle":
+                        {
+                            _containerTitle = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "PublicationDetails":
+                        {
+                            _publicationDetails = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Notes":
+                        {
+                            _notes = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Series":
+                        {
+                            _series = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Issue":
+                        {
+                            _issue = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Date":
+                        {
+                            _date = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "PageRange":
+                        {
+                            _pageRange = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "StartPageNumber":
+                        {
+                            _startPageNumber = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "EndPageNumber":
+                        {
+                            _endPageNumber = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "DownloadUrl":
+                        {
+                            _downloadUrl = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "RightsStatus":
+                    case "CopyrightStatus":
+                        {
+                            _rightsStatus = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "LicenseName":
+                        {
+                            _licenseName = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "DOIName":
+                        {
+                            _doi = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "Authors":
+                        {
+                            string authorString = Utility.EmptyIfNull(column.Value);
+                            if (authorString != string.Empty)
+                            {
+                                if (this.Authors == null) this.Authors = new CustomGenericList<Author>();
+
+                                string[] authors = authorString.Split(';');
+                                foreach (string author in authors)
+                                {
+                                    if (!string.IsNullOrEmpty(author))
+                                    {
+                                        Author creator = new Author();
+                                        creator.Name = author;
+                                        this.Authors.Add(creator);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    case "Keywords":
+                        {
+                            string keywordString = Utility.EmptyIfNull(column.Value);
+                            if (keywordString != string.Empty)
+                            {
+                                if (this.Subjects == null) this.Subjects = new CustomGenericList<Subject>();
+
+                                string[] keywords = keywordString.Split('|');
+                                foreach (string keyword in keywords)
+                                {
+                                    if (!string.IsNullOrEmpty(keyword))
+                                    {
+                                        Subject subject = new Subject();
+                                        subject.SubjectText = keyword;
+                                        this.Subjects.Add(subject);
+                                    }
+                                }
+                            }
+                            break;
+                        }
                 }
             }
         }
 
-        #endregion
+        #endregion ISetValues Members
     }
 }

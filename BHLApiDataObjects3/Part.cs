@@ -274,132 +274,132 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "ItemID":
                         {
-                            _itemID = (string)column.Value;
+                            _itemID = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
                     case "StartPageID":
                         {
-                            _startPageID = (string)column.Value;
+                            _startPageID = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
                     case "SequenceOrder":
                         {
-                            _sequenceOrder = (string)column.Value;
+                            _sequenceOrder = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "GenreName":
                         {
-                            _genreName = (string)column.Value;
+                            _genreName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Title":
                         {
-                            _title = (string)column.Value;
+                            _title = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "TranslatedTitle":
                         {
-                            _translatedTitle = (string)column.Value;
+                            _translatedTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "ContainerTitle":
                         {
-                            _containerTitle = (string)column.Value;
+                            _containerTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PublicationDetails":
                         {
-                            _publicationDetails = (string)column.Value;
+                            _publicationDetails = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PublisherName":
                         {
-                            _publisherName = (string)column.Value;
+                            _publisherName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PublisherPlace":
                         {
-                            _publisherPlace = (string)column.Value;
+                            _publisherPlace = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Notes":
                         {
-                            _notes = (string)column.Value;
+                            _notes = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Volume":
                         {
-                            _volume = (string)column.Value;
+                            _volume = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Series":
                         {
-                            _series = (string)column.Value;
+                            _series = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Issue":
                         {
-                            _issue = (string)column.Value;
+                            _issue = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Date":
                         {
-                            _date = (string)column.Value;
+                            _date = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PageRange":
                         {
-                            _pageRange = (string)column.Value;
+                            _pageRange = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "StartPageNumber":
                         {
-                            _startPageNumber = (string)column.Value;
+                            _startPageNumber = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "EndPageNumber":
                         {
-                            _endPageNumber = (string)column.Value;
+                            _endPageNumber = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "LanguageName":
                         {
-                            _language = (string)column.Value;
+                            _language = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Url":
                         {
-                            _externalUrl = (string)column.Value;
+                            _externalUrl = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "DownloadUrl":
                         {
-                            _downloadUrl = (string)column.Value;
+                            _downloadUrl = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "RightsStatus":
                         {
-                            _rightsStatus = (string)column.Value;
+                            _rightsStatus = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "RightsStatement":
                         {
-                            _rightsStatement = (string)column.Value;
+                            _rightsStatement = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "LicenseName":
                         {
-                            _licenseName = (string)column.Value;
+                            _licenseName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "LicenseUrl":
                         {
-                            _licenseUrl = (string)column.Value;
+                            _licenseUrl = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "DOIName":
                         {
-                            _doi = (string)column.Value;
+                            _doi = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Authors":

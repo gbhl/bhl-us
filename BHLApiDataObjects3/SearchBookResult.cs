@@ -169,47 +169,47 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "FullTitle":
                         {
-                            FullTitle = Utility.EmptyIfNull(column.Value);
+                            FullTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PartNumber":
                         {
-                            PartNumber = Utility.EmptyIfNull(column.Value);
+                            PartNumber = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PartName":
                         {
-                            PartName = Utility.EmptyIfNull(column.Value);
+                            PartName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "EditionStatement":
                         {
-                            EditionStatement = Utility.EmptyIfNull(column.Value);
+                            EditionStatement = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_a":
                         {
-                            PublisherPlace = Utility.EmptyIfNull(column.Value);
+                            PublisherPlace = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_b":
                         {
-                            PublisherName = Utility.EmptyIfNull(column.Value);
+                            PublisherName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_c":
                         {
-                            PublicationDate = Utility.EmptyIfNull(column.Value);
+                            PublicationDate = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Volume":
                         {
-                            Volume = Utility.EmptyIfNull(column.Value);
+                            Volume = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "InstitutionName":
                         {
-                            HoldingInstitution = Utility.EmptyIfNull(column.Value);
+                            HoldingInstitution = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                 }

@@ -244,72 +244,72 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "BibliographicLevelName":
                         {
-                            _BibliographicLevel = (string)column.Value;
+                            _BibliographicLevel = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "MaterialTypeLabel":
                         {
-                            _MaterialType = (string)column.Value;
+                            _MaterialType = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "FullTitle":
                         {
-                            _FullTitle = (string)column.Value;
+                            _FullTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "ShortTitle":
                         {
-                            _ShortTitle = (string)column.Value;
+                            _ShortTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "SortTitle":
                         {
-                            _SortTitle = (string)column.Value;
+                            _SortTitle = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PartNumber":
                         {
-                            _PartNumber = (string)column.Value;
+                            _PartNumber = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "PartName":
                         {
-                            _PartName = (string)column.Value;
+                            _PartName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "CallNumber":
                         {
-                            _CallNumber = (string)column.Value;
+                            _CallNumber = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "EditionStatement":
                         {
-                            _Edition = (string)column.Value;
+                            _Edition = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_a":
                         {
-                            _PublisherPlace = (string)column.Value;
+                            _PublisherPlace = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_b":
                         {
-                            _PublisherName = (string)column.Value;
+                            _PublisherName = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Datafield_260_c":
                         {
-                            _PublicationDate = (string)column.Value;
+                            _PublicationDate = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "CurrentPublicationFrequency":
                         {
-                            _PublicationFrequency = (string)column.Value;
+                            _PublicationFrequency = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "DOIName":
                         {
-                            _doi = (string)column.Value;
+                            _doi = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                 }

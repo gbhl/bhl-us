@@ -158,47 +158,47 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "RoleDescription":
                         {
-                            _Role = (string)column.Value;
+                            _Role = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Numeration":
                         {
-                            _Numeration = (string)column.Value;
+                            _Numeration = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Unit":
                         {
-                            _Unit = (string)column.Value;
+                            _Unit = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Title":
                         {
-                            _Title = (string)column.Value;
+                            _Title = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Location":
                         {
-                            _Location = (string)column.Value;
+                            _Location = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "FullerForm":
                         {
-                            _FullerForm = (string)column.Value;
+                            _FullerForm = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Relationship":
                         {
-                            _relationship = (string)column.Value;
+                            _relationship = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "TitleOfWork":
                         {
-                            _titleOfWork = (string)column.Value;
+                            _titleOfWork = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Dates":
                         {
-                            _Dates = (string)column.Value;
+                            _Dates = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                 }

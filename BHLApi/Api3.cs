@@ -399,9 +399,9 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Title> TitleSearchSimple(string title, bool fullText)
+        public CustomGenericList<Title> TitleSearchSimple(string title, bool sqlFullText)
         {
-            if (fullText)
+            if (sqlFullText)
                 return new Api3DAL().SearchTitleSimple(null, null, title);
             else
                 return new Api3DAL().TitleSelectSearchSimple(null, null, title);
@@ -584,7 +584,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Subject methods
 
-        public CustomGenericList<Subject> SubjectSearch(string subject, bool fullText)
+        public CustomGenericList<Subject> SubjectSearch(string subject, bool sqlFullText)
         {
             CustomGenericList<Subject> subjects = new CustomGenericList<Subject>();
 
@@ -606,7 +606,7 @@ namespace MOBOT.BHL.API.BHLApi
             else
             {
                 Api3DAL dal = new Api3DAL();
-                if (fullText)
+                if (sqlFullText)
                     subjects = dal.SearchTitleKeyword(null, null, subject);
                 else
                     subjects = dal.TitleKeywordSelectLikeTag(null, null, subject);
@@ -643,7 +643,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Author methods
 
-        public CustomGenericList<Author> AuthorSearch(string name, bool fullText)
+        public CustomGenericList<Author> AuthorSearch(string name, bool sqlFullText)
         {
             CustomGenericList<Author> creators = new CustomGenericList<Author>();
 
@@ -666,7 +666,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
             else
             {
-                if (fullText)
+                if (sqlFullText)
                     creators = new Api3DAL().SearchAuthor(null, null, name);
                 else
                     creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
@@ -1019,13 +1019,29 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Search methods
 
-        public Publications SearchPublication(string title, string authorName, string volume,
-            string year, string subject, string languageCode, string collectionID, bool fullText)
+        public CustomGenericList<Publication> SearchPublication(string title, string authorName, string volume,
+            string year, string subject, string languageCode, string collectionID, string searchTerm, string page, 
+            bool sqlFullText)
         {
             // Validate the parameters
-            if (title.Trim() == string.Empty && authorName.Trim() == string.Empty && collectionID.Trim() == string.Empty)
+            if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
+                string.IsNullOrWhiteSpace(collectionID) && string.IsNullOrWhiteSpace(searchTerm))
             {
-                throw new Exception("Please specific a title, author last name, or collection ID for which to search.");
+                throw new Exception("Please supply a title, author last name, collection ID, or searchTerm for which to search.");
+            }
+
+            if ((!string.IsNullOrWhiteSpace(title) || 
+                !string.IsNullOrWhiteSpace(authorName) ||
+                !string.IsNullOrWhiteSpace(volume) ||
+                !string.IsNullOrWhiteSpace(year) ||
+                !string.IsNullOrWhiteSpace(subject) ||
+                !string.IsNullOrWhiteSpace(languageCode) ||
+                !string.IsNullOrWhiteSpace(collectionID)) && 
+                !string.IsNullOrWhiteSpace(searchTerm))
+            {
+                throw new Exception("searchTerm should not be specified with any other search terms.  " +
+                    "searchTerm is for metadata+text searches.  All other parameters are for metadata-only " +
+                    "searches.");
             }
 
             int yearInt = 0;
@@ -1046,179 +1062,321 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            Publications pubs = new Publications();
+            int pageInt = 1;
+            if (page != string.Empty)
+            {
+                if (!Int32.TryParse(page, out pageInt))
+                {
+                    throw new Exception("page (" + page + ") must be a valid integer value.");
+                }
+
+                if (pageInt < 1)
+                {
+                    throw new Exception("page (" + page + ") must be greater than zero.");
+                }
+            }
+
+            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
             if (_useElasticSearch)
             {
-                Tuple<string, string> languageParam = null;
-                Tuple<string, string> collectionParam = null;
-
-                if (!string.IsNullOrWhiteSpace(languageCode))
+                if (string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    languageParam = new Tuple<string, string>(languageCode,
-                        new Api3DAL().GetLanguageName(languageCode));
+                    pubs = SearchPublicationMetadata(title, authorName, volume, year, subject, languageCode,
+                        collectionID, pageInt);
                 }
-                if (!string.IsNullOrWhiteSpace(collectionID))
+                else
                 {
-                    collectionParam = new Tuple<string, string>(collectionID, 
-                        new Api3DAL().GetCollectionName(collectionID));
-                }
-
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
-
-                ISearchResult result = search.SearchItem(title, authorName, volume, year, subject,
-                    languageParam, collectionParam);
-
-                // Build the list of results
-                foreach (ItemHit hit in result.Items)
-                {
-                    // Add Item and Part objects to the Publications object
-                    if (hit.TitleId != 0)
-                    {
-                        Item i = new Item {
-                            TitleID = hit.TitleId.ToString(),
-                            ItemID = hit.ItemId,
-                            FullTitle = hit.Title,
-                            BibliographicLevel = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre),
-                            MaterialType = (string.IsNullOrWhiteSpace(hit.MaterialType) ? null : hit.MaterialType),
-                            PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace),
-                            PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher),
-                            TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + hit.TitleId,
-                            ItemUrl = "https://www.biodiversitylibrary.org/item/" + hit.ItemId,
-                            Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume),
-                            Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language)
-                        };
-
-                        if (hit.Contributors.Count == 1) i.HoldingInstitution = hit.Contributors[0];
-                        if (hit.Dates.Count == 1) i.PublicationDate = hit.Dates[0];
-                        if (hit.Dates.Count > 1) i.PublicationDate = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
-
-                        foreach(string cName in hit.Collections)
-                        {
-                            if (i.Collections == null) i.Collections = new CustomGenericList<Collection>();
-                            i.Collections.Add(new Collection { CollectionName = cName });
-                        }
-                        foreach(string aName in hit.Authors)
-                        {
-                            if (i.Authors == null) i.Authors = new CustomGenericList<Author>();
-                            i.Authors.Add(new Author { Name = aName });
-                        }
-                        if (hit.Oclc.Count > 0)
-                        {
-                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
-                            foreach (string id in hit.Oclc) i.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
-                        }
-                        if (hit.Isbn.Count > 0)
-                        {
-                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
-                            foreach (string id in hit.Isbn) i.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
-                        }
-                        if (hit.Issn.Count > 0)
-                        {
-                            if (i.Identifiers == null) i.Identifiers = new CustomGenericList<Identifier>();
-                            foreach (string id in hit.Issn) i.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
-                        }
-
-                        if (pubs.Items == null) pubs.Items = new CustomGenericList<Item>();
-                        pubs.Items.Add(i);
-                    }
-                    else
-                    {
-                        Part p = new Part {
-                            PartUrl = "https://www.biodiversitylibrary.org/part/" + hit.SegmentId,
-                            PartID = hit.SegmentId,
-                            ItemID = (hit.ItemId == 0 ? null : hit.ItemId.ToString()),
-                            StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString()),
-                            Title = hit.Title,
-                            ContainerTitle = (string.IsNullOrWhiteSpace(hit.Container) ? null : hit.Container),
-                            GenreName = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre),
-                            Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume),
-                            Series = (string.IsNullOrWhiteSpace(hit.Series) ? null : hit.Series),
-                            Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue),
-                            PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher),
-                            PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace),
-                            Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language),
-                            Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi),
-                            PageRange = (hit.PageRange == "--" || string.IsNullOrWhiteSpace(hit.PageRange) ? null : hit.PageRange),
-                            ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url),
-                        };
-                        if (hit.Dates.Count == 1) p.Date = hit.Dates[0];
-                        if (hit.Dates.Count > 1) p.Date = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
-
-                        foreach (string aName in hit.Authors)
-                        {
-                            if (p.Authors == null) p.Authors = new CustomGenericList<Author>();
-                            p.Authors.Add(new Author { Name = aName });
-                        }
-                        foreach(string contributor in hit.Contributors)
-                        {
-                            if (p.Contributors == null) p.Contributors = new CustomGenericList<Contributor>();
-                            p.Contributors.Add(new Contributor { ContributorName = contributor });
-                        }
-                        if (hit.Oclc.Count > 0)
-                        {
-                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
-                            foreach(string id in hit.Oclc) p.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
-                        }
-                        if (hit.Isbn.Count > 0)
-                        {
-                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
-                            foreach (string id in hit.Isbn) p.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
-                        }
-                        if (hit.Issn.Count > 0)
-                        {
-                            if (p.Identifiers == null) p.Identifiers = new CustomGenericList<Identifier>();
-                            foreach (string id in hit.Issn) p.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
-                        }
-
-                        if (pubs.Parts == null) pubs.Parts = new CustomGenericList<Part>();
-                        pubs.Parts.Add(p);
-                    }
+                    pubs = SearchPublicationGlobal(searchTerm, pageInt);
                 }
             }
             else
             {
-                CustomGenericList<Title> titles = this.SearchBook(title, authorName, volume, "", 
-                    (int?)(yearInt == 0 ? (int?)null : yearInt), subject, 
-                    languageCode, (int?)(collectionIDint == 0 ? (int?)null : collectionIDint), 
-                    500, fullText);
-
-                if (titles.Count > 0) pubs.Items = new CustomGenericList<Item>();
-                foreach (Title t in titles)
+                if (string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    foreach (Item i in t.Items)
-                    {
-                        Item item = i;
-                        item.TitleID = t.TitleID.ToString();
-                        item.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + t.TitleID.ToString();
-                        item.FullTitle = t.FullTitle;
-                        item.BibliographicLevel = t.BibliographicLevel;
-                        item.MaterialType = t.MaterialType;
-                        item.PublisherPlace = t.PublisherPlace;
-                        item.PublisherName = t.PublisherName;
-                        item.PublicationDate = t.PublicationDate;
-                        item.Authors = t.Authors;
-                        pubs.Items.Add(item);
-                    }
+                    pubs = SearchPublicationMetadataSQL(title, authorName, volume, yearInt, subject, 
+                        languageCode, collectionIDint, sqlFullText);
                 }
-
-                pubs.Parts = this.SearchSegment(title, "", authorName, year, volume, "", "", 500, "Title", fullText);
+                else
+                {
+                    pubs = SearchPublicationGlobalSQL(searchTerm, sqlFullText);
+                }
             }
 
             return pubs;
         }
 
+        /// <summary>
+        /// Use the search engine to search metadata
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="authorName"></param>
+        /// <param name="volume"></param>
+        /// <param name="year"></param>
+        /// <param name="subject"></param>
+        /// <param name="languageCode"></param>
+        /// <param name="collectionID"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        private CustomGenericList<Publication> SearchPublicationMetadata(string title, string authorName, 
+            string volume, string year, string subject, string languageCode, string collectionID, int page)
+        {
+            // Build the language and collection parameters
+            Tuple<string, string> languageParam = null;
+            Tuple<string, string> collectionParam = null;
+
+            if (!string.IsNullOrWhiteSpace(languageCode))
+            {
+                languageParam = new Tuple<string, string>(languageCode,
+                    new Api3DAL().GetLanguageName(languageCode));
+            }
+            if (!string.IsNullOrWhiteSpace(collectionID))
+            {
+                collectionParam = new Tuple<string, string>(collectionID,
+                    new Api3DAL().GetCollectionName(collectionID));
+            }
+
+            // Submit the request to ElasticSearch
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = page;
+            search.NumResults = 200;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+            ISearchResult result = search.SearchItem(title, authorName, volume, year, subject,
+                languageParam, collectionParam);
+
+            // Build the list of results
+            CustomGenericList<Publication> pubs = BuildPublicationList(result);
+
+            return pubs;
+        }
+
+        /// <summary>
+        /// Use the search engine to search metadata and text
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        private CustomGenericList<Publication> SearchPublicationGlobal(string searchTerm, int page)
+        {
+            // Submit the request to ElasticSearch
+            ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+            search.StartPage = page;
+            search.NumResults = 200;
+            search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
+
+            ISearchResult result = search.SearchItem(searchTerm);
+
+            // Build the list of results
+            CustomGenericList<Publication> pubs = BuildPublicationList(result);
+
+            return pubs;
+        }
+
+        /// <summary>
+        ///  Build a list of publications from the results of a search server query
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private CustomGenericList<Publication> BuildPublicationList(ISearchResult result)
+        {
+            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+
+            foreach (ItemHit hit in result.Items)
+            {
+                // Populate Publication objects
+                Publication pub = new Publication();
+
+                if (hit.TitleId != 0)
+                {
+                    pub.BHLType = BHLType.Item;
+                    pub.TitleID = hit.TitleId.ToString();
+                    pub.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + hit.TitleId;
+                    pub.ItemUrl = "https://www.biodiversitylibrary.org/item/" + hit.ItemId;
+                    pub.BibliographicLevel = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
+                    pub.MaterialType = (string.IsNullOrWhiteSpace(hit.MaterialType) ? null : hit.MaterialType);
+                    if (hit.Contributors.Count == 1) pub.HoldingInstitution = hit.Contributors[0];
+                }
+                else
+                {
+                    pub.BHLType = BHLType.Part;
+                    pub.PartID = hit.SegmentId.ToString();
+                    pub.StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString());
+                    pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + hit.SegmentId;
+                    pub.ContainerTitle = (string.IsNullOrWhiteSpace(hit.Container) ? null : hit.Container);
+                    pub.GenreName = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
+                    pub.PageRange = (hit.PageRange == "--" || string.IsNullOrWhiteSpace(hit.PageRange) ? null : hit.PageRange);
+
+                    foreach (string contributor in hit.Contributors)
+                    {
+                        if (pub.Contributors == null) pub.Contributors = new CustomGenericList<Contributor>();
+                        pub.Contributors.Add(new Contributor { ContributorName = contributor });
+                    }
+                }
+
+                pub.ItemID = (hit.ItemId == 0 ? null : hit.ItemId.ToString());
+                pub.Title = hit.Title;
+                pub.PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace);
+                pub.PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher);
+                pub.Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume);
+                pub.Series = (string.IsNullOrWhiteSpace(hit.Series) ? null : hit.Series);
+                pub.Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue);
+                pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
+                pub.ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url);
+                pub.Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi);
+
+                if (hit.Dates.Count == 1) pub.PublicationDate = hit.Dates[0];
+                if (hit.Dates.Count > 1) pub.PublicationDate = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
+
+                foreach (string cName in hit.Collections)
+                {
+                    if (pub.Collections == null) pub.Collections = new CustomGenericList<Collection>();
+                    pub.Collections.Add(new Collection { CollectionName = cName });
+                }
+                foreach (string aName in hit.Authors)
+                {
+                    if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
+                    pub.Authors.Add(new Author { Name = aName });
+                }
+                if (hit.Oclc.Count > 0)
+                {
+                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
+                    foreach (string id in hit.Oclc) pub.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
+                }
+                if (hit.Isbn.Count > 0)
+                {
+                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
+                    foreach (string id in hit.Isbn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
+                }
+                if (hit.Issn.Count > 0)
+                {
+                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
+                    foreach (string id in hit.Issn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
+                }
+
+                pubs.Add(pub);
+            }
+
+            return pubs;
+        }
+
+        /// <summary>
+        /// Use SQL to search metadata
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="authorName"></param>
+        /// <param name="volume"></param>
+        /// <param name="year"></param>
+        /// <param name="subject"></param>
+        /// <param name="languageCode"></param>
+        /// <param name="collectionID"></param>
+        /// <param name="sqlFullText"></param>
+        /// <returns></returns>
+        private CustomGenericList<Publication> SearchPublicationMetadataSQL(string title, string authorName, 
+            string volume, int year, string subject, string languageCode, int collectionID, bool sqlFullText)
+        {
+            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+
+            // Perform a SQL search for books and articles
+            CustomGenericList<Title> titles = this.SearchBook(title, authorName, volume, "",
+                (int?)(year == 0 ? (int?)null : year), subject,
+                languageCode, (int?)(collectionID == 0 ? (int?)null : collectionID),
+                200, sqlFullText);
+
+            foreach (Title t in titles)
+            {
+                foreach (Item i in t.Items)
+                {
+                    Publication pub = new Publication();
+                    pub.BHLType = BHLType.Item;
+                    pub.TitleID = t.TitleID.ToString();
+                    pub.ItemID = i.ItemID.ToString();
+                    pub.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + t.TitleID.ToString();
+                    pub.ItemUrl = "https://www.biodiversitylibrary.org/item/" + i.ItemID.ToString();
+                    pub.Title = (t.FullTitle + " " + (t.PartNumber ?? string.Empty) + " " + (t.PartName ?? string.Empty)).Trim();
+                    pub.BibliographicLevel = t.BibliographicLevel;
+                    pub.MaterialType = t.MaterialType;
+                    pub.PublisherPlace = t.PublisherPlace;
+                    pub.PublisherName = t.PublisherName;
+                    pub.PublicationDate = t.PublicationDate;
+                    pub.HoldingInstitution = i.HoldingInstitution;
+                    pub.ScanningInstitution = i.ScanningInstitution;
+                    pub.RightsHolder = i.RightsHolder;
+                    pub.Volume = i.Volume;
+                    pub.Doi = t.Doi;
+                    pub.CopySpecificInformation = i.CopySpecificInformation;
+                    pub.Rights = i.Rights;
+                    pub.RightsStatus = i.CopyrightStatus;
+                    pub.LicenseUrl = i.LicenseUrl;
+                    pub.DueDiligence = i.DueDiligence;
+                    if (t.Authors.Count > 0) pub.Authors = t.Authors;
+                    if (i.Collections != null) pub.Collections = i.Collections;
+                    pubs.Add(pub);
+                }
+            }
+
+            CustomGenericList<Part> parts = this.SearchSegment(title, "", authorName, year.ToString(), volume, "", "", 200, "Title", sqlFullText);
+
+            foreach (Part p in parts)
+            {
+                Publication pub = new Publication();
+
+                pub.BHLType = BHLType.Part;
+                pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + p.PartID;
+                pub.PartID = p.PartID.ToString();
+                pub.ItemID = p.ItemID;
+                pub.StartPageID = p.StartPageID;
+                pub.Title = p.Title;
+                pub.ContainerTitle = p.ContainerTitle;
+                pub.TranslatedTitle = p.TranslatedTitle;
+                pub.GenreName = p.GenreName;
+                pub.Volume = p.Volume;
+                pub.Series = p.Series;
+                pub.Issue = p.Issue;
+                pub.PublicationDetails = p.PublicationDetails;
+                pub.PublisherName = p.PublisherName;
+                pub.PublisherPlace = p.PublisherPlace;
+                pub.Date = p.Date;
+                pub.Notes = p.Notes;
+                pub.Language = p.Language;
+                pub.Doi = p.Doi;
+                pub.PageRange = (p.PageRange == "--" ? null : p.PageRange);
+                pub.StartPageNumber = p.StartPageNumber;
+                pub.EndPageNumber = p.EndPageNumber;
+                pub.ExternalUrl = p.ExternalUrl;
+                pub.Rights = p.RightsStatement;
+                pub.RightsStatus = p.RightsStatus;
+                pub.LicenseUrl = p.LicenseUrl;
+                pub.LicenseName = p.LicenseName;
+                if (p.Authors.Count > 0) pub.Authors = p.Authors;
+                if (p.Contributors.Count > 0) pub.Contributors = p.Contributors;
+                if (p.Identifiers.Count > 0) pub.Identifiers = p.Identifiers;
+
+                pubs.Add(pub);
+            }
+
+            return pubs;
+        }
+
+        /// <summary>
+        /// Use SQL to search metadata globally
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <param name="sqlFullText"></param>
+        /// <returns></returns>
+        private CustomGenericList<Publication> SearchPublicationGlobalSQL(string searchTerm, bool sqlFullText)
+        {
+            // There is no non-ElasticSearch implementation
+            throw new NotImplementedException();
+        }
+
         private CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
-            int? year, string subject, string languageCode, int? collectionID, int returnCount, bool fullText)
+            int? year, string subject, string languageCode, int? collectionID, int returnCount, bool sqlFullText)
         {
             Api3DAL dal = new Api3DAL();
 
             // Get the list of books
             CustomGenericList<SearchBookResult> books = null;
-            if (fullText)
+            if (sqlFullText)
             {
                 books = dal.SearchBookFullText(null, null, title, authorLastName, volume, edition,
                     year, subject, languageCode, collectionID, returnCount);
@@ -1289,13 +1447,13 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         private CustomGenericList<Part> SearchSegment(string title, string containerTitle, string author, string date, 
-            string volume, string series, string issue, int returnCount, string sortBy, bool fullText)
+            string volume, string series, string issue, int returnCount, string sortBy, bool sqlFullText)
         {
             Api3DAL dal = new Api3DAL();
 
             // Get the list of segments
             CustomGenericList<Part> parts = null;
-            if (fullText)
+            if (sqlFullText)
             {
                 parts = dal.SearchSegmentFullText(null, null, title, containerTitle, author, date, volume, 
                     series, issue, returnCount, sortBy);
