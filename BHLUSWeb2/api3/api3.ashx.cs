@@ -170,7 +170,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetSubjectPublications", true) == 0)
                 {
                     String subject = context.Request.QueryString["subject"];
-                    ServiceResponse<Publications> serviceResponse = new ServiceResponse<Publications>();
+                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
                     serviceResponse.Result = this.GetSubjectPublications(subject, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -188,7 +188,7 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetAuthorPublications", true) == 0)
                 {
                     String creatorID = context.Request.QueryString["creatorID"];
-                    ServiceResponse<Publications> serviceResponse = new ServiceResponse<Publications>();
+                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
                     serviceResponse.Result = this.GetAuthorPublications(creatorID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -436,7 +436,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.SubjectSearch(subject, fullText);
         }
 
-        private Publications GetSubjectPublications(string subject, string apiKey)
+        private CustomGenericList<Publication> GetSubjectPublications(string subject, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetSubjectPublications, apiKey, subject);
             Api3 api = new Api3();
@@ -457,7 +457,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.PageSearch(itemID, text);
         }
 
-        private Publications GetAuthorPublications(string creatorID, string apiKey)
+        private CustomGenericList<Publication> GetAuthorPublications(string creatorID, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetAuthorPublications, apiKey, creatorID);
             Api3 api = new Api3();

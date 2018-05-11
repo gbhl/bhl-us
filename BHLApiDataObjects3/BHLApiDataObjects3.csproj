@@ -78,7 +78,6 @@
     <Compile Include="PageType.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="Publication.cs" />
-    <Compile Include="Publications.cs" />
     <Compile Include="SearchBookResult.cs" />
     <Compile Include="Subject.cs" />
     <Compile Include="Title.cs" />

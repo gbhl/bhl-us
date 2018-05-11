@@ -211,13 +211,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties (from Title)
 
-        private string _BibliographicLevel = null;
-        public string BibliographicLevel
-        {
-            get { return _BibliographicLevel; }
-            set { _BibliographicLevel = value; }
-        }
-
         private string _MaterialType = null;
         public string MaterialType
         {
@@ -303,11 +296,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _sequenceOrder = value; }
         }
 
-        private string _genreName = null;
-        public string GenreName
+        private string _genre = null;
+        public string Genre
         {
-            get { return _genreName; }
-            set { _genreName = value; }
+            get { return _genre; }
+            set { _genre = value; }
         }
 
         private string _title = null;
@@ -529,11 +522,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _ExternalUrl = Utility.NullIfEmpty(column.Value);
                             break;
                         }
-                    case "BibliographicLevelName":
-                        {
-                            _BibliographicLevel = Utility.NullIfEmpty(column.Value);
-                            break;
-                        }
                     case "MaterialTypeLabel":
                         {
                             _MaterialType = Utility.NullIfEmpty(column.Value);
@@ -567,8 +555,9 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             break;
                         }
                     case "GenreName":
+                    case "BibliographicLevelName":
                         {
-                            _genreName = Utility.NullIfEmpty(column.Value);
+                            _genre = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "Title":

@@ -26,11 +26,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _TitleID = value; }
         }
 
-        private string _BibliographicLevel = null;
-        public string BibliographicLevel
+        private string _Genre = null;
+        public string Genre
         {
-            get { return _BibliographicLevel; }
-            set { _BibliographicLevel = value; }
+            get { return _Genre; }
+            set { _Genre = value; }
         }
 
         private string _MaterialType = null;
@@ -244,7 +244,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "BibliographicLevelName":
                         {
-                            _BibliographicLevel = Utility.NullIfEmpty(column.Value);
+                            _Genre = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "MaterialTypeLabel":
