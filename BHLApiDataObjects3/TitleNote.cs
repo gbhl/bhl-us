@@ -57,7 +57,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "NoteSequence":
                         {
-                            _noteSequence = (string)column.Value;
+                            _noteSequence = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
                     case "NoteTypeName":

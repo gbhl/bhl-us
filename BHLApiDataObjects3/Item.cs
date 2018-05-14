@@ -324,12 +324,14 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "PrimaryTitleID":
                         {
-                            _TitleID = Utility.NullIfEmpty(column.Value);
+                            //_TitleID = Utility.NullIfEmpty(column.Value);
+                            _TitleID = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
                     case "ThumbnailPageID":
                         {
-                            _ThumbnailPageID = Utility.NullIfEmpty(column.Value);
+                            //_ThumbnailPageID = Utility.NullIfEmpty(column.Value);
+                            _ThumbnailPageID = (column.Value == null ? null : column.Value.ToString());
                             break;
                         }
                     case "SourceName":

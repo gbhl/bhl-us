@@ -30,6 +30,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _bhlType = value; }
         }
 
+        private string _foundIn = null;
+        public string FoundIn
+        {
+            get { return _foundIn; }
+            set { _foundIn = value; }
+        }
+
         private string _ItemID = null;
         public string ItemID
         {

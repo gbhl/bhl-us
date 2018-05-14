@@ -1238,6 +1238,26 @@ namespace MOBOT.BHL.API.BHLApi
                     foreach (string id in hit.Issn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
                 }
 
+                if (hit.Highlights.Count == 0)
+                {
+                    pub.FoundIn = FoundIn.Metadata;
+                }
+                else
+                {
+                    bool foundInMetadata = false;
+                    bool foundInText = false;
+
+                    foreach(Tuple<string,string> h in hit.Highlights)
+                    {
+                        if (h.Item1 == "text") foundInText = true;
+                        else foundInMetadata = true;
+                    }
+
+                    if (foundInMetadata && foundInText) pub.FoundIn = FoundIn.Both;
+                    if (foundInMetadata && !foundInText) pub.FoundIn = FoundIn.Metadata;
+                    if (!foundInMetadata && foundInText) pub.FoundIn = FoundIn.Text;
+                }
+
                 pubs.Add(pub);
             }
 
@@ -1312,6 +1332,7 @@ namespace MOBOT.BHL.API.BHLApi
                         });
                     }
                 }
+                pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);
             }
@@ -1394,6 +1415,7 @@ namespace MOBOT.BHL.API.BHLApi
                         });
                     }
                 }
+                pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);
             }

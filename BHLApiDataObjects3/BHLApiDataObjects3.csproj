@@ -66,6 +66,7 @@
     <Compile Include="Contributor.cs" />
     <Compile Include="Creator.cs" />
     <Compile Include="DataObjectBase.cs" />
+    <Compile Include="FoundIn.cs" />
     <Compile Include="Identifier.cs" />
     <Compile Include="Institution.cs" />
     <Compile Include="InstitutionRole.cs" />
