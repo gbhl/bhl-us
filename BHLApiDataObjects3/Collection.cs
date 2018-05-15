@@ -48,20 +48,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        private string _canContainTitles;
-        public string CanContainTitles
-        {
-            get { return _canContainTitles; }
-            set { _canContainTitles = value; }
-        }
-
-        private string _canContainItems;
-        public string CanContainItems
-        {
-            get { return _canContainItems; }
-            set { _canContainItems = value; }
-        }
-
         #endregion
 
 
@@ -86,16 +72,6 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "CollectionDescription":
                         {
                             _collectionDescription = (string)column.Value;
-                            break;
-                        }
-                    case "CanContainTitles":
-                        {
-                            _canContainTitles = column.Value.ToString();
-                            break;
-                        }
-                    case "CanContainItems":
-                        {
-                            _canContainItems = column.Value.ToString();
                             break;
                         }
                 }
