@@ -1,1 +1,663 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result><Subject><SubjectText>Diptera</SubjectText></Subject><Subject><SubjectText>Diptera, Fossil</SubjectText></Subject></Result></Response>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Subject>
+      <SubjectText>Absorption of water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Acidic water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Alameda County Water District</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Bacterial pollution of water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Ballast water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Black water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Bottled water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>California State Water Project</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Deep-water fisheries</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Deionized water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Discharge of ballast water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Drinking water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Effect of water levels on</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Effect of water pollution on</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Effect of water quality on</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Eichhornia crassipes (water hyacinth)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Eurasian water shrew</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Federal Water Pollution Control Act</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Federal aid to water resources development</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fishes, Fresh-water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fresh Water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fresh-water fauna</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fresh-water invertebrates</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fresh-water mussels</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Fruit water content</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Inland water transportation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Ion-rich water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Irrigation water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Key biodiversity areas, inland water fish, Iraq</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Metropolitan Water District of Southern California</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Miller Water Gardens (San Gabriel, Calif.)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Mineral water biology</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>New Haven Water Company</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>New Taxa, East Pacific, Deep Water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Oil and Water Cream</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Oil pollution of water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Organic water pollutants</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Plant-water relationships</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Produced water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Radioactive pollution of water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Reftigerated water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Rice water weevil</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Running water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Rye Water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>SEA WATER</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Soil and Water Science</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Soil and Water Science thesis, Ph.D</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Soil water content</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Soil water potential</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>South Atlantic Central Water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>South Florida Water Management District (Fla.)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Southern water snake</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Spider Water Beetle</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Spider Water Beetles</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Storm water retention basins</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Temporary water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Trace elements in water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>WQI - Water Quality Index</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Analysis</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Cure</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Microbiology</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Pollution</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Pollution, Chemical</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Quality Biotic Indices (WQBI)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Quality Index (WQI)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water Resources Policy Commission</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water beetles</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water birds</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water birds -- California</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water birds -- California -- Los Angeles County</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water chemistry</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water conservation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water conservation -- California</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water conservation -- California -- Arcadia</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water conservation -- California -- Los Angeles Co</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water conservation projects</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water current range</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water current velocity and direction</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water dweller</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water flow</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water front</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water gardens</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water gardens -- California -- Arcadia</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water howellia</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water hyacinth</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water in agriculture</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water in the body</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water levels</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water lilies</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water lilies -- California</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water masses</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water mites</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water pipes -- California -- La Canada Flintridge</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water pollution control industry</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality bioassay</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality biological</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality biological assessment</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality management</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water quality monitoring stations</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water requirements</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water resources development</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water reuse -- California -- Los Angeles</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water rights</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water scorpions</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water stress</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water table</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water temperature</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water transparency</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water treatment plants</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water tunnels</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water use</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water waves</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water, Purification of</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-birds</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-color drawings</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-fowl</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-level fluctuation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-lilies</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-pipes</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-power</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-supply</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-supply -- California -- Los Angeles County</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-supply and forests</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-supply, Agricultural</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Water-supply, Rural</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Well water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Yellow Water Triangle</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Zoet water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>and level water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>available water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>bioindicators of water quality</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>black-water floodplain lakes</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>brackish water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>brackish-water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>clear water rivers</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>coastal water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>columnar water vapor</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>continental water discharges</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>continuous water flow</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water community</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water fishery</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water fishes</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water reefs</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water resource</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water resources</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>deep-water shrimps</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>discharge water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>drinking water reservoirs</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>economic valuation of water resources</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>evaporative water loss</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>ground water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>high water phase</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>hot water treatment</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>inland water crustaceans</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>integrated water balance</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>interstitial water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>land-water ecotone</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>leaf water potential</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>lenthic water bodies</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>low water exchange</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>low water phase</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>management of water resources</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>pore-water nutrients</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>river water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>seasonal water level variation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>sediment-water exchanges</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>shallow water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>shallow-water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>soft water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>subantarctic and subtropical shelf water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>surface water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>tropical water systems</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>viral analysis of water</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water Heteroptera</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water access</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water and soil conservation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water availability</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water balance</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water beetle</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water bug</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water characteristics</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water column</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water column levels</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water contamination</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water deficit</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water depth</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water deterioration</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water diversion</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water economy</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water exchange</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water hardness</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water hyacinth fertilizer</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water lettuce</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water level</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water management</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water permanence</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water plants</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water potential</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water quality index</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water quality indices</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water quality monitoring</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water relations</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water resources</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water saturation</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water scarcity</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water speed</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water supply</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water supply reservoir</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water supply system</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water tank</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water transport</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water transport models</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water volume</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water-bug</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>water-use efficiency</SubjectText>
+    </Subject>
+  </Result>
+</Response>

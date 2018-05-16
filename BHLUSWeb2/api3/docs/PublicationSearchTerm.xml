@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>69525</ItemID>
+      <TitleID>27114</TitleID>
+      <HoldingInstitution>Kelly - University of Toronto (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/69525</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/27114</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>New York</PublisherPlace>
+      <PublisherName>P. F. Collier,</PublisherName>
+      <PublicationDate>1902</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Darwin, Charles,</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>Origin of species by means of natural selection, or, The preservation of favored races in the struggle for life /  by Charles Darwin.</Title>
+      <Doi>10.5962/bhl.title.27114</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>165402</ItemID>
+      <TitleID>87916</TitleID>
+      <HoldingInstitution>Wellesley College Library (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/165402</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/87916</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>J. Murray,</PublisherName>
+      <PublicationDate>1902</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Darwin, Charles,</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>The origin of species by means of natural selection, or, The preservation of favoured races in the struggle for life.</Title>
+      <Doi>10.5962/bhl.title.87916</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>116453</ItemID>
+      <TitleID>55742</TitleID>
+      <HoldingInstitution>Cornell University Library</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/116453</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/55742</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>Longmans, Green, and co.,</PublisherName>
+      <PublicationDate>1909</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Poulton, Edward Bagnall, Sir,</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>3756332</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>Charles Darwin and the Origin of species; addresses, etc., in America and England in the year of the two anniversaries,</Title>
+      <Doi>10.5962/bhl.title.55742</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>60272</ItemID>
+      <TitleID>20341</TitleID>
+      <HoldingInstitution>University of California Libraries (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/60272</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/20341</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>Longmans, Green, and co.,</PublisherName>
+      <PublicationDate>1909</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Poulton, Edward Bagnall, Sir,</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>3756332</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>Charles Darwin and the Origin of species; addresses, etc., in America and England in the year of the two anniversaries, by Edward Bagnall Poulton ... Published Nov. 24, 1909, being the fiftieth anniversary of the publication of 'The origin of species'.</Title>
+      <Doi>10.5962/bhl.title.20341</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>68594</ItemID>
+      <TitleID>26447</TitleID>
+      <HoldingInstitution>Kelly - University of Toronto (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/68594</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/26447</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>Longmans, Green, and co.,</PublisherName>
+      <PublicationDate>1909</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Poulton, Edward Bagnall, Sir,</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>Charles Darwin and the Origin of species; addresses, etc., in America and England in the year of the two anniversaries, by Edward Bagnall Poulton ... Published Nov. 24, 1909, being the fiftieth anniversary of the publication of 'The origin of species'.</Title>
+      <Doi>10.5962/bhl.title.26447</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>185171</ItemID>
+      <TitleID>104504</TitleID>
+      <HoldingInstitution>Tisch Library (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/185171</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/104504</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>Cambridge</PublisherPlace>
+      <PublisherName>At the University Press,</PublisherName>
+      <PublicationDate>1910</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Darwin, Charles,</Name>
+        </Author>
+        <Author>
+          <Name>Seward, A. C. (Albert Charles),</Name>
+        </Author>
+        <Author>
+          <Name>Shipman, Grace M.),</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge Philosophical Society,</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge University Press,</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>42742544</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>Darwin and modern science : essays in commemoration of the centenary of the birth of Charles Darwin and of the fiftieth anniversary of the publication of the Origin of species /</Title>
+      <Doi>10.5962/bhl.title.104504</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>117608</ItemID>
+      <TitleID>56781</TitleID>
+      <HoldingInstitution>Cornell University Library</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/117608</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/56781</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>Cambridge</PublisherPlace>
+      <PublisherName>University Press,</PublisherName>
+      <PublicationDate>1909</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Seward, A. C. (Albert Charles),</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge Philosophical Society.</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge University Press.</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>823393</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>Darwin and modern science; essays in commemoration of the centenary of the birth of Charles Darwin and of the fiftieth anniversary of the publication of the Origin of species.</Title>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>171835</ItemID>
+      <TitleID>94199</TitleID>
+      <HoldingInstitution>Wellesley College Library (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/171835</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/94199</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>Cambridge</PublisherPlace>
+      <PublisherName>University press,</PublisherName>
+      <PublicationDate>1909</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Seward, A. C. (Albert Charles),</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge Philosophical Society.</Name>
+        </Author>
+        <Author>
+          <Name>Cambridge University Press.</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>Darwin and modern science; essays in commemoration of the centenary of the birth of Charles Darwin and of the fiftieth anniversary of the publication of the Origin of species.</Title>
+      <Doi>10.5962/bhl.title.94199</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>136172</ItemID>
+      <TitleID>68202</TitleID>
+      <Volume>1902</Volume>
+      <HoldingInstitution>U.S. Department of Agriculture, National Agricultural Library</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/136172</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68202</TitleUrl>
+      <Collections>
+        <Collection>
+          <CollectionName>Seed &amp; Nursery Catalogs</CollectionName>
+        </Collection>
+      </Collections>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>Philadelphia Pa</PublisherPlace>
+      <PublisherName>Henry A. Dreer,</PublisherName>
+      <PublicationDate>1902</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Henry A. Dreer (Firm)</Name>
+        </Author>
+        <Author>
+          <Name>Henry G. Gilbert Nursery and Seed Trade Catalog Collection.</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>840488996</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>Dreer's autumn 1902 catalogue.</Title>
+      <Doi>10.5962/bhl.title.68202</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Both</FoundIn>
+      <ItemID>118628</ItemID>
+      <TitleID>57635</TitleID>
+      <HoldingInstitution>Cornell University Library</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/118628</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/57635</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>Longmans, Green,</PublisherName>
+      <PublicationDate>1908</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Gaskell, Walter Holbrook,</Name>
+        </Author>
+      </Authors>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>OCLC</IdentifierName>
+          <IdentifierValue>1127224</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <Genre>Monograph/Item</Genre>
+      <Title>The origin of vertebrates /</Title>
+      <Doi>10.5962/bhl.title.57635</Doi>
+    </Publication>
+  </Result>
+</Response>

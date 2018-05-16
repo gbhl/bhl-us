@@ -1,71 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result>
-
-The few diptera whose mouth-parts have been the object of the anatom- 
-
- ical studies, the results of which are noted in the following pages, were 
-
- chosen, on the one hand, with especial reference to their presenting a series 
-
- beginning with a species possessing simple, separate and fully developed mouth- 
-
- parts, and ending with a species of which the complexity of the mouth-parts 
-
- was due to coalescence and incomplete development of their different elements, 
-
- and, on the other hand, with partial reference to forms whose mouth-parts were 
-
- of sufficient length to render their study by sections, made with the microtome, 
-
- of value in determining their relative lengths, their positions and their attach- 
-
- ments. With the above-mentioned objects in view species of the genera Cuk.i; 
-
- Bombylius, Installs, and Muxca were chosen. Upon the anatomy of the mouth- 
-
- parts of Culcx the following notes probably add most to what has been previously 
-
- recorded. No study of the development of the mouth-parts has been made in 
-
- preparing the following paper; the results are anatomical only. 
-
-
-
-The work necessary for the preparation of this paper was done by me, 
-
- as student, in the Laboratory of the Zoological Institute in Leipzig, and I gladly 
-
- take this opportunity of expressing my sincerest thanks to its director, my 
-
- honored instructor, Professor Leuckart, for the advice and encouragement which 
-
- he has given me in my studies. 
-
-
-
-HISTORICAL. 
-
-
-
-Until FABRICIUS, in J7&lt;5, first called attention to the importance of the 
-
- mouth-parts in the classification of insects, little or no valuable progress had been 
-
- made in the study of their comparative anatomy. Observations on the anatomy 
-
- of the mouth-parts of single insects are to be found in the works of many 
-
- writers, previous to the above-mentioned date, but they can be best regarded as 
-
- forming only a part of the history of the anatomy of single insects, and, so far 
-
- as they treat of insects which are further discussed in this paper, they will be 
-
- mentioned later. 
-
-
-
-1 
-
-
-
-</Result></Response>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    CONTENTS OF VOLUME X
+    Plates 1-9
+    PAGE
+    Title-page i
+    Contents Hi
+    A Further Study of Variation in the Gopher-Snakes of Western North
+    America, by John Van Denburgh 1
+    (Published August 6, 1920)
+    Description of a New Species of Rattlesnake (Crotalus lucasensis) from
+    Lower California, by John Van Denburgh 29
+    (Published August 6, 1920)
+    Description of a New Subspecies of Boa (Charina bottce utaliensis) from
+    Utah, by John Van Denburgh 31
+    (Published August 6, 1920)
+    Description of a New Lizard (Dipsosaurus dorsalis lucasensis) from
+    Lower California, by John Van Denburgh : 33
+    (Published August 6, 1920)
+    Undescribed Tipulidae (Diptera) from Western North America, by
+    Charles P. Alexander 35
+    (Published August 6, 1920)
+    Three New Species of Dolichopodidae (Diptera) from California and
+    Nevada, by M. C. Van Duzee _ 47
+    (Published August 6, 1920)
+    Two New Species of Syrphidse (Diptera), by A. L. Lovett 51
+    (Published August 6, 19^)
+    Notes on Some Undescribed Calif ornian Helices, by S. Stillman Berry.... 53
+    (Published August 11, 1920)
+    A New Genus and Species of Grasshopper from California, by Morgan
+    Hebard _ 71
+    (Published December 29, 1920)
+    Color Changes and Structure of the Skin of Anolis carolinensis, by
+    Charles E. von Geldern 77
+    (Published February 12, 1921)
+    Report of the President of the Academy for the Year 1920, by C. E.
+    Grunsky 119
+    (Published July 2, 1921)
+    Report of the Director of the Museum for the Year 1920, by Barton
+    Warren Evermann 128
+    (Published July 2, 1921)
+    Index 165
+    JUNE 11, 1923
+  </Result>
+</Response>

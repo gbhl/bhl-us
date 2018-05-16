@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Metadata</FoundIn>
+      <ItemID>165402</ItemID>
+      <TitleID>87916</TitleID>
+      <HoldingInstitution>Wellesley College Library (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/165402</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/87916</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>London</PublisherPlace>
+      <PublisherName>J. Murray,</PublisherName>
+      <PublicationDate>1902</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Darwin, Charles,</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>The origin of species by means of natural selection, or, The preservation of favoured races in the struggle for life.</Title>
+      <Doi>10.5962/bhl.title.87916</Doi>
+    </Publication>
+    <Publication>
+      <BHLType>Item</BHLType>
+      <FoundIn>Metadata</FoundIn>
+      <ItemID>69525</ItemID>
+      <TitleID>27114</TitleID>
+      <HoldingInstitution>Kelly - University of Toronto (archive.org)</HoldingInstitution>
+      <Language>English</Language>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/69525</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/27114</TitleUrl>
+      <MaterialType>Published material</MaterialType>
+      <PublisherPlace>New York</PublisherPlace>
+      <PublisherName>P. F. Collier,</PublisherName>
+      <PublicationDate>1902</PublicationDate>
+      <Authors>
+        <Author>
+          <Name>Darwin, Charles,</Name>
+        </Author>
+      </Authors>
+      <Genre>Monograph/Item</Genre>
+      <Title>Origin of species by means of natural selection, or, The preservation of favored races in the struggle for life /  by Charles Darwin.</Title>
+      <Doi>10.5962/bhl.title.27114</Doi>
+    </Publication>
+  </Result>
+</Response>

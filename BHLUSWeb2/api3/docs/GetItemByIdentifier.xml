@@ -1,1 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result><Item><ItemID>19951</ItemID><Volume>3 (Plates)</Volume><Year>1834</Year><HoldingInstitution>Natural History Museum, London</HoldingInstitution><Sponsor>Natural History Museum Library, London</Sponsor><Language>English</Language><LicenseUrl /><Rights /><DueDiligence /><CopyrightStatus /><CopyrightRegion /><ItemUrl>https://www.biodiversitylibrary.org/item/19951</ItemUrl></Item></Result></Response>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Item>
+      <ItemID>22314</ItemID>
+      <TitleID>3943</TitleID>
+      <ThumbnailPageID>3137425</ThumbnailPageID>
+      <Source>Internet Archive</Source>
+      <SourceIdentifier>proceedingsofcal0410cali</SourceIdentifier>
+      <Volume>4th ser. v. 10 (1920)</Volume>
+      <Year>1920</Year>
+      <HoldingInstitution>MBLWHOI Library</HoldingInstitution>
+      <Sponsor>MBLWHOI Library</Sponsor>
+      <Language>English</Language>
+      <CopyrightStatus>NOT_IN_COPYRIGHT</CopyrightStatus>
+      <ItemUrl>https://www.biodiversitylibrary.org/item/22314</ItemUrl>
+      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/3943</TitleUrl>
+      <ItemThumbUrl>https://www.biodiversitylibrary.org/pagethumb/3137425</ItemThumbUrl>
+    </Item>
+  </Result>
+</Response>

@@ -1,1 +1,88 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Status>ok</Status><Result><Creator><CreatorID>1970</CreatorID><Name>Dimmock, George,</Name><Unit /><Location /><Dates>1852-</Dates><CreatorUrl>https://www.biodiversitylibrary.org/creator/1970</CreatorUrl></Creator><Creator><CreatorID>8126</CreatorID><Name>Dimmock, George,</Name><Unit /><Location /><Dates>1852-1930.</Dates><CreatorUrl>https://www.biodiversitylibrary.org/creator/8126</CreatorUrl></Creator></Result></Response>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Author>
+      <AuthorID>20793</AuthorID>
+      <Name>Ball, E. D.</Name>
+      <FullerForm>(Elmer Darwin),</FullerForm>
+      <Dates>1870-1943</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/20793</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>93</AuthorID>
+      <Name>Darwin, Charles,</Name>
+      <Dates>1809-1882</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/93</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>2277</AuthorID>
+      <Name>Darwin, Erasmus,</Name>
+      <Dates>1731-1802</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/2277</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>94</AuthorID>
+      <Name>Darwin, Francis,</Name>
+      <Title>Sir,</Title>
+      <Dates>1848-1925</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/94</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>1196</AuthorID>
+      <Name>Darwin, George Howard,</Name>
+      <Title>Sir,</Title>
+      <Dates>1845-1912</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/1196</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>13575</AuthorID>
+      <Name>Darwin, Leonard,</Name>
+      <Dates>1850-1943</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/13575</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>21598</AuthorID>
+      <Name>Darwin, Robert Waring,</Name>
+      <Dates>1766-1848</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/21598</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>167105</AuthorID>
+      <Name>Darwin, Steven P</Name>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/167105</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>60835</AuthorID>
+      <Name>Jorgensen, Darwin</Name>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/60835</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>1747</AuthorID>
+      <Name>Litchfield, Henrietta Emma Darwin,</Name>
+      <Dates>1843-1929</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/1747</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>43979</AuthorID>
+      <Name>McReynolds, Darwin James.</Name>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/43979</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>64060</AuthorID>
+      <Name>Thomas, James Darwin.</Name>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/64060</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>66618</AuthorID>
+      <Name>Tiemann, Darwin L</Name>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/66618</CreatorUrl>
+    </Author>
+    <Author>
+      <AuthorID>28280</AuthorID>
+      <Name>Ware, Richard Darwin,</Name>
+      <Dates>1869-1931</Dates>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/28280</CreatorUrl>
+    </Author>
+  </Result>
+</Response>
