@@ -9,4 +9,5 @@ SELECT	[MaterialTypeID],
 		[MARCCode]
 FROM	[dbo].[MaterialType]
 ORDER BY 
+		[MaterialTypeName],
 		[MaterialTypeLabel]

@@ -31,15 +31,6 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdAlertMessage;
         
         /// <summary>
-        /// tdImageServer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImageServer;
-        
-        /// <summary>
         /// tdCollections control.
         /// </summary>
         /// <remarks>
@@ -110,15 +101,6 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdUserAccounts;
-        
-        /// <summary>
-        /// tdVaults control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdVaults;
         
         /// <summary>
         /// tdTitles control.

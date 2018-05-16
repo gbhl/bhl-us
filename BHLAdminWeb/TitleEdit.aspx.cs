@@ -178,7 +178,7 @@ namespace MOBOT.BHL.AdminWeb
             materialTypes.Insert(0, emptyMaterialType);
 
             ddlMaterialType.DataSource = materialTypes;
-            ddlMaterialType.DataTextField = "MaterialTypeLabel";
+            ddlMaterialType.DataTextField = "ExpandedLabel";
             ddlMaterialType.DataValueField = "MaterialTypeID";
             ddlMaterialType.DataBind();
 

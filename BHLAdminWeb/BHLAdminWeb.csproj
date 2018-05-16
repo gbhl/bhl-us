@@ -395,13 +395,6 @@
     <Compile Include="IAHarvestItemStatusAbout.aspx.designer.cs">
       <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ImageServerEdit.aspx.cs">
-      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ImageServerEdit.aspx.designer.cs">
-      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="InstitutionEdit.aspx.cs">
       <DependentUpon>InstitutionEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -697,13 +690,6 @@
     </Compile>
     <Compile Include="NoteTypeEdit.aspx.designer.cs">
       <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="VaultEdit.aspx.cs">
-      <DependentUpon>VaultEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="VaultEdit.aspx.designer.cs">
-      <DependentUpon>VaultEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebHistory.aspx.cs">
       <DependentUpon>WebHistory.aspx</DependentUpon>
@@ -1109,7 +1095,6 @@
     <Content Include="IAHarvestDashboard.aspx" />
     <Content Include="IAHarvestItemList.aspx" />
     <Content Include="IAHarvestItemStatusAbout.aspx" />
-    <Content Include="ImageServerEdit.aspx" />
     <Content Include="InstitutionEdit.aspx" />
     <Content Include="ItemEdit.aspx" />
     <Content Include="ItemStatusEdit.aspx" />
@@ -1141,7 +1126,6 @@
     <Content Include="TitleImportResults.aspx" />
     <Content Include="TitleItemMarc.aspx" />
     <Content Include="TitleSearch.aspx" />
-    <Content Include="VaultEdit.aspx" />
     <Content Include="WebHistory.aspx" />
     <Content Include="WebStatsDaily.aspx" />
     <Content Include="WebStatsDetail.aspx" />

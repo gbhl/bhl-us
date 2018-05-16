@@ -20,11 +20,6 @@
 						</td>
 					</tr>
 					<tr>
-						<td align="center" runat="server" id="tdImageServer">
-							<a href="/ImageServerEdit.aspx">Image Server</a>
-						</td>
-					</tr>
-					<tr>
 					    <td align="center" runat="server" id="tdCollections">
 					        <a href="/CollectionEdit.aspx">Collections</a>
 					    </td>
@@ -64,11 +59,6 @@
                             <a href="/account/">User Accounts</a>
                         </td>
                     </tr>
-					<tr>
-						<td align="center" runat="server" id="tdVaults">
-							<a href="/VaultEdit.aspx">Vaults</a>
-						</td>
-					</tr>
 				</table>
 			</td>
 			<td class="box" style="width: 250px;background-color:White" valign="top">

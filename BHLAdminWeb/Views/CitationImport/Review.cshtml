@@ -281,7 +281,7 @@
                     var tbody = $("#srchAuthorResultTable tbody");
                     var td1 = $("<td/>").append(authors[i].AuthorID);
                     var a = $("<a/>")
-                            .attr("href", "#").attr("onClick", "selectAuthor('" + authors[i].AuthorID + "','" + authorFullName + "')")
+                        .attr("href", "#").attr("onClick", "selectAuthor('" + authors[i].AuthorID + "','" + authorFullName.replace("'", "\\\'") + "')")
                             .append(authorFullName);
                     var td2 = $("<td/>").append(a);
                     var row = $("<tr/>").attr("align", "left").append(td1).append(td2);

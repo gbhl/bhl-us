@@ -213,8 +213,8 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminSysAdmin))
             {
-                tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
-                tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);
+                //tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
+                //tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);
             }
         }
 
