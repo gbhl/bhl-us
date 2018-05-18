@@ -1,0 +1,25 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.MonitorModel
+
+@{
+    ViewBag.Title = "Server Monitor";
+}
+
+<div class="row">
+    <div class="col-md-11 center" style="border:3px solid #DDE1E0; border-radius:10px; margin-top:20px; background:url(images/panel/bg.gif)">
+        <div class="row">
+            <div class="col-md-12" style="padding:10px;">
+                <span class="pageHeader">Server Monitor </span>
+                <span><a href="/">Administrative Dashboard</a></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Search Server</h5>
+                <div style="margin:10px 0px">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
+            </div>
+            <div class="col-md-6">
+                <h5>Message Queue</h5>
+            </div>
+        </div>
+    </div>
+</div>

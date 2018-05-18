@@ -22,6 +22,15 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::MOBOT.BHL.AdminWeb.ContentPanel contentPanel;
         
         /// <summary>
+        /// spnMonitor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spnMonitor;
+        
+        /// <summary>
         /// tdAlertMessage control.
         /// </summary>
         /// <remarks>

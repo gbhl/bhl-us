@@ -271,6 +271,7 @@
     <Compile Include="Controllers\CitationImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
+    <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
@@ -435,6 +436,7 @@
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\MonitorModel.cs" />
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
@@ -1062,6 +1064,7 @@
     <Content Include="Views\CitationImport\SelectFile.cshtml" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
+    <Content Include="Views\Monitor\Index.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
