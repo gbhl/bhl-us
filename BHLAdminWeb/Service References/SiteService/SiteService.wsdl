@@ -16,6 +16,16 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetMQInfo">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetMQInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMQInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="DOIGetFileContents">
         <s:complexType>
           <s:sequence>
@@ -128,6 +138,12 @@
   <wsdl:message name="GetOcrTextSoapOut">
     <wsdl:part name="parameters" element="tns:GetOcrTextResponse" />
   </wsdl:message>
+  <wsdl:message name="GetMQInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMQInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMQInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMQInfoResponse" />
+  </wsdl:message>
   <wsdl:message name="DOIGetFileContentsSoapIn">
     <wsdl:part name="parameters" element="tns:DOIGetFileContents" />
   </wsdl:message>
@@ -175,6 +191,10 @@
       <wsdl:input message="tns:GetOcrTextSoapIn" />
       <wsdl:output message="tns:GetOcrTextSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetMQInfo">
+      <wsdl:input message="tns:GetMQInfoSoapIn" />
+      <wsdl:output message="tns:GetMQInfoSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="DOIGetFileContents">
       <wsdl:input message="tns:DOIGetFileContentsSoapIn" />
       <wsdl:output message="tns:DOIGetFileContentsSoapOut" />
@@ -208,6 +228,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMQInfo">
+      <soap:operation soapAction="https://biodiversitylibrary.org/GetMQInfo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -283,6 +312,15 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap12:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMQInfo">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/GetMQInfo" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

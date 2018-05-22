@@ -4,7 +4,10 @@ using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Services;
 
@@ -32,6 +35,52 @@ namespace BHL.SiteServices
                 return new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).GetErrorInfo(this.Context.Request, ex);
             }
         }
+
+        #region MQ Methods
+
+        [WebMethod]
+        public string GetMQInfo()
+        {
+            return InvokeMQAPI(string.Format("{0}/api/queues",
+                ConfigurationManager.AppSettings["MQServerAPIEndpoint"]));
+        }
+
+        private string InvokeMQAPI(string uri, string method = "GET", string body = null)
+        {
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
+            req.Method = method;
+            req.Timeout = 60000;
+            req.Headers.Add("Authorization", "Basic " + 
+                Convert.ToBase64String(
+                    Encoding.ASCII.GetBytes(
+                        string.Format("{0}:{1}",
+                            ConfigurationManager.AppSettings["MQUsername"],
+                            ConfigurationManager.AppSettings["MQPassword"]))));
+
+            if (!string.IsNullOrWhiteSpace(body) && method.ToUpper() == "POST")
+            {
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(body);
+                req.ContentType = "application/json";
+                req.ContentLength = byteArray.Length;
+                Stream dataStream = req.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+            }
+
+            string jsonResponse = string.Empty;
+            using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+            {
+                using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                {
+                    jsonResponse = reader.ReadToEnd();
+                }
+            }
+            req = null;
+
+            return jsonResponse;
+        }
+
+        #endregion MQ Methods
 
         #region DOI Methods
 

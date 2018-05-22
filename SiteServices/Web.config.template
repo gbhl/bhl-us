@@ -28,6 +28,11 @@
     <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
     <add key="MaxReadAttempts" value="60" />
 
+    <!-- Message Queue API endpoint -->
+    <add key="MQServerAPIEndpoint" value="MESSAGE QUEUE API ENDPOINT" />
+    <add key="MQUsername" value="MESSAGE QUEUE USERNAME" />
+    <add key="MQPassword" value="MESSAGE QUEUE PASSWORD" />
+
   </appSettings>
   <connectionStrings>
     <remove name="BHL"/>

@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.Models;
+using System.Configuration;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
@@ -13,6 +14,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult Index()
         {
             MonitorModel model = new MonitorModel();
+            ViewBag.MessageQueueAdminAddress = ConfigurationManager.AppSettings["MessageQueueAdminAddress"];
             return View(model);
         }
     }

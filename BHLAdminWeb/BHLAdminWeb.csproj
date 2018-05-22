@@ -969,6 +969,9 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />

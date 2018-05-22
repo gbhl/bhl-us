@@ -31,6 +31,13 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetOcrText", ReplyAction="*")]
         System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.GetOcrTextResponse> GetOcrTextAsync(MOBOT.BHL.AdminWeb.SiteService.GetOcrTextRequest request);
         
+        // CODEGEN: Generating message contract since element name GetMQInfoResult from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetMQInfo", ReplyAction="*")]
+        MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse GetMQInfo(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetMQInfo", ReplyAction="*")]
+        System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse> GetMQInfoAsync(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest request);
+        
         // CODEGEN: Generating message contract since element name batchId from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/DOIGetFileContents", ReplyAction="*")]
         MOBOT.BHL.AdminWeb.SiteService.DOIGetFileContentsResponse DOIGetFileContents(MOBOT.BHL.AdminWeb.SiteService.DOIGetFileContentsRequest request);
@@ -144,6 +151,67 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
         
         public GetOcrTextResponseBody(string GetOcrTextResult) {
             this.GetOcrTextResult = GetOcrTextResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetMQInfoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetMQInfo", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequestBody Body;
+        
+        public GetMQInfoRequest() {
+        }
+        
+        public GetMQInfoRequest(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class GetMQInfoRequestBody {
+        
+        public GetMQInfoRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetMQInfoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetMQInfoResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponseBody Body;
+        
+        public GetMQInfoResponse() {
+        }
+        
+        public GetMQInfoResponse(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetMQInfoResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string GetMQInfoResult;
+        
+        public GetMQInfoResponseBody() {
+        }
+        
+        public GetMQInfoResponseBody(string GetMQInfoResult) {
+            this.GetMQInfoResult = GetMQInfoResult;
         }
     }
     
@@ -566,6 +634,29 @@ namespace MOBOT.BHL.AdminWeb.SiteService {
             inValue.Body = new MOBOT.BHL.AdminWeb.SiteService.GetOcrTextRequestBody();
             inValue.Body.pageID = pageID;
             return ((MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap)(this)).GetOcrTextAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap.GetMQInfo(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest request) {
+            return base.Channel.GetMQInfo(request);
+        }
+        
+        public string GetMQInfo() {
+            MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest inValue = new MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest();
+            inValue.Body = new MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequestBody();
+            MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse retVal = ((MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap)(this)).GetMQInfo(inValue);
+            return retVal.Body.GetMQInfoResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse> MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap.GetMQInfoAsync(MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest request) {
+            return base.Channel.GetMQInfoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse> GetMQInfoAsync() {
+            MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest inValue = new MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequest();
+            inValue.Body = new MOBOT.BHL.AdminWeb.SiteService.GetMQInfoRequestBody();
+            return ((MOBOT.BHL.AdminWeb.SiteService.SiteServiceSoap)(this)).GetMQInfoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
