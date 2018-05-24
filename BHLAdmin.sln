@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLAdminWeb", "BHLAdminWeb\BHLAdminWeb.csproj", "{53463F60-2878-46CC-A088-0B09C8F55CC7}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -42,6 +42,8 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database-BHL", "Database-BHL\Database-BHL.sqlproj", "{1EBA8419-B379-473B-B641-7AA6FDDB30A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteServices", "SiteServices\SiteServices.csproj", "{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtility\QueueUtility.csproj", "{0DE1BE81-B922-411F-A4EC-01FD9822936B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,8 +113,15 @@ Global
 		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3F5E38D-5028-4249-8DB8-A86FD6A09A8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF8D649E-2D1E-4C4A-BD9A-810737F93CEA}
 	EndGlobalSection
 EndGlobal

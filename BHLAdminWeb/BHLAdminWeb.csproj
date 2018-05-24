@@ -969,7 +969,10 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetMQInfoResponse.datasource">
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.QueueMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\SiteService\SiteService.disco" />
@@ -1068,6 +1071,7 @@
     <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
     <Content Include="Views\Monitor\Index.cshtml" />
+    <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

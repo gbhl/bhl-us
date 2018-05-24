@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -14,8 +15,19 @@ namespace MOBOT.BHL.AdminWeb.Models
     {
         public SearchMonitor searchMonitor = new SearchMonitor();
         public MQMonitor mqMonitor = new MQMonitor();
+        public List<string> UpdateableQueueList = new List<string>();
+        public string queueName { get; set; }
+        public string queueMessages { get; set; }
+        public string queueResult { get; set; }
 
         public MonitorModel()
+        {
+            List<string> queues = ConfigurationManager.AppSettings["MessageQueues"].Split('|').ToList<string>();
+            for (int x = queues.Count - 1; x >= 0; x--) if (queues[x].Contains("error")) queues.Remove(queues[x]);
+            UpdateableQueueList = queues;
+        }
+
+        public void GetMonitorData()
         {
             GetSearchStats();
             GetMQStats();
@@ -100,28 +112,18 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             try
             {
-                SiteService.SiteServiceSoapClient client = new SiteService.SiteServiceSoapClient();
-                string apiResponse = client.GetMQInfo();
-                JArray jsonResponse = JArray.Parse(apiResponse);
-
                 List<string> queueNames = ConfigurationManager.AppSettings["MessageQueues"]
                     .ToLower()
                     .Split('|')
                     .ToList<string>();
 
-                foreach (JToken queue in jsonResponse)
+                SiteService.SiteServiceSoapClient client = new SiteService.SiteServiceSoapClient();
+                foreach (string queueName in queueNames)
                 {
-                    string name = queue["name"].ToString();
-
-                    if (queueNames.Contains(name.ToLower()))
-                    {
-                        MessageQueue mq = new MessageQueue();
-                        mq.Name = name;
-                        mq.Messages = Convert.ToInt32(queue["messages"]);
-                        mq.Memory = Convert.ToInt32(queue["memory"]);
-                        mq.State = queue["state"].ToString();
-                        mqMonitor.Queues.Add(mq);
-                    }
+                    MessageQueue mq = new MessageQueue();
+                    mq.Name = queueName;
+                    mq.Messages = client.GetQueueMessageCount(queueName);
+                    mqMonitor.Queues.Add(mq);
                 }
             }
             catch (Exception ex)
@@ -188,14 +190,10 @@ namespace MOBOT.BHL.AdminWeb.Models
         public class MessageQueue
         {
             string _name = string.Empty;
-            int _messages = 0;
-            int _memory = 0;
-            string _state = string.Empty;
+            uint _messages = 0;
 
             public string Name { get => _name; set => _name = value; }
-            public int Messages { get => _messages; set => _messages = value; }
-            public int Memory { get => _memory; set => _memory = value; }
-            public string State { get => _state; set => _state = value; }
+            public uint Messages { get => _messages; set => _messages = value; }
         }
     }
 }

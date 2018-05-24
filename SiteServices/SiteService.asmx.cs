@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Services;
+using BHL.QueueUtility;
 
 namespace BHL.SiteServices
 {
@@ -39,12 +40,65 @@ namespace BHL.SiteServices
         #region MQ Methods
 
         [WebMethod]
-        public string GetMQInfo()
+        public uint GetQueueMessageCount(string queueName)
         {
-            return InvokeMQAPI(string.Format("{0}/api/queues",
-                ConfigurationManager.AppSettings["MQServerAPIEndpoint"]));
+            uint numMessages = 0;
+
+            using (QueueInfo queueInfo = new QueueInfo(ConfigurationManager.AppSettings["MQHost"],
+                Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]),
+                ConfigurationManager.AppSettings["MQUsername"],
+                ConfigurationManager.AppSettings["MQPassword"]))
+            {
+                numMessages = queueInfo.GetMessageCount(queueName);
+            }
+
+            return numMessages;
         }
 
+        [WebMethod]
+        public void QueueMessages(string queueName, List<string> messages)
+        {
+            string errorQueueName = string.Empty;
+            string errorExchangeName = string.Empty;
+
+            // Get the error queue and error exchange for the specified queue
+            string[] messageQueues = ConfigurationManager.AppSettings["MQQueues"].Split('~');
+            foreach(string messageQueue in messageQueues)
+            {
+                string[] queueDetails = messageQueue.Split('|');
+                if (string.Compare(queueDetails[0], queueName, true) == 0) {
+                    errorQueueName = queueDetails[1];
+                    errorExchangeName = queueDetails[2];
+                }
+            }
+
+            // Add each message to the queue
+            using (QueueIO queueIO = new QueueIO(ConfigurationManager.AppSettings["MQHost"],
+                Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]),
+                ConfigurationManager.AppSettings["MQUsername"],
+                ConfigurationManager.AppSettings["MQPassword"]))
+            {
+                foreach (string message in messages)
+                {
+                    if (!string.IsNullOrWhiteSpace(message))
+                    {
+                        queueIO.PutMessage(message,
+                            queueName: queueName,
+                            errorQueueName: errorQueueName,
+                            errorExchangeName: errorExchangeName);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invoke the Rabbit Management API.  Example usage:
+        ///     InvokeMQAPI("http://localhost:15672/api/queues");
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="method"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
         private string InvokeMQAPI(string uri, string method = "GET", string body = null)
         {
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);
@@ -78,6 +132,13 @@ namespace BHL.SiteServices
             req = null;
 
             return jsonResponse;
+        }
+
+        class MessageQueue
+        {
+            public string Queue { get; set; }
+            public string ErrorQueue { get; set; }
+            public string ErrorExchange { get; set; }
         }
 
         #endregion MQ Methods

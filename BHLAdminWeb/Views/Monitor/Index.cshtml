@@ -4,53 +4,6 @@
     ViewBag.Title = "Server Monitor";
 }
 
-<style>
-    .monitorFrame {
-        border: 3px solid #DDE1E0;
-        border-radius: 10px;
-        margin-top: 20px;
-        background: url(images/panel/bg.gif)
-    }
-    .monitorPageHeader {
-        padding: 10px;
-    }
-    .monitorHeader {
-        font-size: 16px;
-        color: black;
-        font-family: Verdana,Helvetica,Times,serif;
-        background-color: transparent;
-        text-decoration: none;
-    }
-    .monitorSubHeader {
-        margin-top:10px;
-        font-size: 14px;
-        color: black;
-        font-family: Verdana,Helvetica,Times,serif;
-        background-color: transparent;
-        text-decoration: none;
-    }
-    .monitorError {
-        color:red;
-        margin:10px;
-    }
-    .monitorRow {
-        padding:20px;
-    }
-    .monitorSection {
-        background-color: #FFFFFF;
-        border-color:#DDE1E0;
-        border-width:1px;
-        border-style:solid;
-        padding: 10px;
-    }
-    .statDetails {
-        margin: 10px 0px;
-    }
-    .statDetail {
-        margin: 3px 0px;
-    }
-</style>
-
 <div class="row">
     <div class="col-md-11 center monitorFrame">
         <div class="row">
@@ -67,24 +20,24 @@
                     <div class="monitorSubHeader">Overview</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <div class="col-md-12 statDetail">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
-                            <div class="col-md-12 statDetail">Store Size: @Html.DisplayFor(m => m.searchMonitor.StoreSize)</div>
-                            <div class="col-md-12 statDetail"># of Documents: @Html.DisplayFor(m => m.searchMonitor.Documents)</div>
-                            <div class="col-md-12 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.Uptime)</div>
+                            <div class="col-md-6 statDetail">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
+                            <div class="col-md-6 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.Uptime)</div>
+                            <div class="col-md-6 statDetail">Store Size: @Html.DisplayFor(m => m.searchMonitor.StoreSize)</div>
+                            <div class="col-md-6 statDetail">Documents: @Html.DisplayFor(m => m.searchMonitor.Documents)</div>
                         </div>
                     </div>
                     <div class="monitorSubHeader">Performance</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <div id="srchCPU" class="col-md-12 statDetail">CPU: @Html.DisplayFor(m => m.searchMonitor.CpuPercent)%</div>
+                            <div id="srchCPU" class="col-md-12 statDetail">CPU: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.CpuPercent)%</span></div>
                         </div>
                         <div class="row">
-                            <div id="srchMemUsage" class="col-md-4 statDetail">Memory Usage: @Html.DisplayFor(m => m.searchMonitor.MemoryUsagePercent)%</div>
+                            <div id="srchMemUsage" class="col-md-4 statDetail">Memory Usage: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.MemoryUsagePercent)%</span></div>
                             <div id="srchUsedMem" class="col-md-4 statDetail">Used: @Html.DisplayFor(m => m.searchMonitor.UsedMemory)</div>
                             <div id="srchTotalMem" class="col-md-4 statDetail">Total: @Html.DisplayFor(m => m.searchMonitor.TotalMemory)</div>
                         </div>
                         <div class="row">
-                            <div id="srchDiskUsage" class="col-md-4 statDetail">Disk Usage: @Html.DisplayFor(m => m.searchMonitor.DiskUsagePercent)%</div>
+                            <div id="srchDiskUsage" class="col-md-4 statDetail">Disk Usage: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.DiskUsagePercent)%</span></div>
                             <div id="srchFreeDisk" class="col-md-4 statDetail">Free: @Html.DisplayFor(m => m.searchMonitor.FreeDisk)</div>
                             <div id="srchTotalDisk" class="col-md-4 statDetail">Total: @Html.DisplayFor(m => m.searchMonitor.TotalDisk)</div>
                         </div>
@@ -109,21 +62,19 @@
                     <div class="monitorSubHeader">Actions</div>
                     <div class="col-md-12 statDetails">
                         <div class="row">
-                            <div class="col-md-12 statDetail"><a href="#">Queue Messages</a></div>
-                            <div class="col-md-12 statDetail"><a href="@ViewBag.MessageQueueAdminAddress" target="_blank">RabbitMQ Management</a> (Requires SI Network connection)</div>
+                            <div class="col-md-12 statDetail"><a href="/monitor/addtoqueue">Add Messages to a Queue</a></div>
+                            <div class="col-md-12 statDetail"><a href="@ViewBag.MessageQueueAdminAddress" target="_blank">Queue Manager</a> (Requires SI Network connection)</div>
                         </div>
                     </div>
                     <div class="monitorSubHeader">Queues</div>
                     <div class="col-md-12 statDetails">
-                        <div class="col-md-12 statDetails">
-                            @foreach (var queue in Model.mqMonitor.Queues)
-                            {
-                                <div class="row">
-                                    <div class="col-md-6 statDetail">@queue.Name</div>
-                                    <div class="col-md-6 statDetail">Messages: @queue.Messages</div>
-                                </div>
-                            }
-                        </div>
+                        @foreach (var queue in Model.mqMonitor.Queues)
+                        {
+                            <div class="row">
+                                <div class="col-md-6 statDetail">@queue.Name</div>
+                                <div class="col-md-6 statDetail">Messages: <span class="statHighlight">@queue.Messages</span></div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
