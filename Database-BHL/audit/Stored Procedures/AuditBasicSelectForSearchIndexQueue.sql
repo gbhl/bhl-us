@@ -536,7 +536,8 @@ AND		EntityID2 IN (
 			SELECT	r.EntityID2
 			FROM	#Reduced r
 					INNER JOIN dbo.Item i WITH (NOLOCK) ON r.EntityID2 = i.ItemID
-					INNER JOIN dbo.Title t WITH (NOLOCK) ON r.EntityID1 = t.TitleID
+					INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON i.ItemID = ti.ItemID
+					INNER JOIN dbo.Title t WITH (NOLOCK) ON ti.TitleID = t.TitleID
 			WHERE	r.IndexEntity = 'item'
 			AND		i.ItemStatusID = 40
 			GROUP BY r.EntityID2 HAVING SUM(CONVERT(smallint, t.PublishReady)) = 0
