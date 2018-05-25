@@ -1,0 +1,84 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.MonitorModel
+
+@{
+    ViewBag.Title = "Server Monitor";
+}
+
+<div class="row">
+    <div class="col-md-11 center monitorFrame">
+        <div class="row">
+            <div class="col-md-12 monitorPageHeader">
+                <span class="pageHeader">Server Monitor </span>
+                <span><a href="/">Administrative Dashboard</a></span>
+            </div>
+        </div>
+        <div class="row monitorRow">
+            <div class="col-md-6">
+                <div class="col-md-12 monitorSection">
+                    <div class="monitorHeader">Search Server</div>
+                    <div class="monitorError">@Html.DisplayFor(m => m.searchMonitor.ErrorMessage)</div>
+                    <div class="monitorSubHeader">Overview</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div class="col-md-6 statDetail">Name: @Html.DisplayFor(m => m.searchMonitor.Name)</div>
+                            <div class="col-md-6 statDetail">Uptime: @Html.DisplayFor(m => m.searchMonitor.Uptime)</div>
+                            <div class="col-md-6 statDetail">Store Size: @Html.DisplayFor(m => m.searchMonitor.StoreSize)</div>
+                            <div class="col-md-6 statDetail">Documents: @Html.DisplayFor(m => m.searchMonitor.Documents)</div>
+                        </div>
+                    </div>
+                    <div class="monitorSubHeader">Performance</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <div id="srchCPU" class="col-md-12 statDetail">CPU: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.CpuPercent)%</span></div>
+                        </div>
+                        <div class="row">
+                            <div id="srchMemUsage" class="col-md-4 statDetail">Memory Usage: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.MemoryUsagePercent)%</span></div>
+                            <div id="srchUsedMem" class="col-md-4 statDetail">Used: @Html.DisplayFor(m => m.searchMonitor.UsedMemory)</div>
+                            <div id="srchTotalMem" class="col-md-4 statDetail">Total: @Html.DisplayFor(m => m.searchMonitor.TotalMemory)</div>
+                        </div>
+                        <div class="row">
+                            <div id="srchDiskUsage" class="col-md-4 statDetail">Disk Usage: <span class="statHighlight">@Html.DisplayFor(m => m.searchMonitor.DiskUsagePercent)%</span></div>
+                            <div id="srchFreeDisk" class="col-md-4 statDetail">Free: @Html.DisplayFor(m => m.searchMonitor.FreeDisk)</div>
+                            <div id="srchTotalDisk" class="col-md-4 statDetail">Total: @Html.DisplayFor(m => m.searchMonitor.TotalDisk)</div>
+                        </div>
+                    </div>
+                    <div class="monitorSubHeader">Indexes</div>
+                    <div class="col-md-12 statDetails">
+                        @foreach (var index in Model.searchMonitor.Indexes)
+        {
+                <div class="row">
+                    <div class="col-md-4 statDetail">@index.Name</div>
+                    <div class="col-md-4 statDetail">Docs: @index.Documents</div>
+                    <div class="col-md-4 statDetail">Size: @index.StoreSize</div>
+                </div>
+}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12 monitorSection">
+                    <div class="monitorHeader">Message Queue</div>
+                    <div class="monitorError">@Html.DisplayFor(m => m.mqMonitor.ErrorMessage)</div>
+                    <div class="monitorSubHeader">Actions</div>
+                    <div class="col-md-12 statDetails">
+                        <div class="row">
+                            <!--<div class="col-md-12 statDetail"><a href="/monitor/addtoqueue">Add Messages to a Queue</a></div>-->
+                            <div class="col-md-12 statDetail">Add Messages to a Queue (UNDER CONSTRUCTION)</div>
+                            <div class="col-md-12 statDetail"><a href="@ViewBag.MessageQueueAdminAddress" target="_blank">Queue Manager</a> (Requires SI Network connection)</div>
+                        </div>
+                    </div>
+                    <div class="monitorSubHeader">Queues</div>
+                    <div class="col-md-12 statDetails">
+                        @foreach (var queue in Model.mqMonitor.Queues)
+                        {
+                            <div class="row">
+                                <div class="col-md-6 statDetail">@queue.Name</div>
+                                <div class="col-md-6 statDetail">Messages: <span class="statHighlight">@queue.Messages</span></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

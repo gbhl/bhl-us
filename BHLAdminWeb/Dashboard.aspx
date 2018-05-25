@@ -5,6 +5,7 @@
 <br />
 	<cc:ContentPanel ID="contentPanel" runat="server">
 	<span class="pageHeader">Dashboard </span>
+    <span runat="server" id="spnMonitor"><a href="/monitor">Server Monitor</a></span>
 	<table cellspacing="25px" cellpadding="0px">
 		<tr>
 			<td class="box" style="width: 250px; background-color:White">

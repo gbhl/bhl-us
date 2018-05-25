@@ -271,6 +271,7 @@
     <Compile Include="Controllers\CitationImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
+    <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
@@ -435,6 +436,7 @@
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\MonitorModel.cs" />
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
@@ -967,6 +969,12 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.QueueMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />
@@ -1062,6 +1070,8 @@
     <Content Include="Views\CitationImport\SelectFile.cshtml" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
+    <Content Include="Views\Monitor\Index.cshtml" />
+    <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
