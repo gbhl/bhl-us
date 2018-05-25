@@ -11,6 +11,7 @@ using System.Text;
 using System.Web;
 using System.Web.Services;
 using BHL.QueueUtility;
+using Newtonsoft.Json.Linq;
 
 namespace BHL.SiteServices
 {
@@ -44,12 +45,29 @@ namespace BHL.SiteServices
         {
             uint numMessages = 0;
 
+            /*
+             * THIS SHOULD WORK, BUT CAUSES 500 ERROR ON PROD/QA SERVER
             using (QueueInfo queueInfo = new QueueInfo(ConfigurationManager.AppSettings["MQHost"],
                 Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"]),
                 ConfigurationManager.AppSettings["MQUsername"],
                 ConfigurationManager.AppSettings["MQPassword"]))
             {
                 numMessages = queueInfo.GetMessageCount(queueName);
+            }
+            */
+
+            string apiResponse = InvokeMQAPI(string.Format("http://{0}:{1}/api/queues",
+                ConfigurationManager.AppSettings["MQHost"],
+                ConfigurationManager.AppSettings["MQAPIPort"]));
+
+            JArray jsonResponse = JArray.Parse(apiResponse);
+            foreach(var queue in jsonResponse)
+            {
+                if (string.Compare(queue["name"].ToString(), queueName, true) == 0)
+                {
+                    numMessages = Convert.ToUInt32(queue["messages"]);
+                    break;
+                }
             }
 
             return numMessages;
@@ -58,6 +76,8 @@ namespace BHL.SiteServices
         [WebMethod]
         public void QueueMessages(string queueName, List<string> messages)
         {
+            /*
+             * THIS SHOULD WORK, BUT CAUSES 500 ERROR ON PROD/QA SERVER
             string errorQueueName = string.Empty;
             string errorExchangeName = string.Empty;
 
@@ -87,6 +107,36 @@ namespace BHL.SiteServices
                             errorQueueName: errorQueueName,
                             errorExchangeName: errorExchangeName);
                     }
+                }
+            }
+            */
+
+            foreach (string message in messages)
+            {
+                string requestBody = string.Format(
+                    "{{\"properties\":{{}},\"routing_key\":\"{0}\",\"payload\":\"{1}\",\"payload_encoding\":\"string\"}}",
+                    queueName,
+                    message
+                    );
+
+                /*
+                 * Causing HTTP 405 (method not allowed) errors on Prod/QA server.
+                 * https://stackoverflow.com/a/10890943
+                 * https://stackoverflow.com/a/12170132
+                 * https://stackoverflow.com/questions/4379674/httpwebrequest-url-escaping
+                 * http://blogs.perpetuumsoft.com/dotnet/about-escaping-slashes-in-net/
+                 */
+                string apiResponse = InvokeMQAPI(
+                    string.Format("http://{0}:{1}/api/exchanges/%2f//publish",
+                        ConfigurationManager.AppSettings["MQHost"],
+                        ConfigurationManager.AppSettings["MQAPIPort"]), 
+                    "POST", 
+                    requestBody);
+
+                JObject jsonResponse = JObject.Parse(apiResponse);
+                if (!Convert.ToBoolean(jsonResponse["routed"]))
+                {
+                    throw new Exception(string.Format("Error queuing message: {0}", message));
                 }
             }
         }

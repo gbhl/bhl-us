@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
 using System.Linq;
+using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -47,6 +48,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             catch (System.Exception ex)
             {
                 response = "Error adding messages to queue";
+                if (ConfigurationManager.AppSettings["LogExceptions"] == "true")
+                {
+                    ExceptionUtility.LogException(ex, "MonitorController.AddToQueue");
+                }
+                if (System.Web.HttpContext.Current.IsDebuggingEnabled) throw (ex);
             }
 
             model = new MonitorModel();
