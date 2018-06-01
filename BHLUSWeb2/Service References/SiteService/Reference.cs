@@ -28,6 +28,14 @@ namespace MOBOT.BHL.Web2.SiteService {
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetOcrText", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.GetOcrTextResponse GetOcrText(MOBOT.BHL.Web2.SiteService.GetOcrTextRequest request);
         
+        // CODEGEN: Generating message contract since element name queueName from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetQueueMessageCount", ReplyAction="*")]
+        MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponse GetQueueMessageCount(MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequest request);
+        
+        // CODEGEN: Generating message contract since element name queueName from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/QueueMessages", ReplyAction="*")]
+        MOBOT.BHL.Web2.SiteService.QueueMessagesResponse QueueMessages(MOBOT.BHL.Web2.SiteService.QueueMessagesRequest request);
+        
         // CODEGEN: Generating message contract since element name batchId from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/DOIGetFileContents", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.DOIGetFileContentsResponse DOIGetFileContents(MOBOT.BHL.Web2.SiteService.DOIGetFileContentsRequest request);
@@ -120,6 +128,139 @@ namespace MOBOT.BHL.Web2.SiteService {
         
         public GetOcrTextResponseBody(string GetOcrTextResult) {
             this.GetOcrTextResult = GetOcrTextResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetQueueMessageCountRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetQueueMessageCount", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequestBody Body;
+        
+        public GetQueueMessageCountRequest() {
+        }
+        
+        public GetQueueMessageCountRequest(MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetQueueMessageCountRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string queueName;
+        
+        public GetQueueMessageCountRequestBody() {
+        }
+        
+        public GetQueueMessageCountRequestBody(string queueName) {
+            this.queueName = queueName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetQueueMessageCountResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetQueueMessageCountResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponseBody Body;
+        
+        public GetQueueMessageCountResponse() {
+        }
+        
+        public GetQueueMessageCountResponse(MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetQueueMessageCountResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public uint GetQueueMessageCountResult;
+        
+        public GetQueueMessageCountResponseBody() {
+        }
+        
+        public GetQueueMessageCountResponseBody(uint GetQueueMessageCountResult) {
+            this.GetQueueMessageCountResult = GetQueueMessageCountResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class QueueMessagesRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="QueueMessages", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.QueueMessagesRequestBody Body;
+        
+        public QueueMessagesRequest() {
+        }
+        
+        public QueueMessagesRequest(MOBOT.BHL.Web2.SiteService.QueueMessagesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class QueueMessagesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string queueName;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public MOBOT.BHL.Web2.SiteService.ArrayOfString messages;
+        
+        public QueueMessagesRequestBody() {
+        }
+        
+        public QueueMessagesRequestBody(string queueName, MOBOT.BHL.Web2.SiteService.ArrayOfString messages) {
+            this.queueName = queueName;
+            this.messages = messages;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class QueueMessagesResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="QueueMessagesResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.QueueMessagesResponseBody Body;
+        
+        public QueueMessagesResponse() {
+        }
+        
+        public QueueMessagesResponse(MOBOT.BHL.Web2.SiteService.QueueMessagesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class QueueMessagesResponseBody {
+        
+        public QueueMessagesResponseBody() {
         }
     }
     
@@ -530,6 +671,32 @@ namespace MOBOT.BHL.Web2.SiteService {
             inValue.Body.pageID = pageID;
             MOBOT.BHL.Web2.SiteService.GetOcrTextResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetOcrText(inValue);
             return retVal.Body.GetOcrTextResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponse MOBOT.BHL.Web2.SiteService.SiteServiceSoap.GetQueueMessageCount(MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequest request) {
+            return base.Channel.GetQueueMessageCount(request);
+        }
+        
+        public uint GetQueueMessageCount(string queueName) {
+            MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequest inValue = new MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequest();
+            inValue.Body = new MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequestBody();
+            inValue.Body.queueName = queueName;
+            MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetQueueMessageCount(inValue);
+            return retVal.Body.GetQueueMessageCountResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.Web2.SiteService.QueueMessagesResponse MOBOT.BHL.Web2.SiteService.SiteServiceSoap.QueueMessages(MOBOT.BHL.Web2.SiteService.QueueMessagesRequest request) {
+            return base.Channel.QueueMessages(request);
+        }
+        
+        public void QueueMessages(string queueName, MOBOT.BHL.Web2.SiteService.ArrayOfString messages) {
+            MOBOT.BHL.Web2.SiteService.QueueMessagesRequest inValue = new MOBOT.BHL.Web2.SiteService.QueueMessagesRequest();
+            inValue.Body = new MOBOT.BHL.Web2.SiteService.QueueMessagesRequestBody();
+            inValue.Body.queueName = queueName;
+            inValue.Body.messages = messages;
+            MOBOT.BHL.Web2.SiteService.QueueMessagesResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).QueueMessages(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

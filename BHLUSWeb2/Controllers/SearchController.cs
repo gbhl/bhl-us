@@ -32,11 +32,33 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the search arguments
             model.Params.SearchCategory = (searchCat ?? string.Empty).Trim().ToUpper();
             model.Params.LastName = lname ?? string.Empty;
-            model.Params.Volume = vol ?? string.Empty; ;
-            model.Params.Year = yr ?? string.Empty; ;
-            model.Params.Subject = subj ?? string.Empty; ;
+            model.Params.Volume = vol ?? string.Empty;
+            model.Params.Year = yr ?? string.Empty;
+            model.Params.Subject = subj ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(lang))
             {
+                if (lang.StartsWith("(") && lang.EndsWith(")"))
+                {
+                    if (lang.Length == 2) lang = string.Empty;
+                    else lang = lang.Substring(1, lang.Length - 2);
+                }
+
+                string languageCode = string.Empty;
+                string languageName = string.Empty;
+                if (!lang.Contains(","))
+                {
+                    languageCode = lang;
+                    Language language = new BHLProvider().LanguageSelectAuto(languageCode);
+                    if (language != null) languageName = language.LanguageName;
+                }
+                else
+                {
+                    languageCode = lang.Substring(0, lang.IndexOf(',')).Trim();
+                    languageName = lang.Substring(lang.IndexOf(',') + 1).Trim();
+                }
+
+                model.Params.Language = new Tuple<string, string>(languageCode, languageName);
+                /*
                 string[] langParts = lang.Split('|');
                 string languageName = string.Empty;
 
@@ -52,9 +74,33 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 model.Params.Language = new Tuple<string, string>(langParts[0], languageName);
+                */
             }
             if (!string.IsNullOrWhiteSpace(col))
             {
+                if (col.StartsWith("(") && col.EndsWith(")"))
+                {
+                    if (col.Length == 2) col = string.Empty;
+                    else col = col.Substring(1, col.Length - 2);
+                }
+
+                int collectionID;
+                string collectionName = string.Empty;
+                if (!col.Contains(","))
+                {
+                    collectionID = Convert.ToInt32(col);
+                    Collection collection = new BHLProvider().CollectionSelectAuto(collectionID);
+                    if (collection != null) collectionName = collection.CollectionName;
+                }
+                else
+                {
+                    collectionID = Convert.ToInt32(col.Substring(0, col.IndexOf(',')));
+                    collectionName = col.Substring(col.IndexOf(',') + 1).Trim();
+                }
+
+                model.Params.Collection = new Tuple<string, string>(collectionID.ToString(), collectionName);
+
+                /*
                 string[] colParts = col.Split('|');
                 string collectionName = string.Empty;
 
@@ -70,6 +116,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 }
 
                 model.Params.Collection = new Tuple<string, string>(colParts[0], collectionName);
+                */
             }
             int startPage;
             if (!Int32.TryParse(ppage ?? "1", out startPage)) startPage = 1;

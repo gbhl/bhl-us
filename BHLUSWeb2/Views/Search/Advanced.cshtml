@@ -43,7 +43,7 @@
                                 <option value="">(Any Language)</option>
                                 @foreach (MOBOT.BHL.DataObjects.Language language in ViewBag.Languages)
                                 {
-                                    <option value="@language.LanguageCode|@language.LanguageName">@language.LanguageName</option>
+                                    <option value="@language.LanguageCode,@language.LanguageName">@language.LanguageName</option>
                                 }
                             </select>
                         </li>
@@ -53,7 +53,7 @@
                                 <option value="">(Any Collection)</option>
                                 @foreach (MOBOT.BHL.DataObjects.Collection collection in ViewBag.Collections)
                                 {
-                                    <option value="@collection.CollectionID.ToString()|@collection.CollectionName">@collection.CollectionName</option>
+                                    <option value="@collection.CollectionID.ToString(),@collection.CollectionName">@collection.CollectionName</option>
                                 }
                             </select>
                         </li>
