@@ -39,6 +39,7 @@ SELECT	s.SegmentID,
 		s.RightsStatement,
 		s.LicenseName,
 		s.LicenseUrl,
+		ISNULL(d.DOIName, '') AS DOIName,
 		REPLACE(scs.Authors, '|', ';') AS Authors,
 		REPLACE(scs.Subjects, '|', ';') AS Keywords,
 		s.ContributorCreationDate,
@@ -54,6 +55,10 @@ FROM	dbo.Keyword k
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SearchCatalogSegment scs on s.SegmentID = scs.SegmentID
+		LEFT JOIN dbo.DOI d 
+			ON s.SegmentID = d.EntityID 
+			AND d.DOIEntityTypeID = 40 -- segment
+			AND d.DOIStatusID IN (100, 200)
 WHERE	k.Keyword = @Keyword
 AND		s.SegmentStatusID IN (10, 20) -- New, Published
 ORDER BY s.SortTitle

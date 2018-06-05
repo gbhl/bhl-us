@@ -61,6 +61,7 @@ CREATE TABLE #tmpSegment
 	StartPageID int NULL,
 	Url nvarchar(200) NOT NULL DEFAULT(''),
 	DownloadUrl nvarchar(200) NOT NULL DEFAULT(''),
+	DOIName nvarchar(50) NOT NULL,
 	PageRange nvarchar(50) NOT NULL DEFAULT(''),
 	StartPageNumber nvarchar(20) NOT NULL DEFAULT(''),
 	EndPageNumber nvarchar(20) NOT NULL DEFAULT(''),
@@ -179,6 +180,7 @@ SELECT	s.SegmentID,
 		s.StartPageID,
 		s.Url,
 		s.DownloadUrl,
+		ISNULL(d.DOIName, '') AS DOIName,
 		s.PageRange,
 		s.StartPageNumber,
 		s.EndPageNumber,
@@ -189,6 +191,10 @@ SELECT	s.SegmentID,
 FROM	#tmpLimitFinal t INNER JOIN dbo.vwSegment s ON t.SegmentID = s.SegmentID
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		LEFT JOIN dbo.DOI d 
+			ON s.SegmentID = d.EntityID 
+			AND d.DOIEntityTypeID = 40 -- segment
+			AND d.DOIStatusID IN (100, 200)
 
 -- De-emphasize ranking of any segments:
 --	1) Without local content
@@ -213,6 +219,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
@@ -237,6 +244,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
@@ -261,6 +269,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
@@ -285,6 +294,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
