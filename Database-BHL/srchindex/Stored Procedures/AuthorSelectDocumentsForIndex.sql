@@ -9,6 +9,11 @@ BEGIN
 
 SET NOCOUNT ON
 
+DECLARE @Start int
+DECLARE @End int
+SET @Start = @StartID
+SET @End = @EndID
+
 SELECT DISTINCT
 		a.AuthorID,
 		dbo.fnAuthorSearchStringForAuthor(a.AuthorID, '|') AS AuthorNames,
@@ -33,8 +38,8 @@ AND		a.AuthorID IN (
 						INNER JOIN dbo.Segment s WITH (NOLOCK) ON sa.SegmentID = s.SegmentID
 				WHERE   s.SegmentStatusID IN (10, 20)
 				) x
-	    WHERE	AuthorID >= @StartID
-		AND		(AuthorID <= @EndID OR @EndID IS NULL)
+	    WHERE	AuthorID >= @Start
+		AND		(AuthorID <= @End OR @End IS NULL)
 		ORDER BY AuthorID
 		)
 ORDER BY a.AuthorID
