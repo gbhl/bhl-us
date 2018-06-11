@@ -271,6 +271,7 @@
     <Compile Include="Controllers\CitationImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
+    <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
@@ -395,13 +396,6 @@
     <Compile Include="IAHarvestItemStatusAbout.aspx.designer.cs">
       <DependentUpon>IAHarvestItemStatusAbout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ImageServerEdit.aspx.cs">
-      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ImageServerEdit.aspx.designer.cs">
-      <DependentUpon>ImageServerEdit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="InstitutionEdit.aspx.cs">
       <DependentUpon>InstitutionEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -442,6 +436,7 @@
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryModel.cs" />
+    <Compile Include="Models\MonitorModel.cs" />
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
@@ -697,13 +692,6 @@
     </Compile>
     <Compile Include="NoteTypeEdit.aspx.designer.cs">
       <DependentUpon>NoteTypeEdit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="VaultEdit.aspx.cs">
-      <DependentUpon>VaultEdit.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="VaultEdit.aspx.designer.cs">
-      <DependentUpon>VaultEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebHistory.aspx.cs">
       <DependentUpon>WebHistory.aspx</DependentUpon>
@@ -981,6 +969,12 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.SendEmailResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.QueueMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />
@@ -1076,6 +1070,8 @@
     <Content Include="Views\CitationImport\SelectFile.cshtml" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xls" />
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
+    <Content Include="Views\Monitor\Index.cshtml" />
+    <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -1109,7 +1105,6 @@
     <Content Include="IAHarvestDashboard.aspx" />
     <Content Include="IAHarvestItemList.aspx" />
     <Content Include="IAHarvestItemStatusAbout.aspx" />
-    <Content Include="ImageServerEdit.aspx" />
     <Content Include="InstitutionEdit.aspx" />
     <Content Include="ItemEdit.aspx" />
     <Content Include="ItemStatusEdit.aspx" />
@@ -1141,7 +1136,6 @@
     <Content Include="TitleImportResults.aspx" />
     <Content Include="TitleItemMarc.aspx" />
     <Content Include="TitleSearch.aspx" />
-    <Content Include="VaultEdit.aspx" />
     <Content Include="WebHistory.aspx" />
     <Content Include="WebStatsDaily.aspx" />
     <Content Include="WebStatsDetail.aspx" />

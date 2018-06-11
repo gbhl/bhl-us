@@ -127,6 +127,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("imageserveredit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("vaultedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("library/align")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
+            else if (path.Contains("monitor")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
 
             return authorized;
         }

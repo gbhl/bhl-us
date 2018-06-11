@@ -9,7 +9,8 @@ BEGIN
 
 SET NOCOUNT ON
 
-SELECT	s.SegmentID,
+SELECT DISTINCT
+		s.SegmentID,
 		s.ItemID,
 		dbo.fnContributorStringForSegment(s.SegmentID) AS ContributorName,
 		d.DOIName,
@@ -62,8 +63,8 @@ FROM	dbo.vwSegment s
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
 		INNER JOIN dbo.SearchCatalogSegment scs on s.SegmentID = scs.SegmentID
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 -- segment
-WHERE	i.IdentifierName = @IdentifierName
-AND		si.IdentifierValue = @IdentifierValue
+WHERE	((i.IdentifierName = @IdentifierName AND	si.IdentifierValue = @IdentifierValue)
+OR		(@IdentifierName = 'doi' AND d.DOIName = @IdentifierValue))
 AND		s.SegmentStatusID IN (10, 20) -- New, Published
 ORDER BY
 		s.ItemID,

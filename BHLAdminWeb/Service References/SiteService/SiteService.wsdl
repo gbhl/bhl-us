@@ -16,6 +16,36 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetQueueMessageCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="queueName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetQueueMessageCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetQueueMessageCountResult" type="s:unsignedInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueueMessages">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="queueName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="messages" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="QueueMessagesResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="DOIGetFileContents">
         <s:complexType>
           <s:sequence>
@@ -108,11 +138,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfString">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="SendEmailResponse">
         <s:complexType>
           <s:sequence>
@@ -127,6 +152,18 @@
   </wsdl:message>
   <wsdl:message name="GetOcrTextSoapOut">
     <wsdl:part name="parameters" element="tns:GetOcrTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetQueueMessageCountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetQueueMessageCount" />
+  </wsdl:message>
+  <wsdl:message name="GetQueueMessageCountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetQueueMessageCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="QueueMessagesSoapIn">
+    <wsdl:part name="parameters" element="tns:QueueMessages" />
+  </wsdl:message>
+  <wsdl:message name="QueueMessagesSoapOut">
+    <wsdl:part name="parameters" element="tns:QueueMessagesResponse" />
   </wsdl:message>
   <wsdl:message name="DOIGetFileContentsSoapIn">
     <wsdl:part name="parameters" element="tns:DOIGetFileContents" />
@@ -175,6 +212,14 @@
       <wsdl:input message="tns:GetOcrTextSoapIn" />
       <wsdl:output message="tns:GetOcrTextSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetQueueMessageCount">
+      <wsdl:input message="tns:GetQueueMessageCountSoapIn" />
+      <wsdl:output message="tns:GetQueueMessageCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QueueMessages">
+      <wsdl:input message="tns:QueueMessagesSoapIn" />
+      <wsdl:output message="tns:QueueMessagesSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="DOIGetFileContents">
       <wsdl:input message="tns:DOIGetFileContentsSoapIn" />
       <wsdl:output message="tns:DOIGetFileContentsSoapOut" />
@@ -208,6 +253,24 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQueueMessageCount">
+      <soap:operation soapAction="https://biodiversitylibrary.org/GetQueueMessageCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueueMessages">
+      <soap:operation soapAction="https://biodiversitylibrary.org/QueueMessages" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -283,6 +346,24 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap12:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQueueMessageCount">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/GetQueueMessageCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QueueMessages">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/QueueMessages" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

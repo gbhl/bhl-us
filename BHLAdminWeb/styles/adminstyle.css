@@ -396,3 +396,62 @@ tr.import-detail-row td.import-detail {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* Server Monitor styles */
+.monitorFrame {
+    border: 3px solid #DDE1E0;
+    border-radius: 10px;
+    margin-top: 20px;
+    background: url(images/panel/bg.gif)
+}
+
+.monitorPageHeader {
+    padding: 10px;
+}
+
+.monitorHeader {
+    font-size: 16px;
+    color: black;
+    font-family: Verdana,Helvetica,Times,serif;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.monitorSubHeader {
+    margin-top: 10px;
+    font-size: 14px;
+    color: black;
+    font-family: Verdana,Helvetica,Times,serif;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.monitorError {
+    color: red;
+    margin: 10px;
+}
+
+.monitorRow {
+    padding: 20px;
+}
+
+.monitorSection {
+    background-color: #FFFFFF;
+    border-color: #DDE1E0;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+}
+
+.statDetails {
+    margin: 10px 0px;
+}
+
+.statDetail {
+    margin: 3px 0px;
+}
+
+.statHighlight {
+    font-weight:bold;
+    color:blue;
+}

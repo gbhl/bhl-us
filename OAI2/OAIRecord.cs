@@ -612,6 +612,13 @@ namespace MOBOT.BHL.OAI2
                     this.PublicationStartYear = (title.StartYear == null) ? String.Empty : title.StartYear.ToString();
                     this.PublicationEndYear = (title.EndYear == null) ? String.Empty : title.EndYear.ToString();
                     this.Edition = (title.EditionStatement == null) ? String.Empty : title.EditionStatement;
+                    if (string.IsNullOrWhiteSpace(this.PublicationDates))
+                    {
+                        if (!string.IsNullOrWhiteSpace(this.PublicationStartYear) && !string.IsNullOrWhiteSpace(this.PublicationEndYear))
+                            this.PublicationDates = this.PublicationStartYear + "-" + this.PublicationEndYear;
+                        else
+                            this.PublicationDates = (this.PublicationStartYear + this.PublicationEndYear).Trim();
+                    }
                     this.OriginalCatalogingSource = (title.OriginalCatalogingSource == null) ? String.Empty : title.OriginalCatalogingSource;
                     this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;
                     this.Title = title.FullTitle;
@@ -718,6 +725,13 @@ namespace MOBOT.BHL.OAI2
                 this.PublicationDates = title.Datafield_260_c;
                 this.PublicationStartYear = (title.StartYear == null) ? String.Empty : title.StartYear.ToString();
                 this.PublicationEndYear = (title.EndYear == null) ? String.Empty : title.EndYear.ToString();
+                if (string.IsNullOrWhiteSpace(this.PublicationDates))
+                {
+                    if (!string.IsNullOrWhiteSpace(this.PublicationStartYear) && !string.IsNullOrWhiteSpace(this.PublicationEndYear))
+                        this.PublicationDates = this.PublicationStartYear + "-" + this.PublicationEndYear;
+                    else
+                        this.PublicationDates = (this.PublicationStartYear + this.PublicationEndYear).Trim();
+                }
                 this.Edition = (title.EditionStatement == null) ? String.Empty : title.EditionStatement;
                 this.OriginalCatalogingSource = (title.OriginalCatalogingSource == null) ? String.Empty : title.OriginalCatalogingSource;
                 this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;
@@ -924,6 +938,13 @@ namespace MOBOT.BHL.OAI2
                         this.PublicationDates = title.Datafield_260_c;
                         this.PublicationStartYear = (title.StartYear == null) ? String.Empty : title.StartYear.ToString();
                         this.PublicationEndYear = (title.EndYear == null) ? String.Empty : title.EndYear.ToString();
+                        if (string.IsNullOrWhiteSpace(this.PublicationDates))
+                        {
+                            if (!string.IsNullOrWhiteSpace(this.PublicationStartYear) && !string.IsNullOrWhiteSpace(this.PublicationEndYear))
+                                this.PublicationDates = this.PublicationStartYear + "-" + this.PublicationEndYear;
+                            else
+                                this.PublicationDates = (this.PublicationStartYear + this.PublicationEndYear).Trim();
+                        }
                         this.Edition = (title.EditionStatement == null) ? String.Empty : title.EditionStatement;
                         this.OriginalCatalogingSource = (title.OriginalCatalogingSource == null) ? String.Empty : title.OriginalCatalogingSource;
                         this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;

@@ -34,6 +34,7 @@ CREATE TABLE #tmpSegment
 	StartPageID int NULL,
 	Url nvarchar(200) NOT NULL,
 	DownloadUrl nvarchar(200) NOT NULL,
+	DOIName nvarchar(50) NOT NULL,
 	PageRange nvarchar(50) NOT NULL,
 	StartPageNumber nvarchar(20) NOT NULL,
 	EndPageNumber nvarchar(20) NOT NULL,
@@ -57,6 +58,7 @@ SELECT DISTINCT
 		s.StartPageID,
 		s.Url,
 		s.DownloadUrl,
+		ISNULL(d.DOIName, '') AS DOIName,
 		s.PageRange,
 		s.StartPageNumber,
 		s.EndPageNumber,
@@ -65,6 +67,10 @@ SELECT DISTINCT
 FROM	dbo.vwSegment s 
 		INNER JOIN dbo.SegmentGenre g ON g.SegmentGenreID = s.SegmentGenreID
 		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		LEFT JOIN dbo.DOI d 
+			ON s.SegmentID = d.EntityID 
+			AND d.DOIEntityTypeID = 40 -- segment
+			AND d.DOIStatusID IN (100, 200)
 WHERE	(s.Title LIKE (@Title + '%') OR @Title = '')
 AND		(s.ContainerTitle LIKE (@ContainerTitle + '%') OR @ContainerTitle = '')
 AND		(s.[Date] LIKE ('%' + @Date + '%') OR @Date = '')
@@ -97,6 +103,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
@@ -120,6 +127,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
@@ -143,6 +151,7 @@ BEGIN
 			StartPageID,
 			Url,
 			DownloadUrl,
+			DOIName,
 			PageRange,
 			StartPageNumber,
 			EndPageNumber,
