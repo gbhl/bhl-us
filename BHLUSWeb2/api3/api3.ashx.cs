@@ -48,22 +48,6 @@ namespace MOBOT.BHL.Web2.api3
                     response = serviceResponse.Serialize(outputType);
                 }
 
-                if (String.Compare(operation, "GetPageOcrText", true) == 0)
-                {
-                    String pageID = context.Request.QueryString["pageid"];
-                    ServiceResponse<string> serviceResponse = new ServiceResponse<string>();
-                    serviceResponse.Result = this.GetPageOcrText(pageID, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetPageNames", true) == 0)
-                {
-                    String pageID = context.Request.QueryString["pageid"];
-                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
-                    serviceResponse.Result = this.GetPageNames(pageID, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
                 // ------- Item operations -------
 
                 if (String.Compare(operation, "GetItemMetadata", true) == 0)
@@ -86,14 +70,6 @@ namespace MOBOT.BHL.Web2.api3
                     response = serviceResponse.Serialize(outputType);
                 }
 
-                if (String.Compare(operation, "GetItemParts", true) == 0)
-                {
-                    String itemID = context.Request.QueryString["itemid"];
-                    ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    serviceResponse.Result = this.GetItemParts(itemID, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
                 // ------- Title operations -------
 
                 if (String.Compare(operation, "GetTitleMetadata", true) == 0)
@@ -102,14 +78,6 @@ namespace MOBOT.BHL.Web2.api3
                     String includeItems = context.Request.QueryString["items"] ?? "f";
                     ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
                     serviceResponse.Result = this.GetTitleMetadata(titleID, includeItems, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetTitleItems", true) == 0)
-                {
-                    String titleID = context.Request.QueryString["titleid"];
-                    ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
-                    serviceResponse.Result = this.GetTitleItems(titleID, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -135,16 +103,9 @@ namespace MOBOT.BHL.Web2.api3
                 if (String.Compare(operation, "GetPartMetadata", true) == 0)
                 {
                     String partID = context.Request.QueryString["partid"];
+                    String includeNames = context.Request.QueryString["names"] ?? "f";
                     ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    serviceResponse.Result = this.GetPartMetadata(partID, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetPartNames", true) == 0)
-                {
-                    String partID = context.Request.QueryString["partid"];
-                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
-                    serviceResponse.Result = this.GetPartNames(partID, key);
+                    serviceResponse.Result = this.GetPartMetadata(partID, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -337,25 +298,11 @@ namespace MOBOT.BHL.Web2.api3
 
         #region API Methods
 
-        private CustomGenericList<Name> GetPageNames(string pageID, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetPageNames, apiKey, pageID);
-            Api3 api = new Api3();
-            return api.GetPageNames(pageID);
-        }
-
         private Page GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
             Api3 api = new Api3();
             return api.GetPageMetadata(pageID, includeOcr, includeNames);
-        }
-
-        private string GetPageOcrText(string pageID, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetPageOcrText, apiKey, pageID);
-            Api3 api = new Api3();
-            return api.GetPageOcrText(pageID);
         }
 
         private CustomGenericList<Item> GetItemMetadata(string itemID, string includePages, string includeOcr, string includeParts, string apiKey)
@@ -373,25 +320,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetItemByIdentifier(identifierType, identifierValue);
         }
 
-        private CustomGenericList<Part> GetItemParts(string itemID, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetItemParts, apiKey, itemID);
-            Api3 api = new Api3();
-            return api.GetItemSegments(itemID);
-        }
-
         private CustomGenericList<Title> GetTitleMetadata(string titleID, string includeItems, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, titleID);
             Api3 api = new Api3();
             return api.GetTitleMetadata(titleID, includeItems);
-        }
-
-        private CustomGenericList<Item> GetTitleItems(string titleID, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetTitleItems, apiKey, titleID);
-            Api3 api = new Api3();
-            return api.GetTitleItems(titleID);
         }
 
         private CustomGenericList<Title> GetTitleByIdentifier(string identifierType, string identifierValue, string apiKey)
@@ -408,18 +341,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.TitleSearchSimple(title, fullText);
         }
 
-        private CustomGenericList<Part> GetPartMetadata(string partID, string apiKey)
+        private CustomGenericList<Part> GetPartMetadata(string partID, string includeNames, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, partID);
+            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, partID + "|" + includeNames);
             Api3 api = new Api3();
-            return api.GetSegmentMetadata(partID);
-        }
-
-        private CustomGenericList<Name> GetPartNames(string partID, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetPartNames, apiKey, partID);
-            Api3 api = new Api3();
-            return api.GetSegmentNames(partID);
+            return api.GetSegmentMetadata(partID, includeNames);
         }
 
         private CustomGenericList<Part> GetPartByIdentifier(string identifierType, string identifierValue, string apiKey)

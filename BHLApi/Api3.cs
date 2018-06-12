@@ -35,7 +35,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Page methods
 
-        public CustomGenericList<Name> GetPageNames(string pageID)
+        private CustomGenericList<Name> GetPageNames(string pageID)
         {
             // Validate the page identifier
             int pageIDInt;
@@ -82,7 +82,7 @@ namespace MOBOT.BHL.API.BHLApi
             return page;
         }
 
-        public string GetPageOcrText(string pageID)
+        private string GetPageOcrText(string pageID)
         {
             // Validate the parameters
             int pageIDInt;
@@ -260,7 +260,7 @@ namespace MOBOT.BHL.API.BHLApi
             return new CustomGenericList<Item> { item };
         }
 
-        public CustomGenericList<Part> GetItemSegments(string itemID)
+        private CustomGenericList<Part> GetItemSegments(string itemID)
         {
             // Validate the parameters
             int itemIDint;
@@ -318,7 +318,7 @@ namespace MOBOT.BHL.API.BHLApi
             return new CustomGenericList<Title> { title };
         }
 
-        public CustomGenericList<Item> GetTitleItems(string titleID)
+        private CustomGenericList<Item> GetTitleItems(string titleID)
         {
             // Validate the parameters
             int titleIDint;
@@ -411,7 +411,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Segment methods
 
-        public CustomGenericList<Part> GetSegmentMetadata(string segmentID)
+        public CustomGenericList<Part> GetSegmentMetadata(string segmentID, string includeNames)
         {
             // Validate the parameters
             int segmentIDint;
@@ -419,6 +419,11 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
             }
+
+            // "t" or "true" are acceptable values for the "includeNames" argument; anything else
+            // is considering a value of "false"
+            includeNames = (includeNames ?? "");
+            bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
 
             Api3DAL dal = new Api3DAL();
             Part part = dal.SegmentSelectForSegmentID(null, null, segmentIDint);
@@ -435,12 +440,13 @@ namespace MOBOT.BHL.API.BHLApi
                     relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
                 }
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
+                if (names) part.Names = this.GetSegmentNames(segmentID);
             }
 
             return new CustomGenericList<Part> { part };
         }
 
-        public CustomGenericList<Name> GetSegmentNames(string segmentID)
+        private CustomGenericList<Name> GetSegmentNames(string segmentID)
         {
             // Validate the page identifier
             int segmentIDInt;

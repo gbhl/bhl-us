@@ -257,6 +257,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _relatedParts = value; }
         }
 
+        CustomGenericList<Name> _Names = null;
+        public CustomGenericList<Name> Names
+        {
+            get { return _Names; }
+            set { _Names = value; }
+        }
+
         #endregion Properties
 
         #region ISetValues Members
