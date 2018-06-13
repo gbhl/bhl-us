@@ -166,34 +166,34 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
-    <Content Include="api3\docs\AuthorSearch.xml" />
-    <Content Include="api3\docs\docs.html" />
-    <Content Include="api3\docs\docs.txt" />
-    <Content Include="api3\docs\GetAuthorPublications.xml" />
-    <Content Include="api3\docs\GetCollections.xml" />
-    <Content Include="api3\docs\GetInstitutions.xml" />
-    <Content Include="api3\docs\GetItemByIdentifier.xml" />
-    <Content Include="api3\docs\GetItemMetadata.xml" />
-    <Content Include="api3\docs\GetItemParts.xml" />
-    <Content Include="api3\docs\GetLanguages.xml" />
-    <Content Include="api3\docs\GetNameDetail.xml" />
-    <Content Include="api3\docs\GetNameDetailByIdentifier.xml" />
-    <Content Include="api3\docs\GetPageMetadata.xml" />
-    <Content Include="api3\docs\GetPageNames.xml" />
-    <Content Include="api3\docs\GetPageOcrText.xml" />
-    <Content Include="api3\docs\GetPartByIdentifier.xml" />
-    <Content Include="api3\docs\GetPartMetadata.xml" />
-    <Content Include="api3\docs\GetPartNames.xml" />
-    <Content Include="api3\docs\GetSubjectPublications.xml" />
-    <Content Include="api3\docs\GetTitleByIdentifier.xml" />
-    <Content Include="api3\docs\GetTitleItems.xml" />
-    <Content Include="api3\docs\GetTitleMetadata.xml" />
-    <Content Include="api3\docs\NameSearch.xml" />
-    <Content Include="api3\docs\PageSearch.xml" />
-    <Content Include="api3\docs\PublicationSearchTerm.xml" />
-    <Content Include="api3\docs\PublicationSearchTitle.xml" />
-    <Content Include="api3\docs\SubjectSearch.xml" />
-    <Content Include="api3\docs\TitleSearchSimple.xml" />
+    <Content Include="apiv3\docs\AuthorSearch.xml" />
+    <Content Include="apiv3\docs\docs.html" />
+    <Content Include="apiv3\docs\docs.txt" />
+    <Content Include="apiv3\docs\GetAuthorPublications.xml" />
+    <Content Include="apiv3\docs\GetCollections.xml" />
+    <Content Include="apiv3\docs\GetInstitutions.xml" />
+    <Content Include="apiv3\docs\GetItemByIdentifier.xml" />
+    <Content Include="apiv3\docs\GetItemMetadata.xml" />
+    <Content Include="apiv3\docs\GetItemParts.xml" />
+    <Content Include="apiv3\docs\GetLanguages.xml" />
+    <Content Include="apiv3\docs\GetNameDetail.xml" />
+    <Content Include="apiv3\docs\GetNameDetailByIdentifier.xml" />
+    <Content Include="apiv3\docs\GetPageMetadata.xml" />
+    <Content Include="apiv3\docs\GetPageNames.xml" />
+    <Content Include="apiv3\docs\GetPageOcrText.xml" />
+    <Content Include="apiv3\docs\GetPartByIdentifier.xml" />
+    <Content Include="apiv3\docs\GetPartMetadata.xml" />
+    <Content Include="apiv3\docs\GetPartNames.xml" />
+    <Content Include="apiv3\docs\GetSubjectPublications.xml" />
+    <Content Include="apiv3\docs\GetTitleByIdentifier.xml" />
+    <Content Include="apiv3\docs\GetTitleItems.xml" />
+    <Content Include="apiv3\docs\GetTitleMetadata.xml" />
+    <Content Include="apiv3\docs\NameSearch.xml" />
+    <Content Include="apiv3\docs\PageSearch.xml" />
+    <Content Include="apiv3\docs\PublicationSearchTerm.xml" />
+    <Content Include="apiv3\docs\PublicationSearchTitle.xml" />
+    <Content Include="apiv3\docs\SubjectSearch.xml" />
+    <Content Include="apiv3\docs\TitleSearchSimple.xml" />
     <Content Include="apikeymsg.txt" />
     <Content Include="api\docs\docs.html" />
     <Content Include="api\docs\docs.txt" />
@@ -491,7 +491,7 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\PDFDownload.ashx" />
     <Content Include="Handlers\RISDownload.ashx" />
-    <Content Include="api3\api3.ashx" />
+    <Content Include="apiv3\api3.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -570,7 +570,7 @@
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="api3\api3.ashx.cs">
+    <Compile Include="apiv3\api3.ashx.cs">
       <DependentUpon>api3.ashx</DependentUpon>
     </Compile>
     <Compile Include="api\httpQuery.ashx.cs">

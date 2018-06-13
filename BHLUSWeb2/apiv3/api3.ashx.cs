@@ -52,21 +52,13 @@ namespace MOBOT.BHL.Web2.api3
 
                 if (String.Compare(operation, "GetItemMetadata", true) == 0)
                 {
-                    String itemID = context.Request.QueryString["itemid"];
+                    String id = context.Request.QueryString["id"];
+                    String idType = context.Request.QueryString["idType"];
                     String includePages = context.Request.QueryString["pages"] ?? "f";
                     String includeOcr = context.Request.QueryString["ocr"] ?? "f";
                     String includeParts = context.Request.QueryString["parts"] ?? "f";
                     ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
-                    serviceResponse.Result = this.GetItemMetadata(itemID, includePages, includeOcr, includeParts, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetItemByIdentifier", true) == 0)
-                {
-                    String identifierType = context.Request.QueryString["type"];
-                    String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<CustomGenericList<Item>> serviceResponse = new ServiceResponse<CustomGenericList<Item>>();
-                    serviceResponse.Result = this.GetItemByIdentifier(identifierType, identifierValue, key);
+                    serviceResponse.Result = this.GetItemMetadata(id, idType, includePages, includeOcr, includeParts, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -74,27 +66,11 @@ namespace MOBOT.BHL.Web2.api3
 
                 if (String.Compare(operation, "GetTitleMetadata", true) == 0)
                 {
-                    String titleID = context.Request.QueryString["titleid"];
+                    String id = context.Request.QueryString["id"];
+                    String idType = context.Request.QueryString["idType"];
                     String includeItems = context.Request.QueryString["items"] ?? "f";
                     ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
-                    serviceResponse.Result = this.GetTitleMetadata(titleID, includeItems, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetTitleByIdentifier", true) == 0)
-                {
-                    String identifierType = context.Request.QueryString["type"];
-                    String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
-                    serviceResponse.Result = this.GetTitleByIdentifier(identifierType, identifierValue, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "TitleSearchSimple", true) == 0)
-                {
-                    String title = context.Request.QueryString["title"];
-                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
-                    serviceResponse.Result = this.TitleSearchSimple(title, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    serviceResponse.Result = this.GetTitleMetadata(id, idType, includeItems, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -102,31 +78,15 @@ namespace MOBOT.BHL.Web2.api3
 
                 if (String.Compare(operation, "GetPartMetadata", true) == 0)
                 {
-                    String partID = context.Request.QueryString["partid"];
+                    String id = context.Request.QueryString["id"];
+                    String idType = context.Request.QueryString["idType"];
                     String includeNames = context.Request.QueryString["names"] ?? "f";
                     ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    serviceResponse.Result = this.GetPartMetadata(partID, includeNames, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetPartByIdentifier", true) == 0)
-                {
-                    String identifierType = context.Request.QueryString["type"];
-                    String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    serviceResponse.Result = this.GetPartByIdentifier(identifierType, identifierValue, key);
+                    serviceResponse.Result = this.GetPartMetadata(id, idType, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
                 // ------- Subject operations -------
-
-                if (String.Compare(operation, "SubjectSearch", true) == 0)
-                {
-                    String subject = context.Request.QueryString["subject"];
-                    ServiceResponse<CustomGenericList<Subject>> serviceResponse = new ServiceResponse<CustomGenericList<Subject>>();
-                    serviceResponse.Result = this.SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
-                    response = serviceResponse.Serialize(outputType);
-                }
 
                 if (String.Compare(operation, "GetSubjectPublications", true) == 0)
                 {
@@ -137,14 +97,6 @@ namespace MOBOT.BHL.Web2.api3
                 }
 
                 // ------- Author operations -------
-
-                if (String.Compare(operation, "AuthorSearch", true) == 0)
-                {
-                    String name = context.Request.QueryString["authorname"];
-                    ServiceResponse<CustomGenericList<Author>> serviceResponse = new ServiceResponse<CustomGenericList<Author>>();
-                    serviceResponse.Result = this.AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
-                    response = serviceResponse.Serialize(outputType);
-                }
 
                 if (String.Compare(operation, "GetAuthorPublications", true) == 0)
                 {
@@ -173,14 +125,6 @@ namespace MOBOT.BHL.Web2.api3
                     response = serviceResponse.Serialize(outputType);
                 }
 
-                if (String.Compare(operation, "NameSearch", true) == 0)
-                {
-                    String name = context.Request.QueryString["name"];
-                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
-                    serviceResponse.Result = this.NameSearch(name, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
                 // ------- Language operations -------
 
                 if (String.Compare(operation, "GetLanguages", true) == 0)
@@ -196,6 +140,15 @@ namespace MOBOT.BHL.Web2.api3
                 {
                     ServiceResponse<CustomGenericList<Collection>> serviceResponse = new ServiceResponse<CustomGenericList<Collection>>();
                     serviceResponse.Result = this.GetCollections(key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                // ------- Institution operations -------
+
+                if (String.Compare(operation, "GetInstitutions", true) == 0)
+                {
+                    ServiceResponse<CustomGenericList<Institution>> serviceResponse = new ServiceResponse<CustomGenericList<Institution>>();
+                    serviceResponse.Result = this.GetInstitutions(key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -232,12 +185,35 @@ namespace MOBOT.BHL.Web2.api3
                     response = serviceResponse.Serialize(outputType);
                 }
 
-                // ------- Institution operations -------
-
-                if (String.Compare(operation, "GetInstitutions", true) == 0)
+                if (String.Compare(operation, "NameSearch", true) == 0)
                 {
-                    ServiceResponse<CustomGenericList<Institution>> serviceResponse = new ServiceResponse<CustomGenericList<Institution>>();
-                    serviceResponse.Result = this.GetInstitutions(key);
+                    String name = context.Request.QueryString["name"];
+                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
+                    serviceResponse.Result = this.NameSearch(name, key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                if (String.Compare(operation, "SubjectSearch", true) == 0)
+                {
+                    String subject = context.Request.QueryString["subject"];
+                    ServiceResponse<CustomGenericList<Subject>> serviceResponse = new ServiceResponse<CustomGenericList<Subject>>();
+                    serviceResponse.Result = this.SubjectSearch(subject, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                if (String.Compare(operation, "AuthorSearch", true) == 0)
+                {
+                    String name = context.Request.QueryString["authorname"];
+                    ServiceResponse<CustomGenericList<Author>> serviceResponse = new ServiceResponse<CustomGenericList<Author>>();
+                    serviceResponse.Result = this.AuthorSearch(name, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
+                    response = serviceResponse.Serialize(outputType);
+                }
+
+                if (String.Compare(operation, "TitleSearchSimple", true) == 0)
+                {
+                    String title = context.Request.QueryString["title"];
+                    ServiceResponse<CustomGenericList<Title>> serviceResponse = new ServiceResponse<CustomGenericList<Title>>();
+                    serviceResponse.Result = this.TitleSearchSimple(title, Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
                     response = serviceResponse.Serialize(outputType);
                 }
             }
@@ -305,33 +281,19 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetPageMetadata(pageID, includeOcr, includeNames);
         }
 
-        private CustomGenericList<Item> GetItemMetadata(string itemID, string includePages, string includeOcr, string includeParts, string apiKey)
+        private CustomGenericList<Item> GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeParts, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetItemMetadata, apiKey, 
-                itemID + "|" + includePages + "|" + includeOcr + "|" + includeParts);
+                id + "|" + idType + "|" + includePages + "|" + includeOcr + "|" + includeParts);
             Api3 api = new Api3();
-            return api.GetItemMetadata(itemID, includePages, includeOcr, includeParts);
+            return api.GetItemMetadata(id, idType, includePages, includeOcr, includeParts);
         }
 
-        private CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue, string apiKey)
+        private CustomGenericList<Title> GetTitleMetadata(string id, string idType, string includeItems, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetItemByIdentifier, apiKey, identifierType + "|" + identifierValue);
+            ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, id + "|" + idType + "|" + includeItems);
             Api3 api = new Api3();
-            return api.GetItemByIdentifier(identifierType, identifierValue);
-        }
-
-        private CustomGenericList<Title> GetTitleMetadata(string titleID, string includeItems, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetTitleMetadata, apiKey, titleID);
-            Api3 api = new Api3();
-            return api.GetTitleMetadata(titleID, includeItems);
-        }
-
-        private CustomGenericList<Title> GetTitleByIdentifier(string identifierType, string identifierValue, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetTitleByIdentifier, apiKey, identifierType + "|" + identifierValue);
-            Api3 api = new Api3();
-            return api.GetTitleByIdentifier(identifierType, identifierValue);
+            return api.GetTitleMetadata(id, idType, includeItems);
         }
 
         private CustomGenericList<Title> TitleSearchSimple(string title, bool fullText, string apiKey)
@@ -341,19 +303,21 @@ namespace MOBOT.BHL.Web2.api3
             return api.TitleSearchSimple(title, fullText);
         }
 
-        private CustomGenericList<Part> GetPartMetadata(string partID, string includeNames, string apiKey)
+        private CustomGenericList<Part> GetPartMetadata(string id, string idType, string includeNames, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, partID + "|" + includeNames);
+            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includeNames);
             Api3 api = new Api3();
-            return api.GetSegmentMetadata(partID, includeNames);
+            return api.GetSegmentMetadata(id, idType, includeNames);
         }
 
+        /*
         private CustomGenericList<Part> GetPartByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetPartByIdentifier, apiKey, identifierType + "|" + identifierValue);
             Api3 api = new Api3();
             return api.GetSegmentByIdentifier(identifierType, identifierValue);
         }
+        */
 
         private CustomGenericList<Subject> SubjectSearch(string subject, bool fullText, string apiKey)
         {

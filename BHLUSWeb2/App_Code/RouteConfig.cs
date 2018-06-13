@@ -24,7 +24,6 @@ namespace MOBOT.BHL.Web2
             routes.MapPageRoute("OpenUrl-Multiple", "openurlmultiple", "~/OpenUrlMultiple.aspx");
 
             routes.Add("API3", new Route("api3", new HttpHandlerRouteHandler<api3.api3>()));
-            routes.RouteExistingFiles = true;
 
             routes.Add("OAI", new Route("oai", new HttpHandlerRouteHandler<oai2>()));
 

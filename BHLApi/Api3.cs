@@ -35,19 +35,6 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Page methods
 
-        private CustomGenericList<Name> GetPageNames(string pageID)
-        {
-            // Validate the page identifier
-            int pageIDInt;
-            if (!Int32.TryParse(pageID, out pageIDInt))
-            {
-                throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
-            }
-
-            // Get the names from the DAL
-            return new Api3DAL().NamePageSelectByPageID(null, null, pageIDInt);
-        }
-
         public Page GetPageMetadata(string pageID, string includeOcr, string includeNames)
         {
             // Validate the parameters
@@ -82,6 +69,19 @@ namespace MOBOT.BHL.API.BHLApi
             return page;
         }
 
+        private CustomGenericList<Name> GetPageNames(string pageID)
+        {
+            // Validate the page identifier
+            int pageIDInt;
+            if (!Int32.TryParse(pageID, out pageIDInt))
+            {
+                throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
+            }
+
+            // Get the names from the DAL
+            return new Api3DAL().NamePageSelectByPageID(null, null, pageIDInt);
+        }
+
         private string GetPageOcrText(string pageID)
         {
             // Validate the parameters
@@ -110,18 +110,26 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Item methods
 
-        public CustomGenericList<Item> GetItemMetadata(string itemID, string includePages)
+        public CustomGenericList<Item> GetItemMetadata(string id, string idType, string includePages)
         {
-            return this.GetItemMetadata(itemID, includePages, "f", "f");
+            return this.GetItemMetadata(id, idType, includePages, "f", "f");
         }
 
-        public CustomGenericList<Item> GetItemMetadata(string itemID, string includePages, string includeOcr, string includeSegments)
+        public CustomGenericList<Item> GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeSegments)
         {
+            CustomGenericList<Item> items = null;
+
             // Validate the parameters
-            int itemIDint;
-            if (!Int32.TryParse(itemID, out itemIDint))
+            if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
+
+            // Validate the parameters
+            int itemID = 0;
+            if (idType.ToLower() == "bhl")
             {
-                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+                if (!Int32.TryParse(id, out itemID))
+                {
+                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                }
             }
 
             // "t" or "true" are acceptable values for the "includePages" argument; anything else
@@ -134,23 +142,41 @@ namespace MOBOT.BHL.API.BHLApi
             includeSegments = (includeSegments ?? "");
             bool segments = (includeSegments.ToLower() == "t" || includeSegments.ToLower() == "true");
 
-            Item item = new Api3DAL().ItemSelectByItemID(null, null, itemIDint);
-            if (item != null)
+            // Retrieve the basic item metadata
+            Api3DAL dal = new Api3DAL();
+            switch (idType.ToLower())
+            {
+                case "bhl":
+                    items = new CustomGenericList<Item> {
+                        dal.ItemSelectByItemID(null, null, itemID)
+                    };
+                    break;
+                case "ia":
+                    items = new CustomGenericList<Item> {
+                        dal.ItemSelectByBarcode(null, null, id)
+                    };
+                    break;
+                default:
+                    throw new Exception("idType must be one of the following values: bhl, ia");
+            }
+
+            // Add the extended metadata
+            foreach(Item item in items)
             {
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
                 item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
-                CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                CustomGenericList<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                CustomGenericList<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
-                if (pages) item.Pages = this.GetItemPages(itemID, includeOcr);
-                if (segments) item.Parts = this.GetItemSegments(itemID);
+                if (pages) item.Pages = this.GetItemPages(id, includeOcr);
+                if (segments) item.Parts = this.GetItemSegments(id);
             }
 
-            return new CustomGenericList<Item> { item };
+            return items;
         }
 
         private CustomGenericList<Page> GetItemPages(string itemID, string includeOcr)
@@ -228,38 +254,6 @@ namespace MOBOT.BHL.API.BHLApi
             return pages;
         }
 
-        public CustomGenericList<Item> GetItemByIdentifier(string identifierType, string identifierValue)
-        {
-            Item item;
-
-            switch (identifierType.ToLower())
-            {
-                case "barcode":
-                case "ia":
-                    {
-                        Api3DAL dal = new Api3DAL();
-                        item = dal.ItemSelectByBarcode(null, null, identifierValue);
-                        if (item != null)
-                        {
-                            CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
-                            if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                            CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
-                            if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
-
-                            item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                            item.TitleUrl = (item.TitleID == null ) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
-                            item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
-                        }
-
-                        break;
-                    }
-                default:
-                    throw new Exception("identifierType must be one of the following values: barcode, ia");
-            }
-
-            return new CustomGenericList<Item> { item };
-        }
-
         private CustomGenericList<Part> GetItemSegments(string itemID)
         {
             // Validate the parameters
@@ -285,22 +279,55 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Title methods
 
-        public CustomGenericList<Title> GetTitleMetadata(string titleID, string includeItems)
+        public CustomGenericList<Title> GetTitleMetadata(string id, string idType, string includeItems)
         {
+            CustomGenericList<Title> titles = null;
+
             // Validate the parameters
-            int titleIDint;
-            if (!Int32.TryParse(titleID, out titleIDint))
+            if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
+
+            int titleID = 0;
+            if (idType.ToLower() == "bhl")
             {
-                throw new Exception("titleID (" + titleID + ") must be a valid integer value.");
+                if (!Int32.TryParse(id, out titleID))
+                {
+                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                }
             }
 
             // "t" or "true" are acceptable values for the "includeItems" argument; anything else
             // is considering a value of "false"
             bool items = (includeItems.ToLower() == "t" || includeItems.ToLower() == "true");
 
+            // Retrieve the basic title metadata
             Api3DAL dal = new Api3DAL();
-            Title title = dal.TitleSelectAuto(null, null, titleIDint);
-            if (title != null)
+            switch (idType.ToLower())
+            {
+                case "bhl":
+                    Title title = dal.TitleSelectAuto(null, null, titleID);
+                    titles = new CustomGenericList<Title> { title };
+                    break;
+                case "oclc":
+                case "issn":
+                case "isbn":
+                case "lccn":
+                case "ddc":
+                case "nal":
+                case "nlm":
+                case "coden":
+                case "soulsby":
+                        if (idType.ToLower() == "lccn") idType = "dlc";
+                        titles = dal.TitleSelectByIdentifier(null, null, idType, id);
+                        break;
+                case "doi":
+                        titles = dal.TitleSelectByDOI(null, null, id);
+                        break;
+                default:
+                    throw new Exception("idType must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby");
+            }
+
+            // Add the extended metadata
+            foreach (Title title in titles)
             {
                 title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
                 title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
@@ -308,14 +335,10 @@ namespace MOBOT.BHL.API.BHLApi
                 title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
                 title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
                 title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
-
-                if (items)
-                {
-                    title.Items = this.GetTitleItems(title.TitleID.ToString());
-                }
+                if (items) title.Items = this.GetTitleItems(title.TitleID.ToString());
             }
 
-            return new CustomGenericList<Title> { title };
+            return titles;
         }
 
         private CustomGenericList<Item> GetTitleItems(string titleID)
@@ -344,12 +367,39 @@ namespace MOBOT.BHL.API.BHLApi
             return items;
         }
 
-        public CustomGenericList<Title> GetTitleByIdentifier(string identifierType, string identifierValue)
-        {
-            CustomGenericList<Title> titles = new CustomGenericList<Title>();
+        #endregion Title methods
 
-            switch (identifierType.ToLower())
+        #region Segment methods
+
+        public CustomGenericList<Part> GetSegmentMetadata(string id, string idType, string includeNames)
+        {
+            CustomGenericList<Part> parts = null;
+
+            // Validate the parameters
+            if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
+
+            int segmentID = 0;
+            if (idType.ToLower() == "bhl")
             {
+                if (!Int32.TryParse(id, out segmentID))
+                {
+                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                }
+            }
+
+            // "t" or "true" are acceptable values for the "includeNames" argument; anything else
+            // is considering a value of "false"
+            includeNames = (includeNames ?? "");
+            bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
+
+            // Retrieve the basic part metadata
+            Api3DAL dal = new Api3DAL();
+            switch (idType.ToLower())
+            {
+                case "bhl":
+                    Part part = dal.SegmentSelectForSegmentID(null, null, segmentID);
+                    parts = new CustomGenericList<Part> { part };
+                    break;
                 case "oclc":
                 case "issn":
                 case "isbn":
@@ -358,76 +408,20 @@ namespace MOBOT.BHL.API.BHLApi
                 case "nal":
                 case "nlm":
                 case "coden":
+                case "biostor":
                 case "soulsby":
-                    {
-                        if (identifierType.ToLower() == "lccn") identifierType = "dlc";
-
-                        Api3DAL dal = new Api3DAL();
-                        titles = dal.TitleSelectByIdentifier(null, null, identifierType, identifierValue);
-                        foreach (Title title in titles)
-                        {
-                            title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
-                            title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
-                            title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
-                            title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
-                            title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
-                            title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
-                        }
-
-                        break;
-                    }
+                    if (idType.ToLower() == "lccn") idType = "dlc";
+                    parts = dal.SegmentSelectByIdentifier(null, null, idType, id);
+                    break;
                 case "doi":
-                    {
-                        Api3DAL dal = new Api3DAL();
-                        titles = dal.TitleSelectByDOI(null, null, identifierValue);
-                        foreach (Title title in titles)
-                        {
-                            title.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + title.TitleID.ToString();
-                            title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
-                            title.Identifiers = dal.TitleIdentifierSelectByTitleID(null, null, title.TitleID);
-                            title.Variants = dal.TitleVariantSelectByTitleID(null, null, title.TitleID);
-                            title.Subjects = dal.SubjectSelectByTitleID(null, null, title.TitleID);
-                            title.Notes = dal.TitleNoteSelectByTitleID(null, null, title.TitleID);
-                        }
-
-                        break;
-                    }
+                    parts = dal.SegmentSelectByDOI(null, null, id);
+                    break;
                 default:
-                    throw new Exception("identifierType must be one of the following values: doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden");
+                    throw new Exception("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
             }
 
-            return titles;
-        }
-
-        public CustomGenericList<Title> TitleSearchSimple(string title, bool sqlFullText)
-        {
-            if (sqlFullText)
-                return new Api3DAL().SearchTitleSimple(null, null, title);
-            else
-                return new Api3DAL().TitleSelectSearchSimple(null, null, title);
-        }
-
-        #endregion Title methods
-
-        #region Segment methods
-
-        public CustomGenericList<Part> GetSegmentMetadata(string segmentID, string includeNames)
-        {
-            // Validate the parameters
-            int segmentIDint;
-            if (!Int32.TryParse(segmentID, out segmentIDint))
-            {
-                throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
-            }
-
-            // "t" or "true" are acceptable values for the "includeNames" argument; anything else
-            // is considering a value of "false"
-            includeNames = (includeNames ?? "");
-            bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
-
-            Api3DAL dal = new Api3DAL();
-            Part part = dal.SegmentSelectForSegmentID(null, null, segmentIDint);
-            if (part != null)
+            // Add the extended metadata
+            foreach (Part part in parts)
             {
                 part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
@@ -435,15 +429,15 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
                 part.Pages = this.GetSegmentPages(part.PartID);
                 part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
-                foreach(Part relatedPart in part.RelatedParts)
+                foreach (Part relatedPart in part.RelatedParts)
                 {
                     relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
                 }
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
-                if (names) part.Names = this.GetSegmentNames(segmentID);
+                if (names) part.Names = this.GetSegmentNames(id);
             }
 
-            return new CustomGenericList<Part> { part };
+            return parts;
         }
 
         private CustomGenericList<Name> GetSegmentNames(string segmentID)
@@ -457,72 +451,6 @@ namespace MOBOT.BHL.API.BHLApi
 
             // Get the names from the DAL
             return new Api3DAL().NameSegmentSelectBySegmentID(null, null, segmentIDInt);
-        }
-
-        public CustomGenericList<Part> GetSegmentByIdentifier(string identifierType, string identifierValue)
-        {
-            CustomGenericList<Part> parts = new CustomGenericList<Part>();
-
-            switch (identifierType.ToLower())
-            {
-                case "oclc":
-                case "issn":
-                case "isbn":
-                case "lccn":
-                case "ddc":
-                case "nal":
-                case "nlm":
-                case "coden":
-                case "biostor":
-                case "soulsby":
-                    {
-                        if (identifierType.ToLower() == "lccn") identifierType = "dlc";
-
-                        Api3DAL dal = new Api3DAL();
-                        parts = dal.SegmentSelectByIdentifier(null, null, identifierType, identifierValue);
-                        foreach (Part part in parts)
-                        {
-                            part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
-                            part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
-                            part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
-                            part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
-                            part.Pages = this.GetSegmentPages(part.PartID);
-                            part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
-                            foreach (Part relatedPart in part.RelatedParts)
-                            {
-                                relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
-                            }
-                            part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
-                        }
-
-                        break;
-                    }
-                case "doi":
-                    {
-                        Api3DAL dal = new Api3DAL();
-                        parts = dal.SegmentSelectByDOI(null, null, identifierValue);
-                        foreach (Part part in parts)
-                        {
-                            part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
-                            part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
-                            part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
-                            part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
-                            part.Pages = this.GetSegmentPages(part.PartID);
-                            part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
-                            foreach (Part relatedPart in part.RelatedParts)
-                            {
-                                relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
-                            }
-                            part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
-                        }
-
-                        break;
-                    }
-                default:
-                    throw new Exception("identifierType must be one of the following values: doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor");
-            }
-
-            return parts;
         }
 
         private CustomGenericList<Page> GetSegmentPages(int segmentID)
@@ -590,37 +518,6 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Subject methods
 
-        public CustomGenericList<Subject> SubjectSearch(string subject, bool sqlFullText)
-        {
-            CustomGenericList<Subject> subjects = new CustomGenericList<Subject>();
-
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
-                ISearchResult result = search.SearchKeyword(subject);
-
-                // Build the list of results
-                foreach(KeywordHit hit in result.Keywords)
-                {
-                    subjects.Add(new Subject { SubjectText = hit.Keyword });
-                }
-            }
-            else
-            {
-                Api3DAL dal = new Api3DAL();
-                if (sqlFullText)
-                    subjects = dal.SearchTitleKeyword(null, null, subject);
-                else
-                    subjects = dal.TitleKeywordSelectLikeTag(null, null, subject);
-            }
-
-            return subjects;
-        }
-
         public CustomGenericList<Publication> GetSubjectPublications(string subject)
         {
             Api3DAL dal = new Api3DAL();
@@ -640,43 +537,6 @@ namespace MOBOT.BHL.API.BHLApi
         #endregion Subject methods
 
         #region Author methods
-
-        public CustomGenericList<Author> AuthorSearch(string name, bool sqlFullText)
-        {
-            CustomGenericList<Author> creators = new CustomGenericList<Author>();
-
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
-                ISearchResult result = search.SearchAuthor(name);
-
-                // Build the list of results
-                List<int> creatorIds = new List<int>();
-                foreach (AuthorHit hit in result.Authors)
-                {
-                    creatorIds.Add(Convert.ToInt32(hit.Id));
-                }
-                creators = new Api3DAL().AuthorSelectForList(null, null, creatorIds);
-            }
-            else
-            {
-                if (sqlFullText)
-                    creators = new Api3DAL().SearchAuthor(null, null, name);
-                else
-                    creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
-            }
-
-            foreach (Author creator in creators)
-            {
-                creator.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + creator.AuthorID.ToString();
-            }
-
-            return creators;
-        }
 
         public CustomGenericList<Publication> GetAuthorPublications(string creatorID)
         {
@@ -853,103 +713,6 @@ namespace MOBOT.BHL.API.BHLApi
             return name;
         }
 
-        public CustomGenericList<Name> NameSearch(string name)
-        {
-            if (name == String.Empty)
-            {
-                throw new Exception("Please supply a name for which to search.");
-            }
-
-            CustomGenericList<Name> names = new CustomGenericList<Name>();
-
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
-                ISearchResult result = search.SearchName(name);
-
-                // Build the list of results
-                foreach (NameHit hit in result.Names)
-                {
-                    names.Add(new Name { NameConfirmed = hit.Name });
-                }
-            }
-            else
-            {
-                names = new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
-            }
-
-            return names;
-        }
-
-        public CustomGenericList<Page> PageSearch(string itemID, string text)
-        {
-            // Validate the parameters
-            int itemIDint;
-            if (!Int32.TryParse(itemID, out itemIDint))
-            {
-                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
-            }
-            if (text == String.Empty)
-            {
-                throw new Exception("Please supply text for which to search.");
-            }
-
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
-
-            if (_useElasticSearch)
-            {
-                // Submit the request to ElasticSearch
-                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
-                search.StartPage = 1;
-                search.NumResults = 10000;
-                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
-
-                List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
-                Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
-                limits.Add(itemLimit);
-                ISearchResult result = search.SearchPage(text ?? "", limits, true);
-
-                // Build the list of results
-                foreach (PageHit hit in result.Pages)
-                {
-                    Page page = new Page {
-                        PageID = Convert.ToInt32(hit.Id),
-                        ItemID = itemIDint,
-                        PageUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
-                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
-                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
-                        OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
-                        OcrText = hit.Text
-                    };
-
-                    if (hit.PageTypes.Count > 0) page.PageTypes = new CustomGenericList<PageType>();
-                    foreach(string pageType in hit.PageTypes)
-                    {
-                        page.PageTypes.Add(new PageType { PageTypeName = pageType });
-                    }
-
-                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new CustomGenericList<PageNumber>();
-                    foreach(string pageIndicator in hit.pageIndicators)
-                    {
-                        page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
-                    }
-
-                    pages.Add(page);
-                }
-            }
-            else
-            {
-                // There is no non-ElasticSearch implementation
-                throw new NotImplementedException();
-            }
-
-            return pages;
-        }
-
         /// <summary>
         /// Validate the startRow and batchSize parameters used by the NameList* web methods.
         /// </summary>
@@ -1006,6 +769,17 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         #endregion Collection methods
+
+        #region Institution methods
+
+        public CustomGenericList<Institution> GetInstitutions()
+        {
+            Api3DAL dal = new Api3DAL();
+            CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
+            return institutions;
+        }
+
+        #endregion Institution methods
 
         #region Search methods
 
@@ -1652,6 +1426,180 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
+        public CustomGenericList<Title> TitleSearchSimple(string title, bool sqlFullText)
+        {
+            if (sqlFullText)
+                return new Api3DAL().SearchTitleSimple(null, null, title);
+            else
+                return new Api3DAL().TitleSelectSearchSimple(null, null, title);
+        }
+
+        public CustomGenericList<Subject> SubjectSearch(string subject, bool sqlFullText)
+        {
+            CustomGenericList<Subject> subjects = new CustomGenericList<Subject>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["KeywordResultDefaultSort"]);
+                ISearchResult result = search.SearchKeyword(subject);
+
+                // Build the list of results
+                foreach (KeywordHit hit in result.Keywords)
+                {
+                    subjects.Add(new Subject { SubjectText = hit.Keyword });
+                }
+            }
+            else
+            {
+                Api3DAL dal = new Api3DAL();
+                if (sqlFullText)
+                    subjects = dal.SearchTitleKeyword(null, null, subject);
+                else
+                    subjects = dal.TitleKeywordSelectLikeTag(null, null, subject);
+            }
+
+            return subjects;
+        }
+
+        public CustomGenericList<Author> AuthorSearch(string name, bool sqlFullText)
+        {
+            CustomGenericList<Author> creators = new CustomGenericList<Author>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["AuthorResultDefaultSort"]);
+                ISearchResult result = search.SearchAuthor(name);
+
+                // Build the list of results
+                List<int> creatorIds = new List<int>();
+                foreach (AuthorHit hit in result.Authors)
+                {
+                    creatorIds.Add(Convert.ToInt32(hit.Id));
+                }
+                creators = new Api3DAL().AuthorSelectForList(null, null, creatorIds);
+            }
+            else
+            {
+                if (sqlFullText)
+                    creators = new Api3DAL().SearchAuthor(null, null, name);
+                else
+                    creators = new Api3DAL().AuthorSelectNameStartsWith(null, null, name);
+            }
+
+            foreach (Author creator in creators)
+            {
+                creator.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + creator.AuthorID.ToString();
+            }
+
+            return creators;
+        }
+
+        public CustomGenericList<Name> NameSearch(string name)
+        {
+            if (name == String.Empty)
+            {
+                throw new Exception("Please supply a name for which to search.");
+            }
+
+            CustomGenericList<Name> names = new CustomGenericList<Name>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["NameResultDefaultSort"]);
+                ISearchResult result = search.SearchName(name);
+
+                // Build the list of results
+                foreach (NameHit hit in result.Names)
+                {
+                    names.Add(new Name { NameConfirmed = hit.Name });
+                }
+            }
+            else
+            {
+                names = new Api3DAL().NameResolvedSelectByNameLike(null, null, name);
+            }
+
+            return names;
+        }
+
+        public CustomGenericList<Page> PageSearch(string itemID, string text)
+        {
+            // Validate the parameters
+            int itemIDint;
+            if (!Int32.TryParse(itemID, out itemIDint))
+            {
+                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+            }
+            if (text == String.Empty)
+            {
+                throw new Exception("Please supply text for which to search.");
+            }
+
+            CustomGenericList<Page> pages = new CustomGenericList<Page>();
+
+            if (_useElasticSearch)
+            {
+                // Submit the request to ElasticSearch
+                ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
+                search.StartPage = 1;
+                search.NumResults = 10000;
+                search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PageResultDefaultSort"]);
+
+                List<Tuple<SearchField, string>> limits = new List<Tuple<SearchField, string>>();
+                Tuple<SearchField, string> itemLimit = new Tuple<SearchField, string>(SearchField.ItemID, itemID.ToString());
+                limits.Add(itemLimit);
+                ISearchResult result = search.SearchPage(text ?? "", limits, true);
+
+                // Build the list of results
+                foreach (PageHit hit in result.Pages)
+                {
+                    Page page = new Page
+                    {
+                        PageID = Convert.ToInt32(hit.Id),
+                        ItemID = itemIDint,
+                        PageUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
+                        FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
+                        OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        OcrText = hit.Text
+                    };
+
+                    if (hit.PageTypes.Count > 0) page.PageTypes = new CustomGenericList<PageType>();
+                    foreach (string pageType in hit.PageTypes)
+                    {
+                        page.PageTypes.Add(new PageType { PageTypeName = pageType });
+                    }
+
+                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new CustomGenericList<PageNumber>();
+                    foreach (string pageIndicator in hit.pageIndicators)
+                    {
+                        page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
+                    }
+
+                    pages.Add(page);
+                }
+            }
+            else
+            {
+                // There is no non-ElasticSearch implementation
+                throw new NotImplementedException();
+            }
+
+            return pages;
+        }
+
         #endregion Search methods
 
         #region Validation methods
@@ -1748,16 +1696,5 @@ namespace MOBOT.BHL.API.BHLApi
         }
 
         #endregion Validation methods
-
-        #region Institution methods
-
-        public CustomGenericList<Institution> GetInstitutions()
-        {
-            Api3DAL dal = new Api3DAL();
-            CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
-            return institutions;
-        }
-
-        #endregion Institution methods
     }
 }
