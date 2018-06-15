@@ -1349,5 +1349,6 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogInsertUpdate.sql" />
     <None Include="dbo\Stored Procedures\ApiPageSelectByNameIdentifier.sql" />
     <None Include="dbo\Stored Procedures\ApiAuthorSelectForList.sql" />
+    <None Include="dbo\Stored Procedures\ApiAuthorSelectWithNameByIdentifier.sql" />
   </ItemGroup>
 </Project>

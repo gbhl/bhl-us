@@ -89,7 +89,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
         #region Item methods
 
-        public Item ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        public CustomGenericList<Item> ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
         {
             SqlConnection connection = sqlConnection;
             SqlTransaction transaction = sqlTransaction;
@@ -104,20 +104,12 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                    {
-                        return list[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return helper.ExecuteReader(command);
                 }
             }
         }
 
-        public Item ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode)
+        public CustomGenericList<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode)
         {
             SqlConnection connection = sqlConnection;
             SqlTransaction transaction = sqlTransaction;
@@ -129,15 +121,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                    {
-                        return list[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return helper.ExecuteReader(command);
                 }
             }
         }
@@ -161,7 +145,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         #endregion Item methods
 
         #region Title methods
-        public Title TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID)
+        public CustomGenericList<Title> TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -172,14 +156,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
                 {
                     CustomGenericList<Title> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                    {
-                        return list[0];
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return list;
                 }
             }
         }
@@ -358,7 +335,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public Part SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId)
+        public CustomGenericList<Part> SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -367,11 +344,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<Part> helper = new CustomSqlHelper<Part>())
                 {
-                    CustomGenericList<Part> list = helper.ExecuteReader(command);
-                    if (list.Count > 0)
-                        return (list[0]);
-                    else
-                        return null;
+                    return helper.ExecuteReader(command);
                 }
             }
         }
@@ -492,6 +465,27 @@ namespace MOBOT.BHL.API.BHLApiDAL
         #endregion Segment methods
 
         #region Subject methods
+
+        public CustomGenericList<Subject> KeywordSelectByKeyword(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            string subject
+            )
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("KeywordSelectByKeyword", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("Keyword", SqlDbType.NVarChar, 50, false, subject)))
+            {
+                using (CustomSqlHelper<Subject> helper = new CustomSqlHelper<Subject>())
+                {
+                    CustomGenericList<Subject> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
 
         public CustomGenericList<Subject> TitleKeywordSelectLikeTag(
             SqlConnection sqlConnection,
@@ -615,6 +609,55 @@ namespace MOBOT.BHL.API.BHLApiDAL
                     CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
+        public CustomGenericList<Author> AuthorSelectByAuthorID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int authorID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectWithNameByAuthorID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
+        public CustomGenericList<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, string identifierName, string identifierValue)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiAuthorSelectWithNameByIdentifier", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("IdentifierName", SqlDbType.NVarChar, 40, false, identifierName),
+                    CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 125, false, identifierValue)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
+        public CustomGenericList<Identifier> AuthorIdentifierSelectByAuthorID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int authorID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.AuthorIdentifierSelectByAuthorID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
+            {
+                using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
                 {
                     return helper.ExecuteReader(command);
                 }

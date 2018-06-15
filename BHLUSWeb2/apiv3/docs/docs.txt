@@ -1,7 +1,7 @@
 ﻿Biodiversity Heritage Library
 API v3 Documentation
-Created: May 1, 2018
-Revised: May 1, 2018
+Created: June 15, 2018
+Revised: June 15, 2018
 
 ----------------------------------------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ https://www.biodiversitylibrary.org/getapikey.aspx.  The same key can be used fo
 Query interface and the SOAP interface.
 
 To include the key value with a request, append the argument &apikey=<key value> to the method call.  
-For example, https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method>...&apikey=<key value>
+For example, https://www.biodiversitylibrary.org/api3?op=<method>...&apikey=<key value>
 
 OUTPUT TYPES
 
@@ -25,16 +25,16 @@ Results can be returned in either XML or JSON format.  To return XML, append &fo
 call.  To return JSON, append &format=json to the method call.  If a format is not specified, XML is 
 returned.
 
-An example of returning XML is https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method>...&apikey=<key value>&format=xml
+An example of returning XML is https://www.biodiversitylibrary.org/api3?op=<method>...&apikey=<key value>&format=xml
 
-An example of returning JSON is https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method>...&apikey=<key value>&format=json
+An example of returning JSON is https://www.biodiversitylibrary.org/api3?op=<method>...&apikey=<key value>&format=json
 
 CALLBACKS
 
 If you need to capture the results of a method call with a callback function, specific the name of the 
 callback function by appending &callback=<function name> to the method call.
 
-For example, https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method>...&apikey=<key value>&callback=<function name>
+For example, https://www.biodiversitylibrary.org/api3?op=<method>...&apikey=<key value>&callback=<function name>
 
 STATUS CODE
 
@@ -48,174 +48,103 @@ This code is contained in the "Status" field of the response.  The valid status 
 METHODS
 
 Specify the name of the API method being called with the "op=<method name>" argument.  For example, 
-https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=<method name>
+https://www.biodiversitylibrary.org/api3?op=<method name>
 
 GetPageMetadata:
 
     Return metadata about a page.  You may choose to include the OCR text and a list of names found 
     on the page.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageMetadata&pageid=1328690&ocr=t&names=t&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&pageid=1328690&ocr=t&names=t&apikey=<key value>
 
     pageid - the identifier of an individual page in a scanned book
     ocr - "t" or "true" to return ocr text of the page
     names - "t" or "true" to return the names that appear on the page
-
-GetPageOcrText:
-
-    Return the OCR-generated text of a page.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageOcrText&pageid=1328690&apikey=<key value>
-
-    pageid - the identifier of an individual page in a scanned book
-
-GetPageNames:
-
-    Return a list of names that appear on a page.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPageNames&pageid=1328690&apikey=<key value>
-
-    pageid - the identifier of an individual page in a scanned book
 
 GetItemMetadata:
 
     Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, 
     and a list of the item's parts.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemMetadata&itemid=16800&pages=t&ocr=f&parts=f&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&id=16800&pages=t&ocr=f&parts=f&apikey=<key value>
 
-    itemid - the identifier of an individual item (book)
+    id - the identifier of an individual item (book)
+	idtype (OPTIONAL)
+			"bhl" if the id is a BHL identifier (default value)
+			"ia" if the id is an Internet Archive identifier
     pages - "t" or "true" to return the item's pages
     ocr - "t" or "true" to return the ocr for the item's pages
     parts - "t" or "true" to return the item's parts 
-
-GetItemPages:
-
-    Return a list of an item's pages.  You may choose to include the ocr for the pages.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemPages&itemid=16800&ocr=f&apikey=<key value>
-
-    itemid - the identifier of an individual item (book)
-    ocr - "t" or "true" to return the ocr for the item's pages
-
-GetItemParts:
-
-    Return a list of parts (articles, chapters, etc) associated with an item.
-
-    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetItemParts&itemid=35600&apikey=<key value>
-
-    itemid - the identifier of an individual item (book)
-
-GetUnpublishedItems:
-
-    Return a list of the identifiers of all unpublished items.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedItems&apikey=<key value>
-
-GetPartMetadata:
-
-    Return metadata about a part.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartMetadata&partid=10409&apikey=<key value>
-
-    partid - the identifier of an individual part (article, chapter, etc)
-
-GetPartNames:
-
-    Return a list of scientific names associated with a part.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartNames&partid=41797&apikey=<key value>
-
-    partid - the identifier of an individual part (article, chapter, etc)
-
-GetUnpublishedParts:
-
-    Return a list of the identifiers of all unpublished parts (articles, chapters, etc).
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedParts&apikey=<key value>
-
-GetPartByIdentifier:
-
-    Find and return metadata about a part or parts that match a specific identifier.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartByIdentifier&type=doi&value=10.4039/Ent38406-12&apikey=<key value>
-
-    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby)
-    value - the identifier value
-
-GetPartBibTex:
-
-    Return a citation for a part, using the BibTeX format.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartBibTex&partid=1000&apikey=<key value>
-
-    partid - the identifier of an individual part (article, chapter, etc)
-
-GetPartRIS:
-
-    Return a citation for a part, using the RIS format.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetPartRIS&partid=2341&apikey=<key value>
-
-    partid - the identifier of an individual part (article, chapter, etc)
 
 GetTitleMetadata:
 
     Return metadata about a title.  You may choose to include a list of the items (books) associated
     with the title.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleMetadata&titleid=1726&items=t&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&id=1726&items=t&apikey=<key value>
 
-    titleid - the identifier of an individual title
+    id - the identifier of an individual title
+    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby).  Defaults to "bhl".
     items - "t" or "true" to return the title's items
 
-GetTitleItems:
+GetPartMetadata:
 
-    Return a list of a title's items (books).
+    Return metadata about a part.  You may choose to include a list of the part's names.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleItems&titleid=1726&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&id=10409&names=f&apikey=<key value>
 
-    titleid - the identifier of an individual title
+    id - the identifier of an individual part (article, chapter, etc)
+    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".
+	names - "t" or "true" to return the part's names
 
-GetTitleByIdentifier:
+GetSubjectMetadata:
 
-    Find and return metadata about a title or titles that match a specific identifier.
+    Return metadata about a subject.  You may choose to include a list of the subject's publications.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleByIdentifier&type=oclc&value=2992225&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&subject=water&pubs=t&apikey=<key value>
 
-    type - the type of identifier (doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby)
-    value - the identifier value
+	subject - the subject for which to return metadata
+	pubs - "t" or "true" to return the subject's publications
 
-TitleSearchSimple:
+GetAuthorMetadata:
 
-    Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)
-    is searched for the specified string.  Basic metadata for all full and partial matches is returned.
+    Return metadata about an author.  You may choose to include a list of the authors's publications.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=TitleSearchSimple&title=nematocerous&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&id=87509&pubs=t&apikey=<key value>
 
-    title - full or partial title for which to search
+    id - the identifier of an individual author
+    idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".
+	pubs - "t" or "true" to return the author's publications
 
-GetTitleBibTex:
+GetNameMetadata:
 
-    Return a citation for a title, using the BibTeX format.
+    Get basic title, item, and page metadata for each page on which the specified name appears.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleBibTex&titleid=1726&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&name=poa+annua+supina&apikey=<key value>
 
-    titleid - the identifier of an individual title
+    name - a complete name string.  Not used if idtype/id are specified.
+	idtype - the type of identifier (namebank, eol, gni, ion, col, gbif, itis, ipni, worms).  Not used if name is specified.
+	id - an identifier of a name.    Not used if name is specified.
 
-GetTitleRIS:
+GetCollections:
 
-    Return a citation for a title, using the RIS format.
+    Get a list of collections which are used to group titles and items.  A single collection may
+    contain either titles or items, but not both.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetTitleRIS&titleid=3622&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=GetCollections&apikey=<key value>
 
-    titleid - the identifier of an individual title
+GetInstitutions:
 
-GetUnpublishedTitles:
+    Get a list of institutions which have contributed to BHL in some way.  These institutions may
+    fill roles such as contributors, rights holders, and scanning institutions.
 
-    Return a list of the identifiers of all unpublished titles.
+    Example - https://www.biodiversitylibrary.org/api3?op=GetInstitutions&apikey=<key value>
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetUnpublishedTitles&apikey=<key value>
+GetLanguages:
+
+    Get a list of languages in which materials in BHL have been written.
+
+    Example - https://www.biodiversitylibrary.org/api3?op=GetLanguages&apikey=<key value>
 
 BookSearch:
 
@@ -232,7 +161,7 @@ BookSearch:
     Item URL, Volume, Contributor, and collection data.  For more information about these data elements,
     see the "Data Elements" section of this documentation.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=BookSearch&title=Selborne&lname=White&volume=2&edition=new&year=1825&subject=&collectionid=4&language=eng&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=BookSearch&title=Selborne&lname=White&volume=2&edition=new&year=1825&subject=&collectionid=4&language=eng&apikey=<key value>
 
 PartSearch:
 
@@ -246,105 +175,33 @@ PartSearch:
     Page Range, Language, rights information, authors, keywords, identifiers, pages, and related
     parts.  For more information, see the "Data Elements" section of this documentation.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=PartSearch&title=Critical+approach+to+the+definition+of+Darwinian+units&containerTitle=&author=&date=&volume=&series=&issue=&apikey=<key value>.
+    Example - https://www.biodiversitylibrary.org/api3?op=PartSearch&title=Critical+approach+to+the+definition+of+Darwinian+units&containerTitle=&author=&date=&volume=&series=&issue=&apikey=<key value>.
+
+PageSearch:
+
+	Search an item for pages containing the specified text.
+
+	Example - https://www.biodiversitylibrary.org/api3?op=PageSearch&itemid=22004&text=dog&apikey=<key value>
+
+	itemid - BHL identifier of the item to be searched
+	text - the text for which to search
 
 SubjectSearch:
 
     Return a list of subjects that match (fully or partially) the specified search string.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=SubjectSearch&subject=diptera&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=SubjectSearch&subject=water&apikey=<key value>
 
     subject - the full or partial subject for which to search
-
-GetSubjectTitles:
-
-    Return a list of titles associated with a subject.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectTitles&subject=diptera&apikey=<key value>
-
-    subject - the full subject string for which to search
-
-GetSubjectParts:
-
-    Return a list of parts (articles, chapters, etc) associated with a subject.
-
-    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetSubjectParts&subject=frogs&apikey=<key value>
-
-    subject - the full subject string for which to search
 
 AuthorSearch:
 
     Return a list of authors that match (fully or partially) the specified search string.  The names
     searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=AuthorSearch&name=dimmock&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=AuthorSearch&authorname=dimmock&apikey=<key value>
 
-    name - full or partial name of the author for which to search (last name listed first, i.e. "Darwin, Charles")
-
-GetAuthorTitles:
-
-    Return a list of titles associated with a given BHL author identifier.  Unless the identifier
-    for a particular BHL author record is known in advance, this method should be used in combination
-    with the AuthorSearch method.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorTitles&creatorid=1970&apikey=<key value>
-
-    creatorid - BHL identifier for a particular author
-
-GetAuthorParts:
-
-    Return a list of parts (articles, chapters, etc) associated with a given BHL author identifier.  
-    Unless the identifier for a particular BHL author record is known in advance, this method should
-    be used in combination with the AuthorSearch method.
-
-    Example - http://wwww.biodiversitylibrary.org/api2/httpquery.ashx?op=GetAuthorParts&creatorid=39120&apikey=<key value>
-
-    creatorid - BHL identifier for a particular author
-
-NameCount:
-
-    Return the number of unique names found on pages in BHL.  Names both with and without NameBank
-    identifiers are counted.
-
-    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-    have changed. ***
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameCount&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
-
-    startdate - (optional) start date of range between which to count names
-    enddate - (optional) end date of range between which to count names
-
-NameList:
-
-    List the unique names.  By using the startrow and batchsize parameters appropriately, you can
-    pull the list all at once, or in batches (i.e. 1000 names at a time).  Names both with and 
-    without NameBank identifiers are returned.
-
-    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-    have changed. ***
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameList&startrow=1&batchsize=1000&startdate=10/15/2009&enddate=10/31/2009&apikey=<key value>
-
-    startrow - first name to return (if are returning names in batches of 100, specify startrow=1
-                for the first batch, startrow=101 for the second batch, and so on
-    batchsize - number of names to return
-    startdate - (optional) start date of range between which to count names
-    enddate - (optional) end date of range between which to count names
-
-NameGetDetail:
-
-    Get basic title, item, and page metadata for each page on which the specified name appears.
-
-    *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
-    have changed. ***
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&namebankid=3501464&apikey=<key value>
-
-    namebankid - (not used if "name" specified) NameBank identifier for a name
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameGetDetail&name=poa+annua+supina&apikey=<key value>
-
-    name - (not used if "namebankid" specified) a complete name string
+    authorname - full or partial name of the author for which to search
 
 NameSearch:
 
@@ -353,99 +210,18 @@ NameSearch:
     *** This method was a part of version 1	of the BHL API.  Its signature and/or return values may 
     have changed. ***
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=NameSearch&name=poa+annua&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=NameSearch&name=poa+annua&apikey=<key value>
 
     name - a partial or complete name string
 
-GetCollections:
+TitleSearchSimple:
 
-    Get a list of collections which are used to group titles and items.  A single collection may
-    contain either titles or items, but not both.
+    Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)
+    is searched for the specified string.  Basic metadata for all full and partial matches is returned.
 
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetCollections&apikey=<key value>
+    Example - https://www.biodiversitylibrary.org/api3?op=TitleSearchSimple&title=nematocerous&apikey=<key value>
 
-GetInstitutions:
-
-    Get a list of institutions which have contributed to BHL in some way.  These institutions may
-    fill roles such as contributors, rights holders, and scanning institutions.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetInstitutions&apikey=<key value>
-
-GetLanguages:
-
-    Get a list of languages in which materials in BHL have been written.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetLanguages&apikey=<key value>
-
-GetStats:
-
-    Get the number of Titles, Items, Pages, and Parts currently in BHL.
-
-    Example - https://www.biodiversitylibrary.org/api2/httpquery.ashx?op=GetStats&apikey=<key value>
-
-----------------------------------------------------------------------------------------------------
-
-*** SOAP INTERFACE ***
-
-The SOAP interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting
-data using SOAP requests.  The WSDL document for the API is available at this location:
-https://www.biodiversitylibrary.org/api2/soap.asmx?wsdl
-
-AUTHENTICATION
-
-To use the BHL API you must supply an API Key value with each request.  To obtain a key, go to 
-https://www.biodiversitylibrary.org/getapikey.aspx.  The same key can be used for both the HTTP
-Query interface and the SOAP interface.
-
-METHODS
-
-The SOAP methods that are available generally map to the methods exposed by the HTTP query interface.
-The methods names are listed below, and a complete description of each method can be found by browsing
-the information found at https://www.biodiversitylibrary.org/api2/soap.asmx.
-
-AuthorSearch
-BookSearch
-GetAuthorParts
-GetAuthorTitles
-GetCollections
-GetInstitutions
-GetItemByIdentifier
-GetItemMetadata
-GetItemPages
-GetItemParts
-GetLanguages
-GetPageMetadata
-GetPageNames
-GetPageOcrText
-GetPartBibTeX
-GetPartRIS
-GetPartByIdentifier
-GetPartMetadata
-GetPartNames
-GetStats
-GetSubjectParts
-GetSubjectTitles
-GetTitleBibTex
-GetTitleRIS
-GetTitleByIdentifier
-GetTitleItems
-GetTitleMetadata
-GetUnpublishedItems
-GetUnpublishedParts
-GetUnpublishedTitles
-NameCount
-NameCountBetweenDates
-NameGetDetailForName
-NameGetDetailForNameBankID
-NameList
-NameListBetweenDates
-NameSearch
-PartSearch
-SubjectSearch
-TitleSearchSimple
-
-*** The Name* methods were a part of version 1 of the BHL API.  Their signatures and/or return values 
-may have changed. ***
+    title - full or partial title for which to search
 
 ----------------------------------------------------------------------------------------------------
 
@@ -658,14 +434,16 @@ Variant/Title                    The variant title                              
                                                                                             210 (VariantType = abbreviated)
                                                                                             242 (VariantType = translated)
                                                                                             246 (VariantType = parallel or alternative)
-TitleCount                      Number of Titles in BHL                                 NA
-ItemCount                       Number of Items in BHL                                  NA
-PageCount                       Number of Pages in BHL                                  NA
-PartCount                       Number of Parts in BHL                                  NA
-
 ----------------------------------------------------------------------------------------------------
 
 *** RELEASE NOTES ***
+
+June 15, 2018 - version 3.0.0
+
+
+
+
+
 
 June 12, 2017 - version 2.8.2
 

@@ -30,6 +30,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        private CustomGenericList<Publication> _publications = null;
+        public CustomGenericList<Publication> Publications
+        {
+            get { return _publications; }
+            set { _publications = value; }
+        }
+
         #endregion
 
         #region ISetValues Members

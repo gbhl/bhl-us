@@ -88,40 +88,36 @@ namespace MOBOT.BHL.Web2.api3
 
                 // ------- Subject operations -------
 
-                if (String.Compare(operation, "GetSubjectPublications", true) == 0)
+                if (String.Compare(operation, "GetSubjectMetadata", true) == 0)
                 {
                     String subject = context.Request.QueryString["subject"];
-                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
-                    serviceResponse.Result = this.GetSubjectPublications(subject, key);
+                    string includePubs = context.Request.QueryString["pubs"] ?? "f";
+                    ServiceResponse<CustomGenericList<Subject>> serviceResponse = new ServiceResponse<CustomGenericList<Subject>>();
+                    serviceResponse.Result = this.GetSubjectMetadata(subject, includePubs, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
                 // ------- Author operations -------
 
-                if (String.Compare(operation, "GetAuthorPublications", true) == 0)
+                if (string.Compare(operation, "GetAuthorMetadata", true) == 0)
                 {
-                    String creatorID = context.Request.QueryString["creatorID"];
-                    ServiceResponse<CustomGenericList<Publication>> serviceResponse = new ServiceResponse<CustomGenericList<Publication>>();
-                    serviceResponse.Result = this.GetAuthorPublications(creatorID, key);
+                    string id = context.Request.QueryString["id"];
+                    string idType = context.Request.QueryString["idType"];
+                    string includePubs = context.Request.QueryString["pubs"] ?? "f";
+                    ServiceResponse<CustomGenericList<Author>> serviceResponse = new ServiceResponse<CustomGenericList<Author>>();
+                    serviceResponse.Result = this.GetAuthorMetadata(id, idType, includePubs, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
                 // ------- Name operations -------
 
-                if (String.Compare(operation, "GetNameDetail", true) == 0)
+                if (string.Compare(operation, "GetNameMetadata", true) == 0)
                 {
                     String nameConfirmed = context.Request.QueryString["name"];
+                    String idType = context.Request.QueryString["idtype"];
+                    String id = context.Request.QueryString["id"];
                     ServiceResponse<Name> serviceResponse = new ServiceResponse<Name>();
-                    serviceResponse.Result = this.GetNameDetail(nameConfirmed, key);
-                    response = serviceResponse.Serialize(outputType);
-                }
-
-                if (String.Compare(operation, "GetNameDetailByIdentifier", true) == 0)
-                {
-                    String identifierType = context.Request.QueryString["type"];
-                    String identifierValue = context.Request.QueryString["value"];
-                    ServiceResponse<Name> serviceResponse = new ServiceResponse<Name>();
-                    serviceResponse.Result = this.GetNameDetailByIdentifier(identifierType, identifierValue, key);
+                    serviceResponse.Result = this.GetNameMetadata(nameConfirmed, idType, id, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -310,15 +306,6 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetSegmentMetadata(id, idType, includeNames);
         }
 
-        /*
-        private CustomGenericList<Part> GetPartByIdentifier(string identifierType, string identifierValue, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetPartByIdentifier, apiKey, identifierType + "|" + identifierValue);
-            Api3 api = new Api3();
-            return api.GetSegmentByIdentifier(identifierType, identifierValue);
-        }
-        */
-
         private CustomGenericList<Subject> SubjectSearch(string subject, bool fullText, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.SubjectSearch, apiKey, subject);
@@ -326,11 +313,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.SubjectSearch(subject, fullText);
         }
 
-        private CustomGenericList<Publication> GetSubjectPublications(string subject, string apiKey)
+        private CustomGenericList<Subject> GetSubjectMetadata(string subject, string includePubs, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetSubjectPublications, apiKey, subject);
+            ValidateUser(Api3.APIRequestType.GetSubjectMetadata, apiKey, subject + "|" + includePubs);
             Api3 api = new Api3();
-            return api.GetSubjectPublications(subject);
+            return api.GetSubjectMetadata(subject, includePubs);
         }
 
         private CustomGenericList<Author> AuthorSearch(string name, bool fullText, string apiKey)
@@ -347,25 +334,18 @@ namespace MOBOT.BHL.Web2.api3
             return api.PageSearch(itemID, text);
         }
 
-        private CustomGenericList<Publication> GetAuthorPublications(string creatorID, string apiKey)
+        private CustomGenericList<Author> GetAuthorMetadata(string id, string idType, string includePubs, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetAuthorPublications, apiKey, creatorID);
+            ValidateUser(Api3.APIRequestType.GetAuthorMetadata, apiKey, id + "|" + idType + "|" + includePubs);
             Api3 api = new Api3();
-            return api.GetAuthorPublications(creatorID);
+            return api.GetAuthorMetadata(id, idType, includePubs);
         }
 
-        private Name GetNameDetail(string nameConfirmed, string apiKey)
+        private Name GetNameMetadata(string nameConfirmed, string idType, string id, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetNameDetail, apiKey, nameConfirmed);
+            ValidateUser(Api3.APIRequestType.GetNameMetadata, apiKey, nameConfirmed + "|" + idType+ "|" + id);
             Api3 api = new Api3();
-            return api.GetNameDetail(nameConfirmed);
-        }
-
-        private Name GetNameDetailByIdentifier(string identifierType, string identifierValue, string apiKey)
-        {
-            ValidateUser(Api3.APIRequestType.GetNameDetailByIdentifier, apiKey, identifierType + "|" + identifierValue);
-            Api3 api = new Api3();
-            return api.GetNameDetailByIdentifier(identifierType, identifierValue);
+            return api.GetNameMetadata(nameConfirmed, idType, id);
         }
 
         private CustomGenericList<Name> NameSearch(string name, string apiKey)

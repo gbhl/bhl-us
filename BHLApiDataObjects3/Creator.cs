@@ -136,6 +136,20 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _CreatorUrl = value; }
         }
 
+        private CustomGenericList<Identifier> _identifiers = null;
+        public CustomGenericList<Identifier> Identifiers
+        {
+            get { return _identifiers; }
+            set { _identifiers = value; }
+        }
+
+        private CustomGenericList<Publication> _publications = null;
+        public CustomGenericList<Publication> Publications
+        {
+            get { return _publications; }
+            set { _publications = value; }
+        }
+
         #endregion Properties
 
         #region ISetValues Members

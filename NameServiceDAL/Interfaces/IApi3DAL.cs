@@ -11,8 +11,8 @@ namespace MOBOT.BHL.API.BHLApiDAL
         Page PageSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
         CustomGenericList<PageNumber> IndicatedPageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
         CustomGenericList<PageType> PageTypeSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
-        Item ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID);
-        Item ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
+        CustomGenericList<Item> ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID);
+        CustomGenericList<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
         CustomGenericList<PageDetail> PageSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID);
         CustomGenericList<Part> SegmentSelectByItemID(SqlConnection sqlConnection,
@@ -21,7 +21,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             SqlTransaction sqlTransaction, int titleID);
         CustomGenericList<Author> AuthorSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        Title TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID);
+        CustomGenericList<Title> TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID);
         CustomGenericList<Item> ItemSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
         CustomGenericList<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
@@ -36,7 +36,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             string identifierName, string identifierValue);
         CustomGenericList<Title> TitleSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi);
-        Part SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId);
+        CustomGenericList<Part> SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId);
         CustomGenericList<Identifier> SegmentIdentifierSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
         CustomGenericList<Subject> SubjectSelectBySegmentID(SqlConnection sqlConnection,

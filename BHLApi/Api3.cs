@@ -147,14 +147,10 @@ namespace MOBOT.BHL.API.BHLApi
             switch (idType.ToLower())
             {
                 case "bhl":
-                    items = new CustomGenericList<Item> {
-                        dal.ItemSelectByItemID(null, null, itemID)
-                    };
+                    items = dal.ItemSelectByItemID(null, null, itemID);
                     break;
                 case "ia":
-                    items = new CustomGenericList<Item> {
-                        dal.ItemSelectByBarcode(null, null, id)
-                    };
+                    items = dal.ItemSelectByBarcode(null, null, id);
                     break;
                 default:
                     throw new Exception("idType must be one of the following values: bhl, ia");
@@ -304,8 +300,7 @@ namespace MOBOT.BHL.API.BHLApi
             switch (idType.ToLower())
             {
                 case "bhl":
-                    Title title = dal.TitleSelectAuto(null, null, titleID);
-                    titles = new CustomGenericList<Title> { title };
+                    titles = dal.TitleSelectAuto(null, null, titleID);
                     break;
                 case "oclc":
                 case "issn":
@@ -316,12 +311,12 @@ namespace MOBOT.BHL.API.BHLApi
                 case "nlm":
                 case "coden":
                 case "soulsby":
-                        if (idType.ToLower() == "lccn") idType = "dlc";
-                        titles = dal.TitleSelectByIdentifier(null, null, idType, id);
-                        break;
+                    if (idType.ToLower() == "lccn") idType = "dlc";
+                    titles = dal.TitleSelectByIdentifier(null, null, idType, id);
+                    break;
                 case "doi":
-                        titles = dal.TitleSelectByDOI(null, null, id);
-                        break;
+                    titles = dal.TitleSelectByDOI(null, null, id);
+                    break;
                 default:
                     throw new Exception("idType must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby");
             }
@@ -388,7 +383,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // "t" or "true" are acceptable values for the "includeNames" argument; anything else
-            // is considering a value of "false"
+            // is considered a value of "false"
             includeNames = (includeNames ?? "");
             bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
 
@@ -397,8 +392,7 @@ namespace MOBOT.BHL.API.BHLApi
             switch (idType.ToLower())
             {
                 case "bhl":
-                    Part part = dal.SegmentSelectForSegmentID(null, null, segmentID);
-                    parts = new CustomGenericList<Part> { part };
+                    parts = dal.SegmentSelectForSegmentID(null, null, segmentID);
                     break;
                 case "oclc":
                 case "issn":
@@ -518,7 +512,31 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Subject methods
 
-        public CustomGenericList<Publication> GetSubjectPublications(string subject)
+        public CustomGenericList<Subject> GetSubjectMetadata(string keyword, string includePubs)
+        {
+            CustomGenericList<Subject> subjects = null;
+
+            // Validate the parameters
+
+            // "t" or "true" are acceptable values for the "includePubs" argument; anything else
+            // is considered a value of "false"
+            includePubs = (includePubs ?? "");
+            bool pubs = (includePubs.ToLower() == "t" || includePubs.ToLower() == "true");
+
+            // Retrieve the basic part metadata
+            Api3DAL dal = new Api3DAL();
+            subjects = dal.KeywordSelectByKeyword(null, null, keyword);
+
+            // Add the extended metadata
+            foreach (Subject subject in subjects)
+            {
+                if (pubs) subject.Publications = this.GetSubjectPublications(keyword);
+            }
+
+            return subjects;
+        }
+
+        private CustomGenericList<Publication> GetSubjectPublications(string subject)
         {
             Api3DAL dal = new Api3DAL();
             CustomGenericList<Title> titles = dal.TitleSelectByKeyword(null, null, subject);
@@ -538,7 +556,54 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Author methods
 
-        public CustomGenericList<Publication> GetAuthorPublications(string creatorID)
+        public CustomGenericList<Author> GetAuthorMetadata(string id, string idType, string includePubs)
+        {
+            CustomGenericList<Author> authors = null;
+
+            // Validate the parameters
+            if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
+
+            int authorID = 0;
+            if (idType.ToLower() == "bhl")
+            {
+                if (!Int32.TryParse(id, out authorID))
+                {
+                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                }
+            }
+
+            // "t" or "true" are acceptable values for the "includePubs" argument; anything else
+            // is considered a value of "false"
+            includePubs = (includePubs?? "");
+            bool pubs = (includePubs.ToLower() == "t" || includePubs.ToLower() == "true");
+
+            // Retrieve the basic part metadata
+            Api3DAL dal = new Api3DAL();
+            switch (idType.ToLower())
+            {
+                case "bhl":
+                    authors = dal.AuthorSelectByAuthorID(null, null, authorID);
+                    break;
+                case "biostor":
+                case "viaf":
+                    authors = dal.AuthorSelectByIdentifier(null, null, idType, id);
+                    break;
+                default:
+                    throw new Exception("idType  must be one of the following values: bhl, biostor, viaf");
+            }
+
+            // Add the extended metadata
+            foreach (Author author in authors)
+            {
+                author.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + author.AuthorID.ToString();
+                author.Identifiers = dal.AuthorIdentifierSelectByAuthorID(null, null, Convert.ToInt32(author.AuthorID));
+                if (pubs) author.Publications = this.GetAuthorPublications(id);
+            }
+
+            return authors;
+        }
+
+        private CustomGenericList<Publication> GetAuthorPublications(string creatorID)
         {
             // Validate the parameters
             int creatorIDint;
@@ -565,10 +630,23 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Name Services
 
-        // These methods are parallels of the original Name Service methods, though the method
-        // signatures and response formats have changed somewhat.
+        public Name GetNameMetadata(string nameConfirmed, string idType, string id)
+        {
+            Name name = null;
 
-        public Name GetNameDetail(string nameConfirmed)
+            if (!string.IsNullOrWhiteSpace(nameConfirmed))
+            {
+                name = this.GetNameDetail(nameConfirmed);
+            }
+            else
+            {
+                name = this.GetNameDetailByIdentifier(idType, id);
+            }
+
+            return name;
+        }
+
+        private Name GetNameDetail(string nameConfirmed)
         {
             // Validate the input
             if (string.IsNullOrWhiteSpace(nameConfirmed)) throw new Exception("Please supply a Name.");
@@ -579,10 +657,10 @@ namespace MOBOT.BHL.API.BHLApi
             return GetNameDetailFromPageDetails(pageDetails);
         }
 
-        public Name GetNameDetailByIdentifier(string identifierType, string identifierValue)
+        private Name GetNameDetailByIdentifier(string identifierType, string identifierValue)
         {
             // Validate the input
-            if (string.IsNullOrWhiteSpace(identifierType) || string.IsNullOrWhiteSpace(identifierValue)) throw new Exception("Please supply an identifier Type and Name.");
+            if (string.IsNullOrWhiteSpace(identifierType) || string.IsNullOrWhiteSpace(identifierValue)) throw new Exception("Please supply an identifier Type and Value.");
 
             string identifierName = string.Empty;
             switch (identifierType)
@@ -1621,9 +1699,12 @@ namespace MOBOT.BHL.API.BHLApi
             GetPartByIdentifier = 431,
             GetPartNames = 432,
             GetAuthorPublications = 440,
+            GetAuthorMetadata = 441,
             GetSubjectPublications = 450,
+            GetSubjectMetadata = 451,
             GetNameDetail = 460,
             GetNameDetailByIdentifier = 461,
+            GetNameMetadata = 462,
             AuthorSearch = 470,
             SubjectSearch = 471,
             NameSearch = 472,
