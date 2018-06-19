@@ -14,6 +14,7 @@ CREATE TABLE #tmpTitle (
 	[MARCBibID] [nvarchar](50) NOT NULL,
 	[MARCLeader] [nvarchar](24) NULL,
 	[BibliographicLevelID] [int] NULL,
+	[MaterialTypeID] [int] NULL,
 	[FullTitle] [ntext] NOT NULL,
 	[ShortTitle] [nvarchar](255) NULL,
 	[UniformTitle] [nvarchar](255) NULL,
@@ -50,6 +51,12 @@ UPDATE	#tmpTitle
 SET		BibliographicLevelID = b.BibliographicLevelID
 FROM	#tmpTitle t INNER JOIN dbo.BibliographicLevel b
 			ON SUBSTRING(t.MarcLeader, 8, 1) = b.MARCCode
+
+-- Add the material type
+UPDATE	#tmpTitle
+SET		MaterialTypeID = m.MaterialTypeID
+FROM	#tmpTitle t INNER JOIN dbo.MaterialType m
+			ON SUBSTRING(t.MarcLeader, 7, 1) = m.MARCCode
 
 -- Get the start year, end year, and language code from the MARC control data
 UPDATE	#tmpTitle
@@ -250,6 +257,7 @@ AND		m.MarcID = @MarcID
 SELECT	[MARCBibID],
 		[MARCLeader],
 		[BibliographicLevelID],
+		[MaterialTypeID],
 		SUBSTRING(CONVERT(nvarchar(max), [FullTitle]), 1, 2000) AS FullTitle,
 		[ShortTitle],
 		[UniformTitle],
