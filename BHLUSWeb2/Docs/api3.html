@@ -29,73 +29,65 @@
     <p>Specify the name of the API method being called with the &quot;op=&lt;method name&gt;&quot; argument.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method name&gt;</p>
     <p><i><b>GetPageMetadata</b></i></p>
     <p>	Return metadata about a page.  You may choose to include the OCR text and a list of names found on the page.</p>
-    <p>	Example - <a href="/api3/docs/GetPageMetadata.xml" title="GetPageMetadata">https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=1328690&amp;ocr=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetPageMetadata.xml" title="GetPageMetadata">https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	pageid - the identifier of an individual page in a scanned book<br />	ocr - &quot;t&quot; or &quot;true&quot; to return ocr text of the page<br />	names - &quot;t&quot; or &quot;true&quot; to return the names that appear on the page</p>
     <p><i><b>GetItemMetadata</b></i></p>
     <p>	Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, and a list of the item's parts.</p>
-    <p>	Example - <a href="/api3/docs/GetItemMetadata.xml" title="GetItemMetadata">https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;itemid=16800&amp;pages=t&amp;ocr=f&amp;parts=f&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetItemMetadata.xml" title="GetItemMetadata">https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;id=16800&amp;pages=t&amp;ocr=f&amp;parts=f&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	id - the identifier of an individual item (book)<br />  idtype (OPTIONAL) - "bhl" if the id is a BHL identifier (default value), "ia" if the id is an Internet Archive identifier<br />	pages - &quot;t&quot; or &quot;true&quot; to return the item's pages<br />	ocr - &quot;t&quot; or &quot;true&quot; to return the ocr for the item's pages<br />	parts - &quot;t&quot; or &quot;true&quot; to return the item's parts<br /></p>
     <p><i><b>GetTitleMetadata</b></i></p>
     <p>	Return metadata about a title.  You may choose to include a list of the items (books) associated	with the title.</p>
-    <p>	Example - <a href="/api3/docs/GetTitleMetadata.xml" title="GetTitleMetadata">https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=1726&amp;items=t&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetTitleMetadata.xml" title="GetTitleMetadata">https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=3943&amp;items=t&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	id - the identifier of an individual title<br />    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby).  Defaults to "bhl".<br />	items - &quot;t&quot; or &quot;true&quot; to return the title's items</p>
     <p><i><b>GetPartMetadata</b></i></p>
     <p>	Return metadata about a part.  You may choose to include a list of the part's names.</p>
-    <p>	Example - <a href="/api3/docs/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=10409&amp;names=f&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;names=t&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</p>
     <p><i><b>GetSubjectMetadata</b></i></p>
     <p>	Return metadata about a subject.  You may choose to include a list of the subject's publications.</p>
-    <p>	Example - <a href="/api3/docs/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	subject - the subject for which to return metadata<br /> pubs - "t" or "true" to return the subject's publications</p>
     <p><i><b>GetAuthorMetadata</b></i></p>
     <p>	Return metadata about an author.  You may choose to include a list of the author's publications.</p>
-    <p>	Example - <a href="/api3/docs/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	id - the identifier of an individual author<br /> idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".<br />	pubs - "t" or "true" to return the subject's publications</p>
     <p><i><b>GetNameMetadata</b></i></p>
     <p>	Get basic title, item, and page metadata for each page on which the specified name appears.</p>
     <p>	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may have changed. ***</p>
-    <p>	Example - <a href="/api3/docs/GetNameMetadata.xml" title="GetNameMetadata">https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=poa+annua+supina&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetNameMetadata.xml" title="GetNameMetadata">https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=poa+annua+linnaeus&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	name - a complete name string.  Not used if idtype/id are specified.<br />idtype - the type of identifier (namebank, eol, gni, ion, col, gbif, itis, ipni, worms).  Not used if name is specified.<br />id - an identifier of a name.    Not used if name is specified.</p>
     <p><i><b>GetCollections</b></i></p>
     <p>	Get a list of collections which are used to group titles and items.  A single collection may contain either titles or items, but not both.</p>
-    <p>	Example - <a href="/api3/docs/GetCollections.xml" title="GetCollections">https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetCollections.xml" title="GetCollections">https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;apikey=&lt;key+value&gt;</a></p>
     <p><i><b>GetInstitutions</b></i></p>
     <p>	Get a list of institutions which have contributed to BHL in some way.  These institutions may fill roles such as contributors, rights holders, and scanning institutions.</p>
-    <p>	Example - <a href="/api3/docs/GetInstitutions.xml" title="GetInstitutions">https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/GetInstitutions.xml" title="GetInstitutions">https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;apikey=&lt;key+value&gt;</a></p>
     <p><i><b>GetLanguages</b></i></p>
     <p>	Get a list of languages in which materials in BHL have been written.</p>
-    <p> Example - <a href="/api3/docs/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><b><i>BookSearch</i></b></p>
-    <p>	Search for titles and items in BHL.  Search criteria includes title, author last name, volume, edition, year of publication, subject, language code, and collection identifier.</p>
-    <p> Valid language codes and collection identifiers can be obtained from the GetLanguages and GetCollections methods.  If year of publication is specified, it should be a 4-digit year.</p>
-    <p>	To execute a search, you must supply at least a title, author last name, or collection identifier.</p>
-    <p>	The metadata returned by this method includes Title Identifier, Title URL, Full Title, Part Number, Part Name, Publisher Place, Publisher Name, Publication Date, complete author data, Item Identifier, Item URL, Volume, Contributor, and collection data.  For more information about these data elements, see the "Data Elements" section of this documentation.</p>
-    <p>	Example - <a href="/api3/docs/BookSearch.xml" title="BookSearch">https://www.biodiversitylibrary.org/api3?op=BookSearch&amp;title=Selborne&amp;lname=White&amp;volume=2&amp;edition=new&amp;year=1825&amp;subject=&amp;collectionid=4&amp;language=eng&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><b><i>PartSearch</i></b></p>
-    <p>	Search for parts of books in BHL, such as articles, chapters, or treatments.  Search criteria includes title, container (journal or book title), author, date of publication, volume, series, and issue.</p>
-    <p> To execute a search, you must supply at least a title or author.</p>
-    <p>	The metadata returned by this method includes Part Identifier, Part URL, Item ID, Page ID for the start page, Genre, Title, Container Title, Publication Details, Volume, Series, Issue, Date, Page Range, Language, rights information, authors, keywords, identifiers, pages, and related parts.  For more information, see the "Data Elements" section of this documentation.</p>
-    <p>	Example - <a href="/api3/docs/PartSearch.xml" title="PartSearch">https://www.biodiversitylibrary.org/api3?op=PartSearch&amp;title=Critical+approach+to+the+definition+of+Darwinian+units&amp;containerTitle=&amp;author=&amp;date=&amp;volume=&amp;series=&amp;issue=&amp;apikey=&lt;key+value&gt;</a></p>
+    <p> Example - <a href="/docs/api3/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></p>
+    <p><b><i>PublicationSearch</i></b></p>
+    <p>	UNDER CONSTRUCTION</p>
+    <p>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;title=Selborne&amp;lname=White&amp;volume=2&amp;year=1825&amp;subject=&amp;collectionid=4&amp;language=eng&amp;apikey=&lt;key+value&gt;</a></p>
     <p><b><i>PageSearch</i></b></p>
     <p>	Search an item for pages containing the specified text.</p>
-    <p>	Example - <a href="/api3/docs/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></p>
 	<p> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</p>
     <p><b><i>SubjectSearch</i></b></p>
     <p>	Return a list of subjects that match (fully or partially) the specified search string.</p>
-    <p>	Example - <a href="/api3/docs/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	subject - the full or partial subject for which to search</p>
     <p><i><b>AuthorSearch</b></i></p>
     <p>	Return a list of authors that match (fully or partially) the specified search string.  The names	searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.</p>
-    <p>	Example - <a href="/api3/docs/AuthorSearch.xml" title="AuthorSearch">https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=dimmock&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/AuthorSearch.xml" title="AuthorSearch">https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=dimmock&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	authorname - full or partial name of the author for which to search</p>
     <p><i><b>NameSearch</b></i></p>
     <p>	Search for a particular name.  Names both with and without NameBank identifiers are returned.</p>
     <p>	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may have changed. ***</p>
-    <p>	Example - <a href="/api3/docs/NameSearch.xml" title="NameSearch">https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/NameSearch.xml" title="NameSearch">https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	name - a partial or complete name string</p>
     <p><i><b>TitleSearchSimple</b></i></p>
     <p>	Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)	is searched for the specified string.  Basic metadata for all full and partial matches is returned.</p>
-    <p>	Example - <a href="/api3/docs/TitleSearchSimple.xml" title="TitleSearchSimple">https://www.biodiversitylibrary.org/api3?op=TitleSearchSimple&amp;title=nematocerous&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Example - <a href="/docs/api3/TitleSearchSimple.xml" title="TitleSearchSimple">https://www.biodiversitylibrary.org/api3?op=TitleSearchSimple&amp;title=nematocerous&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	title - full or partial title for which to search</p>
     <hr />
     <p><b>*** DATA ELEMENTS ***</b></p>
@@ -113,9 +105,9 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Title/BibliographicLevel</td>
+            <td>Title/Genre</td>
             <td>
-                One of the following values, which identify the 'type' of work:<br />
+                One of the following values, which identify the bibliographic level of work:<br />
                 Collection<br />
                 Monograph/Item<br />
                 Monographic component part<br />
@@ -123,6 +115,27 @@
                 Serial component part
             </td>
             <td>Leader position 07</td>
+        </tr>
+        <tr>
+            <td>Title/MaterialType</td>
+            <td>
+                One of the following values, which identify the characteristics of the work:
+                Language material
+                Notated music
+                Manuscript notated music
+                Cartographic material
+                Manuscript cartographic material
+                Projected medium
+                Nonmusical sound recording
+                Musical sound recording
+                Two-dimensional nonprojectable graphic
+                Computer file
+                Kit
+                Mixed materials
+                Three-dimensional artifact or naturally occuring object
+                Manuscript language material
+            </td>
+            <td>Leader position 06</td>
         </tr>
         <tr>
             <td>Title/FullTitle</td>
@@ -190,17 +203,17 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Creator/CreatorID</td>
+            <td>Author/AuthorID</td>
             <td>BHL identifier for the author</td>
             <td>NA</td>
         </tr>
         <tr>
-            <td>Creator/Name</td>
+            <td>Author/Name</td>
             <td>Personal, corporate, or meeting name</td>
             <td>100/110/111/700/710/711/720a</td>
         </tr>
         <tr>
-            <td>Creator/Role</td>
+            <td>Author/Role</td>
             <td>
                 One of the following values, which identify the role of an author:<br />
                 Main Entry -- Personal Name (MARC 100)<br />
@@ -214,47 +227,47 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Creator/Numeration</td>
+            <td>Author/Numeration</td>
             <td>Personal numeration</td>
             <td>100/110/111/700/710/711/720b</td>
         </tr>
         <tr>
-            <td>Creator/Unit</td>
+            <td>Author/Unit</td>
             <td>Corporate unit</td>
             <td>100/110/111/700/710/711/720b</td>
         </tr>
         <tr>
-            <td>Creator/Title</td>
+            <td>Author/Title</td>
             <td>Personal title</td>
             <td>100/110/111/700/710/711/720c</td>
         </tr>
         <tr>
-            <td>Creator/Location</td>
+            <td>Author/Location</td>
             <td>Corporate/meeting location</td>
             <td>100/110/111/700/710/711/720c</td>
         </tr>
         <tr>
-            <td>Creator/FullerForm</td>
+            <td>Author/FullerForm</td>
             <td>Fuller form of name</td>
             <td>100/700q</td>
         </tr>
         <tr>
-            <td>Creator/Relationship</td>
+            <td>Author/Relationship</td>
             <td>Relationship of person to work (editor, illustrator)</td>
             <td>700e</td>
         </tr>
         <tr>
-            <td>Creator/TitleOfWork</td>
+            <td>Author/TitleOfWork</td>
             <td>Title page title or serial title related to person</td>
             <td>700t</td>
         </tr>
         <tr>
-            <td>Creator/Dates</td>
+            <td>Author/Dates</td>
             <td>Date of birth/death or Corp/Meeting dates</td>
             <td>100/110/111/700/710/711/720d</td>
         </tr>
         <tr>
-            <td>Creator/CreatorUrl</td>
+            <td>Author/CreatorUrl</td>
             <td>BHL address for the author</td>
             <td>NA</td>
         </tr>
@@ -262,38 +275,6 @@
             <td>Subject/SubjectText</td>
             <td>Subject term</td>
             <td>Various 6XX fields. Most BHL subjects are from 650.</td>
-        </tr>
-        <tr>
-            <td>TitleIdentifier/IdentifierName</td>
-            <td>
-                One of the following values, which identify the type of identifier:<br />
-                doi<br />
-                oclc<br />
-                issn<br />
-                isbn<br />
-                lccn<br />
-                ddc<br />
-                nal<br />
-                nlm<br />
-                coden<br />
-                soulsby
-            </td>
-            <td>NA</td>
-        </tr>
-        <tr>
-            <td>TitleIdentifier/IdentifierValue</td>
-            <td>Value of an identifier assigned to the title</td>
-            <td>
-                Location depends on the type of identifier:<br />
-                035 (IdentifierName = oclc)<br />
-                022 (IdentifierName = issn)<br />
-                020 (IdentifierName = isbn)<br />
-                050 (IdentifierName = lccn)<br />
-                082 (IdentifierName = ddc)<br />
-                070 (IdentifierName = nal)<br />
-                060 (IdentifierName = nlm)<br />
-                030 (IdentifierName = coden)
-            </td>
         </tr>
         <tr>
             <td>TitleNote/NoteText</td>
@@ -316,7 +297,7 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Item/PrimaryTitleID</td>
+            <td>Item/TitleID</td>
             <td>BHL identifier for the title related to the item</td>
             <td>NA</td>
         </tr>
@@ -446,7 +427,7 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Part/GenreName</td>
+            <td>Part/Genre</td>
             <td>
                 One of the following values, which identify the type of the part:<br />
                 Article<br />
@@ -662,11 +643,6 @@
             <td>NA</td>
         </tr>
         <tr>
-            <td>Name/NameBankID</td>
-            <td>Identifier assigned to a name in uBio&#39;s NameBank</td>
-            <td>NA</td>
-        </tr>
-        <tr>
             <td>Name/NameFound</td>
             <td>Name found on a page</td>
             <td>NA</td>
@@ -675,6 +651,44 @@
             <td>Name/NameConfirmed</td>
             <td>Name found on a page and confirmed in uBio&#39;s NameBank</td>
             <td>NA</td>
+        </tr>
+        <tr>
+            <td>Identifier/IdentifierName</td>
+            <td>
+                One of the following values, which identify the type of identifier:<br />
+                bhl<br />
+                ia<br />
+                doi<br />
+                issn<br />
+                isbn<br />
+                lccn<br />
+                ddc<br />
+                nal<br />
+                nlm<br />
+                coden<br />
+                soulsby<br />
+                biostor<br />
+                viaf<br />
+                namebank<br />
+                eol<br />
+                gni
+            </td>
+            <td>NA</td>
+        </tr>
+        <tr>
+            <td>Identifier/IdentifierValue</td>
+            <td>Value of the identifier</td>
+            <td>
+                Location depends on the type of identifier.  Not all identifiers appear in MARC.<br />
+                035 (IdentifierName = oclc)<br />
+                022 (IdentifierName = issn)<br />
+                020 (IdentifierName = isbn)<br />
+                050 (IdentifierName = lccn)<br />
+                082 (IdentifierName = ddc)<br />
+                070 (IdentifierName = nal)<br />
+                060 (IdentifierName = nlm)<br />
+                030 (IdentifierName = coden)
+            </td>
         </tr>
         <tr>
             <td>Collection/CollectionID</td>

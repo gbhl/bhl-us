@@ -18,7 +18,7 @@ SELECT @TL2 = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'TL2'
 SELECT @IdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = @IdentifierName
 
 -- Get the detail for the specified NameBankID
-SELECT	ni.IdentifierValue AS NameBankID, nr.ResolvedNameString,
+SELECT	ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString,
 		t.TitleID, t.MARCBibID, t.ShortTitle, 
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber else i.CallNumber END AS CallNumber, 
 		t.Datafield_260_a AS PublisherPlace, 

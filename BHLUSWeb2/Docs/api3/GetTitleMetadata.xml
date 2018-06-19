@@ -1,5 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Status>ok</Status>
   <Result>
     <Title>
@@ -48,7 +50,7 @@
         </Identifier>
         <Identifier>
           <IdentifierName>MARC001</IdentifierName>
-          <IdentifierValue>32643</IdentifierValue>
+          <IdentifierValue>32643       </IdentifierValue>
         </Identifier>
         <Identifier>
           <IdentifierName>NAL</IdentifierName>
@@ -66,11 +68,11 @@
       <Variants>
         <TitleVariant>
           <TitleVariantTypeName>Abbreviated</TitleVariantTypeName>
-          <Title>Proc. Calif. Acad. Sci. (1907)</Title>
+          <Title>Proc. Calif. Acad. Sci. (1907)  </Title>
         </TitleVariant>
         <TitleVariant>
           <TitleVariantTypeName>Alternative</TitleVariantTypeName>
-          <Title>Proceedings of the California Academy of Sciences. 4th ser.</Title>
+          <Title>Proceedings of the California Academy of Sciences. 4th ser.   </Title>
         </TitleVariant>
       </Variants>
       <Items>
@@ -458,7 +460,7 @@
           <Source>Internet Archive</Source>
           <SourceIdentifier>pro4126951320192324cali</SourceIdentifier>
           <Volume>4th ser. v. 12, p. 695-1320 (1923-24 )</Volume>
-          <Year>1923-24</Year>
+          <Year>1923-24 </Year>
           <HoldingInstitution>Smithsonian Libraries</HoldingInstitution>
           <Sponsor>Biodiversity Heritage Library</Sponsor>
           <Language>English</Language>

@@ -1002,6 +1002,22 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
+        public CustomGenericList<Identifier> NameIdentifierSelectByNameResolvedID(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, int nameResolvedID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiNameIdentifierSelectByNameResolvedID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("NameResolvedID", SqlDbType.Int, null, false, nameResolvedID)))
+            {
+                using (CustomSqlHelper<Identifier> helper = new CustomSqlHelper<Identifier>())
+                {
+                    return helper.ExecuteReader(command);
+                }
+            }
+        }
+
         #endregion Name methods
 
         #region Search methods

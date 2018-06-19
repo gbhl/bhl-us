@@ -43,7 +43,7 @@ namespace MOBOT.BHL.Web2.api3
                     String pageID = context.Request.QueryString["pageid"];
                     String includeOcr = context.Request.QueryString["ocr"] ?? "f";
                     String includeNames = context.Request.QueryString["names"] ?? "f";
-                    ServiceResponse<Page> serviceResponse = new ServiceResponse<Page>();
+                    ServiceResponse<CustomGenericList<Page>> serviceResponse = new ServiceResponse<CustomGenericList<Page>>();
                     serviceResponse.Result = this.GetPageMetadata(pageID, includeOcr, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -116,7 +116,7 @@ namespace MOBOT.BHL.Web2.api3
                     String nameConfirmed = context.Request.QueryString["name"];
                     String idType = context.Request.QueryString["idtype"];
                     String id = context.Request.QueryString["id"];
-                    ServiceResponse<Name> serviceResponse = new ServiceResponse<Name>();
+                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
                     serviceResponse.Result = this.GetNameMetadata(nameConfirmed, idType, id, key);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -270,7 +270,7 @@ namespace MOBOT.BHL.Web2.api3
 
         #region API Methods
 
-        private Page GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
+        private CustomGenericList<Page> GetPageMetadata(string pageID, string includeOcr, string includeNames, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetPageMetadata, apiKey, pageID + "|" + includeOcr + "|" + includeNames);
             Api3 api = new Api3();
@@ -341,7 +341,7 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetAuthorMetadata(id, idType, includePubs);
         }
 
-        private Name GetNameMetadata(string nameConfirmed, string idType, string id, string apiKey)
+        private CustomGenericList<Name> GetNameMetadata(string nameConfirmed, string idType, string id, string apiKey)
         {
             ValidateUser(Api3.APIRequestType.GetNameMetadata, apiKey, nameConfirmed + "|" + idType+ "|" + id);
             Api3 api = new Api3();

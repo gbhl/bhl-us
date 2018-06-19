@@ -29,6 +29,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             {
                 switch (column.Name)
                 {
+                    /*
                     case "NameBankID":
                         {
                             _identifiers.Add(new Identifier("NameBank", Utility.EmptyIfNull(column.Value)));
@@ -39,6 +40,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _identifiers.Add(new Identifier("EOL", Utility.EmptyIfNull(column.Value)));
                             break;
                         }
+                    */
                     case "NameString":
                         {
                             _NameFound = Utility.EmptyIfNull(column.Value);
@@ -57,8 +59,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties		
 
-        private List<Identifier> _identifiers = new List<Identifier>();
-        public List<Identifier> Identifiers
+        private CustomGenericList<Identifier> _identifiers = null;
+        public CustomGenericList<Identifier> Identifiers
         {
             get { return _identifiers; }
             set { _identifiers = value; }

@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Status>ok</Status>
   <Result>
     <Part>
@@ -402,6 +404,112 @@
         </Page>
       </Pages>
       <RelatedParts />
+      <Names>
+        <Name>
+          <NameFound>Aphrastura masafuerae</NameFound>
+          <NameConfirmed>Aphrastura masafuerae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Araneae</NameFound>
+          <NameConfirmed>Araneae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Bidessus skottsbergi</NameFound>
+          <NameConfirmed>Bidessus skottsbergi</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Callyntropyga</NameFound>
+          <NameConfirmed>Callyntropyga</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Carabidae</NameFound>
+          <NameConfirmed>Carabidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Chrysopa skottsbergi</NameFound>
+          <NameConfirmed>Chrysopa skottsbergi</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Cinclodes oustaleti baeckstroemi</NameFound>
+          <NameConfirmed>Cinclodes oustaleti baeckstroemii Lonnberg, 1921</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Coleoptera</NameFound>
+          <NameConfirmed>Coleoptera</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Cossoninae</NameFound>
+          <NameConfirmed>Cossoninae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Curculionidae</NameFound>
+          <NameConfirmed>Curculionidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Diptera</NameFound>
+          <NameConfirmed>Diptera</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Dytiscidae</NameFound>
+          <NameConfirmed>Dytiscidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Falco sparverius fernandensis</NameFound>
+          <NameConfirmed>Falco sparverius fernandensis</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Insecta</NameFound>
+          <NameConfirmed>INSECTA</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Lipsana insulae-paschalis</NameFound>
+          <NameConfirmed />
+        </Name>
+        <Name>
+          <NameFound>Lonchaeidae</NameFound>
+          <NameConfirmed>Lonchaeidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Masafuera</NameFound>
+          <NameConfirmed>Masafuera</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Melampus pascus</NameFound>
+          <NameConfirmed>Melampus pascus N. H. J. Odhner, 1922</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Melandryidae</NameFound>
+          <NameConfirmed>Melandryidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Mollusca</NameFound>
+          <NameConfirmed>Mollusca</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Neuroptera</NameFound>
+          <NameConfirmed>Neuroptera</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Pacindonus</NameFound>
+          <NameConfirmed>Pacindonus</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Pascua</NameFound>
+          <NameConfirmed>Pascua</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Pselaphidae</NameFound>
+          <NameConfirmed>Pselaphidae</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Spizitornis</NameFound>
+          <NameConfirmed>Spizitornis</NameConfirmed>
+        </Name>
+        <Name>
+          <NameFound>Tetragnatha paschae</NameFound>
+          <NameConfirmed>Tetragnatha paschae</NameConfirmed>
+        </Name>
+      </Names>
     </Part>
   </Result>
 </Response>

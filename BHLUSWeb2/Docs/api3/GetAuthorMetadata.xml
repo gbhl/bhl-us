@@ -1,0 +1,3791 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Author>
+      <AuthorID>87509</AuthorID>
+      <Name>Montana.</Name>
+      <Unit>Department of Fish, Wildlife, and Parks</Unit>
+      <CreatorUrl>https://www.biodiversitylibrary.org/creator/87509</CreatorUrl>
+      <Identifiers />
+      <Publications>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>51042</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/51042</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Ennis, Mont. :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife, &amp; Parks</PublisherName>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>15235</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Dept. of Fish, Wildlife, and Parks.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Madison River drainage fisheries ; and, Madison River drainage westslope cutthroat trout conservation and restoration program.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>55766</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/55766</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.</PublisherName>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>15235</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Dept. of Fish, Wildlife, and Parks.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Annual report.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>67542</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/67542</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Natural Heritage Program,</PublisherName>
+          <PublicationDate>2012</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87583</AuthorID>
+              <Name>Cilimburg, Amy.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>39965</AuthorID>
+              <Name>Currier, Coburn.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87584</AuthorID>
+              <Name>Ellis, Janet.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>27874</AuthorID>
+              <Name>Hendricks, Paul.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>37579</AuthorID>
+              <Name>Lenard, Susan.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>37580</AuthorID>
+              <Name>Maxell, Bryce A.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(Alan)</FullerForm>
+            </Author>
+            <Author>
+              <AuthorID>39734</AuthorID>
+              <Name>Montana Audubon.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>21160</AuthorID>
+              <Name>Montana Bird Distribution Committee.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+            </Author>
+            <Author>
+              <AuthorID>18424</AuthorID>
+              <Name>Montana Natural Heritage Program.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87585</AuthorID>
+              <Name>Story, Scott.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>37740</AuthorID>
+              <Name>Sullivan, Dan.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87586</AuthorID>
+              <Name>Wightman, Catherine.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>P.D. Skaar's Montana bird distribution /</Title>
+          <Doi>10.5962/bhl.title.67542</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>67908</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/67908</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Great Falls, Mont. :</PublisherPlace>
+          <PublisherName>Montana Department of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>2004.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87717</AuthorID>
+              <Name>Frank, Teresa R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>15243</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Fisheries Division.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87718</AuthorID>
+              <Name>Tews, Anne E.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Prairie streams survey 2003 : Fisheries Division report /</Title>
+          <Doi>10.5962/bhl.title.67908</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>67915</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/67915</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>18560</AuthorID>
+              <Name>Oswald, Richard A.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <FullerForm>(Richard Allen),</FullerForm>
+              <Dates>1947-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Instream flow evaluation for selected headwater tributaries of the upper Missouri drainage of southwestern Montana /</Title>
+          <Doi>10.5962/bhl.title.67915</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>67916</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/67916</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Libby, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87719</AuthorID>
+              <Name>May, Bruce,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1937-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14047</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Forest Service.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Instream flow evaluation for selected streams in the Kootenai National Forest of Montana /</Title>
+          <Doi>10.5962/bhl.title.67916</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>67999</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/67999</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena? :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>1997</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Upper Ruby River fluvial arctic grayling reintroduction : environmental assessment and reintroduction plan.</Title>
+          <Doi>10.5962/bhl.title.67999</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68001</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68001</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?, MT] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1995]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Final programmatic environmental impact statement on the riparian and wetland habitat conservation program /</Title>
+          <Doi>10.5962/bhl.title.68001</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68018</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68018</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1980.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87990</AuthorID>
+              <Name>Harvey, Stephen J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The potential and current vegetation of the Sun River Game Range /</Title>
+          <Doi>10.5962/bhl.title.68018</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68020</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68020</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena? Mont.] :</PublisherPlace>
+          <PublisherName>Wildlife Division, Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20993</AuthorID>
+              <Name>Flath, Dennis L.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Vertebrate species of special interest or concern : mammals, birds, reptiles, amphibians, fishes /</Title>
+          <Doi>10.5962/bhl.title.68020</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68060</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68060</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Or. :</PublisherPlace>
+          <PublisherName>U.S. Dept. of Energy, Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88006</AuthorID>
+              <Name>Cope, Michael Glen.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>40459</AuthorID>
+              <Name>Montana State University--Bozeman.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Dept. of Ecology</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Northwest Montana Libby/Hungry Horse Dams wildlife mitigation : Columbian sharp-tailed grouse : final report /</Title>
+          <Doi>10.5962/bhl.title.68060</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68066</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68066</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mt. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1990]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20171</AuthorID>
+              <Name>Johnson, Howard E.,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1935-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Triploid grass carp : a review of selected literature and an assessment of introducing grass carp as a biological control agent in Montana /</Title>
+          <Doi>10.5962/bhl.title.68066</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68076</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68076</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Produced by Montana Fish, Wildlife &amp; Parks :</PublisherName>
+          <PublicationDate>1996.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88015</AuthorID>
+              <Name>Holton, George D.,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1920-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>20171</AuthorID>
+              <Name>Johnson, Howard E.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1935-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>A field guide to Montana fishes /</Title>
+          <Doi>10.5962/bhl.title.68076</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68077</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68077</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Produced by Montana Fish, Wildlife &amp; Parks :</PublisherName>
+          <PublicationDate>2003.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88015</AuthorID>
+              <Name>Holton, George D.,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1920-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>20171</AuthorID>
+              <Name>Johnson, Howard E.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1935-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88016</AuthorID>
+              <Name>Stevenson, Harold (Rich)</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88017</AuthorID>
+              <Name>Tomelleri, Joseph R.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88018</AuthorID>
+              <Name>West, Glenn</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>A field guide to Montana fishes /</Title>
+          <Doi>10.5962/bhl.title.68077</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68087</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68087</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Polson, MT :</PublisherPlace>
+          <PublisherName>Flathead Lake Biological Station, University of Montana,</PublisherName>
+          <PublicationDate>[1991]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88019</AuthorID>
+              <Name>Flathead Lake Biological Station.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87511</AuthorID>
+              <Name>Spencer, Craig Nelson.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Distribution and abundance of zooplankton and Mysis relicta in Flathead Lake /</Title>
+          <Doi>10.5962/bhl.title.68087</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68090</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68090</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Dillon, Mont. (c/o Beaverhead National Forest, 610 N. Montana St., Dillon, 59725) :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1987]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>18561</AuthorID>
+              <Name>Shepard, Bradley B.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14047</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Forest Service.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Beaverhead National Forest Fisheries : second annual report, covering the period January to December 1986 /</Title>
+          <Doi>10.5962/bhl.title.68090</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68091</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68091</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88020</AuthorID>
+              <Name>Morris, Lani M.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>An analysis of the aquatic resources of the Hanging Woman Creek and Otter Creek Drainages, Montana : final report /</Title>
+          <Doi>10.5962/bhl.title.68091</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68097</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68097</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mt.?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1980]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>24112</AuthorID>
+              <Name>Elser, Allen A.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88027</AuthorID>
+              <Name>Gorges, Mark W.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88020</AuthorID>
+              <Name>Morris, Lani M.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Distribution of fishes in southeastern Montana /</Title>
+          <Doi>10.5962/bhl.title.68097</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68099</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68099</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Dillon, Mont. (c/o Beaverhead National Forest, P.O. Box 1258, Dillon 59725) :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1986?]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>18561</AuthorID>
+              <Name>Shepard, Bradley B.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14047</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Forest Service.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Beaverhead National Forest and Montana Department of Fish, Wildlife and Parks cooperative fishery program : first annual report, covering the report period August 15 to December 31, 1985 /</Title>
+          <Doi>10.5962/bhl.title.68099</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68114</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68114</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>1990.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88015</AuthorID>
+              <Name>Holton, George D.,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1920-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>A field guide to Montana fishes /</Title>
+          <Doi>10.5962/bhl.title.68114</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68227</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68227</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>2005</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88075</AuthorID>
+              <Name>Harrington, Bob</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Vegetation monitoring manual /</Title>
+          <Doi>10.5962/bhl.title.68227</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68245</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68245</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Department of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1990].</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88085</AuthorID>
+              <Name>Kaya, Calvin M.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Status report on fluvial arctic grayling (Thymallus arcticus) in Montana /</Title>
+          <Doi>10.5962/bhl.title.68245</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68247</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68247</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Kalispell, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1981].</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88021</AuthorID>
+              <Name>Graham, Patrick J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88087</AuthorID>
+              <Name>Perry, Sue.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14005</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Reclamation.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The impact of Hungry Horse Dam on the aquatic invertebrates of the Flathead River /</Title>
+          <Doi>10.5962/bhl.title.68247</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>68321</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/68321</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1980]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>24112</AuthorID>
+              <Name>Elser, Allen A.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88027</AuthorID>
+              <Name>Gorges, Mark W.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88020</AuthorID>
+              <Name>Morris, Lani M.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Distribution of fishes in southeastern Montana /</Title>
+          <Doi>10.5962/bhl.title.68321</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69089</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69089</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1993</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88847</AuthorID>
+              <Name>Henderson, R. E.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88848</AuthorID>
+              <Name>Lemke, T. O.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88849</AuthorID>
+              <Name>Rocky Mountain Elk Foundation.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88850</AuthorID>
+              <Name>Sterling, B. A.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The Lower Clark Fork elk study : final report 1985-1990 : the social structure and seasonal habitat selection of a northwest Montana elk population with an analysis of population characteristics, harvest rates, and survey techniques /</Title>
+          <Doi>10.5962/bhl.title.69089</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69091</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69091</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>1983-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88852</AuthorID>
+              <Name>Kasworm, Wayne,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1954-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Cabinet Mountains grizzly bear study /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69103</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69103</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1990]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87988</AuthorID>
+              <Name>Dusek, Gary L.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88855</AuthorID>
+              <Name>Morgan, John T.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(John Thomas),</FullerForm>
+              <Dates>1959-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Population ecology of white-tailed deer in northwestern Montana /</Title>
+          <Doi>10.5962/bhl.title.69103</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69104</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69104</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40678</AuthorID>
+              <Name>Brannon, Robert D.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>20887</AuthorID>
+              <Name>Dood, Arnold R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88856</AuthorID>
+              <Name>Mace, Richard D.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(Richard David)</FullerForm>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Draft programmatic environmental impact statement : the grizzly bear in northwestern Montana /</Title>
+          <Doi>10.5962/bhl.title.69104</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69105</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69105</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 E. 6th Ave., Helena 59620) :</PublisherPlace>
+          <PublisherName>Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20117</AuthorID>
+              <Name>Joslin, Gayle.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>34153</AuthorID>
+              <Name>Lewis and Clark National Forest (Mont.)</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Montana mountain goat investigations, Rocky Mountain Front /</Title>
+          <Doi>10.5962/bhl.title.69105</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69109</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69109</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>S.l. :</PublisherPlace>
+          <PublisherName>s.n.,</PublisherName>
+          <PublicationDate>1985</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40677</AuthorID>
+              <Name>Aune, Keith,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1954-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>74478</AuthorID>
+              <Name>U.S. Fish and Wildlife Service.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Region 1.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14047</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Forest Service.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Rocky Mountain front grizzly bear monitoring and investigation /</Title>
+          <Doi>10.5962/bhl.title.69109</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69110</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69110</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1982</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40677</AuthorID>
+              <Name>Aune, Keith,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1954-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88858</AuthorID>
+              <Name>Stivers, Tom.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Rocky Mountain front grizzly bear monitoring and investigation /</Title>
+          <Doi>10.5962/bhl.title.69110</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69111</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69111</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1994?</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>40284</AuthorID>
+              <Name>Sime, Carolyn A.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Northwestern Montana whitetail deer research : progress report, 1994.</Title>
+          <Doi>10.5962/bhl.title.69111</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69127</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69127</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, OR :</PublisherPlace>
+          <PublisherName>U.S. Dept. of Energy, Bonneville Power Administration, Division of Fish &amp; Wildlife ;</PublisherName>
+          <PublicationDate>[1988]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88868</AuthorID>
+              <Name>Hansen, Barry.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88101</AuthorID>
+              <Name>Marotz, Brian.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88869</AuthorID>
+              <Name>Tralles, Steve.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Instream flows needed for successful migration, spawning, and rearing of rainbow and westslope cutthroat trout in selected tributaries of the Kootenai River : final report FY 1988 /</Title>
+          <Doi>10.5962/bhl.title.69127</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69142</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69142</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Denver, Colo.] :</PublisherPlace>
+          <PublisherName>The Service,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88885</AuthorID>
+              <Name>Brown, Don L.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>2362</AuthorID>
+              <Name>U.S. Fish and Wildlife Service.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Office of Biological Services.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Grizzly bear recovery plan /</Title>
+          <Doi>10.5962/bhl.title.69142</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69145</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69145</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont. :</PublisherPlace>
+          <PublisherName>Montana Department of Fish, Wildlife and Parks],</PublisherName>
+          <PublicationDate>1991.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20117</AuthorID>
+              <Name>Joslin, Gayle.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88849</AuthorID>
+              <Name>Rocky Mountain Elk Foundation.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88888</AuthorID>
+              <Name>Seven-up Pete Joint Venture.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>42308</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Granite Butte elk GIS project progress report : maintenance of elk habitat - recovery of public hunting opportunity /</Title>
+          <Doi>10.5962/bhl.title.69145</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69146</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69146</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88889</AuthorID>
+              <Name>Montana Fish, Wildlife, and Parks Commission.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>20739</AuthorID>
+              <Name>Youmans, Heidi B.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1953-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Statewide elk management plan for Montana /</Title>
+          <Doi>10.5962/bhl.title.69146</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69149</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69149</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1991]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87988</AuthorID>
+              <Name>Dusek, Gary L.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88855</AuthorID>
+              <Name>Morgan, John T.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(John Thomas),</FullerForm>
+              <Dates>1959-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Population ecology of white-tailed deer in northwestern Montana /</Title>
+          <Doi>10.5962/bhl.title.69149</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69152</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69152</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20737</AuthorID>
+              <Name>DuBois, Kristi.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34306</AuthorID>
+              <Name>U.S. Fish and Wildlife Service.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Division of Fish Hatcheries.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Rocky Mountain front raptor survey, December 1982-August 1984 /</Title>
+          <Doi>10.5962/bhl.title.69152</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69153</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69153</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>Montana Department of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1993]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>20887</AuthorID>
+              <Name>Dood, Arnold R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34242</AuthorID>
+              <Name>Pac, Helga Ihsle,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1955-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Five year update of the programmatic environmental impact statement : the grizzly bear in northwestern Montana, 1986-1990 /</Title>
+          <Doi>10.5962/bhl.title.69153</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69161</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69161</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>1987?</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87988</AuthorID>
+              <Name>Dusek, Gary L.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88896</AuthorID>
+              <Name>International Union of Game Biologists.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Congress</Unit>
+              <Location>Kraków, Poland)</Location>
+              <Dates>1987-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The Implication of body weight to reproductive strategy among young adult female white-tailed deer /</Title>
+          <Doi>10.5962/bhl.title.69161</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69181</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69181</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena]</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish and Game,</PublisherName>
+          <PublicationDate>1976-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87972</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish and Game</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Montana deer studies : progress report for the period ...</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69183</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69183</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Dillon, Mont. :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>2000.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88910</AuthorID>
+              <Name>Magee, James Patrick.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Upper Missouri Headwaters fluvial arctic grayling : reintroduction plan /</Title>
+          <Doi>10.5962/bhl.title.69183</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69184</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69184</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Dillon, Mont. :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>1998].</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88910</AuthorID>
+              <Name>Magee, James Patrick.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>North and South Forks of the Sun River fluvial arctic grayling : reintroduction plan /</Title>
+          <Doi>10.5962/bhl.title.69184</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69186</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69186</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Dillon, Mont.? :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks],</PublisherName>
+          <PublicationDate>2000-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88911</AuthorID>
+              <Name>Magee, James P.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88912</AuthorID>
+              <Name>Opitz, Scott T.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Montana fluvial arctic grayling recovery project : annual monitoring report /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69187</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69187</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Boulder, Mont. :</PublisherPlace>
+          <PublisherName>FaunaWest Wildlife Consultants,</PublisherName>
+          <PublicationDate>1998</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88913</AuthorID>
+              <Name>Knowles, Craig J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88914</AuthorID>
+              <Name>Knowles, Pamela R.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The historic and current status of the mountain plover in Montana /</Title>
+          <Doi>10.5962/bhl.title.69187</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69189</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69189</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Dillon, Mont.?</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks],</PublisherName>
+          <PublicationDate>2000-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88912</AuthorID>
+              <Name>Opitz, Scott T.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Upper Ruby River fluvial arctic grayling reintroduction : annual report /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69712</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69712</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman? :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>1992</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>89368</AuthorID>
+              <Name>Gobielle, John E.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <FullerForm>(John Edward)</FullerForm>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The effect of fire on Merriam's turkey brood habitat in southeastern Montana /</Title>
+          <Doi>10.5962/bhl.title.69712</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69716</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69716</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1991]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>89372</AuthorID>
+              <Name>FaunaWest Wildlife Consultants (Firm)</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>An ecological and taxonomic review of the swift fox (Vulpes velox) with special reference to Montana /</Title>
+          <Doi>10.5962/bhl.title.69716</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>69719</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/69719</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Yellowstone National Park, WY :</PublisherPlace>
+          <PublisherName>National Park Service?,</PublisherName>
+          <PublicationDate>1990</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>21334</AuthorID>
+              <Name>Gallatin National Forest (Agency : U.S.)</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>27894</AuthorID>
+              <Name>Yellowstone National Park (Agency : U.S.)</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Yellowstone bison : background and issues : a cooperatively prepared narrative of bison management history and management issues /</Title>
+          <Doi>10.5962/bhl.title.69719</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>70859</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/70859</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.?,</PublisherName>
+          <PublicationDate>1982?].</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34242</AuthorID>
+              <Name>Pac, Helga Ihsle,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1955-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>14004</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Population ecology of mule deer with emphasis on potential impacts of gas and oil development along the east slope of the Rocky Mountains, northcentral Montana /</Title>
+          <Doi>10.5962/bhl.title.70859</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>70890</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/70890</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Billings, Mont. :</PublisherPlace>
+          <PublisherName>U.S. Bureau of Land Management ;</PublisherName>
+          <PublicationDate>[1986]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88014</AuthorID>
+              <Name>Clark, Tim W.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87604</AuthorID>
+              <Name>U.S. Fish and Wildlife Service.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Branch of Predator and Rodent Control.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>42308</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Land Management.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Annotated prairie dog bibliography, 1973 to 1985 /</Title>
+          <Doi>10.5962/bhl.title.70890</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>77295</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/77295</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Bozeman?] :</PublisherPlace>
+          <PublisherName>The Dept.?,</PublisherName>
+          <PublicationDate>[1993?]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>97030</AuthorID>
+              <Name>Montana State University--Bozeman.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Veterinary Molecular Biology Laboratory.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Trichinosis in Montana bears /</Title>
+          <Doi>10.5962/bhl.title.77295</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>77304</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/77304</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman :</PublisherPlace>
+          <PublisherName>Montana State University [and] Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88006</AuthorID>
+              <Name>Cope, Michael Glen.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Distribution, habitat selection and survival of transplanted Columbian sharp-tailed grouse (Tympanuchus phasianellus columbianus) in the Tobacco Valley, Montana /</Title>
+          <Doi>10.5962/bhl.title.77304</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100810</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100810</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, MT :</PublisherPlace>
+          <PublisherName>The Dept.],</PublisherName>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Drawing statistics and ... game harvest statistics /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100830</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100830</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, OR :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>1984-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Quantification of Libby Reservoir water levels needed to maintain or enhance reservoir fisheries.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100855</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100855</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Or. :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration,</PublisherName>
+          <PublicationDate>1982-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>23672</AuthorID>
+              <Name>Decker-Hess, Janet.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Impacts of water level fluctuations on kokanee reproduction in Flathead Lake.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100897</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100897</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Montana :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks?,</PublisherName>
+          <PublicationDate>1984</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154166</AuthorID>
+              <Name>Schollenberger, Mark.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Impact on rainbow trout reproduction associated with the attainment of the recreational pool elevation at Mystic Lake : final draft /</Title>
+          <Doi>10.5962/bhl.title.100897</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100901</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100901</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Boise, Idaho :</PublisherPlace>
+          <PublisherName>The Bureau,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88021</AuthorID>
+              <Name>Graham, Patrick J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88087</AuthorID>
+              <Name>Perry, Sue.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>14005</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Reclamation.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Impacts of Hungry Horse Dam on the invertebrates in the Flathead River : final report /</Title>
+          <Doi>10.5962/bhl.title.100901</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100904</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100904</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Kalispell, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1983]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88021</AuthorID>
+              <Name>Graham, Patrick J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>18561</AuthorID>
+              <Name>Shepard, Bradley B.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Coal beetle salvage fisheries monitoring study : final report /</Title>
+          <Doi>10.5962/bhl.title.100904</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100905</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100905</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Townsend :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>[1993]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>[Environmental assessment for the proposed Big Springs Restoration Project]</Title>
+          <Doi>10.5962/bhl.title.100905</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100906</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100906</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman, Mont. :</PublisherPlace>
+          <PublisherName>Inter-Fluve, Inc.,</PublisherName>
+          <PublicationDate>[1989]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154186</AuthorID>
+              <Name>Inter-Fluve, Inc.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Feasibility of creating a spawning and rearing channel to the Missouri River using the lower Deep Creek drain ditch near Townsend, Montana /</Title>
+          <Doi>10.5962/bhl.title.100906</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100908</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100908</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>1986.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Draft upper Bighorn River fisheries management plan.</Title>
+          <Doi>10.5962/bhl.title.100908</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100909</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100909</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, OR :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1984-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Quantification of Hungry Horse Reservoir water levels needed to maintain or enhance reservoir fisheries.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100979</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100979</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks?,</PublisherName>
+          <PublicationDate>1988</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154185</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Health and Environmental Sciences</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Guidelines for investigating fish kills /</Title>
+          <Doi>10.5962/bhl.title.100979</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>100981</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/100981</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Mont. :</PublisherPlace>
+          <PublisherName>Deerlodge National Forest?,</PublisherName>
+          <PublicationDate>1986</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>21406</AuthorID>
+              <Name>Deerlodge National Forest (Mont.)</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>154209</AuthorID>
+              <Name>Frank, Gary,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1961-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154208</AuthorID>
+              <Name>Munther, Greg.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>1985 fisheries habitat and aquatic environment monitoring report, Rock Creek drainage of the Deerlodge National Forest /</Title>
+          <Doi>10.5962/bhl.title.100981</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101051</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101051</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Mont.] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40820</AuthorID>
+              <Name>Berg, Rodney K.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>A brief overview of the Middle Clark Fork River fishery monitoring study : evaluation of the effects of pulp and paper mill effluents on the fish population /</Title>
+          <Doi>10.5962/bhl.title.101051</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101052</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101052</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Middle Clark Fork River fishery monitoring study : evaluation of the effects of pulp and paper mill effluents on the fish population /</Title>
+          <Doi>10.5962/bhl.title.101052</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101053</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101053</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Boise, Idaho :</PublisherPlace>
+          <PublisherName>[The Bureau?,</PublisherName>
+          <PublicationDate>1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>41376</AuthorID>
+              <Name>Fraley, John.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88021</AuthorID>
+              <Name>Graham, Patrick J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14005</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Reclamation.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The impact of Hungry Horse Dam on the fishery of the Flathead River : final report /</Title>
+          <Doi>10.5962/bhl.title.101053</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101120</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101120</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman, Mont. :</PublisherPlace>
+          <PublisherName>Cooperative Fishery Research Unit, Montana State University ;</PublisherName>
+          <Authors>
+            <Author>
+              <AuthorID>34190</AuthorID>
+              <Name>Montana Cooperative Fishery Research Unit.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>14005</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bureau of Reclamation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154267</AuthorID>
+              <Name>White, Robert G.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(Robert George),</FullerForm>
+              <Dates>1940-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>The Effects of supersaturation of dissolved gases on the fishery of the Bighorn River downstream of the Yellowtail Afterbay Dam /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101121</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101121</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena MT :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>2003.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40820</AuthorID>
+              <Name>Berg, Rodney K.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Fish population status in eight major lakes in the Clearwater River Drainage, Montana, 1995-2002 /</Title>
+          <Doi>10.5962/bhl.title.101121</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101123</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101123</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, MT :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1995?]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Whirling disease &amp; Montana's wild trout /</Title>
+          <Doi>10.5962/bhl.title.101123</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101145</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101145</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Missoula, Mont. :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>2005.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154272</AuthorID>
+              <Name>Aasheim, Ryen.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>20642</AuthorID>
+              <Name>Pierce, Ron.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>20643</AuthorID>
+              <Name>Podner, Craig.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>An integrated stream restoration and native fish conservation strategy for the Blackfoot River basin /</Title>
+          <Doi>10.5962/bhl.title.101145</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101146</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101146</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Missoula, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Middle Clark Fork River fishery monitoring study : evaluation of the effects of pulp and paper mill effluents on the fish population /</Title>
+          <Doi>10.5962/bhl.title.101146</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101169</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101169</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Dept. of Fish, Wildlife, and Parks?,</PublisherName>
+          <PublicationDate>1991</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154184</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Board of Natural Resources and Conservation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Before the Montana Board of Natural Resources and Conservation in the matter of water reservation application nos. 69903-410 ... in the upper Missouri River Basin : Department of Fish, Wildlife and Parks' rebuttal testimony.</Title>
+          <Doi>10.5962/bhl.title.101169</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101279</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101279</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>1981</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154312</AuthorID>
+              <Name>Hadley, Wayne F.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The distribution of fishes and fish habitat in the Elkhorn Mountains portion of the Helena National Forest /</Title>
+          <Doi>10.5962/bhl.title.101279</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101395</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101395</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Dept. of Fish, Wildlife, and Parks?,</PublisherName>
+          <PublicationDate>1991</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154184</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Board of Natural Resources and Conservation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Before the Montana Board of Natural Resources and Conservation in the matter of water reservation application nos. 69903-410 ... in the Upper Missouri River Basin : Department of Fish, Wildlife and Parks' exhibits for prefiled direct testimony.</Title>
+          <Doi>10.5962/bhl.title.101395</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101396</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101396</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Kalispell, Mont. :</PublisherPlace>
+          <PublisherName>Fisheries Research and Special Projects Bureau, Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1983-1986.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154355</AuthorID>
+              <Name>Clancey, Pat,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1956-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>41376</AuthorID>
+              <Name>Fraley, John.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>154354</AuthorID>
+              <Name>McMullin, Steve L.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Effects of the operation of Kerr and Hungry Horse Dam on the Kokanee Fishery in the Flathead River system.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101405</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101405</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Missoula, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>A field bioassay of potential effects of Champion Pulp Mill effluents on brown trout egg and sac fry survival in the Clark Fork River /</Title>
+          <Doi>10.5962/bhl.title.101405</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101406</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101406</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1990]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Missouri River management plan : Holter Dam to Great Falls, 1990 through 1994 /</Title>
+          <Doi>10.5962/bhl.title.101406</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101418</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101418</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, OR. :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration</PublisherName>
+          <PublicationDate>1995.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154368</AuthorID>
+              <Name>Hanzel, Delano.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Flathead River creel report, 1992-1993 : final report /</Title>
+          <Doi>10.5962/bhl.title.101418</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101426</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101426</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1983]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>3498</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Army.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Kootenai River investigations final report, 1972-1982 /</Title>
+          <Doi>10.5962/bhl.title.101426</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101508</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101508</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>1983</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154440</AuthorID>
+              <Name>Rognrud, Merle.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>General wildlife restocking in Montana, 1941-1982 /</Title>
+          <Doi>10.5962/bhl.title.101508</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>101561</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/101561</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1980]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>34137</AuthorID>
+              <Name>Mackie, Richard J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(Richard John),</FullerForm>
+              <Dates>1933-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Montana deer studies : federal aid project W-120-R-11 progress report for the period July 1, 1979-June 30, 1980.</Title>
+          <Doi>10.5962/bhl.title.101561</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>102726</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/102726</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1993]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Report to 53rd Montana Legislature : SB 252, habitat Montana /</Title>
+          <Doi>10.5962/bhl.title.102726</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>102727</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/102727</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena?, Mont. :</PublisherPlace>
+          <PublisherName>Dept. of Fish, Wildlife, and Parks?,</PublisherName>
+          <PublicationDate>1991</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>154184</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Board of Natural Resources and Conservation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Before the Montana Board of Natural Resources and Conservation in the matter of water reservation application nos. 69903-410 ... in the Upper Missouri River Basin : Department of Fish, Wildlife and Parks' surrebuttal testimony.</Title>
+          <Doi>10.5962/bhl.title.102727</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>102778</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/102778</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[2005]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Habitat  Montana : a portfolio of land conservation efforts : report to 59th Montana Legislature /</Title>
+          <Doi>10.5962/bhl.title.102778</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>102784</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/102784</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Bozeman?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1994-</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Serial</Genre>
+          <Title>Wildlife management program programmatic environmental impact statement newsletter.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>104995</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/104995</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Upper Missouri River reservoir operating guidelines for fish, wildlife and recreation /</Title>
+          <Doi>10.5962/bhl.title.104995</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>106968</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/106968</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 East Sixth Avenue, Helena 59620) :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>[1987]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87508</AuthorID>
+              <Name>Hill, Kurt.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>161787</AuthorID>
+              <Name>Humphrey, Ann B.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>37520</AuthorID>
+              <Name>Phillips, Glenn R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Statewide water pollution studies triennial report, 1984-86 /</Title>
+          <Doi>10.5962/bhl.title.106968</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>107248</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/107248</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 East Sixth Avenue, Helena 59620) :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>37520</AuthorID>
+              <Name>Phillips, Glenn R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Evaluation of copper concentrations in crayfish (Pacifastacus trowbridgi) from various segments of the Clark Fork River drainage, Montana /</Title>
+          <Doi>10.5962/bhl.title.107248</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>107431</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/107431</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 East Sixth Avenue, Helena 59620) :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1982]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>37520</AuthorID>
+              <Name>Phillips, Glenn R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Metals residues in brown trout (Salmo trutta) from the Clark Fork and Little Blackfoot Rivers, 1978 /</Title>
+          <Doi>10.5962/bhl.title.107431</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>107505</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/107505</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 East Sixth Avenue, Helena 59620) :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87508</AuthorID>
+              <Name>Hill, Kurt.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>37520</AuthorID>
+              <Name>Phillips, Glenn R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Statewide water pollution studies biennial report, 1982-83 /</Title>
+          <Doi>10.5962/bhl.title.107505</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>109456</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/109456</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Bozeman, Mont. :</PublisherPlace>
+          <PublisherName>[The Dept.?,</PublisherName>
+          <PublicationDate>1981]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>164319</AuthorID>
+              <Name>Dooley, John,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1941-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>164317</AuthorID>
+              <Name>Horn, Jim.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>73737</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of the Interior.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>164318</AuthorID>
+              <Name>Vincent, E. Richard.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Madison River thermal simulation study /</Title>
+          <Doi>10.5962/bhl.title.109456</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>109744</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/109744</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>1989.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40677</AuthorID>
+              <Name>Aune, Keith,</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <Dates>1954-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>88852</AuthorID>
+              <Name>Kasworm, Wayne,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1954-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Final report : east front grizzly studies /</Title>
+          <Doi>10.5962/bhl.title.109744</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>109749</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/109749</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Montana] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1990]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34083</AuthorID>
+              <Name>Peters, Donald J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>164881</AuthorID>
+              <Name>Pierce, R. C.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <FullerForm>(Ronald C.)</FullerForm>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Aquatic investigations in the middle Blackfoot River : Nevada Creek and Nevada Spring Creek corridor /</Title>
+          <Doi>10.5962/bhl.title.109749</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>113806</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/113806</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, MT] :</PublisherPlace>
+          <PublisherName>[Montana Fish, Wildlife and Parks],</PublisherName>
+          <PublicationDate>[2004].</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>181202</AuthorID>
+              <Name>Weigand, Joe.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>2004 noxious weed management activity report /</Title>
+          <Doi>10.5962/bhl.title.113806</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>113945</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/113945</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, MT :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1996]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88839</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Livestock</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Interim bison management operating procedures : decision notice /</Title>
+          <Doi>10.5962/bhl.title.113945</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>114770</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/114770</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Place of publication not identified] :</PublisherPlace>
+          <PublisherName>[publisher not identified],</PublisherName>
+          <PublicationDate>[1986]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>21155</AuthorID>
+              <Name>Bitterroot National Forest (Idaho and Mont.)</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+            </Author>
+            <Author>
+              <AuthorID>154209</AuthorID>
+              <Name>Frank, Gary,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1961-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154208</AuthorID>
+              <Name>Munther, Greg.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>34083</AuthorID>
+              <Name>Peters, Donald J.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>1985 fisheries habitat and aquatic environment monitoring report, Bitterroot National Forest /</Title>
+          <Doi>10.5962/bhl.title.114770</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>114915</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/114915</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>181939</AuthorID>
+              <Name>Lane, Robert N.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>181940</AuthorID>
+              <Name>Larsen, Curtis E.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1956-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>154184</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Board of Natural Resources and Conservation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Before the Montana Board of Natural Resources and Conservation in the matter of water reservation application nos. 69903-410 ... in the upper Missouri River Basin : Department of Fish, Wildlife and Parks' reply brief /</Title>
+          <Doi>10.5962/bhl.title.114915</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>114916</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/114916</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>181939</AuthorID>
+              <Name>Lane, Robert N.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>181940</AuthorID>
+              <Name>Larsen, Curtis E.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1956-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>154184</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Board of Natural Resources and Conservation.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Before the Montana Board of Natural Resources and Conservation in the matter of water reservation application nos. 69903-410 ... in the upper Missouri River Basin : exceptions to the proposal for decision and brief in support /</Title>
+          <Doi>10.5962/bhl.title.114916</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115087</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115087</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Or. :</PublisherPlace>
+          <PublisherName>[U.S. Dept. of Energy, Bonneville Power Administration, Division of Fish &amp; Wildlife [and] Montana Dept. of Fish, Wildlife, and Parks,</PublisherName>
+          <PublicationDate>1988]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182007</AuthorID>
+              <Name>Beattie, Will.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>154355</AuthorID>
+              <Name>Clancey, Pat,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1956-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>182008</AuthorID>
+              <Name>Zubik, Raymond John,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1951-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Effect of the operation of Kerr and Hungry Horse Dams on the reproductive success of Kokanee in the Flathead system : final report, FY 1987 /</Title>
+          <Doi>10.2172/901154</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115164</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115164</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>[Dept. of Agriculture?],</PublisherName>
+          <PublicationDate>1981.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>176859</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Agriculture</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>154185</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Health and Environmental Sciences</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88839</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Livestock</Unit>
+            </Author>
+            <Author>
+              <AuthorID>3505</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Environmental Protection Agency.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>State of Montana supplemental information for the Environmental Protection Agency on depredation of livestock and use of 1080 single lethal baits and Montana's experience with M-44, 1977 to present /</Title>
+          <Doi>10.5962/bhl.title.115164</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115333</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115333</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Oreg. :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1989]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182134</AuthorID>
+              <Name>Chisholm, Ian.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Quantification of Libby Reservoir water levels needed to maintain or enhance reservoir fisheries : methods and data summary, 1983-1987 /</Title>
+          <Doi>10.2172/7202851</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115653</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115653</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mt.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1990]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34083</AuthorID>
+              <Name>Peters, Donald J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Inventory of fishery resources in the Blackfoot River and major tributaries /</Title>
+          <Doi>10.5962/bhl.title.115653</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115888</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115888</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Omaha, Neb.?] :</PublisherPlace>
+          <PublisherName>[Omaha District Corps of Engineers?],</PublisherName>
+          <PublicationDate>[2000]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>3498</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Army.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Environmental assessment and finding of no significant impact for Fort Peck Fish Hatchery, Fort Peck, Montana.</Title>
+          <Doi>10.5962/bhl.title.115888</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115968</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115968</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Ore. (P.O. Box 3621, Portland 97208) :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182750</AuthorID>
+              <Name>Bissell, G. N.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>182753</AuthorID>
+              <Name>Wood, Marilyn,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1953-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>34187</AuthorID>
+              <Name>Yde, Chris A.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1952-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Wildlife and wildlife habitat mitigation plan for the Noxon Rapids and Cabinet Gorge hydroelectric projects /</Title>
+          <Doi>10.2172/5584416</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115975</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115975</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?, Mont.] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1992]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>87604</AuthorID>
+              <Name>U.S. Fish and Wildlife Service.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Branch of Predator and Rodent Control.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>North central Montana black-footed ferret reintroduction : environmental assessment /</Title>
+          <Doi>10.5962/bhl.title.115975</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>115997</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/115997</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Bozeman?, Mont.] :</PublisherPlace>
+          <PublisherName>[Dept. of Fish, Wildlife, and Parks?],</PublisherName>
+          <PublicationDate>[1993]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182765</AuthorID>
+              <Name>Kujala, Quentin J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Winter habitat selection and habitat status of pine marten in southwest Montana /</Title>
+          <Doi>10.5962/bhl.title.115997</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116026</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116026</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Montana] :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182750</AuthorID>
+              <Name>Bissell, G. N.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>182753</AuthorID>
+              <Name>Wood, Marilyn,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1953-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Wildlife and wildlife habitat mitigation plan for the Thompson Falls hydroelectric project : final report /</Title>
+          <Doi>10.2172/947614</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116038</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116038</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>1 v. (various pagings) ;</PublisherPlace>
+          <PublicationDate>29 cm.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Collection</Genre>
+          <Title>Wildlife investigations by districts : index /</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116057</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116057</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. (1420 E. Sixth Ave., Helena 59620) ;</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>40678</AuthorID>
+              <Name>Brannon, Robert D.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>20887</AuthorID>
+              <Name>Dood, Arnold R.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>88856</AuthorID>
+              <Name>Mace, Richard D.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <FullerForm>(Richard David)</FullerForm>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Grizzly bear environmental impact statement : preliminary draft /</Title>
+          <Doi>10.5962/bhl.title.116057</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116070</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116070</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Ore. (P.O. Box 3621, Portland 97208) :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1985]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>182750</AuthorID>
+              <Name>Bissell, G. N.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34187</AuthorID>
+              <Name>Yde, Chris A.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1952-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Wildlife and wildlife habitat mitigation plan for Hungry Horse hydroelectric project : final report /</Title>
+          <Doi>10.2172/5465405</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116078</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116078</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Kalispell, Mont. :</PublisherPlace>
+          <PublisherName>Montana Department of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[2000]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>182806</AuthorID>
+              <Name>Muhlfeld, Clint C.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Seasonal distribution and movements of native and non-native fishes in the upper Flathead River, Montana : Flathead River native species project : summary report 1997-1999 /</Title>
+          <Doi>10.5962/bhl.title.116078</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116609</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116609</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.?] :</PublisherPlace>
+          <PublisherName>[Dept. of Fish, Wildlife and Parks?],</PublisherName>
+          <PublicationDate>1985.</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>183047</AuthorID>
+              <Name>Rumsey, Scott.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Mysis monitoring in western Montana lakes, 1983-1984 /</Title>
+          <Doi>10.5962/bhl.title.116609</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>116610</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/116610</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Kalispell, Mont. :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife and Parks,</PublisherName>
+          <PublicationDate>[1981]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>88021</AuthorID>
+              <Name>Graham, Patrick J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Status of white sturgeon in the Kootenai River /</Title>
+          <Doi>10.5962/bhl.title.116610</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>117218</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/117218</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife &amp; Parks :</PublisherName>
+          <PublicationDate>[2000]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>183539</AuthorID>
+              <Name>Gertonson, Arnold.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88839</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Livestock</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Interagency bison management plan for the state of Montana and Yellowstone National Park : final environmental impact statement /</Title>
+          <Doi>10.5962/bhl.title.117218</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>117220</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/117220</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Portland, Ore. (P.O. Box 3621, Portland 97208) :</PublisherPlace>
+          <PublisherName>Bonneville Power Administration, Division of Fish and Wildlife,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>183540</AuthorID>
+              <Name>Casey, Daniel.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34186</AuthorID>
+              <Name>Olsen, Arnold.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>13997</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Bonneville Power Administration.</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34187</AuthorID>
+              <Name>Yde, Chris A.,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1952-</Dates>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Wildlife loss estimates and summary of previous mitigation related to hydroelectric projects in Montana : volume three, Hungry Horse project /</Title>
+          <Doi>10.5962/bhl.title.117220</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>117222</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/117222</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1994]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Main Entry -- Corporate Name (MARC 110)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Management of black bears in Montana : final environmental impact statement.</Title>
+          <Doi>10.5962/bhl.title.117222</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>117231</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/117231</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena, Mont.] :</PublisherPlace>
+          <PublisherName>Montana Fish, Wildlife &amp; Parks :</PublisherName>
+          <PublicationDate>[2000]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>88839</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Livestock</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Interagency bison management plan for the state of Montana and Yellowstone National Park : record of decision.</Title>
+          <Doi>10.5962/bhl.title.117231</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>117247</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/117247</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Montana] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, Wildlife &amp; Parks,</PublisherName>
+          <PublicationDate>[1987]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>41130</AuthorID>
+              <Name>Gardner, William M.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+              <FullerForm>(William Michael)</FullerForm>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>182775</AuthorID>
+              <Name>Stewart, Phillip A.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>The Fishery of the lower Missouri River, Montana /</Title>
+          <Doi>10.5962/bhl.title.117247</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>119284</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/119284</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Helena, Mont. :</PublisherPlace>
+          <PublisherName>The Dept.,</PublisherName>
+          <PublicationDate>[1984]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>191110</AuthorID>
+              <Name>Hamlin, Paul.</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+            </Author>
+            <Author>
+              <AuthorID>34007</AuthorID>
+              <Name>Huston, Joe E.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+            <Author>
+              <AuthorID>87719</AuthorID>
+              <Name>May, Bruce,</Name>
+              <Role>Added Entry -- Personal Name (MARC 700)</Role>
+              <Dates>1937-</Dates>
+            </Author>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>3498</AuthorID>
+              <Name>United States.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Army.</Unit>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Lake Koocanusa investigations final report, 1972-1983 /</Title>
+          <Doi>10.5962/bhl.title.119284</Doi>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>119293</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/119293</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>[Helena?] :</PublisherPlace>
+          <PublisherName>Montana Dept. of Fish, wildlife and Parks,</PublisherName>
+          <PublicationDate>[1988]</PublicationDate>
+          <Authors>
+            <Author>
+              <AuthorID>87509</AuthorID>
+              <Name>Montana.</Name>
+              <Role>Added Entry -- Corporate Name (MARC 710)</Role>
+              <Unit>Department of Fish, Wildlife, and Parks</Unit>
+            </Author>
+            <Author>
+              <AuthorID>34083</AuthorID>
+              <Name>Peters, Donald J.</Name>
+              <Role>Main Entry -- Personal Name (MARC 100)</Role>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Third year evaluation of sediment and fish populations in selected tributaries in Rock Creek and the Bitterroot River drainage /</Title>
+          <Doi>10.5962/bhl.title.119293</Doi>
+        </Publication>
+      </Publications>
+    </Author>
+  </Result>
+</Response>

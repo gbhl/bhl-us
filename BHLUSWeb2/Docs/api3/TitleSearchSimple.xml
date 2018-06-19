@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Title>
+      <TitleID>8531</TitleID>
+      <Genre>Monograph/Item</Genre>
+      <MaterialType>Published material</MaterialType>
+      <FullTitle>Aquatic nematocerous diptera. (I)  </FullTitle>
+      <ShortTitle>Aquatic nematocerous diptera. (I)</ShortTitle>
+      <SortTitle>Aquatic nematocerous diptera. (I)</SortTitle>
+      <PublisherPlace>Albany :</PublisherPlace>
+      <PublisherName>University of the State of New York,</PublisherName>
+      <PublicationDate>1903.</PublicationDate>
+    </Title>
+  </Result>
+</Response>

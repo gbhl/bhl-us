@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Subject>
+      <SubjectText>DIPTERA (CLASSIFICAÇÃO)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera larvae</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera parasitoids</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera, Chironomidae, fossil, proboscis, feeding,</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera, Fossil</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera, Periscelididae (Stenomicrinae), new speci</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera, Ptychopteridae, Ptychoptera, revision, Te</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera, Tachinidae</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera/ecology</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera/key</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Diptera: Streblidae</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Larvae of Diptera</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Mansonia (Diptera)</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>Tabanidae, Diptera, Serbia, Europe</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>alien, Europe, Diptera</SubjectText>
+    </Subject>
+    <Subject>
+      <SubjectText>larvas de Diptera</SubjectText>
+    </Subject>
+  </Result>
+</Response>

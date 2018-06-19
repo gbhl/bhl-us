@@ -14,6 +14,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         }
 
         public PageDetail(string nameBankID,
+            int nameResolvedID,
             string nameConfirmed,
             int titleID,
             string publicationTitle,
@@ -36,6 +37,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             string pageTypeName) : this()
         {
             _NameBankID = nameBankID;
+            _NameResolvedID = nameResolvedID;
             _NameConfirmed = nameConfirmed;
             _TitleID = titleID;
             _PublicationTitle = publicationTitle;
@@ -74,6 +76,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "NameBankID":
                         {
                             _NameBankID = (string)column.Value;
+                            break;
+                        }
+                    case "NameResolvedID":
+                        {
+                            _NameResolvedID = (int)column.Value;
                             break;
                         }
                     case "ResolvedNameString":
@@ -224,6 +231,19 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set
             {
                 _NameBankID = value;
+            }
+        }
+
+        private int _NameResolvedID = default(int);
+        public int NameResolvedID
+        {
+            get
+            {
+                return _NameResolvedID;
+            }
+            set
+            {
+                _NameResolvedID = value;
             }
         }
 

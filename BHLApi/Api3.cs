@@ -35,7 +35,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Page methods
 
-        public Page GetPageMetadata(string pageID, string includeOcr, string includeNames)
+        public CustomGenericList<Page> GetPageMetadata(string pageID, string includeOcr, string includeNames)
         {
             // Validate the parameters
             int pageIDInt;
@@ -66,7 +66,7 @@ namespace MOBOT.BHL.API.BHLApi
                 if (names) page.Names = this.GetPageNames(pageID);
             }
 
-            return page;
+            return new CustomGenericList<Page> { page };
         }
 
         private CustomGenericList<Name> GetPageNames(string pageID)
@@ -630,7 +630,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Name Services
 
-        public Name GetNameMetadata(string nameConfirmed, string idType, string id)
+        public CustomGenericList<Name> GetNameMetadata(string nameConfirmed, string idType, string id)
         {
             Name name = null;
 
@@ -643,7 +643,7 @@ namespace MOBOT.BHL.API.BHLApi
                 name = this.GetNameDetailByIdentifier(idType, id);
             }
 
-            return name;
+            return new CustomGenericList<Name> { name };
         }
 
         private Name GetNameDetail(string nameConfirmed)
@@ -704,7 +704,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 // Get the name information
                 name = new Name();
-                name.Identifiers.Add(new Identifier("NameBank", pageDetails[0].NameBankID));
+                name.Identifiers = new Api3DAL().NameIdentifierSelectByNameResolvedID(null, null, pageDetails[0].NameResolvedID);
                 name.NameConfirmed = pageDetails[0].NameConfirmed;
                 name.Titles = new CustomGenericList<Title>();
 
