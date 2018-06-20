@@ -273,6 +273,7 @@
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\TextImportController.cs" />
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1072,6 +1073,7 @@
     <Content Include="Upload\Citation\ImportSegmentTemplate.xlsx" />
     <Content Include="Views\Monitor\Index.cshtml" />
     <Content Include="Views\Monitor\AddToQueue.cshtml" />
+    <Content Include="Views\TextImport\Index.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

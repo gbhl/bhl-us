@@ -529,6 +529,18 @@
 					        <a href="Report/CitationImportHistory">Segment Import History</a>
 					    </td>
 					</tr>
+
+					<tr>
+						<td align="center" runat="server" id="td2">
+							<a href="/TextImport">Import Item Text</a>
+						</td>
+					</tr>
+					<tr>
+					    <td align="center" runat="server" id="td3">
+					        <a href="Report/TextImportHistory">Text Import History</a>
+					    </td>
+					</tr>
+
 				</table>
             </td>
         </tr>
