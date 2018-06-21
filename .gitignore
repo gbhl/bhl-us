@@ -5,6 +5,7 @@
 BHLAdminWeb/Upload/Citation/New/
 BHLAdminWeb/Upload/Citation/Complete/
 BHLAdminWeb/Upload/Citation/Error/
+BHLAdminWeb/Upload/ItemText/Files/
 
 # Visual Studio cache/options directory
 .vs/

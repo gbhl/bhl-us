@@ -203,6 +203,8 @@ namespace MOBOT.BHL.AdminWeb
 
                 tdImportCitations.InnerHtml = GetMenuText(tdImportCitations.InnerHtml);
                 tdImportCitationHistory.InnerHtml = GetMenuText(tdImportCitationHistory.InnerHtml);
+                tdImportItemText.InnerHtml = GetMenuText(tdImportItemText.InnerHtml);
+                tdImportTextHistory.InnerHtml = GetMenuText(tdImportTextHistory.InnerHtml);
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminUserAdvanced))
             {

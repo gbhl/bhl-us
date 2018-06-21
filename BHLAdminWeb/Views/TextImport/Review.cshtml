@@ -1,7 +1,7 @@
 ﻿@model MOBOT.BHL.AdminWeb.Models.TextImportModel
 
 @{
-    ViewBag.Title = "Import Item Text - Getting Started";
+    ViewBag.Title = "Import Item Text - Review";
 }
 
 <p><a href="/">&lt; Return to Dashboard</a></p>
@@ -9,19 +9,17 @@
 <br />
 
 <div class="citeImport">
-
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        <div style="margin-bottom:10px">
-            <p>
-                UPDATE THIS TEXT WITH INSTRUCTIONS FOR UPLOADING TEXT FILES, INCLUDING
-                INFORMATION ABOUT FILE FORMATS.
-            </p>
+
+
+
+
+        <div style="margin:10px 0px">
             <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
             <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
         </div>
     }
-
 </div>
 
 <script type="text/javascript">
@@ -31,3 +29,5 @@
         });
     });
 </script>
+
+

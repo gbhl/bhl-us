@@ -93,6 +93,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("segmenttypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
 
             else if (path.Contains("citationimport")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
+            else if (path.Contains("textimport")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("report/")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("biostorharvest")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("biostorsegmentsforitem")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);

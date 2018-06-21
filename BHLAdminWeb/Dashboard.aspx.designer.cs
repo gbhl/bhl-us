@@ -760,21 +760,21 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImportCitationHistory;
         
         /// <summary>
-        /// td2 control.
+        /// tdImportItemText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell td2;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImportItemText;
         
         /// <summary>
-        /// td3 control.
+        /// tdImportTextHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell td3;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdImportTextHistory;
     }
 }

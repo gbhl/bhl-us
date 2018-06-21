@@ -531,12 +531,12 @@
 					</tr>
 
 					<tr>
-						<td align="center" runat="server" id="td2">
+						<td align="center" runat="server" id="tdImportItemText">
 							<a href="/TextImport">Import Item Text</a>
 						</td>
 					</tr>
 					<tr>
-					    <td align="center" runat="server" id="td3">
+					    <td align="center" runat="server" id="tdImportTextHistory">
 					        <a href="Report/TextImportHistory">Text Import History</a>
 					    </td>
 					</tr>

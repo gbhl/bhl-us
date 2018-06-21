@@ -441,8 +441,10 @@
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
+    <Compile Include="Models\TextImportModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="MVCServices\EmailService.cs" />
+    <Compile Include="MVCServices\TextImportService.cs" />
     <Compile Include="NamePageEdit.aspx.cs">
       <DependentUpon>NamePageEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1074,6 +1076,8 @@
     <Content Include="Views\Monitor\Index.cshtml" />
     <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <Content Include="Views\TextImport\Index.cshtml" />
+    <Content Include="Views\TextImport\SelectFile.cshtml" />
+    <Content Include="Views\TextImport\Review.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>
@@ -1197,6 +1201,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="styles\jqgridtheme\images\" />
+    <Folder Include="Upload\ItemText\Files\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\SiteService\" />
