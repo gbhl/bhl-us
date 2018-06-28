@@ -29,9 +29,6 @@
                             <label class="caption" for="txtPubAuthorLastName">Author Last Name:</label><input name="txtPubAuthorLastName" type="text" id="txtPubAuthorLastName" style="width:200px;" />
                         </li>
                         <li>
-                            <label class="caption" for="txtPubVolume">Volume:</label><input name="txtPubVolume" type="text" id="txtPubVolume" />
-                        </li>
-                        <li>
                             <label class="caption" for="txtPubYear">Year (YYYY):</label><input name="txtPubYear" type="text" id="txtPubYear" /><label id="lblPubYearError" for="txtPubYear" class="ErrorText" style="display:none"> Please specify a 4-digit Year.</label>
                         </li>
                         <li>
@@ -195,7 +192,6 @@
     // Search books on Enter keypress
     $("#txtPubTitle").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
     $("#txtPubAuthorLastName").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
-    $("#txtPubVolume").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
     $("#txtPubYear").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
     $("#txtPubSubject").keypress(function (event) { if (event.keyCode == '13') $("#btnSearchTitle").click(); });
 

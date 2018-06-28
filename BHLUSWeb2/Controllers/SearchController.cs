@@ -16,7 +16,7 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Index
         [HttpGet]
-        public ActionResult Index(string searchTerm, string searchCat, string lname, string vol, string yr, 
+        public ActionResult Index(string searchTerm, string searchCat, string lname, string yr, 
             string subj, string lang, string col, string ppage, string apage, string kpage, string npage, 
             string[] facet)
         {
@@ -32,7 +32,6 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the search arguments
             model.Params.SearchCategory = (searchCat ?? string.Empty).Trim().ToUpper();
             model.Params.LastName = lname ?? string.Empty;
-            model.Params.Volume = vol ?? string.Empty;
             model.Params.Year = yr ?? string.Empty;
             model.Params.Subject = subj ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(lang))
@@ -196,7 +195,6 @@ namespace MOBOT.BHL.Web2.Controllers
             {
                 queryString = "SearchTerm=" + Server.UrlEncode(Request.Form["txtPubTitle"]) +
                     "&lname=" + Server.UrlEncode(Request.Form["txtPubAuthorLastName"]) +
-                    "&vol=" + Server.UrlEncode(Request.Form["txtPubVolume"]) +
                     "&yr=" + Server.UrlEncode(Request.Form["txtPubYear"]) +
                     "&subj=" + Server.UrlEncode(Request.Form["txtPubSubject"]) +
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
