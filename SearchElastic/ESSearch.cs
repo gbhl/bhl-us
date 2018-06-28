@@ -270,17 +270,17 @@ namespace BHL.Search.Elastic
                 List<QueryContainer> shouldQueries = new List<QueryContainer>();
                 if (!string.IsNullOrWhiteSpace(title))
                 {
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title), Boost = 10 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title) });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 10 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 10 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 10 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
                 }
 
-                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author) });
+                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
                 if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = CleanQuery(volume) });
                 if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = CleanQuery(year) });
-                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword) });
+                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
