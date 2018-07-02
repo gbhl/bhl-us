@@ -45,6 +45,12 @@ namespace BHL.Search
         bool IsOnline();
 
         /// <summary>
+        /// Check whether the search provider supports full-text search.
+        /// </summary>
+        /// <returns>True if full-text searches are supported, false if not.</returns>
+        bool IsFullTextSupported();
+
+        /// <summary>
         /// Global search of items, authors, keywords, and names (but NOT pages)
         /// </summary>
         /// <param name="query"></param>
@@ -62,8 +68,9 @@ namespace BHL.Search
         /// <param name="language"></param>
         /// <param name="collection"></param>
         /// <returns>Object containing the publications returned by the search.</returns>
-        ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, 
-            Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null);
+        ISearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
+            List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
         /// Search for publications

@@ -46,11 +46,14 @@
 <form id="searchForm" action="~/search" method="get">
 
     @Html.HiddenFor(m => m.Params.SearchTerm)
+    @Html.HiddenFor(m => m.Params.TermInclude)
     @Html.HiddenFor(m => m.Params.SearchCategory)
     @Html.HiddenFor(m => m.Params.LastName)
+    @Html.HiddenFor(m => m.Params.LastNameInclude)
     @Html.HiddenFor(m => m.Params.Volume)
     @Html.HiddenFor(m => m.Params.Year)
     @Html.HiddenFor(m => m.Params.Subject)
+    @Html.HiddenFor(m => m.Params.SubjectInclude)
     @Html.HiddenFor(m => m.Params.Language)
     @Html.HiddenFor(m => m.Params.Collection)
     @Html.HiddenFor(m => m.ItemPage, new { @id = "ItemPage" })
@@ -118,28 +121,28 @@
                                                             <div class="row">
                                                                 <div class="col-sm-9">
                                                                     <div style="padding-bottom:10px">
-                                                                    @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
-                                                                    {
-                                                                        if (string.IsNullOrWhiteSpace(item.Url))
+                                                                        @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
                                                                         {
-                                                                            <a href="~/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            if (string.IsNullOrWhiteSpace(item.Url))
+                                                                            {
+                                                                                <a href="~/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a target="_blank" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
-                                                                            <a target="_blank" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            if (string.IsNullOrWhiteSpace(item.Url))
+                                                                            {
+                                                                                <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <a target="_blank" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                            }
                                                                         }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        if (string.IsNullOrWhiteSpace(item.Url))
-                                                                        {
-                                                                            <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <a target="_blank" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
-                                                                        }
-                                                                    }
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3 pubResultLinks">
@@ -326,13 +329,13 @@
                                         else
                                         {
                                             <div class="nonPubResult">
-                                                @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.KeywordResult}, { "currentPageField", "KeywordPage" }, { "searchTab", "subjects" } })
+                                                @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.KeywordResult }, { "currentPageField", "KeywordPage" }, { "searchTab", "subjects" } })
                                                 @foreach (BHL.Search.KeywordHit keyword in Model.KeywordResult.Keywords)
                                                 {
                                                     <div class="nonPubResultLine"><a href="/subject/@Server.UrlEncode(keyword.Keyword)">@keyword.Keyword</a></div>
                                                 }
                                             </div>
-                                            @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.KeywordResult}, { "currentPageField", "KeywordPage" }, { "searchTab", "subjects" } })
+                                            @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.KeywordResult }, { "currentPageField", "KeywordPage" }, { "searchTab", "subjects" } })
                                         }
                                     }
                                     else
@@ -403,14 +406,14 @@
             <div class="col-sm-2">
                 <p>
                     <div class="column-wrap" style="padding-left:10px; padding-bottom:5px;">
-                    <p><a href="~/search?elastic=0&@Model.QueryString">Use our old<br />search interface</a></p>
-                    </div>
-                </p>
+                <p><a href="~/search?elastic=0&@Model.QueryString">Use our old<br />search interface</a></p>
+            </div>
+            </p>
 
-                @Html.Action("_DonateFeatureSmall", "Partial")
-                <p>&nbsp;</p>
-                @Html.Action("_CollectionFeatureSmall", "Partial")
-    </div>
+            @Html.Action("_DonateFeatureSmall", "Partial")
+            <p>&nbsp;</p>
+            @Html.Action("_CollectionFeatureSmall", "Partial")
+        </div>
 </form>
 <!--
     </div>
@@ -528,11 +531,14 @@
 
         function buildQS() {
             var qs = 'searchTerm=' + $('#Params_SearchTerm').val() +
+                "&tinc=" + $('#Params_TermInclude').val() +
                 '&searchCat=' + $('#Params_SearchCategory').val() +
                 '&lname=' + $('#Params_LastName').val() +
+                "&ninc=" + $('#Params_LastNameInclude').val() +
                 '&vol=' + $('#Params_Volume').val() +
                 '&yr=' + $('#Params_Year').val() +
                 '&subj=' + $('#Params_Subject').val() +
+                "&sinc=" + $('#Params_SubjectInclude').val() +
                 '&lang=' + $('#Params_Language').val() +
                 '&col=' + $('#Params_Collection').val() +
                 '&ppage=' + $('#ItemPage').val() +

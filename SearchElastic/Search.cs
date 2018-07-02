@@ -84,6 +84,11 @@ namespace BHL.Search.Elastic
             return online;
         }
 
+        public bool IsFullTextSupported()
+        {
+            return true;
+        }
+
         public ISearchResult SearchCatalog(string query, List<Tuple<SearchField, string>> limits = null)
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
@@ -120,8 +125,9 @@ namespace BHL.Search.Elastic
             return result;
         }
 
-        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, 
-            Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
+            List<Tuple<SearchField, string>> limits = null)
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> { ESField.ASSOCIATIONS, ESField.AUTHORS,
@@ -143,15 +149,15 @@ namespace BHL.Search.Elastic
 
             // Highlight only the queried fields
             List<string> highlightFields = new List<string>();
-            if (!string.IsNullOrWhiteSpace(title)) {
+            if (!string.IsNullOrWhiteSpace(title.searchValue)) {
                 highlightFields.Add(ESField.ASSOCIATIONS);
                 highlightFields.Add(ESField.TITLE);
                 highlightFields.Add(ESField.TRANSLATEDTITLE);
                 highlightFields.Add(ESField.UNIFORMTITLE);
                 highlightFields.Add(ESField.VARIANTS);
             }
-            if (!string.IsNullOrWhiteSpace(author)) highlightFields.Add(ESField.SEARCHAUTHORS);
-            if (!string.IsNullOrWhiteSpace(keyword)) highlightFields.Add(ESField.KEYWORDS);
+            if (!string.IsNullOrWhiteSpace(author.searchValue)) highlightFields.Add(ESField.SEARCHAUTHORS);
+            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) highlightFields.Add(ESField.KEYWORDS);
             if (collection != null) highlightFields.Add(ESField.COLLECTIONS);
 
             // Perform the search
@@ -161,11 +167,11 @@ namespace BHL.Search.Elastic
                 (collection != null ? collection.Item2 : null), searchLimits);
 
             // Add the query parameters to the result
-            if (!string.IsNullOrWhiteSpace(title)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title));
-            if (!string.IsNullOrWhiteSpace(author)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author));
+            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
+            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword));
+            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
             result.QueryLimits = limits;

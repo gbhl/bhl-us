@@ -54,6 +54,7 @@
     <Compile Include="SearchException.cs" />
     <Compile Include="SearchFactory.cs" />
     <Compile Include="SearchField.cs" />
+    <Compile Include="SearchStringParam.cs" />
     <Compile Include="SearchResult.cs" />
     <Compile Include="SortField.cs" />
   </ItemGroup>

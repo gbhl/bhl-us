@@ -248,16 +248,16 @@ namespace BHL.Search.Elastic
         /// </summary>
         /// <param name="query"></param>
         //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
-        public SearchResult SearchItem(string title, string author, string volume, string year, string keyword,
-            string language, string collection, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, string language, string collection, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
-            if (!string.IsNullOrWhiteSpace(title) ||
-                !string.IsNullOrWhiteSpace(author) ||
+            if (!string.IsNullOrWhiteSpace(title.searchValue) ||
+                !string.IsNullOrWhiteSpace(author.searchValue) ||
                 !string.IsNullOrWhiteSpace(volume) ||
                 !string.IsNullOrWhiteSpace(year) ||
-                !string.IsNullOrWhiteSpace(keyword) ||
+                !string.IsNullOrWhiteSpace(keyword.searchValue) ||
                 !string.IsNullOrWhiteSpace(language) ||
                 !string.IsNullOrWhiteSpace(collection))
             {
@@ -268,19 +268,59 @@ namespace BHL.Search.Elastic
                 // Boolean query instead of a Query_String query.
                 List<QueryContainer> mustQueries = new List<QueryContainer>();
                 List<QueryContainer> shouldQueries = new List<QueryContainer>();
-                if (!string.IsNullOrWhiteSpace(title))
+                if (!string.IsNullOrWhiteSpace(title.searchValue))
                 {
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                    shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title), Boost = 10, Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    if (title.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.searchValue) });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.searchValue), Boost = 10 });
+                        shouldQueries.Add(new MatchPhraseQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.searchValue), Boost = 10 });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (title.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    }
                 }
 
-                if (!string.IsNullOrWhiteSpace(author)) mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                if (!string.IsNullOrWhiteSpace(author.searchValue))
+                {
+                    if (author.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue) });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (author.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(volume)) mustQueries.Add(new MatchQuery { Field = ESField.VOLUME, Query = CleanQuery(volume) });
                 if (!string.IsNullOrWhiteSpace(year)) mustQueries.Add(new MatchQuery { Field = ESField.DATES, Query = CleanQuery(year) });
-                if (!string.IsNullOrWhiteSpace(keyword)) mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword), Operator = Operator.And, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+
+                if (!string.IsNullOrWhiteSpace(keyword.searchValue))
+                {
+                    if (keyword.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue) });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (keyword.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
@@ -307,11 +347,11 @@ namespace BHL.Search.Elastic
                 SetHighlightFields(searchDesc);
 
                 List<Tuple<string, string>> args = new List<Tuple<string, string>>();
-                if (!string.IsNullOrWhiteSpace(title)) args.Add(new Tuple<string, string>(ESField.TITLE, title));
-                if (!string.IsNullOrWhiteSpace(author)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author));
+                if (!string.IsNullOrWhiteSpace(title.searchValue)) args.Add(new Tuple<string, string>(ESField.TITLE, title.searchValue));
+                if (!string.IsNullOrWhiteSpace(author.searchValue)) args.Add(new Tuple<string, string>(ESField.SEARCHAUTHORS, author.searchValue));
                 if (!string.IsNullOrWhiteSpace(volume)) args.Add(new Tuple<string, string>(ESField.VOLUME, volume));
                 if (!string.IsNullOrWhiteSpace(year)) args.Add(new Tuple<string, string>(ESField.DATES, year));
-                if (!string.IsNullOrWhiteSpace(keyword)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword));
+                if (!string.IsNullOrWhiteSpace(keyword.searchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.searchValue));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
 

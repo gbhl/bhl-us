@@ -24,6 +24,11 @@
                     <ol>
                         <li>
                             <label class="caption" for="txtPubTitle">Title:</label><input name="txtPubTitle" type="text" id="txtPubTitle" style="width:400px;" />
+                            <div style="font-family:Georgia;font-size:12px">
+                                <span>Include:</span>
+                                @Html.RadioButton("rdoTitleInclude", "A", true, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;" })All Words&nbsp;&nbsp;
+                                @Html.RadioButton("rdoTitleInclude", "P", false, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;" })Exact Phrase
+                            </div>
                         </li>
                         <li>
                             <label class="caption" for="txtPubAuthorLastName">Author Last Name:</label><input name="txtPubAuthorLastName" type="text" id="txtPubAuthorLastName" style="width:200px;" />

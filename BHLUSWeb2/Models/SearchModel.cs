@@ -148,16 +148,28 @@ namespace MOBOT.BHL.Web2.Models
         {
             SearchCategory = string.Empty;
             SearchTerm = string.Empty;
+            TermInclude = "A";
             LastName = string.Empty;
+            LastNameInclude = "A";
             Volume = string.Empty;
             Year = string.Empty;
             Subject = string.Empty;
+            SubjectInclude = "A";
             Language = null;
             Collection = null;
         }
 
         public string SearchCategory { get; set; }
         public string SearchTerm { get; set; }
+
+        // Indicates if responses to searches for SearchTerm,
+        // LastNmae, or Subject should include all words (A) 
+        // or the exact phrase (P).
+        // * Only applies to Advanced Searches.
+        public string TermInclude { get; set; }
+        public string LastNameInclude { get; set; }
+        public string SubjectInclude { get; set; }
+
         public string LastName { get; set; }
         public string Volume { get; set; }
         public string Year { get; set; }
