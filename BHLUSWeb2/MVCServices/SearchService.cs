@@ -1,5 +1,6 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,39 +23,47 @@ namespace MOBOT.BHL.Web2.MVCServices
         /// <param name="searchSubject"></param>
         /// <param name="searchCollection"></param>
         /// <returns></returns>
-        public string GetSearchCriteriaLabel(string searchCat, string searchTerm, string searchLang, 
-            string searchLastName, string searchVolume, string searchYear, string searchSubject, 
-            string searchCollection)
+        public string GetSearchCriteriaLabel(SearchParams p)
         {
             StringBuilder searchCriteria = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(searchCat))
+            if (string.IsNullOrWhiteSpace(p.SearchCategory))
             {
                 // search box at top of page was used; just echo the input
-                searchCriteria.Append(searchTerm ?? "");
+                searchCriteria.Append(p.SearchTerm ?? "");
             }
             else
             {
-                if (searchCat.ToUpper() == "A") searchCriteria.Append(searchTerm ?? "");    // author search
-                if (searchCat.ToUpper() == "N" || searchCat.ToUpper() == "M") searchCriteria.Append(searchTerm ?? "");  // name search
-                if (searchCat.ToUpper() == "S") searchCriteria.Append(searchTerm ?? "");    // subject search
+                if (p.SearchCategory.ToUpper() == "A") searchCriteria.Append(p.SearchTerm ?? "");    // author search
+                if (p.SearchCategory.ToUpper() == "N" || p.SearchCategory.ToUpper() == "M") searchCriteria.Append(p.SearchTerm ?? "");  // name search
+                if (p.SearchCategory.ToUpper() == "S") searchCriteria.Append(p.SearchTerm ?? "");    // subject search
 
                 // title search
-                if (searchCat.ToUpper() == "T")
+                if (p.SearchCategory.ToUpper() == "T")
                 {
-                    if (!string.IsNullOrWhiteSpace(searchTerm)) searchCriteria.Append(" title:" + searchTerm.Replace(' ', '-'));
-                    if (!string.IsNullOrWhiteSpace(searchLastName)) searchCriteria.Append(" author:" + searchLastName.Replace(' ', '-'));
-                    if (!string.IsNullOrWhiteSpace(searchVolume)) searchCriteria.Append(" vol:" + searchVolume.Replace(' ', '-'));
-                    if (!string.IsNullOrWhiteSpace(searchYear)) searchCriteria.Append(" year:" + searchYear.Replace(' ', '-'));
-                    if (!string.IsNullOrWhiteSpace(searchSubject)) searchCriteria.Append(" subject:" + searchSubject.Replace(' ', '-'));
-                    if (!string.IsNullOrWhiteSpace(searchLang))
+                    string languageCode = p.Language != null ? p.Language.Item1 : string.Empty;
+                    string collectionId = p.Collection != null ? p.Collection.Item1 : string.Empty;
+
+                    if (!string.IsNullOrWhiteSpace(p.SearchTerm))
                     {
-                        Language lang = new BHLProvider().LanguageSelectAuto(searchLang);
+                        //searchCriteria.Append(" title:" + p.SearchTerm.Replace(' ', '-'));
+                        //searchCriteria.Append(" " + (p.TermInclude == "A" ? "[All words]" : "[Exact phrase]"));
+                        searchCriteria.Append(string.Format(" title:{0} [{1}]",
+                            p.SearchTerm.Replace(' ', '-'),
+                            p.TermInclude.ToUpper() == "A" ? "All words" : "Exact phrase"));
+                    }
+                    if (!string.IsNullOrWhiteSpace(p.LastName)) searchCriteria.Append(" author:" + p.LastName.Replace(' ', '-'));
+                    if (!string.IsNullOrWhiteSpace(p.Volume)) searchCriteria.Append(" vol:" + p.Volume.Replace(' ', '-'));
+                    if (!string.IsNullOrWhiteSpace(p.Year)) searchCriteria.Append(" year:" + p.Year.Replace(' ', '-'));
+                    if (!string.IsNullOrWhiteSpace(p.Subject)) searchCriteria.Append(" subject:" + p.Subject.Replace(' ', '-'));
+                    if (!string.IsNullOrWhiteSpace(languageCode))
+                    {
+                        Language lang = new BHLProvider().LanguageSelectAuto(languageCode);
                         if (lang != null) searchCriteria.Append(" lang:" + lang.LanguageName.Replace(' ', '-'));
                     }
-                    if (!string.IsNullOrWhiteSpace(searchCollection))
+                    if (!string.IsNullOrWhiteSpace(collectionId))
                     {
-                        Collection collection = new BHLProvider().CollectionSelectAuto(Convert.ToInt32(searchCollection));
+                        Collection collection = new BHLProvider().CollectionSelectAuto(Convert.ToInt32(collectionId));
                         if (collection != null) searchCriteria.Append(" collection:" + collection.CollectionName.Replace(' ', '-'));
                     }
                 }

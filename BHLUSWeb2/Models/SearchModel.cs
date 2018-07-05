@@ -21,11 +21,7 @@ namespace MOBOT.BHL.Web2.Models
         {
             get
             {
-                return new MVCServices.SearchService().GetSearchCriteriaLabel(
-                    Params.SearchCategory, Params.SearchTerm, (Params.Language != null ? Params.Language.Item1 : string.Empty), 
-                    Params.LastName, Params.Volume, Params.Year, Params.Subject, 
-                    (Params.Collection != null ? Params.Collection.Item1 : string.Empty));
-
+                return new MVCServices.SearchService().GetSearchCriteriaLabel(Params);
             }
         }
 
