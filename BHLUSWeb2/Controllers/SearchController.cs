@@ -278,7 +278,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
                     search.Facet = true;
-                    model.ItemResult = search.SearchItem(
+                    model.ItemResult = search.SearchCatalog(
                         new SearchStringParam(searchTerm, GetParamOperator(model.Params.TermInclude)),
                         new SearchStringParam(model.Params.LastName, GetParamOperator(model.Params.LastNameInclude)),
                         model.Params.Volume, model.Params.Year, 

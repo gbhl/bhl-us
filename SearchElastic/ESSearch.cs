@@ -9,7 +9,7 @@ namespace BHL.Search.Elastic
         private ElasticClient _es = null;
 
         // Index to query
-        private string _indexName = ESIndex.ALL;
+        private string _indexName = ESIndex.DEFAULT;
 
         // Index object type to query
         private string _typeName = ESType.ALL;
@@ -44,7 +44,7 @@ namespace BHL.Search.Elastic
         public string IndexName
         {
             get { return _indexName; }
-            set { _indexName = value ?? ESIndex.ALL; }
+            set { _indexName = value ?? ESIndex.DEFAULT; }
         }
 
         public string TypeName
@@ -111,7 +111,7 @@ namespace BHL.Search.Elastic
         {
             // Establish a connection to an ElasticSearch server
             ConnectionSettings connectionSettings = new ConnectionSettings(new Uri(connectionString));
-            connectionSettings.DefaultIndex(ESIndex.ALL);
+            connectionSettings.DefaultIndex(ESIndex.DEFAULT);
             connectionSettings.DisableDirectStreaming(true); // Uncomment this to add req/resp strings to response.debuginformation
             //connectionSettings.ThrowExceptions(true);      // Uncomment to debug uncaught ElasticSearch errors
             _es = new ElasticClient(connectionSettings);
@@ -124,7 +124,7 @@ namespace BHL.Search.Elastic
         /// </summary>
         public void SetSearchDefaults()
         {
-            _indexName = ESIndex.ALL;
+            _indexName = ESIndex.DEFAULT;
             _typeName = ESType.ALL;
             _returnFields = new List<string>();
             _sortField = ESSortField.SCORE;
@@ -146,7 +146,7 @@ namespace BHL.Search.Elastic
         /// </summary>
         /// <param name="query">Query string</param>
         /// <param name="limits">List of field/value pairs on which to limit the search</param>
-        public SearchResult SearchCatalog(string query, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
@@ -248,7 +248,7 @@ namespace BHL.Search.Elastic
         /// </summary>
         /// <param name="query"></param>
         //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
-        public SearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+        public SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, string language, string collection, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
@@ -847,9 +847,16 @@ namespace BHL.Search.Elastic
                 {
                     switch (hit.Type)
                     {
-                        case ESType.ITEM:
+                        case ESType.CATALOGITEM:
                             string title = hit.Source.title;
                             ItemHit item = hit.Source.ToObject<ItemHit>();
+                            item.Score = hit.Score;
+                            item.Highlights = GetHighlights(hit);
+                            result.Items.Add(item);
+                            break;
+                        case ESType.ITEM:
+                            title = hit.Source.title;
+                            item = hit.Source.ToObject<ItemHit>();
                             item.Score = hit.Score;
                             item.Highlights = GetHighlights(hit);
                             result.Items.Add(item);

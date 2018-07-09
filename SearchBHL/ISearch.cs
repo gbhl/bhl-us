@@ -51,14 +51,14 @@ namespace BHL.Search
         bool IsFullTextSupported();
 
         /// <summary>
-        /// Global search of items, authors, keywords, and names (but NOT pages)
+        /// Global full-text search of items, authors, keywords, and names (but NOT pages)
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        ISearchResult SearchCatalog(string query, List<Tuple<SearchField, string>> limits = null);
+        ISearchResult SearchAll(string query, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
-        /// Search for publications
+        /// Catalog search for publications
         /// </summary>
         /// <param name="title"></param>
         /// <param name="author"></param>
@@ -68,12 +68,20 @@ namespace BHL.Search
         /// <param name="language"></param>
         /// <param name="collection"></param>
         /// <returns>Object containing the publications returned by the search.</returns>
-        ISearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+        ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
             List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
-        /// Search for publications
+        /// Global catalog search for publications
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <param name="limits"></param>
+        /// <returns></returns>
+        ISearchResult SearchCatalog(string searchTerm, List<Tuple<SearchField, string>> limits = null);
+
+        /// <summary>
+        /// Global full-text search for publications
         /// </summary>
         /// <param name="searchTerm"></param>
         /// <param name="limits"></param>
@@ -81,7 +89,7 @@ namespace BHL.Search
         ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
-        /// Search for pages
+        /// Full-text search for pages
         /// </summary>
         /// <param name="query"></param>
         /// <returns>Object containing the pages returned by the search</returns>

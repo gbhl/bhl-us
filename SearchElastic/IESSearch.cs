@@ -15,9 +15,9 @@ namespace BHL.Search.Elastic
         /// </summary>
         void SetSearchDefaults();
 
-        SearchResult SearchCatalog(string query, List<Tuple<string, string>> limits = null);
+        SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null);
 
-        SearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+        SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, string language, string collection, List<Tuple<string, string>> limits = null);
 
         // Obsolete

@@ -89,7 +89,7 @@ namespace BHL.Search.Elastic
             return true;
         }
 
-        public ISearchResult SearchCatalog(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchAll(string query, List<Tuple<SearchField, string>> limits = null)
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> { ESField.ASSOCIATIONS, ESField.AUTHORS,
@@ -115,8 +115,8 @@ namespace BHL.Search.Elastic
                 ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.AUTHORNAMES, ESField.KEYWORD, ESField.NAME,
                 ESField.TEXT, ESField.ISSN, ESField.ISBN, ESField.DOI, ESField.OCLC};
 
-            ConfigureSearch(ESIndex.CATALOG, returnFields, facetFields, highlightFields);
-            ISearchResult result = _esSearch.SearchCatalog(query, searchLimits);
+            ConfigureSearch(ESIndex.ALL, returnFields, facetFields, highlightFields);
+            ISearchResult result = _esSearch.SearchAll(query, searchLimits);
 
             // Add the query parameters to the result
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, query));
@@ -125,7 +125,7 @@ namespace BHL.Search.Elastic
             return result;
         }
 
-        public ISearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
+        public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
             List<Tuple<SearchField, string>> limits = null)
         {
@@ -161,8 +161,8 @@ namespace BHL.Search.Elastic
             if (collection != null) highlightFields.Add(ESField.COLLECTIONS);
 
             // Perform the search
-            ConfigureSearch(ESIndex.ITEMS, returnFields, facetFields, highlightFields);
-            ISearchResult result = _esSearch.SearchItem(title, author, volume, year, keyword, 
+            ConfigureSearch(ESIndex.CATALOG, returnFields, facetFields, highlightFields);
+            ISearchResult result = _esSearch.SearchCatalog(title, author, volume, year, keyword, 
                 (language != null ? language.Item2 : null), 
                 (collection != null ? collection.Item2 : null), searchLimits);
 
@@ -174,6 +174,41 @@ namespace BHL.Search.Elastic
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
+            result.QueryLimits = limits;
+
+            return result;
+        }
+
+        public ISearchResult SearchCatalog(string searchTerm, List<Tuple<SearchField, string>> limits = null)
+        {
+            List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
+            List<string> returnFields = new List<string> { ESField.ASSOCIATIONS, ESField.AUTHORS,
+                ESField.COLLECTIONS, ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.DATERANGES,
+                ESField.DATES, ESField.DOI, ESField.GENRE, ESField.HASEXTERNALCONTENT,
+                ESField.HASLOCALCONTENT, ESField.HASSEGMENTS, ESField.ID, ESField.ISBN, ESField.ISSN,
+                ESField.ISSUE, ESField.ITEMID, ESField.KEYWORDS, ESField.LANGUAGE, ESField.MATERIALTYPE,
+                ESField.OCLC, ESField.PAGERANGE, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SCORE,
+                ESField.SEGMENTID, ESField.SERIES, ESField.STARTPAGEID, ESField.TEXT, ESField.TITLE,
+                ESField.TITLEID, ESField.TRANSLATEDTITLE, ESField.UNIFORMTITLE, ESField.URL, ESField.VARIANTS,
+                ESField.VOLUME };
+            List<Tuple<string, ESFacetSortOrder>> facetFields = new List<Tuple<string, ESFacetSortOrder>> {
+                new Tuple<string, ESFacetSortOrder>(ESField.GENRE, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.MATERIALTYPE, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.FACETAUTHORS, ESFacetSortOrder.COUNT),
+                new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
+                new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
+                new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
+            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
+                ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.KEYWORDS, ESField.PUBLICATIONPLACE,
+                ESField.PUBLISHER, ESField.SEARCHAUTHORS, ESField.TITLE, ESField.TRANSLATEDTITLE,
+                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.TEXT, ESField.ISSN, ESField.ISBN,
+                ESField.DOI, ESField.OCLC };
+
+            ConfigureSearch(ESIndex.CATALOG, returnFields, facetFields, highlightFields);
+            ISearchResult result = _esSearch.SearchAll(searchTerm, searchLimits);
+
+            // Add the query parameters to the result
+            result.Query.Add(new Tuple<SearchField, string>(SearchField.All, searchTerm));
             result.QueryLimits = limits;
 
             return result;
@@ -205,7 +240,7 @@ namespace BHL.Search.Elastic
                 ESField.DOI, ESField.OCLC };
 
             ConfigureSearch(ESIndex.ITEMS, returnFields, facetFields, highlightFields);
-            ISearchResult result = _esSearch.SearchCatalog(searchTerm, searchLimits);
+            ISearchResult result = _esSearch.SearchAll(searchTerm, searchLimits);
 
             // Add the query parameters to the result
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, searchTerm));
