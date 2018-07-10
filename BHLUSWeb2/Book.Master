@@ -15,8 +15,8 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/css/bhlaustylereference.css?v=6" />
-    <link rel="stylesheet" href="/css/style.css?v=16" />
-    <link rel="Stylesheet" href="/css/bookviewer.css" />
+    <link rel="stylesheet" href="/css/style.css?v=17" />
+    <link rel="Stylesheet" href="/css/bookviewer.css?v=2" />
     <script src="/js/libs/modernizr-1.6.min.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
@@ -46,6 +46,10 @@
                         <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" class="altmetric-embed"></div>
                     </nav>
                     <div id="searchbar">
+                        <span id="searchbar-searchtype">
+                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" type="radio" value="F" checked /> Full-text
+                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" type="radio" value="C" /> Catalog
+                        </span>
                         <a href="/advsearch" title="Advanced Search">advanced search</a>
         	            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />
                         <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />

@@ -143,6 +143,7 @@ namespace MOBOT.BHL.Web2.Models
         public SearchParams()
         {
             SearchCategory = string.Empty;
+            SearchType = string.Empty;
             SearchTerm = string.Empty;
             TermInclude = "A";
             LastName = string.Empty;
@@ -156,10 +157,13 @@ namespace MOBOT.BHL.Web2.Models
         }
 
         public string SearchCategory { get; set; }
+        // Indicates if searches should be full-text (F)
+        // or catalog (C) searches.
+        public string SearchType { get; set; }
         public string SearchTerm { get; set; }
 
         // Indicates if responses to searches for SearchTerm,
-        // LastNmae, or Subject should include all words (A) 
+        // LastName, or Subject should include all words (A) 
         // or the exact phrase (P).
         // * Only applies to Advanced Searches.
         public string TermInclude { get; set; }

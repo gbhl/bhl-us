@@ -63,8 +63,12 @@
                         </ul>
                     </div>
                     <div id="searchbar">
-                        <a href="/advsearch" title="Advanced Search">advanced search</a>
                         <form action="/search" method="get">
+                            <span id="searchbar-searchtype">
+                                <input name="stype" id="rdoSearchTypeF" type="radio" value="F" checked /> Full-text
+                                <input name="stype" id="rdoSearchTypeC" type="radio" value="C" /> Catalog
+                            </span>
+                            <a href="/advsearch" title="Advanced Search">advanced search</a>
                             <input type="text" class="field" name="searchTerm" id="searchTerm" />
                             <input type="submit" class="button" id="btnSearchSubmit" value="submit" />
                         </form>

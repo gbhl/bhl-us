@@ -16,7 +16,7 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Index
         [HttpGet]
-        public ActionResult Index(string searchTerm, string tinc, string searchCat, string lname, string ninc,
+        public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
             string yr, string subj, string sinc, string lang, string col, string ppage, string apage, string kpage, 
             string npage, string[] facet)
         {
@@ -32,6 +32,7 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the search arguments
             model.Params.TermInclude = (tinc ?? string.Empty).Trim().ToUpper();
             model.Params.SearchCategory = (searchCat ?? string.Empty).Trim().ToUpper();
+            model.Params.SearchType = (stype ?? string.Empty).Trim().ToUpper();
             model.Params.LastName = lname ?? string.Empty;
             model.Params.LastNameInclude = (ninc ?? string.Empty).Trim().ToUpper();
             model.Params.Year = yr ?? string.Empty;
@@ -141,7 +142,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     "&subj=" + Server.UrlEncode(Request.Form["txtPubSubject"]) +
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
                     "&col=" + Server.UrlEncode(Request.Form["ddlPubCollection"]) +
-                    "&SearchCat=T&return=ADV";
+                    "&SearchCat=T&stype=C&return=ADV";
 
             }
 
@@ -256,7 +257,17 @@ namespace MOBOT.BHL.Web2.Controllers
                 search.StartPage = model.ItemPage;
                 search.NumResults = publicationPageSize;
                 search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
-                model.ItemResult = search.SearchItem(searchTerm, limits);
+
+                if (model.Params.SearchType == "F")
+                {
+                    // Full-text search
+                    model.ItemResult = search.SearchItem(searchTerm, limits);
+                }
+                else
+                {
+                    // Catalog search
+                    model.ItemResult = search.SearchCatalog(searchTerm, limits);
+                }
             }
             else
             {
