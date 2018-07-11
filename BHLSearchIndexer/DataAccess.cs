@@ -172,6 +172,48 @@ namespace BHL.SearchIndexer
             return items;
         }
 
+        public CatalogItem GetCatalogItemDocument(Item item)
+        {
+            CatalogItem catalogItem = new CatalogItem();
+
+            catalogItem.associations = item.associations;
+            catalogItem.authors = item.authors;
+            catalogItem.collections = item.collections;
+            catalogItem.container = item.container;
+            catalogItem.contributors = item.titleContributors.Count > 0 ? item.titleContributors : item.contributors;
+            catalogItem.dateRanges = item.dateRanges;
+            catalogItem.dates = item.dates;
+            catalogItem.doi = item.doi;
+            catalogItem.facetAuthors = item.facetAuthors;
+            catalogItem.genre = item.genre;
+            catalogItem.id = string.Format("t-{0}", item.titleId.ToString());
+            catalogItem.isbn = item.isbn;
+            catalogItem.issn = item.issn;
+            catalogItem.issue = item.issue;
+            catalogItem.itemId = item.itemId;
+            catalogItem.keywords = item.keywords;
+            catalogItem.language = item.language;
+            catalogItem.materialType = item.materialType;
+            catalogItem.oclc = item.oclc;
+            catalogItem.pageRange = item.pageRange;
+            catalogItem.publicationPlace = item.publicationPlace;
+            catalogItem.publisher = item.publisher;
+            catalogItem.searchAuthors = item.searchAuthors;
+            catalogItem.segmentId = item.segmentId;
+            catalogItem.series = item.series;
+            catalogItem.sortTitle = item.sortTitle;
+            catalogItem.startPageId = item.startPageId;
+            catalogItem.title = item.title;
+            catalogItem.titleId = item.titleId;
+            catalogItem.translatedTitle = item.translatedTitle;
+            catalogItem.uniformTitle = item.uniformTitle;
+            catalogItem.url = item.url;
+            catalogItem.variants = item.variants;
+            catalogItem.volume = item.volume;
+
+            return catalogItem;
+        }
+
         public List<int> GetSegments(int startSegment = 1, bool readFromFile = false)
         {
             List<int> segments = new List<int>();

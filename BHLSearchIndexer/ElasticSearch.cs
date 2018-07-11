@@ -14,6 +14,7 @@ namespace BHL.SearchIndexer
 
         public static class ESIndex
         {
+            public const string CATALOG = "catalog";
             public const string ITEMS = "items";
             public const string PAGES = "pages";
             public const string AUTHORS = "authors";
@@ -51,6 +52,19 @@ namespace BHL.SearchIndexer
             if (document != null) _es.Index(document);
         }
 
+        public void Index(CatalogItem document)
+        {
+            if (document != null) _es.Index(document);
+        }
+
+        public void IndexMany(List<CatalogItem> documents)
+        {
+            if (documents.Count > 0)
+            {
+                var br = _es.IndexMany(documents, _indexName);
+                if (!br.IsValid && br.Errors) throw new Exception(GetIndexErrorString(br));
+            }
+        }
 
         public void IndexMany(List<Page> documents)
         {

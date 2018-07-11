@@ -71,6 +71,7 @@ namespace BHL.SearchIndexer
 
         private static bool _haltIncremental = false;
 
+        private static HashSet<int> _indexedTitles = new HashSet<int>();
         private static HashSet<int> _indexedSegments = new HashSet<int>();
         private static ILogger _logger;
 
@@ -165,10 +166,21 @@ namespace BHL.SearchIndexer
                 try
                 {
                     List<Item> itemDocs = dataAccess.GetItemDocuments(itemId);
+                    List<CatalogItem> catalogItemDocs = new List<CatalogItem>();
                     List<Page> pageDocs = new List<Page>();
                     List<Item> segmentDocs = new List<Item>();
                     if (itemDocs.Count > 0)
                     {
+                        // Get the catalog entries for this item
+                        foreach(Item itemDoc in itemDocs)
+                        {
+                            if (!_indexedTitles.Contains(itemDoc.titleId))
+                            {
+                                catalogItemDocs.Add(dataAccess.GetCatalogItemDocument(itemDoc));
+                                _indexedTitles.Add(itemDoc.titleId);
+                            }
+                        }
+
                         if (!_metadataOnly)
                         {
                             // Get the pages for the item
@@ -189,6 +201,9 @@ namespace BHL.SearchIndexer
                                 // Get the full text for the segment.
                                 foreach (Item segmentDoc in segmentDocs)
                                 {
+                                    // Get the catalog entry for this segment
+                                    catalogItemDocs.Add(dataAccess.GetCatalogItemDocument(segmentDoc));
+
                                     // Get the pages for this segment
                                     Dictionary<int, Page> segmentPages = dataAccess.GetPages(ElasticSearch.PageSource.Segment, segmentDoc.segmentId);
 
@@ -213,6 +228,7 @@ namespace BHL.SearchIndexer
                     if (_debug)
                     {
                         // Write the documents to JSON files
+                        ExportDocuments(ElasticSearch.ESIndex.CATALOG, catalogItemDocs, "catalog", itemId);
                         ExportDocuments(ElasticSearch.ESIndex.ITEMS, itemDocs, "item", itemId);
                         ExportDocuments(ElasticSearch.ESIndex.PAGES, pageDocs, "itempages", itemId);
                         if (_indexSegments) ExportDocuments(ElasticSearch.ESIndex.ITEMS, segmentDocs, "segments", itemId);
@@ -220,6 +236,9 @@ namespace BHL.SearchIndexer
 
                     if (_doIndex)
                     {
+                        ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                        esCatalog.IndexMany(catalogItemDocs);
+
                         if (_metadataOnly)
                         {
                             ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
@@ -277,6 +296,9 @@ namespace BHL.SearchIndexer
                     {
                         Item segmentDoc = dataAccess.GetSegmentDocuments(null, segmentId.ToString()).First();
 
+                        // Get the catalog entry for this segment
+                        CatalogItem catalogItemDoc = dataAccess.GetCatalogItemDocument(segmentDoc);
+
                         List<Page> pageDocs = new List<Page>();
                         if (segmentDoc != null)
                         {
@@ -296,12 +318,16 @@ namespace BHL.SearchIndexer
                         if (_debug)
                         {
                             // Write the documents to JSON files
+                            ExportDocuments(ElasticSearch.ESIndex.CATALOG, catalogItemDoc, "catalogitem", segmentId);
                             ExportDocuments(ElasticSearch.ESIndex.ITEMS, segmentDoc, "segment", segmentId);
                             ExportDocuments(ElasticSearch.ESIndex.PAGES, pageDocs, "segmentpages", segmentId);
                         }
 
                         if (_doIndex)
                         {
+                            ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                            esCatalog.Index(catalogItemDoc);
+
                             if (_metadataOnly)
                             {
                                 ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
@@ -594,7 +620,9 @@ namespace BHL.SearchIndexer
         {
             try
             {
-                ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                es.OptimizeIndex();
+                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
                 es.OptimizeIndex();
                 es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.PAGES);
                 es.OptimizeIndex();
