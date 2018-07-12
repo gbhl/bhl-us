@@ -2,6 +2,14 @@
 {
     public class Volume
     {
+        public Volume()
+        {
+            hasExternalContent = false;
+            hasLocalContent = false;
+            hasIllustrations = false;
+            hasSegments = false;
+        }
+
         public string id { get; set; }
         public int itemId { get; set; }
         public string volume { get; set; }

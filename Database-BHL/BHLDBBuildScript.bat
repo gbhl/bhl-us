@@ -1201,7 +1201,9 @@ sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTypesByDate.s
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestTypeSelectByApplication.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\DailyTasks.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\AuthorSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemCountForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectDocumentForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectFirstForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectIDs.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\KeywordSelectDocumentsForIndex.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\NameSelectDocumentsForIndex.sql"
@@ -1224,6 +1226,7 @@ sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublicationAdvanced.
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectByItem.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectDocumentForIndex.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectIDs.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\VolumeSelectDocumentsForIndex.sql"
 
 GOTO DONE
 

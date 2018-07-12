@@ -138,6 +138,17 @@ namespace BHL.SearchIndexer
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
             }
         }
+        
+        public void Delete(CatalogItem document)
+        {
+            if (document != null)
+            {
+                IDeleteResponse response = _es.Delete<CatalogItem>(document, d => d
+                                    .Refresh(Elasticsearch.Net.Refresh.WaitFor)
+                                    );
+                if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
+            }
+        }
 
         public void Delete(Item document)
         {

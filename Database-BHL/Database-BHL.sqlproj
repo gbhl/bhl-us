@@ -1345,5 +1345,8 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogCreatorInsertUpdate.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogSegmentInsertUpdate.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogInsertUpdate.sql" />
+    <None Include="srchindex\Stored Procedures\VolumeSelectDocumentsForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\ItemCountForTitle.sql" />
+    <None Include="srchindex\Stored Procedures\ItemSelectFirstForTitle.sql" />
   </ItemGroup>
 </Project>
