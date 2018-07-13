@@ -1003,6 +1003,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     min-height:187px;
     background: #3d90c8 URL(../images/home_search_shadows.png) 0 0 repeat-x;
 }
+#searchtype-home {
+    font: 15px Georgia;
+    color: #ffffff;
+    display: block;
+    padding: 57px 0px 15px 0px;
+}
 #searchbox-home 
 {
     position:relative;
@@ -1076,10 +1082,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 { 
     color: #dff0fb; 
     text-decoration: underline;  
-}
-#searchtype-home {
-    position: absolute;
-    top: 90px
 }
 #browsebar-home {
     min-height: 128px;

@@ -33,10 +33,10 @@
             <span>Search across books and journals, scientific names, authors and subjects</span>
             <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" Text="Search" />
             <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
-            <span id="searchtype-home">
+            <div id="searchtype-home">
                 <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" type="radio" value="F" checked /> Full-text
                 <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" type="radio" value="C" /> Catalog
-            </span>
+            </div>
             <a href="/advsearch" class="advsearch-home">advanced search</a>
         </div>
 </div>
