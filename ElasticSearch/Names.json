@@ -1,0 +1,33 @@
+{
+	"settings": {
+		"analysis": {
+			"analyzer": {
+				"default": {
+					"tokenizer": "icu_tokenizer",
+					"filter":  [ "lowercase", "icu_folding" ]
+				}
+			}
+		}
+	},
+	"name" : {
+		"properties" : {
+			"count" : {
+				"type" : "long",
+				"include_in_all" : false
+			},
+			"id" : {
+				"type" : "long",
+				"include_in_all" : false
+			},
+			"name" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				}
+			}
+		}
+	}
+}
