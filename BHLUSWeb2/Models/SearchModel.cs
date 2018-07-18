@@ -38,6 +38,7 @@ namespace MOBOT.BHL.Web2.Models
                 if (!string.IsNullOrWhiteSpace(Params.Subject)) qsParams.Add(string.Format("{0}={1}", "subj", Params.Subject));
                 if (Params.Language != null) qsParams.Add(string.Format("{0}={1}", "lang", Params.Language.Item1));
                 if (Params.Collection != null) qsParams.Add(string.Format("{0}={1}", "col", Params.Collection.Item1));
+                if (!string.IsNullOrWhiteSpace(Params.Text)) qsParams.Add(string.Format("{0}={1}", "txt", Params.Text));
 
                 return string.Join("&", qsParams.ToArray());
             }
@@ -154,6 +155,7 @@ namespace MOBOT.BHL.Web2.Models
             SubjectInclude = "A";
             Language = null;
             Collection = null;
+            Text = string.Empty;
         }
 
         public string SearchCategory { get; set; }
@@ -176,6 +178,8 @@ namespace MOBOT.BHL.Web2.Models
         public string Subject { get; set; }
         public Tuple<string, string> Language { get; set; }
         public Tuple<string, string> Collection { get; set; }
+
+        public string Text { get; set; }
 
         private List<FacetParam> _genreFacets = new List<FacetParam>();
         public List<FacetParam> GenreFacets {

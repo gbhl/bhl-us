@@ -70,7 +70,7 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
-            List<Tuple<SearchField, string>> limits = null)
+            string text, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = new SearchResult();
 
@@ -87,6 +87,7 @@ namespace BHL.Search.SQL
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item1));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item1));
+            if (!string.IsNullOrWhiteSpace(text)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text));
             result.QueryLimits = limits;
             return result;
         }

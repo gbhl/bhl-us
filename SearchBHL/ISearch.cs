@@ -58,7 +58,7 @@ namespace BHL.Search
         ISearchResult SearchAll(string query, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
-        /// Catalog search for publications
+        /// Catalog search for publications.  Return title-level results unless "text" parameter included.  Then include item-level results.
         /// </summary>
         /// <param name="title"></param>
         /// <param name="author"></param>
@@ -67,10 +67,12 @@ namespace BHL.Search
         /// <param name="keyword"></param>
         /// <param name="language"></param>
         /// <param name="collection"></param>
+        /// <param name="text"></param>
+        /// <param name="limits"></param>
         /// <returns>Object containing the publications returned by the search.</returns>
         ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
-            List<Tuple<SearchField, string>> limits = null);
+            string text, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
         /// Global catalog search for publications

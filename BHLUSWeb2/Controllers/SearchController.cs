@@ -17,7 +17,7 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Index
         [HttpGet]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
-            string yr, string subj, string sinc, string lang, string col, string ppage, string apage, string kpage, 
+            string yr, string subj, string sinc, string lang, string col, string txt, string ppage, string apage, string kpage, 
             string npage, string[] facet)
         {
             // Prevent browser Back button page caching
@@ -86,6 +86,7 @@ namespace MOBOT.BHL.Web2.Controllers
 
                 model.Params.Collection = new Tuple<string, string>(collectionID.ToString(), collectionName);
             }
+            model.Params.Text = txt ?? string.Empty;
             int startPage;
             if (!Int32.TryParse(ppage ?? "1", out startPage)) startPage = 1;
             model.ItemPage = startPage;
@@ -142,6 +143,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     "&subj=" + Server.UrlEncode(Request.Form["txtPubSubject"]) +
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
                     "&col=" + Server.UrlEncode(Request.Form["ddlPubCollection"]) +
+                    "&txt=" + Server.UrlEncode(Request.Form["txtPubText"] ?? string.Empty) + 
                     "&SearchCat=T&stype=C&return=ADV";
 
             }
@@ -294,8 +296,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         new SearchStringParam(model.Params.LastName, GetParamOperator(model.Params.LastNameInclude)),
                         model.Params.Volume, model.Params.Year, 
                         new SearchStringParam(model.Params.Subject, GetParamOperator(model.Params.SubjectInclude)), 
-                        model.Params.Language, 
-                        model.Params.Collection, limits);
+                        model.Params.Language, model.Params.Collection, model.Params.Text, limits);
                 }
                 if (model.Params.SearchCategory.Equals("S"))
                 {
