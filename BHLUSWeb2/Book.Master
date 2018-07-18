@@ -47,8 +47,8 @@
                     </nav>
                     <div id="searchbar">
                         <span id="searchbar-searchtype">
-                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" type="radio" value="F" checked /> Full-text
-                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" type="radio" value="C" /> Catalog
+                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> Full-text
+                            <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> Catalog
                         </span>
                         <a href="/advsearch" title="Advanced Search">advanced search</a>
         	            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />
@@ -65,7 +65,7 @@
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />  
         
         <script src="/js/plugins.js?v=2"></script>
-        <script src="/js/script.js?v=2"></script>
+        <script src="/js/script.js?v=4"></script>
         <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
     </form>
 
