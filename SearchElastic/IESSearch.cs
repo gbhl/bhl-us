@@ -18,7 +18,8 @@ namespace BHL.Search.Elastic
         SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null);
 
         SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
-            SearchStringParam keyword, string language, string collection, string text, List<Tuple<string, string>> limits = null);
+            SearchStringParam keyword, string language, string collection, SearchStringParam text, 
+            List<Tuple<string, string>> limits = null);
 
         // Obsolete
         //SearchResult SearchItem(List<Tuple<string, string>> args, ESOperator op = ESOperator.And, List<Tuple<string, string>> limits = null);

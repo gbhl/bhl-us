@@ -127,7 +127,7 @@ namespace BHL.Search.Elastic
 
         public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
-            string text, List<Tuple<SearchField, string>> limits = null)
+            SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
             List<Tuple<string, string>> searchLimits = GetSearchLimitsList(limits);
             List<string> returnFields = new List<string> { ESField.ASSOCIATIONS, ESField.AUTHORS,
@@ -159,12 +159,12 @@ namespace BHL.Search.Elastic
             if (!string.IsNullOrWhiteSpace(author.searchValue)) highlightFields.Add(ESField.SEARCHAUTHORS);
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) highlightFields.Add(ESField.KEYWORDS);
             if (collection != null) highlightFields.Add(ESField.COLLECTIONS);
-            if (!string.IsNullOrWhiteSpace(text)) highlightFields.Add(ESField.TEXT);
+            if (!string.IsNullOrWhiteSpace(text.searchValue)) highlightFields.Add(ESField.TEXT);
 
             // Perform the search.  Use the CATALOG index unless a value is specified for the "text"
             // parameter.  In that case, use the ITEMS index to perform a full-text search on the 
             // text of the items.
-            ConfigureSearch((string.IsNullOrWhiteSpace(text) ? ESIndex.CATALOG : ESIndex.ITEMS), 
+            ConfigureSearch((string.IsNullOrWhiteSpace(text.searchValue) ? ESIndex.CATALOG : ESIndex.ITEMS), 
                 returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchCatalog(title, author, volume, year, keyword, 
                 (language != null ? language.Item2 : null), 
@@ -178,7 +178,7 @@ namespace BHL.Search.Elastic
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
-            if (!string.IsNullOrWhiteSpace(text)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text));
+            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
             result.QueryLimits = limits;
 
             return result;

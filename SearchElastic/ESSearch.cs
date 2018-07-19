@@ -249,7 +249,8 @@ namespace BHL.Search.Elastic
         /// <param name="query"></param>
         //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
         public SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
-            SearchStringParam keyword, string language, string collection, string text, List<Tuple<string, string>> limits = null)
+            SearchStringParam keyword, string language, string collection, SearchStringParam text, 
+            List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
@@ -260,7 +261,7 @@ namespace BHL.Search.Elastic
                 !string.IsNullOrWhiteSpace(keyword.searchValue) ||
                 !string.IsNullOrWhiteSpace(language) ||
                 !string.IsNullOrWhiteSpace(collection) ||
-                !string.IsNullOrWhiteSpace(text))
+                !string.IsNullOrWhiteSpace(text.searchValue))
             {
                 // Initialize the query object
                 SearchDescriptor<dynamic> searchDesc = InitializeQuery();
@@ -324,7 +325,20 @@ namespace BHL.Search.Elastic
 
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
-                if (!string.IsNullOrWhiteSpace(text)) mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text) });
+
+                if (!string.IsNullOrWhiteSpace(text.searchValue))
+                {
+                    if (text.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue) });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (text.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    }
+                }
 
                 if (limits != null)
                 {
@@ -356,7 +370,7 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(keyword.searchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.searchValue));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
-                if (!string.IsNullOrWhiteSpace(text)) args.Add(new Tuple<string, string>(ESField.TEXT, text));
+                if (!string.IsNullOrWhiteSpace(text.searchValue)) args.Add(new Tuple<string, string>(ESField.TEXT, text.searchValue));
 
                 // Set the fields to use when determining alternate search suggestions
                 if (_suggest)
@@ -808,7 +822,6 @@ namespace BHL.Search.Elastic
                     .PreTags("<b>")
                     .PostTags("</b>")
                     .NumberOfFragments(5)
-                    .RequireFieldMatch(false)
                 );
             }
         }

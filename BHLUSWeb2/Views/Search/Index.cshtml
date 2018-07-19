@@ -58,6 +58,7 @@
     @Html.HiddenFor(m => m.Params.Language)
     @Html.HiddenFor(m => m.Params.Collection)
     @Html.HiddenFor(m => m.Params.Text)
+    @Html.HiddenFor(m => m.Params.TextInclude)
     @Html.HiddenFor(m => m.ItemPage, new { @id = "ItemPage" })
     @Html.HiddenFor(m => m.AuthorPage, new { @id = "AuthorPage" })
     @Html.HiddenFor(m => m.KeywordPage, new { @id = "KeywordPage" })
@@ -555,6 +556,7 @@
                 '&lang=' + $('#Params_Language').val() +
                 '&col=' + $('#Params_Collection').val() +
                 '&txt=' + $('#Params_Text').val() + 
+                '&txinc=' + $('#Params_TextInclude').val() + 
                 '&ppage=' + $('#ItemPage').val() +
                 '&apage=' + $('#AuthorPage').val() +
                 '&kpage=' + $('#KeywordPage').val() +

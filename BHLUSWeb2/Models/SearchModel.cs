@@ -156,6 +156,7 @@ namespace MOBOT.BHL.Web2.Models
             Language = null;
             Collection = null;
             Text = string.Empty;
+            TextInclude = "A";
         }
 
         public string SearchCategory { get; set; }
@@ -165,12 +166,13 @@ namespace MOBOT.BHL.Web2.Models
         public string SearchTerm { get; set; }
 
         // Indicates if responses to searches for SearchTerm,
-        // LastName, or Subject should include all words (A) 
+        // LastName, Subject, or Text should include all words (A) 
         // or the exact phrase (P).
         // * Only applies to Advanced Searches.
         public string TermInclude { get; set; }
         public string LastNameInclude { get; set; }
         public string SubjectInclude { get; set; }
+        public string TextInclude { get; set; }
 
         public string LastName { get; set; }
         public string Volume { get; set; }
