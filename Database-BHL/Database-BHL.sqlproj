@@ -1351,5 +1351,8 @@
     <None Include="dbo\Stored Procedures\ApiAuthorSelectForList.sql" />
     <None Include="dbo\Stored Procedures\ApiAuthorSelectWithNameByIdentifier.sql" />
     <None Include="dbo\Stored Procedures\ApiNameIdentifierSelectByNameResolvedID.sql" />
+    <None Include="srchindex\Stored Procedures\VolumeSelectDocumentsForIndex.sql" />
+    <None Include="srchindex\Stored Procedures\ItemCountForTitle.sql" />
+    <None Include="srchindex\Stored Procedures\ItemSelectFirstForTitle.sql" />
   </ItemGroup>
 </Project>

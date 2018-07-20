@@ -162,6 +162,7 @@ namespace MOBOT.BHL.AdminWeb
                         // Update title values
                         title.MARCLeader = marcTitle.MARCLeader;
                         title.BibliographicLevelID = marcTitle.BibliographicLevelID;
+                        title.MaterialTypeID = marcTitle.MaterialTypeID;
                         title.FullTitle = marcTitle.FullTitle;
                         title.ShortTitle = marcTitle.ShortTitle;
                         title.UniformTitle = marcTitle.UniformTitle;

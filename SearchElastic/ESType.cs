@@ -3,6 +3,7 @@
     public static class ESType
     {
         public const string ALL = "";
+        public const string CATALOGITEM = "catalogitem";
         public const string ITEM = "item";
         public const string PAGE = "page";
         public const string AUTHOR = "author";
