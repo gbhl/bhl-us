@@ -274,47 +274,6 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<Title> TitleSelectSearchSimple(SqlConnection sqlConnection,
-            SqlTransaction sqlTransaction, string title)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiTitleSelectSearchSimple", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("FullTitle", SqlDbType.VarChar, 1000, false, title)))
-            {
-                using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
-                {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Execute a simple full-text search of titles (only the FullTitle field is searched)
-        /// </summary>
-        /// <param name="sqlConnection"></param>
-        /// <param name="sqlTransaction"></param>
-        /// <param name="title"></param>
-        /// <returns></returns>
-        public CustomGenericList<Title> SearchTitleSimple(SqlConnection sqlConnection, 
-                SqlTransaction sqlTransaction, string title)
-        {
-            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-            SqlTransaction transaction = sqlTransaction;
-
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiSearchTitleSimple", connection, transaction,
-                            CustomSqlHelper.CreateInputParameter("FullTitle", SqlDbType.VarChar, 4000, false, title)))
-            {
-                using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
-                {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
-                    return (list);
-                }
-            }
-        }
-
         #endregion Title methods
 
         #region Segment methods

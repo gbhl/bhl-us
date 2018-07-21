@@ -5,7 +5,7 @@
 </head>
 <body>
 
-    <p>Biodiversity Heritage Library<br />API v3 Documentation<br />Created: June 15, 2018<br />Revised: June 15, 2018</p>
+    <p>Biodiversity Heritage Library<br />API v3 Documentation<br />Created: August 1, 2018<br />Revised: August 1, 2018</p>
     <hr />
     <p><b>*** HTTP QUERY INTERFACE ***</b></p>
     <p>The HTTP query interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting data using HTTP GET requests.</p>
@@ -66,12 +66,15 @@
     <p>	Get a list of languages in which materials in BHL have been written.</p>
     <p> Example - <a href="/docs/api3/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></p>
     <p><b><i>PublicationSearch</i></b></p>
-    <p>	UNDER CONSTRUCTION</p>
-    <p>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;title=Selborne&amp;lname=White&amp;volume=2&amp;year=1825&amp;subject=&amp;collectionid=4&amp;language=eng&amp;apikey=&lt;key+value&gt;</a></p>
+    <p>	Search for publications (titles, items, and parts) that match the specified search term.  Can be a full-text search or a catalog search.  A full-text search also searches the catalog metadata.</p>
+    <p>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island&amp;searchtype=F&amp;page=1&amp;apikey=&lt;key+value&gt;</a></p>
+    <p><b><i>PublicationSearchAdvanced</i></b></p>
+    <p>	Search for publications (titles, items, and parts) that match the specified search criteria.  This method searches specified fields for specific terms.  Searches the catalog, unless the 'text' parameter is specified.  Then a full-text search is performed over the text of the publications.</p>
+    <p>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=Origin+species&amp;titleop=All&amp;lname=Darwin&amp;year=&amp;subject=&amp;collectionid=&amp;language=eng&amp;text=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></p>
     <p><b><i>PageSearch</i></b></p>
     <p>	Search an item for pages containing the specified text.</p>
     <p>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></p>
-	<p> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</p>
+    <p> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</p>
     <p><b><i>SubjectSearch</i></b></p>
     <p>	Return a list of subjects that match (fully or partially) the specified search string.</p>
     <p>	Example - <a href="/docs/api3/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></p>
@@ -85,10 +88,6 @@
     <p>	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may have changed. ***</p>
     <p>	Example - <a href="/docs/api3/NameSearch.xml" title="NameSearch">https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=&lt;key+value&gt;</a></p>
     <p>	name - a partial or complete name string</p>
-    <p><i><b>TitleSearchSimple</b></i></p>
-    <p>	Perform a simple title search.  The full title (as specified in MARC 245a and MARC 245b library records)	is searched for the specified string.  Basic metadata for all full and partial matches is returned.</p>
-    <p>	Example - <a href="/docs/api3/TitleSearchSimple.xml" title="TitleSearchSimple">https://www.biodiversitylibrary.org/api3?op=TitleSearchSimple&amp;title=nematocerous&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	title - full or partial title for which to search</p>
     <hr />
     <p><b>*** DATA ELEMENTS ***</b></p>
     <p>The following table describes the data elements that may be included in the various API responses.  Included is a mapping of the API data elements to the MARC cataloging standard.</p>
@@ -770,7 +769,7 @@
     <br />
     <hr />
     <p><b>*** RELEASE NOTES ***</b></p>
-    <p>June 15, 2018 - version 3.0.0</p>
+    <p>August 1, 2018 - version 3.0.0</p>
     <p><br /><br /><br /><br /><br /></p>
     <p>June 12, 2017 - version 2.8.2</p>
     <p><ul><li>BREAKING CHANGE: Changed the Item/Contributor element to Item/HoldingInstitution.</li></ul></p>

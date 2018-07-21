@@ -180,10 +180,9 @@
     <Content Include="Docs\api3\GetTitleMetadata.xml" />
     <Content Include="Docs\api3\NameSearch.xml" />
     <Content Include="Docs\api3\PageSearch.xml" />
-    <Content Include="Docs\api3\PublicationSearchTerm.xml" />
-    <Content Include="Docs\api3\PublicationSearchTitle.xml" />
+    <Content Include="Docs\api3\PublicationSearch.xml" />
+    <Content Include="Docs\api3\PublicationSearchAdvanced.xml" />
     <Content Include="Docs\api3\SubjectSearch.xml" />
-    <Content Include="Docs\api3\TitleSearchSimple.xml" />
     <Content Include="apikeymsg.txt" />
     <Content Include="api\docs\docs.html" />
     <Content Include="api\docs\docs.txt" />

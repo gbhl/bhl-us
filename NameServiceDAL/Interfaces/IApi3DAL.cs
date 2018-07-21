@@ -53,10 +53,6 @@ namespace MOBOT.BHL.API.BHLApiDAL
             SqlTransaction sqlTransaction, int segmentID);
         CustomGenericList<Collection> CollectionSelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
         ApiKey ApiKeySelectByKey(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Guid keyValue);
-        CustomGenericList<Title> TitleSelectSearchSimple(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-        string title);
-        CustomGenericList<Title> SearchTitleSimple(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-                string title);
         CustomGenericList<Author> AuthorSelectNameStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string name);
         CustomGenericList<Author> SearchAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,

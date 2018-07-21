@@ -861,29 +861,71 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Search methods
 
-        public CustomGenericList<Publication> SearchPublication(string title, string authorName, string volume,
-            string year, string subject, string languageCode, string collectionID, string searchTerm, string page, 
-            bool sqlFullText)
+        public CustomGenericList<Publication> SearchPublication(string searchTerm, string searchType, 
+            string page, bool sqlFullText)
+        {
+            // Validate the parameters
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                throw new Exception("Please supply a searchterm for which to search.");
+            }
+
+            if (string.IsNullOrWhiteSpace(searchType)) searchType = "F";  // Default to "F" (full-text search)
+            List<string> types = new List<string> { "F", "C" };
+            if (!types.Contains(searchType.ToUpper()))
+            {
+                throw new Exception("searchtype (" + searchType + ") must be one of the following values: F, C");
+            }
+
+            int pageInt = 1;
+            if (page != string.Empty)
+            {
+                if (!Int32.TryParse(page, out pageInt))
+                {
+                    throw new Exception("page (" + page + ") must be a valid integer value.");
+                }
+
+                if (pageInt < 1)
+                {
+                    throw new Exception("page (" + page + ") must be greater than zero.");
+                }
+            }
+
+            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            if (_useElasticSearch)
+            {
+                pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt);
+            }
+            else
+            {
+                pubs = SearchPublicationGlobalSQL(searchTerm, sqlFullText);
+            }
+
+            return pubs;
+        }
+
+        public CustomGenericList<Publication> SearchPublication(string title, string titleOp, 
+            string authorName, string year, string subject, string languageCode, string collectionID, 
+            string text, string page, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
-                string.IsNullOrWhiteSpace(collectionID) && string.IsNullOrWhiteSpace(searchTerm))
+                string.IsNullOrWhiteSpace(collectionID))
             {
-                throw new Exception("Please supply a title, author last name, collection ID, or searchTerm for which to search.");
+                throw new Exception("Please supply a title, author last name, or collection ID for which to search.");
             }
 
-            if ((!string.IsNullOrWhiteSpace(title) || 
-                !string.IsNullOrWhiteSpace(authorName) ||
-                !string.IsNullOrWhiteSpace(volume) ||
-                !string.IsNullOrWhiteSpace(year) ||
-                !string.IsNullOrWhiteSpace(subject) ||
-                !string.IsNullOrWhiteSpace(languageCode) ||
-                !string.IsNullOrWhiteSpace(collectionID)) && 
-                !string.IsNullOrWhiteSpace(searchTerm))
+            if (string.IsNullOrWhiteSpace(titleOp)) titleOp = "All";  // Default to "All" (an AND search)
+            switch (titleOp.ToLower())
             {
-                throw new Exception("searchTerm should not be specified with any other search terms.  " +
-                    "searchTerm is for metadata+text searches.  All other parameters are for metadata-only " +
-                    "searches.");
+                case "all":
+                    titleOp = "A";
+                    break;
+                case "phrase":
+                    titleOp = "P";
+                    break;
+                default:
+                    throw new Exception("titleop (" + titleOp + ") must be one of the following values: All, Phrase");
             }
 
             int yearInt = 0;
@@ -921,46 +963,35 @@ namespace MOBOT.BHL.API.BHLApi
             CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
             if (_useElasticSearch)
             {
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    pubs = SearchPublicationMetadata(title, authorName, volume, year, subject, languageCode,
-                        collectionID, pageInt);
-                }
-                else
-                {
-                    pubs = SearchPublicationGlobal(searchTerm, pageInt);
-                }
+                pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
+                    collectionID, text, pageInt);
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    pubs = SearchPublicationMetadataSQL(title, authorName, volume, yearInt, subject, 
-                        languageCode, collectionIDint, sqlFullText);
-                }
-                else
-                {
-                    pubs = SearchPublicationGlobalSQL(searchTerm, sqlFullText);
-                }
+                pubs = SearchPublicationAdvancedSQL(title, authorName, yearInt, subject, 
+                    languageCode, collectionIDint, sqlFullText);
             }
 
             return pubs;
         }
 
         /// <summary>
-        /// Use the search engine to search metadata
+        /// Use the search engine to perform an advanced search
         /// </summary>
         /// <param name="title"></param>
+        /// <param name="titleOp"></param>
         /// <param name="authorName"></param>
         /// <param name="volume"></param>
         /// <param name="year"></param>
         /// <param name="subject"></param>
         /// <param name="languageCode"></param>
         /// <param name="collectionID"></param>
+        /// <param name="text"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationMetadata(string title, string authorName, 
-            string volume, string year, string subject, string languageCode, string collectionID, int page)
+        private CustomGenericList<Publication> SearchPublicationAdvanced(string title, string titleOp,
+            string authorName, string year, string subject, string languageCode, string collectionID, 
+            string text, int page)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -983,8 +1014,14 @@ namespace MOBOT.BHL.API.BHLApi
             search.NumResults = 200;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
-            ISearchResult result = search.SearchItem(title, authorName, volume, year, subject,
-                languageParam, collectionParam);
+            ISearchResult result = search.SearchCatalog(
+                new SearchStringParam(title, 
+                    (titleOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)),
+                new SearchStringParam(authorName, SearchStringParamOperator.And), 
+                string.Empty, year,
+                new SearchStringParam(subject, SearchStringParamOperator.And),
+                languageParam, collectionParam,
+                new SearchStringParam(text, SearchStringParamOperator.And));
 
             // Build the list of results
             CustomGenericList<Publication> pubs = BuildPublicationList(result);
@@ -998,7 +1035,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationGlobal(string searchTerm, int page)
+        private CustomGenericList<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page)
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -1007,7 +1044,17 @@ namespace MOBOT.BHL.API.BHLApi
             search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
-            ISearchResult result = search.SearchItem(searchTerm);
+            ISearchResult result = null;
+            if (searchType.ToUpper() == "F")
+            {
+                // Full-text search
+                result = search.SearchItem(searchTerm);
+            }
+            else
+            {
+                // Catalog search
+                result = search.SearchCatalog(searchTerm);
+            }
 
             // Build the list of results
             CustomGenericList<Publication> pubs = BuildPublicationList(result);
@@ -1293,13 +1340,13 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="collectionID"></param>
         /// <param name="sqlFullText"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationMetadataSQL(string title, string authorName, 
-            string volume, int year, string subject, string languageCode, int collectionID, bool sqlFullText)
+        private CustomGenericList<Publication> SearchPublicationAdvancedSQL(string title, string authorName, 
+            int year, string subject, string languageCode, int collectionID, bool sqlFullText)
         {
             CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
 
             // Perform a SQL search for books and articles
-            CustomGenericList<Title> titles = this.SearchBook(title, authorName, volume, "",
+            CustomGenericList<Title> titles = this.SearchBook(title, authorName, "", "",
                 (int?)(year == 0 ? (int?)null : year), subject,
                 languageCode, (int?)(collectionID == 0 ? (int?)null : collectionID),
                 200, sqlFullText);
@@ -1336,7 +1383,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            CustomGenericList<Part> parts = this.SearchSegment(title, "", authorName, year.ToString(), volume, "", "", 200, "Title", sqlFullText);
+            CustomGenericList<Part> parts = this.SearchSegment(title, "", authorName, year.ToString(), "", "", "", 200, "Title", sqlFullText);
 
             foreach (Part p in parts)
             {
@@ -1502,14 +1549,6 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             return parts;
-        }
-
-        public CustomGenericList<Title> TitleSearchSimple(string title, bool sqlFullText)
-        {
-            if (sqlFullText)
-                return new Api3DAL().SearchTitleSimple(null, null, title);
-            else
-                return new Api3DAL().TitleSelectSearchSimple(null, null, title);
         }
 
         public CustomGenericList<Subject> SubjectSearch(string subject, bool sqlFullText)
@@ -1708,7 +1747,7 @@ namespace MOBOT.BHL.API.BHLApi
             AuthorSearch = 470,
             SubjectSearch = 471,
             NameSearch = 472,
-            TitleSearchSimple = 473,
+            PublicationSearchAdvanced = 473,
             PublicationSearch = 474,
             PageSearch = 475,
             GetLanguages = 480,
