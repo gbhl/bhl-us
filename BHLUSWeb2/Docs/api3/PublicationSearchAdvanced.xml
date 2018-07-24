@@ -3,48 +3,31 @@
   <Status>ok</Status>
   <Result>
     <Publication>
-      <BHLType>Item</BHLType>
+      <BHLType>Part</BHLType>
       <FoundIn>Metadata</FoundIn>
-      <ItemID>165402</ItemID>
-      <TitleID>87916</TitleID>
-      <HoldingInstitution>Wellesley College Library (archive.org)</HoldingInstitution>
-      <Language>English</Language>
-      <ItemUrl>https://www.biodiversitylibrary.org/item/165402</ItemUrl>
-      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/87916</TitleUrl>
-      <MaterialType>Published material</MaterialType>
-      <PublisherPlace>London</PublisherPlace>
-      <PublisherName>J. Murray,</PublisherName>
-      <PublicationDate>1902</PublicationDate>
+      <ItemID>97652</ItemID>
+      <Volume>2</Volume>
+      <PublisherPlace>San Francisco</PublisherPlace>
+      <PublisherName>California Academy of Sciences.</PublisherName>
+      <PublicationDate>1919</PublicationDate>
       <Authors>
         <Author>
-          <Name>Darwin, Charles,</Name>
+          <Name>Gifford, Edward Winslow</Name>
         </Author>
       </Authors>
-      <Genre>Monograph/Item</Genre>
-      <Title>The origin of species by means of natural selection, or, The preservation of favoured races in the struggle for life.</Title>
-      <Doi>10.5962/bhl.title.87916</Doi>
-    </Publication>
-    <Publication>
-      <BHLType>Item</BHLType>
-      <FoundIn>Metadata</FoundIn>
-      <ItemID>69525</ItemID>
-      <TitleID>27114</TitleID>
-      <HoldingInstitution>Kelly - University of Toronto (archive.org)</HoldingInstitution>
-      <Language>English</Language>
-      <ItemUrl>https://www.biodiversitylibrary.org/item/69525</ItemUrl>
-      <TitleUrl>https://www.biodiversitylibrary.org/bibliography/27114</TitleUrl>
-      <MaterialType>Published material</MaterialType>
-      <PublisherPlace>New York</PublisherPlace>
-      <PublisherName>P. F. Collier,</PublisherName>
-      <PublicationDate>1902</PublicationDate>
-      <Authors>
-        <Author>
-          <Name>Darwin, Charles,</Name>
-        </Author>
-      </Authors>
-      <Genre>Monograph/Item</Genre>
-      <Title>Origin of species by means of natural selection, or, The preservation of favored races in the struggle for life /  by Charles Darwin.</Title>
-      <Doi>10.5962/bhl.title.27114</Doi>
+      <PartUrl>https://www.biodiversitylibrary.org/part/69838</PartUrl>
+      <PartID>69838</PartID>
+      <StartPageID>31197278</StartPageID>
+      <Genre>Article</Genre>
+      <Title>Field notes on the land birds of the Galapagos Islands, and of Cocos Island,Costa Rica</Title>
+      <ContainerTitle>Proceedings of the California Academy of Sciences, 4th series.</ContainerTitle>
+      <Series>4</Series>
+      <PageRange>189--258</PageRange>
+      <Contributors>
+        <Contributor>
+          <ContributorName>BioStor</ContributorName>
+        </Contributor>
+      </Contributors>
     </Publication>
   </Result>
 </Response>

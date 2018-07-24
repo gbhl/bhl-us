@@ -2,214 +2,237 @@
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head>
     <title>Biodiversity Heritage Library - API Version 3 Documentation</title>
+    <style type="text/css">
+        body { font-family:Verdana; font-size:12px; }
+        hr { margin:15px 0 15px 0; }
+        div { padding:5px; }
+        table, th, td { border:1px solid black; }
+        th { text-align:left; }
+        .pagehead { height:40px; padding:0px; }
+        .pagehead #left { float:left; }
+        .pagehead #right { float:right; }
+        .header { font-weight:bold; }
+        .subhead1 { font-weight:bold; font-style:italic; margin-top:10px; }
+        .subhead2 { font-style:italic; }
+        .toplink { font-weight:normal; font-size:10px; }
+        .codeblock { padding:0px; margin:0in; font-family:Calibri; font-size:11.0pt; }
+        .codeblock .indent1 { padding:0px; margin-left:1.125in; }
+        .codeblock .indent2 { padding:0px; margin-left:1.5in; }
+        .codeblock .indent3 { padding:0px; margin-left:1.875in; }
+        .codeblock .indent4 { padding:0px; margin-left:2.25in; }
+        .codeblock .indent5 { padding:0px; margin-left:2.625in; }
+        .codeblock .indent6 { padding:0px; margin-left:3.0in; }
+    </style>
 </head>
 <body>
-
-    <p>Biodiversity Heritage Library<br />API v3 Documentation<br />Created: August 1, 2018<br />Revised: August 1, 2018</p>
+    <a name="top"></a>
+    <div class="pagehead">
+        <div id="left">
+            Biodiversity Heritage Library<br />
+            API v3 Documentation<br />
+        </div>
+        <div id="right">
+            Created: August 1, 2018<br />
+            Revised: August 1, 2018
+        </div>
+    </div>
+    <div>
+        <a href="#overview">Overview</a><br />
+        <a href="#methods">Methods</a><br />
+        <a href="#elements">Data Elements</a><br />
+        <a href="#notes">Release Notes</a>
+    </div>
     <hr />
-    <p><b>*** HTTP QUERY INTERFACE ***</b></p>
-    <p>The HTTP query interface to the Biodiversity Heritage Library (BHL) API exposes methods for extracting data using HTTP GET requests.</p>
-    <p><b>AUTHENTICATION</b></p>
-    <p>
+    <a name="overview"></a>
+    <div class="header">*** OVERVIEW *** <a href="#top" class="toplink">Contents</a></div>
+    <div class="subhead1">Authentication</div>
+    <div>
         To use the BHL API you must supply an API Key value with each request.  To obtain a key, go to
         <a href="/getapikey.aspx" title="GetApiKey">https://www.biodiversitylibrary.org/getapikey.aspx</a>.  The same key can be used for both the HTTP Query interface and the SOAP interface.
-    </p>
-    <p>To include the key value with a request, append the argument &amp;apikey=&lt;key+value&gt; to the method call.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;</p>
-    <p><b>OUTPUT TYPES</b></p>
-    <p>Results can be returned in either XML or JSON format.  To return XML, append &amp;format=xml to the method call.  To return JSON, append &amp;format=json to the method call.  If a format is not specified, XML is returned.</p>
-    <p>An example of returning XML is https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;format=xml</p>
-    <p>An example of returning JSON is https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;format=json</p>
-    <p><b>CALLBACKS</b></p>
-    <p>If you need to capture the results of a method call with a callback function, specific the name of the callback function by appending &amp;callback=&lt;function name&gt; to the method call.</p>
-    <p>For example, https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;callback=&lt;function name&gt;</p>
-    <p><b>STATUS CODE</b></p>
-    <p>Each method response contains a status code that indicates the success or failure of the method call.  This code is contained in the &quot;Status&quot; field of the response.  The valid status codes are:</p>
-    <p>	ok - the method executed successfully<br />	error - an error occurred while executing the method; check the ErrorMessage field for details<br />	unauthorized - the specified api key is invalid or does not have permission to execute the method</p>
-    <p><b>METHODS</b></p>
-    <p>Specify the name of the API method being called with the &quot;op=&lt;method name&gt;&quot; argument.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method name&gt;</p>
-    <p><i><b>GetPageMetadata</b></i></p>
-    <p>	Return metadata about a page.  You may choose to include the OCR text and a list of names found on the page.</p>
-    <p>	Example - <a href="/docs/api3/GetPageMetadata.xml" title="GetPageMetadata">https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	pageid - the identifier of an individual page in a scanned book<br />	ocr - &quot;t&quot; or &quot;true&quot; to return ocr text of the page<br />	names - &quot;t&quot; or &quot;true&quot; to return the names that appear on the page</p>
-    <p><i><b>GetItemMetadata</b></i></p>
-    <p>	Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, and a list of the item's parts.</p>
-    <p>	Example - <a href="/docs/api3/GetItemMetadata.xml" title="GetItemMetadata">https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;id=16800&amp;pages=t&amp;ocr=f&amp;parts=f&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	id - the identifier of an individual item (book)<br />  idtype (OPTIONAL) - "bhl" if the id is a BHL identifier (default value), "ia" if the id is an Internet Archive identifier<br />	pages - &quot;t&quot; or &quot;true&quot; to return the item's pages<br />	ocr - &quot;t&quot; or &quot;true&quot; to return the ocr for the item's pages<br />	parts - &quot;t&quot; or &quot;true&quot; to return the item's parts<br /></p>
-    <p><i><b>GetTitleMetadata</b></i></p>
-    <p>	Return metadata about a title.  You may choose to include a list of the items (books) associated	with the title.</p>
-    <p>	Example - <a href="/docs/api3/GetTitleMetadata.xml" title="GetTitleMetadata">https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=3943&amp;items=t&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	id - the identifier of an individual title<br />    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby).  Defaults to "bhl".<br />	items - &quot;t&quot; or &quot;true&quot; to return the title's items</p>
-    <p><i><b>GetPartMetadata</b></i></p>
-    <p>	Return metadata about a part.  You may choose to include a list of the part's names.</p>
-    <p>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;names=t&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</p>
-    <p><i><b>GetSubjectMetadata</b></i></p>
-    <p>	Return metadata about a subject.  You may choose to include a list of the subject's publications.</p>
-    <p>	Example - <a href="/docs/api3/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	subject - the subject for which to return metadata<br /> pubs - "t" or "true" to return the subject's publications</p>
-    <p><i><b>GetAuthorMetadata</b></i></p>
-    <p>	Return metadata about an author.  You may choose to include a list of the author's publications.</p>
-    <p>	Example - <a href="/docs/api3/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	id - the identifier of an individual author<br /> idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".<br />	pubs - "t" or "true" to return the subject's publications</p>
-    <p><i><b>GetNameMetadata</b></i></p>
-    <p>	Get basic title, item, and page metadata for each page on which the specified name appears.</p>
-    <p>	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may have changed. ***</p>
-    <p>	Example - <a href="/docs/api3/GetNameMetadata.xml" title="GetNameMetadata">https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=poa+annua+linnaeus&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	name - a complete name string.  Not used if idtype/id are specified.<br />idtype - the type of identifier (namebank, eol, gni, ion, col, gbif, itis, ipni, worms).  Not used if name is specified.<br />id - an identifier of a name.    Not used if name is specified.</p>
-    <p><i><b>GetCollections</b></i></p>
-    <p>	Get a list of collections which are used to group titles and items.  A single collection may contain either titles or items, but not both.</p>
-    <p>	Example - <a href="/docs/api3/GetCollections.xml" title="GetCollections">https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><i><b>GetInstitutions</b></i></p>
-    <p>	Get a list of institutions which have contributed to BHL in some way.  These institutions may fill roles such as contributors, rights holders, and scanning institutions.</p>
-    <p>	Example - <a href="/docs/api3/GetInstitutions.xml" title="GetInstitutions">https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><i><b>GetLanguages</b></i></p>
-    <p>	Get a list of languages in which materials in BHL have been written.</p>
-    <p> Example - <a href="/docs/api3/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><b><i>PublicationSearch</i></b></p>
-    <p>	Search for publications (titles, items, and parts) that match the specified search term.  Can be a full-text search or a catalog search.  A full-text search also searches the catalog metadata.</p>
-    <p>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island&amp;searchtype=F&amp;page=1&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><b><i>PublicationSearchAdvanced</i></b></p>
-    <p>	Search for publications (titles, items, and parts) that match the specified search criteria.  This method searches specified fields for specific terms.  Searches the catalog, unless the 'text' parameter is specified.  Then a full-text search is performed over the text of the publications.</p>
-    <p>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=Origin+species&amp;titleop=All&amp;lname=Darwin&amp;year=&amp;subject=&amp;collectionid=&amp;language=eng&amp;text=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></p>
-    <p><b><i>PageSearch</i></b></p>
-    <p>	Search an item for pages containing the specified text.</p>
-    <p>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></p>
-    <p> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</p>
-    <p><b><i>SubjectSearch</i></b></p>
-    <p>	Return a list of subjects that match (fully or partially) the specified search string.</p>
-    <p>	Example - <a href="/docs/api3/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	subject - the full or partial subject for which to search</p>
-    <p><i><b>AuthorSearch</b></i></p>
-    <p>	Return a list of authors that match (fully or partially) the specified search string.  The names	searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.</p>
-    <p>	Example - <a href="/docs/api3/AuthorSearch.xml" title="AuthorSearch">https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=dimmock&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	authorname - full or partial name of the author for which to search</p>
-    <p><i><b>NameSearch</b></i></p>
-    <p>	Search for a particular name.  Names both with and without NameBank identifiers are returned.</p>
-    <p>	*** This method was a part of version 1	of the BHL API.  Its signature and/or return values may have changed. ***</p>
-    <p>	Example - <a href="/docs/api3/NameSearch.xml" title="NameSearch">https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=&lt;key+value&gt;</a></p>
-    <p>	name - a partial or complete name string</p>
+    </div>
+    <div>To include the key value with a request, append the argument &amp;apikey=&lt;key+value&gt; to the method call.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;</div>
+    <div class="subhead1">Output Types</div>
+    <div>Results can be returned in either XML or JSON format.  To return XML, append &amp;format=xml to the method call.  To return JSON, append &amp;format=json to the method call.  If a format is not specified, XML is returned.</div>
+    <div>An example of returning XML is https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;format=xml</div>
+    <div>An example of returning JSON is https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;format=json</div>
+    <div class="subhead1">Callbacks</div>
+    <div>If you need to capture the results of a method call with a callback function, specific the name of the callback function by appending &amp;callback=&lt;function name&gt; to the method call.</div>
+    <div>For example, https://www.biodiversitylibrary.org/api3?op=&lt;method&gt;...&amp;apikey=&lt;key+value&gt;&amp;callback=&lt;function name&gt;</div>
+    <div class="subhead1">Status Codes</div>
+    <div>Each method response contains a status code that indicates the success or failure of the method call.  This code is contained in the &quot;Status&quot; field of the response.  The valid status codes are:</div>
+    <div>	ok - the method executed successfully<br />	error - an error occurred while executing the method; check the ErrorMessage field for details<br />	unauthorized - the specified api key is invalid or does not have permission to execute the method</div>
     <hr />
-    <p><b>*** DATA ELEMENTS ***</b></p>
-    <p>The following table describes the data elements that may be included in the various API responses.  Included is a mapping of the API data elements to the MARC cataloging standard.</p>
+    <a name="methods"></a>
+    <div class="header">*** METHODS *** <a href="#top" class="toplink">Contents</a></div>
+    <div>Specify the name of the API method being called with the &quot;op=&lt;method name&gt;&quot; argument.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method name&gt;</div>
+    <div class="subhead1">GetPageMetadata</div>
+    <div>	Return metadata about a page.  You may choose to include the OCR text and a list of names found on the page.</div>
+    <div>	Example - <a href="/docs/api3/GetPageMetadata.xml" title="GetPageMetadata">https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	pageid - the identifier of an individual page in a scanned book<br />	ocr - &quot;t&quot; or &quot;true&quot; to return ocr text of the page<br />	names - &quot;t&quot; or &quot;true&quot; to return the names that appear on the page</div>
+    <div class="subhead1">GetItemMetadata</div>
+    <div>	Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, and a list of the item's parts.</div>
+    <div>	Example - <a href="/docs/api3/GetItemMetadata.xml" title="GetItemMetadata">https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;id=16800&amp;pages=t&amp;ocr=f&amp;parts=f&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	id - the identifier of an individual item (book)<br />  idtype (OPTIONAL) - "bhl" if the id is a BHL identifier (default value), "ia" if the id is an Internet Archive identifier<br />	pages - &quot;t&quot; or &quot;true&quot; to return the item's pages<br />	ocr - &quot;t&quot; or &quot;true&quot; to return the ocr for the item's pages<br />	parts - &quot;t&quot; or &quot;true&quot; to return the item's parts<br /></div>
+    <div class="subhead1">GetTitleMetadata</div>
+    <div>	Return metadata about a title.  You may choose to include a list of the items (books) associated	with the title.</div>
+    <div>	Example - <a href="/docs/api3/GetTitleMetadata.xml" title="GetTitleMetadata">https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=3943&amp;items=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	id - the identifier of an individual title<br />    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby).  Defaults to "bhl".<br />	items - &quot;t&quot; or &quot;true&quot; to return the title's items</div>
+    <div class="subhead1">GetPartMetadata</div>
+    <div>	Return metadata about a part.  You may choose to include a list of the part's names.</div>
+    <div>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</div>
+    <div class="subhead1">GetSubjectMetadata</div>
+    <div>	Return metadata about a subject.  You may choose to include a list of the subject's publications.</div>
+    <div>	Example - <a href="/docs/api3/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	subject - the subject for which to return metadata<br /> pubs - "t" or "true" to return the subject's publications</div>
+    <div class="subhead1">GetAuthorMetadata</div>
+    <div>	Return metadata about an author.  You may choose to include a list of the author's publications.</div>
+    <div>	Example - <a href="/docs/api3/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	id - the identifier of an individual author<br /> idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".<br />	pubs - "t" or "true" to return the subject's publications</div>
+    <div class="subhead1">GetNameMetadata</div>
+    <div>	Get basic title, item, and page metadata for each page on which the specified name appears.</div>
+    <div>	Example - <a href="/docs/api3/GetNameMetadata.xml" title="GetNameMetadata">https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=poa+annua+linnaeus&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	name - a complete name string.  Not used if idtype/id are specified.<br />idtype - the type of identifier (namebank, eol, gni, ion, col, gbif, itis, ipni, worms).  Not used if name is specified.<br />id - an identifier of a name.    Not used if name is specified.</div>
+    <div class="subhead1">GetCollections</div>
+    <div>	Get a list of collections which are used to group titles and items.  A single collection may contain either titles or items, but not both.</div>
+    <div>	Example - <a href="/docs/api3/GetCollections.xml" title="GetCollections">https://www.biodiversitylibrary.org/api3?op=GetCollections&amp;apikey=&lt;key+value&gt;</a></div>
+    <div class="subhead1">GetInstitutions</div>
+    <div>	Get a list of institutions which have contributed to BHL in some way.  These institutions may fill roles such as contributors, rights holders, and scanning institutions.</div>
+    <div>	Example - <a href="/docs/api3/GetInstitutions.xml" title="GetInstitutions">https://www.biodiversitylibrary.org/api3?op=GetInstitutions&amp;apikey=&lt;key+value&gt;</a></div>
+    <div class="subhead1">GetLanguages</div>
+    <div>	Get a list of languages in which materials in BHL have been written.</div>
+    <div> Example - <a href="/docs/api3/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></div>
+    <div class="subhead1">PublicationSearch</div>
+    <div>	Search for publications (titles, items, and parts) that match the specified search term.  You can search the catalog metadata only, or the full-text and the catalog metadata combined.&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
+    <div>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island+costa+rica+birds&amp;searchtype=C&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	searchterm - the text for which to search<br /> searchtype - &#39;C&#39; for a catalog-only search; &#39;F&#39; for a catalog+full-text search<br /> page - 1 for the first page of results, 2 for the second, and so on </div>
+    <div class="subhead1">PublicationSearchAdvanced</div>
+    <div>	Search for publications (titles, items, and parts) that match the specified search criteria.  Rather than searching across all of the metadata for specified search terms, this method searches specific fields for the terms.&nbsp; For example, title fields are searched for the &quot;title&quot; parameter value, and the author names are searched for the &quot;authorname&quot; parameter value.&nbsp; This method searches the catalog metadata only, unless the &quot;text&quot; parameter is specified.  Inclusion of a value for the &quot;text&quot; parameter triggers a full-text search over the text of the publications.&nbsp;&nbsp;&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
+    <div>	Use the GetLanguages and GetCollections methods to obtain valid language codes and collection identifiers for use as parameters to this method.</div>
+    <div>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=cocos+island&amp;titleop=All&amp;authorname=gifford&amp;year=1919&amp;subject=&amp;language=&amp;collection=&amp;text=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	title - a title for which to search<br /> titleop - &#39;all&#39; to search for all specified words in the title fields; &#39;phrase&#39; to search for the exact phrase specified<br /> authorname - an author name for which to search <br /> year - a four-digit publication year for which to search <br /> subject - a subject for which to search <br /> language - a language code; search will only return publications in the specified language<br /> collection - a collection id; search will only return publications from the specfied collection <br /> text - one or more words for which to search in the text of the publications <br /> page - 1 for the first page of results, 2 for the second, and so on </div>
+    <div class="subhead1">PageSearch</div>
+    <div>	Search an item for pages containing the specified text.</div>
+    <div>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></div>
+    <div> itemid - BHL identifier of the item to be searched<br /> text - the text for which to search</div>
+    <div class="subhead1">SubjectSearch</div>
+    <div>	Return a list of subjects that match (fully or partially) the specified search string.</div>
+    <div>	Example - <a href="/docs/api3/SubjectSearch.xml" title="SubjectSearch">https://www.biodiversitylibrary.org/api3?op=SubjectSearch&amp;subject=diptera&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	subject - the full or partial subject for which to search</div>
+    <div class="subhead1">AuthorSearch</div>
+    <div>	Return a list of authors that match (fully or partially) the specified search string.  The names	searched are those contained in MARC 100a, 110a, 111a, 700a, 710a, and 711a library records.</div>
+    <div>	Example - <a href="/docs/api3/AuthorSearch.xml" title="AuthorSearch">https://www.biodiversitylibrary.org/api3?op=AuthorSearch&amp;authorname=dimmock&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	authorname - full or partial name of the author for which to search</div>
+    <div class="subhead1">NameSearch</div>
+    <div>	Search for a particular name.  Names both with and without NameBank identifiers are returned.</div>
+    <div>	Example - <a href="/docs/api3/NameSearch.xml" title="NameSearch">https://www.biodiversitylibrary.org/api3?op=NameSearch&amp;name=poa+annua&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	name - a partial or complete name string</div>
+    <hr />
+    <a name="elements"></a>
+    <div class="header">*** DATA ELEMENTS *** <a href="#top" class="toplink">Contents</a></div>
+    <div>The following table describes the data elements that may be included in the various API responses.</div>
 
-    <table border="1">
+    <div>
+    <table>
         <tr>
-            <th align="left">BHL API</th>
-            <th align="left">Description</th>
-            <th align="left">MARC</th>
+            <th>BHL API</th>
+            <th>Description</th>
         </tr>
         <tr>
             <td>Title/TitleID</td>
             <td>BHL identifier for the title</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Title/Genre</td>
             <td>
                 One of the following values, which identify the bibliographic level of work:<br />
+                <br />
                 Collection<br />
                 Monograph/Item<br />
                 Monographic component part<br />
                 Serial<br />
                 Serial component part
-            </td>
-            <td>Leader position 07</td>
+                <br />
+                <br />
+                Derived from <a href=http://www.loc.gov/marc/bibliographic/bdleader.html" target="_blank">MARC leader position 07</a>.</td>
         </tr>
         <tr>
             <td>Title/MaterialType</td>
             <td>
-                One of the following values, which identify the characteristics of the work:
-                Language material
-                Notated music
-                Manuscript notated music
-                Cartographic material
-                Manuscript cartographic material
-                Projected medium
-                Nonmusical sound recording
-                Musical sound recording
-                Two-dimensional nonprojectable graphic
-                Computer file
-                Kit
-                Mixed materials
-                Three-dimensional artifact or naturally occuring object
-                Manuscript language material
-            </td>
-            <td>Leader position 06</td>
+                One of the following values, which identify the characteristics of the work:<br />
+                <br />
+                Archival material<br />
+                Audio<br />
+                Computer file<br />
+                Maps<br />
+                Mixed materials<br />
+                Music<br />
+                Published material<br />
+                Video<br />
+                Visual resource
+                <br />
+                <br />
+                Derived from <a href="http://www.loc.gov/marc/bibliographic/bdleader.html%22" target="_blank">MARC leader position 06</a></td>
         </tr>
         <tr>
             <td>Title/FullTitle</td>
-            <td>The complete title of the work</td>
-            <td>245a,b,c</td>
+            <td>The complete title of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a|b</a>.</td>
         </tr>
         <tr>
             <td>Title/ShortTitle</td>
-            <td>The title proper of the work</td>
-            <td>245a</td>
+            <td>The title proper of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a</a>.</td>
         </tr>
         <tr>
             <td>Title/SortTitle</td>
             <td>Title of the work, modified for more accurate searching</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Title/PartNumber</td>
-            <td>Number designation for part of a work used in the title</td>
-            <td>245n</td>
+            <td>Number designation for part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245n</a>.&nbsp; </td>
         </tr>
         <tr>
             <td>Title/PartName</td>
-            <td>Name of a part of a work used in the title</td>
-            <td>245p</td>
+            <td>Name of a part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245p</a>.</td>
         </tr>
         <tr>
             <td>Title/CallNumber</td>
-            <td>Classification or call number of the work</td>
-            <td>050a,b</td>
+            <td>Classification or call number of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd050.html" target="_blank">MARC 050a|b</a>.</td>
         </tr>
         <tr>
             <td>Title/Edition</td>
-            <td>Information about the edition of the work</td>
-            <td>250a,b</td>
+            <td>Information about the edition of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd250.html" target="_blank">MARC 250a|b</a>.</td>
         </tr>
         <tr>
             <td>Title/PublisherPlace</td>
-            <td>Place of publication of the work</td>
-            <td>260a</td>
+            <td>Place of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260a</a>.</td>
         </tr>
         <tr>
             <td>Title/PublisherName</td>
-            <td>Name of publisher/distributor of the work</td>
-            <td>260b</td>
+            <td>Name of publisher/distributor of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260b</a>.</td>
         </tr>
         <tr>
             <td>Title/PublicationDate</td>
-            <td>Date of publication of the work</td>
-            <td>260c</td>
+            <td>Date of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260c</a>.</td>
         </tr>
         <tr>
             <td>Title/PublicationFrequency</td>
-            <td>Frequency of publication of the work</td>
-            <td>310a</td>
+            <td>Frequency of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd310.html" target="_blank">MARC 310a</a>.</td>
         </tr>
         <tr>
             <td>Title/Doi</td>
             <td>DOI assigned to the title</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Title/TitleURL</td>
             <td>BHL address for the title</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Author/AuthorID</td>
             <td>BHL identifier for the author</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Author/Name</td>
-            <td>Personal, corporate, or meeting name</td>
-            <td>100/110/111/700/710/711/720a</td>
+            <td>Personal, corporate, or meeting name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Role</td>
@@ -223,207 +246,166 @@
                 Added Entry -- Meeting Name (MARC 711)<br />
                 Added Entry -- Uncontrolled Name (MARC 720)
             </td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Author/Numeration</td>
-            <td>Personal numeration</td>
-            <td>100/110/111/700/710/711/720b</td>
+            <td>Personal numeration.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Unit</td>
-            <td>Corporate unit</td>
-            <td>100/110/111/700/710/711/720b</td>
+            <td>Corporate unit.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Title</td>
-            <td>Personal title</td>
-            <td>100/110/111/700/710/711/720c</td>
+            <td>Personal title.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Location</td>
-            <td>Corporate/meeting location</td>
-            <td>100/110/111/700/710/711/720c</td>
+            <td>Corporate/meeting location.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/FullerForm</td>
-            <td>Fuller form of name</td>
-            <td>100/700q</td>
+            <td>Fuller form of name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Relationship</td>
-            <td>Relationship of person to work (editor, illustrator)</td>
-            <td>700e</td>
+            <td>Relationship of person to work (editor, illustrator).  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/TitleOfWork</td>
-            <td>Title page title or serial title related to person</td>
-            <td>700t</td>
+            <td>Title page title or serial title related to person.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/Dates</td>
-            <td>Date of birth/death or Corp/Meeting dates</td>
-            <td>100/110/111/700/710/711/720d</td>
+            <td>Date of birth/death or Corp/Meeting dates.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
         </tr>
         <tr>
             <td>Author/CreatorUrl</td>
             <td>BHL address for the author</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Subject/SubjectText</td>
-            <td>Subject term</td>
-            <td>Various 6XX fields. Most BHL subjects are from 650.</td>
+            <td>Subject term.  See <a href="http://www.loc.gov/marc/bibliographic/bd6xx.html" target="_blank">MARC 6XX</a>.</td>
         </tr>
         <tr>
             <td>TitleNote/NoteText</td>
-            <td>Text of a note associated with a title</td>
-            <td>Various 5XX fields.</td>
+            <td>Text of a note associated with a title.  See <a href="http://www.loc.gov/marc/bibliographic/bd5xx.html" target="_blank">MARC 5XX</a>.</td>
         </tr>
         <tr>
             <td>TitleNote/NoteSequence</td>
             <td>Numerical position of the note</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>TitleNote/NoteTypeName</td>
             <td>Description of the note</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ItemID</td>
             <td>BHL identifier for the item</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/TitleID</td>
             <td>BHL identifier for the title related to the item</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ThumbnailPageID</td>
             <td>BHL identifier of the page that produces the item thumbnail</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Source</td>
             <td>System from which the item originated</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/SourceIdentifier</td>
             <td>Originating system identifier</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Volume</td>
             <td>Volume assigned to the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Year</td>
             <td>Year assigned to to a monograph or single item in a journal</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/CopySpecificInformation</td>
             <td>Information specific to this copy of the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Holding Institution</td>
             <td>Institution that contributed the book to BHL</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/RightsHolder</td>
             <td>Institution holding the rights to the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ScanningInstitution</td>
             <td>Institution performing the scanning of the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Sponsor</td>
             <td>Institution that sponsored the scanning of the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Language</td>
-            <td>Primary language in which the work is published</td>
-            <td>008</td>
+            <td>Primary language in which the work is published.  See <a href="http://www.loc.gov/marc/bibliographic/bd008.html" target="_blank">MARC 008 positions 35-37</a>.</td>
         </tr>
         <tr>
             <td>Item/LicenseUrl</td>
             <td>URL to information about the license asserted on the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/Rights</td>
             <td>URL to information about the rights/permissions asserted on the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/DueDiligence</td>
             <td>URL to information about the rights/permissions asserted on the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/CopyrightStatus</td>
             <td>Copyright statement for the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/CopyrightRegion</td>
             <td>Country issuing the copyright on the book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ExternalUrl</td>
             <td>Non-BHL address for the item</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ItemUrl</td>
             <td>BHL address for the item</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/TitleUrl</td>
             <td>BHL address for the title</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Item/ItemThumbUrl</td>
             <td>BHL address for the item thumbnail image</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PartID</td>
             <td>BHL identifier for the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PartUrl</td>
             <td>BHL address for the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/ItemID</td>
             <td>BHL address for the item related to the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/StartPageID</td>
             <td>BHL address for the first page of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/SequenceOrder</td>
             <td>Sequential position of the part within the container item.</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Genre</td>
@@ -441,182 +423,146 @@
                 Unknown<br />
                 Treatment
             </td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Title</td>
             <td>The title of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/TranslatedTitle</td>
             <td>Translated title of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/ContainerTitle</td>
             <td>Title of the containing journal/book</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PublicationDetails</td>
             <td>Combined publication informatino (publisher name, publisher place, and publication date)</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PublisherName</td>
             <td>Name of publisher/distributor of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PublisherPlace</td>
             <td>Place of publication of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Notes</td>
             <td>Miscellaneous information about the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Volume</td>
             <td>Volume of the work in which the part appears</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Series</td>
             <td>Series of the work in which the part appears</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Issue</td>
             <td>Issue of the work in which the part appears</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Date</td>
             <td>Publication date of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/PageRange</td>
             <td>Combined page information (start--end)</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/StartPageNumber</td>
             <td>Starting page number of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/EndPageNumber</td>
             <td>Ending page number of the work</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Language</td>
             <td>Language of he part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/ExternalUrl</td>
             <td>Non-BHL location of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/DownloadUrl</td>
             <td>Link to a downloadable version of the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/RightsStatus</td>
             <td>Rights status of the part (for example, "out of copyright")</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/RightsStatement</td>
             <td>Rights statement for the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/LicenseName</td>
             <td>License under which the part is made available</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/LicenseUrl</td>
             <td>Link to additional licensing details</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Doi</td>
             <td>DOI assigned to the part</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Part/Contributors/Contributor/ContributorName</td>
             <td>Person/organization that contributed the part to BHL</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/PageID</td>
             <td>BHL identifier for the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/ItemID</td>
             <td>BHL identifier for the item containing the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/Volume</td>
             <td>Volume assigned to the page when multiple volumes bound together.</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/Issue</td>
             <td>Issue assigned to the page when multiple volumes bound together.</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/Year</td>
             <td>Year assigned to the page when multiple volumes bound together.</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/PageUrl</td>
             <td>BHL address for the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/ThumbnailUrl</td>
             <td>BHL address for the thumbnail image of the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/FullSizeImageUrl</td>
             <td>BHL address for the full-size image of the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/OcrUrl</td>
             <td>BHL address for the OCR of the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Page/OcrText</td>
             <td>Text of the page OCR</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>PageNumber/Prefix</td>
             <td>Prefix of the number assigned to the page (ex. Page, Plate)</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>PageNumber/Number</td>
             <td>The number assigned to the page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>PageType/PageTypeName</td>
@@ -639,17 +585,178 @@
                 Issue Start<br />
                 Issue End
             </td>
-            <td>NA</td>
+        </tr>
+        <tr>
+            <td>Publication/BHLType</td>
+            <td>Publication type: Title, Item, or Part</td>
+        </tr>
+        <tr>
+            <td>Publication/FoundIn</td>
+            <td>Indicates where in the publication the search term(s) were found:  Metadata, Text, or Both</td>
+        </tr>
+        <tr>
+            <td>Publication/ItemID</td>
+            <td>BHL Identifier for the publication (if BHLType is Item) or the related BHL Item.</td>
+        </tr>
+        <tr>
+            <td>Publication/TitleID</td>
+            <td>BHL Identifier for the publication (if BHLType is Title)</td>
+        </tr>
+        <tr>
+            <td>Publication/ThumbnailPageID</td>
+            <td>BHL identifier of the page that produces the publication thumbnail</td>
+        </tr>
+        <tr>
+            <td>Publication/Volume</td>
+            <td>Volume of the publication or the publication&#39;s parent work.</td>
+        </tr>
+        <tr>
+            <td>Publication/CopySpecificInformation</td>
+            <td>Information specific to this copy of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/HoldingInstitution</td>
+            <td>Institution holding the physical copy of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/RightsHolder</td>
+            <td>Institution holding the rights to the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/ScanningInstitution</td>
+            <td>Institution performing the scanning of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/Sponsor</td>
+            <td>Institution that sponsored the scanning of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/Language</td>
+            <td>Primary language of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/LicenseUrl</td>
+            <td>URL to information about the license asserted on the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/Rights</td>
+            <td>URL to information about the rights/permissions asserted on the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/DueDiligence</td>
+            <td>URL to information about the rights/permissions asserted on the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/ExternalUrl</td>
+            <td>Non-BHL address for the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/ItemUrl</td>
+            <td>BHL address for the publication (if BHLType is Item) or the related BHL Item.</td>
+        </tr>
+        <tr>
+            <td>Publication/TitleUrl</td>
+            <td>BHL address for the publication (if BHLType is Title)</td>
+        </tr>
+        <tr>
+            <td>Publication/MaterialType</td>
+            <td>One of the following values, which identify the characteristics of the work: Language material Notated music Manuscript notated music Cartographic material Manuscript cartographic material Projected medium Nonmusical sound recording Musical sound recording Two-dimensional nonprojectable graphic Computer file Kit Mixed materials Three-dimensional artifact or naturally occuring object Manuscript language material </td>
+        </tr>
+        <tr>
+            <td>Publication/PublisherPlace</td>
+            <td>Place of publication</td>
+        </tr>
+        <tr>
+            <td>Publication/PublisherName</td>
+            <td>Publisher of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/PublicationDate</td>
+            <td>Publishing date of the publication or parent object of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/PartUrl</td>
+            <td>BHL address for the publication (if BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/PartID</td>
+            <td>BHL Identifier for the publication (if BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/StartPageID</td>
+            <td>BHL address for the first page of the publication (if BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/SequenceOrder</td>
+            <td>Sequence order of the publication within its parent work</td>
+        </tr>
+        <tr>
+            <td>Publication/Genre</td>
+            <td>Value identifying the genre of the publication.  Examples include the following: Collection, Monograph/Item, Serial, Article, Chapte,&nbsp; Journal, Issue, Proceeding Conference, Preprint, Treatment&nbsp; </td>
+        </tr>
+        <tr>
+            <td>Publication/Title</td>
+            <td>The title of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/TranslatedTitle</td>
+            <td>The translated title of the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/ContainerTitle</td>
+            <td>The title of the parent work of the publication.  If the publication is an article, the ContainerTitle will be the journal in which the article appears.</td>
+        </tr>
+        <tr>
+            <td>Publication/PublicationDetails</td>
+            <td>Combined publisher information (publisher name, publisher place, and publication date)</td>
+        </tr>
+        <tr>
+            <td>Publication/Notes</td>
+            <td>Miscellaneous information about the publication</td>
+        </tr>
+        <tr>
+            <td>Publication/Series</td>
+            <td>Series of the publication or the publication&#39;s parent work.</td>
+        </tr>
+        <tr>
+            <td>Publication/Issue</td>
+            <td>Issue of the publication or the publication&#39;s parent work.</td>
+        </tr>
+        <tr>
+            <td>Publication/PageRange</td>
+            <td>Combined start and end page information (applies when BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/StartPageNumber</td>
+            <td>Starting page number of the publication (applies when BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/EndPageNumber</td>
+            <td>Ending page number of the publication (applies when BHLType is Part)</td>
+        </tr>
+        <tr>
+            <td>Publication/DownloadUrl</td>
+            <td>Link to a downloadable version of the publication.</td>
+        </tr>
+        <tr>
+            <td>Publication/RightsStatus</td>
+            <td>Rights statement for the publication.</td>
+        </tr>
+        <tr>
+            <td>Publication/LicenseName</td>
+            <td>License under which the publication is made available.</td>
+        </tr>
+        <tr>
+            <td>Publication/DOI</td>
+            <td>DOI assigned to the publication.</td>
         </tr>
         <tr>
             <td>Name/NameFound</td>
             <td>Name found on a page</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Name/NameConfirmed</td>
             <td>Name found on a page and confirmed in uBio&#39;s NameBank</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Identifier/IdentifierName</td>
@@ -672,77 +779,54 @@
                 eol<br />
                 gni
             </td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Identifier/IdentifierValue</td>
-            <td>Value of the identifier</td>
-            <td>
-                Location depends on the type of identifier.  Not all identifiers appear in MARC.<br />
-                035 (IdentifierName = oclc)<br />
-                022 (IdentifierName = issn)<br />
-                020 (IdentifierName = isbn)<br />
-                050 (IdentifierName = lccn)<br />
-                082 (IdentifierName = ddc)<br />
-                070 (IdentifierName = nal)<br />
-                060 (IdentifierName = nlm)<br />
-                030 (IdentifierName = coden)
-            </td>
+            <td>Value of the identifier.</td>
         </tr>
         <tr>
             <td>Collection/CollectionID</td>
             <td>BHL identifier for the collection</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Collection/CollectionName</td>
             <td>The name of the collection</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Collection/CollectionDescription</td>
             <td>A description of the contents of the collection</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Collection/CanContainTitles</td>
             <td>1 if the collection can contain titles, 0 otherwise</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Institution/InstitutionCode</td>
             <td>BHL code for the institution</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Institution/InstitutionName</td>
             <td>The name of the institution</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Institution/InstitutionUrl</td>
             <td>URL for the institution</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Institution/BHLMember</td>
             <td>True if the institution is a member of the BHL consortium</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Collection/CanContainItems</td>
             <td>1 if the collection can contain items, 0 otherwise</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Language/LanguageCode</td>
             <td>BHL code for the language</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Language/LanguageName</td>
             <td>The name of the language</td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Variant/TitleVariantTypeName</td>
@@ -753,114 +837,429 @@
                 Abbreviated<br />
                 Alterative<br />
             </td>
-            <td>NA</td>
         </tr>
         <tr>
             <td>Variant/Title</td>
-            <td>The variant title</td>
-            <td>
-                Location depends on the type of variant:<br />
-                210 (VariantType = abbreviated)<br />
-                242 (VariantType = translated)<br />
-                246 (VariantType = parallel or alternative)<br />
-            </td>
+            <td>The variant title.  See <a href="http://www.loc.gov/marc/bibliographic/bd20x24x.html" target="_blank">MARC 210, 242, and 246</a>.</td>
         </tr>
     </table>
-    <br />
+    </div>
+    <div></div>
     <hr />
-    <p><b>*** RELEASE NOTES ***</b></p>
-    <p>August 1, 2018 - version 3.0.0</p>
-    <p><br /><br /><br /><br /><br /></p>
-    <p>June 12, 2017 - version 2.8.2</p>
-    <p><ul><li>BREAKING CHANGE: Changed the Item/Contributor element to Item/HoldingInstitution.</li></ul></p>
-    <p>March 17, 2017 - version 2.8.1</p>
-    <p>
+    <a name="notes"></a>
+    <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
+    <div class="subhead1">August 1, 2018 - version 3.0.0</div>
+    <div>Documentation for the previous version of the BHL API can be found at <a href="https://www.biodiversitylibrary.org/api2/docs/docs.html">https://www.biodiversitylibrary.org/api2/docs/docs.html</a>.</div>
+    <div>Following is a summary of the changes from version 2.x to version 3.0.0 of the API.<br /></div>
+    <div class="subhead2">Overall Changes</div>
+    <ul type="disc">
+        <li>No SOAP interface for version 3.0.0</li>
+        <li>All &quot;PrimaryTitleID&quot; response elements have been renamed to &quot;TitleID&quot;</li>
+        <li>All &quot;GenreName&quot; response elements have been renamed to &quot;Genre&quot;</li>
+        <li>All &quot;BibliographicLevel&quot; response elements have been renamed to &quot;Genre&quot;</li>
+        <li>All &quot;Creator&quot; response elements were renamed to &quot;Author&quot; (for example, &lt;Creators&gt; and &lt;Creator&gt; elements became &lt;Authors&gt; and &lt;Author&gt;, and &lt;CreatorID&gt; became &lt;AuthorID&gt;)</li>
+    </ul>
+    <div class="subhead2">New Methods</div>
+    <ul type="disc">
+        <li>GetAuthorMetadata
+            <ul type="circle">
+                <li>Replaces and combines the old GetAuthorTitles and GetAuthorParts, as well as provides a way to retrieve basic Author metadata.</li>
+                <li>Response includes author metadata, including a list of publications associated with the author.</li>
+                <li>Response format:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Result&gt;</div>
+        <div class="indent2">&lt;Author&gt;</div>
+        <div class="indent3">&lt;AuthorID&gt;&lt;/AuthorID&gt;</div>
+        <div class="indent3">&lt;Name&gt;&lt;/Name&gt;</div>
+        <div class="indent3">&lt;CreatorUrl&gt;&lt;/CreatorUrl&gt;</div>
+        <div class="indent3">&lt;Identifiers&gt;</div>
+        <div class="indent4">&lt;Identifier&gt;&lt;/Identifier&gt;</div>
+        <div class="indent4">&lt;Identifier&gt;&lt;/Identifier&gt;</div>
+        <div class="indent3">&lt;/Identifiers&gt;</div>
+        <div class="indent3">&lt;Publications&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent3">&lt;/Publications&gt;</div>
+        <div class="indent2">&lt;/Author&gt;</div>
+        <div class="indent1">&lt;/Result&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>GetSubjectMetadata
+            <ul type="circle">
+                <li>Replaces and combines the old GetSubjectTitles and GetSubjectParts, as well as provides a way to retrieve basic Subject metadata.</li>
+                <li>Response includes subject metadata, including a list of publications associated with the subject.</li>
+                <li>Response format:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Result&gt;</div>
+        <div class="indent2">&lt;Subject&gt;</div>
+        <div class="indent3">&lt;SubjectText&gt;&lt;/SubjectText&gt;</div>
+        <div class="indent3">&lt;Publications&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent4">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent3">&lt;/Publications&gt;</div>
+        <div class="indent2">&lt;/Subject&gt;</div>
+        <div class="indent1">&lt;/Result&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>PageSearch
+            <ul type="circle">
+                <li>Searches the text of a particular item (book) for a word/phrase</li>
+                <li>Mimics the &quot;Search Inside the Book&quot; feature in the book viewer</li>
+                <li>Response format:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Result&gt;</div>
+        <div class="indent2">&lt;Page&gt;&lt;/Page&gt;</div>
+        <div class="indent2">&lt;Page&gt;&lt;/Page&gt;</div>
+        <div class="indent2">&lt;Page&gt;&lt;/Page&gt;</div>
+        <div class="indent1">&lt;/Result&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>PublicationSearch
+            <ul type="circle">
+                <li>Replaces the old BookSearch and PartSearch methods</li>
+                <li>Searches the text or text+metadata of items</li>
+                <li>Returns 200 results at a time; specify &quot;page&quot; to get a specific page of results</li>
+                <li>Equivalent to the primary BHL site search</li>
+                <li>Response format:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Result&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent1">&lt;/Result&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>PublicationSearchAdvanced
+            <ul type="circle">
+                <li>Replaces the old BookSearch and PartSearch methods</li>
+                <li>Search only title metadata by specifying a combination of &quot;title&quot;, &quot;authorname&quot;, &quot;year&quot;, &quot;subject&quot;, &quot;language&quot;, and &quot;collection&quot;.</li>
+                <li>Search the full text of items matching the metadata criteria by including a &quot;text&quot; value.</li>
+                <li>Returns 200 results at a time; specify &quot;page&quot; to get a specific page of results</li>
+                <li>Equivalent to the &quot;Advanced Search&quot; feature of the web site</li>
+                <li>Response format:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Result&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent2">&lt;Publication&gt;&lt;/Publication&gt;</div>
+        <div class="indent1">&lt;/Result&gt;</div>
+    </div>
+    <div class="subhead2">Modified Methods</div>
+    <ul type="disc">
+        <li>AuthorSearch
+            <ul type="circle">
+                <li>Changed &quot;name&quot; argument to &quot;authorname&quot;</li>
+            </ul>
+        </li>
+        <li>GetItemMetadata
+            <ul type="circle">
+                <li>Renamed &quot;itemid&quot; parameter to &quot;id&quot;</li>
+                <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, ia</li>
+                <li>Defaulted &quot;pages&quot; parameter to &quot;f&quot;</li>
+                <li>Defaulted &quot;ocr&quot; parameter to &quot;f&quot;</li>
+                <li>Defaulted &quot;parts&quot; parameter to &quot;f&quot;</li>
+                <li>Added &lt;Item&gt; container element around search results</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">XML:</div>
+        <div class="indent1">&lt;Response&gt;</div>
+        <div class="indent2">&lt;Result&gt;</div>
+        <div class="indent3">&lt;Item&gt;…&lt;/Item&gt;</div>
+        <div class="indent2">&lt;/Result&gt;</div>
+        <div class="indent1">&lt;/Response&gt;</div>
+        <div></div>
+        <div class="indent1">JSON:</div>
+        <div class="indent1">{</div>
+        <div class="indent2">&quot;Status&quot;:&quot;ok&quot;,</div>
+        <div class="indent2">&quot;ErrorMessage&quot;:null,</div>
+        <div class="indent2">&quot;Result&quot;:[</div>
+        <div class="indent3">{…}</div>
+        <div class="indent2">]</div>
+        <div class="indent1">}</div>
+    </div>
+    <ul type="disc">
+        <li>GetPageMetadata
+            <ul type="circle">
+                <li>Defaulted &quot;ocr&quot; parameter to &quot;f&quot;</li>
+                <li>Defaulted &quot;names&quot; parameter to &quot;f&quot;</li>
+                <li>Added &lt;Page&gt; container element around search results</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">XML:</div>
+        <div class="indent1">&lt;Response&gt;</div>
+        <div class="indent2">&lt;Result&gt;</div>
+        <div class="indent3">&lt;Page&gt;…&lt;/Page&gt;</div>
+        <div class="indent2">&lt;/Result&gt;</div>
+        <div class="indent1">&lt;/Response&gt;</div>
+        <div></div>
+        <div class="indent1">JSON:</div>
+        <div class="indent1">{</div>
+        <div class="indent2">&quot;Status&quot;:&quot;ok&quot;,</div>
+        <div class="indent2">&quot;ErrorMessage&quot;:null,</div>
+        <div class="indent2">&quot;Result&quot;:[</div>
+        <div class="indent3">{…}</div>
+        <div class="indent2">]</div>
+        <div class="indent1">}</div>
+    </div>
+    <ul type="circle">
+        <li>Moved &lt;Name&gt;&lt;NameBankID&gt; and &lt;Name&gt;&lt;EOLID&gt; elements into an &lt;Identifiers&gt; element to match how identifiers are formatted in other API responses.</li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">Previous:</div>
+        <div class="indent1">&lt;Page&gt;</div>
+        <div class="indent2">…</div>
+        <div class="indent2">&lt;Names&gt;</div>
+        <div class="indent3">&lt;Name&gt;</div>
+        <div class="indent4">&lt;NameBankID&gt;&lt;/NameBankID&gt;</div>
+        <div class="indent4">&lt;EOLID&gt;&lt;/EOLID&gt;</div>
+        <div class="indent4">&lt;NameFound&gt;&lt;/NameFound&gt;</div>
+        <div class="indent4">&lt;NameConfirmed&gt;&lt;/NameConfirmed&gt;</div>
+        <div class="indent3">&lt;/Name&gt;</div>
+        <div class="indent2">&lt;/Names&gt;</div>
+        <div class="indent1">&lt;/Page&gt;</div>
+        <div></div>
+        <div class="indent1">New:</div>
+        <div class="indent1">&lt;Page&gt;</div>
+        <div class="indent2">…</div>
+        <div class="indent2">&lt;Names&gt;</div>
+        <div class="indent3">&lt;Name&gt;</div>
+        <div class="indent4">&lt;Identifiers&gt;</div>
+        <div class="indent5">&lt;Identifier&gt;</div>
+        <div class="indent6">&lt;IdentifierName&gt;NameBank&lt;/IdentifierName</div>
+        <div class="indent6">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent5">&lt;/Identifier&gt;</div>
+        <div class="indent5">&lt;Identifier&gt;</div>
+        <div class="indent6">&lt;IdentifierName&gt;EOL&lt;/IdentifierName</div>
+        <div class="indent6">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent5">&lt;/Identifier&gt;</div>
+        <div class="indent4">&lt;/Identifiers&gt;</div>
+        <div class="indent4">&lt;NameFound&gt;&lt;/NameFound&gt;</div>
+        <div class="indent4">&lt;NameConfirmed&gt;&lt;/NameConfirmed&gt;</div>
+        <div class="indent3">&lt;/Name&gt;</div>
+        <div class="indent2">&lt;/Names&gt;</div>
+        <div class="indent1">&lt;/Page&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>GetPartMetadata
+            <ul type="circle">
+                <li>Renamed &quot;partid&quot; parameter to &quot;id&quot;</li>
+                <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby</li>
+                <li>Added &quot;names&quot; parameter to allow names to be included in the response.  For example:</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">&lt;Part&gt;</div>
+        <div class="indent2">…</div>
+        <div class="indent2">&lt;Names&gt;</div>
+        <div class="indent3">&lt;Name&gt;</div>
+        <div class="indent4">&lt;Identifiers&gt;</div>
+        <div class="indent5">&lt;Identifier&gt;</div>
+        <div class="indent6">&lt;IdentifierName&gt;NameBank&lt;/IdentifierName</div>
+        <div class="indent6">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent5">&lt;/Identifier&gt;</div>
+        <div class="indent5">&lt;Identifier&gt;</div>
+        <div class="indent6">&lt;IdentifierName&gt;EOL&lt;/IdentifierName</div>
+        <div class="indent6">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent5">&lt;/Identifier&gt;</div>
+        <div class="indent4">&lt;/Identifiers&gt;</div>
+        <div class="indent4">&lt;NameFound&gt;&lt;/NameFound&gt;</div>
+        <div class="indent4">&lt;NameConfirmed&gt;&lt;/NameConfirmed&gt;</div>
+        <div class="indent3">&lt;/Name&gt;</div>
+        <div class="indent2">&lt;/Names&gt;</div>
+        <div class="indent1">&lt;/Part&gt;</div>
+        <div></div>
         <ul>
-            <li>Enhancement: Added GetPartRIS method</li>
-            <li>Enhancement: Added GetTitleRIS method</li>
+            <ul type="circle">
+                <li>Added &lt;Part&gt; container element around search results</li>
+            </ul>
         </ul>
-    </p>
-    <p>February 24, 2017 - version 2.8</p>
-    <p>
-        <ul>
-            <li>BREAKING CHANGE: Removed the GetPartEndNote method.</li>
-            <li>BREAKING CHANGE: Removed the GetTitleEndNote method.</li>
+        <div class="indent1">XML:</div>
+        <div class="indent1">&lt;Response&gt;</div>
+        <div class="indent2">&lt;Result&gt;</div>
+        <div class="indent3">&lt;Part&gt;…&lt;/Part&gt;</div>
+        <div class="indent2">&lt;/Result&gt;</div>
+        <div class="indent1">&lt;/Response&gt;</div>
+        <div></div>
+        <div class="indent1">JSON:</div>
+        <div class="indent1">{</div>
+        <div class="indent2">&quot;Status&quot;:&quot;ok&quot;,</div>
+        <div class="indent2">&quot;ErrorMessage&quot;:null,</div>
+        <div class="indent2">&quot;Result&quot;:[</div>
+        <div class="indent3">{…}</div>
+        <div class="indent2">]</div>
+        <div class="indent1">}</div>
+    </div>
+    <div></div>
+    <ul>
+        <ul type="circle">
+            <li>Renamed &lt;PartIdentifier&gt; element to &lt;Identifier&gt;</li>
         </ul>
-    </p>
-    <p>January 25 2017 - version 2.7.3</p>
-    <p><ul><li>Enhancement: Added "soulsby" as a valid identifier type parameter for the GetTitleByIdentifier and GetPartByIdentifier methods.</li></ul></p>
-    <p>September 8, 2016 - version 2.7.2</p>
-    <p><ul><li>Enhancement: Added Item/CopySpecificInformation element.</li></ul></p>
-    <p>July 26, 2016 - version 2.7.1</p>
-    <p><ul><li>Enhancement: Added GetInstitutions method</li></ul></p>
-    <p>June 14, 2016 - version 2.7</p>
-    <p>
-        <ul>
-            <li>BREAKING CHANGE: Removed the Part/ContributorID element.  Values previously located in that element now are found in the Identifiers/Identifier element.</li>
-            <li>BREAKING CHANGE: Removed the Part/Contributor element.  Values previously located in that element now are found in the Part/Contributors element.</li>
-            <li>Enhancement: Added RightsHolder and ScanningInstitution to the Item metadata</li>
+    </ul>
+    <ul type="disc">
+        <li>GetTitleIdentifier
+            <ul type="circle">
+                <li>Renamed &quot;titleid&quot; parameter to &quot;id&quot;</li>
+                <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby</li>
+            </ul>
+        </li>
+        <li>GetTitleMetadata
+            <ul type="circle">
+                <li>Defaulted &quot;items&quot; parameter to &quot;f&quot;</li>
+                <li>Added &lt;Title&gt; container element around search results</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">XML:</div>
+        <div class="indent1">&lt;Response&gt;</div>
+        <div class="indent2">&lt;Result&gt;</div>
+        <div class="indent3">&lt;Title&gt;…&lt;/Title&gt;</div>
+        <div class="indent2">&lt;/Result&gt;</div>
+        <div class="indent1">&lt;/Response&gt;</div>
+        <div></div>
+        <div class="indent1">JSON:</div>
+        <div class="indent1">{</div>
+        <div class="indent2">&quot;Status&quot;:&quot;ok&quot;,</div>
+        <div class="indent2">&quot;ErrorMessage&quot;:null,</div>
+        <div class="indent2">&quot;Result&quot;:[</div>
+        <div class="indent3">{…}</div>
+        <div class="indent2">]</div>
+        <div class="indent1">}</div>
+    </div>
+    <ul>
+        <ul type="circle">
+            <li>Renamed &lt;TitleIdentifier&gt; element to &lt;Identifier&gt;</li>
         </ul>
-    </p>
-    <p>May 12, 2016 - version 2.6</p>
-    <p><ul><li>Enhancement: Added GetStats method</li></ul></p>
-    <p>March 24, 2015 - version 2.5.2</p>
-    <p>
-        <ul>
-            <li>Enhancement: Added TitleNotes to the GetTitleMetadata response</li>
-            <li>Enhancement: Added TitleNotes to the GetTitleByIdentifier response</li>
+    </ul>
+    <ul type="disc">
+        <li>NameGetDetail
+            <ul type="circle">
+                <li>Renamed to GetNameMetadata</li>
+                <li>Removed &quot;namebankid&quot; parameter</li>
+                <li>Added &quot;id&quot; parameter</li>
+                <li>Added &quot;idType&quot; parameter that accepts values: namebank, eol, gni, ion (index to organism names), col (catalogue of life), gbif, itis, ipni, worms</li>
+                <li>To invoke this method, users should supply either a &quot;name&quot; parameter, or &quot;idType&quot; and &quot;id&quot; parameters</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">Examples:</div>
+        <div class="indent1">op=GetNameMetadata&amp;name=poa+annua</div>
+        <div class="indent1">op=GetNameMetadata&amp;type=namebank&amp;value=123456</div>
+    </div>
+    <ul>
+        <ul type="circle">
+            <li>Added &lt;Name&gt; container element around search results</li>
         </ul>
-    </p>
-    <p>January 24, 2014 - version 2.5.1</p>
-    <p><ul><li>Enhancement: Added ExternalUrl to the information returned about Items</li></ul></p>
-    <p>January 1, 2013 - version 2.5</p>
-    <p>
-        <ul>
-            <li>Enhancement: Added PartSearch method</li>
-            <li>Enhancement: Added GetSubjectParts method</li>
-            <li>Enhancement: Added GetItemParts method</li>
-            <li>Enhancement: Added GetAuthorParts method</li>
-            <li>Enhancement: Added GetPartMetadata method</li>
-            <li>Enhancement: Added GetPartNames method</li>
-            <li>Enhancement: Added GetUnpublishedParts method</li>
-            <li>Enhancement: Added GetPartByIdentifier method</li>
-            <li>Enhancement: Added GetPartBibTeX method</li>
-            <li>Enhancement: Added GetPartEndNote method</li>
-            <li>Enhancement: Added parts and ocr options to the GetItemMetadata method to allow for parts and ocr to be included in the data returned by the method</li>
-            <li>Enhancement: Added an ocr option to the GetItemPages method to allow for ocr to be returned by the method</li>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">XML:</div>
+        <div class="indent1">&lt;Response&gt;</div>
+        <div class="indent2">&lt;Result&gt;</div>
+        <div class="indent3">&lt;Name&gt;…&lt;/Name&gt;</div>
+        <div class="indent2">&lt;/Result&gt;</div>
+        <div class="indent1">&lt;/Response&gt;</div>
+        <div></div>
+        <div class="indent1">JSON:</div>
+        <div class="indent1">{</div>
+        <div class="indent2">&quot;Status&quot;:&quot;ok&quot;,</div>
+        <div class="indent2">&quot;ErrorMessage&quot;:null,</div>
+        <div class="indent2">&quot;Result&quot;:[</div>
+        <div class="indent3">{…}</div>
+        <div class="indent2">]</div>
+        <div class="indent1">}</div>
+    </div>
+    <ul>
+        <ul type="circle">
+            <li>Moved &lt;Name&gt;&lt;NameBankID&gt; and &lt;Name&gt;&lt;EOLID&gt; elements into an &lt;Identifiers&gt; element to match how identifiers are formatted in other API responses.</li>
         </ul>
-    </p>
-    <p>March 22, 2012 - version 2.3</p>
-    <p><ul><li>Enhancement: Added Subject as an optional parameter to the BookSearch method.</li></ul></p>
-    <p>December 1, 2011 - version 2.2.2</p>
-    <p>
-        <ul>
-            <li>Enhancement: Added doi as an identifier type recognized by the GetTitleByIdentifier method</li>
-            <li>Enhancement: Added doi as part of the title information returned by various methods</li>
-        </ul>
-    </p>
-    <p>March 1, 2011 - version 2.2.1</p>
-    <p>
-        <ul>
-            <li>Enhancement: Added FullerForm to the Creator information returned by various methods</li>
-            <li>Enhancement: Added Variant titles (such as Translated titles and Alternative titles) to the Title information returned by GetTitleMetadata and GetTitleByIdentifier.</li>
-        </ul>
-    </p>
-    <p>February 1, 2011 - version 2.2</p>
-    <p><ul><li>Enhancement: Added GetCollections, GetLanguages, and BookSearch methods</li></ul></p>
-    <p>November 5, 2010 - version 2.1.1</p>
-    <p><ul><li>Enhancement: Added BibliographicLevel to the Title information returned by various methods</li></ul></p>
-    <p>October 28, 2010 - version 2.1</p>
-    <p><ul><li>Enhancement: Added GetUnpublishedTitles and GetUnpublishedItems methods</li></ul></p>
-    <p>September 30, 2010 - version 2.0.2</p>
-    <p><ul><li>Enhancement: Added Role to the Creator information returned by various methods</li></ul></p>
-    <p>May 7, 2010 - version 2.0.1</p>
-    <p>
-        <ul>
-            <li>Enhancement: Added additional identifier types ("dcc", "nal", "nlm", and "coden") to the GetTitleByIdentifier method.</li>
-            <li>Bug fix: Increased the allowed length of a JSON response to handle large responses</li>
-        </ul>
-    </p>
-    <p>April 6, 2010 - version 2.0</p>
-    <p><ul><li>Initial Release</li></ul></p>
-</body>
+    </ul>
+    <div class="codeblock">
+        <div class="indent1">Previous:</div>
+        <div class="indent1">&lt;Name&gt;</div>
+        <div class="indent2">&lt;NameBankID&gt;&lt;/NameBankID&gt;</div>
+        <div class="indent2">&lt;EOLID&gt;&lt;/EOLID&gt;</div>
+        <div class="indent2">&lt;NameFound&gt;&lt;/NameFound&gt;</div>
+        <div class="indent2">&lt;NameConfirmed&gt;&lt;/NameConfirmed&gt;</div>
+        <div class="indent1">&lt;/Name&gt;</div>
+        <div></div>
+        <div class="indent1">New:</div>
+        <div class="indent1">&lt;Name&gt;</div>
+        <div class="indent2">&lt;Identifiers&gt;</div>
+        <div class="indent3">&lt;Identifier&gt;</div>
+        <div class="indent4">&lt;IdentifierName&gt;NameBank&lt;/IdentifierName</div>
+        <div class="indent4">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent3">&lt;/Identifier&gt;</div>
+        <div class="indent3">&lt;Identifier&gt;</div>
+        <div class="indent4">&lt;IdentifierName&gt;EOL&lt;/IdentifierName</div>
+        <div class="indent4">&lt;IdentifierValue&gt;&lt;/IdentifierValue&gt;</div>
+        <div class="indent3">&lt;/Identifier&gt;</div>
+        <div class="indent2">&lt;/Identifiers&gt;</div>
+        <div class="indent2">&lt;NameFound&gt;&lt;/NameFound&gt;</div>
+        <div class="indent2">&lt;NameConfirmed&gt;&lt;/NameConfirmed&gt;</div>
+        <div class="indent1">&lt;/Name&gt;</div>
+    </div>
+    <ul type="disc">
+        <li>NameSearch
+            <ul type="circle">
+                <li>Identifiers are no longer included in the response.</li>
+            </ul>
+        </li>
+    </ul>
+    <div class="subhead2">Removed Methods</div>
+    <div>The following methods are no longer part of the API, either because they were rarely used, their functionality was duplicated in other methods, or they were replaced with other methods.  Where appropriate, the replacement for a removed method is noted.</div>
+    <ul type="disc">
+        <li>BookSearch - replaced with PublicationSearch and PublicationSearchAdvanced</li>
+        <li>GetAuthorParts - replaced with GetAuthorPublications</li>
+        <li>GetAuthorTitles - replaced with GetAuthorPublications</li>
+        <li>GetItemByIdentifier - merged with GetItemMetadata</li>
+        <li>GetItemPages - same information available from GetItemMetadata</li>
+        <li>GetItemParts - same information available from GetItemMetadata</li>
+        <li>GetPageNames - same information available from GetPageMetadata</li>
+        <li>GetPageOcrText - same information available from GetPageMetadata</li>
+        <li>GetPartBibTex</li>
+        <li>GetPartByIdentifier - merged with GetPartMetadata</li>
+        <li>GetPartNames - same information available from GetPartMetadata</li>
+        <li>GetPartRIS</li>
+        <li>GetStats</li>
+        <li>GetSubjectParts - replaced with GetSubjectPublications</li>
+        <li>GetSubjectTitles - replaced with GetSubjectPublications</li>
+        <li>GetTitleBibText</li>
+        <li>GetTitleByIdentifier - merged with GetTitleMetadata</li>
+        <li>GetTitleItems - same information available from GetTitleMetadata</li>
+        <li>GetTitleRIS</li>
+        <li>GetUnpublishedItems</li>
+        <li>GetUnpublishedParts</li>
+        <li>GetUnpublishedTitles</li>
+        <li>NameCount</li>
+        <li>NameCountBetweenDates</li>
+        <li>NameList</li>
+        <li>NameListBetweenDates</li>
+        <li>PartSearch - replaced with PublicationSearch and PublicationSearchAdvanced</li>
+        <li>TitleSeachSimple - replaced with PublicationSearchAdvanced (specify title parameter only)</li>
+    </ul>
+    <div></div>
+    </body>
 </html>
