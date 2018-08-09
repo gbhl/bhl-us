@@ -63,8 +63,12 @@
                         </ul>
                     </div>
                     <div id="searchbar">
-                        <a href="/advsearch" title="Advanced Search">advanced search</a>
                         <form action="/search" method="get">
+                            <span id="searchbar-searchtype">
+                                <input name="stype" id="rdoSearchTypeF" type="radio" value="F" style="margin:3px 3px 0px 4px;" checked /> Full-text
+                                <input name="stype" id="rdoSearchTypeC" type="radio" value="C" style="margin:3px 3px 0px 4px;" /> Catalog
+                            </span>
+                            <a href="/advsearch" title="Advanced Search">advanced search</a>
                             <input type="text" class="field" name="searchTerm" id="searchTerm" />
                             <input type="submit" class="button" id="btnSearchSubmit" value="submit" />
                         </form>
@@ -131,7 +135,7 @@
     <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
 
     <script src="/js/plugins.js?v=2"></script>
-    <script src="/js/script.js?v=3"></script>
+    <script src="/js/script.js?v=4"></script>
     <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
     @RenderSection("scripts", required:false)

@@ -172,6 +172,172 @@ namespace BHL.SearchIndexer
             return items;
         }
 
+        public CatalogItem GetCatalogItemDocument(Item item)
+        {
+            CatalogItem catalogItem = new CatalogItem();
+
+            catalogItem.associations = item.associations;
+            catalogItem.authors = item.authors;
+            catalogItem.collections = item.collections;
+            catalogItem.container = item.container;
+            catalogItem.contributors = item.titleContributors.Count > 0 ? item.titleContributors : item.contributors;
+            catalogItem.dateRanges = item.dateRanges;
+            catalogItem.dates = item.dates;
+            catalogItem.doi = item.doi;
+            catalogItem.facetAuthors = item.facetAuthors;
+            catalogItem.genre = item.genre;
+            catalogItem.isbn = item.isbn;
+            catalogItem.issn = item.issn;
+            catalogItem.issue = item.issue;
+            catalogItem.keywords = item.keywords;
+            catalogItem.language = item.language;
+            catalogItem.materialType = item.materialType;
+            catalogItem.oclc = item.oclc;
+            catalogItem.pageRange = item.pageRange;
+            catalogItem.publicationPlace = item.publicationPlace;
+            catalogItem.publisher = item.publisher;
+            catalogItem.searchAuthors = item.searchAuthors;
+            catalogItem.segmentId = item.segmentId;
+            catalogItem.series = item.series;
+            catalogItem.sortTitle = item.sortTitle;
+            catalogItem.startPageId = item.startPageId;
+            catalogItem.title = item.title;
+            catalogItem.titleId = item.titleId;
+            catalogItem.translatedTitle = item.translatedTitle;
+            catalogItem.uniformTitle = item.uniformTitle;
+            catalogItem.url = item.url;
+            catalogItem.variants = item.variants;
+            catalogItem.volume = item.volume;
+            if (item.segmentId > 0)
+            {
+                catalogItem.id = string.Format("s-{0}", item.segmentId.ToString());
+                catalogItem.itemId = item.itemId;
+            }
+            else
+            {
+                catalogItem.id = string.Format("t-{0}", item.titleId.ToString());
+                catalogItem.itemId = this.SelectFirstItem(item.titleId) ?? item.itemId;
+                catalogItem.volumes = this.GetVolumeDocuments(item.titleId);
+            }
+
+            return catalogItem;
+        }
+
+        private List<Volume> GetVolumeDocuments(int titleId)
+        {
+            List<Volume> volumes = new List<Volume>();
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "srchindex.VolumeSelectDocumentsForIndex";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Volume volume = new Volume();
+                            volume.itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                            volume.id = string.Format("i-{0}", volume.itemId.ToString());
+                            volume.volume = reader.GetString(reader.GetOrdinal("Volume"));
+                            volume.date = reader.GetString(reader.GetOrdinal("Year"));
+                            volume.hasLocalContent = reader.GetInt32(reader.GetOrdinal("HasLocalContent")) == 1;
+                            volume.hasExternalContent = reader.GetInt32(reader.GetOrdinal("HasExternalContent")) == 1;
+                            volume.hasIllustrations = reader.GetInt32(reader.GetOrdinal("HasIllustrations")) == 1;
+                            volume.hasSegments = reader.GetInt32(reader.GetOrdinal("HasSegments")) == 1;
+                            volumes.Add(volume);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return volumes;
+        }
+
+        /// <summary>
+        /// Return the number of active items associated with the specified title
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <returns></returns>
+        public int ItemCountForTitle(int titleId)
+        {
+            int numItems = 0;
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "srchindex.ItemCountForTitle";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read()) numItems++;
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return numItems;
+        }
+
+        /// <summary>
+        /// Get the identifier for the first Item of the specified title
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <returns></returns>
+        public int? SelectFirstItem(int titleId)
+        {
+            int? itemId = null;
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "srchindex.ItemSelectFirstForTitle";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read()) itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return itemId;
+        }
+
         public List<int> GetSegments(int startSegment = 1, bool readFromFile = false)
         {
             List<int> segments = new List<int>();

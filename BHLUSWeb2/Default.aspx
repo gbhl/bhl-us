@@ -31,8 +31,12 @@
 <div id="searchbar-home">
 	    <div id="searchbox-home" class="column-wrap">
             <span>Search across books and journals, scientific names, authors and subjects</span>
-            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" Text="Search" />
+            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" Text="Search the catalog and full-text" />
             <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
+            <div id="searchtype-home">
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> Full-text
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> Catalog
+            </div>
             <a href="/advsearch" class="advsearch-home">advanced search</a>
         </div>
 </div>
@@ -72,23 +76,38 @@
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {
-        var searchDefaultText = "Search";
+        var searchDefaultTexts = ["Search the catalog and full-text", "Search the catalog"];
 
         $('#tbSearchTerm')
-            .val(searchDefaultText)
+            .val(searchDefaultTexts[0])
             .focus(function () {
-                if ($(this).val() == searchDefaultText) {
+                if ($.inArray($(this).val(), searchDefaultTexts) >= 0) {
                     $(this).val("");
                 }
             })
             .blur(function () {
                 if ($.trim($(this).val()) == "") {
-                    $(this).val(searchDefaultText);
+                    if ($("#rdoSearchTypeF").is(":checked")) $(this).val(searchDefaultTexts[0]);
+                    if ($("#rdoSearchTypeC").is(":checked")) $(this).val(searchDefaultTexts[1]);
+                }
+            });
+
+        $('#rdoSearchTypeF')
+            .change(function () {
+                if ($(this).is(':checked')) {
+                    if ($.inArray($('#tbSearchTerm').val(), searchDefaultTexts) >= 0) $('#tbSearchTerm').val(searchDefaultTexts[0]);
+                }
+            });
+
+        $('#rdoSearchTypeC')
+            .change(function () {
+                if ($(this).is(':checked')) {
+                    if ($.inArray($('#tbSearchTerm').val(), searchDefaultTexts) >= 0) $('#tbSearchTerm').val(searchDefaultTexts[1]);
                 }
             });
 
         $('#btnSearchSubmit').click(function (e) {
-            if ($('#tbSearchTerm').val() == searchDefaultText) {
+            if ($.inArray($("#tbSearchTerm").val(), searchDefaultTexts) >= 0) {
                 e.preventDefault();
                 return false;
             }

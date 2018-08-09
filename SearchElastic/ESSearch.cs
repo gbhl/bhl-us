@@ -9,7 +9,7 @@ namespace BHL.Search.Elastic
         private ElasticClient _es = null;
 
         // Index to query
-        private string _indexName = ESIndex.ALL;
+        private string _indexName = ESIndex.DEFAULT;
 
         // Index object type to query
         private string _typeName = ESType.ALL;
@@ -44,7 +44,7 @@ namespace BHL.Search.Elastic
         public string IndexName
         {
             get { return _indexName; }
-            set { _indexName = value ?? ESIndex.ALL; }
+            set { _indexName = value ?? ESIndex.DEFAULT; }
         }
 
         public string TypeName
@@ -111,7 +111,7 @@ namespace BHL.Search.Elastic
         {
             // Establish a connection to an ElasticSearch server
             ConnectionSettings connectionSettings = new ConnectionSettings(new Uri(connectionString));
-            connectionSettings.DefaultIndex(ESIndex.ALL);
+            connectionSettings.DefaultIndex(ESIndex.DEFAULT);
             connectionSettings.DisableDirectStreaming(true); // Uncomment this to add req/resp strings to response.debuginformation
             //connectionSettings.ThrowExceptions(true);      // Uncomment to debug uncaught ElasticSearch errors
             _es = new ElasticClient(connectionSettings);
@@ -124,7 +124,7 @@ namespace BHL.Search.Elastic
         /// </summary>
         public void SetSearchDefaults()
         {
-            _indexName = ESIndex.ALL;
+            _indexName = ESIndex.DEFAULT;
             _typeName = ESType.ALL;
             _returnFields = new List<string>();
             _sortField = ESSortField.SCORE;
@@ -146,7 +146,7 @@ namespace BHL.Search.Elastic
         /// </summary>
         /// <param name="query">Query string</param>
         /// <param name="limits">List of field/value pairs on which to limit the search</param>
-        public SearchResult SearchCatalog(string query, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
@@ -248,8 +248,9 @@ namespace BHL.Search.Elastic
         /// </summary>
         /// <param name="query"></param>
         //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
-        public SearchResult SearchItem(SearchStringParam title, SearchStringParam author, string volume, string year, 
-            SearchStringParam keyword, string language, string collection, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, string language, string collection, SearchStringParam text, 
+            List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
@@ -259,7 +260,8 @@ namespace BHL.Search.Elastic
                 !string.IsNullOrWhiteSpace(year) ||
                 !string.IsNullOrWhiteSpace(keyword.searchValue) ||
                 !string.IsNullOrWhiteSpace(language) ||
-                !string.IsNullOrWhiteSpace(collection))
+                !string.IsNullOrWhiteSpace(collection) ||
+                !string.IsNullOrWhiteSpace(text.searchValue))
             {
                 // Initialize the query object
                 SearchDescriptor<dynamic> searchDesc = InitializeQuery();
@@ -324,6 +326,20 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
+                if (!string.IsNullOrWhiteSpace(text.searchValue))
+                {
+                    if (text.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue) });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (text.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                    }
+                }
+
                 if (limits != null)
                 {
                     foreach (Tuple<string, string> limit in limits)
@@ -354,6 +370,7 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(keyword.searchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.searchValue));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
+                if (!string.IsNullOrWhiteSpace(text.searchValue)) args.Add(new Tuple<string, string>(ESField.TEXT, text.searchValue));
 
                 // Set the fields to use when determining alternate search suggestions
                 if (_suggest)
@@ -805,7 +822,6 @@ namespace BHL.Search.Elastic
                     .PreTags("<b>")
                     .PostTags("</b>")
                     .NumberOfFragments(5)
-                    .RequireFieldMatch(false)
                 );
             }
         }
@@ -847,9 +863,16 @@ namespace BHL.Search.Elastic
                 {
                     switch (hit.Type)
                     {
-                        case ESType.ITEM:
+                        case ESType.CATALOGITEM:
                             string title = hit.Source.title;
                             ItemHit item = hit.Source.ToObject<ItemHit>();
+                            item.Score = hit.Score;
+                            item.Highlights = GetHighlights(hit);
+                            result.Items.Add(item);
+                            break;
+                        case ESType.ITEM:
+                            title = hit.Source.title;
+                            item = hit.Source.ToObject<ItemHit>();
                             item.Score = hit.Score;
                             item.Highlights = GetHighlights(hit);
                             result.Items.Add(item);

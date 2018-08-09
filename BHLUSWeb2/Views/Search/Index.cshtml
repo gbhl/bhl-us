@@ -48,6 +48,7 @@
     @Html.HiddenFor(m => m.Params.SearchTerm)
     @Html.HiddenFor(m => m.Params.TermInclude)
     @Html.HiddenFor(m => m.Params.SearchCategory)
+    @Html.HiddenFor(m => m.Params.SearchType)
     @Html.HiddenFor(m => m.Params.LastName)
     @Html.HiddenFor(m => m.Params.LastNameInclude)
     @Html.HiddenFor(m => m.Params.Volume)
@@ -56,6 +57,8 @@
     @Html.HiddenFor(m => m.Params.SubjectInclude)
     @Html.HiddenFor(m => m.Params.Language)
     @Html.HiddenFor(m => m.Params.Collection)
+    @Html.HiddenFor(m => m.Params.Text)
+    @Html.HiddenFor(m => m.Params.TextInclude)
     @Html.HiddenFor(m => m.ItemPage, new { @id = "ItemPage" })
     @Html.HiddenFor(m => m.AuthorPage, new { @id = "AuthorPage" })
     @Html.HiddenFor(m => m.KeywordPage, new { @id = "KeywordPage" })
@@ -64,7 +67,17 @@
     <div id="page-title-query-details">
         <div class="content column-wrap">
             <div>&nbsp;</div>
-            <div class="searchResultLabel">Results for: @Model.ParamLabel</div>
+            <div class="searchResultLabel">
+                @if (Model.Params.SearchType == "F")
+                {
+                    @Html.Raw("Full-Text")
+                }
+                else if (Model.Params.SearchType == "C")
+                {
+                    @Html.Raw("Catalog ");
+                }
+                Results for: @Model.ParamLabel
+            </div>
             @if (Model.Suggestions.Count > 0)
             {
                 int numSuggest = 0;
@@ -72,7 +85,7 @@
                     Did you mean:
                     @foreach (string suggestion in Model.Suggestions)
                     {
-                        <span>@(numSuggest > 0 ? ", " : "")<a href="~/search?searchTerm=@Server.UrlEncode(suggestion)&searchCat=@Model.Params.SearchCategory">@Html.Raw(Server.HtmlEncode(suggestion))</a></span>
+                        <span>@(numSuggest > 0 ? ", " : "")<a href="~/search?searchTerm=@Server.UrlEncode(suggestion)&searchCat=@Model.Params.SearchCategory&stype=@Model.Params.SearchType">@Html.Raw(Server.HtmlEncode(suggestion))</a></span>
                         numSuggest++;
                     }
                 </div>
@@ -533,6 +546,7 @@
             var qs = 'searchTerm=' + $('#Params_SearchTerm').val() +
                 "&tinc=" + $('#Params_TermInclude').val() +
                 '&searchCat=' + $('#Params_SearchCategory').val() +
+                '&stype=' + $('#Params_SearchType').val() +
                 '&lname=' + $('#Params_LastName').val() +
                 "&ninc=" + $('#Params_LastNameInclude').val() +
                 '&vol=' + $('#Params_Volume').val() +
@@ -541,6 +555,8 @@
                 "&sinc=" + $('#Params_SubjectInclude').val() +
                 '&lang=' + $('#Params_Language').val() +
                 '&col=' + $('#Params_Collection').val() +
+                '&txt=' + $('#Params_Text').val() + 
+                '&txinc=' + $('#Params_TextInclude').val() + 
                 '&ppage=' + $('#ItemPage').val() +
                 '&apage=' + $('#AuthorPage').val() +
                 '&kpage=' + $('#KeywordPage').val() +

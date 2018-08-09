@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var searchDefaultText = "Search";
+    var searchDefaultTexts = ["Search the catalog and full-text", "Search the catalog"];
 
     // Upgrade browsers plugin
     $.upgradebrowsers();
@@ -9,23 +10,44 @@ $(document).ready(function () {
 
     // Search bar
     $('#searchbar #btnSearchSubmit').click(function (e) {
-        if ($('#searchbar .field').val() == searchDefaultText) {
+        //if ($('#searchbar .field').val() == searchDefaultText) {
+        if ($.inArray($("#searchbar .field").val(), searchDefaultTexts) >= 0) {
             e.preventDefault();
             return false;
         }
     });
     $('#searchbar .field')
-            .val(searchDefaultText)
-            .focus(function () {
-                if ($(this).val() == searchDefaultText) {
-                    $(this).val("");
-                }
-            })
-            .blur(function () {
-                if ($.trim($(this).val()) == "") {
-                    $(this).val(searchDefaultText);
-                }
-            });
+        .val(searchDefaultTexts[0])
+        .focus(function () {
+            //if ($(this).val() == searchDefaultText) {
+            //    $(this).val("");
+            //}
+            if ($.inArray($(this).val(), searchDefaultTexts) >= 0) {
+                $(this).val("");
+            }
+        })
+        .blur(function () {
+            if ($.trim($(this).val()) == "") {
+                //$(this).val(searchDefaultText);
+                if ($("#rdoSearchTypeF").is(":checked")) $(this).val(searchDefaultTexts[0]);
+                if ($("#rdoSearchTypeC").is(":checked")) $(this).val(searchDefaultTexts[1]);
+            }
+        });
+
+    $('#rdoSearchTypeF')
+        .change(function () {
+            if ($(this).is(':checked')) {
+                if ($.inArray($('#searchbar .field').val(), searchDefaultTexts) >= 0) $('#searchbar .field').val(searchDefaultTexts[0]);
+            }
+        });
+
+    $('#rdoSearchTypeC')
+        .change(function () {
+            if ($(this).is(':checked')) {
+                if ($.inArray($('#searchbar .field').val(), searchDefaultTexts) >= 0) $('#searchbar .field').val(searchDefaultTexts[1]);
+            }
+        });
+
 
     // Code taken from here to account for deprecated "browser" jQuery attribute
     // https://stackoverflow.com/a/14798444

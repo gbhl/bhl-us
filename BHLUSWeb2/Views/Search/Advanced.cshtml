@@ -31,7 +31,7 @@
                             </div>
                         </li>
                         <li>
-                            <label class="caption" for="txtPubAuthorLastName">Author Last Name:</label><input name="txtPubAuthorLastName" type="text" id="txtPubAuthorLastName" style="width:200px;" />
+                            <label class="caption" for="txtPubAuthorLastName">Author Name:</label><input name="txtPubAuthorLastName" type="text" id="txtPubAuthorLastName" style="width:200px;" />
                         </li>
                         <li>
                             <label class="caption" for="txtPubYear">Year (YYYY):</label><input name="txtPubYear" type="text" id="txtPubYear" /><label id="lblPubYearError" for="txtPubYear" class="ErrorText" style="display:none"> Please specify a 4-digit Year.</label>
@@ -59,9 +59,12 @@
                                 }
                             </select>
                         </li>
+                        <li>
+                            <label class="caption" for="txtPubText">Text:</label><input name="txtPubText" type="text" id="txtPubText" style="width:200px;" />
+                        </li>
                     </ol>
                     <div style="margin-left: 152px;">
-                        <div id="lblPubError" class="ErrorText" style="display:none;">Please specify Title or Author Last Name, or select a Collection.</div>
+                        <div id="lblPubError" class="ErrorText" style="display:none;">Please specify Title or Author Name, or select a Collection.</div>
                         <div style="width: 13em; margin-right: 1em; margin-top: -1em; margin-bottom: 20px;">
                             <input type="submit" name="btnSearchTitle" value="Search" id="btnSearchTitle" />
                         </div>

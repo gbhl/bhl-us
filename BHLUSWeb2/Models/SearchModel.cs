@@ -38,6 +38,7 @@ namespace MOBOT.BHL.Web2.Models
                 if (!string.IsNullOrWhiteSpace(Params.Subject)) qsParams.Add(string.Format("{0}={1}", "subj", Params.Subject));
                 if (Params.Language != null) qsParams.Add(string.Format("{0}={1}", "lang", Params.Language.Item1));
                 if (Params.Collection != null) qsParams.Add(string.Format("{0}={1}", "col", Params.Collection.Item1));
+                if (!string.IsNullOrWhiteSpace(Params.Text)) qsParams.Add(string.Format("{0}={1}", "txt", Params.Text));
 
                 return string.Join("&", qsParams.ToArray());
             }
@@ -143,6 +144,7 @@ namespace MOBOT.BHL.Web2.Models
         public SearchParams()
         {
             SearchCategory = string.Empty;
+            SearchType = string.Empty;
             SearchTerm = string.Empty;
             TermInclude = "A";
             LastName = string.Empty;
@@ -153,18 +155,24 @@ namespace MOBOT.BHL.Web2.Models
             SubjectInclude = "A";
             Language = null;
             Collection = null;
+            Text = string.Empty;
+            TextInclude = "A";
         }
 
         public string SearchCategory { get; set; }
+        // Indicates if searches should be full-text (F)
+        // or catalog (C) searches.
+        public string SearchType { get; set; }
         public string SearchTerm { get; set; }
 
         // Indicates if responses to searches for SearchTerm,
-        // LastNmae, or Subject should include all words (A) 
+        // LastName, Subject, or Text should include all words (A) 
         // or the exact phrase (P).
         // * Only applies to Advanced Searches.
         public string TermInclude { get; set; }
         public string LastNameInclude { get; set; }
         public string SubjectInclude { get; set; }
+        public string TextInclude { get; set; }
 
         public string LastName { get; set; }
         public string Volume { get; set; }
@@ -172,6 +180,8 @@ namespace MOBOT.BHL.Web2.Models
         public string Subject { get; set; }
         public Tuple<string, string> Language { get; set; }
         public Tuple<string, string> Collection { get; set; }
+
+        public string Text { get; set; }
 
         private List<FacetParam> _genreFacets = new List<FacetParam>();
         public List<FacetParam> GenreFacets {

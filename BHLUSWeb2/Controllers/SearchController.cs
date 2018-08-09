@@ -16,9 +16,9 @@ namespace MOBOT.BHL.Web2.Controllers
     {
         // GET: Index
         [HttpGet]
-        public ActionResult Index(string searchTerm, string tinc, string searchCat, string lname, string ninc,
-            string yr, string subj, string sinc, string lang, string col, string ppage, string apage, string kpage, 
-            string npage, string[] facet)
+        public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
+            string yr, string subj, string sinc, string lang, string col, string txt, string txinc, string ppage, string apage, 
+            string kpage, string npage, string[] facet)
         {
             // Prevent browser Back button page caching
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1
@@ -32,6 +32,7 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the search arguments
             model.Params.TermInclude = (tinc ?? string.Empty).Trim().ToUpper();
             model.Params.SearchCategory = (searchCat ?? string.Empty).Trim().ToUpper();
+            model.Params.SearchType = (stype ?? string.Empty).Trim().ToUpper();
             model.Params.LastName = lname ?? string.Empty;
             model.Params.LastNameInclude = (ninc ?? string.Empty).Trim().ToUpper();
             model.Params.Year = yr ?? string.Empty;
@@ -85,6 +86,8 @@ namespace MOBOT.BHL.Web2.Controllers
 
                 model.Params.Collection = new Tuple<string, string>(collectionID.ToString(), collectionName);
             }
+            model.Params.Text = txt ?? string.Empty;
+            model.Params.TextInclude = (txinc ?? string.Empty).Trim().ToUpper();
             int startPage;
             if (!Int32.TryParse(ppage ?? "1", out startPage)) startPage = 1;
             model.ItemPage = startPage;
@@ -141,7 +144,8 @@ namespace MOBOT.BHL.Web2.Controllers
                     "&subj=" + Server.UrlEncode(Request.Form["txtPubSubject"]) +
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
                     "&col=" + Server.UrlEncode(Request.Form["ddlPubCollection"]) +
-                    "&SearchCat=T&return=ADV";
+                    "&txt=" + Server.UrlEncode(Request.Form["txtPubText"] ?? string.Empty) + 
+                    "&SearchCat=T&stype=C&return=ADV";
 
             }
 
@@ -256,7 +260,17 @@ namespace MOBOT.BHL.Web2.Controllers
                 search.StartPage = model.ItemPage;
                 search.NumResults = publicationPageSize;
                 search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
-                model.ItemResult = search.SearchItem(searchTerm, limits);
+
+                if (model.Params.SearchType == "F")
+                {
+                    // Full-text search
+                    model.ItemResult = search.SearchItem(searchTerm, limits);
+                }
+                else
+                {
+                    // Catalog search
+                    model.ItemResult = search.SearchCatalog(searchTerm, limits);
+                }
             }
             else
             {
@@ -278,13 +292,13 @@ namespace MOBOT.BHL.Web2.Controllers
                     search.StartPage = model.ItemPage;
                     search.NumResults = publicationPageSize;
                     search.Facet = true;
-                    model.ItemResult = search.SearchItem(
+                    model.ItemResult = search.SearchCatalog(
                         new SearchStringParam(searchTerm, GetParamOperator(model.Params.TermInclude)),
                         new SearchStringParam(model.Params.LastName, GetParamOperator(model.Params.LastNameInclude)),
                         model.Params.Volume, model.Params.Year, 
                         new SearchStringParam(model.Params.Subject, GetParamOperator(model.Params.SubjectInclude)), 
-                        model.Params.Language, 
-                        model.Params.Collection, limits);
+                        model.Params.Language, model.Params.Collection, 
+                        new SearchStringParam(model.Params.Text, GetParamOperator(model.Params.TextInclude)), limits);
                 }
                 if (model.Params.SearchCategory.Equals("S"))
                 {

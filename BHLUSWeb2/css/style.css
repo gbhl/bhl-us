@@ -845,6 +845,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     padding:7px 17px 7px 8px;
     position:absolute;
     top:40px;
+    left:0px;
     border:0;
     -webkit-border-top-left-radius:5px;
     -webkit-border-bottom-left-radius:5px;
@@ -888,7 +889,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {
 	background-position:0 -64px;
 }
-
+#searchbar-searchtype
+{
+    display:block;
+    float:left;
+    color:#FFFFFF;
+    font: 12px Georgia;
+    margin: 0px 0px 3px 0px;
+    text-shadow: 0 -1px 1px #315b7e;
+}
 /* sortbar*/
 #sortbar
 {
@@ -994,6 +1003,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     min-height:187px;
     background: #3d90c8 URL(../images/home_search_shadows.png) 0 0 repeat-x;
 }
+#searchtype-home {
+    font: 15px Georgia;
+    color: #ffffff;
+    display: block;
+    padding: 57px 0px 15px 0px;
+}
 #searchbox-home 
 {
     position:relative;
@@ -1058,7 +1073,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
 {
     position:absolute;
     top:131px;
-    left:0;
+    left:520px;
     font: small-caps 15px Georgia;
     color: #fff;
     text-shadow: 0 -1px 1px #315b7e;
@@ -1068,10 +1083,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', end
     color: #dff0fb; 
     text-decoration: underline;  
 }
-#browsebar-home
-{
-    min-height:128px;
-    background:#c5d7e3;   
+#browsebar-home {
+    min-height: 128px;
+    background: #c5d7e3;
 }
 #browsebox-home h2
 {
