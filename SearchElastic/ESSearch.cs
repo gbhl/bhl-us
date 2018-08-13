@@ -389,22 +389,22 @@ namespace BHL.Search.Elastic
 
         public SearchResult SearchAuthor(string query)
         {
-            return SearchSimple(query, null);
+            return SearchSimple(query, new List<string> { ESField.ALL }, null);
         }
 
         public SearchResult SearchKeyword(string query)
         {
-            return SearchSimple(query, null);
+            return SearchSimple(query, new List<string> { ESField.ALL }, null);
         }
 
         public SearchResult SearchName(string query)
         {
-            return SearchSimple(query, null);
+            return SearchSimple(query, new List<string> { ESField.ALL }, null);
         }
 
         public SearchResult SearchPage(string query, List<Tuple<string, string>> limits = null)
         {
-            return SearchSimple(query, limits);
+            return SearchSimple(query, new List<string> { ESField.ALL, ESField.TEXT }, limits);
         }
 
         /// <summary>
@@ -413,7 +413,8 @@ namespace BHL.Search.Elastic
         /// <param name="query"></param>
         /// <param name="limits"></param>
         /// <returns></returns>
-        public SearchResult SearchSimple(string query, List<Tuple<string, string>> limits = null)
+        public SearchResult SearchSimple(string query, List<string> queryFields, 
+            List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
 
@@ -448,7 +449,10 @@ namespace BHL.Search.Elastic
                 }
 
                 List<Field> fields = new List<Field>();
-                fields.Add(new Field("_all"));
+                foreach (string field in queryFields)
+                {
+                    fields.Add(new Field(field));
+                }
                 // If necessary, add fields to be boosted here - i.e. "fields.Add(new Field("title^2"))
 
                 // Construct the query.
