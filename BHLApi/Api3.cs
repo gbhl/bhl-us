@@ -366,7 +366,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Segment methods
 
-        public CustomGenericList<Part> GetSegmentMetadata(string id, string idType, string includeNames)
+        public CustomGenericList<Part> GetSegmentMetadata(string id, string idType, string includePages, string includeNames)
         {
             CustomGenericList<Part> parts = null;
 
@@ -382,8 +382,10 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            // "t" or "true" are acceptable values for the "includeNames" argument; anything else
-            // is considered a value of "false"
+            // "t" or "true" are acceptable values for the "includePages" and "includeNames" arguments; 
+            // anything else is considered a value of "false"
+            includePages = (includePages ?? "");
+            bool pages = (includePages.ToLower() == "t" || includePages.ToLower() == "true");
             includeNames = (includeNames ?? "");
             bool names = (includeNames.ToLower() == "t" || includeNames.ToLower() == "true");
 
@@ -421,7 +423,7 @@ namespace MOBOT.BHL.API.BHLApi
                 part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
                 part.Identifiers = dal.SegmentIdentifierSelectBySegmentID(null, null, part.PartID);
                 part.Subjects = dal.SubjectSelectBySegmentID(null, null, part.PartID);
-                part.Pages = this.GetSegmentPages(part.PartID);
+                if (pages) part.Pages = this.GetSegmentPages(part.PartID);
                 part.RelatedParts = dal.SegmentSelectRelated(null, null, part.PartID);
                 foreach (Part relatedPart in part.RelatedParts)
                 {

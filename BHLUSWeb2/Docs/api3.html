@@ -79,8 +79,8 @@
     <div>	id - the identifier of an individual title<br />    idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby).  Defaults to "bhl".<br />	items - &quot;t&quot; or &quot;true&quot; to return the title's items</div>
     <div class="subhead1">GetPartMetadata</div>
     <div>	Return metadata about a part.  You may choose to include a list of the part's names.</div>
-    <div>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
-    <div>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</div>
+    <div>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;pages=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	pages - &quot;t&quot; or &quot;true&quot; to return the part's pages<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</div>
     <div class="subhead1">GetSubjectMetadata</div>
     <div>	Return metadata about a subject.  You may choose to include a list of the subject's publications.</div>
     <div>	Example - <a href="/docs/api3/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
@@ -1065,7 +1065,8 @@
             <ul type="circle">
                 <li>Renamed &quot;partid&quot; parameter to &quot;id&quot;</li>
                 <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby</li>
-                <li>Added &quot;names&quot; parameter to allow names to be included in the response.  For example:</li>
+                <li>Added &quot;pages&quot; parameter to allow pages to be included in or excluded from the response.</li>
+                <li>Added &quot;names&quot; parameter to allow names to be included in or excluded from the response.</li>
             </ul>
         </li>
     </ul>

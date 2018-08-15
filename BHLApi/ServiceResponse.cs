@@ -1,7 +1,6 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
-using CustomDataAccess;
+using System.Web.Script.Serialization;
 
 namespace MOBOT.BHL.API.BHLApi
 {
@@ -34,7 +33,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
         }
 
-        private string _ErrorMessage = null;
+        private string _ErrorMessage = string.Empty;
         public string ErrorMessage
         {
             get
@@ -75,7 +74,10 @@ namespace MOBOT.BHL.API.BHLApi
         private string SerializeAsJson()
         {
             System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            js.MaxJsonLength = 58720256;    // 56 MB of Unicode string data
+            // Allow up to 56 MB of Unicode string data
+            js.MaxJsonLength = 58720256;    
+            // Add custom serializers
+            js.RegisterConverters(new JavaScriptConverter[] { new BHLApiDataObjects3.JavascriptNullPropertiesConverter() });
             return js.Serialize(this);
         }
 

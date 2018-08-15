@@ -80,9 +80,10 @@ namespace MOBOT.BHL.Web2.api3
                 {
                     String id = context.Request.QueryString["id"];
                     String idType = context.Request.QueryString["idType"];
+                    String includePages = context.Request.QueryString["pages"] ?? "f";
                     String includeNames = context.Request.QueryString["names"] ?? "f";
                     ServiceResponse<CustomGenericList<Part>> serviceResponse = new ServiceResponse<CustomGenericList<Part>>();
-                    serviceResponse.Result = this.GetPartMetadata(id, idType, includeNames, key);
+                    serviceResponse.Result = this.GetPartMetadata(id, idType, includePages, includeNames, key);
                     response = serviceResponse.Serialize(outputType);
                 }
 
@@ -299,11 +300,11 @@ namespace MOBOT.BHL.Web2.api3
             return api.GetTitleMetadata(id, idType, includeItems);
         }
 
-        private CustomGenericList<Part> GetPartMetadata(string id, string idType, string includeNames, string apiKey)
+        private CustomGenericList<Part> GetPartMetadata(string id, string idType, string includePages, string includeNames, string apiKey)
         {
-            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includeNames);
+            ValidateUser(Api3.APIRequestType.GetPartMetadata, apiKey, id + "|" + idType + "|" + includePages + "|" + includeNames);
             Api3 api = new Api3();
-            return api.GetSegmentMetadata(id, idType, includeNames);
+            return api.GetSegmentMetadata(id, idType, includePages, includeNames);
         }
 
         private CustomGenericList<Subject> SubjectSearch(string subject, bool fullText, string apiKey)
