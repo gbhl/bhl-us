@@ -260,15 +260,29 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Api3DAL dal = new Api3DAL();
-            CustomGenericList<Part> parts = dal.SegmentSelectByItemID(null, null, itemIDint);
-            foreach (Part part in parts)
+            CustomGenericList<Part> detailedParts = dal.SegmentSelectByItemID(null, null, itemIDint);
+            CustomGenericList<Part> simpleParts = detailedParts.Count == 0 ? null : new CustomGenericList<Part>();
+            foreach (Part detailedPart in detailedParts)
             {
-                part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
-                part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
-                part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
+                Part simplePart = new Part();
+                simplePart.PartID = detailedPart.PartID;
+                simplePart.PartUrl = "https://www.biodiversitylibrary.org/part/" + simplePart.PartID.ToString();
+                simplePart.Genre = detailedPart.Genre;
+                simplePart.Title = detailedPart.Title;
+                simplePart.ContainerTitle = detailedPart.ContainerTitle;
+                simplePart.Volume = detailedPart.Volume;
+                simplePart.Series = detailedPart.Series;
+                simplePart.Issue = detailedPart.Issue;
+                simplePart.Date = detailedPart.Date;
+                simplePart.PageRange = detailedPart.PageRange;
+                simplePart.ExternalUrl = detailedPart.ExternalUrl;
+                simplePart.Authors = detailedPart.Authors;
+                //part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
+                //part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
+                simpleParts.Add(simplePart);
             }
 
-            return parts;
+            return simpleParts;
         }
 
         #endregion Item methods
@@ -346,20 +360,26 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the items
-            CustomGenericList<Item> items = new Api3DAL().ItemSelectByTitleID(null, null, titleIDint);
-            foreach (Item item in items)
+            CustomGenericList<Item> detailedItems = new Api3DAL().ItemSelectByTitleID(null, null, titleIDint);
+            CustomGenericList<Item> simpleItems = detailedItems.Count == 0 ? null : new CustomGenericList<Item>();
+            foreach (Item detailedItem in detailedItems)
             {
-                CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
-                if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
-                if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
-
-                item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
-                item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
-                item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                Item simpleItem = new Item();
+                simpleItem.ItemID = detailedItem.ItemID;
+                simpleItem.ItemUrl = "https://www.biodiversitylibrary.org/item/" + simpleItem.ItemID.ToString();
+                simpleItem.Volume = detailedItem.Volume;
+                simpleItem.Year = detailedItem.Year;
+                simpleItem.ExternalUrl = detailedItem.ExternalUrl;
+                //CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                //if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
+                //CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                //if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
+                //item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
+                //item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
+                simpleItems.Add(simpleItem);
             }
 
-            return items;
+            return simpleItems;
         }
 
         #endregion Title methods
@@ -396,24 +416,26 @@ namespace MOBOT.BHL.API.BHLApi
                 case "bhl":
                     parts = dal.SegmentSelectForSegmentID(null, null, segmentID);
                     break;
-                case "oclc":
-                case "issn":
-                case "isbn":
-                case "lccn":
-                case "ddc":
-                case "nal":
-                case "nlm":
-                case "coden":
+                //case "oclc":
+                //case "issn":
+                //case "isbn":
+                //case "lccn":
+                //case "ddc":
+                //case "nal":
+                //case "nlm":
+                //case "coden":
                 case "biostor":
+                case "jstor":
                 case "soulsby":
-                    if (idType.ToLower() == "lccn") idType = "dlc";
+                    //if (idType.ToLower() == "lccn") idType = "dlc";
                     parts = dal.SegmentSelectByIdentifier(null, null, idType, id);
                     break;
                 case "doi":
                     parts = dal.SegmentSelectByDOI(null, null, id);
                     break;
                 default:
-                    throw new Exception("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
+                    //throw new Exception("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
+                    throw new Exception("idType  must be one of the following values: bhl, doi, biostor, jstor, soulsby");
             }
 
             // Add the extended metadata
@@ -599,6 +621,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 author.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + author.AuthorID.ToString();
                 author.Identifiers = dal.AuthorIdentifierSelectByAuthorID(null, null, Convert.ToInt32(author.AuthorID));
+                if (author.Identifiers.Count == 0) author.Identifiers = null;
                 if (pubs) author.Publications = this.GetAuthorPublications(id);
             }
 
@@ -1083,52 +1106,58 @@ namespace MOBOT.BHL.API.BHLApi
                     pub.BHLType = BHLType.Item;
                     pub.TitleID = hit.TitleId.ToString();
                     pub.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + hit.TitleId;
-                    pub.ItemUrl = "https://www.biodiversitylibrary.org/item/" + hit.ItemId;
+                    pub.ItemID = (hit.ItemId == 0 ? null : hit.ItemId.ToString());
+                    pub.ItemUrl = pub.ItemID == null ? null : "https://www.biodiversitylibrary.org/item/" + pub.ItemID;
                     pub.Genre = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
                     pub.MaterialType = (string.IsNullOrWhiteSpace(hit.MaterialType) ? null : hit.MaterialType);
-                    if (hit.Contributors.Count == 1) pub.HoldingInstitution = hit.Contributors[0];
+                    //if (hit.Contributors.Count == 1) pub.HoldingInstitution = hit.Contributors[0];
+                    pub.PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace);
+                    pub.PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher);
+                    if (hit.Dates.Count == 1) pub.PublicationDate = hit.Dates[0];
+                    if (hit.Dates.Count > 1) pub.PublicationDate = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
                 }
                 else
                 {
                     pub.BHLType = BHLType.Part;
                     pub.PartID = hit.SegmentId.ToString();
-                    pub.StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString());
+                    //pub.StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString());
                     pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + hit.SegmentId;
                     pub.ContainerTitle = (string.IsNullOrWhiteSpace(hit.Container) ? null : hit.Container);
                     pub.Genre = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
                     pub.PageRange = (hit.PageRange == "--" || string.IsNullOrWhiteSpace(hit.PageRange) ? null : hit.PageRange);
+                    pub.Series = (string.IsNullOrWhiteSpace(hit.Series) ? null : hit.Series);
+                    pub.Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue);
+                    if (hit.Dates.Count == 1) pub.Date = hit.Dates[0];
+                    if (hit.Dates.Count > 1) pub.Date = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
 
+                    /*
                     foreach (string contributor in hit.Contributors)
                     {
                         if (pub.Contributors == null) pub.Contributors = new CustomGenericList<Contributor>();
                         pub.Contributors.Add(new Contributor { ContributorName = contributor });
                     }
+                    */
                 }
 
-                pub.ItemID = (hit.ItemId == 0 ? null : hit.ItemId.ToString());
                 pub.Title = hit.Title;
-                pub.PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace);
-                pub.PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher);
                 pub.Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume);
-                pub.Series = (string.IsNullOrWhiteSpace(hit.Series) ? null : hit.Series);
-                pub.Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue);
-                pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
+                //pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url);
-                pub.Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi);
+                //pub.Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi);
 
-                if (hit.Dates.Count == 1) pub.PublicationDate = hit.Dates[0];
-                if (hit.Dates.Count > 1) pub.PublicationDate = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
-
+                /*
                 foreach (string cName in hit.Collections)
                 {
                     if (pub.Collections == null) pub.Collections = new CustomGenericList<Collection>();
                     pub.Collections.Add(new Collection { CollectionName = cName });
                 }
+                */
                 foreach (string aName in hit.Authors)
                 {
                     if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
                     pub.Authors.Add(new Author { Name = aName });
                 }
+                /*
                 if (hit.Oclc.Count > 0)
                 {
                     if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
@@ -1144,6 +1173,7 @@ namespace MOBOT.BHL.API.BHLApi
                     if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
                     foreach (string id in hit.Issn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
                 }
+                */
 
                 if (hit.Highlights.Count == 0)
                 {
@@ -1194,8 +1224,9 @@ namespace MOBOT.BHL.API.BHLApi
                 pub.PublisherPlace = (string.IsNullOrWhiteSpace(title.PublisherPlace) ? null : title.PublisherPlace);
                 pub.PublisherName = (string.IsNullOrWhiteSpace(title.PublisherName) ? null : title.PublisherName);
                 pub.PublicationDate = (string.IsNullOrWhiteSpace(title.PublicationDate) ? null : title.PublicationDate);
-                pub.Doi = (string.IsNullOrWhiteSpace(title.Doi) ? null : title.Doi);
+                //pub.Doi = (string.IsNullOrWhiteSpace(title.Doi) ? null : title.Doi);
 
+                /*
                 if (title.Collections != null)
                 {
                     foreach (Collection collection in title.Collections)
@@ -1208,6 +1239,7 @@ namespace MOBOT.BHL.API.BHLApi
                         });
                     }
                 }
+                */
                 if (title.Authors != null)
                 {
                     foreach (Author author in title.Authors)
@@ -1215,18 +1247,19 @@ namespace MOBOT.BHL.API.BHLApi
                         if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
                         pub.Authors.Add(new Author
                         {
-                            AuthorID = author.AuthorID,
-                            Name = author.Name,
-                            FullerForm = author.FullerForm,
-                            Location = author.Location,
-                            Role = author.Role,
-                            Title = author.Title,
-                            Unit = author.Unit,
-                            Numeration = author.Numeration,
-                            Dates = author.Dates
+                            //AuthorID = author.AuthorID,
+                            Name = author.Name//,
+                            //FullerForm = author.FullerForm,
+                            //Location = author.Location,
+                            //Role = author.Role,
+                            //Title = author.Title,
+                            //Unit = author.Unit,
+                            //Numeration = author.Numeration,
+                            //Dates = author.Dates
                         });
                     }
                 }
+                /*
                 if (title.Identifiers != null)
                 {
                     foreach (Identifier id in title.Identifiers)
@@ -1239,6 +1272,7 @@ namespace MOBOT.BHL.API.BHLApi
                         });
                     }
                 }
+                */
                 pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);
@@ -1263,26 +1297,27 @@ namespace MOBOT.BHL.API.BHLApi
 
                 pub.BHLType = BHLType.Part;
                 pub.PartID = part.PartID.ToString();
-                pub.StartPageID = part.StartPageID;
+                //pub.StartPageID = part.StartPageID;
                 pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID;
                 pub.Title = part.Title;
                 pub.ContainerTitle = (string.IsNullOrWhiteSpace(part.ContainerTitle) ? null : part.ContainerTitle);
-                pub.PublisherPlace = (string.IsNullOrWhiteSpace(part.PublisherPlace) ? null : part.PublisherPlace);
-                pub.PublisherName = (string.IsNullOrWhiteSpace(part.PublisherName) ? null : part.PublisherName);
+                //pub.PublisherPlace = (string.IsNullOrWhiteSpace(part.PublisherPlace) ? null : part.PublisherPlace);
+                //pub.PublisherName = (string.IsNullOrWhiteSpace(part.PublisherName) ? null : part.PublisherName);
                 pub.Date = (string.IsNullOrWhiteSpace(part.Date) ? null : part.Date);
                 pub.Genre = (string.IsNullOrWhiteSpace(part.Genre) ? null : part.Genre);
                 pub.Volume = (string.IsNullOrWhiteSpace(part.Volume) ? null : part.Volume);
                 pub.Series = (string.IsNullOrWhiteSpace(part.Series) ? null : part.Series);
                 pub.Issue = (string.IsNullOrWhiteSpace(part.Issue) ? null : part.Issue);
-                pub.Language = (string.IsNullOrWhiteSpace(part.Language) ? null : part.Language);
+                //pub.Language = (string.IsNullOrWhiteSpace(part.Language) ? null : part.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(part.ExternalUrl) ? null : part.ExternalUrl);
-                pub.Rights = (string.IsNullOrWhiteSpace(part.RightsStatement) ? null : part.RightsStatement);
-                pub.RightsStatus = (string.IsNullOrWhiteSpace(part.RightsStatus) ? null : part.RightsStatus);
+                //pub.Rights = (string.IsNullOrWhiteSpace(part.RightsStatement) ? null : part.RightsStatement);
+                //pub.RightsStatus = (string.IsNullOrWhiteSpace(part.RightsStatus) ? null : part.RightsStatus);
                 pub.PageRange = (part.PageRange == "--" || string.IsNullOrWhiteSpace(part.PageRange) ? null : part.PageRange);
-                pub.StartPageNumber = (string.IsNullOrWhiteSpace(part.StartPageNumber) ? null : part.StartPageNumber);
-                pub.EndPageNumber = (string.IsNullOrWhiteSpace(part.EndPageNumber) ? null : part.EndPageNumber);
-                pub.Doi = (string.IsNullOrWhiteSpace(part.Doi) ? null : part.Doi);
+                //pub.StartPageNumber = (string.IsNullOrWhiteSpace(part.StartPageNumber) ? null : part.StartPageNumber);
+                //pub.EndPageNumber = (string.IsNullOrWhiteSpace(part.EndPageNumber) ? null : part.EndPageNumber);
+                //pub.Doi = (string.IsNullOrWhiteSpace(part.Doi) ? null : part.Doi);
 
+                /*
                 if (part.Contributors != null)
                 {
                     foreach (string contributor in part.Contributors)
@@ -1291,6 +1326,7 @@ namespace MOBOT.BHL.API.BHLApi
                         pub.Contributors.Add(new Contributor { ContributorName = contributor });
                     }
                 }
+                */
                 if (part.Authors != null)
                 {
                     foreach (Author author in part.Authors)
@@ -1298,18 +1334,19 @@ namespace MOBOT.BHL.API.BHLApi
                         if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
                         pub.Authors.Add(new Author
                         {
-                            AuthorID = author.AuthorID,
-                            Name = author.Name,
-                            FullerForm = author.FullerForm,
-                            Location = author.Location,
-                            Role = author.Role,
-                            Title = author.Title,
-                            Unit = author.Unit,
-                            Numeration = author.Numeration,
-                            Dates = author.Dates
+                            //AuthorID = author.AuthorID,
+                            Name = author.Name//,
+                            //FullerForm = author.FullerForm,
+                            //Location = author.Location,
+                            //Role = author.Role,
+                            //Title = author.Title,
+                            //Unit = author.Unit,
+                            //Numeration = author.Numeration,
+                            //Dates = author.Dates
                         });
                     }
                 }
+                /*
                 if (part.Identifiers != null)
                 {
                     foreach (Identifier id in part.Identifiers)
@@ -1322,6 +1359,7 @@ namespace MOBOT.BHL.API.BHLApi
                         });
                     }
                 }
+                */
                 pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);

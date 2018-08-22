@@ -32,8 +32,8 @@
             API v3 Documentation<br />
         </div>
         <div id="right">
-            Created: August 1, 2018<br />
-            Revised: August 1, 2018
+            Created: August 27, 2018<br />
+            Revised: August 27, 2018
         </div>
     </div>
     <div>
@@ -61,6 +61,9 @@
     <div class="subhead1">Status Codes</div>
     <div>Each method response contains a status code that indicates the success or failure of the method call.  This code is contained in the &quot;Status&quot; field of the response.  The valid status codes are:</div>
     <div>	ok - the method executed successfully<br />	error - an error occurred while executing the method; check the ErrorMessage field for details<br />	unauthorized - the specified api key is invalid or does not have permission to execute the method</div>
+    <div class="subhead1">API Methods as Building Blocks</div>
+    <div>API methods are intended to be used as building blocks, rather than one-stop shops.  For example, a method like GetTitleMetadata will return complete metadata about the specified Title, but only summary information (including BHL identifiers) for any related Items.  To get the complete metadata for the related Items, the GetItemMetadata method will need to be called for each Item associated with the original Title.</div>
+    <div>The idea is that API users will not automatically get a lot of unnecessary information from API methods that return everything all at once, but by chaining several API methods call together can get as much or as little information as needed.</div>
     <hr />
     <a name="methods"></a>
     <div class="header">*** METHODS *** <a href="#top" class="toplink">Contents</a></div>
@@ -82,11 +85,11 @@
     <div>	Example - <a href="/docs/api3/GetPartMetadata.xml" title="GetPartMetadata">https://www.biodiversitylibrary.org/api3?op=GetPartMetadata&amp;id=2341&amp;pages=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	id - the identifier of an individual part (article, chapter, etc)<br /> idtype (OPTIONAL) - the type of identifier (bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby).  Defaults to "bhl".<br />	pages - &quot;t&quot; or &quot;true&quot; to return the part's pages<br />	names - &quot;t&quot; or &quot;true&quot; to return the part's names</div>
     <div class="subhead1">GetSubjectMetadata</div>
-    <div>	Return metadata about a subject.  You may choose to include a list of the subject's publications.</div>
+    <div>	Return metadata about a subject.  You may choose to include a list of the subject's publications.  The BHLType element identifies the type of each publication (Title or Part).</div>
     <div>	Example - <a href="/docs/api3/GetSubjectMetadata.xml" title="GetSubjectMetadata">https://www.biodiversitylibrary.org/api3?op=GetSubjectMetadata&amp;subject=water&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	subject - the subject for which to return metadata<br /> pubs - "t" or "true" to return the subject's publications</div>
     <div class="subhead1">GetAuthorMetadata</div>
-    <div>	Return metadata about an author.  You may choose to include a list of the author's publications.</div>
+    <div>	Return metadata about an author.  You may choose to include a list of the author's publications.  The BHLType element identifies the type of each publication (Title or Part).</div>
     <div>	Example - <a href="/docs/api3/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	id - the identifier of an individual author<br /> idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".<br />	pubs - "t" or "true" to return the subject's publications</div>
     <div class="subhead1">GetNameMetadata</div>
@@ -103,11 +106,11 @@
     <div>	Get a list of languages in which materials in BHL have been written.</div>
     <div> Example - <a href="/docs/api3/GetLanguages.xml" title="GetLanguages">https://www.biodiversitylibrary.org/api3?op=GetLanguages&amp;apikey=&lt;key+value&gt;</a></div>
     <div class="subhead1">PublicationSearch</div>
-    <div>	Search for publications (titles, items, and parts) that match the specified search term.  You can search the catalog metadata only, or the full-text and the catalog metadata combined.&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
+    <div>	Search for publications (titles, items, and parts) that match the specified search term.  You can search the catalog metadata only, or the full-text and the catalog metadata combined.&nbsp; The BHLType element identifies the type of each publication returned (Item or Part).&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
     <div>	Example - <a href="/docs/api3/PublicationSearch.xml" title="PublicationSearch">https://www.biodiversitylibrary.org/api3?op=PublicationSearch&amp;searchterm=cocos+island+costa+rica+birds&amp;searchtype=C&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	searchterm - the text for which to search<br /> searchtype - &#39;C&#39; for a catalog-only search; &#39;F&#39; for a catalog+full-text search<br /> page - 1 for the first page of results, 2 for the second, and so on </div>
     <div class="subhead1">PublicationSearchAdvanced</div>
-    <div>	Search for publications (titles, items, and parts) that match the specified search criteria.  Rather than searching across all of the metadata for specified search terms, this method searches specific fields for the terms.&nbsp; For example, title fields are searched for the &quot;title&quot; parameter value, and the author names are searched for the &quot;authorname&quot; parameter value.&nbsp; This method searches the catalog metadata only, unless the &quot;text&quot; parameter is specified.  Inclusion of a value for the &quot;text&quot; parameter triggers a full-text search over the text of the publications.&nbsp;&nbsp;&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
+    <div>	Search for publications (titles, items, and parts) that match the specified search criteria.  Rather than searching across all of the metadata for specified search terms, this method searches specific fields for the terms.&nbsp; For example, title fields are searched for the &quot;title&quot; parameter value, and the author names are searched for the &quot;authorname&quot; parameter value.&nbsp; This method searches the catalog metadata only, unless the &quot;text&quot; parameter is specified.  Inclusion of a value for the &quot;text&quot; parameter triggers a full-text search over the text of the publications.&nbsp; The BHLType element identifies the type of each publication returned (Item or Part).&nbsp;&nbsp;&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
     <div>	Use the GetLanguages and GetCollections methods to obtain valid language codes and collection identifiers for use as parameters to this method.</div>
     <div>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=cocos+island&amp;titleop=All&amp;authorname=gifford&amp;year=1919&amp;subject=&amp;language=&amp;collection=&amp;text=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	title - a title for which to search<br /> titleop - &#39;all&#39; to search for all specified words in the title fields; &#39;phrase&#39; to search for the exact phrase specified<br /> authorname - an author name for which to search <br /> year - a four-digit publication year for which to search <br /> subject - a subject for which to search <br /> language - a language code; search will only return publications in the specified language<br /> collection - a collection id; search will only return publications from the specfied collection <br /> text - one or more words for which to search in the text of the publications <br /> page - 1 for the first page of results, 2 for the second, and so on </div>
@@ -133,722 +136,644 @@
     <div>The following table describes the data elements that may be included in the various API responses.</div>
 
     <div>
-    <table>
-        <tr>
-            <th>BHL API</th>
-            <th>Description</th>
-        </tr>
-        <tr>
-            <td>Title/TitleID</td>
-            <td>BHL identifier for the title</td>
-        </tr>
-        <tr>
-            <td>Title/Genre</td>
-            <td>
-                One of the following values, which identify the bibliographic level of work:<br />
-                <br />
-                Collection<br />
-                Monograph/Item<br />
-                Monographic component part<br />
-                Serial<br />
-                Serial component part
-                <br />
-                <br />
-                Derived from <a href="http://www.loc.gov/marc/bibliographic/bdleader.html" target="_blank">MARC leader position 07</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/MaterialType</td>
-            <td>
-                One of the following values, which identify the characteristics of the work:<br />
-                <br />
-                Archival material<br />
-                Audio<br />
-                Computer file<br />
-                Maps<br />
-                Mixed materials<br />
-                Music<br />
-                Published material<br />
-                Video<br />
-                Visual resource
-                <br />
-                <br />
-                Derived from <a href="http://www.loc.gov/marc/bibliographic/bdleader.html" target="_blank">MARC leader position 06</a></td>
-        </tr>
-        <tr>
-            <td>Title/FullTitle</td>
-            <td>The complete title of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a|b</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/ShortTitle</td>
-            <td>The title proper of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/SortTitle</td>
-            <td>Title of the work, modified for more accurate searching</td>
-        </tr>
-        <tr>
-            <td>Title/PartNumber</td>
-            <td>Number designation for part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245n</a>.&nbsp; </td>
-        </tr>
-        <tr>
-            <td>Title/PartName</td>
-            <td>Name of a part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245p</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/CallNumber</td>
-            <td>Classification or call number of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd050.html" target="_blank">MARC 050a|b</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/Edition</td>
-            <td>Information about the edition of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd250.html" target="_blank">MARC 250a|b</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/PublisherPlace</td>
-            <td>Place of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260a</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/PublisherName</td>
-            <td>Name of publisher/distributor of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260b</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/PublicationDate</td>
-            <td>Date of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260c</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/PublicationFrequency</td>
-            <td>Frequency of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd310.html" target="_blank">MARC 310a</a>.</td>
-        </tr>
-        <tr>
-            <td>Title/Doi</td>
-            <td>DOI assigned to the title</td>
-        </tr>
-        <tr>
-            <td>Title/TitleURL</td>
-            <td>BHL address for the title</td>
-        </tr>
-        <tr>
-            <td>Author/AuthorID</td>
-            <td>BHL identifier for the author</td>
-        </tr>
-        <tr>
-            <td>Author/Name</td>
-            <td>Personal, corporate, or meeting name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Role</td>
-            <td>
-                One of the following values, which identify the role of an author:<br />
-                Main Entry -- Personal Name (MARC 100)<br />
-                Main Entry -- Corporate Name (MARC 110)<br />
-                Main Entry -- Meeting Name (MARC 111)<br />
-                Added Entry -- Personal Name (MARC 700)<br />
-                Added Entry -- Corporate Name (MARC 710)<br />
-                Added Entry -- Meeting Name (MARC 711)<br />
-                Added Entry -- Uncontrolled Name (MARC 720)
-            </td>
-        </tr>
-        <tr>
-            <td>Author/Numeration</td>
-            <td>Personal numeration.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Unit</td>
-            <td>Corporate unit.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Title</td>
-            <td>Personal title.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Location</td>
-            <td>Corporate/meeting location.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/FullerForm</td>
-            <td>Fuller form of name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Relationship</td>
-            <td>Relationship of person to work (editor, illustrator).  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/TitleOfWork</td>
-            <td>Title page title or serial title related to person.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/Dates</td>
-            <td>Date of birth/death or Corp/Meeting dates.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
-        </tr>
-        <tr>
-            <td>Author/CreatorUrl</td>
-            <td>BHL address for the author</td>
-        </tr>
-        <tr>
-            <td>Subject/SubjectText</td>
-            <td>Subject term.  See <a href="http://www.loc.gov/marc/bibliographic/bd6xx.html" target="_blank">MARC 6XX</a>.</td>
-        </tr>
-        <tr>
-            <td>TitleNote/NoteText</td>
-            <td>Text of a note associated with a title.  See <a href="http://www.loc.gov/marc/bibliographic/bd5xx.html" target="_blank">MARC 5XX</a>.</td>
-        </tr>
-        <tr>
-            <td>TitleNote/NoteSequence</td>
-            <td>Numerical position of the note</td>
-        </tr>
-        <tr>
-            <td>TitleNote/NoteTypeName</td>
-            <td>Description of the note</td>
-        </tr>
-        <tr>
-            <td>Item/ItemID</td>
-            <td>BHL identifier for the item</td>
-        </tr>
-        <tr>
-            <td>Item/TitleID</td>
-            <td>BHL identifier for the title related to the item</td>
-        </tr>
-        <tr>
-            <td>Item/ThumbnailPageID</td>
-            <td>BHL identifier of the page that produces the item thumbnail</td>
-        </tr>
-        <tr>
-            <td>Item/Source</td>
-            <td>System from which the item originated</td>
-        </tr>
-        <tr>
-            <td>Item/SourceIdentifier</td>
-            <td>Originating system identifier</td>
-        </tr>
-        <tr>
-            <td>Item/Volume</td>
-            <td>Volume assigned to the book</td>
-        </tr>
-        <tr>
-            <td>Item/Year</td>
-            <td>Year assigned to to a monograph or single item in a journal</td>
-        </tr>
-        <tr>
-            <td>Item/CopySpecificInformation</td>
-            <td>Information specific to this copy of the book</td>
-        </tr>
-        <tr>
-            <td>Item/Holding Institution</td>
-            <td>Institution that contributed the book to BHL</td>
-        </tr>
-        <tr>
-            <td>Item/RightsHolder</td>
-            <td>Institution holding the rights to the book</td>
-        </tr>
-        <tr>
-            <td>Item/ScanningInstitution</td>
-            <td>Institution performing the scanning of the book</td>
-        </tr>
-        <tr>
-            <td>Item/Sponsor</td>
-            <td>Institution that sponsored the scanning of the book</td>
-        </tr>
-        <tr>
-            <td>Item/Language</td>
-            <td>Primary language in which the work is published.  See <a href="http://www.loc.gov/marc/bibliographic/bd008.html" target="_blank">MARC 008 positions 35-37</a>.</td>
-        </tr>
-        <tr>
-            <td>Item/LicenseUrl</td>
-            <td>URL to information about the license asserted on the book</td>
-        </tr>
-        <tr>
-            <td>Item/Rights</td>
-            <td>URL to information about the rights/permissions asserted on the book</td>
-        </tr>
-        <tr>
-            <td>Item/DueDiligence</td>
-            <td>URL to information about the rights/permissions asserted on the book</td>
-        </tr>
-        <tr>
-            <td>Item/CopyrightStatus</td>
-            <td>Copyright statement for the book</td>
-        </tr>
-        <tr>
-            <td>Item/CopyrightRegion</td>
-            <td>Country issuing the copyright on the book</td>
-        </tr>
-        <tr>
-            <td>Item/ExternalUrl</td>
-            <td>Non-BHL address for the item</td>
-        </tr>
-        <tr>
-            <td>Item/ItemUrl</td>
-            <td>BHL address for the item</td>
-        </tr>
-        <tr>
-            <td>Item/TitleUrl</td>
-            <td>BHL address for the title</td>
-        </tr>
-        <tr>
-            <td>Item/ItemThumbUrl</td>
-            <td>BHL address for the item thumbnail image</td>
-        </tr>
-        <tr>
-            <td>Part/PartID</td>
-            <td>BHL identifier for the part</td>
-        </tr>
-        <tr>
-            <td>Part/PartUrl</td>
-            <td>BHL address for the part</td>
-        </tr>
-        <tr>
-            <td>Part/ItemID</td>
-            <td>BHL address for the item related to the part</td>
-        </tr>
-        <tr>
-            <td>Part/StartPageID</td>
-            <td>BHL address for the first page of the part</td>
-        </tr>
-        <tr>
-            <td>Part/SequenceOrder</td>
-            <td>Sequential position of the part within the container item.</td>
-        </tr>
-        <tr>
-            <td>Part/Genre</td>
-            <td>
-                One of the following values, which identify the type of the part:<br />
-                Article<br />
-                Book<br />
-                BookItem<br />
-                Chapter<br />
-                Journal<br />
-                Issue<br />
-                Proceeding<br />
-                Conference<br />
-                Preprint<br />
-                Unknown<br />
-                Treatment
-            </td>
-        </tr>
-        <tr>
-            <td>Part/Title</td>
-            <td>The title of the part</td>
-        </tr>
-        <tr>
-            <td>Part/TranslatedTitle</td>
-            <td>Translated title of the part</td>
-        </tr>
-        <tr>
-            <td>Part/ContainerTitle</td>
-            <td>Title of the containing journal/book</td>
-        </tr>
-        <tr>
-            <td>Part/PublicationDetails</td>
-            <td>Combined publication informatino (publisher name, publisher place, and publication date)</td>
-        </tr>
-        <tr>
-            <td>Part/PublisherName</td>
-            <td>Name of publisher/distributor of the part</td>
-        </tr>
-        <tr>
-            <td>Part/PublisherPlace</td>
-            <td>Place of publication of the part</td>
-        </tr>
-        <tr>
-            <td>Part/Notes</td>
-            <td>Miscellaneous information about the part</td>
-        </tr>
-        <tr>
-            <td>Part/Volume</td>
-            <td>Volume of the work in which the part appears</td>
-        </tr>
-        <tr>
-            <td>Part/Series</td>
-            <td>Series of the work in which the part appears</td>
-        </tr>
-        <tr>
-            <td>Part/Issue</td>
-            <td>Issue of the work in which the part appears</td>
-        </tr>
-        <tr>
-            <td>Part/Date</td>
-            <td>Publication date of the part</td>
-        </tr>
-        <tr>
-            <td>Part/PageRange</td>
-            <td>Combined page information (start--end)</td>
-        </tr>
-        <tr>
-            <td>Part/StartPageNumber</td>
-            <td>Starting page number of the part</td>
-        </tr>
-        <tr>
-            <td>Part/EndPageNumber</td>
-            <td>Ending page number of the work</td>
-        </tr>
-        <tr>
-            <td>Part/Language</td>
-            <td>Language of he part</td>
-        </tr>
-        <tr>
-            <td>Part/ExternalUrl</td>
-            <td>Non-BHL location of the part</td>
-        </tr>
-        <tr>
-            <td>Part/DownloadUrl</td>
-            <td>Link to a downloadable version of the part</td>
-        </tr>
-        <tr>
-            <td>Part/RightsStatus</td>
-            <td>Rights status of the part (for example, "out of copyright")</td>
-        </tr>
-        <tr>
-            <td>Part/RightsStatement</td>
-            <td>Rights statement for the part</td>
-        </tr>
-        <tr>
-            <td>Part/LicenseName</td>
-            <td>License under which the part is made available</td>
-        </tr>
-        <tr>
-            <td>Part/LicenseUrl</td>
-            <td>Link to additional licensing details</td>
-        </tr>
-        <tr>
-            <td>Part/Doi</td>
-            <td>DOI assigned to the part</td>
-        </tr>
-        <tr>
-            <td>Part/Contributors/Contributor/ContributorName</td>
-            <td>Person/organization that contributed the part to BHL</td>
-        </tr>
-        <tr>
-            <td>Page/PageID</td>
-            <td>BHL identifier for the page</td>
-        </tr>
-        <tr>
-            <td>Page/ItemID</td>
-            <td>BHL identifier for the item containing the page</td>
-        </tr>
-        <tr>
-            <td>Page/Volume</td>
-            <td>Volume assigned to the page when multiple volumes bound together.</td>
-        </tr>
-        <tr>
-            <td>Page/Issue</td>
-            <td>Issue assigned to the page when multiple volumes bound together.</td>
-        </tr>
-        <tr>
-            <td>Page/Year</td>
-            <td>Year assigned to the page when multiple volumes bound together.</td>
-        </tr>
-        <tr>
-            <td>Page/PageUrl</td>
-            <td>BHL address for the page</td>
-        </tr>
-        <tr>
-            <td>Page/ThumbnailUrl</td>
-            <td>BHL address for the thumbnail image of the page</td>
-        </tr>
-        <tr>
-            <td>Page/FullSizeImageUrl</td>
-            <td>BHL address for the full-size image of the page</td>
-        </tr>
-        <tr>
-            <td>Page/OcrUrl</td>
-            <td>BHL address for the OCR of the page</td>
-        </tr>
-        <tr>
-            <td>Page/OcrText</td>
-            <td>Text of the page OCR</td>
-        </tr>
-        <tr>
-            <td>PageNumber/Prefix</td>
-            <td>Prefix of the number assigned to the page (ex. Page, Plate)</td>
-        </tr>
-        <tr>
-            <td>PageNumber/Number</td>
-            <td>The number assigned to the page</td>
-        </tr>
-        <tr>
-            <td>PageType/PageTypeName</td>
-            <td>
-                One of the following values, which identify the type of a page:<br />
-                Title Page<br />
-                Text<br />
-                Illustration<br />
-                Verso<br />
-                Recto<br />
-                Blank<br />
-                Index<br />
-                Cover<br />
-                Appendix<br />
-                Map<br />
-                Table of Contents<br />
-                Article Start<br />
-                Article End<br />
-                Foldout<br />
-                Issue Start<br />
-                Issue End
-            </td>
-        </tr>
-        <tr>
-            <td>Publication/BHLType</td>
-            <td>Publication type: Title, Item, or Part</td>
-        </tr>
-        <tr>
-            <td>Publication/FoundIn</td>
-            <td>Indicates where in the publication the search term(s) were found:  Metadata, Text, or Both</td>
-        </tr>
-        <tr>
-            <td>Publication/ItemID</td>
-            <td>BHL Identifier for the publication (if BHLType is Item) or the related BHL Item.</td>
-        </tr>
-        <tr>
-            <td>Publication/TitleID</td>
-            <td>BHL Identifier for the publication (if BHLType is Title)</td>
-        </tr>
-        <tr>
-            <td>Publication/ThumbnailPageID</td>
-            <td>BHL identifier of the page that produces the publication thumbnail</td>
-        </tr>
-        <tr>
-            <td>Publication/Volume</td>
-            <td>Volume of the publication or the publication&#39;s parent work.</td>
-        </tr>
-        <tr>
-            <td>Publication/CopySpecificInformation</td>
-            <td>Information specific to this copy of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/HoldingInstitution</td>
-            <td>Institution holding the physical copy of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/RightsHolder</td>
-            <td>Institution holding the rights to the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/ScanningInstitution</td>
-            <td>Institution performing the scanning of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/Sponsor</td>
-            <td>Institution that sponsored the scanning of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/Language</td>
-            <td>Primary language of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/LicenseUrl</td>
-            <td>URL to information about the license asserted on the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/Rights</td>
-            <td>URL to information about the rights/permissions asserted on the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/DueDiligence</td>
-            <td>URL to information about the rights/permissions asserted on the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/ExternalUrl</td>
-            <td>Non-BHL address for the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/ItemUrl</td>
-            <td>BHL address for the publication (if BHLType is Item) or the related BHL Item.</td>
-        </tr>
-        <tr>
-            <td>Publication/TitleUrl</td>
-            <td>BHL address for the publication (if BHLType is Title)</td>
-        </tr>
-        <tr>
-            <td>Publication/MaterialType</td>
-            <td>One of the following values, which identify the characteristics of the work: Language material Notated music Manuscript notated music Cartographic material Manuscript cartographic material Projected medium Nonmusical sound recording Musical sound recording Two-dimensional nonprojectable graphic Computer file Kit Mixed materials Three-dimensional artifact or naturally occuring object Manuscript language material </td>
-        </tr>
-        <tr>
-            <td>Publication/PublisherPlace</td>
-            <td>Place of publication</td>
-        </tr>
-        <tr>
-            <td>Publication/PublisherName</td>
-            <td>Publisher of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/PublicationDate</td>
-            <td>Publishing date of the publication or parent object of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/PartUrl</td>
-            <td>BHL address for the publication (if BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/PartID</td>
-            <td>BHL Identifier for the publication (if BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/StartPageID</td>
-            <td>BHL address for the first page of the publication (if BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/SequenceOrder</td>
-            <td>Sequence order of the publication within its parent work</td>
-        </tr>
-        <tr>
-            <td>Publication/Genre</td>
-            <td>Value identifying the genre of the publication.  Examples include the following: Collection, Monograph/Item, Serial, Article, Chapte,&nbsp; Journal, Issue, Proceeding Conference, Preprint, Treatment&nbsp; </td>
-        </tr>
-        <tr>
-            <td>Publication/Title</td>
-            <td>The title of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/TranslatedTitle</td>
-            <td>The translated title of the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/ContainerTitle</td>
-            <td>The title of the parent work of the publication.  If the publication is an article, the ContainerTitle will be the journal in which the article appears.</td>
-        </tr>
-        <tr>
-            <td>Publication/PublicationDetails</td>
-            <td>Combined publisher information (publisher name, publisher place, and publication date)</td>
-        </tr>
-        <tr>
-            <td>Publication/Notes</td>
-            <td>Miscellaneous information about the publication</td>
-        </tr>
-        <tr>
-            <td>Publication/Series</td>
-            <td>Series of the publication or the publication&#39;s parent work.</td>
-        </tr>
-        <tr>
-            <td>Publication/Issue</td>
-            <td>Issue of the publication or the publication&#39;s parent work.</td>
-        </tr>
-        <tr>
-            <td>Publication/PageRange</td>
-            <td>Combined start and end page information (applies when BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/StartPageNumber</td>
-            <td>Starting page number of the publication (applies when BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/EndPageNumber</td>
-            <td>Ending page number of the publication (applies when BHLType is Part)</td>
-        </tr>
-        <tr>
-            <td>Publication/DownloadUrl</td>
-            <td>Link to a downloadable version of the publication.</td>
-        </tr>
-        <tr>
-            <td>Publication/RightsStatus</td>
-            <td>Rights statement for the publication.</td>
-        </tr>
-        <tr>
-            <td>Publication/LicenseName</td>
-            <td>License under which the publication is made available.</td>
-        </tr>
-        <tr>
-            <td>Publication/DOI</td>
-            <td>DOI assigned to the publication.</td>
-        </tr>
-        <tr>
-            <td>Name/NameFound</td>
-            <td>Name found on a page</td>
-        </tr>
-        <tr>
-            <td>Name/NameConfirmed</td>
-            <td>Name found on a page and confirmed in uBio&#39;s NameBank</td>
-        </tr>
-        <tr>
-            <td>Identifier/IdentifierName</td>
-            <td>
-                One of the following values, which identify the type of identifier:<br />
-                bhl<br />
-                ia<br />
-                doi<br />
-                issn<br />
-                isbn<br />
-                lccn<br />
-                ddc<br />
-                nal<br />
-                nlm<br />
-                coden<br />
-                soulsby<br />
-                biostor<br />
-                viaf<br />
-                namebank<br />
-                eol<br />
-                gni
-            </td>
-        </tr>
-        <tr>
-            <td>Identifier/IdentifierValue</td>
-            <td>Value of the identifier.</td>
-        </tr>
-        <tr>
-            <td>Collection/CollectionID</td>
-            <td>BHL identifier for the collection</td>
-        </tr>
-        <tr>
-            <td>Collection/CollectionName</td>
-            <td>The name of the collection</td>
-        </tr>
-        <tr>
-            <td>Collection/CollectionDescription</td>
-            <td>A description of the contents of the collection</td>
-        </tr>
-        <tr>
-            <td>Collection/CanContainTitles</td>
-            <td>1 if the collection can contain titles, 0 otherwise</td>
-        </tr>
-        <tr>
-            <td>Institution/InstitutionCode</td>
-            <td>BHL code for the institution</td>
-        </tr>
-        <tr>
-            <td>Institution/InstitutionName</td>
-            <td>The name of the institution</td>
-        </tr>
-        <tr>
-            <td>Institution/InstitutionUrl</td>
-            <td>URL for the institution</td>
-        </tr>
-        <tr>
-            <td>Institution/BHLMember</td>
-            <td>True if the institution is a member of the BHL consortium</td>
-        </tr>
-        <tr>
-            <td>Collection/CanContainItems</td>
-            <td>1 if the collection can contain items, 0 otherwise</td>
-        </tr>
-        <tr>
-            <td>Language/LanguageCode</td>
-            <td>BHL code for the language</td>
-        </tr>
-        <tr>
-            <td>Language/LanguageName</td>
-            <td>The name of the language</td>
-        </tr>
-        <tr>
-            <td>Variant/TitleVariantTypeName</td>
-            <td>
-                One of the following values, which identify the type of variant:<br />
-                Translated<br />
-                Parallel (Translated)<br />
-                Abbreviated<br />
-                Alterative<br />
-            </td>
-        </tr>
-        <tr>
-            <td>Variant/Title</td>
-            <td>The variant title.  See <a href="http://www.loc.gov/marc/bibliographic/bd20x24x.html" target="_blank">MARC 210, 242, and 246</a>.</td>
-        </tr>
-    </table>
+        <table>
+            <tr>
+                <th>BHL API</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Title/TitleID</td>
+                <td>BHL identifier for the title</td>
+            </tr>
+            <tr>
+                <td>Title/Genre</td>
+                <td>
+                    One of the following values, which identify the bibliographic level of work:<br />
+                    <br />
+                    Collection<br />
+                    Monograph/Item<br />
+                    Monographic component part<br />
+                    Serial<br />
+                    Serial component part
+                    <br />
+                    <br />
+                    Derived from <a href="http://www.loc.gov/marc/bibliographic/bdleader.html" target="_blank">MARC leader position 07</a>.
+                </td>
+            </tr>
+            <tr>
+                <td>Title/MaterialType</td>
+                <td>
+                    One of the following values, which identify the characteristics of the work:<br />
+                    <br />
+                    Archival material<br />
+                    Audio<br />
+                    Computer file<br />
+                    Maps<br />
+                    Mixed materials<br />
+                    Music<br />
+                    Published material<br />
+                    Video<br />
+                    Visual resource
+                    <br />
+                    <br />
+                    Derived from <a href="http://www.loc.gov/marc/bibliographic/bdleader.html" target="_blank">MARC leader position 06</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Title/FullTitle</td>
+                <td>The complete title of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a|b</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/ShortTitle</td>
+                <td>The title proper of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245a</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/SortTitle</td>
+                <td>Title of the work, modified for more accurate searching</td>
+            </tr>
+            <tr>
+                <td>Title/PartNumber</td>
+                <td>Number designation for part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245n</a>.&nbsp; </td>
+            </tr>
+            <tr>
+                <td>Title/PartName</td>
+                <td>Name of a part of a work used in the title.  See <a href="http://www.loc.gov/marc/bibliographic/bd245.html" target="_blank">MARC 245p</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/CallNumber</td>
+                <td>Classification or call number of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd050.html" target="_blank">MARC 050a|b</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/Edition</td>
+                <td>Information about the edition of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd250.html" target="_blank">MARC 250a|b</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/PublisherPlace</td>
+                <td>Place of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260a</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/PublisherName</td>
+                <td>Name of publisher/distributor of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260b</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/PublicationDate</td>
+                <td>Date of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd260.html" target="_blank">MARC 260c</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/PublicationFrequency</td>
+                <td>Frequency of publication of the work.  See <a href="http://www.loc.gov/marc/bibliographic/bd310.html" target="_blank">MARC 310a</a>.</td>
+            </tr>
+            <tr>
+                <td>Title/Doi</td>
+                <td>DOI assigned to the title</td>
+            </tr>
+            <tr>
+                <td>Title/TitleURL</td>
+                <td>BHL address for the title</td>
+            </tr>
+            <tr>
+                <td>Author/AuthorID</td>
+                <td>BHL identifier for the author</td>
+            </tr>
+            <tr>
+                <td>Author/Name</td>
+                <td>Personal, corporate, or meeting name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Role</td>
+                <td>
+                    One of the following values, which identify the role of an author:<br />
+                    Main Entry -- Personal Name (MARC 100)<br />
+                    Main Entry -- Corporate Name (MARC 110)<br />
+                    Main Entry -- Meeting Name (MARC 111)<br />
+                    Added Entry -- Personal Name (MARC 700)<br />
+                    Added Entry -- Corporate Name (MARC 710)<br />
+                    Added Entry -- Meeting Name (MARC 711)<br />
+                    Added Entry -- Uncontrolled Name (MARC 720)
+                </td>
+            </tr>
+            <tr>
+                <td>Author/Numeration</td>
+                <td>Personal numeration.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Unit</td>
+                <td>Corporate unit.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Title</td>
+                <td>Personal title.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Location</td>
+                <td>Corporate/meeting location.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/FullerForm</td>
+                <td>Fuller form of name.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Relationship</td>
+                <td>Relationship of person to work (editor, illustrator).  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/TitleOfWork</td>
+                <td>Title page title or serial title related to person.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/Dates</td>
+                <td>Date of birth/death or Corp/Meeting dates.  See <a href="http://www.loc.gov/marc/bibliographic/bd1xx.html" target="_blank">MARC 1XX</a> and <a href="http://www.loc.gov/marc/bibliographic/bd70x75x.html" target="_blank">MARC 7XX</a>.</td>
+            </tr>
+            <tr>
+                <td>Author/CreatorUrl</td>
+                <td>BHL address for the author</td>
+            </tr>
+            <tr>
+                <td>Subject/SubjectText</td>
+                <td>Subject term.  See <a href="http://www.loc.gov/marc/bibliographic/bd6xx.html" target="_blank">MARC 6XX</a>.</td>
+            </tr>
+            <tr>
+                <td>TitleNote/NoteText</td>
+                <td>Text of a note associated with a title.  See <a href="http://www.loc.gov/marc/bibliographic/bd5xx.html" target="_blank">MARC 5XX</a>.</td>
+            </tr>
+            <tr>
+                <td>TitleNote/NoteSequence</td>
+                <td>Numerical position of the note</td>
+            </tr>
+            <tr>
+                <td>TitleNote/NoteTypeName</td>
+                <td>Description of the note</td>
+            </tr>
+            <tr>
+                <td>Item/ItemID</td>
+                <td>BHL identifier for the item</td>
+            </tr>
+            <tr>
+                <td>Item/TitleID</td>
+                <td>BHL identifier for the title related to the item</td>
+            </tr>
+            <tr>
+                <td>Item/ThumbnailPageID</td>
+                <td>BHL identifier of the page that produces the item thumbnail</td>
+            </tr>
+            <tr>
+                <td>Item/Source</td>
+                <td>System from which the item originated</td>
+            </tr>
+            <tr>
+                <td>Item/SourceIdentifier</td>
+                <td>Originating system identifier</td>
+            </tr>
+            <tr>
+                <td>Item/Volume</td>
+                <td>Volume assigned to the book</td>
+            </tr>
+            <tr>
+                <td>Item/Year</td>
+                <td>Year assigned to to a monograph or single item in a journal</td>
+            </tr>
+            <tr>
+                <td>Item/CopySpecificInformation</td>
+                <td>Information specific to this copy of the book</td>
+            </tr>
+            <tr>
+                <td>Item/Holding Institution</td>
+                <td>Institution that contributed the book to BHL</td>
+            </tr>
+            <tr>
+                <td>Item/RightsHolder</td>
+                <td>Institution holding the rights to the book</td>
+            </tr>
+            <tr>
+                <td>Item/ScanningInstitution</td>
+                <td>Institution performing the scanning of the book</td>
+            </tr>
+            <tr>
+                <td>Item/Sponsor</td>
+                <td>Institution that sponsored the scanning of the book</td>
+            </tr>
+            <tr>
+                <td>Item/Language</td>
+                <td>Primary language in which the work is published.  See <a href="http://www.loc.gov/marc/bibliographic/bd008.html" target="_blank">MARC 008 positions 35-37</a>.</td>
+            </tr>
+            <tr>
+                <td>Item/LicenseUrl</td>
+                <td>URL to information about the license asserted on the book</td>
+            </tr>
+            <tr>
+                <td>Item/Rights</td>
+                <td>URL to information about the rights/permissions asserted on the book</td>
+            </tr>
+            <tr>
+                <td>Item/DueDiligence</td>
+                <td>URL to information about the rights/permissions asserted on the book</td>
+            </tr>
+            <tr>
+                <td>Item/CopyrightStatus</td>
+                <td>Copyright statement for the book</td>
+            </tr>
+            <tr>
+                <td>Item/CopyrightRegion</td>
+                <td>Country issuing the copyright on the book</td>
+            </tr>
+            <tr>
+                <td>Item/ExternalUrl</td>
+                <td>Non-BHL address for the item</td>
+            </tr>
+            <tr>
+                <td>Item/ItemUrl</td>
+                <td>BHL address for the item</td>
+            </tr>
+            <tr>
+                <td>Item/TitleUrl</td>
+                <td>BHL address for the title</td>
+            </tr>
+            <tr>
+                <td>Item/ItemThumbUrl</td>
+                <td>BHL address for the item thumbnail image</td>
+            </tr>
+            <tr>
+                <td>Part/PartID</td>
+                <td>BHL identifier for the part</td>
+            </tr>
+            <tr>
+                <td>Part/PartUrl</td>
+                <td>BHL address for the part</td>
+            </tr>
+            <tr>
+                <td>Part/ItemID</td>
+                <td>BHL address for the item related to the part</td>
+            </tr>
+            <tr>
+                <td>Part/StartPageID</td>
+                <td>BHL address for the first page of the part</td>
+            </tr>
+            <tr>
+                <td>Part/SequenceOrder</td>
+                <td>Sequential position of the part within the container item.</td>
+            </tr>
+            <tr>
+                <td>Part/Genre</td>
+                <td>
+                    One of the following values, which identify the type of the part:<br />
+                    Article<br />
+                    Book<br />
+                    BookItem<br />
+                    Chapter<br />
+                    Journal<br />
+                    Issue<br />
+                    Proceeding<br />
+                    Conference<br />
+                    Preprint<br />
+                    Unknown<br />
+                    Treatment
+                </td>
+            </tr>
+            <tr>
+                <td>Part/Title</td>
+                <td>The title of the part</td>
+            </tr>
+            <tr>
+                <td>Part/TranslatedTitle</td>
+                <td>Translated title of the part</td>
+            </tr>
+            <tr>
+                <td>Part/ContainerTitle</td>
+                <td>Title of the containing journal/book</td>
+            </tr>
+            <tr>
+                <td>Part/PublicationDetails</td>
+                <td>Combined publication informatino (publisher name, publisher place, and publication date)</td>
+            </tr>
+            <tr>
+                <td>Part/PublisherName</td>
+                <td>Name of publisher/distributor of the part</td>
+            </tr>
+            <tr>
+                <td>Part/PublisherPlace</td>
+                <td>Place of publication of the part</td>
+            </tr>
+            <tr>
+                <td>Part/Notes</td>
+                <td>Miscellaneous information about the part</td>
+            </tr>
+            <tr>
+                <td>Part/Volume</td>
+                <td>Volume of the work in which the part appears</td>
+            </tr>
+            <tr>
+                <td>Part/Series</td>
+                <td>Series of the work in which the part appears</td>
+            </tr>
+            <tr>
+                <td>Part/Issue</td>
+                <td>Issue of the work in which the part appears</td>
+            </tr>
+            <tr>
+                <td>Part/Date</td>
+                <td>Publication date of the part</td>
+            </tr>
+            <tr>
+                <td>Part/PageRange</td>
+                <td>Combined page information (start--end)</td>
+            </tr>
+            <tr>
+                <td>Part/StartPageNumber</td>
+                <td>Starting page number of the part</td>
+            </tr>
+            <tr>
+                <td>Part/EndPageNumber</td>
+                <td>Ending page number of the work</td>
+            </tr>
+            <tr>
+                <td>Part/Language</td>
+                <td>Language of he part</td>
+            </tr>
+            <tr>
+                <td>Part/ExternalUrl</td>
+                <td>Non-BHL location of the part</td>
+            </tr>
+            <tr>
+                <td>Part/DownloadUrl</td>
+                <td>Link to a downloadable version of the part</td>
+            </tr>
+            <tr>
+                <td>Part/RightsStatus</td>
+                <td>Rights status of the part (for example, "out of copyright")</td>
+            </tr>
+            <tr>
+                <td>Part/RightsStatement</td>
+                <td>Rights statement for the part</td>
+            </tr>
+            <tr>
+                <td>Part/LicenseName</td>
+                <td>License under which the part is made available</td>
+            </tr>
+            <tr>
+                <td>Part/LicenseUrl</td>
+                <td>Link to additional licensing details</td>
+            </tr>
+            <tr>
+                <td>Part/Doi</td>
+                <td>DOI assigned to the part</td>
+            </tr>
+            <tr>
+                <td>Part/Contributors/Contributor/ContributorName</td>
+                <td>Person/organization that contributed the part to BHL</td>
+            </tr>
+            <tr>
+                <td>Page/PageID</td>
+                <td>BHL identifier for the page</td>
+            </tr>
+            <tr>
+                <td>Page/ItemID</td>
+                <td>BHL identifier for the item containing the page</td>
+            </tr>
+            <tr>
+                <td>Page/Volume</td>
+                <td>Volume assigned to the page when multiple volumes bound together.</td>
+            </tr>
+            <tr>
+                <td>Page/Issue</td>
+                <td>Issue assigned to the page when multiple volumes bound together.</td>
+            </tr>
+            <tr>
+                <td>Page/Year</td>
+                <td>Year assigned to the page when multiple volumes bound together.</td>
+            </tr>
+            <tr>
+                <td>Page/PageUrl</td>
+                <td>BHL address for the page</td>
+            </tr>
+            <tr>
+                <td>Page/ThumbnailUrl</td>
+                <td>BHL address for the thumbnail image of the page</td>
+            </tr>
+            <tr>
+                <td>Page/FullSizeImageUrl</td>
+                <td>BHL address for the full-size image of the page</td>
+            </tr>
+            <tr>
+                <td>Page/OcrUrl</td>
+                <td>BHL address for the OCR of the page</td>
+            </tr>
+            <tr>
+                <td>Page/OcrText</td>
+                <td>Text of the page OCR</td>
+            </tr>
+            <tr>
+                <td>PageNumber/Prefix</td>
+                <td>Prefix of the number assigned to the page (ex. Page, Plate)</td>
+            </tr>
+            <tr>
+                <td>PageNumber/Number</td>
+                <td>The number assigned to the page</td>
+            </tr>
+            <tr>
+                <td>PageType/PageTypeName</td>
+                <td>
+                    One of the following values, which identify the type of a page:<br />
+                    Title Page<br />
+                    Text<br />
+                    Illustration<br />
+                    Verso<br />
+                    Recto<br />
+                    Blank<br />
+                    Index<br />
+                    Cover<br />
+                    Appendix<br />
+                    Map<br />
+                    Table of Contents<br />
+                    Article Start<br />
+                    Article End<br />
+                    Foldout<br />
+                    Issue Start<br />
+                    Issue End
+                </td>
+            </tr>
+            <tr>
+                <td>Publication/BHLType</td>
+                <td>Publication type: Title, Item, or Part</td>
+            </tr>
+            <tr>
+                <td>Publication/FoundIn</td>
+                <td>Indicates where in the publication the search term(s) were found:  Metadata, Text, or Both</td>
+            </tr>
+            <tr>
+                <td>Publication/ItemID</td>
+                <td>BHL Identifier for the publication (if BHLType is Item) or the related BHL Item.</td>
+            </tr>
+            <tr>
+                <td>Publication/TitleID</td>
+                <td>BHL Identifier for the publication (if BHLType is Title)</td>
+            </tr>
+            <tr>
+                <td>Publication/Volume</td>
+                <td>Volume of the publication or the publication&#39;s parent work.</td>
+            </tr>
+            <tr>
+                <td>Publication/ExternalUrl</td>
+                <td>Non-BHL address for the publication</td>
+            </tr>
+            <tr>
+                <td>Publication/ItemUrl</td>
+                <td>BHL address for the publication (if BHLType is Item) or the related BHL Item.</td>
+            </tr>
+            <tr>
+                <td>Publication/TitleUrl</td>
+                <td>BHL address for the publication (if BHLType is Title)</td>
+            </tr>
+            <tr>
+                <td>Publication/MaterialType</td>
+                <td>One of the following values, which identify the characteristics of the work: Language material Notated music Manuscript notated music Cartographic material Manuscript cartographic material Projected medium Nonmusical sound recording Musical sound recording Two-dimensional nonprojectable graphic Computer file Kit Mixed materials Three-dimensional artifact or naturally occuring object Manuscript language material </td>
+            </tr>
+            <tr>
+                <td>Publication/PublisherPlace</td>
+                <td>Place of publication</td>
+            </tr>
+            <tr>
+                <td>Publication/PublisherName</td>
+                <td>Publisher of the publication</td>
+            </tr>
+            <tr>
+                <td>Publication/PublicationDate</td>
+                <td>Publishing date of a book or journal publication</td>
+            </tr>
+            <tr>
+                <td>Publication/Date</td>
+                <td>Publishing date of a part publication</td>
+            </tr>
+            <tr>
+                <td>Publication/PartUrl</td>
+                <td>BHL address for the publication (if BHLType is Part)</td>
+            </tr>
+            <tr>
+                <td>Publication/PartID</td>
+                <td>BHL Identifier for the publication (if BHLType is Part)</td>
+            </tr>
+            <tr>
+                <td>Publication/Genre</td>
+                <td>Value identifying the genre of the publication.  Examples include the following: Collection, Monograph/Item, Serial, Article, Chapte,&nbsp; Journal, Issue, Proceeding Conference, Preprint, Treatment&nbsp; </td>
+            </tr>
+            <tr>
+                <td>Publication/Title</td>
+                <td>The title of the publication</td>
+            </tr>
+            <tr>
+                <td>Publication/ContainerTitle</td>
+                <td>The title of the parent work of the publication.  If the publication is an article, the ContainerTitle will be the journal in which the article appears.</td>
+            </tr>
+            <tr>
+                <td>Publication/Series</td>
+                <td>Series of the publication or the publication&#39;s parent work.</td>
+            </tr>
+            <tr>
+                <td>Publication/Issue</td>
+                <td>Issue of the publication or the publication&#39;s parent work.</td>
+            </tr>
+            <tr>
+                <td>Publication/PageRange</td>
+                <td>Combined start and end page information (applies when BHLType is Part)</td>
+            </tr>
+            <tr>
+                <td>Name/NameFound</td>
+                <td>Name found on a page</td>
+            </tr>
+            <tr>
+                <td>Name/NameConfirmed</td>
+                <td>Name found on a page and confirmed in uBio&#39;s NameBank</td>
+            </tr>
+            <tr>
+                <td>Identifier/IdentifierName</td>
+                <td>
+                    One of the following values, which identify the type of identifier:<br />
+                    bhl<br />
+                    ia<br />
+                    doi<br />
+                    issn<br />
+                    isbn<br />
+                    lccn<br />
+                    ddc<br />
+                    nal<br />
+                    nlm<br />
+                    coden<br />
+                    soulsby<br />
+                    biostor<br />
+                    viaf<br />
+                    namebank<br />
+                    eol<br />
+                    gni
+                </td>
+            </tr>
+            <tr>
+                <td>Identifier/IdentifierValue</td>
+                <td>Value of the identifier.</td>
+            </tr>
+            <tr>
+                <td>Collection/CollectionID</td>
+                <td>BHL identifier for the collection</td>
+            </tr>
+            <tr>
+                <td>Collection/CollectionName</td>
+                <td>The name of the collection</td>
+            </tr>
+            <tr>
+                <td>Collection/CollectionDescription</td>
+                <td>A description of the contents of the collection</td>
+            </tr>
+            <tr>
+                <td>Collection/CanContainTitles</td>
+                <td>1 if the collection can contain titles, 0 otherwise</td>
+            </tr>
+            <tr>
+                <td>Institution/InstitutionCode</td>
+                <td>BHL code for the institution</td>
+            </tr>
+            <tr>
+                <td>Institution/InstitutionName</td>
+                <td>The name of the institution</td>
+            </tr>
+            <tr>
+                <td>Institution/InstitutionUrl</td>
+                <td>URL for the institution</td>
+            </tr>
+            <tr>
+                <td>Institution/BHLMember</td>
+                <td>True if the institution is a member of the BHL consortium</td>
+            </tr>
+            <tr>
+                <td>Collection/CanContainItems</td>
+                <td>1 if the collection can contain items, 0 otherwise</td>
+            </tr>
+            <tr>
+                <td>Language/LanguageCode</td>
+                <td>BHL code for the language</td>
+            </tr>
+            <tr>
+                <td>Language/LanguageName</td>
+                <td>The name of the language</td>
+            </tr>
+            <tr>
+                <td>Variant/TitleVariantTypeName</td>
+                <td>
+                    One of the following values, which identify the type of variant:<br />
+                    Translated<br />
+                    Parallel (Translated)<br />
+                    Abbreviated<br />
+                    Alterative<br />
+                </td>
+            </tr>
+            <tr>
+                <td>Variant/Title</td>
+                <td>The variant title.  See <a href="http://www.loc.gov/marc/bibliographic/bd20x24x.html" target="_blank">MARC 210, 242, and 246</a>.</td>
+            </tr>
+        </table>
     </div>
     <div></div>
     <hr />
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
-    <div class="subhead1">August 1, 2018 - version 3.0.0</div>
+    <div class="subhead1">August 27, 2018 - version 3.0.0</div>
     <div>Documentation for the previous version of the BHL API can be found at <a href="https://www.biodiversitylibrary.org/api2/docs/docs.html">https://www.biodiversitylibrary.org/api2/docs/docs.html</a>.</div>
     <div>Following is a summary of the changes from version 2.x to version 3.0.0 of the API.<br /></div>
     <div class="subhead2">Overall Changes</div>

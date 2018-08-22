@@ -1,15 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Status>ok</Status>
+  <ErrorMessage />
   <Result>
     <Publication>
       <BHLType>Part</BHLType>
       <FoundIn>Metadata</FoundIn>
-      <ItemID>97652</ItemID>
       <Volume>2</Volume>
-      <PublisherPlace>San Francisco</PublisherPlace>
-      <PublisherName>California Academy of Sciences.</PublisherName>
-      <PublicationDate>1919</PublicationDate>
       <Authors>
         <Author>
           <Name>Gifford, Edward Winslow</Name>
@@ -17,17 +14,12 @@
       </Authors>
       <PartUrl>https://www.biodiversitylibrary.org/part/69838</PartUrl>
       <PartID>69838</PartID>
-      <StartPageID>31197278</StartPageID>
       <Genre>Article</Genre>
       <Title>Field notes on the land birds of the Galapagos Islands, and of Cocos Island,Costa Rica</Title>
       <ContainerTitle>Proceedings of the California Academy of Sciences, 4th series.</ContainerTitle>
       <Series>4</Series>
+      <Date>1919</Date>
       <PageRange>189--258</PageRange>
-      <Contributors>
-        <Contributor>
-          <ContributorName>BioStor</ContributorName>
-        </Contributor>
-      </Contributors>
     </Publication>
   </Result>
 </Response>

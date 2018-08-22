@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Status>ok</Status>
+  <ErrorMessage />
   <Result>
     <Publication>
       <BHLType>Part</BHLType>
       <FoundIn>Metadata</FoundIn>
       <Volume>v. 134, p. 261-296</Volume>
-      <Language>English</Language>
       <ExternalUrl>http://www.ots.ac.cr/bnbt/2229.html</ExternalUrl>
-      <PublicationDate>1967</PublicationDate>
       <Authors>
         <Author>
           <Name>Slud, Paul</Name>
@@ -19,18 +18,13 @@
       <Genre>Article</Genre>
       <Title>The birds of Cocos Island, Costa Rica</Title>
       <ContainerTitle>Bulletin of the American Museum of Natural History</ContainerTitle>
-      <Contributors>
-        <Contributor>
-          <ContributorName>Organization for Tropical Studies</ContributorName>
-        </Contributor>
-      </Contributors>
+      <Date>1967</Date>
     </Publication>
     <Publication>
       <BHLType>Part</BHLType>
       <FoundIn>Metadata</FoundIn>
       <Volume>v. 7, no. 2, p. 29-37</Volume>
       <ExternalUrl>http://www.ots.ac.cr/bnbt/30866.html</ExternalUrl>
-      <PublicationDate>2003</PublicationDate>
       <Authors>
         <Author>
           <Name>Montoya-Maquín, J. Michel</Name>
@@ -41,19 +35,13 @@
       <Genre>Article</Genre>
       <Title>Aves de la Isla del Coco. Lista de especies</Title>
       <ContainerTitle>Zeledonia  Costa Rica</ContainerTitle>
-      <Contributors>
-        <Contributor>
-          <ContributorName>Organization for Tropical Studies</ContributorName>
-        </Contributor>
-      </Contributors>
+      <Date>2003</Date>
     </Publication>
     <Publication>
       <BHLType>Item</BHLType>
       <FoundIn>Metadata</FoundIn>
       <ItemID>167380</ItemID>
       <TitleID>89765</TitleID>
-      <HoldingInstitution>American Museum of Natural History Library</HoldingInstitution>
-      <Language>English</Language>
       <ExternalUrl>http://hdl.handle.net/2246/1677</ExternalUrl>
       <ItemUrl>https://www.biodiversitylibrary.org/item/167380</ItemUrl>
       <TitleUrl>https://www.biodiversitylibrary.org/bibliography/89765</TitleUrl>
@@ -69,11 +57,7 @@
     <Publication>
       <BHLType>Part</BHLType>
       <FoundIn>Metadata</FoundIn>
-      <ItemID>97652</ItemID>
       <Volume>2</Volume>
-      <PublisherPlace>San Francisco</PublisherPlace>
-      <PublisherName>California Academy of Sciences.</PublisherName>
-      <PublicationDate>1919</PublicationDate>
       <Authors>
         <Author>
           <Name>Gifford, Edward Winslow</Name>
@@ -81,17 +65,12 @@
       </Authors>
       <PartUrl>https://www.biodiversitylibrary.org/part/69838</PartUrl>
       <PartID>69838</PartID>
-      <StartPageID>31197278</StartPageID>
       <Genre>Article</Genre>
       <Title>Field notes on the land birds of the Galapagos Islands, and of Cocos Island,Costa Rica</Title>
       <ContainerTitle>Proceedings of the California Academy of Sciences, 4th series.</ContainerTitle>
       <Series>4</Series>
+      <Date>1919</Date>
       <PageRange>189--258</PageRange>
-      <Contributors>
-        <Contributor>
-          <ContributorName>BioStor</ContributorName>
-        </Contributor>
-      </Contributors>
     </Publication>
   </Result>
 </Response>
