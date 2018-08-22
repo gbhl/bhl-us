@@ -20,7 +20,7 @@ namespace MOBOT.BHL.AdminWeb.Controls
         private string _menu = "v1";
 
         /// <summary>
-        /// Valid values are "v1" for API v1, "v2" for API v2, and "ou" for OpenUrl.  "v1" is the default value.
+        /// Valid values are "v1" for API v1, "v2" for API v2, "v3" for API v3, and "ou" for OpenUrl.  "v1" is the default value.
         /// </summary>
         public string Menu
         {

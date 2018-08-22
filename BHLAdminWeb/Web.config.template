@@ -105,6 +105,7 @@
     <add key="DashboardStatsCacheTime" value="240" />
     <!-- Values for these keys map to the ApplicationIDs defined in the Application table in the MOBOTAdmin database -->
     <add key="APIStatsAppID" value="2" />
+    <add key="APIV3StatsAppID" value="5" />
     <add key="OpenUrlStatsAppID" value="3" />
     <!-- Use these Urls to include titles, items, pages, and names on the chart -->
     <!--
