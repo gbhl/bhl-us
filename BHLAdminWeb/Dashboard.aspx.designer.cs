@@ -643,6 +643,24 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor apiv2StatsLink;
         
         /// <summary>
+        /// tdApiV3Stats control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdApiV3Stats;
+        
+        /// <summary>
+        /// apiv3StatsLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor apiv3StatsLink;
+        
+        /// <summary>
         /// tdOpenUrlStats control.
         /// </summary>
         /// <remarks>
