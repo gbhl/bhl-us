@@ -145,6 +145,7 @@ namespace MOBOT.BHL.Web2.Controllers
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
                     "&col=" + Server.UrlEncode(Request.Form["ddlPubCollection"]) +
                     "&txt=" + Server.UrlEncode(Request.Form["txtPubText"] ?? string.Empty) + 
+                    "&txinc=" + Server.UrlEncode(Request.Form["rdoTextInclude"]) + 
                     "&SearchCat=T&stype=C&return=ADV";
 
             }

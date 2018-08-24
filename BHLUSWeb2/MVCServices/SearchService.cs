@@ -14,14 +14,7 @@ namespace MOBOT.BHL.Web2.MVCServices
         /// <summary>
         /// Build the text for the label that echoes the search criteria
         /// </summary>
-        /// <param name="searchCat"></param>
-        /// <param name="searchTerm"></param>
-        /// <param name="searchLang"></param>
-        /// <param name="searchLastName"></param>
-        /// <param name="searchVolume"></param>
-        /// <param name="searchYear"></param>
-        /// <param name="searchSubject"></param>
-        /// <param name="searchCollection"></param>
+        /// <param name="p">Class containing all search parameter values</param>
         /// <returns></returns>
         public string GetSearchCriteriaLabel(SearchParams p)
         {
@@ -66,7 +59,13 @@ namespace MOBOT.BHL.Web2.MVCServices
                         Collection collection = new BHLProvider().CollectionSelectAuto(Convert.ToInt32(collectionId));
                         if (collection != null) searchCriteria.Append(" collection:" + collection.CollectionName.Replace(' ', '-'));
                     }
-                    if (!string.IsNullOrWhiteSpace(p.Text)) searchCriteria.Append(" text:" + p.Text.Replace(' ', '-'));
+                    if (!string.IsNullOrWhiteSpace(p.Text))
+                    {
+                        //searchCriteria.Append(" text:" + p.Text.Replace(' ', '-'));
+                        searchCriteria.Append(string.Format(" text:{0} [{1}]",
+                            p.Text.Replace(' ', '-'),
+                            p.TextInclude.ToUpper() == "A" ? "All words" : "Exact phrase"));
+                    }
                 }
             }
 
