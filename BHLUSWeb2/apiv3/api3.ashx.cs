@@ -177,12 +177,13 @@ namespace MOBOT.BHL.Web2.api3
                     string language = context.Request.QueryString["language"];
                     string collection = context.Request.QueryString["collection"];
                     string text = context.Request.QueryString["text"];
+                    string textOp = context.Request.QueryString["textop"];
                     string page = context.Request.QueryString["page"];
 
                     serviceResponse.Result = this.PublicationSearchAdvanced((title ?? string.Empty), 
                         (titleOp ?? string.Empty), (authorLastName ?? string.Empty), (year ?? string.Empty), 
                         (subject ?? string.Empty), (language ?? string.Empty), (collection ?? string.Empty),
-                        (text ?? string.Empty), (page ?? "1"),
+                        (text ?? string.Empty), (textOp ?? string.Empty), (page ?? "1"),
                         Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]), key);
 
                     response = serviceResponse.Serialize(outputType);
@@ -381,15 +382,15 @@ namespace MOBOT.BHL.Web2.api3
 
         private CustomGenericList<Publication> PublicationSearchAdvanced(string title, string titleOp,
             string authorLastName, string year, string subject, string languageCode, string collectionID, 
-            string text, string page, bool fullText, string apiKey)
+            string text, string textOp, string page, bool fullText, string apiKey)
         {
-            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}", title, titleOp, 
+            string args = string.Format("{0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}", title, titleOp, 
                 authorLastName, (year == null ? "" : year.ToString()), subject, languageCode, 
-                (collectionID == null ? "" : collectionID.ToString()), text, page.ToString());
+                (collectionID == null ? "" : collectionID.ToString()), text, textOp, page.ToString());
             ValidateUser(Api3.APIRequestType.PublicationSearchAdvanced, apiKey, args);
             Api3 api = new Api3(ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
             return api.SearchPublication(title, titleOp, authorLastName, year, subject, languageCode, 
-                collectionID, text, page, fullText);
+                collectionID, text, textOp, page, fullText);
         }
 
         private CustomGenericList<Institution> GetInstitutions(string apiKey)

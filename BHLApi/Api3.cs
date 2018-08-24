@@ -931,7 +931,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string text, string page, bool sqlFullText)
+            string text, string textOp, string page, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
@@ -951,6 +951,19 @@ namespace MOBOT.BHL.API.BHLApi
                     break;
                 default:
                     throw new Exception("titleop (" + titleOp + ") must be one of the following values: All, Phrase");
+            }
+
+            if (string.IsNullOrWhiteSpace(textOp)) textOp = "All";  // Default to "All" (an AND search)
+            switch (textOp.ToLower())
+            {
+                case "all":
+                    textOp = "A";
+                    break;
+                case "phrase":
+                    textOp = "P";
+                    break;
+                default:
+                    throw new Exception("textop (" + textOp + ") must be one of the following values: All, Phrase");
             }
 
             int yearInt = 0;
@@ -989,7 +1002,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                    collectionID, text, pageInt);
+                    collectionID, text, textOp, pageInt);
             }
             else
             {
@@ -1016,7 +1029,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <returns></returns>
         private CustomGenericList<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string text, int page)
+            string text, string textOp, int page)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -1037,6 +1050,7 @@ namespace MOBOT.BHL.API.BHLApi
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
             search.StartPage = page;
             search.NumResults = 200;
+            if (!string.IsNullOrWhiteSpace(text)) search.Highlight = true;
             search.SortField = (SortField)Enum.Parse(typeof(SortField), ConfigurationManager.AppSettings["PublicationResultDefaultSort"]);
 
             ISearchResult result = search.SearchCatalog(
@@ -1046,7 +1060,8 @@ namespace MOBOT.BHL.API.BHLApi
                 string.Empty, year,
                 new SearchStringParam(subject, SearchStringParamOperator.And),
                 languageParam, collectionParam,
-                new SearchStringParam(text, SearchStringParamOperator.And));
+                new SearchStringParam(text, 
+                    (textOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)));
 
             // Build the list of results
             CustomGenericList<Publication> pubs = BuildPublicationList(result);

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiTitleIdentifierSelectByTitleID]
+﻿CREATE PROCEDURE [dbo].[ApiTitleIdentifierSelectByTitleID]
 
 @TitleID int
 
@@ -16,6 +15,7 @@ FROM	dbo.Title t INNER JOIN dbo.Title_Identifier ti
 		INNER JOIN dbo.Identifier i
 			ON ti.IdentifierID = i.IdentifierID
 WHERE	t.PublishReady = 1
+AND		i.Display = 1
 AND		t.TitleID = @TitleID
 ORDER BY i.IdentifierName
 
