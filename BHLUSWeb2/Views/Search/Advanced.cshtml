@@ -61,6 +61,11 @@
                         </li>
                         <li>
                             <label class="caption" for="txtPubText">Text:</label><input name="txtPubText" type="text" id="txtPubText" style="width:200px;" />
+                            <div style="font-family:Georgia;font-size:12px">
+                                <span>Include:</span>
+                                @Html.RadioButton("rdoTextInclude", "A", true, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;" })All Words&nbsp;&nbsp;
+                                @Html.RadioButton("rdoTextInclude", "P", false, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;" })Exact Phrase
+                            </div>
                         </li>
                     </ol>
                     <div style="margin-left: 152px;">
