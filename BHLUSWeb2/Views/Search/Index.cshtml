@@ -543,19 +543,19 @@
         }
 
         function buildQS() {
-            var qs = 'searchTerm=' + $('#Params_SearchTerm').val() +
+            var qs = 'searchTerm=' + encodeURIComponent( $('#Params_SearchTerm').val() ) +
                 "&tinc=" + $('#Params_TermInclude').val() +
                 '&searchCat=' + $('#Params_SearchCategory').val() +
                 '&stype=' + $('#Params_SearchType').val() +
-                '&lname=' + $('#Params_LastName').val() +
+                '&lname=' + encodeURIComponent( $('#Params_LastName').val() ) +
                 "&ninc=" + $('#Params_LastNameInclude').val() +
-                '&vol=' + $('#Params_Volume').val() +
-                '&yr=' + $('#Params_Year').val() +
-                '&subj=' + $('#Params_Subject').val() +
+                '&vol=' + encodeURIComponent( $('#Params_Volume').val() ) +
+                '&yr=' + encodeURIComponent( $('#Params_Year').val() ) +
+                '&subj=' + encodeURIComponent( $('#Params_Subject').val() ) +
                 "&sinc=" + $('#Params_SubjectInclude').val() +
                 '&lang=' + $('#Params_Language').val() +
-                '&col=' + $('#Params_Collection').val() +
-                '&txt=' + $('#Params_Text').val() + 
+                '&col=' + encodeURIComponent( $('#Params_Collection').val() ) +
+                '&txt=' + encodeURIComponent( $('#Params_Text').val() ) + 
                 '&txinc=' + $('#Params_TextInclude').val() + 
                 '&ppage=' + $('#ItemPage').val() +
                 '&apage=' + $('#AuthorPage').val() +
