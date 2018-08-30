@@ -160,6 +160,7 @@ BEGIN
 		PageID int,
 		ItemID int,
 		Issue nvarchar(20),
+		EndIssue nvarchar(20),
 		Year nvarchar(20),
 		Volume nvarchar(20),
 		PagePrefix nvarchar(40),
@@ -200,7 +201,9 @@ BEGIN
 					INNER JOIN Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
 			WHERE	t.PublishReady = 1 
 			AND		i.ItemStatusID = 40
-			AND		i.Volume = @Volume
+			AND		(i.Volume = @Volume OR
+					i.StartVolume = @Volume OR
+					@Volume BETWEEN i.StartVolume and i.EndVolume)
 
 			SELECT @ItemCount = COUNT(*) FROM #items
 		END
@@ -227,6 +230,7 @@ BEGIN
 			SELECT @ItemCount = COUNT(*) FROM #items
 		END
 
+		/*
 		IF @ItemCount = 0
 		BEGIN
 			-- If still no items found, again check the Volume field in the Item table
@@ -245,6 +249,7 @@ BEGIN
 
 			SELECT @ItemCount = COUNT(*) FROM #items
 		END
+		*/
 	END
 	ELSE
 	BEGIN
@@ -257,8 +262,11 @@ BEGIN
 		IF @ItemCount > 0
 		BEGIN
 			INSERT INTO #pages
-			SELECT	p.PageID, it.ItemID, p.Issue, p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
-			FROM	#items it INNER JOIN Page p WITH (NOLOCK) ON it.ItemID = p.ItemID
+			SELECT	p.PageID, it.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
+			FROM	#items it 
+					INNER JOIN Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
+					INNER JOIN Page p WITH (NOLOCK) ON i.ItemID = p.ItemID
 					INNER JOIN IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.PageID
 			WHERE	ip.PageNumber = @StartPage 
 			AND		p.Active = 1
@@ -269,7 +277,8 @@ BEGIN
 			--IF (@Volume = '')
 			--BEGIN
 				INSERT INTO #pages
-				SELECT	p.PageID, i.ItemID, p.Issue, p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
+				SELECT	p.PageID, i.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+						p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 				FROM	#tmpOpenUrlCitation ou
 						INNER JOIN TitleItem ti WITH (NOLOCK) ON ou.TitleID = ti.TitleID
 						INNER JOIN Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
@@ -288,8 +297,11 @@ BEGIN
 		IF @ItemCount > 0
 		BEGIN
 			INSERT INTO #pages
-			SELECT	p.PageID, it.ItemID, p.Issue, p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
-			FROM	#items it INNER JOIN Page p WITH (NOLOCK) ON it.ItemID = p.ItemID
+			SELECT	p.PageID, it.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
+			FROM	#items it 
+					INNER JOIN Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
+					INNER JOIN Page p WITH (NOLOCK) ON i.ItemID = p.ItemID
 					LEFT JOIN IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.PageID
 					INNER JOIN Page_PageType ppt WITH (NOLOCK) ON p.PageID = ppt.PageID
 			WHERE	ppt.PageTypeID = 1 -- title page
@@ -301,7 +313,8 @@ BEGIN
 			--IF (@Volume = '')
 			--BEGIN
 				INSERT INTO #pages
-				SELECT	p.PageID, i.ItemID, p.Issue, p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
+				SELECT	p.PageID, i.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+						p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 				FROM	#tmpOpenUrlCitation ou 
 						INNER JOIN TitleItem ti WITH (NOLOCK) ON ou.TitleID = ti.TitleID
 						INNER JOIN Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
@@ -316,7 +329,7 @@ BEGIN
 	END
 
 	-- If an issue was specified, drop any rows from our #pages table that don't match
-	IF (@Issue <> '') DELETE FROM #pages WHERE Issue <> @Issue
+	IF (@Issue <> '') DELETE FROM #pages WHERE @Issue NOT BETWEEN Issue AND EndIssue
 
 	-- Populate the final result set
 	IF (SELECT COUNT(*) FROM #pages) > 0
@@ -482,4 +495,3 @@ FROM #tmpOpenUrlCitation t LEFT JOIN dbo.TitleItem ti WITH (NOLOCK)
 ORDER BY s.SortTitle, title.SortTitle, ti.ItemSequence, t.Date, t.StartPage
 
 END
-
