@@ -13,6 +13,24 @@ namespace MOBOT.BHL.Web2 {
     public partial class NavBar {
         
         /// <summary>
+        /// rdoSearchTypeF control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeF;
+        
+        /// <summary>
+        /// rdoSearchTypeC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeC;
+        
+        /// <summary>
         /// tbSearchTerm control.
         /// </summary>
         /// <remarks>

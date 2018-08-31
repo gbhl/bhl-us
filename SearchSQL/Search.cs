@@ -40,6 +40,11 @@ namespace BHL.Search.SQL
             return online;
         }
 
+        public bool IsFullTextSupported()
+        {
+            return false;
+        }
+
         public ISearchResult SearchAuthor(string name)
         {
             SearchResult result = new SearchResult();
@@ -50,7 +55,7 @@ namespace BHL.Search.SQL
             return result;
         }
 
-        public ISearchResult SearchCatalog(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchAll(string query, List<Tuple<SearchField, string>> limits = null)
         {
             throw new NotImplementedException();
 
@@ -63,25 +68,33 @@ namespace BHL.Search.SQL
             */
         }
 
-        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
+            SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = new SearchResult();
 
             long totalHits = 0;
-            result.Items = new DataAccess(_connectionString).SearchItem(title, author, volume, year, keyword, 
-                (language != null ? language.Item1 : null), 
+            result.Items = new DataAccess(_connectionString).SearchItem(title.searchValue, author.searchValue, volume, 
+                year, keyword.searchValue, (language != null ? language.Item1 : null), 
                 (collection != null ? collection.Item1 : null), out totalHits, StartPage, NumResults);
             GetSearchResultStats(result, totalHits);
 
-            if (!string.IsNullOrWhiteSpace(title)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title));
-            if (!string.IsNullOrWhiteSpace(author)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author));
+            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
+            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword));
+            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item1));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item1));
+            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
             result.QueryLimits = limits;
             return result;
+        }
+
+        public ISearchResult SearchCatalog(string searchTerm, List<Tuple<SearchField, string>> limits = null)
+        {
+            return SearchItem(searchTerm, limits);
         }
 
         public ISearchResult SearchItem(string searchTerm, List<Tuple<SearchField, string>> limits = null)
@@ -117,7 +130,8 @@ namespace BHL.Search.SQL
             return result;
         }
 
-        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null, 
+            bool includeText = false)
         {
             throw new NotImplementedException();
 

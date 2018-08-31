@@ -47,6 +47,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -63,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api3.cs" />
     <Compile Include="Api2.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="ServiceResponse.cs" />
@@ -72,6 +74,10 @@
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects3\BHLApiDataObjects3.csproj">
+      <Project>{c5a231c5-6079-4204-b023-ac180388c10a}</Project>
+      <Name>BHLApiDataObjects3</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHLServer\BHLServer.csproj">
       <Project>{20FC0F67-C32A-46FE-9FF2-BA5FC74725AF}</Project>
@@ -92,6 +98,10 @@
     <ProjectReference Include="..\NameServiceDataObjects\BHLApiDataObjects.csproj">
       <Project>{EF8580AD-4BF2-4143-AAC8-03B8136BF151}</Project>
       <Name>BHLApiDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SearchBHL\SearchBHL.csproj">
+      <Project>{331e4ba6-e31a-488a-a9f0-ef0d81969b4c}</Project>
+      <Name>SearchBHL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

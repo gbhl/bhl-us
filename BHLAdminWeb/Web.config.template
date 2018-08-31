@@ -105,6 +105,7 @@
     <add key="DashboardStatsCacheTime" value="240" />
     <!-- Values for these keys map to the ApplicationIDs defined in the Application table in the MOBOTAdmin database -->
     <add key="APIStatsAppID" value="2" />
+    <add key="APIV3StatsAppID" value="5" />
     <add key="OpenUrlStatsAppID" value="3" />
     <!-- Use these Urls to include titles, items, pages, and names on the chart -->
     <!--
@@ -122,7 +123,7 @@
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="LogExceptions" value="true"/>
     <!-- List of search indexes, delimited by | -->
-    <add key="SearchServerIndexes" value="items|authors|keywords|names|pages" />
+    <add key="SearchServerIndexes" value="catalog|items|authors|keywords|names|pages" />
     <!-- Search Server API URLs -->
     <add key="SearchServerStatsUrl" value="/_cluster/stats?human" />
     <add key="SearchIndexStatsUrl" value="/_stats?human" />

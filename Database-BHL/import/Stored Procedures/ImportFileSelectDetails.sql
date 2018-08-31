@@ -31,8 +31,8 @@ FROM	import.importFile f
 		INNER JOIN import.ImportFileStatus s ON f.ImportFileStatusID = s.ImportFileStatusID
 		LEFT JOIN dbo.AspNetUsers u1 ON f.CreationUserID = u1.Id
 		LEFT JOIN dbo.AspNetUsers u2 ON f.LastModifiedUserID = u2.Id
-WHERE	f.ContributorCode = @ContributorCode OR @ContributorCode = ''
-AND		f.ImportFileStatusID = @FileStatusID OR @FileStatusID = 0
+WHERE	(f.ContributorCode = @ContributorCode OR @ContributorCode = '')
+AND		(f.ImportFileStatusID = @FileStatusID OR @FileStatusID = 0)
 AND		DATEDIFF(DAY, f.LastModifiedDate, GETDATE()) <= @NumDays
 GROUP BY
 		f.ImportFileID,

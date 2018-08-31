@@ -15,6 +15,7 @@ FROM	dbo.Segment s INNER JOIN dbo.SegmentIdentifier si
 		INNER JOIN dbo.Identifier i
 			ON si.IdentifierID = i.IdentifierID
 WHERE	s.SegmentStatusID IN (10, 20)
+AND		i.Display = 1
 AND		s.SegmentID = @SegmentID
 ORDER BY i.IdentifierName
 

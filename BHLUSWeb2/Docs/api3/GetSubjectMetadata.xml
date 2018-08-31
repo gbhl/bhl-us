@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <ErrorMessage />
+  <Result>
+    <Subject>
+      <SubjectText>Water</SubjectText>
+      <Publications>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>3622</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/3622</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Washington,</PublisherPlace>
+          <PublisherName>Biological Society of Washington</PublisherName>
+          <Genre>Serial</Genre>
+          <Title>Proceedings of the Biological Society of Washington.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Title</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <TitleID>4193</TitleID>
+          <TitleUrl>https://www.biodiversitylibrary.org/bibliography/4193</TitleUrl>
+          <MaterialType>Published material</MaterialType>
+          <PublisherPlace>Rockville, Md. :</PublisherPlace>
+          <PublisherName>National Oceanic and Atmospheric Administration ;</PublisherName>
+          <PublicationDate>1979.</PublicationDate>
+          <Authors>
+            <Author>
+              <Name>Sindermann, Carl J.</Name>
+            </Author>
+            <Author>
+              <Name>Swanson, R. Lawrence</Name>
+            </Author>
+          </Authors>
+          <Genre>Monograph/Item</Genre>
+          <Title>Oxygen depletion and associated benthic mortalities in New York Bight, 1976 /  editors, R. Lawrence Swanson, Carl J. Sindermann.</Title>
+        </Publication>
+        <Publication>
+          <BHLType>Part</BHLType>
+          <FoundIn>Metadata</FoundIn>
+          <Volume>40</Volume>
+          <Authors>
+            <Author>
+              <Name>Dustin, A-P</Name>
+            </Author>
+          </Authors>
+          <PartUrl>https://www.biodiversitylibrary.org/part/6452</PartUrl>
+          <PartID>6452</PartID>
+          <Genre>Article</Genre>
+          <Title>Sur une variete nouvelle de Licnophora endoparasite de Bulla hydatis L</Title>
+          <ContainerTitle>Bulletin de la Société zoologique de France.</ContainerTitle>
+          <Date>1915</Date>
+          <PageRange>179--184</PageRange>
+        </Publication>
+      </Publications>
+    </Subject>
+  </Result>
+</Response>

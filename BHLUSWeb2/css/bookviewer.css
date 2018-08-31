@@ -45,13 +45,22 @@
 #book-master header #searchbar .field
 {
     top: 25px;
-    }
+    left: 0px;
+}
 
 
 #book-master header #searchbar .button
 {
     top: 25px;
-    }
+}
+
+#book-master header #searchbar-searchtype {
+    display: block;
+    float: left;
+    color: #7194b4;
+    font: 12px Georgia;
+    text-shadow:0px 0px #fff;
+}
     
 #book-master #page-title
 {

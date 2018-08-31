@@ -166,6 +166,23 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="Docs\api3\AuthorSearch.xml" />
+    <Content Include="Docs\api3.html" />
+    <Content Include="Docs\api3\GetAuthorMetadata.xml" />
+    <Content Include="Docs\api3\GetCollections.xml" />
+    <Content Include="Docs\api3\GetInstitutions.xml" />
+    <Content Include="Docs\api3\GetItemMetadata.xml" />
+    <Content Include="Docs\api3\GetLanguages.xml" />
+    <Content Include="Docs\api3\GetNameMetadata.xml" />
+    <Content Include="Docs\api3\GetPageMetadata.xml" />
+    <Content Include="Docs\api3\GetPartMetadata.xml" />
+    <Content Include="Docs\api3\GetSubjectMetadata.xml" />
+    <Content Include="Docs\api3\GetTitleMetadata.xml" />
+    <Content Include="Docs\api3\NameSearch.xml" />
+    <Content Include="Docs\api3\PageSearch.xml" />
+    <Content Include="Docs\api3\PublicationSearch.xml" />
+    <Content Include="Docs\api3\PublicationSearchAdvanced.xml" />
+    <Content Include="Docs\api3\SubjectSearch.xml" />
     <Content Include="apikeymsg.txt" />
     <Content Include="api\docs\docs.html" />
     <Content Include="api\docs\docs.txt" />
@@ -197,7 +214,9 @@
     <Content Include="controls\ucFeatureBox.ascx" />
     <Content Include="CreatorList.aspx" />
     <Content Include="CreatorPage.aspx" />
-    <Content Include="css\bhlaustylereference.css" />
+    <Content Include="css\bhlaustylereference.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="css\BookReader.css" />
     <Content Include="css\bookviewer.css" />
     <Content Include="css\bookviewer_extra.css" />
@@ -220,7 +239,9 @@
     <Content Include="css\jqgridtheme\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="css\jqgridtheme\jquery-ui-1.8.10.custom.css" />
     <Content Include="css\jqgridtheme\ui.jqgrid.css" />
-    <Content Include="css\style.css" />
+    <Content Include="css\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="css\ui.jqgrid.css" />
     <Content Include="dlconcepts.aspx" />
     <Content Include="dlindexbrowse.aspx" />
@@ -463,6 +484,10 @@
     <Content Include="packages.config" />
     <Content Include="Handlers\PDFDownload.ashx" />
     <Content Include="Handlers\RISDownload.ashx" />
+    <Content Include="apiv3\api3.ashx" />
+    <Content Include="Docs\BHL Permissions Form.pdf" />
+    <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
+    <Content Include="Docs\DarwinsLibraryBibliography.pdf" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -540,6 +565,9 @@
     <Compile Include="api2\soap.asmx.cs">
       <DependentUpon>soap.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="apiv3\api3.ashx.cs">
+      <DependentUpon>api3.ashx</DependentUpon>
     </Compile>
     <Compile Include="api\httpQuery.ashx.cs">
       <DependentUpon>httpQuery.ashx</DependentUpon>
@@ -979,6 +1007,10 @@
     <ProjectReference Include="..\BHLApiDataObjects2\BHLApiDataObjects2.csproj">
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLApiDataObjects3\BHLApiDataObjects3.csproj">
+      <Project>{c5a231c5-6079-4204-b023-ac180388c10a}</Project>
+      <Name>BHLApiDataObjects3</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHLApi\BHLApi.csproj">
       <Project>{1C2EAD88-F194-4DF0-A82B-3D402F7ABC21}</Project>

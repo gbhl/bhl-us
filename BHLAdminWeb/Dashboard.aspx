@@ -450,6 +450,11 @@
 						</td>
 					</tr>
 					<tr>
+						<td align="center" runat="server" id="tdApiV3Stats">
+							<a href="/WebStatsDaily.aspx?id={0}&mid=v3" runat="server" id="apiv3StatsLink">API v3</a>
+						</td>
+					</tr>
+					<tr>
 						<td align="center" runat="server" id="tdOpenUrlStats">
 							<a href="/WebStatsDaily.aspx?id={0}&mid=ou" runat="server" id="openurlStatsLink">OpenUrl</a>
 						</td>

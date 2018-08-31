@@ -46,7 +46,7 @@ SELECT	s.SegmentID,
 		RTRIM(s.Title) AS Title,
 		RTRIM(s.TranslatedTitle) AS TranslatedTitle,
 		ISNULL(s.SortTitle, '') AS SortTitle,
-		ISNULL(CASE WHEN t.FullTitle IS NULL THEN s.ContainerTitle COLLATE SQL_Latin1_General_CP1_CI_AI ELSE t.FullTitle END, '') AS ContainerTitle,
+		RTRIM(s.ContainerTitle) AS ContainerTitle,
 		ISNULL(RTRIM(dbo.fnAuthorSearchStringForSegment(s.SegmentID, 1)) + ' ', '') AS Authors,
 		dbo.fnAuthorFacetStringForSegment(s.SegmentID) AS FacetAuthors,
 		ISNULL(RTRIM(dbo.fnAuthorSearchStringForSegment(s.SegmentID, 0)) + ' ', '') AS SearchAuthors,
@@ -55,8 +55,8 @@ SELECT	s.SegmentID,
 		RTRIM(s.Volume) AS Volume,
 		RTRIM(s.Series) AS Series,
 		RTRIM(s.Issue) AS Issue,
-		ISNULL(RTRIM(t.Datafield_260_b) + ' ', '') AS PublisherName,
-		ISNULL(RTRIM(t.Datafield_260_a) + ' ', '') AS PublisherPlace,
+		RTRIM(s.PublisherName) AS PublisherName,
+		RTRIM(s.PublisherPlace) AS PublisherPlace,
 		0 AS HasLocalContent,
 		RTRIM(CASE WHEN s.Url = '' THEN 0 ELSE 1 END) AS HasExternalContent,
 		0 AS HasIllustrations,
@@ -68,7 +68,7 @@ SELECT	s.SegmentID,
 		s.StartPageID,
 		CASE WHEN ISNULL(PageRange, '') = '' THEN StartPageNumber +'--' + EndPageNumber ELSE PageRange END AS PageRange,
 		RTRIM(s.[Date]) AS [Date]
-FROM	dbo.Segment s WITH(NOLOCK)
+FROM	dbo.vwSegment s WITH(NOLOCK)
 		LEFT JOIN dbo.Language l WITH(NOLOCK) ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentGenre g WITH(NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.DOI d WITH(NOLOCK) ON s.SegmentID = d.EntityID AND d.DOIStatusID IN(100, 200) AND d.DOIEntityTypeID = 40

@@ -17,6 +17,11 @@ namespace BHL.Search.Offline
             return true;
         }
 
+        public bool IsFullTextSupported()
+        {
+            return true;
+        }
+
         public ISearchResult SearchAuthor(string name)
         {
             SearchResult result = GetOfflineSearchResult();
@@ -24,7 +29,7 @@ namespace BHL.Search.Offline
             return result;
         }
 
-        public ISearchResult SearchCatalog(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchAll(string query, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = GetOfflineSearchResult();
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, query));
@@ -32,16 +37,27 @@ namespace BHL.Search.Offline
             return result;
         }
 
-        public ISearchResult SearchItem(string title, string author, string volume, string year, string keyword, Tuple<string, string> language, Tuple<string, string> collection, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
+            SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
+            SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = GetOfflineSearchResult();
-            if (!string.IsNullOrWhiteSpace(title)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title));
-            if (!string.IsNullOrWhiteSpace(author)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author));
+            if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
+            if (!string.IsNullOrWhiteSpace(author.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.AuthorNames, author.searchValue));
             if (!string.IsNullOrWhiteSpace(volume)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Volume, volume));
             if (!string.IsNullOrWhiteSpace(year)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Dates, year));
-            if (!string.IsNullOrWhiteSpace(keyword)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword));
+            if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item2));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item2));
+            if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
+            result.QueryLimits = limits;
+            return result;
+        }
+
+        public ISearchResult SearchCatalog(string searchTerm, List<Tuple<SearchField, string>> limits = null)
+        {
+            SearchResult result = GetOfflineSearchResult();
+            result.Query.Add(new Tuple<SearchField, string>(SearchField.All, searchTerm));
             result.QueryLimits = limits;
             return result;
         }
@@ -68,7 +84,8 @@ namespace BHL.Search.Offline
             return result;
         }
 
-        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null)
+        public ISearchResult SearchPage(string query, List<Tuple<SearchField, string>> limits = null,
+            bool includeText = false)
         {
             SearchResult result = GetOfflineSearchResult();
             result.Query.Add(new Tuple<SearchField, string>(SearchField.All, query));

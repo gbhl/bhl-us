@@ -22,7 +22,8 @@ namespace MOBOT.BHL.Web2
 
         protected void btnSearchSubmit_Click(object sender, EventArgs e)
         {
-            Response.Redirect(string.Format("~/search?searchTerm={0}", Server.UrlEncode(tbSearchTerm.Text)));
+            string searchType = (rdoSearchTypeF.Checked) ? rdoSearchTypeF.Value : rdoSearchTypeC.Value;
+            Response.Redirect(string.Format("~/search?searchTerm={0}&stype={1}", Server.UrlEncode(tbSearchTerm.Text), Server.UrlEncode(searchType)));
         }
 
         public string SetClass(string page)

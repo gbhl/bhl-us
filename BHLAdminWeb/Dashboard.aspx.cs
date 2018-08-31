@@ -42,6 +42,7 @@ namespace MOBOT.BHL.AdminWeb
 
             // Set the links for the web traffic stats
             apiv2StatsLink.HRef = string.Format(apiv2StatsLink.HRef, ConfigurationManager.AppSettings["APIStatsAppID"]);
+            apiv3StatsLink.HRef = string.Format(apiv3StatsLink.HRef, ConfigurationManager.AppSettings["APIV3StatsAppID"]);
             openurlStatsLink.HRef = string.Format(openurlStatsLink.HRef, ConfigurationManager.AppSettings["OpenUrlStatsAppID"]);
             trafficStatsMenu.Visible = new BHL.Web.Utilities.RequestLog().Loaded; // Show the web stats menu if stats are available
 
@@ -210,6 +211,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 tdAlertMessage.InnerHtml = GetMenuText(tdAlertMessage.InnerHtml);
                 tdApiV2Stats.InnerHtml = apiv2StatsLink.InnerText;
+                tdApiV3Stats.InnerHtml = apiv3StatsLink.InnerText;
                 tdOpenUrlStats.InnerHtml = openurlStatsLink.InnerText;
                 tdUserAccounts.InnerHtml = GetMenuText(tdUserAccounts.InnerHtml);
             }

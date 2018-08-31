@@ -241,6 +241,11 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwMarcDataField.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwTropicosNames.sql"
 
 REM --------------------------------------
+REM  Build Types
+REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Types\SearchIDTable.sql"
+
+REM --------------------------------------
 REM  Build Stored Procedures for Auditing
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicCreateTrigger.sql"
@@ -515,7 +520,9 @@ sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectFromDateToNow.
 sqlcmd -E -S %1 -d %2 -i "audit\Stored Procedures\AuditBasicSelectPrimaryKeyNames.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectBySegmentID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectByTitleID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectForList.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectNameStartsWith.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiAuthorSelectWithNameByIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiItemSelectByBarcode.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiItemSelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiItemSelectByTitleId.sql"
@@ -528,6 +535,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\APIKeySelectAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiKeySelectByEmail.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiKeySelectByKey.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\APIKeyUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiNameIdentifierSelectByNameResolvedID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiNameResolvedCountUnique.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiNameResolvedCountUniqueBetweenDates.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiNameResolvedListActive.sql"
@@ -537,6 +545,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiNameSegmentSelectBySegmentID.
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameBankID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameConfirmed.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectBySegmentID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSearchAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSearchTitleSimple.sql"
@@ -1201,7 +1210,9 @@ sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTypesByDate.s
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestTypeSelectByApplication.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\DailyTasks.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\AuthorSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemCountForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectDocumentForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectFirstForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectIDs.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\KeywordSelectDocumentsForIndex.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\NameSelectDocumentsForIndex.sql"
@@ -1224,6 +1235,7 @@ sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SearchPublicationAdvanced.
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectByItem.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectDocumentForIndex.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\SegmentSelectIDs.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\VolumeSelectDocumentsForIndex.sql"
 
 GOTO DONE
 

@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Response
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Name>
+      <Identifiers>
+        <Identifier>
+          <IdentifierName>EOL</IdentifierName>
+          <IdentifierValue>1114594</IdentifierValue>
+        </Identifier>
+        <Identifier>
+          <IdentifierName>GNI</IdentifierName>
+          <IdentifierValue>57c2f267-7aa5-5991-949c-610af8b2546b</IdentifierValue>
+        </Identifier>
+      </Identifiers>
+      <NameConfirmed>Poa annua Linnaeus</NameConfirmed>
+      <Titles>
+        <Title>
+          <TitleID>44625</TitleID>
+          <ShortTitle>The American farmer's encyclopedia :</ShortTitle>
+          <CallNumber>S411 .J68 1858</CallNumber>
+          <PublisherPlace>New York :</PublisherPlace>
+          <PublisherName>A.O. Moore, Agricultural Book Publisher,</PublisherName>
+          <PublicationDate>1858, [c1857]</PublicationDate>
+          <TitleUrl>https://www.biodiversitylibrary.org/title/44625</TitleUrl>
+          <Items>
+            <Item>
+              <ItemID>96956</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>americanfarmers00john</SourceIdentifier>
+              <Volume />
+              <HoldingInstitution>University of British Columbia Library (archive.org)</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/96956</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>30892792</PageID>
+                  <ItemID>96956</ItemID>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/30892792</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/30892792</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/30892792</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/30892792</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>209</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+          </Items>
+        </Title>
+        <Title>
+          <TitleID>60</TitleID>
+          <ShortTitle>Botanische Jahrbücher fur Systematik, Pflanzengeschichte und Pflanzengeographie.</ShortTitle>
+          <CallNumber>QK1 .B55</CallNumber>
+          <PublisherPlace>Stuttgart [etc.]</PublisherPlace>
+          <PublisherName>Schweizerbart [etc.]</PublisherName>
+          <PublicationDate />
+          <TitleUrl>https://www.biodiversitylibrary.org/title/60</TitleUrl>
+          <Items>
+            <Item>
+              <ItemID>679</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>mobot31753002220884</SourceIdentifier>
+              <Volume>v.21 (1896)</Volume>
+              <HoldingInstitution>Missouri Botanical Garden, Peter H. Raven Library</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/679</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>205652</PageID>
+                  <ItemID>679</ItemID>
+                  <Volume>21</Volume>
+                  <Issue>1 &amp; 2</Issue>
+                  <Year>1896</Year>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/205652</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/205652</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/205652</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/205652</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>87</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+          </Items>
+        </Title>
+        <Title>
+          <TitleID>5828</TitleID>
+          <ShortTitle>Bulletin /</ShortTitle>
+          <CallNumber>QK1 .B968515</CallNumber>
+          <PublisherPlace>Washington, D.C. :</PublisherPlace>
+          <PublisherName>The Division,</PublisherName>
+          <PublicationDate>1895-1901.</PublicationDate>
+          <TitleUrl>https://www.biodiversitylibrary.org/title/5828</TitleUrl>
+          <Items>
+            <Item>
+              <ItemID>110083</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>mobot31753002746300</SourceIdentifier>
+              <Volume>no. 1-6 (1895-1897)</Volume>
+              <HoldingInstitution>Missouri Botanical Garden, Peter H. Raven Library</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/110083</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>35539818</PageID>
+                  <ItemID>110083</ItemID>
+                  <Issue>5</Issue>
+                  <Year>1895-1897</Year>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/35539818</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/35539818</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/35539818</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/35539818</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>43</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+          </Items>
+        </Title>
+        <Title>
+          <TitleID>6138</TitleID>
+          <ShortTitle>An introduction to physiological and systematical botany.</ShortTitle>
+          <PublisherPlace>London,</PublisherPlace>
+          <PublisherName>Longman, Hurst, Reese, and Orme,</PublisherName>
+          <PublicationDate>1809.</PublicationDate>
+          <TitleUrl>https://www.biodiversitylibrary.org/title/6138</TitleUrl>
+          <Items>
+            <Item>
+              <ItemID>27705</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>introductionto00smit</SourceIdentifier>
+              <Volume />
+              <HoldingInstitution>New York Botanical Garden, LuEsther T. Mertz Library</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/27705</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>5284038</PageID>
+                  <ItemID>27705</ItemID>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/5284038</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/5284038</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/5284038</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/5284038</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>105</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+          </Items>
+        </Title>
+        <Title>
+          <TitleID>144</TitleID>
+          <ShortTitle>Symbolae Antillanae,seu, Fundamenta florae Indiae Occidentalis /</ShortTitle>
+          <CallNumber>QK225 .U73 1898-1928</CallNumber>
+          <PublisherPlace>Berolini :Parisiis :</PublisherPlace>
+          <PublisherName>Fratres Borntraeger ;Paul Klincksieck,</PublisherName>
+          <PublicationDate>1898-1928.</PublicationDate>
+          <TitleUrl>https://www.biodiversitylibrary.org/title/144</TitleUrl>
+          <Items>
+            <Item>
+              <ItemID>3758</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>mobot31753002361035</SourceIdentifier>
+              <Volume>v.8 1920-21</Volume>
+              <HoldingInstitution>Missouri Botanical Garden, Peter H. Raven Library</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/3758</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>744187</PageID>
+                  <ItemID>3758</ItemID>
+                  <Volume>8</Volume>
+                  <Year>1920-1921</Year>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/744187</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/744187</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/744187</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/744187</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>643</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+            <Item>
+              <ItemID>23304</ItemID>
+              <Source>Internet Archive</Source>
+              <SourceIdentifier>symbolaeantillan08urba</SourceIdentifier>
+              <Volume>1920-21 v. 8</Volume>
+              <HoldingInstitution>New York Botanical Garden, LuEsther T. Mertz Library</HoldingInstitution>
+              <ItemUrl>https://www.biodiversitylibrary.org/item/23304</ItemUrl>
+              <Pages>
+                <Page>
+                  <PageID>3508693</PageID>
+                  <ItemID>23304</ItemID>
+                  <PageUrl>https://www.biodiversitylibrary.org/page/3508693</PageUrl>
+                  <ThumbnailUrl>https://www.biodiversitylibrary.org/pagethumb/3508693</ThumbnailUrl>
+                  <FullSizeImageUrl>https://www.biodiversitylibrary.org/pageimage/3508693</FullSizeImageUrl>
+                  <OcrUrl>https://www.biodiversitylibrary.org/pageocr/3508693</OcrUrl>
+                  <PageTypes>
+                    <PageType>
+                      <PageTypeName>Text</PageTypeName>
+                    </PageType>
+                  </PageTypes>
+                  <PageNumbers>
+                    <PageNumber>
+                      <Prefix>Page</Prefix>
+                      <Number>643</Number>
+                    </PageNumber>
+                  </PageNumbers>
+                </Page>
+              </Pages>
+            </Item>
+          </Items>
+        </Title>
+      </Titles>
+    </Name>
+  </Result>
+</Response>

@@ -1,0 +1,1566 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Response xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Status>ok</Status>
+  <Result>
+    <Institution>
+      <InstitutionCode>ALPL</InstitutionCode>
+      <InstitutionName>Abraham Lincoln Presidential Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ANSP</InstitutionCode>
+      <InstitutionName>Academy of Natural Sciences of Drexel University, Library and Archives</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AAFC</InstitutionCode>
+      <InstitutionName>Agriculture and Agri-Food Canada (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AMZA</InstitutionCode>
+      <InstitutionName>Albany Museum</InstitutionName>
+      <InstitutionUrl>https://www.ru.ac.za/albanymuseum/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ALL</InstitutionCode>
+      <InstitutionName>Alberta Legislature Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NHA</InstitutionCode>
+      <InstitutionName>Albion Hodgdon Herbarium, University of New Hampshire (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ACPLGC</InstitutionCode>
+      <InstitutionName>Allen County Public Library Genealogy Center (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AES</InstitutionCode>
+      <InstitutionName>American Entomological Society</InstitutionName>
+      <InstitutionUrl>http://www.ansp.org/hosted/aes/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AMCA</InstitutionCode>
+      <InstitutionName>American Mosquito Control Association</InstitutionName>
+      <InstitutionUrl>http://www.mosquito.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AMNH</InstitutionCode>
+      <InstitutionName>American Museum of Natural History Library</InstitutionName>
+      <InstitutionUrl>http://library.amnh.org</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AMU</InstitutionCode>
+      <InstitutionName>American Ornithologists' Union</InstitutionName>
+      <InstitutionUrl>http://www.aou.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ARC</InstitutionCode>
+      <InstitutionName>Amphibian and Reptile Conservation</InstitutionName>
+      <InstitutionUrl>http://amphibian-reptile-conservation.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ANE</InstitutionCode>
+      <InstitutionName>Amphipod Newsletter, Editors</InstitutionName>
+      <InstitutionUrl>http://www.marinespecies.org/amphipoda/newsletter.php</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AOI</InstitutionCode>
+      <InstitutionName>Ants of India</InstitutionName>
+      <InstitutionUrl>http://www.antdiversityindia.com/home_ants_of_india</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AOO</InstitutionCode>
+      <InstitutionName>Archives of Ontario (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ARKNPS</InstitutionCode>
+      <InstitutionName>Arkansas Native Plant Society</InstitutionName>
+      <InstitutionUrl>https://anps.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ASCYUL</InstitutionCode>
+      <InstitutionName>ASC - York University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>AM</InstitutionCode>
+      <InstitutionName>Australian Museum</InstitutionName>
+      <InstitutionUrl>http://australianmuseum.net.au/journalfinder</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BHLE</InstitutionCode>
+      <InstitutionName>BHL Europe</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SCIELO</InstitutionCode>
+      <InstitutionName>BHL SciELO</InstitutionName>
+      <InstitutionUrl>http://www.bhlscielo.org/en/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNAM</InstitutionCode>
+      <InstitutionName>Biblioteca Conjunta de Ciencias de la Tierra, Instituto de Ciencias del Mar y Limnología, UNAM</InstitutionName>
+      <InstitutionUrl>http://bcct.unam.mx/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BDRJBM</InstitutionCode>
+      <InstitutionName>Biblioteca Digital del Real Jardin Botanico de Madrid</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BSG</InstitutionCode>
+      <InstitutionName>Bibliotheque Sainte Genevieve</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BSTOR</InstitutionCode>
+      <InstitutionName>BioStor</InstitutionName>
+      <InstitutionUrl>http://biostor.org</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BNHS</InstitutionCode>
+      <InstitutionName>Bombay Natural History Society</InstitutionName>
+      <InstitutionUrl>http://bnhs.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BLEIU</InstitutionCode>
+      <InstitutionName>Booth Library, Eastern Illinois University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BCL</InstitutionCode>
+      <InstitutionName>Boston College Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BOS</InstitutionCode>
+      <InstitutionName>Boston Public Library (archive.org)</InstitutionName>
+      <InstitutionUrl>http://www.bpl.org</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BOSTONUL</InstitutionCode>
+      <InstitutionName>Boston University Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BRIT</InstitutionCode>
+      <InstitutionName>Botanical Research Institute of Texas (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BUL</InstitutionCode>
+      <InstitutionName>Brandeis University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BYUHI</InstitutionCode>
+      <InstitutionName>Brigham Young University Hawaii, Joseph F. Smith Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BYUI</InstitutionCode>
+      <InstitutionName>Brigham Young University-Idaho (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BROCK</InstitutionCode>
+      <InstitutionName>Brock University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BROWNUL</InstitutionCode>
+      <InstitutionName>Brown University Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BLM</InstitutionCode>
+      <InstitutionName>Bureau of Land Management (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CASL</InstitutionCode>
+      <InstitutionName>California Academy of Sciences</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CDFG</InstitutionCode>
+      <InstitutionName>California Department of Fish and Game (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CNPSEB</InstitutionCode>
+      <InstitutionName>California Native Plant Society: East Bay Chapter</InstitutionName>
+      <InstitutionUrl>http://ebcnps.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CNPKC</InstitutionCode>
+      <InstitutionName>California Native Plant Society: Kern County Chapter</InstitutionName>
+      <InstitutionUrl>http://kern.cnps.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CNPSML</InstitutionCode>
+      <InstitutionName>California Native Plant Society: Mount Lassen Chapter</InstitutionName>
+      <InstitutionUrl>http://mountlassen.cnps.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CSL</InstitutionCode>
+      <InstitutionName>California State Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CUL</InstitutionCode>
+      <InstitutionName>Cambridge University Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CANADIANA</InstitutionCode>
+      <InstitutionName>Canadiana.org (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CBC</InstitutionCode>
+      <InstitutionName>Carolina Bird Club</InstitutionName>
+      <InstitutionUrl>https://www.carolinabirdclub.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CYTEALUT</InstitutionCode>
+      <InstitutionName>Cheng Yu Tung East Asian Library - University of Toronto (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CBF</InstitutionCode>
+      <InstitutionName>Chesapeake Bay Foundation</InstitutionName>
+      <InstitutionUrl>http://www.cbf.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CBG</InstitutionCode>
+      <InstitutionName>Chicago Botanic Garden, Lenhardt Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CTCUMD</InstitutionCode>
+      <InstitutionName>Claire T. Carney Library, UMass Dartmouth (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>COLUMBIAUL</InstitutionCode>
+      <InstitutionName>Columbia University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CONABIO</InstitutionCode>
+      <InstitutionName>Comisión Nacional para el Conocimiento y Uso de la Biodiversidad (CONABIO)</InstitutionName>
+      <InstitutionUrl>http://www.conabio.gob.mx/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GSA</InstitutionCode>
+      <InstitutionName>Commonwealth of Australia (Geoscience Australia)</InstitutionName>
+      <InstitutionUrl>http://www.ga.gov.au</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CORN</InstitutionCode>
+      <InstitutionName>Cornell University Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>DANMURPHY</InstitutionCode>
+      <InstitutionName>Dan Murphy (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>DENPS</InstitutionCode>
+      <InstitutionName>Delaware Native Plant Society</InstitutionName>
+      <InstitutionUrl>http://www.delawarenativeplants.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>DHHLOCAD</InstitutionCode>
+      <InstitutionName>Dorothy H. Hoover Library, Ontario College of Art &amp; Design (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>DUKEUL</InstitutionCode>
+      <InstitutionName>Duke University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ESUT</InstitutionCode>
+      <InstitutionName>Earth Sciences - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ECOSUR</InstitutionCode>
+      <InstitutionName>El Colegio de la Frontera Sur</InstitutionName>
+      <InstitutionUrl>http://bibliotecasibe.ecosur.mx/sibe/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EUT</InstitutionCode>
+      <InstitutionName>Emmanuel - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EMRYU</InstitutionCode>
+      <InstitutionName>Emory University, Manuscript, Archives and Rare Book Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EUPTL</InstitutionCode>
+      <InstitutionName>Emory University, Pitts Theology Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EURWWL</InstitutionCode>
+      <InstitutionName>Emory University, Robert W. Woodruff Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EUWHSCL</InstitutionCode>
+      <InstitutionName>Emory University, Woodruff Health Sciences Center Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ESOO</InstitutionCode>
+      <InstitutionName>Entomological Society of Ontario</InstitutionName>
+      <InstitutionUrl>http://www.entsocont.ca/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ESLS</InstitutionCode>
+      <InstitutionName>Environmental Services &amp; Library Systems (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EABL</InstitutionCode>
+      <InstitutionName>Expanding Access</InstitutionName>
+      <InstitutionUrl>https://biodivlib.wikispaces.com/Expanding+Access+to+Biodiversity+Literature</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FAOROA</InstitutionCode>
+      <InstitutionName>FAO Regional Office for Africa (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FARLOW</InstitutionCode>
+      <InstitutionName>Farlow Reference Library of Cryptogamic Botany (archive.org)</InstitutionName>
+      <InstitutionUrl>http://www.huh.harvard.edu/libraries/Farlowarc.htm</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FIELD</InstitutionCode>
+      <InstitutionName>Field Museum of Natural History Library</InstitutionName>
+      <InstitutionUrl>http://fieldmuseum.org/explore/department/library</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FISHERUT</InstitutionCode>
+      <InstitutionName>Fisher - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FORDHAM</InstitutionCode>
+      <InstitutionName>Fordham University Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FACLM</InstitutionCode>
+      <InstitutionName>Francis A. Countway Library of Medicine (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FROSTYUL</InstitutionCode>
+      <InstitutionName>Frost - York University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GERSTEINUT</InstitutionCode>
+      <InstitutionName>Gerstein - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GHENT</InstitutionCode>
+      <InstitutionName>Ghent University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HBLL</InstitutionCode>
+      <InstitutionName>Harold B. Lee Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HARVARD</InstitutionCode>
+      <InstitutionName>Harvard University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HUH</InstitutionCode>
+      <InstitutionName>Harvard University Botany Libraries</InstitutionName>
+      <InstitutionUrl>http://www.huh.harvard.edu/libraries/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HUMCZ</InstitutionCode>
+      <InstitutionName>Harvard University, Museum of Comparative Zoology, Ernst Mayr Library</InstitutionName>
+      <InstitutionUrl>http://library.mcz.harvard.edu/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HKEH</InstitutionCode>
+      <InstitutionName>Hisham K.El-Hennawy</InstitutionName>
+      <InstitutionUrl>http://serket1987.blogspot.com/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HMBRG</InstitutionCode>
+      <InstitutionName>History of Modern Biomedicine Research Group (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>HIBD</InstitutionCode>
+      <InstitutionName>Hunt Institution for Botanical Documentation (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>INPS</InstitutionCode>
+      <InstitutionName>Idaho Native Plant Society</InstitutionName>
+      <InstitutionUrl>https://idahonativeplants.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ILNPS</InstitutionCode>
+      <InstitutionName>Illinois Native Plant Society</InstitutionName>
+      <InstitutionUrl>http://www.ill-inps.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>IBCAS</InstitutionCode>
+      <InstitutionName>Institute of Botany, Chinese Academy of Sciences</InstitutionName>
+      <InstitutionUrl>http://www.bhl-china.org/bhl/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>IBUNAM01</InstitutionCode>
+      <InstitutionName>Instituto de Biología UNAM</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>IEAC</InstitutionCode>
+      <InstitutionName>Instituto de Ecología A.C.</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNAM-ECO</InstitutionCode>
+      <InstitutionName>Instituto de Ecología, UNAM</InstitutionName>
+      <InstitutionUrl>http://web.ecologia.unam.mx/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>IA</InstitutionCode>
+      <InstitutionName>Internet Archive</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>IOU</InstitutionCode>
+      <InstitutionName>Iowa Ornithologists' Union</InstitutionName>
+      <InstitutionUrl>http://www.iowabirds.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JALBPL</InstitutionCode>
+      <InstitutionName>John Adams Library at the Boston Public Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JCBL</InstitutionCode>
+      <InstitutionName>John Carter Brown Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JGILMORE</InstitutionCode>
+      <InstitutionName>John Gilmore (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JCT</InstitutionCode>
+      <InstitutionName>Joint Committee on Taxation, US Congress (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JPKL</InstitutionCode>
+      <InstitutionName>Joseph Palmer Knapp Library, UNC School of Government (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CDA</InstitutionCode>
+      <InstitutionName>Kathryn (Drechsler) Finnegan and Gregory Finnegan</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>KELLYUT</InstitutionCode>
+      <InstitutionName>Kelly - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>KOS</InstitutionCode>
+      <InstitutionName>Kentucky Ornithological Society</InstitutionName>
+      <InstitutionUrl>http://www.birdky.org/index.html</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>KCLFSCL</InstitutionCode>
+      <InstitutionName>King's College London, Foyle Special Collections Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LCHS</InstitutionCode>
+      <InstitutionName>Lancaster County Historical Society (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LLUNCCH</InstitutionCode>
+      <InstitutionName>Law Library, University of North Carolina at Chapel Hill (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LPLPL</InstitutionCode>
+      <InstitutionName>Lawrence Public Library / Prelinger Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LBIA</InstitutionCode>
+      <InstitutionName>Leo Baeck Institute Archives (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LCCCNGRREE</InstitutionCode>
+      <InstitutionName>Lewis &amp; Clark Community College / NGRREC (archive.org)</InstitutionName>
+      <InstitutionUrl>http://www.ngrrec.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LCCCNGRREC</InstitutionCode>
+      <InstitutionName>Lewis and Clark Community College and the National Great Rivers Research and Education Center (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LACBAC</InstitutionCode>
+      <InstitutionName>Library and Archives Canada - Bibliothèque et Archives Canada (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LC</InstitutionCode>
+      <InstitutionName>Library of Congress</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LMCORP</InstitutionCode>
+      <InstitutionName>Library of the Marine Corps (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LFC</InstitutionCode>
+      <InstitutionName>Lincoln Financial Collection (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NSW</InstitutionCode>
+      <InstitutionName>Linnean Society of New South Wales</InstitutionName>
+      <InstitutionUrl>http://linneansocietynsw.org.au/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LSHTMLAS</InstitutionCode>
+      <InstitutionName>London School of Hygiene &amp; Tropical Medicine Library &amp; Archives Service (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LIBS</InstitutionCode>
+      <InstitutionName>Long Island Botanical Society</InstitutionName>
+      <InstitutionUrl>http://www.libotanical.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LACABGL</InstitutionCode>
+      <InstitutionName>Los Angeles County Arboretum &amp; Botanic Garden Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>LBEEBE</InstitutionCode>
+      <InstitutionName>Lucius Beebe Memorial Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MEB</InstitutionCode>
+      <InstitutionName>M.E. Braithwaite</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MSG</InstitutionCode>
+      <InstitutionName>Mantis Study Group</InstitutionName>
+      <InstitutionUrl>http://mantodea.myspecies.info/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MOS</InstitutionCode>
+      <InstitutionName>Maryland Ornithological Society</InstitutionName>
+      <InstitutionUrl>http://www.mdbirds.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MSUT</InstitutionCode>
+      <InstitutionName>Mathematical Sciences - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MBLWHOI</InstitutionCode>
+      <InstitutionName>MBLWHOI Library</InstitutionName>
+      <InstitutionUrl>http://www.mblwhoilibrary.org/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MCGILL</InstitutionCode>
+      <InstitutionName>McGill University Library (archive.org)</InstitutionName>
+      <InstitutionUrl>http://www.mcgill.ca/library/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MISSUT</InstitutionCode>
+      <InstitutionName>Mississauga - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MO</InstitutionCode>
+      <InstitutionName>Missouri Botanical Garden, Peter H. Raven Library</InstitutionName>
+      <InstitutionUrl>http://www.missouribotanicalgarden.org/plant-science/plant-science/resources/raven-library.aspx</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MITL</InstitutionCode>
+      <InstitutionName>MIT Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MTSTL</InstitutionCode>
+      <InstitutionName>Montana State Library (archive.org)</InstitutionName>
+      <InstitutionUrl>http://msl.state.mt.us/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MLSIUC</InstitutionCode>
+      <InstitutionName>Morris Library, Southern Illinois University Carbondale (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MUGARBU</InstitutionCode>
+      <InstitutionName>Mugar Memorial Library, Boston University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MIZPAS</InstitutionCode>
+      <InstitutionName>Museum and Institute of Zoology, Polish Academy of Sciences</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MV</InstitutionCode>
+      <InstitutionName>Museum Victoria</InstitutionName>
+      <InstitutionUrl>http://museumvictoria.com.au</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>MUSICUT</InstitutionCode>
+      <InstitutionName>Music - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NLBSING</InstitutionCode>
+      <InstitutionName>National Library Board, Singapore</InstitutionName>
+      <InstitutionUrl>http://www.nlb.gov.sg/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NLM</InstitutionCode>
+      <InstitutionName>National Library of Medicine (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NRWY</InstitutionCode>
+      <InstitutionName>National Library of Norway (archive.org)</InstitutionName>
+      <InstitutionUrl>http://www.nb.no/English</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NLSCOTLAND</InstitutionCode>
+      <InstitutionName>National Library of Scotland (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NYIDDISHBC</InstitutionCode>
+      <InstitutionName>National Yiddish Book Center (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NHM</InstitutionCode>
+      <InstitutionName>Natural History Museum Library, London</InstitutionName>
+      <InstitutionUrl>http://www.nhm.ac.uk/research-curation/library/index.html</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NBC</InstitutionCode>
+      <InstitutionName>Naturalis Biodiversity Center</InstitutionName>
+      <InstitutionUrl>http://www.naturalis.nl/en/services/library/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>EANHS</InstitutionCode>
+      <InstitutionName>Nature Kenya, East Africa Natural History Society</InstitutionName>
+      <InstitutionUrl>http://www.naturekenya.org/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NPS</InstitutionCode>
+      <InstitutionName>Naval Postgraduate School (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NCHHDC</InstitutionCode>
+      <InstitutionName>NC History of Health Digital Collection (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NCSUL</InstitutionCode>
+      <InstitutionName>NCSU Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NCC</InstitutionCode>
+      <InstitutionName>New College of California (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NYBG</InstitutionCode>
+      <InstitutionName>New York Botanical Garden, LuEsther T. Mertz Library</InstitutionName>
+      <InstitutionUrl>http://library.nybg.org/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NYES</InstitutionCode>
+      <InstitutionName>New York Entomological Society</InstitutionName>
+      <InstitutionUrl>http://www.nyentsoc.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NYPL</InstitutionCode>
+      <InstitutionName>New York Public Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NIHLIB</InstitutionCode>
+      <InstitutionName>NIH Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ECLNUCC</InstitutionCode>
+      <InstitutionName>Nipissing University/Canadore College Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NEUSNELL</InstitutionCode>
+      <InstitutionName>Northeastern University, Snell Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NCB</InstitutionCode>
+      <InstitutionName>Northern California Botanists</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OSGL</InstitutionCode>
+      <InstitutionName>Oak Spring Garden Library</InstitutionName>
+      <InstitutionUrl>http://oakspring.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OCS</InstitutionCode>
+      <InstitutionName>Ohio Coleopterist Society</InstitutionName>
+      <InstitutionUrl>http://www.ohiocoleoptera.org/OC/Home.html</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OISEUT</InstitutionCode>
+      <InstitutionName>OISE - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OMNRL</InstitutionCode>
+      <InstitutionName>Ontario Ministry of Natural Resources Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OME</InstitutionCode>
+      <InstitutionName>Ontario Ministry of the Environment (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ORGTS</InstitutionCode>
+      <InstitutionName>Organization for Tropical Studies</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>OXFORD</InstitutionCode>
+      <InstitutionName>Oxford University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PSBG</InstitutionCode>
+      <InstitutionName>Pacific Seabird Group</InstitutionName>
+      <InstitutionUrl>http://www.pacificseabirdgroup.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PENNST</InstitutionCode>
+      <InstitutionName>Penn State University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PHS</InstitutionCode>
+      <InstitutionName>Pennsylvania Horticultural Society</InstitutionName>
+      <InstitutionUrl>http://phsonline.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PENSOFT</InstitutionCode>
+      <InstitutionName>Pensoft Publishers</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PSG</InstitutionCode>
+      <InstitutionName>Phasmid Study Group</InstitutionName>
+      <InstitutionUrl>http://phasmid-study-group.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PMAL</InstitutionCode>
+      <InstitutionName>Philadelphia Museum of Art, Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PHYT</InstitutionCode>
+      <InstitutionName>Phytologia</InstitutionName>
+      <InstitutionUrl>http://www.phytologia.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PIMSUT</InstitutionCode>
+      <InstitutionName>PIMS - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PRATTUT</InstitutionCode>
+      <InstitutionName>Pratt - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PRELINGER</InstitutionCode>
+      <InstitutionName>Prelinger Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PTSL</InstitutionCode>
+      <InstitutionName>Princeton Theological Seminary Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>PRINCETON</InstitutionCode>
+      <InstitutionName>Princeton University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GSNS</InstitutionCode>
+      <InstitutionName>Private collection of the works of the Great School of Natural Science (GSNS) (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GUTENBERG</InstitutionCode>
+      <InstitutionName>Project Gutenberg (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WULWDJSCML</InstitutionCode>
+      <InstitutionName>Queen's University, W.D. Jordan Special Collections &amp; Music Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>QM</InstitutionCode>
+      <InstitutionName>Queensland Museum</InstitutionName>
+      <InstitutionUrl>http://www.qm.qld.gov.au/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RRF</InstitutionCode>
+      <InstitutionName>Raptor Research Foundation</InstitutionName>
+      <InstitutionUrl>http://www.raptorresearchfoundation.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>REGISUT</InstitutionCode>
+      <InstitutionName>Regis - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RLGETTY</InstitutionCode>
+      <InstitutionName>Research Library, The Getty Research Institute (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ROBARTSUT</InstitutionCode>
+      <InstitutionName>Robarts - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ROMUT</InstitutionCode>
+      <InstitutionName>ROM - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RCAOT</InstitutionCode>
+      <InstitutionName>Roman Catholic Archdiocese of Toronto (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RBGE</InstitutionCode>
+      <InstitutionName>Royal Botanic Garden Edinburgh</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>KEW</InstitutionCode>
+      <InstitutionName>Royal Botanic Gardens Kew, Library, Art &amp; Archives</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RCPHYSE</InstitutionCode>
+      <InstitutionName>Royal College of Physicians in Edinburgh (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RCPHYSL</InstitutionCode>
+      <InstitutionName>Royal College of Physicians, London (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ROM</InstitutionCode>
+      <InstitutionName>Royal Ontario Museum (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RSQ</InstitutionCode>
+      <InstitutionName>Royal Society of Queensland</InstitutionName>
+      <InstitutionUrl>http://www.royalsocietyqld.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RSWA</InstitutionCode>
+      <InstitutionName>Royal Society of Western Australia</InstitutionName>
+      <InstitutionUrl>http://www.rswa.org.au/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RUL</InstitutionCode>
+      <InstitutionName>Rutgers University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RYERSON</InstitutionCode>
+      <InstitutionName>Ryerson University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RYERSONLSC</InstitutionCode>
+      <InstitutionName>Ryerson University Library Special Collections (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SLPL</InstitutionCode>
+      <InstitutionName>Saint Louis Public Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SMCC</InstitutionCode>
+      <InstitutionName>Saint Mary's College of California (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SFPL</InstitutionCode>
+      <InstitutionName>San Francisco Public Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SGLUNCCH</InstitutionCode>
+      <InstitutionName>School of Government Library, University of North Carolina at Chapel Hill (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>STLBU</InstitutionCode>
+      <InstitutionName>School of Theology Library, Boston University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>STBU</InstitutionCode>
+      <InstitutionName>School of Theology, Boston University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SCOTTYORK</InstitutionCode>
+      <InstitutionName>Scott - York University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SBG</InstitutionCode>
+      <InstitutionName>Singapore Botanic Gardens, National Parks Board Singapore</InstitutionName>
+      <InstitutionUrl>https://www.sbg.org.sg/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SMITHINST</InstitutionCode>
+      <InstitutionName>Smithsonian Institution</InstitutionName>
+      <InstitutionUrl>http://www.si.edu/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SIA</InstitutionCode>
+      <InstitutionName>Smithsonian Institution Archives</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SI</InstitutionCode>
+      <InstitutionName>Smithsonian Libraries</InstitutionName>
+      <InstitutionUrl>http://library.si.edu/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SAIAB</InstitutionCode>
+      <InstitutionName>South African Institute for Aquatic Biodiversity</InstitutionName>
+      <InstitutionUrl>http://www.saiab.ac.za/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SANBI</InstitutionCode>
+      <InstitutionName>South African National Biodiversity Institute</InstitutionName>
+      <InstitutionUrl>http://www.sanbi.org/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SAM</InstitutionCode>
+      <InstitutionName>South Australian Museum</InstitutionName>
+      <InstitutionUrl>http://www.samuseum.sa.gov.au/science/library/collections</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SCB</InstitutionCode>
+      <InstitutionName>Southern California Botanists</InstitutionName>
+      <InstitutionUrl>http://www.socalbot.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>RBGV</InstitutionCode>
+      <InstitutionName>State Botanical Collection, Royal Botanic Gardens Victoria</InstitutionName>
+      <InstitutionUrl>http://www.rbg.vic.gov.au/science/herbarium-and-resources/library</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SLMASS</InstitutionCode>
+      <InstitutionName>State Library of Massachusetts (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SLNC</InstitutionCode>
+      <InstitutionName>State Library of North Carolina (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SFCAIL</InstitutionCode>
+      <InstitutionName>Sterling and Francine Clark Art Institute Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SUNY</InstitutionCode>
+      <InstitutionName>SUNY College of Environmental Science and Forestry</InstitutionName>
+      <InstitutionUrl>http://www.esf.edu/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>SBC</InstitutionCode>
+      <InstitutionName>Sweet Briar College (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TOS</InstitutionCode>
+      <InstitutionName>Tennessee Ornithological Society</InstitutionName>
+      <InstitutionUrl>http://www.tnbirds.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>BANCROFT</InstitutionCode>
+      <InstitutionName>The Bancroft Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>FNCV</InstitutionCode>
+      <InstitutionName>The Field Naturalists Club of Victoria</InstitutionName>
+      <InstitutionUrl>http://www.fncv.org.au/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>JHUSL</InstitutionCode>
+      <InstitutionName>The Johns Hopkins University Sheridan Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NEWB</InstitutionCode>
+      <InstitutionName>The Newberry Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UWOUA</InstitutionCode>
+      <InstitutionName>The University of Western Ontario, The University Archives (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UWOWA</InstitutionCode>
+      <InstitutionName>The University of Western Ontario, Western Archives (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TISCH</InstitutionCode>
+      <InstitutionName>Tisch Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TPLNYC</InstitutionCode>
+      <InstitutionName>Toronto Public Library : North York Central (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TPLTRL</InstitutionCode>
+      <InstitutionName>Toronto Public Library : Toronto Reference Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TPLRRL</InstitutionCode>
+      <InstitutionName>Toronto Public Library: Research and Reference Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>THBGL</InstitutionCode>
+      <InstitutionName>Tower Hill Botanic Garden Library</InstitutionName>
+      <InstitutionUrl>http://www.towerhillbg.org/library/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TRINITYUT</InstitutionCode>
+      <InstitutionName>Trinity College - University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>TUFTS</InstitutionCode>
+      <InstitutionName>Tufts University (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>USDA</InstitutionCode>
+      <InstitutionName>U.S. Department of Agriculture</InstitutionName>
+      <InstitutionUrl>http://www.usda.gov/wps/portal/usda/usdahome</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>NAL</InstitutionCode>
+      <InstitutionName>U.S. Department of Agriculture, National Agricultural Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>USDTTL</InstitutionCode>
+      <InstitutionName>U.S. Dept. of the Treasury, Treasury Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>USGPRINT</InstitutionCode>
+      <InstitutionName>U.S. Government Printing Office (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCLUK</InstitutionCode>
+      <InstitutionName>UCL Library Services, University College London (UCL) (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCLAPD</InstitutionCode>
+      <InstitutionName>UCLA Library, Preservation Department (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMAMHERST</InstitutionCode>
+      <InstitutionName>UMass Amherst Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNEP</InstitutionCode>
+      <InstitutionName>UNEP-WCMC, Cambridge (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>USGS</InstitutionCode>
+      <InstitutionName>United States Geological Survey Libraries Program</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMMSOUTTER</InstitutionCode>
+      <InstitutionName>Univ. of Mass Medical School, Lamar Soutter Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UDL</InstitutionCode>
+      <InstitutionName>Universal Digital Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UIUC</InstitutionCode>
+      <InstitutionName>University Library, University of Illinois Urbana Champaign</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ULUNCCH</InstitutionCode>
+      <InstitutionName>University Library, University of North Carolina at Chapel Hill (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UOAL</InstitutionCode>
+      <InstitutionName>University of Alberta</InstitutionName>
+      <InstitutionUrl>https://www.ualberta.ca/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UAL</InstitutionCode>
+      <InstitutionName>University of Alberta Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UBRISTOL</InstitutionCode>
+      <InstitutionName>University of Bristol</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UBCL</InstitutionCode>
+      <InstitutionName>University of British Columbia Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UC</InstitutionCode>
+      <InstitutionName>University of California (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCB</InstitutionCode>
+      <InstitutionName>University of California Berkeley (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCL</InstitutionCode>
+      <InstitutionName>University of California Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCD</InstitutionCode>
+      <InstitutionName>University of California, Davis Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>CRERAR</InstitutionCode>
+      <InstitutionName>University of Chicago, John Crerar Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UCONNL</InstitutionCode>
+      <InstitutionName>University of Connecticut Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UFSMATHERS</InstitutionCode>
+      <InstitutionName>University of Florida, George A. Smathers Libraries</InstitutionName>
+      <InstitutionUrl>http://cms.uflib.ufl.edu/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>GLSGW</InstitutionCode>
+      <InstitutionName>University of Glasgow Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UIC</InstitutionCode>
+      <InstitutionName>University of Illinois at Chicago (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>ULEEDSL</InstitutionCode>
+      <InstitutionName>University of Leeds Library</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMBDA</InstitutionCode>
+      <InstitutionName>University of Maryland, Baltimore Digital Archive</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMCP</InstitutionCode>
+      <InstitutionName>University of Maryland, College Park (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMICH</InstitutionCode>
+      <InstitutionName>University of Michigan (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UMIN</InstitutionCode>
+      <InstitutionName>University of Minnesota Libraries (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNHL</InstitutionCode>
+      <InstitutionName>University of New Hampshire Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNCCH</InstitutionCode>
+      <InstitutionName>University of North Carolina at Chapel Hill (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UOTTAWA</InstitutionCode>
+      <InstitutionName>University of Ottawa (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UPENNL</InstitutionCode>
+      <InstitutionName>University of Pennsylvania Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UPITTLS</InstitutionCode>
+      <InstitutionName>University of Pittsburgh Library System (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UPRET</InstitutionCode>
+      <InstitutionName>University of Pretoria, Library Services</InstitutionName>
+      <InstitutionUrl>http://www.library.up.ac.za/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>USH</InstitutionCode>
+      <InstitutionName>University of Southampton (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UTEXAS</InstitutionCode>
+      <InstitutionName>University of Texas (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UTCRRS</InstitutionCode>
+      <InstitutionName>University of Toronto - CRRS Library for Renaissance Studies (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UT</InstitutionCode>
+      <InstitutionName>University of Toronto (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UTONTARIO</InstitutionCode>
+      <InstitutionName>University of Toronto- Ontario Institute for Studies in Education (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UVIRGINIA</InstitutionCode>
+      <InstitutionName>University of Virginia (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UWISCMAD</InstitutionCode>
+      <InstitutionName>University of Wisconsin - Madison (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>UNKNOWN</InstitutionCode>
+      <InstitutionName>Unknown</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WFLVM</InstitutionCode>
+      <InstitutionName>Webster Family Library of Veterinary Medicine (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WELLCOME</InstitutionCode>
+      <InstitutionName>Wellcome Library (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WELLESLEYL</InstitutionCode>
+      <InstitutionName>Wellesley College Library (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WVUL</InstitutionCode>
+      <InstitutionName>West Virginia University Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WAH</InstitutionCode>
+      <InstitutionName>Western Australian Herbarium</InstitutionName>
+      <InstitutionUrl>https://www.dpaw.wa.gov.au/plants-and-animals/wa-herbarium</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WAM</InstitutionCode>
+      <InstitutionName>Western Australian Museum</InstitutionName>
+      <InstitutionUrl>http://museum.wa.gov.au/</InstitutionUrl>
+      <BHLMember>true</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WCBC</InstitutionCode>
+      <InstitutionName>Western Carolina Botanical Club</InstitutionName>
+      <InstitutionUrl>https://wcbotanicalclub.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WFO</InstitutionCode>
+      <InstitutionName>Western Field Ornithologists</InstitutionName>
+      <InstitutionUrl>http://www.westernfieldornithologists.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WCS</InstitutionCode>
+      <InstitutionName>Wildlife Conservation Society</InstitutionName>
+      <InstitutionUrl>https://www.wcs.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WILLIAMSL</InstitutionCode>
+      <InstitutionName>Williams College Libraries (archive.org)</InstitutionName>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>WES</InstitutionCode>
+      <InstitutionName>Wisconsin Entomological Society</InstitutionName>
+      <InstitutionUrl>http://www.wisentsoc.org/</InstitutionUrl>
+      <BHLMember>false</BHLMember>
+    </Institution>
+    <Institution>
+      <InstitutionCode>YALE</InstitutionCode>
+      <InstitutionName>Yale University (archive.org)</InstitutionName>
+      <InstitutionUrl />
+      <BHLMember>false</BHLMember>
+    </Institution>
+  </Result>
+</Response>
