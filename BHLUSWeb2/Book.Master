@@ -34,8 +34,8 @@
 		                <h1>Biodiversity Heritage Library</h1>
                     </a>
 		            <nav style="width:475;">
-			     		<a href="http://biodivlib.wikispaces.com/About">About</a>
-			            <a href="http://biodivlib.wikispaces.com/Help">Help</a>				            
+			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
+			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
                         <a href="/contact">Feedback</a>
                         <a class="storelink" target="_blank" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
                         <span id="headersocialbook">

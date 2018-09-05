@@ -390,6 +390,8 @@ namespace MOBOT.BHL.Web2
                 MOBOT.BHL.Web2.SiteService.ArrayOfString recipients = new MOBOT.BHL.Web2.SiteService.ArrayOfString();
                 recipients.Add(recipient);
                 string message = this.GetReceivedMessage();
+                string faqLink = System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"];
+                message = message.Replace("[FAQLink]", faqLink);
                 message = message.Replace("[Feedback]", this.CleanStringForEmail(feedbackReceived));
                 if (message != String.Empty)
                 {

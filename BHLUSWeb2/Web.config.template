@@ -95,8 +95,17 @@
     <add key="TwitterConsumerSecret" value="your twitter consumer secret goes here"/>
     <add key="BHLTwitterFeedUrl" value="https://api.twitter.com/1.1/search/tweets.json?q=from:biodivlibrary&amp;count=3&amp;include_entities=true"/>
 
-    <add key="WikiPageAbout" value="https://biodivlib.wikispaces.com/About"/>
-    <add key="WikiPagePermissions" value="https://biodivlib.wikispaces.com/Permissions"/>
+    <add key="WikiPageAbout" value="https://about.biodiversitylibrary.org"/>
+    <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>
+    <add key="WikiPageHelp" value="http://about.biodiversitylibrary.org/help/" />
+    <add key="WikiPageContribute" value="http://about.biodiversitylibrary.org/get-involved/" />
+    <add key="WikiPageToolsServices" value="http://about.biodiversitylibrary.org/tools-and-services/" />
+    <add key="WikiPageDeveloper" value="http://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/" />
+    <add key="WikiPageMembers" value="http://about.biodiversitylibrary.org/about/bhl-consortium/" />
+    <add key="WikiPageCopyright" value="http://about.biodiversitylibrary.org/copyright-and-reuse/" />
+    <add key="WikiPageFAQ" value="http://about.biodiversitylibrary.org/help/faq" />
+    <add key="WikiPageSubmissionGuide" value="http://about.biodiversitylibrary.org/help/guidelines-for-submitting-scanning-requests/" />
+    <add key="WikiPageAPI" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/#APIs" />
     <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
     <add key="PdfGenDownloadIA" value="https://www.archive.org/download/{0}/{1}.pdf"/>

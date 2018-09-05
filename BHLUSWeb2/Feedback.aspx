@@ -44,7 +44,7 @@
 
 		    <!-- Feedback Form -->
 		    <div id="FeedbackForm" style="display:none; margin-top:5px;">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="http://biodivlib.wikispaces.com/Help" target="_blank" title="Help">Help</a> page for answers to common questions.</p></div>
+                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" title="Help">FAQ</a> page for answers to common questions.</p></div>
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="commentTextBox">Comment:</label>
                     <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
@@ -54,7 +54,7 @@
 
 		    <!-- Scanning Request Form -->
 		    <div id="ScanRequestForm" style="display:none; margin-top:5px">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="http://biodivlib.wikispaces.com/Guidelines%20for%20Submitting%20Scanning%20Requests" target="_blank" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" title="Guidelines">guidelines</a> for submitting requests.</p></div>
                 <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" title="WorldCat">WorldCat</a> (recommended)</p></div>
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="srOCLCTextBox">OCLC:</label>
