@@ -3,6 +3,6 @@
 Username: <<<USERNAME>>>
 Email Address: <<<EMAILADDRESS>>>
 
-Review documentation for Admin Dashboard functionality via the "Help" link in the top right or https://bhl.wikispaces.com/help
+Review documentation for Admin Dashboard functionality via the "Help" link in the top right or <<<HELPLINK>>>
 
 A BHL administrator will assign appropriate permissions to your account and notify you that you have access to expanded functionality.  Thank you for your patience.

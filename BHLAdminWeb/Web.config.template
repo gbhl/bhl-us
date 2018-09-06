@@ -70,6 +70,8 @@
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt" />
     <!-- Folder into which to place items downloaded from Internet Archive -->
     <add key="LocalFileFolder" value="DOWNLOAD_FOLDER_FOR_IA_HARVESTS" />
+    <!-- Wiki paths -->
+    <add key="WikiPageHelpDocs" value="https://about.biodiversitylibrary.org/help/documentation/" />
     <!-- jQuery libraries -->
     <add key="jQueryPath" value="/Scripts/jquery-1.9.1.min.js" />
     <add key="jQuery142Path" value="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" />
