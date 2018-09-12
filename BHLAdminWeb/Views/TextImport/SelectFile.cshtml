@@ -12,9 +12,7 @@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div style="margin-bottom:10px">
-            <div><div class="label">BHL Item ID:</div><div class="field">@Html.TextBox("ItemID")</div></div>
-            <div><div class="label">File name:</div><div class="field"><input type="file" id="FileName" name="FileName" style="width:450px" /></div></div>
-            <div><div class="label">File Format:</div><div class="field">@Html.DropDownList("FileFormat")</div></div>
+            <div><div class="label">File name:</div><div class="field"><input type="file" id="FileName" name="FileName" style="width:450px" multiple /></div></div>
         </div>
         <div style="margin:10px 0px">
             <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />

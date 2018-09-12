@@ -8,8 +8,18 @@ namespace MOBOT.BHL.AdminWeb.Models
     [Serializable]
     public class TextImportModel
     {
-        #region Properties
+        private List<TextImportFileModel> _batch = new List<TextImportFileModel>();
 
+        public List<TextImportFileModel> Batch
+        {
+            get { return _batch; }
+            set { _batch = value; }
+        }
+    }
+
+    [Serializable]
+    public class TextImportFileModel
+    {
         private string _itemID = string.Empty;
 
         public string ItemID
@@ -49,7 +59,5 @@ namespace MOBOT.BHL.AdminWeb.Models
             get { return _fileFormatName; }
             set { _fileFormatName = value; }
         }
-
-        #endregion Properties
     }
 }

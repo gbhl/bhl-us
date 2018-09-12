@@ -37,10 +37,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult SelectFile()
         {
             TextImportService service = new TextImportService();
-
             ViewBag.PageTitle += "Item Text Import";
-            ViewBag.FileFormat = new SelectList(service.FileFormatList(), "key", "value", "dv");
-
             return View();
         }
 
@@ -50,18 +47,22 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public RedirectToRouteResult SelectFile(TextImportModel model)
         {
             // Upload and save the file
-            foreach (string file in Request.Files)
+            for (int x = 0; x < Request.Files.Count; x++)
             {
-                HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                HttpPostedFileBase hpf = Request.Files[x] as HttpPostedFileBase;
                 if (hpf.ContentLength == 0) continue;
                 string savedFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + "." + Path.GetFileName(hpf.FileName);
                 string savedFilePath = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], savedFileName);
-                //hpf.SaveAs(savedFilePath);
-                model.FilePath = savedFilePath;
-                model.FileName = savedFileName;
-            }
+                hpf.SaveAs(savedFilePath);
 
-            model.FileFormatName = new TextImportService().GetFileFormatValue(model.FileFormat);
+                TextImportFileModel fileModel = new TextImportFileModel();
+                fileModel.ItemID = Path.GetFileNameWithoutExtension(hpf.FileName);
+                fileModel.FilePath = savedFilePath;
+                fileModel.FileName = savedFileName;
+                fileModel.FileFormat = new TextImportService().GetFileFormat(savedFilePath);
+                fileModel.FileFormatName = new TextImportService().GetFileFormatValue(fileModel.FileFormat);
+                model.Batch.Add(fileModel);
+            }
 
             TempData["Model"] = model;
             return RedirectToAction("Review");
