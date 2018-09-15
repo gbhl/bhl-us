@@ -253,5 +253,10 @@ namespace MOBOT.BHL.Server
         {
             new PageDAL().PageDeleteFromItem(null, null, barCode, pageID, numPagesToDelete);
         }
+
+        public CustomGenericList<PageTextLog> PageTextLogSelectForItem(int itemID)
+        {
+            return new PageDAL().PageTextLogSelectForItem(null, null, itemID);
+        }
     }
 }

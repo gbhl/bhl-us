@@ -61,8 +61,11 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 fileModel.FileName = savedFileName;
                 fileModel.FileFormat = new TextImportService().GetFileFormat(savedFilePath);
                 fileModel.FileFormatName = new TextImportService().GetFileFormatValue(fileModel.FileFormat);
-                model.Batch.Add(fileModel);
+                model.Files.Add(fileModel);
             }
+
+            // Add database records for the batch and files
+            model.AddBatch(Helper.GetCurrentUserUID(Request));
 
             TempData["Model"] = model;
             return RedirectToAction("Review");

@@ -125,6 +125,8 @@
     <Compile Include="BHLProvider.SegmentStatus.cs" />
     <Compile Include="BHLProvider.Stats.cs">
     </Compile>
+    <Compile Include="BHLProvider.TextImportBatch.cs" />
+    <Compile Include="BHLProvider.TextImportBatchFile.cs" />
     <Compile Include="BHLProvider.Title.cs">
     </Compile>
     <Compile Include="BHLProvider.TitleAuthor.cs" />

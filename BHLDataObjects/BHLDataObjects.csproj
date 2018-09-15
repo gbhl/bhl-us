@@ -132,6 +132,7 @@
     <Compile Include="Concrete\OpenUrlCitation.cs" />
     <Compile Include="Concrete\PageAnnotation.cs" />
     <Compile Include="Concrete\PageFlickr.cs" />
+    <Compile Include="Concrete\PageTextLog.cs" />
     <Compile Include="Concrete\PDF.cs" />
     <Compile Include="Concrete\PDFPage.cs" />
     <Compile Include="Concrete\PDFStats.cs" />
@@ -155,6 +156,8 @@
     <Compile Include="Concrete\SegmentPage.cs" />
     <Compile Include="Concrete\SegmentResolutionLog.cs" />
     <Compile Include="Concrete\SegmentStatus.cs" />
+    <Compile Include="Concrete\TextImportBatch.cs" />
+    <Compile Include="Concrete\TextImportBatchFile.cs" />
     <Compile Include="Concrete\TitleAssociation.cs" />
     <Compile Include="Concrete\TitleAssociationType.cs" />
     <Compile Include="Concrete\TitleAssociation_TitleIdentifier.cs" />
@@ -248,6 +251,7 @@
     <Compile Include="Generated\__NoteType.cs" />
     <Compile Include="Generated\__PageAnnotation.cs" />
     <Compile Include="Generated\__PageFlickr.cs" />
+    <Compile Include="Generated\__PageTextLog.cs" />
     <Compile Include="Generated\__PDF.cs" />
     <Compile Include="Generated\__PDFPage.cs" />
     <Compile Include="Generated\__PDFStatus.cs" />
@@ -264,6 +268,8 @@
     <Compile Include="Generated\__SegmentPage.cs" />
     <Compile Include="Generated\__SegmentResolutionLog.cs" />
     <Compile Include="Generated\__SegmentStatus.cs" />
+    <Compile Include="Generated\__TextImportBatch.cs" />
+    <Compile Include="Generated\__TextImportBatchFile.cs" />
     <Compile Include="Generated\__TitleAssociation.cs" />
     <Compile Include="Generated\__TitleAssociationType.cs" />
     <Compile Include="Generated\__TitleAssociation_TitleIdentifier.cs" />

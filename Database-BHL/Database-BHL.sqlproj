@@ -94,6 +94,9 @@
     <Folder Include="srchindex" />
     <Folder Include="srchindex\Stored Procedures" />
     <Folder Include="dbo\Types" />
+    <Folder Include="txtimport" />
+    <Folder Include="txtimport\Tables" />
+    <Folder Include="txtimport\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Keyword.sql" />
@@ -1053,6 +1056,15 @@
     <None Include="Data\dbo.MaterialType.Table.sql" />
     <None Include="Security\Schemas\srchindex.sql" />
     <None Include="dbo\Types\SearchIDTable.sql" />
+    <None Include="Security\Schemas\txtimport.sql" />
+    <None Include="txtimport\Tables\TextImportBatchStatus.sql" />
+    <None Include="txtimport\Tables\TextImportBatchFileStatus.sql" />
+    <None Include="txtimport\Tables\TextImportBatch.sql" />
+    <None Include="txtimport\Tables\TextImportBatchFile.sql" />
+    <None Include="Data\txtimport.TextImportBatchStatus.Table.sql" />
+    <None Include="Data\txtimport.TextImportBatchFileStatus.Table.sql" />
+    <None Include="dbo\Tables\PageTextLog.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogSelectForItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1354,5 +1366,13 @@
     <None Include="srchindex\Stored Procedures\VolumeSelectDocumentsForIndex.sql" />
     <None Include="srchindex\Stored Procedures\ItemCountForTitle.sql" />
     <None Include="srchindex\Stored Procedures\ItemSelectFirstForTitle.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchDeleteAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileDeleteAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileInsertAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileSelectAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileUpdateAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchInsertAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchSelectAuto.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchUpdateAuto.sql" />
   </ItemGroup>
 </Project>

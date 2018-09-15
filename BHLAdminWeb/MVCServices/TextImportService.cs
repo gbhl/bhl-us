@@ -15,6 +15,22 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             {"stc", "Smithsonian Transcription Center" }
         };
 
+        private static Dictionary<int, string> TextImportBatchStatuses = new Dictionary<int, string>
+        {
+            { 10, "New" },
+            { 20, "Queued" },
+            { 30, "Processing" },
+            { 40, "Imported" },
+            { 50, "Rejected" }
+        };
+
+        private static Dictionary<int, string> TextImportBatchFileStatuses = new Dictionary<int, string>
+        {
+            { 10, "Ready" },
+            { 20, "Review" },
+            { 30, "Rejected" },
+            { 40, "Error" }
+        };
 
         public class ImportFileException : Exception
         {
@@ -23,7 +39,25 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             public ImportFileException(string message, System.Exception inner) : base(message, inner) { }
         }
 
-        #region DropDownList data
+        public static int GetTextImportBatchStatusNew()
+        {
+            return TextImportBatchStatuses.Where(s => s.Value == "New").Select(k => k.Key).First();
+        }
+
+        public static int GetTextImportBatchFileStatusReady()
+        {
+            return TextImportBatchFileStatuses.Where(s => s.Value == "Ready").Select(k => k.Key).First();
+        }
+
+        public static int GetTextImportBatchFileStatusReview()
+        {
+            return TextImportBatchFileStatuses.Where(s => s.Value == "Review").Select(k => k.Key).First();
+        }
+
+        public static int GetTextImportBatchFileStatusError()
+        {
+            return TextImportBatchFileStatuses.Where(s => s.Value == "Error").Select(k => k.Key).First();
+        }
 
         public string GetFileFormat(string savedFileName)
         {
@@ -50,8 +84,5 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         {
             return FileFormats[fileFormatKey];
         }
-
-        #endregion DropDownList data
-
     }
 }

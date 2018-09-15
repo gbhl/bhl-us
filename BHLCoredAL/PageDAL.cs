@@ -411,5 +411,24 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.ExecuteNonQuery(command);
             }
         }
+
+        public CustomGenericList<PageTextLog> PageTextLogSelectForItem(
+                SqlConnection sqlConnection,
+                SqlTransaction sqlTransaction,
+                int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageTextLogSelectForItem", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
+                {
+                    CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
     }
 }

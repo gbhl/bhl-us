@@ -1,0 +1,4 @@
+﻿INSERT [txtimport].[TextImportBatchFileStatus] ([TextImportBatchFileStatusID], [StatusName], [StatusDescription]) VALUES (10, 'Ready to Import', 'A file that is ready to be imported to production.')
+INSERT [txtimport].[TextImportBatchFileStatus] ([TextImportBatchFileStatusID], [StatusName], [StatusDescription]) VALUES (20, 'Must Review', 'The file must be reviewed and manually set to ''Ready to Import'' status before it will be imported to production.')
+INSERT [txtimport].[TextImportBatchFileStatus] ([TextImportBatchFileStatusID], [StatusName], [StatusDescription]) VALUES (30, 'Rejected', 'The file was rejected and not imported to production.')
+INSERT [txtimport].[TextImportBatchFileStatus] ([TextImportBatchFileStatusID], [StatusName], [StatusDescription]) VALUES (40, 'Error', 'An error occurred while importing the file to production.')

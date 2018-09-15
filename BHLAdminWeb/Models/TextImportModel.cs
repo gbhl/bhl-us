@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MOBOT.BHL.AdminWeb.MVCServices;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +11,52 @@ namespace MOBOT.BHL.AdminWeb.Models
     [Serializable]
     public class TextImportModel
     {
-        private List<TextImportFileModel> _batch = new List<TextImportFileModel>();
+        private int _batchId = int.MinValue;
 
-        public List<TextImportFileModel> Batch
+        public int BatchID
         {
-            get { return _batch; }
-            set { _batch = value; }
+            get { return _batchId; }
+            set { _batchId = value; }
+        }
+
+        private int _batchStatusId = int.MinValue;
+
+        public int BatchStatusID
+        {
+            get { return _batchStatusId; }
+            set { _batchStatusId = value; }
+        }
+
+        private string _batchStatus = string.Empty;
+
+        public string BatchStatus
+        {
+            get { return _batchStatus; }
+            set { _batchStatus = value; }
+        }
+
+        private List<TextImportFileModel> _files = new List<TextImportFileModel>();
+
+        public List<TextImportFileModel> Files
+        {
+            get { return _files; }
+            set { _files = value; }
+        }
+
+
+        public void AddBatch(int userId)
+        {
+            BHLProvider provider = new BHLProvider();
+
+            TextImportBatch batch = provider.TextImportBatchInsertAuto(
+                TextImportService.GetTextImportBatchStatusNew(), userId);
+
+            this.BatchID = batch.TextImportBatchID;
+
+            foreach (TextImportFileModel file in Files)
+            {
+                file.AddBatchFile(this.BatchID, userId);
+            }
         }
     }
 
@@ -58,6 +101,20 @@ namespace MOBOT.BHL.AdminWeb.Models
         {
             get { return _fileFormatName; }
             set { _fileFormatName = value; }
+        }
+
+        public void AddBatchFile(int batchId, int userId)
+        {
+            BHLProvider provider = new BHLProvider();
+
+            int batchFileStatus;
+            if (this.ItemID == "") batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+            else if (provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0) batchFileStatus = TextImportService.GetTextImportBatchFileStatusReview();
+            else batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
+
+            TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
+                batchFileStatus, this.ItemID == "" ? (int?)null : Convert.ToInt32(this.ItemID), 
+                this.FileName, this.FileFormat, userId);
         }
     }
 }

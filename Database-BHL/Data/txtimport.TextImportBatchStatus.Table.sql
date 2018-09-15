@@ -1,0 +1,5 @@
+﻿INSERT [txtimport].[TextImportBatchStatus] ([TextImportBatchStatusID], [StatusName], [StatusDescription]) VALUES (10, 'New', 'A new batch.  Not yet imported to production.')
+INSERT [txtimport].[TextImportBatchStatus] ([TextImportBatchStatusID], [StatusName], [StatusDescription]) VALUES (20, 'Queued', 'Queued up for processing and text file creation.')
+INSERT [txtimport].[TextImportBatchStatus] ([TextImportBatchStatusID], [StatusName], [StatusDescription]) VALUES (30, 'Processing', 'Text files currently being created for each file in the batch.')
+INSERT [txtimport].[TextImportBatchStatus] ([TextImportBatchStatusID], [StatusName], [StatusDescription]) VALUES (40, 'Imported', 'The files in the batch have been imported to production.')
+INSERT [txtimport].[TextImportBatchStatus] ([TextImportBatchStatusID], [StatusName], [StatusDescription]) VALUES (50, 'Rejected', 'The batch was rejected and no files were imported to production.')
