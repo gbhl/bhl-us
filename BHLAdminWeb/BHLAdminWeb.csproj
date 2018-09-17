@@ -441,6 +441,7 @@
     <Compile Include="Models\OrphanModel.cs" />
     <Compile Include="Models\ReportingStatsModel.cs" />
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
+    <Compile Include="Models\TextImportHistoryModel.cs" />
     <Compile Include="Models\TextImportModel.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="MVCServices\EmailService.cs" />
@@ -1078,6 +1079,7 @@
     <Content Include="Views\TextImport\Index.cshtml" />
     <Content Include="Views\TextImport\SelectFile.cshtml" />
     <Content Include="Views\TextImport\Review.cshtml" />
+    <Content Include="Views\Report\TextImportHistory.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

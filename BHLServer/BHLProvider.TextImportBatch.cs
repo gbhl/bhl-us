@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DAL;
+﻿using CustomDataAccess;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Server
@@ -18,6 +19,16 @@ namespace MOBOT.BHL.Server
         public TextImportBatch TextImportBatchUpdateAuto(TextImportBatch textImportBatch)
         {
             return new TextImportBatchDAL().TextImportBatchUpdateAuto(null, null, textImportBatch);
+        }
+
+        public CustomGenericList<TextImportBatch> TextImportBatchSelectDetails(int fileStatusID, int numberOfDays)
+        {
+            return new TextImportBatchDAL().TextImportBatchSelectDetails(null, null, fileStatusID, numberOfDays);
+        }
+
+        public CustomGenericList<TextImportBatchStatus> TextImportBatchStatusSelectAll()
+        {
+            return new TextImportBatchStatusDAL().SelectAll(null, null);
         }
     }
 }

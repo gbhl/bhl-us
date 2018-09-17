@@ -165,6 +165,8 @@
     <Compile Include="Generated\SegmentStatusDAL.Auto.cs" />
     <Compile Include="Generated\TextImportBatchDAL.Auto.cs" />
     <Compile Include="Generated\TextImportBatchFileDAL.Auto.cs" />
+    <Compile Include="Generated\TextImportBatchFileStatusDAL.Auto.cs" />
+    <Compile Include="Generated\TextImportBatchStatusDAL.Auto.cs" />
     <Compile Include="Generated\TitleAuthorDAL.Auto.cs" />
     <Compile Include="Generated\TitleCollectionDAL.Auto.cs" />
     <Compile Include="Generated\TitleKeywordDAL.Auto.cs" />
@@ -258,6 +260,8 @@
     <Compile Include="SegmentStatusDAL.cs" />
     <Compile Include="TextImportBatchDAL.cs" />
     <Compile Include="TextImportBatchFileDAL.cs" />
+    <Compile Include="TextImportBatchFileStatusDAL.cs" />
+    <Compile Include="TextImportBatchStatusDAL.cs" />
     <Compile Include="TitleAssociationDAL.cs" />
     <Compile Include="TitleAssociationTypeDAL.cs" />
     <Compile Include="TitleAssociation_TitleIdentifierDAL.cs" />

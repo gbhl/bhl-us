@@ -112,5 +112,39 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             model.GetImportFileList();
         }
+
+        // GET: /Report/TextImportHistory
+        [HttpGet]
+        public ActionResult TextImportHistory()
+        {
+            TextImportHistoryModel model = new TextImportHistoryModel();
+            model.Institution = string.Empty;
+            model.ImportBatchStatus = string.Empty;
+            model.ReportDateRange = "30";
+
+            TextImportHistoryInit(model);
+
+            return View(model);
+        }
+
+        // POST: /Report/TextImportHistory
+        [HttpPost]
+        public ActionResult TextImportHistory(TextImportHistoryModel model)
+        {
+            TextImportHistoryInit(model);
+
+            return View(model);
+        }
+
+        private void TextImportHistoryInit(TextImportHistoryModel model)
+        {
+            TextImportService service = new TextImportService();
+            ViewBag.PageTitle += "Text Import History";
+            ViewBag.InstitutionList = service.InstitutionList();
+            ViewBag.TextImportBatchStatusList = service.TextImportBatchStatusList();
+            ViewBag.ReportDateRangeList = service.ReportDateRangeList();
+
+            model.GetImportBatchList();
+        }
     }
 }

@@ -158,6 +158,8 @@
     <Compile Include="Concrete\SegmentStatus.cs" />
     <Compile Include="Concrete\TextImportBatch.cs" />
     <Compile Include="Concrete\TextImportBatchFile.cs" />
+    <Compile Include="Concrete\TextImportBatchFileStatus.cs" />
+    <Compile Include="Concrete\TextImportBatchStatus.cs" />
     <Compile Include="Concrete\TitleAssociation.cs" />
     <Compile Include="Concrete\TitleAssociationType.cs" />
     <Compile Include="Concrete\TitleAssociation_TitleIdentifier.cs" />
@@ -270,6 +272,8 @@
     <Compile Include="Generated\__SegmentStatus.cs" />
     <Compile Include="Generated\__TextImportBatch.cs" />
     <Compile Include="Generated\__TextImportBatchFile.cs" />
+    <Compile Include="Generated\__TextImportBatchFileStatus.cs" />
+    <Compile Include="Generated\__TextImportBatchStatus.cs" />
     <Compile Include="Generated\__TitleAssociation.cs" />
     <Compile Include="Generated\__TitleAssociationType.cs" />
     <Compile Include="Generated\__TitleAssociation_TitleIdentifier.cs" />

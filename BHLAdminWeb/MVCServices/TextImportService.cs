@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,6 +34,13 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             { 30, "Rejected" },
             { 40, "Error" }
         };
+
+        public class ImportBatchException : Exception
+        {
+            public ImportBatchException() : base() { }
+            public ImportBatchException(string message) : base(message) { }
+            public ImportBatchException(string message, System.Exception inner) : base(message, inner) { }
+        }
 
         public class ImportFileException : Exception
         {
@@ -83,6 +93,39 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         public string GetFileFormatValue(string fileFormatKey)
         {
             return FileFormats[fileFormatKey];
+        }
+
+        /// <summary>
+        /// Provide the list of institutions (read from the DB) to be used during the text import process
+        /// </summary>
+        /// <returns></returns>
+        public CustomGenericList<Institution> InstitutionList()
+        {
+            BHLProvider provider = new BHLProvider();
+            return provider.InstituationSelectAll();
+        }
+
+        public CustomGenericList<TextImportBatchStatus> TextImportBatchStatusList()
+        {
+            CustomGenericList<TextImportBatchStatus> statusList = new BHLProvider().TextImportBatchStatusSelectAll();
+
+            return statusList;
+        }
+
+        /// <summary>
+        /// Provide the list of data sources to be used during the text import process
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> ReportDateRangeList()
+        {
+            Dictionary<string, string> dataSourceTypes = new Dictionary<string, string>();
+            dataSourceTypes.Add("1", "Last Day");
+            dataSourceTypes.Add("30", "Last 30 Days");
+            dataSourceTypes.Add("90", "Last 90 Days");
+            dataSourceTypes.Add("180", "Last 180 Days");
+            dataSourceTypes.Add("365", "Last Year");
+
+            return dataSourceTypes;
         }
     }
 }
