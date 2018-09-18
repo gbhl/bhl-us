@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
 {
@@ -71,40 +72,51 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             return RedirectToAction("Review");
         }
 
-        //
         // GET: /TextImport/Review
         [HttpGet]
-        public ActionResult Review()
+        public ActionResult Review(int? id = null)
         {
-            TextImportModel model = (TextImportModel)TempData["Model"] ?? new TextImportModel();
-
-
             /*
             Read the pagination info for the item from the database, match it to the pages
             in the imported file, and present the list to the user for review.
             */
 
+            TextImportModel model = (TextImportModel)TempData["Model"] ?? new TextImportModel();
+            if (id != null) model.GetImportBatchDetails((int)id);
 
-            ViewBag.PageTitle += "ItemText Import";
+            ViewBag.TextImportBatchFileStatuses = new TextImportService().TextImportBatchFileStatusList();
+            ViewBag.PageTitle += "Text Import Review";
 
             return View(model);
         }
 
-
-        //
         // POST: /TextImport/Review
         [HttpPost]
         public ActionResult Review (TextImportModel model)
         {
             int userId = Helper.GetCurrentUserUID(Request);
 
+            if (Request.Form["btnImport"] != null)
+            {
+                // Set the batch status to "Queued".  This will signal the application that generates the 
+                // new text files to process this batch.  Only files in "Ready to Import" status will be
+                // processed.
 
-            /*
-            1) Replace the existing text files for the item with the text in the imported file.
-            2) Log the pages for which text was updated
-            3) Flag the item/pages for name indexing and add the item to the index queue.
-            */
+                /*
+                The process that creates the text files will do the following:
 
+                1) Replace the existing text files for the item with the text in the imported file.
+                2) Log the pages for which text was updated
+                3) Flag the item/pages for name indexing and add the item to the index queue.
+                */
+
+                model.QueueBatch(userId);
+            }
+            else if (Request.Form["btnReject"] != null)
+            {
+                // Set the statuses of the batch and the files to "Rejected".
+                model.RejectBatch(userId);
+            }
 
             return RedirectToAction("TextImportHistory", "Report");
         }

@@ -112,6 +112,11 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             return statusList;
         }
 
+        public CustomGenericList<TextImportBatchFileStatus> TextImportBatchFileStatusList()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Provide the list of data sources to be used during the text import process
         /// </summary>

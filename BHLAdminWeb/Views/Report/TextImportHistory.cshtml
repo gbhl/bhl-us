@@ -1,7 +1,110 @@
-﻿
+﻿@model MOBOT.BHL.AdminWeb.Models.TextImportHistoryModel
+@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			$('#recordlist').dataTable( {
+				"bProcessing": true,
+				"bFilter": false,
+				"bLengthChange": false,
+				"iDisplayLength": 20,
+                "sDom": '<"H"lfr>t<"F"ip>',
+				"sPaginationType": "full_numbers"
+				,"aoColumns": [
+					null,
+					null,
+					null,
+                    null,
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false },
+					{ "bSortable": false }
+				]
+                ,"aaSorting": [[4,'desc']]
+			} );
+		} );
+    </script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
 @{
-    ViewBag.Title = "TextImportHistory";
+    ViewBag.Title = "Text Import History";
 }
 
-<h2>TextImportHistory</h2>
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+</p>
+<span class="pageHeader">@ViewBag.Title</span><hr />
+<br />
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+
+    <div style="margin-bottom:10px">
+        <div>Import Status: @Html.DropDownListFor(m => m.ImportBatchStatus, new SelectList(ViewBag.TextImportBatchStatusList, "TextImportBatchStatusID", "StatusName"), "-- All --")</div>
+        <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
+        <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
+    </div>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
+        <thead>
+            <tr>
+                <th colspan="5" style="border-bottom:0px"></th>
+                <th colspan="8" style="border-bottom:0px">Files</th>
+            </tr>
+            <tr>
+                <th width="10%">Batch</th>
+                <th width="15%">Status</th>
+                <th width="16%">User</th>
+                <th width="15%">Date</th>
+                <th width="3%">Total</th>
+                <th width="3%">Ready</th>
+                <th width="3%">Review</th>
+                <th width="3%">Reject</th>
+                <th width="3%">Error</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (MOBOT.BHL.DataObjects.TextImportBatch batch in Model.ImportBatchList)
+            {
+                <tr>
+                    <td><a href="/textimport/review/@batch.TextImportBatchID">@batch.TextImportBatchID</a></td>
+                    <td>@batch.StatusName</td>
+                    <td>@batch.CreationUser</td>
+                    <td>@batch.LastModifiedDate.ToString("yyyy/MM/dd hh:mm:sstt")</td>
+                    <td class="importHistAlign">@batch.TotalRecords</td>
+                    <td class="importHistAlign">@batch.ReadyRecords</td>
+                    <td class="importHistAlign">@batch.ReviewRecords</td>
+                    <td class="importHistAlign">@batch.RejectedRecords</td>
+                    <td class="importHistAlign">@batch.ErrorRecords</td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Batch</th>
+                <th>Status</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Ready</th>
+                <th>Review</th>
+                <th>Reject</th>
+                <th>Error</th>
+            </tr>
+            <tr>
+                <th colspan="5" style="border-top:0px"></th>
+                <th colspan="8" style="border-top:0px">Files</th>
+            </tr>
+        </tfoot>
+    </table>
+
+}
+
 

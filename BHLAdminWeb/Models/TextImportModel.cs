@@ -58,6 +58,21 @@ namespace MOBOT.BHL.AdminWeb.Models
                 file.AddBatchFile(this.BatchID, userId);
             }
         }
+
+        public void GetImportBatchDetails(int batchID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void QueueBatch(int userID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RejectBatch(int userID)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     [Serializable]
@@ -108,9 +123,21 @@ namespace MOBOT.BHL.AdminWeb.Models
             BHLProvider provider = new BHLProvider();
 
             int batchFileStatus;
-            if (this.ItemID == "") batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
-            else if (provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0) batchFileStatus = TextImportService.GetTextImportBatchFileStatusReview();
-            else batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
+            if (this.ItemID == "")
+            {
+                // No valid Item ID
+                batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+            }
+            else if (provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0)
+            {
+                // Text to be replaced NOT from IA, so user must review and approve replacement
+                batchFileStatus = TextImportService.GetTextImportBatchFileStatusReview();
+            }
+            else
+            {
+                // Validations passed; ok to import this file
+                batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
+            }
 
             TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
                 batchFileStatus, this.ItemID == "" ? (int?)null : Convert.ToInt32(this.ItemID), 
