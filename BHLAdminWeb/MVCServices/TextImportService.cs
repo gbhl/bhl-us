@@ -31,8 +31,9 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         {
             { 10, "Ready" },
             { 20, "Review" },
-            { 30, "Rejected" },
-            { 40, "Error" }
+            { 30, "Imported" },
+            { 40, "Rejected" },
+            { 50, "Error" }
         };
 
         public class ImportBatchException : Exception
@@ -52,6 +53,16 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         public static int GetTextImportBatchStatusNew()
         {
             return TextImportBatchStatuses.Where(s => s.Value == "New").Select(k => k.Key).First();
+        }
+
+        public static int GetTextImportBatchStatusQueued()
+        {
+            return TextImportBatchStatuses.Where(s => s.Value == "Queued").Select(k => k.Key).First();
+        }
+
+        public static int GetTextImportBatchStatusRejected()
+        {
+            return TextImportBatchStatuses.Where(s => s.Value == "Rejected").Select(k => k.Key).First();
         }
 
         public static int GetTextImportBatchFileStatusReady()
@@ -114,7 +125,9 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
         public CustomGenericList<TextImportBatchFileStatus> TextImportBatchFileStatusList()
         {
-            throw new NotImplementedException();
+            CustomGenericList<TextImportBatchFileStatus> statusList = new BHLProvider().TextImportBatchFileStatusSelectAll();
+
+            return statusList;
         }
 
         /// <summary>

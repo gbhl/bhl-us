@@ -1067,6 +1067,10 @@
     <None Include="dbo\Stored Procedures\PageTextLogSelectForItem.sql" />
     <None Include="txtimport\Stored Procedures\TextImportBatchStatusSelectAll.sql" />
     <None Include="txtimport\Stored Procedures\TextImportBatchSelectDetails.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileStatusSelectAll.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchUpdateStatus.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchSelectExpanded.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileSelectForBatch.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

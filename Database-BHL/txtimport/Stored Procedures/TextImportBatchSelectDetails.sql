@@ -17,8 +17,9 @@ SELECT	f.TextImportBatchID,
 		COUNT(*) TotalRecords,
 		SUM(CASE WHEN r.TextImportBatchFileStatusID = 10 THEN 1 ELSE 0 END) AS ReadyRecords,
 		SUM(CASE WHEN r.TextImportBatchFileStatusID = 20 THEN 1 ELSE 0 END) AS ReviewRecords,
-		SUM(CASE WHEN r.TextImportBatchFileStatusID = 30 THEN 1 ELSE 0 END) AS RejectedRecords,
-		SUM(CASE WHEN r.TextImportBatchFileStatusID = 40 THEN 1 ELSE 0 END) AS ErrorRecords
+		SUM(CASE WHEN r.TextImportBatchFileStatusID = 30 THEN 1 ELSE 0 END) AS ImportedRecords,
+		SUM(CASE WHEN r.TextImportBatchFileStatusID = 40 THEN 1 ELSE 0 END) AS RejectedRecords,
+		SUM(CASE WHEN r.TextImportBatchFileStatusID = 50 THEN 1 ELSE 0 END) AS ErrorRecords
 FROM	txtimport.TextImportBatch f 
 		INNER JOIN txtimport.TextImportBatchFile r ON f.TextImportBatchID = r.TextImportBatchID
 		INNER JOIN txtimport.TextImportBatchStatus s ON f.TextImportBatchStatusID = s.TextImportBatchStatusID

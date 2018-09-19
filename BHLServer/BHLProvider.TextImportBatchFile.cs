@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.DAL;
+﻿using CustomDataAccess;
+using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,16 @@ namespace MOBOT.BHL.Server
         public TextImportBatchFile TextImportBatchFileUpdateAuto(TextImportBatchFile textImportBatchFile)
         {
             return new TextImportBatchFileDAL().TextImportBatchFileUpdateAuto(null, null, textImportBatchFile);
+        }
+
+        public CustomGenericList<TextImportBatchFileStatus> TextImportBatchFileStatusSelectAll()
+        {
+            return new TextImportBatchFileStatusDAL().SelectAll(null, null);
+        }
+
+        public CustomGenericList<TextImportBatchFile> TextImportBatchFileSelectForBatch(int batchID)
+        {
+            return new TextImportBatchFileDAL().TextImportBatchFileSelectForBatch(null, null, batchID);
         }
     }
 }

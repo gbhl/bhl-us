@@ -69,7 +69,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             model.AddBatch(Helper.GetCurrentUserUID(Request));
 
             TempData["Model"] = model;
-            return RedirectToAction("Review");
+            return RedirectToAction("Review", new { id = model.BatchID });
         }
 
         // GET: /TextImport/Review
@@ -81,7 +81,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             in the imported file, and present the list to the user for review.
             */
 
-            TextImportModel model = (TextImportModel)TempData["Model"] ?? new TextImportModel();
+            TextImportModel model = new TextImportModel();
             if (id != null) model.GetImportBatchDetails((int)id);
 
             ViewBag.TextImportBatchFileStatuses = new TextImportService().TextImportBatchFileStatusList();

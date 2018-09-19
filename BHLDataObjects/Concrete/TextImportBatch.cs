@@ -69,6 +69,14 @@ namespace MOBOT.BHL.DataObjects
             set { _rejectedRecords = value; }
         }
 
+        private int _importedRecords;
+
+        public int ImportedRecords
+        {
+            get { return _importedRecords; }
+            set { _importedRecords = value; }
+        }
+
         private int _errorRecords;
 
         public int ErrorRecords
@@ -115,6 +123,11 @@ namespace MOBOT.BHL.DataObjects
                     case "ReviewRecords":
                         {
                             _reviewRecords = Utility.ZeroIfNull(column.Value);
+                            break;
+                        }
+                    case "ImportedRecords":
+                        {
+                            _importedRecords = Utility.ZeroIfNull(column.Value);
                             break;
                         }
                     case "RejectedRecords":

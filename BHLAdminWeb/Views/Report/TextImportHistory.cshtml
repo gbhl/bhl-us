@@ -18,11 +18,12 @@
                     null,
 					{ "bSortable": false },
 					{ "bSortable": false },
+                    { "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false },
 					{ "bSortable": false }
 				]
-                ,"aaSorting": [[4,'desc']]
+                ,"aaSorting": [[3,'desc']]
 			} );
 		} );
     </script>
@@ -64,6 +65,7 @@
                 <th width="3%">Total</th>
                 <th width="3%">Ready</th>
                 <th width="3%">Review</th>
+                <th width="3%">Import</th>
                 <th width="3%">Reject</th>
                 <th width="3%">Error</th>
             </tr>
@@ -80,6 +82,7 @@
                     <td class="importHistAlign">@batch.TotalRecords</td>
                     <td class="importHistAlign">@batch.ReadyRecords</td>
                     <td class="importHistAlign">@batch.ReviewRecords</td>
+                    <td class="importHistAlign">@batch.ImportedRecords</td>
                     <td class="importHistAlign">@batch.RejectedRecords</td>
                     <td class="importHistAlign">@batch.ErrorRecords</td>
                 </tr>
@@ -95,6 +98,7 @@
                 <th>Total</th>
                 <th>Ready</th>
                 <th>Review</th>
+                <th>Import</th>
                 <th>Reject</th>
                 <th>Error</th>
             </tr>

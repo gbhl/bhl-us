@@ -26,9 +26,19 @@ namespace MOBOT.BHL.Server
             return new TextImportBatchDAL().TextImportBatchSelectDetails(null, null, fileStatusID, numberOfDays);
         }
 
+        public TextImportBatch TextImportBatchSelectExpanded(int batchID)
+        {
+            return new TextImportBatchDAL().TextImportBatchSelectExpanded(null, null, batchID);
+        }
+
         public CustomGenericList<TextImportBatchStatus> TextImportBatchStatusSelectAll()
         {
             return new TextImportBatchStatusDAL().SelectAll(null, null);
+        }
+
+        public void TextImportBatchUpdateStatus(int batchID, int statusID)
+        {
+            new TextImportBatchDAL().TextImportBatchUpdateStatus(null, null, batchID, statusID);
         }
     }
 }
