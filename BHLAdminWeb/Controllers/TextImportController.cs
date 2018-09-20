@@ -120,5 +120,48 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             return RedirectToAction("TextImportHistory", "Report");
         }
+
+        // AJAX method to support /TextImport/Review
+        [HttpGet]
+        public ActionResult GetFiles(int batchID, int sEcho, int iDisplayStart, int iDisplayLength,
+            int iSortCol_0, string sSortDir_0)
+        {
+            string sortColumn = "Filename";
+
+            switch (iSortCol_0)
+            {
+                case 0:
+                case 1:
+                    sortColumn = "Filename";
+                    break;
+                case 4:
+                    sortColumn = "Status";
+                    break;
+                default:
+                    sortColumn = string.Format("Filename {0}", sSortDir_0);
+                    break;
+            }
+
+            ImportRecordJson.Rootobject json = new TextImportModel().GetFiles(batchID, iDisplayLength,
+                iDisplayStart, sortColumn, sSortDir_0);
+            json.sEcho = sEcho;
+            return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        // AJAX method to support /TextImport/Review
+        [HttpPost]
+        public ActionResult UpdateRecordStatus(int fileID, string originalValue, string value)
+        {
+            int fileStatusID;
+            string newStatus = originalValue;
+
+            if (Int32.TryParse(value, out fileStatusID))
+            {
+                int userId = Helper.GetCurrentUserUID(Request);
+                newStatus = new TextImportFileModel().UpdateFileStatus(fileID, fileStatusID, userId);
+            }
+
+            return Content(newStatus);
+        }
     }
 }

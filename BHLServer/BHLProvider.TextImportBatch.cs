@@ -1,6 +1,7 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
 
 namespace MOBOT.BHL.Server
 {
@@ -36,9 +37,22 @@ namespace MOBOT.BHL.Server
             return new TextImportBatchStatusDAL().SelectAll(null, null);
         }
 
-        public void TextImportBatchUpdateStatus(int batchID, int statusID)
+        public TextImportBatch TextImportBatchUpdateStatus(int batchID, int statusID, int userID)
         {
-            new TextImportBatchDAL().TextImportBatchUpdateStatus(null, null, batchID, statusID);
+            TextImportBatchDAL dal = new TextImportBatchDAL();
+            TextImportBatch savedBatch = dal.TextImportBatchSelectAuto(null, null, batchID);
+            if (savedBatch != null)
+            {
+                savedBatch.TextImportBatchStatusID = statusID;
+                savedBatch.LastModifiedDate = DateTime.Now;
+                savedBatch.LastModifiedUserID = userID;
+                savedBatch = dal.TextImportBatchUpdateAuto(null, null, savedBatch);
+            }
+            else
+            {
+                throw new Exception("Could not find existing TextImportBatch.");
+            }
+            return savedBatch;
         }
     }
 }

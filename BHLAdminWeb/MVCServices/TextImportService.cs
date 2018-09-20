@@ -11,14 +11,14 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 {
     public class TextImportService
     {
-        private Dictionary<string, string> FileFormats = new Dictionary<string, string> {
+        public Dictionary<string, string> FileFormats = new Dictionary<string, string> {
             { "", "Unknown" },
             {"dv", "DigiVol" },
             {"ftp", "From The Page" },
             {"stc", "Smithsonian Transcription Center" }
         };
 
-        private static Dictionary<int, string> TextImportBatchStatuses = new Dictionary<int, string>
+        public static Dictionary<int, string> TextImportBatchStatuses = new Dictionary<int, string>
         {
             { 10, "New" },
             { 20, "Queued" },
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             { 50, "Rejected" }
         };
 
-        private static Dictionary<int, string> TextImportBatchFileStatuses = new Dictionary<int, string>
+        public static Dictionary<int, string> TextImportBatchFileStatuses = new Dictionary<int, string>
         {
             { 10, "Ready" },
             { 20, "Review" },

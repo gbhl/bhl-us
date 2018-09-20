@@ -1255,7 +1255,6 @@ sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchSelectAuto.
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchSelectDetails.sql"
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchSelectExpanded.sql"
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchUpdateAuto.sql"
-sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchUpdateStatus.sql"
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchStatusDeleteAuto.sql"
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchFileSelectForBatch.sql"
 sqlcmd -E -S %1 -d %2 -i "txtimport\stored procedures\TextImportBatchFileStatusDeleteAuto.sql"

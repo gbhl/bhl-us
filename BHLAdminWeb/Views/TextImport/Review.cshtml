@@ -1,26 +1,96 @@
 ﻿@model MOBOT.BHL.AdminWeb.Models.TextImportModel
-
+@section Javascript
+{
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
+    <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryJEditablePath"])" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            var oTable = $('#filelist').DataTable( {
+                "processing": true
+                ,"serverSide": true
+                ,"filter": false
+                ,"lengthChange": false
+                ,"displayLength": 100
+                ,"scrollY": 100
+                ,"scrollX": true
+                ,"paginationType": "full_numbers"
+                , "ajaxSource": '/TextImport/GetFiles?batchID=@Model.BatchID'
+                ,"columns": [
+                    { "data": "id", "visible": false } /* ID column */
+                    ,{ "data": "filename", "sortable": true }
+                    ,{ "data": "fileformat", "sortable": false }
+                    ,{ "data": "itemdesc", "sortable": false }
+                    ,{ "data": "status", "sortable": true, "sClass": "editCol" }
+                ]
+                ,"drawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/TextImport/UpdateFileStatus', {
+                    "callback": function (sValue, settings) {
+                        oTable.row(this.parentNode).data().status = sValue;
+                    },
+                    "submitdata": function (value, settings) {
+                        return {
+                            "batchID": oTable.row(this.parentNode).data().id,
+                            "originalValue": this.revert
+                        };
+                    },
+                    "height": "12px",
+                    "width": "100%",
+                    "data" : $(".fileStatus").html(),
+                    "type" : "select"
+                    } );
+                }
+            } );
+		} );
+    </script>
+}
+@section CSS
+{
+    <link href="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesCSSPath"])" rel="stylesheet" type="text/css" />
+}
 @{
     ViewBag.Title = "Import Item Text - Review";
 }
 
-<p><a href="/">&lt; Return to Dashboard</a></p>
-<span class="pageHeader">@ViewBag.Title</span><hr />
-<br />
+<p>
+    <a href="/">< Return to Dashboard</a><br />
+    <a href="/report/textimporthistory">< View Text Import History</a>
+    <span style="float:right">
+        <a href="#" title="How to Use This Page" onclick="window.open('/ImportTextReviewHelp.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');">How To Use This Page</a>
+    </span>
+</p>
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
 
-<div class="citeImport">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 
+{
+    @Html.HiddenFor(m => m.BatchID)
 
-
-
-        <div style="margin:10px 0px">
-            <input class="formButton" type="submit" name="btnNext" id="btnNext" value="Next >" />
-            <input class="formButton" type="button" name="btnCancel" id="btnCancel" value="Cancel" />
+    <div>
+        <div style="margin:10px 0px; float:left;">
+            <span style="font-weight:bold">Batch @Model.BatchID</span>, submitted by @Model.CreationUser, on @Model.CreationDateTime. <span style="font-weight:bold">Status: @Model.BatchStatus</span>
         </div>
-    }
-</div>
+
+        <div style="margin:10px 0px;float:right;">
+            <input type="submit" name="btnImport" id="btnImport" value="Import Batch" @(Model.BatchStatusID >= 30 ? "disabled" : "") />
+            <input type="submit" name="btnReject" id="btnReject" value="Reject Batch" @(Model.BatchStatusID >= 30 ? "disabled" : "") />
+        </div>
+    </div>
+
+    <div style="clear:both">
+        <table cellpadding="0" cellspacing="0" border="0" class="display" id="filelist" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th width="20%">File</th>
+                    <th width="20%">Format</th>
+                    <th width="50%">Item</th>
+                    <th width="10%">Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+}
 
 <script type="text/javascript">
     $(document).ready(function () {

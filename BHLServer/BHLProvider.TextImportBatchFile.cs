@@ -37,5 +37,23 @@ namespace MOBOT.BHL.Server
         {
             return new TextImportBatchFileDAL().TextImportBatchFileSelectForBatch(null, null, batchID);
         }
+
+        public TextImportBatchFile TextImportBatchFileUpdateStatus(int fileID, int fileStatusID, int userID)
+        {
+            TextImportBatchFileDAL dal = new TextImportBatchFileDAL();
+            TextImportBatchFile savedFile = dal.TextImportBatchFileSelectAuto(null, null, fileID);
+            if (savedFile != null)
+            {
+                savedFile.TextImportBatchFileStatusID = fileStatusID;
+                savedFile.LastModifiedDate = DateTime.Now;
+                savedFile.LastModifiedUserID = userID;
+                savedFile = dal.TextImportBatchFileUpdateAuto(null, null, savedFile);
+            }
+            else
+            {
+                throw new Exception("Could not find existing TextImportBatchFile.");
+            }
+            return savedFile;
+        }
     }
 }

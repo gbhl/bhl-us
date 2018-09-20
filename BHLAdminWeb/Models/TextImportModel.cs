@@ -98,6 +98,78 @@ namespace MOBOT.BHL.AdminWeb.Models
             return files;
         }
 
+        /// <summary>
+        /// Get files from the specified text import batch.
+        /// </summary>
+        /// <param name="batchID">Identifier of the import batch</param>
+        /// <param name="numRows">Number of rows to return</param>
+        /// <param name="startRow">First row to return (enables paging)</param>
+        /// <param name="sortColumn">Column by which to sort data</param>
+        /// <param name="sortDirection">Direction of sort</param>
+        public ImportRecordJson.Rootobject GetFiles(int batchID, int numRows, int startRow, string sortColumn, string sortDirection)
+        {
+            throw new NotImplementedException();
+
+            CustomGenericList<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(batchID,
+                numRows, startRow, sortColumn, sortDirection, 1);
+
+            ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();
+            json.iTotalRecords = (records.Count == 0) ? "0" : records[0].TotalRecords.ToString();
+            json.iTotalDisplayRecords = json.iTotalRecords;
+
+            ImportRecordJson.Datum[] aaData = new ImportRecordJson.Datum[records.Count];
+
+            for (int x = 0; x < records.Count; x++)
+            {
+                string sPageID = records[x].StartPageID == null ? "" : string.Format(" (ID: {0})", records[x].StartPageID.ToString());
+                string ePageID = records[x].EndPageID == null ? "" : string.Format(" (ID: {0})", records[x].EndPageID.ToString());
+
+                aaData[x] = new ImportRecordJson.Datum()
+                {
+                    // Summary
+                    id = records[x].ImportRecordID.ToString(),
+                    title = records[x].Title,
+                    itemID = records[x].ItemID.ToString(),
+                    segmentID = records[x].SegmentID.ToString(),
+                    journal = records[x].JournalTitle,
+                    year = records[x].Year,
+                    volume = records[x].Volume,
+                    issue = records[x].Issue,
+                    startPageID = records[x].StartPageID.ToString(),
+                    startPage = records[x].StartPage + sPageID,
+                    endPage = records[x].EndPage + ePageID,
+                    status = records[x].StatusName,
+                    // Detailed
+                    translatedTitle = records[x].TranslatedTitle,
+                    series = records[x].Series,
+                    edition = records[x].Edition,
+                    publicationDetails = records[x].PublicationDetails,
+                    publisherName = records[x].PublisherName,
+                    publisherPlace = records[x].PublisherPlace,
+                    language = records[x].Language,
+                    rights = records[x].Rights,
+                    dueDiligence = records[x].DueDiligence,
+                    copyrightStatus = records[x].CopyrightStatus,
+                    license = records[x].License,
+                    licenseUrl = records[x].LicenseUrl,
+                    url = records[x].Url,
+                    issn = records[x].ISSN,
+                    isbn = records[x].ISBN,
+                    oclc = records[x].OCLC,
+                    lccn = records[x].LCCN,
+                    doi = records[x].DOI,
+                    summary = records[x].Summary,
+                    notes = records[x].Notes,
+                    authors = records[x].AuthorString,
+                    keywords = records[x].KeywordString,
+                    errors = records[x].ErrorString
+                };
+            }
+            json.aaData = aaData;
+
+            return json;
+        }
+
         public void GetImportBatchDetails(int batchID)
         {
             BHLProvider provider = new BHLProvider();
@@ -113,12 +185,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public void QueueBatch(int userID)
         {
-            new BHLProvider().TextImportBatchUpdateStatus(this.BatchID, TextImportService.GetTextImportBatchStatusQueued());
+            new BHLProvider().TextImportBatchUpdateStatus(this.BatchID, TextImportService.GetTextImportBatchStatusQueued(), userID);
         }
 
         public void RejectBatch(int userID)
         {
-            new BHLProvider().TextImportBatchUpdateStatus(this.BatchID, TextImportService.GetTextImportBatchStatusRejected());
+            new BHLProvider().TextImportBatchUpdateStatus(this.BatchID, TextImportService.GetTextImportBatchStatusRejected(), userID);
         }
     }
 
@@ -213,6 +285,20 @@ namespace MOBOT.BHL.AdminWeb.Models
             TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
                 batchFileStatus, this.ItemID == "" ? (int?)null : Convert.ToInt32(this.ItemID), 
                 this.FileName, this.FileFormat, userId);
+        }
+
+        /// <summary>
+        /// Update the specified import record with the specified import record status.
+        /// </summary>
+        /// <param name="importRecordID"></param>
+        /// <param name="importRecordStatusID"></param>
+        /// <param name="securityToken"></param>
+        /// <returns>The name of the new status.</returns>
+        public string UpdateFileStatus(int fileID, int fileStatusID, int userId)
+        {
+            BHLProvider bhlService = new BHLProvider();
+            TextImportBatchFile updatedFile = bhlService.TextImportBatchFileUpdateStatus(fileID, fileStatusID, userId);
+            return TextImportService.TextImportBatchFileStatuses[updatedFile.TextImportBatchFileStatusID];
         }
     }
 }
