@@ -106,63 +106,28 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="startRow">First row to return (enables paging)</param>
         /// <param name="sortColumn">Column by which to sort data</param>
         /// <param name="sortDirection">Direction of sort</param>
-        public ImportRecordJson.Rootobject GetFiles(int batchID, int numRows, int startRow, string sortColumn, string sortDirection)
+        public TextImportBatchFileJson.Rootobject GetFiles(int batchID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            throw new NotImplementedException();
+            CustomGenericList<TextImportBatchFile> files = new BHLProvider().TextImportBatchFileDetailSelectForBatch(batchID,
+                numRows, startRow, sortColumn, sortDirection);
 
-            CustomGenericList<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(batchID,
-                numRows, startRow, sortColumn, sortDirection, 1);
-
-            ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();
-            json.iTotalRecords = (records.Count == 0) ? "0" : records[0].TotalRecords.ToString();
+            TextImportBatchFileJson.Rootobject json = new TextImportBatchFileJson.Rootobject();
+            json.iTotalRecords = (files.Count == 0) ? "0" : files[0].TotalFiles.ToString();
             json.iTotalDisplayRecords = json.iTotalRecords;
 
-            ImportRecordJson.Datum[] aaData = new ImportRecordJson.Datum[records.Count];
+            TextImportBatchFileJson.Datum[] aaData = new TextImportBatchFileJson.Datum[files.Count];
 
-            for (int x = 0; x < records.Count; x++)
+            for (int x = 0; x < files.Count; x++)
             {
-                string sPageID = records[x].StartPageID == null ? "" : string.Format(" (ID: {0})", records[x].StartPageID.ToString());
-                string ePageID = records[x].EndPageID == null ? "" : string.Format(" (ID: {0})", records[x].EndPageID.ToString());
-
-                aaData[x] = new ImportRecordJson.Datum()
+                aaData[x] = new TextImportBatchFileJson.Datum()
                 {
                     // Summary
-                    id = records[x].ImportRecordID.ToString(),
-                    title = records[x].Title,
-                    itemID = records[x].ItemID.ToString(),
-                    segmentID = records[x].SegmentID.ToString(),
-                    journal = records[x].JournalTitle,
-                    year = records[x].Year,
-                    volume = records[x].Volume,
-                    issue = records[x].Issue,
-                    startPageID = records[x].StartPageID.ToString(),
-                    startPage = records[x].StartPage + sPageID,
-                    endPage = records[x].EndPage + ePageID,
-                    status = records[x].StatusName,
-                    // Detailed
-                    translatedTitle = records[x].TranslatedTitle,
-                    series = records[x].Series,
-                    edition = records[x].Edition,
-                    publicationDetails = records[x].PublicationDetails,
-                    publisherName = records[x].PublisherName,
-                    publisherPlace = records[x].PublisherPlace,
-                    language = records[x].Language,
-                    rights = records[x].Rights,
-                    dueDiligence = records[x].DueDiligence,
-                    copyrightStatus = records[x].CopyrightStatus,
-                    license = records[x].License,
-                    licenseUrl = records[x].LicenseUrl,
-                    url = records[x].Url,
-                    issn = records[x].ISSN,
-                    isbn = records[x].ISBN,
-                    oclc = records[x].OCLC,
-                    lccn = records[x].LCCN,
-                    doi = records[x].DOI,
-                    summary = records[x].Summary,
-                    notes = records[x].Notes,
-                    authors = records[x].AuthorString,
-                    keywords = records[x].KeywordString,
-                    errors = records[x].ErrorString
+                    id = files[x].TextImportBatchFileID.ToString(),
+                    filename = files[x].Filename,
+                    fileformat = new TextImportService().GetFileFormatValue(files[x].FileFormat),
+                    itemid = files[x].ItemID.ToString(),
+                    itemdesc = files[x].ItemDescription,
+                    status = files[x].StatusName
                 };
             }
             json.aaData = aaData;
@@ -299,6 +264,37 @@ namespace MOBOT.BHL.AdminWeb.Models
             BHLProvider bhlService = new BHLProvider();
             TextImportBatchFile updatedFile = bhlService.TextImportBatchFileUpdateStatus(fileID, fileStatusID, userId);
             return TextImportService.TextImportBatchFileStatuses[updatedFile.TextImportBatchFileStatusID];
+        }
+
+        public CustomGenericList<Page> GetItemPages(int itemID)
+        {
+            CustomGenericList<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
+            return pages;
+        }
+    }
+
+    /// <summary>
+    /// Class used to produce the JSON representation of batch files that is needed by jQuery DataTables
+    /// </summary>
+    [Serializable]
+    public class TextImportBatchFileJson
+    {
+        public class Rootobject
+        {
+            public int sEcho { get; set; }
+            public string iTotalRecords { get; set; }
+            public string iTotalDisplayRecords { get; set; }
+            public Datum[] aaData { get; set; }
+        }
+
+        public class Datum
+        {
+            public string id { get; set; }
+            public string filename { get; set; }
+            public string fileformat { get; set; }
+            public string itemid { get; set; }
+            public string itemdesc { get; set; }
+            public string status { get; set; }
         }
     }
 }

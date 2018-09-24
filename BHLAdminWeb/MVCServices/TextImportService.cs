@@ -29,8 +29,8 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
         public static Dictionary<int, string> TextImportBatchFileStatuses = new Dictionary<int, string>
         {
-            { 10, "Ready" },
-            { 20, "Review" },
+            { 10, "Ready to Import" },
+            { 20, "Must Review" },
             { 30, "Imported" },
             { 40, "Rejected" },
             { 50, "Error" }
@@ -123,9 +123,15 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
             return statusList;
         }
 
-        public CustomGenericList<TextImportBatchFileStatus> TextImportBatchFileStatusList()
+        public Dictionary<string, string> TextImportBatchFileStatusList()
         {
-            CustomGenericList<TextImportBatchFileStatus> statusList = new BHLProvider().TextImportBatchFileStatusSelectAll();
+            Dictionary<string, string> statusList = new Dictionary<string, string>();
+
+            CustomGenericList<TextImportBatchFileStatus> statuses = new BHLProvider().TextImportBatchFileStatusSelectAll();
+            foreach (TextImportBatchFileStatus status in statuses)
+            {
+                if (status.StatusName != "Imported") statusList.Add(status.TextImportBatchFileStatusID.ToString(), status.StatusName);
+            }
 
             return statusList;
         }

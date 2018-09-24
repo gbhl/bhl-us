@@ -84,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             TextImportModel model = new TextImportModel();
             if (id != null) model.GetImportBatchDetails((int)id);
 
-            ViewBag.TextImportBatchFileStatuses = new TextImportService().TextImportBatchFileStatusList();
+            ViewBag.TextImportBatchFileStatuses = new JavaScriptSerializer().Serialize(new TextImportService().TextImportBatchFileStatusList());
             ViewBag.PageTitle += "Text Import Review";
 
             return View(model);
@@ -142,7 +142,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     break;
             }
 
-            ImportRecordJson.Rootobject json = new TextImportModel().GetFiles(batchID, iDisplayLength,
+            TextImportBatchFileJson.Rootobject json = new TextImportModel().GetFiles(batchID, iDisplayLength,
                 iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
             return Json(json, JsonRequestBehavior.AllowGet);
@@ -150,7 +150,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // AJAX method to support /TextImport/Review
         [HttpPost]
-        public ActionResult UpdateRecordStatus(int fileID, string originalValue, string value)
+        public ActionResult UpdateFileStatus(int fileID, string originalValue, string value)
         {
             int fileStatusID;
             string newStatus = originalValue;
@@ -162,6 +162,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             }
 
             return Content(newStatus);
+        }
+
+        // AJAX method to support /TextImport/Review
+        [HttpGet]
+        public ActionResult GetItemPages(int itemID)
+        {
+            return Json(new TextImportFileModel().GetItemPages(itemID), JsonRequestBehavior.AllowGet);
         }
     }
 }

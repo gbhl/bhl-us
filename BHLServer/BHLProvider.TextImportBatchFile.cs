@@ -38,6 +38,12 @@ namespace MOBOT.BHL.Server
             return new TextImportBatchFileDAL().TextImportBatchFileSelectForBatch(null, null, batchID);
         }
 
+        public CustomGenericList<TextImportBatchFile> TextImportBatchFileDetailSelectForBatch(int batchID,
+            int numRows, int startRow, string sortColumn, string sortDirection)
+        {
+            return new TextImportBatchFileDAL().TextImportBatchFileDetailSelectForBatch(null, null, batchID, numRows, startRow, sortColumn, sortDirection);
+        }
+
         public TextImportBatchFile TextImportBatchFileUpdateStatus(int fileID, int fileStatusID, int userID)
         {
             TextImportBatchFileDAL dal = new TextImportBatchFileDAL();

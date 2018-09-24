@@ -28,7 +28,7 @@
                     },
                     "submitdata": function (value, settings) {
                         return {
-                            "batchID": oTable.row(this.parentNode).data().id,
+                            "fileID": oTable.row(this.parentNode).data().id,
                             "originalValue": this.revert
                         };
                     },
@@ -38,8 +38,56 @@
                     "type" : "select"
                     } );
                 }
-            } );
-		} );
+            });
+
+            var selectedRow = null;
+
+            $('#filelist tbody').on('click', 'tr', function () {
+                var tr = $(this).closest('tr');
+                var row = oTable.row(tr);
+                var id = row.data().id;
+                var itemdesc = row.data().itemdesc;
+                var itemid = row.data().itemid;
+
+                // Highlight clicked row
+                if (selectedRow) selectedRow.css("background-color", "");
+                selectedRow = tr;
+                tr.css("background-color", "#9FC9E6");
+
+                // Get pages and populate list
+                $.ajax({
+                    url: "/textimport/GetItemPages?itemID=" + itemid
+                }).done(function (data) {
+                    $("#pageTable > tbody").empty();
+
+                    var tableRows;
+                    data.forEach(function (pageData) {
+                        tableRows += "<tr><td>";
+                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "'>" + pageData.WebDisplay + "</a>";
+                        tableRows += "</td></tr>";
+                    });
+
+                    $("#pageTable > tbody:last-child").append(tableRows);
+                });
+
+                $("#pagelist").show();
+                $("#itemdesc").html(itemdesc);
+            });
+        });
+
+        $(document).on('show.bs.modal', '#pageDetailModal', function (event) {
+            var button = $(event.relatedTarget); // Link that triggered the modal
+            // Extract info from data-* attributes
+            var pageRecordId = button.data('pagerecordid');
+            var pageSeqNo = button.data('pageseqno');
+
+            var modal = $(this);
+            modal.find('.modal-header h4').text('Page ID: ' + pageRecordId);
+            modal.find('.modal-header #pageRecordID').val(pageRecordId);
+
+            // TODO:  Show the page image and OCR
+
+        });
     </script>
 }
 @section CSS
@@ -49,6 +97,34 @@
 @{
     ViewBag.Title = "Import Item Text - Review";
 }
+
+
+<div class="modal" id="pageDetailModal" tabindex="-1" role="dialog" aria-labelledby="pageReviewLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="pageReviewLabel">Review Page</h4>
+                <input type="hidden" id="pageRecordID" />
+            </div>
+            <div class="modal-body">
+                <div class="panel">
+                    <label class="control-label">Selected:</label>&nbsp;<button id="clearAuthorSelection" class="btn btn-xs btn-primary">Clear Selection</button>
+                    <div><span id="selectedAuthorID"></span>&nbsp;<span id="selectedAuthorName">None</span></div>
+                </div>
+                <form class="panel">
+                    <div class="form-inline">
+                        <label for="author-name" class="control-label">Search For:</label>
+                        <input type="text" class="form-control" id="author-name">
+                        <button type="button" class="btn btn-primary" id="authorSearchButton">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <p>
     <a href="/">< Return to Dashboard</a><br />
@@ -64,6 +140,8 @@
 
 {
     @Html.HiddenFor(m => m.BatchID)
+
+    <div class="fileStatus" style="display:none">@Html.Raw(ViewBag.TextImportBatchFileStatuses)</div>
 
     <div>
         <div style="margin:10px 0px; float:left;">
@@ -90,6 +168,50 @@
             <tbody></tbody>
         </table>
     </div>
+    <style>
+        #pagelist td {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            padding-right: 3px;
+            padding-left: 3px;
+        }
+    </style>
+    <p>
+        <div id="pagelist" class="citeImport" style="display:none">
+            <div style="background-color:#FFFFFF; padding:10px">
+                <div id="itemdesc"></div>
+                <div style="margin-top:20px; font-weight:bold">Pages</div>
+                <div style="overflow:auto; column-count:3; -webkit-column-count:3;-moz-column-count:3">
+                    <table id="pageTable">
+                        <tbody>
+                            <!--
+                            <tr><td>Cover</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Title Page</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Table of Contents</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Page 1</td></tr>
+                            <tr><td>Page 2</td></tr>
+                            <tr><td>Page 3</td></tr>
+                            <tr><td>Page 4</td></tr>
+                            <tr><td>Page 5</td></tr>
+                            <tr><td>Page 6</td></tr>
+                            <tr><td>Page 7</td></tr>
+                            <tr><td>Page 8</td></tr>
+                            <tr><td>Page 9</td></tr>
+                            <tr><td>Page 10</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Blank</td></tr>
+                            <tr><td>Cover</td></tr>
+                            -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </p>
 }
 
 <script type="text/javascript">

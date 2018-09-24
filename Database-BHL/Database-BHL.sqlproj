@@ -1070,6 +1070,7 @@
     <None Include="txtimport\Stored Procedures\TextImportBatchFileStatusSelectAll.sql" />
     <None Include="txtimport\Stored Procedures\TextImportBatchSelectExpanded.sql" />
     <None Include="txtimport\Stored Procedures\TextImportBatchFileSelectForBatch.sql" />
+    <None Include="txtimport\Stored Procedures\TextImportBatchFileDetailSelectForBatch.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
