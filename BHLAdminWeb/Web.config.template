@@ -15,6 +15,8 @@
     <add key="BibPageUrl" value="https://www.biodiversitylibrary.org/bibliography/{0}" />
     <add key="ItemPageUrl" value="https://www.biodiversitylibrary.org/item/{0}" />
     <add key="PagePageUrl" value="https://www.biodiversitylibrary.org/page/{0}" />
+    <add key="PageImageUrl" value="https://www.biodiversitylibrary.org/pageimage/{0}" />
+    <add key="PageTextUrl" value="https://www.biodiversitylibrary.org/pageocr/{0}" />
     <add key="PartPageUrl" value="https://www.biodiversitylibrary.org/part/{0}" />
     <add key="AuthorPageUrl" value="https://www.biodiversitylibrary.org/creator/{0}" />
     <add key="CollectionPageUrl" value="https://www.biodiversitylibrary.org/collection/{0}" />

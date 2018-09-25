@@ -1,4 +1,5 @@
-﻿using CustomDataAccess;
+﻿using BHL.TextImportUtility;
+using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
@@ -67,12 +68,12 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
         public static int GetTextImportBatchFileStatusReady()
         {
-            return TextImportBatchFileStatuses.Where(s => s.Value == "Ready").Select(k => k.Key).First();
+            return TextImportBatchFileStatuses.Where(s => s.Value == "Ready to Import").Select(k => k.Key).First();
         }
 
         public static int GetTextImportBatchFileStatusReview()
         {
-            return TextImportBatchFileStatuses.Where(s => s.Value == "Review").Select(k => k.Key).First();
+            return TextImportBatchFileStatuses.Where(s => s.Value == "Must Review").Select(k => k.Key).First();
         }
 
         public static int GetTextImportBatchFileStatusError()
@@ -82,23 +83,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
 
         public string GetFileFormat(string savedFileName)
         {
-            string fileFormat = "";
-            string fileContent = File.ReadAllText(savedFileName);
-
-            if (fileContent.Contains("<div class=\"page-content\">"))
-            {
-                fileFormat = "ftp";
-            }
-            else if (fileContent.Contains(",\"occurrenceRemarks\","))
-            {
-                fileFormat = "dv";
-            }
-            else if (fileContent.Contains("tl1_text"))
-            {
-                fileFormat = "stc";
-            }
-
-            return fileFormat;
+            return new TextImportTool().GetFileFormat(savedFileName);
         }
 
         public string GetFileFormatValue(string fileFormatKey)

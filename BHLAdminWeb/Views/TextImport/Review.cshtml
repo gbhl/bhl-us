@@ -48,6 +48,7 @@
                 var id = row.data().id;
                 var itemdesc = row.data().itemdesc;
                 var itemid = row.data().itemid;
+                var filename = row.data().filename;
 
                 // Highlight clicked row
                 if (selectedRow) selectedRow.css("background-color", "");
@@ -63,7 +64,7 @@
                     var tableRows;
                     data.forEach(function (pageData) {
                         tableRows += "<tr><td>";
-                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "'>" + pageData.WebDisplay + "</a>";
+                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "' data-filename='" + filename + "'>" + pageData.WebDisplay + "</a>";
                         tableRows += "</td></tr>";
                     });
 
@@ -76,17 +77,21 @@
         });
 
         $(document).on('show.bs.modal', '#pageDetailModal', function (event) {
-            var button = $(event.relatedTarget); // Link that triggered the modal
+            var page = $(event.relatedTarget); // Page link that triggered the modal
             // Extract info from data-* attributes
-            var pageRecordId = button.data('pagerecordid');
-            var pageSeqNo = button.data('pageseqno');
+            var pageRecordId = page.data('pagerecordid');
+            var pageSeqNo = page.data('pageseqno');
+            var filename = page.data('filename');
 
             var modal = $(this);
             modal.find('.modal-header h4').text('Page ID: ' + pageRecordId);
             modal.find('.modal-header #pageRecordID').val(pageRecordId);
 
-            // TODO:  Show the page image and OCR
-
+            // Show the page image and text
+            var imageLink = '@Url.Content(System.Configuration.ConfigurationManager.AppSettings["PageImageUrl"])';
+            modal.find('.modal-body #pageImage').attr("src", imageLink.replace("{0}", pageRecordId));
+            $.ajax("/textimport/GetOrigPageText?pageID=" + pageRecordId).done(function (data) { modal.find('.modal-body #textOriginal').text(data); });
+            $.ajax("/textimport/GetNewPageText?fileName=" + filename + "&seqNo=" + pageSeqNo).done(function (data) { modal.find('.modal-body #textReplacement').text(data); });
         });
     </script>
 }
@@ -98,9 +103,8 @@
     ViewBag.Title = "Import Item Text - Review";
 }
 
-
 <div class="modal" id="pageDetailModal" tabindex="-1" role="dialog" aria-labelledby="pageReviewLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -109,22 +113,32 @@
             </div>
             <div class="modal-body">
                 <div class="panel">
-                    <label class="control-label">Selected:</label>&nbsp;<button id="clearAuthorSelection" class="btn btn-xs btn-primary">Clear Selection</button>
-                    <div><span id="selectedAuthorID"></span>&nbsp;<span id="selectedAuthorName">None</span></div>
-                </div>
-                <form class="panel">
-                    <div class="form-inline">
-                        <label for="author-name" class="control-label">Search For:</label>
-                        <input type="text" class="form-control" id="author-name">
-                        <button type="button" class="btn btn-primary" id="authorSearchButton">Search</button>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <img width="435" id="pageImage" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    Original Text:
+                                    <div id="textOriginal" style="height:300px;margin-bottom:20px;padding:5px;overflow:auto"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    Replacement Text:
+                                    <div id="textReplacement" style="height:300px;margin-bottom:20px;padding:5px;overflow:auto"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <p>
     <a href="/">< Return to Dashboard</a><br />
@@ -183,43 +197,10 @@
                 <div style="margin-top:20px; font-weight:bold">Pages</div>
                 <div style="overflow:auto; column-count:3; -webkit-column-count:3;-moz-column-count:3">
                     <table id="pageTable">
-                        <tbody>
-                            <!--
-                            <tr><td>Cover</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Title Page</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Table of Contents</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Page 1</td></tr>
-                            <tr><td>Page 2</td></tr>
-                            <tr><td>Page 3</td></tr>
-                            <tr><td>Page 4</td></tr>
-                            <tr><td>Page 5</td></tr>
-                            <tr><td>Page 6</td></tr>
-                            <tr><td>Page 7</td></tr>
-                            <tr><td>Page 8</td></tr>
-                            <tr><td>Page 9</td></tr>
-                            <tr><td>Page 10</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Blank</td></tr>
-                            <tr><td>Cover</td></tr>
-                            -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </p>
 }
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnCancel").click(function () {
-            window.location.href = "/";
-        });
-    });
-</script>
-
-

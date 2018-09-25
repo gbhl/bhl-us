@@ -1,4 +1,5 @@
-﻿using MOBOT.BHL.AdminWeb.ActionFilters;
+﻿using BHL.TextImportUtility;
+using MOBOT.BHL.AdminWeb.ActionFilters;
 using MOBOT.BHL.AdminWeb.Models;
 using MOBOT.BHL.AdminWeb.MVCServices;
 using System;
@@ -169,6 +170,23 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult GetItemPages(int itemID)
         {
             return Json(new TextImportFileModel().GetItemPages(itemID), JsonRequestBehavior.AllowGet);
+        }
+
+        // AJAX method to support /TextImport/Review
+        [HttpGet]
+        public ActionResult GetOrigPageText(int pageID)
+        {
+            string textLink = string.Format(System.Configuration.ConfigurationManager.AppSettings["PageTextUrl"], pageID);
+            string pageText = new System.Net.WebClient().DownloadString(textLink);
+            return Content(pageText);
+        }
+
+        // AJAX method to support /TextImport/Review
+        [HttpGet]
+        public ActionResult GetNewPageText(string fileName, string seqNo)
+        {
+            string pageText = new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo);
+            return Content(pageText);
         }
     }
 }

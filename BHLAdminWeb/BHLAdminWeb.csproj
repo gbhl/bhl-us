@@ -1196,6 +1196,10 @@
       <Project>{f9d69fa5-9ee0-43fb-aba3-dc443ace3f18}</Project>
       <Name>FlickrUtility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TextImportUtility\TextImportUtility.csproj">
+      <Project>{534cfd16-b8ec-4527-8e3e-f1e64ebd2a21}</Project>
+      <Name>TextImportUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

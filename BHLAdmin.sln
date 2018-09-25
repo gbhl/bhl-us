@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteServices", "SiteService
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueUtility", "QueueUtility\QueueUtility.csproj", "{0DE1BE81-B922-411F-A4EC-01FD9822936B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextImportUtility", "TextImportUtility\TextImportUtility.csproj", "{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DE1BE81-B922-411F-A4EC-01FD9822936B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{534CFD16-B8EC-4527-8E3E-F1E64EBD2A21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
