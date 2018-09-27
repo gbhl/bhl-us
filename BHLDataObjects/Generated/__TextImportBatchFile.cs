@@ -1,5 +1,5 @@
 
-// Generated 9/14/2018 11:09:07 AM
+// Generated 9/26/2018 8:45:51 PM
 // Do not modify the contents of this code file.
 // This abstract class __TextImportBatchFile is based upon txtimport.TextImportBatchFile.
 
@@ -51,6 +51,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="itemID"></param>
 		/// <param name="filename"></param>
 		/// <param name="fileFormat"></param>
+		/// <param name="errorMessage"></param>
 		/// <param name="creationDate"></param>
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
@@ -61,6 +62,7 @@ namespace MOBOT.BHL.DataObjects
 			int? itemID, 
 			string filename, 
 			string fileFormat, 
+			string errorMessage, 
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
@@ -72,6 +74,7 @@ namespace MOBOT.BHL.DataObjects
 			ItemID = itemID;
 			Filename = filename;
 			FileFormat = fileFormat;
+			ErrorMessage = errorMessage;
 			CreationDate = creationDate;
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
@@ -132,6 +135,11 @@ namespace MOBOT.BHL.DataObjects
 						_FileFormat = (string)column.Value;
 						break;
 					}
+					case "ErrorMessage" :
+					{
+						_ErrorMessage = (string)column.Value;
+						break;
+					}
 					case "CreationDate" :
 					{
 						_CreationDate = (DateTime)column.Value;
@@ -170,7 +178,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: TextImportBatchFileID;
 		/// DBMS data type: int; Auto key;
 		/// </summary>
-		[ColumnDefinition("TextImportBatchFileID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInPrimaryKey=true)]
+		[ColumnDefinition("TextImportBatchFileID", DbTargetType=SqlDbType.Int, Ordinal=1, NumericPrecision=10, IsAutoKey=true, IsInForeignKey=true, IsInPrimaryKey=true)]
 		public int TextImportBatchFileID
 		{
 			get
@@ -327,6 +335,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion FileFormat
 		
+		#region ErrorMessage
+		
+		private string _ErrorMessage = string.Empty;
+		
+		/// <summary>
+		/// Column: ErrorMessage;
+		/// DBMS data type: nvarchar(MAX);
+		/// </summary>
+		[ColumnDefinition("ErrorMessage", DbTargetType=SqlDbType.NVarChar, Ordinal=7, CharacterMaxLength=1073741823)]
+		public string ErrorMessage
+		{
+			get
+			{
+				return _ErrorMessage;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_ErrorMessage != value)
+				{
+					_ErrorMessage = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ErrorMessage
+		
 		#region CreationDate
 		
 		private DateTime _CreationDate;
@@ -335,7 +371,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=7)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
 		public DateTime CreationDate
 		{
 			get
@@ -362,7 +398,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=8)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=9)]
 		public DateTime LastModifiedDate
 		{
 			get
@@ -389,7 +425,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=9, NumericPrecision=10)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10)]
 		public int CreationUserID
 		{
 			get
@@ -416,7 +452,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10)]
 		public int LastModifiedUserID
 		{
 			get
@@ -484,6 +520,7 @@ namespace MOBOT.BHL.DataObjects
 					o.ItemID == ItemID &&
 					GetComparisonString(o.Filename) == GetComparisonString(Filename) &&
 					GetComparisonString(o.FileFormat) == GetComparisonString(FileFormat) &&
+					GetComparisonString(o.ErrorMessage) == GetComparisonString(ErrorMessage) &&
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
@@ -594,6 +631,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string ItemID = "ItemID";	
 			public const string Filename = "Filename";	
 			public const string FileFormat = "FileFormat";	
+			public const string ErrorMessage = "ErrorMessage";	
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	

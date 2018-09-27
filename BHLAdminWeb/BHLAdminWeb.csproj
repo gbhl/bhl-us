@@ -892,6 +892,7 @@
     <Content Include="Images\blankpage.png" />
     <Content Include="Images\cover.gif" />
     <Content Include="Images\down.gif" />
+    <Content Include="Images\error_yellow_16x16.png" />
     <Content Include="Images\firstpage.png" />
     <Content Include="Images\flickr_sml.png" />
     <Content Include="Images\help.png" />
@@ -929,6 +930,7 @@
     <Content Include="Images\textpage.png" />
     <Content Include="Images\up.gif" />
     <Content Include="ImportCitationReviewHelp.html" />
+    <Content Include="ImportTextReviewHelp.html" />
     <Content Include="js\FlickrUpload.js" />
     <Content Include="js\grid.locale-en.js" />
     <Content Include="js\jquery.dataTables.min.js" />
@@ -1077,7 +1079,6 @@
     <Content Include="Views\Monitor\Index.cshtml" />
     <Content Include="Views\Monitor\AddToQueue.cshtml" />
     <Content Include="Views\TextImport\Index.cshtml" />
-    <Content Include="Views\TextImport\SelectFile.cshtml" />
     <Content Include="Views\TextImport\Review.cshtml" />
     <Content Include="Views\Report\TextImportHistory.cshtml" />
     <None Include="Web.config.template">

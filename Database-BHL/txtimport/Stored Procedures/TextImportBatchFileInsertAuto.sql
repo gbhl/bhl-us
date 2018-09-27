@@ -1,6 +1,6 @@
 
 IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = object_id(N'[txtimport].[TextImportBatchFileInsertAuto]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
-DROP PROCEDURE [dbo].[TextImportBatchFileInsertAuto]
+DROP PROCEDURE [txtimport].[TextImportBatchFileInsertAuto]
 GO
 
 SET QUOTED_IDENTIFIER ON
@@ -10,7 +10,7 @@ GO
 
 -- Insert Procedure for txtimport.TextImportBatchFile
 -- Do not modify the contents of this procedure.
--- Generated 9/14/2018 11:09:07 AM
+-- Generated 9/26/2018 8:45:51 PM
 
 CREATE PROCEDURE txtimport.TextImportBatchFileInsertAuto
 
@@ -20,6 +20,7 @@ CREATE PROCEDURE txtimport.TextImportBatchFileInsertAuto
 @ItemID INT = null,
 @Filename NVARCHAR(500),
 @FileFormat NVARCHAR(100),
+@ErrorMessage NVARCHAR(MAX),
 @CreationUserID INT,
 @LastModifiedUserID INT
 
@@ -33,6 +34,7 @@ INSERT INTO [txtimport].[TextImportBatchFile]
 	[ItemID],
 	[Filename],
 	[FileFormat],
+	[ErrorMessage],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
@@ -43,6 +45,7 @@ VALUES
 	@ItemID,
 	@Filename,
 	@FileFormat,
+	@ErrorMessage,
 	getdate(),
 	getdate(),
 	@CreationUserID,
@@ -64,6 +67,7 @@ ELSE BEGIN
 		[ItemID],
 		[Filename],
 		[FileFormat],
+		[ErrorMessage],
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],

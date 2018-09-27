@@ -21,32 +21,14 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.PageTitle += "Item Text Import";
-            return View();
-        }
-
-        //
-        // POST: /TextImport/Index
-        [HttpPost]
-        public RedirectToRouteResult Index(TextImportModel model)
-        {
-            return RedirectToAction("SelectFile");
-        }
-
-        //
-        // GET: /TextImport/SelectFile
-        [HttpGet]
-        public ActionResult SelectFile()
-        {
             TextImportService service = new TextImportService();
             ViewBag.PageTitle += "Item Text Import";
             return View();
         }
 
-        //
-        // POST: /TextImport/SelectFile
+        // POST: /TextImport
         [HttpPost]
-        public RedirectToRouteResult SelectFile(TextImportModel model)
+        public RedirectToRouteResult Index(TextImportModel model)
         {
             // Upload and save the file
             for (int x = 0; x < Request.Files.Count; x++)
@@ -77,11 +59,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult Review(int? id = null)
         {
-            /*
-            Read the pagination info for the item from the database, match it to the pages
-            in the imported file, and present the list to the user for review.
-            */
-
             TextImportModel model = new TextImportModel();
             if (id != null) model.GetImportBatchDetails((int)id);
 
@@ -146,6 +123,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             TextImportBatchFileJson.Rootobject json = new TextImportModel().GetFiles(batchID, iDisplayLength,
                 iDisplayStart, sortColumn, sSortDir_0);
             json.sEcho = sEcho;
+
+            // For the UI, remove date information added to to the original filename
+            foreach (TextImportBatchFileJson.Datum d in json.aaData) { d.origfilename = d.filename.Substring(15); }
+
             return Json(json, JsonRequestBehavior.AllowGet);
         }
 
@@ -177,7 +158,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult GetOrigPageText(int pageID)
         {
             string textLink = string.Format(System.Configuration.ConfigurationManager.AppSettings["PageTextUrl"], pageID);
-            string pageText = new System.Net.WebClient().DownloadString(textLink);
+            string pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
             return Content(pageText);
         }
 
@@ -185,7 +166,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [HttpGet]
         public ActionResult GetNewPageText(string fileName, string seqNo)
         {
-            string pageText = new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo);
+            string pageText = new TextImportTool().GetText(Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), seqNo).Replace("\n", "<br/>");
             return Content(pageText);
         }
     }

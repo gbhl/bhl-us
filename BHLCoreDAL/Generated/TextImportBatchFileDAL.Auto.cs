@@ -1,5 +1,5 @@
 
-// Generated 9/14/2018 11:09:07 AM
+// Generated 9/26/2018 8:45:51 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class TextImportBatchFileDAL is based upon txtimport.TextImportBatchFile.
@@ -141,6 +141,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="itemID"></param>
 		/// <param name="filename"></param>
 		/// <param name="fileFormat"></param>
+		/// <param name="errorMessage"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TextImportBatchFile.</returns>
@@ -152,10 +153,11 @@ namespace MOBOT.BHL.DAL
 			int? itemID,
 			string filename,
 			string fileFormat,
+			string errorMessage,
 			int creationUserID,
 			int lastModifiedUserID)
 		{
-			return TextImportBatchFileInsertAuto( sqlConnection, sqlTransaction, "BHL", textImportBatchID, textImportBatchFileStatusID, itemID, filename, fileFormat, creationUserID, lastModifiedUserID );
+			return TextImportBatchFileInsertAuto( sqlConnection, sqlTransaction, "BHL", textImportBatchID, textImportBatchFileStatusID, itemID, filename, fileFormat, errorMessage, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -169,6 +171,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="itemID"></param>
 		/// <param name="filename"></param>
 		/// <param name="fileFormat"></param>
+		/// <param name="errorMessage"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TextImportBatchFile.</returns>
@@ -181,6 +184,7 @@ namespace MOBOT.BHL.DAL
 			int? itemID,
 			string filename,
 			string fileFormat,
+			string errorMessage,
 			int creationUserID,
 			int lastModifiedUserID)
 		{
@@ -194,6 +198,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("Filename", SqlDbType.NVarChar, 500, false, filename),
 					CustomSqlHelper.CreateInputParameter("FileFormat", SqlDbType.NVarChar, 100, false, fileFormat),
+					CustomSqlHelper.CreateInputParameter("ErrorMessage", SqlDbType.NVarChar, 1073741823, false, errorMessage),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
@@ -250,6 +255,7 @@ namespace MOBOT.BHL.DAL
 				value.ItemID,
 				value.Filename,
 				value.FileFormat,
+				value.ErrorMessage,
 				value.CreationUserID,
 				value.LastModifiedUserID);
 		}
@@ -327,6 +333,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="itemID"></param>
 		/// <param name="filename"></param>
 		/// <param name="fileFormat"></param>
+		/// <param name="errorMessage"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TextImportBatchFile.</returns>
 		public TextImportBatchFile TextImportBatchFileUpdateAuto(
@@ -338,9 +345,10 @@ namespace MOBOT.BHL.DAL
 			int? itemID,
 			string filename,
 			string fileFormat,
+			string errorMessage,
 			int lastModifiedUserID)
 		{
-			return TextImportBatchFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", textImportBatchFileID, textImportBatchID, textImportBatchFileStatusID, itemID, filename, fileFormat, lastModifiedUserID);
+			return TextImportBatchFileUpdateAuto( sqlConnection, sqlTransaction, "BHL", textImportBatchFileID, textImportBatchID, textImportBatchFileStatusID, itemID, filename, fileFormat, errorMessage, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -355,6 +363,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="itemID"></param>
 		/// <param name="filename"></param>
 		/// <param name="fileFormat"></param>
+		/// <param name="errorMessage"></param>
 		/// <param name="lastModifiedUserID"></param>
 		/// <returns>Object of type TextImportBatchFile.</returns>
 		public TextImportBatchFile TextImportBatchFileUpdateAuto(
@@ -367,6 +376,7 @@ namespace MOBOT.BHL.DAL
 			int? itemID,
 			string filename,
 			string fileFormat,
+			string errorMessage,
 			int lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -379,6 +389,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("Filename", SqlDbType.NVarChar, 500, false, filename),
 					CustomSqlHelper.CreateInputParameter("FileFormat", SqlDbType.NVarChar, 100, false, fileFormat),
+					CustomSqlHelper.CreateInputParameter("ErrorMessage", SqlDbType.NVarChar, 1073741823, false, errorMessage),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -435,6 +446,7 @@ namespace MOBOT.BHL.DAL
 				value.ItemID,
 				value.Filename,
 				value.FileFormat,
+				value.ErrorMessage,
 				value.LastModifiedUserID);
 		}
 		
@@ -485,6 +497,7 @@ namespace MOBOT.BHL.DAL
 						value.ItemID,
 						value.Filename,
 						value.FileFormat,
+						value.ErrorMessage,
 						value.CreationUserID,
 						value.LastModifiedUserID);
 				
@@ -518,6 +531,7 @@ namespace MOBOT.BHL.DAL
 						value.ItemID,
 						value.Filename,
 						value.FileFormat,
+						value.ErrorMessage,
 						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<TextImportBatchFile>(

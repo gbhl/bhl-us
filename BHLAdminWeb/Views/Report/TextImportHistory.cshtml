@@ -3,29 +3,29 @@
 {
     <script src="@Url.Content(System.Configuration.ConfigurationManager.AppSettings["jQueryDataTablesPath"])" type="text/javascript"></script>
     <script type="text/javascript" charset="utf-8">
-		$(document).ready(function() {
-			$('#recordlist').dataTable( {
-				"bProcessing": true,
-				"bFilter": false,
-				"bLengthChange": false,
-				"iDisplayLength": 20,
+        $(document).ready(function () {
+            $('#recordlist').dataTable({
+                "bProcessing": true,
+                "bFilter": false,
+                "bLengthChange": false,
+                "iDisplayLength": 20,
                 "sDom": '<"H"lfr>t<"F"ip>',
-				"sPaginationType": "full_numbers"
-				,"aoColumns": [
-					null,
-					null,
-					null,
+                "sPaginationType": "full_numbers"
+                , "aoColumns": [
                     null,
-					{ "bSortable": false },
-					{ "bSortable": false },
+                    null,
+                    null,
+                    null,
                     { "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false },
-					{ "bSortable": false }
-				]
-                ,"aaSorting": [[3,'desc']]
-			} );
-		} );
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    { "bSortable": false },
+                    { "bSortable": false }
+                ]
+                , "aaSorting": [[3, 'desc']]
+            });
+        });
     </script>
 }
 @section CSS
@@ -49,6 +49,10 @@
         <div>Import Status: @Html.DropDownListFor(m => m.ImportBatchStatus, new SelectList(ViewBag.TextImportBatchStatusList, "TextImportBatchStatusID", "StatusName"), "-- All --")</div>
         <div>Dates: @Html.DropDownListFor(m => m.ReportDateRange, new SelectList(ViewBag.ReportDateRangeList, "key", "value", "1"), "-- All --")</div>
         <div><input type="submit" name="btnShow" id="btnShow" value="Update" /></div>
+    </div>
+
+    <div style="text-align:center">
+        Click a Batch number to review the contents of the batch.
     </div>
 
     <table cellpadding="0" cellspacing="0" border="0" class="display" id="recordlist" style="width:100%">
@@ -78,7 +82,7 @@
                     <td><a href="/textimport/review/@batch.TextImportBatchID">@batch.TextImportBatchID</a></td>
                     <td>@batch.StatusName</td>
                     <td>@batch.CreationUser</td>
-                    <td>@batch.LastModifiedDate.ToString("yyyy/MM/dd hh:mm:sstt")</td>
+                    <td>@batch.CreationDate.ToString("yyyy/MM/dd HH:mm:ss")</td>
                     <td class="importHistAlign">@batch.TotalRecords</td>
                     <td class="importHistAlign">@batch.ReadyRecords</td>
                     <td class="importHistAlign">@batch.ReviewRecords</td>

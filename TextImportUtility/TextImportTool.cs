@@ -53,7 +53,10 @@ namespace BHL.TextImportUtility
                     break;
             }
 
-            fileText = fileContents[sequence];
+            if (sequence > fileContents.Count)
+                fileText = string.Format("Page {0} not found in file.", seqNo);
+            else
+                fileText = fileContents[sequence];
 
             return fileText;
         }

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Import Text Review Help</title>
+    <link rel="stylesheet" type="text/css" runat="server" id="link1" href="styles/adminstyle.css" />
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 5px 5px 20px 5px;
+        }
+
+            table tr {
+                vertical-align: top;
+            }
+
+            table td {
+                border: 1px solid Black;
+                padding: 3px 3px 3px 3px;
+            }
+    </style>
+</head>
+<body>
+    <p class="BlackHeading">Using The Import Item Text Review Page</p>
+    <p>The "Import Item Text - Review" page allows the contents of one or more import files to be reviewed.  Each file should contain the complete transcription for a single BHL item.  Individual files or the entire batch can be imported or rejected.</p>
+    <p>The following actions can be taken on this page:</p><p>
+    </p>
+    <p>
+        <ul>
+            <li>Click on a file to see a list of the pages in the item.</li>
+            <li>Click on a page description (i.e. "Page 1") to view the page image, the original page text (ocr or transcription), and the replacement page text (transcription).</li>
+            <li>Change the status of individual files (for more information, see below).</li>
+            <li>Click the "Import Batch" button to import all files with "Ready to Import" status into production.</li>
+            <li>Click the "Reject Batch" button to reject the entire batch of files.</li>
+        </ul>
+    </p>
+    <p>The status of each file controls the action that will be taken on the file.</p>
+    <p>
+        <ul>
+            <li>Files with a status of "Ready to Import" are ready to be imported.  <b>Only files in this status will be imported.</b></li>
+            <li>A file with a "Rejected" status will not be imported.  This status is set by the person performing the import.</li>
+            <li>A file with an "Error" status failed to import.  View the error details by clicking the <img src="/images/error_yellow_16x16.png" /> icon next to the file status.</li>
+            <li>A file with a "Must Review" status has already had its text replaced, and the new replacement text must be manually verified before import.  Must be overridden by setting the status to "Ready to Import".</li>
+            <li>Files with a status of "Imported" have been imported.  This status cannot be changed.</li>
+        </ul>
+    </p>
+    <p>Change the status of any file by clicking on the status of the file.  A dropdown of available status values will appear.  Pick the desired new status from the list.</p>
+    <p>When the statuses of all files have been set, take one of the following actions:</p>
+    <p>
+        <ul>
+            <li>Import the trsnscriptions in of the all "Ready to Import" files by clicking the "Import Batch" button.</li>
+            <li>Reject all files by clicking the "Reject Batch" button.</li>
+            <li>Leave the page without taking any action on the "Ready to Import" files by clicking "Return to Dashboard" or "View Text Import History" links in the upper left.</li>
+        </ul>
+    </p>
+</body>
+</html>

@@ -5,6 +5,7 @@
 	[ItemID] [int] NULL,
 	[Filename] [nvarchar](500) NOT NULL CONSTRAINT [DF_TextImportBatchFile_FileName] DEFAULT (''),
 	[FileFormat] [nvarchar](100) NOT NULL CONSTRAINT [DF_TextImportBatchFile_FileFormat] DEFAULT (''),
+	[ErrorMessage] [nvarchar](max) NOT NULL CONSTRAINT [DF_TextImportBatchFile_ErrorMessage] DEFAULT(''),
 	[CreationDate] [datetime] NOT NULL CONSTRAINT [DF_TextImportBatchFile_CreationDate]  DEFAULT (getdate()),
 	[LastModifiedDate] [datetime] NOT NULL CONSTRAINT [DF_TextImportBatchFile_LastModifiedDate]  DEFAULT (getdate()),
 	[CreationUserID] [int] NOT NULL CONSTRAINT [DF_TextImportBatchFile_CreationUserID]  DEFAULT ((1)),

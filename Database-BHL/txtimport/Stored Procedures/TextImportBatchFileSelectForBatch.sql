@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE txtimport.TextImportBatchFileSelectForBatch
+﻿CREATE PROCEDURE [txtimport].[TextImportBatchFileSelectForBatch]
 
 @TextImportBatchID int
 
@@ -13,7 +13,8 @@ SELECT	f.TextImportBatchFileID,
 		s.StatusName,
 		f.ItemID,
 		f.[Filename],
-		f.FileFormat
+		f.FileFormat,
+		f.ErrorMessage
 FROM	txtimport.TextImportBatchFile f
 		INNER JOIN txtimport.TextImportBatchFileStatus s ON f.TextImportBatchFileStatusID = s.TextImportBatchFileStatusID
 WHERE	f.TextImportBatchID = @TextImportBatchID

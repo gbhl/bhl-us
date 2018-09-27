@@ -88,9 +88,10 @@ namespace MOBOT.BHL.AdminWeb.Models
                 file.FileStatusID = batchFile.TextImportBatchFileStatusID;
                 file.FileStatus = batchFile.StatusName;
                 file.FileName = batchFile.Filename;
-                file.FilePath = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], file.FileName);
+                file.FilePath = Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], batchFile.Filename);
                 file.FileFormat = batchFile.FileFormat;
                 file.FileFormatName = new TextImportService().GetFileFormatValue(file.FileFormat);
+                file.ErrorMessage = batchFile.ErrorMessage;
                 file.ItemID = batchFile.ItemID.ToString();
                 files.Add(file);
             }
@@ -127,7 +128,8 @@ namespace MOBOT.BHL.AdminWeb.Models
                     fileformat = new TextImportService().GetFileFormatValue(files[x].FileFormat),
                     itemid = files[x].ItemID.ToString(),
                     itemdesc = files[x].ItemDescription,
-                    status = files[x].StatusName
+                    status = files[x].StatusName,
+                    errormessage = files[x].ErrorMessage
                 };
             }
             json.aaData = aaData;
@@ -226,30 +228,43 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _fileFormatName = value; }
         }
 
+        private string _errorMessage = string.Empty;
+
+        public string ErrorMessage
+        {
+            get { return _errorMessage; }
+            set { _errorMessage = value; }
+        }
+
         public void AddBatchFile(int batchId, int userId)
         {
             BHLProvider provider = new BHLProvider();
 
-            int batchFileStatus;
-            if (this.ItemID == "")
+            int batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
+            string errorMessage = string.Empty;
+            int itemIDInt;
+            if (!Int32.TryParse(this.ItemID, out itemIDInt))
             {
                 // No valid Item ID
                 batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+                errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
             }
             else if (provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0)
             {
                 // Text to be replaced NOT from IA, so user must review and approve replacement
                 batchFileStatus = TextImportService.GetTextImportBatchFileStatusReview();
             }
-            else
+
+            if (string.IsNullOrWhiteSpace(this.FileFormat))
             {
-                // Validations passed; ok to import this file
-                batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
+                // No valid Item ID
+                batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+                errorMessage += "Invalid file format.  Could not determine the format of the file. | ";
             }
 
             TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
-                batchFileStatus, this.ItemID == "" ? (int?)null : Convert.ToInt32(this.ItemID), 
-                this.FileName, this.FileFormat, userId);
+                batchFileStatus, (itemIDInt == 0 ?  (int?)null : itemIDInt), this.FileName, 
+                this.FileFormat, errorMessage, userId);
         }
 
         /// <summary>
@@ -290,11 +305,13 @@ namespace MOBOT.BHL.AdminWeb.Models
         public class Datum
         {
             public string id { get; set; }
+            public string origfilename { get; set; }
             public string filename { get; set; }
             public string fileformat { get; set; }
             public string itemid { get; set; }
             public string itemdesc { get; set; }
             public string status { get; set; }
+            public string errormessage { get; set; }
         }
     }
 }

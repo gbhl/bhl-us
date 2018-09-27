@@ -10,7 +10,7 @@ GO
 
 -- Select Procedure for txtimport.TextImportBatchFile
 -- Do not modify the contents of this procedure.
--- Generated 9/14/2018 11:09:07 AM
+-- Generated 9/26/2018 8:45:51 PM
 
 CREATE PROCEDURE [txtimport].[TextImportBatchFileSelectAuto]
 
@@ -27,6 +27,7 @@ SELECT
 	[ItemID],
 	[Filename],
 	[FileFormat],
+	[ErrorMessage],
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],

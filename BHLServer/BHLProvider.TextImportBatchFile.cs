@@ -17,10 +17,10 @@ namespace MOBOT.BHL.Server
         }
 
         public TextImportBatchFile TextImportBatchFileInsertAuto(int textImportBatchID, int textImportBatchFileStatusID, int? itemID,
-            string fileName, string fileFormat, int userID)
+            string fileName, string fileFormat, string errorMessage, int userID)
         {
             return new TextImportBatchFileDAL().TextImportBatchFileInsertAuto(null, null, textImportBatchID, textImportBatchFileStatusID, 
-                itemID, fileName, fileFormat, userID, userID);
+                itemID, fileName, fileFormat, errorMessage, userID, userID);
         }
 
         public TextImportBatchFile TextImportBatchFileUpdateAuto(TextImportBatchFile textImportBatchFile)

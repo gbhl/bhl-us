@@ -17,10 +17,19 @@
                 , "ajaxSource": '/TextImport/GetFiles?batchID=@Model.BatchID'
                 ,"columns": [
                     { "data": "id", "visible": false } /* ID column */
-                    ,{ "data": "filename", "sortable": true }
-                    ,{ "data": "fileformat", "sortable": false }
-                    ,{ "data": "itemdesc", "sortable": false }
-                    ,{ "data": "status", "sortable": true, "sClass": "editCol" }
+                    , { "data": "origfilename", "sortable": true }
+                    , { "data": "fileformat", "sortable": false }
+                    , { "data": "itemdesc", "sortable": false }
+                    , { "data": "status", "sortable": true, "sClass": "editCol" }
+                    , {
+                        "data": "errormessage", "sortable": false
+                        , "mRender": function (msg, type, full) {
+                            if (msg !== '')
+                                return "<a href='#' title='Error Details' onclick='alert(\"" + msg.replace(/ \| /g, '\\n') + "\");'><img height=16 width=16 src='/images/error_yellow_16x16.png' /></a>";
+                            else
+                                return "";
+                        }
+                    }
                 ]
                 ,"drawCallback": function() { $("td.editCol").filter(":not(:contains('Imported'))").editable('/TextImport/UpdateFileStatus', {
                     "callback": function (sValue, settings) {
@@ -45,7 +54,6 @@
             $('#filelist tbody').on('click', 'tr', function () {
                 var tr = $(this).closest('tr');
                 var row = oTable.row(tr);
-                var id = row.data().id;
                 var itemdesc = row.data().itemdesc;
                 var itemid = row.data().itemid;
                 var filename = row.data().filename;
@@ -64,7 +72,7 @@
                     var tableRows;
                     data.forEach(function (pageData) {
                         tableRows += "<tr><td>";
-                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "' data-filename='" + filename + "'>" + pageData.WebDisplay + "</a>";
+                        tableRows += "<a href='' id='selectedPageLink" + pageData.PageID + "' data-toggle='modal' data-target='#pageDetailModal' data-pagerecordid='" + pageData.PageID + "' data-pageseqno='" + pageData.SequenceOrder + "' data-filename='" + filename + "' data-pagedesc='" + pageData.WebDisplay.replace("'", "\'") + "'>" + pageData.WebDisplay + "</a>";
                         tableRows += "</td></tr>";
                     });
 
@@ -74,6 +82,25 @@
                 $("#pagelist").show();
                 $("#itemdesc").html(itemdesc);
             });
+
+            $('form').submit(function (event) {
+                var val = $("input[type=submit][clicked=true]").val();
+                if (val === "Import Batch") {
+                    var isValid = true;
+                    oTable.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        if (this.data().status === "Must Review") isValid = false;
+                    });
+                    if (!isValid) {
+                        alert("Before this batch can be submitted, all files in 'Must Review' status must be reviewed and set to 'Ready to Import' or 'Rejected'.");
+                        event.preventDefault();
+                    }
+                }
+            });
+            $('form input[type=submit]').click(function () {
+                $('input[type=submit]', $(this).parents('form')).removeAttr("clicked");
+                $(this).attr('clicked', 'true');
+            });
+
         });
 
         $(document).on('show.bs.modal', '#pageDetailModal', function (event) {
@@ -82,16 +109,17 @@
             var pageRecordId = page.data('pagerecordid');
             var pageSeqNo = page.data('pageseqno');
             var filename = page.data('filename');
+            var pageDesc = page.data('pagedesc');
 
             var modal = $(this);
-            modal.find('.modal-header h4').text('Page ID: ' + pageRecordId);
+            modal.find('.modal-header h4').html('Page Label: ' + pageDesc + '<br/>Page ID: ' + pageRecordId);
             modal.find('.modal-header #pageRecordID').val(pageRecordId);
 
             // Show the page image and text
             var imageLink = '@Url.Content(System.Configuration.ConfigurationManager.AppSettings["PageImageUrl"])';
             modal.find('.modal-body #pageImage').attr("src", imageLink.replace("{0}", pageRecordId));
-            $.ajax("/textimport/GetOrigPageText?pageID=" + pageRecordId).done(function (data) { modal.find('.modal-body #textOriginal').text(data); });
-            $.ajax("/textimport/GetNewPageText?fileName=" + filename + "&seqNo=" + pageSeqNo).done(function (data) { modal.find('.modal-body #textReplacement').text(data); });
+            $.ajax("/textimport/GetOrigPageText?pageID=" + pageRecordId).done(function (data) { modal.find('.modal-body #textOriginal').html(data); });
+            $.ajax("/textimport/GetNewPageText?fileName=" + filename + "&seqNo=" + pageSeqNo).done(function (data) { modal.find('.modal-body #textReplacement').html(data); });
         });
     </script>
 }
@@ -116,20 +144,20 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div>
-                                <img width="435" id="pageImage" />
+                                <img width="100%" id="pageImage" />
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-12">
                                     Original Text:
-                                    <div id="textOriginal" style="height:300px;margin-bottom:20px;padding:5px;overflow:auto"></div>
+                                    <div id="textOriginal" style="height:290px;margin-bottom:20px;padding:5px;overflow:auto;border:1px solid black;"></div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     Replacement Text:
-                                    <div id="textReplacement" style="height:300px;margin-bottom:20px;padding:5px;overflow:auto"></div>
+                                    <div id="textReplacement" style="height:290px;margin-bottom:20px;padding:5px;overflow:auto;border:1px solid black;"></div>
                                 </div>
                             </div>
                         </div>
@@ -168,15 +196,20 @@
         </div>
     </div>
 
+    <div style="clear:both; text-align:center; margin-top:50px; margin-bottom:10px;">
+        Click a File to review the pages it contains.  Click a File Status to change it.  When done, click the Import Batch or Reject Batch button.
+    </div>
+
     <div style="clear:both">
         <table cellpadding="0" cellspacing="0" border="0" class="display" id="filelist" style="width:100%">
             <thead>
                 <tr>
                     <th></th>
-                    <th width="20%">File</th>
+                    <th width="15%">File</th>
                     <th width="20%">Format</th>
                     <th width="50%">Item</th>
-                    <th width="10%">Status</th>
+                    <th width="13%">Status</th>
+                    <th width="2%"></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -194,7 +227,7 @@
         <div id="pagelist" class="citeImport" style="display:none">
             <div style="background-color:#FFFFFF; padding:10px">
                 <div id="itemdesc"></div>
-                <div style="margin-top:20px; font-weight:bold">Pages</div>
+                <div style="margin-top:20px; font-weight:bold">Contents (click to view page images and text)</div>
                 <div style="overflow:auto; column-count:3; -webkit-column-count:3;-moz-column-count:3">
                     <table id="pageTable">
                         <tbody></tbody>

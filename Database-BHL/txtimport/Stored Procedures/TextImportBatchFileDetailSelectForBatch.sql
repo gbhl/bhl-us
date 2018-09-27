@@ -47,6 +47,7 @@ SELECT TOP (@NumRows)
 		tmp.TextImportBatchFileID,
 		f.TextImportBatchFileStatusID,
 		s.StatusName,
+		f.ErrorMessage,
 		f.[Filename],
 		f.FileFormat,
 		f.ItemID,
