@@ -53,9 +53,9 @@
 <div class="column-wrap">
 <span>Sort By:</span> 
     <ul>
-    <li class="<%= SetSortClass("title") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%= Start %>/title">Title</a></li>
-    <li class="<%= SetSortClass("author") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%= Start %>/author">Author</a></li>
-    <li class="<%= SetSortClass("year") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%= Start %>/year">Year</a></li>
+    <li class="<%= SetSortClass("title") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%: Start %>/title">Title</a></li>
+    <li class="<%= SetSortClass("author") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%: Start %>/author">Author</a></li>
+    <li class="<%= SetSortClass("year") %>"><a href="/browse/collection/<%= collection.PreferredUrl %>/<%: Start %>/year">Year</a></li>
     </ul>
     <div class="floatclear"></div>
 </div>

@@ -173,10 +173,12 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         // roles to the new account.  Copy the BHL user administrator on the message.
                         int userId = user.Id;
                         string emailBody = System.IO.File.ReadAllText(Server.MapPath(@"\UserRegistrationEmail.txt"));
+                        string helpLink = ConfigurationManager.AppSettings["WikiPageHelpDocs"];
                         emailBody = emailBody.Replace("<<<USERNAME>>>", user.UserName);
                         emailBody = emailBody.Replace("<<<FIRSTNAME>>>", user.FirstName);
                         emailBody = emailBody.Replace("<<<LASTNAME>>>", user.LastName);
                         emailBody = emailBody.Replace("<<<EMAILADDRESS>>>", user.Email);
+                        emailBody = emailBody.Replace("<<<HELPLINK>>>", helpLink);
 
                         List<string> bccList = new List<string>();
                         bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);
@@ -383,8 +385,10 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                             // roles to the new account.  Copy the BHL user administrator on the message.
                             int userId = user.Id;
                             string emailBody = System.IO.File.ReadAllText(Server.MapPath(@"\ExternalUserRegistrationEmail.txt"));
+                            string helpLink = ConfigurationManager.AppSettings["WikiPageHelpDocs"];
                             emailBody = emailBody.Replace("<<<USERNAME>>>", user.UserName);
                             emailBody = emailBody.Replace("<<<EMAILADDRESS>>>", user.Email);
+                            emailBody = emailBody.Replace("<<<HELPLINK>>>", helpLink);
 
                             List<string> bccList = new List<string>();
                             bccList.Add(ConfigurationManager.AppSettings["BHLUserAdminEmailAddress"]);

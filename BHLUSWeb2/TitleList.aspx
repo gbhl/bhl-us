@@ -50,8 +50,8 @@
         <div id="sub-sub-nav-tabs">
             <div id="linkbar">
                 <ul>
-                    <li class="titles"><a href="#/titles" title="Books"><% if (string.IsNullOrEmpty(Start)) { %>All <span class="highlight-tab">Titles</span> (<%= Count%>)<% } else { %><span class="highlight-tab">Titles</span> beginning with <%= displayStart %><% } %> (<%= Count%>)</a></li>
-                    <li class="sections"><a href="#/sections" title="Parts"><% if (string.IsNullOrEmpty(Start)) { %>All <span class="highlight-tab">Articles/Chapters/Treatments</span> (<%= SegmentCount%>)<% } else { %><span class="highlight-tab">Articles/Chapters/Treatments</span> beginning with <%= displayStart %><% } %> (<%= SegmentCount%>)</a></li>
+                    <li class="titles"><a href="#/titles" title="Books"><% if (string.IsNullOrEmpty(Start)) { %>All <span class="highlight-tab">Titles</span> (<%= Count%>)<% } else { %><span class="highlight-tab">Titles</span> beginning with <%: displayStart %><% } %> (<%= Count%>)</a></li>
+                    <li class="sections"><a href="#/sections" title="Parts"><% if (string.IsNullOrEmpty(Start)) { %>All <span class="highlight-tab">Articles/Chapters/Treatments</span> (<%= SegmentCount%>)<% } else { %><span class="highlight-tab">Articles/Chapters/Treatments</span> beginning with <%: displayStart %><% } %> (<%= SegmentCount%>)</a></li>
                 </ul>
             </div>
         </div>
@@ -61,9 +61,9 @@
         <div class="column-wrap">
             <span>Sort By:</span> 
             <ul>
-            <li class="<%= SetSortClass("title") %>"><a href="/browse/titles/<%= Start %>/title">Title</a></li>
-            <li class="<%= SetSortClass("author") %>"><a href="/browse/titles/<%= Start %>/author">Author</a></li>
-            <li class="<%= SetSortClass("year") %>"><a href="/browse/titles/<%= Start %>/year">Year</a></li>
+            <li class="<%= SetSortClass("title") %>"><a href="/browse/titles/<%: Start %>/title">Title</a></li>
+            <li class="<%= SetSortClass("author") %>"><a href="/browse/titles/<%: Start %>/author">Author</a></li>
+            <li class="<%= SetSortClass("year") %>"><a href="/browse/titles/<%: Start %>/year">Year</a></li>
             </ul>
             <div class="floatclear"></div>
         </div>
