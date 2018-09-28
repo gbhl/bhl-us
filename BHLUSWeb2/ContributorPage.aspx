@@ -57,10 +57,10 @@
             <h3><asp:Literal ID="ltlContributorHeader" runat="server" EnableViewState="false" /></h3>
             <ul>
                 <li runat="server" id="spanTitleSummary" class="titles">
-                    <a href="#/titles" title="Books"><% if (Start.ToUpper() == "ALL") { %>All <span class="highlight-tab">Books/Journals</span><% } else { %><span class="highlight-tab">Books/Journals</span> beginning with <%= displayStart %><% } %> (<%= count%>)</a>
+                    <a href="#/titles" title="Books"><% if (Start.ToUpper() == "ALL") { %>All <span class="highlight-tab">Books/Journals</span><% } else { %><span class="highlight-tab">Books/Journals</span> beginning with <%: displayStart %><% } %> (<%: count%>)</a>
                 </li>
                 <li runat="server" id="spanSectionSummary" class="sections">
-                    <a href="#/sections" title="Parts"><% if (Start.ToUpper() == "ALL") { %>All <span class="highlight-tab">Chapters/Articles/Treatments</span><% } else { %><span class="highlight-tab">Chapters/Articles/Treatments</span> beginning with <%= displayStart %><% } %> (<%= segmentcount%>)</a>
+                    <a href="#/sections" title="Parts"><% if (Start.ToUpper() == "ALL") { %>All <span class="highlight-tab">Chapters/Articles/Treatments</span><% } else { %><span class="highlight-tab">Chapters/Articles/Treatments</span> beginning with <%: displayStart %><% } %> (<%: segmentcount%>)</a>
                 </li>
                 </ul>
             </div>
@@ -71,9 +71,9 @@
 <div class="column-wrap">
 <span>Sort By:</span> 
     <ul>
-    <li class="<%= SetSortClass("title") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%= Start %>/title">Title</a></li>
-    <li class="<%= SetSortClass("author") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%= Start %>/author">Author</a></li>
-    <li class="<%= SetSortClass("year") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%= Start %>/year">Year</a></li>
+    <li class="<%= SetSortClass("title") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%: Start %>/title">Title</a></li>
+    <li class="<%= SetSortClass("author") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%: Start %>/author">Author</a></li>
+    <li class="<%= SetSortClass("year") %>"><a href="/browse/contributor/<%= contributor.InstitutionCode %>/<%: Start %>/year">Year</a></li>
     </ul>
     <div class="floatclear"></div>
 </div>
