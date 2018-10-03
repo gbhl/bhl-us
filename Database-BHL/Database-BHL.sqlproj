@@ -1392,5 +1392,9 @@
     <Build Include="txtimport\Stored Procedures\TextImportBatchStatusInsertAuto.sql" />
     <Build Include="txtimport\Stored Procedures\TextImportBatchStatusUpdateAuto.sql" />
     <Build Include="txtimport\Stored Procedures\TextImportBatchStatusSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogUpdateAuto.sql" />
   </ItemGroup>
 </Project>

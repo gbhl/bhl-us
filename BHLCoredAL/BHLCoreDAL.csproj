@@ -146,6 +146,7 @@
     <Compile Include="Generated\NoteTypeDAL.Auto.cs" />
     <Compile Include="Generated\PageAnnotationDAL.Auto.cs" />
     <Compile Include="Generated\PageFlickrDAL.Auto.cs" />
+    <Compile Include="Generated\PageTextLogDAL.Auto.cs" />
     <Compile Include="Generated\PDFDAL.Auto.cs" />
     <Compile Include="Generated\PDFPageDAL.Auto.cs" />
     <Compile Include="Generated\PDFStatusDAL.Auto.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Generated\TitleItemDAL.Auto.cs" />
     <Compile Include="PageAnnotationDAL.cs" />
     <Compile Include="PageFlickrDAL.cs" />
+    <Compile Include="PageTextLogDAL.cs" />
     <Compile Include="PDFDAL.cs" />
     <Compile Include="PDFPageDAL.cs" />
     <Compile Include="PDFStatsDAL.cs" />
