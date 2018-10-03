@@ -194,7 +194,12 @@ namespace MOBOT.BHL.Server
 			return GetPageDalInstance().PageUpdateLastPageNameLookupDate( null, null, pageID );
 		}
 
-		private void PageSetPaginationInfo( int pageID, int userID, TransactionController transactionController )
+        public void PageUpdateAndLogTextChange(int pageID, string textSource, int batchID, int userID)
+        {
+            GetPageDalInstance().PageUpdateAndLogTextChange(null, null, pageID, textSource, batchID, userID);
+        }
+
+        private void PageSetPaginationInfo( int pageID, int userID, TransactionController transactionController )
 		{
 			Page page = GetPageDalInstance().PageSelectAuto( transactionController.Connection, transactionController.Transaction, pageID );
 			page.PaginationUserID = userID;

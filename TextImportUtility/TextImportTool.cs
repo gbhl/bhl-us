@@ -26,8 +26,33 @@ namespace BHL.TextImportUtility
             {
                 fileFormat = "stc";
             }
+            else
+            {
+                throw new Exception(string.Format("Unknown file format for {0}", savedFileName));
+            }
 
             return fileFormat;
+        }
+
+        public int PageCount(string fileName, string fileFormat = "")
+        {
+            Dictionary<int, string> fileContents = new Dictionary<int, string>();
+
+            if (fileFormat == "") fileFormat = GetFileFormat(fileName);
+            switch (fileFormat)
+            {
+                case "ftp":
+                    fileContents = ParseFTP(fileName);
+                    break;
+                case "dv":
+                    fileContents = ParseDV(fileName);
+                    break;
+                case "stc":
+                    fileContents = ParseSTC(fileName);
+                    break;
+            }
+
+            return fileContents.Count;
         }
 
         public string GetText(string fileName, string seqNo, string fileFormat = "")

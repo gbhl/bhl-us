@@ -32,6 +32,11 @@ namespace MOBOT.BHL.Server
             return new TextImportBatchDAL().TextImportBatchSelectExpanded(null, null, batchID);
         }
 
+        public CustomGenericList<TextImportBatch> TextImportBatchSelectForFileCreation()
+        {
+            return new TextImportBatchDAL().TextImportBatchSelectForFileCreation(null, null);
+        }
+
         public CustomGenericList<TextImportBatchStatus> TextImportBatchStatusSelectAll()
         {
             return new TextImportBatchStatusDAL().SelectAll(null, null);

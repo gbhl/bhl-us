@@ -35,6 +35,16 @@ namespace MOBOT.BHL.Server
         }
     }
 
+    /// <summary>
+    /// Return information about all pages in the specified item.
+    /// </summary>
+    /// <param name="itemId"></param>
+    /// <returns></returns>
+    public CustomGenericList<PageSummaryView> PageSummarySelectAllByItemID( int itemId )
+    {
+        return new PageSummaryDAL().PageSummarySelectAllByItemID( null, null, itemId );
+    }
+
     public PageSummaryView PageSummarySelectByItemIdAndTitleId(int itemId, int titleId)
     {
         return (new PageSummaryDAL().PageSummarySelectByItemIdAndTitleId(null, null, itemId, titleId));

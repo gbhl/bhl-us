@@ -322,6 +322,26 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
+        public void PageUpdateAndLogTextChange(SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
+            int pageID, string textSource, int textImportBatchID, int userID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.PageUpdateAndLogTextChange", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
+                CustomSqlHelper.CreateInputParameter("TextSource", SqlDbType.NVarChar, 50, false, textSource),
+                CustomSqlHelper.CreateInputParameter("BatchID", SqlDbType.Int, null, false, textImportBatchID),
+                CustomSqlHelper.CreateInputParameter("UserID", SqlDbType.Int, null, false, userID)))
+            {
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                }
+            }
+        }
+
         public Page PageSelectFirstPageForItem(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(

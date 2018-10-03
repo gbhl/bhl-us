@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler"/>
+  </configSections>
+  <connectionStrings>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING"/>
+  </connectionStrings>
+  <appSettings>
+    <!-- "False" to disable debug mode.  Any other value puts the process into debug mode.  
+      In debug mode, no files are written to their final destination.  Everything is written
+      to the DebugPath instead.  -->
+    <add key="DebugMode" value="true" />
+    <add key="DebugPath" value="PATH FOR DEBUG OUTPUT" />
+    <!-- Email Settings-->
+    <add key="SMTPHost" value="SMTP SERVER NAME"/>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+    <!-- Text file path -->
+    <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
+    <!-- Status codes -->
+    <add key="TextImportBatchStatusImported" value="40" />
+    <add key="TextImportBatchFileStatusImported" value="30" />
+    <add key="TextImportBatchFileStatusError" value="50" />
+    <!-- Text import file path -->
+    <add key="TextImportFilePath" value="https://WEB-SITE-ADDRESS/Upload/ItemText/Files/" />
+    <add key="TextImportLocalFilePath" value="temp/" />
+  </appSettings>
+  <!-- This section contains the log4net configuration settings -->
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-BHLTextImportProcessor-rolling-log.txt"/>
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="20"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]
+"/>
+        <footer value="[Footer]
+"/>
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+  <system.net>
+    <mailSettings>
+      <smtp deliveryMethod="Network">
+        <network defaultCredentials="false"
+                 enableSsl="false"
+                   host="MAIL_SERVER_ADDRESS"
+                   port="MAIL_SERVER_PORT"
+                   userName="MAIL_SERVER_USERNAME"
+                   password="MAIL_SERVER_PASSWORD"
+                   />
+      </smtp>
+    </mailSettings>
+  </system.net>
+  <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2"/>
+    </startup>
+</configuration>

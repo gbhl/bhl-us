@@ -36,8 +36,25 @@ namespace MOBOT.BHL.DAL
       }
     }
 
+    public CustomGenericList<PageSummaryView> PageSummarySelectAllByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        int itemId)
+    {
+        SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+        SqlTransaction transaction = sqlTransaction;
+
+        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySelectAllByItemID", connection, transaction,
+            CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId)))
+        {
+            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
+            {
+                return helper.ExecuteReader(command);
+            }
+        }
+    }
+
     public PageSummaryView PageSummarySelectByItemIdAndTitleId(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-     int itemId, int titleId)
+        int itemId, int titleId)
     {
         SqlConnection connection = CustomSqlHelper.CreateConnection(
           CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);

@@ -52,6 +52,21 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public CustomGenericList<TextImportBatch> TextImportBatchSelectForFileCreation(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("txtimport.TextImportBatchSelectForFileCreation", connection, transaction))
+            {
+                using (CustomSqlHelper<TextImportBatch> helper = new CustomSqlHelper<TextImportBatch>())
+                {
+                    CustomGenericList<TextImportBatch> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
     }
 }
 

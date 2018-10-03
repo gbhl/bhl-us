@@ -30,6 +30,23 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<TextImportBatchFile> TextImportBatchFileSelectForProcessing(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int batchID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("txtimport.TextImportBatchFileSelectForProcessing", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("TextImportBatchID", SqlDbType.Int, null, false, batchID)))
+            {
+                using (CustomSqlHelper<TextImportBatchFile> helper = new CustomSqlHelper<TextImportBatchFile>())
+                {
+                    CustomGenericList<TextImportBatchFile> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         public CustomGenericList<TextImportBatchFile> TextImportBatchFileDetailSelectForBatch(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int batchID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
