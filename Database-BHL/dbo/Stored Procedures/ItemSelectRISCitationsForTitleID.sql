@@ -34,7 +34,8 @@ SELECT	DISTINCT
 		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes
 INTO	#RIS
 FROM	dbo.Title t WITH (NOLOCK)
-		INNER JOIN dbo.Item i WITH (NOLOCK) ON t.TitleID = i.PrimaryTitleID
+		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON t.TitleID = ti.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID
 		LEFT JOIN dbo.BibliographicLevel b WITH (NOLOCK) ON t.BibliographicLevelID = b.BibliographicLevelID
 		LEFT JOIN dbo.Title_Identifier isbn WITH (NOLOCK) ON t.TitleID = isbn.TitleID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.Title_Identifier issn WITH (NOLOCK) ON t.TitleID = issn.TitleID AND issn.IdentifierID = @ISSNID
