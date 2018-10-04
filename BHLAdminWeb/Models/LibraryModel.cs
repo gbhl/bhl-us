@@ -110,6 +110,14 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _ocrIAID = value; }
         }
 
+        private bool _forceOverwrite = false;
+
+        public bool ForceOverwrite
+        {
+            get { return _forceOverwrite; }
+            set { _forceOverwrite = value; }
+        }
+
         #endregion Align Properties
 
         #region Public methods
@@ -263,6 +271,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             this.OcrItemID = item.ItemID.ToString();
             this.OcrIAID = item.BarCode;
+
+            if (provider.PageTextLogSelectNonOCRForItem(item.ItemID).Count > 0 && !this.ForceOverwrite)
+            {
+                this.Message = "Existing text for item is NOT derived from OCR.  Check 'Force Override' to update the text anyway.";
+                return;
+            }
 
             SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
             if (service.OcrJobExists(item.ItemID))

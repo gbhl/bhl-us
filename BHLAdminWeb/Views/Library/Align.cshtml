@@ -16,7 +16,7 @@
         <ul>
         <li><a href="#divAdd" title="Add Pages"><span>Add Pages</span></a></li>
         <li><a href="#divDelete" title="Delete Pages"><span>Remove Pages</span></a></li>
-        <li><a href="#divOcr" title="Update Ocr"><span>Update Ocr</span></a></li>
+        <li><a href="#divOcr" title="Update Text"><span>Update Text</span></a></li>
         </ul>
 
         @using (Html.BeginForm(null, null, FormMethod.Post, new {enctype="multipart/form-data"})) {
@@ -62,9 +62,10 @@
                 <div>
                     <div><div class="label">Item ID:</div><div class="field">@Html.TextBox("OcrItemID") (Must supply this or IA Identifier)</div></div>
                     <div><div class="label">IA Identifier:</div><div class="field">@Html.TextBox("OcrIAID") (Must supply this or Item ID)</div></div>
+                    <div><div class="label">Force Overwrite:</div><div class="field">@Html.CheckBox("ForceOverwrite") (Check to overwrite non-OCR text)</div></div>
                 </div>
                 <div style="margin-bottom:10px;">
-                    <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update OCR" />
+                    <input class="formButton" type="submit" name="submit:Ocr" id="btnOcr" value="Update Text" />
                     <input class="formButton" type="reset" id="btnOcrReset" value="Clear" />
                 </div>
                 <div id="lblOcrErrMissing" class="ErrorText" style="display:none;">Please specify an Item ID OR Internet Archive Identifier.</div>

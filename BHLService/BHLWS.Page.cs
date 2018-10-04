@@ -93,6 +93,13 @@ namespace MOBOT.BHL.WebService
         #endregion Page Methods
 
         [WebMethod]
+        public void PageTextLogInsertForItem(int itemID, string textSource, int userID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            bhlServer.PageTextLogInsertForItem(itemID, textSource, userID);
+        }
+
+        [WebMethod]
         public CustomGenericList<PageFlickr> PageFlickrSelectRandom(int numberToReturn)
         {
             BHLProvider bhlServer = new BHLProvider();

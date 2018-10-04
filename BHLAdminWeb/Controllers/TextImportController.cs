@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Security;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -158,7 +160,21 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult GetOrigPageText(int pageID)
         {
             string textLink = string.Format(System.Configuration.ConfigurationManager.AppSettings["PageTextUrl"], pageID);
-            string pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
+            string pageText = string.Empty;
+
+            // Ignore SSL certficate errors when downloading the text for the page
+            var sslFailureCallback = new RemoteCertificateValidationCallback(delegate { return true; });
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback += sslFailureCallback;
+                pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
+            }
+            finally
+            {
+                ServicePointManager.ServerCertificateValidationCallback -= sslFailureCallback;
+            }
+
+            //string pageText = new System.Net.WebClient().DownloadString(textLink).Replace("\n", "<br/>");
             return Content(pageText);
         }
 

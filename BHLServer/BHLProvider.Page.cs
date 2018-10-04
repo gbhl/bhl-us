@@ -261,7 +261,17 @@ namespace MOBOT.BHL.Server
 
         public CustomGenericList<PageTextLog> PageTextLogSelectForItem(int itemID)
         {
-            return new PageDAL().PageTextLogSelectForItem(null, null, itemID);
+            return new PageTextLogDAL().PageTextLogSelectForItem(null, null, itemID);
+        }
+
+        public void PageTextLogInsertForItem(int itemID, string textSource, int userID)
+        {
+            new PageTextLogDAL().PageTextLogInsertForItem(null, null, itemID, textSource, userID);
+        }
+
+        public CustomGenericList<PageTextLog> PageTextLogSelectNonOCRForItem(int itemID)
+        {
+            return new PageTextLogDAL().PageTextLogSelectNonOCRForItem(null, null, itemID);
         }
     }
 }

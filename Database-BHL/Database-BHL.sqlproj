@@ -1075,6 +1075,8 @@
     <None Include="txtimport\Stored Procedures\TextImportBatchFileSelectForProcessing.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySelectAllByItemID.sql" />
     <None Include="dbo\Stored Procedures\PageUpdateAndLogTextChange.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogInsertForItem.sql" />
+    <None Include="dbo\Stored Procedures\PageTextLogSelectNonOCRForItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

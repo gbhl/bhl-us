@@ -18,11 +18,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://mbgserv09:2012/BHLWS.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:26504/BHLWS.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BHLWS1.disco" MetadataType="Disco" ID="986ed01b-b73f-4a15-8cd2-2fbda228f4b8" SourceId="1" SourceUrl="http://mbgserv09:2012/BHLWS.asmx?disco" />
-    <MetadataFile FileName="BHLWS1.wsdl" MetadataType="Wsdl" ID="9215bf97-3880-45be-b6fe-a65f694093c5" SourceId="1" SourceUrl="http://mbgserv09:2012/BHLWS.asmx?wsdl" />
+    <MetadataFile FileName="BHLWS.disco" MetadataType="Disco" ID="8e245843-9a17-4e56-8736-50de251691cb" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?disco" />
+    <MetadataFile FileName="BHLWS.wsdl" MetadataType="Wsdl" ID="163c6147-53e1-4cf1-bc47-2ab6af32fd25" SourceId="1" SourceUrl="http://localhost:26504/BHLWS.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

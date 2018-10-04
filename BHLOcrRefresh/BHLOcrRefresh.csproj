@@ -64,8 +64,8 @@
     <Content Include="djvu2text.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Service References\BHLWS\BHLWS1.disco" />
-    <None Include="Service References\BHLWS\BHLWS1.wsdl" />
+    <None Include="Service References\BHLWS\BHLWS.disco" />
+    <None Include="Service References\BHLWS\BHLWS.wsdl" />
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -123,6 +123,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -130,9 +133,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.TitleEndNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLOcrRefresh.BHLWS.Title_Identifier.datasource">
