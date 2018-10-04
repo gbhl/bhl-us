@@ -97,14 +97,14 @@ namespace MOBOT.BHL.Web2.Services
 
                 if (string.IsNullOrWhiteSpace(ocrText))
                 {
-                    js.Serialize(new { ocrText = "OCR text unavailable for this page.", success = false });
+                    js.Serialize(new { ocrText = "Text unavailable for this page.", success = false });
                 }
 
                 return js.Serialize(new { ocrText, success = true });
             }
             catch
             {
-                return js.Serialize(new { ocrText = "OCR text unavailable for this page.", success = false });
+                return js.Serialize(new { ocrText = "Text unavailable for this page.", success = false });
             }
         }
 

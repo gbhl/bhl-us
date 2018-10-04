@@ -74,7 +74,7 @@ namespace BHLServerTest
             BHLProvider target = new BHLProvider();
             string actual = string.Empty;
             actual = target.GetOcrText(1);
-            Assert.AreEqual("OCR text unavailable for this page.", actual);
+            Assert.AreEqual("Text unavailable for this page.", actual);
         }
     
         [TestMethod]

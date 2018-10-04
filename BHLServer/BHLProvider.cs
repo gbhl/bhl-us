@@ -593,7 +593,7 @@ namespace MOBOT.BHL.Server
         public string GetOcrText(int pageID)
         {
             Page page = this.PageSelectOcrPathForPageID(pageID);
-            String ocrText = "OCR text unavailable for this page.";
+            String ocrText = "Text unavailable for this page.";
 
             // Make sure we found an active page
             if (page != null)

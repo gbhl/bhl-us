@@ -24,7 +24,7 @@
                     <a class="large-icon pdf" href="<%= string.Format("https://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
                     <a class="large-icon jp2" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
-                    <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download OCR</a>                
+                    <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download Text</a>                
                 </div>
             <% } %>
 
@@ -297,7 +297,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=5" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=6" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -452,7 +452,7 @@
                     newpageOCR.text("");
                     var header = $('<div/>', { 'class' : 'header' }).appendTo(newpageOCR);
                                         
-                    if (data.success && (data.ocrText != "OCR text unavailable for this page."))
+                    if (data.success && (data.ocrText != "Text unavailable for this page."))
                     {
                         header.append(
                             $('<a/>', {
@@ -479,7 +479,7 @@
                             'text' : 'Viewing Page as Text'
                         })).append(
                         $('<em/>', {
-                            'text' : 'This text is generated from uncorrected OCR and as such, may contain, inconsistencies with the actual content of the original page.'
+                            'text' : 'This text is either generated from uncorrected OCR or is a manually produced transcription.  As such, it may include inconsistencies with the content of the original page.'
                         }));
                                         
                     var text = $('<div/>', { 'class': 'text' })
@@ -999,7 +999,7 @@
                 return pages[index].PageID;         
             }
         }
-        //function to update page URL, Names and OCR
+        //function to update page URL, Names and text
         br.updatePageDetailsUI = function(index){
             var segListItem = $("#lstSegments li[id='" + pages[index].SegmentID + "']");
             var segTitleLink = $("#articleTitleLink");
@@ -1052,8 +1052,8 @@
             }
 
             var showOCRButton = $('#showOCRButton'); 
-            if (showOCRButton.attr("title") == "Hide OCR") {
-                updateOCR(index);   // Update OCR if it is visible
+            if (showOCRButton.attr("title") == "Hide Text") {
+                updateOCR(index);   // Update text if it is visible
             }
             updatePageNames(index);
             $("#pagename").text(br.getPageName(br.currentIndex()));
@@ -1226,7 +1226,7 @@
 
             var BRtoolbar = $("#BRtoolbar").detach();
             BRtoolbar.appendTo("#BRtoolbarwrapper");
-            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show OCR'>Show<br/>OCR</a> </div>");
+            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show Text'>Show<br/>Text</a> </div>");
             var PDFtoolbar = $("#toolbar-top").detach();
             PDFtoolbar.prependTo("#BRtoolbar");
             $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
@@ -1264,21 +1264,21 @@
                 }
             });
 
-            // Toggle right hand container for OCR 
+            // Toggle right hand container for text 
             var showOCRButton = $('#showOCRButton');
             showOCRButton.click(function () {
                 newpageOCR.text("");
-                if (showOCRButton.attr("title") == "Show OCR") {
+                if (showOCRButton.attr("title") == "Show Text") {
                     updateOCR(br.currentIndex());
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageOCR-panel").show();
-                    showOCRButton.attr("title", "Hide OCR");
-                    showOCRButton.html("Hide<br/>OCR");
+                    showOCRButton.attr("title", "Hide Text");
+                    showOCRButton.html("Hide<br/>Text");
                     showOCRButton.addClass("displayed");
                 } else {
                     $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
-                    showOCRButton.attr("title", "Show OCR");
-                    showOCRButton.html("Show<br/>OCR");
+                    showOCRButton.attr("title", "Show Text");
+                    showOCRButton.html("Show<br/>Text");
                     showOCRButton.removeClass("displayed");
                 }
 
@@ -1289,9 +1289,7 @@
             // Toggle right hand container for Search 
             var showSearchButton = $('#showSearchButton');
             showSearchButton.click(function () {
-                //newpageOCR.text("");
                 if (showSearchButton.attr("title") == "Search Inside") {
-                    //updateOCR(br.currentIndex()); 
                     $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
                     $("#pageSearch-panel").show();
                     $("#sibSearchText").focus();
@@ -1430,8 +1428,8 @@
 
     function resetPageOCRBox() {
         $("#pageOCR-panel").hide();
-        $("#showOCRButton").attr("title", "Show OCR");
-        $("#showOCRButton").html("Show<br/>OCR");
+        $("#showOCRButton").attr("title", "Show Text");
+        $("#showOCRButton").html("Show<br/>Text");
         $("#showOCRButton").removeClass("displayed");
     }
 
@@ -1448,7 +1446,7 @@
     }
 
     $(document).ready(function(){
-        	    //	Called when we click on the tab itself
+        //	Called when we click on the tab itself
 	    $('#pagestab').click(function() {
 
             if ($('#pagestab').hasClass('active')) return false; 
