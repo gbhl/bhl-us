@@ -488,6 +488,7 @@
     <Content Include="Docs\BHL Permissions Form.pdf" />
     <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
     <Content Include="Docs\DarwinsLibraryBibliography.pdf" />
+    <Content Include="Handlers\GetPageOcrRedirect.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -807,6 +808,9 @@
     </Compile>
     <Compile Include="Handlers\GetPageOcr.ashx.cs">
       <DependentUpon>GetPageOcr.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetPageOcrRedirect.ashx.cs">
+      <DependentUpon>GetPageOcrRedirect.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\GetPageThumb.ashx.cs">
       <DependentUpon>GetPageThumb.ashx</DependentUpon>

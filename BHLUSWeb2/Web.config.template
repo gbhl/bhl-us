@@ -68,7 +68,7 @@
     <add key="TaxonFinderRequestText" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;freeText=" />
 
     <!-- TaxonFinder name service request URL that contains pointer (url) to text to be evaluated -->
-    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=https://www.biodiversitylibrary.org/pageocr/{0}" />
+    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=https://www.biodiversitylibrary.org/pagetext/{0}" />
 
     <!-- Base address of GNRD name service -->
     <add key="GNRDBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />

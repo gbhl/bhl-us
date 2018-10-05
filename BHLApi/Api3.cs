@@ -58,7 +58,7 @@ namespace MOBOT.BHL.API.BHLApi
                 page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + page.PageID.ToString();
                 page.PageNumbers = dal.IndicatedPageSelectByPageID(null, null, pageIDInt);
                 page.PageTypes = dal.PageTypeSelectByPageID(null, null, pageIDInt);
 
@@ -96,7 +96,7 @@ namespace MOBOT.BHL.API.BHLApi
             try
             {
                 client.Encoding = Encoding.UTF8;
-                text = client.DownloadString("https://www.biodiversitylibrary.org/pageocr/" + pageID);
+                text = client.DownloadString("https://www.biodiversitylibrary.org/pagetext/" + pageID);
             }
             finally
             {
@@ -203,7 +203,7 @@ namespace MOBOT.BHL.API.BHLApi
                 page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + page.PageID.ToString();
                 page.PageTypes = new CustomGenericList<PageType>();
                 page.PageNumbers = new CustomGenericList<PageNumber>();
 
@@ -487,7 +487,7 @@ namespace MOBOT.BHL.API.BHLApi
                 page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
-                page.OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + page.PageID.ToString();
+                page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext//" + page.PageID.ToString();
                 page.PageTypes = new CustomGenericList<PageType>();
                 page.PageNumbers = new CustomGenericList<PageNumber>();
 
@@ -1741,10 +1741,10 @@ namespace MOBOT.BHL.API.BHLApi
                     {
                         PageID = Convert.ToInt32(hit.Id),
                         ItemID = itemIDint,
-                        PageUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        PageUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
                         ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + hit.Id,
                         FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + hit.Id,
-                        OcrUrl = "https://www.biodiversitylibrary.org/pageocr/" + hit.Id,
+                        OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + hit.Id,
                         OcrText = hit.Text
                     };
 

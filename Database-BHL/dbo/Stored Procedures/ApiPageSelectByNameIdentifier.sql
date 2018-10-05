@@ -36,7 +36,7 @@ SELECT	ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameStrin
 		'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID) AS FullSizeImageURL,
 		-- Image viewer address
 		REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(s.ImageServerUrlFormat, '{0}', ''), '{1}', ''), '{2}', ''), '{3}', 'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID)), '{4}', 'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID)), '&amp;', '&') AS ImageURL,
-		'https://www.biodiversitylibrary.org/pageocr/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
+		'https://www.biodiversitylibrary.org/pagetext/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
 		pt.PageTypeName
 FROM	dbo.NameIdentifier ni WITH (NOLOCK)
 		INNER JOIN dbo.NameResolved nr WITH (NOLOCK) ON ni.NameResolvedID = nr.NameResolvedID

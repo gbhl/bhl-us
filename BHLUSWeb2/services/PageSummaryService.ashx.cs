@@ -90,9 +90,8 @@ namespace MOBOT.BHL.Web2.Services
 
                 using (WebClient client = new WebClient())
                 {
-                    //ocrText = client.DownloadString("https://www.biodiversitylibrary.org/pageocr/" + pageID);
                     client.Encoding = System.Text.Encoding.UTF8; 
-                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(ConfigurationManager.AppSettings["BaseUrl"] + "/pageocr/" + pageID));
+                    ocrText = HttpUtility.HtmlEncode(client.DownloadString(ConfigurationManager.AppSettings["BaseUrl"] + "/pagetext/" + pageID));
                 }
 
                 if (string.IsNullOrWhiteSpace(ocrText))

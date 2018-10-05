@@ -1,5 +1,4 @@
-﻿
-CREATE VIEW [dbo].[vwTropicosNames]
+﻿CREATE VIEW [dbo].[vwTropicosNames]
 AS
 SELECT	NameID,
 		BHLTitleID,
@@ -7,7 +6,6 @@ SELECT	NameID,
 		NameNoAuthors,
 		Rank,
 		'https://www.biodiversitylibrary.org/page/' + CONVERT(varchar(20), BHLPageID) AS BHLPageUrl,
-		'https://www.biodiversitylibrary.org/pageocr/' + CONVERT(varchar(20), BHLPageID) AS OCRPath
+		'https://www.biodiversitylibrary.org/pagetext/' + CONVERT(varchar(20), BHLPageID) AS OCRPath
 FROM	dbo.tropicosnames
 WHERE	ISNULL(BHLPageID, 0) <> 0
-

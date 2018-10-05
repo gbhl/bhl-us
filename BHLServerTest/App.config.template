@@ -3,7 +3,7 @@
   <appSettings>
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="TaxonFinderRequestText" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;freeText=" />
-    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=http://www.biodiversitylibrary.org/pageocr/{0}" />
+    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=http://www.biodiversitylibrary.org/pagetext/{0}" />
     <add key="GNRDBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
     <add key="GNRDRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169" />
   </appSettings>
