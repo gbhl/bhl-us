@@ -28,3 +28,7 @@ CREATE NONCLUSTERED INDEX [IX_SearchCatalogSegment_SegmentID]
 ON [dbo].[SearchCatalogSegment] ([SegmentID])
 INCLUDE ([Subjects],[Authors],[ItemID],[HasLocalContent],[HasExternalContent])
 GO
+
+CREATE NONCLUSTERED INDEX [IX_SearchCatalogSegment_ItemID]
+ON [dbo].[SearchCatalogSegment] ([ItemID])
+GO
