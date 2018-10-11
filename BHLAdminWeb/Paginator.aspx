@@ -172,6 +172,7 @@
 											<asp:ListItem>Issue</asp:ListItem>
 											<asp:ListItem>No.</asp:ListItem>
 											<asp:ListItem>Part</asp:ListItem>
+                                            <asp:ListItem>Suppl.</asp:ListItem>
 										</asp:DropDownList>
 										<asp:TextBox ID="issueTextBox" runat="server" CssClass="TextBox" Style="background-color:White; height:13px" Width="90px"></asp:TextBox>
 									</td>
