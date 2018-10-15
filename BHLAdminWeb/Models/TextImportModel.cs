@@ -245,7 +245,15 @@ namespace MOBOT.BHL.AdminWeb.Models
             int itemIDInt;
             if (!Int32.TryParse(this.ItemID, out itemIDInt))
             {
-                // No valid Item ID
+                // Invalid Item ID format
+                batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+                errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
+            }
+            else if (provider.ItemSelectAuto(Convert.ToInt32(this.ItemID)) == null)
+            {
+                // Item ID not found in BHL
+                itemIDInt = 0;
+                this.ItemID = string.Empty;
                 batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
                 errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
             }

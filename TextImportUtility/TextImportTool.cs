@@ -104,7 +104,7 @@ namespace BHL.TextImportUtility
                 int pageEnd = fileContents.IndexOf("</div>", pageStart);
 
                 string pageText = fileContents.Substring(pageStart, pageEnd - pageStart);
-                contents.Add(sequenceNumber++, pageText.Replace("<br>", "\n").Replace("<p>", "").Replace("</p>", "\r\n"));
+                contents.Add(sequenceNumber++, pageText.Replace("<br>", "").Replace("<p>", "").Replace("</p>", ""));
                 fileContents = fileContents.Substring(pageEnd + "</div>".Length);
             }
 
