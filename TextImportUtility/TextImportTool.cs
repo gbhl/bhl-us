@@ -18,7 +18,7 @@ namespace BHL.TextImportUtility
             {
                 fileFormat = "ftp";
             }
-            else if (fileContent.Contains(",\"occurrenceRemarks\","))
+            else if (fileContent.Contains("occurrenceRemarks"))
             {
                 fileFormat = "dv";
             }
@@ -124,6 +124,8 @@ namespace BHL.TextImportUtility
             {
                 CsvReader csv = new CsvReader(reader);
                 csv.Configuration.HasHeaderRecord = true;
+                csv.Configuration.HeaderValidated = null;
+                csv.Configuration.MissingFieldFound = null;
 
                 var dvRecord = new
                 {
@@ -134,8 +136,8 @@ namespace BHL.TextImportUtility
                     validatorID = string.Empty,
                     externalIdentifier = string.Empty,
                     exportComment = string.Empty,
-                    dateTranscribed = new DateTime(),
-                    dateValidated = new DateTime(),
+                    dateTranscribed = string.Empty,
+                    dateValidated = string.Empty,
                     individualCount = default(int),
                     institutionCode = string.Empty,
                     occurrenceRemarks = string.Empty,
