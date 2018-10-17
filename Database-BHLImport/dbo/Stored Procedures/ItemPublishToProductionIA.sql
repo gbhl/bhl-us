@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
+﻿DROP PROCEDURE [dbo].[ItemPublishToProductionIA]
+GO
+
+CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
 
 @BarCode nvarchar(40) = NULL
 
@@ -622,8 +625,11 @@ BEGIN TRY
 	UPDATE	#tmpTitle_Creator
 	SET		ProductionAuthorID = a.AuthorID
 	FROM	#tmpTitle_Creator t 
-			INNER JOIN dbo.BHLAuthorName n ON t.CreatorName = n.FullName COLLATE SQL_Latin1_General_CP1_CI_AI
-			INNER JOIN dbo.BHLAuthor a ON a.AuthorID = n.AuthorID
+			LEFT JOIN dbo.BHLAuthorName n 
+				ON REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
+				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
+					COLLATE SQL_Latin1_General_CP1_CI_AI
+			LEFT JOIN dbo.BHLAuthor a ON a.AuthorID = n.AuthorID
 	WHERE	(  -- If b is blank, match records with blank Numeration/Unit values
 			(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
 			OR  -- If b is not blank, find records with matching Numeration/Unit values
@@ -708,15 +714,27 @@ BEGIN TRY
 	SET		ProductionAuthorID = a.AuthorID,
 			ProductionAuthorNameID = n.AuthorNameID
 	FROM	#tmpCreator t INNER JOIN dbo.BHLAuthor a
-				ON  (ISNULL(t.MARCCreator_b, '') = ISNULL(a.Numeration, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
-					 ISNULL(t.MARCCreator_b, '') = ISNULL(a.Unit, '') COLLATE SQL_Latin1_General_CP1_CI_AI)
-				AND (ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
-					 ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, '') COLLATE SQL_Latin1_General_CP1_CI_AI)
+			ON		(  -- If b is blank, match records with blank Numeration/Unit values
+					(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
+					OR  -- If b is not blank, find records with matching Numeration/Unit values
+					(ISNULL(t.MARCCreator_b, '') <> '' AND
+						(ISNULL(t.MARCCreator_b, '') = ISNULL(a.Numeration, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
+						ISNULL(t.MARCCreator_b, '') = ISNULL(a.Unit, '') COLLATE SQL_Latin1_General_CP1_CI_AI))
+					)
+			AND		(  -- If c is blank, match records with blank Numeration/Unit values
+					(ISNULL(t.MARCCreator_c, '') = '' AND ISNULL(a.Title, '') = '' AND ISNULL(a.Location, '') = '')
+					OR  -- If c is not blank, find records with matching Numeration/Unit values
+					(ISNULL(t.MARCCreator_c, '') <> '' AND
+						(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
+						ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, '') COLLATE SQL_Latin1_General_CP1_CI_AI))
+					)
 				AND ISNULL(t.DOB, '') = ISNULL(a.Startdate, '')
 				AND	ISNULL(t.DOD, '') = ISNULL(a.EndDate, '')
 			INNER JOIN dbo.BHLAuthorName n
 				ON a.AuthorID = n.AuthorID
-				AND t.CreatorName = n.FullName COLLATE SQL_Latin1_General_CP1_CI_AI
+				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
+				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
+					COLLATE SQL_Latin1_General_CP1_CI_AI
 
 	-- If a selected production Author ID has been redirected to a different 
 	-- author ID, then use that author ID instead.  Follow the "redirect" chain
