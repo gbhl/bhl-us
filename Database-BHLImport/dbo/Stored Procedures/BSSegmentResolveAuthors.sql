@@ -35,6 +35,7 @@ FROM	dbo.BSSegment s
 		INNER JOIN dbo.BHLIdentifier id ON ai.IdentifierID = id.IdentifierID AND id.IdentifierName = 'VIAF'		
 WHERE	s.SegmentID = @SegmentID
 AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
+AND		sa.VIAFIdentifier <> ''
 
 -- Compare name strings of authors in import DB and production.  If matches are found,
 -- update import DB with production author ID.
