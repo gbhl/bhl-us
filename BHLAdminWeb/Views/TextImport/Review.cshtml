@@ -117,7 +117,10 @@
 
             // Show the page image and text
             var imageLink = '@Url.Content(System.Configuration.ConfigurationManager.AppSettings["PageImageUrl"])';
+            modal.find('.modal-body #pageImage').hide();
+            modal.find('.modal-body #pageImageLoading').show();
             modal.find('.modal-body #pageImage').attr("src", imageLink.replace("{0}", pageRecordId));
+            modal.find('.modal-body #pageImage').load(function () { $('#pageImageLoading').hide(); $('#pageImage').show();});
             $.ajax("/textimport/GetOrigPageText?pageID=" + pageRecordId).done(function (data) { modal.find('.modal-body #textOriginal').html(data); });
             $.ajax("/textimport/GetNewPageText?fileName=" + filename + "&seqNo=" + pageSeqNo).done(function (data) { modal.find('.modal-body #textReplacement').html(data); });
         });
@@ -144,7 +147,8 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div>
-                                <img width="100%" id="pageImage" />
+                                <img style="display:block; margin:auto;padding-top:50px" src="~/Images/loading.gif" id="pageImageLoading" />
+                                <img width="100%" id="pageImage" style="display:none"/>
                             </div>
                         </div>
                         <div class="col-sm-6">
