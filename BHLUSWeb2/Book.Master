@@ -43,7 +43,7 @@
                         </span>
 		            </nav>
                     <nav id="altmetricbadgebook" style="float:left;line-height:0px;margin-top:18px;">
-                        <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" class="altmetric-embed"></div>
+                        <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>
                     </nav>
                     <div id="searchbar">
                         <span id="searchbar-searchtype">
