@@ -223,7 +223,7 @@ namespace BHL.TextImportProcessor
                     this.LogMessage("Sending Email....");
                     string message = this.GetEmailBody();
                     this.LogMessage(message);
-                    this.SendEmail(message);
+                    if (errorMessages.Count > 0) this.SendEmail(message);
                 }
                 else
                 {
