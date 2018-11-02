@@ -470,6 +470,7 @@
     <Content Include="js\plugins.js" />
     <Content Include="js\script.js" />
     <Content Include="js\webtrends.js" />
+    <Content Include="js\webtrends.min.js" />
     <Content Include="libs\countersoft\Newtonsoft.Json.dll" />
     <Content Include="Monitor.aspx" />
     <Content Include="NameDetail.aspx" />

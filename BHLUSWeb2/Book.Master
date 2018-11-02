@@ -21,6 +21,28 @@
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
     <asp:ContentPlaceHolder id="PageHeaderIncludesPlaceHolder" runat="server" />
+
+    <!-- START OF SmartSource Data Collector TAG v10.4.23 -->
+    <!-- Copyright (c) 2018 Webtrends Inc.  All rights reserved. -->
+    <script>
+    window.webtrendsAsyncInit=function(){
+        var dcs=new Webtrends.dcs().init({
+            dcsid:"dcsse0w37bdzpxzj2yuxm4sap_9g8y",
+            domain:"logs1.smithsonian.museum",
+            timezone:-5,
+            i18n:true,
+            fpcdom:".biodiversitylibrary.org",
+            plugins:{
+            }
+            }).track();
+    };
+    (function(){
+        var s=document.createElement("script"); s.async=true; s.src="/js/webtrends.min.js";    
+        var s2=document.getElementsByTagName("script")[0]; s2.parentNode.insertBefore(s,s2);
+    }());
+    </script>
+    <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//logs1.smithsonian.museum/dcsse0w37bdzpxzj2yuxm4sap_9g8y/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.23&amp;dcssip=www.biodiversitylibrary.org"/></noscript>
+    <!-- END OF SmartSource Data Collector TAG v10.4.23 -->
 </head>
 
 <body id="book-master" class="book-master">
@@ -82,36 +104,5 @@
             "dimension3": "<%: sponsor %>"
         });
     </script>
-
-    <!-- START OF SmartSource Data Collector TAG -->
-    <!-- Copyright (c) 1996-2013 Webtrends Inc.  All rights reserved. -->
-    <!-- Version: 9.4.0 -->
-    <!-- Tag Builder Version: 4.1  -->
-    <!-- Created: 5/30/2013 2:18:46 PM -->
-    <script src="/js/webtrends.js" type="text/javascript"></script>
-    <!-- ----------------------------------------------------------------------------------- -->
-    <!-- Warning: The two script blocks below must remain inline. Moving them to an external -->
-    <!-- JavaScript include file can cause serious problems with cross-domain tracking.      -->
-    <!-- ----------------------------------------------------------------------------------- -->
-    <script type="text/javascript">
-        //<![CDATA[
-        var _tag = new WebTrends();
-        _tag.dcsGetId();
-        //]]>
-    </script>
-    <script type="text/javascript">
-        //<![CDATA[
-        _tag.dcsCustom = function () {
-            // Add custom parameters here.
-            //_tag.DCSext.param_name=param_value;
-        }
-        _tag.dcsCollect();
-        //]]>
-    </script>
-    <noscript>
-    <div><img alt="DCSIMG" id="DCSIMG" width="1" height="1" src="//logs1.smithsonian.museum/dcsse0w37bdzpxzj2yuxm4sap_9g8y/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=9.4.0&amp;dcssip=www.biodiversitylibrary.org"/></div>
-    </noscript>
-    <!-- END OF SmartSource Data Collector TAG -->
-
 </body>
 </html>
