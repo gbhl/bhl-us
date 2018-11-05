@@ -112,7 +112,6 @@ namespace MOBOT.BHL.Web2
             if (Request["ser"] != null) searchSeries = Request["ser"].ToString();
 
             queryString = Request.QueryString.ToString().Replace("elastic=0&", "");
-            divESToggle.Visible = (ConfigurationManager.AppSettings["UseElasticSearch"] == "true" && searchCat != "O");
 
             //get sortdetails
             if (!string.IsNullOrEmpty(searchSort)) {

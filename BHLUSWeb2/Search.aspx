@@ -310,9 +310,6 @@
           	</div>  
    
                  <aside id="searchaside">
-                    <div id="divESToggle" runat="server">
-                        <p><a href="/search?elastic=1&<%= queryString %>">Try our new search interface!</a></p>
-                    </div>
                     <uc:FeatureBox ID="FeatureBox5" runat="server" FeatureType="support"></uc:FeatureBox>
                     <uc:FeatureBox ID="FeatureBox6" runat="server" FeatureType="collection"></uc:FeatureBox>
 

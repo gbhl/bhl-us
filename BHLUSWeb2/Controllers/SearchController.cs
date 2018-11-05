@@ -121,8 +121,6 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Advanced
         public ActionResult Advanced()
         {
-            if (SearchRedirect()) return new RedirectResult("~/advancedsearch.aspx");
-
             MVCServices.SearchService searchService = new MVCServices.SearchService();
             ViewBag.Languages = searchService.LanguageList();
             ViewBag.Collections = searchService.CollectionList();
@@ -229,8 +227,6 @@ namespace MOBOT.BHL.Web2.Controllers
 
         public ActionResult SearchAction(SearchModel model, List<Tuple<SearchField, string>> limits)
         {
-            if (SearchRedirect()) return new RedirectResult("~/search.aspx?" + Request.QueryString);
-
             int publicationPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["PublicationResultPageSize"]);
             int authorPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["AuthorResultPageSize"]);
             int keywordPageSize = Convert.ToInt32(ConfigurationManager.AppSettings["KeywordResultPageSize"]);
@@ -414,48 +410,6 @@ namespace MOBOT.BHL.Web2.Controllers
             }
 
             return isLimited;
-        }
-
-        private bool SearchRedirect()
-        {
-            bool redirect = false;
-            bool switchToNew = false;
-
-            // If ElasticSearch usage is turned off, immediately redirect to the original search
-            if (ConfigurationManager.AppSettings["UseElasticSearch"] != "true") return true;
-
-            // User requested to switch to original search
-            if (Request.QueryString["elastic"] == "0")
-            {
-                // Set cookie to use the original search for 7 days
-                HttpCookie cookie = new HttpCookie("originalsearch");
-                cookie.Value = "1";
-                cookie.Expires = DateTime.Now.AddHours(168); // 7-day expiration
-                cookie.Domain = ".biodiversitylibrary.org";
-                Response.Cookies.Add(cookie);
-
-                // User chose to use old search interface, so redirect
-                redirect = true;
-            }
-            else if (Request.QueryString["elastic"] == "1") // User requested to switch to elasticsearch
-            {
-                // Set cookie to use the new search
-                HttpCookie cookie = new HttpCookie("originalsearch");
-                cookie.Value = "0";
-                cookie.Expires = DateTime.Now.AddHours(168); // 7-day expiration
-                cookie.Domain = ".biodiversitylibrary.org";
-                Response.Cookies.Add(cookie);
-
-                switchToNew = true;
-            }
-
-            // User switched to original search within last 7 days, and is not switching back
-            if (Request.Cookies.AllKeys.Contains("originalsearch") && !switchToNew)
-            {
-                if (Request.Cookies["originalsearch"].Value == "1") redirect = true;
-            }
-
-            return redirect;
         }
     }
 }

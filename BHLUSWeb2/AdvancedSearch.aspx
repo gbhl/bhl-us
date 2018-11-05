@@ -162,9 +162,6 @@
         </div>
     </section>
     <aside>
-      <div id="divESToggle" runat="server" class="column-wrap">
-        <p><a href="/advsearch?elastic=1">Try our new search interface!</a></p>
-      </div>
       <uc:FeatureBox ID="FeatureBox1" runat="server" FeatureType="support"></uc:FeatureBox>
       <uc:FeatureBox ID="FeatureBox2" runat="server" FeatureType="collection"></uc:FeatureBox>
     </aside>		

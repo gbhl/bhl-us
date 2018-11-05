@@ -41,8 +41,6 @@ namespace MOBOT.BHL.Web2
             base.Page_Load(sender, e);
             main.Page.Title = String.Format(ConfigurationManager.AppSettings["PageTitle"], "Advanced Search");
 
-            divESToggle.Visible = (ConfigurationManager.AppSettings["UseElasticSearch"] == "true");
-
             if (!this.IsPostBack)
             {
                 // Initial populate of controls 
