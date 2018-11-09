@@ -331,10 +331,11 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.IAMarc m
 				ON t.ItemID = m.ItemID
 
-	-- Get the start year, end year, and language code from the MARC control data
+	-- Get the start year, end year, and language code from the MARC control data.
+	-- Only read the 2nd date (EndYear) if the Date Type is NOT one of p, r, s, t.
 	UPDATE	#tmpTitle
 	SET		StartYear = CASE WHEN ISNUMERIC(SUBSTRING(c.[Value], 8, 4)) = 1 THEN SUBSTRING(c.[Value], 8, 4) ELSE NULL END,
-			EndYear = CASE WHEN ISNUMERIC(SUBSTRING(c.[Value], 12, 4)) = 1 THEN SUBSTRING(c.[Value], 12, 4) ELSE NULL END,
+			EndYear = CASE WHEN ISNUMERIC(SUBSTRING(c.[Value], 12, 4)) = 1 AND SUBSTRING(c.[Value], 7, 1) NOT IN ('p', 'r', 's', 't') THEN SUBSTRING(c.[Value], 12, 4) ELSE NULL END,
 			LanguageCode = SUBSTRING(c.[Value], 36, 3)
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcControl c
 				ON t.ItemID = c.ItemID
