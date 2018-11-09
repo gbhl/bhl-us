@@ -47,6 +47,7 @@ namespace MOBOT.BHL.AdminWeb.Controls
                 switch (Menu)
                 {
                     case "v2":
+                    case "v3":
                         {
                             userMenu.Visible = true;
                             break;

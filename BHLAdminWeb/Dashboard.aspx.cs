@@ -201,6 +201,8 @@ namespace MOBOT.BHL.AdminWeb
                 tdRptMonoContributions.InnerHtml = GetMenuText(tdRptMonoContributions.InnerHtml);
                 tdRptItemsByContributor.InnerHtml = GetMenuText(tdRptItemsByContributor.InnerHtml);
                 tdRptRecentlyClustered.InnerHtml = GetMenuText(tdRptRecentlyClustered.InnerHtml);
+                tdRptOrphan.InnerHtml = GetMenuText(tdRptOrphan.InnerHtml);
+                tdDLTitlesWithExtContent.InnerHtml = GetMenuText(tdDLTitlesWithExtContent.InnerHtml);
 
                 tdImportCitations.InnerHtml = GetMenuText(tdImportCitations.InnerHtml);
                 tdImportCitationHistory.InnerHtml = GetMenuText(tdImportCitationHistory.InnerHtml);

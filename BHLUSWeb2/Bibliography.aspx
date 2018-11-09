@@ -59,6 +59,19 @@
                     </p>
                     <% } %>
                 <% } %>
+                <% if (Institutions.Count > 0) {
+                    foreach (Institution institution in Institutions) {
+                        if (institution.InstitutionRoleName == "External Content Holder") {%>
+                            <span style="font-weight:bold">
+                            <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
+                                More content is available from <%:institution.InstitutionName%>.
+                            <%} else {%>
+                                More content is available from <a href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>.
+                            <%}%>
+                            </span>
+                        <%}
+                    }
+                } %>
                 <h3>By</h3>
                 <p>
                     <% foreach (Author author in Authors) { %>
@@ -184,6 +197,19 @@
                     </p>
                     <% } %>
                 <% } %>
+                <% if (Institutions.Count > 0) {
+                    foreach (Institution institution in Institutions) {
+                        if (institution.InstitutionRoleName == "External Content Holder") {%>
+                            <span style="font-weight:bold">
+                            <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
+                                More content is available from <%:institution.InstitutionName%>.
+                            <%} else {%>
+                                More content is available from <a href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>.
+                            <%}%>
+                            </span>
+                        <%}
+                    }
+                } %>
                 <h3>By</h3>
                 <p>
                     <% foreach (Author author in AuthorsDetail) { %>
@@ -192,7 +218,7 @@
 						</a><%if (!string.IsNullOrWhiteSpace(author.Relationship)) Response.Write(", " + author.Relationship); %><%if (!string.IsNullOrWhiteSpace(author.TitleOfWork)) Response.Write(", " + author.TitleOfWork); %>
                         <br />
                     <% } %>
-                    <% if (AdditionalAuthorsDetail.Count > 0) Response.Write("<br .>"); %>
+                    <% if (AuthorsDetail.Count > 0 && AdditionalAuthorsDetail.Count > 0) Response.Write("<br />"); %>
                     <% foreach (Author author in AdditionalAuthorsDetail) { %>
                         <a href="/creator/<%: author.AuthorID %>">
 							<%: author.NameExtended %>

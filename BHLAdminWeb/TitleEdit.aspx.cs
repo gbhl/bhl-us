@@ -6,6 +6,9 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using CustomDataAccess;
 using SortOrder = CustomDataAccess.SortOrder;
+using System.Web.UI.HtmlControls;
+using System.Configuration;
+using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -16,6 +19,14 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void Page_Load( object sender, EventArgs e )
 		{
+            HtmlLink cssLnk = new HtmlLink();
+            cssLnk.Attributes.Add("rel", "stylesheet");
+            cssLnk.Attributes.Add("type", "text/css");
+            cssLnk.Href = ConfigurationManager.AppSettings["jQueryUICSSPath"];
+            Page.Header.Controls.Add(cssLnk);
+            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryPath"]);
+            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryUIPath"]);
+
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectItem", "<script language='javascript'>function selectItem(itemId) { document.getElementById('" + selectedItem.ClientID + "').value+=itemId+'|';}</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearItem", "<script language='javascript'>function clearItems() { document.getElementById('" + selectedItem.ClientID + "').value=''; overlay(); __doPostBack('', '');}</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearAuthor", "<script language='javascript'>function clearAuthor() { document.getElementById('" + selectedItem.ClientID + "').value=''; overlayAuthorSearch(); __doPostBack('', '');}</script>");
@@ -158,6 +169,18 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			BHLProvider bp = new BHLProvider();
 
+            CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+
+            Institution emptyInstitution = new Institution();
+            emptyInstitution.InstitutionCode = string.Empty;
+            emptyInstitution.InstitutionName = string.Empty;
+            institutions.Insert(0, emptyInstitution);
+
+            ddlExtContent.DataSource = institutions;
+            ddlExtContent.DataTextField = "InstitutionName";
+            ddlExtContent.DataValueField = "InstitutionCode";
+            ddlExtContent.DataBind();
+
             CustomGenericList<BibliographicLevel> bibliographicLevels = bp.BibliographicLevelSelectAll();
 
             BibliographicLevel emptyBibLevel = new BibliographicLevel();
@@ -240,7 +263,18 @@ namespace MOBOT.BHL.AdminWeb
             partNameTextBox.Text = title.PartName;
 			callNumberTextBox.Text = title.CallNumber;
 
-			if ( title.LanguageCode != null && title.LanguageCode.Length > 0 )
+            ddlExtContent.SelectedValue = "";
+            foreach (Institution contributor in title.TitleInstitutions)
+            {
+                if (contributor.InstitutionRoleName == InstitutionRole.ExternalContentHolder)
+                {
+                    ddlExtContent.SelectedValue = contributor.InstitutionCode;
+                    RepositoryUrlTextBox.Text = contributor.Url;
+                    break;
+                }
+            }
+
+            if ( title.LanguageCode != null && title.LanguageCode.Length > 0 )
 			{
 				ddlLang.SelectedValue = title.LanguageCode;
 			}
@@ -1697,6 +1731,7 @@ namespace MOBOT.BHL.AdminWeb
                 // Set the id of the editing user
                 userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
+                //----------------------------------------
                 // Gather up data on form
                 title.DOIName = doiTextBox.Text.Trim();
                 title.RedirectTitleID = (replacedByTextBox.Text.Trim().Length == 0 ? (int?)null : Convert.ToInt32(replacedByTextBox.Text));
@@ -1725,8 +1760,35 @@ namespace MOBOT.BHL.AdminWeb
 
 				title.IsNew = false;
 
-				// Forces deletes to happen first
-				title.TitleCollections.Sort( SortOrder.Descending, "IsDeleted" );
+                //----------------------------------------
+                // Mark for deletion any existing institutions that have changed
+                bool externalContentHolderChanged = false;
+                bool externalContentHolderExists = false;
+                foreach (Institution institution in title.TitleInstitutions)
+                {
+                    if (institution.InstitutionRoleName == InstitutionRole.ExternalContentHolder)
+                    {
+                        externalContentHolderExists = true;
+                        if (institution.InstitutionCode != ddlExtContent.SelectedValue || institution.Url != RepositoryUrlTextBox.Text) {
+                            institution.IsDeleted = true; externalContentHolderChanged = true;
+                        }
+                    }
+                }
+
+                // Add new institutions
+                if ((externalContentHolderChanged || !externalContentHolderExists) && ddlExtContent.SelectedValue != string.Empty)
+                {
+                    Institution newExternalContentHolder = new Institution();
+                    newExternalContentHolder.InstitutionCode = ddlExtContent.SelectedValue;
+                    newExternalContentHolder.InstitutionRoleName = InstitutionRole.ExternalContentHolder;
+                    newExternalContentHolder.IsNew = true;
+                    newExternalContentHolder.Url = RepositoryUrlTextBox.Text;
+                    title.TitleInstitutions.Add(newExternalContentHolder);
+                }
+
+                //----------------------------------------
+                // Forces deletes to happen first
+                title.TitleCollections.Sort( SortOrder.Descending, "IsDeleted" );
                 title.TitleIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
 				title.TitleAuthors.Sort( SortOrder.Descending, "IsDeleted" );
                 title.TitleItems.Sort(SortOrder.Descending, "IsDeleted");
@@ -1734,7 +1796,8 @@ namespace MOBOT.BHL.AdminWeb
                 title.TitleAssociations.Sort(SortOrder.Descending, "IsDeleted");
                 title.TitleVariants.Sort(SortOrder.Descending, "IsDeleted");
 
-				BHLProvider bp = new BHLProvider();
+                //----------------------------------------
+                BHLProvider bp = new BHLProvider();
                 // Don't catch errors... allow global error handler to take over
 				bp.TitleSave( title, (int)userId );
 

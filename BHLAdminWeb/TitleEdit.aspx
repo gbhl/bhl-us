@@ -5,17 +5,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <script language="javascript">
     function overlay() {
-	    el = document.getElementById("overlayitem");
-	    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+        el = document.getElementById("overlayitem");
+        el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";
 	}
 
 	function overlayAuthorSearch() {
-	    el = document.getElementById("overlayauthor");
-	    el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+        el = document.getElementById("overlayauthor");
+        el.style.visibility = (el.style.visibility === "visible") ? "hidden" : "visible";
 	}
     
     function titleSearch(titleId, title) {
-        if (titleId == "" && title == "") {
+        if (titleId === "" && title === "") {
             alert("Please specify a Title ID or Title.");
             return;
         }
@@ -24,7 +24,7 @@
     }
 
     function authorSearch(authorId, authorName) {
-        if (authorId == "" && authorName == "") {
+        if (authorId === "" && authorName === "") {
             alert("Please specify an Author ID or Name.");
             return;
         }
@@ -33,7 +33,7 @@
 
     function itemSearch(titleId, marcBibId)
     {
-        if (titleId == "" && marcBibId == "") {
+        if (titleId === "" && marcBibId === "") {
             alert("Please specify a Title ID or MARC Bib ID.");
             return;
         }
@@ -51,7 +51,7 @@
         
         // Build the table
         for (var i = 0; i < titles.length; i++) {
-            var tbody = document.getElementById("srchTitleTable").getElementsByTagName("tbody")[0];
+            tbody = document.getElementById("srchTitleTable").getElementsByTagName("tbody")[0];
             var row = document.createElement("tr");
             row.setAttribute("align", "left");
             var td1 = document.createElement("td");
@@ -83,7 +83,7 @@
 
         // Build the table
         for (var i = 0; i < authors.length; i++) {
-            var tbody = document.getElementById("srchAuthorResultTable").getElementsByTagName("tbody")[0];
+            tbody = document.getElementById("srchAuthorResultTable").getElementsByTagName("tbody")[0];
             var row = document.createElement("tr");
             row.setAttribute("align", "left");
             var td1 = document.createElement("td");
@@ -115,7 +115,7 @@
         // Build the table
         for (var i = 0; i < items.length; i++)
         {
-            var tbody = document.getElementById("srchResultTable").getElementsByTagName("tbody")[0];
+            tbody = document.getElementById("srchResultTable").getElementsByTagName("tbody")[0];
             var row = document.createElement("tr");
             row.setAttribute("align", "left");
             var td1 = document.createElement("td");
@@ -148,8 +148,8 @@
         var request = createXMLHttpRequest();
         request.open("GET", url, true);
         request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                if (request.status == 200) {
+            if (request.readyState === 4) {
+                if (request.status === 200) {
                     var result = eval('(' + request.responseText + ')');
                     callback(result);
                 }
@@ -159,9 +159,9 @@
     }
 
     function createXMLHttpRequest() {
-        if (typeof XMLHttpRequest != "undefined") {
+        if (typeof XMLHttpRequest !== "undefined") {
             return new XMLHttpRequest();
-        } else if (typeof ActiveXObject != "undefined") {
+        } else if (typeof ActiveXObject !== "undefined") {
             return new ActiveXObject("Microsoft.XMLHTTP");
         } else {
             throw new Error("XMLHttpRequest not supported");
@@ -171,7 +171,7 @@
     function keyDownHandler(event, btn)
     {
         // process only the Enter key
-        if ((document.all ? event.keyCode : event.which) == 13)
+        if ((document.all ? event.keyCode : event.which) === 13)
         {
             // cancel the default submit
             event.preventDefault ? event.preventDefault() : event.returnValue = false;
@@ -189,7 +189,7 @@
 
         var visibility = "none";
         var border = "";
-        if (!publishedCB.checked && replacedByTB.value == "") {
+        if (!publishedCB.checked && replacedByTB.value === "") {
             visibility = "block";
             border = "2px solid #ed7600";
         }
@@ -204,8 +204,8 @@
         var replacedByTB = document.getElementById("replacedByTextBox");
         var replacedByOrig = document.getElementById("replacedByOrig");
 
-        if (!publishedCB.checked && replacedByTB.value == '' &&
-            (publishedOrig.value == 'True' || replacedByOrig.value != '') ) {
+        if (!publishedCB.checked && replacedByTB.value === '' &&
+            (publishedOrig.value === 'True' || replacedByOrig.value !== '') ) {
             if (confirm('You are removing TITLE METADATA from BHL\'s SEARCH INDEX.  Continue?')) { return true; } else { return false; }
         }
 
@@ -430,7 +430,22 @@
 			</tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Notes:
+					External Content Holder:
+				</td>
+				<td>
+					<asp:DropDownList ID="ddlExtContent" Width="300px" ClientIDMode="static" runat="server">
+					</asp:DropDownList>
+				</td>
+				<td style="white-space: nowrap" align="right" class="dataHeader">
+					External Repository URL:
+				</td>
+				<td>
+					<asp:TextBox ID="RepositoryUrlTextBox" runat="server" ClientIDMode="static" Width="300px"></asp:TextBox>
+				</td>
+			</tr>
+			<tr>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+					Notes (not shown in UI):
 				</td>
 				<td colspan="4" style="width: 100%">
 					<asp:TextBox ID="notesTextBox" runat="server" MaxLength="255" Width="100%"></asp:TextBox>
@@ -928,16 +943,23 @@
 	<div id="titleAssociationEditLayer" style="width:700px;height:515px;border:1px solid #000000;background-color:#FFFFFF;padding:0px;position:absolute;top:1035px;left:50px;z-index:1000;display:none">
 	    <iframe id="titleAssociationEditFrame" src="" style="width:100%;height:100%;"></iframe>
 	</div>
-	<script language="javascript">
-	    function addItemsToTitle() {
-	        var checkboxes; var x = 0;
+	<script type="text/javascript">
+        function addItemsToTitle() {
+            var checkboxes; var x = 0;
 
-	        checkboxes = document.getElementsByName('makePrimaryCheckbox');
-	        for (x = 0; x < checkboxes.length; x++) {
-	            if (checkboxes[x].checked) selectItem(checkboxes[x].value);
-	        }
+            checkboxes = document.getElementsByName('makePrimaryCheckbox');
+            for (x = 0; x < checkboxes.length; x++) {
+                if (checkboxes[x].checked) selectItem(checkboxes[x].value);
+            }
 
-	        overlay(); __doPostBack('', '');
-	    }
+            overlay(); __doPostBack('', '');
+        }
+
+        $("#ddlExtContent").change(function () {
+            var selected = this.value;
+            var textBox = $("#RepositoryUrlTextBox");
+            textBox.prop("disabled", selected === "");
+            if (selected === "") textBox.val("");
+        });
     </script>
 </asp:Content>

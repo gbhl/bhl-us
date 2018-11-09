@@ -1077,6 +1077,10 @@
     <None Include="dbo\Stored Procedures\PageUpdateAndLogTextChange.sql" />
     <None Include="dbo\Stored Procedures\PageTextLogInsertForItem.sql" />
     <None Include="dbo\Stored Procedures\PageTextLogSelectNonOCRForItem.sql" />
+    <None Include="dbo\Tables\TitleInstitution.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionSelectByTitleID.sql" />
+    <None Include="dbo\Stored Procedures\TitleInstitutionInsert.sql" />
+    <None Include="dbo\Stored Procedures\TitleSelectWithExternalContentProvider.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1398,5 +1402,9 @@
     <None Include="dbo\Stored Procedures\PageTextLogInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PageTextLogSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageTextLogUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleInstitutionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleInstitutionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleInstitutionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\TitleInstitutionUpdateAuto.sql" />
   </ItemGroup>
 </Project>

@@ -32,6 +32,7 @@ namespace MOBOT.BHL.Web2
         protected IList<Author> AdditionalAuthorsDetail { get; set; }
         protected IList<BibliographyItem> BibliographyItems { get; set; }
         protected IList<Collection> Collections { get; set; }
+        protected IList<Institution> Institutions { get; set; }
 
         public class BibliographyItem
         {
@@ -132,6 +133,7 @@ namespace MOBOT.BHL.Web2
             TitleAssociations = bhlProvider.TitleAssociationSelectByTitleId(titleId, true).ToList();
             TitleNotes = bhlProvider.TitleNoteSelectByTitleID(titleId).ToList();
             Collections = bhlProvider.CollectionSelectAllForTitle(titleId).ToList();
+            Institutions = bhlProvider.InstitutionSelectByTitleID(titleId).ToList();
             if (!string.IsNullOrEmpty(BhlTitle.LanguageCode)) LanguageName = bhlProvider.LanguageSelectAuto(BhlTitle.LanguageCode).LanguageName;
 
             BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(BhlTitle.BibliographicLevelID ?? 0);

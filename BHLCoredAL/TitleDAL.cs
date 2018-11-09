@@ -56,6 +56,8 @@ namespace MOBOT.BHL.DAL
                 title.TitleLanguages = new TitleLanguageDAL().TitleLanguageSelectByTitleID(connection, transaction, titleId);
 
                 title.TitleNotes = new TitleNoteDAL().TitleNoteSelectByTitleID(connection, transaction, titleId);
+
+                title.TitleInstitutions = new InstitutionDAL().InstitutionSelectByTitleID(connection, transaction, titleId);
 			}
 
 			return title;
@@ -518,7 +520,24 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 
-				CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
+                if (title.TitleInstitutions.Count > 0)
+                {
+                    TitleInstitutionDAL titleInstitutionDAL = new TitleInstitutionDAL();
+                    foreach (Institution institution in title.TitleInstitutions)
+                    {
+                        if (institution.IsDeleted)
+                        {
+                            titleInstitutionDAL.TitleInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
+                        }
+                        if (institution.IsNew)
+                        {
+                            titleInstitutionDAL.TitleInstitutionInsert(connection, transaction, updatedTitle.ReturnObject.TitleID,
+                                institution.InstitutionCode, institution.InstitutionRoleName, institution.Url, userId);
+                        }
+                    }
+                }
+
+                CustomSqlHelper.CommitTransaction( transaction, isTransactionCoordinator );
 			}
 			catch
 			{

@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
+﻿DROP PROCEDURE [audit].[AuditBasicDropAllTriggers]
+GO
+
+CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
 
 AS
 
@@ -36,6 +39,7 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'AspNetUsers'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionRole'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'SegmentInstitution'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'NoteType'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleNote'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'MaterialType'
@@ -70,4 +74,3 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'NameSegment'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'NameSource'
 
 END
-

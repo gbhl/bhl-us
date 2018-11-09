@@ -23,6 +23,7 @@ namespace MOBOT.BHL.DataObjects
         private CustomGenericList<TitleVariant> _titleVariants = new CustomGenericList<TitleVariant>();
         private CustomGenericList<TitleLanguage> _titleLanguages = new CustomGenericList<TitleLanguage>();
         private CustomGenericList<TitleNote> _titleNotes = new CustomGenericList<TitleNote>();
+        private CustomGenericList<Institution> _titleInstitutions = new CustomGenericList<Institution>();
 		private long _rowNum;
 		private string _institutionName;
         private string _doiName;
@@ -87,6 +88,13 @@ namespace MOBOT.BHL.DataObjects
             set { _titleNotes = value; }
         }
 
+        public CustomGenericList<Institution> TitleInstitutions
+        {
+            get { return _titleInstitutions; }
+            set { _titleInstitutions = value; }
+        }
+
+        // Title institution name is rolled up from the Items associated with the Title.
         public string InstitutionName
 		{
 			get { return this._institutionName; }

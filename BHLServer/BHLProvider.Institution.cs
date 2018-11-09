@@ -27,6 +27,11 @@ namespace MOBOT.BHL.Server
             return GetInstitutionDalInstance().InstitutionSelectByItemIDAndRole(null, null, itemID, role);
         }
 
+        public CustomGenericList<Institution> InstitutionSelectByTitleID(int titleID)
+        {
+            return GetInstitutionDalInstance().InstitutionSelectByTitleID(null, null, titleID);
+        }
+
         public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(bool onlyMemberLibraries, string institutionRoleName = null)
         {
             return ( GetInstitutionDalInstance().InstitutionSelectWithPublishedItems(null, null, onlyMemberLibraries, institutionRoleName) );

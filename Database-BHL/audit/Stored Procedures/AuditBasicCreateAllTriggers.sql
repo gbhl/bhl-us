@@ -48,6 +48,7 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AspNetUsers', 'Id', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionRole', 'InstitutionRoleID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'ItemInstitution', 'ItemInstitutionID', NULL, NULL, 'dbo', 'Item', 'ItemID', 'dbo',' Institution', 'InstitutionCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'SegmentInstitution', 'SegmentInstitutionID', NULL, NULL, 'dbo', 'Segment', 'SegmentID', 'dbo',' Institution', 'InstitutionCode'
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleInstitution', 'TitleInstitutionID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo',' Institution', 'InstitutionCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'NoteType', 'NoteTypeID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleNote', 'TitleNoteID', NULL, NULL, 'dbo', 'Title', 'TitleID'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'MaterialType', 'MaterialTypeID', NULL, NULL

@@ -72,6 +72,16 @@ namespace MOBOT.BHL.DataObjects
             set { _institutionRoleLabel = value; }
         }
 
+        private string _url = string.Empty;
+        /// <summary>
+        /// Typically, this is a repository URL associated with a Title-Institution relationship
+        /// </summary>
+        public string Url
+        {
+            get { return _url; }
+            set { _url = value; }
+        }
+
         #endregion Properties
 
         public override void SetValues(CustomDataRow row)
@@ -97,6 +107,7 @@ namespace MOBOT.BHL.DataObjects
                         }
                     case "ItemInstitutionID":
                     case "SegmentInstitutionID":
+                    case "TitleInstitutionID":
                         {
                             _entityInstitutionID = (int?)column.Value;
                             break;
@@ -109,6 +120,11 @@ namespace MOBOT.BHL.DataObjects
                     case "InstitutionRoleLabel":
                         {
                             _institutionRoleLabel = (string)column.Value;
+                            break;
+                        }
+                    case "Url":
+                        {
+                            _url = (string)column.Value;
                             break;
                         }
                 }

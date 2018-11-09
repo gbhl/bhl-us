@@ -751,13 +751,22 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptRecentlyClustered;
         
         /// <summary>
-        /// td1 control.
+        /// tdRptOrphan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell td1;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptOrphan;
+        
+        /// <summary>
+        /// tdDLTitlesWithExtContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdDLTitlesWithExtContent;
         
         /// <summary>
         /// tdImportCitations control.

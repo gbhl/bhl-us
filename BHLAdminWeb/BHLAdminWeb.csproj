@@ -269,6 +269,7 @@
     <Compile Include="ContentPanel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryController.cs" />
     <Compile Include="Controllers\MonitorController.cs" />
@@ -1209,6 +1210,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="styles\jqgridtheme\images\" />
     <Folder Include="Upload\ItemText\Files\" />
+    <Folder Include="Views\Downloads\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\SiteService\" />

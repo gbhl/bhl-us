@@ -19,7 +19,8 @@ BEGIN TRY
 	BEGIN TRAN
 
 	UPDATE	dbo.Page
-	SET		LastModifiedDate = @UpdateDate,
+	SET		LastPageNameLookupDate = NULL,
+			LastModifiedDate = @UpdateDate,
 			LastModifiedUserID = @UserID
 	WHERE	PageID = @PageID
 

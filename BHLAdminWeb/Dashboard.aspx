@@ -116,7 +116,7 @@
 				<table width="100%" cellspacing="0px">
 					<tr>
 						<td class="boxHeader" align="center">
-							Library Stats<div style="float:right"><a class="small" href="#" title="About Library Stats" onclick="window.open('LibraryStatsAbout.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');"><img src="images/help.png" height="16" width="16" /></a></div>
+							Library Stats<div style="float:right"><a class="small" href="#" title="About Library Stats" onclick="window.open('LibraryStatsAbout.html', 'About', 'resizeable=0,scrollbars=1,height=530,width=500,status=0,toolbar=0,menubar=0,location=0');"><img src="images/help.png" alt="Help" height="16" width="16" /></a></div>
 						</td>
 					</tr>
 					<tr>
@@ -185,7 +185,7 @@
 								<tr>
 									<td>
 										<span id="namesNameLabel" style="display:none">Names</span>
-									    <img id="imgNamesLoading" src="images/loading.gif" style="display:none" />
+									    <img id="imgNamesLoading" alt="Loading" src="images/loading.gif" style="display:none" />
 									</td>
 									<td align="right" class="liveData" runat="server" id="namesAllCell">
 									    <span id="namesAllSpan" style="display:none"></span>
@@ -201,7 +201,7 @@
 								<tr>
 									<td>
 										<span id="uniqueNameLabel" style="display:none">Unique Names</span>
-									    <img id="imgUniqueLoading" src="images/loading.gif" style="display:none" />
+									    <img id="imgUniqueLoading" alt="Loading" src="images/loading.gif" style="display:none" />
 									</td>
 									<td align="right" class="liveData" runat="server" id="uniqueAllCell">
 									    <span id="uniqueAllSpan" style="display:none"></span>
@@ -217,7 +217,7 @@
 								<tr>
 									<td>
 										<span id="verifiedNameLabel" style="display:none">Verified Names</span>
-									    <img id="imgVerifiedLoading" src="images/loading.gif" style="display:none" />
+									    <img id="imgVerifiedLoading" alt="Loading" src="images/loading.gif" style="display:none" />
 									</td>
 									<td align="right" class="liveData" runat="server" id="verifiedAllCell">
 									    <span id="verifiedAllSpan" style="display:none"></span>
@@ -233,7 +233,7 @@
 								<tr>
 									<td>
 										<span id="eolNameNameLabel" style="display:none">EOL Names</span>
-									    <img id="imgEOLNameLoading" src="images/loading.gif" style="display:none" />
+									    <img id="imgEOLNameLoading" alt="Loading" src="images/loading.gif" style="display:none" />
 									</td>
 									<td align="right" class="liveData" runat="server" id="eolNameAllCell">
 									    <span id="eolNameAllSpan" style="display:none"></span>
@@ -249,7 +249,7 @@
 								<tr>
 									<td>
 										<span id="eolPageNameLabel" style="display:none">EOL Pages</span>
-									    <img id="imgEOLPageLoading" src="images/loading.gif" style="display:none" />
+									    <img id="imgEOLPageLoading" alt="Loading" src="images/loading.gif" style="display:none" />
 									</td>
 									<td align="right" class="liveData" runat="server" id="eolPageAllCell">
 									    <span id="eolPageAllSpan" style="display:none"></span>
@@ -314,7 +314,7 @@
 					</tr>
 					<tr><td>&nbsp;</td></tr>
 					<tr>
-					    <td align=center colspan="2" runat="server" id="tdExpandedGrowthStats">
+					    <td align="center" colspan="2" runat="server" id="tdExpandedGrowthStats">
                             <a href="/GrowthStats.aspx">Expanded Growth Stats</a>
                         </td>
                     </tr>
@@ -329,17 +329,17 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-                            <asp:GridView ID="gvPDFGeneration" runat="server" AutoGenerateColumns=False GridLines=none Width=90% HorizontalAlign=center CellSpacing=3 HeaderStyle-Font-Underline=true>
+                            <asp:GridView ID="gvPDFGeneration" runat="server" AutoGenerateColumns="False" GridLines="none" Width="90%" HorizontalAlign="center" CellSpacing="3" HeaderStyle-Font-Underline="true">
                             <Columns>
-                            <asp:BoundField HeaderText="Status" HeaderStyle-HorizontalAlign=left DataField="PdfStatusName" />
-                            <asp:BoundField HeaderText="# Of PDFs" HeaderStyle-HorizontalAlign=right DataField="NumberofPdfs" ItemStyle-HorizontalAlign=right />
+                            <asp:BoundField HeaderText="Status" HeaderStyle-HorizontalAlign="left" DataField="PdfStatusName" />
+                            <asp:BoundField HeaderText="# Of PDFs" HeaderStyle-HorizontalAlign="right" DataField="NumberofPdfs" ItemStyle-HorizontalAlign="right" />
                             </Columns>
                             </asp:GridView>
 						</td>
 					</tr>
 					<tr><td>&nbsp;</td></tr>
 					<tr>
-					    <td align=center colspan="2" runat="server" id="tdExpandedPDFStats">
+					    <td align="center" colspan="2" runat="server" id="tdExpandedPDFStats">
                             <a href="/PdfStats.aspx">Expanded PDF Stats</a>
                         </td>
                     </tr>
@@ -356,10 +356,10 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-                            <asp:GridView ID="gvItemStatus" runat="server" AutoGenerateColumns=False GridLines=none Width=90% HorizontalAlign=center CellSpacing=3 HeaderStyle-Font-Underline=true>
+                            <asp:GridView ID="gvItemStatus" runat="server" AutoGenerateColumns="False" GridLines="none" Width="90%" HorizontalAlign="center" CellSpacing="3" HeaderStyle-Font-Underline="true">
                             <Columns>
-                            <asp:BoundField HeaderText="Item Status" HeaderStyle-HorizontalAlign=left DataField="Status" />
-                            <asp:BoundField HeaderText="# Of Items" HeaderStyle-HorizontalAlign=right DataField="NumberOfItems" ItemStyle-HorizontalAlign=right />
+                            <asp:BoundField HeaderText="Item Status" HeaderStyle-HorizontalAlign="left" DataField="Status" />
+                            <asp:BoundField HeaderText="# Of Items" HeaderStyle-HorizontalAlign="right" DataField="NumberOfItems" ItemStyle-HorizontalAlign="Right" />
                             </Columns>
                             </asp:GridView>
 						</td>
@@ -419,10 +419,10 @@
                     </tr>
 					<tr>
 						<td colspan="2">
-                            <asp:GridView ID="gvDOIStatus" runat="server" AutoGenerateColumns=False GridLines=none Width=90% HorizontalAlign=center CellSpacing=3 HeaderStyle-Font-Underline=true>
+                            <asp:GridView ID="gvDOIStatus" runat="server" AutoGenerateColumns="False" GridLines="none" Width="90%" HorizontalAlign="center" CellSpacing="3" HeaderStyle-Font-Underline="true">
                             <Columns>
-                            <asp:BoundField HeaderText="DOI Status" HeaderStyle-HorizontalAlign=left DataField="DOIStatusName" />
-                            <asp:BoundField HeaderText="# Of DOIs" HeaderStyle-HorizontalAlign=right DataField="NumberOfDOIs" ItemStyle-HorizontalAlign=right />
+                            <asp:BoundField HeaderText="DOI Status" HeaderStyle-HorizontalAlign="left" DataField="DOIStatusName" />
+                            <asp:BoundField HeaderText="# Of DOIs" HeaderStyle-HorizontalAlign="right" DataField="NumberOfDOIs" ItemStyle-HorizontalAlign="Right" />
                             </Columns>
                             </asp:GridView>
 						</td>
@@ -467,7 +467,7 @@
 				<table width="100%" cellspacing="0px" cellpadding="3px">
 					<tr>
 						<td class="boxHeader" align="center">
-							Reports
+							Reports / Downloads
 						</td>
 					</tr>
 					<tr>
@@ -511,8 +511,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" runat="server" id="td1">
+                        <td align="center" runat="server" id="tdRptOrphan">
                             <a href="/Report/Orphans">Orphaned Titles/Items/Segments</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" runat="server" id="tdDLTitlesWithExtContent">
+                            <a href="/Downloads/TitlesWithExternalContent">Titles with External Content (Moving Walls) [Download]</a>
                         </td>
                     </tr>
 				</table>
@@ -550,89 +555,89 @@
             </td>
         </tr>
 	</table>
-	<script>
-	    function showNames() {
-	        document.getElementById('imgNamesLoading').style.display = 'block';
-	        document.getElementById('namesShowLink').style.display = 'none';
-	        executeServiceCall("services/statsservice.ashx?op=SelectNames", updateNamesUI);
-	    }
+	<script type="text/javascript">
+        function showNames() {
+            document.getElementById('imgNamesLoading').style.display = 'block';
+            document.getElementById('namesShowLink').style.display = 'none';
+            executeServiceCall("services/statsservice.ashx?op=SelectNames", updateNamesUI);
+        }
 
-	    function showUniqueNames() {
-	        document.getElementById('imgUniqueLoading').style.display = 'block';
-	        document.getElementById('uniqueNamesShowLink').style.display = 'none';
-	        executeServiceCall("services/statsservice.ashx?op=SelectUniqueNames", updateUniqueNamesUI);
-	    }
+        function showUniqueNames() {
+            document.getElementById('imgUniqueLoading').style.display = 'block';
+            document.getElementById('uniqueNamesShowLink').style.display = 'none';
+            executeServiceCall("services/statsservice.ashx?op=SelectUniqueNames", updateUniqueNamesUI);
+        }
 
-	    function showVerifiedNames() {
-	        document.getElementById('imgVerifiedLoading').style.display = 'block';
-	        document.getElementById('verifiedNamesShowLink').style.display = 'none';
-	        executeServiceCall("services/statsservice.ashx?op=SelectVerifiedNames", updateVerifiedNamesUI);
-	    }
+        function showVerifiedNames() {
+            document.getElementById('imgVerifiedLoading').style.display = 'block';
+            document.getElementById('verifiedNamesShowLink').style.display = 'none';
+            executeServiceCall("services/statsservice.ashx?op=SelectVerifiedNames", updateVerifiedNamesUI);
+        }
 
-	    function showEOLNames() {
-	        document.getElementById('imgEOLNameLoading').style.display = 'block';
-	        document.getElementById('eolNamesShowLink').style.display = 'none';
-	        executeServiceCall("services/statsservice.ashx?op=SelectEOLNames", updateEOLNamesUI);
-	    }
+        function showEOLNames() {
+            document.getElementById('imgEOLNameLoading').style.display = 'block';
+            document.getElementById('eolNamesShowLink').style.display = 'none';
+            executeServiceCall("services/statsservice.ashx?op=SelectEOLNames", updateEOLNamesUI);
+        }
 
-	    function showEOLPages() {
-	        document.getElementById('imgEOLPageLoading').style.display = 'block';
-	        document.getElementById('eolPagesShowLink').style.display = 'none';
-	        executeServiceCall("services/statsservice.ashx?op=SelectEOLPages", updateEOLPagesUI);
-	    }
+        function showEOLPages() {
+            document.getElementById('imgEOLPageLoading').style.display = 'block';
+            document.getElementById('eolPagesShowLink').style.display = 'none';
+            executeServiceCall("services/statsservice.ashx?op=SelectEOLPages", updateEOLPagesUI);
+        }
 
-	    function updateNamesUI(results) {
-	        updateUI(results.NameTotal, results.NameCount, 'imgNamesLoading', 'namesAllSpan', 'namesActiveSpan', 'namesNameLabel');
-	    }
+        function updateNamesUI(results) {
+            updateUI(results.NameTotal, results.NameCount, 'imgNamesLoading', 'namesAllSpan', 'namesActiveSpan', 'namesNameLabel');
+        }
 
-	    function updateUniqueNamesUI(results) {
-	        updateUI(results.UniqueNameTotal, results.UniqueNameCount, 'imgUniqueLoading', 'uniqueAllSpan', 'uniqueActiveSpan', 'uniqueNameLabel');
-	    }
+        function updateUniqueNamesUI(results) {
+            updateUI(results.UniqueNameTotal, results.UniqueNameCount, 'imgUniqueLoading', 'uniqueAllSpan', 'uniqueActiveSpan', 'uniqueNameLabel');
+        }
 
-	    function updateVerifiedNamesUI(results) {
-	        updateUI(results.VerifiedNameTotal, results.VerifiedNameCount, 'imgVerifiedLoading', 'verifiedAllSpan', 'verifiedActiveSpan', 'verifiedNameLabel');
-	    }
+        function updateVerifiedNamesUI(results) {
+            updateUI(results.VerifiedNameTotal, results.VerifiedNameCount, 'imgVerifiedLoading', 'verifiedAllSpan', 'verifiedActiveSpan', 'verifiedNameLabel');
+        }
 
-	    function updateEOLNamesUI(results) {
-	        updateUI(results.EolNameTotal, results.EolNameCount, 'imgEOLNameLoading', 'eolNameAllSpan', 'eolNameActiveSpan', 'eolNameNameLabel');
-	    }
+        function updateEOLNamesUI(results) {
+            updateUI(results.EolNameTotal, results.EolNameCount, 'imgEOLNameLoading', 'eolNameAllSpan', 'eolNameActiveSpan', 'eolNameNameLabel');
+        }
 
-	    function updateEOLPagesUI(results) {
-	        updateUI(results.EolPageTotal, results.EolPageCount, 'imgEOLPageLoading', 'eolPageAllSpan', 'eolPageActiveSpan', 'eolPageNameLabel');
-	    }
+        function updateEOLPagesUI(results) {
+            updateUI(results.EolPageTotal, results.EolPageCount, 'imgEOLPageLoading', 'eolPageAllSpan', 'eolPageActiveSpan', 'eolPageNameLabel');
+        }
 
-	    function updateUI(total, count, img, allSpan, activeSpan, nameLabel) {
-	        document.getElementById(allSpan).innerHTML = total;
-	        document.getElementById(activeSpan).innerHTML = count;
-	        document.getElementById(img).style.display = 'none';
-	        document.getElementById(nameLabel).style.display = 'block';
-	        document.getElementById(allSpan).style.display = 'block';
-	        document.getElementById(activeSpan).style.display = 'block';
-	    }
+        function updateUI(total, count, img, allSpan, activeSpan, nameLabel) {
+            document.getElementById(allSpan).innerHTML = total;
+            document.getElementById(activeSpan).innerHTML = count;
+            document.getElementById(img).style.display = 'none';
+            document.getElementById(nameLabel).style.display = 'block';
+            document.getElementById(allSpan).style.display = 'block';
+            document.getElementById(activeSpan).style.display = 'block';
+        }
 
-	    function executeServiceCall(url, callback) {
-	        var request = createXMLHttpRequest();
-	        request.open("GET", url, true);
-	        request.onreadystatechange = function () {
-	            if (request.readyState == 4) {
-	                if (request.status == 200) {
-	                    var result = eval('(' + request.responseText + ')');
-	                    callback(result);
-	                }
-	            }
-	        }
-	        request.send(null);
-	    }
+        function executeServiceCall(url, callback) {
+            var request = createXMLHttpRequest();
+            request.open("GET", url, true);
+            request.onreadystatechange = function () {
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        var result = eval('(' + request.responseText + ')');
+                        callback(result);
+                    }
+                }
+            };
+            request.send(null);
+        }
 
-	    function createXMLHttpRequest() {
-	        if (typeof XMLHttpRequest != "undefined") {
-	            return new XMLHttpRequest();
-	        } else if (typeof ActiveXObject != "undefined") {
-	            return new ActiveXObject("Microsoft.XMLHTTP");
-	        } else {
-	            throw new Error("XMLHttpRequest not supported");
-	        }
-	    }
+        function createXMLHttpRequest() {
+            if (typeof XMLHttpRequest !== "undefined") {
+                return new XMLHttpRequest();
+            } else if (typeof ActiveXObject !== "undefined") {
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            } else {
+                throw new Error("XMLHttpRequest not supported");
+            }
+        }
 
 	</script>
 	</cc:ContentPanel>

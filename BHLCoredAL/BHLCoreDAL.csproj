@@ -170,6 +170,7 @@
     <Compile Include="Generated\TextImportBatchStatusDAL.Auto.cs" />
     <Compile Include="Generated\TitleAuthorDAL.Auto.cs" />
     <Compile Include="Generated\TitleCollectionDAL.Auto.cs" />
+    <Compile Include="Generated\TitleInstitutionDAL.Auto.cs" />
     <Compile Include="Generated\TitleKeywordDAL.Auto.cs" />
     <Compile Include="Generated\TitleLanguageDAL.Auto.cs" />
     <Compile Include="Generated\TitleNoteDAL.Auto.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="TitleAssociation_TitleIdentifierDAL.cs" />
     <Compile Include="TitleAuthorDAL.cs" />
     <Compile Include="TitleCollectionDAL.cs" />
+    <Compile Include="TitleInstitutionDAL.cs" />
     <Compile Include="TitleItemDAL.cs" />
     <Compile Include="TitleKeywordDAL.cs" />
     <Compile Include="TitleLanguageDAL.cs" />

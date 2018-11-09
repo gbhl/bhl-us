@@ -50,6 +50,25 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
+        public CustomGenericList<Institution> InstitutionSelectByTitleID(
+                SqlConnection sqlConnection,
+                SqlTransaction sqlTransaction,
+                int titleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectByTitleID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("TitleID", SqlDbType.Int, null, false, titleID)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,

@@ -166,6 +166,7 @@
     <Compile Include="Concrete\TitleAuthor.cs" />
     <Compile Include="Concrete\TitleBibTeX.cs" />
     <Compile Include="Concrete\TitleCollection.cs" />
+    <Compile Include="Concrete\TitleInstitution.cs" />
     <Compile Include="Concrete\TitleItem.cs" />
     <Compile Include="Concrete\TitleKeyword.cs" />
     <Compile Include="Concrete\TitleLanguage.cs" />
@@ -279,6 +280,7 @@
     <Compile Include="Generated\__TitleAssociation_TitleIdentifier.cs" />
     <Compile Include="Generated\__TitleAuthor.cs" />
     <Compile Include="Generated\__TitleCollection.cs" />
+    <Compile Include="Generated\__TitleInstitution.cs" />
     <Compile Include="Generated\__TitleItem.cs" />
     <Compile Include="Generated\__TitleKeyword.cs" />
     <Compile Include="Generated\__TitleLanguage.cs" />
