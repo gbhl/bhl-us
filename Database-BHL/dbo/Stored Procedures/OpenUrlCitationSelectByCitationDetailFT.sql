@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByCitationDetailFT]
+﻿CREATE PROCEDURE [dbo].[OpenUrlCitationSelectByCitationDetailFT]
 
 @TitleID int = 0,
 @ItemID int = 0,
@@ -264,7 +263,7 @@ BEGIN
 		IF @ItemCount > 0
 		BEGIN
 			INSERT INTO #pages
-			SELECT	p.PageID, it.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+			SELECT	p.PageID, it.ItemID, NULLIF(COALESCE(p.Issue, i.StartIssue), ''), NULLIF(i.EndIssue, ''), 
 					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 			FROM	#items it 
 					INNER JOIN Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
@@ -277,7 +276,7 @@ BEGIN
 		BEGIN
 			---- If we had a volume to search for and didn't find any items, then don't look for pages
 			INSERT INTO #pages
-			SELECT	p.PageID, i.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+			SELECT	p.PageID, i.ItemID, NULLIF(COALESCE(p.Issue, i.StartIssue), ''), NULLIF(i.EndIssue, ''), 
 					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 			FROM	#tmpOpenUrlCitation ou
 					INNER JOIN TitleItem ti WITH (NOLOCK) ON ou.TitleID = ti.TitleID
@@ -296,7 +295,7 @@ BEGIN
 		IF @ItemCount > 0
 		BEGIN
 			INSERT INTO #pages
-			SELECT	p.PageID, it.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+			SELECT	p.PageID, it.ItemID, NULLIF(COALESCE(p.Issue, i.StartIssue), ''), NULLIF(i.EndIssue, ''), 
 					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 			FROM	#items it 
 					INNER JOIN Item i WITH (NOLOCK) ON it.ItemID = i.ItemID
@@ -310,7 +309,7 @@ BEGIN
 		BEGIN
 			---- If we had a volume to search for and didn't find any items, then don't look for pages
 			INSERT INTO #pages
-			SELECT	p.PageID, i.ItemID, COALESCE(p.Issue, i.StartIssue), i.EndIssue, 
+			SELECT	p.PageID, i.ItemID, NULLIF(COALESCE(p.Issue, i.StartIssue), ''), NULLIF(i.EndIssue, ''), 
 					p.Year, p.Volume, ISNULL(ip.PagePrefix, ''), ISNULL(ip.PageNumber, '')
 			FROM	#tmpOpenUrlCitation ou 
 					INNER JOIN TitleItem ti WITH (NOLOCK) ON ou.TitleID = ti.TitleID
@@ -325,7 +324,13 @@ BEGIN
 	END
 
 	-- If an issue was specified, drop any rows from our #pages table that don't match
-	IF (@Issue <> '') DELETE FROM #pages WHERE @Issue NOT BETWEEN Issue AND EndIssue
+	IF (@Issue <> '') 
+	BEGIN
+		DELETE FROM #pages 
+		WHERE	(Issue IS NOT NULL AND EndIssue IS NOT NULL AND @Issue NOT BETWEEN Issue and EndIssue)
+		OR		(Issue IS NOT NULL AND EndIssue IS NULL AND @Issue <> Issue)
+		OR		(Issue IS NULL AND EndIssue IS NOT NULL AND @Issue <> EndIssue)
+	END
 
 	-- Populate the final result set
 	IF (SELECT COUNT(*) FROM #pages) > 0
