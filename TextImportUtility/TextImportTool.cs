@@ -129,7 +129,7 @@ namespace BHL.TextImportUtility
 
                 var dvRecord = new
                 {
-                    taskID = default(int),
+                    taskID = string.Empty,
                     taskURL = string.Empty,
                     validationStatus = string.Empty,
                     transcriberID = string.Empty,
@@ -138,7 +138,7 @@ namespace BHL.TextImportUtility
                     exportComment = string.Empty,
                     dateTranscribed = string.Empty,
                     dateValidated = string.Empty,
-                    individualCount = default(int),
+                    individualCount = string.Empty,
                     institutionCode = string.Empty,
                     occurrenceRemarks = string.Empty,
                     sequenceNumber = default(int),  // 1-based index
