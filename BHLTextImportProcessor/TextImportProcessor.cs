@@ -121,7 +121,7 @@ namespace BHL.TextImportProcessor
 
                                         // Update the page so that it will be indexed for search, and write log entry 
                                         // for the page to track updates to the page text.
-                                        service.PageUpdateAndLogTextChange(page.PageID, "Text Import", batch.TextImportBatchID, batchFile.LastModifiedUserID);
+                                        service.PageUpdateAndLogTextChange(page.PageID, "Text Import", batchFile.TextImportBatchFileID, batchFile.LastModifiedUserID);
 
                                         // Count the pages processed
                                         this.processedPages.Add(page.PageID.ToString());
