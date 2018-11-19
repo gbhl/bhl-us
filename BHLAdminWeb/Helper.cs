@@ -118,7 +118,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("reportnonmembermonographscsv")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportrecentlyclusteredsegments")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("report/orphans")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
-            else if (path.Contains("downloads/TitlesWithExternalContent")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
+            else if (path.Contains("downloads/ExternalContent")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
 
             // URLs available to "Advanced User" users (BHL Admin Site admins)
             else if (path.Contains("alertedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);

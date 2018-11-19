@@ -1080,7 +1080,7 @@
     <None Include="dbo\Tables\TitleInstitution.sql" />
     <None Include="dbo\Stored Procedures\InstitutionSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleInstitutionInsert.sql" />
-    <None Include="dbo\Stored Procedures\TitleSelectWithExternalContentProvider.sql" />
+    <None Include="dbo\Stored Procedures\LinkSelectToExternalContent.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

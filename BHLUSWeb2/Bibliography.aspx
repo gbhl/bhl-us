@@ -59,16 +59,22 @@
                     </p>
                     <% } %>
                 <% } %>
-                <% if (Institutions.Count > 0) {
-                    foreach (Institution institution in Institutions) {
+                <%if (Institutions.Count > 0) {%>
+                    <%foreach (Institution institution in Institutions) {
                         if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <span style="font-weight:bold">
+                            <h3>More Content</h3>
+                            <%break;
+                        }
+                    }%>
+                    <%foreach (Institution institution in Institutions) {
+                        if (institution.InstitutionRoleName == "External Content Holder") {%>
+                            <p><i>Available from:</i>
                             <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
-                                More content is available from <%:institution.InstitutionName%>.
+                                <%:institution.InstitutionName%>
                             <%} else {%>
-                                More content is available from <a href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>.
+                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>
                             <%}%>
-                            </span>
+                            </p>
                         <%}
                     }
                 } %>
@@ -197,16 +203,22 @@
                     </p>
                     <% } %>
                 <% } %>
-                <% if (Institutions.Count > 0) {
-                    foreach (Institution institution in Institutions) {
+                <%if (Institutions.Count > 0) {%>
+                    <%foreach (Institution institution in Institutions) {
                         if (institution.InstitutionRoleName == "External Content Holder") {%>
-                            <span style="font-weight:bold">
+                            <h3>More Content</h3>
+                            <%break;
+                        }
+                    }%>
+                    <%foreach (Institution institution in Institutions) {
+                        if (institution.InstitutionRoleName == "External Content Holder") {%>
+                            <p><i>Available from:</i>
                             <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
-                                More content is available from <%:institution.InstitutionName%>.
+                                <%:institution.InstitutionName%>
                             <%} else {%>
-                                More content is available from <a href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>.
+                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>
                             <%}%>
-                            </span>
+                            </p>
                         <%}
                     }
                 } %>

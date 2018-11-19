@@ -516,8 +516,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align="center" runat="server" id="tdDLTitlesWithExtContent">
-                            <a href="/Downloads/TitlesWithExternalContent">Titles with External Content (Moving Walls) [Download]</a>
+                        <td align="center" runat="server" id="tdDLExtContent">
+                            <a href="/Downloads/ExternalContent">Links to External Content [Download]</a>
                         </td>
                     </tr>
 				</table>

@@ -92,6 +92,7 @@
     <Compile Include="CollectionDAL.cs" />
     <Compile Include="ConfigurationDAL.cs" />
     <Compile Include="DOIDAL.cs" />
+    <Compile Include="DownloadDAL.cs" />
     <Compile Include="Generated\AnnotatedItemDAL.Auto.cs" />
     <Compile Include="Generated\AnnotatedPageCharacteristicDAL.Auto.cs" />
     <Compile Include="Generated\AnnotatedPageDAL.Auto.cs" />

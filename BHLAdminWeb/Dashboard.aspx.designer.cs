@@ -760,13 +760,13 @@ namespace MOBOT.BHL.AdminWeb {
         protected global::System.Web.UI.HtmlControls.HtmlTableCell tdRptOrphan;
         
         /// <summary>
-        /// tdDLTitlesWithExtContent control.
+        /// tdDLExtContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdDLTitlesWithExtContent;
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell tdDLExtContent;
         
         /// <summary>
         /// tdImportCitations control.

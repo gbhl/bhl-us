@@ -814,6 +814,11 @@ namespace MOBOT.BHL.Server
             }
         }
 
+        public CustomGenericList<Tuple<string, string, string>> LinkSelectToExternalContent()
+        {
+            return new DownloadDAL().LinkSelectToExternalContent(null, null);
+        }
+
         [Serializable]
         public class ViewerPage
         {

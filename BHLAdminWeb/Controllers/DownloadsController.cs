@@ -13,25 +13,25 @@ namespace MOBOT.BHL.AdminWeb.Controllers
     public class DownloadsController : Controller
     {
         // GET: Downloads
-        public ActionResult TitlesWithExternalContent()
+        public ActionResult ExternalContent()
         {
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<TitleInstitution> titleInstitutions = provider.TitleSelectWithExternalContentProvider();
+            CustomGenericList<Tuple<string, string, string>> links = provider.LinkSelectToExternalContent();
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("\"Title ID\",\"Title\",\"External Content Provider\",\"External Repository URL\"");
-            foreach (TitleInstitution ti in titleInstitutions)
+            sb.AppendLine("\"Entity\",\"ID\",\"Title/Name\",\"External URL\"");
+            foreach (Tuple<string, string, string> link in links)
             {
-                sb.AppendLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\"", 
-                    ti.TitleID.ToString(),
-                    ti.FullTitle.Replace("\"", ""),
-                    ti.InstitutionName.Replace("\"", ""),
-                    ti.Url.Replace("\"", "")));
+                sb.AppendLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\"",
+                    link.Item1,
+                    link.Item2.Split('|')[0],
+                    link.Item2.Split('|')[1],
+                    link.Item3));
             }
 
             byte[] csvData = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
             string date = DateTime.Now.ToString("yyyyMMddHHmmss");
-            return File(csvData, "text/csv", string.Format("TitlesWithExternalContent{0}.csv", date));
+            return File(csvData, "text/csv", string.Format("LinksToExternalContent{0}.csv", date));
         }
     }
 }
