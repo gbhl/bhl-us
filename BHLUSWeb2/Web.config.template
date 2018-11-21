@@ -26,6 +26,28 @@
 
     <!-- Feature toggle for ElasticSearch implementation -->
     <add key="UseElasticSearch" value="false"/>
+    <add key="DebugSearch" value="true" />
+    <add key="ElasticSearchServerAddress" value="ELASTICSEARCH_URL" />
+    <!-- Index names-->
+    <add key="ESDefaultIndex" value="_all" />
+    <add key="ESAllIndex" value="items,authors,keywords,names" />
+    <add key="ESCatalogIndex" value="catalog" />
+    <add key="ESItemsIndex" value="items" />
+    <add key="ESPagesIndex" value="pages" />
+    <add key="ESAuthorsIndex" value="authors" />
+    <add key="ESKeywordsIndex" value="keywords" />
+    <add key="ESNamesIndex" value="names" />
+    <!-- Available Search providers for ElasticSearch implementation.
+        Enter each search provider assembly name, IN ORDER OF PREFERENCE, separated by a |.
+        For example:
+    
+        BHL.Search.Elastic|BHL.Search.SQLServer|BHL.Search.Offline
+        
+        In this example, BHL.Search.Elastic is the preferred server.  If it is unavailable, 
+        BHL.Search.SQLServer will be used.  If that is unavailable, BHL.Search.Offline
+        will be used.  If none are available, an exception will be thrown.
+    -->
+    <add key="SearchProviders" value="BHL.Search.Elastic|BHL.Search.SQL|BHL.Search.Offline" />
 
     <!-- ###################################################################### -->
 

@@ -11,11 +11,27 @@ namespace BHL.SearchIndexer
         private string _dbConnectionstring { get; set; }
         private string _ocrLocation { get; set; }
 
-        public IndexMessageProcessor(string searchConnectionString, string dbConnectionString, string ocrLocation)
+        private string _catalogIndex { get; set; }
+        private string _itemsIndex { get; set; }
+        private string _pagesIndex { get; set; }
+        private string _authorsIndex { get; set; }
+        private string _keywordsIndex { get; set; }
+        private string _namesIndex { get; set; }
+
+        public IndexMessageProcessor(string searchConnectionString, string dbConnectionString, string ocrLocation,
+            string catalogIndex, string itemsIndex, string pagesIndex, string authorsIndex, string keywordsIndex,
+            string namesIndex)
         {
             _searchConnectionString = searchConnectionString;
             _dbConnectionstring = dbConnectionString;
             _ocrLocation = ocrLocation;
+
+            _catalogIndex = catalogIndex;
+            _itemsIndex = itemsIndex;
+            _pagesIndex = pagesIndex;
+            _authorsIndex = authorsIndex;
+            _keywordsIndex = keywordsIndex;
+            _namesIndex = namesIndex;
         }
 
         public bool ProcessMessage(string message)
@@ -197,9 +213,9 @@ namespace BHL.SearchIndexer
                 }
 
                 // Update the search indexes
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.CATALOG).IndexMany(catalogItems);
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).IndexMany(items);
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).IndexMany(pages);
+                new ElasticSearch(_searchConnectionString, _catalogIndex).IndexMany(catalogItems);
+                new ElasticSearch(_searchConnectionString, _itemsIndex).IndexMany(items);
+                new ElasticSearch(_searchConnectionString, _pagesIndex).IndexMany(pages);
             }
         }
 
@@ -219,14 +235,14 @@ namespace BHL.SearchIndexer
 
             // Delete from search index
             Item deleteItem = new Item { id = string.Format("i-{0}-{1}", titleId, itemId) };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).Delete(deleteItem);
+            new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(deleteItem);
 
             // Get count of remaining items for title
             if (dataAccess.ItemCountForTitle(Convert.ToInt32(titleId)) == 0)
             {
                 // No remaining active items for this title, so remove it from the catalog index
                 CatalogItem catalogItem = new CatalogItem { id = string.Format("t-{0}", titleId) };
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.CATALOG).Delete(catalogItem);
+                new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
             }
             else
             {
@@ -237,7 +253,7 @@ namespace BHL.SearchIndexer
                     if (item.titleId == Convert.ToInt32(titleId))
                     {
                         CatalogItem catalogItem = dataAccess.GetCatalogItemDocument(item);
-                        new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.CATALOG).Index(catalogItem);
+                        new ElasticSearch(_searchConnectionString, _catalogIndex).Index(catalogItem);
                         break;
                     }
                 }
@@ -296,9 +312,9 @@ namespace BHL.SearchIndexer
                 }
 
                 // Update the search indexes
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.CATALOG).IndexMany(catalogItems);
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).IndexMany(segments);
-                new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).IndexMany(pages);
+                new ElasticSearch(_searchConnectionString, _catalogIndex).IndexMany(catalogItems);
+                new ElasticSearch(_searchConnectionString, _itemsIndex).IndexMany(segments);
+                new ElasticSearch(_searchConnectionString, _pagesIndex).IndexMany(pages);
             }
         }
 
@@ -314,8 +330,8 @@ namespace BHL.SearchIndexer
             // Delete from search indexes
             CatalogItem catalogItem = new CatalogItem { id = string.Format("s-{0}", id) };
             Item item = new Item { id = string.Format("s-{0}", id) };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.CATALOG).Delete(catalogItem);
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.ITEMS).Delete(item);
+            new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
+            new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(item);
         }
 
         /// <summary>
@@ -334,7 +350,7 @@ namespace BHL.SearchIndexer
             }
 
             // Update the search indexes
-            if (authors.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.AUTHORS).IndexMany(authors);
+            if (authors.Count > 0) new ElasticSearch(_searchConnectionString, _authorsIndex).IndexMany(authors);
         }
 
         /// <summary>
@@ -348,7 +364,7 @@ namespace BHL.SearchIndexer
 
             // Delete from search index
             Author author = new Author { id = Convert.ToInt32(id) };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.AUTHORS).Delete(author);
+            new ElasticSearch(_searchConnectionString, _authorsIndex).Delete(author);
         }
 
         /// <summary>
@@ -364,7 +380,7 @@ namespace BHL.SearchIndexer
             foreach (Keyword keyword in keywords) dataAccess.UpsertKeyword(keyword.id, keyword.keyword);
 
             // Update the search indexes
-            if (keywords.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.KEYWORDS).IndexMany(keywords);
+            if (keywords.Count > 0) new ElasticSearch(_searchConnectionString, _keywordsIndex).IndexMany(keywords);
         }
 
         /// <summary>
@@ -378,7 +394,7 @@ namespace BHL.SearchIndexer
 
             // Delete from search index
             Keyword keyword = new Keyword { id = Convert.ToInt32(id) };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.KEYWORDS).Delete(keyword);
+            new ElasticSearch(_searchConnectionString, _keywordsIndex).Delete(keyword);
         }
 
         /// <summary>
@@ -391,7 +407,7 @@ namespace BHL.SearchIndexer
                 .GetNameDocumentsFromDatabase(Convert.ToInt32(id), Convert.ToInt32(id));
 
             // Update the search indexes
-            if (names.Count > 0) new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.NAMES).IndexMany(names);
+            if (names.Count > 0) new ElasticSearch(_searchConnectionString, _namesIndex).IndexMany(names);
         }
 
         /// <summary>
@@ -402,7 +418,7 @@ namespace BHL.SearchIndexer
         {
             // Delete from search index
             Name name = new Name { id = Convert.ToInt32(id) };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.NAMES).Delete(name);
+            new ElasticSearch(_searchConnectionString, _namesIndex).Delete(name);
         }
 
         /// <summary>
@@ -413,7 +429,7 @@ namespace BHL.SearchIndexer
         {
             // Delete from searchindex
             Page page = new Page { id = id };
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).Delete(page);
+            new ElasticSearch(_searchConnectionString, _pagesIndex).Delete(page);
         }
 
         /// <summary>
@@ -423,7 +439,7 @@ namespace BHL.SearchIndexer
         private void DeletePagesForItem(string id)
         {
             // Delete from search index
-            new ElasticSearch(_searchConnectionString, ElasticSearch.ESIndex.PAGES).DeleteAll(id);
+            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAll(id);
         }
     }
 }

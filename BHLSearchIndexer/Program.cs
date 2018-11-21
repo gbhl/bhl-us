@@ -123,7 +123,8 @@ namespace BHL.SearchIndexer
                             queueIO.PrefetchCount = _mqPrefetchCount;
                             queueIO.GetMessage(_mqQueueName, _mqErrorExchangeName, _mqErrorQueueName,
                                 new IndexMessageProcessor(_esConnectionString, _dbConnectionString, 
-                                    _ocrLocation));
+                                    _ocrLocation, ESIndex.CATALOG, ESIndex.ITEMS, ESIndex.PAGES,
+                                    ESIndex.AUTHORS, ESIndex.KEYWORDS, ESIndex.NAMES));
                                     
                             // Register event handlers for SIGTERM and SIGINT (termination signals)
                             AssemblyLoadContext.Default.Unloading += SigTermEventHandler;
@@ -228,28 +229,28 @@ namespace BHL.SearchIndexer
                     if (_debug)
                     {
                         // Write the documents to JSON files
-                        ExportDocuments(ElasticSearch.ESIndex.CATALOG, catalogItemDocs, "catalog", itemId);
-                        ExportDocuments(ElasticSearch.ESIndex.ITEMS, itemDocs, "item", itemId);
-                        ExportDocuments(ElasticSearch.ESIndex.PAGES, pageDocs, "itempages", itemId);
-                        if (_indexSegments) ExportDocuments(ElasticSearch.ESIndex.ITEMS, segmentDocs, "segments", itemId);
+                        ExportDocuments(ESIndex.CATALOG, catalogItemDocs, "catalog", itemId);
+                        ExportDocuments(ESIndex.ITEMS, itemDocs, "item", itemId);
+                        ExportDocuments(ESIndex.PAGES, pageDocs, "itempages", itemId);
+                        if (_indexSegments) ExportDocuments(ESIndex.ITEMS, segmentDocs, "segments", itemId);
                     }
 
                     if (_doIndex)
                     {
-                        ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                        ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ESIndex.CATALOG);
                         esCatalog.IndexMany(catalogItemDocs);
 
                         if (_metadataOnly)
                         {
-                            ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                            ElasticSearch esItems = new ElasticSearch(_esConnectionString, ESIndex.ITEMS);
                             foreach(Item itemDoc in itemDocs) esItems.Update(itemDoc);
                         }
                         else
                         {
                             // Index the documents
-                            ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                            ElasticSearch esItems = new ElasticSearch(_esConnectionString, ESIndex.ITEMS);
                             esItems.IndexMany(itemDocs);
-                            ElasticSearch esPages = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.PAGES);
+                            ElasticSearch esPages = new ElasticSearch(_esConnectionString, ESIndex.PAGES);
                             esPages.IndexMany(pageDocs);
                             if (_indexSegments)
                             {
@@ -318,27 +319,27 @@ namespace BHL.SearchIndexer
                         if (_debug)
                         {
                             // Write the documents to JSON files
-                            ExportDocuments(ElasticSearch.ESIndex.CATALOG, catalogItemDoc, "catalogitem", segmentId);
-                            ExportDocuments(ElasticSearch.ESIndex.ITEMS, segmentDoc, "segment", segmentId);
-                            ExportDocuments(ElasticSearch.ESIndex.PAGES, pageDocs, "segmentpages", segmentId);
+                            ExportDocuments(ESIndex.CATALOG, catalogItemDoc, "catalogitem", segmentId);
+                            ExportDocuments(ESIndex.ITEMS, segmentDoc, "segment", segmentId);
+                            ExportDocuments(ESIndex.PAGES, pageDocs, "segmentpages", segmentId);
                         }
 
                         if (_doIndex)
                         {
-                            ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                            ElasticSearch esCatalog = new ElasticSearch(_esConnectionString, ESIndex.CATALOG);
                             esCatalog.Index(catalogItemDoc);
 
                             if (_metadataOnly)
                             {
-                                ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                                ElasticSearch esItems = new ElasticSearch(_esConnectionString, ESIndex.ITEMS);
                                 esItems.Update(segmentDoc);
                             }
                             else
                             {
                                 // Index the documents
-                                ElasticSearch esItems = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                                ElasticSearch esItems = new ElasticSearch(_esConnectionString, ESIndex.ITEMS);
                                 esItems.Index(segmentDoc);
-                                ElasticSearch esPages = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.PAGES);
+                                ElasticSearch esPages = new ElasticSearch(_esConnectionString, ESIndex.PAGES);
                                 esPages.IndexMany(pageDocs);
                             }
 
@@ -468,12 +469,12 @@ namespace BHL.SearchIndexer
                         if (_debug)
                         {
                             // Write the documents to JSON files
-                            ExportDocuments(ElasticSearch.ESIndex.AUTHORS, authorSelection, "author", batchNumber);
+                            ExportDocuments(ESIndex.AUTHORS, authorSelection, "author", batchNumber);
                         }
 
                         if (_doIndex)
                         {
-                            ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.AUTHORS);
+                            ElasticSearch es = new ElasticSearch(_esConnectionString, ESIndex.AUTHORS);
                             es.IndexMany(authorSelection);
                         }
 
@@ -528,12 +529,12 @@ namespace BHL.SearchIndexer
                         if (_debug)
                         {
                             // Write the documents to JSON files
-                            ExportDocuments(ElasticSearch.ESIndex.KEYWORDS, keywordSelection, "keyword", batchNumber);
+                            ExportDocuments(ESIndex.KEYWORDS, keywordSelection, "keyword", batchNumber);
                         }
 
                         if (_doIndex)
                         {
-                            ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.KEYWORDS);
+                            ElasticSearch es = new ElasticSearch(_esConnectionString, ESIndex.KEYWORDS);
                             es.IndexMany(keywordSelection);
                         }
 
@@ -588,12 +589,12 @@ namespace BHL.SearchIndexer
                         if (_debug)
                         {
                             // Write the documents to JSON files
-                            ExportDocuments(ElasticSearch.ESIndex.NAMES, nameSelection, "name", batchNumber);
+                            ExportDocuments(ESIndex.NAMES, nameSelection, "name", batchNumber);
                         }
 
                         if (_doIndex)
                         {
-                            ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.NAMES);
+                            ElasticSearch es = new ElasticSearch(_esConnectionString, ESIndex.NAMES);
                             es.IndexMany(nameSelection);
                         }
 
@@ -620,17 +621,17 @@ namespace BHL.SearchIndexer
         {
             try
             {
-                ElasticSearch es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.CATALOG);
+                ElasticSearch es = new ElasticSearch(_esConnectionString, ESIndex.CATALOG);
                 es.OptimizeIndex();
-                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.ITEMS);
+                es = new ElasticSearch(_esConnectionString, ESIndex.ITEMS);
                 es.OptimizeIndex();
-                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.PAGES);
+                es = new ElasticSearch(_esConnectionString, ESIndex.PAGES);
                 es.OptimizeIndex();
-                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.AUTHORS);
+                es = new ElasticSearch(_esConnectionString, ESIndex.AUTHORS);
                 es.OptimizeIndex();
-                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.KEYWORDS);
+                es = new ElasticSearch(_esConnectionString, ESIndex.KEYWORDS);
                 es.OptimizeIndex();
-                es = new ElasticSearch(_esConnectionString, ElasticSearch.ESIndex.NAMES);
+                es = new ElasticSearch(_esConnectionString, ESIndex.NAMES);
                 es.OptimizeIndex();
             }
             catch (Exception ex)
@@ -802,6 +803,24 @@ namespace BHL.SearchIndexer
         {
             public const string DB = "DB";
             public const string FILE = "FILE";
+        }
+
+        public static class ESIndex
+        {
+            private static string _CATALOG = new ConfigurationManager(_configFile).AppSettings("ESCatalogIndex") ?? "catalog";
+            private static string _ITEMS = new ConfigurationManager(_configFile).AppSettings("ESItemsIndex") ?? "items";
+            private static string _PAGES = new ConfigurationManager(_configFile).AppSettings("ESPagesIndex") ?? "pages";
+            private static string _AUTHORS = new ConfigurationManager(_configFile).AppSettings("ESAuthorsIndex") ?? "authors";
+            private static string _KEYWORDS = new ConfigurationManager(_configFile).AppSettings("ESKeywordsIndex") ?? "keywords";
+            private static string _NAMES = new ConfigurationManager(_configFile).AppSettings("ESNamesIndex") ?? "names";
+
+            public static string CATALOG { get { return _CATALOG; } }
+            public static string ITEMS { get { return _ITEMS; } }
+            public static string PAGES { get { return _PAGES; } }
+            public static string AUTHORS { get { return _AUTHORS; } }
+            public static string KEYWORDS { get { return _KEYWORDS; } }
+            public static string NAMES { get { return _NAMES; } }
+
         }
     }
 }

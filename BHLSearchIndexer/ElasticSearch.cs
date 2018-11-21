@@ -12,16 +12,6 @@ namespace BHL.SearchIndexer
             Segment
         }
 
-        public static class ESIndex
-        {
-            public const string CATALOG = "catalog";
-            public const string ITEMS = "items";
-            public const string PAGES = "pages";
-            public const string AUTHORS = "authors";
-            public const string KEYWORDS = "keywords";
-            public const string NAMES = "names";
-        }
-
         private ElasticClient _es = null;
         private string _indexName = string.Empty;
         private bool _debug = false;

@@ -11,6 +11,14 @@
     <!-- Search server connection string -->
     <ElasticSearchServerAddress>SEARCH SERVER ADDRESS</ElasticSearchServerAddress>>
 
+    <!-- ElasticSearch index names -->
+    <ESCatalogIndex>catalog</ESCatalogIndex>
+    <ESItemsIndex>items</ESItemsIndex>
+    <ESPagesIndex>pages</ESPagesIndex>
+    <ESAuthorsIndex>authors</ESAuthorsIndex>
+    <ESKeywordsIndex>keywords</ESKeywordsIndex>
+    <ESNamesIndex>names</ESNamesIndex>
+
     <!-- Message queue connection settings -->
     <MQAddress>MESSAGE QUEUE SERVER ADDRESS</MQAddress>
     <MQPort>MESSAGE QUEUE SERVER PORT</MQPort>
