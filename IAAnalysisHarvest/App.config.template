@@ -20,7 +20,7 @@
 
 		<!-- ####################################################### -->
 		<!--              Internet Archive service URLs              -->
-		<add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q=-uploader:jillytmd@gmail.com+AND+-collection:biodiversity+AND-collection:usfederalcourts+AND+mediatype:texts+AND+oai_updatedate:[{0}+TO+{1}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=2000000&amp;fmt=xml&amp;xmlsearch=Search" />
+		<add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q=-uploader:jillytmd@gmail.com+AND+-collection:biodiversity+AND-collection:usfederalcourts+AND+-collection:royalbotanicgardenedinburgh+AND+-collection:usda-nurseryandseedcatalog+AND+-collection:test_collection+AND+mediatype:texts+AND+oai_updatedate:[{0}+TO+{1}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=2000000&amp;fmt=xml&amp;xmlsearch=Search" />
 		<!-- ####################################################### -->
 		<!--              Internet Archive files and file extensions           -->
 		<add key="MetadataExtension" value="_meta.xml"/>
