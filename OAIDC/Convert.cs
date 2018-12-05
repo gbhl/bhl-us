@@ -154,8 +154,19 @@ namespace MOBOT.BHL.OAIDC
                     _oaiRecord.Type = OAIRecord.RecordType.BookJournal;
             }
 
-            var identifier = root.Element(ns + "identifier");
-            if (identifier != null) _oaiRecord.Url = identifier.Value;
+            var identifiers = from i in root.Elements(ns + "identifier") select i;
+            foreach (XElement i in identifiers)
+            {
+                string identifier = i.Value;
+                if (identifier.StartsWith("info:doi/"))
+                    _oaiRecord.Doi = identifier.Replace("info:doi/", "");
+                else if (identifier.StartsWith("urn:ISSN:"))
+                    _oaiRecord.Issn = identifier.Replace("urn:ISSN:", "");
+                else if (identifier.StartsWith("urn:ISBN:"))
+                    _oaiRecord.Isbn = identifier.Replace("urn:ISBN:", "");
+                else 
+                    _oaiRecord.Url = identifier;
+            }
 
             var formats = from f in root.Elements(ns + "format") select f;
             foreach (XElement f in formats)
@@ -233,7 +244,10 @@ namespace MOBOT.BHL.OAIDC
             }
 
             // Identifier
-            if (!String.IsNullOrEmpty(_oaiRecord.Url)) sb.Append("<dc:identifier>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</dc:identifier>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.Url)) sb.Append("<dc:identifier>" + HttpUtility.HtmlEncode(_oaiRecord.Url) + "</dc:identifier>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.Doi)) sb.Append("<dc:identifier>info:doi/" + HttpUtility.HtmlEncode(_oaiRecord.Doi) + "</dc:identifier>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.Issn)) sb.Append("<dc:identifier>urn:ISSN:" + HttpUtility.HtmlEncode(_oaiRecord.Issn) + "</dc:identifier>\n");
+            if (!string.IsNullOrWhiteSpace(_oaiRecord.Isbn)) sb.Append("<dc:identifier>urn:ISBN:" + HttpUtility.HtmlEncode(_oaiRecord.Isbn) + "</dc:identifier>\n");
 
             // Source
             // No mapping for this DataSet
