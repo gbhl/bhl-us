@@ -126,7 +126,15 @@
                                         {
                                             <div class="row">
                                                 <div class="col-sm-10 pubResultContainer">
-                                                    @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "titles" } })
+                                                    @if (Model.Params.SearchType == "F")
+                                                    {
+                                                    <div class="catOnlyControl">
+                                                        Too many results?&nbsp;&nbsp;
+                                                        <div class="catOnly" onclick="$('#ItemPage').val(1);$('#Params_SearchType').val('C');pagerClick('');">Search only the Catalog.</div>&nbsp;&nbsp;
+                                                        <a target="_blank" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="images/help.png" style="margin-bottom:-2px;" alt="Search help" title="What's This?" height="16" width="16" /></a>
+                                                    </div>
+                                                    }
+                                                    @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "" } })
 
                                                     @foreach (BHL.Search.ItemHit item in Model.ItemResult.Items)
                                                     {
@@ -280,7 +288,7 @@
                                                     }
                                                 </div>
                                             </div>
-                                            @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "titles" } })
+                                            @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "" } })
                                         }
                                     }
                                     else

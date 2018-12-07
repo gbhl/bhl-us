@@ -2627,6 +2627,21 @@ ul.creator-titles li
     color: #23527c;
     outline: 0;
 }
+.catOnlyControl {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.catOnly {
+    color: #265f99;
+    text-decoration: underline;
+    display: inline;
+}
+.catOnly:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: #23527c;
+    outline: 0;
+}
 
 /*Darwin's Library Concepts */
 section .column3 {
