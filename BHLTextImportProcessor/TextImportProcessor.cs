@@ -95,7 +95,10 @@ namespace BHL.TextImportProcessor
                                     // Get the text import file
                                     string textImportFilePath = string.Format("{0}{1}", configParms.TextImportFilePath, batchFile.Filename);
                                     textImportFileLocalPath = string.Format("{0}{1}", configParms.TextImportLocalFilePath, batchFile.Filename);
-                                    File.AppendAllText(textImportFileLocalPath, new WebClient().DownloadString(textImportFilePath));
+                                    WebClient wc = new WebClient();
+                                    wc.Encoding = Encoding.UTF8;
+                                    string importFileContents = wc.DownloadString(textImportFilePath);
+                                    File.AppendAllText(textImportFileLocalPath, importFileContents, Encoding.UTF8);
 
                                     // Validate the file
                                     int filePageCount = importTool.PageCount(textImportFileLocalPath);
