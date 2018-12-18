@@ -185,16 +185,22 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field("_all"));
                 // Add fields to be boosted
                 fields.Add(new Field(ESField.TITLE + "^15"));
+                fields.Add(new Field(ESField.TITLE_ABBR + "^10"));
                 fields.Add(new Field(ESField.ISSN + "^15"));
                 fields.Add(new Field(ESField.ISBN + "^15"));
                 fields.Add(new Field(ESField.OCLC + "^15"));
                 fields.Add(new Field(ESField.DOI + "^15"));
                 fields.Add(new Field(ESField.TRANSLATEDTITLE + "^15"));
+                fields.Add(new Field(ESField.TRANSLATEDTITLE_ABBR + "^10"));
                 fields.Add(new Field(ESField.UNIFORMTITLE + "^15"));
+                fields.Add(new Field(ESField.UNIFORMTITLE_ABBR + "^10"));
                 fields.Add(new Field(ESField.VARIANTS + "^15"));
+                fields.Add(new Field(ESField.VARIANTS_ABBR + "^10"));
                 fields.Add(new Field(ESField.ASSOCIATIONS + "^5"));
+                fields.Add(new Field(ESField.ASSOCIATIONS_ABBR + "^3"));
                 fields.Add(new Field(ESField.COLLECTIONS + "^5"));
                 fields.Add(new Field(ESField.CONTAINER + "^5"));
+                fields.Add(new Field(ESField.CONTAINER_ABBR + "^3"));
                 fields.Add(new Field(ESField.CONTRIBUTORS + "^5"));
                 fields.Add(new Field(ESField.KEYWORDS + "^5"));
                 fields.Add(new Field(ESField.PUBLICATIONPLACE + "^5"));
@@ -284,11 +290,16 @@ namespace BHL.Search.Elastic
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (title.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE_ABBR, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Query = CleanQuery(title.searchValue), Boost = 5, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS_ABBR, Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE_ABBR, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE_ABBR, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS_ABBR, Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
                     }
                 }
 
@@ -970,7 +981,47 @@ namespace BHL.Search.Elastic
                 HighlightHit highlightHit = highlight.Value;
                 foreach (string highlightString in highlightHit.Highlights)
                 {
-                    highlights.Add(new Tuple<string, string>(highlightHit.Field, highlightString));
+                    // Replace "_abbr" field names with the name of the "parent" field.  For example, replace "title_abbr"
+                    // with "title".
+                    string highlightField = string.Empty;
+                    switch(highlightHit.Field)
+                    {
+                        case ESField.ASSOCIATIONS_ABBR:
+                            highlightField = ESField.ASSOCIATIONS;
+                            break;
+                        case ESField.CONTAINER_ABBR:
+                            highlightField = ESField.CONTAINER;
+                            break;
+                        case ESField.TITLE_ABBR:
+                            highlightField = ESField.TITLE;
+                            break;
+                        case ESField.TRANSLATEDTITLE_ABBR:
+                            highlightField = ESField.TRANSLATEDTITLE;
+                            break;
+                        case ESField.UNIFORMTITLE_ABBR:
+                            highlightField = ESField.UNIFORMTITLE;
+                            break;
+                        case ESField.VARIANTS_ABBR:
+                            highlightField = ESField.VARIANTS;
+                            break;
+                        default:
+                            highlightField = highlightHit.Field;
+                            break;
+                    }
+
+                    // Make sure no duplicate field-value pairs are added to the list of highlights.  This could happen for 
+                    // fields that are indexed in multiple ways.
+                    bool added = false;
+                    foreach (Tuple<string, string> h in highlights)
+                    {
+                        if (h.Item1 == highlightField && 
+                            h.Item2.Replace("<b>", "").Replace("</b>", "") == highlightString.Replace("<b>", "").Replace("</b>", ""))
+                        {
+                            // Match found
+                            added = true; break;
+                        }
+                    }
+                    if (!added) highlights.Add(new Tuple<string, string>(highlightField, highlightString));
                 }
             }
 

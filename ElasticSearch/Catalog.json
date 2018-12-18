@@ -2,9 +2,21 @@
 	"settings": {
 		"analysis": {
 			"analyzer": {
+				"fragment": {
+					"tokenizer": "icu_tokenizer",
+					"filter":  [ "lowercase", "icu_folding", "cat_ngram" ]
+				}
+				,
 				"default": {
 					"tokenizer": "icu_tokenizer",
 					"filter":  [ "lowercase", "icu_folding" ]
+				}
+			},
+			"filter" : {
+				"cat_ngram" : {
+					"type" : "edgeNGram",
+					"min_gram" : 3,
+					"max_gram" : 6
 				}
 			}
 		}
@@ -14,7 +26,13 @@
 			"properties" : {
 				"associations" : {
 					"type" : "text",
-					"analyzer" : "default"
+					"analyzer" : "default",
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
+						}
+					}
 				},
 				"authors" : {
 					"type" : "keyword",
@@ -30,6 +48,12 @@
 					"fields" : {
 						"raw" : {
 							"type" : "keyword"
+						}
+					},
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
 						}
 					}
 				},
@@ -174,6 +198,12 @@
 						"raw" : {
 							"type" : "keyword"
 						}
+					},
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
+						}
 					}
 				},
 				"titleId" : {
@@ -182,11 +212,23 @@
 				},
 				"translatedTitle" : {
 					"type" : "text",
-					"analyzer" : "default"
+					"analyzer" : "default",
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
+						}
+					}
 				},
 				"uniformTitle" : {
 					"type" : "text",
-					"analyzer" : "default"
+					"analyzer" : "default",
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
+						}
+					}
 				},
 				"url" : {
 					"type" : "keyword",
@@ -194,7 +236,13 @@
 				},
 				"variants" : {
 					"type" : "text",
-					"analyzer" : "default"
+					"analyzer" : "default",
+					"fields" : {
+						"abbr" : {
+							"type" : "text",
+							"analyzer" : "fragment"
+						}
+					}
 				},
 				"volume" : {
 					"type" : "text",

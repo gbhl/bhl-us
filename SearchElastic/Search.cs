@@ -109,11 +109,13 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
-            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
-                ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.KEYWORDS, ESField.PUBLICATIONPLACE,
-                ESField.PUBLISHER, ESField.SEARCHAUTHORS, ESField.TITLE, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.AUTHORNAMES, ESField.KEYWORD, ESField.NAME,
-                ESField.TEXT, ESField.ISSN, ESField.ISBN, ESField.DOI, ESField.OCLC};
+            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
+                ESField.COLLECTIONS, ESField.CONTAINER, ESField.CONTAINER_ABBR, ESField.CONTRIBUTORS,
+                ESField.KEYWORDS, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SEARCHAUTHORS,
+                ESField.TITLE, ESField.TITLE_ABBR, ESField.TRANSLATEDTITLE, ESField.TRANSLATEDTITLE_ABBR,
+                ESField.UNIFORMTITLE, ESField.UNIFORMTITLE_ABBR, ESField.VARIANTS, ESField.VARIANTS_ABBR,
+                ESField.AUTHORNAMES, ESField.KEYWORD, ESField.NAME,ESField.TEXT, ESField.ISSN, ESField.ISBN,
+                ESField.DOI, ESField.OCLC};
 
             ConfigureSearch(ESIndex.ALL, returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchAll(query, searchLimits);
@@ -151,10 +153,15 @@ namespace BHL.Search.Elastic
             List<string> highlightFields = new List<string>();
             if (!string.IsNullOrWhiteSpace(title.searchValue)) {
                 highlightFields.Add(ESField.ASSOCIATIONS);
+                highlightFields.Add(ESField.ASSOCIATIONS_ABBR);
                 highlightFields.Add(ESField.TITLE);
+                highlightFields.Add(ESField.TITLE_ABBR);
                 highlightFields.Add(ESField.TRANSLATEDTITLE);
+                highlightFields.Add(ESField.TRANSLATEDTITLE_ABBR);
                 highlightFields.Add(ESField.UNIFORMTITLE);
+                highlightFields.Add(ESField.UNIFORMTITLE_ABBR);
                 highlightFields.Add(ESField.VARIANTS);
+                highlightFields.Add(ESField.VARIANTS_ABBR);
             }
             if (!string.IsNullOrWhiteSpace(author.searchValue)) highlightFields.Add(ESField.SEARCHAUTHORS);
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) highlightFields.Add(ESField.KEYWORDS);
@@ -203,11 +210,12 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
-            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
-                ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.KEYWORDS, ESField.PUBLICATIONPLACE,
-                ESField.PUBLISHER, ESField.SEARCHAUTHORS, ESField.TITLE, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.TEXT, ESField.ISSN, ESField.ISBN,
-                ESField.DOI, ESField.OCLC };
+            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
+                ESField.COLLECTIONS, ESField.CONTAINER, ESField.CONTAINER_ABBR, ESField.CONTRIBUTORS,
+                ESField.KEYWORDS, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SEARCHAUTHORS,
+                ESField.TITLE, ESField.TITLE_ABBR, ESField.TRANSLATEDTITLE, ESField.TRANSLATEDTITLE_ABBR,
+                ESField.UNIFORMTITLE, ESField.UNIFORMTITLE_ABBR, ESField.VARIANTS, ESField.VARIANTS_ABBR,
+                ESField.TEXT, ESField.ISSN, ESField.ISBN, ESField.DOI, ESField.OCLC };
 
             ConfigureSearch(ESIndex.CATALOG, returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchAll(searchTerm, searchLimits);
@@ -238,11 +246,12 @@ namespace BHL.Search.Elastic
                 new Tuple<string, ESFacetSortOrder>(ESField.DATERANGES, ESFacetSortOrder.TERM),
                 new Tuple<string, ESFacetSortOrder>(ESField.KEYWORDS_RAW, ESFacetSortOrder.COUNT),
                 new Tuple<string, ESFacetSortOrder>(ESField.LANGUAGE, ESFacetSortOrder.COUNT) };
-            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.COLLECTIONS,
-                ESField.CONTAINER, ESField.CONTRIBUTORS, ESField.KEYWORDS, ESField.PUBLICATIONPLACE,
-                ESField.PUBLISHER, ESField.SEARCHAUTHORS, ESField.TITLE, ESField.TRANSLATEDTITLE,
-                ESField.UNIFORMTITLE, ESField.VARIANTS, ESField.TEXT, ESField.ISSN, ESField.ISBN,
-                ESField.DOI, ESField.OCLC };
+            List<string> highlightFields = new List<string> { ESField.ASSOCIATIONS, ESField.ASSOCIATIONS_ABBR,
+                ESField.COLLECTIONS, ESField.CONTAINER, ESField.CONTAINER_ABBR, ESField.CONTRIBUTORS,
+                ESField.KEYWORDS, ESField.PUBLICATIONPLACE, ESField.PUBLISHER, ESField.SEARCHAUTHORS,
+                ESField.TITLE, ESField.TITLE_ABBR, ESField.TRANSLATEDTITLE, ESField.TRANSLATEDTITLE_ABBR,
+                ESField.UNIFORMTITLE, ESField.UNIFORMTITLE_ABBR, ESField.VARIANTS, ESField.VARIANTS_ABBR,
+                ESField.TEXT, ESField.ISSN, ESField.ISBN, ESField.DOI, ESField.OCLC };
 
             ConfigureSearch(ESIndex.ITEMS, returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchAll(searchTerm, searchLimits);

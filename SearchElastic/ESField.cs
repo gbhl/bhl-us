@@ -6,10 +6,12 @@
 
         // Item index
         public const string ASSOCIATIONS = "associations";
+        public const string ASSOCIATIONS_ABBR = "associations.abbr";
         public const string AUTHORS = "authors";
         public const string COLLECTIONS = "collections";
         public const string CONTAINER = "container";
         public const string CONTAINER_RAW = "container.raw";
+        public const string CONTAINER_ABBR = "container.abbr";
         public const string CONTRIBUTORS = "contributors";
         public const string CONTRIBUTORS_RAW = "contributors.raw";
         public const string DATERANGES = "dateRanges";
@@ -44,11 +46,15 @@
         public const string TEXT = "text";
         public const string TITLE = "title";
         public const string TITLE_RAW = "title.raw";
+        public const string TITLE_ABBR = "title.abbr";
         public const string TITLEID = "titleId";
         public const string TRANSLATEDTITLE = "translatedTitle";
+        public const string TRANSLATEDTITLE_ABBR = "translatedTitle.abbr";
         public const string UNIFORMTITLE = "uniformTitle";
+        public const string UNIFORMTITLE_ABBR = "uniformTitle.abbr";
         public const string URL = "url";
         public const string VARIANTS = "variants";
+        public const string VARIANTS_ABBR = "variants.abbr";
         public const string VOLUME = "volume";
 
         // Page index
