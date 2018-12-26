@@ -15,8 +15,8 @@
 			"filter" : {
 				"cat_ngram" : {
 					"type" : "edgeNGram",
-					"min_gram" : 3,
-					"max_gram" : 6
+					"min_gram" : 1,
+					"max_gram" : 15
 				}
 			}
 		}

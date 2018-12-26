@@ -291,16 +291,16 @@ namespace BHL.Search.Elastic
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (title.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 5, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
-                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 5, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.ASSOCIATIONS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.TRANSLATEDTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.UNIFORMTITLE_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 15, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                        shouldQueries.Add(new MatchQuery { Field = ESField.VARIANTS_ABBR, Analyzer = "default", Query = CleanQuery(title.searchValue), Boost = 10, Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
@@ -314,7 +314,7 @@ namespace BHL.Search.Elastic
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (author.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.SEARCHAUTHORS, Query = CleanQuery(author.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
@@ -331,7 +331,7 @@ namespace BHL.Search.Elastic
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (keyword.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.KEYWORDS, Query = CleanQuery(keyword.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
@@ -348,7 +348,7 @@ namespace BHL.Search.Elastic
                     {
                         Nest.Operator matchOperator = Operator.And;
                         if (text.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
-                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.Auto, PrefixLength = 3 });
+                        mustQueries.Add(new MatchQuery { Field = ESField.TEXT, Query = CleanQuery(text.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
                     }
                 }
 
