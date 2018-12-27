@@ -13,8 +13,8 @@
         </div>
         <div id="searchbar">
             <span id="searchbar-searchtype">
-                <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> Full-text
-                <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> Catalog
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> <label for="rdoSearchTypeF">Full-text</label>
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> <label for="rdoSearchTypeC">Catalog</label>
                 &nbsp;&nbsp;<a style="margin-top:2px;" target="_blank" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" alt="Search help" title="What's This?" height="16" width="16" /></a>
             </span>
             <a href="/advsearch" title="Advanced Search">advanced search</a>

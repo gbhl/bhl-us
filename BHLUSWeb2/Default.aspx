@@ -34,8 +34,8 @@
             <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" Text="Search the catalog and full-text" />
             <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
             <div id="searchtype-home">
-                <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> Full-text
-                <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> Catalog
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> <label for="rdoSearchTypeF">Full-text</label>
+                <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> <label for="rdoSearchTypeC">Catalog</label>
                 &nbsp;<a target="_blank" style="left:169px" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" alt="Search help" title="What's This?" height="16" width="16" /></a>
             </div>
             <a href="/advsearch" class="advsearch-home">advanced search</a>
