@@ -429,6 +429,7 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="TitleUnavailable.aspx" />
     <Content Include="ItemUnavailable.aspx" />
     <Content Include="js\jMyCarousel\credits.txt" />
     <Content Include="js\jMyCarousel\img\arrow_down.gif" />
@@ -842,6 +843,13 @@
     </Compile>
     <Compile Include="ItemPage.aspx.designer.cs">
       <DependentUpon>ItemPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TitleUnavailable.aspx.cs">
+      <DependentUpon>TitleUnavailable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TitleUnavailable.aspx.designer.cs">
+      <DependentUpon>TitleUnavailable.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemUnavailable.aspx.cs">
       <DependentUpon>ItemUnavailable.aspx</DependentUpon>

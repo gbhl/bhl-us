@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Configuration;
 using System.Web;
 using System.Web.Services;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
 
 namespace MOBOT.BHL.Web2
 {
@@ -44,6 +43,7 @@ namespace MOBOT.BHL.Web2
                     {
                         imageUrl = ConfigurationManager.AppSettings["ImageNotFoundPath"];
                         context.Response.StatusCode = 404;
+                        context.Response.TrySkipIisCustomErrors = true;
                     }
                     context.Response.BinaryWrite(client.DownloadData(imageUrl));
                 }
@@ -53,6 +53,7 @@ namespace MOBOT.BHL.Web2
                     {
                         context.Response.BinaryWrite(client.DownloadData(ConfigurationManager.AppSettings["ImageNotFoundPath"]));
                         context.Response.StatusCode = 404;
+                        context.Response.TrySkipIisCustomErrors = true;
                     }
                 }
             }

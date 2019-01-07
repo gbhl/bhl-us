@@ -141,6 +141,7 @@ namespace MOBOT.BHL.Web2
                 new RouteValueDictionary { {"subject",""}, {"sort",""} } );
 
             routes.MapPageRoute("Error-TitleNotFound", "titlenotfound", "~/TitleNotFound.aspx");
+            routes.MapPageRoute("Error-TitleUnavailable", "titleunavailable", "~/TitleUnavailable.aspx");
             routes.MapPageRoute("Error-AuthorNotFound", "authornotfound", "~/AuthorNotFound.aspx");
             routes.MapPageRoute("Error-ItemNotFound", "itemnotfound", "~/ItemNotFound.aspx");
             routes.MapPageRoute("Error-ItemUnavailable", "itemunavailable", "~/ItemUnavailable.aspx");

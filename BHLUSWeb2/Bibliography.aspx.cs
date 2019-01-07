@@ -82,18 +82,18 @@ namespace MOBOT.BHL.Web2
                 // Make sure the title is published.
                 if (!BhlTitle.PublishReady)
                 {
-                    Response.Redirect("~/titlenotfound");
+                    Response.Redirect("~/titleunavailable");
                 }
             }
 
             CustomGenericList<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
             if (Items == null)
             {
-                Response.Redirect("~/titlenotfound");
+                Response.Redirect("~/titleunavailable");
             }
             if (Items.Count == 0)
             {
-                Response.Redirect("~/titlenotfound");
+                Response.Redirect("~/titleunavailable");
             }
             else
             {
