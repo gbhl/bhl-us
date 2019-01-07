@@ -1497,13 +1497,10 @@ BEGIN TRY
 	WHERE	t.RightsHolderCode IS NULL
 	AND		i.RightsHolder <> ''
 	
-	-- Add a default Copyright Status to non-BHL contributor items
+	-- Add a default Copyright Status if none is provided
 	UPDATE	#tmpItem
-	SET		CopyrightStatus = 'Not provided. Contact Contributing Library to verify copyright status.'
-	FROM	#tmpItem t 
-			INNER JOIN dbo.BHLInstitution i ON t.InstitutionCode = i.InstitutionCode
+	SET		CopyrightStatus = 'Not provided. Contact contributing library to verify copyright status.'
 	WHERE	ISNULL(CopyrightStatus, '') = ''
-	AND		i.BHLMemberLibrary = 0
 
 	-- Use the AddedDate as the ScanningDate if no Scan Date was specified
 	UPDATE	#tmpItem

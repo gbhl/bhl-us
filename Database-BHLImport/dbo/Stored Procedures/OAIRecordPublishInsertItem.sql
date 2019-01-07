@@ -32,7 +32,8 @@ INSERT	dbo.BHLItem
 		ItemSourceID,
 		Year,
 		Rights,
-		ExternalUrl
+		ExternalUrl,
+		CopyrightStatus
 		)
 SELECT	40,
 		@ProductionTitleID AS PrimaryTitleID,
@@ -44,7 +45,8 @@ SELECT	40,
 		src.BHLItemSourceID AS ItemSourceID,
 		Date AS Year,
 		@Right AS Rights,
-		Url AS ExternalUrl
+		Url AS ExternalUrl,
+		'Not provided. Contact contributing library to verify copyright status.' AS CopyrightStatus
 FROM	dbo.OAIRecord o
 		LEFT JOIN dbo.OAIRecordLanguage l ON o.Language = l.OAILanguage
 		INNER JOIN dbo.OAIHarvestLog lg ON o.HarvestLogID = lg.HarvestLogID
