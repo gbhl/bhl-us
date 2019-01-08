@@ -87,10 +87,15 @@
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
                 <div class="segmentdetails"><h3>Contributed by</h3> <p>
-                    <%foreach (Institution institution in BhlSegment.ContributorList)
-                        { %>
-                        <%: institution.InstitutionName%><br />
-                    <% } %>
+                    <%foreach (Institution institution in BhlSegment.ContributorList) {
+                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {%>
+                            <a target="_blank" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
+                        <%}
+                        else
+                        {%>
+                            <%: institution.InstitutionName%><br />
+                        <%}
+                    }%>
                     </p>
                 </div>
             <% } %>
@@ -172,10 +177,15 @@
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.ContributorName)) { %>
                 <div class="segmentdetails"><h3>Contributed by</h3> <p>
-                    <%foreach (Institution institution in BhlSegment.ContributorList)
-                        { %>
-                        <%: institution.InstitutionName%><br />
-                    <% } %>
+                    <%foreach (Institution institution in BhlSegment.ContributorList) {
+                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {%>
+                            <a target="_blank" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
+                        <%}
+                        else
+                        {%>
+                            <%: institution.InstitutionName%><br />
+                        <%}
+                    }%>
                     </p>
                 </div>
             <% } %>
@@ -208,9 +218,16 @@
             <% } %>
             <% if (BhlSegment.IdentifierList.Count > 0) { %>
                 <h3>Identifiers</h3><p>
-                <% foreach (SegmentIdentifier segmentIdentifier in BhlSegment.IdentifierList) { %>
-                    <%: segmentIdentifier.IdentifierLabel %>: <span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span><br />
-                <% } %>
+                    <%foreach (SegmentIdentifier segmentIdentifier in BhlSegment.IdentifierList) {%>
+                        <%: segmentIdentifier.IdentifierLabel %>: 
+                        <%if (string.Compare(segmentIdentifier.IdentifierLabel, "BioStor", true) == 0) {%>
+                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="https://biostor.org/reference/<%: segmentIdentifier.IdentifierValue%>"><span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span></a><br />
+                        <%}
+                        else
+                        {%>
+                            <span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span><br />
+                        <%}
+                    }%>
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatus)) { %>
