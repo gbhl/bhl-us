@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[AuthorSelectByNameLike]
+﻿CREATE PROCEDURE [dbo].[AuthorSelectByNameLike]
 
 @FullName nvarchar(255),
 @ReturnCount	int = 100
@@ -13,6 +12,7 @@ SELECT DISTINCT
 INTO	#tmpAuthor
 FROM	dbo.AuthorName
 WHERE	FullName LIKE (@FullName + '%')
+AND		IsPreferredName = 1
 
 SELECT	v.AuthorID,
 		v.FullName,
