@@ -268,7 +268,12 @@
       <remove statusCode="404" subStatusCode="-1" />
       <error statusCode="404" prefixLanguageFilePath="" path="/404.aspx" responseMode="ExecuteURL" />
     </httpErrors>
-      <security>
+    <httpProtocol>
+      <customHeaders>
+        <add name="X-Frame-Options" value="deny" />
+      </customHeaders>
+    </httpProtocol>
+    <security>
           <requestFiltering allowDoubleEscaping="true" />
       </security>
   <validation validateIntegratedModeConfiguration="false" />
