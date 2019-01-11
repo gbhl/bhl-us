@@ -131,13 +131,6 @@
     <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>
     <add key="PdfGenDownloadIA" value="https://www.archive.org/download/{0}/{1}.pdf"/>
-    <!-- jQuery libraries -->
-    <add key="jQueryPath" value="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"/>
-    <add key="jQueryUIPath" value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"/>
-    <add key="jQueryUICSSPath" value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/themes/base/jquery-ui.css"/>
-    <add key="jqGridCSSPath" value="/css/jqgridtheme/ui.jqgrid.css"/>
-    <add key="jqGridLocalePath" value="/js/libs/grid.locale-en.js"/>
-    <add key="jqGridPath" value="/js/libs/jquery.jqGrid.min.js"/>
     <!-- begin attribution div properties -->
     <!-- Maximum age in days of Page Names before they are refreshed -->
     <add key="MaximumPageNameAge" value="45"/>

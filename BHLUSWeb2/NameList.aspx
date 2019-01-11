@@ -34,7 +34,7 @@
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/grid.locale-en.js" type="text/javascript"></script>
-<script src="/js/libs/jquery.jqGrid.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.jqGrid.min.js?v=4.7" type="text/javascript"></script>
 <style>
 .ui-jqgrid tr.ui-row-ltr td {  border-left: 1px solid #b6c1cc;  }
 </style>

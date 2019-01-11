@@ -173,12 +173,21 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContentPlaceHolder" runat="server">
 
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" language="javascript"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" language="javascript"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js" language="javascript"></script>
         <script type="text/javascript">
             // Set up tabs
             $(document).ready(function () {
-                $("#tabs").tabs();
+                $(function() {
+                    $("#tabs").tabs({
+                        activate: function (event, ui) {
+                            alert(ui.newPanel.attr('id'));
+                            var scrollTop = $(window).scrollTop(); // save current scroll position
+                            window.location.hash = ui.newPanel.attr('id'); // add hash to url
+                            $(window).scrollTop(scrollTop); // keep scroll at current position
+                        }
+                    });
+                });
                 $("#tabs").tabs('select', '#<%= startTabDiv %>');    // Default to a particular tab
             });
 
