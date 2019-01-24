@@ -286,8 +286,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     EFModel.SegmentAuthor segmentAuthor = new EFModel.SegmentAuthor();
                     segmentAuthor.ImportSourceID = configParms.ImportSourceID;
                     segmentAuthor.BioStorID = ((string)author["id"]) ?? string.Empty;
-                    segmentAuthor.LastName = lastName;
-                    segmentAuthor.FirstName = firstName;
+                    segmentAuthor.LastName = lastName.Trim();
+                    segmentAuthor.FirstName = firstName.Trim();
                     segmentAuthors.Add(segmentAuthor);
                 }
             }
