@@ -82,8 +82,9 @@
         <div id="divAlert" runat="server" visible="false" class="alertbox"><asp:Literal ID="litAlertMessage" runat="server"></asp:Literal></div>
         <asp:ContentPlaceHolder ID="mainContentPlaceHolder" runat="server" />
             
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-        <script>            !window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.4.4.min.js"%3E%3C/script%3E'))</script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>            !window.jQuery && document.write(unescape('%3Cscript src="/js/libs/jquery-1.12.4.min.js"%3E%3C/script%3E'))</script>
+        <script src="/js/libs/jquery-1.12.4.bhlextension.js"></script>
 
         <asp:ContentPlaceHolder ID="scriptContentPlaceHolder" runat="server" />  
         

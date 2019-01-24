@@ -78,7 +78,7 @@
 <script src="/js/libs/jquery.history.min.js"></script>
 <script src="/js/libs/jquery.hoverintent.min.js"></script>
 <script src="/js/libs/jquery.text-overflow.min.js"></script>
-<script src="/js/libs/jquery-ui-1.8.11.custom.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery-ui-1.12.1.custom.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
     $(document).ready(function () {

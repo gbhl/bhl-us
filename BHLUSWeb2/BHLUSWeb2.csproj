@@ -166,6 +166,7 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="css\jqgridtheme\jquery-ui-1.12.1.custom.min.css" />
     <Content Include="Docs\api3\AuthorSearch.xml" />
     <Content Include="Docs\api3.html" />
     <Content Include="Docs\api3\GetAuthorMetadata.xml" />
@@ -429,6 +430,9 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="js\libs\jquery-1.12.4.bhlextension.js" />
+    <Content Include="js\libs\jquery-ui-1.12.1.custom.min.js" />
+    <Content Include="js\libs\jquery.easing.1.4.1.min.js" />
     <Content Include="TitleUnavailable.aspx" />
     <Content Include="ItemUnavailable.aspx" />
     <Content Include="js\jMyCarousel\credits.txt" />

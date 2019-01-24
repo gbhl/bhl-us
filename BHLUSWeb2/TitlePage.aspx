@@ -300,8 +300,8 @@
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=6" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
-<script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
-<script src="/js/libs/jquery-ui-1.8.11.custom.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery.easing.1.4.1.min.js" type="text/javascript"></script>
+<script src="/js/libs/jquery-ui-1.12.1.custom.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.hoverintent.min.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.xcolor.min.js" type="text/javascript"></script>
 <script src="/js/libs/jqModal.min.js" type="text/javascript"></script>
@@ -351,6 +351,7 @@
     }
 
     $(document).ready(function () {
+
         br = new BookReader();
 
         // Page info Json object
@@ -624,11 +625,11 @@
         });
         $('#review-dialog').jqm({
             toTop: true,
-            onHide: onHideAction,
-            onShow: function(hash) { 
-                hash.w.show();
-                $('.ellipsis').textOverflow();
-            }
+            onHide: onHideAction//,
+            //onShow: function(hash) { 
+                //hash.w.show();
+                //$('.ellipsis').textOverflow();
+            //}
         });
         $('#generate-dialog').jqm({
             toTop: true,
@@ -704,20 +705,21 @@
         });
 
         // Binder for page dropdown list
-        $('#lstPages').live("change", function(){
-          br.jumpToIndex($('#lstPages').attr("selectedIndex"));
+        $(document).on("change", "#lstPages", function () {
+          br.jumpToIndex($('#lstPages')[0].selectedIndex);
         });
 
         // Binder for segment list used by iDevices
-        $('#lbSegments').live("change", function(){
-            var pageNum = $('#lbSegments').attr("value"); 
+        $(document).on("change", "#lbSegments", function () {
+            var pageNum = $('#lbSegments').attr("value");
             var pageIndex = br.getPageIndexWithPageNum(pageNum);
 
-            if ('undefined' != typeof(pageIndex)) {
+            if ('undefined' != typeof (pageIndex)) {
                 var leafTop = 0;
                 var h;
                 br.jumpToIndex(pageIndex);
-                $('#BRcontainer').attr('scrollTop', leafTop);
+                //$('#BRcontainer').attr('scrollTop', leafTop);
+                $('#BRcontainer')[0].scrollTop = leafTop;
                 return true;
             }
             // Page not found
@@ -740,7 +742,8 @@
                 var leafTop = 0;
                 var h;
                 br.jumpToIndex(pageIndex);
-                $('#BRcontainer').attr('scrollTop', leafTop);
+                //$('#BRcontainer').attr('scrollTop', leafTop);
+                $('#BRcontainer')[0].scrollTop = leafTop;
                 return true;
             }
             // Page not found
@@ -1445,7 +1448,7 @@
         }
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         //	Called when we click on the tab itself
 	    $('#pagestab').click(function() {
 
