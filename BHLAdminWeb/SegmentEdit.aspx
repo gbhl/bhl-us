@@ -502,6 +502,7 @@
 				OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="SegmentAuthorID,AuthorID">
 				<Columns>
 					<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
+				    <asp:BoundField DataField="AuthorID" HeaderText="Author ID" ItemStyle-Width="60px" ReadOnly="true" />
 					<asp:TemplateField HeaderText="Name" ItemStyle-Width="350px" HeaderStyle-HorizontalAlign="Left">
 						<ItemTemplate>
 							<%# Eval( "FullName" ) %> <%# Eval("FullerForm") %> <%# Eval("Numeration") %> <%# Eval("Unit") %> <%# Eval("Title") %> <%# Eval("Location") %>
