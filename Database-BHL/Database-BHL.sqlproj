@@ -1081,6 +1081,8 @@
     <None Include="dbo\Stored Procedures\InstitutionSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\TitleInstitutionInsert.sql" />
     <None Include="dbo\Stored Procedures\LinkSelectToExternalContent.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectByCollectionAndStartsWithout.sql" />
+    <None Include="dbo\Stored Procedures\TitleSelectByCollectionAndStartsWithout.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -11,7 +11,7 @@
 <nav id="sub-nav">
     <div class="column-wrap">
       
-        <div id="linkbar" class="letters">
+        <div id="linkbar" class="lettersandnumbers">
             <ul>
                 <li class="first-child"><a class="<%= SetClass("a") %>" href="/browse/collection/<%= collection.PreferredUrl %>/a">A</a></li>
                 <li><a class="<%= SetClass("b") %>" href="/browse/collection/<%= collection.PreferredUrl %>/b">B</a></li>
@@ -39,6 +39,7 @@
                 <li><a class="<%= SetClass("x") %>" href="/browse/collection/<%= collection.PreferredUrl %>/x">X</a></li>
                 <li><a class="<%= SetClass("y") %>" href="/browse/collection/<%= collection.PreferredUrl %>/y">Y</a></li>
                 <li><a class="<%= SetClass("z") %>" href="/browse/collection/<%= collection.PreferredUrl %>/z">Z</a></li>
+                <li><a class="<%= SetClass("0") %>" href="/browse/collection/<%= collection.PreferredUrl %>/0">#</a></li>
                 <li><a class="<%= SetClass("All") %>" href="/browse/collection/<%= collection.PreferredUrl %>/all">All</a></li>
             </ul>
         </div>

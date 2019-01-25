@@ -96,6 +96,17 @@ namespace MOBOT.BHL.Server
         }
 
         /// <summary>
+        /// Select Titles for a particular collection
+        /// </summary>
+        /// <param name="collectionID"></param>
+        /// <param name="startString"></param>
+        /// <returns>List of SearchBookResult</returns>
+        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWithout(int collectionID, string startString)
+        {
+            return new SearchDAL().TitleSelectByCollectionAndStartsWithout(null, null, collectionID, startString);
+        }
+
+        /// <summary>
         /// Select Items for a particular collection
         /// </summary>
         /// <param name="collectionID"></param>
@@ -104,6 +115,17 @@ namespace MOBOT.BHL.Server
         public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWith(int collectionID, string startsWith)
         {
             return new SearchDAL().ItemSelectByCollectionAndStartsWith(null, null, collectionID, startsWith);
+        }
+
+        /// <summary>
+        /// Select Items for a particular collection
+        /// </summary>
+        /// <param name="collectionID"></param>
+        /// <param name="startsWith"></param>
+        /// <returns></returns>
+        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWithout(int collectionID, string startsWith)
+        {
+            return new SearchDAL().ItemSelectByCollectionAndStartsWithout(null, null, collectionID, startsWith);
         }
 
         public CustomGenericList<TitleKeyword> SearchTitleKeyword(string keyword, string languageCode, int returnCount)

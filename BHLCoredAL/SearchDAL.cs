@@ -285,6 +285,36 @@ namespace MOBOT.BHL.DAL
         }
 
         /// <summary>
+        /// Select all values from Title associated with the specified collection
+        /// and not starting with the specified letter
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="collectionID"></param>
+        /// <param name="startString"></param>
+        /// <returns>List of SearchBookResult</returns>
+        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWithout(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int collectionID,
+            string startString)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("TitleSelectByCollectionAndStartsWithout",
+                connection, transaction,
+                CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 1000, false, startString)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
         /// Select all values from Item associated with the specified collectn
         /// and starting with the specified letter
         /// </summary>
@@ -302,6 +332,36 @@ namespace MOBOT.BHL.DAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByCollectionAndStartsWith",
+                connection, transaction,
+                CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
+                CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString)))
+            {
+                using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
+                {
+                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Search all values from Item associated with the specified collection
+        /// and not starting with the specified letter
+        /// </summary>
+        /// <param name="sqlConnection"></param>
+        /// <param name="sqlTransaction"></param>
+        /// <param name="collectionID"></param>
+        /// <param name="startString"></param>
+        /// <returns>List of SesarchBookresult</returns>
+        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWithout(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            int collectionID,
+            string startString)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByCollectionAndStartsWithout",
                 connection, transaction,
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID),
                 CustomSqlHelper.CreateInputParameter("StartsWith", SqlDbType.VarChar, 255, false, startString)))
