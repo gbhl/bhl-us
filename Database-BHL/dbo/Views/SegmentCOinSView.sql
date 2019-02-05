@@ -14,7 +14,7 @@ SELECT DISTINCT
 			ELSE ''
 		END AS 'rft_pages'
 		,ISNULL(LOWER(s.LanguageCode), '') AS 'rft_language' -- dc
-		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'ISSN') AS 'rft_issn'
+		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'ISSN', 0) AS 'rft_issn'
 		,CASE WHEN CHARINDEX(',', dbo.fnCOinSGetFirstAuthorNameForSegment(s.SegmentID)) > 0
 			THEN LTRIM(SUBSTRING(dbo.fnCOinSGetFirstAuthorNameForSegment(s.SegmentID), 1, CHARINDEX(',', dbo.fnCOinSGetFirstAuthorNameForSegment(s.SegmentID)) - 1))
 			ELSE ISNULL(dbo.fnCOinSGetFirstAuthorNameForSegment(s.SegmentID), '')
@@ -25,8 +25,8 @@ SELECT DISTINCT
 		END AS 'rft_aufirst'
 		,dbo.fnCOinSAuthorStringForSegment(s.SegmentID) AS 'rft_au'
 		,dbo.fnKeywordStringForSegment(s.SegmentID) AS 'rft_subject' -- dc
-		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'ISBN') AS 'rft_isbn'
-		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'CODEN') AS 'rft_coden'
+		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'ISBN', 0) AS 'rft_isbn'
+		,dbo.fnGetIdentifierForSegment(s.SegmentID, 'CODEN', 0) AS 'rft_coden'
 		,LOWER(g.GenreName) AS 'rft_genre'
 		,scs.Contributors AS 'rft_contributor' -- dc
 FROM	dbo.vwSegment s
