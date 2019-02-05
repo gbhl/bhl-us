@@ -792,7 +792,10 @@ namespace MOBOT.BHL.Server
 
                     foreach (SegmentIdentifier identifier in segment.IdentifierList)
                     {
-                        AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
+                        if ((identifier.IsContainerIdentifier ?? 0) == 0)
+                        {
+                            AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
+                        }
                     }
 
                     CustomGenericList<DOI> dois = service.DOISelectValidForSegment(segmentID);
