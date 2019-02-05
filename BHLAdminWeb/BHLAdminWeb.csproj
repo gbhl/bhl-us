@@ -546,6 +546,16 @@
     <Compile Include="ReportItemPagination.aspx.designer.cs">
       <DependentUpon>ReportItemPagination.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ReportItemsByContentProvider.aspx.cs">
+      <DependentUpon>ReportItemsByContentProvider.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportItemsByContentProvider.aspx.designer.cs">
+      <DependentUpon>ReportItemsByContentProvider.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportItemsByContentProviderCSV.ashx.cs">
+      <DependentUpon>ReportItemsByContentProviderCSV.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ReportItemsByContributor.aspx.cs">
       <DependentUpon>ReportItemsByContributor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -628,6 +638,9 @@
     </Compile>
     <Compile Include="Services\RecentlyClusteredSegmentsDownloadService.ashx.cs">
       <DependentUpon>RecentlyClusteredSegmentsDownloadService.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\rptItemByContentProviderService.ashx.cs">
+      <DependentUpon>rptItemByContentProviderService.ashx</DependentUpon>
     </Compile>
     <Compile Include="Services\SegmentService.ashx.cs">
       <DependentUpon>SegmentService.ashx</DependentUpon>
@@ -940,6 +953,7 @@
     <Content Include="js\jquery.jqGrid.min.js" />
     <Content Include="PageNotFound.aspx" />
     <Content Include="ReportCharacterEncodingProblems.aspx" />
+    <Content Include="ReportItemsByContentProvider.aspx" />
     <Content Include="ReportItemsByContributorCSV.ashx" />
     <Content Include="ReportNonMemberMonographsCSV.ashx" />
     <Content Include="ReportRecentlyClusteredSegments.aspx" />
@@ -951,6 +965,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Properties\PublishProfiles\Beta - BHL Admin %28local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL Admin %28local%29.pubxml" />
+    <Content Include="ReportItemsByContentProviderCSV.ashx" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1082,6 +1097,7 @@
     <Content Include="Views\TextImport\Index.cshtml" />
     <Content Include="Views\TextImport\Review.cshtml" />
     <Content Include="Views\Report\TextImportHistory.cshtml" />
+    <Content Include="Services\rptItemByContentProviderService.ashx" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

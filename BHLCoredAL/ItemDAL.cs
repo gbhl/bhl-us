@@ -682,6 +682,35 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(
+            SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction,
+            string institutionCode,
+            int institutionRoleID,
+            int numRows,
+            int pageNum,
+            string sortColumn,
+            string sortOrder)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectByInstitutionAndRole", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode),
+                CustomSqlHelper.CreateInputParameter("InstitutionRoleID", SqlDbType.Int, null, false, institutionRoleID),
+                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
+                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
+                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
+                CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortOrder)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         public int ItemCountByInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string institutionCode)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(

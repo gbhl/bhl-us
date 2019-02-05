@@ -112,6 +112,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("reportcharacterencodingproblems")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportdoibyinstitution")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportiaitemspendingapproval")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
+            else if (path.Contains("reportitemsbycontentprovider")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportitemsbycontributor")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportitemsbycontributorcsv")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("reportmonographiccontributions")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);

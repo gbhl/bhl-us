@@ -149,14 +149,57 @@ namespace MOBOT.BHL.Server
 			return dal.ItemUpdateLastPageNameLookupDate( null, null, itemID );
 		}
 
-		/// <summary>
-		/// Check for existence of OCR files in the folder for the specified item 
-		/// </summary>
-		/// <param name="itemID"></param>
-		/// <param name="pageID"></param>
-		/// <param name="ocrTextPath"></param>
-		/// <returns></returns>
-		public bool ItemCheckForOcrText( int itemID, string ocrTextPath, bool useRemoteProvider )
+        /// <summary>
+        /// Update the assigned iteminstitution of the specified item.
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <param name="originalInstitution"></param>
+        /// <param name="newInstitution"></param>
+        /// <param name="roleID"></param>
+        /// <returns>Array of two elements. First element contains "true" or "false".  Second element 
+        /// contains message detailing the success or error.</returns>
+        public string[] ItemUpdateInstitution(int itemID, string originalInstitution, string newInstitution, int roleID, int userID)
+        {
+            string[] results = new string[2];
+            string returnValue = "true";
+            string returnMessage = string.Empty;
+
+            try
+            {
+                ItemInstitutionDAL dal = new ItemInstitutionDAL();
+
+                ItemInstitution savedItemInstitution = dal.ItemInstitutionSelectByItemInstitutionAndRole(null, null, itemID, originalInstitution, roleID);
+                if (savedItemInstitution != null)
+                {
+                    savedItemInstitution.InstitutionCode = newInstitution;
+                    savedItemInstitution.LastModifiedDate = DateTime.Now;
+                    savedItemInstitution.LastModifiedUserID = userID;
+                    savedItemInstitution = dal.ItemInstitutionUpdateAuto(null, null, savedItemInstitution);
+                }
+                else
+                {
+                    throw new Exception("Could not find existing Item record.");
+                }
+            }
+            catch (Exception ex)
+            {
+                returnValue = "false";
+                returnMessage = ex.Message;
+            }
+
+            results[0] = returnValue;
+            results[1] = returnMessage;
+            return results;
+        }
+
+        /// <summary>
+        /// Check for existence of OCR files in the folder for the specified item 
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <param name="pageID"></param>
+        /// <param name="ocrTextPath"></param>
+        /// <returns></returns>
+        public bool ItemCheckForOcrText( int itemID, string ocrTextPath, bool useRemoteProvider )
 		{
 			try
 			{
@@ -239,6 +282,11 @@ namespace MOBOT.BHL.Server
         public CustomGenericList<Item> ItemSelectByInstitution(string institutionCode, int returnCode, string sortBy)
         {
             return new ItemDAL().ItemSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
+        }
+
+        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, int numRows, int pageNum, string sortColumn, string sortOrder)
+        {
+            return new ItemDAL().ItemSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, numRows, pageNum, sortColumn, sortOrder);
         }
 
         public int ItemCountByInstitution(string institutionCode)
