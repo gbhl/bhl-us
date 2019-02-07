@@ -33,6 +33,6 @@ ELSE
 	FROM	dbo.Item i 
 			LEFT JOIN dbo.Language l ON i.LanguageCode = l.LanguageCode
 			INNER JOIN dbo.ItemSource s ON i.ItemSourceID = s.ItemSourceID
-			INNER JOIN dbo.SearchCatalog c ON c.ItemID = i.ItemID
+			INNER JOIN dbo.SearchCatalog c ON c.ItemID = i.ItemID AND c.TitleID = i.PrimaryTitleID
 	WHERE	i.Barcode = @Barcode
 	AND		i.ItemStatusID = 40
