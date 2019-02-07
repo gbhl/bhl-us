@@ -42,9 +42,6 @@ CREATE TABLE #Step1
 	Rights nvarchar(max) NOT NULL,
 	LicenseUrl nvarchar(max) NOT NULL,
 	DueDiligence nvarchar(max) NOT NULL,
-	ContributorTextString nvarchar(max) NOT NULL,
-	RightsHolderTextString nvarchar(max) NOT NULL,
-	ScanningInstitutionTextString nvarchar(max) NOT NULL,
 	CreationDate datetime NOT NULL,
 	LastModifiedDate datetime NOT NULL
 	)
@@ -69,9 +66,6 @@ BEGIN
 			ISNULL(i.Rights, ''),
 			ISNULL(i.LicenseUrl, ''),
 			ISNULL(i.DueDiligence, ''),
-			dbo.fnInstitutionStringForItem(i.ItemID, @HoldingInstitutionID) AS ContributorTextString,
-			dbo.fnInstitutionStringForItem(i.ItemID, @RightsHolderID) AS RightsHolderTextString,
-			dbo.fnInstitutionStringForItem(i.ItemID, @ScanningInstitutionID) AS ScanningInstitutionTextString,
 			i.CreationDate,
 			i.LastModifiedDate
 	FROM	dbo.Item i WITH (NOLOCK)
@@ -100,9 +94,6 @@ BEGIN
 			ISNULL(i.Rights, ''),
 			ISNULL(i.LicenseUrl, ''),
 			ISNULL(i.DueDiligence, ''),
-			dbo.fnInstitutionStringForItem(i.ItemID, @HoldingInstitutionID) AS ContributorTextString,
-			dbo.fnInstitutionStringForItem(i.ItemID, @RightsHolderID) AS RightsHolderTextString,
-			dbo.fnInstitutionStringForItem(i.ItemID, @ScanningInstitutionID) AS ScanningInstitutionTextString,
 			i.CreationDate,
 			i.LastModifiedDate
 	FROM	dbo.Item i WITH (NOLOCK)
@@ -130,9 +121,6 @@ CREATE TABLE #Step2
 	Rights nvarchar(max) NOT NULL,
 	LicenseUrl nvarchar(max) NOT NULL,
 	DueDiligence nvarchar(max) NOT NULL,
-	ContributorTextString nvarchar(max) NOT NULL,
-	RightsHolderTextString nvarchar(max) NOT NULL,
-	ScanningInstitutionTextString nvarchar(max) NOT NULL,
 	CreationDate datetime NOT NULL,
 	LastModifiedDate datetime NOT NULL,
 	RowNumber int NOT NULL
@@ -221,9 +209,9 @@ SELECT TOP (@NumRows)
 		Rights,
 		LicenseUrl,
 		DueDiligence,
-		ContributorTextString,
-		RightsHolderTextString,
-		ScanningInstitutionTextString,
+		dbo.fnInstitutionStringForItem(ItemID, @HoldingInstitutionID) AS ContributorTextString,
+		dbo.fnInstitutionStringForItem(ItemID, @RightsHolderID) AS RightsHolderTextString,
+		dbo.fnInstitutionStringForItem(ItemID, @ScanningInstitutionID) AS ScanningInstitutionTextString,
 		CreationDate,
 		LastModifiedDate,
 		@TotalItems AS TotalItems
