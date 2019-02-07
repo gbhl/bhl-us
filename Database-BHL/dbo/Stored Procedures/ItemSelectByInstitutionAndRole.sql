@@ -14,6 +14,15 @@ BEGIN
 SET NOCOUNT ON
 
 DECLARE @TotalItems INT
+DECLARE @HoldingInstitutionID INT
+DECLARE @RightsHolderID INT
+DECLARE @ScanningInstitutionID INT
+
+SELECT @RightsHolderID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Rights Holder'
+SELECT @ScanningInstitutionID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Scanning Institution'
+SELECT @HoldingInstitutionID = InstitutionRoleID FROM dbo.InstitutionRole WHERE InstitutionRoleName = 'Holding Institution'
+
+
 
 -- Create a temp table for the initial data set
 CREATE TABLE #Step1
@@ -33,33 +42,75 @@ CREATE TABLE #Step1
 	Rights nvarchar(max) NOT NULL,
 	LicenseUrl nvarchar(max) NOT NULL,
 	DueDiligence nvarchar(max) NOT NULL,
-	CreationDate datetime NOT NULL
+	ContributorTextString nvarchar(max) NOT NULL,
+	RightsHolderTextString nvarchar(max) NOT NULL,
+	ScanningInstitutionTextString nvarchar(max) NOT NULL,
+	CreationDate datetime NOT NULL,
+	LastModifiedDate datetime NOT NULL
 	)
 	
 -- Get the initial data set
-INSERT #Step1
-SELECT	i.ItemID,
-		i.BarCode,
-		t.FullTitle AS TitleName, 
-		t.SortTitle,
-		ISNULL(i.Volume, ''),
-		i.StartVolume,
-		i.StartIssue,
-		i.StartNumber,
-		i.StartSeries,
-		CASE WHEN ISNULL(i.Year, '') = '' THEN ISNULL(CONVERT(nvarchar(20), t.StartYear), '') ELSE i.Year END,
-		c.Authors AS CreatorTextString,
-		i.CopyrightStatus,
-		i.Rights,
-		i.LicenseUrl,
-		i.DueDiligence,
-		i.CreationDate
-FROM	dbo.Item i WITH (NOLOCK)
-		INNER JOIN dbo.Title t WITH (NOLOCK)ON i.PrimaryTitleID = t.TitleID
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
-		INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
-WHERE	ii.InstitutionCode = @InstitutionCode
-AND		ii.InstitutionRoleID = @InstitutionRoleID
+IF (@InstitutionCode = '')
+BEGIN
+	-- Look for items where NO institution has been assigned to the specified role
+	INSERT #Step1
+	SELECT	i.ItemID,
+			i.BarCode,
+			t.FullTitle AS TitleName, 
+			t.SortTitle,
+			ISNULL(i.Volume, ''),
+			i.StartVolume,
+			i.StartIssue,
+			i.StartNumber,
+			i.StartSeries,
+			CASE WHEN ISNULL(i.Year, '') = '' THEN ISNULL(CONVERT(nvarchar(20), t.StartYear), '') ELSE i.Year END,
+			c.Authors AS CreatorTextString,
+			ISNULL(i.CopyrightStatus, ''),
+			ISNULL(i.Rights, ''),
+			ISNULL(i.LicenseUrl, ''),
+			ISNULL(i.DueDiligence, ''),
+			dbo.fnInstitutionStringForItem(i.ItemID, @HoldingInstitutionID) AS ContributorTextString,
+			dbo.fnInstitutionStringForItem(i.ItemID, @RightsHolderID) AS RightsHolderTextString,
+			dbo.fnInstitutionStringForItem(i.ItemID, @ScanningInstitutionID) AS ScanningInstitutionTextString,
+			i.CreationDate,
+			i.LastModifiedDate
+	FROM	dbo.Item i WITH (NOLOCK)
+			INNER JOIN dbo.Title t WITH (NOLOCK)ON i.PrimaryTitleID = t.TitleID
+			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
+			LEFT JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID AND ii.InstitutionRoleID = @InstitutionRoleID
+	WHERE	ii.InstitutionRoleID IS NULL
+	AND		@InstitutionRoleID IN (SELECT InstitutionRoleID FROM dbo.InstitutionRole)
+END
+ELSE
+BEGIN
+	-- Look for items where the specified institution has been assigned to the specified role
+	INSERT #Step1
+	SELECT	i.ItemID,
+			i.BarCode,
+			t.FullTitle AS TitleName, 
+			t.SortTitle,
+			ISNULL(i.Volume, ''),
+			i.StartVolume,
+			i.StartIssue,
+			i.StartNumber,
+			i.StartSeries,
+			CASE WHEN ISNULL(i.Year, '') = '' THEN ISNULL(CONVERT(nvarchar(20), t.StartYear), '') ELSE i.Year END,
+			c.Authors AS CreatorTextString,
+			ISNULL(i.CopyrightStatus, ''),
+			ISNULL(i.Rights, ''),
+			ISNULL(i.LicenseUrl, ''),
+			ISNULL(i.DueDiligence, ''),
+			dbo.fnInstitutionStringForItem(i.ItemID, @HoldingInstitutionID) AS ContributorTextString,
+			dbo.fnInstitutionStringForItem(i.ItemID, @RightsHolderID) AS RightsHolderTextString,
+			dbo.fnInstitutionStringForItem(i.ItemID, @ScanningInstitutionID) AS ScanningInstitutionTextString,
+			i.CreationDate,
+			i.LastModifiedDate
+	FROM	dbo.Item i WITH (NOLOCK)
+			INNER JOIN dbo.Title t WITH (NOLOCK)ON i.PrimaryTitleID = t.TitleID
+			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
+			INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID AND ii.InstitutionRoleID = @InstitutionRoleID
+	WHERE	ii.InstitutionCode = @InstitutionCode
+END
 
 -- Create a temp table for the second step
 CREATE TABLE #Step2
@@ -79,7 +130,11 @@ CREATE TABLE #Step2
 	Rights nvarchar(max) NOT NULL,
 	LicenseUrl nvarchar(max) NOT NULL,
 	DueDiligence nvarchar(max) NOT NULL,
+	ContributorTextString nvarchar(max) NOT NULL,
+	RightsHolderTextString nvarchar(max) NOT NULL,
+	ScanningInstitutionTextString nvarchar(max) NOT NULL,
 	CreationDate datetime NOT NULL,
+	LastModifiedDate datetime NOT NULL,
 	RowNumber int NOT NULL
 	)
 
@@ -166,7 +221,11 @@ SELECT TOP (@NumRows)
 		Rights,
 		LicenseUrl,
 		DueDiligence,
+		ContributorTextString,
+		RightsHolderTextString,
+		ScanningInstitutionTextString,
 		CreationDate,
+		LastModifiedDate,
 		@TotalItems AS TotalItems
 FROM	#Step2
 WHERE	RowNumber > (@PageNum - 1) * @NumRows

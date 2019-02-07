@@ -31,15 +31,14 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public ItemInstitution ItemInstitutionSelectByItemInstitutionAndRole(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            int itemID, string institutionCode, int institutionRoleID)
+        public ItemInstitution ItemInstitutionSelectByItemAndRole(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemID, int institutionRoleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInstitutionSelectByItemInstitutionAndRole", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInstitutionSelectByItemAndRole", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 100, false, institutionCode),
                     CustomSqlHelper.CreateInputParameter("InstitutionRoleID", SqlDbType.Int, null, false, institutionRoleID)))
             {
                 using (CustomSqlHelper<ItemInstitution> helper = new CustomSqlHelper<ItemInstitution>())

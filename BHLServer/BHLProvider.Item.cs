@@ -158,23 +158,53 @@ namespace MOBOT.BHL.Server
         /// <param name="roleID"></param>
         /// <returns>Array of two elements. First element contains "true" or "false".  Second element 
         /// contains message detailing the success or error.</returns>
-        public string[] ItemUpdateInstitution(int itemID, string originalInstitution, string newInstitution, int roleID, int userID)
+        public string[] ItemUpdateInstitution(int itemID, string newInstitution, int roleID, int userID)
         {
-            string[] results = new string[2];
+            string[] results = new string[3];
             string returnValue = "true";
             string returnMessage = string.Empty;
 
             try
             {
-                ItemInstitutionDAL dal = new ItemInstitutionDAL();
+                ItemDAL iDAL = new ItemDAL();
+                ItemInstitutionDAL iiDAL = new ItemInstitutionDAL();
 
-                ItemInstitution savedItemInstitution = dal.ItemInstitutionSelectByItemInstitutionAndRole(null, null, itemID, originalInstitution, roleID);
-                if (savedItemInstitution != null)
+                Item savedItem = iDAL.ItemSelectAuto(null, null, itemID);
+                ItemInstitution savedItemInstitution = iiDAL.ItemInstitutionSelectByItemAndRole(null, null, itemID, roleID);
+                if (savedItem != null)
                 {
-                    savedItemInstitution.InstitutionCode = newInstitution;
-                    savedItemInstitution.LastModifiedDate = DateTime.Now;
-                    savedItemInstitution.LastModifiedUserID = userID;
-                    savedItemInstitution = dal.ItemInstitutionUpdateAuto(null, null, savedItemInstitution);
+                    DateTime updateDate = DateTime.Now;
+
+                    if (savedItemInstitution == null)
+                    {
+                        // Role not assigned previously, so add a new record
+                        ItemInstitution newItemInstitution = new ItemInstitution();
+                        newItemInstitution.ItemID = itemID;
+                        newItemInstitution.InstitutionCode = newInstitution;
+                        newItemInstitution.InstitutionRoleID = roleID;
+                        newItemInstitution.CreationDate = updateDate;
+                        newItemInstitution.CreationUserID = userID;
+                        newItemInstitution.LastModifiedDate = updateDate;
+                        newItemInstitution.LastModifiedUserID = userID;
+                        iiDAL.ItemInstitutionInsertAuto(null, null, newItemInstitution);
+                    }
+                    else if (newInstitution == string.Empty)
+                    {
+                        // Setting new role to blank, so delete existing record
+                        iiDAL.ItemInstitutionDeleteAuto(null, null, savedItemInstitution.ItemInstitutionID);
+                    }
+                    else
+                    {
+                        // Changing role to new value, so update existing record
+                        savedItemInstitution.InstitutionCode = newInstitution;
+                        savedItemInstitution.LastModifiedDate = updateDate;
+                        savedItemInstitution.LastModifiedUserID = userID;
+                        iiDAL.ItemInstitutionUpdateAuto(null, null, savedItemInstitution);
+                    }
+
+                    savedItem.LastModifiedDate = updateDate;
+                    savedItem.LastModifiedUserID = userID;
+                    savedItem = iDAL.ItemUpdateAuto(null, null, savedItem);
                 }
                 else
                 {
@@ -189,6 +219,7 @@ namespace MOBOT.BHL.Server
 
             results[0] = returnValue;
             results[1] = returnMessage;
+            results[2] = itemID.ToString();
             return results;
         }
 

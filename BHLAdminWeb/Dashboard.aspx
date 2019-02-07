@@ -502,7 +502,7 @@
                     </tr>
                     <tr>
                         <td align="center" runat="server" id="tdRptItemsByContributor">
-                            <a href="ReportItemsByContributor.aspx">Items By Content Provider</a>
+                            <a href="ReportItemsByContentProvider.aspx">Items By Content Provider</a>
                         </td>
                     </tr>
                     <tr>

@@ -33,7 +33,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 // Write file header
                 StringBuilder csvString = new StringBuilder();
-                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\"");
+                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Scanning Institution\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();
 
@@ -49,10 +49,14 @@ namespace MOBOT.BHL.AdminWeb
                     csvString.Append("\"" + (item.Volume ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
                     csvString.Append("\"" + (item.Year ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
                     csvString.Append("\"" + item.AuthorListString.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", item.InstitutionStrings).Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", item.RightsHolderStrings).Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", item.ScanningInstitutionStrings).Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.CopyrightStatus.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.Rights.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.LicenseUrl.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.DueDiligence.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + item.LastModifiedDate + "\",");
                     csvString.AppendLine("\"" + item.CreationDate + "\"");
 
                     context.Response.Write(csvString.ToString());

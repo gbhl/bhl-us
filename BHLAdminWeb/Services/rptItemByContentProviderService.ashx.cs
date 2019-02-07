@@ -103,11 +103,35 @@ namespace MOBOT.BHL.AdminWeb.Services
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Year) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].AuthorListString) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].CopyrightStatus) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Rights) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].LicenseUrl) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].DueDiligence) + " </cell>");
+
+                    response.Append("<cell> ");
+                    for (int y = 0; y < searchResult[x].InstitutionStrings.Length; y++)
+                    {
+                        if (y > 0) response.Append("&lt;br/&gt;");
+                        response.Append(SecurityElement.Escape(searchResult[x].InstitutionStrings[y]));
+                    }
+                    response.Append(" </cell>");
+                    response.Append("<cell> ");
+                    for (int y = 0; y < searchResult[x].RightsHolderStrings.Length; y++)
+                    {
+                        if (y > 0) response.Append("&lt;br/&gt;");
+                        response.Append(SecurityElement.Escape(searchResult[x].RightsHolderStrings[y]));
+                    }
+                    response.Append(" </cell>");
+                    response.Append("<cell> ");
+                    for (int y = 0; y < searchResult[x].ScanningInstitutionStrings.Length; y++)
+                    {
+                        if (y > 0) response.Append("&lt;br/&gt;");
+                        response.Append(SecurityElement.Escape(searchResult[x].ScanningInstitutionStrings[y]));
+                    }
+                    response.Append(" </cell>");
+
+                    response.Append("<cell>&lt;div&gt; Copyright Status: " + SecurityElement.Escape(searchResult[x].CopyrightStatus) + " &lt;br/&gt;" + 
+                                    " Rights: " + SecurityElement.Escape(searchResult[x].Rights) + " &lt;br/&gt;" + 
+                                    " License Type: " + SecurityElement.Escape(searchResult[x].LicenseUrl) + " &lt;br/&gt;" + 
+                                    " Due Diligence: " + SecurityElement.Escape(searchResult[x].DueDiligence) + " &lt;/div&gt;</cell>");
                     response.Append("<cell> " + SecurityElement.Escape(((DateTime)searchResult[x].CreationDate).ToString("yyyy/MM/dd HH:mm:ss")) + " </cell>");
+                    response.Append("<cell> " + SecurityElement.Escape(((DateTime)searchResult[x].LastModifiedDate).ToString("yyyy/MM/dd HH:mm:ss")) + " </cell>");
                     response.Append("</row>");
                 }
                 response.Append("</rows>");

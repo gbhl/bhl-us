@@ -50,8 +50,10 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
-                ddlInstitutions.Items.Add(new ListItem("(select content provider)", ""));
-                ddlInstitutionChange.Items.Add(new ListItem("(select content provider)", ""));
+                ddlInstitutions.Items.Add(new ListItem("(select content provider)", "^^^^^^^^"));
+                ddlInstitutions.Items.Add(new ListItem("- UNASSIGNED -", ""));
+                ddlInstitutionChange.Items.Add(new ListItem("(select content provider)", "^^^^^^^^"));
+                ddlInstitutionChange.Items.Add(new ListItem("- UNASSIGNED -", ""));
                 foreach (Institution institution in institutions)
                 {
                     ListItem li = new ListItem(institution.InstitutionName, institution.InstitutionCode);
@@ -61,12 +63,14 @@ namespace MOBOT.BHL.AdminWeb
 
                 CustomGenericList<InstitutionRole> roles = bp.InstitutionRoleSelectAll();
                 ddlInstitutionRoles.Items.Add(new ListItem("(select role)", ""));
+                ddlInstitutionRoleChange.Items.Add(new ListItem("(select field to update)", ""));
                 foreach (InstitutionRole role in roles)
                 {
                     if (role.InstitutionRoleName != "Contributor" && role.InstitutionRoleName != "External Content Holder")
                     {
                         ListItem li = new ListItem(role.InstitutionRoleName, role.InstitutionRoleID.ToString());
                         ddlInstitutionRoles.Items.Add(li);
+                        ddlInstitutionRoleChange.Items.Add(li);
                     }
                 }
             }
@@ -86,11 +90,15 @@ namespace MOBOT.BHL.AdminWeb
             if (Validate(out msg))
             {
                 litDisplayed.Text =
-                    (ddlInstitutions.SelectedValue == string.Empty || ddlInstitutionRoles.SelectedValue == string.Empty) ?
+                    (ddlInstitutions.SelectedValue == "^^^^^^^^" || ddlInstitutionRoles.SelectedValue == string.Empty) ?
                     string.Empty :
-                    string.Format("Items from <b>{0}</b> in <b>{1}</b> role.", ddlInstitutions.SelectedItem.Text, ddlInstitutionRoles.SelectedItem.Text);
+                    (string.IsNullOrWhiteSpace(ddlInstitutions.SelectedValue)) ?
+                        string.Format("Items where the <b>{1}</b> role is <b>{0}</b>.", ddlInstitutions.SelectedItem.Text, ddlInstitutionRoles.SelectedItem.Text) :
+                        string.Format("Items from <b>{0}</b> in the <b>{1}</b> role.", ddlInstitutions.SelectedItem.Text, ddlInstitutionRoles.SelectedItem.Text);
                 selectedInstitutionCode = ddlInstitutions.SelectedValue;
                 selectedRoleID = ddlInstitutionRoles.SelectedValue;
+                ddlInstitutionChange.SelectedIndex = 0;
+                ddlInstitutionRoleChange.SelectedIndex = 0;
                 litUpdateResult.Text = string.Empty;
             }
             else
@@ -116,7 +124,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             msg = string.Empty;
 
-            bool valid = !string.IsNullOrEmpty(ddlInstitutions.SelectedValue) && !string.IsNullOrEmpty(ddlInstitutionRoles.SelectedValue);
+            bool valid = ddlInstitutions.SelectedValue != "^^^^^^^^" && !string.IsNullOrEmpty(ddlInstitutionRoles.SelectedValue);
             if (!valid) msg = "Please select a content provider and a role";
 
             return valid;
@@ -132,7 +140,12 @@ namespace MOBOT.BHL.AdminWeb
             string updateMsg = string.Empty;
             litUpdateResult.Text = string.Empty;
 
-            if (string.IsNullOrEmpty(ddlInstitutionChange.SelectedValue))
+            if (string.IsNullOrEmpty(ddlInstitutionRoleChange.SelectedValue))
+            {
+                updateMsg = "Please select a field to update in the selected items";
+            }
+            else
+            if (ddlInstitutionChange.SelectedValue == "^^^^^^^^")
             {
                 updateMsg = "Please select a new content provider to assign to the selected items";
             }
@@ -159,8 +172,8 @@ namespace MOBOT.BHL.AdminWeb
                             {
                                 string id = ids[x].Replace("jqg_list_", "");
                                 // Call the web service to update the item
-                                string[] wsResponse = service.ItemUpdateInstitution(Convert.ToInt32(id), ddlInstitutions.SelectedValue,
-                                    ddlInstitutionChange.SelectedValue, Convert.ToInt32(ddlInstitutionRoles.SelectedValue), userID);
+                                string[] wsResponse = service.ItemUpdateInstitution(Convert.ToInt32(id), 
+                                    ddlInstitutionChange.SelectedValue, Convert.ToInt32(ddlInstitutionRoleChange.SelectedValue), userID);
 
                                 // Check for any errors
                                 if (wsResponse[0] != "true")

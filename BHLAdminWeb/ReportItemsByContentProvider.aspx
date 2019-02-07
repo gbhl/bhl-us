@@ -30,7 +30,7 @@
         <table id="list"></table>
         <div id="pager"></div>
     </div>
-    Change Content Provider of Selected Items to:&nbsp;<asp:DropDownList ID="ddlInstitutionChange" runat="server"></asp:DropDownList>&nbsp;<asp:Button ID="btnChange" runat="server" Text="Update" OnClientClick="return getSelected();" OnClick="btnChange_Click" />
+    Change&nbsp;<asp:DropDownList ID="ddlInstitutionRoleChange" runat="server"></asp:DropDownList>&nbsp;of Selected Items to:&nbsp;<asp:DropDownList ID="ddlInstitutionChange" runat="server"></asp:DropDownList>&nbsp;<asp:Button ID="btnChange" runat="server" Text="Update" OnClientClick="return getSelected();" OnClick="btnChange_Click" />
     <asp:HiddenField ID="hidSelected" runat="server" ClientIDMode="Static" /><br />
     <asp:Literal ID="litUpdateResult" runat="server"></asp:Literal>
 
@@ -40,19 +40,20 @@
                 url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Item ID', 'IA Identifier', 'Title', 'Volume', 'Year', 'Authors', 'Copyright Status', 'Rights', 'License Type', 'Due Diligence', 'Date Added'],    // column names
+                colNames: ['Item ID', 'IA Identifier', 'Title', 'Volume', 'Year', 'Authors', 'Holding Institution', 'Rights Holder', 'Scanning Institution', 'Rights/Licensing', 'Date Added', 'Date Updated'],    // column names
                 colModel: [
-                  { name: 'ItemID', index: 'ItemID', sortable: false },
+                  { name: 'ItemID', index: 'ItemID', sortable: false, width: 60 },
                   { name: 'Barcode', index: 'Barcode', sortable: false },
-                  { name: 'TitleName', index: 'TitleName' },
+                  { name: 'TitleName', index: 'TitleName', cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' } },
                   { name: 'Volume', index: 'Volume', sortable: false },
-                  { name: 'Year', index: 'Year', sortable: false },
-                  { name: 'AuthorListString', index: 'AuthorListString', sortable: false },
-                  { name: 'CopyrightStatus', index: 'CopyrightStatus', sortable: false },
+                  { name: 'Year', index: 'Year', sortable: false, width: 75},
+                  { name: 'AuthorListString', index: 'AuthorListString', sortable: false, cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' } },
+                  { name: 'HoldingInstitution', index: 'HoldingInstitution', sortable: false },
+                  { name: 'RightsHolder', index: 'RightsHolder', sortable: false },
+                  { name: 'ScanningInstitution', index: 'ScanningInstitution', sortable: false },
                   { name: 'Rights', index: 'Rights', sortable: false },
-                  { name: 'LicenseUrl', index: 'LicenseUrl', sortable: false },
-                  { name: 'DueDiligence', index: 'DueDiligence', sortable: false },
-                  { name: 'CreationDate', index: 'CreationDate' }
+                  { name: 'CreationDate', index: 'CreationDate', cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' }, width: 75 },
+                  { name: 'LastModifiedDate', index: 'LastModifiedDate', sortable: false, cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' }, width: 75 }
                 ],  // model of the columns to display
                 pager: '#pager',    // show a pager bar for record navigation
                 rowNum: 200,    // rows in grid

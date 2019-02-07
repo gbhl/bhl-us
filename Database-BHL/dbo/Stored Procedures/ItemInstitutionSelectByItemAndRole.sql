@@ -1,7 +1,6 @@
-﻿CREATE PROCEDURE dbo.ItemInstitutionSelectByItemInstitutionAndRole
+﻿CREATE PROCEDURE dbo.ItemInstitutionSelectByItemAndRole
 
 @ItemID int,
-@InstitutionCode nvarchar(10),
 @InstitutionRoleID int
 
 AS
@@ -20,7 +19,6 @@ SELECT	ItemInstitutionID,
 		LastModifiedUserID
 FROM	dbo.ItemInstitution
 WHERE	ItemID = @ItemID
-AND		InstitutionCode = @InstitutionCode
 AND		InstitutionRoleID = @InstitutionRoleID
 
 END
