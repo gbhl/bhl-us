@@ -41,7 +41,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     // Write record
                     csvString.Remove(0, csvString.Length);
-                    csvString.Append("\"" + institution.InstitutionName.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + ((institution != null) ? institution.InstitutionName.Replace(",", " ") : "- UNASSIGNED - ") + "\",");
                     csvString.Append("\"" + institutionRole.InstitutionRoleLabel.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.ItemID.ToString() + "\",");
                     csvString.Append("\"" + item.BarCode + "\",");
@@ -80,6 +80,7 @@ namespace MOBOT.BHL.AdminWeb
             context.Response.ClearHeaders();
             context.Response.Buffer = true;
             context.Response.ContentType = contentType;
+            context.Response.ContentEncoding = Encoding.UTF8;
             context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
         }
 
