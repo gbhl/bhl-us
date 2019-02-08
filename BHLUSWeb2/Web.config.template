@@ -257,7 +257,7 @@
     </mailSettings>
   </system.net>
   <system.webServer>
-    <httpErrors>
+    <httpErrors existingResponse="PassThrough">
       <remove statusCode="404" subStatusCode="-1" />
       <error statusCode="404" prefixLanguageFilePath="" path="/404.aspx" responseMode="ExecuteURL" />
     </httpErrors>

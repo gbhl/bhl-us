@@ -67,6 +67,7 @@
     <Compile Include="Api3.cs" />
     <Compile Include="Api2.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="InvalidApiParamException.cs" />
     <Compile Include="ServiceResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

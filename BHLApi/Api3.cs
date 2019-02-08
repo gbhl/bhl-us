@@ -41,7 +41,7 @@ namespace MOBOT.BHL.API.BHLApi
             int pageIDInt;
             if (!Int32.TryParse(pageID, out pageIDInt))
             {
-                throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("pageID (" + pageID + ") must be a valid integer value.");
             }
 
             // "t" or "true" are acceptable values for the "include" arguments; anything else
@@ -75,7 +75,7 @@ namespace MOBOT.BHL.API.BHLApi
             int pageIDInt;
             if (!Int32.TryParse(pageID, out pageIDInt))
             {
-                throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("pageID (" + pageID + ") must be a valid integer value.");
             }
 
             // Get the names from the DAL
@@ -88,7 +88,7 @@ namespace MOBOT.BHL.API.BHLApi
             int pageIDInt;
             if (!Int32.TryParse(pageID, out pageIDInt))
             {
-                throw new Exception("pageID (" + pageID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("pageID (" + pageID + ") must be a valid integer value.");
             }
 
             System.Net.WebClient client = new System.Net.WebClient();
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(id, out itemID))
                 {
-                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                    throw new InvalidApiParamException("id (" + id + ") of type 'bhl' must be a valid integer value.");
                 }
             }
 
@@ -153,7 +153,7 @@ namespace MOBOT.BHL.API.BHLApi
                     items = dal.ItemSelectByBarcode(null, null, id);
                     break;
                 default:
-                    throw new Exception("idType must be one of the following values: bhl, ia");
+                    throw new InvalidApiParamException("idType must be one of the following values: bhl, ia");
             }
 
             // Add the extended metadata
@@ -181,7 +181,7 @@ namespace MOBOT.BHL.API.BHLApi
             int itemIDint;
             if (!Int32.TryParse(itemID, out itemIDint))
             {
-                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("itemID (" + itemID + ") must be a valid integer value.");
             }
 
             // "t" or "true" are acceptable values for the "includeOcr" argument; anything else
@@ -256,7 +256,7 @@ namespace MOBOT.BHL.API.BHLApi
             int itemIDint;
             if (!Int32.TryParse(itemID, out itemIDint))
             {
-                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("itemID (" + itemID + ") must be a valid integer value.");
             }
 
             Api3DAL dal = new Api3DAL();
@@ -301,7 +301,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(id, out titleID))
                 {
-                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                    throw new InvalidApiParamException("id (" + id + ") of type 'bhl' must be a valid integer value.");
                 }
             }
 
@@ -332,7 +332,7 @@ namespace MOBOT.BHL.API.BHLApi
                     titles = dal.TitleSelectByDOI(null, null, id);
                     break;
                 default:
-                    throw new Exception("idType must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby");
+                    throw new InvalidApiParamException("idType must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby");
             }
 
             // Add the extended metadata
@@ -356,7 +356,7 @@ namespace MOBOT.BHL.API.BHLApi
             int titleIDint;
             if (!Int32.TryParse(titleID, out titleIDint))
             {
-                throw new Exception("titleID (" + titleID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("titleID (" + titleID + ") must be a valid integer value.");
             }
 
             // Get the items
@@ -398,7 +398,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(id, out segmentID))
                 {
-                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                    throw new InvalidApiParamException("id (" + id + ") of type 'bhl' must be a valid integer value.");
                 }
             }
 
@@ -434,8 +434,8 @@ namespace MOBOT.BHL.API.BHLApi
                     parts = dal.SegmentSelectByDOI(null, null, id);
                     break;
                 default:
-                    //throw new Exception("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
-                    throw new Exception("idType  must be one of the following values: bhl, doi, biostor, jstor, soulsby");
+                    //throw new InvalidApiParamException("idType  must be one of the following values: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby");
+                    throw new InvalidApiParamException("idType  must be one of the following values: bhl, doi, biostor, jstor, soulsby");
             }
 
             // Add the extended metadata
@@ -464,7 +464,7 @@ namespace MOBOT.BHL.API.BHLApi
             int segmentIDInt;
             if (!Int32.TryParse(segmentID, out segmentIDInt))
             {
-                throw new Exception("segmentID (" + segmentID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("segmentID (" + segmentID + ") must be a valid integer value.");
             }
 
             // Get the names from the DAL
@@ -592,7 +592,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(id, out authorID))
                 {
-                    throw new Exception("id (" + id + ") of type 'bhl' must be a valid integer value.");
+                    throw new InvalidApiParamException("id (" + id + ") of type 'bhl' must be a valid integer value.");
                 }
             }
 
@@ -613,7 +613,7 @@ namespace MOBOT.BHL.API.BHLApi
                     authors = dal.AuthorSelectByIdentifier(null, null, idType, id);
                     break;
                 default:
-                    throw new Exception("idType  must be one of the following values: bhl, biostor, viaf");
+                    throw new InvalidApiParamException("idType  must be one of the following values: bhl, biostor, viaf");
             }
 
             // Add the extended metadata
@@ -634,7 +634,7 @@ namespace MOBOT.BHL.API.BHLApi
             int creatorIDint;
             if (!Int32.TryParse(creatorID, out creatorIDint))
             {
-                throw new Exception("creatorID (" + creatorID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("creatorID (" + creatorID + ") must be a valid integer value.");
             }
 
             Api3DAL dal = new Api3DAL();
@@ -674,7 +674,7 @@ namespace MOBOT.BHL.API.BHLApi
         private Name GetNameDetail(string nameConfirmed)
         {
             // Validate the input
-            if (string.IsNullOrWhiteSpace(nameConfirmed)) throw new Exception("Please supply a Name.");
+            if (string.IsNullOrWhiteSpace(nameConfirmed)) throw new InvalidApiParamException("Please supply a Name.");
 
             CustomGenericList<PageDetail> pageDetails = null;
             pageDetails = new Api3DAL().PageSelectByNameConfirmed(null, null, nameConfirmed);
@@ -685,7 +685,7 @@ namespace MOBOT.BHL.API.BHLApi
         private Name GetNameDetailByIdentifier(string identifierType, string identifierValue)
         {
             // Validate the input
-            if (string.IsNullOrWhiteSpace(identifierType) || string.IsNullOrWhiteSpace(identifierValue)) throw new Exception("Please supply an identifier Type and Value.");
+            if (string.IsNullOrWhiteSpace(identifierType) || string.IsNullOrWhiteSpace(identifierValue)) throw new InvalidApiParamException("Please supply an identifier Type and Value.");
 
             string identifierName = string.Empty;
             switch (identifierType)
@@ -710,7 +710,7 @@ namespace MOBOT.BHL.API.BHLApi
                     identifierName = "WoRMS"; break;
             }
 
-            if (string.IsNullOrWhiteSpace(identifierName)) throw new Exception("Please supply one of the following identifier Types: namebank, eol, gni, ion, col, gbif, itis, ipni, worms.");
+            if (string.IsNullOrWhiteSpace(identifierName)) throw new InvalidApiParamException("Please supply one of the following identifier Types: namebank, eol, gni, ion, col, gbif, itis, ipni, worms.");
 
             CustomGenericList<PageDetail> pageDetails = null;
             pageDetails = new Api3DAL().PageSelectByNameIdentifier(null, null, identifierName, identifierValue);
@@ -830,7 +830,7 @@ namespace MOBOT.BHL.API.BHLApi
             double batchSizeDouble;
             if (!Double.TryParse(startRow, out startRowDouble))
             {
-                throw new Exception("startRow (" + startRow + ") must be a valid integer value.");
+                throw new InvalidApiParamException("startRow (" + startRow + ") must be a valid integer value.");
             }
             else
             {
@@ -838,7 +838,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
             if (!Double.TryParse(batchSize, out batchSizeDouble))
             {
-                throw new Exception("batchSize (" + batchSize + ") must be a valid integer value.");
+                throw new InvalidApiParamException("batchSize (" + batchSize + ") must be a valid integer value.");
             }
             else
             {
@@ -847,7 +847,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             if (batchSizeValid > 1000)
             {
-                throw new Exception("batchSize (" + batchSize + ") must be between 1 and 1000.");
+                throw new InvalidApiParamException("batchSize (" + batchSize + ") must be between 1 and 1000.");
             }
         }
 
@@ -892,14 +892,14 @@ namespace MOBOT.BHL.API.BHLApi
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
-                throw new Exception("Please supply a searchterm for which to search.");
+                throw new InvalidApiParamException("Please supply a searchterm for which to search.");
             }
 
             if (string.IsNullOrWhiteSpace(searchType)) searchType = "F";  // Default to "F" (full-text search)
             List<string> types = new List<string> { "F", "C" };
             if (!types.Contains(searchType.ToUpper()))
             {
-                throw new Exception("searchtype (" + searchType + ") must be one of the following values: F, C");
+                throw new InvalidApiParamException("searchtype (" + searchType + ") must be one of the following values: F, C");
             }
 
             int pageInt = 1;
@@ -907,12 +907,27 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(page, out pageInt))
                 {
-                    throw new Exception("page (" + page + ") must be a valid integer value.");
+                    throw new InvalidApiParamException("page (" + page + ") must be a valid integer value.");
                 }
 
+                /*
+                 * Page must be between 1 and 50.  
+                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
+                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
+                 * following error:  
+                 *  Result window is too large, from + size must be less than or equal to: [10000] 
+                 *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
+                 *  data sets. This limit can be set by changing the [index.max_result_window] index 
+                 *  level setting.
+                 */
                 if (pageInt < 1)
                 {
-                    throw new Exception("page (" + page + ") must be greater than zero.");
+                    throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
+                }
+
+                if (pageInt > 50)
+                {
+                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
                 }
             }
 
@@ -937,7 +952,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
                 string.IsNullOrWhiteSpace(collectionID))
             {
-                throw new Exception("Please supply a title, author last name, or collection ID for which to search.");
+                throw new InvalidApiParamException("Please supply a title, author last name, or collection ID for which to search.");
             }
 
             if (string.IsNullOrWhiteSpace(titleOp)) titleOp = "All";  // Default to "All" (an AND search)
@@ -950,7 +965,7 @@ namespace MOBOT.BHL.API.BHLApi
                     titleOp = "P";
                     break;
                 default:
-                    throw new Exception("titleop (" + titleOp + ") must be one of the following values: All, Phrase");
+                    throw new InvalidApiParamException("titleop (" + titleOp + ") must be one of the following values: All, Phrase");
             }
 
             if (string.IsNullOrWhiteSpace(textOp)) textOp = "All";  // Default to "All" (an AND search)
@@ -963,7 +978,7 @@ namespace MOBOT.BHL.API.BHLApi
                     textOp = "P";
                     break;
                 default:
-                    throw new Exception("textop (" + textOp + ") must be one of the following values: All, Phrase");
+                    throw new InvalidApiParamException("textop (" + textOp + ") must be one of the following values: All, Phrase");
             }
 
             int yearInt = 0;
@@ -971,7 +986,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(year, out yearInt))
                 {
-                    throw new Exception("year (" + year + ") must be a valid integer value.");
+                    throw new InvalidApiParamException("year (" + year + ") must be a valid integer value.");
                 }
             }
 
@@ -980,7 +995,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(collectionID, out collectionIDint))
                 {
-                    throw new Exception("collection (" + collectionID + ") must be a valid integer value.");
+                    throw new InvalidApiParamException("collection (" + collectionID + ") must be a valid integer value.");
                 }
             }
 
@@ -989,12 +1004,27 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 if (!Int32.TryParse(page, out pageInt))
                 {
-                    throw new Exception("page (" + page + ") must be a valid integer value.");
+                    throw new InvalidApiParamException("page (" + page + ") must be a valid integer value.");
                 }
 
+                /*
+                 * Page must be between 1 and 50.  
+                 * Total results must be less than 10000.  With a page size of 200 results, 50 pages 
+                 * is the maximum.  If page greater than 50 is requested, ElasticSearch returns the 
+                 * following error:  
+                 *  Result window is too large, from + size must be less than or equal to: [10000] 
+                 *  but was [XXXXX]. See the scroll api for a more efficient way to request large 
+                 *  data sets. This limit can be set by changing the [index.max_result_window] index 
+                 *  level setting.
+                 */
                 if (pageInt < 1)
                 {
-                    throw new Exception("page (" + page + ") must be greater than zero.");
+                    throw new InvalidApiParamException("page (" + page + ") must be greater than zero.");
+                }
+
+                if (pageInt > 50)
+                {
+                    throw new InvalidApiParamException("page (" + page + ") must be less than or equal to 50.");
                 }
             }
 
@@ -1152,9 +1182,9 @@ namespace MOBOT.BHL.API.BHLApi
                         pub.Contributors.Add(new Contributor { ContributorName = contributor });
                     }
                     */
-                }
+            }
 
-                pub.Title = hit.Title;
+            pub.Title = hit.Title;
                 pub.Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume);
                 //pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url);
@@ -1678,7 +1708,7 @@ namespace MOBOT.BHL.API.BHLApi
         {
             if (name == String.Empty)
             {
-                throw new Exception("Please supply a name for which to search.");
+                throw new InvalidApiParamException("Please supply a name for which to search.");
             }
 
             CustomGenericList<Name> names = new CustomGenericList<Name>();
@@ -1712,11 +1742,11 @@ namespace MOBOT.BHL.API.BHLApi
             int itemIDint;
             if (!Int32.TryParse(itemID, out itemIDint))
             {
-                throw new Exception("itemID (" + itemID + ") must be a valid integer value.");
+                throw new InvalidApiParamException("itemID (" + itemID + ") must be a valid integer value.");
             }
             if (text == String.Empty)
             {
-                throw new Exception("Please supply text for which to search.");
+                throw new InvalidApiParamException("Please supply text for which to search.");
             }
 
             CustomGenericList<Page> pages = new CustomGenericList<Page>();
