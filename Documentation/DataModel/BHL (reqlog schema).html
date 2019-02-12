@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+<style>
+      .table {
+        background-color:#F5F5FF;
+        border-left:4px solid gray;
+        border-bottom:4px solid gray;
+        border-top:4px solid gray;
+        border-right:4px solid gray;
+        margin-bottom:3em;
+        margin-left:2em;
+        margin-right:2em;
+        padding:1em;
+      }
+      .tableNameHeading h1 {
+          display: inline;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-size:125%;
+        font-weight:bold;
+      }
+        
+      .tableNameHeading h2 {
+        display: inline;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-size:115%;
+        font-weight:normal;
+      }
+      
+      .tableComment { 
+        background-color:#e4efff; margin-bottom:20px;
+      }
+      
+      .tableDefinition { 
+        padding:2px;
+        border-collapse:collapse;
+        margin-top:1em;
+      }
+
+      .tdTableDefinition {
+        padding-right:10px;
+        vertical-align:top;
+        border-top:1px solid #C0C0C0;
+      }
+
+      .tdLogicalColName {
+        width:20em;
+      }
+      
+      .tdPhysicalColName {
+        width:20em;
+      }
+      
+      .tdDataType {
+        width:10em;
+      }
+
+      .tdPkFlag {
+        width:4em;
+      }
+
+      .tdNullFlag {
+        width:9em;
+      }
+
+      .tdTableHeading {
+        padding:2px;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-weight: bold;
+        vertical-align:top;
+        border-bottom: 1px solid #C0C0C0;
+        background-color: rgb(240,240,240);
+      }
+      
+      .subTitle {
+        font-family: Segoe UI, Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      .references {
+      }
+      .comment {
+        color:#666666;
+        margin-left:3em;
+        padding:0.25em;
+      }
+    </style>
+<title>BHL (reqlog schema)</title>
+</head>
+<body>
+<center>
+<h2>BHL (reqlog schema)</h2>
+</center>
+<h3>List of tables</h3>
+<ul>
+<li>
+<a href="#Application">Application</a>
+</li>
+<li>
+<a href="#RequestHistory">RequestHistory</a>
+</li>
+<li>
+<a href="#RequestHistoryByTopUsers">RequestHistoryByTopUsers</a>
+</li>
+<li>
+<a href="#RequestHistoryByType">RequestHistoryByType</a>
+</li>
+<li>
+<a href="#RequestLog">RequestLog</a>
+</li>
+<li>
+<a href="#RequestLogArchive">RequestLogArchive</a>
+</li>
+<li>
+<a href="#RequestType">RequestType</a>
+</li>
+</ul>
+<div class="tableNameHeading">
+<h1>Application<a name="Application"></a>
+</h1>
+<h2>
+      (Physical Name: Application)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID (PK)</td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationName</td><td class="tdTableDefinition">ApplicationName</td><td class="tdTableDefinition">VARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#RequestHistory">RequestHistory</a> referencing (ApplicationID)</li>
+<li>
+<a href="#RequestHistoryByTopUsers">RequestHistoryByTopUsers</a> referencing (ApplicationID)</li>
+<li>
+<a href="#RequestType">RequestType</a> referencing (ApplicationID)</li>
+<li>
+<a href="#RequestLog">RequestLog</a> referencing (ApplicationID)</li>
+<li>
+<a href="#RequestHistoryByType">RequestHistoryByType</a> referencing (ApplicationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestHistory<a name="RequestHistory"></a>
+</h1>
+<h2>
+      (Physical Name: RequestHistory)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestHistoryID (PK)</td><td class="tdTableDefinition">RequestHistoryID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID
+                &nbsp;(<a href="#Application">FK</a>)
+              </td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Application">Application</a> through (ApplicationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestHistoryByTopUsers<a name="RequestHistoryByTopUsers"></a>
+</h1>
+<h2>
+      (Physical Name: RequestHistoryByTopUsers)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestHistoryByTopUsers (PK)</td><td class="tdTableDefinition">RequestHistoryByTopUsers</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID
+                &nbsp;(<a href="#Application">FK</a>)
+              </td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RankForDate</td><td class="tdTableDefinition">RankForDate</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">VARCHAR(15)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Application">Application</a> through (ApplicationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestHistoryByType<a name="RequestHistoryByType"></a>
+</h1>
+<h2>
+      (Physical Name: RequestHistoryByType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestHistoryByTypeID (PK)</td><td class="tdTableDefinition">RequestHistoryByTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID
+                &nbsp;(<a href="#Application">FK</a>)
+              </td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">RequestDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestTypeID
+                &nbsp;(<a href="#RequestType">FK</a>)
+              </td><td class="tdTableDefinition">RequestTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">NumRequests</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#RequestType">RequestType</a> through (RequestTypeID)</li>
+<li>
+<a href="#Application">Application</a> through (ApplicationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestLog<a name="RequestLog"></a>
+</h1>
+<h2>
+      (Physical Name: RequestLog)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestLogID (PK)</td><td class="tdTableDefinition">RequestLogID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID
+                &nbsp;(<a href="#Application">FK</a>)
+              </td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">VARCHAR(15)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestTypeID
+                &nbsp;(<a href="#RequestType">FK</a>)
+              </td><td class="tdTableDefinition">RequestTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Detail</td><td class="tdTableDefinition">Detail</td><td class="tdTableDefinition">VARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#RequestType">RequestType</a> through (RequestTypeID)</li>
+<li>
+<a href="#Application">Application</a> through (ApplicationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestLogArchive<a name="RequestLogArchive"></a>
+</h1>
+<h2>
+      (Physical Name: RequestLogArchive)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestLogID (PK)</td><td class="tdTableDefinition">RequestLogID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">IPAddress</td><td class="tdTableDefinition">VARCHAR(15)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">UserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestTypeID</td><td class="tdTableDefinition">RequestTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Detail</td><td class="tdTableDefinition">Detail</td><td class="tdTableDefinition">VARCHAR(2000)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references"></div>
+</div>
+<div class="tableNameHeading">
+<h1>RequestType<a name="RequestType"></a>
+</h1>
+<h2>
+      (Physical Name: RequestType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestTypeID (PK)</td><td class="tdTableDefinition">RequestTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RequestTypeName</td><td class="tdTableDefinition">RequestTypeName</td><td class="tdTableDefinition">VARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ApplicationID
+                &nbsp;(<a href="#Application">FK</a>)
+              </td><td class="tdTableDefinition">ApplicationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Application">Application</a> through (ApplicationID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#RequestLog">RequestLog</a> referencing (RequestTypeID)</li>
+<li>
+<a href="#RequestHistoryByType">RequestHistoryByType</a> referencing (RequestTypeID)</li>
+</ul>
+</div>
+</div>
+</body>
+</html>
