@@ -200,7 +200,7 @@
             comment out the <machineKey> element.
     -->
     <machineKey decryption="AES" decryptionKey="decryption key" validation="HMACSHA256" validationKey="validation key" />
-    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" />
+    <httpRuntime requestValidationMode="2.0" executionTimeout="90" maxRequestLength="8192" relaxedUrlToFileSystemMapping="true" />
     <!-- 
             Set compilation debug="true" to insert debugging 
             symbols into the compiled page. Because this 
