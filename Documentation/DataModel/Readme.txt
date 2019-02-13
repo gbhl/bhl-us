@@ -1,16 +1,31 @@
-SQL Power Architect (http://www.sqlpower.ca/page/architect) was used to create the data diagrams, 
-and Microsoft Excel was used to create the data dictionary.
+SQL Power Architect (http://www.sqlpower.ca/page/architect) was used to create the schema diagrams, 
+and Microsoft Excel was used to create the data dictionaries.
 
-List of files:
+SCHEMA DIAGRAMS
 
-BHLDataDictionary.pdf 
-  Details of all tables and columns in the BHL database, including descriptions, in PDF format.
+Name				Database		Schema		Format
 
-BHLDataDictionary.xlsx 
-  Details of all tables and columns in the BHL database, including descriptions, in Excel format.
+BHL (annotation schema).pdf	BHL		annotation	PDF
+BHL (annotation schema).html	BHL		annotation	HTML
+BHL (audit schema).pdf		BHL		audit		PDF
+BHL (audit schema).html		BHL		audit		HTML
+BHL (dbo schema).pdf		BHL		dbo		PDF
+BHL (dbo schema).html		BHL		dbo		HTML
+BHL (import schema).pdf		BHL		import		PDF
+BHL (import schema).html		BHL		import		HTML
+BHL (reqlog schema).pdf		BHL		reqlog		PDF
+BHL (reqlog schema).html		BHL		reqlog		HTML
+BHL (txtimport schema).pdf		BHL		txtimport		PDF
+BHL (txtimport schema).html		BHL		txtimport		HTML
+BHLImport (dbo schema).pdf		BHLImport	dbo		PDF
+BHLImport (dbo schema).html	BHLImport	dbo		HTML
 
-BHLDataModel.pdf
-  PDF of the data model for the BHL database, exported from SQL Power Architect.
 
-BHLDataModel.html
-  HTML representation of the data model for the BHL database, exported from SQL Power Architect.
+DATA DICTIONARIES
+
+Name				Database		Format
+BHLDataDictionary.pdf		BHL		PDF
+BHLDataDictionary.xlsx 		BHL		Excel
+BHLImportDataDictionary.pdf		BHLImport	PDF
+BHLImportDataDictionary.xlsx 	BHLImport	Excel
+

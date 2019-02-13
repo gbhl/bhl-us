@@ -1,0 +1,1035 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+<style>
+      .table {
+        background-color:#F5F5FF;
+        border-left:4px solid gray;
+        border-bottom:4px solid gray;
+        border-top:4px solid gray;
+        border-right:4px solid gray;
+        margin-bottom:3em;
+        margin-left:2em;
+        margin-right:2em;
+        padding:1em;
+      }
+      .tableNameHeading h1 {
+          display: inline;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-size:125%;
+        font-weight:bold;
+      }
+        
+      .tableNameHeading h2 {
+        display: inline;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-size:115%;
+        font-weight:normal;
+      }
+      
+      .tableComment { 
+        background-color:#e4efff; margin-bottom:20px;
+      }
+      
+      .tableDefinition { 
+        padding:2px;
+        border-collapse:collapse;
+        margin-top:1em;
+      }
+
+      .tdTableDefinition {
+        padding-right:10px;
+        vertical-align:top;
+        border-top:1px solid #C0C0C0;
+      }
+
+      .tdLogicalColName {
+        width:20em;
+      }
+      
+      .tdPhysicalColName {
+        width:20em;
+      }
+      
+      .tdDataType {
+        width:10em;
+      }
+
+      .tdPkFlag {
+        width:4em;
+      }
+
+      .tdNullFlag {
+        width:9em;
+      }
+
+      .tdTableHeading {
+        padding:2px;
+        font-family: Segoe UI, Arial, sans-serif;
+        font-weight: bold;
+        vertical-align:top;
+        border-bottom: 1px solid #C0C0C0;
+        background-color: rgb(240,240,240);
+      }
+      
+      .subTitle {
+        font-family: Segoe UI, Arial, sans-serif;
+        font-weight: bold;
+      }
+
+      .references {
+      }
+      .comment {
+        color:#666666;
+        margin-left:3em;
+        padding:0.25em;
+      }
+    </style>
+<title>BHL (annotation schema)</title>
+</head>
+<body>
+<center>
+<h2>BHL (annotation schema)</h2>
+</center>
+<h3>List of tables</h3>
+<ul>
+<li>
+<a href="#AnnotatedItem">AnnotatedItem</a>
+</li>
+<li>
+<a href="#AnnotatedPage">AnnotatedPage</a>
+</li>
+<li>
+<a href="#AnnotatedPageCharacteristic">AnnotatedPageCharacteristic</a>
+</li>
+<li>
+<a href="#AnnotatedPageType">AnnotatedPageType</a>
+</li>
+<li>
+<a href="#AnnotatedTitle">AnnotatedTitle</a>
+</li>
+<li>
+<a href="#Annotation">Annotation</a>
+</li>
+<li>
+<a href="#Annotation_AnnotationConcept">Annotation_AnnotationConcept</a>
+</li>
+<li>
+<a href="#AnnotationConcept">AnnotationConcept</a>
+</li>
+<li>
+<a href="#AnnotationKeywordTarget">AnnotationKeywordTarget</a>
+</li>
+<li>
+<a href="#AnnotationMark">AnnotationMark</a>
+</li>
+<li>
+<a href="#AnnotationMarkType">AnnotationMarkType</a>
+</li>
+<li>
+<a href="#AnnotationNote">AnnotationNote</a>
+</li>
+<li>
+<a href="#AnnotationPolygon">AnnotationPolygon</a>
+</li>
+<li>
+<a href="#AnnotationRelation">AnnotationRelation</a>
+</li>
+<li>
+<a href="#AnnotationSource">AnnotationSource</a>
+</li>
+<li>
+<a href="#AnnotationSubject">AnnotationSubject</a>
+</li>
+<li>
+<a href="#AnnotationSubjectCategory">AnnotationSubjectCategory</a>
+</li>
+<li>
+<a href="#PageAnnotation">PageAnnotation</a>
+</li>
+</ul>
+<div class="tableNameHeading">
+<h1>AnnotatedItem<a name="AnnotatedItem"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotatedItem)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedItemID (PK)</td><td class="tdTableDefinition">AnnotatedItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedTitleID
+                &nbsp;(<a href="#AnnotatedTitle">FK</a>)
+              </td><td class="tdTableDefinition">AnnotatedTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotatedTitle">AnnotatedTitle</a> through (AnnotatedTitleID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotatedPage">AnnotatedPage</a> referencing (AnnotatedItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotatedPage<a name="AnnotatedPage"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotatedPage)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageID (PK)</td><td class="tdTableDefinition">AnnotatedPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedItemID
+                &nbsp;(<a href="#AnnotatedItem">FK</a>)
+              </td><td class="tdTableDefinition">AnnotatedItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageTypeID
+                &nbsp;(<a href="#AnnotatedPageType">FK</a>)
+              </td><td class="tdTableDefinition">AnnotatedPageTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageNumber</td><td class="tdTableDefinition">PageNumber</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotatedPageType">AnnotatedPageType</a> through (AnnotatedPageTypeID)</li>
+<li>
+<a href="#AnnotatedItem">AnnotatedItem</a> through (AnnotatedItemID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotatedPageCharacteristic">AnnotatedPageCharacteristic</a> referencing (AnnotatedPageID)</li>
+<li>
+<a href="#PageAnnotation">PageAnnotation</a> referencing (AnnotatedPageID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotatedPageCharacteristic<a name="AnnotatedPageCharacteristic"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotatedPageCharacteristic)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageCharacteristicID (PK)</td><td class="tdTableDefinition">AnnotatedPageCharacteristicID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageID
+                &nbsp;(<a href="#AnnotatedPage">FK</a>)
+              </td><td class="tdTableDefinition">AnnotatedPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CharacteristicDetail</td><td class="tdTableDefinition">CharacteristicDetail</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CharacteristicDetailClean</td><td class="tdTableDefinition">CharacteristicDetailClean</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CharacteristicDetailDisplay</td><td class="tdTableDefinition">CharacteristicDetailDisplay</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotatedPage">AnnotatedPage</a> through (AnnotatedPageID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotatedPageType<a name="AnnotatedPageType"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotatedPageType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageTypeID (PK)</td><td class="tdTableDefinition">AnnotatedPageTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageTypeName</td><td class="tdTableDefinition">AnnotatedPageTypeName</td><td class="tdTableDefinition">NVARCHAR(30)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageTypeDescription</td><td class="tdTableDefinition">AnnotatedPageTypeDescription</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotatedPage">AnnotatedPage</a> referencing (AnnotatedPageTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotatedTitle<a name="AnnotatedTitle"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotatedTitle)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedTitleID (PK)</td><td class="tdTableDefinition">AnnotatedTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceID
+                &nbsp;(<a href="#AnnotationSource">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Author</td><td class="tdTableDefinition">Author</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Title</td><td class="tdTableDefinition">Title</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Edition</td><td class="tdTableDefinition">Edition</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PublicationDetails</td><td class="tdTableDefinition">PublicationDetails</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Date</td><td class="tdTableDefinition">Date</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Location</td><td class="tdTableDefinition">Location</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IsBeagleEra</td><td class="tdTableDefinition">IsBeagleEra</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Inscription</td><td class="tdTableDefinition">Inscription</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationSource">AnnotationSource</a> through (AnnotationSourceID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotatedItem">AnnotatedItem</a> referencing (AnnotatedTitleID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>Annotation<a name="Annotation"></a>
+</h1>
+<h2>
+      (Physical Name: Annotation)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID (PK)</td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceID
+                &nbsp;(<a href="#AnnotationSource">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationTextDescription</td><td class="tdTableDefinition">AnnotationTextDescription</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationText</td><td class="tdTableDefinition">AnnotationText</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationTextClean</td><td class="tdTableDefinition">AnnotationTextClean</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationTextDisplay</td><td class="tdTableDefinition">AnnotationTextDisplay</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationTextCorrected</td><td class="tdTableDefinition">AnnotationTextCorrected</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationSource">AnnotationSource</a> through (AnnotationSourceID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationNote">AnnotationNote</a> referencing (AnnotationID)</li>
+<li>
+<a href="#AnnotationRelation">AnnotationRelation</a> referencing (AnnotationID)</li>
+<li>
+<a href="#AnnotationSubject">AnnotationSubject</a> referencing (AnnotationID)</li>
+<li>
+<a href="#AnnotationPolygon">AnnotationPolygon</a> referencing (AnnotationID)</li>
+<li>
+<a href="#PageAnnotation">PageAnnotation</a> referencing (AnnotationID)</li>
+<li>
+<a href="#Annotation_AnnotationConcept">Annotation_AnnotationConcept</a> referencing (AnnotationID)</li>
+<li>
+<a href="#AnnotationMark">AnnotationMark</a> referencing (AnnotationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>Annotation_AnnotationConcept<a name="Annotation_AnnotationConcept"></a>
+</h1>
+<h2>
+      (Physical Name: Annotation_AnnotationConcept)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID (PK)
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationConceptCode (PK)
+                &nbsp;(<a href="#AnnotationConcept">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationConceptCode</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationKeywordTargetID (PK)
+                &nbsp;(<a href="#AnnotationKeywordTarget">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationKeywordTargetID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationConcept">AnnotationConcept</a> through (AnnotationConceptCode)</li>
+<li>
+<a href="#AnnotationKeywordTarget">AnnotationKeywordTarget</a> through (AnnotationKeywordTargetID)</li>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationConcept<a name="AnnotationConcept"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationConcept)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationConceptCode (PK)</td><td class="tdTableDefinition">AnnotationConceptCode</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceID
+                &nbsp;(<a href="#AnnotationSource">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ConceptText</td><td class="tdTableDefinition">ConceptText</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ParentConceptCode
+                &nbsp;(<a href="#AnnotationConcept">FK</a>)
+              </td><td class="tdTableDefinition">ParentConceptCode</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationConcept">AnnotationConcept</a> through (ParentConceptCode)</li>
+<li>
+<a href="#AnnotationSource">AnnotationSource</a> through (AnnotationSourceID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationConcept">AnnotationConcept</a> referencing (AnnotationConceptCode)</li>
+<li>
+<a href="#Annotation_AnnotationConcept">Annotation_AnnotationConcept</a> referencing (AnnotationConceptCode)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationKeywordTarget<a name="AnnotationKeywordTarget"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationKeywordTarget)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationKeywordTargetID (PK)</td><td class="tdTableDefinition">AnnotationKeywordTargetID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">KeywordTargetName</td><td class="tdTableDefinition">KeywordTargetName</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationSubject">AnnotationSubject</a> referencing (AnnotationKeywordTargetID)</li>
+<li>
+<a href="#Annotation_AnnotationConcept">Annotation_AnnotationConcept</a> referencing (AnnotationKeywordTargetID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationMark<a name="AnnotationMark"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationMark)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationMarkID (PK)</td><td class="tdTableDefinition">AnnotationMarkID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">ExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">SequenceNumber</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Position</td><td class="tdTableDefinition">Position</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationMarkTypeID
+                &nbsp;(<a href="#AnnotationMarkType">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationMarkTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Content</td><td class="tdTableDefinition">Content</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CorrectedContent</td><td class="tdTableDefinition">CorrectedContent</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">Comment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+<li>
+<a href="#AnnotationMarkType">AnnotationMarkType</a> through (AnnotationMarkTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationMarkType<a name="AnnotationMarkType"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationMarkType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationMarkTypeID (PK)</td><td class="tdTableDefinition">AnnotationMarkTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationMarkTypeName</td><td class="tdTableDefinition">AnnotationMarkTypeName</td><td class="tdTableDefinition">NVARCHAR(30)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationMark">AnnotationMark</a> referencing (AnnotationMarkTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationNote<a name="AnnotationNote"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationNote)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationNoteID (PK)</td><td class="tdTableDefinition">AnnotationNoteID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NoteText</td><td class="tdTableDefinition">NoteText</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NoteTextClean</td><td class="tdTableDefinition">NoteTextClean</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">NoteTextDisplay</td><td class="tdTableDefinition">NoteTextDisplay</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IsAlternate</td><td class="tdTableDefinition">IsAlternate</td><td class="tdTableDefinition">TINYINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationPolygon<a name="AnnotationPolygon"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationPolygon)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationPolygonID (PK)</td><td class="tdTableDefinition">AnnotationPolygonID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">PolygonX1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">PolygonY1</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">PolygonX2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">PolygonY2</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationRelation<a name="AnnotationRelation"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationRelation)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID (PK)
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RelatedExternalIdentifier (PK)</td><td class="tdTableDefinition">RelatedExternalIdentifier</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Note</td><td class="tdTableDefinition">Note</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationSource<a name="AnnotationSource"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationSource)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceID (PK)</td><td class="tdTableDefinition">AnnotationSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceName</td><td class="tdTableDefinition">AnnotationSourceName</td><td class="tdTableDefinition">NVARCHAR(30)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceDescription</td><td class="tdTableDefinition">AnnotationSourceDescription</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationConcept">AnnotationConcept</a> referencing (AnnotationSourceID)</li>
+<li>
+<a href="#Annotation">Annotation</a> referencing (AnnotationSourceID)</li>
+<li>
+<a href="#AnnotationSubjectCategory">AnnotationSubjectCategory</a> referencing (AnnotationSourceID)</li>
+<li>
+<a href="#AnnotatedTitle">AnnotatedTitle</a> referencing (AnnotationSourceID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationSubject<a name="AnnotationSubject"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationSubject)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSubjectID (PK)</td><td class="tdTableDefinition">AnnotationSubjectID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSubjectCategoryID
+                &nbsp;(<a href="#AnnotationSubjectCategory">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationSubjectCategoryID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationKeywordTargetID
+                &nbsp;(<a href="#AnnotationKeywordTarget">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationKeywordTargetID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SubjectText</td><td class="tdTableDefinition">SubjectText</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationKeywordTarget">AnnotationKeywordTarget</a> through (AnnotationKeywordTargetID)</li>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+<li>
+<a href="#AnnotationSubjectCategory">AnnotationSubjectCategory</a> through (AnnotationSubjectCategoryID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>AnnotationSubjectCategory<a name="AnnotationSubjectCategory"></a>
+</h1>
+<h2>
+      (Physical Name: AnnotationSubjectCategory)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSubjectCategoryID (PK)</td><td class="tdTableDefinition">AnnotationSubjectCategoryID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationSourceID
+                &nbsp;(<a href="#AnnotationSource">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SubjectCategoryCode</td><td class="tdTableDefinition">SubjectCategoryCode</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SubjectCategoryName</td><td class="tdTableDefinition">SubjectCategoryName</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#AnnotationSource">AnnotationSource</a> through (AnnotationSourceID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#AnnotationSubject">AnnotationSubject</a> referencing (AnnotationSubjectCategoryID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>PageAnnotation<a name="PageAnnotation"></a>
+</h1>
+<h2>
+      (Physical Name: PageAnnotation)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotatedPageID (PK)
+                &nbsp;(<a href="#AnnotatedPage">FK</a>)
+              </td><td class="tdTableDefinition">AnnotatedPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AnnotationID (PK)
+                &nbsp;(<a href="#Annotation">FK</a>)
+              </td><td class="tdTableDefinition">AnnotationID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageColumn</td><td class="tdTableDefinition">PageColumn</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Annotation">Annotation</a> through (AnnotationID)</li>
+<li>
+<a href="#AnnotatedPage">AnnotatedPage</a> through (AnnotatedPageID)</li>
+</ul>
+</div>
+</div>
+</body>
+</html>

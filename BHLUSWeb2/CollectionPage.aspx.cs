@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Collections;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Data = MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+﻿using CustomDataAccess;
 using MOBOT.BHL.Server;
-using System.Text.RegularExpressions;
+using System;
+using System.Configuration;
+using System.Web.UI;
+using Data = MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -19,9 +13,8 @@ namespace MOBOT.BHL.Web2
         protected string Start { get; set; }
         protected string sortBy { get; set; }
         protected Data.Collection collection { get; set; }
-        protected int count { get; set; }
+        //protected int count { get; set; }
         protected string collectionPath { get; set; } // returns friendly or ID
-        //protected int collectionId { get; set; }
 
         protected override void Page_Load(object sender, EventArgs e)
         {
@@ -38,9 +31,9 @@ namespace MOBOT.BHL.Web2
             int collectionID;
             // Parse CollectionId - may be "nice" name
 
-            CustomDataAccess.CustomGenericList<MOBOT.BHL.DataObjects.Collection> collections = null;
+            CustomGenericList<Data.Collection> collections = null;
             collections = (string.IsNullOrWhiteSpace((string)RouteData.Values["collectionid"])) ?
-                new CustomGenericList<DataObjects.Collection>() :
+                new CustomGenericList<Data.Collection>() :
                 provider.CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
 
             if (collections.Count > 0)
@@ -55,19 +48,8 @@ namespace MOBOT.BHL.Web2
                 }
             }
 
-            /*
-            bool forceShowAll = false;  // flag to indicated if All items should be shown (even if more than 500 books in list)
-            if (Start.ToUpper() == "ALL")
-            {
-                Start = String.Empty;
-                forceShowAll = true;
-            }
-            */
-
             if (string.IsNullOrEmpty(Start)) Start = "All";
 
-
-           // Data.Collection collection = null;
             collection = provider.CollectionSelectAuto(collectionID);
 
             if (collection != null)
@@ -96,7 +78,7 @@ namespace MOBOT.BHL.Web2
 
                     CustomGenericList<Data.SearchBookResult> list = null;
                     list = GetCollectionList(collection, collectionID, Start);
-                    count = list.Count;
+                    //count = list.Count;
 
                     //build header
                     System.Text.StringBuilder html = new System.Text.StringBuilder();
@@ -104,7 +86,10 @@ namespace MOBOT.BHL.Web2
                     html.Append(list.Count).
                         Append((collection.CanContainTitles == 1) ? " title" : " item").Append(list.Count == 1 ? " " : "s ").
                         Append(" in ").Append(collection.CollectionName);
-                    if (Start != String.Empty && Start.ToLower() != "all") html.Append(" beginning with ").Append(Start.ToUpper());
+                    if (Start != String.Empty && Start.ToLower() != "all")
+                    {
+                        html.Append(" beginning with ").Append((Start == "0") ? "a number" : Start.ToUpper());
+                    }
                     ltlCollectionHeader.Text = html.ToString();
 
                     // Show the collection statistics
@@ -155,12 +140,26 @@ namespace MOBOT.BHL.Web2
                     // We don't expect a Collection to contain both items & titles, but allow for both
                     if (collection.CanContainItems > 0)
                     {
-                        list = provider.ItemSelectByCollectionAndStartsWith(collectionID, startString);
+                        if (startString == "0")
+                        {
+                            list = bhlProvider.ItemSelectByCollectionAndStartsWithout(collectionID, "[a-z]");
+                        }
+                        else
+                        {
+                            list = provider.ItemSelectByCollectionAndStartsWith(collectionID, startString);
+                        }
                     }
 
                     if (collection.CanContainTitles > 0)
                     {
-                        list = provider.TitleSelectByCollectionAndStartsWith(collectionID, startString);
+                        if (startString == "0")
+                        {
+                            list = bhlProvider.TitleSelectByCollectionAndStartsWithout(collectionID, "[a-z]");
+                        }
+                        else
+                        {
+                            list = provider.TitleSelectByCollectionAndStartsWith(collectionID, startString);
+                        }
                     }
 
                     ////// Cache the HTML fragment

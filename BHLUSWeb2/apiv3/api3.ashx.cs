@@ -225,9 +225,20 @@ namespace MOBOT.BHL.Web2.api3
             catch (UnauthorizedAccessException ex)
             {
                 response = GetErrorResponse("unauthorized", ex, outputType);
+                context.Server.ClearError();
+                context.Response.TrySkipIisCustomErrors = true;
                 context.Response.Status = "401 Unauthorized";
                 context.Response.StatusCode = 401;
                 context.Response.StatusDescription = "Unauthorized";
+            }
+            catch (InvalidApiParamException ex)
+            {
+                response = GetErrorResponse("bad request", ex, outputType);
+                context.Server.ClearError();
+                context.Response.TrySkipIisCustomErrors = true;
+                context.Response.Status = "400 Bad Request";
+                context.Response.StatusCode = 400;
+                context.Response.StatusDescription = "Bad Request";
             }
             catch (Exception ex)
             {
