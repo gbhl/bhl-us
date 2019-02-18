@@ -315,9 +315,9 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
         }
 
-        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, int numRows, int pageNum, string sortColumn, string sortOrder)
+        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            return new ItemDAL().ItemSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, numRows, pageNum, sortColumn, sortOrder);
+            return new ItemDAL().ItemSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, numRows, pageNum, sortColumn, sortOrder);
         }
 
         public int ItemCountByInstitution(string institutionCode)

@@ -10,15 +10,32 @@
         NOTE: Use this report to find items not assigned to a particular content provider by selecting "Unknown" from the Content Provider drop-down.
     </p>
     <table>
-    <tr>
-        <td><b>Content Provider:</b></td>
-        <td><asp:DropDownList ID="ddlInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode"/></td>
-    </tr>
-    <tr>
-        <td><b>Role:</b></td>
-        <td><asp:DropDownList ID="ddlInstitutionRoles" runat="server" DataTextField="InstitutionRoleName" DataValueField="InstitutionRoleID"/></td>
-    </tr>
-    </table>
+        <tr>
+            <td style="padding-right:50px;">
+                <table>
+                    <tr>
+                        <td><b>Content Provider:</b></td>
+                        <td><asp:DropDownList ID="ddlInstitutions" runat="server" DataTextField="InstitutionName" DataValueField="InstitutionCode" Width="300px"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Role:</b></td>
+                        <td><asp:DropDownList ID="ddlInstitutionRoles" runat="server" DataTextField="InstitutionRoleName" DataValueField="InstitutionRoleID"/></td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td><b>Only Items Where IA Identifier Contains:</b></td>
+                        <td><asp:TextBox ID="txtIAIdentifier" runat="server" placeholder="(Optional)"></asp:TextBox></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            <td>
+        </tr>
+    </table>      
     <p>
         <asp:Button ID="btnShow" runat="server" Text="Show Items" OnClick="btnShow_Click" />&nbsp;
         <asp:Button ID="btnDownload" runat="server" Text="Download" OnClick="btnDownload_Click" />
@@ -37,23 +54,22 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#list").jqGrid({
-                url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>', // tells where to get the data
+                url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>&barcode=<%=specifiedBarcode%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Item ID', 'IA Identifier', 'Title', 'Volume', 'Year', 'Authors', 'Holding Institution', 'Rights Holder', 'Scanning Institution', 'Rights/Licensing', 'Date Added', 'Date Updated'],    // column names
+                colNames: ['Item ID', 'IA Identifier', 'Title', 'Volume', 'Year', 'Holding Institution', 'Rights Holder', 'Scanning Institution', 'Date Added', 'Date Updated'],    // column names
                 colModel: [
                   { name: 'ItemID', index: 'ItemID', sortable: false, width: 60 },
-                  { name: 'Barcode', index: 'Barcode', sortable: false },
-                  { name: 'TitleName', index: 'TitleName', cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' } },
+                  { name: 'Barcode', index: 'Barcode' },
+                  //{ name: 'TitleName', index: 'TitleName', cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' } },
+                  { name: 'TitleName', index: 'TitleName' },
                   { name: 'Volume', index: 'Volume', sortable: false },
-                  { name: 'Year', index: 'Year', sortable: false, width: 75},
-                  { name: 'AuthorListString', index: 'AuthorListString', sortable: false, cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' } },
+                  { name: 'Year', index: 'Year', width: 75},
                   { name: 'HoldingInstitution', index: 'HoldingInstitution', sortable: false },
                   { name: 'RightsHolder', index: 'RightsHolder', sortable: false },
                   { name: 'ScanningInstitution', index: 'ScanningInstitution', sortable: false },
-                  { name: 'Rights', index: 'Rights', sortable: false },
-                  { name: 'CreationDate', index: 'CreationDate', cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' }, width: 75 },
-                  { name: 'LastModifiedDate', index: 'LastModifiedDate', sortable: false, cellattr: function (rowId, tv, rawObject, cm, rdata) { return 'style="white-space: normal;"' }, width: 75 }
+                  { name: 'CreationDate', index: 'CreationDate', width: 100 },
+                  { name: 'LastModifiedDate', index: 'LastModifiedDate', sortable: false, width: 75 }
                 ],  // model of the columns to display
                 pager: '#pager',    // show a pager bar for record navigation
                 rowNum: 200,    // rows in grid

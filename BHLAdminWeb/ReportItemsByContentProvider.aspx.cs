@@ -16,6 +16,7 @@ namespace MOBOT.BHL.AdminWeb
         private string _MsgFormat = "<font color='red'>{0}</font>";
         public string selectedInstitutionCode = string.Empty;
         public string selectedRoleID = string.Empty;
+        public string specifiedBarcode = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
 		{
@@ -97,6 +98,7 @@ namespace MOBOT.BHL.AdminWeb
                         string.Format("Items from <b>{0}</b> in the <b>{1}</b> role.", ddlInstitutions.SelectedItem.Text, ddlInstitutionRoles.SelectedItem.Text);
                 selectedInstitutionCode = ddlInstitutions.SelectedValue;
                 selectedRoleID = ddlInstitutionRoles.SelectedValue;
+                specifiedBarcode = txtIAIdentifier.Text;
                 ddlInstitutionChange.SelectedIndex = 0;
                 ddlInstitutionRoleChange.SelectedIndex = 0;
                 litUpdateResult.Text = string.Empty;
@@ -112,7 +114,7 @@ namespace MOBOT.BHL.AdminWeb
             string msg = string.Empty;
             if (this.Validate(out msg))
             {
-                Response.Redirect("ReportItemsByContentProviderCSV.ashx?id=" + ddlInstitutions.SelectedValue + "&role=" + ddlInstitutionRoles.SelectedValue);
+                Response.Redirect("ReportItemsByContentProviderCSV.ashx?id=" + ddlInstitutions.SelectedValue + "&role=" + ddlInstitutionRoles.SelectedValue + "&barcode=" + txtIAIdentifier.Text);
             }
             else
             {
@@ -197,6 +199,7 @@ namespace MOBOT.BHL.AdminWeb
             litUpdateResult.Text = string.Format(_MsgFormat, updateMsg);
             selectedInstitutionCode = ddlInstitutions.SelectedValue;
             selectedRoleID = ddlInstitutionRoles.SelectedValue;
+            specifiedBarcode = txtIAIdentifier.Text;
         }
     }
 }

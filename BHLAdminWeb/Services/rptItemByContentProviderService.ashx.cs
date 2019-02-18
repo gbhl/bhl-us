@@ -21,6 +21,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             // Clean up inputs
             string institutionCode = context.Request.QueryString["id"] as string;
             string roleId = context.Request.QueryString["role"] as string;
+            string barcode = context.Request.QueryString["barcode"] as string;
             string numRows = context.Request.QueryString["rows"] as string;
             string pageNum = context.Request.QueryString["page"] as string;
             string sortColumn = context.Request.QueryString["sidx"] as string;
@@ -40,7 +41,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "asc" : sortOrder;
 
             CustomGenericList<Item> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
-                Convert.ToInt32(roleId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
+                Convert.ToInt32(roleId), barcode, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             string xmlResponse = GetItemXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
 
@@ -51,14 +52,16 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <summary>
         /// Call the BHLImport web service to get the list of IA items that match the specified criteria.
         /// </summary>
-        /// <param name="itemStatusId"></param>
+        /// <param name="institutionCode"></param>
+        /// <param name="roleID"></param>
+        /// <param name="barcode"></param>
         /// <param name="numRows"></param>
-        /// <param name="pageNume"></param>
+        /// <param name="pageNum"></param>
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
         private CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode,
-            int roleID, int numRows, int pageNum, string sortColumn, string sortOrder)
+            int roleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             CustomGenericList<Item> items = new CustomGenericList<Item>();
             BHLProvider service = null;
@@ -66,7 +69,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             try
             {
                 service = new BHLProvider();
-                items = service.ItemSelectByInstitutionAndRole(institutionCode, roleID, numRows, pageNum, sortColumn, sortOrder);
+                items = service.ItemSelectByInstitutionAndRole(institutionCode, roleID, barcode, numRows, pageNum, sortColumn, sortOrder);
             }
             catch
             {
@@ -102,7 +105,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].TitleName) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Year) + " </cell>");
-                    response.Append("<cell> " + SecurityElement.Escape(searchResult[x].AuthorListString) + " </cell>");
+                    //response.Append("<cell> " + SecurityElement.Escape(searchResult[x].AuthorListString) + " </cell>");
 
                     response.Append("<cell> ");
                     for (int y = 0; y < searchResult[x].InstitutionStrings.Length; y++)
@@ -126,10 +129,12 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
                     response.Append(" </cell>");
 
+                    /*
                     response.Append("<cell>&lt;div&gt; Copyright Status: " + SecurityElement.Escape(searchResult[x].CopyrightStatus) + " &lt;br/&gt;" + 
                                     " Rights: " + SecurityElement.Escape(searchResult[x].Rights) + " &lt;br/&gt;" + 
                                     " License Type: " + SecurityElement.Escape(searchResult[x].LicenseUrl) + " &lt;br/&gt;" + 
                                     " Due Diligence: " + SecurityElement.Escape(searchResult[x].DueDiligence) + " &lt;/div&gt;</cell>");
+                    */
                     response.Append("<cell> " + SecurityElement.Escape(((DateTime)searchResult[x].CreationDate).ToString("yyyy/MM/dd HH:mm:ss")) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(((DateTime)searchResult[x].LastModifiedDate).ToString("yyyy/MM/dd HH:mm:ss")) + " </cell>");
                     response.Append("</row>");

@@ -2,6 +2,7 @@
 
 @InstitutionCode nvarchar(10),
 @InstitutionRoleID int,
+@Barcode nvarchar(50) = '',
 @NumRows int = 100,
 @PageNum int = 1,
 @SortColumn nvarchar(150) = 'CreationDate',
@@ -74,6 +75,7 @@ BEGIN
 			LEFT JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID AND ii.InstitutionRoleID = @InstitutionRoleID
 	WHERE	ii.InstitutionRoleID IS NULL
 	AND		@InstitutionRoleID IN (SELECT InstitutionRoleID FROM dbo.InstitutionRole)
+	AND		(i.Barcode LIKE '%' + @Barcode + '%' OR @Barcode = '')
 END
 ELSE
 BEGIN
@@ -101,6 +103,7 @@ BEGIN
 			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 			INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID AND ii.InstitutionRoleID = @InstitutionRoleID
 	WHERE	ii.InstitutionCode = @InstitutionCode
+	AND		(i.Barcode LIKE '%' + @Barcode + '%' OR @Barcode = '')
 END
 
 -- Create a temp table for the second step
@@ -193,6 +196,31 @@ BEGIN
 	SELECT	*, ROW_NUMBER() OVER (ORDER BY CreationDate DESC)
 	FROM	#Step1
 END
+IF (LOWER(@SortColumn) = 'barcode' AND LOWER(@SortDirection) = 'asc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER(ORDER BY Barcode)
+	FROM	#Step1
+END
+IF (LOWER(@SortColumn) = 'barcode' AND LOWER(@SortDirection) = 'desc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER(ORDER BY Barcode DESC)
+	FROM	#Step1
+END
+IF (LOWER(@SortColumn) = 'year' AND LOWER(@SortDirection) = 'asc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER(ORDER BY [Year])
+	FROM	#Step1
+END
+IF (LOWER(@SortColumn) = 'year' AND LOWER(@SortDirection) = 'desc')
+BEGIN
+	INSERT	#Step2
+	SELECT	*, ROW_NUMBER() OVER(ORDER BY [Year] DESC)
+	FROM	#Step1
+END
+
 
 -- Count the total number of pages
 SELECT @TotalItems = COUNT(*) FROM #Step2

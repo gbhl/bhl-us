@@ -19,6 +19,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             string institutionCode = context.Request.QueryString["id"] as string;
             string institutionRoleID = context.Request.QueryString["role"] as string;
+            string barcode = context.Request.QueryString["barcode"] as string;
 
             int roleId;
             // Make sure roleId is a valid integer value
@@ -27,7 +28,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                CustomGenericList<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, 1000000, 1, "TitleName", "asc");
+                CustomGenericList<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "TitleName", "asc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
