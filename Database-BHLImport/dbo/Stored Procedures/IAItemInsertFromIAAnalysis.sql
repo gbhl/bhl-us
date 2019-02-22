@@ -38,7 +38,7 @@ BEGIN TRY
 	WHERE	ii.ItemID IS NULL
 	AND		r.Sponsor <> 'Google'
 
-	-- Eliminate any items in the "lendinglibrary", "printdisabled", or 
+	-- Eliminate any items in the "lendinglibrary", "printdisabled", "stream_only" or 
 	-- "browseringlending" collections (they are non-downloadable)
 	DELETE FROM #tmpItem WHERE IAIdentifier IN (
 		SELECT	i.Identifier
@@ -49,6 +49,7 @@ BEGIN TRY
 		WHERE	c.CollectionName LIKE '%lendinglibrary%'
 		OR		c.CollectionName LIKE '%printdisabled%'
 		OR		c.CollectionName LIKE '%browserlending%'
+		OR		c.CollectionName LIKE '%stream_only%'
 	)
 
 	SELECT @HarvestDate = MAX(CreationDate) FROM #tmpItem
