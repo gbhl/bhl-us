@@ -176,7 +176,9 @@ SET		ProductionAuthorID = a.AuthorID,
 		LastModifiedDate = GETDATE()
 FROM	dbo.OAIRecordCreator c
 		INNER JOIN #tmpNewOAIRecords t ON c.OAIRecordID = t.OAIRecordID
-		INNER JOIN dbo.BHLAuthor a ON c.StartDate = a.StartDate AND c.EndDate = a.EndDate
+		INNER JOIN dbo.BHLAuthor a 
+			ON dbo.fnRemoveNonNumericCharacters(c.StartDate) = dbo.fnRemoveNonNumericCharacters(a.StartDate) 
+			AND dbo.fnRemoveNonNumericCharacters(c.EndDate) = dbo.fnRemoveNonNumericCharacters(a.EndDate)
 		INNER JOIN dbo.BHLAuthorName n ON a.AuthorID = n.AuthorID
 WHERE	n.FullName = c.FullName
 AND		c.ProductionAuthorID IS NULL
@@ -186,7 +188,9 @@ SET		ProductionAuthorID = a.AuthorID,
 		LastModifiedDate = GETDATE()
 FROM	dbo.OAIRecordCreator c
 		INNER JOIN #tmpNewOAIRecords t ON c.OAIRecordID = t.OAIRecordID
-		INNER JOIN dbo.BHLAuthor a ON c.StartDate = a.StartDate AND c.EndDate = a.EndDate
+		INNER JOIN dbo.BHLAuthor a 
+			ON dbo.fnRemoveNonNumericCharacters(c.StartDate) = dbo.fnRemoveNonNumericCharacters(a.StartDate)
+			AND dbo.fnRemoveNonNumericCharacters(c.EndDate) = dbo.fnRemoveNonNumericCharacters(a.EndDate)
 		INNER JOIN dbo.BHLAuthorName n ON a.AuthorID = n.AuthorID
 WHERE	dbo.fnReverseAuthorName(n.FullName) = c.FullName
 AND		c.ProductionAuthorID IS NULL

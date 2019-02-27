@@ -1301,33 +1301,21 @@ BEGIN TRY
 			MARCCreator_b,
 			MARCCreator_c,
 			MARCCreator_d,
-			LTRIM(RTRIM(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(MARCCreator_d, 
-					'b.', ''), 
-					'.', ''), 
-					',', ''),
-					'(', ''),
-					')', ''),
-					':', '')
-			)) AS Dates
+			MARCCreator_d AS Dates
 	INTO	#tmpCreatorDates
 	FROM	#tmpCreator
 	WHERE	ISNULL(MARCCreator_d, '') <> ''
 
 	UPDATE	#tmpCreator
-	SET		DOB = SUBSTRING(d.Dates, 1, 4),
-			DOD = CASE WHEN LEN(d.Dates) > 5 THEN SUBSTRING(d.Dates, 6, 4) END
+	SET		DOB = u.StartDate,
+			DOD = u.EndDate
 	FROM	#tmpCreator c INNER JOIN #tmpCreatorDates d
 				ON c.ItemID = d.ItemID
 				AND ISNULL(c.MARCCreator_a, '') = ISNULL(d.MARCCreator_a, '')
 				AND ISNULL(c.MARCCreator_b, '') = ISNULL(d.MARCCreator_b, '')
 				AND ISNULL(c.MARCCreator_c, '') = ISNULL(d.MARCCreator_c, '')
 				AND ISNULL(c.MARCCreator_d, '') = ISNULL(d.MARCCreator_d, '')
+			CROSS APPLY dbo.fnGetDatesFromString(d.Dates) u
 
 	DROP TABLE #tmpCreatorDates
 

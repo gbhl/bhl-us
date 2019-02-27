@@ -119,32 +119,20 @@ SELECT	MARCCreator_a,
 		MARCCreator_b,
 		MARCCreator_c,
 		MARCCreator_d,
-		LTRIM(RTRIM(
-			REPLACE(
-			REPLACE(
-			REPLACE(
-			REPLACE(
-			REPLACE(
-			REPLACE(MARCCreator_d, 
-				'b.', ''), 
-				'.', ''), 
-				',', ''),
-				'(', ''),
-				')', ''),
-				':', '')
-		)) AS Dates
+		MARCCreator_d AS Dates
 INTO	#tmpAuthorDates
 FROM	#tmpAuthor
 WHERE	ISNULL(MARCCreator_d, '') <> ''
 
 UPDATE	#tmpAuthor
-SET		StartDate = SUBSTRING(d.Dates, 1, 4),
-		EndDate = CASE WHEN LEN(d.Dates) > 5 THEN SUBSTRING(d.Dates, 6, 4) END
+SET		StartDate = u.StartDate,
+		EndDate = u.EndDate
 FROM	#tmpAuthor c INNER JOIN #tmpAuthorDates d
 			ON ISNULL(c.MARCCreator_a, '') = ISNULL(d.MARCCreator_a, '')
 			AND ISNULL(c.MARCCreator_b, '') = ISNULL(d.MARCCreator_b, '')
 			AND ISNULL(c.MARCCreator_c, '') = ISNULL(d.MARCCreator_c, '')
 			AND ISNULL(c.MARCCreator_d, '') = ISNULL(d.MARCCreator_d, '')
+		CROSS APPLY dbo.fnGetDatesFromString(d.Dates) u
 
 DROP TABLE #tmpAuthorDates
 
@@ -175,8 +163,8 @@ BEGIN TRY
 											a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
 									FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
 				ON t.AuthorTypeID = a.AuthorTypeID
-				AND ISNULL(t.StartDate, '') = ISNULL(a.StartDate, '')
-				AND ISNULL(t.EndDate, '') = ISNULL(a.EndDate, '')
+				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
+				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
 				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
 					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(a.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
 				AND	(  -- If b is blank, match records with blank Numeration/Unit values
@@ -253,8 +241,8 @@ FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDat
 										a.Numeration, a.Title, a.Unit, a.Location, n.FullerForm
 								FROM dbo.Author a INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID) a
 			ON t.AuthorTypeID = a.AuthorTypeID
-			AND ISNULL(t.StartDate, '') = ISNULL(a.StartDate, '')
-			AND ISNULL(t.EndDate, '') = ISNULL(a.Enddate, '')
+			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
+			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
 			AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
 				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(a.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
 			AND	(  -- If b is blank, match records with blank Numeration/Unit values

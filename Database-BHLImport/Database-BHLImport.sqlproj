@@ -427,6 +427,8 @@
     <None Include="dbo\Synonyms\BHLInstitutionRole.sql" />
     <None Include="dbo\Synonyms\BHLItemInstitution.sql" />
     <None Include="dbo\Synonyms\BHLMaterialType.sql" />
+    <None Include="dbo\Functions\fnGetDatesFromString.sql" />
+    <None Include="dbo\Functions\fnRemoveNonNumericCharacters.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

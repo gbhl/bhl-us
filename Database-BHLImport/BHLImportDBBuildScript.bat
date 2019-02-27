@@ -154,6 +154,8 @@ REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnFilterString.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnGetDatesFromString.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnRemoveNonNumericCharacters.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnReverseAuthorName.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\vwSplitLanguage.sql"
 
