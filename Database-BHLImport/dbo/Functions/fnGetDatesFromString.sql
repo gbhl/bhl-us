@@ -3,14 +3,14 @@
 	@DateString nvarchar(max)
 )
 RETURNS @dates TABLE (
-        StartDate VARCHAR(100),
-        EndDate VARCHAR(100)
+        StartDate VARCHAR(25),
+        EndDate VARCHAR(25)
     )
 AS 
 
 BEGIN
-	DECLARE @StartDate nvarchar(100)
-	DECLARE @EndDate nvarchar(100)
+	DECLARE @StartDate nvarchar(25)
+	DECLARE @EndDate nvarchar(25)
 
 	SELECT	@DateString = 
 			RTRIM(LTRIM(
