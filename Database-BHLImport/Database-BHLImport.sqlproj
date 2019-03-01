@@ -429,6 +429,9 @@
     <None Include="dbo\Synonyms\BHLMaterialType.sql" />
     <None Include="dbo\Functions\fnGetDatesFromString.sql" />
     <None Include="dbo\Functions\fnRemoveNonNumericCharacters.sql" />
+    <None Include="dbo\Tables\IAItemIdentifier.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierDeleteByItem.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierSelect.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
@@ -463,5 +466,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\PageFlickrNoteSelectForPageID.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Stored Procedures\IAItemIdentifierDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemIdentifierInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemIdentifierSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IAItemIdentifierUpdateAuto.sql" />
   </ItemGroup>
 </Project>

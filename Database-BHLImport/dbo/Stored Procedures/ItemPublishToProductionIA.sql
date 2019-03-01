@@ -1300,9 +1300,33 @@ BEGIN TRY
 					AND i.IdentifierID = ti.IdentifierID
 					AND tmp.IdentifierValue = ti.IdentifierValue
 		WHERE	ti.TitleIdentifierID IS NULL
+		AND		tmp.IdentifierName <> 'DOI'
 
 		SELECT @TitleIdentifierInsert = @@ROWCOUNT
 
+		-- Insert new DOI records into the production database
+		DECLARE @DOIEntityTypeID int
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
+		DECLARE @DOIStatusID int
+		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
+
+		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
+			DOIName, StatusDate, IsValid, Creationdate, LastModifiedDate)
+		SELECT DISTINCT @DOIEntityTypeID, t.TitleID, @DOIStatusID, tmp.IdentifierValue, 
+			GETDATE(), 1, tmp.ExternalCreationDate, tmp.ExternalLastModifiedDate
+		FROM	#tmpTitle_TitleIdentifier tmp 
+				INNER JOIN #tmpTitle tmpT
+					ON tmp.ImportKey = tmpT.ImportKey
+				INNER JOIN dbo.BHLTitle t
+					ON tmpT.ProductionTitleID = t.TitleID
+				LEFT JOIN dbo.BHLDOI d
+					ON d.DOIEntityTypeID = @DOIEntityTypeID
+					AND d.EntityID = t.TitleID
+					AND d.DOIName = tmp.IdentifierValue 
+		WHERE	d.DOIID IS NULL
+		AND		tmp.IdentifierName = 'DOI'
+
+		SELECT @TitleIdentifierInsert = @TitleIdentifierInsert + @@ROWCOUNT
 
 		-- =======================================================================
 
