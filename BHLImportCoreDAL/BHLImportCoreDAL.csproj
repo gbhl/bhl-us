@@ -76,6 +76,7 @@
     <Compile Include="Generated\IAFileDAL.Auto.cs" />
     <Compile Include="Generated\IAItemDAL.Auto.cs" />
     <Compile Include="Generated\IAItemErrorDAL.Auto.cs" />
+    <Compile Include="Generated\IAItemIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\IAItemSetDAL.Auto.cs" />
     <Compile Include="Generated\IAItemStatusDAL.Auto.cs" />
     <Compile Include="Generated\IAMarcControlDAL.Auto.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="IAFileDAL.cs" />
     <Compile Include="IAItemDAL.cs" />
     <Compile Include="IAItemErrorDAL.cs" />
+    <Compile Include="IAItemIdentifierDAL.cs" />
     <Compile Include="IAItemSetDAL.cs" />
     <Compile Include="IAItemStatusDAL.cs" />
     <Compile Include="IAMarcControlDAL.cs" />
