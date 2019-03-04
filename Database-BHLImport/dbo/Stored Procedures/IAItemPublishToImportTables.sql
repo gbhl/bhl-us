@@ -917,6 +917,9 @@ BEGIN TRY
 	WHERE	i.IdentifierDescription = 'identifier-doi'
 	AND		ti.IdentifierValue IS NULL
 
+	/*
+	-- Consider using ARK, ISSN, and ISBN ids from the meta.xml file in the future
+
 	INSERT INTO #tmpTitleIdentifier
 	SELECT DISTINCT
 			t.ItemID,
@@ -958,7 +961,7 @@ BEGIN TRY
 				AND i.IdentifierValue = ti.IdentifierValue
 	WHERE	i.IdentifierDescription = 'isbn'
 	AND		ti.IdentifierValue IS NULL
-
+	*/
 
 	-- =======================================================================
 	-- =======================================================================
