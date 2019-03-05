@@ -28,6 +28,8 @@ namespace MOBOT.BHL.DataObjects
         private string[] tagStrings = null;
         private string[] associationStrings = null;
         private string[] institutionStrings = null;
+        private string[] rightsHolderStrings = null;
+        private string[] scanningInstitutionStrings = null;
         private string _publicationDetails;
         private int _numberOfSegments = 0;
         private int _numberOfPages = 0;
@@ -172,6 +174,16 @@ namespace MOBOT.BHL.DataObjects
             get { return institutionStrings; }
         }
 
+        public string[] RightsHolderStrings
+        {
+            get { return rightsHolderStrings; }
+        }
+
+        public string[] ScanningInstitutionStrings
+        {
+            get { return scanningInstitutionStrings; }
+        }
+
         public string PublicationDetails
         {
             get { return _publicationDetails; }
@@ -249,7 +261,7 @@ namespace MOBOT.BHL.DataObjects
             associationStrings = associationTextString.Split('|');
         }
 
-        private void ProcessInstitutionTextString(string value)
+        private string[] ProcessInstitutionTextString(string value)
         {
             string institutionTextString = "";
             //strip off the trailing separator if necessary
@@ -259,7 +271,7 @@ namespace MOBOT.BHL.DataObjects
             if (value != null)
                 institutionTextString = value;
 
-            institutionStrings = institutionTextString.Split('|');
+            return institutionTextString.Split('|');
         }
 
         #region ISet override
@@ -287,7 +299,17 @@ namespace MOBOT.BHL.DataObjects
                         }
                     case "ContributorTextString":
                         {
-                            ProcessInstitutionTextString(Utility.EmptyIfNull(column.Value));
+                            institutionStrings = ProcessInstitutionTextString(Utility.EmptyIfNull(column.Value));
+                            break;
+                        }
+                    case "RightsHolderTextString":
+                        {
+                            rightsHolderStrings = ProcessInstitutionTextString(Utility.EmptyIfNull(column.Value));
+                            break;
+                        }
+                    case "ScanningInstitutionTextString":
+                        {
+                            scanningInstitutionStrings = ProcessInstitutionTextString(Utility.EmptyIfNull(column.Value));
                             break;
                         }
                     case "TitleName":

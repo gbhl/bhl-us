@@ -22,8 +22,8 @@ FROM	dbo.Author a
 WHERE	(REPLACE(REPLACE(n.FullName,',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
 		 REPLACE(REPLACE(dbo.fnReverseAuthorName(n.FullName),',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
 		(n.LastName = @LastName AND n.FirstName = @FirstName AND ISNULL(@LastName, '') <> '' AND ISNULL(@FirstName, '') <> ''))
-AND		(a.StartDate = @StartDate OR ISNULL(@StartDate, '') = '')
-AND		(a.EndDate = @EndDate OR ISNULL(@EndDate, '') = '')
+AND		(dbo.fnRemoveNonNumericCharacters(a.StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) OR ISNULL(@StartDate, '') = '')
+AND		(dbo.fnRemoveNonNumericCharacters(a.EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate) OR ISNULL(@EndDate, '') = '')
 AND		a.IsActive = 1
 
 /*

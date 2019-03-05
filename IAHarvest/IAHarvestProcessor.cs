@@ -89,7 +89,6 @@ namespace IAHarvest
                         break;
                 }
 
-                //this.HarvestOAIInformation();
                 this.HarvestXMLInformation();
             }
 
@@ -209,7 +208,7 @@ namespace IAHarvest
                     XmlNode updateDate = updateDates.LastChild;
 
                     // Save the item identifier (and associate it with a set if necessary)
-                    IAItem item = provider.SaveIAItemIdentifier(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText));
+                    IAItem item = provider.SaveIAItemID(id.InnerText, configParms.LocalFileFolder, Convert.ToDateTime(updateDate.InnerText));
                     if (setID != null) provider.SaveIAItemSet(item.ItemID, (int)setID);
                     retrievedIds.Add(identifier.InnerText);
                 }
@@ -691,6 +690,14 @@ namespace IAHarvest
                         copyrightComment, copyrightEvidence, copyrightEvidenceOperator,
                         copyrightEvidenceDate, scanningInstitution, rightsHolder, itemDescription);
 
+                    // Read the identifier information
+                    provider.IAItemIdentifierDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/identifier-doi");
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/identifier-ark");
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/external-identifier");
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/issn");
+                    this.ReadAndSaveItemIdentifierElements(itemID, xml, "metadata/isbn");
+
                     // Read the set information
                     provider.IAItemSetDeleteByItem(itemID);  // Delete existing, as we're doing a full replace
 
@@ -747,6 +754,15 @@ namespace IAHarvest
                 String elementName = element.Name.Replace("dc:", "");
                 String elementValue = element.InnerText;
                 provider.IADCMetadataInsert(itemID, elementName, elementValue, source);
+            }
+        }
+
+        private void ReadAndSaveItemIdentifierElements(int itemID, XmlDocument xml, string xPath)
+        {
+            XmlNodeList ids = xml.SelectNodes(xPath);
+            foreach (XmlNode id in ids)
+            {
+                provider.SaveIAItemIdentifier(itemID, id.Name, id.InnerText);
             }
         }
 

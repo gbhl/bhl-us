@@ -17,7 +17,7 @@ namespace MOBOT.BHLImport.Server
         private const int ITEMSTATUS_MARCMISSINGONHOLD = 82;
         private const int ITEMSTATUS_ERROR = 99;
 
-        public IAItem SaveIAItemIdentifier(string iaIdentifier, string localFileFolder, DateTime? dateStamp)
+        public IAItem SaveIAItemID(string iaIdentifier, string localFileFolder, DateTime? dateStamp)
         {
             IAItemDAL dal = new IAItemDAL();
             IAItem savedItem = dal.IAItemSelectByIAIdentifier(null, null, iaIdentifier);

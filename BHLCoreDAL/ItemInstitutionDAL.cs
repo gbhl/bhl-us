@@ -31,6 +31,26 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public ItemInstitution ItemInstitutionSelectByItemAndRole(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemID, int institutionRoleID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemInstitutionSelectByItemAndRole", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+                    CustomSqlHelper.CreateInputParameter("InstitutionRoleID", SqlDbType.Int, null, false, institutionRoleID)))
+            {
+                using (CustomSqlHelper<ItemInstitution> helper = new CustomSqlHelper<ItemInstitution>())
+                {
+                    CustomGenericList<ItemInstitution> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
     }
 }
 

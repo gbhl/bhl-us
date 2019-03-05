@@ -66,6 +66,7 @@
     <Compile Include="BHLImportProvider.IADCMetadata.cs" />
     <Compile Include="BHLImportProvider.IAFile.cs" />
     <Compile Include="BHLImportProvider.IAItem.cs" />
+    <Compile Include="BHLImportProvider.IAItemIdentifier.cs" />
     <Compile Include="BHLImportProvider.IAItemSet.cs" />
     <Compile Include="BHLImportProvider.IAItemStatus.cs" />
     <Compile Include="BHLImportProvider.IAMarc.cs" />

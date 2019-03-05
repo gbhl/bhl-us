@@ -76,5 +76,17 @@ namespace MOBOT.BHL.Server
 		{
 			new InstitutionDAL().Save( null, null, institution, userID );
 		}
-	}
+
+        public InstitutionRole InstitutionRoleSelectAuto(int institutionRoleID)
+        {
+            return new InstitutionRoleDAL().InstitutionRoleSelectAuto(null, null, institutionRoleID);
+        }
+
+        public CustomGenericList<InstitutionRole> InstitutionRoleSelectAll()
+        {
+            return (GetInstitutionDalInstance().InstitutionRoleSelectAll(null, null));
+        }
+
+
+    }
 }

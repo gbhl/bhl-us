@@ -221,5 +221,21 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CloseConnection( connection, isTransactionCoordinator );
 			}
 		}
-	}
+
+        public CustomGenericList<InstitutionRole> InstitutionRoleSelectAll(
+                SqlConnection sqlConnection,
+                SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionRoleSelectAll", connection, transaction))
+            {
+                using (CustomSqlHelper<InstitutionRole> helper = new CustomSqlHelper<InstitutionRole>())
+                {
+                    CustomGenericList<InstitutionRole> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+    }
 }

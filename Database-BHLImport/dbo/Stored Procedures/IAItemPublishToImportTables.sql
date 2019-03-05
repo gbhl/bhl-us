@@ -864,19 +864,6 @@ BEGIN TRY
 	WHERE	m.DataFieldTag = '082'
 	AND		m.Code = 'a'
 
-	/* The Abbreviations held in MARC 210 are now harvested into the TitleVariant table.  2/16/2011 MWL
-	-- Get the Abbreviations
-	INSERT INTO #tmpTitleIdentifier
-	SELECT DISTINCT
-			t.ItemID,
-			'Abbreviation',
-			m.SubFieldValue
-	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
-				ON t.ItemID = m.ItemID
-	WHERE	m.DataFieldTag = '210'
-	AND		m.Code = 'a'
-	*/
-
 	-- Get the WonderFetch identifiers (first look for a titleid, then look for a MARC
 	-- 001 control record with a value including 'catkey')
 	INSERT INTO #tmpTitleIdentifier
@@ -914,6 +901,67 @@ BEGIN TRY
 	WHERE	m.Tag = '001'
 	AND		m.[Value] NOT LIKE 'catkey%'
 	AND		m.[Value] NOT LIKE 'oc%'
+
+	-- Get identifiers specified in the _META.XML file
+	INSERT INTO #tmpTitleIdentifier
+	SELECT DISTINCT
+			t.ItemID,
+			'DOI',
+			i.IdentifierValue
+	FROM	#tmpTitle t INNER JOIN dbo.IAItemIdentifier i
+				ON t.ItemID = i.ItemID
+			LEFT JOIN #tmpTitleIdentifier ti
+				ON t.ItemID = ti.ItemID
+				AND 'DOI' = ti.IdentifierName
+				AND i.IdentifierValue = ti.IdentifierValue
+	WHERE	i.IdentifierDescription = 'identifier-doi'
+	AND		ti.IdentifierValue IS NULL
+
+	/*
+	-- Consider using ARK, ISSN, and ISBN ids from the meta.xml file in the future
+
+	INSERT INTO #tmpTitleIdentifier
+	SELECT DISTINCT
+			t.ItemID,
+			'ARK',
+			i.IdentifierValue
+	FROM	#tmpTitle t INNER JOIN dbo.IAItemIdentifier i
+				ON t.ItemID = i.ItemID
+			LEFT JOIN #tmpTitleIdentifier ti
+				ON t.ItemID = ti.ItemID
+				AND 'ARK' = ti.IdentifierName
+				AND i.IdentifierValue = ti.IdentifierValue
+	WHERE	i.IdentifierDescription = 'identifier-ark'
+	AND		ti.IdentifierValue IS NULL
+
+	INSERT INTO #tmpTitleIdentifier
+	SELECT DISTINCT
+			t.ItemID,
+			'ISSN',
+			i.IdentifierValue
+	FROM	#tmpTitle t INNER JOIN dbo.IAItemIdentifier i
+				ON t.ItemID = i.ItemID
+			LEFT JOIN #tmpTitleIdentifier ti
+				ON t.ItemID = ti.ItemID
+				AND 'ISSN' = ti.IdentifierName
+				AND i.IdentifierValue = ti.IdentifierValue
+	WHERE	i.IdentifierDescription = 'issn'
+	AND		ti.IdentifierValue IS NULL
+
+	INSERT INTO #tmpTitleIdentifier
+	SELECT DISTINCT
+			t.ItemID,
+			'ISBN',
+			i.IdentifierValue
+	FROM	#tmpTitle t INNER JOIN dbo.IAItemIdentifier i
+				ON t.ItemID = i.ItemID
+			LEFT JOIN #tmpTitleIdentifier ti
+				ON t.ItemID = ti.ItemID
+				AND 'ISBN' = ti.IdentifierName
+				AND i.IdentifierValue = ti.IdentifierValue
+	WHERE	i.IdentifierDescription = 'isbn'
+	AND		ti.IdentifierValue IS NULL
+	*/
 
 	-- =======================================================================
 	-- =======================================================================
@@ -1301,33 +1349,21 @@ BEGIN TRY
 			MARCCreator_b,
 			MARCCreator_c,
 			MARCCreator_d,
-			LTRIM(RTRIM(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(
-				REPLACE(MARCCreator_d, 
-					'b.', ''), 
-					'.', ''), 
-					',', ''),
-					'(', ''),
-					')', ''),
-					':', '')
-			)) AS Dates
+			MARCCreator_d AS Dates
 	INTO	#tmpCreatorDates
 	FROM	#tmpCreator
 	WHERE	ISNULL(MARCCreator_d, '') <> ''
 
 	UPDATE	#tmpCreator
-	SET		DOB = SUBSTRING(d.Dates, 1, 4),
-			DOD = CASE WHEN LEN(d.Dates) > 5 THEN SUBSTRING(d.Dates, 6, 4) END
+	SET		DOB = u.StartDate,
+			DOD = u.EndDate
 	FROM	#tmpCreator c INNER JOIN #tmpCreatorDates d
 				ON c.ItemID = d.ItemID
 				AND ISNULL(c.MARCCreator_a, '') = ISNULL(d.MARCCreator_a, '')
 				AND ISNULL(c.MARCCreator_b, '') = ISNULL(d.MARCCreator_b, '')
 				AND ISNULL(c.MARCCreator_c, '') = ISNULL(d.MARCCreator_c, '')
 				AND ISNULL(c.MARCCreator_d, '') = ISNULL(d.MARCCreator_d, '')
+			CROSS APPLY dbo.fnGetDatesFromString(d.Dates) u
 
 	DROP TABLE #tmpCreatorDates
 

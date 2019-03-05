@@ -1,7 +1,4 @@
-﻿DROP PROCEDURE [dbo].[ItemPublishToProductionIA]
-GO
-
-CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
+﻿CREATE PROCEDURE [dbo].[ItemPublishToProductionIA]
 
 @BarCode nvarchar(40) = NULL
 
@@ -728,8 +725,8 @@ BEGIN TRY
 						(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
 						ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, '') COLLATE SQL_Latin1_General_CP1_CI_AI))
 					)
-				AND ISNULL(t.DOB, '') = ISNULL(a.Startdate, '')
-				AND	ISNULL(t.DOD, '') = ISNULL(a.EndDate, '')
+				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.DOB), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.Startdate), '')
+				AND	ISNULL(dbo.fnRemoveNonNumericCharacters(t.DOD), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
 			INNER JOIN dbo.BHLAuthorName n
 				ON a.AuthorID = n.AuthorID
 				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
@@ -1303,9 +1300,33 @@ BEGIN TRY
 					AND i.IdentifierID = ti.IdentifierID
 					AND tmp.IdentifierValue = ti.IdentifierValue
 		WHERE	ti.TitleIdentifierID IS NULL
+		AND		tmp.IdentifierName <> 'DOI'
 
 		SELECT @TitleIdentifierInsert = @@ROWCOUNT
 
+		-- Insert new DOI records into the production database
+		DECLARE @DOIEntityTypeID int
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
+		DECLARE @DOIStatusID int
+		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
+
+		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
+			DOIName, StatusDate, IsValid, Creationdate, LastModifiedDate)
+		SELECT DISTINCT @DOIEntityTypeID, t.TitleID, @DOIStatusID, tmp.IdentifierValue, 
+			GETDATE(), 1, tmp.ExternalCreationDate, tmp.ExternalLastModifiedDate
+		FROM	#tmpTitle_TitleIdentifier tmp 
+				INNER JOIN #tmpTitle tmpT
+					ON tmp.ImportKey = tmpT.ImportKey
+				INNER JOIN dbo.BHLTitle t
+					ON tmpT.ProductionTitleID = t.TitleID
+				LEFT JOIN dbo.BHLDOI d
+					ON d.DOIEntityTypeID = @DOIEntityTypeID
+					AND d.EntityID = t.TitleID
+					AND d.DOIName = tmp.IdentifierValue 
+		WHERE	d.DOIID IS NULL
+		AND		tmp.IdentifierName = 'DOI'
+
+		SELECT @TitleIdentifierInsert = @TitleIdentifierInsert + @@ROWCOUNT
 
 		-- =======================================================================
 

@@ -149,14 +149,88 @@ namespace MOBOT.BHL.Server
 			return dal.ItemUpdateLastPageNameLookupDate( null, null, itemID );
 		}
 
-		/// <summary>
-		/// Check for existence of OCR files in the folder for the specified item 
-		/// </summary>
-		/// <param name="itemID"></param>
-		/// <param name="pageID"></param>
-		/// <param name="ocrTextPath"></param>
-		/// <returns></returns>
-		public bool ItemCheckForOcrText( int itemID, string ocrTextPath, bool useRemoteProvider )
+        /// <summary>
+        /// Update the assigned iteminstitution of the specified item.
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <param name="originalInstitution"></param>
+        /// <param name="newInstitution"></param>
+        /// <param name="roleID"></param>
+        /// <returns>Array of two elements. First element contains "true" or "false".  Second element 
+        /// contains message detailing the success or error.</returns>
+        public string[] ItemUpdateInstitution(int itemID, string newInstitution, int roleID, int userID)
+        {
+            string[] results = new string[3];
+            string returnValue = "true";
+            string returnMessage = string.Empty;
+
+            try
+            {
+                ItemDAL iDAL = new ItemDAL();
+                ItemInstitutionDAL iiDAL = new ItemInstitutionDAL();
+
+                Item savedItem = iDAL.ItemSelectAuto(null, null, itemID);
+                ItemInstitution savedItemInstitution = iiDAL.ItemInstitutionSelectByItemAndRole(null, null, itemID, roleID);
+                if (savedItem != null)
+                {
+                    DateTime updateDate = DateTime.Now;
+
+                    if (savedItemInstitution == null)
+                    {
+                        // Role not assigned previously, so add a new record
+                        ItemInstitution newItemInstitution = new ItemInstitution();
+                        newItemInstitution.ItemID = itemID;
+                        newItemInstitution.InstitutionCode = newInstitution;
+                        newItemInstitution.InstitutionRoleID = roleID;
+                        newItemInstitution.CreationDate = updateDate;
+                        newItemInstitution.CreationUserID = userID;
+                        newItemInstitution.LastModifiedDate = updateDate;
+                        newItemInstitution.LastModifiedUserID = userID;
+                        iiDAL.ItemInstitutionInsertAuto(null, null, newItemInstitution);
+                    }
+                    else if (newInstitution == string.Empty)
+                    {
+                        // Setting new role to blank, so delete existing record
+                        iiDAL.ItemInstitutionDeleteAuto(null, null, savedItemInstitution.ItemInstitutionID);
+                    }
+                    else
+                    {
+                        // Changing role to new value, so update existing record
+                        savedItemInstitution.InstitutionCode = newInstitution;
+                        savedItemInstitution.LastModifiedDate = updateDate;
+                        savedItemInstitution.LastModifiedUserID = userID;
+                        iiDAL.ItemInstitutionUpdateAuto(null, null, savedItemInstitution);
+                    }
+
+                    savedItem.LastModifiedDate = updateDate;
+                    savedItem.LastModifiedUserID = userID;
+                    savedItem = iDAL.ItemUpdateAuto(null, null, savedItem);
+                }
+                else
+                {
+                    throw new Exception("Could not find existing Item record.");
+                }
+            }
+            catch (Exception ex)
+            {
+                returnValue = "false";
+                returnMessage = ex.Message;
+            }
+
+            results[0] = returnValue;
+            results[1] = returnMessage;
+            results[2] = itemID.ToString();
+            return results;
+        }
+
+        /// <summary>
+        /// Check for existence of OCR files in the folder for the specified item 
+        /// </summary>
+        /// <param name="itemID"></param>
+        /// <param name="pageID"></param>
+        /// <param name="ocrTextPath"></param>
+        /// <returns></returns>
+        public bool ItemCheckForOcrText( int itemID, string ocrTextPath, bool useRemoteProvider )
 		{
 			try
 			{
@@ -239,6 +313,11 @@ namespace MOBOT.BHL.Server
         public CustomGenericList<Item> ItemSelectByInstitution(string institutionCode, int returnCode, string sortBy)
         {
             return new ItemDAL().ItemSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
+        }
+
+        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
+        {
+            return new ItemDAL().ItemSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, numRows, pageNum, sortColumn, sortOrder);
         }
 
         public int ItemCountByInstitution(string institutionCode)
