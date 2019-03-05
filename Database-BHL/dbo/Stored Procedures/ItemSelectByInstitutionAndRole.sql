@@ -102,7 +102,7 @@ BEGIN
 			INNER JOIN dbo.Title t WITH (NOLOCK)ON i.PrimaryTitleID = t.TitleID
 			INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
 			INNER JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID AND ii.InstitutionRoleID = @InstitutionRoleID
-	WHERE	ii.InstitutionCode = @InstitutionCode
+	WHERE	ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '_A_L_L_'
 	AND		(i.Barcode LIKE '%' + @Barcode + '%' OR @Barcode = '')
 END
 

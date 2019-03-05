@@ -52,6 +52,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
                 ddlInstitutions.Items.Add(new ListItem("(select content provider)", "^^^^^^^^"));
+                ddlInstitutions.Items.Add(new ListItem("- ASSIGNED - ", "_A_L_L_"));
                 ddlInstitutions.Items.Add(new ListItem("- UNASSIGNED -", ""));
                 ddlInstitutionChange.Items.Add(new ListItem("(select content provider)", "^^^^^^^^"));
                 ddlInstitutionChange.Items.Add(new ListItem("- UNASSIGNED -", ""));
