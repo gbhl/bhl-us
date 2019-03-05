@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleSelectWithoutSubmittedDOI]
+﻿CREATE PROCEDURE [dbo].[TitleSelectWithoutSubmittedDOI]
 
 @NumberToReturn int = 10
 
@@ -14,6 +13,10 @@ SET @NumToReturn = @NumberToReturn
 
 DECLARE @MaxDate DATETIME
 SELECT @MaxDate = GETDATE() - 14 -- days
+
+-- Year for sliding copyright window
+DECLARE @YearLimit int
+SELECT @YearLimit = DATEPART(year, GETDATE()) - 95
 
 SELECT DISTINCT TOP (@NumToReturn)
 		ISNULL(d.DOIID, 0) AS DOIID,
@@ -32,6 +35,7 @@ OR		d.DOIStatusID = 20 -- DOI Assigned (but not submitted)
 OR		d.DOIStatusID = 30 -- Pending Resubmit
 OR		d.DOIStatusID = 40 -- Batch ID Assigned
 OR		d.DOIID IS NULL)
+AND		ISNULL(t.StartYear, 9999) < @YearLimit -- Only out-of-copyright titles
 AND		t.CreationDate <= @MaxDate -- Only select titles older than specified # of days
 AND		c.HasLocalContent = 1 -- Make sure that Page records exist (no items without scans)
 AND		t.BibliographicLevelID IN (1, 4) -- Monographic component part, Monograph/Item
