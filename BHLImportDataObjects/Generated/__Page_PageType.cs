@@ -266,7 +266,7 @@ namespace MOBOT.BHLImport.DataObjects
 		/// Column: FileNamePrefix;
 		/// DBMS data type: nvarchar(50);
 		/// </summary>
-		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
+		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=200)]
 		public string FileNamePrefix
 		{
 			get
@@ -275,7 +275,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 50);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_FileNamePrefix != value)
 				{
 					_FileNamePrefix = value;

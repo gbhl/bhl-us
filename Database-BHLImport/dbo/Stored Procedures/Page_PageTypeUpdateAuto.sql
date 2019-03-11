@@ -8,7 +8,7 @@ CREATE PROCEDURE Page_PageTypeUpdateAuto
 
 @PagePageTypeID INT,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @PageTypeID INT,
 @ImportStatusID INT,

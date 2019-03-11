@@ -8,7 +8,7 @@ CREATE PROCEDURE IndicatedPageInsertAuto
 
 @IndicatedPageID INT OUTPUT,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @Sequence SMALLINT = null,
 @ImportStatusID INT,

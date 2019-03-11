@@ -8,7 +8,7 @@ CREATE PROCEDURE PageInsertAuto
 
 @PageID INT OUTPUT,
 @ItemID INT,
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @PageDescription NVARCHAR(255) = null,
 @Illustration BIT,

@@ -10,7 +10,7 @@ CREATE PROCEDURE PageUpdateAuto
 @ImportStatusID INT,
 @ImportSourceID INT,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @PageDescription NVARCHAR(255),
 @Illustration BIT,

@@ -8,7 +8,7 @@ CREATE PROCEDURE Page_PageTypeInsertAuto
 
 @PagePageTypeID INT OUTPUT,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @PageTypeID INT,
 @ImportStatusID INT,

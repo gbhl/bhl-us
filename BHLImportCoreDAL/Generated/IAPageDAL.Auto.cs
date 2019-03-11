@@ -121,7 +121,7 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAPageInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("PageID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 50, false, localFileName),
+					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 200, false, localFileName),
 					CustomSqlHelper.CreateInputParameter("Sequence", SqlDbType.Int, null, true, sequence),
 					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
@@ -233,7 +233,7 @@ namespace MOBOT.BHLImport.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("IAPageUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
 					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
-					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 50, false, localFileName),
+					CustomSqlHelper.CreateInputParameter("LocalFileName", SqlDbType.NVarChar, 200, false, localFileName),
 					CustomSqlHelper.CreateInputParameter("Sequence", SqlDbType.Int, null, true, sequence),
 					CustomSqlHelper.CreateInputParameter("ExternalUrl", SqlDbType.NVarChar, 500, true, externalUrl), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))

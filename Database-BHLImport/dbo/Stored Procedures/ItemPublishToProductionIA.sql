@@ -290,7 +290,7 @@ BEGIN TRY
 	CREATE TABLE #tmpPage (
 		[PageID] [int] NOT NULL,
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[PageDescription] [nvarchar](255) NULL,
 		[Illustration] [bit] NULL DEFAULT(0),
@@ -317,7 +317,7 @@ BEGIN TRY
 	CREATE TABLE #tmpIndicatedPage (
 		[IndicatedPageID] [int] NOT NULL,
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[Sequence] [smallint] NULL,
 		[PagePrefix] [nvarchar](40) NULL,
@@ -332,7 +332,7 @@ BEGIN TRY
 	CREATE TABLE #tmpPage_PageType (
 		[PagePageTypeID] [int] NOT NULL,
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[PageTypeID] [int] NOT NULL,
 		[Verified] [bit] NOT NULL,

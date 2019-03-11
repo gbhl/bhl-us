@@ -279,7 +279,7 @@ BEGIN TRY
 		[ItemID] [int] NOT NULL,
 		[BHLItemID] [int] NOT NULL,
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NULL,
 		[SequenceOrderCorrected] [int] NULL,
 		[Year] nvarchar(20) NULL,
@@ -293,7 +293,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpPage_PageType (
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
 		[PageTypeID] [int] NOT NULL
@@ -301,7 +301,7 @@ BEGIN TRY
 
 	CREATE TABLE #tmpIndicatedPage (
 		[BarCode] [nvarchar](40) NOT NULL,
-		[FileNamePrefix] [nvarchar](50) NOT NULL,
+		[FileNamePrefix] [nvarchar](200) NOT NULL,
 		[SequenceOrder] [int] NOT NULL,
 		[SequenceOrderCorrected] [int] NULL,
 		[PageID] [int] NOT NULL,

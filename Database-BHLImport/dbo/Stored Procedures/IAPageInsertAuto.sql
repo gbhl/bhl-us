@@ -8,7 +8,7 @@ CREATE PROCEDURE IAPageInsertAuto
 
 @PageID INT OUTPUT,
 @ItemID INT,
-@LocalFileName NVARCHAR(50),
+@LocalFileName NVARCHAR(200),
 @Sequence INT = null,
 @ExternalUrl NVARCHAR(500) = null
 

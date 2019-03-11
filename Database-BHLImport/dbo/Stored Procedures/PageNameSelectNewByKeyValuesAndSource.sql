@@ -2,7 +2,7 @@
 CREATE PROCEDURE [dbo].[PageNameSelectNewByKeyValuesAndSource]
 
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @NameFound NVARCHAR(100),
 @ImportSourceID INT
 

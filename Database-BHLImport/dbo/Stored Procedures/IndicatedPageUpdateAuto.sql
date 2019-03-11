@@ -8,7 +8,7 @@ CREATE PROCEDURE IndicatedPageUpdateAuto
 
 @IndicatedPageID INT,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @Sequence SMALLINT,
 @ImportStatusID INT,

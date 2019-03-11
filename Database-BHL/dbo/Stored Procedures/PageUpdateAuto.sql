@@ -8,7 +8,7 @@ CREATE PROCEDURE PageUpdateAuto
 
 @PageID INT,
 @ItemID INT,
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT,
 @PageDescription NVARCHAR(255),
 @Illustration BIT,

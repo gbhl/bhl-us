@@ -10,7 +10,7 @@ CREATE PROCEDURE PageNameInsertAuto
 @ImportStatusID INT,
 @ImportSourceID INT = null,
 @BarCode NVARCHAR(40),
-@FileNamePrefix NVARCHAR(50),
+@FileNamePrefix NVARCHAR(200),
 @SequenceOrder INT = null,
 @Source NVARCHAR(50) = null,
 @NameFound NVARCHAR(100) = null,

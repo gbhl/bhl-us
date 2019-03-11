@@ -8,7 +8,7 @@ CREATE PROCEDURE IAPageUpdateAuto
 
 @PageID INT,
 @ItemID INT,
-@LocalFileName NVARCHAR(50),
+@LocalFileName NVARCHAR(200),
 @Sequence INT,
 @ExternalUrl NVARCHAR(500)
 

@@ -38,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("IndicatedPageSelectNewByKeyValuesAndSource", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 40, false, barCode),
-                CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 50, false, fileNamePrefix),
+                CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
                 CustomSqlHelper.CreateInputParameter("Sequence", SqlDbType.TinyInt, null, true, sequence),
                 CustomSqlHelper.CreateInputParameter("ImportSourceID", SqlDbType.Int, null, false, importSourceID)))
             {
