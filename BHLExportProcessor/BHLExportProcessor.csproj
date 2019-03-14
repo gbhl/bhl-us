@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -55,11 +52,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ExportEngine.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config.template">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -169,6 +172,14 @@
     <ProjectReference Include="..\ExportBase\ExportBase.csproj">
       <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
       <Name>ExportBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExportBibTeX\ExportBibTeX.csproj">
+      <Project>{72398c08-6921-4ab7-85e9-8da7a3e43026}</Project>
+      <Name>ExportBibTeX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExportMODS\ExportMODS.csproj">
+      <Project>{a157afa5-3db7-48a7-a723-ab366c894cc2}</Project>
+      <Name>ExportMODS</Name>
     </ProjectReference>
     <ProjectReference Include="..\ExportRIS\ExportRIS.csproj">
       <Project>{4919c9d5-ee52-42c9-8176-526e6ecfb3b4}</Project>

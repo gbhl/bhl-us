@@ -6,22 +6,29 @@ namespace BHL.Export
 {
     public class ExportProcessorFactory
     {
-        Assembly _processorAssembly = null;
-        String _handler = String.Empty;
+        Dictionary<string, ExportProcessor> _processors;
 
-        public ExportProcessorFactory(String processorToRun, Dictionary<string, ExportProcessor> processors)
+        public ExportProcessorFactory(Dictionary<string, ExportProcessor> processors)
         {
-            // Find the handler assembly for the specified processor
-            ExportProcessor processor = processors[processorToRun];
-            _handler = processor.Handler;
-
-            _processorAssembly = Assembly.Load(_handler);
+            _processors = processors;
         }
 
-        public IBHLExport New()
+        /// <summary>
+        /// Get an instance of the specified processor
+        /// </summary>
+        /// <param name="processorToRun"></param>
+        /// <returns></returns>
+        public IBHLExport New(string processorName)
         {
-            Type processorType = _processorAssembly.GetType(_handler + ".ExportProcessor");
+            // Find the handler assembly for the specified processor
+            ExportProcessor processor = _processors[processorName];
+            string handler = processor.Handler;
+
+            // Instatiate an instance of the specified processor
+            Assembly processorAssembly = Assembly.Load(handler);
+            Type processorType = processorAssembly.GetType(handler + ".ExportProcessor");
             IBHLExport processorInstance = (IBHLExport)Activator.CreateInstance(processorType);
+
             return processorInstance;
         }
     }

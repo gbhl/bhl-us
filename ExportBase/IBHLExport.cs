@@ -8,6 +8,8 @@ namespace BHL.Export
 
         List<string> Errors();
 
+        void SetLogger(ExportLogger log);
+
         void Process();
     }
 }

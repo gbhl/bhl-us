@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4919C9D5-EE52-42C9-8176-526E6ECFB3B4}</ProjectGuid>
+    <ProjectGuid>{72398C08-6921-4AB7-85E9-8DA7A3E43026}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BHL.Export.RIS</RootNamespace>
-    <AssemblyName>BHL.Export.RIS</AssemblyName>
+    <RootNamespace>BHL.Export.BibTeX</RootNamespace>
+    <AssemblyName>BHL.Export.BibTeX</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -54,88 +54,98 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
+      <Project>{7e1631e8-f28a-4f9e-97e4-f8a69522d9dd}</Project>
+      <Name>BHLWebUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExportBase\ExportBase.csproj">
+      <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
+      <Name>ExportBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotatedItem.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotatedPage.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotatedPage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotatedPageCharacteristic.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotatedPageCharacteristic.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotatedTitle.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotatedTitle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Annotation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Annotation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotationNote.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotationNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotationRelation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotationRelation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.AnnotationSubject.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.AnnotationSubject.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Annotation_AnnotationConcept.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Annotation_AnnotationConcept.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.DOI.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.DOIUpdateStatusResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.DOIUpdateStatusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.GetPaginationStatusStringResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.GetPaginationStatusStringResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Institution.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Item.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Item.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.ItemNameFileLog.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.ItemNameFileLog.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.NameFinderResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Page.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Page.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.PageFlickr.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.PageFlickr.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.PageSummaryView.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.PageSummaryView.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.PageType.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.PageType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.PDF.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.RISCitation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.RISCitation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Segment.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Title.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Title.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.TitleBibTeX.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.TitleBibTeX.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Title_Identifier.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Title_Identifier.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.RIS.BHLWS.Vault.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.BibTeX.BHLWS.Vault.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\BHLWS\BHLWS.wsdl" />
@@ -157,12 +167,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExportBase\ExportBase.csproj">
-      <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
-      <Name>ExportBase</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,6 +8,8 @@ namespace BHL.Export
         public string SMTPHost { get; set; }
         public string EmailFromAddress { get; set; }
         public string EmailToAddress { get; set; }
+        public bool LogToFile { get; set;}
+        public bool LogToConsole { get; set; }
         public Dictionary<string, ExportProcessor> Processors { get; set; }
         public string ProcessorToRun { get; set; }
 
@@ -16,17 +18,21 @@ namespace BHL.Export
             SMTPHost = string.Empty;
             EmailFromAddress = string.Empty;
             EmailToAddress = string.Empty;
+            LogToFile = true;
+            LogToConsole = true;
             Processors = new Dictionary<string, ExportProcessor>();
             ProcessorToRun = string.Empty;
         }
 
         public void LoadAppConfig()
         {
-            this.SMTPHost = ConfigurationManager.AppSettings["SMTPHost"] ?? string.Empty;
-            this.EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"] ?? string.Empty;
-            this.EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"] ?? string.Empty;
+            SMTPHost = ConfigurationManager.AppSettings["SMTPHost"] ?? string.Empty;
+            EmailFromAddress = ConfigurationManager.AppSettings["EmailFromAddress"] ?? string.Empty;
+            EmailToAddress = ConfigurationManager.AppSettings["EmailToAddress"] ?? string.Empty;
+            LogToFile = !((ConfigurationManager.AppSettings["LogToFile"] ?? string.Empty).ToLower() == "false");
+            LogToConsole = !((ConfigurationManager.AppSettings["LogToConsole"] ?? string.Empty).ToLower() == "false");
             InitializeProcessorList(ConfigurationManager.AppSettings["Processors"]);
-            this.ProcessorToRun = (ConfigurationManager.AppSettings["ProcessorToRun"] ?? string.Empty).ToUpper();
+            ProcessorToRun = (ConfigurationManager.AppSettings["ProcessorToRun"] ?? string.Empty).ToUpper();
         }
 
         private void InitializeProcessorList(string processors)
