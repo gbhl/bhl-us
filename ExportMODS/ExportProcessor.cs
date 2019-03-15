@@ -237,7 +237,7 @@ namespace BHL.Export.MODS
                 _stats[statsKey]++;
             else
                 _stats.Add(statsKey, 1);
-            if (_stats[statsKey] % 100 == 0) _log.Info(string.Format("{0} {1} processed.", _stats[statsKey].ToString(), statsKey));
+            if (_stats[statsKey] % 1000 == 0) _log.Info(string.Format("{0} {1} processed.", _stats[statsKey].ToString(), statsKey));
         }
 
         /// <summary>

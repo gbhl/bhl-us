@@ -3,6 +3,9 @@
   <configSections>
     <section name="log4net" type="System.Configuration.IgnoreSectionHandler" />
   </configSections>
+  <connectionStrings>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING"/>
+  </connectionStrings>
   <appSettings>
     <!-- *** GLOBAL settings *** -->
     <add key="SMTPHost" value="SMTP SERVER NAME"/>
@@ -25,7 +28,7 @@
         MODS | BHL.Export.MODS
         BibTeX | BHL.Export.BibTeX
     -->
-    <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX" />
+    <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX&#xA;IAID | BHL.Export.IAID&#xA;TSV | BHL.Export.TSV" />
 
     <!-- ********************************** -->
     <!--    Settings for each processor     -->
@@ -56,19 +59,32 @@
     <add key="MODSSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml.zip"/>
 
     <!-- *** BibTeX *** -->
-    <add key="BibTeXTitleTempFile" value="\\SERVER\FOLDER\bhltitle.bib.TEMP"/>
-    <add key="BibTeXTitleFile" value="\\SERVER\FOLDER\bhltitle.bib"/>
-    <add key="BibTeXTitleZipFile" value="\\SERVER\FOLDER\bhltitle.bib.zip"/>
-    <add key="BibTeXItemTempFile" value="\\SERVER\FOLDER\bhlitem.bib.TEMP"/>
-    <add key="BibTeXItemFile" value="\\SERVER\FOLDER\bhlitem.bib"/>
-    <add key="BibTeXItemZipFile" value="\\SERVER\FOLDER\bhlitem.bib.zip"/>
-    <add key="BibTeXSegmentTempFile" value="\\SERVER\FOLDER\bhlpart.bib.TEMP"/>
-    <add key="BibTeXSegmentFile" value="\\SERVER\FOLDER\bhlpart.bib"/>
-    <add key="BibTeXSegmentZipFile" value="\\SERVER\FOLDER\bhlpart.bib.zip"/>
+    <add key="BibTeXTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.bib.TEMP"/>
+    <add key="BibTeXTitleFile" value="\\SERVER\FOLDER\data\bhltitle.bib"/>
+    <add key="BibTeXTitleZipFile" value="\\SERVER\FOLDER\data\bhltitle.bib.zip"/>
+    <add key="BibTeXItemTempFile" value="\\SERVER\FOLDER\data\bhlitem.bib.TEMP"/>
+    <add key="BibTeXItemFile" value="\\SERVER\FOLDER\data\bhlitem.bib"/>
+    <add key="BibTeXItemZipFile" value="\\SERVER\FOLDER\data\bhlitem.bib.zip"/>
+    <add key="BibTeXSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.bib.TEMP"/>
+    <add key="BibTeXSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.bib"/>
+    <add key="BibTeXSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.bib.zip"/>
 
     <!-- *** Flat File *** -->
-    
+    <add key="TSVDOIFile" value="\\SERVER\FOLDER\data\doi.txt" />
+    <add key="TSVAuthorFile" value="\\SERVER\FOLDER\data\creator.txt" />
+    <add key="TSVItemFile" value="\\SERVER\FOLDER\data\item.txt" />
+    <add key="TSVPageFile" value="\\SERVER\FOLDER\data\page.txt" />
+    <add key="TSVPageNameFile" value="\\SERVER\FOLDER\data\pagename.txt" />
+    <add key="TSVPartFile" value="\\SERVER\FOLDER\data\part.txt" />
+    <add key="TSVPartAuthorFile" value="\\SERVER\FOLDER\data\partcreator.txt" />
+    <add key="TSVKeywordFile" value="\\SERVER\FOLDER\data\subject.txt" />
+    <add key="TSVTitleFile" value="\\SERVER\FOLDER\data\title.txt" />
+    <add key="TSVTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifier.txt" />
+    <add key="TSVItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
+
     <!-- *** IA Identifiers *** -->
+    <add key="IAIDFolder" value="iaidentifiers" />
+    <add key="IAIDFile" value="iaidentifiers.txt" />
 
     <!-- ********************************** -->
 

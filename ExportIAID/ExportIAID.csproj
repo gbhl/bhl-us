@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F08158A8-E657-4D11-A64B-D5F033E88D49}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>BHL.Export</RootNamespace>
-    <AssemblyName>BHLExportProcessor</AssemblyName>
+    <ProjectGuid>{6F9D630F-9C20-4BC7-8615-25D89CEC66E3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BHL.Export.IAID</RootNamespace>
+    <AssemblyName>BHL.Export.IAID</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -52,100 +50,99 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ExportEngine.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ExportProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config.template">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedItem.datasource">
+    <ProjectReference Include="..\ExportBase\ExportBase.csproj">
+      <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
+      <Name>ExportBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedPage.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotatedPage.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedPageCharacteristic.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotatedPageCharacteristic.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotatedTitle.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotatedTitle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Annotation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Annotation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationNote.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotationNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationRelation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotationRelation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.AnnotationSubject.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotationSubject.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Annotation_AnnotationConcept.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Annotation_AnnotationConcept.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOI.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.DOIUpdateStatusResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.DOIUpdateStatusResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.GetPaginationStatusStringResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.GetPaginationStatusStringResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Institution.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Item.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Item.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.ItemNameFileLog.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.ItemNameFileLog.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.NameFinderResponse.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Page.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Page.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageFlickr.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.PageFlickr.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageSummaryView.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.PageSummaryView.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PageType.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.PageType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.PDF.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.RISCitation.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.RISCitation.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Segment.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Title.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Title.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.TitleBibTeX.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.TitleBibTeX.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Title_Identifier.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Title_Identifier.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\BHLWS\BHL.Export.BHLWS.Vault.datasource">
+    <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.Vault.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\BHLWS\BHLWS.wsdl" />
-    <None Include="packages.config" />
+    <None Include="ExportIAIdentifiers.bat" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -167,32 +164,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExportBase\ExportBase.csproj">
-      <Project>{d8346831-da53-48c6-9a88-59ed4edc1a84}</Project>
-      <Name>ExportBase</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportBibTeX\ExportBibTeX.csproj">
-      <Project>{72398c08-6921-4ab7-85e9-8da7a3e43026}</Project>
-      <Name>ExportBibTeX</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportIAID\ExportIAID.csproj">
-      <Project>{6f9d630f-9c20-4bc7-8615-25d89cec66e3}</Project>
-      <Name>ExportIAID</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportMODS\ExportMODS.csproj">
-      <Project>{a157afa5-3db7-48a7-a723-ab366c894cc2}</Project>
-      <Name>ExportMODS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportRIS\ExportRIS.csproj">
-      <Project>{4919c9d5-ee52-42c9-8176-526e6ecfb3b4}</Project>
-      <Name>ExportRIS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ExportTSV\ExportTSV.csproj">
-      <Project>{c0114d29-f764-4185-b71f-e2fb620aad0b}</Project>
-      <Name>ExportTSV</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

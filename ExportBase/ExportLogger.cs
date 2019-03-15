@@ -40,11 +40,7 @@ namespace BHL.Export
             else
             {
                 if (_toFile) log.Error(message, ex);
-                if (_toConsole)
-                {
-                    Console.WriteLine(message);
-                    Console.WriteLine(ex.Message);
-                }
+                if (_toConsole) Console.WriteLine(string.Format("{0} | {1}", message, ex.Message));
             }
         }
     }

@@ -72,7 +72,7 @@ namespace BHL.Export.RIS
             catch (Exception ex)
             {
                 _log.Error("Exception processing citations.", ex);
-                _errors.Add("Exception processing citation:  " + ex.Message);
+                _errors.Add(string.Format("Exception processing citation:  {0}", ex.Message));
             }
         }
 
@@ -86,37 +86,26 @@ namespace BHL.Export.RIS
             {
                 BHLWS.BHLWSSoapClient service = new BHLWSSoapClient();
 
-                double numErrors = 0;
                 foreach (RISCitation citation in citations)
                 {
                     try
                     {
                         string citationText = service.GenerateRISCitation(citation);
                         File.AppendAllText(risTempFile, citationText, Encoding.UTF8);
-                        if (_stats.ContainsKey(statsKey))
-                        {
-                            _stats[statsKey]++;
-                        }
-                        else
-                        {
-                            _stats.Add(statsKey, 1);
-                        }
-
-                        _log.Info("Processing complete for citation: " + citation.Url);
+                        UpdateStats(statsKey);
                     }
                     catch (Exception ex)
                     {
-                        _log.Error("Exception processing citation: " + citation.Url, ex);
-                        _errors.Add("Exception processing citation " + citation.Url + ":  " + ex.Message);
-                        numErrors++;
+                        _log.Error(string.Format("Exception processing citation: {0}", citation.Url), ex);
+                        _errors.Add(string.Format("Exception processing citation {0}:  {1}", citation.Url, ex.Message));
                         // don't bomb.  try next citation
                     }
                 }
 
-                if ((numErrors / Convert.ToDouble(citations.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(citations.Length) * 100) > 1.0)
                 {
-                    _log.Error("RIS processing failed. " + numErrors.ToString() + " out of " + citations.Length + " item citations produced errors.");
-                    _errors.Add("RIS processing failed. " + numErrors.ToString() + " out of " + citations.Length + " item citations produced errors.");
+                    _log.Error(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
+                    _errors.Add(string.Format("RIS processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
                 }
                 else
                 {
@@ -130,6 +119,15 @@ namespace BHL.Export.RIS
             }
 
             _log.Info("Citation processing complete.");
+        }
+
+        private void UpdateStats(string statsKey)
+        {
+            if (_stats.ContainsKey(statsKey))
+                _stats[statsKey]++;
+            else
+                _stats.Add(statsKey, 1);
+            if (_stats[statsKey] % 1000 == 0) _log.Info(string.Format("{0} {1} processed.", _stats[statsKey].ToString(), statsKey));
         }
 
         /// <summary>

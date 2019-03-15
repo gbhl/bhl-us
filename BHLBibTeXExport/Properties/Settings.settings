@@ -1,9 +1,0 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MOBOT.BHL.BHLBibTeXExport.Properties" GeneratedClassName="Settings">
-  <Profiles />
-  <Settings>
-    <Setting Name="BHLBibTeXExport_BHLWS_BHLWS" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://localhost:26504/BHLWS.asmx</Value>
-    </Setting>
-  </Settings>
-</SettingsFile>

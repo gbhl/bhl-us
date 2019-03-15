@@ -3,9 +3,7 @@ using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BHL.Export.BibTeX
 {
@@ -75,7 +73,7 @@ namespace BHL.Export.BibTeX
             catch (Exception ex)
             {
                 _log.Error("Exception processing citations.", ex);
-                _errors.Add("Exception processing citation:  " + ex.Message);
+                _errors.Add(string.Format("Exception processing citation:  {0}", ex.Message));
             }
         }
 
@@ -87,37 +85,31 @@ namespace BHL.Export.BibTeX
 
             if (citations.Length > 0)
             {
-                double numErrors = 0;
                 foreach (TitleBibTeX citation in citations)
                 {
                     try
                     {
                         String citationText = this.GenerateCitation(citation);
                         File.AppendAllText(bibtexTempFile, citationText, Encoding.UTF8);
-                        if (_stats.ContainsKey(statsKey))
-                        {
-                            _stats[statsKey]++;
-                        }
-                        else
-                        {
-                            _stats.Add(statsKey, 1);
-                        }
-
-                        _log.Info("Processing complete for citation: " + citation.CitationKey);
+                        UpdateStats(statsKey);
+                    }
+                    catch (ArgumentException ae)
+                    {
+                        _log.Error(string.Format("Invalid metadata for citation: {0}", citation.CitationKey), ae);
+                        UpdateStats(string.Format("{0} with Invalid Metadata", statsKey));
                     }
                     catch (Exception ex)
                     {
-                        _log.Error("Exception processing citation: " + citation.CitationKey, ex);
-                        _errors.Add("Exception processing citation " + citation.CitationKey + ":  " + ex.Message);
-                        numErrors++;
+                        _log.Error(string.Format("Exception processing citation: {0}", citation.CitationKey), ex);
+                        _errors.Add(string.Format("Exception processing citation {0}: {1}", citation.CitationKey, ex.Message));
                         // don't bomb.  try next citation
                     }
                 }
 
-                if ((numErrors / Convert.ToDouble(citations.Length) * 100) > 1.0)
+                if ((_errors.Count / Convert.ToDouble(citations.Length) * 100) > 1.0)
                 {
-                    _log.Error("BibTeX processing failed. " + numErrors.ToString() + " out of " + citations.Length + " item citations produced errors.");
-                    _errors.Add("BibTeX processing failed. " + numErrors.ToString() + " out of " + citations.Length + " item citations produced errors.");
+                    _log.Error(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
+                    _errors.Add(string.Format("BibTeX processing failed. {0} out of {1} item citations produced errors.", _errors.Count.ToString(), citations.Length));
                 }
                 else
                 {
@@ -194,6 +186,19 @@ namespace BHL.Export.BibTeX
             citationText = bibtex.GenerateReference();
 
             return citationText;
+        }
+
+        /// <summary>
+        /// Update the statistics for the given key value
+        /// </summary>
+        /// <param name="statsKey"></param>
+        private void UpdateStats(string statsKey)
+        {
+            if (_stats.ContainsKey(statsKey))
+                _stats[statsKey]++;
+            else
+                _stats.Add(statsKey, 1);
+            if (_stats[statsKey] % 1000 == 0) _log.Info(string.Format("{0} {1} processed.", _stats[statsKey].ToString(), statsKey));
         }
 
         /// <summary>
