@@ -28,7 +28,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                CustomGenericList<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "TitleName", "asc");
+                CustomGenericList<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
@@ -42,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     // Write record
                     csvString.Remove(0, csvString.Length);
-                    csvString.Append("\"" + ((institution != null) ? institution.InstitutionName.Replace(",", " ") : "- UNASSIGNED - ") + "\",");
+                    csvString.Append("\"" + (institutionCode == "_A_L_L_" ? "- ASSIGNED -" : ((institution != null) ? institution.InstitutionName.Replace(", ", " ") : "- UNASSIGNED -")) + "\",");
                     csvString.Append("\"" + institutionRole.InstitutionRoleLabel.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.ItemID.ToString() + "\",");
                     csvString.Append("\"" + item.BarCode + "\",");
@@ -57,8 +57,8 @@ namespace MOBOT.BHL.AdminWeb
                     csvString.Append("\"" + item.Rights.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.LicenseUrl.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.DueDiligence.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.LastModifiedDate + "\",");
-                    csvString.AppendLine("\"" + item.CreationDate + "\"");
+                    csvString.Append("\"" + item.CreationDate + "\",");
+                    csvString.AppendLine("\"" + item.LastModifiedDate + "\"");
 
                     context.Response.Write(csvString.ToString());
                     context.Response.Flush();
