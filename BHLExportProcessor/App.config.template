@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="System.Configuration.IgnoreSectionHandler" />
+  </configSections>
+  <connectionStrings>
+    <add name="BHL" connectionString="DATABASE CONNECTION STRING"/>
+  </connectionStrings>
+  <appSettings>
+    <!-- *** GLOBAL settings *** -->
+    <add key="SMTPHost" value="SMTP SERVER NAME"/>
+    <add key="EmailFromAddress" value="EMAIL FROM ADDRESS"/>
+    <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
+
+    <!-- Log settings -->
+    <add key="LogToFile" value="true"/>
+    <add key="LogToConsole" value="true"/>
+
+    <!-- The name of the processor to use to produce export files.  Can be overridden on the command line.  -->
+    <add key="ProcessorToRun" value="RIS" />
+
+    <!-- Export processors that are available.
+        Enter each processor on a separate line, with each 
+        element (name, handler) separated by the '|' character
+    
+        To add additional metadata formats, add the items like so:         
+        RIS | BHL.Export.RIS
+        MODS | BHL.Export.MODS
+        BibTeX | BHL.Export.BibTeX
+    -->
+    <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX&#xA;IAID | BHL.Export.IAID&#xA;TSV | BHL.Export.TSV" />
+
+    <!-- ********************************** -->
+    <!--    Settings for each processor     -->
+    <!--  Each processor included in the    -->
+    <!--  "Processors" list should have     -->
+    <!--  something here.                   -->
+    
+    <!-- *** RIS *** -->
+    <add key="RISTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.ris.TEMP" />
+    <add key="RISTitleFile" value="\\SERVER\FOLDER\data\bhltitle.ris" />
+    <add key="RISTitleZipFile" value="\\SERVER\FOLDER\data\bhltitle.ris.zip"/>
+    <add key="RISItemTempFile" value="\\SERVER\FOLDER\data\bhlitem.ris.TEMP" />
+    <add key="RISItemFile" value="\\SERVER\FOLDER\data\bhlitem.ris" />
+    <add key="RISItemZipFile" value="\\SERVER\FOLDER\data\bhlitem.ris.zip"/>
+    <add key="RISSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.ris.TEMP"/>
+    <add key="RISSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.ris"/>
+    <add key="RISSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.ris.zip"/>
+    
+    <!-- *** MODS *** -->
+    <add key="MODSTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.mods.xml.TEMP"/>
+    <add key="MODSTitleFile" value="\\SERVER\FOLDER\data\bhltitle.mods.xml"/>
+    <add key="MODSTitleZipFile" value="\\SERVER\FOLDER\data\bhltitle.mods.xml.zip"/>
+    <add key="MODSItemTempFile" value="\\SERVER\FOLDER\data\bhlitem.mods.xml.TEMP"/>
+    <add key="MODSItemFile" value="\\SERVER\FOLDER\data\bhlitem.mods.xml"/>
+    <add key="MODSItemZipFile" value="\\SERVER\FOLDER\data\bhlitem.mods.xml.zip"/>
+    <add key="MODSSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml.TEMP"/>
+    <add key="MODSSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml"/>
+    <add key="MODSSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml.zip"/>
+
+    <!-- *** BibTeX *** -->
+    <add key="BibTeXTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.bib.TEMP"/>
+    <add key="BibTeXTitleFile" value="\\SERVER\FOLDER\data\bhltitle.bib"/>
+    <add key="BibTeXTitleZipFile" value="\\SERVER\FOLDER\data\bhltitle.bib.zip"/>
+    <add key="BibTeXItemTempFile" value="\\SERVER\FOLDER\data\bhlitem.bib.TEMP"/>
+    <add key="BibTeXItemFile" value="\\SERVER\FOLDER\data\bhlitem.bib"/>
+    <add key="BibTeXItemZipFile" value="\\SERVER\FOLDER\data\bhlitem.bib.zip"/>
+    <add key="BibTeXSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.bib.TEMP"/>
+    <add key="BibTeXSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.bib"/>
+    <add key="BibTeXSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.bib.zip"/>
+
+    <!-- *** Flat File *** -->
+    <add key="TSVDOIFile" value="\\SERVER\FOLDER\data\doi.txt" />
+    <add key="TSVAuthorFile" value="\\SERVER\FOLDER\data\creator.txt" />
+    <add key="TSVItemFile" value="\\SERVER\FOLDER\data\item.txt" />
+    <add key="TSVPageFile" value="\\SERVER\FOLDER\data\page.txt" />
+    <add key="TSVPageNameFile" value="\\SERVER\FOLDER\data\pagename.txt" />
+    <add key="TSVPartFile" value="\\SERVER\FOLDER\data\part.txt" />
+    <add key="TSVPartAuthorFile" value="\\SERVER\FOLDER\data\partcreator.txt" />
+    <add key="TSVKeywordFile" value="\\SERVER\FOLDER\data\subject.txt" />
+    <add key="TSVTitleFile" value="\\SERVER\FOLDER\data\title.txt" />
+    <add key="TSVTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifier.txt" />
+    <add key="TSVItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
+
+    <!-- *** IA Identifiers *** -->
+    <add key="IAIDFolder" value="iaidentifiers" />
+    <add key="IAIDFile" value="iaidentifiers.txt" />
+
+    <!-- ********************************** -->
+
+  </appSettings>
+  <!-- This section contains the log4net configuration settings -->
+  <log4net>
+    <!-- Define some output appenders -->
+    <appender name="RollingLogFileAppender" type="log4net.Appender.RollingFileAppender">
+      <file value="\\SERVER\${COMPUTERNAME}-BHLExportProcessor-rolling-log.txt"/>
+      <appendToFile value="true"/>
+      <maxSizeRollBackups value="20"/>
+      <maximumFileSize value="5000000"/>
+      <rollingStyle value="Size"/>
+      <staticLogFileName value="true"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <header value="[Header]&#xD;&#xA;"
+ />
+        <footer value="[Footer]&#xD;&#xA;"
+ />
+        <conversionPattern value="%date [%thread] %-5level %logger [%ndc] - %message%newline"/>
+      </layout>
+    </appender>
+    <!-- Setup the root category, add the appenders and set the default level -->
+    <root>
+      <level value="ALL"/>
+      <appender-ref ref="RollingLogFileAppender"/>
+    </root>
+  </log4net>
+  <startup> 
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />
+  </startup>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
+            receiveTimeout="00:30:00" sendTimeout="00:01:00" allowCookies="false"
+            bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
+            maxBufferSize="536870912" maxBufferPoolSize="524288" maxReceivedMessageSize="536870912"
+            messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered"
+            useDefaultWebProxy="true"/>
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://WEBSERVERURL/BHLWS.asmx" binding="basicHttpBinding"
+          bindingConfiguration="BHLWSSoap" contract="BHLWS.BHLWSSoap" name="BHLWSSoap" />
+    </client>
+  </system.serviceModel>
+  <system.net>
+    <mailSettings>
+      <smtp deliveryMethod="Network">
+        <network defaultCredentials="false"
+                 enableSsl="false"
+                 host="MAIL_SERVER_ADDRESS"
+                 port="MAIL_SERVER_PORT"
+                 userName="MAIL_SERVER_USERNAME"
+                 password="MAIL_SERVER_PASSWORD"
+                 />
+      </smtp>
+    </mailSettings>
+  </system.net>
+</configuration>
