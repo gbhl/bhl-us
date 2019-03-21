@@ -55,7 +55,7 @@ namespace BHL.Export
             }
             else if (args.Length == 2)
             {
-                _configParms.ProcessorToRun = args[1];
+                _configParms.ProcessorToRun = args[1].ToUpper();
             }
 
             return returnValue;
