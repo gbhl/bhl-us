@@ -548,10 +548,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^([0-9]{4}) ??(-|/) ??([0-9]{4})$", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[3].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[3].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[3].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -563,10 +566,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^([0-9]{4}) ??[-|/] ??([0-9]{2})$", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[1].Value.Substring(0, 2) + groups[2].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[1].Value.Substring(0, 2) + groups[2].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[1].Value.Substring(0, 2) + groups[2].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -578,10 +584,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^([0-9]{4}) ??[-|/] ??([0-9]{1})$", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[1].Value.Substring(0, 3) + groups[2].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[1].Value.Substring(0, 3) + groups[2].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[1].Value.Substring(0, 3) + groups[2].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -593,10 +602,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^\\(??([0-9]{4}) ??(-|/) ??([0-9]{4})\\)??", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[3].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[3].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[3].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -605,9 +617,12 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("\\(([0-9]{4})(\\)|:)", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -616,10 +631,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("\\(([0-9]{4}) ??[-|/] ??([0-9]{4})\\)", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[2].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[2].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[2].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -628,10 +646,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("([0-9]{4}) ??[-|/] ??([0-9]{2})([^0-9]|$)", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[1].Value.Substring(0, 2) + groups[2].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[1].Value.Substring(0, 2) + groups[2].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[1].Value.Substring(0, 2) + groups[2].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -643,9 +664,12 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^\\(??\\b([0-9]{4})\\b\\)??", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -657,9 +681,12 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^([0-9]{4})( |:)\\(??[a-z]+", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -671,19 +698,25 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("^.*[a-z]+.*, ??([0-9]{4}) ??[-|/] ??([0-9]{4})$", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[2].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[2].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[2].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
                 else
                 {
                     groups = GetMatchGroups("^.*[a-z]+.*, ??([0-9]{4})$", volumeData.VolumeParsed);
                     if (groups != null)
                     {
-                        volumeData.StartYear = groups[1].Value;
-                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                        found = true;
+                        if (IsValidYear(groups[1].Value))
+                        {
+                            volumeData.StartYear = groups[1].Value;
+                            volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                            found = true;
+                        }
                     }
                 }
             }
@@ -694,10 +727,13 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("([0-9]{4}) ??(-|/) ??([0-9]{4})", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.EndYear = groups[3].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value) && IsValidYear(groups[3].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.EndYear = groups[3].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
@@ -707,13 +743,31 @@ namespace MOBOT.BHL.Utility
                 GroupCollection groups = GetMatchGroups("\\b([0-9]{4})\\b", volumeData.VolumeParsed);
                 if (groups != null)
                 {
-                    volumeData.StartYear = groups[1].Value;
-                    volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
-                    found = true;
+                    if (IsValidYear(groups[1].Value))
+                    {
+                        volumeData.StartYear = groups[1].Value;
+                        volumeData.VolumeParsed = CleanVolumeParsed(volumeData.VolumeParsed, groups[0].Value);
+                        found = true;
+                    }
                 }
             }
 
             return volumeData;
+        }
+
+        /// <summary>
+        /// Make sure the specified publication year is not greater than the current year.
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        private static bool IsValidYear(string year)
+        {
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                int currentYear = DateTime.Now.Year;
+                if (Convert.ToInt32(year) > currentYear) return false;
+            }
+            return true;
         }
 
         /// <summary>

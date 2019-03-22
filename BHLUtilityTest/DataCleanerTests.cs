@@ -1137,6 +1137,36 @@ namespace BHLUtilityTest
                 startNumber: "1", endNumber: "11", startIssue: "", endIssue: "");
         }
 
+        [TestMethod]
+        public void ParseVolumeStringTest114()
+        {
+            RunParseVolumeStringTest(
+                volumeString: "PA-3000",
+                startVolume: "", endVolume: "", startYear: "", endYear: "",
+                startSeries: "", endSeries: "", startPart: "", endPart: "",
+                startNumber: "", endNumber: "", startIssue: "", endIssue: "");
+        }
+
+        [TestMethod]
+        public void ParseVolumeStringTest115()
+        {
+            RunParseVolumeStringTest(
+                volumeString: "3910",
+                startVolume: "3910", endVolume: "", startYear: "", endYear: "",
+                startSeries: "", endSeries: "", startPart: "", endPart: "",
+                startNumber: "", endNumber: "", startIssue: "", endIssue: "");
+        }
+
+        [TestMethod]
+        public void ParseVolumeStringTest116()
+        {
+            RunParseVolumeStringTest(
+                volumeString: "1907",
+                startVolume: "", endVolume: "", startYear: "1907", endYear: "",
+                startSeries: "", endSeries: "", startPart: "", endPart: "",
+                startNumber: "", endNumber: "", startIssue: "", endIssue: "");
+        }
+
         #region ParseVolumeStringTest supporting methods
 
         private void RunParseVolumeStringTest(string volumeString, string startVolume,
