@@ -197,7 +197,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanDate = scanDate;
                 savedItem.ExternalStatus = externalStatus;
                 savedItem.TitleID = titleID;
-                savedItem.Year = string.IsNullOrWhiteSpace(volumeData.StartYear) ? year : volumeData.StartYear;
+                savedItem.Year = string.IsNullOrWhiteSpace(year) ? volumeData.StartYear : year;
                 savedItem.IdentifierBib = identifierBib;
                 savedItem.LicenseUrl = licenseUrl;
                 savedItem.Rights = rights;
