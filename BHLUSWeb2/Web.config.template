@@ -263,7 +263,7 @@
     </httpErrors>
     <httpProtocol>
       <customHeaders>
-        <add name="X-Frame-Options" value="deny" />
+        <add name="Content-Security-Policy" value="frame-ancestors DOMAIN-TO-EXCLUDE" />
       </customHeaders>
     </httpProtocol>
     <security>
