@@ -63,6 +63,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Connected Services\BHLWS\BHL.Export.MODS.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

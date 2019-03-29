@@ -53,21 +53,27 @@ namespace BHL.Export.BibTeX
                 _log.Info("Getting BibTeX data for all items.");
                 citations = service.TitleBibTeXSelectAllItemCitations();
                 this.GenerateCitations(citations, configParms.BibTexItemTempFile,
-                    configParms.BibTexItemFile, configParms.BibTexItemZipFile, "Items");
+                    configParms.BibTexItemFile, configParms.BibTexItemZipFile, 
+                    configParms.BibTexInternalItemTempFile, configParms.BibTexInternalItemFile, 
+                    configParms.BibTexInternalItemZipFile, "Items");
                 _log.Info("Item processing complete.");
 
                 _log.Info("Processing titles...");
                 _log.Info("Getting BibTeX data for all titles.");
                 citations = service.TitleBibTeXSelectAllTitleCitations();
                 this.GenerateCitations(citations, configParms.BibTexTitleTempFile,
-                    configParms.BibTexTitleFile, configParms.BibTexTitleZipFile, "Titles");
+                    configParms.BibTexTitleFile, configParms.BibTexTitleZipFile,
+                    configParms.BibTexInternalTitleTempFile, configParms.BibTexInternalTitleFile, 
+                    configParms.BibTexInternalTitleZipFile, "Titles");
                 _log.Info("Title processing complete.");
 
                 _log.Info("Processing segments...");
                 _log.Info("Getting BibTeX data for all segments.");
                 citations = service.SegmentSelectAllBibTeXCitations();
                 this.GenerateCitations(citations, configParms.BibTexSegmentTempFile,
-                    configParms.BibTexSegmentFile, configParms.BibTexSegmentZipFile, "Segments");
+                    configParms.BibTexSegmentFile, configParms.BibTexSegmentZipFile,
+                    configParms.BibTexInternalSegmentTempFile, configParms.BibTexInternalSegmentFile, 
+                    configParms.BibTexInternalSegmentZipFile, "Segments");
                 _log.Info("Segment processing complete.");
             }
             catch (Exception ex)
@@ -77,11 +83,13 @@ namespace BHL.Export.BibTeX
             }
         }
 
-        private void GenerateCitations(TitleBibTeX[] citations, String bibtexTempFile,
-            String bibtexFile, String bibtexZipFile, string statsKey)
+        private void GenerateCitations(TitleBibTeX[] citations, string bibtexTempFile,
+            string bibtexFile, string bibtexZipFile, string bibtexInternalTempFile,
+            string bibtexInternalFile, string bibtexInternalZipFile, string statsKey)
         {
-            // Clean up an existing temp file
+            // Clean up any existing temp files
             if (File.Exists(bibtexTempFile)) File.Delete(bibtexTempFile);
+            if (File.Exists(bibtexInternalTempFile)) File.Delete(bibtexInternalTempFile);
 
             if (citations.Length > 0)
             {
@@ -92,6 +100,13 @@ namespace BHL.Export.BibTeX
                         String citationText = this.GenerateCitation(citation);
                         File.AppendAllText(bibtexTempFile, citationText, Encoding.UTF8);
                         UpdateStats(statsKey);
+
+                        // If this is content held internally within BHL, write it to the "internal" file
+                        if (citation.HasLocalContent)
+                        {
+                            File.AppendAllText(bibtexInternalTempFile, citationText, Encoding.UTF8);
+                            UpdateStats(string.Format("{0} (Internal)", statsKey));
+                        }
                     }
                     catch (ArgumentException ae)
                     {
@@ -113,12 +128,15 @@ namespace BHL.Export.BibTeX
                 }
                 else
                 {
-                    // Move the newly created file to "production"
+                    // Move the newly created files to "production"
                     File.Delete(bibtexFile);
+                    File.Delete(bibtexInternalFile);
                     File.Move(bibtexTempFile, bibtexFile);
+                    File.Move(bibtexInternalTempFile, bibtexInternalFile);
 
-                    // Create a compressed version of the file
+                    // Create a compressed version of the files
                     new ExportFile(_log).Compress(bibtexFile, bibtexZipFile);
+                    new ExportFile(_log).Compress(bibtexInternalFile, bibtexInternalZipFile);
                 }
             }
 

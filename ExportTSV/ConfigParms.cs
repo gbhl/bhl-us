@@ -16,6 +16,17 @@ namespace BHL.Export.TSV
         public string TitleIdentifierFile { get; set; } = string.Empty;
         public string ItemUrlFormat { get; set; } = string.Empty;
 
+        public string InternalDOIFile { get; set; } = string.Empty;
+        public string InternalAuthorFile { get; set; } = string.Empty;
+        public string InternalItemFile { get; set; } = string.Empty;
+        public string InternalPartFile { get; set; } = string.Empty;
+        public string InternalPartAuthorFile { get; set; } = string.Empty;
+        public string InternalKeywordFile { get; set; } = string.Empty;
+        public string InternalTitleFile { get; set; } = string.Empty;
+        public string InternalTitleIdentifierFile { get; set; } = string.Empty;
+        public string InternalItemUrlFormat { get; set; } = string.Empty;
+
+
         public void LoadAppConfig()
         {
             DOIFile = ConfigurationManager.AppSettings["TSVDOIFile"];
@@ -29,6 +40,16 @@ namespace BHL.Export.TSV
             TitleFile = ConfigurationManager.AppSettings["TSVTitleFile"];
             TitleIdentifierFile = ConfigurationManager.AppSettings["TSVTitleIdentifierFile"];
             ItemUrlFormat = ConfigurationManager.AppSettings["TSVItemUrlFormat"];
+
+            InternalDOIFile = ConfigurationManager.AppSettings["TSVInternalDOIFile"];
+            InternalAuthorFile = ConfigurationManager.AppSettings["TSVInternalAuthorFile"];
+            InternalItemFile = ConfigurationManager.AppSettings["TSVInternalItemFile"];
+            InternalPartFile = ConfigurationManager.AppSettings["TSVInternalPartFile"];
+            InternalPartAuthorFile = ConfigurationManager.AppSettings["TSVInternalPartAuthorFile"];
+            InternalKeywordFile = ConfigurationManager.AppSettings["TSVInternalKeywordFile"];
+            InternalTitleFile = ConfigurationManager.AppSettings["TSVInternalTitleFile"];
+            InternalTitleIdentifierFile = ConfigurationManager.AppSettings["TSVInternalTitleIdentifierFile"];
+            InternalItemUrlFormat = ConfigurationManager.AppSettings["TSVInternalItemUrlFormat"];
         }
     }
 }

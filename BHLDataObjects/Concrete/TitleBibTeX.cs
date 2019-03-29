@@ -135,6 +135,22 @@ namespace MOBOT.BHL.DataObjects
             set { _keywords = value; }
         }
 
+        private bool _hasLocalContent = true;
+
+        public bool HasLocalContent
+        {
+            get { return _hasLocalContent; }
+            set { _hasLocalContent = value; }
+        }
+
+        private bool _hasExternalContent = false;
+
+        public bool HasExternalContent
+        {
+            get { return _hasExternalContent; }
+            set { _hasExternalContent = value; }
+        }
+
         #region ISetValues Members
 
         public void SetValues(CustomDataRow row)
@@ -221,6 +237,16 @@ namespace MOBOT.BHL.DataObjects
                     case "Keywords":
                         {
                             Keywords = (String)column.Value;
+                            break;
+                        }
+                    case "HasLocalContent":
+                        {
+                            _hasLocalContent = Convert.ToInt16(column.Value) == 1;
+                            break;
+                        }
+                    case "HasExternalContent":
+                        {
+                            _hasExternalContent = Convert.ToInt16(column.Value) == 1;
                             break;
                         }
                 }

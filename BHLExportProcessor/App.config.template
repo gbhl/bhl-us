@@ -46,7 +46,17 @@
     <add key="RISSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.ris.TEMP"/>
     <add key="RISSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.ris"/>
     <add key="RISSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.ris.zip"/>
-    
+
+    <add key="RISInternalTitleTempFile" value="\\SERVER\FOLDER\data\bhlinttitle.ris.TEMP" />
+    <add key="RISInternalTitleFile" value="\\SERVER\FOLDER\data\bhlinttitle.ris" />
+    <add key="RISInternalTitleZipFile" value="\\SERVER\FOLDER\data\bhlinttitle.ris.zip"/>
+    <add key="RISInternalItemTempFile" value="\\SERVER\FOLDER\data\bhlintitem.ris.TEMP" />
+    <add key="RISInternalItemFile" value="\\SERVER\FOLDER\data\bhlintitem.ris" />
+    <add key="RISInternalItemZipFile" value="\\SERVER\FOLDER\data\bhlintitem.ris.zip"/>
+    <add key="RISInternalSegmentTempFile" value="\\SERVER\FOLDER\data\bhlintpart.ris.TEMP"/>
+    <add key="RISInternalSegmentFile" value="\\SERVER\FOLDER\data\bhlintpart.ris"/>
+    <add key="RISInternalSegmentZipFile" value="\\SERVER\FOLDER\data\bhlintpart.ris.zip"/>
+
     <!-- *** MODS *** -->
     <add key="MODSTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.mods.xml.TEMP"/>
     <add key="MODSTitleFile" value="\\SERVER\FOLDER\data\bhltitle.mods.xml"/>
@@ -57,6 +67,16 @@
     <add key="MODSSegmentTempFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml.TEMP"/>
     <add key="MODSSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml"/>
     <add key="MODSSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.mods.xml.zip"/>
+
+    <add key="MODSInternalTitleTempFile" value="\\SERVER\FOLDER\data\bhlinttitle.mods.xml.TEMP"/>
+    <add key="MODSInternalTitleFile" value="\\SERVER\FOLDER\data\bhlinttitle.mods.xml"/>
+    <add key="MODSInternalTitleZipFile" value="\\SERVER\FOLDER\data\bhlinttitle.mods.xml.zip"/>
+    <add key="MODSInternalItemTempFile" value="\\SERVER\FOLDER\data\bhlintitem.mods.xml.TEMP"/>
+    <add key="MODSInternalItemFile" value="\\SERVER\FOLDER\data\bhlintitem.mods.xml"/>
+    <add key="MODSInternalItemZipFile" value="\\SERVER\FOLDER\data\bhlintitem.mods.xml.zip"/>
+    <add key="MODSInternalSegmentTempFile" value="\\SERVER\FOLDER\data\bhlintpart.mods.xml.TEMP"/>
+    <add key="MODSInternalSegmentFile" value="\\SERVER\FOLDER\data\bhlintpart.mods.xml"/>
+    <add key="MODSInternalSegmentZipFile" value="\\SERVER\FOLDER\data\bhlintpart.mods.xml.zip"/>
 
     <!-- *** BibTeX *** -->
     <add key="BibTeXTitleTempFile" value="\\SERVER\FOLDER\data\bhltitle.bib.TEMP"/>
@@ -69,6 +89,16 @@
     <add key="BibTeXSegmentFile" value="\\SERVER\FOLDER\data\bhlpart.bib"/>
     <add key="BibTeXSegmentZipFile" value="\\SERVER\FOLDER\data\bhlpart.bib.zip"/>
 
+    <add key="BibTeXInternalTitleTempFile" value="\\SERVER\FOLDER\data\bhlinttitle.bib.TEMP" />
+    <add key="BibTeXInternalTitleFile" value="\\SERVER\FOLDER\data\bhlinttitle.bib" />
+    <add key="BibTeXInternalTitleZipFile" value="\\SERVER\FOLDER\data\bhlinttitle.bib.zip"/>
+    <add key="BibTeXInternalItemTempFile" value="\\SERVER\FOLDER\data\bhlintitem.bib.TEMP" />
+    <add key="BibTeXInternalItemFile" value="\\SERVER\FOLDER\data\bhlintitem.bib" />
+    <add key="BibTeXInternalItemZipFile" value="\\SERVER\FOLDER\data\bhlintitem.bib.zip"/>
+    <add key="BibTeXInternalSegmentTempFile" value="\\SERVER\FOLDER\data\bhlintpart.bib.TEMP"/>
+    <add key="BibTeXInternalSegmentFile" value="\\SERVER\FOLDER\data\bhlintpart.bib"/>
+    <add key="BibTeXInternalSegmentZipFile" value="\\SERVER\FOLDER\data\bhlintpart.bib.zip"/>
+
     <!-- *** Flat File *** -->
     <add key="TSVDOIFile" value="\\SERVER\FOLDER\data\doi.txt" />
     <add key="TSVAuthorFile" value="\\SERVER\FOLDER\data\creator.txt" />
@@ -80,6 +110,16 @@
     <add key="TSVKeywordFile" value="\\SERVER\FOLDER\data\subject.txt" />
     <add key="TSVTitleFile" value="\\SERVER\FOLDER\data\title.txt" />
     <add key="TSVTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifier.txt" />
+
+    <add key="TSVInternalDOIFile" value="\\SERVER\FOLDER\data\doiint.txt" />
+    <add key="TSVInternalAuthorFile" value="\\SERVER\FOLDER\data\creatorint.txt" />
+    <add key="TSVInternalItemFile" value="\\SERVER\FOLDER\data\itemint.txt" />
+    <add key="TSVInternalPartFile" value="\\SERVER\FOLDER\data\partint.txt" />
+    <add key="TSVInternalPartAuthorFile" value="\\SERVER\FOLDER\data\partcreatorint.txt" />
+    <add key="TSVInternalKeywordFile" value="\\SERVER\FOLDER\data\subjectint.txt" />
+    <add key="TSVInternalTitleFile" value="\\SERVER\FOLDER\data\titleint.txt" />
+    <add key="TSVInternalTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifierint.txt" />
+
     <add key="TSVItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
 
     <!-- *** IA Identifiers *** -->

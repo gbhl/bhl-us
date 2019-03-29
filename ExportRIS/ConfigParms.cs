@@ -15,18 +15,15 @@ namespace BHL.Export.RIS
         public string RISSegmentFile { get; set; }
         public string RISSegmentZipFile { get; set; }
 
-        public ConfigParms()
-        {
-            RISItemTempFile = string.Empty;
-            RISItemFile = string.Empty;
-            RISItemZipFile = string.Empty;
-            RISTitleTempFile = string.Empty;
-            RISTitleFile = string.Empty;
-            RISTitleZipFile = string.Empty;
-            RISSegmentTempFile = string.Empty;
-            RISSegmentFile = string.Empty;
-            RISSegmentZipFile = string.Empty;
-        }
+        public string RISInternalItemTempFile { get; set; }
+        public string RISInternalItemFile { get; set; }
+        public string RISInternalItemZipFile { get; set; }
+        public string RISInternalTitleTempFile { get; set; }
+        public string RISInternalTitleFile { get; set; }
+        public string RISInternalTitleZipFile { get; set; }
+        public string RISInternalSegmentTempFile { get; set; }
+        public string RISInternalSegmentFile { get; set; }
+        public string RISInternalSegmentZipFile { get; set; }
 
         public void LoadAppConfig()
         {
@@ -39,6 +36,16 @@ namespace BHL.Export.RIS
             this.RISSegmentTempFile = ConfigurationManager.AppSettings["RISSegmentTempFile"];
             this.RISSegmentFile = ConfigurationManager.AppSettings["RISSegmentFile"];
             this.RISSegmentZipFile = ConfigurationManager.AppSettings["RISSegmentZipFile"];
+
+            this.RISInternalItemTempFile = ConfigurationManager.AppSettings["RISInternalItemTempFile"];
+            this.RISInternalItemFile = ConfigurationManager.AppSettings["RISInternalItemFile"];
+            this.RISInternalItemZipFile = ConfigurationManager.AppSettings["RISInternalItemZipFile"];
+            this.RISInternalTitleTempFile = ConfigurationManager.AppSettings["RISInternalTitleTempFile"];
+            this.RISInternalTitleFile = ConfigurationManager.AppSettings["RISInternalTitleFile"];
+            this.RISInternalTitleZipFile = ConfigurationManager.AppSettings["RISInternalTitleZipFile"];
+            this.RISInternalSegmentTempFile = ConfigurationManager.AppSettings["RISInternalSegmentTempFile"];
+            this.RISInternalSegmentFile = ConfigurationManager.AppSettings["RISInternalSegmentFile"];
+            this.RISInternalSegmentZipFile = ConfigurationManager.AppSettings["RISInternalSegmentZipFile"];
         }
     }
 }

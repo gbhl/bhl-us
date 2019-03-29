@@ -18,7 +18,9 @@ SELECT DISTINCT
 		i.IdentifierBib AS LocalID, 
 		i.Year, 
 		c.ItemContributors AS InstitutionName, 
-		i.ZQuery, 
+		i.ZQuery,
+		c.HasLocalContent,
+		c.HasExternalContent,
 		CONVERT(nvarchar(16), i.CreationDate, 120) AS CreationDate
 FROM	dbo.Item i WITH (NOLOCK)
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON i.ItemID = c.ItemID

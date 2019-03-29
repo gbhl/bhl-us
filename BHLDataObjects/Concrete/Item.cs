@@ -36,6 +36,8 @@ namespace MOBOT.BHL.DataObjects
         private int _totalItems = 0;
         private int? _firstPageID = null;
         private bool _hasFlickrImages = false;
+        private bool _hasLocalContent = true;
+        private bool _hasExternalContent = false;
 
 		public string DisplayedShortVolume
 		{
@@ -220,6 +222,18 @@ namespace MOBOT.BHL.DataObjects
             set { _hasFlickrImages = value; }
         }
 
+        public bool HasLocalContent
+        {
+            get { return _hasLocalContent; }
+            set { _hasLocalContent = value; }
+        }
+
+        public bool HasExternalContent
+        {
+            get { return _hasExternalContent; }
+            set { _hasExternalContent = value; }
+        }
+
         #endregion
 
         private void ProcessTagTextString(string value)
@@ -385,6 +399,16 @@ namespace MOBOT.BHL.DataObjects
                     case "HasFlickrImages":
                         {
                             _hasFlickrImages = (((int)column.Value) == 1);
+                            break;
+                        }
+                    case "HasLocalContent":
+                        {
+                            _hasLocalContent = Convert.ToInt16(column.Value) == 1;
+                            break;
+                        }
+                    case "HasExternalContent":
+                        {
+                            _hasExternalContent = Convert.ToInt16(column.Value) == 1;
                             break;
                         }
 				}

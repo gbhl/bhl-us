@@ -800,6 +800,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="TitleInstitutions" type="tns:ArrayOfInstitution" />
               <s:element minOccurs="0" maxOccurs="1" name="InstitutionName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1070,6 +1072,8 @@
               <s:element minOccurs="1" maxOccurs="1" name="TotalItems" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="FirstPageID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="HasFlickrImages" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1352,6 +1356,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="Authors" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="AuthorList" type="tns:ArrayOfSegmentAuthor" />
               <s:element minOccurs="0" maxOccurs="1" name="KeywordList" type="tns:ArrayOfSegmentKeyword" />
               <s:element minOccurs="0" maxOccurs="1" name="IdentifierList" type="tns:ArrayOfSegmentIdentifier" />
@@ -1828,6 +1834,8 @@
           <s:element minOccurs="1" maxOccurs="1" name="Pages" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="PageRange" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
         </s:sequence>
       </s:complexType>
       <s:element name="TitleBibTeXSelectAllItemCitations">
@@ -1887,6 +1895,8 @@
           <s:element minOccurs="0" maxOccurs="1" name="Abstract" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="StartPage" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="EndPage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
         </s:sequence>
       </s:complexType>
       <s:element name="Title_IdentifierSelectByTitleID">

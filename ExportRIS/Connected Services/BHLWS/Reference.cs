@@ -1302,6 +1302,10 @@ namespace BHL.Export.RIS.BHLWS {
         
         private string endPageField;
         
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string Genre {
@@ -1542,6 +1546,30 @@ namespace BHL.Export.RIS.BHLWS {
             }
         }
         
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+                this.RaisePropertyChanged("HasLocalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=21)]
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+                this.RaisePropertyChanged("HasExternalContent");
+            }
+        }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
         protected void RaisePropertyChanged(string propertyName) {
@@ -1591,6 +1619,10 @@ namespace BHL.Export.RIS.BHLWS {
         private string pageRangeField;
         
         private string keywordsField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -1781,6 +1813,30 @@ namespace BHL.Export.RIS.BHLWS {
             set {
                 this.keywordsField = value;
                 this.RaisePropertyChanged("Keywords");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=16)]
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+                this.RaisePropertyChanged("HasLocalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=17)]
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+                this.RaisePropertyChanged("HasExternalContent");
             }
         }
         
@@ -5771,6 +5827,10 @@ namespace BHL.Export.RIS.BHLWS {
         
         private short isPrimaryField;
         
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
+        
         private SegmentAuthor[] authorListField;
         
         private SegmentKeyword[] keywordListField;
@@ -6014,7 +6074,31 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=19)]
+        [System.Xml.Serialization.XmlElementAttribute(Order=19)]
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+                this.RaisePropertyChanged("HasLocalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=20)]
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+                this.RaisePropertyChanged("HasExternalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayAttribute(Order=21)]
         public SegmentAuthor[] AuthorList {
             get {
                 return this.authorListField;
@@ -6026,7 +6110,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=20)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=22)]
         public SegmentKeyword[] KeywordList {
             get {
                 return this.keywordListField;
@@ -6038,7 +6122,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=21)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=23)]
         public SegmentIdentifier[] IdentifierList {
             get {
                 return this.identifierListField;
@@ -6050,7 +6134,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=22)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=24)]
         public Institution[] ContributorList {
             get {
                 return this.contributorListField;
@@ -6062,7 +6146,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=23)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=25)]
         public SegmentPage[] PageList {
             get {
                 return this.pageListField;
@@ -6074,7 +6158,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=24)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=26)]
         public NameSegment[] NameList {
             get {
                 return this.nameListField;
@@ -6086,7 +6170,7 @@ namespace BHL.Export.RIS.BHLWS {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=25)]
+        [System.Xml.Serialization.XmlArrayAttribute(Order=27)]
         public Segment[] RelatedSegmentList {
             get {
                 return this.relatedSegmentListField;
@@ -8173,6 +8257,10 @@ namespace BHL.Export.RIS.BHLWS {
         
         private bool hasFlickrImagesField;
         
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
         public Institution[] Institutions {
@@ -8436,6 +8524,30 @@ namespace BHL.Export.RIS.BHLWS {
                 this.RaisePropertyChanged("HasFlickrImages");
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=22)]
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+                this.RaisePropertyChanged("HasLocalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=23)]
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+                this.RaisePropertyChanged("HasExternalContent");
+            }
+        }
     }
     
     /// <remarks/>
@@ -8471,6 +8583,10 @@ namespace BHL.Export.RIS.BHLWS {
         private string institutionNameField;
         
         private string dOINameField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=0)]
@@ -8625,6 +8741,30 @@ namespace BHL.Export.RIS.BHLWS {
             set {
                 this.dOINameField = value;
                 this.RaisePropertyChanged("DOIName");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=13)]
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+                this.RaisePropertyChanged("HasLocalContent");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=14)]
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+                this.RaisePropertyChanged("HasExternalContent");
             }
         }
     }

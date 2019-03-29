@@ -1,6 +1,7 @@
-﻿
-CREATE PROCEDURE [dbo].[TitleBibTeXSelectAllItemCitations]
+﻿CREATE PROCEDURE [dbo].[TitleBibTeXSelectAllItemCitations]
+
 AS
+
 BEGIN
 
 SET NOCOUNT ON
@@ -19,7 +20,9 @@ CREATE TABLE #tmpItem
 	CopyrightStatus nvarchar(max) NOT NULL,
 	Authors nvarchar(max) NOT NULL,
 	Pages int NOT NULL,
-	Keywords nvarchar(max) NOT NULL
+	Keywords nvarchar(max) NOT NULL,
+	HasLocalContent smallint NOT NULL,
+	HasExternalContent smallint NOT NULL
 	)
 
 INSERT INTO #tmpItem
@@ -30,7 +33,7 @@ SELECT	t.TitleID, i.ItemID, 'bhlitem' + CONVERT(NVARCHAR(10), i.ItemID) AS Citat
 		ISNULL(t.Datafield_260_a, '') + ISNULL(t.Datafield_260_b, '') AS Publisher,
 		CASE WHEN i.Year IS NULL THEN ISNULL(t.Datafield_260_c, '') ELSE i.Year END AS [Year],
 		ISNULL(i.Volume, '') AS Volume , ISNULL(i.CopyrightStatus, '') AS CopyrightStatus,
-		c.Authors, 0, c.Subjects AS Keywords
+		c.Authors, 0, c.Subjects AS Keywords, c.HasLocalContent, c.HasExternalContent
 FROM	dbo.Title t  WITH (NOLOCK)
 		INNER JOIN dbo.Item i WITH (NOLOCK)
 			ON t.TitleID = i.PrimaryTitleID
@@ -43,8 +46,7 @@ AND		i.ItemStatusID = 40
 UPDATE	#tmpItem
 SET		Pages = dbo.fnCOinSGetPageCountForItem(ItemID)
 
-SELECT	CitationKey, Url, Note, Title, Publisher, [Year], Volume, CopyrightStatus, Authors, Pages, Keywords
+SELECT	CitationKey, Url, Note, Title, Publisher, [Year], Volume, CopyrightStatus, Authors, Pages, Keywords, HasLocalContent, HasExternalContent
 FROM	#tmpItem
 
 END
-

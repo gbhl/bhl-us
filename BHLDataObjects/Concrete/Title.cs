@@ -27,6 +27,8 @@ namespace MOBOT.BHL.DataObjects
 		private long _rowNum;
 		private string _institutionName;
         private string _doiName;
+        private bool _hasLocalContent = true;
+        private bool _hasExternalContent = false;
 
         public CustomGenericList<TitleAuthor> TitleAuthors
 		{
@@ -112,11 +114,23 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._rowNum; }
 		}
 
-		#endregion
+        public bool HasLocalContent
+        {
+            get { return _hasLocalContent; }
+            set { _hasLocalContent = value; }
+        }
 
-		#region Helper methods
+        public bool HasExternalContent
+        {
+            get { return _hasExternalContent; }
+            set { _hasExternalContent = value; }
+        }
 
-		public string DisplayedShortTitle
+        #endregion
+
+        #region Helper methods
+
+        public string DisplayedShortTitle
 		{
 			get
 			{
@@ -156,8 +170,18 @@ namespace MOBOT.BHL.DataObjects
 							_rowNum = (long)column.Value;
 							break;
 						}
-				}
-			}
+                    case "HasLocalContent":
+                        {
+                            _hasLocalContent = Convert.ToInt16(column.Value) == 1;
+                            break;
+                        }
+                    case "HasExternalContent":
+                        {
+                            _hasExternalContent = Convert.ToInt16(column.Value) == 1;
+                            break;
+                        }
+                }
+            }
 
 			base.SetValues( row );
 

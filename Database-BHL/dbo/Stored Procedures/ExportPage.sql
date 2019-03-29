@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ExportPage
+﻿CREATE PROCEDURE [dbo].[ExportPage]
 
 AS
 
@@ -16,14 +16,16 @@ SELECT DISTINCT
 		ip.PagePrefix, 
 		ip.PageNumber,
 		pt.PageTypeName, 
+		c.HasLocalContent,
+		c.HasExternalContent,
 		CONVERT(nvarchar(16), p.CreationDate, 120) AS CreationDate
 FROM    dbo.Page p WITH (NOLOCK) 
 		LEFT JOIN dbo.IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.PageID
         LEFT JOIN dbo.Page_PageType ppt WITH (NOLOCK) ON p.PageID = ppt.PageID
         LEFT JOIN dbo.PageType pt WITH (NOLOCK) ON ppt.PageTypeID = pt.PageTypeID
+		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON p.ItemID = c.ItemID
 WHERE	p.Active = 1
 ORDER BY
 		p.ItemID, p.SequenceOrder
 
 END
-

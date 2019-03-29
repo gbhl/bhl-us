@@ -46,20 +46,29 @@ namespace BHL.Export.TSV
             if (File.Exists(configParms.TitleFile)) File.Delete(configParms.TitleFile);
             if (File.Exists(configParms.TitleIdentifierFile)) File.Delete(configParms.TitleIdentifierFile);
 
+            if (File.Exists(configParms.InternalAuthorFile)) File.Delete(configParms.InternalAuthorFile);
+            if (File.Exists(configParms.InternalDOIFile)) File.Delete(configParms.InternalDOIFile);
+            if (File.Exists(configParms.InternalItemFile)) File.Delete(configParms.InternalItemFile);
+            if (File.Exists(configParms.InternalKeywordFile)) File.Delete(configParms.InternalKeywordFile);
+            if (File.Exists(configParms.InternalPartAuthorFile)) File.Delete(configParms.InternalPartAuthorFile);
+            if (File.Exists(configParms.InternalPartFile)) File.Delete(configParms.InternalPartFile);
+            if (File.Exists(configParms.InternalTitleFile)) File.Delete(configParms.InternalTitleFile);
+            if (File.Exists(configParms.InternalTitleIdentifierFile)) File.Delete(configParms.InternalTitleIdentifierFile);
+
             // Export the data
-            Export("ExportTitle", configParms.TitleFile, WriteTitleHeader, GetTitleRow, "Titles");
-            Export("ExportTitleIdentifier", configParms.TitleIdentifierFile, WriteTitleIdentifierHeader, GetTitleIdentifierRow, "Title Identifiers");
-            Export("ExportKeyword", configParms.KeywordFile, WriteKeywordHeader, GetKeywordRow, "Keywords");
-            Export("ExportAuthor", configParms.AuthorFile, WriteAuthorHeader, GetAuthorRow, "Title Authors");
-            Export("ExportDOI", configParms.DOIFile, WriteDOIHeader, GetDOIRow, "DOIs");
-            Export("ExportItem", configParms.ItemFile, WriteItemHeader, GetItemRow, "Items");
-            Export("ExportSegment", configParms.PartFile, WriteSegmentHeader, GetSegmentRow, "Segments");
-            Export("ExportSegmentAuthor", configParms.PartAuthorFile, WriteSegmentAuthorHeader, GetSegmentAuthorRow, "Segment Authors");
-            Export("ExportPageName", configParms.PageNameFile, WritePageNameHeader, GetPageNameRow, "Page Names");
-            Export("ExportPage", configParms.PageFile, WritePageHeader, GetPageRow, "Pages");
+            Export("ExportTitle", configParms.TitleFile, configParms.InternalTitleFile, WriteTitleHeader, GetTitleRow, "Titles");
+            Export("ExportTitleIdentifier", configParms.TitleIdentifierFile, configParms.InternalTitleIdentifierFile, WriteTitleIdentifierHeader, GetTitleIdentifierRow, "Title Identifiers");
+            Export("ExportKeyword", configParms.KeywordFile, configParms.InternalKeywordFile, WriteKeywordHeader, GetKeywordRow, "Keywords");
+            Export("ExportAuthor", configParms.AuthorFile, configParms.InternalAuthorFile, WriteAuthorHeader, GetAuthorRow, "Title Authors");
+            Export("ExportDOI", configParms.DOIFile, configParms.InternalDOIFile, WriteDOIHeader, GetDOIRow, "DOIs");
+            Export("ExportItem", configParms.ItemFile, configParms.InternalItemFile, WriteItemHeader, GetItemRow, "Items");
+            Export("ExportSegment", configParms.PartFile, configParms.InternalPartFile, WriteSegmentHeader, GetSegmentRow, "Segments");
+            Export("ExportSegmentAuthor", configParms.PartAuthorFile, configParms.InternalPartAuthorFile, WriteSegmentAuthorHeader, GetSegmentAuthorRow, "Segment Authors");
+            Export("ExportPageName", configParms.PageNameFile, null, WritePageNameHeader, GetPageNameRow, "Page Names");
+            Export("ExportPage", configParms.PageFile, null, WritePageHeader, GetPageRow, "Pages");
         }
 
-        public void Export(string storedProcedureName, string fileName, WriteFileHeader writeHeaderMethod, GetExportRow exportRowMethod, string statType)
+        public void Export(string storedProcedureName, string fileName, string internalFileName, WriteFileHeader writeHeaderMethod, GetExportRow exportRowMethod, string statType)
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["BHL"].ConnectionString))
             {
@@ -77,7 +86,7 @@ namespace BHL.Export.TSV
                         reader = command.ExecuteReader();
 
                         // Write the data to a file
-                        ExportData(fileName, reader, writeHeaderMethod, exportRowMethod, statType);
+                        ExportData(fileName, internalFileName, reader, writeHeaderMethod, exportRowMethod, statType);
                     }
                     finally
                     {
@@ -88,14 +97,16 @@ namespace BHL.Export.TSV
             }
         }
 
-        public void ExportData(string fileName, SqlDataReader reader, WriteFileHeader writeHeader, GetExportRow exportRow, string statType)
+        public void ExportData(string fileName, string internalFileName, SqlDataReader reader, WriteFileHeader writeHeader, GetExportRow exportRow, string statType)
         {
-            _log.Info(string.Format("Starting export to {0}", fileName));
+            _log.Info(string.Format("Starting export to {0} and {1}", fileName, internalFileName));
 
-            // Write the header row to the file
+            // Write the header row to the files
             writeHeader(fileName);
+            if (!string.IsNullOrWhiteSpace(internalFileName)) writeHeader(internalFileName);
 
             StringBuilder sb = new StringBuilder();
+            StringBuilder sbInternal = new StringBuilder();
             int numProcessed = 0;
             while (reader.Read())
             {
@@ -103,24 +114,35 @@ namespace BHL.Export.TSV
 
                 string line = exportRow(reader, statType);
                 sb.AppendLine(line);
+                UpdateStats(statType);
 
-                // Write data to the file after every 10000 records
+                // If this is content held internally within BHL, write it to the "internal" file
+                if (GetDBInt16(reader, "HasLocalContent") == "1" && !string.IsNullOrWhiteSpace(internalFileName))
+                {
+                    sbInternal.AppendLine(line);
+                    UpdateStats(string.Format("{0} (Internal)", statType));
+                }
+
+                // Write data to the files after every 10000 records
                 if ((numProcessed % 10000) == 0)
                 {
                     // Write the lines to a file
                     File.AppendAllText(fileName, sb.ToString(), Encoding.UTF8);
+                    if (!string.IsNullOrWhiteSpace(internalFileName)) File.AppendAllText(internalFileName, sbInternal.ToString(), Encoding.UTF8);
                     _log.Info(string.Format("{0} rows exported to {1}", numProcessed, fileName));
                     sb.Clear();
+                    sbInternal.Clear();
                 }
             }
 
             if (sb.Length > 0)
             {
                 File.AppendAllText(fileName, sb.ToString(), Encoding.UTF8);
+                if (!string.IsNullOrWhiteSpace(internalFileName)) File.AppendAllText(internalFileName, sbInternal.ToString(), Encoding.UTF8);
                 _log.Info(string.Format("{0} rows exported to {1}", numProcessed, fileName));
             }
 
-            _log.Info(string.Format("Done exporting to {0}", fileName));
+            _log.Info(string.Format("Done exporting to {0} and {1}", fileName, internalFileName));
         }
 
         #region FileHeader delegates
@@ -134,7 +156,7 @@ namespace BHL.Export.TSV
 
         public void WriteAuthorHeader(string filePath)
         {
-            File.AppendAllText(filePath, "TitleID\tCreatorType\tCreatorName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "TitleID\tCreatorID\tCreatorType\tCreatorName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WriteItemHeader(string filePath)
@@ -159,7 +181,7 @@ namespace BHL.Export.TSV
 
         public void WriteSegmentAuthorHeader(string filePath)
         {
-            File.AppendAllText(filePath, "PartID\tCreatorName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "PartID\tCreatorID\tCreatorName\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WriteKeywordHeader(string filePath)
@@ -219,7 +241,6 @@ namespace BHL.Export.TSV
 
         public string GetDOIRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string entityTypeName = GetDBString(reader, "EntityType");
             string entityID = GetDBInt32(reader, "EntityID");
             string doi = GetDBString(reader, "DOI");
@@ -229,17 +250,16 @@ namespace BHL.Export.TSV
 
         public string GetAuthorRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string titleID = GetDBInt32(reader, "TitleID");
+            string creatorID = GetDBInt32(reader, "AuthorID");
             string creatorType = GetDBString(reader, "CreatorType");
             string creatorName = GetDBString(reader, "CreatorName");
             string creationDate = GetDBString(reader, "CreationDate");
-            return string.Format("{0}\t{1}\t{2}\t{3}", titleID, creatorType, creatorName, creationDate);
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}", titleID, creatorID, creatorType, creatorName, creationDate);
         }
 
         public string GetItemRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string itemID = GetDBInt32(reader, "ItemID");
             string titleID = GetDBInt32(reader, "TitleID");
             string thumbnailPageID = GetDBInt32(reader, "ThumbnailPageID");
@@ -260,7 +280,6 @@ namespace BHL.Export.TSV
 
         public string GetPageRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string pageID = GetDBInt32(reader, "PageID");
             string itemID = GetDBInt32(reader, "ItemID");
             string sequenceOrder = GetDBInt32(reader, "SequenceOrder");
@@ -277,7 +296,6 @@ namespace BHL.Export.TSV
 
         public string GetPageNameRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string nameBankID = GetDBString(reader, "NameBankID");
             string nameConfirmed = GetDBString(reader, "NameConfirmed");
             string pageID = GetDBInt32(reader, "PageID");
@@ -287,7 +305,6 @@ namespace BHL.Export.TSV
 
         public string GetSegmentRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string partID = GetDBInt32(reader, "SegmentID");
             string itemID = GetDBInt32(reader, "ItemID");
             string contributorName = GetDBString(reader, "ContributorName");
@@ -318,16 +335,15 @@ namespace BHL.Export.TSV
 
         public string GetSegmentAuthorRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string partID = GetDBInt32(reader, "SegmentID");
+            string creatorID = GetDBInt32(reader, "AuthorID");
             string creatorName = GetDBString(reader, "CreatorName");
             string creationDate = GetDBString(reader, "CreationDate");
-            return string.Format("{0}\t{1}\t{2}", partID, creatorName, creationDate);
+            return string.Format("{0}\t{1}\t{2}\t{3}", partID, creatorID, creatorName, creationDate);
         }
 
         public string GetKeywordRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string titleID = GetDBInt32(reader, "TitleID");
             string subject = GetDBString(reader, "Subject");
             string creationDate = GetDBString(reader, "CreationDate");
@@ -336,7 +352,6 @@ namespace BHL.Export.TSV
 
         public string GetTitleRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string titleID = GetDBInt32(reader, "TitleID");
             string marcBibID = GetDBString(reader, "MARCBibID");
             string marcLeader = GetDBString(reader, "MARCLeader");
@@ -357,7 +372,6 @@ namespace BHL.Export.TSV
 
         public string GetTitleIdentifierRow(SqlDataReader reader, string statType)
         {
-            UpdateStats(statType);
             string titleID = GetDBInt32(reader, "TitleID");
             string identifierName = GetDBString(reader, "IdentifierName");
             string identifierValue = GetDBString(reader, "IdentifierValue");

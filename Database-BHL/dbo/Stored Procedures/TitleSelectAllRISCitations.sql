@@ -1,5 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[TitleSelectAllRISCitations]
+
 AS
+
 BEGIN
 
 SET NOCOUNT ON
@@ -25,7 +27,9 @@ SELECT	DISTINCT
 		ISNULL(t.EditionStatement, '') AS Edition,
 		ISNULL(isbn.IdentifierValue, ISNULL(issn.IdentifierValue, '')) AS ISSNISBN,
 		ISNULL(l.LanguageName, '') AS [Language],
-		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes
+		dbo.fnNoteStringForTitle(t.TitleID, '') AS Notes,
+		c.HasLocalContent,
+		c.HasExternalContent
 INTO	#RIS
 FROM	dbo.Title t WITH (NOLOCK)
 		LEFT JOIN dbo.BibliographicLevel b WITH (NOLOCK) ON t.BibliographicLevelID = b.BibliographicLevelID
@@ -48,7 +52,9 @@ SELECT 	Genre,
 		Edition,
 		MIN(ISSNISBN) AS ISSNISBN,
 		[Language],
-		Notes
+		Notes,
+		MAX(HasLocalContent) AS HasLocalContent,
+		MAX(HasExternalContent) AS HasExternalContent
 FROM	#RIS
 GROUP BY
 		Genre,

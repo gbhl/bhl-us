@@ -33,17 +33,19 @@ SELECT	DISTINCT
 		s.Notes,
 		s.Summary AS Abstract,
 		s.StartPageNumber AS StartPage,
-		s.EndPageNumber AS EndPage
+		s.EndPageNumber AS EndPage,
+		scs.HasLocalContent,
+		scs.HasExternalContent
 INTO	#RIS
-FROM	dbo.vwSegment s 
-		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
+FROM	dbo.vwSegment s WITH (NOLOCK) 
+		INNER JOIN dbo.SegmentGenre g WITH (NOLOCK) ON s.SegmentGenreID = g.SegmentGenreID
+		LEFT JOIN dbo.Item i WITH (NOLOCK) ON s.ItemID = i.ItemID
+		LEFT JOIN dbo.Title t WITH (NOLOCK) ON i.PrimaryTitleID = t.TitleID
 		LEFT JOIN dbo.SegmentIdentifier isbn WITH (NOLOCK) ON s.SegmentID = isbn.SegmentID AND isbn.IdentifierID = @ISBNID
 		LEFT JOIN dbo.SegmentIdentifier issn WITH (NOLOCK) ON s.SegmentID = issn.SegmentID AND issn.IdentifierID = @ISSNID
 		LEFT JOIN dbo.DOI d ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = @DOISEGMENTID AND d.IsValid = 1
 		LEFT JOIN dbo.[Language] l WITH (NOLOCK) ON s.LanguageCode = l.LanguageCode
-		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		INNER JOIN dbo.SearchCatalogSegment scs WITH (NOLOCK) ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT NULL)
 
@@ -65,7 +67,9 @@ SELECT 	Genre,
 		Notes,
 		Abstract,
 		StartPage,
-		EndPage
+		EndPage,
+		HasLocalContent,
+		HasExternalContent
 FROM	#RIS
 GROUP BY
 		Genre,
@@ -85,6 +89,8 @@ GROUP BY
 		Notes,
 		Abstract,
 		StartPage,
-		EndPage
+		EndPage,
+		HasLocalContent,
+		HasExternalContent
 
 END

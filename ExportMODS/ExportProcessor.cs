@@ -48,15 +48,17 @@ namespace BHL.Export.MODS
             {
                 _log.Info(string.Format("Processing {0}...", statsKey));
 
-                // Clean up an existing temp file
+                // Clean up any existing temp files
                 if (File.Exists(configParms.MODSTitleTempFile)) File.Delete(configParms.MODSTitleTempFile);
+                if (File.Exists(configParms.MODSInternalTitleTempFile)) File.Delete(configParms.MODSInternalTitleTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
                 service = new BHLWSSoapClient();
                 Title[] titles = service.TitleSelectAllPublished();
 
-                // Build the MODS file
+                // Build the MODS files
                 File.AppendAllText(configParms.MODSTitleTempFile, "<modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalTitleTempFile, "<modsCollection>\n", Encoding.UTF8);
                 foreach (Title title in titles)
                 {
                     try
@@ -64,6 +66,13 @@ namespace BHL.Export.MODS
                         string mods = service.GetMODSRecordForTitle(title.TitleID);
                         File.AppendAllText(configParms.MODSTitleTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
+
+                        // If this is content held internally within BHL, write it to the "internal" file
+                        if (title.HasLocalContent)
+                        {
+                            File.AppendAllText(configParms.MODSInternalTitleTempFile, mods, Encoding.UTF8);
+                            UpdateStats(string.Format("{0} (Internal)", statsKey));
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -73,6 +82,7 @@ namespace BHL.Export.MODS
                     }
                 }
                 File.AppendAllText(configParms.MODSTitleTempFile, "</modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalTitleTempFile, "</modsCollection>\n", Encoding.UTF8);
 
                 if ((_errors.Count / Convert.ToDouble(titles.Length) * 100) > 1.0)
                 {
@@ -83,10 +93,13 @@ namespace BHL.Export.MODS
                 {
                     // Move the newly created file to "production"
                     File.Delete(configParms.MODSTitleFile);
+                    File.Delete(configParms.MODSInternalTitleFile);
                     File.Move(configParms.MODSTitleTempFile, configParms.MODSTitleFile);
+                    File.Move(configParms.MODSInternalTitleTempFile, configParms.MODSInternalTitleFile);
 
                     // Create a compressed version of the file
                     new ExportFile(_log).Compress(configParms.MODSTitleFile, configParms.MODSTitleZipFile);
+                    new ExportFile(_log).Compress(configParms.MODSInternalTitleFile, configParms.MODSInternalTitleZipFile);
                 }
 
                 _log.Info(string.Format("{0} processing complete.", statsKey));
@@ -111,15 +124,17 @@ namespace BHL.Export.MODS
                 _log.Info(string.Format("Processing {0}...", statsKey));
                 service = new BHLWS.BHLWSSoapClient();
 
-                // Clean up an existing temp file
+                // Clean up any existing temp files
                 if (File.Exists(configParms.MODSItemTempFile)) File.Delete(configParms.MODSItemTempFile);
+                if (File.Exists(configParms.MODSInternalItemTempFile)) File.Delete(configParms.MODSInternalItemTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
                 service = new BHLWSSoapClient();
                 Item[] items = service.ItemSelectPublished();
 
-                // Build the MODS file
+                // Build the MODS files
                 File.AppendAllText(configParms.MODSItemTempFile, "<modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalItemTempFile, "<modsCollection>\n", Encoding.UTF8);
                 foreach (Item item in items)
                 {
                     try
@@ -127,6 +142,13 @@ namespace BHL.Export.MODS
                         string mods = service.GetMODSRecordForItem(item.ItemID);
                         File.AppendAllText(configParms.MODSItemTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
+
+                        // If this is content held internally within BHL, write it to the "internal" file
+                        if (item.HasLocalContent)
+                        {
+                            File.AppendAllText(configParms.MODSInternalItemTempFile, mods, Encoding.UTF8);
+                            UpdateStats(string.Format("{0} (Internal)", statsKey));
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -136,6 +158,7 @@ namespace BHL.Export.MODS
                     }
                 }
                 File.AppendAllText(configParms.MODSItemTempFile, "</modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalItemTempFile, "</modsCollection>\n", Encoding.UTF8);
 
                 if ((_errors.Count / Convert.ToDouble(items.Length) * 100) > 1.0)
                 {
@@ -146,10 +169,13 @@ namespace BHL.Export.MODS
                 {
                     // Move the newly created file to "production"
                     File.Delete(configParms.MODSItemFile);
+                    File.Delete(configParms.MODSInternalItemFile);
                     File.Move(configParms.MODSItemTempFile, configParms.MODSItemFile);
+                    File.Move(configParms.MODSInternalItemTempFile, configParms.MODSInternalItemFile);
 
                     // Create a compressed version of the file
                     new ExportFile(_log).Compress(configParms.MODSItemFile, configParms.MODSItemZipFile);
+                    new ExportFile(_log).Compress(configParms.MODSInternalItemFile, configParms.MODSInternalItemZipFile);
                 }
 
                 _log.Info(string.Format("{0} processing complete.", statsKey));
@@ -173,15 +199,17 @@ namespace BHL.Export.MODS
             {
                 _log.Info(string.Format("Processing {0}...", statsKey));
 
-                // Clean up an existing temp file
+                // Clean up any existing temp files
                 if (File.Exists(configParms.MODSSegmentTempFile)) File.Delete(configParms.MODSSegmentTempFile);
+                if (File.Exists(configParms.MODSInternalSegmentTempFile)) File.Delete(configParms.MODSInternalSegmentTempFile);
 
                 _log.Info(string.Format("Getting data for all {0}.", statsKey));
                 service = new BHLWSSoapClient();
                 Segment[] segments = service.SegmentSelectPublished();
 
-                // Build the MODS file
+                // Build the MODS files
                 File.AppendAllText(configParms.MODSSegmentTempFile, "<modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalSegmentTempFile, "<modsCollection>\n", Encoding.UTF8);
                 foreach (Segment segment in segments)
                 {
                     try
@@ -189,6 +217,13 @@ namespace BHL.Export.MODS
                         string mods = service.GetMODSRecordForSegment(segment.SegmentID);
                         File.AppendAllText(configParms.MODSSegmentTempFile, mods, Encoding.UTF8);
                         UpdateStats(statsKey);
+
+                        // If this is content held internally within BHL, write it to the "internal" file
+                        if (segment.HasLocalContent)
+                        {
+                            File.AppendAllText(configParms.MODSInternalSegmentTempFile, mods, Encoding.UTF8);
+                            UpdateStats(string.Format("{0} (Internal)", statsKey));
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -198,6 +233,7 @@ namespace BHL.Export.MODS
                     }
                 }
                 File.AppendAllText(configParms.MODSSegmentTempFile, "</modsCollection>\n", Encoding.UTF8);
+                File.AppendAllText(configParms.MODSInternalSegmentTempFile, "</modsCollection>\n", Encoding.UTF8);
 
                 if ((_errors.Count / Convert.ToDouble(segments.Length) * 100) > 1.0)
                 {
@@ -206,12 +242,15 @@ namespace BHL.Export.MODS
                 }
                 else
                 {
-                    // Move the newly created file to "production"
+                    // Move the newly created files to "production"
                     File.Delete(configParms.MODSSegmentFile);
+                    File.Delete(configParms.MODSInternalSegmentFile);
                     File.Move(configParms.MODSSegmentTempFile, configParms.MODSSegmentFile);
+                    File.Move(configParms.MODSInternalSegmentTempFile, configParms.MODSInternalSegmentFile);
 
-                    // Create a compressed version of the file
+                    // Create a compressed version of the files
                     new ExportFile(_log).Compress(configParms.MODSSegmentFile, configParms.MODSSegmentZipFile);
+                    new ExportFile(_log).Compress(configParms.MODSInternalSegmentFile, configParms.MODSInternalSegmentZipFile);
                 }
 
                 _log.Info(string.Format("{0} processing complete.", statsKey));

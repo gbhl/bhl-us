@@ -22,7 +22,9 @@ CREATE TABLE #tmpSegment
 	PageRange nvarchar(20) NOT NULL,
 	Authors nvarchar(max) NOT NULL,
 	Keywords nvarchar(max) NOT NULL,
-	Pages int NOT NULL
+	Pages int NOT NULL,
+	HasLocalContent smallint NOT NULL,
+	HasExternalContent smallint NOT NULL
 	)
 
 INSERT INTO #tmpSegment
@@ -47,11 +49,13 @@ SELECT	s.SegmentID,
 		END, 20) AS PageRange,
 		scs.Authors,
 		scs.Subjects as 'Keywords',
-		0 AS Pages
-FROM	dbo.vwSegment s INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
-		LEFT JOIN dbo.Item i ON s.ItemID = i.ItemID
-		LEFT JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
-		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		0 AS Pages,
+		scs.HasLocalContent,
+		scs.HasExternalContent
+FROM	dbo.vwSegment s WITH (NOLOCK) INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
+		LEFT JOIN dbo.Item i WITH (NOLOCK) ON s.ItemID = i.ItemID
+		LEFT JOIN dbo.Title t WITH (NOLOCK) ON i.PrimaryTitleID = t.TitleID
+		INNER JOIN dbo.SearchCatalogSegment scs WITH (NOLOCK) ON s.SegmentID = scs.SegmentID
 WHERE	s.SegmentStatusID IN (10, 20)
 AND		(scs.HasLocalContent = 1 OR scs.HasExternalContent = 1 OR scs.ItemID IS NOT NULL)
 
@@ -62,11 +66,7 @@ SET		Pages = dbo.fnGetPageCountForSegment(SegmentID)
 
 SELECT	CitationKey, Url, Note, [Type], Title, Journal, Publisher, [Year], 
 		Volume, Series, Issue, CopyrightStatus, PageRange, Authors, Keywords,
-		Pages
+		Pages, HasLocalContent, HasExternalContent
 FROM	#tmpSegment
 
 END
-
-
-
-

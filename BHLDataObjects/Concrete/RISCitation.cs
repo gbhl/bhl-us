@@ -151,6 +151,22 @@ namespace MOBOT.BHL.DataObjects
             set { _endPage = value; }
         }
 
+        private bool _hasLocalContent = true;
+
+        public bool HasLocalContent
+        {
+            get { return _hasLocalContent; }
+            set { _hasLocalContent = value; }
+        }
+
+        private bool _hasExternalContent = false;
+
+        public bool HasExternalContent
+        {
+            get { return _hasExternalContent; }
+            set { _hasExternalContent = value; }
+        }
+
         public void SetValues(CustomDataRow row)
         {
             foreach (CustomDataColumn column in row)
@@ -256,6 +272,16 @@ namespace MOBOT.BHL.DataObjects
                     case "EndPage":
                         {
                             EndPage = Utility.EmptyIfNull((string)column.Value);
+                            break;
+                        }
+                    case "HasLocalContent":
+                        {
+                            _hasLocalContent = Convert.ToInt16(column.Value) == 1;
+                            break;
+                        }
+                    case "HasExternalContent":
+                        {
+                            _hasExternalContent = Convert.ToInt16(column.Value) == 1;
                             break;
                         }
                 }

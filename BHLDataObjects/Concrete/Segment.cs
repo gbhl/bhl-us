@@ -169,6 +169,22 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        private bool _hasLocalContent = true;
+
+        public bool HasLocalContent
+        {
+            get { return _hasLocalContent; }
+            set { _hasLocalContent = value; }
+        }
+
+        private bool _hasExternalContent = false;
+
+        public bool HasExternalContent
+        {
+            get { return _hasExternalContent; }
+            set { _hasExternalContent = value; }
+        }
+
         private CustomGenericList<SegmentAuthor> _authorList = new CustomGenericList<SegmentAuthor>();
 
         public CustomGenericList<SegmentAuthor> AuthorList
@@ -284,6 +300,14 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "IsPrimary")
                 {
                     _isPrimary = (short)Utility.ZeroIfNull(Convert.ToInt32(column.Value));
+                }
+                if (column.Name == "HasLocalContent")
+                {
+                    _hasLocalContent = Convert.ToInt16(column.Value) == 1;
+                }
+                if (column.Name == "HasExternalContent")
+                {
+                    _hasExternalContent = Convert.ToInt16(column.Value) == 1;
                 }
             }
             base.SetValues(row);

@@ -15,18 +15,15 @@ namespace BHL.Export.BibTeX
         public string BibTexSegmentFile { get; set; } = string.Empty;
         public string BibTexSegmentZipFile { get; set; } = string.Empty;
 
-        public ConfigParms()
-        {
-            BibTexItemTempFile = string.Empty;
-            BibTexItemFile = string.Empty;
-            BibTexItemZipFile = string.Empty;
-            BibTexTitleTempFile = string.Empty;
-            BibTexTitleFile = string.Empty;
-            BibTexTitleZipFile = string.Empty;
-            BibTexSegmentTempFile = string.Empty;
-            BibTexSegmentFile = string.Empty;
-            BibTexSegmentZipFile = string.Empty;
-        }
+        public string BibTexInternalItemTempFile { get; set; } = string.Empty;
+        public string BibTexInternalItemFile { get; set; } = string.Empty;
+        public string BibTexInternalItemZipFile { get; set; } = String.Empty;
+        public string BibTexInternalTitleTempFile { get; set; } = string.Empty;
+        public string BibTexInternalTitleFile { get; set; } = string.Empty;
+        public string BibTexInternalTitleZipFile { get; set; } = String.Empty;
+        public string BibTexInternalSegmentTempFile { get; set; } = string.Empty;
+        public string BibTexInternalSegmentFile { get; set; } = string.Empty;
+        public string BibTexInternalSegmentZipFile { get; set; } = string.Empty;
 
         public void LoadAppConfig()
         {
@@ -39,6 +36,16 @@ namespace BHL.Export.BibTeX
             this.BibTexSegmentTempFile = ConfigurationManager.AppSettings["BibTexSegmentTempFile"];
             this.BibTexSegmentFile = ConfigurationManager.AppSettings["BibTexSegmentFile"];
             this.BibTexSegmentZipFile = ConfigurationManager.AppSettings["BibTexSegmentZipFile"];
+
+            this.BibTexInternalItemTempFile = ConfigurationManager.AppSettings["BibTexInternalItemTempFile"];
+            this.BibTexInternalItemFile = ConfigurationManager.AppSettings["BibTexInternalItemFile"];
+            this.BibTexInternalItemZipFile = ConfigurationManager.AppSettings["BibTexInternalItemZipFile"];
+            this.BibTexInternalTitleTempFile = ConfigurationManager.AppSettings["BibTexInternalTitleTempFile"];
+            this.BibTexInternalTitleFile = ConfigurationManager.AppSettings["BibTexInternalTitleFile"];
+            this.BibTexInternalTitleZipFile = ConfigurationManager.AppSettings["BibTexInternalTitleZipFile"];
+            this.BibTexInternalSegmentTempFile = ConfigurationManager.AppSettings["BibTexInternalSegmentTempFile"];
+            this.BibTexInternalSegmentFile = ConfigurationManager.AppSettings["BibTexInternalSegmentFile"];
+            this.BibTexInternalSegmentZipFile = ConfigurationManager.AppSettings["BibTexInternalSegmentZipFile"];
         }
     }
 }
