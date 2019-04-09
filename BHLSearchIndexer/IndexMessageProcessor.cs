@@ -230,6 +230,59 @@ namespace BHL.SearchIndexer
 
             DataAccess dataAccess = new DataAccess(_dbConnectionstring);
 
+            Tuple<bool, bool> statuses = dataAccess.GetItemAndTitleStatus(Convert.ToInt32(titleId), Convert.ToInt32(itemId));
+
+            if (!statuses.Item2)    // If Item not active
+            {
+                DeleteItemFromIndexes(titleId, itemId, false);
+            }
+
+            if (statuses.Item1)    // If Title active
+            {
+                // Get count of remaining items for title
+                if (dataAccess.ItemCountForTitle(Convert.ToInt32(titleId)) == 0)
+                {
+                    // No remaining active items for this title, so remove it from the catalog index
+                    DeleteTitleFromIndexes(titleId);
+                }
+                else
+                {
+                    // There are additional active items for this title, so reindex it in the catalog index
+                    List<Item> items = dataAccess.GetItemDocuments((int)dataAccess.SelectFirstItem(Convert.ToInt32(titleId)));
+                    foreach (Item item in items)
+                    {
+                        if (item.titleId == Convert.ToInt32(titleId))
+                        {
+                            CatalogItem catalogItem = dataAccess.GetCatalogItemDocument(item);
+                            new ElasticSearch(_searchConnectionString, _catalogIndex).Index(catalogItem);
+                            break;
+                        }
+                    }
+                }
+            }
+            else  // Title not active
+            {
+                // Get any active items for the inactive title
+                List<int> items = dataAccess.GetItemsForTitle(Convert.ToInt32(titleId));
+                foreach(int item in items)
+                {
+                    DeleteItemFromIndexes(titleId, item.ToString(), true);
+                }
+
+                // Remove title from the catalog index
+                DeleteTitleFromIndexes(titleId);
+            }
+        }
+
+        /// <summary>
+        /// Delete the specified title-item combination from search indexes
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <param name="itemId"></param>
+        private void DeleteItemFromIndexes(string titleId, string itemId, bool isPublished)
+        {
+            DataAccess dataAccess = new DataAccess(_dbConnectionstring);
+
             // Delete from SearchCatalog table
             dataAccess.DeleteItem(Convert.ToInt32(titleId), Convert.ToInt32(itemId));
 
@@ -237,34 +290,24 @@ namespace BHL.SearchIndexer
             Item deleteItem = new Item { id = string.Format("i-{0}-{1}", titleId, itemId) };
             new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(deleteItem);
 
-            // Get count of remaining items for title
-            if (dataAccess.ItemCountForTitle(Convert.ToInt32(titleId)) == 0)
+            if (!isPublished)   // If Item is not published
             {
-                // No remaining active items for this title, so remove it from the catalog index
-                CatalogItem catalogItem = new CatalogItem { id = string.Format("t-{0}", titleId) };
-                new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
+                // Delete pages and segments related to the item
+                DeletePagesForItem(itemId);
+                List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
+                foreach (int segment in segments) DeleteSegment(segment.ToString());
             }
-            else
-            {
-                // There are additional active items for this title, so reindex it in the catalog index
-                List<Item> items = dataAccess.GetItemDocuments((int)dataAccess.SelectFirstItem(Convert.ToInt32(titleId)));
-                foreach (Item item in items)
-                {
-                    if (item.titleId == Convert.ToInt32(titleId))
-                    {
-                        CatalogItem catalogItem = dataAccess.GetCatalogItemDocument(item);
-                        new ElasticSearch(_searchConnectionString, _catalogIndex).Index(catalogItem);
-                        break;
-                    }
-                }
-            }
+        }
 
-            // Deleted pages and segments
-            //List<int> pages = dataAccess.GetPagesForItem(Convert.ToInt32(itemId));
-            DeletePagesForItem(itemId);
-            List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
-            //foreach (int page in pages) DeletePage(page);
-            foreach (int segment in segments) DeleteSegment(segment.ToString());
+        /// <summary>
+        /// Delete the specified title from search indexes
+        /// </summary>
+        /// <param name="titleId"></param>
+        private void DeleteTitleFromIndexes(string titleId)
+        {
+            // Remove title from the catalog index
+            CatalogItem catalogItem = new CatalogItem { id = string.Format("t-{0}", titleId) };
+            new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
         }
 
         /// <summary>

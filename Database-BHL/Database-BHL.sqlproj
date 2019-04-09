@@ -1087,6 +1087,8 @@
     <None Include="dbo\Stored Procedures\InstitutionRoleSelectAll.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectByInstitutionAndRole.sql" />
     <None Include="dbo\Functions\fnRemoveNonNumericCharacters.sql" />
+    <None Include="srchindex\Stored Procedures\GetItemAndTitleStatus.sql" />
+    <None Include="srchindex\Stored Procedures\ItemSelectForTitle.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

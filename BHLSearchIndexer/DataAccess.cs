@@ -92,6 +92,37 @@ namespace BHL.SearchIndexer
             return items;
         }
 
+        public List<int> GetItemsForTitle(int titleId)
+        {
+            List<int> items = new List<int>();
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "srchindex.ItemSelectForTitle";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read()) items.Add(reader.GetInt32(reader.GetOrdinal("ItemID")));
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return items;
+        }
+
         public List<Item> GetItemDocuments(int itemId)
         {
             List<Item> items = new List<Item>();
@@ -218,6 +249,8 @@ namespace BHL.SearchIndexer
                 catalogItem.id = string.Format("t-{0}", item.titleId.ToString());
                 catalogItem.itemId = this.SelectFirstItem(item.titleId) ?? item.itemId;
                 catalogItem.volumes = this.GetVolumeDocuments(item.titleId);
+                // Reset the volume string of the parent record to the volume string of the first child record
+                if (catalogItem.volumes.Count() > 0) catalogItem.volume = catalogItem.volumes[0].volume;
             }
 
             return catalogItem;
@@ -264,6 +297,49 @@ namespace BHL.SearchIndexer
             }
 
             return volumes;
+        }
+
+        /// <summary>
+        /// Return the Title and Item status for the specified Title and Item ID.
+        /// </summary>
+        /// <param name="titleId"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public Tuple<bool, bool> GetItemAndTitleStatus(int titleId, int itemId)
+        {
+            bool publishReady = false;
+            bool isPublished = false;
+
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "srchindex.GetItemAndTitleStatus";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            publishReady = reader.GetBoolean(reader.GetOrdinal("PublishReady"));
+                            isPublished = reader.GetBoolean(reader.GetOrdinal("IsPublished"));
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+
+            return new Tuple<bool, bool>(publishReady, isPublished);
         }
 
         /// <summary>

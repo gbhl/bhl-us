@@ -143,6 +143,13 @@ FROM	audit.AuditBasic ab WITH (NOLOCK)
 WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
 AND		EntityName = 'dbo.TitleItem'
 AND		ItemStatusID = 40
+AND		Operation <> 'D'
+UNION
+SELECT	AuditBasicID, ab.Operation, EntityName, 'item', EntityKey2 AS TitleID, EntityKey3 AS ItemID, AuditDate
+FROM	audit.AuditBasic ab WITH (NOLOCK)
+WHERE	(AuditDate > @StartDate AND AuditDate <= @EndDate)
+AND		EntityName = 'dbo.TitleItem'
+AND		Operation = 'D'
 UNION
 SELECT	AuditBasicID, ab.Operation, EntityName, 'item', t.TitleID, i.ItemID, AuditDate
 FROM	audit.AuditBasic ab WITH (NOLOCK)
@@ -521,6 +528,13 @@ GROUP BY
 
 
 -- ### Flag inactive Items, Segments, Authors, and Names for deletion from the search indexes ###
+UPDATE	#Reduced
+SET		Operation = 'delete'
+FROM	#Reduced r
+		INNER JOIN dbo.Title t WITH (NOLOCK) ON r.EntityID1 = t.TitleID
+WHERE	r.IndexEntity = 'item'
+AND		t.PublishReady = 0
+
 UPDATE	#Reduced
 SET		Operation = 'delete'
 FROM	#Reduced r

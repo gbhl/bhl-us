@@ -1241,6 +1241,7 @@ sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestLogSelectTypesByDate.s
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\RequestTypeSelectByApplication.sql"
 sqlcmd -E -S %1 -d %2 -i "reqlog\stored procedures\DailyTasks.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\AuthorSelectDocumentsForIndex.sql"
+sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\GetItemAndTitleStatus.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemCountForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectDocumentForIndex.sql"
 sqlcmd -E -S %1 -d %2 -i "srchindex\stored procedures\ItemSelectFirstForTitle.sql"

@@ -17,7 +17,7 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Title', 'TitleID', NULL, NULL, NU
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Title', 'TitleID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleLanguage', 'TitleLanguageID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo', 'Language', 'LanguageCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'I'
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo', 'Item', 'ItemID', 'D'
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', 'TitleID', 'ItemID', 'dbo', 'Title', 'TitleID', 'dbo', 'Item', 'ItemID', 'D'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociation', 'TitleAssociationID', NULL, NULL, 'dbo', 'Title', 'TitleID'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociation_TitleIdentifier', 'TitleAssociation_TitleIdentifierID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleVariant', 'TitleVariantID', NULL, NULL, 'dbo', 'Title', 'TitleID'
