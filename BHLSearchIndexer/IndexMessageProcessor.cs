@@ -230,11 +230,18 @@ namespace BHL.SearchIndexer
 
             DataAccess dataAccess = new DataAccess(_dbConnectionstring);
 
+            // Get statuses of the Title and Item
             Tuple<bool, bool> statuses = dataAccess.GetItemAndTitleStatus(Convert.ToInt32(titleId), Convert.ToInt32(itemId));
+
+            // Delete index entries for the title-item pair
+            DeleteItemFromIndexes(titleId, itemId);
 
             if (!statuses.Item2)    // If Item not active
             {
-                DeleteItemFromIndexes(titleId, itemId, false);
+                // Delete pages and segments related to the item
+                DeletePagesForItem(itemId);
+                List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
+                foreach (int segment in segments) DeleteSegment(segment.ToString());
             }
 
             if (statuses.Item1)    // If Title active
@@ -266,7 +273,7 @@ namespace BHL.SearchIndexer
                 List<int> items = dataAccess.GetItemsForTitle(Convert.ToInt32(titleId));
                 foreach(int item in items)
                 {
-                    DeleteItemFromIndexes(titleId, item.ToString(), true);
+                    DeleteItemFromIndexes(titleId, item.ToString());
                 }
 
                 // Remove title from the catalog index
@@ -279,7 +286,7 @@ namespace BHL.SearchIndexer
         /// </summary>
         /// <param name="titleId"></param>
         /// <param name="itemId"></param>
-        private void DeleteItemFromIndexes(string titleId, string itemId, bool isPublished)
+        private void DeleteItemFromIndexes(string titleId, string itemId)
         {
             DataAccess dataAccess = new DataAccess(_dbConnectionstring);
 
@@ -289,14 +296,6 @@ namespace BHL.SearchIndexer
             // Delete from search index
             Item deleteItem = new Item { id = string.Format("i-{0}-{1}", titleId, itemId) };
             new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(deleteItem);
-
-            if (!isPublished)   // If Item is not published
-            {
-                // Delete pages and segments related to the item
-                DeletePagesForItem(itemId);
-                List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
-                foreach (int segment in segments) DeleteSegment(segment.ToString());
-            }
         }
 
         /// <summary>
