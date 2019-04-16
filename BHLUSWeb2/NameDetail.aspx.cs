@@ -18,8 +18,9 @@ namespace MOBOT.BHL.Web2
         {
             if (RouteData.Values["name"] != null)
             {
-                NameParam = (string)RouteData.Values["name"];
-                NameClean = NameParam.Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
+                string searchName = (string)RouteData.Values["name"];
+                NameParam = Server.UrlEncode(searchName);
+                NameClean = Server.HtmlEncode(searchName).Replace('_', ' ').Replace('$', '.').Replace('^', '?').Replace('~', '&');
             }
             main.Page.Title = string.Format("{0} - Biodiversity Heritage Library", NameClean);
 
