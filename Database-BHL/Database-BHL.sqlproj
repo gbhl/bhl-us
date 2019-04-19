@@ -1089,6 +1089,7 @@
     <None Include="dbo\Functions\fnRemoveNonNumericCharacters.sql" />
     <None Include="srchindex\Stored Procedures\GetItemAndTitleStatus.sql" />
     <None Include="srchindex\Stored Procedures\ItemSelectForTitle.sql" />
+    <None Include="dbo\Stored Procedures\EditHistorySelectByItemID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
