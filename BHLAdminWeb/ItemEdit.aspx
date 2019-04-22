@@ -1,6 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="/Admin.Master" AutoEventWireup="True" Codebehind="ItemEdit.aspx.cs" Inherits="MOBOT.BHL.AdminWeb.ItemEdit"
 	ValidateRequest="false" EnableEventValidation="false" %>
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <script language="javascript">
@@ -658,6 +659,7 @@
 		</fieldset>
 		<br />
 		<asp:Button ID="saveButton" runat="server" ClientIDMode="Static" OnClick="saveButton_Click" Text="Save" />
+		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 	</div>
 	<div id="overlay" class="overlay">
 	    <div style="top:900px">

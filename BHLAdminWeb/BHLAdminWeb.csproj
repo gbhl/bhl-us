@@ -275,6 +275,13 @@
     <Compile Include="Controllers\MonitorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TextImportController.cs" />
+    <Compile Include="Controls\EditHistoryLink.ascx.cs">
+      <DependentUpon>EditHistoryLink.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EditHistoryLink.ascx.designer.cs">
+      <DependentUpon>EditHistoryLink.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ErrorControl.ascx.cs">
       <DependentUpon>ErrorControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -337,6 +344,13 @@
     </Compile>
     <Compile Include="DOISubmissionDetail.aspx.designer.cs">
       <DependentUpon>DOISubmissionDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditHistoryList.aspx.cs">
+      <DependentUpon>EditHistoryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditHistoryList.aspx.designer.cs">
+      <DependentUpon>EditHistoryList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
@@ -761,6 +775,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Controls\EditHistoryLink.ascx" />
     <Content Include="Controls\ErrorControl.ascx" />
     <Content Include="Controls\fckeditor\editor\css\behaviors\disablehandles.htc" />
     <Content Include="Controls\fckeditor\editor\css\behaviors\showtableborders.htc" />
@@ -894,6 +909,7 @@
     <Content Include="Controls\OLBookReader\Viewer\print.aspx" />
     <Content Include="Controls\PagingUserControl.ascx" />
     <Content Include="Controls\WebStatsNavControl.ascx" />
+    <Content Include="EditHistoryList.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="ExternalUserRegistrationEmail.txt" />
     <Content Include="favicon.ico" />
