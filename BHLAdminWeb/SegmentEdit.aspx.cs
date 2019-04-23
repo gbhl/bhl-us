@@ -252,6 +252,9 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
+            editHistoryControl.EntityName = "segment";
+            editHistoryControl.EntityId = idLabel.Text;
+
             Page.MaintainScrollPositionOnPostBack = true;
         }
 

@@ -149,8 +149,11 @@ namespace MOBOT.BHL.AdminWeb
                     marcDataFieldTagTextBox.Text = noteType.MarcDataFieldTag;
                     marcIndicator1TextBox.Text = noteType.MarcIndicator1;
                     ddlNoteTypes.SelectedValue = noteType.NoteTypeID.ToString();
-				}
-			}
+
+                    editHistoryControl.EntityName = "notetype";
+                    editHistoryControl.EntityId = noteType.NoteTypeID.ToString();
+                }
+            }
 		}
 
 		#endregion

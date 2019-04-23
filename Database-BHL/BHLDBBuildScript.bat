@@ -644,6 +644,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByEntityAndID.s
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectBySegmentID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByTitleID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectNameByPageID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectPageByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EntityCountSelectLatest.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ExportAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ExportDOI.sql"

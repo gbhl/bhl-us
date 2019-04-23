@@ -137,8 +137,11 @@ namespace MOBOT.BHL.AdminWeb
 					nameTextBox.Text = pageType.PageTypeName;
 					descriptionTextBox.Text = BHL.DataObjects.Utility.EmptyIfNull( pageType.PageTypeDescription );
 					ddlPageTypes.SelectedValue = pageType.PageTypeID.ToString();
-				}
-			}
+
+                    editHistoryControl.EntityName = "pagetype";
+                    editHistoryControl.EntityId = pageType.PageTypeID.ToString();
+                }
+            }
 		}
 
 		#endregion

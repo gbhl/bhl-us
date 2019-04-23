@@ -221,6 +221,9 @@ namespace MOBOT.BHL.AdminWeb
                 ltlCollectionStats.Visible = false;
             }
 
+            editHistoryControl.EntityName = "collection";
+            editHistoryControl.EntityId = lblID.Text;
+
             contentsButton.Text = "Show Contents";
             contentPanel.Visible = false;
             contentsButton.Enabled = flag;

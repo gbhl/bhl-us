@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="True" CodeBehind="PdfEdit.aspx.cs" Inherits="MOBOT.BHL.AdminWeb.PdfEdit" 
     ValidateRequest="false" EnableEventValidation="false" %>
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <a href="/">&lt; Return to Dashboard</a><br />
 	<a id="weeklyStatsLink" runat="server" href="/PdfWeeklyStats.aspx" visible="false">&lt; Return to PDF Generation Weekly Stats</a><br />
@@ -21,7 +22,7 @@
 	<br />
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
 	<br />
-	<div class="box" style="padding: 5px;margin-right:5px">
+	<div class="box" style="padding: 5px;margin-right:5px; width:850px;">
 		<table cellpadding="4" width="95%">
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
@@ -190,5 +191,6 @@
 		</table>
 		<br />
 		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 	</div>
 </asp:Content>

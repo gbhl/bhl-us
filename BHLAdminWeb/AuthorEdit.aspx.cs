@@ -37,6 +37,9 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
+            editHistoryControl.EntityName = "author";
+            editHistoryControl.EntityId = lblID.Text;
+
             litMessage.Text = "";
             errorControl.Visible = false;
             Page.MaintainScrollPositionOnPostBack = true;

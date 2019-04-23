@@ -31,6 +31,14 @@ namespace MOBOT.BHL.Server
             return new EditHistoryDAL().EditHistorySelectByEntityAndID(null, null, entitySchema, entityName, entityID);
         }
 
+        public CustomGenericList<EditHistory> EditHistorySelectNameByPageID(int pageID)
+        {
+            return new EditHistoryDAL().EditHistorySelectNameByPageID(null, null, pageID);
+        }
 
+        public CustomGenericList<EditHistory> EditHistorySelectPageByItemID(int itemID)
+        {
+            return new EditHistoryDAL().EditHistorySelectPageByItemID(null, null, itemID);
+        }
     }
 }

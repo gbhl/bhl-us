@@ -58,9 +58,21 @@ namespace MOBOT.BHL.AdminWeb
                         entityName = "Page Type";
                         if (isInt) historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "PageType", entityID);
                         break;
-                    case "segmenttype":
+                    case "segmentgenre":
                         entityName = "Segment Type";
                         if (isInt) historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "SegmentGenre", entityID);
+                        break;
+                    case "pdf":
+                        entityName = "PDF";
+                        if (isInt) historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "PDF", entityID);
+                        break;
+                    case "namepage":
+                        entityName = "Names for Page";
+                        if (isInt) historyList.DataSource = provider.EditHistorySelectNameByPageID(idInt);
+                        break;
+                    case "pagination":
+                        entityName = "Item Pagination";
+                        if (isInt) historyList.DataSource = provider.EditHistorySelectPageByItemID(idInt);
                         break;
                     default:
                         entityName = "Unknown";

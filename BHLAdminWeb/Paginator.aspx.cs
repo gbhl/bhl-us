@@ -1,30 +1,21 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml;
+using CustomDataAccess;
+using FlickrUtility;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
-using SortOrder = CustomDataAccess.SortOrder;
-using Page = MOBOT.BHL.DataObjects.Page;
-using FlickrUtility;
 using MOBOT.BHL.Utility;
+using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Page = MOBOT.BHL.DataObjects.Page;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class Paginator : System.Web.UI.Page
+    public partial class Paginator : System.Web.UI.Page
 	{
 		private BHLProvider bp = new BHLProvider();
 		private bool _maintainScrollPos = true;
@@ -65,9 +56,12 @@ namespace MOBOT.BHL.AdminWeb
 			detailGridView.DataSource = pages;
 			detailGridView.DataBind();
 			clearAll();
-		}
 
-		private void loadPageTypes()
+            editHistoryControl.EntityName = "pagination";
+            editHistoryControl.EntityId = itemId.ToString();
+        }
+
+        private void loadPageTypes()
 		{
 			CustomGenericList<PageType> pageTypes = bp.PageTypeSelectAll();
 			pageTypeCombo.DataSource = pageTypes;

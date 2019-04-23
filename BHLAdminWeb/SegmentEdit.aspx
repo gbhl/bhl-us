@@ -2,6 +2,7 @@
  	ValidateRequest="false" EnableEventValidation="false" %>
 
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 
     <script language="javascript">
@@ -730,6 +731,7 @@
 		</fieldset>
 		<br />
 		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 	</div>
     <div id="overlayauthor" class="overlay">
         <div style="top:1000px">

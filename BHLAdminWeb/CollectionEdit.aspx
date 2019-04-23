@@ -3,6 +3,7 @@
 	
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
 <%@ Register TagPrefix="FCKeditorV2" Namespace="FredCK.FCKeditorV2" Assembly="FredCK.FCKeditorV2" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<br />
@@ -165,6 +166,7 @@
 		    <asp:Button ID="saveAsNewButton" runat="server" Text="Save As New" OnClick="saveAsNewButton_Click" />
         </div>
         <div style="float:right">
+            <mobot:EditHistoryControl runat="server" id="editHistoryControl" />&nbsp;
             <asp:Button ID="deleteButton" runat="server" Text="Delete" OnClick="deleteButton_Click" OnClientClick="return ConfirmDelete()" />
         </div>
 	</div>

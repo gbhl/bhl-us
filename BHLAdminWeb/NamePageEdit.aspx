@@ -1,6 +1,7 @@
 <%@ Page Language="C#" MasterPageFile="/Admin.Master" AutoEventWireup="True" Codebehind="NamePageEdit.aspx.cs" Inherits="MOBOT.BHL.AdminWeb.NamePageEdit"
 	Title="BHL Admin - Names (Taxa)" %>
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 
@@ -218,6 +219,7 @@
 		<tr>
 			<td>
 				<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" Enabled="false" />
+        		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 			</td>
 		</tr>
 	</table>

@@ -97,5 +97,41 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public CustomGenericList<EditHistory> EditHistorySelectNameByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int pageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("EditHistorySelectNameByPageID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.NVarChar, 100, false, pageID.ToString())))
+            {
+                using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
+                {
+                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public CustomGenericList<EditHistory> EditHistorySelectPageByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+            CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("EditHistorySelectPageByItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.NVarChar, 100, false, itemID.ToString())))
+            {
+                using (CustomSqlHelper<EditHistory> helper = new CustomSqlHelper<EditHistory>())
+                {
+                    CustomGenericList<EditHistory> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
     }
 }

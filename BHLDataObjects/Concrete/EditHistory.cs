@@ -16,6 +16,9 @@ namespace MOBOT.BHL.DataObjects
 
         public DateTime? EditDate { get => _editDate; set => _editDate = value; }
         public string EntityName { get => _entityName; set => _entityName = value; }
+
+        public string EntityNameClean {  get { return _entityName.Replace("dbo.", ""); } }
+
         public string EntityKey { get => _entityKey; set => _entityKey = value; }
         public string EntityDetail { get => _entityDetail; set => _entityDetail = value; }
 
@@ -52,7 +55,7 @@ namespace MOBOT.BHL.DataObjects
                 {
                     case "EditDate":
                         {
-                            EditDate = (DateTime)column.Value;
+                            EditDate = (DateTime?)column.Value;
                             break;
                         }
                     case "EntityName":

@@ -15,7 +15,7 @@
 		        CssClass="boxTable" Font-Size="Small" HeaderStyle-CssClass="boxHeader" Width="100%">
 		        <Columns>
 		            <asp:BoundField HeaderText="Date" DataField="EditDate" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
-		            <asp:BoundField HeaderText="Entity" DataField="EntityName" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
+		            <asp:BoundField HeaderText="Entity" DataField="EntityNameClean" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
 		            <asp:BoundField HeaderText="Detail" DataField="EntityDetail" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
                     <asp:BoundField HeaderText="Operation" DataField="Operation" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left" />
                     <asp:BoundField HeaderText="User" DataField="User" ItemStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" HeaderStyle-HorizontalAlign="Left" />
