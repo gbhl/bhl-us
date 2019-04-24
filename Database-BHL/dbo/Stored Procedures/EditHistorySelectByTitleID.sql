@@ -246,7 +246,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, '', b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 WHERE	h.EntityName = 'dbo.Title'
 UNION
@@ -263,7 +263,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, id.IdentifierLabel + ':' + ti.IdentifierValue, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.Title_Identifier ti ON ti.TitleIdentifierID = b.EntityKey1
 		INNER JOIN dbo.Identifier id ON ti.IdentifierID = id.IdentifierID
@@ -284,7 +284,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, n.FullName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleAuthor ta ON ta.TitleAuthorID = b.EntityKey1
 		INNER JOIN dbo.AuthorName n ON ta.AuthorID = n.AuthorID
@@ -305,7 +305,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, k.Keyword, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleKeyword tk ON tk.TitleKeywordID = b.EntityKey1
 		INNER JOIN dbo.Keyword k ON tk.KeywordID = k.KeywordID
@@ -326,7 +326,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, r.InstitutionRoleLabel + ':' + i.InstitutionName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleInstitution ti ON ti.TitleInstitutionID = b.EntityKey1
 		INNER JOIN dbo.Institution i ON ti.InstitutionCode = i.InstitutionCode
@@ -349,7 +349,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, nt.MarcDataFieldTag + ' (' + nt.NoteTypeName + ') ' + SUBSTRING(tn.NoteText, 1, 15) + '...', b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleNote tn ON tn.TitleNoteID = b.EntityKey1
 		INNER JOIN dbo.NoteType nt ON tn.NoteTypeID = nt.NoteTypeID
@@ -370,7 +370,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, tat.TitleAssociationLabel + ':' + SUBSTRING(ta.Title, 1, 15) + '...' COLLATE SQL_Latin1_General_CP1_CI_AI, b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleAssociation ta ON ta.TitleAssociationID = b.EntityKey1
 		INNER JOIN dbo.TitleAssociationType tat ON ta.TitleAssociationTypeID = tat.TitleAssociationTypeID
@@ -391,7 +391,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, tvt.TitleVariantLabel + ':' + SUBSTRING(tv.Title, 1, 15) + '...', b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleVariant tv ON tv.TitleVariantID = b.EntityKey1
 		INNER JOIN dbo.TitleVariantType tvt ON tv.TitleVariantTypeID = tvt.TitleVariantTypeID
@@ -412,7 +412,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, l.LanguageName, b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleLanguage tl ON tl.TitleLanguageID = b.EntityKey1
 		INNER JOIN dbo.Language l ON tl.LanguageCode = l.LanguageCode
@@ -433,7 +433,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, c.CollectionName, b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleCollection tc ON tc.TitleCollectionID = b.EntityKey1
 		INNER JOIN dbo.Collection c ON tc.CollectionID = c.CollectionID
@@ -454,7 +454,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, CONVERT(nvarchar(20), ti.ItemID), b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleItem ti ON ti.TitleItemID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.TitleItem'
@@ -473,7 +473,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, d.DOIName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.DOI d ON d.DOIID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.DOI'

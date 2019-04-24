@@ -112,7 +112,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, '', b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 WHERE	h.EntityName = 'dbo.Item'
 UNION
@@ -129,7 +129,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, r.InstitutionRoleLabel + ':' + i.InstitutionName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.ItemInstitution ii ON ii.ItemInstitutionID = b.EntityKey1
 		INNER JOIN dbo.Institution i ON ii.InstitutionCode = i.InstitutionCode
@@ -152,7 +152,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, l.LanguageName, b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.ItemLanguage il ON il.ItemLanguageID = b.EntityKey1
 		INNER JOIN dbo.Language l ON il.LanguageCode = l.LanguageCode
@@ -173,7 +173,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, c.CollectionName, b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.ItemCollection ic ON ic.ItemCollectionID = b.EntityKey1
 		INNER JOIN dbo.Collection c ON ic.CollectionID = c.CollectionID
@@ -194,7 +194,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, CONVERT(nvarchar(20), ti.ItemID), b.Operation,
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.TitleItem ti ON ti.TitleItemID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.TitleItem'
@@ -216,7 +216,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(30), b.AuditDate, 101)) AS AuditDate,
 		u.FirstName, u.LastName, u.Email
 FROM	dbo.Page p
 		INNER JOIN dbo.Page_PageType ppt ON p.PageID = ppt.PageID
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.Page_PageType'
+		INNER JOIN audit.AuditBasicArchive b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.Page_PageType'
 		LEFT JOIN dbo.AspNetUsers u ON ppt.CreationUserID = u.Id
 WHERE	CONVERT(nvarchar(max), p.ItemID) = @ItemID
 GROUP BY
@@ -232,7 +232,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(30), b.AuditDate, 101)) AS AuditDate,
 		u.FirstName, u.LastName, u.Email
 FROM	dbo.Page p
 		INNER JOIN dbo.IndicatedPage ip ON p.PageID = ip .PageID
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.IndicatedPage'
+		INNER JOIN audit.AuditBasicArchive b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.IndicatedPage'
 		LEFT JOIN dbo.AspNetUsers u ON ip.CreationUserID = u.Id
 WHERE	CONVERT(nvarchar(max), p.ItemID) = @ItemID
 GROUP BY

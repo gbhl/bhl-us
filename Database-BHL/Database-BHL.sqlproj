@@ -868,9 +868,6 @@
     <None Include="annotation\Stored Procedures\AnnotationSubjectDeleteByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\IndicatedPageSelectByPageID.sql" />
     <None Include="audit\Synonyms\AuditBasicArchive.sql" />
-    <None Include="dbo\Synonyms\MOBOTSecuritySecUserSyn.sql" />
-    <None Include="dbo\Synonyms\MOBOTAdminRequestLog.sql" />
-    <None Include="dbo\Synonyms\TropicosNameReferenceSynonym.sql" />
     <None Include="Storage\BHLFullTextStopList.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectByStatusID.sql" />
     <None Include="dbo\Tables\SegmentResolutionLog.sql" />

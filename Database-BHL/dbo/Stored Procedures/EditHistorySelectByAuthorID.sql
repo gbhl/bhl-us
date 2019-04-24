@@ -82,7 +82,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, '', b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 WHERE	h.EntityName = 'dbo.Author'
 UNION
@@ -99,7 +99,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, n.FullName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.AuthorName n ON n.AuthorNameID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.AuthorName'
@@ -118,7 +118,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, id.IdentifierLabel + ':' + ai.IdentifierValue, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.AuthorIdentifier ai ON ai.AuthorIdentifierID = b.EntityKey1
 		INNER JOIN dbo.Identifier id ON ai.IdentifierID = id.IdentifierID

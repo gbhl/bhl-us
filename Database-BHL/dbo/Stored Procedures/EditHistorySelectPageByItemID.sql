@@ -28,7 +28,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(30), b.AuditDate, 101)) AS AuditDate,
 		u.FirstName, u.LastName, u.Email
 FROM	dbo.Page p
 		INNER JOIN dbo.Page_PageType ppt ON p.PageID = ppt.PageID
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.Page_PageType'
+		INNER JOIN audit.AuditBasicArchive b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.Page_PageType'
 		LEFT JOIN dbo.AspNetUsers u ON ppt.CreationUserID = u.Id
 WHERE	CONVERT(nvarchar(max), p.ItemID) = @ItemID
 GROUP BY
@@ -59,7 +59,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(30), b.AuditDate, 101)) AS AuditDate,
 		u.FirstName, u.LastName, u.Email
 FROM	dbo.Page p
 		INNER JOIN dbo.IndicatedPage ip ON p.PageID = ip .PageID
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.IndicatedPage'
+		INNER JOIN audit.AuditBasicArchive b ON p.PageID = b.EntityKey1 AND b.EntityName = 'dbo.IndicatedPage'
 		LEFT JOIN dbo.AspNetUsers u ON ip.CreationUserID = u.Id
 WHERE	CONVERT(nvarchar(max), p.ItemID) = @ItemID
 GROUP BY
@@ -95,7 +95,5 @@ FROM	#History
 WHERE	Operation IN ('I', 'U', 'D')
 GROUP BY EditDate, EntityName, EntityKey1
 ORDER BY EditDate DESC, Operation DESC
-
-DROP TABLE #History
 
 END 

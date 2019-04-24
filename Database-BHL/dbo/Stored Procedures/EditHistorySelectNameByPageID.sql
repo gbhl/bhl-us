@@ -49,7 +49,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, n.NameString, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.NamePage np ON b.EntityKey1 = np.NamePageID
 		INNER JOIN dbo.Name n ON np.NameID = n.NameID

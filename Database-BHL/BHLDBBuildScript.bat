@@ -182,9 +182,6 @@ REM --------------------------------------
 REM  Add Synonyms
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "audit\Synonyms\AuditBasicArchive.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\MOBOTAdminRequestLog.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\MOBOTSecuritySecUserSyn.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\TropicosNameReferenceSynonym.sql"
 
 REM --------------------------------------
 REM  Build Functions

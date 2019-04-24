@@ -107,7 +107,7 @@ END
 -- GET THE REST OF THE HISTORY
 INSERT	#History
 SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)), b.EntityName, b.Operation, u.FirstName, u.LastName, u.Email
-FROM	BHLAuditArchive.audit.AuditBasic b
+FROM	audit.AuditBasicArchive b
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 WHERE	b.EntityName = @EntitySchema + '.' + @EntityName
 AND		b.EntityKey1 = @EntityID

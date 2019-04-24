@@ -170,7 +170,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, '', b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 WHERE	h.EntityName = 'dbo.Segment'
 UNION
@@ -187,7 +187,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, id.IdentifierLabel + ':' + si.IdentifierValue, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.SegmentIdentifier si ON si.SegmentIdentifierID = b.EntityKey1
 		INNER JOIN dbo.Identifier id ON si.IdentifierID = id.IdentifierID
@@ -208,7 +208,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, n.FullName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.SegmentAuthor sa ON sa.SegmentAuthorID = b.EntityKey1
 		INNER JOIN dbo.AuthorName n ON sa.AuthorID = n.AuthorID
@@ -229,7 +229,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, k.Keyword, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.SegmentKeyword sk ON sk.SegmentKeywordID = b.EntityKey1
 		INNER JOIN dbo.Keyword k ON sk.KeywordID = k.KeywordID
@@ -250,7 +250,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, r.InstitutionRoleLabel + ':' + i.InstitutionName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.SegmentInstitution si ON si.SegmentInstitutionID = b.EntityKey1
 		INNER JOIN dbo.Institution i ON si.InstitutionCode = i.InstitutionCode
@@ -273,7 +273,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, CONVERT(nvarchar(20), sp.PageID), b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.SegmentPage sp ON sp.SegmentPageID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.SegmentPage'
@@ -292,7 +292,7 @@ SELECT	CONVERT(datetime, CONVERT(nvarchar(50), b.AuditDate, 120)),
 		h.EntityName, h.EntityKey1, d.DOIName, b.Operation, 
 		u.FirstName, u.LastName, u.Email
 FROM	#History h
-		INNER JOIN BHLAuditArchive.audit.AuditBasic b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
+		INNER JOIN audit.AuditBasicArchive b ON h.EntityName = b.EntityName AND h.EntityKey1 = b.EntityKey1
 		LEFT JOIN dbo.AspNetUsers u ON b.ApplicationUserID = u.Id
 		INNER JOIN dbo.DOI d ON d.DOIID = b.EntityKey1
 WHERE	h.EntityName = 'dbo.DOI'
