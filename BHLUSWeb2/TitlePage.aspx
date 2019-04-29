@@ -12,6 +12,7 @@
                 <div class="downloadcontents">
                     <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">View Metadata</a></div>
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
+                    <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
                     <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
                 </div>
@@ -369,10 +370,10 @@
         var newpageOCR = $("#pageOCR-panel");
         var newpageReaderComments = $("#pageReaderComments-panelInner");
         var pageNames = $("#names-panel");
-        
+
         // On Hide Action for Dialogs
         function onHideAction(hash) {
-            if(isModalDialogChange) {
+            if (isModalDialogChange) {
                 hash.w.hide();
                 hash.o.remove();
                 resetGenerate();
@@ -380,7 +381,7 @@
                 hash.w.fadeOut(200);
                 hash.o.fadeOut(200, function () {
                     hash.o.remove();
-                    resetGenerate(); 
+                    resetGenerate();
                 });
             }
 
@@ -391,7 +392,7 @@
                 $('#generate-dialog .success').hide();
                 $('#generate-dialog .failure').hide();
 
-                if (cancelPdfSelection) cancelSelectPages(); 
+                if (cancelPdfSelection) cancelSelectPages();
                 cancelPdfSelection = false;
             }
 
@@ -412,15 +413,47 @@
             pdfToolbar.find('.zoom_in').click(function (e) { br.zoom(1); e.preventDefault(); });
 
             actionMode = actionModeType.Select;
-            if(3 != br.mode) { br.switchMode(3); }
+            if (3 != br.mode) { br.switchMode(3); }
 
-            $("#right-panel2").hide("fast", function() { if(br.mode == 3) { br.resizePageView(); } br.centerPageView();});
+            $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
             resetAnnotationsBox();
             resetSearchBox();
             resetPageOCRBox();
+            resetPDFDialog();
 
             $(".pagetoolbox").show();
             setInterval('fixIEDisplayIssue()', 1000);
+        }
+
+        function selectPartToDownload() {
+            selectPagesToDownload();
+
+            // Pre-select part pages here
+            var index = $('#lstPages').attr('selectedIndex');
+            var selectedSegmentID = pages[index].SegmentID;
+            if (selectedSegmentID != null) {
+                for (var x = 0; x < pages.length; x++) {
+                    if (pages[x].SegmentID === selectedSegmentID) {
+                        // Select the page
+                        var pdfPageIndex = $.inArray(x, pdfPages);
+                        if(pdfPageIndex < 0) {
+                            pdfPageCount = pdfPages.push(x);
+                            $('#ptb' + x).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
+
+                            if(!pdfBar.hasClass('active')) {
+                                pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
+                            }
+                            lastPdfIndex = x;
+                        }
+                    }
+                    // Re-sort pdf pages
+                    pdfPages.sort(function (a, b){ return (a-b); });
+                }
+            }
+
+            // Default the PDF title field to the selected segment title
+            var segTitleLink = $("#articleTitleLink");
+            $("#tbTitle").val(segTitleLink.html());
         }
 
         function cancelSelectPages() {
@@ -652,6 +685,9 @@
         });
         $(".selectpages").click(function(){
             selectPagesToDownload();
+        });
+        $(".selectpart").click(function () {
+            selectPartToDownload();
         });
         $(".cancelpdf", pdfBar).click(function(){
             cancelSelectPages();
@@ -1024,6 +1060,14 @@
                 if (updateMendeleyLink !== undefined) {
                     updateMendeleyLink('item', '<%: CurrentItemID %>');
                 }
+            }
+
+            // Update the Download Part menu item
+            if (pages[index].SegmentID != null) {
+                $(".selectpart").show();
+            }
+            else {
+                $(".selectpart").hide();
             }
 
             // Update the Altmetric badge
@@ -1431,6 +1475,13 @@
         $("#showOCRButton").attr("title", "Show Text");
         $("#showOCRButton").html("Show<br/>Text");
         $("#showOCRButton").removeClass("displayed");
+    }
+
+    function resetPDFDialog() {
+        $("#tbEmail").val("");
+        $("#tbTitle").val("");
+        $("#tbAuthors").val("");
+        $("#tbSubjects").val("");
     }
 
     function fixIEDisplayIssue() {
