@@ -178,8 +178,11 @@ namespace MOBOT.BHL.AdminWeb
                     chkIsMemberLibrary.Checked = inst.BHLMemberLibrary;
 
 					ddlInstitutions.SelectedValue = inst.InstitutionCode;
-				}
-			}
+
+                    editHistoryControl.EntityName = "institution";
+                    editHistoryControl.EntityId = inst.InstitutionCode;
+                }
+            }
 		}
 
 		#endregion

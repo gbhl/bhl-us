@@ -158,6 +158,9 @@ namespace MOBOT.BHL.AdminWeb
 				}
 			}
 
+            editHistoryControl.EntityName = "title";
+            editHistoryControl.EntityId = idLabel.Text;
+
             litMessage.Text = "";
 			errorControl.Visible = false;
 			Page.MaintainScrollPositionOnPostBack = true;

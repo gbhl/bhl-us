@@ -164,8 +164,11 @@ namespace MOBOT.BHL.AdminWeb
 					noteTextBox.Text = MOBOT.BHL.DataObjects.Utility.EmptyIfNull( language.Note );
 
 					ddlLanguages.SelectedValue = language.LanguageCode;
-				}
-			}
+
+                    editHistoryControl.EntityName = "language";
+                    editHistoryControl.EntityId = language.LanguageCode;
+                }
+            }
 		}
 
 		#endregion

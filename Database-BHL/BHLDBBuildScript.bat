@@ -182,9 +182,6 @@ REM --------------------------------------
 REM  Add Synonyms
 REM --------------------------------------
 sqlcmd -E -S %1 -d %2 -i "audit\Synonyms\AuditBasicArchive.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\MOBOTAdminRequestLog.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\MOBOTSecuritySecUserSyn.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Synonyms\TropicosNameReferenceSynonym.sql"
 
 REM --------------------------------------
 REM  Build Functions
@@ -639,6 +636,13 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOISelectValidForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOISelectValidForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIStatusSelectAll.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\DOIUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByAuthorID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByEntityAndID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByItemID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectBySegmentID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectByTitleID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectNameByPageID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EditHistorySelectPageByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\EntityCountSelectLatest.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ExportAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ExportDOI.sql"

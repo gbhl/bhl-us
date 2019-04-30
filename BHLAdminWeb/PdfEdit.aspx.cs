@@ -91,6 +91,9 @@ namespace MOBOT.BHL.AdminWeb
 
                 weeklyStatsLink.HRef = GetWeeklyStatsLink();
                 weeklyStatsLink.Visible = true;
+
+                editHistoryControl.EntityName = "pdf";
+                editHistoryControl.EntityId = pdf.PdfID.ToString();
             }
             else
             {

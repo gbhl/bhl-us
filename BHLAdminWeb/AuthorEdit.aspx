@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="True" CodeBehind="AuthorEdit.aspx.cs" Inherits="MOBOT.BHL.AdminWeb.AuthorEdit" %>
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
 	<a href="/">&lt; Return to Dashboard</a><br />
 	<a href="/AuthorSearch.aspx">&lt; Find a Different Author</a><br />
@@ -198,6 +199,7 @@
 		</fieldset>
 		<br />
 		<asp:Button ID="saveButton" runat="server" OnClick="saveButton_Click" Text="Save" />
+		<div style="float:right;"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
 	</div>
     <script type="text/javascript">
         $(document).ready(function () {

@@ -92,6 +92,9 @@ namespace MOBOT.BHL.AdminWeb
 				}
 			}
 
+            editHistoryControl.EntityName = "namepage";
+            editHistoryControl.EntityId = pageIdLabel.Text;
+
             litMessage.Text = "";
             errorControl.Visible = false;
 			Page.MaintainScrollPositionOnPostBack = true;

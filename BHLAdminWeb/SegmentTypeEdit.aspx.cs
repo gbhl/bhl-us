@@ -135,6 +135,10 @@ namespace MOBOT.BHL.AdminWeb
                     idLabel.Text = segmentGenre.SegmentGenreID.ToString();
                     nameTextBox.Text = segmentGenre.GenreName;
                     ddlSegmentTypes.SelectedValue = segmentGenre.SegmentGenreID.ToString();
+
+                    editHistoryControl.EntityName = "segmentgenre";
+                    editHistoryControl.EntityId = segmentGenre.SegmentGenreID.ToString();
+
                 }
             }
         }

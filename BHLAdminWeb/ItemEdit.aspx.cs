@@ -34,15 +34,12 @@ namespace MOBOT.BHL.AdminWeb
 				fillCombos();
 
 				string idString = Request.QueryString[ "id" ];
-				int id = 0;
+
+                int id = 0;
 				if ( idString != null && int.TryParse( idString, out id ) )
 				{
 					itemIdTextBox.Text = id.ToString();
 					search( id, null );
-				}
-				else
-				{
-					// TODO: Inform user that title does not exist -- Perhaps redirect to unknown.aspx?type=title
 				}
 			}
 			else
@@ -119,6 +116,9 @@ namespace MOBOT.BHL.AdminWeb
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
 			}
+
+            editHistoryControl.EntityName = "item";
+            editHistoryControl.EntityId = itemIdTextBox.Text;
 
             litMessage.Text = "";
             errorControl.Visible = false;

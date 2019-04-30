@@ -3,6 +3,7 @@
 
 <%@ Register Src="/Controls/ErrorControl.ascx" TagName="ErrorControl" TagPrefix="mobot" %>
 <%@ Register src="/Controls/OLBookReader/BookReader.ascx" tagname="BookReader" tagprefix="reader" %>
+<%@ Register Src="/Controls/EditHistoryLink.ascx" TagName="EditHistoryControl" TagPrefix="mobot" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContentPlaceHolder" runat="server">
     <a href="/">&lt; Return to Dashboard</a><br />
 	<a href="/TitleSearch.aspx?redir=p">&lt; Paginate a Different Title</a><br />
@@ -242,6 +243,11 @@
                 </div>
 			</td>
 		</tr>
+        <tr>
+            <td colspan="2">
+                <div style="float:right;display:none"><mobot:EditHistoryControl runat="server" id="editHistoryControl" /></div>
+            </td>
+        </tr>
 	</table>
 	<div id="indicatedPagesDiv" style="position: absolute; bottom: 150px; left: 50px; width: 300px; display: none;">
 		<table cellpadding="0px">
