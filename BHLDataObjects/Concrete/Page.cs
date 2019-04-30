@@ -170,6 +170,13 @@ namespace MOBOT.BHL.DataObjects
             set { _segmentID = value; }
         }
 
+        private string _genreName;
+        public string GenreName
+        {
+            get { return _genreName; }
+            set { _genreName = value; }
+        }
+
         //private bool _illustration = false;
         //public bool Illustration
         //{
@@ -314,6 +321,9 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "SegmentID":
                         SegmentID = (int?)column.Value;
+                        break;
+                    case "GenreName":
+                        GenreName = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

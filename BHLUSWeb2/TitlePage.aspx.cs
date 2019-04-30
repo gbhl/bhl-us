@@ -310,6 +310,7 @@ namespace MOBOT.BHL.Web2
                                                         p.SequenceOrder,
                                                         p.BarCode,
                                                         p.SegmentID,
+                                                        p.GenreName,
                                                         vp.ExternalBaseUrl,
                                                         vp.Height,
                                                         vp.Width,

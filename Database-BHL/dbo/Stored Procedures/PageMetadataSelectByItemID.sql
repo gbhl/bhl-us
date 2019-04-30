@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[PageMetadataSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[PageMetadataSelectByItemID]
 
 @ItemID INT
 
@@ -46,11 +45,24 @@ AND		s.SegmentStatusID IN (10,20)
 GROUP BY 
 		sp.PageID
 
-SELECT	sp.SegmentID, sp.PageID
+/*
+-- Add this to include segment author information
+SELECT	s.SegmentID, dbo.fnAuthorSearchStringForSegment(s.SegmentID, 1) AS AuthorName
+INTO	#tmpSegAuth
+FROM	dbo.Segment s
+WHERE	s.ItemID = @ItemID
+*/
+
+SELECT	sp.SegmentID
+		--,sa.AuthorName
+		,g.GenreName
+		,sp.PageID
 INTO	#tmpSegment
 FROM	#tmpSegPage t 
 		INNER JOIN dbo.SegmentPage sp ON t.PageID = sp.PageID
 		INNER JOIN dbo.Segment s ON sp.SegmentID = s.SegmentID AND t.SegmentSequence = s.SequenceOrder
+		--INNER JOIN #tmpSegAuth sa ON s.SegmentID = sa.SegmentID
+		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 
 -- Merge Page and Segment Info
 SELECT	p.PageID,
@@ -72,7 +84,8 @@ SELECT	p.PageID,
 		p.AltExternalURL,
 		p.IssuePrefix,
 		p.FlickrURL,
-		MIN(s.SegmentID) AS SegmentID
+		MIN(s.SegmentID) AS SegmentID,
+		MIN(s.GenreName) AS GenreName
 FROM	#tmpPage p LEFT JOIN #tmpSegment s ON p.PageID = s.PageID
 GROUP BY
 		p.PageID,
@@ -96,5 +109,4 @@ GROUP BY
 		p.FlickrURL
 ORDER BY
 		p.SequenceOrder ASC
-
 

@@ -1043,7 +1043,12 @@
             // Update the segment list
             var segTitle = $(segListItem).children("a.viewSegLinkTitle");
             if (segTitle != null) {
-                segTitleLink.html(segTitle.html());
+                if (pages[index].SegmentID != null) {
+                    segTitleLink.html(pages[index].GenreName + ": " + segTitle.html());
+                }
+                else {
+                    segTitleLink.html(segTitle.html());
+                }
                 segTitleLink.attr("href", "/part/" + pages[index].SegmentID);
             }
             highlightSeg(segTitle);
@@ -1064,6 +1069,7 @@
 
             // Update the Download Part menu item
             if (pages[index].SegmentID != null) {
+                $(".selectpart").html("Download " + pages[index].GenreName);
                 $(".selectpart").show();
             }
             else {
