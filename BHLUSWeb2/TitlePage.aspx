@@ -432,6 +432,7 @@
             var index = $('#lstPages').attr('selectedIndex');
             var selectedSegmentID = pages[index].SegmentID;
             if (selectedSegmentID != null) {
+                var pdfPageCount;
                 for (var x = 0; x < pages.length; x++) {
                     if (pages[x].SegmentID === selectedSegmentID) {
                         // Select the page
@@ -447,7 +448,9 @@
                         }
                     }
                     // Re-sort pdf pages
-                    pdfPages.sort(function (a, b){ return (a-b); });
+                    pdfPages.sort(function (a, b) { return (a - b); });
+
+                    updatePdfPageCounter(pdfPageCount);
                 }
             }
 
@@ -1143,10 +1146,12 @@
 
         // Function used by book reader to create the pagetoolbox
         br.getPageToolbox = function (index) {
-            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).bind(pageToolBoxEvent, function(event) {
+            var pageToolbox = $("<div/>", { 'class': 'pagetoolbox', 'id': 'ptb' + index }).bind(pageToolBoxEvent, function (event) {
+                /*
                 var origBG = '#404040'
                 var origActiveBG = '#455667';
                 var activeBG = '#ffa200';
+                */
                 var pdfPageCount;
                 var startIndex;
                 var endIndex;
@@ -1196,18 +1201,7 @@
                 // Re-sort pdfs
                 pdfPages.sort(function (a, b){ return (a-b); });
 
-                pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
-                    if(pdfPageCount <= 0) {
-                        pdfCounter.text('No Pages Added');
-                        pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
-                    } else if(pdfPageCount == 1) {
-                        pdfCounter.text(pdfPageCount + ' Page Added');
-                        pdfReviewCounter.text(pdfPageCount + ' Page');
-                    } else {
-                        pdfCounter.text(pdfPageCount + ' Pages Added');
-                        pdfReviewCounter.text(pdfPageCount + ' Pages');
-                    }                        
-                }).animate({ backgroundColor : (pdfPageCount <= 0) ? origBG : origActiveBG }, 400, 'easeOutQuad');
+                updatePdfPageCounter(pdfPageCount);
 
                 // Prevent event propagating to dragscrollable
                 event.stopPropagation();
@@ -1229,6 +1223,25 @@
             });
 
             return pageToolbox;
+        }
+
+        function updatePdfPageCounter(pdfPageCount) {
+            var origBG = '#404040'
+            var origActiveBG = '#455667';
+            var activeBG = '#ffa200';
+
+            pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
+                if(pdfPageCount <= 0) {
+                    pdfCounter.text('No Pages Added');
+                    pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
+                } else if(pdfPageCount == 1) {
+                    pdfCounter.text(pdfPageCount + ' Page Added');
+                    pdfReviewCounter.text(pdfPageCount + ' Page');
+                } else {
+                    pdfCounter.text(pdfPageCount + ' Pages Added');
+                    pdfReviewCounter.text(pdfPageCount + ' Pages');
+                }                        
+            }).animate({ backgroundColor : (pdfPageCount <= 0) ? origBG : origActiveBG }, 400, 'easeOutQuad');
         }
 
         // Create BeautyTips if canvas exists & not IE (results in singlepage view scrolling to top)
