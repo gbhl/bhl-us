@@ -9,18 +9,20 @@
 			}
 		}
 	},
-	"keyword" : {
-		"properties" : {
-			"id" : {
-				"type" : "long",
-				"include_in_all" : false
-			},
-			"keyword" : {
-				"type" : "text",
-				"analyzer" : "default",
-				"fields" : {
-					"raw" : {
-						"type" : "keyword"
+	"mappings" : {
+		"keyword" : {
+			"properties" : {
+				"id" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"keyword" : {
+					"type" : "text",
+					"analyzer" : "default",
+					"fields" : {
+						"raw" : {
+							"type" : "keyword"
+						}
 					}
 				}
 			}
