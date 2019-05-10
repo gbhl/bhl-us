@@ -16,6 +16,7 @@ INTO	#NameResolved
 FROM	dbo.NameResolved WITH (NOLOCK)
 WHERE	NameResolvedID >= @StartID
 AND		(NameResolvedID <= @EndID OR @EndID IS NULL)
+ORDER BY NameResolvedID
 
 SELECT	r.NameResolvedID,
 		r.ResolvedNameString,
