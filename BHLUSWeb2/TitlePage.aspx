@@ -387,6 +387,7 @@
 
             function resetGenerate() {
                 $('#generate-dialog div, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
+				$("#tbEmail").show();
                 $('#generate-dialog').css('height', '520px');
                 $('#generate-dialog .intro').show();
                 $('#generate-dialog .success').hide();
