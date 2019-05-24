@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiPageSelectBySegmentID]
+﻿CREATE PROCEDURE [dbo].[ApiPageSelectBySegmentID]
 
 @SegmentID INT
 
@@ -13,12 +12,17 @@ SELECT	sp.PageID,
 		p.Series,
 		p.Volume,
 		p.Issue,
-		dbo.fnIndicatedPageStringForPage(sp.PageID) AS PageNumbers,
+		COALESCE(l.TextSource, 'OCR') AS TextSource,
+		dbo.fnAPIIndicatedPageStringForPage(sp.PageID) AS PageNumbers,
 		dbo.fnPageTypeStringForPage(sp.PageID) AS PageTypeName
 FROM	dbo.SegmentPage sp 
 		INNER JOIN dbo.Page p ON sp.PageID = p.PageID
+		OUTER APPLY (
+				SELECT  TOP 1 TextSource
+				FROM    dbo.PageTextLog 
+				WHERE   PageID = p.PageID
+				ORDER BY PageTextLogID DESC
+			) l
 WHERE	sp.SegmentID = @SegmentID
 ORDER BY
 		sp.SequenceOrder ASC
-
-

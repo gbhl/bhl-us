@@ -32,6 +32,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             string issue,
             string prefix,
             string number,
+            string textSource,
             string pageUrl,
             string thumbnailUrl,
             string pageTypeName) : this()
@@ -55,6 +56,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             _Issue = issue;
             _Prefix = prefix;
             _Number = number;
+            _TextSource = textSource;
             _PageUrl = pageUrl;
             _ThumbnailUrl = thumbnailUrl;
             _PageTypeName = pageTypeName;
@@ -171,6 +173,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "Issue":
                         {
                             _Issue = (string)column.Value;
+                            break;
+                        }
+                    case "TextSource":
+                        {
+                            _TextSource = (string)column.Value;
                             break;
                         }
                     case "PagePrefix":
@@ -504,6 +511,20 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             {
                 if (value != null) value = CalibrateValue(value, 20);
                 _Number = value;
+            }
+        }
+
+        private string _TextSource = null;
+        public string TextSource
+        {
+            get
+            {
+                return _TextSource;
+            }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 50);
+                _TextSource = value;
             }
         }
 
