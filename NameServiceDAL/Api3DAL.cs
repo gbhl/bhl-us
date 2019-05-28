@@ -37,7 +37,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
                 connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"));
             }
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectAuto", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiPageSelectByPageID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
@@ -51,6 +51,24 @@ namespace MOBOT.BHL.API.BHLApiDAL
                     {
                         return null;
                     }
+                }
+            }
+        }
+
+        public CustomGenericList<Page> PageSelectByPageIDList(SqlConnection sqlConnection, SqlTransaction sqlTransaction, DataTable pageIDs)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.ApiPageSelectByPageIDList", connection, transaction))
+            {
+                SqlParameter idListParam = command.Parameters.AddWithValue("@IDList", pageIDs);
+                idListParam.SqlDbType = SqlDbType.Structured;
+                idListParam.TypeName = "dbo.IDListInt";
+
+                using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
+                {
+                    return helper.ExecuteReader(command);
                 }
             }
         }

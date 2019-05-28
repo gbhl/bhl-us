@@ -4,8 +4,10 @@ using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Web.Utilities;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Text;
 
 namespace MOBOT.BHL.API.BHLApi
@@ -200,6 +202,7 @@ namespace MOBOT.BHL.API.BHLApi
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
+                page.TextSource = pageDetail.TextSource;
                 page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
@@ -220,18 +223,18 @@ namespace MOBOT.BHL.API.BHLApi
 
                 if (pageDetail.PageNumbers != string.Empty)
                 {
-                    string[] pageNumbers = pageDetail.PageNumbers.Split(',');
+                    string[] pageNumbers = pageDetail.PageNumbers.Split('|');
                     foreach (string pageNumber in pageNumbers)
                     {
                         string pageNumberTrimmed = pageNumber.Trim();
                         if (pageNumberTrimmed != string.Empty)
                         {
                             PageNumber number = new PageNumber();
-                            int pos = pageNumberTrimmed.IndexOf(' ');
+                            int pos = pageNumberTrimmed.IndexOf('%');
                             if (pos > 0)
                             {
                                 number.Prefix = pageNumberTrimmed.Substring(0, pos).Trim();
-                                number.Number = pageNumberTrimmed.Substring(pos).Trim();
+                                number.Number = pageNumberTrimmed.Substring(pos+1).Trim();
                             }
                             else
                             {
@@ -484,6 +487,7 @@ namespace MOBOT.BHL.API.BHLApi
                 page.Issue = pageDetail.Issue;
                 page.Year = pageDetail.Year;
                 page.Volume = pageDetail.Volume;
+                page.TextSource = pageDetail.TextSource;
                 page.PageUrl = "https://www.biodiversitylibrary.org/page/" + page.PageID.ToString();
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
@@ -502,18 +506,18 @@ namespace MOBOT.BHL.API.BHLApi
 
                 if (pageDetail.PageNumbers != string.Empty)
                 {
-                    string[] pageNumbers = pageDetail.PageNumbers.Split(',');
+                    string[] pageNumbers = pageDetail.PageNumbers.Split('|');
                     foreach (string pageNumber in pageNumbers)
                     {
                         string pageNumberTrimmed = pageNumber.Trim();
                         if (pageNumberTrimmed != string.Empty)
                         {
                             PageNumber number = new PageNumber();
-                            int pos = pageNumberTrimmed.IndexOf(' ');
+                            int pos = pageNumberTrimmed.IndexOf('%');
                             if (pos > 0)
                             {
                                 number.Prefix = pageNumberTrimmed.Substring(0, pos).Trim();
-                                number.Number = pageNumberTrimmed.Substring(pos).Trim();
+                                number.Number = pageNumberTrimmed.Substring(pos+1).Trim();
                             }
                             else
                             {
@@ -780,6 +784,7 @@ namespace MOBOT.BHL.API.BHLApi
                         page.Year = pageDetail.Year;
                         page.Volume = pageDetail.Volume;
                         page.Issue = pageDetail.Issue;
+                        page.TextSource = pageDetail.TextSource;
                         page.PageUrl = pageDetail.PageUrl;
                         page.ThumbnailUrl = pageDetail.ThumbnailUrl;
                         page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
@@ -1750,6 +1755,8 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             CustomGenericList<Page> pages = new CustomGenericList<Page>();
+            DataTable pageIDs = new DataTable();
+            pageIDs.Columns.Add(new DataColumn("ID", typeof(int)));
 
             if (_useElasticSearch)
             {
@@ -1778,6 +1785,8 @@ namespace MOBOT.BHL.API.BHLApi
                         OcrText = hit.Text
                     };
 
+                    pageIDs.Rows.Add(page.PageID);
+
                     if (hit.PageTypes.Count > 0) page.PageTypes = new CustomGenericList<PageType>();
                     foreach (string pageType in hit.PageTypes)
                     {
@@ -1797,6 +1806,26 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 // There is no non-ElasticSearch implementation
                 throw new NotImplementedException();
+            }
+
+            if (pages.Count > 0)
+            {
+                // Get additional page details from the database and add them to the results
+                Api3DAL dal = new Api3DAL();
+                CustomGenericList<Page> pageDetails = dal.PageSelectByPageIDList(null, null, pageIDs);
+
+                foreach(Page pg in pages)
+                {
+                    foreach(Page pd in pageDetails)
+                    {
+                        if (pg.PageID == pd.PageID)
+                        {
+                            pg.TextSource = pd.TextSource;
+                            pageDetails.Remove(pd);
+                            break;
+                        }
+                    }
+                }
             }
 
             return pages;

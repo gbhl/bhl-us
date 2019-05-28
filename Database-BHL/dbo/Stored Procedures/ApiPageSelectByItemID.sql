@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiPageSelectByItemID]
+﻿CREATE PROCEDURE [dbo].[ApiPageSelectByItemID]
 
 @ItemID INT
 
@@ -13,18 +12,24 @@ SELECT @RedirItemID = RedirectItemID FROM dbo.Item WHERE ItemID = @ItemID
 IF (@RedirItemID IS NOT NULL)
 	exec [dbo].[ApiPageSelectByItemID] @RedirItemID
 ELSE
-	SELECT	PageID,
-			ItemID,
-			SequenceOrder,
-			[Year],
-			Series,
-			Volume,
-			Issue,
-			dbo.fnIndicatedPageStringForPage(PageID) AS PageNumbers,
-			dbo.fnPageTypeStringForPage(PageID) AS PageTypeName
-	FROM	dbo.Page
-	WHERE	ItemID = @ItemID
-	AND		Active = 1
+	SELECT	p.PageID,
+			p.ItemID,
+			p.SequenceOrder,
+			p.[Year],
+			p.Series,
+			p.Volume,
+			p.Issue,
+			COALESCE(l.TextSource, 'OCR') AS TextSource,
+			dbo.fnAPIIndicatedPageStringForPage(p.PageID) AS PageNumbers,
+			dbo.fnPageTypeStringForPage(p.PageID) AS PageTypeName
+	FROM	dbo.Page p 
+			OUTER APPLY (
+					SELECT  TOP 1 TextSource
+					FROM    dbo.PageTextLog 
+					WHERE   PageID = p.PageID
+					ORDER BY PageTextLogID DESC
+				) l
+	WHERE	p.ItemID = @ItemID
+	AND		p.Active = 1
 	ORDER BY
-			SequenceOrder ASC
-
+			p.SequenceOrder ASC

@@ -33,7 +33,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: August 27, 2018
+            Revised: May 23, 2019
         </div>
     </div>
     <div>
@@ -69,13 +69,13 @@
     <div class="header">*** METHODS *** <a href="#top" class="toplink">Contents</a></div>
     <div>Specify the name of the API method being called with the &quot;op=&lt;method name&gt;&quot; argument.  For example, https://www.biodiversitylibrary.org/api3?op=&lt;method name&gt;</div>
     <div class="subhead1">GetPageMetadata</div>
-    <div>	Return metadata about a page.  You may choose to include the OCR text and a list of names found on the page.</div>
+    <div>	Return metadata about a page.  You may choose to include the text and a list of names found on the page.</div>
     <div>	Example - <a href="/docs/api3/GetPageMetadata.xml" title="GetPageMetadata">https://www.biodiversitylibrary.org/api3?op=GetPageMetadata&amp;pageid=3137380&amp;ocr=t&amp;names=t&amp;apikey=&lt;key+value&gt;</a></div>
-    <div>	pageid - the identifier of an individual page in a scanned book<br />	ocr - &quot;t&quot; or &quot;true&quot; to return ocr text of the page<br />	names - &quot;t&quot; or &quot;true&quot; to return the names that appear on the page</div>
+    <div>	pageid - the identifier of an individual page in a scanned book<br />	ocr - &quot;t&quot; or &quot;true&quot; to return text of the page<br />	names - &quot;t&quot; or &quot;true&quot; to return the names that appear on the page</div>
     <div class="subhead1">GetItemMetadata</div>
-    <div>	Return metadata about an item.  You may choose to include a list of the item's pages, the page OCR, and a list of the item's parts.</div>
+    <div>	Return metadata about an item.  You may choose to include a list of the item's pages, the page text, and a list of the item's parts.</div>
     <div>	Example - <a href="/docs/api3/GetItemMetadata.xml" title="GetItemMetadata">https://www.biodiversitylibrary.org/api3?op=GetItemMetadata&amp;id=16800&amp;pages=t&amp;ocr=f&amp;parts=f&amp;apikey=&lt;key+value&gt;</a></div>
-    <div>	id - the identifier of an individual item (book)<br />  idtype (OPTIONAL) - "bhl" if the id is a BHL identifier (default value), "ia" if the id is an Internet Archive identifier<br />	pages - &quot;t&quot; or &quot;true&quot; to return the item's pages<br />	ocr - &quot;t&quot; or &quot;true&quot; to return the ocr for the item's pages<br />	parts - &quot;t&quot; or &quot;true&quot; to return the item's parts<br /></div>
+    <div>	id - the identifier of an individual item (book)<br />  idtype (OPTIONAL) - "bhl" if the id is a BHL identifier (default value), "ia" if the id is an Internet Archive identifier<br />	pages - &quot;t&quot; or &quot;true&quot; to return the item's pages<br />	ocr - &quot;t&quot; or &quot;true&quot; to return the text for the item's pages<br />	parts - &quot;t&quot; or &quot;true&quot; to return the item's parts<br /></div>
     <div class="subhead1">GetTitleMetadata</div>
     <div>	Return metadata about a title.  You may choose to include a list of the items (books) associated	with the title.</div>
     <div>	Example - <a href="/docs/api3/GetTitleMetadata.xml" title="GetTitleMetadata">https://www.biodiversitylibrary.org/api3?op=GetTitleMetadata&amp;id=3943&amp;items=t&amp;apikey=&lt;key+value&gt;</a></div>
@@ -554,6 +554,10 @@
                 <td>BHL address for the full-size image of the page</td>
             </tr>
             <tr>
+                <td>Page/TextSource</td>
+                <td>Source of the text of the page.  Values include "OCR", "Text Import" (usually indicating transcriptions), and "Purposeful Gaming" (corrected OCR).</td>
+            </tr>
+            <tr>
                 <td>Page/OcrUrl</td>
                 <td>BHL address for the OCR of the page</td>
             </tr>
@@ -773,6 +777,10 @@
     <hr />
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
+    <div class="subhead1">May 23, 2019 - version 3.0.1</div>
+    <ul type="disc">
+        <li>Added &quot;TextSource&quot; elements to the responses for &quot;GetPageMetadata&quot;, &quot;GetItemMetadata&quot;, &quot;GetPartMetadata&quot;, &quot;GetNameMetadata&quot;, and &quot;PageSearch&quot;.</li>
+    </ul>
     <div class="subhead1">August 27, 2018 - version 3.0.0</div>
     <div>Documentation for the previous version of the BHL API can be found at <a href="https://www.biodiversitylibrary.org/api2/docs/docs.html">https://www.biodiversitylibrary.org/api2/docs/docs.html</a>.</div>
     <div>Following is a summary of the changes from version 2.x to version 3.0.0 of the API.<br /></div>
@@ -786,7 +794,8 @@
     </ul>
     <div class="subhead2">New Methods</div>
     <ul type="disc">
-        <li>GetAuthorMetadata
+        <li>
+            GetAuthorMetadata
             <ul type="circle">
                 <li>Replaces and combines the old GetAuthorTitles and GetAuthorParts, as well as provides a way to retrieve basic Author metadata.</li>
                 <li>Response includes author metadata, including a list of publications associated with the author.</li>
@@ -813,7 +822,8 @@
         <div class="indent1">&lt;/Result&gt;</div>
     </div>
     <ul type="disc">
-        <li>GetSubjectMetadata
+        <li>
+            GetSubjectMetadata
             <ul type="circle">
                 <li>Replaces and combines the old GetSubjectTitles and GetSubjectParts, as well as provides a way to retrieve basic Subject metadata.</li>
                 <li>Response includes subject metadata, including a list of publications associated with the subject.</li>
@@ -834,7 +844,8 @@
         <div class="indent1">&lt;/Result&gt;</div>
     </div>
     <ul type="disc">
-        <li>PageSearch
+        <li>
+            PageSearch
             <ul type="circle">
                 <li>Searches the text of a particular item (book) for a word/phrase</li>
                 <li>Mimics the &quot;Search Inside the Book&quot; feature in the book viewer</li>
@@ -850,7 +861,8 @@
         <div class="indent1">&lt;/Result&gt;</div>
     </div>
     <ul type="disc">
-        <li>PublicationSearch
+        <li>
+            PublicationSearch
             <ul type="circle">
                 <li>Replaces the old BookSearch and PartSearch methods</li>
                 <li>Searches the text or text+metadata of items</li>
@@ -868,7 +880,8 @@
         <div class="indent1">&lt;/Result&gt;</div>
     </div>
     <ul type="disc">
-        <li>PublicationSearchAdvanced
+        <li>
+            PublicationSearchAdvanced
             <ul type="circle">
                 <li>Replaces the old BookSearch and PartSearch methods</li>
                 <li>Search only title metadata by specifying a combination of &quot;title&quot;, &quot;authorname&quot;, &quot;year&quot;, &quot;subject&quot;, &quot;language&quot;, and &quot;collection&quot;.</li>
@@ -888,12 +901,14 @@
     </div>
     <div class="subhead2">Modified Methods</div>
     <ul type="disc">
-        <li>AuthorSearch
+        <li>
+            AuthorSearch
             <ul type="circle">
                 <li>Changed &quot;name&quot; argument to &quot;authorname&quot;</li>
             </ul>
         </li>
-        <li>GetItemMetadata
+        <li>
+            GetItemMetadata
             <ul type="circle">
                 <li>Renamed &quot;itemid&quot; parameter to &quot;id&quot;</li>
                 <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, ia</li>
@@ -922,7 +937,8 @@
         <div class="indent1">}</div>
     </div>
     <ul type="disc">
-        <li>GetPageMetadata
+        <li>
+            GetPageMetadata
             <ul type="circle">
                 <li>Defaulted &quot;ocr&quot; parameter to &quot;f&quot;</li>
                 <li>Defaulted &quot;names&quot; parameter to &quot;f&quot;</li>
@@ -986,7 +1002,8 @@
         <div class="indent1">&lt;/Page&gt;</div>
     </div>
     <ul type="disc">
-        <li>GetPartMetadata
+        <li>
+            GetPartMetadata
             <ul type="circle">
                 <li>Renamed &quot;partid&quot; parameter to &quot;id&quot;</li>
                 <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, biostor, soulsby</li>
@@ -1044,13 +1061,15 @@
         </ul>
     </ul>
     <ul type="disc">
-        <li>GetTitleIdentifier
+        <li>
+            GetTitleIdentifier
             <ul type="circle">
                 <li>Renamed &quot;titleid&quot; parameter to &quot;id&quot;</li>
                 <li>Added optional &quot;idtype&quot; parameter that defaults to value &quot;bhl&quot;.  Valid values are: bhl, doi, oclc, issn, isbn, lccn, ddc, nal, nlm, coden, soulsby</li>
             </ul>
         </li>
-        <li>GetTitleMetadata
+        <li>
+            GetTitleMetadata
             <ul type="circle">
                 <li>Defaulted &quot;items&quot; parameter to &quot;f&quot;</li>
                 <li>Added &lt;Title&gt; container element around search results</li>
@@ -1080,7 +1099,8 @@
         </ul>
     </ul>
     <ul type="disc">
-        <li>NameGetDetail
+        <li>
+            NameGetDetail
             <ul type="circle">
                 <li>Renamed to GetNameMetadata</li>
                 <li>Removed &quot;namebankid&quot; parameter</li>
@@ -1148,7 +1168,8 @@
         <div class="indent1">&lt;/Name&gt;</div>
     </div>
     <ul type="disc">
-        <li>NameSearch
+        <li>
+            NameSearch
             <ul type="circle">
                 <li>Identifiers are no longer included in the response.</li>
             </ul>
@@ -1187,5 +1208,5 @@
         <li>TitleSeachSimple - replaced with PublicationSearchAdvanced (specify title parameter only)</li>
     </ul>
     <div></div>
-    </body>
+</body>
 </html>

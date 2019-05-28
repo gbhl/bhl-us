@@ -34,6 +34,7 @@ SELECT	ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameStrin
 		c.ItemContributors AS InstitutionName,
 		'https://www.biodiversitylibrary.org/item/' + CONVERT(nvarchar(20), i.ItemID) AS ItemURL,
 		p.PageID, p.[Year], p.Volume, p.Issue,
+		COALESCE(l.TextSource, 'OCR') AS TextSource,
 		ip.PagePrefix, ip.PageNumber,
 		'https://www.biodiversitylibrary.org/page/' + CONVERT(nvarchar(20), p.PageID) AS PageURL,
 		'https://www.biodiversitylibrary.org/pagethumb/' + CONVERT(nvarchar(20), p.PageID) AS ThumbnailURL,
@@ -45,6 +46,12 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 		INNER JOIN Name n WITH (NOLOCK) ON nr.NameResolvedID = n.NameResolvedID
 		INNER JOIN NamePage np WITH (NOLOCK) ON n.NameID = np.NameID
 		INNER JOIN Page p WITH (NOLOCK)	ON np.PageID = p.PageID
+		OUTER APPLY (
+				SELECT  TOP 1 TextSource
+				FROM    dbo.PageTextLog 
+				WHERE   PageID = p.PageID
+				ORDER BY PageTextLogID DESC
+			) l
 		LEFT JOIN IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.PageID
 		INNER JOIN Item i WITH (NOLOCK) ON p.ItemID = i.ItemID
 		INNER JOIN dbo.ItemSource s WITH (NOLOCK) ON i.ItemSourceID = s.ItemSourceID
