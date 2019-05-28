@@ -35,7 +35,7 @@
 		<add key="OAIGetRecordUrl" value="http://www.archive.org/services/oai.php?verb=GetRecord&amp;metadataPrefix=oai_dc&amp;identifier={0}:{1}"/>
 		<!--<add key="SearchListIdentifiersUrl" value="http://www.archive.org/services/search.php?query={0}+AND+updatedate:[{1}+TO+{2}]&amp;limit=40&amp;submit=submit"/>-->
 		<!--<add key="SearchListIdentifiersUrl" value="http://www.archive.org/services/search.php?query={0}+AND+updatedate:[{1}+TO+{2}]+AND+contributor:(MBLWHOI Library)&amp;limit=1000&amp;submit=submit"/>-->
-		<add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q={0}+AND+-collection:citebank+AND+oai_updatedate:[{1}+TO+{2}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=500000&amp;fmt=xml&amp;xmlsearch=Search"/>
+		<add key="SearchListIdentifiersUrl" value="http://www.archive.org/advancedsearch.php?q={0}+AND+-collection:citebank+AND+mediatype:texts+AND+oai_updatedate:[{1}+TO+{2}]&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=500000&amp;fmt=xml&amp;xmlsearch=Search"/>
 		<!--<add key="SearchListIdentifiersItemUrl" value="http://www.archive.org/services/search.php?query={0}&amp;limit=1000&amp;submit=submit"/>-->
 		<add key="SearchListIdentifiersItemUrl" value="http://www.archive.org/advancedsearch.php?q={0}&amp;fl[]=identifier&amp;fl[]=oai_updatedate&amp;rows=100000&amp;fmt=xml&amp;xmlsearch=Search"/>
 		<add key="FileDownloadUrl" value="https://www.archive.org/download/{0}/{1}"/>

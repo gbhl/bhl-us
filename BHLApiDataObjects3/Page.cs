@@ -76,6 +76,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        private string _TextSource = null;
+        public string TextSource
+        {
+            get { return _TextSource; }
+            set { _TextSource = value; }
+        }
+
         private string _PageUrl = null;
         public string PageUrl
         {
@@ -165,6 +172,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "Year":
                         {
                             _Year = (string)column.Value;
+                            break;
+                        }
+                    case "TextSource":
+                        {
+                            _TextSource = (string)column.Value;
                             break;
                         }
                 }

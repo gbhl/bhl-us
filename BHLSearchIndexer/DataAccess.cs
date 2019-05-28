@@ -250,7 +250,12 @@ namespace BHL.SearchIndexer
                 catalogItem.itemId = this.SelectFirstItem(item.titleId) ?? item.itemId;
                 catalogItem.volumes = this.GetVolumeDocuments(item.titleId);
                 // Reset the volume string of the parent record to the volume string of the first child record
-                if (catalogItem.volumes.Count() > 0) catalogItem.volume = catalogItem.volumes[0].volume;
+                if (catalogItem.volumes.Count() > 0)
+                {
+                    catalogItem.volume = catalogItem.volumes[0].volume;
+                    catalogItem.dates = GetCleanDates(catalogItem.volumes[0].date);
+                    catalogItem.dateRanges = GetDateRanges(catalogItem.dates);
+                }
             }
 
             return catalogItem;

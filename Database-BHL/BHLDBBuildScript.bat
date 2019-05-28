@@ -186,6 +186,7 @@ sqlcmd -E -S %1 -d %2 -i "audit\Synonyms\AuditBasicArchive.sql"
 REM --------------------------------------
 REM  Build Functions
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAPIIndicatedPageStringForPage.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAssociationStringForTitle.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Functions\fnAuthorFacetStringForTitle.sql"
@@ -248,6 +249,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Views\vwTropicosNames.sql"
 REM --------------------------------------
 REM  Build Types
 REM --------------------------------------
+sqlcmd -E -S %1 -d %2 -i "dbo\Types\IDListInt.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Types\SearchIDTable.sql"
 
 REM --------------------------------------
@@ -553,6 +555,8 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByItemID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameBankID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameConfirmed.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByNameIdentifier.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByPageID.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectByPageIDList.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiPageSelectBySegmentID.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSearchAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\ApiSearchTitleSimple.sql"

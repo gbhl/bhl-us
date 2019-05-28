@@ -9,48 +9,50 @@
 			}
 		}
 	},
-	"page" : {
-		"properties" : {
-			"id" : {
-				"type" : "long",
-				"include_in_all" : false
-			},
-			"itemId" : {
-				"type" : "long",
-				"include_in_all" : false
-			},
-			"names" : {
-				"type" : "text",
-				"analyzer" : "default",
-				"fields" : {
-					"raw" : {
-						"type" : "keyword"
+	"mappings" : {
+		"page" : {
+			"properties" : {
+				"id" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"itemId" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"names" : {
+					"type" : "text",
+					"analyzer" : "default",
+					"fields" : {
+						"raw" : {
+							"type" : "keyword"
+						}
 					}
+				},
+				"pageIndicators" : {
+					"type" : "keyword",
+					"include_in_all" : false
+				},
+				"pageTypes" : {
+					"type" : "keyword",
+					"include_in_all" : false
+				},
+				"segments" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"sequence" : {
+					"type" : "long",
+					"include_in_all" : false
+				},
+				"text" : {
+					"type" : "text",
+					"analyzer" : "default"
+				},
+				"textPath" : {
+					"type" : "keyword",
+					"index" : false
 				}
-			},
-			"pageIndicators" : {
-				"type" : "keyword",
-				"include_in_all" : false
-			},
-			"pageTypes" : {
-				"type" : "keyword",
-				"include_in_all" : false
-			},
-			"segments" : {
-				"type" : "long",
-				"include_in_all" : false
-			},
-			"sequence" : {
-				"type" : "long",
-				"include_in_all" : false
-			},
-			"text" : {
-				"type" : "text",
-				"analyzer" : "default"
-			},
-			"textPath" : {
-				"type" : "keyword",
-				"index" : false
 			}
 		}
 	}

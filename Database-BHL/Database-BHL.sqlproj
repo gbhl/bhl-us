@@ -1093,6 +1093,10 @@
     <None Include="dbo\Stored Procedures\EditHistorySelectByEntityAndID.sql" />
     <None Include="dbo\Stored Procedures\EditHistorySelectNameByPageID.sql" />
     <None Include="dbo\Stored Procedures\EditHistorySelectPageByItemID.sql" />
+    <None Include="dbo\Stored Procedures\ApiPageSelectByPageID.sql" />
+    <None Include="dbo\Stored Procedures\ApiPageSelectByPageIDList.sql" />
+    <None Include="dbo\Types\IDListInt.sql" />
+    <None Include="dbo\Functions\fnAPIIndicatedPageStringForPage.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
