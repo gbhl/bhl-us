@@ -39,6 +39,7 @@ FROM [dbo].[IAItem]
 WHERE
 	([IAIdentifier] = @IAIdentifier OR @IAIdentifier = '')
 AND	(ISNULL([IADateStamp], '1/1/1900 12:00:01') > ISNULL([LastXMLDataHarvestDate], '1/1/1900') OR ItemStatusID = 20)
+AND	[ItemStatusID] <> 82	-- ignore 'MARC Missing - On Hold' items
 AND	[ItemStatusID] <> 99	-- ignore items in error
 AND [ItemStatusID] <> 98	-- ignore items in error
 AND [ItemStatusID] <> 97	-- ignore items in error
