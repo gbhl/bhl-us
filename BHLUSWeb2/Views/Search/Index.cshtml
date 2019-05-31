@@ -545,7 +545,12 @@
 
         function pagerClick(tab) {
             var qs = buildQS();
-            window.location.href = '/search?' + qs + '#' + tab; // set tab to which to return
+            if (tab === '') {
+                window.location.href = '/search?' + qs;
+            }
+            else {
+                window.location.href = '/search?' + qs + '#' + tab; // set tab to which to return
+            }
         }
 
         function buildQS() {
