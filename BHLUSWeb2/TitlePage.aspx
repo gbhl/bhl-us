@@ -192,6 +192,7 @@
                             <div class="success">
                                 <p>Thank you for your request. Please wait for an email containing a link to download the PDF.</p>
                                 <p>For your reference, the confirmation number for this request is <span id="pdfId"></span>.</p>
+                                <p><img style="margin-top:50px;" src="/images/bhlau%20images/image_book.jpg"></p>
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Join Our Mailing List</h3>
                                     <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
@@ -388,7 +389,6 @@
             function resetGenerate() {
                 $('#generate-dialog div, #generate-dialog .footer, #generate-dialog .finish, #generate-dialog .review').show();
 				$("#tbEmail").show();
-                $('#generate-dialog').css('height', '520px');
                 $('#generate-dialog .intro').show();
                 $('#generate-dialog .success').hide();
                 $('#generate-dialog .failure').hide();
@@ -938,23 +938,15 @@
                                 finishButton.removeClass('loading').removeAttr('style');
                             });
 
-                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .finish').fadeOut(function() {
-                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
-                            });
-
-                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .review').fadeOut(function() {
-                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
-                            });
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .finish').fadeOut();
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .review').fadeOut();
 
                             // close off the PDF selection stuff.
                             cancelPdfSelection = true;
-
                         } else {
                             $('#pdfIdFail').text(data.pdfId);
 
-                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .footer').fadeOut(function() {
-                                $('#generate-dialog').animate({ 'height': '330px' }, 200);
-                            });
+                            $('#generate-dialog .required, #generate-dialog .optional, #generate-dialog .footer').fadeOut();
 
                             $('#generate-dialog .intro').fadeOut(function() {
                                 $('#generate-dialog .failure').fadeIn();
