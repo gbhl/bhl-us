@@ -561,7 +561,7 @@ select.styled
 	position:absolute;
 	padding:0 8px;
 	border:1px solid #abc2d1;
-	background:url(../images/bg_select_blue.png) right top no-repeat;
+	/*background:url(../images/bg_select_blue.png) right top no-repeat;*/
 	color:#5f6f80;
 	overflow:hidden;
 	-webkit-border-radius:5px;
@@ -609,7 +609,7 @@ select.styled
 	height:22px;
 	line-height:22px;
 	border:1px solid #141316;
-	background:url(../images/bg_select_dark.png) right top no-repeat;
+	/*background:url(../images/bg_select_dark.png) right top no-repeat;*/
 	color:#a6aeb6;
 }
 #volumedd .select.hover

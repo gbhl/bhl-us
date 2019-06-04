@@ -433,26 +433,25 @@
             var index = $('#lstPages').attr('selectedIndex');
             var selectedSegmentID = pages[index].SegmentID;
             if (selectedSegmentID != null) {
-                var pdfPageCount;
-                for (var x = 0; x < pages.length; x++) {
-                    if (pages[x].SegmentID === selectedSegmentID) {
+                var pdfPageCount = 0;
+                $.each(pages, function (index, value) {
+                    if (value.SegmentID === selectedSegmentID) {
                         // Select the page
-                        var pdfPageIndex = $.inArray(x, pdfPages);
+                        var pdfPageIndex = $.inArray(index, pdfPages);
                         if(pdfPageIndex < 0) {
-                            pdfPageCount = pdfPages.push(x);
-                            $('#ptb' + x).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
-
+                            pdfPageCount = pdfPages.push(index);
+                            $('#ptb' + index).addClass('selected').attr('bt-xtitle', 'Remove from My PDF');
                             if(!pdfBar.hasClass('active')) {
                                 pdfBar.removeClass('disabled').addClass('active').fadeTo(200, 1);
                             }
-                            lastPdfIndex = x;
+                            lastPdfIndex = index;
                         }
                     }
-                    // Re-sort pdf pages
-                    pdfPages.sort(function (a, b) { return (a - b); });
+                });
+                // Re-sort pdf pages
+                pdfPages.sort(function (a, b) { return (a - b); });
 
-                    updatePdfPageCounter(pdfPageCount);
-                }
+                if (pdfPageCount > 0) updatePdfPageCounter(pdfPageCount);
             }
 
             // Default the PDF title field to the selected segment title
@@ -467,9 +466,17 @@
             $('.BRtoolbar-container').show();
             $('#toolbar-top').hide();
 
-            $('.pagetoolbox.selected').each(function () {
-                $(this).trigger(pageToolBoxEvent);
-            });
+            for (var x = 0; x < pages.length; x++) {
+                pdfPageIndex = $.inArray(x, pdfPages);
+                if (pdfPageIndex >= 0) {
+                    // Deselect the page
+                    pdfPageCount = pdfPages.remove(pdfPageIndex);
+                    $('#ptb' + x).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
+                    lastPdfIndex = -1;
+                    updatePdfPageCounter(pdfPageCount);
+                }
+            }
+
             $(".pagetoolbox").hide();
             lastPdfIndex = -1;
             fixIEDisplayIssue();
