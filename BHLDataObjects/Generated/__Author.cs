@@ -1,7 +1,7 @@
 
-// Generated 5/29/2012 12:59:27 PM
+// Generated 6/6/2019 11:14:00 AM
 // Do not modify the contents of this code file.
-// This abstract class __Author is based upon Author.
+// This abstract class __Author is based upon dbo.Author.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __Author : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -53,6 +53,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="title"></param>
 		/// <param name="unit"></param>
 		/// <param name="location"></param>
+		/// <param name="note"></param>
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="creationDate"></param>
@@ -67,6 +68,7 @@ namespace MOBOT.BHL.DataObjects
 			string title, 
 			string unit, 
 			string location, 
+			string note, 
 			short isActive, 
 			int? redirectAuthorID, 
 			DateTime? creationDate, 
@@ -82,6 +84,7 @@ namespace MOBOT.BHL.DataObjects
 			Title = title;
 			Unit = unit;
 			Location = location;
+			Note = note;
 			IsActive = isActive;
 			RedirectAuthorID = redirectAuthorID;
 			CreationDate = creationDate;
@@ -154,6 +157,11 @@ namespace MOBOT.BHL.DataObjects
 						_Location = (string)column.Value;
 						break;
 					}
+					case "Note" :
+					{
+						_Note = (string)column.Value;
+						break;
+					}
 					case "IsActive" :
 					{
 						_IsActive = (short)column.Value;
@@ -184,7 +192,7 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -192,7 +200,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region AuthorID
 		
@@ -417,6 +425,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Location
 		
+		#region Note
+		
+		private string _Note = string.Empty;
+		
+		/// <summary>
+		/// Column: Note;
+		/// DBMS data type: nvarchar(MAX);
+		/// </summary>
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=1073741823)]
+		public string Note
+		{
+			get
+			{
+				return _Note;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 1073741823);
+				if (_Note != value)
+				{
+					_Note = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Note
+		
 		#region IsActive
 		
 		private short _IsActive = default(short);
@@ -425,7 +461,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: IsActive;
 		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("IsActive", DbTargetType=SqlDbType.SmallInt, Ordinal=9, NumericPrecision=5)]
+		[ColumnDefinition("IsActive", DbTargetType=SqlDbType.SmallInt, Ordinal=10, NumericPrecision=5)]
 		public short IsActive
 		{
 			get
@@ -452,7 +488,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: RedirectAuthorID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("RedirectAuthorID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("RedirectAuthorID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10, IsNullable=true)]
 		public int? RedirectAuthorID
 		{
 			get
@@ -479,7 +515,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=11, IsNullable=true)]
+		[ColumnDefinition("CreationDate", DbTargetType=SqlDbType.DateTime, Ordinal=12, IsNullable=true)]
 		public DateTime? CreationDate
 		{
 			get
@@ -506,7 +542,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedDate;
 		/// DBMS data type: datetime; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=12, IsNullable=true)]
+		[ColumnDefinition("LastModifiedDate", DbTargetType=SqlDbType.DateTime, Ordinal=13, IsNullable=true)]
 		public DateTime? LastModifiedDate
 		{
 			get
@@ -533,7 +569,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: CreationUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("CreationUserID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10, IsNullable=true)]
 		public int? CreationUserID
 		{
 			get
@@ -560,7 +596,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: LastModifiedUserID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10, IsNullable=true)]
+		[ColumnDefinition("LastModifiedUserID", DbTargetType=SqlDbType.Int, Ordinal=15, NumericPrecision=10, IsNullable=true)]
 		public int? LastModifiedUserID
 		{
 			get
@@ -580,7 +616,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion LastModifiedUserID
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -630,6 +666,7 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.Title) == GetComparisonString(Title) &&
 					GetComparisonString(o.Unit) == GetComparisonString(Unit) &&
 					GetComparisonString(o.Location) == GetComparisonString(Location) &&
+					GetComparisonString(o.Note) == GetComparisonString(Note) &&
 					o.IsActive == IsActive &&
 					o.RedirectAuthorID == RedirectAuthorID &&
 					o.CreationDate == CreationDate &&
@@ -744,6 +781,7 @@ namespace MOBOT.BHL.DataObjects
 			public const string Title = "Title";	
 			public const string Unit = "Unit";	
 			public const string Location = "Location";	
+			public const string Note = "Note";	
 			public const string IsActive = "IsActive";	
 			public const string RedirectAuthorID = "RedirectAuthorID";	
 			public const string CreationDate = "CreationDate";	
@@ -756,3 +794,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+
