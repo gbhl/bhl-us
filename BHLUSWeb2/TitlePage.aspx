@@ -849,8 +849,13 @@
                 $.each(pdfPages, function(index, pdfPageIndex) { 
                     var pdfPage;
                     var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).click(function() {
-                        //$('#ptb' + pdfPageIndex).hide().find('.add_to_pdf').click();
-                        $('#ptb' + pdfPageIndex).trigger(pageToolBoxEvent);
+                        //$('#ptb' + pdfPageIndex).trigger(pageToolBoxEvent);
+                        pdfPageCount = pdfPages.remove(index);
+                        $('#ptb' + pdfPageIndex).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
+                        lastPdfIndex = -1;
+                        changePdfMode(mode, true);
+                        updatePdfPageCounter(pdfPageCount);
+
                         $(this).parents('li').fadeOut(200, function() { 
                             $(this).remove(); 
 
