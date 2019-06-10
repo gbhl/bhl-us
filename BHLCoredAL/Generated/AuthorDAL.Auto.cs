@@ -1,5 +1,5 @@
 
-// Generated 5/9/2016 2:24:52 PM
+// Generated 6/6/2019 11:14:00 AM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class AuthorDAL is based upon dbo.Author.
@@ -32,7 +32,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class AuthorDAL : IAuthorDAL
+	partial class AuthorDAL 
 	{
  		#region ===== SELECT =====
 
@@ -143,6 +143,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="title"></param>
 		/// <param name="unit"></param>
 		/// <param name="location"></param>
+		/// <param name="note"></param>
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="creationUserID"></param>
@@ -158,12 +159,13 @@ namespace MOBOT.BHL.DAL
 			string title,
 			string unit,
 			string location,
+			string note,
 			short isActive,
 			int? redirectAuthorID,
 			int? creationUserID,
 			int? lastModifiedUserID)
 		{
-			return AuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", authorTypeID, startDate, endDate, numeration, title, unit, location, isActive, redirectAuthorID, creationUserID, lastModifiedUserID );
+			return AuthorInsertAuto( sqlConnection, sqlTransaction, "BHL", authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -179,6 +181,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="title"></param>
 		/// <param name="unit"></param>
 		/// <param name="location"></param>
+		/// <param name="note"></param>
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="creationUserID"></param>
@@ -195,6 +198,7 @@ namespace MOBOT.BHL.DAL
 			string title,
 			string unit,
 			string location,
+			string note,
 			short isActive,
 			int? redirectAuthorID,
 			int? creationUserID,
@@ -212,6 +216,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 200, false, title),
 					CustomSqlHelper.CreateInputParameter("Unit", SqlDbType.NVarChar, 300, false, unit),
 					CustomSqlHelper.CreateInputParameter("Location", SqlDbType.NVarChar, 200, false, location),
+					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 1073741823, false, note),
 					CustomSqlHelper.CreateInputParameter("IsActive", SqlDbType.SmallInt, null, false, isActive),
 					CustomSqlHelper.CreateInputParameter("RedirectAuthorID", SqlDbType.Int, null, true, redirectAuthorID),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
@@ -272,6 +277,7 @@ namespace MOBOT.BHL.DAL
 				value.Title,
 				value.Unit,
 				value.Location,
+				value.Note,
 				value.IsActive,
 				value.RedirectAuthorID,
 				value.CreationUserID,
@@ -353,6 +359,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="title"></param>
 		/// <param name="unit"></param>
 		/// <param name="location"></param>
+		/// <param name="note"></param>
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -368,11 +375,12 @@ namespace MOBOT.BHL.DAL
 			string title,
 			string unit,
 			string location,
+			string note,
 			short isActive,
 			int? redirectAuthorID,
 			int? lastModifiedUserID)
 		{
-			return AuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", authorID, authorTypeID, startDate, endDate, numeration, title, unit, location, isActive, redirectAuthorID, lastModifiedUserID);
+			return AuthorUpdateAuto( sqlConnection, sqlTransaction, "BHL", authorID, authorTypeID, startDate, endDate, numeration, title, unit, location, note, isActive, redirectAuthorID, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -389,6 +397,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="title"></param>
 		/// <param name="unit"></param>
 		/// <param name="location"></param>
+		/// <param name="note"></param>
 		/// <param name="isActive"></param>
 		/// <param name="redirectAuthorID"></param>
 		/// <param name="lastModifiedUserID"></param>
@@ -405,6 +414,7 @@ namespace MOBOT.BHL.DAL
 			string title,
 			string unit,
 			string location,
+			string note,
 			short isActive,
 			int? redirectAuthorID,
 			int? lastModifiedUserID)
@@ -421,6 +431,7 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 200, false, title),
 					CustomSqlHelper.CreateInputParameter("Unit", SqlDbType.NVarChar, 300, false, unit),
 					CustomSqlHelper.CreateInputParameter("Location", SqlDbType.NVarChar, 200, false, location),
+					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 1073741823, false, note),
 					CustomSqlHelper.CreateInputParameter("IsActive", SqlDbType.SmallInt, null, false, isActive),
 					CustomSqlHelper.CreateInputParameter("RedirectAuthorID", SqlDbType.Int, null, true, redirectAuthorID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
@@ -481,6 +492,7 @@ namespace MOBOT.BHL.DAL
 				value.Title,
 				value.Unit,
 				value.Location,
+				value.Note,
 				value.IsActive,
 				value.RedirectAuthorID,
 				value.LastModifiedUserID);
@@ -535,6 +547,7 @@ namespace MOBOT.BHL.DAL
 						value.Title,
 						value.Unit,
 						value.Location,
+						value.Note,
 						value.IsActive,
 						value.RedirectAuthorID,
 						value.CreationUserID,
@@ -572,6 +585,7 @@ namespace MOBOT.BHL.DAL
 						value.Title,
 						value.Unit,
 						value.Location,
+						value.Note,
 						value.IsActive,
 						value.RedirectAuthorID,
 						value.LastModifiedUserID);

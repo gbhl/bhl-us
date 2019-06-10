@@ -155,6 +155,14 @@
 				<td width="100%">
 				</td>
 			</tr>
+            <tr>
+                <td style="white-space:nowrap" align="right" valign="top" class="dataHeader">
+                    Note/Source:
+                </td>
+                <td colspan="3">
+                    <asp:TextBox ID="txtNote" ClientIDMode="Static" runat="server" Width="700px" Rows="6" TextMode="MultiLine"></asp:TextBox>
+                </td>
+            </tr>
         </table>
         <br />
 		<fieldset>

@@ -91,6 +91,7 @@ namespace MOBOT.BHL.AdminWeb
             txtTitle.Text = author.Title;
             txtUnit.Text = author.Unit;
             txtLocation.Text = author.Location;
+            txtNote.Text = author.Note;
 
             namesList.DataSource = author.AuthorNames;
             namesList.DataBind();
@@ -406,6 +407,7 @@ namespace MOBOT.BHL.AdminWeb
                 author.Title = txtTitle.Text;
                 author.Unit = txtUnit.Text;
                 author.Location = txtLocation.Text;
+                author.Note = txtNote.Text;
                 author.IsNew = (author.AuthorID == 0);
 
                 // Forces deletes to happen first

@@ -7,6 +7,7 @@
     [Title]              NVARCHAR (200) CONSTRAINT [DF_Author_Title] DEFAULT ('') NOT NULL,
     [Unit]               NVARCHAR (300) CONSTRAINT [DF_Author_Unit] DEFAULT ('') NOT NULL,
     [Location]           NVARCHAR (200) CONSTRAINT [DF_Author_Location] DEFAULT ('') NOT NULL,
+	[Note]               NVARCHAR (MAX) CONSTRAINT [DF_Author_Note] DEFAULT('') NOT NULL,
     [IsActive]           SMALLINT       CONSTRAINT [DF_Author_IsActive] DEFAULT ((1)) NOT NULL,
     [RedirectAuthorID]   INT            NULL,
     [CreationDate]       DATETIME       CONSTRAINT [DF_Author_CreationDate] DEFAULT (getdate()) NULL,
