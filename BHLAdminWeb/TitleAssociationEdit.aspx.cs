@@ -208,7 +208,7 @@ namespace MOBOT.BHL.AdminWeb
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             errorControl.Visible = flag;

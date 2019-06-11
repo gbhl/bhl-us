@@ -433,13 +433,13 @@ namespace MOBOT.BHL.AdminWeb
             if (collectionsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Collections has an edit pending");
+                errorControl.AddErrorText("Collections has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (segmentsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Segments has an edit pending");
+                errorControl.AddErrorText("Segments has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             bool br = false;

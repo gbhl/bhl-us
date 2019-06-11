@@ -239,7 +239,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( namePageList.EditIndex != -1 )
 			{
 				flag = true;
-				errorControl.AddErrorText( "Names list has an edit pending" );
+				errorControl.AddErrorText("Names list has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
 			}
 
 			foreach ( NamePage namePage in namePages )
