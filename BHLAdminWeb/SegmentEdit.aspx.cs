@@ -1307,25 +1307,25 @@ namespace MOBOT.BHL.AdminWeb
             if (authorsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Authors has an edit pending");
+                errorControl.AddErrorText("Authors has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (keywordsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Keywords has an edit pending");
+                errorControl.AddErrorText("Keywords has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (pagesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Pages has an edit pending");
+                errorControl.AddErrorText("Pages has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id

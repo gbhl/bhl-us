@@ -437,7 +437,7 @@
 					Scanning Institution:
 				</td>
 				<td>
-					<asp:DropDownList ID="ddlScanningInstitution" runat="server"></asp:DropDownList>
+					<asp:DropDownList ID="ddlScanningInstitution" runat="server"></asp:DropDownList><br />(Labeled "Added By:" on the BHL web site.)
 				</td>
 			</tr>
 			<tr>

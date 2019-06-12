@@ -440,13 +440,13 @@ namespace MOBOT.BHL.AdminWeb
             if (namesList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Names has an edit pending");
+                errorControl.AddErrorText("Names has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             // Make sure that at least one name has been entered, and that only one preferred name has been identified
@@ -468,7 +468,7 @@ namespace MOBOT.BHL.AdminWeb
             if (countPreferred != 1)
             {
                 flag = true;
-                errorControl.AddErrorText("One (and only one) name must be marked as the preferred name for the author.");
+                errorControl.AddErrorText("Use the \"Preferred\" checkbox to mark one (and only one) name as the preferred name for the author.");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id

@@ -1826,31 +1826,31 @@ namespace MOBOT.BHL.AdminWeb
             if (creatorsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Creators has an edit pending");
+                errorControl.AddErrorText("Creators has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (identifiersList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Identifiers has an edit pending");
+                errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (variantsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Variants has an edit pending");
+                errorControl.AddErrorText("Variants has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (collectionsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Collections has an edit pending");
+                errorControl.AddErrorText("Collections has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (itemsList.EditIndex != -1)
             {
                 flag = true;
-                errorControl.AddErrorText("Items has an edit pending");
+                errorControl.AddErrorText("Items has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id
