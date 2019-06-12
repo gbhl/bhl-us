@@ -394,7 +394,7 @@
                             <%foreach (Institution institution in bibliographyItem.institutions)
                                 {
                                     if (institution.InstitutionRoleName == "Scanning Institution") { %>
-                                        <h5>Scanning Institution:</h5>
+                                        <h5>Added By:</h5>
                                         <p>
                                         <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
                                         { %>
