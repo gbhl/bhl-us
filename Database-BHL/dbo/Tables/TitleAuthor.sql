@@ -3,6 +3,7 @@
     [TitleID]            INT      NOT NULL,
     [AuthorID]           INT      NOT NULL,
     [AuthorRoleID]       INT      NULL,
+	[SequenceOrder]      SMALLINT NOT NULL CONSTRAINT [DF_TitleAuthor_SequenceOrder] DEFAULT(0),
 	[Relationship]       NVARCHAR(150)  NOT NULL CONSTRAINT [DF_TitleAuthor_Relationship] DEFAULT(''),
 	[TitleOfWork]        NVARCHAR(500)  NOT NULL CONSTRAINT [DF_TitleAuthor_TitleOfWork] DEFAULT(''),
     [CreationDate]       DATETIME CONSTRAINT [DF_TitleAuthor_CreationDate] DEFAULT (getdate()) NOT NULL,

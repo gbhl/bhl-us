@@ -107,7 +107,6 @@
     <Compile Include="Generated\TitleAssociation_TitleIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\TitleDAL.Auto.cs" />
     <Compile Include="Generated\TitleTagDAL.Auto.cs" />
-    <Compile Include="Generated\Title_CreatorDAL.Auto.cs" />
     <Compile Include="Generated\Title_TitleIdentifierDAL.Auto.cs" />
     <Compile Include="IADCMetadataDAL.cs" />
     <Compile Include="IAFileDAL.cs" />

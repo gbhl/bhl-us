@@ -221,7 +221,8 @@ BEGIN TRY
 		[MARCCreator_q] [nvarchar](450) NULL,
 		[MARCCreator_t] [nvarchar](450) NULL,
 		[MARCCreator_5] [nvarchar](450) NULL,
-		[MARCCreator_Full] [nvarchar](450) NULL
+		[MARCCreator_Full] [nvarchar](450) NULL,
+		[SequenceOrder] [smallint] NULL
 		)
 
 	CREATE TABLE #tmpItem(
@@ -1235,14 +1236,15 @@ BEGIN TRY
 
 	-- Get the initial creator information (MARC subfield code 'a')
 	INSERT INTO #tmpCreator (ItemID, TitleID, CreatorName,
-							CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a)
+							CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a, SequenceOrder)
 	SELECT	t.ItemID,
 			0,
 			m.SubFieldValue,
 			0,
 			m.MARCDataFieldID, 
 			m.DataFieldTag,
-			m.SubFieldValue
+			m.SubFieldValue,
+			ROW_NUMBER() OVER (PARTITION BY m.ItemID ORDER BY m.DataFieldTag, m.MARCSubFieldID) AS SequenceOrder
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField m
 				ON t.ItemID = m.ItemID
 				AND m.DataFieldTag IN ('100', '110', '111', '700', '710', '711')
@@ -1371,14 +1373,15 @@ BEGIN TRY
 	IF NOT EXISTS (SELECT t.ItemID FROM #tmpTitle t INNER JOIN dbo.IAMarc m ON t.ItemID = m.ItemID)
 	BEGIN
 		INSERT INTO #tmpCreator (ItemID, TitleID, CreatorName,
-								CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a)
+								CreatorRoleTypeID, MARCDataFieldID, MARCDataFieldTag, MARCCreator_a, SequenceOrder)
 		SELECT	ItemID,
 				0,
 				CreatorName,
 				0,
 				RowNum,
 				CASE WHEN RowNum = 1 THEN '100' ELSE '700' END,
-				CreatorName
+				CreatorName,
+				RowNum
 		FROM	(
 				SELECT	ROW_NUMBER() OVER (ORDER BY m.DCMetadataID) AS RowNum,
 						t.ItemID,
@@ -1875,12 +1878,12 @@ BEGIN TRY
 		-- Insert new title_creator records into the import tables
 		INSERT INTO dbo.Title_Creator (CreatorName, MARCCreator_a, 
 			MARCCreator_b, MARCCreator_c, MARCCreator_d, MARCCreator_e,
-			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, 
+			MARCCreator_q, MARCCreator_t, CreatorRoleTypeID, SequenceOrder,
 			ImportStatusID, ImportSourceID, ImportKey)
 		SELECT	c.CreatorName, c.MARCCreator_a, c.MARCCreator_b, 
 				c.MARCCreator_c, c.MARCCreator_d, c.MARCCreator_e,
 				c.MARCCreator_q, c.MARCCreator_t, c.CreatorRoleTypeID, 
-				10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
+				c.SequenceOrder, 10, @ImportSourceID, CONVERT(nvarchar(50), c.ItemID)
 		FROM	#tmpCreator c
 		WHERE	c.MARCCreator_5 IS NULL
 
