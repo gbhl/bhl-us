@@ -14,10 +14,11 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleEdit : System.Web.UI.Page
 	{
-		private TitleItemComparer.CompareEnum _sortColumn = TitleItemComparer.CompareEnum.ItemSequence;
+        private TitleAuthorComparer.CompareEnum _authorSortColumn = TitleAuthorComparer.CompareEnum.SequenceOrder;
+        private TitleItemComparer.CompareEnum _itemSortColumn = TitleItemComparer.CompareEnum.ItemSequence;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 
-		protected void Page_Load( object sender, EventArgs e )
+        protected void Page_Load( object sender, EventArgs e )
 		{
             HtmlLink cssLnk = new HtmlLink();
             cssLnk.Attributes.Add("rel", "stylesheet");
@@ -151,12 +152,19 @@ namespace MOBOT.BHL.AdminWeb
                     this.bindTitleAssociationData();
                 }
 
-                if (ViewState["SortColumn"] != null)
+                if (ViewState["ItemSortColumn"] != null)
 				{
-					_sortColumn = (TitleItemComparer.CompareEnum)ViewState[ "SortColumn" ];
+					_itemSortColumn = (TitleItemComparer.CompareEnum)ViewState[ "ItemSortColumn" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
-			}
+
+                if (ViewState["AuthorSortColumn"] != null)
+                {
+                    _authorSortColumn = (TitleAuthorComparer.CompareEnum)ViewState["AuthorSortColumn"];
+                    _sortOrder = (SortOrder)ViewState["SortOrder"];
+                }
+
+            }
 
             editHistoryControl.EntityName = "title";
             editHistoryControl.EntityId = idLabel.Text;
@@ -350,7 +358,9 @@ namespace MOBOT.BHL.AdminWeb
 				}
 			}
 
-			creatorsList.DataSource = titleAuthors;
+            TitleAuthorComparer comp = new TitleAuthorComparer((TitleAuthorComparer.CompareEnum)_authorSortColumn, _sortOrder);
+            titleAuthors.Sort(comp);
+            creatorsList.DataSource = titleAuthors;
 			creatorsList.DataBind();
 		}
 
@@ -901,7 +911,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 			}
 
-			TitleItemComparer comp = new TitleItemComparer( (TitleItemComparer.CompareEnum)_sortColumn, _sortOrder );
+			TitleItemComparer comp = new TitleItemComparer( (TitleItemComparer.CompareEnum)_itemSortColumn, _sortOrder );
 			items.Sort( comp );
 			itemsList.DataSource = items;
 			itemsList.DataBind();
@@ -925,36 +935,92 @@ namespace MOBOT.BHL.AdminWeb
 
 			if ( row != null )
 			{
-				DropDownList ddlCreatorRole = row.FindControl( "ddlCreatorRole" ) as DropDownList;
+                Title title = (Title)Session["Title" + idLabel.Text];
+                int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+
+                TitleAuthor titleAuthor = null;
+                if (title != null)
+                {
+                    titleAuthor = findTitleAuthor(title.TitleAuthors,
+                        (int)creatorsList.DataKeys[e.RowIndex].Values[0],
+                        (int)creatorsList.DataKeys[e.RowIndex].Values[1],
+                        (int)creatorsList.DataKeys[e.RowIndex].Values[2]);
+                }
+
+                DropDownList ddlCreatorRole = row.FindControl( "ddlCreatorRole" ) as DropDownList;
                 TextBox txtRelationship = row.FindControl("txtRelationship") as TextBox;
                 TextBox txtTitleOfWork = row.FindControl("txtTitleOfWork") as TextBox;
+                TextBox sequenceTextBox = row.FindControl("authorSequenceTextBox") as TextBox;
+
                 if (ddlCreatorRole != null)
 				{
-                    Title title = (Title)Session["Title" + idLabel.Text];
 					int authorRoleId = int.Parse( ddlCreatorRole.SelectedValue );
                     String relationship = txtRelationship.Text;
                     String titleOfWork = txtTitleOfWork.Text;
 
-                    int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
-                    TitleAuthor titleAuthor = findTitleAuthor(title.TitleAuthors,
-						(int)creatorsList.DataKeys[ e.RowIndex ].Values[ 0 ],
-						(int)creatorsList.DataKeys[ e.RowIndex ].Values[ 1 ],
-						(int)creatorsList.DataKeys[ e.RowIndex ].Values[ 2 ] );
-
-                    if (titleAuthor.AuthorRoleID != authorRoleId ||
-                        titleAuthor.RoleDescription != ddlCreatorRole.SelectedItem.Text)
+                    if (titleAuthor != null)
                     {
-                        // Make sure something has actually changed before updating the lastmodifieduserid
-                        titleAuthor.LastModifiedUserID = userId;
+                        if (titleAuthor.AuthorRoleID != authorRoleId ||
+                            titleAuthor.RoleDescription != ddlCreatorRole.SelectedItem.Text)
+                        {
+                            // Make sure something has actually changed before updating the lastmodifieduserid
+                            titleAuthor.LastModifiedUserID = userId;
+                        }
+                        titleAuthor.AuthorRoleID = authorRoleId;
+                        titleAuthor.RoleDescription = ddlCreatorRole.SelectedItem.Text;
+                        titleAuthor.Relationship = relationship;
+                        titleAuthor.TitleOfWork = titleOfWork;
                     }
-					titleAuthor.AuthorRoleID = authorRoleId;
-					titleAuthor.RoleDescription = ddlCreatorRole.SelectedItem.Text;
-                    titleAuthor.Relationship = relationship;
-                    titleAuthor.TitleOfWork = titleOfWork;
 				}
-			}
 
-			creatorsList.EditIndex = -1;
+                if (sequenceTextBox != null)
+                {
+                    string newSeqString = sequenceTextBox.Text.Trim();
+                    short newSeq = 0;
+                    short.TryParse(newSeqString, out newSeq);
+
+                    if (newSeq > 0)
+                    {
+                        if (titleAuthor != null)
+                        {
+                            short oldSeq = titleAuthor.SequenceOrder;
+
+                            // If sequence has been decreased
+                            if (newSeq < oldSeq)
+                            {
+                                // Increment all item sequences between the old and new sequence values
+                                foreach (TitleAuthor author in title.TitleAuthors)
+                                {
+                                    if (author.SequenceOrder >= newSeq && author.SequenceOrder < oldSeq)
+                                    {
+                                        author.SequenceOrder++;
+                                        author.LastModifiedUserID = userId;
+                                    }
+                                }
+                            }
+
+                            // If sequence has been increased
+                            if (newSeq > oldSeq)
+                            {
+                                // Decrement all item sequences between the old and new sequence values
+                                foreach (TitleAuthor author in title.TitleAuthors)
+                                {
+                                    if (author.SequenceOrder <= newSeq && author.SequenceOrder > oldSeq && oldSeq > 0)
+                                    {
+                                        author.SequenceOrder--;
+                                        author.LastModifiedUserID = userId;
+                                    }
+                                }
+                            }
+
+                            titleAuthor.SequenceOrder = newSeq;
+                            titleAuthor.LastModifiedUserID = userId;
+                        }
+                    }
+                }
+            }
+
+            creatorsList.EditIndex = -1;
 			bindTitleAuthorData();
 		}
 
@@ -1613,26 +1679,26 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void itemsList_Sorting( object sender, GridViewSortEventArgs e )
 		{
-			TitleItemComparer.CompareEnum sortColumn = _sortColumn;
+			TitleItemComparer.CompareEnum sortColumn = _itemSortColumn;
 
 			if ( e.SortExpression.Equals( "ItemID" ) )
 			{
-				_sortColumn = TitleItemComparer.CompareEnum.ItemID;
+                _itemSortColumn = TitleItemComparer.CompareEnum.ItemID;
 			}
 			else if ( e.SortExpression.Equals( "BarCode" ) )
 			{
-				_sortColumn = TitleItemComparer.CompareEnum.BarCode;
+                _itemSortColumn = TitleItemComparer.CompareEnum.BarCode;
 			}
 			else if ( e.SortExpression.Equals( "ItemSequence" ) )
 			{
-				_sortColumn = TitleItemComparer.CompareEnum.ItemSequence;
+                _itemSortColumn = TitleItemComparer.CompareEnum.ItemSequence;
 			}
 			else if ( e.SortExpression.Equals( "Volume" ) )
 			{
-				_sortColumn = TitleItemComparer.CompareEnum.Volume;
+                _itemSortColumn = TitleItemComparer.CompareEnum.Volume;
 			}
 
-			if ( sortColumn == _sortColumn )
+			if ( sortColumn == _itemSortColumn)
 			{
 				if ( _sortOrder == SortOrder.Descending )
 				{
@@ -1648,7 +1714,7 @@ namespace MOBOT.BHL.AdminWeb
 				_sortOrder = SortOrder.Ascending;
 			}
 
-			ViewState[ "SortColumn" ] = _sortColumn;
+			ViewState[ "ItemSortColumn" ] = _itemSortColumn;
 			ViewState[ "SortOrder" ] = _sortOrder;
 
 			bindItemData();
@@ -1670,7 +1736,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 
                 int sortColumnIndex = 2;
-				switch ( _sortColumn )
+				switch (_itemSortColumn)
 				{
 					case TitleItemComparer.CompareEnum.BarCode:
 						{

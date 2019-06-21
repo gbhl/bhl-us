@@ -467,6 +467,14 @@
 							<%# Eval( "FullName" ) %> <%# Eval("FullerForm") %> <%# Eval("Numeration") %> <%# Eval("Unit") %> <%# Eval("Title") %> <%# Eval("Location") %>
 						</ItemTemplate>
 					</asp:TemplateField>
+					<asp:TemplateField HeaderText="Sequence" ItemStyle-Width="80px" HeaderStyle-HorizontalAlign="Left">
+						<ItemTemplate>
+							<%# Eval( "SequenceOrder" ) %>
+						</ItemTemplate>
+						<EditItemTemplate>
+							<asp:TextBox ID="authorSequenceTextBox" runat="server" Width="80px" Text='<%# Eval( "SequenceOrder" ) %>' />
+						</EditItemTemplate>
+					</asp:TemplateField>
 					<asp:TemplateField HeaderText="Role" ItemStyle-Width="300px">
 						<ItemTemplate>
 							<%# Eval( "RoleDescription" ) %>
@@ -476,7 +484,7 @@
 								DataSource="<%# GetAuthorRoles() %>" SelectedIndex="<%# GetAuthorRoleIndex( Container.DataItem ) %>" />
 						</EditItemTemplate>
 					</asp:TemplateField>
-                    <asp:TemplateField HeaderText="Relationship" ItemStyle-Width="75">
+                    <asp:TemplateField HeaderText="Relationship" ItemStyle-Width="75px">
                         <ItemTemplate>
                             <%# Eval("Relationship") %>
                         </ItemTemplate>
@@ -484,7 +492,7 @@
 						    <asp:TextBox ID="txtRelationship" runat="server" Text='<%# Eval( "Relationship") %>' Width="75" />
                         </EditItemTemplate>
                     </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Title Of Work" ItemStyle-Width="225">
+                    <asp:TemplateField HeaderText="Title Of Work" ItemStyle-Width="225px">
                         <ItemTemplate>
                             <%# Eval("TitleOfWork") %>
                         </ItemTemplate>

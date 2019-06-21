@@ -18,12 +18,10 @@ BEGIN
 	WHERE	ta.TitleID = @TitleID
 	AND		a.IsActive = 1
 	AND		n.IsPreferredName = 1
-	ORDER BY r.MarcDataFieldTag, n.FullName
+	ORDER BY ta.SequenceOrder, r.MarcDataFieldTag, n.FullName
 
 	IF (@MarcDataFieldTag = '100' AND @MarcDataField NOT IN ('100', '700')) SET @AuthorName = ''
 	IF (@MarcDataFieldTag = '110' AND @MarcDataField NOT IN ('110', '710')) SET @AuthorName = ''
 
 	RETURN LTRIM(RTRIM(COALESCE(@AuthorName, '')))
 END
-
-

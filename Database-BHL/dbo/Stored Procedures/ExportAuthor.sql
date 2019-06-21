@@ -7,6 +7,7 @@ BEGIN
 SET NOCOUNT ON
 
 SELECT	ta.TitleID,
+		ta.SequenceOrder,
 		a.AuthorID,
 		CONVERT(nvarchar(50), 
 			CASE 
@@ -34,7 +35,6 @@ INTO	#Authors
 FROM	dbo.TitleAuthor ta WITH (NOLOCK)
 		INNER JOIN dbo.Author a WITH (NOLOCK) ON ta.AuthorID = a.AuthorID
 		INNER JOIN dbo.AuthorName n WITH (NOLOCK) ON a.AuthorID = n.AuthorID AND n.IsPreferredName = 1
-		--INNER JOIN dbo.Title t WITH (NOLOCK) ON ta.TitleID = t.TitleID AND t.PublishReady = 1 
 		INNER JOIN dbo.AuthorRole r WITH (NOLOCK) ON ta.AuthorRoleID = r.AuthorRoleID
 		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON ta.TitleID = c.TitleID
 
@@ -48,12 +48,13 @@ SELECT	TitleID,
 FROM	#Authors
 GROUP BY
 		TitleID,
+		SequenceOrder,
 		AuthorID,
 		MarcDataFieldTag,
 		CreatorType,
 		CreatorName,
 		CreationDate
 ORDER BY 
-		TitleID, MARCDataFieldTag, CreatorName
+		TitleID, SequenceOrder, MARCDataFieldTag, CreatorName
 
 END

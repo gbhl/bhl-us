@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[AuthorSelectByTitleId]
+﻿CREATE PROCEDURE [dbo].[AuthorSelectByTitleId]
 
 @TitleID int
 
@@ -31,6 +30,4 @@ FROM	dbo.Author a INNER JOIN dbo.AuthorName n
 WHERE	t.TitleID = @TitleID
 AND		a.IsActive = 1
 AND		n.IsPreferredName = 1
-ORDER BY MARCDataFieldTag, n.FullName + a.Numeration + a.Unit + a.Title + a.Location + n.FullerForm + ta.Relationship + ta.TitleOfWork
-
-GO
+ORDER BY ta.SequenceOrder, MARCDataFieldTag, n.FullName + a.Numeration + a.Unit + a.Title + a.Location + n.FullerForm + ta.Relationship + ta.TitleOfWork

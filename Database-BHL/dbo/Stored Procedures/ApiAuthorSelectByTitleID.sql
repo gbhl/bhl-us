@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiAuthorSelectByTitleID]
+﻿CREATE PROCEDURE [dbo].[ApiAuthorSelectByTitleID]
 
 @TitleID int
 
@@ -30,5 +29,4 @@ FROM  dbo. Author a INNER JOIN dbo. TitleAuthor ta
                    AND t. PublishReady = 1
 WHERE t. TitleID = @TitleID
 AND		a.IsActive = 1
-ORDER BY n.FullName, a.Numeration, a.Unit, a.Title, a.Location, n.FullerForm, ta.Relationship, ta.TitleOfWork
-
+ORDER BY ta.SequenceOrder, n.FullName, a.Numeration, a.Unit, a.Title, a.Location, n.FullerForm, ta.Relationship, ta.TitleOfWork

@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiAuthorSelectBySegmentID]
+﻿CREATE PROCEDURE [dbo].[ApiAuthorSelectBySegmentID]
 
 @SegmentID int
 
@@ -25,5 +24,4 @@ FROM	dbo. Author a INNER JOIN dbo. SegmentAuthor sa
 			AND s.SegmentStatusID IN (10, 20)
 WHERE	s.SegmentID = @SegmentID
 AND		a.IsActive = 1
-ORDER BY n.FullName
-
+ORDER BY sa.SequenceOrder, n.FullName
