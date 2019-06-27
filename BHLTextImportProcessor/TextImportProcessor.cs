@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BHL.TextImportProcessor
@@ -97,7 +98,33 @@ namespace BHL.TextImportProcessor
                                     textImportFileLocalPath = string.Format("{0}{1}", configParms.TextImportLocalFilePath, batchFile.Filename);
                                     WebClient wc = new WebClient();
                                     wc.Encoding = Encoding.UTF8;
-                                    string importFileContents = wc.DownloadString(textImportFilePath);
+
+                                    string importFileContents = string.Empty;
+                                    int retryLimit = 1;
+                                    while (retryLimit <= 3)
+                                    {
+                                        try
+                                        {
+                                            importFileContents = wc.DownloadString(textImportFilePath);
+                                            break;
+                                        }
+                                        catch (WebException wex)
+                                        {
+                                            if (((HttpWebResponse)wex.Response).StatusCode == HttpStatusCode.NotFound)
+                                            {
+                                                // 404 Not Found - retry three times before giving up
+                                                if (retryLimit == 3) throw wex;
+                                                Thread.Sleep(TimeSpan.FromSeconds(30)); // Wait 30 seconds before trying again
+                                                retryLimit++;
+                                            }
+                                            else
+                                            {
+                                                // Some non-404 error, don't try again
+                                                throw wex;
+                                            }
+                                        }
+                                    }
+
                                     File.AppendAllText(textImportFileLocalPath, importFileContents, Encoding.UTF8);
 
                                     // Validate the file
