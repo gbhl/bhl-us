@@ -9,6 +9,7 @@ SET NOCOUNT ON
 SELECT	TA.TitleAuthorID,
 		TA.TitleID,
 		TA.AuthorID,
+		TA.SequenceOrder,
 		N.FullName,
 		N.FullerForm,
 		A.Numeration,
@@ -26,4 +27,4 @@ FROM	dbo.TitleAuthor TA
 WHERE	TA.TitleID = @TitleID
 AND		A.IsActive = 1
 AND		N.IsPreferredName = 1
-ORDER BY R.MARCDataFieldTag, N.FullName, FullerForm, Numeration, Unit, Title, Location
+ORDER BY TA.SequenceOrder, R.MARCDataFieldTag, N.FullName, FullerForm, Numeration, Unit, Title, Location

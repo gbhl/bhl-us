@@ -205,6 +205,7 @@ BEGIN TRY
 		[MARCCreator_q] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_t] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[CreatorRoleTypeID] [int] NOT NULL,
+		[SequenceOrder] [smallint] NOT NULL,
 		[ExternalCreationDate] [datetime] NULL,
 		[ExternalLastModifiedDate] [datetime] NULL,
 		[ExternalCreationUser] [int] NULL,
@@ -596,6 +597,7 @@ BEGIN TRY
 			tc.[MARCCreator_q],
 			tc.[MARCCreator_t],
 			tc.[CreatorRoleTypeID],
+			tc.[SequenceOrder],
 			tc.[ExternalCreationDate],
 			tc.[ExternalLastModifiedDate],
 			tc.[ExternalCreationUser],
@@ -1255,11 +1257,12 @@ BEGIN TRY
 		-- =======================================================================
 
 		-- Insert new TitleAuthor records into the production database
-		INSERT INTO dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, Relationship, 
+		INSERT INTO dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, SequenceOrder, Relationship, 
 			TitleOfWork, CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
 		SELECT	t.TitleID, 
 				tmpC.ProductionAuthorID, 
 				tmpC.CreatorRoleTypeID,
+				tmpC.SequenceOrder,
 				ISNULL(CASE WHEN RIGHT(MARCCreator_e, 1) = '.' 
 					THEN LEFT(MARCCreator_e, LEN(MARCCreator_e) - 1) 
 					ELSE MARCCreator_e END, ''),

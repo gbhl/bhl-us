@@ -25,10 +25,9 @@ BEGIN
 		WHERE	t.TitleID = @TitleID
 		AND		a.IsActive = 1
 		AND		n.IsPreferredName = 1
-		ORDER BY r.MarcDataFieldTag, n.FullName ASC
+		ORDER BY ta.SequenceOrder, r.MarcDataFieldTag, n.FullName ASC
 		FOR XML PATH('')
 		),1,1,'')
 
 	RETURN SUBSTRING(LTRIM(RTRIM(COALESCE(@AuthorString, ''))), 1, 1024)
 END
-

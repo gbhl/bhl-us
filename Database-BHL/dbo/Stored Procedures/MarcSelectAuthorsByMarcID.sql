@@ -26,6 +26,7 @@ CREATE TABLE #tmpAuthor (
 	[MARCCreator_q] [nvarchar](150),
 	[MARCCreator_t] [nvarchar](500),
 	[MARCCreator_5] [nvarchar](450) NULL,
+	[SequenceOrder] [smallint] NULL,
 	[AuthorID] [int] NULL
 	)
 
@@ -34,13 +35,14 @@ CREATE TABLE #tmpAuthor (
 
 -- Get the initial creator information (MARC subfield code 'a')
 INSERT INTO #tmpAuthor (FullName, AuthorRoleID, AuthorTypeID, MARCDataFieldID, 
-						MARCDataFieldTag, MARCCreator_a)
+						MARCDataFieldTag, MARCCreator_a, SequenceOrder)
 SELECT	m.SubFieldValue,
 		0,
 		0,
 		m.MARCDataFieldID, 
 		m.DataFieldTag,
-		m.SubFieldValue
+		m.SubFieldValue,
+		ROW_NUMBER() OVER (PARTITION BY m.MarcID ORDER BY m.DataFieldTag, m.MARCSubFieldID) AS SequenceOrder
 FROM	dbo.vwMarcDataField m
 WHERE	m.DataFieldTag IN ('100', '110', '111', '700', '710', '711')
 AND		m.Code = 'a'
@@ -291,7 +293,8 @@ SELECT DISTINCT
 			THEN LEFT(MARCCreator_t, LEN(MARCCreator_t) - 1) 
 			ELSE MARCCreator_t END, '') AS TitleOfWork,
 		MARCDataFieldTag,
-		AuthorID
+		AuthorID,
+		SequenceOrder
 FROM	#tmpAuthor
 WHERE	AuthorID IS NOT NULL
 

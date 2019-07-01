@@ -1,7 +1,7 @@
 
-// Generated 3/27/2014 11:56:11 AM
+// Generated 6/14/2019 5:14:33 PM
 // Do not modify the contents of this code file.
-// This abstract class __TitleAuthor is based upon TitleAuthor.
+// This abstract class __TitleAuthor is based upon dbo.TitleAuthor.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __TitleAuthor : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -55,6 +55,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="sequenceOrder"></param>
 		public __TitleAuthor(int titleAuthorID, 
 			int titleID, 
 			int authorID, 
@@ -64,7 +65,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int? creationUserID, 
-			int? lastModifiedUserID) : this()
+			int? lastModifiedUserID, 
+			short sequenceOrder) : this()
 		{
 			_TitleAuthorID = titleAuthorID;
 			TitleID = titleID;
@@ -76,6 +78,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			SequenceOrder = sequenceOrder;
 		}
 		
 		#endregion Constructors
@@ -152,7 +155,12 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int?)column.Value;
 						break;
 					}
-				}
+					case "SequenceOrder" :
+					{
+						_SequenceOrder = (short)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -160,7 +168,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region TitleAuthorID
 		
@@ -434,9 +442,36 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region SequenceOrder
+		
+		private short _SequenceOrder = default(short);
+		
+		/// <summary>
+		/// Column: SequenceOrder;
+		/// DBMS data type: smallint;
+		/// </summary>
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.SmallInt, Ordinal=11, NumericPrecision=5)]
+		public short SequenceOrder
+		{
+			get
+			{
+				return _SequenceOrder;
+			}
+			set
+			{
+				if (_SequenceOrder != value)
+				{
+					_SequenceOrder = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion SequenceOrder
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -487,7 +522,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					o.SequenceOrder == SequenceOrder 
 				)
 				{
 					o = null;
@@ -597,10 +633,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string SequenceOrder = "SequenceOrder";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

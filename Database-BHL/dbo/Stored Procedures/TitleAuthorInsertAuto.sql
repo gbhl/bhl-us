@@ -1,10 +1,4 @@
-﻿
--- TitleAuthorInsertAuto PROCEDURE
--- Generated 3/27/2014 11:56:11 AM
--- Do not modify the contents of this procedure.
--- Insert Procedure for TitleAuthor
-
-CREATE PROCEDURE TitleAuthorInsertAuto
+﻿CREATE PROCEDURE dbo.TitleAuthorInsertAuto
 
 @TitleAuthorID INT OUTPUT,
 @TitleID INT,
@@ -13,15 +7,15 @@ CREATE PROCEDURE TitleAuthorInsertAuto
 @Relationship NVARCHAR(150),
 @TitleOfWork NVARCHAR(500),
 @CreationUserID INT = null,
-@LastModifiedUserID INT = null
+@LastModifiedUserID INT = null,
+@SequenceOrder SMALLINT
 
 AS 
 
 SET NOCOUNT ON
 
 INSERT INTO [dbo].[TitleAuthor]
-(
-	[TitleID],
+( 	[TitleID],
 	[AuthorID],
 	[AuthorRoleID],
 	[Relationship],
@@ -29,11 +23,10 @@ INSERT INTO [dbo].[TitleAuthor]
 	[CreationDate],
 	[LastModifiedDate],
 	[CreationUserID],
-	[LastModifiedUserID]
-)
+	[LastModifiedUserID],
+	[SequenceOrder] )
 VALUES
-(
-	@TitleID,
+( 	@TitleID,
 	@AuthorID,
 	@AuthorRoleID,
 	@Relationship,
@@ -41,20 +34,19 @@ VALUES
 	getdate(),
 	getdate(),
 	@CreationUserID,
-	@LastModifiedUserID
-)
+	@LastModifiedUserID,
+	@SequenceOrder )
 
 SET @TitleAuthorID = Scope_Identity()
 
 IF @@ERROR <> 0
 BEGIN
 	-- raiserror will throw a SqlException
-	RAISERROR('An error occurred in procedure TitleAuthorInsertAuto. No information was inserted as a result of this request.', 16, 1)
+	RAISERROR('An error occurred in procedure dbo.TitleAuthorInsertAuto. No information was inserted as a result of this request.', 16, 1)
 	RETURN 9 -- error occurred
 END
 ELSE BEGIN
 	SELECT
-	
 		[TitleAuthorID],
 		[TitleID],
 		[AuthorID],
@@ -64,13 +56,11 @@ ELSE BEGIN
 		[CreationDate],
 		[LastModifiedDate],
 		[CreationUserID],
-		[LastModifiedUserID]	
-
+		[LastModifiedUserID],
+		[SequenceOrder]	
 	FROM [dbo].[TitleAuthor]
-	
 	WHERE
 		[TitleAuthorID] = @TitleAuthorID
 	
 	RETURN -- insert successful
 END
-

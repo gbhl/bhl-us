@@ -143,8 +143,9 @@ INSERT dbo.BHLTitleKeyword (TitleID, KeywordID)
 SELECT @ProductionTitleID, ProductionKeywordID FROM dbo.OAIRecordSubject WHERE OAIRecordID = @OAIRecordID
 
 -- Insert TitleAuthor records
-INSERT	dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID) 
-SELECT @ProductionTitleID, ProductionAuthorID, 0 FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
+INSERT	dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, SequenceOrder) 
+SELECT	@ProductionTitleID, ProductionAuthorID, 0, ROW_NUMBER() OVER (ORDER BY OAIRecordCreatorID)
+FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
 
 -- Insert TitleAssociation records
 INSERT	dbo.BHLTitleAssociation (TitleID, TitleAssociationTypeID, Title)
@@ -181,6 +182,3 @@ AND		rt.OAIRecordID = @OAIRecordID
 COMMIT TRAN
 
 END
-
-GO
-

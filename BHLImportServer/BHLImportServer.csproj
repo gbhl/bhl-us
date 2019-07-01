@@ -118,7 +118,6 @@
     <Compile Include="BHLImportProvider.Title.cs" />
     <Compile Include="BHLImportProvider.TitleAssociation.cs" />
     <Compile Include="BHLImportProvider.TitleAssociation_TitleIdentifier.cs" />
-    <Compile Include="BHLImportProvider.TitleCreator.cs" />
     <Compile Include="BHLImportProvider.TitleTag.cs" />
     <Compile Include="BHLImportProvider.TitleTitleIdentifier.cs" />
   </ItemGroup>

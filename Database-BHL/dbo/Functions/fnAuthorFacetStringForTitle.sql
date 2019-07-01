@@ -23,7 +23,7 @@ BEGIN
 			@CurrentRecord = @CurrentRecord + 1
 	FROM	(
 			SELECT	MIN(r.MarcDataFieldTag) AS MarcDataFieldTag, n.FullName, 
-					n.FullerForm, a.Title, a.Unit, a.Location
+					n.FullerForm, a.Title, a.Unit, a.Location, ta.SequenceOrder
 			FROM	Title t INNER JOIN TitleAuthor ta ON t.TitleID = ta.TitleID
 					INNER JOIN Author a ON ta.AuthorID = a.AuthorID
 					INNER JOIN AuthorRole r ON ta.AuthorRoleID = r.AuthorRoleID
@@ -32,9 +32,9 @@ BEGIN
 			AND		n.IsPreferredName = 1		-- Only preferred names
 			AND		a.AuthorTypeID = @Person	-- Only person names used for facets
 			AND		a.IsActive = 1
-			GROUP BY n.FullName, n.FullerForm, a.Title, a.Unit, a.Location
+			GROUP BY n.FullName, n.FullerForm, a.Title, a.Unit, a.Location, ta.SequenceOrder
 			) x
-	ORDER BY x.MarcDataFieldTag, x.FullName ASC
+	ORDER BY x.SequenceOrder, x.MarcDataFieldTag, x.FullName ASC
 
 	RETURN LTRIM(RTRIM(COALESCE(@AuthorString, '')))
 END

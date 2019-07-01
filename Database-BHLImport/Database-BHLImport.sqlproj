@@ -260,13 +260,9 @@
     <None Include="dbo\Stored Procedures\BSItemStatusSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\BSItemStatusInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\BSItemStatusUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\Title_CreatorSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\BSSegmentInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\Title_CreatorInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\BSItemSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\Title_CreatorUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\BSSegmentUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\Title_CreatorDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\BSItemInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\BSSegmentSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\BSItemSelectByStatus.sql" />

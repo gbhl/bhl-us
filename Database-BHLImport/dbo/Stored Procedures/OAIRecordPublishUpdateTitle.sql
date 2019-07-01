@@ -128,8 +128,10 @@ BEGIN
 	BEGIN
 		DELETE FROM dbo.BHLTitleAuthor WHERE TitleID = @ProductionTitleID
 
-		INSERT dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID) 
-		SELECT @ProductionTitleID, ProductionAuthorID, 0 FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
+		INSERT	dbo.BHLTitleAuthor (TitleID, AuthorID, AuthorRoleID, SequenceOrder) 
+		SELECT	@ProductionTitleID, ProductionAuthorID, 0, ROW_NUMBER() OVER (ORDER BY OAIRecordCreatorID)
+		FROM	dbo.OAIRecordCreator WHERE OAIRecordID = @OAIRecordID
+
 	END
 				
 	-- Replace the TitleKeyword records if none have been added/updated by a user
@@ -221,4 +223,3 @@ END
 
 END 
 
-GO

@@ -325,6 +325,7 @@
     <Compile Include="SegmentPageComparer.cs" />
     <Compile Include="TitleAssociationSuspectCharacter.cs" />
     <Compile Include="AuthorSuspectCharacter.cs" />
+    <Compile Include="TitleAuthorComparer.cs" />
     <Compile Include="TitleNoteComparer.cs" />
     <Compile Include="TitleItemComparer.cs" />
     <Compile Include="TitleSuspectCharacter.cs" />
