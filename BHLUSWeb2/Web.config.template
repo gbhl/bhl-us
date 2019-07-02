@@ -119,14 +119,16 @@
 
     <add key="WikiPageAbout" value="https://about.biodiversitylibrary.org"/>
     <add key="WikiPagePermissions" value="https://about.biodiversitylibrary.org/copyright-and-reuse/permissions/"/>
-    <add key="WikiPageHelp" value="http://about.biodiversitylibrary.org/help/" />
-    <add key="WikiPageContribute" value="http://about.biodiversitylibrary.org/get-involved/" />
-    <add key="WikiPageToolsServices" value="http://about.biodiversitylibrary.org/tools-and-services/" />
-    <add key="WikiPageDeveloper" value="http://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/" />
-    <add key="WikiPageMembers" value="http://about.biodiversitylibrary.org/about/bhl-consortium/" />
-    <add key="WikiPageCopyright" value="http://about.biodiversitylibrary.org/copyright-and-reuse/" />
-    <add key="WikiPageFAQ" value="http://about.biodiversitylibrary.org/help/faq" />
-    <add key="WikiPageSubmissionGuide" value="http://about.biodiversitylibrary.org/help/guidelines-for-submitting-scanning-requests/" />
+    <add key="WikiPageHelp" value="https://about.biodiversitylibrary.org/help/" />
+    <add key="WikiPageContribute" value="https://about.biodiversitylibrary.org/get-involved/" />
+    <add key="WikiPageToolsServices" value="https://about.biodiversitylibrary.org/tools-and-services/" />
+    <add key="WikiPageDeveloper" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/" />
+    <add key="WikiPageMembers" value="https://about.biodiversitylibrary.org/about/bhl-consortium/" />
+    <add key="WikiPageCopyright" value="https://about.biodiversitylibrary.org/copyright-and-reuse/" />
+    <add key="WikiPageFAQ" value="https://about.biodiversitylibrary.org/help/faq" />
+    <add key="WikiPageTitleUnavailable" value="https://about.biodiversitylibrary.org/help/faq/" />
+    <add key="WikiPageItemUnavailable" value="https://about.biodiversitylibrary.org/help/faq/" />
+    <add key="WikiPageSubmissionGuide" value="https://about.biodiversitylibrary.org/help/guidelines-for-submitting-scanning-requests/" />
     <add key="WikiPageAPI" value="https://about.biodiversitylibrary.org/tools-and-services/developer-and-data-tools/#APIs" />
     <add key="projectUpdatesFeedLocation" value="https://blog.biodiversitylibrary.org/feed"/>
     <add key="projectUpdatesRssTitle" value="Biodiversity Heritage Library News [RSS]"/>

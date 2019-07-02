@@ -68,7 +68,7 @@
 		            <nav>
 			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
 			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
-                        <a href="/contact">Feedback</a>
+                        <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
                         <a class="storelink" target="_blank" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
 		            </nav>
                     <span id="altmetricbadge">

@@ -222,35 +222,6 @@ namespace MOBOT.BHL.Web2
             return isValid;
         }
 
-        private string createReturnUrl()
-        {
-            string fburl = ViewState["FeedbackRefererURL"].ToString();
-
-            if (ViewState["TitleID"] != null)
-            {
-                fburl = String.Format(ConfigurationManager.AppSettings["BibPageUrl"], ViewState["TitleID"].ToString());
-            }
-            else if (ViewState["PageID"] != null)
-            {
-                // if it comes from the names page then just redirect to orig fburl
-                int x = fburl.IndexOf("/", 10) + 1;
-                int y = fburl.IndexOf("/", x);
-
-                if (y > 0)
-                {
-                    string name = fburl.Substring(x, y - x);
-                    if (name.ToLower().Equals("name"))
-                    {
-                        return fburl;
-                    }
-                }
-
-                fburl = fburl.Substring(0, fburl.IndexOf('/', 10)) + "/page/" + ViewState["PageID"].ToString();
-            }
-
-            return fburl;
-        }
-
         private string getComment()
         {
             StringBuilder sb = new StringBuilder();
@@ -412,7 +383,6 @@ namespace MOBOT.BHL.Web2
             divConfirm.Visible = true;
             litConfirmationSubject.Text = subject;
             litConfirmationText.Text = feedbackReceived;
-            lnkReturn.HRef = createReturnUrl();
         }
 
     }

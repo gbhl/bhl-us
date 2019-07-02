@@ -8,7 +8,7 @@
     <section>
         <h1>Item Unavailable</h1>
         <p>The content you are trying to access is no longer available through the Biodiversity Heritage Library.</p>
-        <p>We apologize for the inconvenience. If you have any questions or concerns, please send us your <a href="/contact">feedback</a>.</p>
+        <p>We apologize for the inconvenience. Please <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageItemUnavailable"] %>">click here</a> for more information.</p>
         <span class="arrow message"></span>
     </section>
     <aside>
