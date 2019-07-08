@@ -515,8 +515,8 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 String itemUrl = "https://www.biodiversitylibrary.org/item/" + pages[0].ItemID.ToString();
                 Anchor itemAnchor = new Anchor(itemUrl, standardFont);
                 itemAnchor.Reference = itemUrl;
-                Anchor pdfAnchor = new Anchor(String.Format(this.UrlFormat, fileName), smallFont);
-                pdfAnchor.Reference = String.Format(this.UrlFormat, fileName);
+                Anchor pdfAnchor = new Anchor(String.Format(this.UrlFormat, fileName + ".pdf"), smallFont);
+                pdfAnchor.Reference = String.Format(this.UrlFormat, fileName + ".pdf");
 
                 // ---------------- First page ----------------
 
