@@ -389,29 +389,64 @@ BEGIN TRY
 	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
 				ON t.ItemID = df.ItemID
 	AND		df.DataFieldTag = '245'
-	AND		df.Code = 'p'
+	AND		df.Code = 'p';
 
 	-- Get datafield 260/264 information
+	/*
+	IF     * 260 with blank ind 1 or ind 1=0 or ind 1=1
+	OR    ** 264 with blank ind 1 and ind 2=1
+	OR    ** 264 with blank ind 1 and ind 2=0
+	OR    ** 264 with blank ind 1 and ind 2=3
+	THEN *** take first subfield a, b and c and/or 3 to populate the BHL database
+	*/
+	-- Start by getting the IDs of the appropriate 260/264 Marc fields
+	WITH DataField (ItemID, MarcDataFieldID)
+	AS
+	(
+		SELECT	t.ItemID, MIN(MarcDataFieldID) AS MarcDataFieldID
+		FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
+					ON t.ItemID = df.ItemID
+		WHERE	(df.DataFieldTag = '260' AND df.Indicator1 IN ('', '0', '1'))
+		OR		(df.DataFieldTag = '264' AND df.Indicator1 = '' AND df.Indicator2 IN ('0', '1', '3'))
+		GROUP BY t.ItemID
+	)
+	SELECT	d.ItemID, d.MarcDataFieldID, MIN(v.MarcSubFieldID) AS MarcSubFieldID, v.Code
+	INTO	#PublisherInfo
+	FROM	DataField d INNER JOIN dbo.vwIAMarcDataField v
+				ON d.MarcDataFieldID = v.MarcDataFieldID
+	GROUP BY d.ItemID, d.MarcDataFieldID, v.Code
+
+	-- Get the 260/264 values
 	UPDATE	#tmpTitle
 	SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
-	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
-				ON t.ItemID = df.ItemID
-	WHERE	(df.DataFieldTag = '260' AND df.Code = 'a')
-	OR		(df.DataFieldTag = '264' AND df.Code = 'a' AND df.Indicator2 = '1')
+	FROM	#tmpTitle t 
+			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
+			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
+	WHERE	p.Code = 'a'
 
 	UPDATE	#tmpTitle
 	SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
-	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
-				ON t.ItemID = df.ItemID
-	WHERE	(df.DataFieldTag = '260' AND df.Code = 'b')
-	OR		(df.DataFieldTag = '264' AND df.Code = 'b' AND df.Indicator2 = '1')
+	FROM	#tmpTitle t 
+			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
+			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
+	WHERE	p.Code = 'b'
 
 	UPDATE	#tmpTitle
 	SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
-	FROM	#tmpTitle t INNER JOIN dbo.vwIAMarcDataField df
-				ON t.ItemID = df.ItemID
-	WHERE	(df.DataFieldTag = '260' AND df.Code = 'c')
-	OR		(df.DataFieldTag = '264' AND df.Code = 'c' AND df.Indicator2 = '1')
+	FROM	#tmpTitle t 
+			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
+			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
+	WHERE	p.Code = 'c'
+
+	UPDATE	#tmpTitle
+	SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+	FROM	#tmpTitle t 
+			INNER JOIN #PublisherInfo p ON t.ItemID = p.ItemID
+			INNER JOIN dbo.vwIAMarcDataField df	ON p.ItemID = df.ItemID	AND p.MarcSubFieldID = df.MarcSubFieldID
+	WHERE	p.Code = '3'
+	AND		ISNULL(Datafield_260_c, '') = ''
+
+	DROP TABLE #PublisherInfo
 
 	-- Remove start and end brackets ( [ ] ) from publication information
 	UPDATE	#tmpTitle

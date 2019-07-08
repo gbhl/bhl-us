@@ -126,29 +126,60 @@ SET		PartName = SUBSTRING(df.SubFieldValue, 1, 255)
 FROM	dbo.vwMarcDataField df
 WHERE	df.DataFieldTag = '245'
 AND		df.Code = 'p'
-AND		df.MarcID = @MarcID
+AND		df.MarcID = @MarcID;
 
 -- Get datafield 260/264 information
+/*
+IF     * 260 with blank ind 1 or ind 1=0 or ind 1=1
+OR    ** 264 with blank ind 1 and ind 2=1
+OR    ** 264 with blank ind 1 and ind 2=0
+OR    ** 264 with blank ind 1 and ind 2=3
+THEN *** take first subfield a, b and c and/or 3 to populate the BHL database
+*/
+-- Get IDs of the appropriate 260/264 Marc fields
+WITH DataField (MarcID, MarcDataFieldID)
+AS
+(
+	SELECT	df.MarcID, MIN(MarcDataFieldID) AS MarcDataFieldID
+	FROM	dbo.vwMarcDataField df
+	WHERE	((df.DataFieldTag = '260' AND df.Indicator1 IN ('', '0', '1'))
+	OR		(df.DataFieldTag = '264' AND df.Indicator1 = '' AND df.Indicator2 IN ('0', '1', '3')))
+	AND		df.MarcID = @MarcID
+	GROUP BY df.MarcID
+)
+SELECT	d.MarcID, d.MarcDataFieldID, MIN(v.MarcSubFieldID) AS MarcSubFieldID, v.Code
+INTO	#PublisherInfo
+FROM	DataField d INNER JOIN dbo.vwMarcDataField v
+			ON d.MarcDataFieldID = v.MarcDataFieldID
+GROUP BY d.MarcID, d.MarcDataFieldID, v.Code
+
+-- Get the 260/264 values
 UPDATE	#tmpTitle
 SET		Datafield_260_a = SUBSTRING(df.SubFieldValue, 1, 150)
-FROM	dbo.vwMarcDataField df
-WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
-AND		df.Code = 'a'
-AND		df.MarcID = @MarcID
+FROM	#PublisherInfo p
+		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
+WHERE	p.Code = 'a'
 
 UPDATE	#tmpTitle
 SET		Datafield_260_b = SUBSTRING(df.SubFieldValue, 1, 255)
-FROM	dbo.vwMarcDataField df
-WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
-AND		df.Code = 'b'
-AND		df.MarcID = @MarcID
+FROM	#PublisherInfo p
+		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
+WHERE	p.Code = 'b'
 
 UPDATE	#tmpTitle
 SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
-FROM	dbo.vwMarcDataField df
-WHERE	(df.DataFieldTag = '260' OR (df.DataFieldTag = '264' AND df.Indicator2 = '1'))
-AND		df.Code = 'c'
-AND		df.MarcID = @MarcID
+FROM	#PublisherInfo p
+		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
+WHERE	p.Code = 'c'
+
+UPDATE	#tmpTitle
+SET		Datafield_260_c = SUBSTRING(df.SubFieldValue, 1, 100)
+FROM	#PublisherInfo p
+		INNER JOIN dbo.vwMarcDataField df ON p.MarcID = df.MarcID AND p.MarcSubFieldID = df.MarcSubFieldID
+WHERE	p.Code = '3'
+AND		ISNULL(Datafield_260_c, '') = ''
+
+DROP TABLE #PublisherInfo
 
 -- Remove start and end brackets ( [ ] ) from publication information
 UPDATE	#tmpTitle
