@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[DoAnalysis]
+﻿CREATE PROCEDURE [dbo].[DoAnalysis]
 
 @SampleDate DATETIME = '1/1/1980'
 
@@ -277,7 +276,7 @@ FROM 	#tmpBySubject t
 
 -- Next check MARC control 001 record for the OCLC number (not too many of these)
 UPDATE	#tmpByCategory
-SET		OCLC = CONVERT(NVARCHAR(30), CONVERT(INT, dbo.fnFilterString(mc.value, '[0-9]', '')))
+SET		OCLC = CONVERT(NVARCHAR(30), CONVERT(BIGINT, dbo.fnFilterString(mc.value, '[0-9]', '')))
 FROM 	#tmpByCategory t 
 		LEFT JOIN (SELECT * FROM  dbo.vwMarcControl WHERE tag = '001' AND [value] NOT LIKE 'Catkey%') mc
 			ON t.ItemID = mc.ItemID
@@ -287,7 +286,7 @@ WHERE	(mc.[Value] LIKE 'oc%' OR mc.[Value] LIKE 'on%' OR mc2.[value] = 'OCoLC')
 AND		LTRIM(RTRIM(ISNULL(t.OCLC, ''))) = ''
 
 UPDATE	#tmpBySubject
-SET		OCLC = CONVERT(NVARCHAR(30), CONVERT(INT, dbo.fnFilterString(mc.value, '[0-9]', '')))
+SET		OCLC = CONVERT(NVARCHAR(30), CONVERT(BIGINT, dbo.fnFilterString(mc.value, '[0-9]', '')))
 FROM 	#tmpBySubject t 
 		LEFT JOIN (SELECT * FROM  dbo.vwMarcControl WHERE tag = '001' AND [value] NOT LIKE 'Catkey%') mc
 			ON t.ItemID = mc.ItemID
