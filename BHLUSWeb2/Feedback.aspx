@@ -26,6 +26,10 @@
             <div>
                 <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
             </div>
+            <div>
+                <p>Thank you for your feedback! BHL is voluntarily staffed by our Partner Libraries and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                <br />
+            </div>
             <div style="margin-bottom:10px;">
                 <label class="caption" for="nameTextBox">Name:</label>
                 <asp:TextBox ID="nameTextBox" ClientIDMode="Static" runat="server" Width="300px" class="field"></asp:TextBox><span style="font-style:italic"> (optional)</span>
@@ -121,7 +125,7 @@
         <div runat="server" id="divConfirm" visible="false">
 
             <div style="text-align:center">
-                <a href="" title="Return to original" id="lnkReturn" runat="server" style="font-size:11px;text-decoration:none">Return to the original page</a>
+                <a href="/" title="Return to BHL" id="lnkReturn" style="font-size:11px;text-decoration:none">Return to BHL</a>
             </div>
 
             <div style="border-bottom:1px;border-style:solid;">
@@ -146,10 +150,6 @@
                 </div>
 
                 <div>&nbsp;</div>
-            </div>
-
-            <div>
-                <p>Thank you for your feedback! BHL is voluntarily staffed by our Partner Libraries and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
             </div>
         </div>
 
@@ -184,6 +184,7 @@
         var divRequest = $("#ScanRequestForm");
         divComments.show();
         divRequest.hide();
+        $("#subjectScanReq").attr("checked", false);
         location.hash = "#/comments";
     }
 
