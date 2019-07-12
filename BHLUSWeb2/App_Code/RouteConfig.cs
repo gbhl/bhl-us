@@ -109,6 +109,12 @@ namespace MOBOT.BHL.Web2
 
             routes.Add("PageOCR", new Route("pageocr/{pageid}", new HttpHandlerRouteHandler<GetPageOcrRedirect>()));
 
+            routes.Add("ItemText", new Route("itemtext/{itemid}", new HttpHandlerRouteHandler<GetItemText>()));
+
+            routes.Add("ItemPdf", new Route("itempdf/{itemid}", new HttpHandlerRouteHandler<GetItemPdf>()));
+
+            routes.Add("ItemImages", new Route("itemimages/{itemid}", new HttpHandlerRouteHandler<GetItemImages>()));
+
             routes.MapPageRoute("Bibliography", "bibliography/{titleid}", "~/bibliography.aspx");
 
             routes.Add("MODSDownload", new Route("modsdownload/{id}", new HttpHandlerRouteHandler<MODSDownload>()));

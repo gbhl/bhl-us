@@ -28,6 +28,10 @@ namespace MOBOT.BHL.Web2.SiteService {
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetOcrText", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.GetOcrTextResponse GetOcrText(MOBOT.BHL.Web2.SiteService.GetOcrTextRequest request);
         
+        // CODEGEN: Generating message contract since element name GetItemTextResult from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetItemText", ReplyAction="*")]
+        MOBOT.BHL.Web2.SiteService.GetItemTextResponse GetItemText(MOBOT.BHL.Web2.SiteService.GetItemTextRequest request);
+        
         // CODEGEN: Generating message contract since element name queueName from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/GetQueueMessageCount", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.GetQueueMessageCountResponse GetQueueMessageCount(MOBOT.BHL.Web2.SiteService.GetQueueMessageCountRequest request);
@@ -128,6 +132,74 @@ namespace MOBOT.BHL.Web2.SiteService {
         
         public GetOcrTextResponseBody(string GetOcrTextResult) {
             this.GetOcrTextResult = GetOcrTextResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetItemTextRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetItemText", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetItemTextRequestBody Body;
+        
+        public GetItemTextRequest() {
+        }
+        
+        public GetItemTextRequest(MOBOT.BHL.Web2.SiteService.GetItemTextRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetItemTextRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int itemID;
+        
+        public GetItemTextRequestBody() {
+        }
+        
+        public GetItemTextRequestBody(int itemID) {
+            this.itemID = itemID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class GetItemTextResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetItemTextResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.GetItemTextResponseBody Body;
+        
+        public GetItemTextResponse() {
+        }
+        
+        public GetItemTextResponse(MOBOT.BHL.Web2.SiteService.GetItemTextResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class GetItemTextResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string GetItemTextResult;
+        
+        public GetItemTextResponseBody() {
+        }
+        
+        public GetItemTextResponseBody(string GetItemTextResult) {
+            this.GetItemTextResult = GetItemTextResult;
         }
     }
     
@@ -671,6 +743,19 @@ namespace MOBOT.BHL.Web2.SiteService {
             inValue.Body.pageID = pageID;
             MOBOT.BHL.Web2.SiteService.GetOcrTextResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetOcrText(inValue);
             return retVal.Body.GetOcrTextResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.Web2.SiteService.GetItemTextResponse MOBOT.BHL.Web2.SiteService.SiteServiceSoap.GetItemText(MOBOT.BHL.Web2.SiteService.GetItemTextRequest request) {
+            return base.Channel.GetItemText(request);
+        }
+        
+        public string GetItemText(int itemID) {
+            MOBOT.BHL.Web2.SiteService.GetItemTextRequest inValue = new MOBOT.BHL.Web2.SiteService.GetItemTextRequest();
+            inValue.Body = new MOBOT.BHL.Web2.SiteService.GetItemTextRequestBody();
+            inValue.Body.itemID = itemID;
+            MOBOT.BHL.Web2.SiteService.GetItemTextResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).GetItemText(inValue);
+            return retVal.Body.GetItemTextResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

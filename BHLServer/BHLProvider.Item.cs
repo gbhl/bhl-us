@@ -101,10 +101,20 @@ namespace MOBOT.BHL.Server
             return risString.ToString();
         }
 
+        public Item ItemSelectFilenames(int itemID)
+        {
+            return (new ItemDAL().ItemSelectFilenames(null, null, itemID));
+        }
+
         public CustomGenericList<Item> ItemResolve(string title, string issn, string isbn, string oclc,
             string volume, string issue, string year)
         {
             return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, issue, year);
+        }
+
+        public Item ItemSelectTextPathForItemID(int itemID)
+        {
+            return new ItemDAL().ItemSelectTextPathForItemID(null, null, itemID);
         }
 
         #endregion

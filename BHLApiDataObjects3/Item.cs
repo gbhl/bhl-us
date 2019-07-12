@@ -207,6 +207,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _ItemThumbUrl = value; }
         }
 
+        private string _ItemTextUrl;
+        public string ItemTextUrl { get => _ItemTextUrl; set => _ItemTextUrl = value; }
+
+        private string _ItemPDFUrl;
+        public string ItemPDFUrl { get => _ItemPDFUrl; set => _ItemPDFUrl = value; }
+
+        private string _ItemImagesUrl;
+        public string ItemImagesUrl { get => _ItemImagesUrl; set => _ItemImagesUrl = value; }
+
         CustomGenericList<Page> _Pages = null;
         public CustomGenericList<Page> Pages
         {

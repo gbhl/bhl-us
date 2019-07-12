@@ -516,9 +516,9 @@
                     <div class="download">
                         Download volume:
                         <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="<%: string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", bibliographyItem.Item.BarCode, ((bibliographyItem.Item.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">JP2</a>
-                        <a class="icon ocr" href="<%: string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", bibliographyItem.Item.BarCode) %>">OCR</a>
-                        <a class="icon pdf" href="<%: string.Format("https://www.archive.org/download/{0}/{0}.pdf", bibliographyItem.Item.BarCode) %>">PDF</a>
+                        <a class="icon jp2" href="/itemimages/<%: bibliographyItem.Item.ItemID %>">JP2</a>
+                        <a class="icon ocr" download="<%: bibliographyItem.Item.ItemID %>.txt" href="/itemtext/<%: bibliographyItem.Item.ItemID %>">OCR</a>
+                        <a class="icon pdf" href="/itempdf/<%: bibliographyItem.Item.ItemID %>">PDF</a>
                     </div>
                     <% } %>
                 </div>

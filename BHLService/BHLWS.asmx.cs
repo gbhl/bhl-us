@@ -127,6 +127,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public Item ItemSelectFilenames(int itemID)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.ItemSelectFilenames(itemID);
+        }
+
+        [WebMethod]
         public Item ItemUpdateStatus(int itemID, int itemStatusID)
         {
             BHLProvider bhlServer = new BHLProvider();

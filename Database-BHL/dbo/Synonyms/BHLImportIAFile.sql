@@ -1,0 +1,1 @@
+﻿CREATE SYNONYM [dbo].[BHLImportIAFile] FOR [BHLImport].[dbo].[IAFile];

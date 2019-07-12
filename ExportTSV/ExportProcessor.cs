@@ -161,7 +161,7 @@ namespace BHL.Export.TSV
 
         public void WriteItemHeader(string filePath)
         {
-            File.AppendAllText(filePath, "ItemID\tTitleID\tThumbnailPageID\tBarCode\tMARCItemID\tCallNumber\tVolumeInfo\tItemURL\tLocalID\tYear\tInstitutionName\tZQuery\tCreationDate" + Environment.NewLine, Encoding.UTF8);
+            File.AppendAllText(filePath, "ItemID\tTitleID\tThumbnailPageID\tBarCode\tMARCItemID\tCallNumber\tVolumeInfo\tItemURL\tItemTextURL\tItemPDFURL\tItemImagesURL\tLocalID\tYear\tInstitutionName\tZQuery\tCreationDate" + Environment.NewLine, Encoding.UTF8);
         }
 
         public void WritePageHeader(string filePath)
@@ -268,14 +268,17 @@ namespace BHL.Export.TSV
             string callNumber = GetDBString(reader, "CallNumber");
             string volumeInfo = GetDBString(reader, "VolumeInfo");
             string itemURL = string.Format(configParms.ItemUrlFormat, itemID);
+            string itemTextURL = string.Format(configParms.ItemTextUrlFormat, itemID);
+            string itemPDFURL = string.Format(configParms.ItemPDFUrlFormat, itemID);
+            string itemImagesURL = string.Format(configParms.ItemImagesUrlFormat, itemID);
             string identifierBib = GetDBString(reader, "LocalID");
             string year = GetDBString(reader, "Year");
             string institutionName = GetDBString(reader, "InstitutionName");
             string zQuery = GetDBString(reader, "ZQuery");
             string creationDate = GetDBString(reader, "CreationDate");
-            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}",
-                itemID, titleID, thumbnailPageID, barCode, marcItemID, callNumber, volumeInfo, itemURL,
-                identifierBib, year, institutionName, zQuery, creationDate);
+            return string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}",
+                itemID, titleID, thumbnailPageID, barCode, marcItemID, callNumber, volumeInfo, itemURL, itemTextURL,
+                itemPDFURL, itemImagesURL, identifierBib, year, institutionName, zQuery, creationDate);
         }
 
         public string GetPageRow(SqlDataReader reader, string statType)

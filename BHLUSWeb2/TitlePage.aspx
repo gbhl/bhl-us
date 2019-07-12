@@ -22,10 +22,10 @@
                         <h2>Download book</h2>
                         <hr />
                     </div>
-                    <a class="large-icon pdf" href="<%= string.Format("https://www.archive.org/download/{0}/{0}.pdf", PageSummary.BarCode) %>">Download PDF</a>
+                    <a class="large-icon pdf" href="/itempdf/<%: PageSummary.ItemID %>">Download PDF</a>
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
-                    <a class="large-icon jp2" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_jp2.{1}", PageSummary.BarCode, ((PageSummary.BarCode.Substring(0,5) == "mobot") ? "tar" : "zip")) %>">Download JPEG 2000</a>
-                    <a class="large-icon ocr" href="<%= string.Format("https://www.archive.org/download/{0}/{0}_djvu.txt", PageSummary.BarCode) %>">Download Text</a>                
+                    <a class="large-icon jp2" href="/itemimages/<%: PageSummary.ItemID %>">Download JPEG 2000</a>
+                    <a class="large-icon ocr" download="<%: PageSummary.ItemID %>.txt" href="/itemtext/<%: PageSummary.ItemID %>">Download Text</a>                
                 </div>
             <% } %>
 

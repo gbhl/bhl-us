@@ -38,8 +38,14 @@ namespace MOBOT.BHL.DataObjects
         private bool _hasFlickrImages = false;
         private bool _hasLocalContent = true;
         private bool _hasExternalContent = false;
+        private string _textFilename;
+        private string _pdfFilename;
+        private string _imagesFilename;
+        private string _djvuFilename;
+        private string _scandataFilename;
+        private string _ocrFolderShare = string.Empty;
 
-		public string DisplayedShortVolume
+        public string DisplayedShortVolume
 		{
 			get
 			{
@@ -234,6 +240,42 @@ namespace MOBOT.BHL.DataObjects
             set { _hasExternalContent = value; }
         }
 
+        public string TextFilename
+        {
+            get { return _textFilename; }
+            set { _textFilename = value; }
+        }
+
+        public string PdfFilename
+        {
+            get { return _pdfFilename; }
+            set { _pdfFilename = value; }
+        }
+
+        public string ImagesFilename
+        {
+            get { return _imagesFilename; }
+            set { _imagesFilename = value; }
+        }
+
+        public string DjvuFilename
+        {
+            get { return _djvuFilename; }
+            set { _djvuFilename = value; }
+        }
+
+        public string ScandataFilename
+        {
+            get { return _scandataFilename; }
+            set { _scandataFilename = value; }
+        }
+
+        public string OcrFolderShare
+        {
+            get { return _ocrFolderShare; }
+            set { _ocrFolderShare = value; }
+        }
+
         #endregion
 
         private void ProcessTagTextString(string value)
@@ -411,8 +453,38 @@ namespace MOBOT.BHL.DataObjects
                             _hasExternalContent = Convert.ToInt16(column.Value) == 1;
                             break;
                         }
-				}
-			}
+                    case "TextFilename":
+                        {
+                            _textFilename = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "PdfFilename":
+                        {
+                            _pdfFilename = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "ImagesFilename":
+                        {
+                            _imagesFilename = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "DjvuFilename":
+                        {
+                            _djvuFilename = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "ScandataFilename":
+                        {
+                            _scandataFilename = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "OcrFolderShare":
+                        {
+                            _ocrFolderShare = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                }
+            }
 
 			base.SetValues( row );
 		}
