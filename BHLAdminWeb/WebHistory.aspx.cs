@@ -13,7 +13,7 @@ namespace MOBOT.BHL.AdminWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.ClientScript.RegisterClientScriptInclude("GoogleMapJS", "http://www.google.com/jsapi");
+            Page.ClientScript.RegisterClientScriptInclude("GoogleMapJS", "https://www.google.com/jsapi");
 
             if (!IsPostBack)
             {
