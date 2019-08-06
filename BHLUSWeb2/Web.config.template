@@ -275,7 +275,36 @@
     <handlers>
         <add name="PdfUrlRoutingHandler" type="System.Web.Routing.UrlRoutingHandler, System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" path="pdf*/*" verb="GET"/>
         <add name="ApiURIs-ISAPI-Integrated-4.0" path="/subject/*" verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
-    </handlers></system.webServer>
+    </handlers>
+
+
+
+    <!--
+        <tracing>
+            <traceFailedRequests>
+                <add path="*">
+                    <traceAreas>
+                        <add provider="ASP" verbosity="Verbose" />
+                        <add provider="ASPNET" areas="Infrastructure,Module,Page,AppServices" verbosity="Verbose" />
+                        <add provider="ISAPI Extension" verbosity="Verbose" />
+                        <add provider="WWW Server" areas="Authentication,Security,Filter,StaticFile,CGI,Compression,Cache,RequestNotifications,Module,FastCGI,WebSocket" verbosity="Verbose" />
+                    </traceAreas>
+                    <failureDefinitions timeTaken="00:00:00" statusCodes="500" verbosity="Error" />
+                </add>
+            </traceFailedRequests>
+        </tracing>
+        -->
+        <rewrite>
+          <rules>
+            <rule name="Canonical Redirect" enabled="true" stopProcessing="false">
+              <match url="(.*)" />
+              <conditions>
+                <add input="{HTTP_HOST}" pattern="^biodiversitylibrary\.org" />
+              </conditions>
+              <action type="Redirect" url="https://www.biodiversitylibrary.org/{R:1}" appendQueryString="true" redirectType="Permanent" />
+            </rule>
+          </rules>
+        </rewrite></system.webServer>
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
