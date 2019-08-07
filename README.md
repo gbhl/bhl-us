@@ -70,9 +70,16 @@ Database Creation
 
 	BHLImportDBBuildScript localhost BHLImport all
 
-8) Navigate to the &lt;BHLRoot&gt;\Database-BHLAuditArchive folder.
+8) In the new BHLImport database, create a role named db\_webuser.
 
-9) Run the BHLAuditArchiveDBBuildScript.bat batch file.  This will build the auditing database.
+	USE [BHLImport];
+	CREATE ROLE db_webuser;
+	GRANT SELECT ON dbo.IAFile TO db_webuser;
+	GRANT SELECT ON dbo.IAItem TO db_webuser;
+
+9) Navigate to the &lt;BHLRoot&gt;\Database-BHLAuditArchive folder.
+
+10) Run the BHLAuditArchiveDBBuildScript.bat batch file.  This will build the auditing database.
 
 	Usage:
 
@@ -87,9 +94,9 @@ Database Creation
 
 	BHLAuditArchiveDBBuildScript localhost BHLAuditArchive
 
-10) Navigate to the &lt;BHLRoot&gt;\Database-IAAnalysis folder.
+11) Navigate to the &lt;BHLRoot&gt;\Database-IAAnalysis folder.
 
-11) Run the IAAnalysisDBBuildScript.bat batch file.  This will build the database used to ingest non-biodiversity-collection items from Internet Archive.
+12) Run the IAAnalysisDBBuildScript.bat batch file.  This will build the database used to ingest non-biodiversity-collection items from Internet Archive.
 
 	Usage:
 
@@ -105,7 +112,7 @@ Database Creation
 
 	IAAnalysisDBBuildScript localhost IAAnalysis all
 
-12) Create a new SQL Server login named BHLWebUser.  Map it to a user named BHLWebUser in the new BHL database, and assign it to the "db\_executor" and "db\_webuser" database roles.
+13) Create a new SQL Server login named BHLWebUser.  Map it to a user named BHLWebUser in the new BHL database, and assign it to the "db\_executor" and "db\_webuser" database roles.
 
 	USE [master];
 	CREATE LOGIN [BHLWebUser] WITH PASSWORD=N'BHLWebUser';
@@ -115,7 +122,13 @@ Database Creation
 	ALTER ROLE [db_executor] ADD MEMBER [BHLWebUser];
 	ALTER ROLE [db_webuser] ADD MEMBER [BHLWebUser];
 
-13) Create a new SQL Server login named BHLService.  Map it to a user named BHLService in the BHL, BHLAuditArchive, BHLImport, and IAAnalysis databases.  In each database, assign the new user to the "db\_datareader", "db\_datawriter", and "db\_owner" database roles.
+14) Map the BHLWebUser login to a user named BHLWebUser in the new BHLImport database, and assign it to the "db\_webuser" database role.
+
+	USE [BHLImport];
+	CREATE USER [BHLWebUser] FOR LOGIN [BHLWebUser] WITH DEFAULT_SCHEMA=[dbo];
+	ALTER ROLE [db_webuser] ADD MEMBER [BHLWebUser];
+
+15) Create a new SQL Server login named BHLService.  Map it to a user named BHLService in the BHL, BHLAuditArchive, BHLImport, and IAAnalysis databases.  In each database, assign the new user to the "db\_datareader", "db\_datawriter", and "db\_owner" database roles.
 
 	USE [master];
 	CREATE LOGIN [BHLService] WITH PASSWORD=N'BHLService';
