@@ -86,7 +86,8 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        filePath = String.Format("https://www.archive.org/download/{0}/{1}_scandata.xml", psv.BarCode, psv.BarCode);
+                        Item item = this.ItemSelectFilenames(itemID);
+                        filePath = String.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename);
                         xml = XDocument.Load(filePath);
                     }
                 }
@@ -605,6 +606,32 @@ namespace MOBOT.BHL.Server
             }
 
             return ocrText;
+        }
+
+        public string GetItemText(int itemID)
+        {
+            Item item = this.ItemSelectTextPathForItemID(itemID);
+            string itemText = "Text unavailable for this item.";
+
+            // Make sure we found an active item
+            if (item != null)
+            {
+                IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], item.OcrFolderShare, item.FileRootFolder, item.BarCode);
+
+                string[] files = fileAccessProvider.GetFiles(ocrTextLocation);
+                Array.Sort(files);
+                StringBuilder sb = new StringBuilder();
+                foreach(string file in files)
+                {
+                    sb.Append(fileAccessProvider.GetFileText(file));
+                    sb.AppendLine();
+                }
+
+                itemText = sb.ToString();
+            }
+
+            return itemText;
         }
 
         /// <summary>

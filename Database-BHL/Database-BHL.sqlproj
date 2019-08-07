@@ -1097,6 +1097,16 @@
     <None Include="dbo\Stored Procedures\ApiPageSelectByPageIDList.sql" />
     <None Include="dbo\Types\IDListInt.sql" />
     <None Include="dbo\Functions\fnAPIIndicatedPageStringForPage.sql" />
+    <None Include="dbo\Synonyms\BHLImportIAItem.sql" />
+    <None Include="dbo\Synonyms\BHLImportIAFile.sql" />
+    <None Include="dbo\Functions\fnGetRemoteFileName.sql" />
+    <None Include="dbo\Functions\fnGetPDFFilenameForItem.sql" />
+    <None Include="dbo\Functions\fnGetTextFilenameForItem.sql" />
+    <None Include="dbo\Functions\fnGetImagesFilenameForItem.sql" />
+    <None Include="dbo\Functions\fnGetDjvuFilenameForItem.sql" />
+    <None Include="dbo\Functions\fnGetScandataFilenameForItem.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectFilenames.sql" />
+    <None Include="dbo\Stored Procedures\ItemSelectTextPathForItemID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

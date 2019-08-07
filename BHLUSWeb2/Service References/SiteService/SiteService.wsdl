@@ -16,6 +16,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetItemText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetItemTextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetItemTextResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GetQueueMessageCount">
         <s:complexType>
           <s:sequence>
@@ -153,6 +167,12 @@
   <wsdl:message name="GetOcrTextSoapOut">
     <wsdl:part name="parameters" element="tns:GetOcrTextResponse" />
   </wsdl:message>
+  <wsdl:message name="GetItemTextSoapIn">
+    <wsdl:part name="parameters" element="tns:GetItemText" />
+  </wsdl:message>
+  <wsdl:message name="GetItemTextSoapOut">
+    <wsdl:part name="parameters" element="tns:GetItemTextResponse" />
+  </wsdl:message>
   <wsdl:message name="GetQueueMessageCountSoapIn">
     <wsdl:part name="parameters" element="tns:GetQueueMessageCount" />
   </wsdl:message>
@@ -212,6 +232,10 @@
       <wsdl:input message="tns:GetOcrTextSoapIn" />
       <wsdl:output message="tns:GetOcrTextSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetItemText">
+      <wsdl:input message="tns:GetItemTextSoapIn" />
+      <wsdl:output message="tns:GetItemTextSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="GetQueueMessageCount">
       <wsdl:input message="tns:GetQueueMessageCountSoapIn" />
       <wsdl:output message="tns:GetQueueMessageCountSoapOut" />
@@ -253,6 +277,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemText">
+      <soap:operation soapAction="https://biodiversitylibrary.org/GetItemText" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -346,6 +379,15 @@
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetOcrText">
       <soap12:operation soapAction="https://biodiversitylibrary.org/GetOcrText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetItemText">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/GetItemText" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

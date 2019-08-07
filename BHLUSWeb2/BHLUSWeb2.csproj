@@ -492,6 +492,9 @@
     <Content Include="Docs\BHL Permissions Questionnaire.pdf" />
     <Content Include="Docs\DarwinsLibraryBibliography.pdf" />
     <Content Include="Handlers\GetPageOcrRedirect.ashx" />
+    <Content Include="Handlers\GetItemText.ashx" />
+    <Content Include="Handlers\GetItemPdf.ashx" />
+    <Content Include="Handlers\GetItemImages.ashx" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28Local%29.pubxml" />
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
@@ -805,6 +808,15 @@
     </Compile>
     <Compile Include="Handlers\BibTeXDownload.ashx.cs">
       <DependentUpon>BibTeXDownload.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetItemImages.ashx.cs">
+      <DependentUpon>GetItemImages.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetItemPdf.ashx.cs">
+      <DependentUpon>GetItemPdf.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\GetItemText.ashx.cs">
+      <DependentUpon>GetItemText.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\GetPageImage.ashx.cs">
       <DependentUpon>GetPageImage.ashx</DependentUpon>

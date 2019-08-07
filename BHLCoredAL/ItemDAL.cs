@@ -793,5 +793,45 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
+
+        public Item ItemSelectFilenames(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int itemId)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectFilenames", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemId", SqlDbType.Int, null, false, itemId)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    if (list == null || list.Count == 0)
+                        return null;
+                    else
+                        return list[0];
+                }
+            }
+        }
+
+        public Item ItemSelectTextPathForItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+                CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ItemSelectTextPathForItemID", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID)))
+            {
+                using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
+                {
+                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
     }
 }

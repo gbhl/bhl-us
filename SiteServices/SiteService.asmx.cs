@@ -38,6 +38,19 @@ namespace BHL.SiteServices
             }
         }
 
+        [WebMethod]
+        public string GetItemText(int itemID)
+        {
+            try
+            {
+                return new BHLProvider().GetItemText(itemID);
+            }
+            catch (Exception ex)
+            {
+                return new DebugUtility(ConfigurationManager.AppSettings["DebugValue"]).GetErrorInfo(this.Context.Request, ex);
+            }
+        }
+
         #region MQ Methods
 
         [WebMethod]

@@ -14,6 +14,7 @@ SELECT	i.ItemID,
 		dbo.fnAuthorStringForTitle(i.PrimaryTitleID) AS CreatorTextString,
 		c.Subjects AS KeywordString,
 		c.ItemContributors AS ContributorTextString,
+		dbo.fnGetPDFFilenameForItem(i.ItemID) AS PdfFilename,
 		ic.CreationDate
 FROM	dbo.Item i INNER JOIN dbo.ItemCollection ic
 			ON i.ItemID = ic.ItemID
@@ -30,4 +31,3 @@ ORDER BY
 		t.FullTitle, ti.ItemSequence
 
 END
-

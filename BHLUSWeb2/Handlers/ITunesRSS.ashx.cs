@@ -120,74 +120,77 @@ namespace MOBOT.BHL.Web2.Handlers
                     List<SyndicationItem> syndItems = new List<SyndicationItem>();
                     foreach (Item item in items)
                     {
-                        string content = string.Empty;
-                        if (!string.IsNullOrEmpty(item.Volume)) content += "Volume: " + item.Volume + "<br>";
-                        if (item.AuthorStrings.Length > 0) content += "By: " + String.Join(" - ", item.AuthorStrings) + "<br>"; 
-                        if (!string.IsNullOrEmpty(item.PublicationDetails)) content += "Publication Details: " + item.PublicationDetails + "<br>";
-                        if (item.InstitutionStrings.Count() > 1) content += "Contributed By: Multiple institutions";
-                        if (item.InstitutionStrings.Count() == 1) content += "Contributed By: " + item.InstitutionStrings[0];
+                        if (!string.IsNullOrWhiteSpace(item.PdfFilename))
+                        {
+                            string content = string.Empty;
+                            if (!string.IsNullOrEmpty(item.Volume)) content += "Volume: " + item.Volume + "<br>";
+                            if (item.AuthorStrings.Length > 0) content += "By: " + String.Join(" - ", item.AuthorStrings) + "<br>";
+                            if (!string.IsNullOrEmpty(item.PublicationDetails)) content += "Publication Details: " + item.PublicationDetails + "<br>";
+                            if (item.InstitutionStrings.Count() > 1) content += "Contributed By: Multiple institutions";
+                            if (item.InstitutionStrings.Count() == 1) content += "Contributed By: " + item.InstitutionStrings[0];
 
-                        // Set up item with standard RSS information
-                        SyndicationItem syndItem = new SyndicationItem(
-                            new TextSyndicationContent((item.ShortTitle + (string.IsNullOrEmpty(item.Volume) ? string.Empty : ", " + item.Volume)).Trim()).Text,
-                            new TextSyndicationContent(content).Text,
-                            new Uri(string.Format(ConfigurationManager.AppSettings["PdfGenDownloadIA"], item.BarCode, item.BarCode)));
+                            // Set up item with standard RSS information
+                            SyndicationItem syndItem = new SyndicationItem(
+                                new TextSyndicationContent((item.ShortTitle + (string.IsNullOrEmpty(item.Volume) ? string.Empty : ", " + item.Volume)).Trim()).Text,
+                                new TextSyndicationContent(content).Text,
+                                new Uri(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename)));
                             //new Uri(domainRoot + "itempdf/" + item.ItemID.ToString()));
-                        syndItem.PublishDate = DateTime.SpecifyKind((item.CreationDate ?? DateTime.Now), DateTimeKind.Local);
-                        syndItem.AddPermalink(new Uri(domainRoot + "item/" + item.ItemID.ToString()));
+                            syndItem.PublishDate = DateTime.SpecifyKind((item.CreationDate ?? DateTime.Now), DateTimeKind.Local);
+                            syndItem.AddPermalink(new Uri(domainRoot + "item/" + item.ItemID.ToString()));
 
-                        // Add iTunes custom elements
-                        string iTunesContent = string.Empty;
-                        if (!string.IsNullOrEmpty(item.Volume)) iTunesContent += "Volume: " + item.Volume + ".  ";
-                        if (!string.IsNullOrEmpty(item.PublicationDetails)) iTunesContent += "Publication Details: " + item.PublicationDetails + ".  ";
-                        if (item.InstitutionStrings.Count() > 1) iTunesContent += "Contributed By: Multiple institutions";
-                        if (item.InstitutionStrings.Count() == 1) iTunesContent += "Contributed By: " + item.InstitutionStrings[0];
+                            // Add iTunes custom elements
+                            string iTunesContent = string.Empty;
+                            if (!string.IsNullOrEmpty(item.Volume)) iTunesContent += "Volume: " + item.Volume + ".  ";
+                            if (!string.IsNullOrEmpty(item.PublicationDetails)) iTunesContent += "Publication Details: " + item.PublicationDetails + ".  ";
+                            if (item.InstitutionStrings.Count() > 1) iTunesContent += "Contributed By: Multiple institutions";
+                            if (item.InstitutionStrings.Count() == 1) iTunesContent += "Contributed By: " + item.InstitutionStrings[0];
 
-                        XmlElement itemElement = doc.CreateElement("itunes", "subtitle", _itunesNamespace);
-                        itemElement.InnerText = iTunesContent.Substring(0, (iTunesContent.Length > 255) ? 255 : iTunesContent.Length);
-                        syndItem.ElementExtensions.Add(itemElement);
-
-                        itemElement = doc.CreateElement("itunes", "summary", _itunesNamespace);
-                        itemElement.InnerText = iTunesContent.Substring(0, (iTunesContent.Length > 4000) ? 4000 : iTunesContent.Length);
-                        syndItem.ElementExtensions.Add(itemElement);
-
-                        if (string.Join("", item.AuthorStrings).Trim().Length > 0)
-                        {
-                            itemElement = doc.CreateElement("itunes", "author", _itunesNamespace);
-                            itemElement.InnerText = string.Join(" - ", item.AuthorStrings);
+                            XmlElement itemElement = doc.CreateElement("itunes", "subtitle", _itunesNamespace);
+                            itemElement.InnerText = iTunesContent.Substring(0, (iTunesContent.Length > 255) ? 255 : iTunesContent.Length);
                             syndItem.ElementExtensions.Add(itemElement);
-                        }
 
-                        if (string.Join("", item.TagStrings).Trim().Length > 0)
-                        {
-                            itemElement = doc.CreateElement("itunes", "keywords", _itunesNamespace);
-                            itemElement.InnerText = string.Join(", ", item.TagStrings);
+                            itemElement = doc.CreateElement("itunes", "summary", _itunesNamespace);
+                            itemElement.InnerText = iTunesContent.Substring(0, (iTunesContent.Length > 4000) ? 4000 : iTunesContent.Length);
                             syndItem.ElementExtensions.Add(itemElement);
+
+                            if (string.Join("", item.AuthorStrings).Trim().Length > 0)
+                            {
+                                itemElement = doc.CreateElement("itunes", "author", _itunesNamespace);
+                                itemElement.InnerText = string.Join(" - ", item.AuthorStrings);
+                                syndItem.ElementExtensions.Add(itemElement);
+                            }
+
+                            if (string.Join("", item.TagStrings).Trim().Length > 0)
+                            {
+                                itemElement = doc.CreateElement("itunes", "keywords", _itunesNamespace);
+                                itemElement.InnerText = string.Join(", ", item.TagStrings);
+                                syndItem.ElementExtensions.Add(itemElement);
+                            }
+
+                            // Add itunesU category
+                            // List of category codes at http://deimos.apple.com/rsrc/doc/UsingiTunesUPublicSiteManager/AboutCategoryPages/chapter_8_section_3.html#//apple_ref/doc/uid/iTUPSM-CH8-SW3
+                            itemElement = doc.CreateElement("itunesu", "category", _itunesUNamespace);
+                            catAttribute = doc.CreateAttribute("itunesu", "code", _itunesUNamespace);
+                            catAttribute.Value = "109103";  // Biology
+                            itemElement.Attributes.Append(catAttribute);
+                            syndItem.ElementExtensions.Add(itemElement);
+
+                            // Add link to PDF
+                            itemElement = doc.CreateElement("enclosure");
+                            XmlAttribute itemAttribute = doc.CreateAttribute("type");
+                            itemAttribute.Value = "application/pdf";
+                            itemElement.Attributes.Append(itemAttribute);
+                            //itemAttribute = doc.CreateAttribute("length");
+                            //itemAttribute.Value = item.PDFSize.ToString();  // size of pdf in bytes
+                            //itemElement.Attributes.Append(itemAttribute);
+                            itemAttribute = doc.CreateAttribute("url");
+                            //itemAttribute.Value = domainRoot + "itempdf/" + item.ItemID.ToString();
+                            itemAttribute.Value = string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename);
+                            itemElement.Attributes.Append(itemAttribute);
+                            syndItem.ElementExtensions.Add(itemElement);
+
+                            syndItems.Add(syndItem);
                         }
-
-                        // Add itunesU category
-                        // List of category codes at http://deimos.apple.com/rsrc/doc/UsingiTunesUPublicSiteManager/AboutCategoryPages/chapter_8_section_3.html#//apple_ref/doc/uid/iTUPSM-CH8-SW3
-                        itemElement = doc.CreateElement("itunesu", "category", _itunesUNamespace);
-                        catAttribute = doc.CreateAttribute("itunesu", "code", _itunesUNamespace);
-                        catAttribute.Value = "109103";  // Biology
-                        itemElement.Attributes.Append(catAttribute);
-                        syndItem.ElementExtensions.Add(itemElement);
-
-                        // Add link to PDF
-                        itemElement = doc.CreateElement("enclosure");
-                        XmlAttribute itemAttribute = doc.CreateAttribute("type");
-                        itemAttribute.Value = "application/pdf";
-                        itemElement.Attributes.Append(itemAttribute);
-                        //itemAttribute = doc.CreateAttribute("length");
-                        //itemAttribute.Value = item.PDFSize.ToString();  // size of pdf in bytes
-                        //itemElement.Attributes.Append(itemAttribute);
-                        itemAttribute = doc.CreateAttribute("url");
-                        //itemAttribute.Value = domainRoot + "itempdf/" + item.ItemID.ToString();
-                        itemAttribute.Value = string.Format(ConfigurationManager.AppSettings["PdfGenDownloadIA"], item.BarCode, item.BarCode);
-                        itemElement.Attributes.Append(itemAttribute);
-                        syndItem.ElementExtensions.Add(itemElement);
-
-                        syndItems.Add(syndItem);
                     }
                     feed.Items = syndItems;
                     feed.LastUpdatedTime = DateTime.Now;

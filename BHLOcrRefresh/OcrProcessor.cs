@@ -130,7 +130,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = GetDJVU(barcode);
+                string djvu = GetDJVU(itemID);
 
                 // Convert the DJVU into XML files (one per page)
                 ConvertDjvuToXml(djvu, tempFolder, barcode);
@@ -171,14 +171,17 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private string GetDJVU(string barcode)
+        private string GetDJVU(string itemID)
         {
             StreamReader reader = null;
             string djvu = string.Empty;
 
             try
             {
-                String iaUrl = string.Format("http://www.archive.org/download/{0}/{1}_djvu.xml", barcode, barcode);
+                BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
+                BHLWS.Item item = client.ItemSelectFilenames(Convert.ToInt32(itemID));
+
+                String iaUrl = string.Format("https://www.archive.org/download/{0}/{1}", item.BarCode, item.DjvuFilename);
 
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(iaUrl);
                 req.Method = "GET";

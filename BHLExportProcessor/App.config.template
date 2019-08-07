@@ -121,6 +121,9 @@
     <add key="TSVInternalTitleIdentifierFile" value="\\SERVER\FOLDER\data\titleidentifierint.txt" />
 
     <add key="TSVItemURLFormat" value="https://www.biodiversitylibrary.org/item/{0} "/>
+    <add key="TSVItemTextURLFormat" value="https://www.biodiversitylibrary.org/itemtext/{0} "/>
+    <add key="TSVItemPDFURLFormat" value="https://www.biodiversitylibrary.org/itempdf/{0} "/>
+    <add key="TSVItemImagesURLFormat" value="https://www.biodiversitylibrary.org/itemimages/{0} "/>
 
     <!-- *** IA Identifiers *** -->
     <add key="IAIDFolder" value="iaidentifiers" />
