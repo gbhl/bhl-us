@@ -34,7 +34,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 // Write file header
                 StringBuilder csvString = new StringBuilder();
-                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Scanning Institution\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
+                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title ID\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Scanning Institution\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();
 
@@ -46,6 +46,7 @@ namespace MOBOT.BHL.AdminWeb
                     csvString.Append("\"" + institutionRole.InstitutionRoleLabel.Replace(",", " ") + "\",");
                     csvString.Append("\"" + item.ItemID.ToString() + "\",");
                     csvString.Append("\"" + item.BarCode + "\",");
+                    csvString.Append("\"" + item.PrimaryTitleID + "\",");
                     csvString.Append("\"" + (item.TitleName ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
                     csvString.Append("\"" + (item.Volume ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
                     csvString.Append("\"" + (item.Year ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");

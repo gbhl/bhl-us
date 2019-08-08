@@ -102,6 +102,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     response.Append("<row id='" + searchResult[x].ItemID.ToString() + "'>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"/ItemEdit.aspx/?id=" + searchResult[x].ItemID.ToString() + "\">" + searchResult[x].ItemID.ToString() + "</a>]]> </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" target=\"_blank\" href=\"https://www.archive.org/details/" + searchResult[x].BarCode + "\">" + searchResult[x].BarCode + "</a>]]> </cell>");
+                    response.Append("<cell> " + searchResult[x].PrimaryTitleID.ToString() + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].TitleName) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Year) + " </cell>");

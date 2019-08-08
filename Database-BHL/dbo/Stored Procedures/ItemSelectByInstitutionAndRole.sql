@@ -30,6 +30,7 @@ CREATE TABLE #Step1
 	(
 	ItemID int NOT NULL,
 	BarCode nvarchar(50) NOT NULL,
+	PrimaryTitleID int NOT NULL,
 	TitleName nvarchar(2000) NOT NULL,
 	SortTitle nvarchar(60) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
@@ -54,6 +55,7 @@ BEGIN
 	INSERT #Step1
 	SELECT	i.ItemID,
 			i.BarCode,
+			i.PrimaryTitleID,
 			t.FullTitle AS TitleName, 
 			t.SortTitle,
 			ISNULL(i.Volume, ''),
@@ -83,6 +85,7 @@ BEGIN
 	INSERT #Step1
 	SELECT	i.ItemID,
 			i.BarCode,
+			i.PrimaryTitleID,
 			t.FullTitle AS TitleName, 
 			t.SortTitle,
 			ISNULL(i.Volume, ''),
@@ -111,6 +114,7 @@ CREATE TABLE #Step2
 	(
 	ItemID int NOT NULL,
 	BarCode nvarchar(50) NOT NULL,
+	PrimaryTitleID int NOT NULL,
 	TitleName nvarchar(2000) NOT NULL,
 	SortTitle nvarchar(60) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
@@ -229,6 +233,7 @@ SELECT @TotalItems = COUNT(*) FROM #Step2
 SELECT TOP (@NumRows) 
 		ItemID,
 		BarCode,
+		PrimaryTitleID,
 		TitleName,
 		Volume,
 		Year,
