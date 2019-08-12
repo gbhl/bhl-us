@@ -629,7 +629,7 @@ namespace MOBOT.BHL.API.BHLApi
                 author.CreatorUrl = "https://www.biodiversitylibrary.org/creator/" + author.AuthorID.ToString();
                 author.Identifiers = dal.AuthorIdentifierSelectByAuthorID(null, null, Convert.ToInt32(author.AuthorID));
                 if (author.Identifiers.Count == 0) author.Identifiers = null;
-                if (pubs) author.Publications = this.GetAuthorPublications(id);
+                if (pubs) author.Publications = this.GetAuthorPublications(author.AuthorID.ToString());
             }
 
             return authors;
