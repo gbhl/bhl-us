@@ -22,7 +22,7 @@
                         <h2>Download book</h2>
                         <hr />
                     </div>
-                    <a class="large-icon pdf" href="/itempdf/<%: PageSummary.ItemID %>">Download PDF</a>
+                    <a class="large-icon pdf" download="<%: PageSummary.ItemID %>.pdf" href="/itempdf/<%: PageSummary.ItemID %>">Download PDF</a>
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
                     <a class="large-icon jp2" href="/itemimages/<%: PageSummary.ItemID %>">Download JPEG 2000</a>
                     <a class="large-icon ocr" download="<%: PageSummary.ItemID %>.txt" href="/itemtext/<%: PageSummary.ItemID %>">Download Text</a>                

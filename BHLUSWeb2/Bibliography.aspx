@@ -518,7 +518,7 @@
                         <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
                         <a class="icon jp2" href="/itemimages/<%: bibliographyItem.Item.ItemID %>">JP2</a>
                         <a class="icon ocr" download="<%: bibliographyItem.Item.ItemID %>.txt" href="/itemtext/<%: bibliographyItem.Item.ItemID %>">OCR</a>
-                        <a class="icon pdf" href="/itempdf/<%: bibliographyItem.Item.ItemID %>">PDF</a>
+                        <a class="icon pdf" download="<%: bibliographyItem.Item.ItemID %>.pdf" href="/itempdf/<%: bibliographyItem.Item.ItemID %>">PDF</a>
                     </div>
                     <% } %>
                 </div>

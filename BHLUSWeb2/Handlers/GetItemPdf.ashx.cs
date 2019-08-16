@@ -29,7 +29,8 @@ namespace MOBOT.BHL.Web2
 
                     try
                     {
-                        context.Response.BinaryWrite(client.DownloadData(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename)));
+                        //context.Response.BinaryWrite(client.DownloadData(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename)));
+                        context.Response.Redirect(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename));
                     }
                     catch (System.Net.WebException wex)
                     {
