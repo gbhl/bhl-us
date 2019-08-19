@@ -282,13 +282,21 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                 // Filter out 'empty' author names
                 if (lastName != string.Empty || firstName != string.Empty)
                 {
-                    // Get the author info
-                    EFModel.SegmentAuthor segmentAuthor = new EFModel.SegmentAuthor();
-                    segmentAuthor.ImportSourceID = configParms.ImportSourceID;
-                    segmentAuthor.BioStorID = ((string)author["id"]) ?? string.Empty;
-                    segmentAuthor.LastName = lastName.Trim();
-                    segmentAuthor.FirstName = firstName.Trim();
-                    segmentAuthors.Add(segmentAuthor);
+                    string bioStorId = ((string)author["id"]) ?? string.Empty; ;
+
+                    // Make sure this isn't a duplicate author
+                    var duplicate = segmentAuthors.Find(a => 
+                        a.BioStorID == bioStorId && a.LastName == lastName.Trim() && a.FirstName == firstName.Trim());
+                    if (duplicate == default(EFModel.SegmentAuthor))
+                    {
+                        // Get the author info
+                        EFModel.SegmentAuthor segmentAuthor = new EFModel.SegmentAuthor();
+                        segmentAuthor.ImportSourceID = configParms.ImportSourceID;
+                        segmentAuthor.BioStorID = ((string)author["id"]) ?? string.Empty;
+                        segmentAuthor.LastName = lastName.Trim();
+                        segmentAuthor.FirstName = firstName.Trim();
+                        segmentAuthors.Add(segmentAuthor);
+                    }
                 }
             }
 
