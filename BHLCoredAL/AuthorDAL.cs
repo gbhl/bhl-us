@@ -91,6 +91,25 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public CustomGenericList<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+            int identifierID, string identifierValue)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(
+              CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectByIdentifier", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("IdentifierID", SqlDbType.Int, null, false, identifierID),
+                CustomSqlHelper.CreateInputParameter("IdentifierValue", SqlDbType.NVarChar, 125, false, identifierValue)))
+            {
+                using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
+                {
+                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    return list;
+                }
+            }
+        }
+
         /// <summary>
         /// Returns a list of authors that have suspected character encoding problems.
         /// </summary>

@@ -8,6 +8,7 @@ using MOBOT.BHL.Server;
 using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
 using SortOrder = CustomDataAccess.SortOrder;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -469,6 +470,47 @@ namespace MOBOT.BHL.AdminWeb
             {
                 flag = true;
                 errorControl.AddErrorText("Use the \"Preferred\" checkbox to mark one (and only one) name as the preferred name for the author.");
+            }
+
+            // Make sure that no identifiers have been assigned to this author more than once
+            Dictionary<string, int> idDict = new Dictionary<string, int>();
+            foreach(AuthorIdentifier aid in author.AuthorIdentifiers)
+            {
+                if (!aid.IsDeleted)
+                {
+                    string idKey = aid.IdentifierName + ":" + aid.IdentifierValue;
+                    if (idDict.ContainsKey(idKey))
+                        idDict[idKey]++;
+                    else
+                        idDict.Add(idKey, 1);
+                }
+            }
+            foreach(KeyValuePair<string,int> kvp in idDict)
+            {
+                if (kvp.Value > 1)
+                {
+                    flag = true;
+                    errorControl.AddErrorText(string.Format("The identifier {0} has been assigned to this author more than once.",
+                        kvp.Key));
+                }
+            }
+
+            // Make sure that no identifiers assigned to this author are duplicates of identifiers assigned to other authors
+            foreach(AuthorIdentifier aid in author.AuthorIdentifiers)
+            {
+                if (!aid.IsDeleted && aid.IsDirty)
+                {
+                    CustomGenericList<Author> dupIDs = new BHLProvider().AuthorSelectByIdentifier(aid.IdentifierID, aid.IdentifierValue);
+                    foreach (Author dupID in dupIDs)
+                    {
+                        if (dupID.AuthorID != author.AuthorID)
+                        {
+                            flag = true;
+                            errorControl.AddErrorText(string.Format("The identifier {0}:{1} has already been assigned to \"{2}\" (BHL Author ID: {3}).",
+                                aid.IdentifierName, aid.IdentifierValue, dupID.NameExtended.Trim(), dupID.AuthorID));
+                        }
+                    }
+                }
             }
 
             // If a "replaced by" identifer was specified, make sure that it is a valid id

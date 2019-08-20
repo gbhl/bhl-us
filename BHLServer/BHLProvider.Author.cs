@@ -34,6 +34,11 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorSelectWithNameByAuthorId(null, null, authorId);
         }
 
+        public CustomGenericList<Author> AuthorSelectByIdentifier(int identifierID, string identifierValue)
+        {
+            return new AuthorDAL().AuthorSelectByIdentifier(null, null, identifierID, identifierValue);
+        }
+
         public Author AuthorSelectAuto(int authorID)
         {
             return new AuthorDAL().AuthorSelectAuto(null, null, authorID);

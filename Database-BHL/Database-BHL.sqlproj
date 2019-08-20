@@ -1107,6 +1107,7 @@
     <None Include="dbo\Functions\fnGetScandataFilenameForItem.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectFilenames.sql" />
     <None Include="dbo\Stored Procedures\ItemSelectTextPathForItemID.sql" />
+    <None Include="dbo\Stored Procedures\AuthorSelectByIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
