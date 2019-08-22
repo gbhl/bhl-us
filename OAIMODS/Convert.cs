@@ -63,7 +63,7 @@ namespace MOBOT.BHL.OAIMODS
             XElement genre = root.Element(ns + "genre");
             if (genre != null)
             {
-                switch (genre.Value)
+                switch (genre.Value.ToLower())
                 {
                     case "book":
                     case "monograph":
@@ -76,6 +76,28 @@ namespace MOBOT.BHL.OAIMODS
                         _oaiRecord.Type = OAIRecord.RecordType.Issue;
                         break;
                     case "article":
+                    case "research article":
+                    case "review article":
+                    case "short communication":
+                    case "short communications":
+                    case "data paper":
+                    case "letter to the editor":
+                    case "letters to the editor":
+                    case "checklist":
+                    case "editorial":
+                    case "editorials":
+                    case "book review":
+                    case "catalogue":
+                    case "catalogues":
+                    case "in memoriam":
+                    case "forum paper":
+                    case "commentary":
+                    case "bibliography":
+                    case "correspondence":
+                    case "discussion paper":
+                    case "project description":
+                    case "editorial pages":
+                    case "corrigenda":
                         _oaiRecord.Type = OAIRecord.RecordType.Segment;
                         break;
                     default:
