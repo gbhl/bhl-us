@@ -9,7 +9,6 @@
     [CreationUserID]     INT           CONSTRAINT [DF_IndicatedPage_CreationUserID] DEFAULT ((1)) NULL,
     [LastModifiedUserID] INT           CONSTRAINT [DF_IndicatedPage_LastModifiedUserID] DEFAULT ((1)) NULL,
     CONSTRAINT [PK_IndicatedPage] PRIMARY KEY CLUSTERED ([PageID] ASC, [Sequence] ASC),
-    CONSTRAINT [CK IndicatedPage Sequence] CHECK ([Sequence]>=(1) AND [Sequence]<=(4)),
     CONSTRAINT [IndicatedPage_FK00] FOREIGN KEY ([PageID]) REFERENCES [dbo].[Page] ([PageID]) ON UPDATE CASCADE
 );
 
