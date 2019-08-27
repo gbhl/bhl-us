@@ -214,13 +214,21 @@ namespace MOBOT.BHL.DAL
                 }
 
                 // If the author record being updated has been redirected to another author record, 'move' all of the 
-                // associated TitleAuthor and SegmentAuthor records to the author being redirected to
+                // associated TitleAuthor, SegmentAuthor, and AuthorIdentifier records to the author being redirected to.  
+                // Also, copy all AuthorNames to the author being redirected to.  For AuthorIdentifier and AuthorName
+                // records, only move/copy them if they do not already exist on the target author.
                 if (author.IsActive == 0 && author.RedirectAuthorID != null)
                 {
                     new TitleAuthorDAL().TitleAuthorUpdateAuthorID(sqlConnection, sqlTransaction, 
                         author.AuthorID, (int)author.RedirectAuthorID, userId);
 
                     new SegmentAuthorDAL().SegmentAuthorUpdateAuthorID(sqlConnection, sqlTransaction,
+                        author.AuthorID, (int)author.RedirectAuthorID, userId);
+
+                    new AuthorIdentifierDAL().AuthorIdentifierUpdateAuthorID(sqlConnection, sqlTransaction,
+                        author.AuthorID, (int)author.RedirectAuthorID, userId);
+
+                    new AuthorNameDAL().AuthorNameInsertFromAuthorID(sqlConnection, sqlTransaction,
                         author.AuthorID, (int)author.RedirectAuthorID, userId);
                 }
 
