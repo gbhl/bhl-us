@@ -330,14 +330,6 @@ namespace MOBOT.BHL.AdminWeb
             languagesList.DataBind();
 
 			bindItemData();
-
-            // See if we can display a link to the MARC file
-            SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-            if (service.MARCFileExists(id, "t"))
-            {
-                hypMarc.Attributes["onclick"] = String.Format(hypMarc.Attributes["onclick"], title.TitleID.ToString());
-                hypMarc.Visible = true;
-            }
         }
 
         #endregion Fill methods
