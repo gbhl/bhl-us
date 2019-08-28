@@ -239,12 +239,6 @@
                     </div>
 				</td>
 			</tr>
-            <tr>
-                <td></td>
-                <td>
-                    <a id="hypMarc" runat="server" href="#" onclick="javascript:window.open('TitleItemMarc.aspx?type=t&id={0}', '', 'width=600,height=600,location=0,status=0,scrollbars=1');" visible="false">View Original MARC Record</a>
-                </td>
-            </tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
 					Replaced By (Title ID):
