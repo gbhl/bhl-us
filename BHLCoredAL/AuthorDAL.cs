@@ -150,7 +150,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="endDate"></param>
         /// <returns>Object of type Author.</returns>
         public CustomGenericList<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
-            string fullName, string lastName, string firstName, string startDate, string endDate)
+            string fullName, string lastName, string firstName, string startDate, string endDate, int? authorID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -160,7 +160,8 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("LastName", SqlDbType.NVarChar, 150, false, lastName),
                 CustomSqlHelper.CreateInputParameter("FirstName", SqlDbType.NVarChar, 150, false, firstName),
                 CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.NVarChar, 25, false, startDate),
-                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate)))
+                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.NVarChar, 25, false, endDate),
+                CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {

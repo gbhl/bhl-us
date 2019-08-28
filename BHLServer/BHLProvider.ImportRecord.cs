@@ -35,8 +35,8 @@ namespace MOBOT.BHL.Server
                 foreach(ImportRecordCreator author in citation.Authors)
                 {
                     CustomGenericList<Author> authors = AuthorResolve(author.FullName, author.LastName,
-                        author.FirstName, author.StartYear, author.EndYear);
-                    if (authors.Count == 1) author.AuthorID = authors[0].AuthorID;
+                        author.FirstName, author.StartYear, author.EndYear, author.ImportedAuthorID);
+                    if (authors.Count == 1) author.ProductionAuthorID = authors[0].AuthorID;
                 }
 
                 // Validate the imported record
@@ -114,7 +114,7 @@ namespace MOBOT.BHL.Server
             ImportRecordCreator savedImportRecordCreator = dal.ImportRecordCreatorSelectAuto(null, null, importRecordCreatorID);
             if (savedImportRecordCreator != null)
             {
-                savedImportRecordCreator.AuthorID = AuthorID;
+                savedImportRecordCreator.ProductionAuthorID = AuthorID;
                 savedImportRecordCreator.LastModifiedDate = DateTime.Now;
                 savedImportRecordCreator.LastModifiedUserID = userID;
                 savedImportRecordCreator = dal.ImportRecordCreatorUpdateAuto(null, null, savedImportRecordCreator);

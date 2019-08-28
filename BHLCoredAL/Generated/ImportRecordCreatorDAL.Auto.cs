@@ -1,5 +1,5 @@
 
-// Generated 9/20/2017 1:00:17 PM
+// Generated 8/27/2019 10:08:10 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class ImportRecordCreatorDAL is based upon import.ImportRecordCreator.
@@ -32,7 +32,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ImportRecordCreatorDAL : IImportRecordCreatorDAL
+	partial class ImportRecordCreatorDAL 
 	{
  		#region ===== SELECT =====
 
@@ -145,7 +145,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="authorType"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="authorID"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -159,9 +160,10 @@ namespace MOBOT.BHL.DAL
 			string authorType,
 			int creationUserID,
 			int lastModifiedUserID,
-			int? authorID)
+			int? productionAuthorID,
+			int? importedAuthorID)
 		{
-			return ImportRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, creationUserID, lastModifiedUserID, authorID );
+			return ImportRecordCreatorInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, creationUserID, lastModifiedUserID, productionAuthorID, importedAuthorID );
 		}
 		
 		/// <summary>
@@ -179,7 +181,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="authorType"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="authorID"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorInsertAuto(
 			SqlConnection sqlConnection, 
@@ -194,7 +197,8 @@ namespace MOBOT.BHL.DAL
 			string authorType,
 			int creationUserID,
 			int lastModifiedUserID,
-			int? authorID)
+			int? productionAuthorID,
+			int? importedAuthorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -210,7 +214,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("AuthorType", SqlDbType.NVarChar, 50, false, authorType),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, true, authorID), 
+					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID),
+					CustomSqlHelper.CreateInputParameter("ImportedAuthorID", SqlDbType.Int, null, true, importedAuthorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordCreator> helper = new CustomSqlHelper<ImportRecordCreator>())
@@ -269,7 +274,8 @@ namespace MOBOT.BHL.DAL
 				value.AuthorType,
 				value.CreationUserID,
 				value.LastModifiedUserID,
-				value.AuthorID);
+				value.ProductionAuthorID,
+				value.ImportedAuthorID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -348,7 +354,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="endYear"></param>
 		/// <param name="authorType"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="authorID"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -362,9 +369,10 @@ namespace MOBOT.BHL.DAL
 			string endYear,
 			string authorType,
 			int lastModifiedUserID,
-			int? authorID)
+			int? productionAuthorID,
+			int? importedAuthorID)
 		{
-			return ImportRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordCreatorID, importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, lastModifiedUserID, authorID);
+			return ImportRecordCreatorUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordCreatorID, importRecordID, fullName, firstName, lastName, startYear, endYear, authorType, lastModifiedUserID, productionAuthorID, importedAuthorID);
 		}
 		
 		/// <summary>
@@ -382,7 +390,8 @@ namespace MOBOT.BHL.DAL
 		/// <param name="endYear"></param>
 		/// <param name="authorType"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="authorID"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		/// <returns>Object of type ImportRecordCreator.</returns>
 		public ImportRecordCreator ImportRecordCreatorUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -397,7 +406,8 @@ namespace MOBOT.BHL.DAL
 			string endYear,
 			string authorType,
 			int lastModifiedUserID,
-			int? authorID)
+			int? productionAuthorID,
+			int? importedAuthorID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -412,7 +422,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("EndYear", SqlDbType.NVarChar, 25, false, endYear),
 					CustomSqlHelper.CreateInputParameter("AuthorType", SqlDbType.NVarChar, 50, false, authorType),
 					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, true, authorID), 
+					CustomSqlHelper.CreateInputParameter("ProductionAuthorID", SqlDbType.Int, null, true, productionAuthorID),
+					CustomSqlHelper.CreateInputParameter("ImportedAuthorID", SqlDbType.Int, null, true, importedAuthorID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordCreator> helper = new CustomSqlHelper<ImportRecordCreator>())
@@ -471,7 +482,8 @@ namespace MOBOT.BHL.DAL
 				value.EndYear,
 				value.AuthorType,
 				value.LastModifiedUserID,
-				value.AuthorID);
+				value.ProductionAuthorID,
+				value.ImportedAuthorID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -525,7 +537,8 @@ namespace MOBOT.BHL.DAL
 						value.AuthorType,
 						value.CreationUserID,
 						value.LastModifiedUserID,
-						value.AuthorID);
+						value.ProductionAuthorID,
+						value.ImportedAuthorID);
 				
 				return new CustomDataAccessStatus<ImportRecordCreator>(
 					CustomDataAccessContext.Insert, 
@@ -560,7 +573,8 @@ namespace MOBOT.BHL.DAL
 						value.EndYear,
 						value.AuthorType,
 						value.LastModifiedUserID,
-						value.AuthorID);
+						value.ProductionAuthorID,
+						value.ImportedAuthorID);
 					
 				return new CustomDataAccessStatus<ImportRecordCreator>(
 					CustomDataAccessContext.Update, 

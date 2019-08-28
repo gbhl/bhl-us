@@ -891,12 +891,20 @@ namespace MOBOT.BHL.AdminWeb.Models
             string startYear = "", string endYear = "", string authorType = "")
         {
             ImportRecordCreator importRecordCreator = new ImportRecordCreator();
-            importRecordCreator.FullName = fullName;
-            importRecordCreator.FirstName = firstName;
-            importRecordCreator.LastName = lastName;
-            importRecordCreator.StartYear = startYear;
-            importRecordCreator.EndYear = endYear;
-            importRecordCreator.AuthorType = authorType;
+            int importedAuthorID = default(int);
+            if (Int32.TryParse(fullName, out importedAuthorID))
+            {
+                importRecordCreator.ImportedAuthorID = importedAuthorID;
+            }
+            else
+            {
+                importRecordCreator.FullName = fullName;
+                importRecordCreator.FirstName = firstName;
+                importRecordCreator.LastName = lastName;
+                importRecordCreator.StartYear = startYear;
+                importRecordCreator.EndYear = endYear;
+                importRecordCreator.AuthorType = authorType;
+            }
             return importRecordCreator;
         }
 

@@ -19,7 +19,7 @@ BEGIN
 					c.StartYear + 
 					CASE WHEN c.StartYear <> '' THEN '-' ELSE '' END + c.EndYear
 					) + 
-				'|' + ISNULL(CONVERT(nvarchar(10), c.AuthorID), '') +
+				'|' + ISNULL(CONVERT(nvarchar(10), c.ProductionAuthorID), '') +
 				'|' + RTRIM(
 					ISNULL(n.FullName, '') + ' ' + 
 					ISNULL(a.Numeration, '') + ' ' + 
@@ -31,7 +31,7 @@ BEGIN
 					)
 				+ ' ' + @Delimiter + ' '
 	FROM	import.ImportRecordCreator c
-			LEFT JOIN dbo.Author a ON c.AuthorID = a.AuthorID AND a.IsActive = 1
+			LEFT JOIN dbo.Author a ON c.ProductionAuthorID = a.AuthorID AND a.IsActive = 1
 			LEFT JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID AND n.IsPreferredName = 1
 	WHERE	ImportRecordID = @ImportRecordID
 	ORDER BY c.ImportRecordCreatorID

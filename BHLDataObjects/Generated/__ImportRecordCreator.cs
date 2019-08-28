@@ -1,5 +1,5 @@
 
-// Generated 9/20/2017 1:00:17 PM
+// Generated 8/27/2019 10:08:10 PM
 // Do not modify the contents of this code file.
 // This abstract class __ImportRecordCreator is based upon import.ImportRecordCreator.
 
@@ -57,7 +57,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="authorID"></param>
+		/// <param name="productionAuthorID"></param>
+		/// <param name="importedAuthorID"></param>
 		public __ImportRecordCreator(int importRecordCreatorID, 
 			int importRecordID, 
 			string fullName, 
@@ -70,7 +71,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime lastModifiedDate, 
 			int creationUserID, 
 			int lastModifiedUserID, 
-			int? authorID) : this()
+			int? productionAuthorID, 
+			int? importedAuthorID) : this()
 		{
 			_ImportRecordCreatorID = importRecordCreatorID;
 			ImportRecordID = importRecordID;
@@ -84,7 +86,8 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
-			AuthorID = authorID;
+			ProductionAuthorID = productionAuthorID;
+			ImportedAuthorID = importedAuthorID;
 		}
 		
 		#endregion Constructors
@@ -171,9 +174,14 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-					case "AuthorID" :
+					case "ProductionAuthorID" :
 					{
-						_AuthorID = (int?)column.Value;
+						_ProductionAuthorID = (int?)column.Value;
+						break;
+					}
+					case "ImportedAuthorID" :
+					{
+						_ImportedAuthorID = (int?)column.Value;
 						break;
 					}
 								}
@@ -517,32 +525,59 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion LastModifiedUserID
 		
-		#region AuthorID
+		#region ProductionAuthorID
 		
-		private int? _AuthorID = null;
+		private int? _ProductionAuthorID = null;
 		
 		/// <summary>
-		/// Column: AuthorID;
+		/// Column: ProductionAuthorID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("AuthorID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
-		public int? AuthorID
+		[ColumnDefinition("ProductionAuthorID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		public int? ProductionAuthorID
 		{
 			get
 			{
-				return _AuthorID;
+				return _ProductionAuthorID;
 			}
 			set
 			{
-				if (_AuthorID != value)
+				if (_ProductionAuthorID != value)
 				{
-					_AuthorID = value;
+					_ProductionAuthorID = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion AuthorID
+		#endregion ProductionAuthorID
+		
+		#region ImportedAuthorID
+		
+		private int? _ImportedAuthorID = null;
+		
+		/// <summary>
+		/// Column: ImportedAuthorID;
+		/// DBMS data type: int; Nullable;
+		/// </summary>
+		[ColumnDefinition("ImportedAuthorID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10, IsNullable=true)]
+		public int? ImportedAuthorID
+		{
+			get
+			{
+				return _ImportedAuthorID;
+			}
+			set
+			{
+				if (_ImportedAuthorID != value)
+				{
+					_ImportedAuthorID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion ImportedAuthorID
 			
 		#endregion Properties
 
@@ -599,7 +634,8 @@ namespace MOBOT.BHL.DataObjects
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
 					o.LastModifiedUserID == LastModifiedUserID &&
-					o.AuthorID == AuthorID 
+					o.ProductionAuthorID == ProductionAuthorID &&
+					o.ImportedAuthorID == ImportedAuthorID 
 				)
 				{
 					o = null;
@@ -712,7 +748,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
 			public const string LastModifiedUserID = "LastModifiedUserID";	
-			public const string AuthorID = "AuthorID";
+			public const string ProductionAuthorID = "ProductionAuthorID";	
+			public const string ImportedAuthorID = "ImportedAuthorID";
 		}
 				
 		#endregion SortColumn

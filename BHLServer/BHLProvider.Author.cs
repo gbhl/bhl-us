@@ -51,9 +51,9 @@ namespace MOBOT.BHL.Server
         }
 
         public CustomGenericList<Author> AuthorResolve(string fullName, string lastName, string firstName,
-            string startDate, string endDate)
+            string startDate, string endDate, int? authorID)
         {
-            return new AuthorDAL().AuthorResolve(null, null, fullName, lastName, firstName, startDate, endDate);
+            return new AuthorDAL().AuthorResolve(null, null, fullName, lastName, firstName, startDate, endDate, authorID);
         }
 
         public int SaveAuthor(Author author, int userId)
