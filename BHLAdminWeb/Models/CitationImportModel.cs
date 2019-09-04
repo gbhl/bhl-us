@@ -517,7 +517,8 @@ namespace MOBOT.BHL.AdminWeb.Models
                     notes = records[x].Notes,
                     authors = records[x].AuthorString,
                     keywords = records[x].KeywordString,
-                    errors = records[x].ErrorString
+                    errors = records[x].ErrorString,
+                    warnings = records[x].WarningString
                 };
             }
             json.aaData = aaData;
@@ -1145,6 +1146,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string authors { get; set; }
             public string keywords { get; set; }
             public string errors { get; set; }
+            public string warnings { get; set; }
         }
     }
 }

@@ -1,7 +1,7 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 8/29/2019 9:56:42 PM
 // Do not modify the contents of this code file.
-// This abstract class __ImportRecordErrorLog is based upon ImportRecordErrorLog.
+// This abstract class __ImportRecordErrorLog is based upon import.ImportRecordErrorLog.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __ImportRecordErrorLog : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -53,6 +53,7 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="lastModifiedDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="severity"></param>
 		public __ImportRecordErrorLog(int importRecordErrorLogID, 
 			int importRecordID, 
 			DateTime errorDate, 
@@ -60,7 +61,8 @@ namespace MOBOT.BHL.DataObjects
 			DateTime creationDate, 
 			DateTime lastModifiedDate, 
 			int creationUserID, 
-			int lastModifiedUserID) : this()
+			int lastModifiedUserID, 
+			string severity) : this()
 		{
 			_ImportRecordErrorLogID = importRecordErrorLogID;
 			ImportRecordID = importRecordID;
@@ -70,6 +72,7 @@ namespace MOBOT.BHL.DataObjects
 			LastModifiedDate = lastModifiedDate;
 			CreationUserID = creationUserID;
 			LastModifiedUserID = lastModifiedUserID;
+			Severity = severity;
 		}
 		
 		#endregion Constructors
@@ -136,7 +139,12 @@ namespace MOBOT.BHL.DataObjects
 						_LastModifiedUserID = (int)column.Value;
 						break;
 					}
-				}
+					case "Severity" :
+					{
+						_Severity = (string)column.Value;
+						break;
+					}
+								}
 			}
 			
 			IsNew = false;
@@ -144,7 +152,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region ImportRecordErrorLogID
 		
@@ -363,9 +371,37 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion LastModifiedUserID
+		
+		#region Severity
+		
+		private string _Severity = string.Empty;
+		
+		/// <summary>
+		/// Column: Severity;
+		/// DBMS data type: nvarchar(40);
+		/// </summary>
+		[ColumnDefinition("Severity", DbTargetType=SqlDbType.NVarChar, Ordinal=9, CharacterMaxLength=40)]
+		public string Severity
+		{
+			get
+			{
+				return _Severity;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 40);
+				if (_Severity != value)
+				{
+					_Severity = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion Severity
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -414,7 +450,8 @@ namespace MOBOT.BHL.DataObjects
 					o.CreationDate == CreationDate &&
 					o.LastModifiedDate == LastModifiedDate &&
 					o.CreationUserID == CreationUserID &&
-					o.LastModifiedUserID == LastModifiedUserID 
+					o.LastModifiedUserID == LastModifiedUserID &&
+					GetComparisonString(o.Severity) == GetComparisonString(Severity) 
 				)
 				{
 					o = null;
@@ -522,10 +559,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string CreationDate = "CreationDate";	
 			public const string LastModifiedDate = "LastModifiedDate";	
 			public const string CreationUserID = "CreationUserID";	
-			public const string LastModifiedUserID = "LastModifiedUserID";
+			public const string LastModifiedUserID = "LastModifiedUserID";	
+			public const string Severity = "Severity";
 		}
 				
 		#endregion SortColumn
 	}
 }
 // end of source generation
+

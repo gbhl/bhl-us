@@ -1,8 +1,8 @@
 
-// Generated 1/10/2014 11:05:49 AM
+// Generated 8/29/2019 9:56:42 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class ImportRecordErrorLogDAL is based upon ImportRecordErrorLog.
+// This partial class ImportRecordErrorLogDAL is based upon import.ImportRecordErrorLog.
 
 #region How To Implement
 
@@ -32,12 +32,12 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class ImportRecordErrorLogDAL : IImportRecordErrorLogDAL
+	partial class ImportRecordErrorLogDAL 
 	{
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from ImportRecordErrorLog by primary key(s).
+		/// Select values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from ImportRecordErrorLog by primary key(s).
+		/// Select values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecordErrorLog by primary key(s).
+		/// Select values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from ImportRecordErrorLog by primary key(s).
+		/// Select values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into ImportRecordErrorLog.
+		/// Insert values into import.ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -141,6 +141,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="errorMessage"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="severity"></param>
 		/// <returns>Object of type ImportRecordErrorLog.</returns>
 		public ImportRecordErrorLog ImportRecordErrorLogInsertAuto(
 			SqlConnection sqlConnection, 
@@ -149,13 +150,14 @@ namespace MOBOT.BHL.DAL
 			DateTime errorDate,
 			string errorMessage,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			string severity)
 		{
-			return ImportRecordErrorLogInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, errorDate, errorMessage, creationUserID, lastModifiedUserID );
+			return ImportRecordErrorLogInsertAuto( sqlConnection, sqlTransaction, "BHL", importRecordID, errorDate, errorMessage, creationUserID, lastModifiedUserID, severity );
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecordErrorLog.
+		/// Insert values into import.ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -165,6 +167,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="errorMessage"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="severity"></param>
 		/// <returns>Object of type ImportRecordErrorLog.</returns>
 		public ImportRecordErrorLog ImportRecordErrorLogInsertAuto(
 			SqlConnection sqlConnection, 
@@ -174,7 +177,8 @@ namespace MOBOT.BHL.DAL
 			DateTime errorDate,
 			string errorMessage,
 			int creationUserID,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			string severity)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -185,7 +189,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ErrorDate", SqlDbType.DateTime, null, false, errorDate),
 					CustomSqlHelper.CreateInputParameter("ErrorMessage", SqlDbType.NVarChar, 1073741823, false, errorMessage),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, false, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("Severity", SqlDbType.NVarChar, 40, false, severity), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordErrorLog> helper = new CustomSqlHelper<ImportRecordErrorLog>())
@@ -206,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Insert values into import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,7 +226,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Insert values into import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -239,7 +244,8 @@ namespace MOBOT.BHL.DAL
 				value.ErrorDate,
 				value.ErrorMessage,
 				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.Severity);
 		}
 		
 		#endregion ===== INSERT =====
@@ -247,7 +253,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from ImportRecordErrorLog by primary key(s).
+		/// Delete values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -262,7 +268,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from ImportRecordErrorLog by primary key(s).
+		/// Delete values from import.ImportRecordErrorLog by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -305,7 +311,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Update values in import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,6 +320,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="errorDate"></param>
 		/// <param name="errorMessage"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="severity"></param>
 		/// <returns>Object of type ImportRecordErrorLog.</returns>
 		public ImportRecordErrorLog ImportRecordErrorLogUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -322,13 +329,14 @@ namespace MOBOT.BHL.DAL
 			int importRecordID,
 			DateTime errorDate,
 			string errorMessage,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			string severity)
 		{
-			return ImportRecordErrorLogUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordErrorLogID, importRecordID, errorDate, errorMessage, lastModifiedUserID);
+			return ImportRecordErrorLogUpdateAuto( sqlConnection, sqlTransaction, "BHL", importRecordErrorLogID, importRecordID, errorDate, errorMessage, lastModifiedUserID, severity);
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Update values in import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -338,6 +346,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="errorDate"></param>
 		/// <param name="errorMessage"></param>
 		/// <param name="lastModifiedUserID"></param>
+		/// <param name="severity"></param>
 		/// <returns>Object of type ImportRecordErrorLog.</returns>
 		public ImportRecordErrorLog ImportRecordErrorLogUpdateAuto(
 			SqlConnection sqlConnection, 
@@ -347,7 +356,8 @@ namespace MOBOT.BHL.DAL
 			int importRecordID,
 			DateTime errorDate,
 			string errorMessage,
-			int lastModifiedUserID)
+			int lastModifiedUserID,
+			string severity)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
@@ -357,7 +367,8 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("ImportRecordID", SqlDbType.Int, null, false, importRecordID),
 					CustomSqlHelper.CreateInputParameter("ErrorDate", SqlDbType.DateTime, null, false, errorDate),
 					CustomSqlHelper.CreateInputParameter("ErrorMessage", SqlDbType.NVarChar, 1073741823, false, errorMessage),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, false, lastModifiedUserID),
+					CustomSqlHelper.CreateInputParameter("Severity", SqlDbType.NVarChar, 40, false, severity), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<ImportRecordErrorLog> helper = new CustomSqlHelper<ImportRecordErrorLog>())
@@ -378,7 +389,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Update values in import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -393,7 +404,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
+		/// Update values in import.ImportRecordErrorLog. Returns an object of type ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -411,7 +422,8 @@ namespace MOBOT.BHL.DAL
 				value.ImportRecordID,
 				value.ErrorDate,
 				value.ErrorMessage,
-				value.LastModifiedUserID);
+				value.LastModifiedUserID,
+				value.Severity);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -419,9 +431,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage ImportRecordErrorLog object.
+		/// Manage import.ImportRecordErrorLog object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecordErrorLog.
+		/// then either insert values into, delete values from, or update values in import.ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -436,9 +448,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage ImportRecordErrorLog object.
+		/// Manage import.ImportRecordErrorLog object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in ImportRecordErrorLog.
+		/// then either insert values into, delete values from, or update values in import.ImportRecordErrorLog.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -460,7 +472,8 @@ namespace MOBOT.BHL.DAL
 						value.ErrorDate,
 						value.ErrorMessage,
 						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.Severity);
 				
 				return new CustomDataAccessStatus<ImportRecordErrorLog>(
 					CustomDataAccessContext.Insert, 
@@ -490,7 +503,8 @@ namespace MOBOT.BHL.DAL
 						value.ImportRecordID,
 						value.ErrorDate,
 						value.ErrorMessage,
-						value.LastModifiedUserID);
+						value.LastModifiedUserID,
+						value.Severity);
 					
 				return new CustomDataAccessStatus<ImportRecordErrorLog>(
 					CustomDataAccessContext.Update, 
@@ -508,4 +522,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

@@ -4,6 +4,7 @@
 	ImportRecordID int NOT NULL,
 	ErrorDate datetime NOT NULL CONSTRAINT DF_ImportRecordErrorLog_ErrorDate DEFAULT(GETDATE()),
 	ErrorMessage nvarchar(max) NOT NULL CONSTRAINT DF_ImportRecordErrorLog_ErrorMessage DEFAULT(''),
+	Severity nvarchar(40) NOT NULL CONSTRAINT DF_ImportRecordErrorLog_Severity DEFAULT (''),
 	CreationDate datetime NOT NULL CONSTRAINT DF_ImportRecordErrorLog_CreationDate DEFAULT(GETDATE()),
 	LastModifiedDate datetime NOT NULL CONSTRAINT DF_ImportRecordErrorLog_LastModifiedDate DEFAULT(GETDATE()),
 	CreationUserID int NOT NULL CONSTRAINT DF_ImportRecordErrorLog_CreationUserID DEFAULT(1),

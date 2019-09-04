@@ -128,7 +128,7 @@ namespace MOBOT.BHL.Server
 
         /// <summary>
         /// Ensure that the imported record has valid Title, Item, and Page IDs (if they were provided).
-        /// Also look for invalid author names (ex. "et al") and mal-formed DOIs.
+        /// Also look for invalid author names (ex. "et al"), invalid author IDs, and mal-formed DOIs.
         /// 
         /// The "final" fields for all valid identifiers should be populated (ex. ItemID, TitleID, list 
         /// of ImportRecordPage records).
@@ -311,7 +311,7 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            // Make sure author names are valid
+            // Make sure author names and IDs are valid
             foreach (ImportRecordCreator author in citation.Authors)
             {
                 if (author.FullName.ToLower().Contains("et al") ||
@@ -320,6 +320,21 @@ namespace MOBOT.BHL.Server
                 {
                     citation.Errors.Add(GetNewImportRecordError(string.Format("Invalid Author {0}", author.FullName)));
                     isValid = false;
+                }
+
+                if (author.ImportedAuthorID != null && 
+                    author.ProductionAuthorID == null)
+                {
+                    citation.Errors.Add(GetNewImportRecordError(string.Format("Author ID {0} is invalid", author.ImportedAuthorID.ToString())));
+                    isValid = false;
+                }
+
+                if (author.ImportedAuthorID != null &&
+                    author.ProductionAuthorID != null &&
+                    author.ImportedAuthorID != author.ProductionAuthorID)
+                {
+                    citation.Errors.Add(GetNewImportRecordWarning(string.Format(
+                        "Author ID {0} substituted for Author ID {1}", author.ProductionAuthorID.ToString(), author.ImportedAuthorID.ToString())));
                 }
             }
 
@@ -418,9 +433,20 @@ namespace MOBOT.BHL.Server
 
         private ImportRecordErrorLog GetNewImportRecordError(string message)
         {
+            return GetNewImportRecordErrorLog(message, "Error");
+        }
+
+        private ImportRecordErrorLog GetNewImportRecordWarning(string message)
+        {
+            return GetNewImportRecordErrorLog(message, "Warning");
+        }
+
+        private ImportRecordErrorLog GetNewImportRecordErrorLog(string message, string severity)
+        {
             ImportRecordErrorLog importRecordErrorLog = new ImportRecordErrorLog();
             importRecordErrorLog.ErrorDate = DateTime.Now;
             importRecordErrorLog.ErrorMessage = message;
+            importRecordErrorLog.Severity = severity;
             return importRecordErrorLog;
         }
 

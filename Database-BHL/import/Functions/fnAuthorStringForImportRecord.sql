@@ -15,7 +15,7 @@ BEGIN
 					WHEN c.LastName <> '' AND c.FirstName <> '' THEN c.LastName + ', ' + c.FirstName + ' '
 					WHEN c.LastName <> '' THEN c.LastName + ' '
 					WHEN c.FirstName <> '' THEN c.FirstName + ' '
-					ELSE '' END + 
+					ELSE ISNULL(CONVERT(NVARCHAR(10), c.ImportedAuthorID), '') END + 
 					c.StartYear + 
 					CASE WHEN c.StartYear <> '' THEN '-' ELSE '' END + c.EndYear
 					) + 
