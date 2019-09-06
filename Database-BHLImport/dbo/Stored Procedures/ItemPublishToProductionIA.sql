@@ -204,6 +204,8 @@ BEGIN TRY
 		[MARCCreator_e] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_q] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
 		[MARCCreator_t] [nvarchar](450) COLLATE SQL_Latin1_General_CP1_CI_AI NULL,
+		[DOB] [nvarchar](50) NULL,
+		[DOD] [nvarchar](50) NULL,
 		[CreatorRoleTypeID] [int] NOT NULL,
 		[SequenceOrder] [smallint] NOT NULL,
 		[ExternalCreationDate] [datetime] NULL,
@@ -596,6 +598,8 @@ BEGIN TRY
 			tc.[MARCCreator_e],
 			tc.[MARCCreator_q],
 			tc.[MARCCreator_t],
+			NULL,
+			NULL,
 			tc.[CreatorRoleTypeID],
 			tc.[SequenceOrder],
 			tc.[ExternalCreationDate],
@@ -620,9 +624,36 @@ BEGIN TRY
 	SET		CreatorName = RTRIM(REPLACE(CreatorName, '[from old catalog]', '')),
 			MARCCreator_q = RTRIM(REPLACE(MARCCreator_q, '[from old catalog]', ''))
 
-	-- Find production Author IDs for the selected authors
+	-- Get the creator DOB and DOD values
+	SELECT	TitleCreatorID,
+			MARCCreator_a,
+			MARCCreator_b,
+			MARCCreator_c,
+			MARCCreator_d,
+			MARCCreator_d AS Dates
+	INTO	#tmpCreatorDates
+	FROM	#tmpTitle_Creator
+	WHERE	ISNULL(MARCCreator_d, '') <> ''
+
 	UPDATE	#tmpTitle_Creator
-	SET		ProductionAuthorID = a.AuthorID
+	SET		DOB = u.StartDate,
+			DOD = u.EndDate
+	FROM	#tmpTitle_Creator c INNER JOIN #tmpCreatorDates d
+				ON c.TitleCreatorID = d.TitleCreatorID
+				AND ISNULL(c.MARCCreator_a, '') = ISNULL(d.MARCCreator_a, '')
+				AND ISNULL(c.MARCCreator_b, '') = ISNULL(d.MARCCreator_b, '')
+				AND ISNULL(c.MARCCreator_c, '') = ISNULL(d.MARCCreator_c, '')
+				AND ISNULL(c.MARCCreator_d, '') = ISNULL(d.MARCCreator_d, '')
+			CROSS APPLY dbo.fnGetDatesFromString(d.Dates) u
+
+	DROP TABLE #tmpCreatorDates
+
+	-- Find production Author IDs for the selected authors
+	--UPDATE	#tmpTitle_Creator
+	--SET		ProductionAuthorID = a.AuthorID
+	SELECT	t.TitleCreatorID, 
+			MIN(a.AuthorID) AS ProductionAuthorID
+	INTO	#tmpTCUpdate
 	FROM	#tmpTitle_Creator t 
 			LEFT JOIN dbo.BHLAuthorName n 
 				ON REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
@@ -643,6 +674,16 @@ BEGIN TRY
 				(ISNULL(t.MARCCreator_c, '') = ISNULL(a.Title, '') COLLATE SQL_Latin1_General_CP1_CI_AI OR
 				ISNULL(t.MARCCreator_c, '') = ISNULL(a.Location, '') COLLATE SQL_Latin1_General_CP1_CI_AI))
 			)
+	AND		ISNULL(dbo.fnRemoveNonNumericCharacters(t.DOB), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.Startdate), '')
+	AND		ISNULL(dbo.fnRemoveNonNumericCharacters(t.DOD), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
+	GROUP BY t.TitleCreatorID
+
+	UPDATE	#tmpTitle_Creator
+	SET		ProductionAuthorID = tu.ProductionAuthorID
+	FROM	#tmpTitle_Creator tc 
+			INNER JOIN #tmpTCUpdate tu ON tc.TitleCreatorID = tu.TitleCreatorID
+
+	DROP TABLE #tmpTCUpdate
 
 	-- If a selected production author ID has been redirected to a different 
 	-- author, then use that author instead.  Follow the "redirect" chain up 
@@ -709,9 +750,13 @@ BEGIN TRY
 			MARCCreator_q = RTRIM(REPLACE(MARCCreator_q, '[from old catalog]', ''))
 
 	-- Find production Author IDs for the selected authors
-	UPDATE	#tmpCreator
-	SET		ProductionAuthorID = a.AuthorID,
-			ProductionAuthorNameID = n.AuthorNameID
+	--UPDATE	#tmpCreator
+	--SET		ProductionAuthorID = a.AuthorID,
+	--		ProductionAuthorNameID = n.AuthorNameID
+	SELECT	t.CreatorID, 
+			MIN(a.AuthorID) AS ProductionAuthorID, 
+			MIN(n.AuthorNameID) AS ProductionAuthorNameID
+	INTO	#tmpCUpdate
 	FROM	#tmpCreator t INNER JOIN dbo.BHLAuthor a
 			ON		(  -- If b is blank, match records with blank Numeration/Unit values
 					(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
@@ -734,6 +779,15 @@ BEGIN TRY
 				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
 				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
 					COLLATE SQL_Latin1_General_CP1_CI_AI
+	GROUP BY t.CreatorID
+
+	UPDATE	#tmpCreator
+	SET		ProductionAuthorID = tu.ProductionAuthorID,
+			ProductionAuthorNameID = tu.ProductionAuthorNameID
+	FROM	#tmpCreator tc 
+			INNER JOIN #tmpCUpdate tu ON tc.CreatorID = tu.CreatorID
+
+	DROP TABLE #tmpCUpdate
 
 	-- If a selected production Author ID has been redirected to a different 
 	-- author ID, then use that author ID instead.  Follow the "redirect" chain
