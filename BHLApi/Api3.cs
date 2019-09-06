@@ -173,8 +173,8 @@ namespace MOBOT.BHL.API.BHLApi
                 CustomGenericList<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
-                if (pages) item.Pages = this.GetItemPages(id, includeOcr);
-                if (segments) item.Parts = this.GetItemSegments(id);
+                if (pages) item.Pages = this.GetItemPages(item.ItemID.ToString(), includeOcr);
+                if (segments) item.Parts = this.GetItemSegments(item.ItemID.ToString());
             }
 
             return items;
@@ -458,7 +458,7 @@ namespace MOBOT.BHL.API.BHLApi
                     relatedPart.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, relatedPart.PartID, InstitutionRole.Contributor);
                 }
                 part.Contributors = dal.InstitutionSelectBySegmentIDAndRole(null, null, part.PartID, InstitutionRole.Contributor);
-                if (names) part.Names = this.GetSegmentNames(id);
+                if (names) part.Names = this.GetSegmentNames(part.PartID.ToString());
             }
 
             return parts;
