@@ -23,7 +23,6 @@ SELECT	'Segment' AS Entity,
 		Url 
 FROM	dbo.Segment
 WHERE	ISNULL(Url, '') <> ''
-AND		Url NOT LIKE '%www.biodiversitylibrary.org%'
 AND		SegmentStatusID IN (10, 20)
 
 UNION
