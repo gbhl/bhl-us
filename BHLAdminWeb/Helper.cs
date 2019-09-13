@@ -143,5 +143,13 @@ namespace MOBOT.BHL.AdminWeb
             var uid = (from u in Db.Users where u.UserName == userName select u.Id).Single();
             return uid;
         }
+
+        public static Models.ApplicationUser GetCurrentUserDetail(HttpRequestBase request)
+        {
+            string userName = request.GetOwinContext().Authentication.User.Identity.Name;
+            var Db = new MOBOT.BHL.AdminWeb.Models.ApplicationDbContext();
+            var user = (from u in Db.Users where u.UserName == userName select u).Single();
+            return user;
+        }
     }
 }

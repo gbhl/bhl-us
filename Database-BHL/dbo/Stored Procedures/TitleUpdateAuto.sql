@@ -21,7 +21,7 @@ CREATE PROCEDURE dbo.TitleUpdateAuto
 @TL2Author NVARCHAR(100),
 @PublishReady BIT,
 @RareBooks BIT,
-@Note NVARCHAR(255),
+@Note NVARCHAR(MAX),
 @LastModifiedUserID INT,
 @OriginalCatalogingSource NVARCHAR(100),
 @EditionStatement NVARCHAR(450),
