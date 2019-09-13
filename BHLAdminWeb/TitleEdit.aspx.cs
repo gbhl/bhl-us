@@ -1862,7 +1862,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider bp = new BHLProvider();
                 // Don't catch errors... allow global error handler to take over
 				bp.TitleSave( title, (int)userId,
-                    string.Format("{0} {1}", user.FirstName, user.LastName));
+                    string.Format("{0} {1} ({2})", user.FirstName, user.LastName, user.Email));
 
                 // After a successful save operation, reload the title
                 fillUI(title.TitleID);
