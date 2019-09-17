@@ -43,6 +43,12 @@ BEGIN
 				AltExternalUrl = '/download/' + @Barcode + '/page/n' + convert(varchar(4), (SequenceOrder - @NumPagesToDelete - 1))
 		WHERE	ItemID = @ItemID and Active = 1 and SequenceOrder >= (@SequenceOrder + @NumPagesToDelete)
 
+		-- If the specified ThumbnailPageID for the Item was just deactivated, clear it
+		UPDATE	dbo.Item
+		SET		ThumbnailPageID = NULL
+		WHERE	ItemID = @ItemID
+		AND		ThumbnailPageID IN (SELECT PageID FROM dbo.Page WHERE ItemID = @ItemID AND Active = 0)
+
 		-- Clear the name records for this book, as they are probably attached to the wrong pages
 		exec dbo.NamePageDeleteByItemID @ItemID
 
