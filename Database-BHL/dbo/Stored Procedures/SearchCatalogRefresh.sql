@@ -221,7 +221,7 @@ BEGIN
 	-- Get the initial data set
 	INSERT	#tmpItem (TitleID, ItemID, FullTitle, PartNumber, PartName, UniformTitle, 
 			Volume, PublicationDetails, PublisherPlace, PublisherName, EditionStatement, [Year],
-			HasSegments, HasExternalContent)
+			HasSegments, HasExternalContent, FirstPageID)
 	SELECT DISTINCT
 			t.TitleID,
 			i.ItemID,
@@ -240,7 +240,8 @@ BEGIN
 				ELSE ''
 				END AS [Year],
 			CASE WHEN s.SegmentID IS NULL THEN 0 ELSE 1 END,
-			CASE WHEN ISNULL(RTRIM(i.ExternalUrl), '') = '' THEN 0 ELSE 1 END
+			CASE WHEN ISNULL(RTRIM(i.ExternalUrl), '') = '' THEN 0 ELSE 1 END,
+			i.ThumbnailPageID
 	FROM	dbo.Title t 
 			INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID
 			INNER JOIN dbo.Item i ON ti.ItemID = i.ItemID
@@ -312,6 +313,7 @@ BEGIN
 	FROM	#tmpItem i
 			INNER JOIN #tmpPages t ON i.ItemID = t.ItemID
 			INNER JOIN dbo.Page p WITH (NOLOCK) ON t.ItemID = p.ItemID AND t.SequenceOrder = p.SequenceOrder
+	WHERE	i.FirstPageID IS NULL
 
 	UPDATE	#tmpItem
 	SET		FirstPageID = p.PageID	-- Just use the first physical page in the book if no title page found

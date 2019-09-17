@@ -85,7 +85,7 @@ SELECT DISTINCT
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections,
 		ISNULL(CASE WHEN ISNULL(i.Year, '') = '' THEN CONVERT(nvarchar(20), t.StartYear) ELSE i.Year END, '') as [Date],
 		i.Barcode,
-		NULL AS FirstPageID
+		i.ThumbnailPageID AS FirstPageID
 FROM	dbo.Item i WITH (NOLOCK)
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON i.ItemID = ti.ItemID
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON ti.TitleID = t.TitleID
@@ -140,6 +140,7 @@ SET		FirstPageID = p.PageID
 FROM	#tmpItem i
 		INNER JOIN #tmpPages t ON i.ItemID = t.ItemID
 		INNER JOIN dbo.Page p WITH (NOLOCK) ON t.ItemID = p.ItemID AND t.SequenceOrder = p.SequenceOrder
+WHERE	i.FirstPageID IS NULL
 
 UPDATE	#tmpItem
 SET		FirstPageID = p.PageID	-- Just use the first physical page in the book if no title page found

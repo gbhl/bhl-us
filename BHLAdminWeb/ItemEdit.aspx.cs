@@ -281,6 +281,30 @@ namespace MOBOT.BHL.AdminWeb
                     }
                 }
 
+                // If necesssary, populate the thumbnail pages dropdown
+                if (ddlThumbnailPageID.Items.Count == 0)
+                {
+                    ddlThumbnailPageID.Items.Add(new ListItem("(use default)", ""));
+                    foreach(DataObjects.Page page in item.Pages)
+                    {
+                        ListItem li = new ListItem(
+                            string.Format("{0} ({1})", page.PageID.ToString(), page.WebDisplay),
+                            page.PageID.ToString()
+                            );
+                        ddlThumbnailPageID.Items.Add(li);
+                    }
+                }
+
+                ddlThumbnailPageID.SelectedValue = "";
+                if (item.ThumbnailPageID.HasValue)
+                {
+                    ddlThumbnailPageID.SelectedValue = item.ThumbnailPageID.Value.ToString();
+                }
+                else
+                {
+                    ddlThumbnailPageID.SelectedIndex = 0;
+                }
+
                 if (item.LanguageCode != null && item.LanguageCode.Length > 0)
                 {
                     ddlLang.SelectedValue = item.LanguageCode.ToUpper();
@@ -1210,6 +1234,7 @@ namespace MOBOT.BHL.AdminWeb
                 item.ExternalUrl = externalUrlTextBox.Text.Trim();
 				item.VaultID = ( ddlVault.SelectedIndex == 0 ? i : int.Parse(ddlVault.SelectedValue) );
 				item.ItemStatusID = int.Parse( ddlItemStatus.SelectedValue );
+                item.ThumbnailPageID = ddlThumbnailPageID.SelectedValue == "" ? (int?)null : int.Parse(ddlThumbnailPageID.SelectedValue);
 
 				item.IsNew = false;
 
