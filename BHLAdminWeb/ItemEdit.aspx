@@ -440,6 +440,14 @@
 					<asp:DropDownList ID="ddlScanningInstitution" runat="server"></asp:DropDownList><br />(Labeled "Added By:" on the BHL web site.)
 				</td>
 			</tr>
+            <tr>
+                <td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
+                    Thumbnail Page ID:
+                </td>
+                <td>
+					<asp:DropDownList ID="ddlThumbnailPageID" runat="server"></asp:DropDownList><br />(Used for the item thumbnail on the BHL web site.  Defaults to Title Page if no selection here.)
+                </td>
+            </tr>
 			<tr>
 				<td style="white-space: nowrap" align="right" class="dataHeader">
 					Scanned By:
