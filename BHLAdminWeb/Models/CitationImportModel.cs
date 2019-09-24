@@ -517,7 +517,8 @@ namespace MOBOT.BHL.AdminWeb.Models
                     notes = records[x].Notes,
                     authors = records[x].AuthorString,
                     keywords = records[x].KeywordString,
-                    errors = records[x].ErrorString
+                    errors = records[x].ErrorString,
+                    warnings = records[x].WarningString
                 };
             }
             json.aaData = aaData;
@@ -891,12 +892,20 @@ namespace MOBOT.BHL.AdminWeb.Models
             string startYear = "", string endYear = "", string authorType = "")
         {
             ImportRecordCreator importRecordCreator = new ImportRecordCreator();
-            importRecordCreator.FullName = fullName;
-            importRecordCreator.FirstName = firstName;
-            importRecordCreator.LastName = lastName;
-            importRecordCreator.StartYear = startYear;
-            importRecordCreator.EndYear = endYear;
-            importRecordCreator.AuthorType = authorType;
+            int importedAuthorID = default(int);
+            if (Int32.TryParse(fullName, out importedAuthorID))
+            {
+                importRecordCreator.ImportedAuthorID = importedAuthorID;
+            }
+            else
+            {
+                importRecordCreator.FullName = fullName;
+                importRecordCreator.FirstName = firstName;
+                importRecordCreator.LastName = lastName;
+                importRecordCreator.StartYear = startYear;
+                importRecordCreator.EndYear = endYear;
+                importRecordCreator.AuthorType = authorType;
+            }
             return importRecordCreator;
         }
 
@@ -1137,6 +1146,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             public string authors { get; set; }
             public string keywords { get; set; }
             public string errors { get; set; }
+            public string warnings { get; set; }
         }
     }
 }

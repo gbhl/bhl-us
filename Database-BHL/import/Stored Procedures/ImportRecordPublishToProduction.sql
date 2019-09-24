@@ -258,7 +258,7 @@ BEGIN TRY
 
 	-- Add new SegmentAuthor records to production
 	INSERT	dbo.SegmentAuthor (SegmentID, AuthorID, SequenceOrder, CreationUserID, LastModifiedUserID)
-	SELECT	@NewSegmentID, AuthorID, ROW_NUMBER() OVER (ORDER BY ImportRecordCreatorID), @UserID, @UserID
+	SELECT	@NewSegmentID, ProductionAuthorID, ROW_NUMBER() OVER (ORDER BY ImportRecordCreatorID), @UserID, @UserID
 	FROM	import.ImportRecordCreator
 	WHERE	ImportRecordID = @ImportRecordID
 

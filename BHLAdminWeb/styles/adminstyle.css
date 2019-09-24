@@ -91,6 +91,12 @@ A.HeaderLinks:active {
 	color: Red;
 }
 
+.WarningText {
+    font-family: Helvetica, Verdana, Times, serif;
+    font-size: 12px;
+    color: orange;
+}
+
 .AdminAlertText 
 {
 	font-family: Helvetica, Verdana, Times, serif;

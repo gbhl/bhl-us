@@ -18,6 +18,7 @@ namespace MOBOT.BHL.DataObjects
         private string _authorString = string.Empty;
         private string _keywordString = string.Empty;
         private string _errorString = string.Empty;
+        private string _warningString = string.Empty;
         private string _titleIDString = string.Empty;
         private string _itemIDString = string.Empty;
         private string _startPageIDString = string.Empty;
@@ -27,6 +28,7 @@ namespace MOBOT.BHL.DataObjects
         private CustomGenericList<ImportRecordKeyword> _keywords = new CustomGenericList<ImportRecordKeyword>();
         private CustomGenericList<ImportRecordPage> _pages = new CustomGenericList<ImportRecordPage>();
         private CustomGenericList<ImportRecordErrorLog> _errors = new CustomGenericList<ImportRecordErrorLog>();
+        private CustomGenericList<ImportRecordErrorLog> _warnings = new CustomGenericList<ImportRecordErrorLog>();
 
         public int TotalRecords
         {
@@ -56,6 +58,12 @@ namespace MOBOT.BHL.DataObjects
         {
             get { return _errorString; }
             set { _errorString = value; }
+        }
+
+        public string WarningString
+        {
+            get { return _warningString; }
+            set { _warningString = value; }
         }
 
         public string TitleIDString
@@ -112,6 +120,12 @@ namespace MOBOT.BHL.DataObjects
             set { _errors = value; }
         }
 
+        public CustomGenericList<ImportRecordErrorLog> Warnings
+        {
+            get { return _warnings; }
+            set { _warnings = value; }
+        }
+
         #endregion Properties
 
         public override void SetValues(CustomDataAccess.CustomDataRow row)
@@ -134,6 +148,9 @@ namespace MOBOT.BHL.DataObjects
                         break;
                     case "Errors":
                         ErrorString = Utility.EmptyIfNull(column.Value);
+                        break;
+                    case "Warnings":
+                        WarningString = Utility.EmptyIfNull(column.Value);
                         break;
                 }
             }

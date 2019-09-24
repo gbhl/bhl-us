@@ -31,7 +31,8 @@
                 if (d.url !== "") segDetails += formatDetail("Url", d.url);
                 if (d.summary !== "") segDetails += formatDetail("Abstract", d.summary);
                 if (d.notes !== "") segDetails += formatDetail("Notes", d.notes);
-                if (d.errors !== "") segDetails += formatDetailError("ERRORS", d.errors);
+                if (d.errors !== "") segDetails += formatDetailError("ERRORS", d.errors, 'ErrorText');
+                if (d.warnings !== "") segDetails += formatDetailError("WARNINGS", d.warnings, 'WarningText');
                 return "<div class='container'>" + segDetails + "</div>";
             }
             else return "";
@@ -72,9 +73,9 @@
             return detail + "</div>";
         }
 
-        function formatDetailError(label, value)
+        function formatDetailError(label, value, style)
         {
-            var detail = formatLabel(label, 'ErrorText');
+            var detail = formatLabel(label, style);
             var values = value.split("+++");
             values.forEach(function(val) { detail += val + "<br/>"; });
             return detail + "</div>";

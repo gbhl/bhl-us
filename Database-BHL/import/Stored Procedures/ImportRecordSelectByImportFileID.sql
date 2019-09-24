@@ -137,7 +137,8 @@ SELECT TOP (@NumRows)
 		r.Notes,
 		CASE WHEN @Extended = 1 THEN import.fnAuthorStringForImportRecord(r.ImportRecordID, '+++') ELSE '' END AS Authors,
 		CASE WHEN @Extended = 1 THEN import.fnKeywordStringForImportRecord(r.ImportRecordID, '+++') ELSE '' END AS Keywords,
-		CASE WHEN @Extended = 1 THEN import.fnErrorStringForImportRecord(r.ImportRecordID, '+++') ELSE '' END AS Errors
+		CASE WHEN @Extended = 1 THEN import.fnErrorStringForImportRecord(r.ImportRecordID, 'Error', '+++') ELSE '' END AS Errors,
+		CASE WHEN @Extended = 1 THEN import.fnErrorStringForImportRecord(r.ImportRecordID, 'Warning', '+++') ELSE '' END AS Warnings
 FROM	#tmpRecord tmp 
 		INNER JOIN import.ImportRecord r ON tmp.ImportRecordID = r.ImportRecordID
 		LEFT JOIN dbo.SegmentGenre g ON r.Genre = g.GenreName

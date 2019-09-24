@@ -33,9 +33,9 @@ BEGIN TRY
 			INNER JOIN import.ImportRecord r ON c.ImportRecordID = r.ImportRecordID
 	WHERE	r.ImportFileID = @ImportFileID
 	AND		r.ImportRecordStatusID = @ImportRecordNewID
-	AND		c.AuthorID IS NULL
+	AND		c.ProductionAuthorID IS NULL
 
-	-- Add the new creators to production (making note of the new AuthorIDs)
+	-- Add the new creators to production (making note of the new production AuthorIDs)
 	DECLARE @NewAuthorID int
 	DECLARE @FullName nvarchar(300)
 	DECLARE @FirstName nvarchar(150)
@@ -70,7 +70,7 @@ BEGIN TRY
 
 			-- Preserve the production identifier
 			UPDATE	import.ImportRecordCreator
-			SET		AuthorID = @NewAuthorID
+			SET		ProductionAuthorID = @NewAuthorID
 			WHERE	FullName = @FullName
 			AND		FirstName = @FirstName
 			AND		LastName = @LastName
