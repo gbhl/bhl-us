@@ -287,11 +287,14 @@ namespace MOBOT.BHL.AdminWeb
                     ddlThumbnailPageID.Items.Add(new ListItem("(use default)", ""));
                     foreach(DataObjects.Page page in item.Pages)
                     {
-                        ListItem li = new ListItem(
-                            string.Format("{0} ({1})", page.PageID.ToString(), page.WebDisplay),
-                            page.PageID.ToString()
-                            );
-                        ddlThumbnailPageID.Items.Add(li);
+                        if (page.Active)
+                        {
+                            ListItem li = new ListItem(
+                                string.Format("{0} ({1})", page.PageID.ToString(), page.WebDisplay),
+                                page.PageID.ToString()
+                                );
+                            ddlThumbnailPageID.Items.Add(li);
+                        }
                     }
                 }
 
