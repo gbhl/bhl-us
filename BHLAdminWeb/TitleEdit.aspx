@@ -443,7 +443,7 @@
 					Notes (not shown in UI):
 				</td>
 				<td colspan="4" style="width: 100%">
-					<asp:TextBox ID="notesTextBox" runat="server" MaxLength="255" Width="100%"></asp:TextBox>
+					<asp:TextBox ID="notesTextBox" runat="server" Rows="6" TextMode="MultiLine" width="700px"></asp:TextBox>
 				</td>
 			</tr>
 		</table>

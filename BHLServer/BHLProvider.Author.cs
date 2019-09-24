@@ -56,8 +56,38 @@ namespace MOBOT.BHL.Server
             return new AuthorDAL().AuthorResolve(null, null, fullName, lastName, firstName, startDate, endDate);
         }
 
-        public int SaveAuthor(Author author, int userId)
+        public int SaveAuthor(Author author, int userId, string userDescription = null)
         {
+            // Not a new author
+            if (author.AuthorID != 0)
+            {
+                // Get existing author record
+                Author existingAuthor = AuthorSelectAuto(author.AuthorID);
+
+                // Is author being deactivated and redirected?
+                if ((author.IsActive == 0 && existingAuthor.IsActive == 1) &&
+                    (author.RedirectAuthorID != null) &&
+                    (author.RedirectAuthorID != existingAuthor.RedirectAuthorID))
+                {
+                    author.Note += string.Format("{0}Replaced by {1}. {2} by {3}",
+                        Environment.NewLine,
+                        author.RedirectAuthorID.ToString(),
+                        DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                        string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+
+                    Author targetAuthor = AuthorSelectAuto((int)author.RedirectAuthorID);
+                    targetAuthor.AuthorNames = new CustomGenericList<AuthorName>();
+                    targetAuthor.AuthorIdentifiers = new CustomGenericList<AuthorIdentifier>();
+                    targetAuthor.Note += string.Format("{0}This author replaces {1}. {2} by {3}",
+                        Environment.NewLine,
+                        author.AuthorID.ToString(),
+                        DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                        string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+
+                    new AuthorDAL().Save(null, null, targetAuthor, userId);
+                }
+            }
+
             return new AuthorDAL().Save(null, null, author, userId);
         }
     }

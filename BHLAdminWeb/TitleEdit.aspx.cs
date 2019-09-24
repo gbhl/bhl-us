@@ -1790,7 +1790,8 @@ namespace MOBOT.BHL.AdminWeb
                 if (ddlMaterialType.SelectedValue != "0") materialTypeID = (int?)Convert.ToInt32(ddlMaterialType.SelectedValue);
 
                 // Set the id of the editing user
-                userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+                var user = Helper.GetCurrentUserDetail(new HttpRequestWrapper(Request));
+                userId = user.Id;
 
                 //----------------------------------------
                 // Gather up data on form
@@ -1860,7 +1861,8 @@ namespace MOBOT.BHL.AdminWeb
                 //----------------------------------------
                 BHLProvider bp = new BHLProvider();
                 // Don't catch errors... allow global error handler to take over
-				bp.TitleSave( title, (int)userId );
+				bp.TitleSave( title, (int)userId,
+                    string.Format("{0} {1} ({2})", user.FirstName, user.LastName, user.Email));
 
                 // After a successful save operation, reload the title
                 fillUI(title.TitleID);

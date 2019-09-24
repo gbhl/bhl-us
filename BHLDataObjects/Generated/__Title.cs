@@ -936,7 +936,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: Note;
 		/// DBMS data type: nvarchar(255); Nullable;
 		/// </summary>
-		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=22, CharacterMaxLength=255, IsNullable=true)]
+		[ColumnDefinition("Note", DbTargetType=SqlDbType.NVarChar, Ordinal=22, IsNullable=true)]
 		public string Note
 		{
 			get
@@ -945,7 +945,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 255);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Note != value)
 				{
 					_Note = value;

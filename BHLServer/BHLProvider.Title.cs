@@ -188,9 +188,33 @@ namespace MOBOT.BHL.Server
 			return titleDal;
 		}
 
-		public Title TitleSave( Title title, int userId )
+		public Title TitleSave( Title title, int userId, string userDescription = null)
 		{
-			return new TitleDAL().Save( null, null, title, userId );
+            // Get existing title record
+            Title existingTitle = TitleSelectAuto(title.TitleID);
+
+            // Is title being deactivated and redirected?
+            if ((!title.PublishReady && existingTitle.PublishReady) &&
+                (title.RedirectTitleID != null) &&
+                (title.RedirectTitleID != existingTitle.RedirectTitleID))
+            {
+                title.Note += string.Format("{0}Replaced by {1}. {2} by {3}",
+                    Environment.NewLine,
+                    title.RedirectTitleID.ToString(),
+                    DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                    string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+
+                Title targetTitle = TitleSelectAuto((int)title.RedirectTitleID);
+                targetTitle.Note += string.Format("{0}This title replaces {1}. {2} by {3}",
+                    Environment.NewLine,
+                    title.TitleID.ToString(),
+                    DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                    string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+
+                new TitleDAL().Save(null, null, targetTitle, userId);
+            }
+
+            return new TitleDAL().Save( null, null, title, userId );
 		}
 
         public CustomGenericList<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(String institutionCode, int maxAge)

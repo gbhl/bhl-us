@@ -21,7 +21,7 @@ CREATE PROCEDURE dbo.TitleInsertAuto
 @TL2Author NVARCHAR(100) = null,
 @PublishReady BIT,
 @RareBooks BIT,
-@Note NVARCHAR(255) = null,
+@Note NVARCHAR(MAX) = null,
 @CreationUserID INT = null,
 @LastModifiedUserID INT = null,
 @OriginalCatalogingSource NVARCHAR(100) = null,

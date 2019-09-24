@@ -20,7 +20,7 @@
     [TL2Author]                   NVARCHAR (100)  NULL,
     [PublishReady]                BIT             CONSTRAINT [DF__Title__PublishRe__725BF7F6] DEFAULT ((0)) NOT NULL,
     [RareBooks]                   BIT             CONSTRAINT [DF_Title_RareBooks] DEFAULT ((0)) NOT NULL,
-    [Note]                        NVARCHAR (255)  NULL,
+    [Note]                        NVARCHAR (MAX)  NULL,
     [CreationDate]                DATETIME        CONSTRAINT [DF__Title__Created__74444068] DEFAULT (getdate()) NULL,
     [LastModifiedDate]            DATETIME        CONSTRAINT [DF__Title__Changed__753864A1] DEFAULT (getdate()) NULL,
     [CreationUserID]              INT             CONSTRAINT [DF_Title_CreationUserID] DEFAULT ((1)) NULL,
