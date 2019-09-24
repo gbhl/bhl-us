@@ -370,6 +370,9 @@ namespace MOBOT.BHL.AdminWeb
                 item.HasFlickrImages = (flickrItem != null) ? flickrItem.HasFlickrImages : false;
             }
 
+            // Clear the thumbnail pages dropdown
+            ddlThumbnailPageID.Items.Clear();
+
             Session["Item" + itemIdTextBox.Text] = item;
 			fillUI();
 		}
