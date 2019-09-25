@@ -378,7 +378,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 SetStandardPageSize(doc);
                 doc.Open();
 
-                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, boldFont, "The following text is generated from uncorrected OCR.");
+                this.AddParagraph(doc, iTextSharp.text.Element.ALIGN_LEFT, boldFont, "The following text is generated from uncorrected OCR or manual transcriptions.");
 
                 foreach (String pageUrl in PageUrls)
                 {

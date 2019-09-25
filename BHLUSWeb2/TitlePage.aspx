@@ -215,7 +215,7 @@
                                 </div>
                                 <label for="grpImageOCR">Include</label>
                                 <div class="field-wrap">
-                                    <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and OCR text" />
+                                    <asp:RadioButton ID="tbImages" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images only" Checked=true />&nbsp;&nbsp;<asp:RadioButton ID="tbImagesOcr" ClientIDMode="Static" GroupName="grpImageOCR" runat="server" Text=" Page images and text" />
                                 </div>
                             </div>
                             <div class="optional">
