@@ -1110,6 +1110,7 @@
     <None Include="dbo\Stored Procedures\AuthorSelectByIdentifier.sql" />
     <None Include="dbo\Stored Procedures\AuthorNameInsertFromAuthorID.sql" />
     <None Include="dbo\Stored Procedures\AuthorIdentifierUpdateAuthorID.sql" />
+    <None Include="dbo\Stored Procedures\ApiAuthorSelectWithNameByAuthorID.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

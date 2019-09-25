@@ -598,7 +598,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("AuthorSelectWithNameByAuthorID", connection, transaction,
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiAuthorSelectWithNameByAuthorID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("AuthorID", SqlDbType.Int, null, false, authorID)))
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
