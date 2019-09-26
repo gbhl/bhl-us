@@ -437,18 +437,18 @@ namespace MOBOT.BHL.AdminWeb
 
         private bool validate(Author author)
         {
-            bool flag = false;
+            bool isValid = true;
 
             // Check that all edits were completed
             if (namesList.EditIndex != -1)
             {
-                flag = true;
+                isValid = false;
                 errorControl.AddErrorText("Names has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
             if (identifiersList.EditIndex != -1)
             {
-                flag = true;
+                isValid = false;
                 errorControl.AddErrorText("Identifiers has an edit pending.  Click \"Update\" to accept the change or \"Cancel\" to reject it.");
             }
 
@@ -465,12 +465,12 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (countNonDeleted == 0)
             {
-                flag = true;
+                isValid = false;
                 errorControl.AddErrorText("At least one name must be entered.");
             }
             if (countPreferred != 1)
             {
-                flag = true;
+                isValid = false;
                 errorControl.AddErrorText("Use the \"Preferred\" checkbox to mark one (and only one) name as the preferred name for the author.");
             }
 
@@ -491,7 +491,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (kvp.Value > 1)
                 {
-                    flag = true;
+                    isValid = false;
                     errorControl.AddErrorText(string.Format("The identifier {0} has been assigned to this author more than once.",
                         kvp.Key));
                 }
@@ -507,7 +507,7 @@ namespace MOBOT.BHL.AdminWeb
                     {
                         if (dupID.AuthorID != author.AuthorID)
                         {
-                            flag = true;
+                            isValid = false;
                             errorControl.AddErrorText(string.Format("The identifier {0}:{1} has already been assigned to \"{2}\" (BHL Author ID: {3}).",
                                 aid.IdentifierName, aid.IdentifierValue, dupID.NameExtended.Trim(), dupID.AuthorID));
                         }
@@ -515,31 +515,36 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            // If a "replaced by" identifer was specified, make sure that it is a valid id
+            // Validate the "replaced by" settings
             if (txtReplacedBy.Text.Trim().Length > 0)
             {
+                if (chkIsActive.Checked)
+                {
+                    isValid = false;
+                    errorControl.AddErrorText("'Replaced By' identifier not applicable when the current Author is active.  Before saving, remove the 'Replaced By' identifier or uncheck the 'Is Active' checkbox.");
+                }
+
                 int authorID;
                 if (Int32.TryParse(txtReplacedBy.Text, out authorID))
                 {
                     // Look up the specified ID to ensure that it exists
                     if (new BHLProvider().AuthorSelectAuto(authorID) == null)
                     {
-                        flag = true;
+                        isValid = false;
                         errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Author ID.");
                     }
                 }
                 else
                 {
                     // Specified ID is not a valid integer value
-                    flag = true;
+                    isValid = false;
                     errorControl.AddErrorText("Make sure the 'Replaced By' identifier is a valid Author ID.");
                 }
             }
 
-            errorControl.Visible = flag;
-            Page.MaintainScrollPositionOnPostBack = !flag;
+            errorControl.Visible = !isValid;
 
-            return !flag;
+            return isValid;
         }
 
     }
