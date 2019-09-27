@@ -1,8 +1,8 @@
 
-// Generated 7/8/2013 2:53:08 PM
+// Generated 9/27/2019 3:36:32 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class IAMarcSubFieldDAL is based upon IAMarcSubField.
+// This partial class IAMarcSubFieldDAL is based upon dbo.IAMarcSubField.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from IAMarcSubField by primary key(s).
+		/// Select values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 			
 		/// <summary>
-		/// Select values from IAMarcSubField by primary key(s).
+		/// Select values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAMarcSubField by primary key(s).
+		/// Select values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Select values from IAMarcSubField by primary key(s).
+		/// Select values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,11 +128,11 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into IAMarcSubField.
+		/// Insert values into dbo.IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -151,7 +151,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAMarcSubField.
+		/// Insert values into dbo.IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -175,7 +175,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateOutputParameter("MarcSubFieldID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("MarcDataFieldID", SqlDbType.Int, null, false, marcDataFieldID),
 					CustomSqlHelper.CreateInputParameter("Code", SqlDbType.NChar, 1, false, code),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 1073741823, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAMarcSubField> helper = new CustomSqlHelper<IAMarcSubField>())
@@ -196,7 +196,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 
 		/// <summary>
-		/// Insert values into IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Insert values into dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -211,7 +211,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Insert values into dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -235,7 +235,7 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from IAMarcSubField by primary key(s).
+		/// Delete values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -250,7 +250,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from IAMarcSubField by primary key(s).
+		/// Delete values from dbo.IAMarcSubField by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -293,7 +293,7 @@ namespace MOBOT.BHLImport.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Update values in dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -314,7 +314,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Update values in dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -340,7 +340,7 @@ namespace MOBOT.BHLImport.DAL
 				CustomSqlHelper.CreateInputParameter("MarcSubFieldID", SqlDbType.Int, null, false, marcSubFieldID),
 					CustomSqlHelper.CreateInputParameter("MarcDataFieldID", SqlDbType.Int, null, false, marcDataFieldID),
 					CustomSqlHelper.CreateInputParameter("Code", SqlDbType.NChar, 1, false, code),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 1073741823, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<IAMarcSubField> helper = new CustomSqlHelper<IAMarcSubField>())
@@ -361,7 +361,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Update values in dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -376,7 +376,7 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Update values in IAMarcSubField. Returns an object of type IAMarcSubField.
+		/// Update values in dbo.IAMarcSubField. Returns an object of type IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -401,9 +401,9 @@ namespace MOBOT.BHLImport.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage IAMarcSubField object.
+		/// Manage dbo.IAMarcSubField object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAMarcSubField.
+		/// then either insert values into, delete values from, or update values in dbo.IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -418,9 +418,9 @@ namespace MOBOT.BHLImport.DAL
 		}
 		
 		/// <summary>
-		/// Manage IAMarcSubField object.
+		/// Manage dbo.IAMarcSubField object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in IAMarcSubField.
+		/// then either insert values into, delete values from, or update values in dbo.IAMarcSubField.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -487,4 +487,4 @@ namespace MOBOT.BHLImport.DAL
 
 	}	
 }
-// end of source generation
+

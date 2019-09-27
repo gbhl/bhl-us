@@ -190,28 +190,31 @@ namespace MOBOT.BHL.Server
 
 		public Title TitleSave( Title title, int userId, string userDescription = null)
 		{
-            // Get existing title record
-            Title existingTitle = TitleSelectAuto(title.TitleID);
-
-            // Is title being deactivated and redirected?
-            if ((!title.PublishReady && existingTitle.PublishReady) &&
-                (title.RedirectTitleID != null) &&
-                (title.RedirectTitleID != existingTitle.RedirectTitleID))
+            if (!title.IsNew)
             {
-                title.Note += string.Format("{0}Replaced by {1}. {2} by {3}",
-                    Environment.NewLine,
-                    title.RedirectTitleID.ToString(),
-                    DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
-                    string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+                // Get existing title record
+                Title existingTitle = TitleSelectAuto(title.TitleID);
 
-                Title targetTitle = TitleSelectAuto((int)title.RedirectTitleID);
-                targetTitle.Note += string.Format("{0}This title replaces {1}. {2} by {3}",
-                    Environment.NewLine,
-                    title.TitleID.ToString(),
-                    DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
-                    string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+                // Is title being deactivated and redirected?
+                if ((!title.PublishReady && existingTitle.PublishReady) &&
+                    (title.RedirectTitleID != null) &&
+                    (title.RedirectTitleID != existingTitle.RedirectTitleID))
+                {
+                    title.Note += string.Format("{0}Replaced by {1}. {2} by {3}",
+                        Environment.NewLine,
+                        title.RedirectTitleID.ToString(),
+                        DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                        string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
 
-                new TitleDAL().Save(null, null, targetTitle, userId);
+                    Title targetTitle = TitleSelectAuto((int)title.RedirectTitleID);
+                    targetTitle.Note += string.Format("{0}This title replaces {1}. {2} by {3}",
+                        Environment.NewLine,
+                        title.TitleID.ToString(),
+                        DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                        string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
+
+                    new TitleDAL().Save(null, null, targetTitle, userId);
+                }
             }
 
             return new TitleDAL().Save( null, null, title, userId );

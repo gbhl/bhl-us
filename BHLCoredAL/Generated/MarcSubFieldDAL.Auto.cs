@@ -1,5 +1,5 @@
 
-// Generated 2/15/2017 3:15:23 PM
+// Generated 9/27/2019 3:50:04 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class MarcSubFieldDAL is based upon dbo.MarcSubField.
@@ -175,7 +175,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateOutputParameter("MarcSubFieldID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("MarcDataFieldID", SqlDbType.Int, null, false, marcDataFieldID),
 					CustomSqlHelper.CreateInputParameter("Code", SqlDbType.NChar, 1, false, code),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 1073741823, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<MarcSubField> helper = new CustomSqlHelper<MarcSubField>())
@@ -340,7 +340,7 @@ namespace MOBOT.BHL.DAL
 				CustomSqlHelper.CreateInputParameter("MarcSubFieldID", SqlDbType.Int, null, false, marcSubFieldID),
 					CustomSqlHelper.CreateInputParameter("MarcDataFieldID", SqlDbType.Int, null, false, marcDataFieldID),
 					CustomSqlHelper.CreateInputParameter("Code", SqlDbType.NChar, 1, false, code),
-					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 2000, false, value), 
+					CustomSqlHelper.CreateInputParameter("Value", SqlDbType.NVarChar, 1073741823, false, value), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<MarcSubField> helper = new CustomSqlHelper<MarcSubField>())

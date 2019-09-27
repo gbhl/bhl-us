@@ -1,7 +1,7 @@
 
-// Generated 7/8/2013 2:53:08 PM
+// Generated 9/27/2019 3:36:32 PM
 // Do not modify the contents of this code file.
-// This abstract class __IAMarcSubField is based upon IAMarcSubField.
+// This abstract class __IAMarcSubField is based upon dbo.IAMarcSubField.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHLImport.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __IAMarcSubField : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -120,7 +120,7 @@ namespace MOBOT.BHLImport.DataObjects
 						_LastModifiedDate = (DateTime)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -128,7 +128,7 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region MarcSubFieldID
 		
@@ -219,9 +219,9 @@ namespace MOBOT.BHLImport.DataObjects
 		
 		/// <summary>
 		/// Column: Value;
-		/// DBMS data type: nvarchar(2000);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=2000)]
+		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=1073741823)]
 		public string Value
 		{
 			get
@@ -230,7 +230,7 @@ namespace MOBOT.BHLImport.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 2000);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Value != value)
 				{
 					_Value = value;
@@ -296,7 +296,7 @@ namespace MOBOT.BHLImport.DataObjects
 		#endregion LastModifiedDate
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -456,3 +456,4 @@ namespace MOBOT.BHLImport.DataObjects
 	}
 }
 // end of source generation
+

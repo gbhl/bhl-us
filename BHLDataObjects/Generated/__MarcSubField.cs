@@ -1,5 +1,5 @@
 
-// Generated 2/15/2017 3:15:23 PM
+// Generated 9/27/2019 3:50:04 PM
 // Do not modify the contents of this code file.
 // This abstract class __MarcSubField is based upon dbo.MarcSubField.
 
@@ -219,9 +219,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: Value;
-		/// DBMS data type: nvarchar(2000);
+		/// DBMS data type: nvarchar(MAX);
 		/// </summary>
-		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=2000)]
+		[ColumnDefinition("Value", DbTargetType=SqlDbType.NVarChar, Ordinal=4, CharacterMaxLength=1073741823)]
 		public string Value
 		{
 			get
@@ -230,7 +230,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 2000);
+				if (value != null) value = CalibrateValue(value, 1073741823);
 				if (_Value != value)
 				{
 					_Value = value;
