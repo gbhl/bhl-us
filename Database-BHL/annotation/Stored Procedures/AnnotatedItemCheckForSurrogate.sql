@@ -11,7 +11,8 @@ FROM	annotation.AnnotatedItem ai
 		INNER JOIN dbo.Item i 
 			ON ai.ItemID = i.ItemID
 		INNER JOIN dbo.ItemInstitution ii
-			ON ii.InstitutionCode = 'CUL' -- Cambridge University Libraries
+			ON i.ItemID = ii.ItemID
+			AND ii.InstitutionCode = 'CUL' -- Cambridge University Libraries
         INNER JOIN dbo.ItemCollection ic
 			ON i.ItemID = ic.ItemID
 			AND ic.CollectionID = 4 -- Darwin's Library
