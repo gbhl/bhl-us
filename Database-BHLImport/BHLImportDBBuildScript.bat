@@ -218,6 +218,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BotanicusHarvestLogSelectAuto.sq
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BotanicusHarvestLogSelectLatestEndDate.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BotanicusHarvestLogSelectRecent.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BotanicusHarvestLogUpdateAuto.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BHLItemCollectionInsertSeedCatalogItems.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BSItemAvailabilityCheck.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BSItemDeleteAllSegments.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Stored Procedures\BSItemDeleteAuto.sql"

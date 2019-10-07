@@ -428,6 +428,7 @@
     <None Include="dbo\Tables\IAItemIdentifier.sql" />
     <None Include="dbo\Stored Procedures\IAItemIdentifierDeleteByItem.sql" />
     <None Include="dbo\Stored Procedures\IAItemIdentifierSelect.sql" />
+    <None Include="dbo\Stored Procedures\BHLItemCollectionInsertSeedCatalogItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
