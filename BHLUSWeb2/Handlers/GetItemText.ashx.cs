@@ -19,6 +19,7 @@ namespace MOBOT.BHL.Web2
                 SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
                 string ocrText = service.GetItemText(itemID);
                 context.Response.ContentType = "text/plain";
+                context.Response.Cache.SetNoTransforms();
                 context.Response.Write(ocrText);
 
                 /*
