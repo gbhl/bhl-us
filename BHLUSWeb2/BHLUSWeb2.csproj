@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MOBOT.BHL.Web2</RootNamespace>
     <AssemblyName>BHLUSWeb2</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <SccProjectName>
     </SccProjectName>
@@ -85,9 +85,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
@@ -1041,10 +1041,6 @@
     <ProjectReference Include="..\BHLApi\BHLApi.csproj">
       <Project>{1C2EAD88-F194-4DF0-A82B-3D402F7ABC21}</Project>
       <Name>BHLApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BHLCoreDALTest\BHLCoreDALTest.csproj">
-      <Project>{23523F13-E173-4B26-9E6B-A09E226E02B6}</Project>
-      <Name>BHLCoreDALTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\BHLCoreDAL\BHLCoreDAL.csproj">
       <Project>{96BF5B64-D65D-43F2-A2F3-500F9E28FE53}</Project>

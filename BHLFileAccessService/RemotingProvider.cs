@@ -1,13 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.ServiceProcess;
-using System.Text;
-using log4net;
-using MOBOT.FileAccess;
 using System.Runtime.Remoting;
+using System.ServiceProcess;
 
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
