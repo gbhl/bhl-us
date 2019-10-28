@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web2
                 DataObjects.Item item = provider.ItemSelectFilenames(itemID);
 
                 context.Response.ContentType = "application/pdf";
-                if (!string.IsNullOrWhiteSpace(item.TextFilename))
+                if (!string.IsNullOrWhiteSpace(item.PdfFilename))
                 {
                     System.Net.WebClient client = new System.Net.WebClient();
 
