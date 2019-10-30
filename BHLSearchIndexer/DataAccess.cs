@@ -1007,6 +1007,34 @@ namespace BHL.SearchIndexer
         }
 
         /// <summary>
+        /// Delete all records for the specified title from the SearchCatalog tables
+        /// </summary>
+        /// <param name="titleId"></param>
+        public void DeleteItemsFromIndexForTitle(int titleId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogDeleteForTitle";
+                    sqlCommand.Parameters.AddWithValue("@TitleID", titleId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Delete the specified record from the SearchCatalog tables
         /// </summary>
         /// <param name="segmentId"></param>
@@ -1024,6 +1052,34 @@ namespace BHL.SearchIndexer
                     sqlCommand.CommandTimeout = 300;
                     sqlCommand.CommandText = "srchindex.SearchCatalogSegmentDelete";
                     sqlCommand.Parameters.AddWithValue("@SegmentID", segmentId);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                if (sqlConnection.State != System.Data.ConnectionState.Closed) sqlConnection.Close();
+                sqlConnection.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete all records for the specified item from the SearchCatalog tables 
+        /// </summary>
+        /// <param name="itemId"></param>
+        public void DeleteSegmentsFromIndexForItem(int itemId)
+        {
+            SqlConnection sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+
+            try
+            {
+                using (SqlCommand sqlCommand = new SqlCommand())
+                {
+                    sqlCommand.Connection = sqlConnection;
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandTimeout = 300;
+                    sqlCommand.CommandText = "srchindex.SearchCatalogSegmentDeleteForItem";
+                    sqlCommand.Parameters.AddWithValue("@ItemID", itemId);
                     sqlCommand.ExecuteNonQuery();
                 }
             }

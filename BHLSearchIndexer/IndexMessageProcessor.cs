@@ -240,8 +240,7 @@ namespace BHL.SearchIndexer
             {
                 // Delete pages and segments related to the item
                 DeletePagesForItem(itemId);
-                List<int> segments = dataAccess.GetSegmentsForItem(Convert.ToInt32(itemId));
-                foreach (int segment in segments) DeleteSegment(segment.ToString());
+                DeleteSegmentsFromIndexForItem(itemId);
             }
 
             if (statuses.Item1)    // If Title active
@@ -269,12 +268,10 @@ namespace BHL.SearchIndexer
             }
             else  // Title not active
             {
-                // Get any active items for the inactive title
-                List<int> items = dataAccess.GetItemsForTitle(Convert.ToInt32(titleId));
-                foreach(int item in items)
-                {
-                    DeleteItemFromIndexes(titleId, item.ToString());
-                }
+                // Delete items related to the title
+                //  We do not delete related pages or segments here because the items may be attached
+                //  to other titles.  We only want to remove the title-item relationships.
+                DeleteItemsFromIndexForTitle(titleId);
 
                 // Remove title from the catalog index
                 DeleteTitleFromIndexes(titleId);
@@ -296,6 +293,15 @@ namespace BHL.SearchIndexer
             // Delete from search index
             Item deleteItem = new Item { id = string.Format("i-{0}-{1}", titleId, itemId) };
             new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(deleteItem);
+        }
+
+        private void DeleteItemsFromIndexForTitle(string id)
+        {
+            // Delete from SeachCatalog table
+            new DataAccess(_dbConnectionstring).DeleteItemsFromIndexForTitle(Convert.ToInt32(id));
+
+            // Delete from search indexes
+            new ElasticSearch(_searchConnectionString, _itemsIndex).DeleteAllItems(id);
         }
 
         /// <summary>
@@ -374,6 +380,15 @@ namespace BHL.SearchIndexer
             Item item = new Item { id = string.Format("s-{0}", id) };
             new ElasticSearch(_searchConnectionString, _catalogIndex).Delete(catalogItem);
             new ElasticSearch(_searchConnectionString, _itemsIndex).Delete(item);
+        }
+
+        private void DeleteSegmentsFromIndexForItem(string id)
+        {
+            // Delete from SeachCatalog table
+            new DataAccess(_dbConnectionstring).DeleteSegmentsFromIndexForItem(Convert.ToInt32(id));
+
+            // Delete from search indexes
+            new ElasticSearch(_searchConnectionString, _catalogIndex).DeleteAllSegments(id);
         }
 
         /// <summary>
@@ -481,7 +496,7 @@ namespace BHL.SearchIndexer
         private void DeletePagesForItem(string id)
         {
             // Delete from search index
-            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAll(id);
+            new ElasticSearch(_searchConnectionString, _pagesIndex).DeleteAllPages(id);
         }
     }
 }

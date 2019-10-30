@@ -1112,6 +1112,8 @@
     <None Include="dbo\Stored Procedures\AuthorNameInsertFromAuthorID.sql" />
     <None Include="dbo\Stored Procedures\AuthorIdentifierUpdateAuthorID.sql" />
     <None Include="dbo\Stored Procedures\ApiAuthorSelectWithNameByAuthorID.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogDeleteForTitle.sql" />
+    <None Include="srchindex\Stored Procedures\SearchCatalogSegmentDeleteForItem.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -37,6 +37,38 @@ namespace BHL.SearchIndexer
             CheckServerStatus();
         }
 
+        public bool IndexEntryExists(string titleId, string itemId)
+        {
+            string queryString = string.Format("titleId:{0} AND itemId:{1}", titleId, itemId);
+            ISearchResponse<dynamic> results = QueryStringSearch(queryString);
+            return (results.HitsMetaData.Total > 0);
+        }
+
+        public bool IndexEntryExists(string titleId)
+        {
+            string queryString = string.Format("titleId:{0}", titleId);
+            ISearchResponse<dynamic> results = QueryStringSearch(queryString);
+            return (results.HitsMetaData.Total > 0);
+        }
+
+        private ISearchResponse<dynamic> QueryStringSearch(string queryString)
+        {
+            // Construct the query.
+            SearchDescriptor<dynamic> searchDesc = new SearchDescriptor<dynamic>()
+                .Index(_indexName)
+                .Timeout("10s");
+            searchDesc.Query(q => q
+                .QueryString(qu => qu
+                    .Analyzer("default")
+                    .Query(queryString)
+                    .DefaultOperator(Operator.And)));
+
+            // Execute the query
+            ISearchResponse<dynamic> results = _es.Search<dynamic>(searchDesc);
+            if (!results.IsValid) ProcessError(results);
+            return results;
+        }
+
         public void Index(Item document)
         {
             if (document != null) _es.Index(document);
@@ -208,10 +240,38 @@ namespace BHL.SearchIndexer
         }
         */
 
-        public void DeleteAll(string id)
+        public void DeleteAllItems(string titleId)
+        {
+            QueryBase query = new MatchQuery { Field = "titleId", Query = titleId};
+            DeleteByQuery(query);
+        }
+
+        public void DeleteAllSegments(string itemId)
+        {
+            BoolQuery bquery = new BoolQuery();
+
+            List<QueryContainer> mustContainer = new List<QueryContainer>();
+            List<QueryContainer> mustNotContainer = new List<QueryContainer>();
+
+            mustContainer.Add(new QueryContainer(new MatchQuery { Field = "itemId", Query = itemId }));
+            mustNotContainer.Add(new QueryContainer(new MatchQuery { Field = "segmentId", Query = "0" }));  // only delete entries with a valid SegmentID
+
+            bquery.Must = mustContainer;
+            bquery.MustNot = mustNotContainer;
+
+            DeleteByQuery(bquery);
+        }
+
+        public void DeleteAllPages(string itemId)
+        {
+            QueryBase query = new MatchQuery { Field = "itemId", Query = itemId };
+            DeleteByQuery(query);
+        }
+
+        private void DeleteByQuery(QueryBase query)
         {
             IDeleteByQueryRequest dq = new DeleteByQueryRequest(_indexName);
-            dq.Query = new QueryContainer(new MatchQuery { Field = "itemId", Query = id });
+            dq.Query = new QueryContainer(query);
             _es.DeleteByQuery(dq);
         }
 
