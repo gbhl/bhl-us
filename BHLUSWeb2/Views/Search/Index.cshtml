@@ -57,6 +57,8 @@
     @Html.HiddenFor(m => m.Params.SubjectInclude)
     @Html.HiddenFor(m => m.Params.Language)
     @Html.HiddenFor(m => m.Params.Collection)
+    @Html.HiddenFor(m => m.Params.Notes)
+    @Html.HiddenFor(m => m.Params.NotesInclude)
     @Html.HiddenFor(m => m.Params.Text)
     @Html.HiddenFor(m => m.Params.TextInclude)
     @Html.HiddenFor(m => m.ItemPage, new { @id = "ItemPage" })
@@ -566,6 +568,8 @@
                 "&sinc=" + $('#Params_SubjectInclude').val() +
                 '&lang=' + $('#Params_Language').val() +
                 '&col=' + encodeURIComponent( $('#Params_Collection').val() ) +
+                '&nt=' + encodeURIComponent( $('#Params_Notes').val() ) + 
+                '&ntinc=' + $('#Params_NotesInclude').val() + 
                 '&txt=' + encodeURIComponent( $('#Params_Text').val() ) + 
                 '&txinc=' + $('#Params_TextInclude').val() + 
                 '&ppage=' + $('#ItemPage').val() +

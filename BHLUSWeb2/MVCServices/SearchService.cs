@@ -59,6 +59,12 @@ namespace MOBOT.BHL.Web2.MVCServices
                         Collection collection = new BHLProvider().CollectionSelectAuto(Convert.ToInt32(collectionId));
                         if (collection != null) searchCriteria.Append(" collection:" + collection.CollectionName.Replace(' ', '-'));
                     }
+                    if (!string.IsNullOrWhiteSpace(p.Notes))
+                    {
+                        searchCriteria.Append(string.Format(" notes:{0} [{1}]",
+                            p.Notes.Replace(' ', '-'),
+                            p.NotesInclude.ToUpper() == "A" ? "All words" : "Exact phrase"));
+                    }
                     if (!string.IsNullOrWhiteSpace(p.Text))
                     {
                         //searchCriteria.Append(" text:" + p.Text.Replace(' ', '-'));

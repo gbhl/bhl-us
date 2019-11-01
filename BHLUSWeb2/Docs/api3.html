@@ -33,7 +33,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: August 1, 2019
+            Revised: November 4, 2019
         </div>
     </div>
     <div>
@@ -112,8 +112,8 @@
     <div class="subhead1">PublicationSearchAdvanced</div>
     <div>	Search for publications (titles, items, and parts) that match the specified search criteria.  Rather than searching across all of the metadata for specified search terms, this method searches specific fields for the terms.&nbsp; For example, title fields are searched for the &quot;title&quot; parameter value, and the author names are searched for the &quot;authorname&quot; parameter value.&nbsp; This method searches the catalog metadata only, unless the &quot;text&quot; parameter is specified.  Inclusion of a value for the &quot;text&quot; parameter triggers a full-text search over the text of the publications.&nbsp; The BHLType element identifies the type of each publication returned (Item or Part).&nbsp;&nbsp;&nbsp; Up to 200 results are returned at once.&nbsp; Use the &quot;page&quot; parameter to return the next 200 results.</div>
     <div>	Use the GetLanguages and GetCollections methods to obtain valid language codes and collection identifiers for use as parameters to this method.</div>
-    <div>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=cocos+island&amp;titleop=All&amp;authorname=gifford&amp;year=1919&amp;subject=&amp;language=&amp;collection=&amp;text=&amp;textop=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
-    <div>	title - a title for which to search<br /> titleop - &#39;all&#39; to search for all specified words in the title fields; &#39;phrase&#39; to search for the exact phrase specified<br /> authorname - an author name for which to search <br /> year - a four-digit publication year for which to search <br /> subject - a subject for which to search <br /> language - a language code; search will only return publications in the specified language<br /> collection - a collection id; search will only return publications from the specfied collection <br /> text - one or more words for which to search in the text of the publications <br /> textop - &#39;all&#39; to search for all specified words in the text field; &#39;phrase&#39; to search for the exact phrase specified<br /> page - 1 for the first page of results, 2 for the second, and so on </div>
+    <div>	Example - <a href="/docs/api3/PublicationSearchAdvanced.xml" title="PublicationSearchAdvanced">https://www.biodiversitylibrary.org/api3?op=PublicationSearchAdvanced&amp;title=cocos+island&amp;titleop=All&amp;authorname=gifford&amp;year=1919&amp;subject=&amp;language=&amp;collection=&amp;notes=&amp;notesop=&amp;text=&amp;textop=&amp;page=1&amp;apikey=&lt;key+value&gt;</a></div>
+    <div>	title - a title for which to search<br /> titleop - &#39;all&#39; to search for all specified words in the title fields; &#39;phrase&#39; to search for the exact phrase specified<br /> authorname - an author name for which to search <br /> year - a four-digit publication year for which to search <br /> subject - a subject for which to search <br /> language - a language code; search will only return publications in the specified language<br /> collection - a collection id; search will only return publications from the specfied collection <br /> notes - one or more words for which to search in the publication notes <br /> notesop - &#39;all&#39; to search for all specified words in the notes field; &#39;phrase&#39; to search for the exact phrase specified<br /> text - one or more words for which to search in the text of the publications <br /> textop - &#39;all&#39; to search for all specified words in the text field; &#39;phrase&#39; to search for the exact phrase specified<br /> page - 1 for the first page of results, 2 for the second, and so on </div>
     <div class="subhead1">PageSearch</div>
     <div>	Search an item for pages containing the specified text.</div>
     <div>	Example - <a href="/docs/api3/PageSearch.xml" title="PageSearch">https://www.biodiversitylibrary.org/api3?op=PageSearch&amp;itemid=22004&amp;text=dog&amp;apikey=&lt;key+value&gt;</a></div>
@@ -789,6 +789,10 @@
     <hr />
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
+    <div class="subhead1">November 4, 2019 - version 3.0.3</div>
+    <ul type="disc">
+        <li>Added &quot;notes&quot; and &quot;notesop&quot; parameters to the PublicationSearchAdvanced method.</li>
+    </ul>
     <div class="subhead1">August 1, 2019 - version 3.0.2</div>
     <ul type="disc">
         <li>Added &quot;ItemTextUrl&quot;, &quot;ItemPDFUrl&quot;, and &quot;ItemImagesUrl&quot; elements to the responses for &quot;GetItemMetadata&quot;.</li>

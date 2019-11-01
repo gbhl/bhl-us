@@ -60,6 +60,14 @@
                             </select>
                         </li>
                         <li>
+                            <label class="caption" for="txtPubNote">Notes:</label><input name="txtPubNote" type="text" id="txtPubNote" style="width:200px;" />
+                            <div style="font-family:Georgia;font-size:12px">
+                                <span>Include:</span>
+                                @Html.RadioButton("rdoNoteInclude", "A", true, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;"})All Words&nbsp;&nbsp;
+                                @Html.RadioButton("rdoNoteInclude", "P", false, new { style = "width:20px !important; -webkit-appearance:radio; box-shadow:none; background-color:transparent;" })Exact Phrase
+                            </div>
+                        </li>
+                        <li>
                             <label class="caption" for="txtPubText">Text:</label><input name="txtPubText" type="text" id="txtPubText" style="width:200px;" />
                             <div style="font-family:Georgia;font-size:12px">
                                 <span>Include:</span>

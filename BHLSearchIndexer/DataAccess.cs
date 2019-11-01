@@ -160,19 +160,20 @@ namespace BHL.SearchIndexer
                             if (!string.IsNullOrWhiteSpace(genre)) item.genre = genre;
                             string materialType = reader.GetString(reader.GetOrdinal("MaterialTypeLabel"));
                             if (!string.IsNullOrWhiteSpace(materialType)) item.materialType = materialType;
-                            item.oclc = GetFieldList(reader, "OCLC", '|');
-                            item.issn = GetFieldList(reader, "ISSN", '|');
-                            item.isbn = GetFieldList(reader, "ISBN", '|');
+                            item.oclc = GetFieldList(reader, "OCLC", "|");
+                            item.issn = GetFieldList(reader, "ISSN", "|");
+                            item.isbn = GetFieldList(reader, "ISBN", "|");
                             item.doi = reader.GetString(reader.GetOrdinal("DOIName"));
-                            item.collections = GetFieldList(reader, "Collections", '|');
-                            item.authors = GetFieldList(reader, "Authors", '|');
-                            item.facetAuthors = GetFieldList(reader, "FacetAuthors", '|');
-                            item.searchAuthors = GetFieldList(reader, "SearchAuthors", '|');
-                            item.keywords = GetFieldList(reader, "Subjects", '|');
-                            item.associations = GetFieldList(reader, "Associations", '|');
-                            item.variants = GetFieldList(reader, "Variants", '|');
-                            item.contributors = GetFieldList(reader, "Contributors", '|');
-                            item.titleContributors = GetFieldList(reader, "TitleContributors", '|');
+                            item.collections = GetFieldList(reader, "Collections", "|");
+                            item.authors = GetFieldList(reader, "Authors", "|");
+                            item.facetAuthors = GetFieldList(reader, "FacetAuthors", "|");
+                            item.searchAuthors = GetFieldList(reader, "SearchAuthors", "|");
+                            item.keywords = GetFieldList(reader, "Subjects", "|");
+                            item.associations = GetFieldList(reader, "Associations", "|");
+                            item.variants = GetFieldList(reader, "Variants", "|");
+                            item.contributors = GetFieldList(reader, "Contributors", "|");
+                            item.titleContributors = GetFieldList(reader, "TitleContributors", "|");
+                            item.notes = GetFieldList(reader, "Notes", "|||");
                             item.volume = reader.GetString(reader.GetOrdinal("Volume"));
                             item.editionStatement = reader.GetString(reader.GetOrdinal("EditionStatement"));
                             item.publicationDetails = reader.GetString(reader.GetOrdinal("PublicationDetails"));
@@ -223,6 +224,7 @@ namespace BHL.SearchIndexer
             catalogItem.keywords = item.keywords;
             catalogItem.language = item.language;
             catalogItem.materialType = item.materialType;
+            catalogItem.notes = item.notes;
             catalogItem.oclc = item.oclc;
             catalogItem.pageRange = item.pageRange;
             catalogItem.publicationPlace = item.publicationPlace;
@@ -542,11 +544,11 @@ namespace BHL.SearchIndexer
                             string materialType = reader.GetString(reader.GetOrdinal("MaterialTypeLabel"));
                             if (!string.IsNullOrWhiteSpace(materialType)) segment.materialType = materialType;
                             segment.doi = reader.GetString(reader.GetOrdinal("DOIName"));
-                            segment.authors = GetFieldList(reader, "Authors", '|');
-                            segment.facetAuthors = GetFieldList(reader, "FacetAuthors", '|');
-                            segment.searchAuthors = GetFieldList(reader, "SearchAuthors", '|');
-                            segment.keywords = GetFieldList(reader, "Subjects", '|');
-                            segment.contributors = GetFieldList(reader, "Contributors", '|');
+                            segment.authors = GetFieldList(reader, "Authors", "|");
+                            segment.facetAuthors = GetFieldList(reader, "FacetAuthors", "|");
+                            segment.searchAuthors = GetFieldList(reader, "SearchAuthors", "|");
+                            segment.keywords = GetFieldList(reader, "Subjects", "|");
+                            segment.contributors = GetFieldList(reader, "Contributors", "|");
                             segment.volume = reader.GetString(reader.GetOrdinal("Volume"));
                             segment.issue = reader.GetString(reader.GetOrdinal("Issue"));
                             segment.series = reader.GetString(reader.GetOrdinal("Series"));
@@ -611,8 +613,8 @@ namespace BHL.SearchIndexer
                             page.id = reader.GetInt32(reader.GetOrdinal("PageID"));
                             page.sequence = reader.GetInt32(reader.GetOrdinal("SequenceOrder"));
                             page.itemId = reader.GetInt32(reader.GetOrdinal("ItemID"));
-                            page.pageIndicators = GetFieldList(reader, "PageIndicators", ',');
-                            page.pageTypes = GetFieldList(reader, "PageTypes", ',');
+                            page.pageIndicators = GetFieldList(reader, "PageIndicators", "|");
+                            page.pageTypes = GetFieldList(reader, "PageTypes", ",");
 
                             string ocrFolderShare = reader.GetString(reader.GetOrdinal("OcrFolderShare")).Replace("\\\\bhl\\", "//bhl.mobot.org/").Replace("\\", "/");
                             string fileRootFolder = reader.GetString(reader.GetOrdinal("FileRootFolder")).Replace("\\", "/");
@@ -696,7 +698,7 @@ namespace BHL.SearchIndexer
                     Author author = new Author();
                     int id = Convert.ToInt32(authorData[0]);
                     author.id = id;
-                    author.authorNames = GetFieldList(authorData[1], '|');
+                    author.authorNames = GetFieldList(authorData[1], "|");
                     author.primaryAuthorName = authorData[2];
                     if (id > startAuthor) authors.Add(author);
                 }
@@ -729,7 +731,7 @@ namespace BHL.SearchIndexer
                         {
                             Author author = new Author();
                             author.id = reader.GetInt32(reader.GetOrdinal("AuthorID"));
-                            author.authorNames = GetFieldList(reader, "AuthorNames", '|');
+                            author.authorNames = GetFieldList(reader, "AuthorNames", "|");
                             author.primaryAuthorName = reader.GetString(reader.GetOrdinal("PrimaryAuthorName"));
                             authors.Add(author);
                         }
@@ -1438,7 +1440,7 @@ namespace BHL.SearchIndexer
         /// <param name="fieldName"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        private List<string> GetFieldList(SqlDataReader reader, string fieldName, char delimiter)
+        private List<string> GetFieldList(SqlDataReader reader, string fieldName, string delimiter)
         {
             string fieldValue = reader.GetString(reader.GetOrdinal(fieldName));
             return GetFieldList(fieldValue, delimiter);
@@ -1450,12 +1452,12 @@ namespace BHL.SearchIndexer
         /// <param name="fieldValue"></param>
         /// <param name="delimiter"></param>
         /// <returns></returns>
-        private List<string> GetFieldList(string fieldValue, char delimiter)
+        private List<string> GetFieldList(string fieldValue, string delimiter)
         {
             List<string> list = new List<string>();
             if (!string.IsNullOrWhiteSpace(fieldValue))
             {
-                string[] values = fieldValue.Split(delimiter);
+                string[] values = fieldValue.Split(new[] { delimiter }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string value in values) if (!string.IsNullOrWhiteSpace(value)) list.Add(value.Trim());
             }
             return list;

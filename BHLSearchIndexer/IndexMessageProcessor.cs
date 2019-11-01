@@ -192,6 +192,7 @@ namespace BHL.SearchIndexer
                 // Update the SearchCatalog table
                 foreach (Item item in items)
                 {
+                    // NOTE:  Notes are not included here.  They are not part of the SQL-based SearchCatalog tables.
                     dataAccess.UpsertItem(item.titleId, item.itemId, item.title, item.uniformTitle,
                         item.publicationDetails, item.publicationPlace, item.publisher, item.volume,
                         item.editionStatement, 

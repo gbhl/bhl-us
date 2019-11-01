@@ -16,6 +16,7 @@ namespace BHL.SearchIndexer
             contributors = new List<string>();
             titleContributors = new List<string>();
             collections = new List<string>();
+            notes = new List<string>();
             dates = new List<string>();
             dateRanges = new List<string>();
             oclc = new List<string>();
@@ -41,6 +42,7 @@ namespace BHL.SearchIndexer
         public List<string> associations { get; set; }
         public List<string> variants { get; set; }
         public List<string> contributors { get; set; }
+        public List<string> notes { get; set; }
         public string volume { get; set; }
         public string issue { get; set; }
         public string series { get; set; }

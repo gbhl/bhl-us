@@ -1114,6 +1114,7 @@
     <None Include="dbo\Stored Procedures\ApiAuthorSelectWithNameByAuthorID.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogDeleteForTitle.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogSegmentDeleteForItem.sql" />
+    <None Include="dbo\Functions\fnNoteIndexStringForTitle.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
