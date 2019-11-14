@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEC97CEE-C95E-4C8E-9AEC-526D27C06EC6}"
 	ProjectSection(SolutionItems) = preProject
@@ -79,6 +79,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchSQL", "SearchSQL\SearchSQL.csproj", "{B792F1C8-5971-400B-8CED-65A8E0B9BD3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BHLApiDataObjects3", "BHLApiDataObjects3\BHLApiDataObjects3.csproj", "{C5A231C5-6079-4204-B023-AC180388C10A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IIIFUtility", "IIIFUtility\IIIFUtility.csproj", "{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -404,6 +406,18 @@ Global
 		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|x86.ActiveCfg = Release|Any CPU
 		{C5A231C5-6079-4204-B023-AC180388C10A}.Release|x86.Build.0 = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Debug|x86.Build.0 = Debug|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D4F7066-F859-43B6-BAB1-E8A33CA3BFF7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
