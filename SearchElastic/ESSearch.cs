@@ -206,7 +206,7 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.PUBLICATIONPLACE + "^5"));
                 fields.Add(new Field(ESField.PUBLISHER + "^5"));
                 fields.Add(new Field(ESField.SEARCHAUTHORS + "^5"));
-                fields.Add(new Field(ESField.NOTES + "^5"));
+                fields.Add(new Field(ESField.NOTES));
                 fields.Add(new Field(ESField.TEXT));
 
                 // Construct the query.
