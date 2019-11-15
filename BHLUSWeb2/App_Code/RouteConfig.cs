@@ -51,6 +51,8 @@ namespace MOBOT.BHL.Web2
                 routes.MapPageRoute("Advanced-Search", "advsearch", "~/AdvancedSearch.aspx");
             }
 
+            routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
+
             routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
                 new RouteValueDictionary { {"start", "a"}, {"sort",""} } );
 

@@ -667,6 +667,7 @@
     <Compile Include="ContributorPage.aspx.designer.cs">
       <DependentUpon>ContributorPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\IIIFController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
@@ -1065,6 +1066,10 @@
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
       <Name>CustomDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IIIFUtility\IIIFUtility.csproj">
+      <Project>{9d4f7066-f859-43b6-bab1-e8a33ca3bff7}</Project>
+      <Name>IIIFUtility</Name>
     </ProjectReference>
     <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
       <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>
