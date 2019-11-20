@@ -7,6 +7,13 @@ namespace MOBOT.BHL.Web2.Controllers
     public class IIIFController : Controller
     {
         [HttpGet]
+        public ActionResult Item(string itemId)
+        {
+            ViewBag.ItemID = itemId;
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Manifest(string itemId)
         {
             string manifest = string.Empty;

@@ -429,6 +429,12 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="tify\tify.html" />
+    <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
+    <Content Include="tify\tifysrc\tify-logo-white.svg" />
+    <Content Include="tify\tifysrc\tify-logo.svg" />
+    <Content Include="tify\tifysrc\tify.css" />
+    <Content Include="tify\tifysrc\tify.js" />
     <Content Include="TitleUnavailable.aspx" />
     <Content Include="ItemUnavailable.aspx" />
     <Content Include="js\jMyCarousel\credits.txt" />
@@ -517,6 +523,12 @@
     <Content Include="Views\Shared\_SearchPager.cshtml" />
     <Content Include="Views\Shared\_DonateFeatureSmall.cshtml" />
     <Content Include="Views\Shared\_CollectionFeatureSmall.cshtml" />
+    <Content Include="tify\tifysrc\MaterialIcons-Regular.0509ab0.woff2" />
+    <Content Include="tify\tifysrc\MaterialIcons-Regular.29b882f.woff" />
+    <Content Include="tify\tifysrc\translations\de.json" />
+    <Content Include="tify\tifysrc\translations\fr.json" />
+    <Content Include="Views\Shared\_layoutBook.cshtml" />
+    <Content Include="Views\IIIF\Item.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>

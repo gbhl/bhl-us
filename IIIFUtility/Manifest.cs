@@ -18,7 +18,7 @@ namespace BHL.IIIF
             Title title = provider.TitleSelectExtended(item.PrimaryTitleID);
             CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             CustomGenericList<Segment> segments = provider.SegmentSelectByItemID(itemId);
-            ScanData scanData = GetScanData(item.BarCode);
+            ScanData scanData = GetScanData(itemId, item.BarCode);
 
             string manifest = 
                 "{" +
@@ -37,17 +37,19 @@ namespace BHL.IIIF
                   GetSeeAlso(itemId) +
                   GetSequences(item.BarCode, pages, scanData) +
                   GetStructures(item.BarCode, segments, pages, scanData) +
-                  GetRelated() +
+                  GetRelated(itemId, item.BarCode) +
                 "}";
 
             return manifest;
         }
 
-        private ScanData GetScanData(string barCode)
+        private ScanData GetScanData(int itemId, string barCode)
         {
+            Item item = new BHLProvider().ItemSelectFilenames(itemId);
+
             WebClient wc = new WebClient();
             XmlDocument xml = new XmlDocument();
-            xml.Load(wc.OpenRead(string.Format("https://www.archive.org/download/{0}/{0}_scandata.xml", barCode)));
+            xml.Load(wc.OpenRead(string.Format("https://www.archive.org/download/{0}/{1}", barCode, item.ScandataFilename)));
 
             String nsPrefix = String.Empty;
             XmlNamespaceManager nsmgr = null;
@@ -119,7 +121,7 @@ namespace BHL.IIIF
                 {
                     titleAuthor.Author.FullName = titleAuthor.FullName;
                     titleAuthor.Author.FullerForm = titleAuthor.FullerForm;
-                    string authorString = "<a href='https://www.biodiversitylibrary.org/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended + "</a>";
+                    string authorString = "<a target='_top' href='https://www.biodiversitylibrary.org/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended + "</a>";
                     authors.Add(authorString);
                 }
 
@@ -147,7 +149,7 @@ namespace BHL.IIIF
                     {
                         if (metadata.Length > 0) metadata += ",";
                         string institutionName = institution.InstitutionName;
-                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) institutionName = "<a href='" + institution.InstitutionUrl + "'>" + institutionName + "</a>";
+                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) institutionName = "<a target='_top' href='" + institution.InstitutionUrl + "'>" + institutionName + "</a>";
                         metadata += GetMetadataSingleValue("holding institution", institutionName);
                         break;
                     }
@@ -162,13 +164,13 @@ namespace BHL.IIIF
                 if (!string.IsNullOrWhiteSpace(item.LicenseUrl))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("license type", "<a href='" + item.LicenseUrl + "'>" + item.LicenseUrl + "</a>");
+                    metadata += GetMetadataSingleValue("license type", "<a target='_top' href='" + item.LicenseUrl + "'>" + item.LicenseUrl + "</a>");
                 }
 
                 if (!string.IsNullOrWhiteSpace(item.Rights))
                 {
                     if (metadata.Length > 0) metadata += ",";
-                    metadata += GetMetadataSingleValue("rights", "<a href='" + item.Rights+ "'>" + item.Rights+ "</a>");
+                    metadata += GetMetadataSingleValue("rights", "<a target='_top' href='" + item.Rights+ "'>" + item.Rights+ "</a>");
                 }
 
                 if (!string.IsNullOrWhiteSpace(item.CopyrightStatus))
@@ -183,7 +185,7 @@ namespace BHL.IIIF
                     {
                         if (metadata.Length > 0) metadata += ",";
                         string institutionName = institution.InstitutionName;
-                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) institutionName = "<a href='" + institution.InstitutionUrl + "'>" + institutionName + "</a>";
+                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) institutionName = "<a target='_top' href='" + institution.InstitutionUrl + "'>" + institutionName + "</a>";
                         metadata += GetMetadataSingleValue("rights holder", institutionName);
                         break;
                     }
@@ -219,15 +221,19 @@ namespace BHL.IIIF
             return metadata;
         }
 
-        private string GetRelated()
+        private string GetRelated(int itemId, string barCode)
         {
             string related = 
                 "\"related\": [" +
                   "{" +
-                      "\"@id\": \"https://www.biodiversitylibrary.org/bibliography/43746\"," +
+                      "\"@id\": \"https://www.biodiversitylibrary.org/bibliography/" + itemId.ToString() + "\"," +
                       "\"label\": \"Additional Bibliographic Information\"" +
+                  "}," +
+                  "{" +
+                      "\"@id\": \"https://www.archive.org/details/" + barCode + "\"," +
+                      "\"label\": \"View at Internet Archive\"" +
                   "}" +
-                "]";
+            "]";
 
             return related;
         }

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_layoutBook.cshtml";
+}
+
+<iframe id="tifyFrame" style="width:100%;height:77vh;" src="/tify/tify.html?manifest=/iiif/@ViewBag.ItemID/manifest"></iframe>
+<script>
+    //var loc = window.location.toString();
+	//var params = loc.split('?')[1];
+	//var iframe = document.getElementById('tifyFrame');
+    //iframe.src = iframe.src + '?' + params;
+</script>
+
+

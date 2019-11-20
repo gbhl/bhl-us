@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="The Biodiversity Heritage Library works collaboratively to make biodiversity literature openly available to the world as part of a global biodiversity community." />
+    <meta name="viewport" content="width=1080" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <title>@ViewBag.Title</title>
+    @RenderSection("CSS", required: false)
+    <link rel="stylesheet" href="/css/style.css?v=18" />
+    <script src="/js/libs/modernizr-1.6.min.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
+    <script>
+        /*
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-3353213-1', 'auto');
+        ga('send', 'pageview');
+        */
+    </script>
+    <!-- START OF SmartSource Data Collector TAG v10.4.23 -->
+    <!-- Copyright (c) 2018 Webtrends Inc.  All rights reserved. -->
+    <script>
+        /*
+        window.webtrendsAsyncInit = function () {
+            var dcs = new Webtrends.dcs().init({
+                dcsid: "dcsse0w37bdzpxzj2yuxm4sap_9g8y",
+                domain: "logs1.smithsonian.museum",
+                timezone: -5,
+                i18n: true,
+                fpcdom: ".biodiversitylibrary.org",
+                plugins: {
+                }
+            }).track();
+        };
+        (function () {
+            var s = document.createElement("script"); s.async = true; s.src = "/js/webtrends.min.js";
+            var s2 = document.getElementsByTagName("script")[0]; s2.parentNode.insertBefore(s, s2);
+        }());
+        */
+    </script>
+    <noscript><img alt="dcsimg" id="dcsimg" width="1" height="1" src="//logs1.smithsonian.museum/dcsse0w37bdzpxzj2yuxm4sap_9g8y/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.23&amp;dcssip=www.biodiversitylibrary.org" /></noscript>
+    <!-- END OF SmartSource Data Collector TAG v10.4.23 -->
+    @RenderSection("Javascript", required: false)
+</head>
+<body id="@ViewBag.BodyID">
+    <noscript>
+        <div id="noscript-warning">BHL works best with JavaScript enabled</div>
+    </noscript>
+    <div id="content-wrap">
+        <header>
+            <div class="column-wrap">
+                <a id="logo" href="/">
+                    <h1>Biodiversity Heritage Library</h1>
+                </a>
+                <nav>
+                    <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageAbout"]">About</a>
+                    <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelp"]">Help</a>
+                    <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageFAQ"]">FAQ</a>
+                    <a class="storelink" target="_blank" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
+                </nav>
+                <span id="altmetricbadge">
+                    <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>
+                </span>
+                <span id="headersocial">
+                    <div class="addthis_sharing_toolbox"></div>
+                </span>
+            </div>
+        </header>
+        @Html.Action("_AlertMessage", "Partial")
+        <div id="main">
+            <nav id="content-nav">
+                <div class="column-wrap">
+                    <div id="browsebar">
+                        <h3>Browse by:</h3>
+                        <ul>
+                            <li class="titles first-child"><a class="png_bg" href="/browse/titles/a">Title</a></li>
+                            <li class="authors"><a class="png_bg" href="/browse/authors/a">Author</a></li>
+                            <li class="year"><a class="png_bg" href="/browse/year">Date</a></li>
+                            <li class="collection"><a class="png_bg" href="/browse/collections">Collection</a></li>
+                            <li class="contributor last-child"><a class="png_bg" href="/browse/contributors">Contributor</a></li>
+                        </ul>
+                    </div>
+                    <div id="searchbar">
+                        <form action="/search" method="get">
+                            <span id="searchbar-searchtype">
+                                <input name="stype" id="rdoSearchTypeF" type="radio" value="F" style="margin:3px 3px 0px 4px;" checked /> <label for="rdoSearchTypeF">Full-text</label>
+                                <input name="stype" id="rdoSearchTypeC" type="radio" value="C" style="margin:3px 3px 0px 4px;" /> <label for="rdoSearchTypeC">Catalog</label>
+                                &nbsp;&nbsp;<a style="margin-top:2px;" target="_blank" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" alt="Search help" title="What's This?" height="16" width="16" /></a>
+                            </span>
+                            <a href="/advsearch" title="Advanced Search">advanced search</a>
+                            <input type="text" class="field" name="searchTerm" id="searchTerm" />
+                            <input type="submit" class="button" id="btnSearchSubmit" value="submit" />
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="/js/script.js?v=4"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
