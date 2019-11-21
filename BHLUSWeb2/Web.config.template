@@ -266,7 +266,7 @@
     </httpErrors>
     <httpProtocol>
       <customHeaders>
-        <add name="Content-Security-Policy" value="frame-ancestors DOMAIN-TO-EXCLUDE" />
+        <add name="Content-Security-Policy" value="frame-ancestors 'self' DOMAIN-TO-EXCLUDE;" />
       </customHeaders>
     </httpProtocol>
     <security>

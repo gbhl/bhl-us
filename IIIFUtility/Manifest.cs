@@ -10,12 +10,27 @@ namespace BHL.IIIF
 {
     public class Manifest
     {
+        private string _rootUrl = "http://localhost";
+
+        public Manifest()
+        {
+
+        }
+
+        public Manifest (string url)
+        {
+            _rootUrl = url;
+        }
+
         public string GetManifest(int itemId)
         {
             BHLProvider provider = new BHLProvider();
             Item item = provider.ItemSelectAuto(itemId);
             item.Institutions = provider.InstitutionSelectByItemID(itemId);
             Title title = provider.TitleSelectExtended(item.PrimaryTitleID);
+            // Used to determine where to send people for more bibliographic information
+            CustomGenericList<Title> titles = provider.TitleSelectByItem(itemId);
+
             CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             CustomGenericList<Segment> segments = provider.SegmentSelectByItemID(itemId);
             ScanData scanData = GetScanData(itemId, item.BarCode);
@@ -31,13 +46,13 @@ namespace BHL.IIIF
                   "\"label\": \"" + title.FullTitle + "\"," +
                   "\"viewingHint\": \"paged\"," +
                   "\"thumbnail\": {" +
-                    "\"@id\": \"https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID + "\"" +
+                    "\"@id\": \"" + _rootUrl + "/pagethumb/" + item.ThumbnailPageID + "\"" +
                   "}," +
                   GetMetadata(title, item) +
                   GetSeeAlso(itemId) +
                   GetSequences(item.BarCode, pages, scanData) +
                   GetStructures(item.BarCode, segments, pages, scanData) +
-                  GetRelated(itemId, item.BarCode) +
+                  GetRelated(titles.Count, item) +
                 "}";
 
             return manifest;
@@ -70,6 +85,8 @@ namespace BHL.IIIF
             int displaySequence = 1;
             foreach (XmlNode page in pages)
             {
+                if (sequence == 1) if (page.Attributes["leafNum"] != null) scanData.StartLeafNumber = Convert.ToInt32(page.Attributes["leafNum"].Value);
+
                 PageScanData pageScanData = new PageScanData();
                 pageScanData.Sequence = sequence;
                 XmlNode addToAccessFormatsNode = page.SelectSingleNode(nsPrefix + "addToAccessFormats", nsmgr);
@@ -121,7 +138,7 @@ namespace BHL.IIIF
                 {
                     titleAuthor.Author.FullName = titleAuthor.FullName;
                     titleAuthor.Author.FullerForm = titleAuthor.FullerForm;
-                    string authorString = "<a target='_top' href='https://www.biodiversitylibrary.org/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended + "</a>";
+                    string authorString = "<a target='_top' href='" + _rootUrl + "/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended + "</a>";
                     authors.Add(authorString);
                 }
 
@@ -221,16 +238,19 @@ namespace BHL.IIIF
             return metadata;
         }
 
-        private string GetRelated(int itemId, string barCode)
+        private string GetRelated(int numTitles, Item item)
         {
-            string related = 
+            string bibUrl = _rootUrl + "/bibliography/" + item.PrimaryTitleID.ToString();
+            if (numTitles > 1) bibUrl = _rootUrl + "/biblioselect/" + item.ItemID.ToString();
+
+            string related =
                 "\"related\": [" +
-                  "{" +
-                      "\"@id\": \"https://www.biodiversitylibrary.org/bibliography/" + itemId.ToString() + "\"," +
-                      "\"label\": \"Additional Bibliographic Information\"" +
+                  "{" + 
+                    "\"@id\": \"" + bibUrl + "\"," +
+                       "\"label\": \"Additional Bibliographic Information\"" +
                   "}," +
                   "{" +
-                      "\"@id\": \"https://www.archive.org/details/" + barCode + "\"," +
+                      "\"@id\": \"https://www.archive.org/details/" + item.BarCode + "\"," +
                       "\"label\": \"View at Internet Archive\"" +
                   "}" +
             "]";
@@ -243,17 +263,17 @@ namespace BHL.IIIF
             string seeAlso = 
                 "\"seeAlso\": [" +
                   "{" +
-                      "\"@id\": \"https://www.biodiversitylibrary.org/itempdf/" + itemId.ToString() + "\"," +
+                      "\"@id\": \"" + _rootUrl + "/itempdf/" + itemId.ToString() + "\"," +
                       "\"label\": \"Download PDF\"," +
                       "\"format\": \"application/pdf\"" +
                   "}," +
                   "{" +
-                      "\"@id\": \"https://www.biodiversitylibrary.org/itemimages/" + itemId.ToString() + "\"," +
+                      "\"@id\": \"" + _rootUrl + "/itemimages/" + itemId.ToString() + "\"," +
                       "\"label\": \"Download JPEG 2000\"," +
                       "\"format\": \"application/zip\"" +
                   "}," +
                   "{" +
-                      "\"@id\": \"https://www.biodiversitylibrary.org/itemtext/" + itemId.ToString() + "\"," +
+                      "\"@id\": \"" + _rootUrl + "/itemtext/" + itemId.ToString() + "\"," +
                       "\"label\": \"Download Text\"," +
                       "\"format\": \"text/plain\"" +
                   "}" +
@@ -288,6 +308,7 @@ namespace BHL.IIIF
         {
             string canvases = "\"canvases\": [";
 
+            int leafNum = scanData.StartLeafNumber;
             int scanPageCount = 0;
             int pageCount = 0;
             foreach (PageScanData pageScanData in scanData.Pages)
@@ -295,11 +316,12 @@ namespace BHL.IIIF
                 if (pageScanData.Display)
                 {
                     if (pageCount > 0) canvases += ",";
-                    canvases += GetCanvas(barCode, pages[pageCount], scanPageCount, scanData.Pages[scanPageCount].Height, scanData.Pages[scanPageCount].Width);
+                    canvases += GetCanvas(barCode, pages[pageCount], leafNum, scanData.Pages[scanPageCount].Height, scanData.Pages[scanPageCount].Width);
                     pageCount++;
                 }
 
                 scanPageCount++;
+                leafNum++;
             }
 
             canvases += "],";
@@ -387,7 +409,7 @@ namespace BHL.IIIF
         {
             string structure = 
             "{" +
-              "\"@id\": \"http://www.biodiversitylibrary.org/part/" + segment.SegmentID.ToString() + "\"," +
+              "\"@id\": \"" + _rootUrl + "/part/" + segment.SegmentID.ToString() + "\"," +
               "\"@type\": \"sc:Range\"," +
               "\"label\": \"" + segment.Title + "\"," +
               "\"canvases\": [\"" +
@@ -406,11 +428,13 @@ namespace BHL.IIIF
         {
             ShowPageCount = 0;
             HidePageCount = 0;
+            StartLeafNumber = 0;
             Pages = new List<PageScanData>();
         }
 
         public int ShowPageCount { get; set; }
         public int HidePageCount { get; set; }
+        public int StartLeafNumber { get; set; }
         public List<PageScanData> Pages { get; set; }
 
         public PageScanData GetScanDataForDisplaySequence(int displaySequence)

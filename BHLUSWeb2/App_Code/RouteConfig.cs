@@ -52,7 +52,7 @@ namespace MOBOT.BHL.Web2
             }
 
             routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
-            routes.MapRoute("IIIF-Item", "iiif/{itemId}/item", new { controller = "IIIF", action = "Item" });
+            routes.MapRoute("IIIFItem", "iiif/item/{itemId}", new { controller = "IIIF", action = "Item" });
 
             routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
                 new RouteValueDictionary { {"start", "a"}, {"sort",""} } );

@@ -18,7 +18,7 @@ namespace MOBOT.BHL.Web2.Controllers
         {
             string manifest = string.Empty;
             int itemIdInt = int.MinValue;
-            IIIF.Manifest manifestService = new IIIF.Manifest();
+            IIIF.Manifest manifestService = new IIIF.Manifest(Request.Url.GetLeftPart(UriPartial.Authority));
             if (Int32.TryParse(itemId, out itemIdInt))
             {
                 manifest = manifestService.GetManifest(itemIdInt);
