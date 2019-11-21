@@ -1089,8 +1089,8 @@
             if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 
             // Update page URL and names
-            $("#currentpageURL").text("https://biodiversitylibrary.org/page/" + pages[index].PageID);
-            $("#currentpageURL").attr("href", "https://biodiversitylibrary.org/page/" + pages[index].PageID);
+            $("#currentpageURL").text("<%: UrlRoot %>/page/" + pages[index].PageID);
+            $("#currentpageURL").attr("href", "<%: UrlRoot %>/page/" + pages[index].PageID);
             var currentFlickrUrl = $("#currentFlickrURL");
             var flickrUrlSpan = $("#flickrurlspan");
             if (pages[index].FlickrUrl == "")

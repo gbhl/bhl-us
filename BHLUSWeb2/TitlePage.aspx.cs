@@ -25,6 +25,7 @@ namespace MOBOT.BHL.Web2
         protected string Pages = String.Empty;
         protected string PageTitle { get; set; }
         protected int CurrentItemID { get; set; }
+        protected string UrlRoot { get; set; }
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -185,6 +186,8 @@ namespace MOBOT.BHL.Web2
                     Page firstPage = null;
                     int? sequenceOrder = PageSummary.SequenceOrder;
                     mendeley.ItemID = PageSummary.ItemID;
+
+                    UrlRoot = Request.Url.GetLeftPart(UriPartial.Authority);
 
                     if (getFirstPage)
                     {

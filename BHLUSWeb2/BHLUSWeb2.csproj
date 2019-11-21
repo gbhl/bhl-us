@@ -529,6 +529,7 @@
     <Content Include="tify\tifysrc\translations\fr.json" />
     <Content Include="Views\Shared\_layoutBook.cshtml" />
     <Content Include="Views\IIIF\Item.cshtml" />
+    <Content Include="Views\IIIF\Page.cshtml" />
     <None Include="Views\Web.config.template">
       <SubType>Designer</SubType>
     </None>
