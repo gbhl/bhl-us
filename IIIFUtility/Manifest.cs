@@ -28,8 +28,21 @@ namespace BHL.IIIF
             Item item = provider.ItemSelectAuto(itemId);
             item.Institutions = provider.InstitutionSelectByItemID(itemId);
             Title title = provider.TitleSelectExtended(item.PrimaryTitleID);
+
+            string thumbnailAttr = string.Empty;
+            int? thumbnailPageID = item.ThumbnailPageID;
+            if (thumbnailPageID == null)
+            {
+                Page firstPage = provider.PageSelectFirstPageForItem(Convert.ToInt32(itemId));
+                thumbnailPageID = (firstPage == null ? thumbnailPageID : firstPage.PageID);
+            }
+            if (thumbnailPageID != null) thumbnailAttr = 
+                  "\"thumbnail\": {" +
+                    "\"@id\": \"" + _rootUrl + "/pagethumb/" + (int)thumbnailPageID + "\"" +
+                  "},";
+
             // Used to determine where to send people for more bibliographic information
-            CustomGenericList<Title> titles = provider.TitleSelectByItem(itemId);
+            CustomGenericList < Title> titles = provider.TitleSelectByItem(itemId);
 
             CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             CustomGenericList<Segment> segments = provider.SegmentSelectByItemID(itemId);
@@ -37,17 +50,14 @@ namespace BHL.IIIF
 
             string manifest = 
                 "{" +
-                  "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
+                  "\"@context\": \"http://iiif.io/api/presentation/2/context.json\"," +
                   "\"@id\": \"http://iiif.archivelab.org/iiif/" + item.BarCode + "/manifest.json\"," +
                   "\"@type\": \"sc:Manifest\"," +
                   "\"attribution\": \"\"," +
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
                   "\"label\": \"" + title.FullTitle + "\"," +
-                  "\"viewingHint\": \"paged\"," +
-                  "\"thumbnail\": {" +
-                    "\"@id\": \"" + _rootUrl + "/pagethumb/" + item.ThumbnailPageID + "\"" +
-                  "}," +
+                  thumbnailAttr +
                   GetMetadata(title, item) +
                   GetSeeAlso(itemId) +
                   GetSequences(item.BarCode, pages, scanData) +
@@ -246,12 +256,14 @@ namespace BHL.IIIF
             string related =
                 "\"related\": [" +
                   "{" + 
-                    "\"@id\": \"" + bibUrl + "\"," +
-                       "\"label\": \"Additional Bibliographic Information\"" +
+                      "\"@id\": \"" + bibUrl + "\"," +
+                      "\"label\": \"Additional Bibliographic Information\"," +
+                      "\"format\": \"text/html\"" + 
                   "}," +
                   "{" +
                       "\"@id\": \"https://www.archive.org/details/" + item.BarCode + "\"," +
-                      "\"label\": \"View at Internet Archive\"" +
+                      "\"label\": \"View at Internet Archive\"," +
+                      "\"format\": \"text/html\"" +
                   "}" +
             "]";
 
@@ -264,17 +276,17 @@ namespace BHL.IIIF
                 "\"seeAlso\": [" +
                   "{" +
                       "\"@id\": \"" + _rootUrl + "/itempdf/" + itemId.ToString() + "\"," +
-                      "\"label\": \"Download PDF\"," +
+                      "\"label\": \"PDF\"," +
                       "\"format\": \"application/pdf\"" +
                   "}," +
                   "{" +
                       "\"@id\": \"" + _rootUrl + "/itemimages/" + itemId.ToString() + "\"," +
-                      "\"label\": \"Download JPEG 2000\"," +
+                      "\"label\": \"JPEG 2000 (Images)\"," +
                       "\"format\": \"application/zip\"" +
                   "}," +
                   "{" +
                       "\"@id\": \"" + _rootUrl + "/itemtext/" + itemId.ToString() + "\"," +
-                      "\"label\": \"Download Text\"," +
+                      "\"label\": \"Text\"," +
                       "\"format\": \"text/plain\"" +
                   "}" +
                 "],";
@@ -291,9 +303,11 @@ namespace BHL.IIIF
                 sequences =
                     "\"sequences\": [" +
                       "{" +
-                        "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
+//                        "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
                         "\"@id\": \"http://iiif.archivelab.org/iiif/" + barCode + "/canvas/default\"," +
                         "\"@type\": \"sc:Sequence\"," +
+                        "\"viewingDirection\": \"left-to-right\"," +
+                        "\"viewingHint\": \"paged\"," +
                         GetCanvases(barCode, pages, scanData) +
                         "\"label\": \"default\"" +
                       "}" +
@@ -337,30 +351,31 @@ namespace BHL.IIIF
                 "{" +
                   "\"@id\": \"" + iiifRootAddress + "/canvas\"," +
                   "\"@type\": \"sc:Canvas\"," +
+                  "\"label\": \"" + page.WebDisplay + "\"," +
                   "\"height\": " + height.ToString() + "," +
+                  "\"width\": " + width.ToString() + "," +
                   "\"images\": [" +
                     "{" +
-                      "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
-                      "\"@id\": \"" + iiifRootAddress + "/annotation\"," +
+//                      "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
+//                      "\"@id\": \"" + iiifRootAddress + "/annotation\"," +
                       "\"@type\": \"oa:Annotation\"," +
                       "\"motivation\": \"sc:painting\"," +
-                      "\"on\": \"" + iiifRootAddress + "/annotation\"," +
+//                      "\"on\": \"" + iiifRootAddress + "/annotation\"," +
+                      "\"on\": \"" + iiifRootAddress + "/canvas\"," +
                       "\"resource\": {" +
                         "\"@id\": \"" + iiifRootAddress + "/full/full/0/default.jpg\"," +
                         "\"@type\": \"dctypes:Image\"," +
                         "\"format\": \"image/jpeg\"," +
                         "\"height\": " + height.ToString() + "," +
+                        "\"width\": " + width.ToString() + "," +
                         "\"service\": {" +
                           "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
                           "\"@id\": \"" + iiifRootAddress + "\"," +
                           "\"profile\": \"https://iiif.io/api/image/2/profiles/level2.json\"" +
-                        "}," +
-                        "\"width\": " + width.ToString() +
+                        "}" +
                       "}" +
                     "}" +
-                  "]," +
-                  "\"label\": \"" + page.WebDisplay + "\"," +
-                  "\"width\": " + width.ToString() +
+                  "]" +
                 "}";
 
             return canvas;
