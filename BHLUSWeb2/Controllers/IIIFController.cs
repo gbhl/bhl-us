@@ -70,5 +70,25 @@ namespace MOBOT.BHL.Web2.Controllers
 
             return Content(manifest);
         }
+
+        [HttpGet]
+        public ActionResult TextManifest(string itemId, string pageSeq)
+        {
+            string manifest = string.Empty;
+            int itemIdInt = int.MinValue;
+            int pageSeqInt = int.MinValue;
+            //IIIF.TextManifest manifestService = new IIIF.TextManifest(Request.Url.GetLeftPart(UriPartial.Authority));
+            IIIF.TextManifest manifestService = new IIIF.TextManifest("https://www.biodiversitylibrary.org");
+            if (Int32.TryParse(itemId, out itemIdInt) && Int32.TryParse(pageSeq, out pageSeqInt))
+            {
+                manifest = manifestService.GetManifest(itemIdInt, pageSeqInt);
+            }
+            else
+            {
+                manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
+            }
+
+            return Content(manifest);
+        }
     }
 }

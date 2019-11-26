@@ -3,8 +3,6 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Xml;
 
 namespace BHL.IIIF
 {
@@ -46,81 +44,26 @@ namespace BHL.IIIF
 
             CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             CustomGenericList<Segment> segments = provider.SegmentSelectByItemID(itemId);
-            ScanData scanData = GetScanData(itemId, item.BarCode);
+            ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
 
             string manifest = 
                 "{" +
                   "\"@context\": \"http://iiif.io/api/presentation/2/context.json\"," +
-                  "\"@id\": \"http://iiif.archivelab.org/iiif/" + item.BarCode + "/manifest.json\"," +
+                  "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/manifest\"," +
                   "\"@type\": \"sc:Manifest\"," +
                   "\"attribution\": \"\"," +
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
-                  "\"label\": \"" + title.FullTitle + "\"," +
+                  "\"label\": \"" + title.FullTitle.Replace("\"", "\\\"") + "\"," +
                   thumbnailAttr +
                   GetMetadata(title, item) +
                   GetSeeAlso(itemId) +
-                  GetSequences(item.BarCode, pages, scanData) +
+                  GetSequences(itemId, item.BarCode, pages, scanData) +
                   GetStructures(item.BarCode, segments, pages, scanData) +
                   GetRelated(titles.Count, item) +
                 "}";
 
             return manifest;
-        }
-
-        private ScanData GetScanData(int itemId, string barCode)
-        {
-            Item item = new BHLProvider().ItemSelectFilenames(itemId);
-
-            WebClient wc = new WebClient();
-            XmlDocument xml = new XmlDocument();
-            xml.Load(wc.OpenRead(string.Format("https://www.archive.org/download/{0}/{1}", barCode, item.ScandataFilename)));
-
-            String nsPrefix = String.Empty;
-            XmlNamespaceManager nsmgr = null;
-            XmlNodeList pages = xml.SelectNodes("book/pageData/page");
-
-            // If we didn't find any pages in the file, try again... after first
-            // adding a namespace to the XML document
-            if (pages.Count == 0)
-            {
-                nsmgr = new XmlNamespaceManager(xml.NameTable);
-                nsmgr.AddNamespace("ns", "http://archive.org/scribe/xml");
-                nsPrefix = "ns:";
-                pages = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "pageData/" + nsPrefix + "page", nsmgr);
-            }
-
-            ScanData scanData = new ScanData();
-            int sequence = 1;
-            int displaySequence = 1;
-            foreach (XmlNode page in pages)
-            {
-                if (sequence == 1) if (page.Attributes["leafNum"] != null) scanData.StartLeafNumber = Convert.ToInt32(page.Attributes["leafNum"].Value);
-
-                PageScanData pageScanData = new PageScanData();
-                pageScanData.Sequence = sequence;
-                XmlNode addToAccessFormatsNode = page.SelectSingleNode(nsPrefix + "addToAccessFormats", nsmgr);
-                if (addToAccessFormatsNode != null) pageScanData.Display = Convert.ToBoolean(addToAccessFormatsNode.InnerText);
-                XmlNode heightNode = page.SelectSingleNode(nsPrefix + "origHeight", nsmgr);
-                if (heightNode != null) pageScanData.Height = Convert.ToInt32(heightNode.InnerText);
-                XmlNode widthNode = page.SelectSingleNode(nsPrefix + "origWidth", nsmgr);
-                if (widthNode != null) pageScanData.Width = Convert.ToInt32(widthNode.InnerText);
-
-                if (pageScanData.Display)
-                {
-                    scanData.ShowPageCount++;
-                    pageScanData.DisplaySequence = displaySequence;
-                    displaySequence++;
-                }
-                else
-                {
-                    scanData.HidePageCount++;
-                }
-                scanData.Pages.Add(pageScanData);
-                sequence++;
-            }
-
-            return scanData;
         }
 
         private string GetMetadata(Title title, Item item)
@@ -148,7 +91,7 @@ namespace BHL.IIIF
                 {
                     titleAuthor.Author.FullName = titleAuthor.FullName;
                     titleAuthor.Author.FullerForm = titleAuthor.FullerForm;
-                    string authorString = "<a target='_top' href='" + _rootUrl + "/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended + "</a>";
+                    string authorString = "<a target='_top' href='" + _rootUrl + "/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended.Replace("\"", "\\\"") + "</a>";
                     authors.Add(authorString);
                 }
 
@@ -228,8 +171,8 @@ namespace BHL.IIIF
         {
             string metadata =
                 "{" +
-                  "\"label\": \"" + label + "\"," +
-                  "\"value\": \"" + value + "\"" +
+                  "\"label\": \"" + label.Replace("\"", "\\\"") + "\"," +
+                  "\"value\": \"" + value.Replace("\"", "\\\"") + "\"" +
                 "}";
 
             return metadata;
@@ -294,7 +237,7 @@ namespace BHL.IIIF
             return seeAlso;
         }
 
-        private string GetSequences(string barCode, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetSequences(int itemId, string barCode, CustomGenericList<Page> pages, ScanData scanData)
         {
             string sequences = string.Empty;
 
@@ -304,11 +247,11 @@ namespace BHL.IIIF
                     "\"sequences\": [" +
                       "{" +
 //                        "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
-                        "\"@id\": \"http://iiif.archivelab.org/iiif/" + barCode + "/canvas/default\"," +
+                        "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/canvas/default\"," +
                         "\"@type\": \"sc:Sequence\"," +
                         "\"viewingDirection\": \"left-to-right\"," +
                         "\"viewingHint\": \"paged\"," +
-                        GetCanvases(barCode, pages, scanData) +
+                        GetCanvases(itemId, barCode, pages, scanData) +
                         "\"label\": \"default\"" +
                       "}" +
                     "],";
@@ -318,7 +261,7 @@ namespace BHL.IIIF
         }
 
 
-        private string GetCanvases(string barCode, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetCanvases(int itemId, string barCode, CustomGenericList<Page> pages, ScanData scanData)
         {
             string canvases = "\"canvases\": [";
 
@@ -330,7 +273,7 @@ namespace BHL.IIIF
                 if (pageScanData.Display)
                 {
                     if (pageCount > 0) canvases += ",";
-                    canvases += GetCanvas(barCode, pages[pageCount], leafNum, scanData.Pages[scanPageCount].Height, scanData.Pages[scanPageCount].Width);
+                    canvases += GetCanvas(itemId, barCode, pages[pageCount], leafNum, scanData.Pages[scanPageCount].Height, scanData.Pages[scanPageCount].Width);
                     pageCount++;
                 }
 
@@ -343,37 +286,42 @@ namespace BHL.IIIF
             return canvases;
         }
 
-        private string GetCanvas(string barCode, Page page, int count, int height = 800, int width = 600)
+        private string GetCanvas(int itemId, string barCode, Page page, int count, int height = 800, int width = 600)
         {
-            string iiifRootAddress = "http://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
+            string iiifRootAddress = _rootUrl + "/iiif/" + itemId.ToString() + "$" + count.ToString();
+            string imageRootAddress = "http://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
 
             string canvas =
                 "{" +
                   "\"@id\": \"" + iiifRootAddress + "/canvas\"," +
                   "\"@type\": \"sc:Canvas\"," +
-                  "\"label\": \"" + page.WebDisplay + "\"," +
+                  "\"label\": \"" + page.WebDisplay.Replace("\"", "\\\"") + "\"," +
                   "\"height\": " + height.ToString() + "," +
                   "\"width\": " + width.ToString() + "," +
                   "\"images\": [" +
                     "{" +
-//                      "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
-//                      "\"@id\": \"" + iiifRootAddress + "/annotation\"," +
                       "\"@type\": \"oa:Annotation\"," +
                       "\"motivation\": \"sc:painting\"," +
-//                      "\"on\": \"" + iiifRootAddress + "/annotation\"," +
                       "\"on\": \"" + iiifRootAddress + "/canvas\"," +
                       "\"resource\": {" +
-                        "\"@id\": \"" + iiifRootAddress + "/full/full/0/default.jpg\"," +
+                        "\"@id\": \"" + imageRootAddress + "/full/full/0/default.jpg\"," +
                         "\"@type\": \"dctypes:Image\"," +
                         "\"format\": \"image/jpeg\"," +
                         "\"height\": " + height.ToString() + "," +
                         "\"width\": " + width.ToString() + "," +
                         "\"service\": {" +
                           "\"@context\": \"http://iiif.io/api/image/2/context.json\"," +
-                          "\"@id\": \"" + iiifRootAddress + "\"," +
+                          "\"@id\": \"" + imageRootAddress + "\"," +
                           "\"profile\": \"https://iiif.io/api/image/2/profiles/level2.json\"" +
                         "}" +
                       "}" +
+                    "}" +
+                  "]," +
+                  "\"otherContent\": [" +
+                    "{" +
+                      "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/text/" + count.ToString() + "\"," +
+                      "\"@type\": \"sc:AnnotationList\"," +
+                      "\"label\": \"Fulltext\"" +
                     "}" +
                   "]" +
                 "}";
@@ -396,7 +344,7 @@ namespace BHL.IIIF
                         if (!canvases.ContainsKey((int)page.SegmentID)) canvases.Add((int)page.SegmentID, new List<string>());
 
                         PageScanData pageScanData = scanData.GetScanDataForDisplaySequence((int)page.SequenceOrder);
-                        string canvas = string.Format("http://iiif.archivelab.org/iiif/{0}${1}/canvas", barCode, (pageScanData == null ? 0 : pageScanData.Sequence - 1));
+                        string canvas = string.Format("{0}/iiif/{1}${2}/canvas", _rootUrl, barCode, (pageScanData == null ? 0 : pageScanData.Sequence - 1));
                         canvases[(int)page.SegmentID].Add(canvas);
                     }
                 }
@@ -426,7 +374,7 @@ namespace BHL.IIIF
             "{" +
               "\"@id\": \"" + _rootUrl + "/part/" + segment.SegmentID.ToString() + "\"," +
               "\"@type\": \"sc:Range\"," +
-              "\"label\": \"" + segment.Title + "\"," +
+              "\"label\": \"" + segment.Title.Replace("\"", "\\\"") + "\"," +
               "\"canvases\": [\"" +
                 string.Join("\",\"", canvasList) +
               "\"]" +
@@ -434,51 +382,5 @@ namespace BHL.IIIF
 
             return structure;
         }
-    }
-
-
-    class ScanData
-    {
-        public ScanData()
-        {
-            ShowPageCount = 0;
-            HidePageCount = 0;
-            StartLeafNumber = 0;
-            Pages = new List<PageScanData>();
-        }
-
-        public int ShowPageCount { get; set; }
-        public int HidePageCount { get; set; }
-        public int StartLeafNumber { get; set; }
-        public List<PageScanData> Pages { get; set; }
-
-        public PageScanData GetScanDataForDisplaySequence(int displaySequence)
-        {
-            PageScanData scanData = null;
-
-            foreach(PageScanData pageScanData in Pages)
-            {
-                if (pageScanData.DisplaySequence == displaySequence) { scanData = pageScanData; break; }
-            }
-
-            return scanData;
-        }
-    }
-
-    class PageScanData
-    {
-        public PageScanData()
-        {
-            DisplaySequence = null;
-            Display = false;
-            Height = 800;
-            Width = 600;
-        }
-
-        public int Sequence { get; set; }
-        public int? DisplaySequence { get; set; }
-        public bool Display { get; set; }
-        public int Height { get; set; }
-        public int Width { get; set; }
     }
 }
