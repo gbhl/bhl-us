@@ -90,5 +90,24 @@ namespace MOBOT.BHL.Web2.Controllers
 
             return Content(manifest);
         }
+
+        [HttpGet]
+        public ActionResult NameManifest(string itemId, string pageSeq)
+        {
+            string manifest = string.Empty;
+            int itemIdInt = int.MinValue;
+            int pageSeqInt = int.MinValue;
+            IIIF.NameManifest manifestService = new IIIF.NameManifest(Request.Url.GetLeftPart(UriPartial.Authority));
+            if (Int32.TryParse(itemId, out itemIdInt) && Int32.TryParse(pageSeq, out pageSeqInt))
+            {
+                manifest = manifestService.GetManifest(itemIdInt, pageSeqInt);
+            }
+            else
+            {
+                manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
+            }
+
+            return Content(manifest);
+        }
     }
 }

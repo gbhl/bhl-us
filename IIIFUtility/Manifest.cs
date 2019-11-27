@@ -298,6 +298,9 @@ namespace BHL.IIIF
                   "\"label\": \"" + page.WebDisplay.Replace("\"", "\\\"") + "\"," +
                   "\"height\": " + height.ToString() + "," +
                   "\"width\": " + width.ToString() + "," +
+                  "\"metadata\": [" +
+                    GetMetadataSingleValue("permalink to this page", _rootUrl + "/iiif/page/" + page.PageID.ToString()) +
+                  "]," + 
                   "\"images\": [" +
                     "{" +
                       "\"@type\": \"oa:Annotation\"," +
@@ -322,6 +325,11 @@ namespace BHL.IIIF
                       "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/text/" + count.ToString() + "\"," +
                       "\"@type\": \"sc:AnnotationList\"," +
                       "\"label\": \"Fulltext\"" +
+                    "}," +
+                    "{" +
+                      "\"@id\": \"" + _rootUrl + "/iiif/" + itemId.ToString() + "/names/" + count.ToString() + "\"," +
+                      "\"@type\": \"sc:AnnotationList\"," +
+                      "\"label\": \"Names\"" +
                     "}" +
                   "]" +
                 "}";
