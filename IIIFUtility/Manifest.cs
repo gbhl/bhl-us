@@ -59,7 +59,7 @@ namespace BHL.IIIF
                   GetMetadata(title, item) +
                   GetSeeAlso(itemId) +
                   GetSequences(itemId, item.BarCode, pages, scanData) +
-                  GetStructures(item.BarCode, segments, pages, scanData) +
+                  GetStructures(itemId, segments, pages, scanData) +
                   GetRelated(titles.Count, item) +
                 "}";
 
@@ -337,7 +337,7 @@ namespace BHL.IIIF
             return canvas;
         }
 
-        private string GetStructures(string barCode, CustomGenericList<Segment> segments, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetStructures(int itemId, CustomGenericList<Segment> segments, CustomGenericList<Page> pages, ScanData scanData)
         {
             string structures = string.Empty;
 
@@ -352,7 +352,7 @@ namespace BHL.IIIF
                         if (!canvases.ContainsKey((int)page.SegmentID)) canvases.Add((int)page.SegmentID, new List<string>());
 
                         PageScanData pageScanData = scanData.GetScanDataForDisplaySequence((int)page.SequenceOrder);
-                        string canvas = string.Format("{0}/iiif/{1}${2}/canvas", _rootUrl, barCode, (pageScanData == null ? 0 : pageScanData.Sequence - 1));
+                        string canvas = string.Format("{0}/iiif/{1}${2}/canvas", _rootUrl, itemId.ToString(), (pageScanData == null ? 0 : pageScanData.Sequence - 1));
                         canvases[(int)page.SegmentID].Add(canvas);
                     }
                 }
