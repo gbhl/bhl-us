@@ -289,7 +289,7 @@ namespace BHL.IIIF
         private string GetCanvas(int itemId, string barCode, Page page, int count, int height = 800, int width = 600)
         {
             string iiifRootAddress = _rootUrl + "/iiif/" + itemId.ToString() + "$" + count.ToString();
-            string imageRootAddress = "http://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
+            string imageRootAddress = "https://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
 
             string canvas =
                 "{" +
