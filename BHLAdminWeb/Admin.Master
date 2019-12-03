@@ -29,7 +29,7 @@
                                 |
                                 <a class="HeaderLinks" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
 							    <!--<asp:HyperLink ID="loginLink" CssClass="HeaderLinks" runat="server">Login</asp:HyperLink>-->
-							    | <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelpDocs"] %>" class="HeaderLinks" target="_blank">Help</a>
+							    | <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelpDocs"] %>" class="HeaderLinks" rel="noopener noreferrer" target="_blank">Help</a>
 
 						</div>
 						<div style="position: absolute; top: 40px; right: 15px;">

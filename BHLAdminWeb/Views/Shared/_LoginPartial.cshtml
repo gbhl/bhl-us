@@ -7,7 +7,7 @@
         <span> | </span>
         <a class="HeaderLinks" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
         <span> | </span>
-        <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelpDocs"]" class="HeaderLinks" target="_blank">Help</a>
+        <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelpDocs"]" class="HeaderLinks" rel="noopener noreferrer" target="_blank">Help</a>
     }
 }
 else
@@ -16,5 +16,5 @@ else
     <span> | </span>
     @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "HeaderLinks" })
 	<span> | </span>
-    <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelpDocs"]" class="HeaderLinks" target="_blank">Help</a>
+    <a href="@System.Web.Configuration.WebConfigurationManager.AppSettings["WikiPageHelpDocs"]" class="HeaderLinks" rel="noopener noreferrer" target="_blank">Help</a>
 }
