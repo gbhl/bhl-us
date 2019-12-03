@@ -43,7 +43,7 @@
 	                    <Columns>
 		                    <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="65px" ItemStyle-HorizontalAlign="Left">
 		                        <ItemTemplate>
-		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' target="_blank">View Title</a><br />
+		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' rel="noopener noreferrer" target="_blank">View Title</a><br />
 		                            <a class='small' href='titleedit.aspx?id=<%# Eval("TitleID")%>'>Edit Title</a><br />
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
@@ -83,7 +83,7 @@
 	                    <Columns>
 		                    <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="65px" ItemStyle-HorizontalAlign="Left">
 		                        <ItemTemplate>
-		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' target="_blank">View Title</a><br />
+		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' rel="noopener noreferrer" target="_blank">View Title</a><br />
 		                            <a class='small' href='titleedit.aspx?id=<%# Eval("TitleID")%>'>Edit Title</a><br />
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
@@ -115,7 +115,7 @@
 	                    <Columns>
 		                    <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="65px" ItemStyle-HorizontalAlign="Left">
 		                        <ItemTemplate>
-		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' target="_blank">View Title</a><br />
+		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' rel="noopener noreferrer" target="_blank">View Title</a><br />
 		                            <a class='small' href='titleedit.aspx?id=<%# Eval("TitleID")%>'>Edit Title</a><br />
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
@@ -162,7 +162,7 @@
 		                    <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="65px" ItemStyle-HorizontalAlign="Left">
 		                        <ItemTemplate>
 		                            <a class='small' href='authoredit.aspx?id=<%# Eval("AuthorID")%>'>Edit Author</a><br />
-		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' target="_blank">View Title</a><br />
+		                            <a class='small' href='https://www.biodiversitylibrary.org/bibliography/<%# Eval("TitleID") %>' rel="noopener noreferrer" target="_blank">View Title</a><br />
 		                            <a class='small' href='titleedit.aspx?id=<%# Eval("TitleID")%>'>Edit Title</a><br />
 		                        </ItemTemplate>
 		                    </asp:TemplateField>
@@ -204,7 +204,7 @@
 	                    <Columns>
 		                    <asp:TemplateField ItemStyle-Wrap="false" ItemStyle-Width="65px" ItemStyle-HorizontalAlign="Left">
 		                        <ItemTemplate>
-		                            <a class='small' href='https://www.biodiversitylibrary.org/item/<%# Eval("ItemID") %>' target="_blank">View Item</a><br />
+		                            <a class='small' href='https://www.biodiversitylibrary.org/item/<%# Eval("ItemID") %>' rel="noopener noreferrer" target="_blank">View Item</a><br />
 		                            <a class='small' href='itemedit.aspx?id=<%# Eval("ItemID")%>'>Edit Item</a><br />
 		                        </ItemTemplate>
 		                    </asp:TemplateField>

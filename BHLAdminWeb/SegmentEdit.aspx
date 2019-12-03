@@ -226,6 +226,7 @@
                 var a = document.createElement("a");
                 a.setAttribute("href", "/pagethumb/" + pages[i].PageID + ",400,400");
                 a.setAttribute("target", "_blank");
+                a.setAttribute("rel", "noopener noreferrer");
                 a.appendChild(document.createTextNode(pages[i].PageID));
                 td1.appendChild(a);
                 var td2 = document.createElement("td");
