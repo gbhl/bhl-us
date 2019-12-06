@@ -68,6 +68,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Item Identifier: {0}", itemId);
             }
 
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
 
@@ -78,6 +79,7 @@ namespace MOBOT.BHL.Web2.Controllers
             int itemIdInt = int.MinValue;
             int pageSeqInt = int.MinValue;
             //IIIF.TextManifest manifestService = new IIIF.TextManifest(Request.Url.GetLeftPart(UriPartial.Authority));
+            // TODO:  Insert proper URL for text file root address
             IIIF.TextManifest manifestService = new IIIF.TextManifest("https://www.biodiversitylibrary.org");
             if (Int32.TryParse(itemId, out itemIdInt) && Int32.TryParse(pageSeq, out pageSeqInt))
             {
@@ -88,6 +90,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
             }
 
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
 
@@ -107,6 +110,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
             }
 
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
     }
