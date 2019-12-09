@@ -80,9 +80,7 @@ namespace MOBOT.BHL.Web2.controls
             BuildInstitutionList(rightsHolders, institutions);
             BuildInstitutionList(rightsHoldersWithSegments, institutions);
 
-            InstitutionComparer comp = new InstitutionComparer(
-                InstitutionComparer.CompareEnum.InstitutionName, 
-                SortOrder.Ascending);
+            InstitutionNameComparer comp = new InstitutionNameComparer();
             institutions.Sort(comp);
 
             return institutions;

@@ -413,9 +413,11 @@ namespace MOBOT.BHL.AdminWeb
                 author.IsNew = (author.AuthorID == 0);
 
                 // Forces deletes to happen first
-                author.AuthorNames.Sort(SortOrder.Descending, "IsDeleted");
-                author.AuthorIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
-                
+                //author.AuthorNames.Sort(SortOrder.Descending, "IsDeleted");
+                //author.AuthorIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
+                author.AuthorNames.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                author.AuthorIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+
                 BHLProvider bp = new BHLProvider();
                 // Don't catch errors... allow global error handler to take over
                 int authorID = bp.SaveAuthor(author, (int)userId, 

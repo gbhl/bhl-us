@@ -150,7 +150,7 @@ namespace MOBOT.BHL.AdminWeb
                 association.IsNew = (association.TitleAssociationID == 0);
 
                 // Forces deletes to happen first
-                association.TitleAssociationIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
+                association.TitleAssociationIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
             }
             else
             {

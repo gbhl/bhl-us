@@ -196,8 +196,12 @@ namespace MOBOT.BHL.AdminWeb.Models
         private CustomGenericList<MonthlyStats> SortStats(CustomGenericList<MonthlyStats> stats,
             CustomDataAccess.SortOrder sortOrder)
         {
-            MonthlyStatsComparer comp = new MonthlyStatsComparer(
-                MonthlyStatsComparer.CompareEnum.InstitutionYearMonth, sortOrder);
+            IComparer<MonthlyStats> comp;
+            if (sortOrder == CustomDataAccess.SortOrder.Ascending)
+                comp = new MonthlyStatsAscComparer();
+            else
+                comp = new MonthlyStatsDescComparer();
+
             stats.Sort(comp);
 
             return stats;

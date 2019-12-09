@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CustomDataAccess;
-using MOBOT.BHL.Utility;
-using SortOrder = CustomDataAccess.SortOrder;
+﻿using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class SearchBookResultComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -62,5 +58,36 @@ namespace MOBOT.BHL.DataObjects
         }
 
         #endregion
+    }
+    */
+
+    public class SearchBookResultTitleComparer : System.Collections.Generic.IComparer<SearchBookResult>
+    {
+        public int Compare(SearchBookResult x, SearchBookResult y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.SortTitle).CompareTo(
+                TypeHelper.EmptyIfNull(y.SortTitle));
+            return ret;
+        }
+    }
+
+    public class SearchBookResultAuthorComparer : System.Collections.Generic.IComparer<SearchBookResult>
+    {
+        public int Compare(SearchBookResult x, SearchBookResult y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.Authors).CompareTo(
+                TypeHelper.EmptyIfNull(y.Authors));
+            return ret;
+        }
+    }
+
+    public class SearchBookResultYearComparer : System.Collections.Generic.IComparer<SearchBookResult>
+    {
+        public int Compare(SearchBookResult x, SearchBookResult y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.Year).CompareTo(
+                TypeHelper.EmptyIfNull(y.Year));
+            return ret;
+        }
     }
 }
