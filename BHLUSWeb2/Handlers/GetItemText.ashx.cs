@@ -1,5 +1,4 @@
-﻿using MOBOT.BHL.Server;
-using System;
+﻿using System;
 using System.Configuration;
 using System.Web;
 
@@ -16,39 +15,27 @@ namespace MOBOT.BHL.Web2
             int itemID;
             if (Int32.TryParse(itemIDString, out itemID))
             {
-                SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
-                string ocrText = service.GetItemText(itemID);
-                context.Response.ContentType = "text/plain";
-                context.Response.Cache.SetNoTransforms();
-                context.Response.Write(ocrText);
+                string itemText = String.Empty;
 
-                /*
-                BHLProvider provider = new BHLProvider();
-                DataObjects.Item item = provider.ItemSelectFilenames(itemID);
-
-                context.Response.ContentType = "text/plain";
-                if (!string.IsNullOrWhiteSpace(item.TextFilename))
+                string cacheKey = "ItemText" + itemIDString;
+                if (context.Cache[cacheKey] != null)
                 {
-                    System.Net.WebClient client = new System.Net.WebClient();
-
-                    try
-                    {
-                        context.Response.Write(client.DownloadString(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.TextFilename)));
-                    }
-                    catch (System.Net.WebException wex)
-                    {
-                        if (wex.Message.Contains("404"))
-                        {
-                            context.Response.Redirect("~/pagenotfound");
-                        }
-                    }
-
+                    // Use cached version
+                    itemText = context.Cache[cacheKey].ToString();
                 }
                 else
                 {
-                    context.Response.Redirect("~/pagenotfound");
+                    // Refresh cache
+                    SiteService.SiteServiceSoapClient service = new SiteService.SiteServiceSoapClient();
+                    itemText = service.GetItemText(itemID);
+                    context.Cache.Add(cacheKey, itemText, null, DateTime.Now.AddMinutes(
+                        Convert.ToDouble(ConfigurationManager.AppSettings["ItemTextCacheTime"])),
+                        System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
-                */
+
+                context.Response.ContentType = "text/plain";
+                context.Response.Cache.SetNoTransforms();
+                context.Response.Write(itemText);
             }
         }
 

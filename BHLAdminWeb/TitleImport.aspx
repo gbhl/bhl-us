@@ -33,7 +33,7 @@
 			    </asp:TemplateField>
 			    <asp:TemplateField HeaderText="Matching Title" ItemStyle-VerticalAlign="Top">
 			        <ItemTemplate>
-			            <%# "<a target='_blank' href='/bibliography/" + Eval("BhlTitleId") + "'>" + Eval("BhlShortTitle") + "</a>"%>
+			            <%# "<a rel='noopener noreferrer' target='_blank' href='/bibliography/" + Eval("BhlTitleId") + "'>" + Eval("BhlShortTitle") + "</a>"%>
 			        </ItemTemplate>
 			    </asp:TemplateField>
 			    <asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" ItemStyle-VerticalAlign="Top" />

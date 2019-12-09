@@ -153,7 +153,7 @@
                     Landing Page Content:
 				</td>
 				<td>
-                    <asp:HyperLink ID="lnkLandingPage" runat="server" Text="View Collection Landing Page" Target="_blank" Visible="false" />
+                    <asp:HyperLink ID="lnkLandingPage" runat="server" Text="View Collection Landing Page" rel="noopener noreferrer" Target="_blank" Visible="false" />
 					<FCKeditorV2:FCKeditor ID="txtHtml" runat="server" BasePath="/Controls/FCKeditor/" Height="500px" />
 				</td>
 			</tr>

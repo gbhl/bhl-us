@@ -52,6 +52,8 @@
     <!-- Message Queue settings -->
     <add key="MessageQueueAdminAddress" value="MESSAGE QUEUE ADMIN ADDRESS" />
     <add key="MessageQueues" value="bhl.dev.index|bhl.dev.index.error|bhl.dev.index.names|bhl.dev.index.names.error" />
+    <!-- List of search indexes, delimited by | -->
+    <add key="SearchServerIndexes" value="catalog|items|authors|keywords|names|pages" />
 
     <!-- ###################################################################### -->
 
@@ -126,8 +128,6 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="LogExceptions" value="true"/>
-    <!-- List of search indexes, delimited by | -->
-    <add key="SearchServerIndexes" value="catalog|items|authors|keywords|names|pages" />
     <!-- Search Server API URLs -->
     <add key="SearchServerStatsUrl" value="/_cluster/stats?human" />
     <add key="SearchIndexStatsUrl" value="/_stats?human" />

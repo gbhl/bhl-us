@@ -12,6 +12,8 @@ namespace MOBOT.BHL.Web2
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string sessionId = Session.SessionID;
+
             Response.Expires = -1;
             Response.Write("Starting tests on " + DateTime.Now.ToString("MM/dd/yyyy") + " at " + DateTime.Now.ToString("HH:mm:ss.fffffff"));
             Response.Flush();
@@ -71,7 +73,23 @@ namespace MOBOT.BHL.Web2
             {
                 Response.Write("<font color=\"red\"><b>Exceptions occurred!</b></font>");
             }
-            Response.Flush();
+
+            Response.Write("<p>&nbsp</p>");
+            Response.Write("<p>CACHED OBJECTS");
+            Response.Write("<div style='border:1px;border-style:solid;border-color:#d3d3d3;width:50%;height:200px;overflow:auto'>");
+            Response.Write("<table style='width:100%'>");
+            double totalCacheSize = 0;
+            foreach (System.Collections.DictionaryEntry cacheItem in Cache)
+            {
+                string key = cacheItem.Key.ToString();
+                double numBytes = cacheItem.Value.ToString().Length;
+                totalCacheSize += numBytes;
+                Response.Write(string.Format("<tr><td>{0}</td><td>{1} KB</td></tr>", key, Math.Round(numBytes / 1024, 3).ToString()));
+            }
+            Response.Write("</table></div>");
+            Response.Write(string.Format("Total Cache Size: {0} KB", Math.Round(totalCacheSize / 1024, 3).ToString()));
+            Response.Write("</p>");
+            //Response.Flush();
         }
 
         private void WriteExceptionInfo(Exception ex)

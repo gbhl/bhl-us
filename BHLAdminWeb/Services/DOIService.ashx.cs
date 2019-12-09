@@ -126,7 +126,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
 
                     response.Append("<row id='" + searchResult[x].DOIID.ToString() + "'>");
-                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" target=\"_blank\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].EntityDetail) + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"DOI Info\" target=\"_blank\" href=\"DOISubmissionDetail.aspx?id=" + searchResult[x].DOIBatchID + "&type=d\">" + searchResult[x].DOIBatchID + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].DOIName + " </cell>");
