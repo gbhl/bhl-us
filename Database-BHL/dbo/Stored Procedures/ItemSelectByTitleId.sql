@@ -9,6 +9,7 @@ SET NOCOUNT ON
 SELECT	i.[ItemID],
 		i.[BarCode],
 		i.[Volume],
+		i.[Year],
 		i.[Sponsor],
 		i.[ItemSourceID],
 		CASE WHEN ISNULL(s.DownloadUrl, '') = '' THEN ''

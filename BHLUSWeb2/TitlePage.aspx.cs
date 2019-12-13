@@ -17,8 +17,12 @@ namespace MOBOT.BHL.Web2
     public partial class TitlePage : BasePage
     {
         protected PageSummaryView PageSummary { get; set; }
+        protected Item CurrentItem { get; set; }
+        protected Title CurrentTitle { get; set; }
+        protected CustomGenericList<Author> Authors {get;set;}
         protected CustomGenericList<Title> Titles { get; set; }
         protected CustomGenericList<Segment> Segments { get; set; }
+        protected CustomGenericList<Institution> ItemInstitutions { get; set; }
         protected int StartPage { get; set; }
         protected int PageCount { get; set; }
         protected int SegmentCount { get; set; }
@@ -205,7 +209,11 @@ namespace MOBOT.BHL.Web2
                         //.Where(x => !string.IsNullOrWhiteSpace(x.Volume))
                         .ToList();
 
-                    foreach (Item item in items) if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                    foreach (Item item in items)
+                    {
+                        if (PageSummary.ItemID == item.ItemID) CurrentItem = item;
+                        if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                    }
 
                     ddlVolumes.DataSource = items;
                     ddlVolumes.DataTextField = "DisplayedShortVolume";
@@ -213,31 +221,37 @@ namespace MOBOT.BHL.Web2
                     ddlVolumes.DataBind();
                     ddlVolumes.SelectedValue = PageSummary.ItemID.ToString();
 
-                    // Show contributing institution
-                    CustomGenericList<Institution> institutions = bhlProvider.ItemHoldingInstitutionSelectByItemID(PageSummary.ItemID);
-                    if (institutions.Count > 0)
-                    {
-                        Institution institution = institutions[0];
-                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl))
-                        {
-                            HyperLink link = new HyperLink();
-                            link.Text = institution.InstitutionName;
-                            link.NavigateUrl = institution.InstitutionUrl;
-                            link.Target = "_blank";
-                            attributionPlaceHolder.Controls.Add(link);
-                        }
-                        else
-                        {
-                            Literal literal = new Literal();
-                            literal.Text = institution.InstitutionName;
-                            attributionPlaceHolder.Controls.Add(literal);
-                        }
+                    ItemInstitutions = bhlProvider.InstitutionSelectByItemID(PageSummary.ItemID);
 
-                        ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("\"", "");
+                    // Show contributing institution
+                    foreach (Institution institution in ItemInstitutions)
+                    {
+                        if (institution.InstitutionRoleName == "Holding Institution")
+                        {
+                            if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                            {
+                                HyperLink link = new HyperLink();
+                                link.Text = institution.InstitutionName;
+                                link.NavigateUrl = institution.InstitutionUrl;
+                                link.Target = "_blank";
+                                attributionPlaceHolder.Controls.Add(link);
+                            }
+                            else
+                            {
+                                Literal literal = new Literal();
+                                literal.Text = institution.InstitutionName;
+                                attributionPlaceHolder.Controls.Add(literal);
+                            }
+
+                            ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("\"", "");
+                            break;
+                        }
                     }
 
                     // Used to determine where to send people for bibliographic curiosity
                     Titles = bhlProvider.TitleSelectByItem(PageSummary.ItemID);
+                    foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
+                    Authors = bhlProvider.AuthorSelectByTitleId(CurrentTitle.TitleID);
 
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
