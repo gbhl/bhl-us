@@ -54,7 +54,8 @@ namespace MOBOT.BHL.Web2
                 }
 
                 BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
-                BhlSegment.ContributorList.Sort(new InstitutionComparer(InstitutionComparer.CompareEnum.InstitutionName, SortOrder.Ascending));
+                InstitutionNameComparer comp = new InstitutionNameComparer();
+                BhlSegment.ContributorList.Sort(comp);
 
                 // Add Google Scholar metadata to the page headers
                 List<KeyValuePair<string, string>> tags = bhlProvider.GetGoogleScholarMetadataForSegment(SegmentID, ConfigurationManager.AppSettings["PartPageUrl"]);

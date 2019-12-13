@@ -1,8 +1,10 @@
 ﻿using MOBOT.BHL.Utility;
+using System.Collections.Generic;
 using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class TitleAuthorComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -55,4 +57,26 @@ namespace MOBOT.BHL.DataObjects
 
         #endregion
     }
+    */
+
+    public class TileAuthorNameComparer : IComparer<TitleAuthor>
+    {
+        public int Compare(TitleAuthor x, TitleAuthor y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.FullName).CompareTo(
+                TypeHelper.EmptyIfNull(y.FullName));
+            return ret;
+        }
+    }
+
+    public class TitleAuthorSequenceComparer : IComparer<TitleAuthor>
+    {
+        public int Compare(TitleAuthor x, TitleAuthor y)
+        {
+            int ret = TypeHelper.ZeroIfNull((int)x.SequenceOrder).CompareTo(
+                TypeHelper.ZeroIfNull((int)y.SequenceOrder));
+            return ret;
+        }
+    }
+
 }

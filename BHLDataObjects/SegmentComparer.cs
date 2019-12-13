@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.Utility;
 using System.Collections.Generic;
-using System.Text;
-using MOBOT.BHL.Utility;
-using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class SegmentComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -71,5 +69,46 @@ namespace MOBOT.BHL.DataObjects
         }
 
         #endregion
+    }
+    */
+
+    public class SegmentSequenceComparer : IComparer<Segment>
+    {
+        public int Compare(Segment x, Segment y)
+        {
+            int ret = TypeHelper.ZeroIfNull((int)x.SequenceOrder).CompareTo(
+                TypeHelper.ZeroIfNull((int)y.SequenceOrder));
+            return ret;
+        }
+    }
+
+    public class SegmentTitleComparer : IComparer<Segment>
+    {
+        public int Compare(Segment x, Segment y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.SortTitle).CompareTo(
+                TypeHelper.EmptyIfNull(y.SortTitle));
+            return ret;
+        }
+    }
+
+    public class SegmentAuthComparer : IComparer<Segment>
+    {
+        public int Compare(Segment x, Segment y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.Authors).CompareTo(
+                TypeHelper.EmptyIfNull(y.Authors));
+            return ret;
+        }
+    }
+
+    public class SegmentDateComparer : IComparer<Segment>
+    {
+        public int Compare(Segment x, Segment y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.Date).CompareTo(
+                TypeHelper.EmptyIfNull(y.Date));
+            return ret;
+        }
     }
 }

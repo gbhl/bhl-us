@@ -36,14 +36,14 @@ namespace MOBOT.BHL.Web2
                 // Sort the data, if necessary
                 if (_sortBy != string.Empty)
                 {
-                    SegmentComparer.CompareEnum sortByEnum = SegmentComparer.CompareEnum.Title;
+                    IComparer<Segment> comp = new SegmentTitleComparer();
                     switch (_sortBy)
                     {
-                        case "title": sortByEnum = SegmentComparer.CompareEnum.Title; break;
-                        case "author": sortByEnum = SegmentComparer.CompareEnum.Author; break;
-                        case "year": sortByEnum = SegmentComparer.CompareEnum.Year; break;
+                        case "title": comp = new SegmentTitleComparer(); break;
+                        case "author": comp = new SegmentAuthComparer(); break;
+                        case "year": comp = new SegmentDateComparer(); break;
                     }
-                    SegmentComparer comp = new SegmentComparer(sortByEnum, SortOrder.Ascending);
+
                     Data.Sort(comp);
                 }
 

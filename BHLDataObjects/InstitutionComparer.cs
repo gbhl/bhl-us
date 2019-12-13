@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CustomDataAccess;
-using MOBOT.BHL.Utility;
-using SortOrder = CustomDataAccess.SortOrder;
+﻿using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class InstitutionComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -51,6 +47,27 @@ namespace MOBOT.BHL.DataObjects
                 ret = ret * -1;
             }
 
+            return ret;
+        }
+    }
+    */
+
+    public class InstitutionCodeComparer : System.Collections.Generic.IComparer<Institution>
+    {
+        public int Compare(Institution x, Institution y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.InstitutionCode).CompareTo(
+                TypeHelper.EmptyIfNull(y.InstitutionCode));
+            return ret;
+        }
+    }
+
+    public class InstitutionNameComparer : System.Collections.Generic.IComparer<Institution>
+    {
+        public int Compare(Institution x, Institution y)
+        {
+            int ret = TypeHelper.EmptyIfNull(x.InstitutionName).CompareTo(
+                TypeHelper.EmptyIfNull(y.InstitutionName));
             return ret;
         }
     }

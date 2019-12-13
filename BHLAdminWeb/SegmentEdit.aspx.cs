@@ -11,7 +11,6 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class SegmentEdit : System.Web.UI.Page
     {
-        private SegmentAuthorComparer.CompareEnum _sortColumn = SegmentAuthorComparer.CompareEnum.SequenceOrder;
         private SortOrder _sortOrder = SortOrder.Ascending;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -231,8 +230,7 @@ namespace MOBOT.BHL.AdminWeb
                     }
 
                     // Re-sort the list of pages, using the order of the scanned pages as a guide
-                    SegmentPageComparer comp = new SegmentPageComparer(
-                        (SegmentPageComparer.CompareEnum)SegmentPageComparer.CompareEnum.PageSequenceOrder, _sortOrder);
+                    SegmentPagePSequenceComparer comp = new SegmentPagePSequenceComparer();
                     segment.PageList.Sort(comp);
                     short newSeqOrder = 1;
                     int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
@@ -427,7 +425,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            SegmentAuthorComparer comp = new SegmentAuthorComparer((SegmentAuthorComparer.CompareEnum)_sortColumn, _sortOrder);
+            SegmentAuthorSequenceComparer comp = new SegmentAuthorSequenceComparer();
             segmentAuthors.Sort(comp);
             authorsList.DataSource = segmentAuthors;
             authorsList.DataBind();
@@ -597,8 +595,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            SegmentPageComparer comp = new SegmentPageComparer(
-                (SegmentPageComparer.CompareEnum)SegmentPageComparer.CompareEnum.SequenceOrder, _sortOrder);
+            SegmentPageSequenceComparer comp = new SegmentPageSequenceComparer();
             segmentPages.Sort(comp);
             pagesList.DataSource = segmentPages;
             pagesList.DataBind();
@@ -646,7 +643,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            SegmentComparer comp = new SegmentComparer((SegmentComparer.CompareEnum)SegmentComparer.CompareEnum.SequenceOrder, _sortOrder);
+            SegmentSequenceComparer comp = new SegmentSequenceComparer();
             relatedSegments.Sort(comp);
 
             litPrimaryMsg.Visible = (relatedSegments.Count > 0);
@@ -1267,11 +1264,16 @@ namespace MOBOT.BHL.AdminWeb
                 //----------------------------------------
 
                 // Forces deletes to happen first
-                segment.ContributorList.Sort(SortOrder.Descending, "IsDeleted");
-                segment.IdentifierList.Sort(SortOrder.Descending, "IsDeleted");
-                segment.AuthorList.Sort(SortOrder.Descending, "IsDeleted");
-                segment.KeywordList.Sort(SortOrder.Descending, "IsDeleted");
-                segment.PageList.Sort(SortOrder.Descending, "IsDeleted");
+                //segment.ContributorList.Sort(SortOrder.Descending, "IsDeleted");
+                //segment.IdentifierList.Sort(SortOrder.Descending, "IsDeleted");
+                //segment.AuthorList.Sort(SortOrder.Descending, "IsDeleted");
+                //segment.KeywordList.Sort(SortOrder.Descending, "IsDeleted");
+                //segment.PageList.Sort(SortOrder.Descending, "IsDeleted");
+                segment.ContributorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                segment.IdentifierList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                segment.AuthorList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                segment.KeywordList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                segment.PageList.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
                 BHLProvider bp = new BHLProvider();
 

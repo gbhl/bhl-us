@@ -380,8 +380,28 @@ namespace MOBOT.BHL.AdminWeb
 		private void bindPageData()
 		{
             Item item = (Item)Session["Item" + itemIdTextBox.Text];
-            PageComparer comp = new PageComparer((PageComparer.CompareEnum)_sortColumn, _sortOrder);
-            item.Pages.Sort(comp);
+            item.Pages.Sort((p1, p2) => (p1.SequenceOrder ?? 0).CompareTo(p2.SequenceOrder ?? 0));
+            switch (_sortColumn)
+            {
+                case PageComparer.CompareEnum.FileNamePrefix:
+                    if (_sortOrder == SortOrder.Ascending)
+                        item.Pages.Sort((p1, p2) => (p1.FileNamePrefix).CompareTo(p2.FileNamePrefix));
+                    else
+                        item.Pages.Sort((p1, p2) => (p2.FileNamePrefix).CompareTo(p1.FileNamePrefix));
+                    break;
+                case PageComparer.CompareEnum.PageID:
+                    if (_sortOrder == SortOrder.Ascending)
+                        item.Pages.Sort((p1, p2) => (p1.PageID).CompareTo(p2.PageID));
+                    else
+                        item.Pages.Sort((p1, p2) => (p2.PageID).CompareTo(p1.PageID));
+                    break;
+                case PageComparer.CompareEnum.SequenceOrder:
+                    if (_sortOrder == SortOrder.Ascending)
+                        item.Pages.Sort((p1, p2) => (p1.SequenceOrder ?? 0).CompareTo(p2.SequenceOrder ?? 0));
+                    else
+                        item.Pages.Sort((p1, p2) => (p2.SequenceOrder ?? 0).CompareTo(p1.SequenceOrder ?? 0));
+                    break;
+            }
             pageList.DataSource = item.Pages;
             pageList.DataBind();
 		}
@@ -667,7 +687,7 @@ namespace MOBOT.BHL.AdminWeb
                 if (s.ItemID != null) segments.Add(s);
             }
 
-            SegmentComparer comp = new SegmentComparer((SegmentComparer.CompareEnum)SegmentComparer.CompareEnum.SequenceOrder, _sortOrder);
+            SegmentSequenceComparer comp = new SegmentSequenceComparer();
             segments.Sort(comp);
             segmentsList.DataSource = segments;
             segmentsList.DataBind();

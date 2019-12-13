@@ -43,14 +43,14 @@ namespace MOBOT.BHL.Web2
                 // Sort the data, if necessary
                 if (_sortBy != string.Empty)
                 {
-                    SearchBookResultComparer.CompareEnum sortByEnum = SearchBookResultComparer.CompareEnum.Title;
+                    IComparer<SearchBookResult> comp = new SearchBookResultTitleComparer();
                     switch (_sortBy)
                     {
-                        case "title": sortByEnum = SearchBookResultComparer.CompareEnum.Title; break;
-                        case "author": sortByEnum = SearchBookResultComparer.CompareEnum.Author; break;
-                        case "year": sortByEnum = SearchBookResultComparer.CompareEnum.Year; break;
+                        case "title": comp = new SearchBookResultTitleComparer(); break;
+                        case "author": comp = new SearchBookResultAuthorComparer(); break;
+                        case "year": comp = new SearchBookResultYearComparer(); break;
                     }
-                    SearchBookResultComparer comp = new SearchBookResultComparer(sortByEnum, SortOrder.Ascending);
+
                     Data.Sort(comp);
                 }
 
