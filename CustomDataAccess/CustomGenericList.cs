@@ -1,12 +1,31 @@
 using System;
-using System.Collections;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
+using System.Collections.Generic;
 
 namespace CustomDataAccess
 {
+    [Serializable]
+    public class CustomGenericList<T>: List<T>
+    {
+
+    }
+
+    /// <summary>
+    /// Specifies how elements in a list are sorted.
+    /// </summary>
+    [Serializable]
+    public enum SortOrder
+    {
+        /// <summary>
+        /// The elements are sorted in ascending order.
+        /// </summary>
+        Ascending = 0,
+        /// <summary>
+        /// The elements are sorted in descending order.
+        /// </summary>
+        Descending = 1
+    }
+
+    /*
     /// <summary>
     /// Custom generic list. Implements <see cref="ICloneable"/>, <see cref="ICollection"/>, <see cref="IDisposable"/>, <see cref="IEnumerable"/>, <see cref="IList"/> and <see cref="ISortable"/> interfaces.
     /// Facilitates creating a strongly type list using generics.
@@ -1014,6 +1033,7 @@ namespace CustomDataAccess
 
         #endregion Dispose
     }
+    
 
     /// <summary>
     /// A generic <see cref="System.Collections.IComparer"/> implementation. 
@@ -1444,22 +1464,6 @@ namespace CustomDataAccess
     }
 
     /// <summary>
-    /// Specifies how elements in a list are sorted.
-    /// </summary>
-    [Serializable]
-    public enum SortOrder
-    {
-        /// <summary>
-        /// The elements are sorted in ascending order.
-        /// </summary>
-        Ascending = 0,
-        /// <summary>
-        /// The elements are sorted in descending order.
-        /// </summary>
-        Descending = 1
-    }
-
-    /// <summary>
     /// Defines the sorting criteria used by <see cref="GenericComparer"/>.
     /// </summary>
     [Serializable]
@@ -1619,4 +1623,5 @@ namespace CustomDataAccess
 
         Hashtable Errors { get; set; }
     }
+    */
 }

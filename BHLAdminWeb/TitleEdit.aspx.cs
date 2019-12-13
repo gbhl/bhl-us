@@ -14,7 +14,6 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleEdit : System.Web.UI.Page
 	{
-        private TitleAuthorComparer.CompareEnum _authorSortColumn = TitleAuthorComparer.CompareEnum.SequenceOrder;
         private TitleItemComparer.CompareEnum _itemSortColumn = TitleItemComparer.CompareEnum.ItemSequence;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 
@@ -157,13 +156,6 @@ namespace MOBOT.BHL.AdminWeb
 					_itemSortColumn = (TitleItemComparer.CompareEnum)ViewState[ "ItemSortColumn" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
-
-                if (ViewState["AuthorSortColumn"] != null)
-                {
-                    _authorSortColumn = (TitleAuthorComparer.CompareEnum)ViewState["AuthorSortColumn"];
-                    _sortOrder = (SortOrder)ViewState["SortOrder"];
-                }
-
             }
 
             editHistoryControl.EntityName = "title";
@@ -350,7 +342,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 			}
 
-            TitleAuthorComparer comp = new TitleAuthorComparer((TitleAuthorComparer.CompareEnum)_authorSortColumn, _sortOrder);
+            TitleAuthorSequenceComparer comp = new TitleAuthorSequenceComparer();
             titleAuthors.Sort(comp);
             creatorsList.DataSource = titleAuthors;
 			creatorsList.DataBind();
@@ -469,8 +461,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
             }
 
-            TitleNoteComparer comp = new TitleNoteComparer(TitleNoteComparer.CompareEnum.NoteSequence, _sortOrder);
-            titleNotes.Sort(comp);
+            titleNotes.Sort((n1, n2) => (n1.NoteSequence ?? 0).CompareTo(n2.NoteSequence ?? 0));
             notesList.DataSource = titleNotes;
             notesList.DataBind();
         }
@@ -903,9 +894,35 @@ namespace MOBOT.BHL.AdminWeb
                 }
 			}
 
-			TitleItemComparer comp = new TitleItemComparer( (TitleItemComparer.CompareEnum)_itemSortColumn, _sortOrder );
-			items.Sort( comp );
-			itemsList.DataSource = items;
+            switch (_itemSortColumn)
+            {
+                case TitleItemComparer.CompareEnum.BarCode:
+                    if (_sortOrder == SortOrder.Ascending)
+                        items.Sort((i1, i2) => (i1.BarCode).CompareTo(i2.BarCode));
+                    else
+                        items.Sort((i1, i2) => (i2.BarCode).CompareTo(i1.BarCode));
+                    break;
+                case TitleItemComparer.CompareEnum.ItemID:
+                    if (_sortOrder == SortOrder.Ascending)
+                        items.Sort((i1, i2) => (i1.ItemID).CompareTo(i2.ItemID));
+                    else
+                        items.Sort((i1, i2) => (i2.ItemID).CompareTo(i1.ItemID));
+                    break;
+                case TitleItemComparer.CompareEnum.ItemSequence:
+                    if (_sortOrder == SortOrder.Ascending)
+                        items.Sort((i1, i2) => (i1.ItemSequence ?? 0).CompareTo(i2.ItemSequence ?? 0));
+                    else
+                        items.Sort((i1, i2) => (i2.ItemSequence ?? 0).CompareTo(i1.ItemSequence ?? 0));
+                    break;
+                case TitleItemComparer.CompareEnum.Volume:
+                    if (_sortOrder == SortOrder.Ascending)
+                        items.Sort((i1, i2) => (i1.Volume).CompareTo(i2.Volume));
+                    else
+                        items.Sort((i1, i2) => (i2.Volume).CompareTo(i1.Volume));
+                    break;
+            }
+
+            itemsList.DataSource = items;
 			itemsList.DataBind();
         }
 
@@ -1850,13 +1867,20 @@ namespace MOBOT.BHL.AdminWeb
 
                 //----------------------------------------
                 // Forces deletes to happen first
-                title.TitleCollections.Sort( SortOrder.Descending, "IsDeleted" );
-                title.TitleIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
-				title.TitleAuthors.Sort( SortOrder.Descending, "IsDeleted" );
-                title.TitleItems.Sort(SortOrder.Descending, "IsDeleted");
-                title.TitleKeywords.Sort(SortOrder.Descending, "IsDeleted");
-                title.TitleAssociations.Sort(SortOrder.Descending, "IsDeleted");
-                title.TitleVariants.Sort(SortOrder.Descending, "IsDeleted");
+                //title.TitleCollections.Sort( SortOrder.Descending, "IsDeleted" );
+                //title.TitleIdentifiers.Sort(SortOrder.Descending, "IsDeleted");
+				//title.TitleAuthors.Sort( SortOrder.Descending, "IsDeleted" );
+                //title.TitleItems.Sort(SortOrder.Descending, "IsDeleted");
+                //title.TitleKeywords.Sort(SortOrder.Descending, "IsDeleted");
+                //title.TitleAssociations.Sort(SortOrder.Descending, "IsDeleted");
+                //title.TitleVariants.Sort(SortOrder.Descending, "IsDeleted");
+                title.TitleCollections.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleIdentifiers.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleAuthors.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleItems.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleKeywords.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleAssociations.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
+                title.TitleVariants.Sort((s1, s2) => s2.IsDeleted.CompareTo(s1.IsDeleted));
 
                 //----------------------------------------
                 BHLProvider bp = new BHLProvider();

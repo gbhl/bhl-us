@@ -7,6 +7,7 @@ using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class MonthlyStatsComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -52,4 +53,30 @@ namespace MOBOT.BHL.DataObjects
             return ret;
         }
     }
+    */
+
+    public class MonthlyStatsAscComparer : IComparer<MonthlyStats>
+    {
+        public int Compare(MonthlyStats x, MonthlyStats y)
+        {
+            int ret = x.InstitutionName.CompareTo(y.InstitutionName);
+            bool institutionNameChanged = (ret != 0);
+            if (ret == 0) ret = x.Year.CompareTo(y.Year);
+            if (ret == 0) ret = x.Month.CompareTo(y.Month);
+            return ret;
+        }
+    }
+
+    public class MonthlyStatsDescComparer : IComparer<MonthlyStats>
+    {
+        public int Compare(MonthlyStats x, MonthlyStats y)
+        {
+            int ret = x.InstitutionName.CompareTo(y.InstitutionName);
+            bool institutionNameChanged = (ret != 0);
+            if (ret == 0) ret = x.Year.CompareTo(y.Year);
+            if (ret == 0) ret = x.Month.CompareTo(y.Month);
+            if (!institutionNameChanged) ret = ret * -1;
+            return ret;
+        }
+    }    
 }

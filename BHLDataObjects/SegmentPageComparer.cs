@@ -6,6 +6,7 @@ using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.DataObjects
 {
+    /*
     public class SegmentPageComparer : System.Collections.IComparer
     {
         public enum CompareEnum
@@ -57,5 +58,26 @@ namespace MOBOT.BHL.DataObjects
         }
 
         #endregion
+    }
+    */
+
+    public class SegmentPageSequenceComparer : IComparer<SegmentPage>
+    {
+        public int Compare(SegmentPage x, SegmentPage y)
+        {
+            int ret = TypeHelper.ZeroIfNull((int)x.SequenceOrder).CompareTo(
+                TypeHelper.ZeroIfNull((int)y.SequenceOrder));
+            return ret;
+        }
+    }
+
+    public class SegmentPagePSequenceComparer : IComparer<SegmentPage>
+    {
+        public int Compare(SegmentPage x, SegmentPage y)
+        {
+            int ret = TypeHelper.ZeroIfNull((int)x.PageSequenceOrder).CompareTo(
+                TypeHelper.ZeroIfNull((int)y.PageSequenceOrder));
+            return ret;
+        }
     }
 }

@@ -152,8 +152,30 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			if ( sort )
 			{
-				NamePageComparer comp = new NamePageComparer( (NamePageComparer.CompareEnum)_sortColumn, _sortOrder );
-				pns.Sort( comp );
+				switch (_sortColumn)
+				{
+					case NamePageComparer.CompareEnum.NameString:
+						if (_sortOrder == SortOrder.Ascending)
+							pns.Sort((n1, n2) => n1.NameString.CompareTo(n2.NameString)); 
+						else
+							pns.Sort((n1, n2) => n2.NameString.CompareTo(n1.NameString));
+						
+						break;
+					case NamePageComparer.CompareEnum.ResolvedNameString:
+						if (_sortOrder == SortOrder.Ascending)
+							pns.Sort((n1, n2) => n1.ResolvedNameString.CompareTo(n2.ResolvedNameString)); 
+						else
+							pns.Sort((n1, n2) => n2.ResolvedNameString.CompareTo(n1.ResolvedNameString));
+						
+						break;
+					case NamePageComparer.CompareEnum.NameBankID:
+						if (_sortOrder == SortOrder.Ascending)
+							pns.Sort((n1, n2) => n1.NameBankID.CompareTo(n2.NameBankID)); 
+						else
+							pns.Sort((n1, n2) => n2.NameBankID.CompareTo(n1.NameBankID));
+
+						break;
+				}
 			}
 			namePageList.DataSource = pns;
 			namePageList.DataBind();
