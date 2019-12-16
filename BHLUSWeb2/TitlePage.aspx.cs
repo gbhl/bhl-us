@@ -19,7 +19,8 @@ namespace MOBOT.BHL.Web2
         protected PageSummaryView PageSummary { get; set; }
         protected Item CurrentItem { get; set; }
         protected Title CurrentTitle { get; set; }
-        protected CustomGenericList<Author> Authors {get;set;}
+        protected List<Author> Authors {get;set;}
+        protected List<Author> AdditionalAuthors { get; set; }
         protected CustomGenericList<Title> Titles { get; set; }
         protected CustomGenericList<Segment> Segments { get; set; }
         protected CustomGenericList<Institution> ItemInstitutions { get; set; }
@@ -251,7 +252,21 @@ namespace MOBOT.BHL.Web2
                     // Used to determine where to send people for bibliographic curiosity
                     Titles = bhlProvider.TitleSelectByItem(PageSummary.ItemID);
                     foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
-                    Authors = bhlProvider.AuthorSelectByTitleId(CurrentTitle.TitleID);
+
+                    Authors = new List<Author>();
+                    AdditionalAuthors = new List<Author>();
+                    foreach (Author author in bhlProvider.AuthorSelectByTitleId(CurrentTitle.TitleID))
+                    {
+                        if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
+                        {
+                            if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship)) Authors.Add(author);
+                        }
+                        else
+                        {
+                            if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship) &&
+                                !ListContainsAuthor(AdditionalAuthors, author.AuthorID, author.Relationship)) AdditionalAuthors.Add(author);
+                        }
+                    }
 
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
@@ -566,6 +581,21 @@ Append("</a>").
                 ltlPageSequence.Text = sbScrollItems.ToString();
             }
         }
-    
+
+        private bool ListContainsAuthor(IList<Author> list, int authorID, string relationship)
+        {
+            bool containsAuthor = false;
+
+            foreach (Author author in list)
+            {
+                if (author.AuthorID == authorID && author.Relationship == relationship)
+                {
+                    containsAuthor = true;
+                    break;
+                }
+            }
+
+            return containsAuthor;
+        }
     }
 }
