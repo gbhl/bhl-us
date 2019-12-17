@@ -113,7 +113,7 @@
                             <div class="header">Title</div>
                             <div class="detail"><%if (PageSummary.FullTitle.Length > 200) {%><%: PageSummary.FullTitle.Substring(0, 200) %>...<%} else {%><%: PageSummary.FullTitle %><%}%></div>
                             <%if (Authors.Count > 0 || AdditionalAuthors.Count > 0) { %>
-                                <div class="header">Author</div>
+                                <div class="header">By</div>
                                 <div class="detail">
                                     <%foreach (Author a in Authors) { %>
                                         <a href="/creator/<%: a.AuthorID.ToString() %>"><%: a.NameExtended %></a><br />
