@@ -21,9 +21,9 @@ namespace MOBOT.BHL.Web2
         protected Title CurrentTitle { get; set; }
         protected List<Author> Authors {get;set;}
         protected List<Author> AdditionalAuthors { get; set; }
-        protected CustomGenericList<Title> Titles { get; set; }
-        protected CustomGenericList<Segment> Segments { get; set; }
-        protected CustomGenericList<Institution> ItemInstitutions { get; set; }
+        protected List<Title> Titles { get; set; }
+        protected List<Segment> Segments { get; set; }
+        protected List<Institution> ItemInstitutions { get; set; }
         protected int StartPage { get; set; }
         protected int PageCount { get; set; }
         protected int SegmentCount { get; set; }
@@ -271,7 +271,7 @@ namespace MOBOT.BHL.Web2
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
                     
-                    CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
+                    List<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
 
                     //SCS Set the Pages drop down list   
                     lstPages.DataSource = pages;
@@ -314,7 +314,7 @@ namespace MOBOT.BHL.Web2
 
                     // Serialize only the information we need
                     List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
-                    CustomGenericList<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
+                    List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
                     foreach (PageSummaryView pageview in pageviews)
                     {
                         BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage
@@ -355,7 +355,7 @@ namespace MOBOT.BHL.Web2
         /// <param name="pages">List of all pages</param>
         /// <param name="currentPageID">Identifier of the current page</param>
         /// <returns>Segment ID associated with the page, or null</returns>
-        private int? GetSegmentID(CustomGenericList<Page> pages, int currentPageID)
+        private int? GetSegmentID(List<Page> pages, int currentPageID)
         {
             int? segmentid = null;
 
@@ -402,7 +402,7 @@ namespace MOBOT.BHL.Web2
             //Set Annotation content
             BHLProvider provider = new BHLProvider();
 
-            CustomGenericList<Annotation> annotationList = provider.AnnotationsSelectByItemID(CurrentItemID);
+            List<Annotation> annotationList = provider.AnnotationsSelectByItemID(CurrentItemID);
 
             if (annotationList != null && annotationList.Count > 0)
             {
@@ -475,7 +475,7 @@ namespace MOBOT.BHL.Web2
 
                     #region Get Notes
                     ///Get tnotes, which are referred to in Annotation Display
-                    CustomGenericList<AnnotationNote> note_list = provider.AnnotationNoteSelectByAnnotationID(_ann.AnnotationID);
+                    List<AnnotationNote> note_list = provider.AnnotationNoteSelectByAnnotationID(_ann.AnnotationID);
                     if (note_list.Count > 0)
                     {
                         sbPageBlock.Append("<div class=\"tnote\">");
@@ -490,7 +490,7 @@ namespace MOBOT.BHL.Web2
                     #endregion
 
                     #region Get Subjects
-                    CustomGenericList<CustomDataRow> subjects = provider.AnnotationSubjectSelectByAnnotationID(_ann.AnnotationID);
+                    List<CustomDataRow> subjects = provider.AnnotationSubjectSelectByAnnotationID(_ann.AnnotationID);
                     if (subjects.Count > 0)
                     {
                         int keywordTargetID = (int)subjects[0]["AnnotationKeywordTargetID"].Value;
@@ -523,7 +523,7 @@ Append("</a>").
                     #endregion
 
                     #region Get Concepts
-                    CustomGenericList<CustomDataRow> concepts = provider.Annotation_AnnotationConceptSelectByAnnotationID(_ann.AnnotationID);
+                    List<CustomDataRow> concepts = provider.Annotation_AnnotationConceptSelectByAnnotationID(_ann.AnnotationID);
                     if (concepts.Count > 0)
                     {
                         int keywordTargetID = (int)concepts[0]["AnnotationKeywordTargetID"].Value;
