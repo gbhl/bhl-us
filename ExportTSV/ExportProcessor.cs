@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BHL.Export.TSV
 {
@@ -205,7 +203,9 @@ namespace BHL.Export.TSV
 
         private string GetDBString(SqlDataReader reader, string columnName)
         {
-            return reader.IsDBNull(reader.GetOrdinal(columnName)) ? string.Empty : reader.GetString(reader.GetOrdinal(columnName));
+            string columnValue = reader.IsDBNull(reader.GetOrdinal(columnName)) ? string.Empty : reader.GetString(reader.GetOrdinal(columnName));
+            // Remove extra tabs and line breaks
+            return columnValue.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
         }
 
         private string GetDBInt32(SqlDataReader reader, string columnName)
