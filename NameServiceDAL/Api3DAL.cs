@@ -939,7 +939,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<PageDetail> PageSelectByNameConfirmed(SqlConnection sqlConnection,
+        public CustomGenericList<PageDetail> PageSelectByResolvedName(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string nameConfirmed)
         {
             SqlConnection connection = sqlConnection;
@@ -947,8 +947,8 @@ namespace MOBOT.BHL.API.BHLApiDAL
 
             if (connection == null) connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"));
 
-            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiPageSelectByNameConfirmed", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("NameConfirmed", SqlDbType.NVarChar, 100, false, nameConfirmed)))
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("ApiPageSelectByResolvedName", connection, transaction,
+                CustomSqlHelper.CreateInputParameter("ResolvedNameString", SqlDbType.NVarChar, 100, false, nameConfirmed)))
             {
                 using (CustomSqlHelper<PageDetail> helper = new CustomSqlHelper<PageDetail>())
                 {

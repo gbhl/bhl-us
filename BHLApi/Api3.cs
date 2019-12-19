@@ -678,13 +678,13 @@ namespace MOBOT.BHL.API.BHLApi
             return new CustomGenericList<Name> { name };
         }
 
-        private Name GetNameDetail(string nameConfirmed)
+        private Name GetNameDetail(string resolvedName)
         {
             // Validate the input
-            if (string.IsNullOrWhiteSpace(nameConfirmed)) throw new InvalidApiParamException("Please supply a Name.");
+            if (string.IsNullOrWhiteSpace(resolvedName)) throw new InvalidApiParamException("Please supply a Name.");
 
             CustomGenericList<PageDetail> pageDetails = null;
-            pageDetails = new Api3DAL().PageSelectByNameConfirmed(null, null, nameConfirmed);
+            pageDetails = new Api3DAL().PageSelectByResolvedName(null, null, resolvedName);
 
             return GetNameDetailFromPageDetails(pageDetails);
         }

@@ -18,6 +18,11 @@ namespace MOBOT.BHL.Server
             return new NameResolvedDAL().NameResolvedSelectByNameLike(null, null, name, returnCount);
         }
 
+        public NameResolved NameResolvedSelectByResolvedName(string name)
+        {
+            return new NameResolvedDAL().NameResolvedSelectByResolvedName(null, null, name);
+        }
+
         public NameSearchResult NameResolvedSearchForPages(string name, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {

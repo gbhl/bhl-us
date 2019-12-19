@@ -1,11 +1,17 @@
-﻿
-CREATE PROCEDURE [dbo].[NameResolvedSearchForPagesDownload]
+﻿CREATE PROCEDURE [dbo].[NameResolvedSearchForPagesDownload]
 
 @ResolvedNameString nvarchar(100)
 
 AS 
 
 SET NOCOUNT ON
+
+-- Use the Canonical form of the Resolved name to search for pages
+DECLARE @CanonicalNameString nvarchar(100)
+SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE ResolvedNameString = @ResolvedNameString
+
+-- If no name found, see if the argument matches a Canonical form
+IF (@CanonicalNameString IS NULL) SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE CanonicalNameString = @ResolvedNameString
 
 CREATE TABLE #tmp
 	(
@@ -87,12 +93,12 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON p.itemid = i.itemid
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON i.primarytitleid = t.titleid
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON ti.ItemID = i.ItemID AND ti.TitleID = t.TitleID
-WHERE	nr.ResolvedNameString = @ResolvedNameString
+WHERE	nr.CanonicalNameString = @CanonicalNameString
 		AND nm.IsActive = 1
 		AND i.ItemStatusID = 40
 		AND t.PublishReady = 1
 
--- Gettting these values after the primary select cuts execution time by at least half
+-- Getting these values after the primary select cuts execution time by at least half
 UPDATE	#tmp
 SET		BibliographicLevelName = b.BibliographicLevelName
 FROM	#tmp t
