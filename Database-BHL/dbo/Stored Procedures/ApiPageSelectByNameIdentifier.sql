@@ -18,7 +18,7 @@ SELECT @TL2 = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'TL2'
 SELECT @IdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = @IdentifierName
 
 -- Find the Resolved Name matching the specified identifier, and return all names with matching Canonical forms
-SELECT	canon.NameResolvedID, canon.ResolvedNameString
+SELECT	canon.NameResolvedID, canon.ResolvedNameString, canon.CanonicalNameString
 INTO	#NameResolved
 FROM	dbo.NameIdentifier ni WITH (NOLOCK)
 		INNER JOIN dbo.NameResolved nr WITH (NOLOCK) ON ni.NameResolvedID = nr.NameResolvedID
@@ -27,8 +27,9 @@ WHERE	ni.IdentifierValue = @IdentifierValue
 AND		ni.IdentifierID = @IdentifierID
 
 -- Get the detail for the specified NameBankID
-SELECT	@IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString,
-		t.TitleID, t.MARCBibID, t.ShortTitle, 
+SELECT DISTINCT
+		@IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString,
+		t.TitleID, t.MARCBibID, t.ShortTitle, t.SortTitle,
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber else i.CallNumber END AS CallNumber, 
 		t.Datafield_260_a AS PublisherPlace, 
 		t.Datafield_260_b AS PublisherName, t.Datafield_260_c AS PublicationDate, 
@@ -48,6 +49,7 @@ SELECT	@IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString,
 		REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(s.ImageServerUrlFormat, '{0}', ''), '{1}', ''), '{2}', ''), '{3}', 'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID)), '{4}', 'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID)), '&amp;', '&') AS ImageURL,
 		'https://www.biodiversitylibrary.org/pagetext/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
 		pt.PageTypeName
+INTO	#Final
 FROM	#NameResolved nr
 		INNER JOIN dbo.Name n WITH (NOLOCK) ON nr.NameResolvedID = n.NameResolvedID
 		INNER JOIN NamePage np WITH (NOLOCK) ON n.NameID = np.NameID
@@ -71,5 +73,12 @@ FROM	#NameResolved nr
 			ON t.TitleID = bph.TitleID AND bph.IdentifierID = @BPH
 		LEFT JOIN Title_Identifier tl2 WITH (NOLOCK)
 			ON t.TitleID = tl2.TitleID AND tl2.IdentifierID = @TL2
+
+SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, TitleID, MARCBibID, 
+		ShortTitle, CallNumber, PublisherPlace, PublisherName, PublicationDate, TL2Author, BPH, TL2, 
+		Abbreviation, TitleURL, ItemID, SourceName, Barcode, MARCItemID, VolumeInfo, InstitutionName,
+		ItemURL, PageID, [Year], Volume, Issue, TextSource, PagePrefix, PageNumber, PageURL, ThumbnailURL, 
+		FullSizeImageURL, ImageURL, OcrURL,PageTypeName
+FROM	#Final
 ORDER BY
-		t.SortTitle, i.ItemID, p.[Year], p.Volume, ip.PageNumber
+		SortTitle, ItemID, [Year], Volume, PageNumber

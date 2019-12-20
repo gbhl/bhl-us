@@ -25,8 +25,9 @@ SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE Re
 IF (@CanonicalNameString IS NULL) SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE CanonicalNameString = @ResolvedNameString
 
 -- Get the detail for the specified NameBankID
-SELECT	ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString,
-		t.TitleID, t.MARCBibID, t.ShortTitle, 
+SELECT DISTINCT
+		ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString,
+		t.TitleID, t.MARCBibID, t.ShortTitle, t.SortTitle,
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber else i.CallNumber END AS CallNumber, 
 		t.Datafield_260_a AS PublisherPlace, 
 		t.Datafield_260_b AS PublisherName, t.Datafield_260_c AS PublicationDate, 
@@ -44,6 +45,7 @@ SELECT	ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameStrin
 		'https://www.biodiversitylibrary.org/pageimage/' + CONVERT(nvarchar(20), p.PageID) AS FullSizeImageURL,
 		'https://www.biodiversitylibrary.org/pagetext/' + CONVERT(nvarchar(20), p.PageID) AS OcrURL,
 		dbo.fnPageTypeStringForPage(p.PageID) AS PageTypeName
+INTO	#Final
 FROM	dbo.NameResolved nr WITH (NOLOCK) 
 		LEFT JOIN dbo.NameIdentifier ni WITH (NOLOCK) ON nr.NameResolvedID = ni.NameResolvedID AND ni.IdentifierID = @NameBank
 		INNER JOIN Name n WITH (NOLOCK) ON nr.NameResolvedID = n.NameResolvedID
@@ -67,5 +69,11 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 		LEFT JOIN Title_Identifier tl2 WITH (NOLOCK)
 			ON t.TitleID = tl2.TitleID AND tl2.IdentifierID = @TL2
 WHERE	nr.CanonicalNameString = @CanonicalNameString
+
+SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, TitleID, MARCBibID, ShortTitle, 
+		CallNumber, PublisherPlace, PublisherName, PublicationDate, TL2Author, BPH, TL2, Abbreviation, TitleURL, 
+		ItemID, SourceName, Barcode, MARCItemID, VolumeInfo, InstitutionName, ItemURL, PageID, [Year], Volume, 
+		Issue, TextSource, PagePrefix, PageNumber, PageURL, ThumbnailURL, FullSizeImageURL, OcrURL, PageTypeName
+FROM	#Final
 ORDER BY
-		t.SortTitle, i.ItemID, p.[Year], p.Volume, ip.PageNumber
+		SortTitle, ItemID, [Year], Volume, PageNumber

@@ -70,7 +70,8 @@ END
 
 -- Get the initial data set
 INSERT #Step1
-SELECT	t.TitleID,
+SELECT DISTINCT
+		t.TitleID,
 		i.ItemID,
 		p.PageID,
 		ISNULL(bl.BibliographicLevelName, '') AS BibliographicLevelName,

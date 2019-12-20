@@ -65,7 +65,8 @@ INSERT #tmp
 		ItemSequence,
 		SequenceOrder
 		)
-SELECT	t.TitleID,
+SELECT DISTINCT
+		t.TitleID,
 		i.ItemID,
 		p.PageID,
 		t.BibliographicLevelID,

@@ -738,6 +738,7 @@ namespace MOBOT.BHL.API.BHLApi
                 name = new Name();
                 name.Identifiers = new Api3DAL().NameIdentifierSelectByNameResolvedID(null, null, pageDetails[0].NameResolvedID);
                 name.NameConfirmed = pageDetails[0].NameConfirmed;
+                name.NameCanonical = pageDetails[0].NameCanonical;
                 name.Titles = new CustomGenericList<Title>();
 
                 currentTitle = new Title();

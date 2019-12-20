@@ -111,7 +111,7 @@ namespace MOBOT.BHL.Web2.Services
         private string GetPageNameList(int pageID)
         {
             this.PopulatePageNames(pageID);
-            CustomGenericList<NameResolved> namePageList = new BHLProvider().NameResolvedSelectByPageID(pageID);
+            List<NameResolved> namePageList = new BHLProvider().NameResolvedSelectByPageID(pageID);
             List<NameResolved> returnList = new List<NameResolved>();
             foreach (NameResolved namePage in namePageList)
             {

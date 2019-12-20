@@ -16,6 +16,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         public PageDetail(string nameBankID,
             int nameResolvedID,
             string nameConfirmed,
+            string nameCanonical,
             int titleID,
             string publicationTitle,
             string publisherPlace,
@@ -40,6 +41,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             _NameBankID = nameBankID;
             _NameResolvedID = nameResolvedID;
             _NameConfirmed = nameConfirmed;
+            _NameCanonical = nameCanonical;
             _TitleID = titleID;
             _PublicationTitle = publicationTitle;
             _PublisherPlace = publisherPlace;
@@ -88,6 +90,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "ResolvedNameString":
                         {
                             _NameConfirmed = (string)column.Value;
+                            break;
+                        }
+                    case "CanonicalNameString":
+                        {
+                            _NameCanonical = (string)column.Value;
                             break;
                         }
                     case "TitleID":
@@ -267,6 +274,18 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 _NameConfirmed = value;
             }
         }
+
+        private string _NameCanonical = null;
+        public string NameCanonical
+        {
+            get { return _NameCanonical; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 100);
+                _NameCanonical = value;
+            }
+        }
+
 
         private int _TitleID = default(int);
         public int TitleID
