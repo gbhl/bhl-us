@@ -30,6 +30,7 @@ namespace MOBOT.BHL.Web2
         protected string Pages = String.Empty;
         protected string PageTitle { get; set; }
         protected int CurrentItemID { get; set; }
+        protected string Genre { get; set; }
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -252,6 +253,9 @@ namespace MOBOT.BHL.Web2
                     // Used to determine where to send people for bibliographic curiosity
                     Titles = bhlProvider.TitleSelectByItem(PageSummary.ItemID);
                     foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
+
+                    BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(CurrentTitle.BibliographicLevelID ?? 0);
+                    Genre = (bibliographicLevel == null) ? string.Empty : (bibliographicLevel.BibliographicLevelName.ToLower().Contains("serial") ? "Journal" : "Book");
 
                     Authors = new List<Author>();
                     AdditionalAuthors = new List<Author>();

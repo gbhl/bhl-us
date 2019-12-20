@@ -110,7 +110,7 @@
                 <div id="right-panel-content">
                     <div id="pageInfo-panel"> 
                         <div id="pageInfoDetails" class="text">
-                            <div class="header">Title</div>
+                            <div class="header"><%: Genre %> Title</div>
                             <div class="detail"><%if (PageSummary.FullTitle.Length > 200) {%><%: PageSummary.FullTitle.Substring(0, 200) %>...<%} else {%><%: PageSummary.FullTitle %><%}%></div>
                             <%if (Authors.Count > 0 || AdditionalAuthors.Count > 0) { %>
                                 <div class="header">By</div>
@@ -129,7 +129,7 @@
                                 <div class="detail"><%: CurrentTitle.PublicationDetails %></div>
                             <%} %>
                             <%if (!string.IsNullOrWhiteSpace(CurrentItem.Year)) { %>
-                                <div class="header">Date</div>
+                                <div class="header">Year</div>
                                 <div class="detail"><%: CurrentItem.Year %></div>
                             <%} %>
                             <%foreach (Institution institution in ItemInstitutions)
