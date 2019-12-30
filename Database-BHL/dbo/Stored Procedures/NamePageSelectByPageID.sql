@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[NamePageSelectByPageID]
+﻿CREATE PROCEDURE [dbo].[NamePageSelectByPageID]
 
 @PageID INT
 
@@ -19,6 +18,7 @@ SELECT	np.NamePageID,
 		ns.SourceName,
 		n.NameString,
 		nr.ResolvedNameString,
+		nr.CanonicalNameString,
 		ni1.IdentifierValue AS NameBankID,
 		ISNULL(MIN(ni2.IdentifierValue), '') AS EOLID,
 		n.IsActive,
@@ -42,6 +42,7 @@ GROUP BY
 		ns.SourceName,
 		n.NameString,
 		nr.ResolvedNameString,
+		nr.CanonicalNameString,
 		ni1.IdentifierValue,
 		n.IsActive,
 		np.IsFirstOccurrence,
@@ -50,4 +51,3 @@ GROUP BY
 		np.CreationUserID,
 		np.LastModifiedUserID
 ORDER BY n.NameString
-

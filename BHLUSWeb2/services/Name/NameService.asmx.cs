@@ -8,6 +8,7 @@ using System.ComponentModel;
 using CustomDataAccess;
 using MOBOT.BHL.API.BHLApiDataObjects;
 using MOBOT.BHL.API.BHLApiDAL;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -144,9 +145,9 @@ namespace MOBOT.BHL.Web2.Services
                 CustomGenericList<Name> names = new CustomGenericList<Name>();
 
                 // Use the existing name search functionality
-                MOBOT.BHL.Server.BHLProvider provider = new MOBOT.BHL.Server.BHLProvider();
-                CustomGenericList<MOBOT.BHL.DataObjects.NameResolved> namesResolved = provider.NameResolvedSelectByNameLike(name, 100000);
-                foreach (MOBOT.BHL.DataObjects.NameResolved nameResolved in namesResolved)
+                Server.BHLProvider provider = new Server.BHLProvider();
+                List<DataObjects.NameResolved> namesResolved = provider.NameResolvedSelectByNameLike(name, 100000);
+                foreach (DataObjects.NameResolved nameResolved in namesResolved)
                 {
                     // Add names to the list to be returned
                     Name nameResult = new Name();
