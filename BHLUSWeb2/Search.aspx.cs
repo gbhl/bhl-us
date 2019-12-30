@@ -1,19 +1,13 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Text;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
+using System.Text;
+using System.Web;
+using System.Web.UI;
 
 namespace MOBOT.BHL.Web2
 {
@@ -440,7 +434,7 @@ namespace MOBOT.BHL.Web2
             }
             if (names.Visible)
             {
-                CustomGenericList<NameResolved> namesList = bhlProvider.NameResolvedSelectByNameLike(searchTerm, nameReturnCount);
+                List<NameResolved> namesList = bhlProvider.NameResolvedSelectByNameLike(searchTerm, nameReturnCount);
                 if (nameFindOnly && namesList.Count == 1)
                 {
                     // If this search was initiated by the Names browse page, and only one name was found,

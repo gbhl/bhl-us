@@ -58,7 +58,7 @@ FROM	dbo.vwSegment s
 		INNER JOIN dbo.SegmentGenre g ON s.SegmentGenreID = g.SegmentGenreID
 		LEFT JOIN dbo.Language l ON s.LanguageCode = l.LanguageCode
 		INNER JOIN dbo.SegmentStatus st ON s.SegmentStatusID = st.SegmentStatusID
-		INNER JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
+		LEFT JOIN dbo.SearchCatalogSegment scs ON s.SegmentID = scs.SegmentID
 WHERE	s.ItemID = @ItemID
 AND		(@ShowAll = 1 OR s.SegmentStatusID IN (10, 20))  -- New, Published
 ORDER BY

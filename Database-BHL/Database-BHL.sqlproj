@@ -1115,6 +1115,8 @@
     <None Include="srchindex\Stored Procedures\SearchCatalogDeleteForTitle.sql" />
     <None Include="srchindex\Stored Procedures\SearchCatalogSegmentDeleteForItem.sql" />
     <None Include="dbo\Functions\fnNoteIndexStringForTitle.sql" />
+    <None Include="dbo\Stored Procedures\ApiPageSelectByResolvedName.sql" />
+    <None Include="dbo\Stored Procedures\NameResolvedSelectByResolvedName.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

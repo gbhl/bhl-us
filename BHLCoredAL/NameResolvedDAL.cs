@@ -45,6 +45,26 @@ namespace MOBOT.BHL.DAL
             }
         }
 
+        public NameResolved NameResolvedSelectByResolvedName(SqlConnection sqlConnection,
+            SqlTransaction sqlTransaction, string name)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("NameResolvedSelectByResolvedName", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("ResolvedNameString", SqlDbType.NVarChar, 100, false, name)))
+            {
+                using (CustomSqlHelper<NameResolved> helper = new CustomSqlHelper<NameResolved>())
+                {
+                    CustomGenericList<NameResolved> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                        return list[0];
+                    else
+                        return null;
+                }
+            }
+        }
+
         public CustomGenericList<CustomDataRow> NameResolvedSearchForPages(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)

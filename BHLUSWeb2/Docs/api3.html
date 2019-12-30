@@ -33,7 +33,7 @@
         </div>
         <div id="right">
             Created: August 27, 2018<br />
-            Revised: November 4, 2019
+            Revised: December 20, 2019
         </div>
     </div>
     <div>
@@ -93,7 +93,7 @@
     <div>	Example - <a href="/docs/api3/GetAuthorMetadata.xml" title="GetAuthorMetadata">https://www.biodiversitylibrary.org/api3?op=GetAuthorMetadata&amp;id=87509&amp;pubs=t&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	id - the identifier of an individual author<br /> idtype (OPTIONAL) - the type of identifier (bhl, biostor, viaf).  Defaults to "bhl".<br />	pubs - "t" or "true" to return the subject's publications</div>
     <div class="subhead1">GetNameMetadata</div>
-    <div>	Get basic title, item, and page metadata for each page on which the specified name appears.</div>
+    <div>	Get basic title, item, and page metadata for each page on which the canonical form of the specified name appears.&nbsp; For example, assume the name &quot;Poa annua Linnaeus&quot;, or an identifier for that name, is specified.&nbsp; The API method will return title/item/page metadata for all pages on which one of the following names appears:&nbsp; &quot;Poa annua&quot;, &quot;Poa annua L.&quot;, &quot;Poa annua Linnaeus&quot;, &quot;Poa annua L. (1753)&quot;.&nbsp; Those names all share a canonical form of &quot;Poa annua&quot;.</div>
     <div>	Example - <a href="/docs/api3/GetNameMetadata.xml" title="GetNameMetadata">https://www.biodiversitylibrary.org/api3?op=GetNameMetadata&amp;name=poa+annua+linnaeus&amp;apikey=&lt;key+value&gt;</a></div>
     <div>	name - a complete name string.  Not used if idtype/id are specified.<br />idtype - the type of identifier (namebank, eol, gni, ion, col, gbif, itis, ipni, worms).  Not used if name is specified.<br />id - an identifier of a name.    Not used if name is specified.</div>
     <div class="subhead1">GetCollections</div>
@@ -700,6 +700,10 @@
                 <td>Name found on a page and confirmed in uBio&#39;s NameBank</td>
             </tr>
             <tr>
+                <td>Name/NameCanonical</td>
+                <td>The canonical form of a name found on a page.&nbsp; For example, &quot;Poa annua&quot; is the canonical form of the name &quot;Poa annua L. (1753)&quot;.</td>
+            </tr>
+            <tr>
                 <td>Identifier/IdentifierName</td>
                 <td>
                     One of the following values, which identify the type of identifier:<br />
@@ -789,10 +793,15 @@
     <hr />
     <a name="notes"></a>
     <div class="header">*** RELEASE NOTES *** <a href="#top" class="toplink">Contents</a></div>
+    <div class="subhead1">December 20, 2019 - version 3.1.0</div>
+    <ul type="disc">
+        <li>&nbsp;Modified &quot;GetNameMetadata&quot; to return data for the canonical form of the specified name, rather than only for exactly the specified name. </li>
+        <li>Added &quot;NameCanonical&quot; to the responses for &quot;GetNameMetadata&quot;, &quot;GetPageMetadata&quot;, and &quot;GetPartMetadata&quot;.</li>
+    </ul>
     <div class="subhead1">November 4, 2019 - version 3.0.3</div>
     <ul type="disc">
         <li>Added &quot;notes&quot; and &quot;notesop&quot; parameters to the PublicationSearchAdvanced method.</li>
-    </ul>
+	</ul>
     <div class="subhead1">August 1, 2019 - version 3.0.2</div>
     <ul type="disc">
         <li>Added &quot;ItemTextUrl&quot;, &quot;ItemPDFUrl&quot;, and &quot;ItemImagesUrl&quot; elements to the responses for &quot;GetItemMetadata&quot;.</li>

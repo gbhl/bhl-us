@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[NameResolvedSearchForPages]
+﻿CREATE PROCEDURE [dbo].[NameResolvedSearchForPages]
 
 @ResolvedNameString nvarchar(100),
 @NumRows int = 100,
@@ -12,6 +11,13 @@ AS
 SET NOCOUNT ON
 
 DECLARE @TotalPages INT
+
+-- Use the Canonical form of the Resolved name to search for pages
+DECLARE @CanonicalNameString nvarchar(100)
+SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE ResolvedNameString = @ResolvedNameString
+
+-- If no name found, see if the argument matches a Canonical form
+IF (@CanonicalNameString IS NULL) SELECT @CanonicalNameString = CanonicalNameString FROM dbo.NameResolved WHERE CanonicalNameString = @ResolvedNameString
 
 -- Create a temp table for the initial data set
 CREATE TABLE #Step1
@@ -64,7 +70,8 @@ END
 
 -- Get the initial data set
 INSERT #Step1
-SELECT	t.TitleID,
+SELECT DISTINCT
+		t.TitleID,
 		i.ItemID,
 		p.PageID,
 		ISNULL(bl.BibliographicLevelName, '') AS BibliographicLevelName,
@@ -84,7 +91,7 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 		INNER JOIN dbo.Title t WITH (NOLOCK) ON i.primarytitleid = t.titleid
 		INNER JOIN dbo.TitleItem ti WITH (NOLOCK) ON ti.ItemID = i.ItemID AND ti.TitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel bl WITH (NOLOCK) ON t.BibliographicLevelID = bl.BibliographicLevelID
-WHERE	nr.ResolvedNameString = @ResolvedNameString
+WHERE	nr.CanonicalNameString = @CanonicalNameString
 		AND n.IsActive = 1
 		AND i.ItemStatusID = 40
 		AND t.PublishReady = 1
@@ -163,7 +170,6 @@ SELECT TOP (@NumRows)
 		sc.Authors,
 		p.Volume,
 		[Date],
-		--dbo.fnIndicatedPageStringForPage(PageID) AS IndicatedPages,
 		LTRIM(RTRIM(ISNULL(ip.PagePrefix, '') +  ' ' + ISNULL(ip.PageNumber, ''))) AS IndicatedPages,
 		@TotalPages AS TotalPages
 FROM	#Step2 p LEFT JOIN dbo.IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.PageID AND ip.Sequence = 1
@@ -171,4 +177,3 @@ FROM	#Step2 p LEFT JOIN dbo.IndicatedPage ip WITH (NOLOCK) ON p.PageID = ip.Page
 WHERE	RowNumber > (@PageNum - 1) * @NumRows
 ORDER BY 
 		RowNumber
-
