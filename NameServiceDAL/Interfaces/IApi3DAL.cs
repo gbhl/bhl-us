@@ -62,7 +62,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
         CustomGenericList<Subject> SearchTitleKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string tag);
         CustomGenericList<Name> NameResolvedSelectByNameLike(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name);
-        CustomGenericList<PageDetail> PageSelectByNameConfirmed(SqlConnection sqlConnection,
+        CustomGenericList<PageDetail> PageSelectByResolvedName(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string nameConfirmed);
         CustomGenericList<PageDetail> PageSelectByNameIdentifier(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string identifierName, string identifierValue);

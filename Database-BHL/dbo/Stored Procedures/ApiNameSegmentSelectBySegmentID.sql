@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ApiNameSegmentSelectBySegmentID]
+﻿CREATE PROCEDURE [dbo].[ApiNameSegmentSelectBySegmentID]
 
 @SegmentID INT
 
@@ -15,6 +14,7 @@ SELECT @EOLID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'EOL'
 -- Get names from NameSegment
 SELECT	n.NameString,
 		nr.ResolvedNameString,
+		nr.CanonicalNameString,
 		ni1.IdentifierValue AS NameBankID,
 		ISNULL(MIN(ni2.IdentifierValue), '') AS EOLID
 FROM	dbo.NameSegment ns
@@ -27,11 +27,13 @@ WHERE	ns.SegmentID = @SegmentID
 GROUP BY
 		n.NameString,
 		nr.ResolvedNameString,
+		nr.CanonicalNameString,
 		ni1.IdentifierValue
 UNION
 -- Get names from NamePage
 SELECT	ISNULL(n.NameString, '') AS NameString,
 		ISNULL(nr.ResolvedNameString, '') AS ResolvedNameString,
+		ISNULL(nr.CanonicalNameString, '') AS CanonicalNameString,
 		ISNULL(ni1.IdentifierValue, '') AS NameBankID,
 		ISNULL(MIN(ni2.IdentifierValue), '') AS EOLID
 FROM	dbo.Segment s 
@@ -49,5 +51,6 @@ AND		n.IsActive = 1
 GROUP BY
 		n.NameString,
 		nr.ResolvedNameString,
+		nr.CanonicalNameString,
 		ni1.IdentifierValue
 ORDER BY n.NameString

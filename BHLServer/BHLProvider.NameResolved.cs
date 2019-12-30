@@ -1,27 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using CustomDataAccess;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<NameResolved> NameResolvedSelectByPageID(int pageID)
+        public List<NameResolved> NameResolvedSelectByPageID(int pageID)
         {
             return new NameResolvedDAL().NameResolvedSelectByPageID(null, null, pageID);
         }
 
-        public CustomGenericList<NameResolved> NameResolvedSelectByNameLike(string name, int returnCount)
+        public List<NameResolved> NameResolvedSelectByNameLike(string name, int returnCount)
         {
             return new NameResolvedDAL().NameResolvedSelectByNameLike(null, null, name, returnCount);
+        }
+
+        public NameResolved NameResolvedSelectByResolvedName(string name)
+        {
+            return new NameResolvedDAL().NameResolvedSelectByResolvedName(null, null, name);
         }
 
         public NameSearchResult NameResolvedSearchForPages(string name, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
-            CustomGenericList<CustomDataRow> data = new NameResolvedDAL().NameResolvedSearchForPages(null, null,
+            List<CustomDataRow> data = new NameResolvedDAL().NameResolvedSearchForPages(null, null,
                 name, numberOfRows, pageNumber, sortColumn, sortDirection);
 
             NameSearchResult result = new NameSearchResult();
@@ -49,7 +54,7 @@ namespace MOBOT.BHL.Server
 
         public NameSearchResult NameResolvedSearchForPagesDownload(string name)
         {
-            CustomGenericList<CustomDataRow> data = new NameResolvedDAL().NameResolvedSearchForPagesDownload(
+            List<CustomDataRow> data = new NameResolvedDAL().NameResolvedSearchForPagesDownload(
                 null, null, name);
 
             NameSearchResult result = new NameSearchResult();

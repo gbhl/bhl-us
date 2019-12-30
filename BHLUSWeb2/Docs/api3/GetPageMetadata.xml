@@ -105,30 +105,37 @@
         <Name>
           <NameFound>Anolis carolinensis</NameFound>
           <NameConfirmed>Anolis carolinensis</NameConfirmed>
+          <NameCanonical>Anolis carolinensis</NameCanonical>
         </Name>
         <Name>
           <NameFound>Charina</NameFound>
           <NameConfirmed>Charina</NameConfirmed>
+          <NameCanonical>Charina</NameCanonical>
         </Name>
         <Name>
           <NameFound>Crotalus lucasensis</NameFound>
           <NameConfirmed>Crotalus lucasensis VAN 1920</NameConfirmed>
+          <NameCanonical>Crotalus lucasensis</NameCanonical>
         </Name>
         <Name>
           <NameFound>Dipsosaurus dorsalis lucasensis</NameFound>
           <NameConfirmed>Dipsosaurus dorsalis lucasensis</NameConfirmed>
+          <NameCanonical>Dipsosaurus dorsalis lucasensis</NameCanonical>
         </Name>
         <Name>
           <NameFound>Diptera</NameFound>
           <NameConfirmed>Diptera</NameConfirmed>
+          <NameCanonical>Diptera</NameCanonical>
         </Name>
         <Name>
           <NameFound>Dolichopodidae</NameFound>
           <NameConfirmed>Dolichopodidae</NameConfirmed>
+          <NameCanonical>Dolichopodidae</NameCanonical>
         </Name>
         <Name>
           <NameFound>Tipulidae</NameFound>
           <NameConfirmed>Tipulidae</NameConfirmed>
+          <NameCanonical>Tipulidae</NameCanonical>
         </Name>
       </Names>
     </Page>
