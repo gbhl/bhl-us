@@ -152,6 +152,10 @@
                                 <div class="header">Sponsor</div>
                                 <div class="detail"><%: PageSummary.Sponsor %></div>
                             <%} %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentItem.ItemDescription)) { %>
+                                <div class="header">Copy-specific Information</div>
+                                <div class="detail"><%: CurrentItem.ItemDescription %></div>
+                            <%} %>
                             <div class="header">Copyright & Usage</div>
                             <div class="detail">
                                 <%  bool showNone = true;
