@@ -51,6 +51,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _NameConfirmed = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "CanonicalNameString":
+                        {
+                            _NameCanonical = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                 }
             }
         }
@@ -59,8 +64,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
 
         #region Properties		
 
-        private CustomGenericList<Identifier> _identifiers = null;
-        public CustomGenericList<Identifier> Identifiers
+        private List<Identifier> _identifiers = null;
+        public List<Identifier> Identifiers
         {
             get { return _identifiers; }
             set { _identifiers = value; }
@@ -89,8 +94,19 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        CustomGenericList<Title> _Titles;
-        public CustomGenericList<Title> Titles
+        private string _NameCanonical = null;
+        public string NameCanonical
+        {
+            get { return _NameCanonical; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 100);
+                _NameCanonical = value;
+            }
+        }
+
+        List<Title> _Titles;
+        public List<Title> Titles
         {
             get { return _Titles; }
             set { _Titles = value; }
