@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
@@ -24,7 +24,7 @@ namespace BHL.IIIF
         {
             BHLProvider provider = new BHLProvider();
             Item item = provider.ItemSelectAuto(itemId);
-            CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
+            List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
 
             string iiifRootAddress = _rootUrl;
@@ -40,7 +40,7 @@ namespace BHL.IIIF
             return manifest;
         }
 
-        private string GetResources(int itemId, CustomGenericList<Page> pages, ScanData scanData, int pageSequence)
+        private string GetResources(int itemId, List<Page> pages, ScanData scanData, int pageSequence)
         {
             string resources = "\"resources\": [";
 

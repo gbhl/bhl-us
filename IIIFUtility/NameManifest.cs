@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Collections.Generic;
 
 namespace BHL.IIIF
 {
@@ -22,7 +22,7 @@ namespace BHL.IIIF
         {
             BHLProvider provider = new BHLProvider();
             Item item = provider.ItemSelectAuto(itemId);
-            CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
+            List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
             ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
 
             string manifest =
@@ -36,7 +36,7 @@ namespace BHL.IIIF
             return manifest;
         }
 
-        private string GetResources(int itemId, CustomGenericList<Page> pages, ScanData scanData, int pageSequence)
+        private string GetResources(int itemId, List<Page> pages, ScanData scanData, int pageSequence)
         {
             string resources = "\"resources\": [";
 
@@ -50,7 +50,7 @@ namespace BHL.IIIF
                     {
 
                         // TODO:  Refactor to make use of hte GetPageNameList() method in the PageSummaryService class
-                        CustomGenericList<NameResolved> names = new BHLProvider().NameResolvedSelectByPageID(pages[pageCount].PageID);
+                        List<NameResolved> names = new BHLProvider().NameResolvedSelectByPageID(pages[pageCount].PageID);
 
                         int resourceCount = 1;
                         foreach(NameResolved name in names)

@@ -40,10 +40,10 @@ namespace BHL.IIIF
                   "},";
 
             // Used to determine where to send people for more bibliographic information
-            CustomGenericList < Title> titles = provider.TitleSelectByItem(itemId);
+            List< Title> titles = provider.TitleSelectByItem(itemId);
 
-            CustomGenericList<Page> pages = provider.PageMetadataSelectByItemID(itemId);
-            CustomGenericList<Segment> segments = provider.SegmentSelectByItemID(itemId);
+            List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
+            List<Segment> segments = provider.SegmentSelectByItemID(itemId);
             ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
 
             string manifest = 
@@ -237,7 +237,7 @@ namespace BHL.IIIF
             return seeAlso;
         }
 
-        private string GetSequences(int itemId, string barCode, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetSequences(int itemId, string barCode, List<Page> pages, ScanData scanData)
         {
             string sequences = string.Empty;
 
@@ -261,7 +261,7 @@ namespace BHL.IIIF
         }
 
 
-        private string GetCanvases(int itemId, string barCode, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetCanvases(int itemId, string barCode, List<Page> pages, ScanData scanData)
         {
             string canvases = "\"canvases\": [";
 
@@ -337,7 +337,7 @@ namespace BHL.IIIF
             return canvas;
         }
 
-        private string GetStructures(int itemId, CustomGenericList<Segment> segments, CustomGenericList<Page> pages, ScanData scanData)
+        private string GetStructures(int itemId, List<Segment> segments, List<Page> pages, ScanData scanData)
         {
             string structures = string.Empty;
 
