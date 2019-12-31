@@ -459,6 +459,7 @@ a.BRButtonFeatured {
     font-weight: bold;
 }
 #showOCRButton.BRButton { width: 50px; margin-right: 5px; }
+#showInfoButton.BRButton { width: 50px; margin-right: 5px; }
 #showAnnotationsButton.BRButton { width: 85px; margin-right: 5px; }
 #showSearchButton.BRButton { width: 70px; margin-right: 5px; }
 
@@ -592,6 +593,54 @@ a.BRButtonFeatured {
 #pageOCR-panel .text span 
 {
     /* padding-bottom: 20px;  */
+}
+
+/* Info Panel */
+
+#pageInfo-panel {
+    position: relative;
+    top: 0px;
+    bottom: 20px;
+    overflow: hidden;
+    display: block;
+    width: auto;
+    height: 100%;
+}
+
+#pageInfo-panel .text {
+    overflow: auto;
+    padding: 10px 20px;
+    bottom: 0;
+    position: relative;
+    top: 0;
+    width: auto;
+    background: #2b3c4c;
+    height: 95%;
+}
+
+#pageInfoDetails .header {
+    font-size: 16px;
+    color: #fff;
+    margin: 15px 0 8px;
+    display: block;
+}
+
+#pageInfoDetails .detail {
+    font-size: 12px;
+    font-style: italic;
+    color: #fff;
+    margin: 15px 0px 25px 20px;
+    display: block;
+}
+
+#pageInfoDetails .detail a {
+    color: #98CDCF;
+    text-decoration: underline;
+}
+
+#pageInfoDetails .detail a:hover, #pageInfoDetails .detail a:visited {
+    color: #98CDCF;
+    text-decoration: none;
 }
 
 #book-master .pagelist 

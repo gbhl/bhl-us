@@ -17,8 +17,13 @@ namespace MOBOT.BHL.Web2
     public partial class TitlePage : BasePage
     {
         protected PageSummaryView PageSummary { get; set; }
-        protected CustomGenericList<Title> Titles { get; set; }
-        protected CustomGenericList<Segment> Segments { get; set; }
+        protected Item CurrentItem { get; set; }
+        protected Title CurrentTitle { get; set; }
+        protected List<Author> Authors {get;set;}
+        protected List<Author> AdditionalAuthors { get; set; }
+        protected List<Title> Titles { get; set; }
+        protected List<Segment> Segments { get; set; }
+        protected List<Institution> ItemInstitutions { get; set; }
         protected int StartPage { get; set; }
         protected int PageCount { get; set; }
         protected int SegmentCount { get; set; }
@@ -26,6 +31,7 @@ namespace MOBOT.BHL.Web2
         protected string PageTitle { get; set; }
         protected int CurrentItemID { get; set; }
         protected string UrlRoot { get; set; }
+        protected string Genre { get; set; }
 
         //Page Annotation additions
         private bool _showAnnotations = true;
@@ -208,7 +214,11 @@ namespace MOBOT.BHL.Web2
                         //.Where(x => !string.IsNullOrWhiteSpace(x.Volume))
                         .ToList();
 
-                    foreach (Item item in items) if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                    foreach (Item item in items)
+                    {
+                        if (PageSummary.ItemID == item.ItemID) CurrentItem = item;
+                        if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                    }
 
                     ddlVolumes.DataSource = items;
                     ddlVolumes.DataTextField = "DisplayedShortVolume";
@@ -216,36 +226,59 @@ namespace MOBOT.BHL.Web2
                     ddlVolumes.DataBind();
                     ddlVolumes.SelectedValue = PageSummary.ItemID.ToString();
 
-                    // Show contributing institution
-                    CustomGenericList<Institution> institutions = bhlProvider.ItemHoldingInstitutionSelectByItemID(PageSummary.ItemID);
-                    if (institutions.Count > 0)
-                    {
-                        Institution institution = institutions[0];
-                        if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl))
-                        {
-                            HyperLink link = new HyperLink();
-                            link.Text = institution.InstitutionName;
-                            link.NavigateUrl = institution.InstitutionUrl;
-                            link.Target = "_blank";
-                            attributionPlaceHolder.Controls.Add(link);
-                        }
-                        else
-                        {
-                            Literal literal = new Literal();
-                            literal.Text = institution.InstitutionName;
-                            attributionPlaceHolder.Controls.Add(literal);
-                        }
+                    ItemInstitutions = bhlProvider.InstitutionSelectByItemID(PageSummary.ItemID);
 
-                        ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("\"", "");
+                    // Show contributing institution
+                    foreach (Institution institution in ItemInstitutions)
+                    {
+                        if (institution.InstitutionRoleName == "Holding Institution")
+                        {
+                            if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                            {
+                                HyperLink link = new HyperLink();
+                                link.Text = institution.InstitutionName;
+                                link.NavigateUrl = institution.InstitutionUrl;
+                                link.Target = "_blank";
+                                attributionPlaceHolder.Controls.Add(link);
+                            }
+                            else
+                            {
+                                Literal literal = new Literal();
+                                literal.Text = institution.InstitutionName;
+                                attributionPlaceHolder.Controls.Add(literal);
+                            }
+
+                            ((Book)this.Master).holdingInstitution = institution.InstitutionCode.Replace("\"", "");
+                            break;
+                        }
                     }
 
                     // Used to determine where to send people for bibliographic curiosity
                     Titles = bhlProvider.TitleSelectByItem(PageSummary.ItemID);
+                    foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
+
+                    BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(CurrentTitle.BibliographicLevelID ?? 0);
+                    Genre = (bibliographicLevel == null) ? string.Empty : (bibliographicLevel.BibliographicLevelName.ToLower().Contains("serial") ? "Journal" : "Book");
+
+                    Authors = new List<Author>();
+                    AdditionalAuthors = new List<Author>();
+                    foreach (Author author in bhlProvider.AuthorSelectByTitleId(CurrentTitle.TitleID))
+                    {
+                        if (author.AuthorRoleID >= 1 && author.AuthorRoleID <= 3)
+                        {
+                            if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship)) Authors.Add(author);
+                        }
+                        else
+                        {
+                            if (!ListContainsAuthor(Authors, author.AuthorID, author.Relationship) &&
+                                !ListContainsAuthor(AdditionalAuthors, author.AuthorID, author.Relationship)) AdditionalAuthors.Add(author);
+                        }
+                    }
 
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
                     
-                    CustomGenericList<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
+                    List<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
 
                     //SCS Set the Pages drop down list   
                     lstPages.DataSource = pages;
@@ -288,7 +321,7 @@ namespace MOBOT.BHL.Web2
 
                     // Serialize only the information we need
                     List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
-                    CustomGenericList<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
+                    List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
                     foreach (PageSummaryView pageview in pageviews)
                     {
                         BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage
@@ -329,7 +362,7 @@ namespace MOBOT.BHL.Web2
         /// <param name="pages">List of all pages</param>
         /// <param name="currentPageID">Identifier of the current page</param>
         /// <returns>Segment ID associated with the page, or null</returns>
-        private int? GetSegmentID(CustomGenericList<Page> pages, int currentPageID)
+        private int? GetSegmentID(List<Page> pages, int currentPageID)
         {
             int? segmentid = null;
 
@@ -376,7 +409,7 @@ namespace MOBOT.BHL.Web2
             //Set Annotation content
             BHLProvider provider = new BHLProvider();
 
-            CustomGenericList<Annotation> annotationList = provider.AnnotationsSelectByItemID(CurrentItemID);
+            List<Annotation> annotationList = provider.AnnotationsSelectByItemID(CurrentItemID);
 
             if (annotationList != null && annotationList.Count > 0)
             {
@@ -449,7 +482,7 @@ namespace MOBOT.BHL.Web2
 
                     #region Get Notes
                     ///Get tnotes, which are referred to in Annotation Display
-                    CustomGenericList<AnnotationNote> note_list = provider.AnnotationNoteSelectByAnnotationID(_ann.AnnotationID);
+                    List<AnnotationNote> note_list = provider.AnnotationNoteSelectByAnnotationID(_ann.AnnotationID);
                     if (note_list.Count > 0)
                     {
                         sbPageBlock.Append("<div class=\"tnote\">");
@@ -464,7 +497,7 @@ namespace MOBOT.BHL.Web2
                     #endregion
 
                     #region Get Subjects
-                    CustomGenericList<CustomDataRow> subjects = provider.AnnotationSubjectSelectByAnnotationID(_ann.AnnotationID);
+                    List<CustomDataRow> subjects = provider.AnnotationSubjectSelectByAnnotationID(_ann.AnnotationID);
                     if (subjects.Count > 0)
                     {
                         int keywordTargetID = (int)subjects[0]["AnnotationKeywordTargetID"].Value;
@@ -497,7 +530,7 @@ Append("</a>").
                     #endregion
 
                     #region Get Concepts
-                    CustomGenericList<CustomDataRow> concepts = provider.Annotation_AnnotationConceptSelectByAnnotationID(_ann.AnnotationID);
+                    List<CustomDataRow> concepts = provider.Annotation_AnnotationConceptSelectByAnnotationID(_ann.AnnotationID);
                     if (concepts.Count > 0)
                     {
                         int keywordTargetID = (int)concepts[0]["AnnotationKeywordTargetID"].Value;
@@ -555,6 +588,21 @@ Append("</a>").
                 ltlPageSequence.Text = sbScrollItems.ToString();
             }
         }
-    
+
+        private bool ListContainsAuthor(IList<Author> list, int authorID, string relationship)
+        {
+            bool containsAuthor = false;
+
+            foreach (Author author in list)
+            {
+                if (author.AuthorID == authorID && author.Relationship == relationship)
+                {
+                    containsAuthor = true;
+                    break;
+                }
+            }
+
+            return containsAuthor;
+        }
     }
 }
