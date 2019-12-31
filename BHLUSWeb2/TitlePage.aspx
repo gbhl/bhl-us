@@ -14,7 +14,7 @@
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
-                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" target="_blank">View at Internet Archive</a></div>
+                    <div><a href="<%= string.Format("https://www.archive.org/details/{0}", PageSummary.BarCode) %>" rel="noopener noreferrer" target="_blank">View at Internet Archive</a></div>
                 </div>
                 <div class="jqmWindow" id="download-dialog">
                     <div class="head">
@@ -88,7 +88,7 @@
                 </div>
                 <div class="urlbox"><a id="currentpageURL" href="#"></a></div>
                 <div class="flickrbox">
-                    <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
+                    <span id="flickrurlspan" style="display:none"><a class="flickrurl" id="currentFlickrURL" rel="noopener noreferrer" target="_blank" href="#">View Current Page in Flickr</a>&nbsp;<img width="12" src="/images/flickr-icon-normal.png"></span>&nbsp;
                 </div>
             </div>
             <div id="names-container-div" class="left-panel-boxes limit-height">
@@ -108,6 +108,130 @@
         <div id="bookwrapper">
             <div id="right-panel2">
                 <div id="right-panel-content">
+                    <div id="pageInfo-panel"> 
+                        <div id="pageInfoDetails" class="text">
+                            <div class="header"><%: Genre %> Title</div>
+                            <div class="detail"><%if (PageSummary.FullTitle.Length > 200) {%><%: PageSummary.FullTitle.Substring(0, 200) %>...<%} else {%><%: PageSummary.FullTitle %><%}%></div>
+                            <%if (Authors.Count > 0 || AdditionalAuthors.Count > 0) { %>
+                                <div class="header">By</div>
+                                <div class="detail">
+                                    <%foreach (Author a in Authors) { %>
+                                        <a href="/creator/<%: a.AuthorID.ToString() %>"><%: a.NameExtended %></a><br />
+                                    <%} %>
+                                    <% if (Authors.Count > 0 && AdditionalAuthors.Count > 0) Response.Write("<br />"); %>
+                                    <%foreach (Author a in AdditionalAuthors) { %>
+                                        <a href="/creator/<%: a.AuthorID.ToString() %>"><%: a.NameExtended %></a><br />
+                                    <%} %>
+                                </div>
+                            <%} %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentTitle.PublicationDetails)) { %>
+                                <div class="header">Publication Details</div>
+                                <div class="detail"><%: CurrentTitle.PublicationDetails %></div>
+                            <%} %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentItem.Year)) { %>
+                                <div class="header">Year</div>
+                                <div class="detail"><%: CurrentItem.Year %></div>
+                            <%} %>
+                            <%foreach (Institution institution in ItemInstitutions)
+                            {
+                                if (institution.InstitutionRoleName == "Holding Institution") { %>
+                                    <div class="header">Holding Institution</div>
+                                    <div class="detail">
+                                        <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                        { %>
+                                            <%: institution.InstitutionName%>
+                                        <% }
+                                        else
+                                        { %>
+                                            <a rel="noopener noreferrer" target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                        <% }%>
+                                    </div>
+                                <%}
+                            }%>
+                            <%if (!string.IsNullOrWhiteSpace(PageSummary.Sponsor)) { %>
+                                <div class="header">Sponsor</div>
+                                <div class="detail"><%: PageSummary.Sponsor %></div>
+                            <%} %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentItem.ItemDescription)) { %>
+                                <div class="header">Copy-specific Information</div>
+                                <div class="detail"><%: CurrentItem.ItemDescription %></div>
+                            <%} %>
+                            <div class="header">Copyright & Usage</div>
+                            <div class="detail">
+                                <%  bool showNone = true;
+                                    if (!string.IsNullOrWhiteSpace(CurrentItem.LicenseUrl)) { %>
+                                        License Type:<br />
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.LicenseUrl%>"><%: CurrentItem.LicenseUrl%></a>
+                                        <% } else {%>
+                                            <%: CurrentItem.LicenseUrl%>
+                                        <% }
+                                        showNone = false;%>
+                                        <br /><br />
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.Rights)) { %>
+                                        Rights:<br />
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.Rights%>"><%: CurrentItem.Rights%></a>
+                                        <% } else { %>
+                                            <%: CurrentItem.Rights%>
+                                        <% }
+                                        showNone = false;%>
+                                        <br /><br />
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.DueDiligence)) { %>
+                                        Due Diligence:<br />
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                            { %>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.DueDiligence%>"><%: CurrentItem.DueDiligence%></a>
+                                        <% } else { %>
+                                            <%: CurrentItem.DueDiligence%>
+                                        <% }
+                                        showNone = false;%>
+                                        <br /><br />
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightStatus)) { %>
+                                    Copyright Status:<br /><%: CurrentItem.CopyrightStatus%><br /><br />
+                                    <%showNone = false;%>
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightRegion)) { %>
+                                    Copyright Region:<br /><%: CurrentItem.CopyrightRegion%><br /><br />
+                                    <%showNone = false;%>
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightComment)) { %>
+                                    Copyright Comments:<br /><%: CurrentItem.CopyrightComment%><br /><br />
+                                    <%showNone = false;%>
+                                <% } %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightEvidence)) { %>
+                                    Copyright Evidence:<br /><%: CurrentItem.CopyrightEvidence%><br /><br />
+                                    <%showNone = false;%>
+                                <% } %>
+
+
+                                <%foreach (Institution institution in ItemInstitutions)
+                                    {
+                                        if (institution.InstitutionRoleName == "Rights Holder") { %>
+                                            Rights Holder:<br />
+                                            <%if (string.IsNullOrWhiteSpace(institution.InstitutionUrl))
+                                            { %>
+                                                <%: institution.InstitutionName%>
+                                            <% }
+                                            else
+                                            { %>
+                                                <a rel="noopener noreferrer" target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                            <% }
+                                            showNone = false;
+                                        }
+                                    }%>                 
+                                <br/>
+
+                                <% if (showNone) { %>
+                                    Not specified
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="pageOCR-panel"> </div>
 
                     <!-- Search Panel -->
@@ -196,12 +320,12 @@
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Join Our Mailing List</h3>
                                     <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" rel="noopener noreferrer" target="_blank" href="https://library.si.edu/bhl-newsletter-signup">Subscribe</a>
                                 </div>
                                 <div style="float:left;margin:0;width:49%">
                                     <h3>Help Support <span>BHL</span></h3>
                                     <p>BHL relies on donations to provide free PDF downloads and other services.  Help keep BHL free and open!</p>
-                                    <a class="featurebutton-home" title="Donate" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
+                                    <a class="featurebutton-home" title="Donate" rel="noopener noreferrer" target="_blank" href="https://library.si.edu/donate-bhl">Donate</a>
                                 </div>
                             </div>
                             <div class="failure">
@@ -286,7 +410,7 @@
                     </div> <!-- legendcontainer -->
                     <div id="copyrightcontainer">
                         <div id="copyrighttitle">Credit</div>
-                        <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="https://darwin.amnh.org" title="AMNH" target="_blank">darwin.amnh.org</a>)</div>
+                        <div id="copyright">Edition of <i>Charles Darwin's Reading Notes</i><br />by Di Gregorio & Gill<br />(Darwin Manuscripts Project: <a href="https://darwin.amnh.org" title="AMNH" rel="noopener noreferrer" target="_blank">darwin.amnh.org</a>)</div>
                     </div>
                 </div> <!-- content --> 
             </div> <!-- contentbox --> 
@@ -299,7 +423,7 @@
 <asp:Content ID="PageHeaderIncludes" ContentPlaceHolderID="PageHeaderIncludesPlaceHolder"
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
-    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=6" />
+    <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=7" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -369,7 +493,7 @@
         var isModalDialogChange;
         var cancelPdfSelection = false;
         var newpageOCR = $("#pageOCR-panel");
-        var newpageReaderComments = $("#pageReaderComments-panelInner");
+        //var newpageReaderComments = $("#pageReaderComments-panelInner");
         var pageNames = $("#names-panel");
 
         // On Hide Action for Dialogs
@@ -1294,7 +1418,7 @@
 
             var BRtoolbar = $("#BRtoolbar").detach();
             BRtoolbar.appendTo("#BRtoolbarwrapper");
-            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show Text'>Show<br/>Text</a> </div>");
+            $('.BRtoolbar-container').append("<div id='BRtoolbar-extra'><a class='BRicon page_print' title='Print'>Print</a><a id='showSearchButton' title='Search Inside' class='BRButton BRButtonFeatured'>Search Inside</a><a id='showInfoButton' title='Show Info' class='BRButton'>Show<br/>Info</a><a id='showAnnotationsButton' class='BRButton' title='Show Annotations'>Show<br/>Annotations</a><a id='showOCRButton' class='BRButton' title='Show Text'>Show<br/>Text</a> </div>");
             var PDFtoolbar = $("#toolbar-top").detach();
             PDFtoolbar.prependTo("#BRtoolbar");
             $('#BRtoolbar').prepend("<div><a id='showPagesButton' class='BRicon book_leftmost' style='display: block;' title='Hide Pages'>Hide Pages</a></div>");
@@ -1350,11 +1474,33 @@
                     showOCRButton.removeClass("displayed");
                 }
 
+                resetInfoBox();
                 resetAnnotationsBox();
                 resetSearchBox();
             });
 
-            // Toggle right hand container for Search 
+            // Toggle right hand container for info 
+            var showInfoButton = $('#showInfoButton');
+            showInfoButton.click(function () {
+                if (showInfoButton.attr("title") == "Show Info") {
+                    $("#right-panel2").show("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
+                    $("#pageInfo-panel").show();
+                    showInfoButton.attr("title", "Hide Info");
+                    showInfoButton.html("Hide<br/>Info");
+                    showInfoButton.addClass("displayed");
+                } else {
+                    $("#right-panel2").hide("fast", function () { if (br.mode == 3) { br.resizePageView(); } br.centerPageView(); });
+                    showInfoButton.attr("title", "Show Info");
+                    showInfoButton.html("Show<br/>Info");
+                    showInfoButton.removeClass("displayed");
+                }
+
+                resetPageOCRBox();
+                resetAnnotationsBox();
+                resetSearchBox();
+            });
+
+            // Toggle right hand container for Search
             var showSearchButton = $('#showSearchButton');
             showSearchButton.click(function () {
                 if (showSearchButton.attr("title") == "Search Inside") {
@@ -1372,6 +1518,7 @@
                 }
 
                 resetPageOCRBox();
+                resetInfoBox();
                 resetAnnotationsBox();
             });
 
@@ -1392,6 +1539,7 @@
                 }
 
                 resetPageOCRBox();
+                resetInfoBox();
                 resetSearchBox();
             });
 
@@ -1419,9 +1567,9 @@
     });
 
     $(window).bind('resize', this, function (e) {
-        var rightPanelHeight = $("#right-panel2").height();
-        var pageOCRHeaderHeight = $("#pageOCR-panel .header").height();
-        var pageReaderCommentsHeaderHeight = $("#pageReaderComments-panel .header").height();
+        //var rightPanelHeight = $("#right-panel2").height();
+        //var pageOCRHeaderHeight = $("#pageOCR-panel .header").height();
+        //var pageReaderCommentsHeaderHeight = $("#pageReaderComments-panel .header").height();
         updateUIHeights(); 
     });
 
@@ -1429,8 +1577,8 @@
         var leftPanelHeight = $("#left-panel2").height();
         var pagesPanel = $("#lstPages").outerHeight();
         var namesPanel = $("#names-panel").outerHeight();
-        var topLeftPanelHeight = $("#left-panel2 .left-panel-boxes:first-child").outerHeight();
-        var bottomLeftPanelHeight = $("#left-panel2 .left-panel-boxes:last-child").outerHeight();
+        //var topLeftPanelHeight = $("#left-panel2 .left-panel-boxes:first-child").outerHeight();
+        //var bottomLeftPanelHeight = $("#left-panel2 .left-panel-boxes:last-child").outerHeight();
 
         var topTotalHeight = 0; 
         $("#left-panel2 .left-panel-boxes:first-child").children().each(function(){
@@ -1445,7 +1593,7 @@
         bottomTotalHeight = bottomTotalHeight-namesPanel;
 
         var lphh = (leftPanelHeight)/4;  // -topLeftPanelHeight-bottomLeftPanelHeight
-        var lcpd = (topTotalHeight - bottomTotalHeight)/2; 
+        //var lcpd = (topTotalHeight - bottomTotalHeight)/2; 
 
         if (leftPanelHeight < 720) {
             topTotalHeight = 0;
@@ -1492,6 +1640,13 @@
         $("#showSearchButton").attr("title", "Search Inside");
         $("#showSearchButton").html("Search<br/>Inside");
         $("#showSearchButton").removeClass("displayed");
+    }
+
+    function resetInfoBox() {
+        $("#pageInfo-panel").hide();
+        $("#showInfoButton").attr("title", "Show Info");
+        $("#showInfoButton").html("Show<br/>Info");
+        $("#showInfoButton").removeClass("displayed");
     }
 
     function resetPageOCRBox() {

@@ -24,7 +24,7 @@ CREATE TABLE #tmpTitleNote
 WITH basetable AS
 (
 	-- Select all note fields, excluding those with a code '5'
-	SELECT	ROW_NUMBER() OVER (PARTITION BY MarcDataFieldID ORDER BY MarcDataFieldID) AS RowNum,
+	SELECT	ROW_NUMBER() OVER (PARTITION BY MarcDataFieldID ORDER BY MarcSubFieldID) AS RowNum,
 			COUNT(*) OVER (PARTITION BY MarcDataFieldID) NumRows,
 			MarcID, MarcDataFieldID, MarcSubFieldID, DataFieldTag, Indicator1, Code, 
 			CAST(SubFieldValue AS NVARCHAR(MAX)) SubFieldValue
