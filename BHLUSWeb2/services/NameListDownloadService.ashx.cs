@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Configuration;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -95,7 +94,7 @@ namespace MOBOT.BHL.Web2.Services
                 // Write record
                 csvString.Remove(0, csvString.Length);
                 csvString.Append("\"" + String.Format(ConfigurationManager.AppSettings["PagePageUrl"].ToString(), page.PageID.ToString()) + "\",");
-                csvString.Append("\"" + page.BibliographicLevelName + "\",");
+                csvString.Append("\"" + page.BibliographicLevelLabel + "\",");
                 csvString.Append("\"" + page.FullTitle.Replace('"', '\'') + "\",");
                 csvString.Append("\"" + page.PublisherPlace.Replace('"', '\'') + "\",");
                 csvString.Append("\"" + page.Publisher.Replace('"', '\'') + "\",");

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -74,7 +71,7 @@ namespace MOBOT.BHL.Web2.Services
                 for (int x = 0; x < searchResult.Pages.Count; x++)
                 {
                     response.Append("<row id='" + searchResult.Pages[x].TitleID.ToString() + "'>");
-                    //response.Append("<cell> " + searchResult.Pages[x].BibliographicLevelName + " </cell>");
+                    //response.Append("<cell> " + searchResult.Pages[x].BibliographicLevelLabel + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"Info\" href=\"/bibliography/" + searchResult.Pages[x].TitleID.ToString() + "\">" + searchResult.Pages[x].FullTitle + "</a>]]> </cell>");
                     response.Append("<cell> <![CDATA[" + searchResult.Pages[x].Authors.Replace("|", "<br>") + "]]> </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"View Book\" href=\"/item/" + searchResult.Pages[x].ItemID.ToString() + "\">");

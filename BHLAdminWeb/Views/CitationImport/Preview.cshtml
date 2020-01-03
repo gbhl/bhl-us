@@ -28,7 +28,7 @@
 
     <p>Preview a sample of the data being imported.  Clicking "Next" will copy the data from the file into a temporary space in the database.  From there, you will be able to review ALL of the data before making it "live" in BHL.</p>
     <div style="margin:10px 0px">Data Source: @Html.DisplayFor(m => m.FileNameClean)</div>
-    <div style="margin:10px 0px">Genre: @Html.DisplayFor(m => m.GenreName)</div>
+    <div style="margin:10px 0px">Type: @Html.DisplayFor(m => m.GenreName)</div>
 
     if (!string.IsNullOrWhiteSpace(Model.ImportFileError))
     {

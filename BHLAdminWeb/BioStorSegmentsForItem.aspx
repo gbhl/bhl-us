@@ -13,7 +13,7 @@
         <HeaderTemplate>
         <table>
             <tr>
-                <td><b>Genre</b></td>
+                <td><b>Type</b></td>
                 <td>&nbsp;</td>
                 <td><b>Title</b></td>
                 <td><b>Volume</b></td>

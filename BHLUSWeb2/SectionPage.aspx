@@ -52,7 +52,7 @@
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
-            <div class="segmentdetails"><h3>Genre</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
+            <div class="segmentdetails"><h3>Type</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
             <div class="segmentdetails"><h3>Date of Publication</h3> <p><span itemprop="datePublished"><%: BhlSegment.Date%></span></p></div>
@@ -142,7 +142,7 @@
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
-            <div class="segmentdetails"><h3>Genre</h3> <p><%: BhlSegment.GenreName %></p></div>
+            <div class="segmentdetails"><h3>Type</h3> <p><%: BhlSegment.GenreName %></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
             <div class="segmentdetails"><h3>Date of Publication</h3> <p><%: BhlSegment.Date%></p></div>

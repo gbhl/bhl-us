@@ -142,7 +142,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-9">
                                                                     <div style="padding-bottom:10px">
-                                                                        @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                        @if (item.TitleId > 0)
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
@@ -157,7 +157,14 @@
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
-                                                                                <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                if (item.StartPageId > 0)
+                                                                                {
+                                                                                    <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.Raw(Server.HtmlEncode(item.Title))
+                                                                                }
                                                                             }
                                                                             else
                                                                             {
@@ -167,7 +174,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3 pubResultLinks">
-                                                                    @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                    @if (item.TitleId > 0)
                                                                     {
                                                                         <a class="titleviewbook" style="position:relative;top:-25px;" href="~/bibliography/@item.TitleId">View Metadata</a>
                                                                     }
@@ -183,7 +190,7 @@
                                                                     {
                                                                         <div class="pubResultLine">Type: @Html.Raw(Server.HtmlEncode(item.Genre))</div>
                                                                     }
-                                                                    @if (!string.IsNullOrWhiteSpace(item.Volume) && (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre)))
+                                                                    @if (!string.IsNullOrWhiteSpace(item.Volume) && (item.TitleId > 0))
                                                                     {
                                                                         <div class="pubResultLine">Volume: @Html.Raw(Server.HtmlEncode(item.Volume))</div>
                                                                     }
@@ -193,7 +200,7 @@
                                                                             By: @Html.Raw(Server.HtmlEncode(string.Join(" - ", item.Authors)))
                                                                         </div>
                                                                     }
-                                                                    @if (!(item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre)))
+                                                                    @if (item.SegmentId > 0)
                                                                     {
                                                                         if (!string.IsNullOrWhiteSpace(item.Container))
                                                                         {
@@ -239,7 +246,7 @@
                                                                             }
                                                                         </div>
                                                                     }
-                                                                    @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                    @if (item.TitleId > 0)
                                                                     {
                                                                         foreach (var association in item.Associations)
                                                                         {

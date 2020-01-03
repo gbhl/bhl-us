@@ -25,7 +25,7 @@ CREATE TABLE #Step1
 	TitleID INT NOT NULL,
 	ItemID INT NOT NULL,
 	PageID INT NOT NULL,
-	BibliographicLevelName nvarchar(50) NOT NULL,
+	BibliographicLevelLabel nvarchar(50) NOT NULL,
 	ShortTitle nvarchar(255) NULL,
 	SortTitle nvarchar(60) NULL,
 	PartNumber nvarchar(255) NULL,
@@ -39,33 +39,33 @@ CREATE TABLE #Step1
 -- Build the appropriate index on the temp table
 IF (@SortColumn = 'BibliographicLevelName' AND LOWER(@SortDirection) = 'asc')
 BEGIN
-	CREATE INDEX IX_Step1 ON #Step1 (BibliographicLevelName, SortTitle, ItemSequence, SequenceOrder)
+	CREATE INDEX IX_Step1 ON #Step1 (BibliographicLevelLabel, SortTitle, ItemSequence, SequenceOrder)
 	INCLUDE (TitleID, ItemID, PageID, ShortTitle, PartNumber, PartName, Volume, [Date])
 END
 IF (@SortColumn = 'BibliographicLevelName' AND LOWER(@SortDirection) = 'desc')
 BEGIN
-	CREATE INDEX IX_Step1 ON #Step1 (BibliographicLevelName desc, SortTitle, ItemSequence, SequenceOrder)
+	CREATE INDEX IX_Step1 ON #Step1 (BibliographicLevelLabel desc, SortTitle, ItemSequence, SequenceOrder)
 	INCLUDE (TitleID, ItemID, PageID, ShortTitle, PartNumber, PartName, Volume, [Date])
 END
 IF (@SortColumn = 'ShortTitle' AND LOWER(@SortDirection) = 'asc')
 BEGIN
 	CREATE INDEX IX_Step1 ON #Step1 (SortTitle, ItemSequence, SequenceOrder)
-	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelName, ShortTitle, PartNumber, PartName, Volume, [Date])
+	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelLabel, ShortTitle, PartNumber, PartName, Volume, [Date])
 END
 IF (@SortColumn = 'ShortTitle' AND LOWER(@SortDirection) = 'desc')
 BEGIN
 	CREATE INDEX IX_Step1 ON #Step1 (SortTitle desc, ItemSequence, SequenceOrder)
-	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelName, ShortTitle, PartNumber, PartName, Volume, [Date])
+	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelLabel, ShortTitle, PartNumber, PartName, Volume, [Date])
 END
 IF (@SortColumn = 'Date' AND LOWER(@SortDirection) = 'asc')
 BEGIN
 	CREATE INDEX IX_Step1 ON #Step1 ([Date], SortTitle, ItemSequence, SequenceOrder)
-	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelName, ShortTitle, PartNumber, PartName, Volume)
+	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelLabel, ShortTitle, PartNumber, PartName, Volume)
 END
 IF (@SortColumn = 'Date' AND LOWER(@SortDirection) = 'desc')
 BEGIN
 	CREATE INDEX IX_Step1 ON #Step1 ([Date] desc, SortTitle, ItemSequence, SequenceOrder)
-	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelName, ShortTitle, PartNumber, PartName, Volume)
+	INCLUDE (TitleID, ItemID, PageID, BibliographicLevelLabel, ShortTitle, PartNumber, PartName, Volume)
 END
 
 -- Get the initial data set
@@ -74,7 +74,7 @@ SELECT DISTINCT
 		t.TitleID,
 		i.ItemID,
 		p.PageID,
-		ISNULL(bl.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(bl.BibliographicLevelLabel, '') AS BibliographicLevelLabel,
 		t.ShortTitle,
 		t.SortTitle,
 		t.PartNumber,
@@ -102,7 +102,7 @@ CREATE TABLE #Step2
 	TitleID INT NOT NULL,
 	ItemID INT NOT NULL,
 	PageID INT NOT NULL,
-	BibliographicLevelName nvarchar(50) NOT NULL,
+	BibliographicLevelLabel nvarchar(50) NOT NULL,
 	ShortTitle nvarchar(255) NULL,
 	SortTitle nvarchar(60) NULL,
 	PartNumber nvarchar(255) NULL,
@@ -120,13 +120,13 @@ CREATE INDEX IX_Step2 ON #Step2 (RowNumber)
 IF (@SortColumn = 'BibliographicLevelName' AND LOWER(@SortDirection) = 'asc')
 BEGIN
 	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY BibliographicLevelName, SortTitle, ItemSequence, SequenceOrder) AS RowNumber
+	SELECT	*, ROW_NUMBER() OVER (ORDER BY BibliographicLevelLabel, SortTitle, ItemSequence, SequenceOrder) AS RowNumber
 	FROM	#Step1
 END
 IF (@SortColumn = 'BibliographicLevelName' AND LOWER(@SortDirection) = 'desc')
 BEGIN
 	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY BibliographicLevelName DESC, SortTitle, ItemSequence, SequenceOrder) AS RowNumber
+	SELECT	*, ROW_NUMBER() OVER (ORDER BY BibliographicLevelLabel DESC, SortTitle, ItemSequence, SequenceOrder) AS RowNumber
 	FROM	#Step1
 END
 IF (@SortColumn = 'ShortTitle' AND LOWER(@SortDirection) = 'asc')
@@ -162,7 +162,7 @@ SELECT TOP (@NumRows)
 		p.TitleID,
 		p.ItemID,
 		p.PageID,
-		BibliographicLevelName,
+		BibliographicLevelLabel,
 		sc.FullTitle,
 		ShortTitle,
 		PartNumber,

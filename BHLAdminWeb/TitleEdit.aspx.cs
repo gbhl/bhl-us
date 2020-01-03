@@ -192,7 +192,7 @@ namespace MOBOT.BHL.AdminWeb
             bibliographicLevels.Insert(0, emptyBibLevel);
 
             ddlBibliographicLevel.DataSource = bibliographicLevels;
-            ddlBibliographicLevel.DataTextField = "BibliographicLevelName";
+            ddlBibliographicLevel.DataTextField = "ExpandedLabel";
             ddlBibliographicLevel.DataValueField = "BibliographicLevelID";
             ddlBibliographicLevel.DataBind();
 

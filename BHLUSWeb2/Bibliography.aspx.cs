@@ -23,7 +23,7 @@ namespace MOBOT.BHL.Web2
         protected Title BhlTitle { get; set; }
         protected IList<TitleVariant> TitleVariants { get; set; }
         protected IList<TitleAssociation> TitleAssociations { get; set; }
-        protected CustomGenericList<TitleKeyword> TitleKeywords { get; set; }
+        protected List<TitleKeyword> TitleKeywords { get; set; }
         protected IList<Title_Identifier> TitleIdentifiers { get; set; }
         protected IList<TitleNote> TitleNotes { get; set; }
         protected IList<Author> Authors { get; set; }
@@ -38,13 +38,13 @@ namespace MOBOT.BHL.Web2
         {
             public Item Item { get; set; }
             public string ThumbUrl { get; set; }
-            public CustomGenericList<Institution> institutions { get; set; }
+            public List<Institution> institutions { get; set; }
 
             public BibliographyItem(Item item, string thumbUrl)
             {
                 Item = item;
                 ThumbUrl = thumbUrl;
-                institutions = new CustomGenericList<Institution>();
+                institutions = new List<Institution>();
             }
         }
 
@@ -86,7 +86,7 @@ namespace MOBOT.BHL.Web2
                 }
             }
 
-            CustomGenericList<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
+            List<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
             if (Items == null)
             {
                 Response.Redirect("~/titleunavailable");
@@ -126,7 +126,6 @@ namespace MOBOT.BHL.Web2
                 }
             }
 
-            //CustomGenericList<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
             TitleKeywords = bhlProvider.TitleKeywordSelectKeywordByTitle(titleId);
             TitleIdentifiers = bhlProvider.Title_IdentifierSelectForDisplayByTitleID(titleId).ToList();
             TitleVariants = bhlProvider.TitleVariantSelectByTitleID(titleId).ToList();
@@ -137,19 +136,12 @@ namespace MOBOT.BHL.Web2
             if (!string.IsNullOrEmpty(BhlTitle.LanguageCode)) LanguageName = bhlProvider.LanguageSelectAuto(BhlTitle.LanguageCode).LanguageName;
 
             BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(BhlTitle.BibliographicLevelID ?? 0);
-            if (bibliographicLevel == null)
-            {
-                Genre = string.Empty;
-            }
-            else
-            {
-                Genre = (bibliographicLevel.BibliographicLevelName.ToLower().Contains("serial") ? "Journal" : "Book");
-            }
+            Genre = (bibliographicLevel == null) ? string.Empty : bibliographicLevel.BibliographicLevelLabel;
 
             MaterialType materialType = bhlProvider.MaterialTypeSelect(BhlTitle.MaterialTypeID ?? 0);
             Material = (materialType == null) ? string.Empty : materialType.MaterialTypeLabel;
 
-            CustomGenericList<DOI> dois = bhlProvider.DOISelectValidForTitle(titleId);
+            List<DOI> dois = bhlProvider.DOISelectValidForTitle(titleId);
             if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
 
             main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlTitle.FullTitle);
