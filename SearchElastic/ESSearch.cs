@@ -356,7 +356,7 @@ namespace BHL.Search.Elastic
                 {
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2 });
+                        mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2, Operator = Operator.And });
                     }
                 }
 
@@ -1061,7 +1061,7 @@ namespace BHL.Search.Elastic
                 case ESField.GENRE:
                     searchField = SearchField.Genre; break;
                 case ESField.KEYWORDS_RAW:
-                    searchField = SearchField.ItemKeywords; break;
+                    searchField = SearchField.FacetItemKeywords; break;
                 case ESField.LANGUAGE:
                     searchField = SearchField.Language; break;
                 case ESField.NAMES_RAW:
@@ -1085,7 +1085,7 @@ namespace BHL.Search.Elastic
                 case ESField.AUTHORS:
                     searchField = SearchField.ItemAuthors; break;
                 case ESField.FACETAUTHORS:
-                    searchField = SearchField.ItemAuthors; break;
+                    searchField = SearchField.FacetItemAuthors; break;
                 case ESField.KEYWORDS:
                     searchField = SearchField.ItemKeywords; break;
                 case ESField.KEYWORD:

@@ -83,8 +83,7 @@
 					}
 				},
 				"facetAuthors" : {
-					"type" : "keyword",
-					"index" : false
+					"type" : "keyword"
 				},			
 				"genre" : {
 					"type" : "keyword",
