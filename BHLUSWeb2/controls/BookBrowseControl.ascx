@@ -13,7 +13,7 @@
             <li class="titlelisting">
                 <div style="display:inline-block; width:620px">
                     <div style="float:left">
-                        <a target="<%# Eval("ExternalUrl") == string.Empty ? "_self\" class=\"title" : "_blank\" class=\"title ExtLinkBrowse" %>" href="/item/<%# Eval("ItemID ")%>"><%# Eval("FullTitle")%> <%# Eval("PartNumber")%> <%# Eval("PartName")%></a>
+                        <a target="<%# Eval("ExternalUrl") == string.Empty ? "_self\" class=\"title" : "_blank\" rel=\"noopener noreferrer\" class=\"title ExtLinkBrowse" %>" href="/item/<%# Eval("ItemID ")%>"><%# Eval("FullTitle")%> <%# Eval("PartNumber")%> <%# Eval("PartName")%></a>
                     </div>
                     <div style="float:right">
                         <a class="titleviewbook" href="/bibliography/<%# Eval("TitleID") %>">View Metadata</a>
@@ -41,7 +41,7 @@
                 <%# Eval("InstitutionName") == string.Empty ? "" : "<div class=\"titledetails\">Holding Institution: " + Eval("InstitutionName") + "</div>"%>
                 <%# Eval("Subjects") == string.Empty ? "" : "<div class=\"titledetails\">Subjects: " + Eval("Subjects").ToString().Replace("|", "&nbsp;&nbsp;") + "</div>"%>
                 <%# Eval("Collections") == string.Empty ? "" : "<div class=\"titledetails\">BHL Collections: " + Eval("Collections") + "</div>"%>
-                 <a class="titleviewbook" style="position:relative;top:-25px;" target="<%# Eval("ExternalUrl") == string.Empty ? "_self" : "_blank" %>" href="/item/<%# Eval("ItemID ")%>">View Book<%# Eval("ExternalUrl") == string.Empty ? "" : " (External)" %></a>
+                 <a class="titleviewbook" style="position:relative;top:-25px;" target="<%# Eval("ExternalUrl") == string.Empty ? "_self" : "_blank" %>" rel="noopener noreferrer" href="/item/<%# Eval("ItemID ")%>">View Book<%# Eval("ExternalUrl") == string.Empty ? "" : " (External)" %></a>
             </li>
         <%} %>
 	</ItemTemplate>

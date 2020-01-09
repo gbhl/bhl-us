@@ -224,10 +224,10 @@ jQuery.cookie = function (key, value, options) {
         var upgradebrowses_html = '<div id="upgradebrowsers">' +
         '<img class="message" src="/images/bhlau images/image_browser_message.png" width="500" height="110" alt="BHL works best with a modern browser. We\'ve noticed that your web browser is out of date. To best experience the Biodiversity Heritage Library, please upgrade to one of the following options..." />' + 
         '<div class="browsers">' +
-        '<a class="icon chrome" href="http://www.google.com/chrome" target="_blank"><img src="/images/bhlau images/icon_chrome.png" width="102" height="110" alt="Chrome" /></a>' +
-        '<a class="icon firefox" href="http://www.mozilla.org/firefox/" target="_blank"><img src="/images/bhlau images/icon_firefox.png" width="102" height="110" alt="Firefox" /></a>' + 
-        '<a class="icon safari" href="http://www.apple.com/safari/download/" target="_blank"><img src="/images/bhlau images/icon_safari.png" width="102" height="110" alt="Safari" /></a>' + 
-        '<a class="icon iexplorer" href="http://windows.microsoft.com/ie9" target="_blank"><img src="/images/bhlau images/icon_iexplorer.png" width="102" height="110" alt="Internet Explorer" /></a>' +
+        '<a class="icon chrome" href="http://www.google.com/chrome" target="_blank" rel="noopener noreferrer"><img src="/images/bhlau images/icon_chrome.png" width="102" height="110" alt="Chrome" /></a>' +
+        '<a class="icon firefox" href="http://www.mozilla.org/firefox/" target="_blank" rel="noopener noreferrer"><img src="/images/bhlau images/icon_firefox.png" width="102" height="110" alt="Firefox" /></a>' + 
+        '<a class="icon safari" href="http://www.apple.com/safari/download/" target="_blank" rel="noopener noreferrer"><img src="/images/bhlau images/icon_safari.png" width="102" height="110" alt="Safari" /></a>' + 
+        '<a class="icon iexplorer" href="http://windows.microsoft.com/ie9" target="_blank" rel="noopener noreferrer"><img src="/images/bhlau images/icon_iexplorer.png" width="102" height="110" alt="Internet Explorer" /></a>' +
         '<a class="close" title="close">close</a>' + 
         '</div>' + 
         '</div>';
