@@ -15,7 +15,7 @@
 <div id="promobox-home" class="featurebox-home">
 <h3>Help Support <span>BHL</span></h3>
 <p>BHL's existence depends on the financial support of its patrons. Help us keep this free resource alive!</p>
-<a  class="featurebutton-home" target="_blank" href="http://library.si.edu/donate-bhl">Donate Now</a>
+<a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate Now</a>
 </div>
 </div>
 </div>
@@ -35,7 +35,7 @@
             <div id="searchtype-home">
                 <input name="rdoSearchType" runat="server" id="rdoSearchTypeF" ClientIDMode="Static" type="radio" value="F" checked /> <label for="rdoSearchTypeF">Full-text</label>
                 <input name="rdoSearchType" runat="server" id="rdoSearchTypeC" ClientIDMode="Static" type="radio" value="C" /> <label for="rdoSearchTypeC">Catalog</label>
-                &nbsp;<a target="_blank" style="left:169px" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" alt="Search help" title="What's This?" height="16" width="16" /></a>
+                &nbsp;<a target="_blank" rel="noopener noreferrer" style="left:169px" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" alt="Search help" title="What's This?" height="16" width="16" /></a>
             </div>
             <a href="/advsearch" class="advsearch-home">advanced search</a>
         </div>
@@ -61,7 +61,7 @@
              <MOBOT:RssFeedControlVersion2 ID="rssFeed" runat="server" MaxRecords="3" Target="_blank" NoItemsFoundText="No BHL blog items found."
 											ShowDescription="true" DescriptionLimit="100" />
              </span>
-            <a target="_blank" class="featurebutton-home" href="http://blog.biodiversitylibrary.org/">View More Blog Posts</a>
+            <a target="_blank" rel="noopener noreferrer" class="featurebutton-home" href="http://blog.biodiversitylibrary.org/">View More Blog Posts</a>
         </div>
              <uc:FeatureBox ID="featurebox3" runat="server" FeatureType="flickr" SpecialClass="featurebox-home" ClientIDMode="Static" specialID="featuretwo-home"></uc:FeatureBox>
         

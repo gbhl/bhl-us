@@ -7,7 +7,7 @@
         <div  class="<%= SpecialClass %> support" id="<%= specialID %>">
         <h3>Help Support <span>BHL</span></h3>
         <p>BHL's existence depends on the support of its patrons. Help us keep this free resource alive!</p>
-                <a  class="featurebutton-home" target="_blank" href="http://library.si.edu/donate-bhl">Donate Now</a>
+                <a  class="featurebutton-home" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate Now</a>
         </div>
 </asp:Panel>
 <asp:Panel ID="panFlickr" runat="server"  Visible="false">
@@ -19,7 +19,7 @@
              </div> 
         
             </span>
-             <a target="_blank" class="featurebutton-home" href="http://www.flickr.com/photos/biodivlibrary/sets/">View More Images on Flickr</a>
+             <a target="_blank" rel="noopener noreferrer" class="featurebutton-home" href="http://www.flickr.com/photos/biodivlibrary/sets/">View More Images on Flickr</a>
         </div>
 
 </asp:Panel>

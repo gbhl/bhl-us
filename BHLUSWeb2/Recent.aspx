@@ -31,7 +31,7 @@
 			<asp:Repeater ID="rptRecent" runat="server">
 				<ItemTemplate>
 					<li>
-                        <a target="<%# string.IsNullOrWhiteSpace(Eval("ExternalUrl").ToString()) ? "_self" : "_blank" %>" href="/item/<%# Eval("ItemID") %>" class="booktitle<%# string.IsNullOrWhiteSpace(Eval("ExternalUrl").ToString()) ? "" : " ExtLink" %>" title="Book"><%# Eval("FullTitle") %> <%# Eval("PartNumber") %> <%# Eval("PartName") %> <%# Eval("Volume") %></a>
+                        <a target="<%# string.IsNullOrWhiteSpace(Eval("ExternalUrl").ToString()) ? "_self" : "_blank" %>" <%# string.IsNullOrWhiteSpace(Eval("ExternalUrl").ToString()) ? "" : "rel=\"noopener noreferrer\"" %> href="/item/<%# Eval("ItemID") %>" class="booktitle<%# string.IsNullOrWhiteSpace(Eval("ExternalUrl").ToString()) ? "" : " ExtLink" %>" title="Book"><%# Eval("FullTitle") %> <%# Eval("PartNumber") %> <%# Eval("PartName") %> <%# Eval("Volume") %></a>
                         &nbsp; (added: <%# Eval("CreationDate","{0:MM/dd/yyyy}") %> )
                     </li>
 				</ItemTemplate>
