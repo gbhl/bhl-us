@@ -1,12 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -40,7 +38,7 @@ namespace MOBOT.BHL.Web2.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "desc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "desc" : sortOrder;
 
-            CustomGenericList<DOI> searchResult = this.DOISelectByStatus(
+            List<DOI> searchResult = this.DOISelectByStatus(
                 Convert.ToInt32(doiStatusId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             context.Response.ContentType = "text/xml";
@@ -56,10 +54,10 @@ namespace MOBOT.BHL.Web2.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private CustomGenericList<DOI> DOISelectByStatus(
+        private List<DOI> DOISelectByStatus(
             int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            CustomGenericList<DOI> items = new CustomGenericList<DOI>();
+            List<DOI> items = new List<DOI>();
 
             try
             {
@@ -74,7 +72,7 @@ namespace MOBOT.BHL.Web2.Services
             return items;
         }
 
-        private string GetXmlResponse(CustomGenericList<DOI> searchResult, int pageNum, int numRows)
+        private string GetXmlResponse(List<DOI> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 
@@ -121,7 +119,7 @@ namespace MOBOT.BHL.Web2.Services
                     }
 
                     response.Append("<row id='" + searchResult[x].DOIID.ToString() + "'>");
-                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" target=\"_blank\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" target=\"_blank\" rel=\"noopener noreferrer\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].EntityDetail) + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"DOI Info\" target=\"_blank\" href=\"DOISubmissionDetail.aspx?id=" + searchResult[x].DOIBatchID + "&type=d\">" + searchResult[x].DOIBatchID + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].DOIName + " </cell>");

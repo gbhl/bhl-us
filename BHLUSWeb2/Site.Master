@@ -69,7 +69,7 @@
 			     		<a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageAbout"] %>">About</a>
 			            <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageHelp"] %>">Help</a>				            
                         <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>">FAQ</a>
-                        <a class="storelink" target="_blank" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
+                        <a class="storelink" target="_blank" rel="noopener noreferrer" href="http://www.cafepress.com/biodiversityheritagelibrary">BHL Store</a>
 		            </nav>
                     <span id="altmetricbadge">
                         <div data-badge-popover="bottom" data-badge-type="donut" data-uri="" data-hide-no-mentions="true" data-no-score="true" data-template="biodiversitylibrary" class="altmetric-embed"></div>
@@ -94,12 +94,12 @@
                     <div class="addthis_horizontal_follow_toolbox" style="margin-bottom:10px;padding-bottom:15px;border-bottom:1px solid #c9c9c9;"></div>
                     <h3>Join Our Mailing List</h3>
                     <p>Sign up to receive the latest news, content highlights, and promotions</p>
-                    <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
+                    <a class="subscribe" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup"><img src="/images/envelope_icon.png" alt="subscribe here" /> Subscribe Here</a>
                 </div>
                 <div id="socialmiddle" class="socialcolumn">
                     <h3>BHL on Twitter</h3>
                     <twit:TwitterFeed ID="twitterFeedControl" runat="server" />
-                    <a class="community" title="Our BHL Community" target="_blank" href="http://mytweeps.com/community/BioDivLibrary">BHL Twitter Community</a>
+                    <a class="community" title="Our BHL Community" target="_blank" rel="noopener noreferrer" href="http://mytweeps.com/community/BioDivLibrary">BHL Twitter Community</a>
                 </div>
                 <div id="socialright" class="socialcolumn">
                     <h3>Now Online    <a title="Recent RSS" href="/recentrss">
@@ -120,12 +120,12 @@
                     <hr />
                     <div class="ourpartners">
                     <h3>Visit Our Partners</h3>
-                    <a title="EOL" target="_blank" href="http://www.eol.org"><img src="/images/eol_11px.png" alt="" /> Encyclopedia of Life</a>
+                    <a title="EOL" target="_blank" rel="noopener noreferrer" href="https://www.eol.org"><img src="/images/eol_11px.png" alt="" /> Encyclopedia of Life</a>
                     </div>
                     <hr />
                     <div class="getinvolved">
                     <h3>Get Involved</h3>
-                    <a class="community" target="_blank" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
+                    <a class="community" target="_blank" rel="noopener noreferrer" href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageContribute"] %>">Ways To Contribute</a>
                     </div>
                 </div>
                 </div>
