@@ -236,6 +236,7 @@ namespace MOBOT.BHL.Web2
                                 link.Text = institution.InstitutionName;
                                 link.NavigateUrl = institution.InstitutionUrl;
                                 link.Target = "_blank";
+                                link.Attributes.Add("rel", "noopener noreferrer");
                                 attributionPlaceHolder.Controls.Add(link);
                             }
                             else
