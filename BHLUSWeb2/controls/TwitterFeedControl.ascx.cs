@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Net;
+using System.Text;
 
 namespace MOBOT.BHL.Web2.Controls
 {
@@ -108,7 +103,7 @@ namespace MOBOT.BHL.Web2.Controls
                         {
                             string hashText = "#" + (string)h["text"];
                             string replaceHashText = string.Format(
-                                "<a class='tweet-url hashtag' href='http://twitter.com/search?q={0}' target='_blank'>{1}</a>",
+                                "<a class='tweet-url hashtag' href='http://twitter.com/search?q={0}' target='_blank' rel='noopener noreferrer'>{1}</a>",
                                 Server.UrlEncode(hashText), hashText);
                             text = text.Replace(hashText, replaceHashText);
                         }
@@ -121,7 +116,7 @@ namespace MOBOT.BHL.Web2.Controls
                             string displayUrl = (string)u["display_url"];
                             string urlText = (string)u["url"];
                             string replaceUrlText = string.Format(
-                                "<a rel='nofollow' href='{0}' target='_blank'>{1}</a>",
+                                "<a rel='nofollow noopener noreferrer' href='{0}' target='_blank'>{1}</a>",
                                 urlText, displayUrl);
                             text = text.Replace(urlText, replaceUrlText);
                         }
@@ -133,7 +128,7 @@ namespace MOBOT.BHL.Web2.Controls
                         {
                             string screenName = (string)um["screen_name"];
                             string replaceScreenName = string.Format(
-                                "<a class='tweet-url username' href='http://twitter.com/{0}' target='_blank'>{1}</a>",
+                                "<a class='tweet-url username' href='http://twitter.com/{0}' target='_blank' rel='noopener noreferrer'>{1}</a>",
                                 screenName, "@" + screenName);
                             text = text.Replace("@" + screenName, replaceScreenName);
                         }
@@ -142,17 +137,17 @@ namespace MOBOT.BHL.Web2.Controls
                         if (fromUser.Length > 0)
                         {
                             fromUserLink = string.Format(
-                                "<a class='twtr-user' href='http://twitter.com/intent/user?screen_name={0}' target='_blank'>{1}</a>",
+                                "<a class='twtr-user' href='http://twitter.com/intent/user?screen_name={0}' target='_blank' rel='noopener noreferrer'>{1}</a>",
                                 fromUser, fromUser);
                         }
 
                         // Format the age and favorite links
                         string ageLink = string.Format(
-                            "<a class='twtr-timestamp' href='http://twitter.com/{0}/status/{1}' time='{2}' target='_blank'>{3}</a>",
+                            "<a class='twtr-timestamp' href='http://twitter.com/{0}/status/{1}' time='{2}' target='_blank' rel='noopener noreferrer'>{3}</a>",
                             fromUser, id, createdAt, age);
 
                         string favLink = string.Format(
-                            "<a class='twtr-fav' href='http://twitter.com/intent/favorite?tweet_id={0}' target='_blank'>favorite</a>",
+                            "<a class='twtr-fav' href='http://twitter.com/intent/favorite?tweet_id={0}' target='_blank' rel='noopener noreferrer'>favorite</a>",
                             id);
 
                         // Build the complete entry for this tweet
@@ -166,7 +161,7 @@ namespace MOBOT.BHL.Web2.Controls
                 }
                 catch
                 {
-                    twitterFeedContents.Append("<p>Unable to access <a href='http://twitter.com/BioDivLibrary' target='_blank'>BioDivLibrary</a> twitter feed.</p>");
+                    twitterFeedContents.Append("<p>Unable to access <a href='http://twitter.com/BioDivLibrary' target='_blank' rel='noopener noreferrer'>BioDivLibrary</a> twitter feed.</p>");
                 }
 
                 // Cache the feed contents
