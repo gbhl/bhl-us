@@ -1,11 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -35,7 +32,7 @@ namespace MOBOT.BHL.Web2
                 }
                 catch
                 {
-                    errorMessage = "No response received from the <a target=\"_blank\" href=\"http://resolver.globalnames.org\">Global Names Index</a>.  Please try again later.";
+                    errorMessage = "No response received from the <a target=\"_blank\"  rel=\"noopener noreferrer\" href=\"http://resolver.globalnames.org\">Global Names Index</a>.  Please try again later.";
                 }
 
                 if (string.IsNullOrWhiteSpace(errorMessage))
@@ -92,7 +89,7 @@ namespace MOBOT.BHL.Web2
                         sb.Append("<div style=\"float:left; margin:0; width:25%;\">Name: </div>");
                         sb.Append("<div style=\"float:left; margin:0;\">");
                         bool hasUrl = !string.IsNullOrWhiteSpace(nameDetail.Url);
-                        if (hasUrl) sb.Append("<a target=\"_blank\" href=\"" + nameDetail.Url + "\">");
+                        if (hasUrl) sb.Append("<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"" + nameDetail.Url + "\">");
                         sb.Append(nameDetail.NameString);
                         if (hasUrl) sb.Append("</a>");
                         sb.Append("</div>");

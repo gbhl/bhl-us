@@ -48,7 +48,7 @@
 
 		    <!-- Feedback Form -->
 		    <div id="FeedbackForm" style="display:none; margin-top:5px;">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" title="Help">FAQ</a> page for answers to common questions.</p></div>
+                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Try our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageFAQ"] %>" target="_blank" rel="noopener noreferrer" title="Help">FAQ</a> page for answers to common questions.</p></div>
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="commentTextBox">Comment:</label>
                     <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
@@ -58,8 +58,8 @@
 
 		    <!-- Scanning Request Form -->
 		    <div id="ScanRequestForm" style="display:none; margin-top:5px">
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" title="Guidelines">guidelines</a> for submitting requests.</p></div>
-                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" title="WorldCat">WorldCat</a> (recommended)</p></div>
+                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Please see our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageSubmissionGuide"] %>" target="_blank" rel="noopener noreferrer" title="Guidelines">guidelines</a> for submitting requests.</p></div>
+                <div><label class="caption">&nbsp;</label><p style="font-weight:bold">Search for your title in <a href="http://www.worldcat.org/" target="_blank" rel="noopener noreferrer" title="WorldCat">WorldCat</a> (recommended)</p></div>
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="srOCLCTextBox">OCLC:</label>
                     <asp:TextBox ID="srOCLCTextBox" ClientIDMode="Static" runat="server" Width="200px" MaxLength="30"></asp:TextBox><span style="font-style:italic"> (optional)</span>
@@ -140,13 +140,13 @@
                 <div style="float:left;margin:0;width:50%">
                     <h3>Join Our Mailing List</h3>
                     <p>Sign up to receive the latest BHL news, content highlights, and promotions.</p>
-                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
+                    <a class="featurebutton-home" title="Subscribe to BHL Newsletter" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/bhl-newsletter-signup">Subscribe</a>
                 </div>
 
                 <div style="float:left;margin:0;width:50%">
                     <h3>Help Support <span>BHL</span></h3>
                     <p>BHL depends on the financial support of its patrons. Help us keep BHL alive!</p>
-                    <a class="featurebutton-home" title="Donate" target="_blank" href="http://library.si.edu/donate-bhl">Donate</a>
+                    <a class="featurebutton-home" title="Donate" target="_blank" rel="noopener noreferrer" href="http://library.si.edu/donate-bhl">Donate</a>
                 </div>
 
                 <div>&nbsp;</div>
