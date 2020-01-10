@@ -1,14 +1,13 @@
-﻿using System;
+﻿using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
-using SortOrder = CustomDataAccess.SortOrder;
-using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -52,7 +51,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
 
-            CustomGenericList<AuthorType> authorTypes = bp.AuthorTypeSelectAll();
+            List<AuthorType> authorTypes = bp.AuthorTypeSelectAll();
 
             ddlAuthorType.DataSource = authorTypes;
             ddlAuthorType.DataTextField = "AuthorTypeName";
@@ -110,7 +109,7 @@ namespace MOBOT.BHL.AdminWeb
             Author author = (Author)Session["Author" + lblID.Text];
 
             // filter out deleted items
-            CustomGenericList<AuthorName> authorNames = new CustomGenericList<AuthorName>();
+            List<AuthorName> authorNames = new List<AuthorName>();
             foreach (AuthorName name in author.AuthorNames)
             {
                 if (name.IsDeleted == false)
@@ -123,7 +122,7 @@ namespace MOBOT.BHL.AdminWeb
             namesList.DataBind();
         }
 
-        private AuthorName findAuthorName(CustomGenericList<AuthorName> authorNames,
+        private AuthorName findAuthorName(List<AuthorName> authorNames,
             int authorNameId, int authorId, string fullName, string lastName, 
             string firstName, string fullerForm)
         {
@@ -157,7 +156,7 @@ namespace MOBOT.BHL.AdminWeb
             Author author = (Author)Session["Author" + lblID.Text];
 
             // filter out deleted items
-            CustomGenericList<AuthorIdentifier> authorIdentifiers = new CustomGenericList<AuthorIdentifier>();
+            List<AuthorIdentifier> authorIdentifiers = new List<AuthorIdentifier>();
             foreach (AuthorIdentifier ai in author.AuthorIdentifiers)
             {
                 if (ai.IsDeleted == false)
@@ -170,8 +169,8 @@ namespace MOBOT.BHL.AdminWeb
             identifiersList.DataBind();
         }
 
-        CustomGenericList<Identifier> _identifiers = null;
-        protected CustomGenericList<Identifier> GetIdentifiers()
+        List<Identifier> _identifiers = null;
+        protected List<Identifier> GetIdentifiers()
         {
             BHLProvider bp = new BHLProvider();
             _identifiers = bp.IdentifierSelectAll();
@@ -200,7 +199,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private AuthorIdentifier findAuthorIdentifier(CustomGenericList<AuthorIdentifier> authorIdentifiers,
+        private AuthorIdentifier findAuthorIdentifier(List<AuthorIdentifier> authorIdentifiers,
             int authorIdentifierId, int identifierID, string identifierValue)
         {
             foreach (AuthorIdentifier ai in authorIdentifiers)
@@ -504,7 +503,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 if (!aid.IsDeleted && aid.IsDirty)
                 {
-                    CustomGenericList<Author> dupIDs = new BHLProvider().AuthorSelectByIdentifier(aid.IdentifierID, aid.IdentifierValue);
+                    List<Author> dupIDs = new BHLProvider().AuthorSelectByIdentifier(aid.IdentifierID, aid.IdentifierValue);
                     foreach (Author dupID in dupIDs)
                     {
                         if (dupID.AuthorID != author.AuthorID)

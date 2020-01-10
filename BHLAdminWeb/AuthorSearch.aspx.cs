@@ -39,7 +39,7 @@ namespace MOBOT.BHL.AdminWeb
 		    if ( txtAuthorID.Text.Trim().Length == 0 && txtName.Text.Trim().Length == 0  ) return;
 
 		    BHLProvider bp = new BHLProvider();
-            CustomGenericList<Author> results = new CustomGenericList<Author>();
+            List<Author> results = new List<Author>();
             if (txtAuthorID.Text.Trim().Length > 0)
             {
                 Author result = bp.AuthorSelectWithNameByAuthorId(Convert.ToInt32(txtAuthorID.Text));

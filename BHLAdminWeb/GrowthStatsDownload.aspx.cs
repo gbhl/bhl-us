@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -20,18 +16,18 @@ namespace MOBOT.BHL.AdminWeb
             Response.AppendHeader("Content-Type", "application/vnd.ms-excel");
             Response.AppendHeader("Content-Disposition", "attachment; filename=BHLGrowthStats.xls");
 
-            CustomGenericList<MonthlyStats> titleStats = new CustomGenericList<MonthlyStats>();
-            CustomGenericList<MonthlyStats> itemStats = new CustomGenericList<MonthlyStats>();
-            CustomGenericList<MonthlyStats> pageStats = new CustomGenericList<MonthlyStats>();
-            CustomGenericList<MonthlyStats> nameStats = new CustomGenericList<MonthlyStats>();
-            CustomGenericList<MonthlyStats> segmentStats = new CustomGenericList<MonthlyStats>();
+            List<MonthlyStats> titleStats = new List<MonthlyStats>();
+            List<MonthlyStats> itemStats = new List<MonthlyStats>();
+            List<MonthlyStats> pageStats = new List<MonthlyStats>();
+            List<MonthlyStats> nameStats = new List<MonthlyStats>();
+            List<MonthlyStats> segmentStats = new List<MonthlyStats>();
 
             BHLProvider provider = new BHLProvider();
 
             Institution institution = provider.InstitutionSelectAuto(institutionCode);
             String institutionName = institution == null ? "(All)" : institution.InstitutionName;
 
-            CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(2000, 1, 2099, 12, institutionCode);
+            List<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(2000, 1, 2099, 12, institutionCode);
             foreach(MonthlyStats stat in stats)
             {
                 switch (stat.StatType)

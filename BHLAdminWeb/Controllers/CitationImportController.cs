@@ -64,7 +64,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 model.FileName = savedFileName;
             }
 
-            CustomDataAccess.CustomGenericList<DataObjects.SegmentGenre> genres = new CitationService().GenreList();
+            List<DataObjects.SegmentGenre> genres = new CitationService().GenreList();
             foreach(DataObjects.SegmentGenre genre in genres)
             {
                 if (genre.SegmentGenreID == model.Genre) model.GenreName = genre.GenreName;
