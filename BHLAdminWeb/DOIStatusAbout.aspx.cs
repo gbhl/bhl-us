@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -17,7 +12,7 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 BHLProvider service = new BHLProvider();
-                CustomGenericList<DOIStatus> statuses = service.DOIStatusSelectAll();
+                List<DOIStatus> statuses = service.DOIStatusSelectAll();
 
                 dlStatus.DataSource = statuses;
                 dlStatus.DataBind();

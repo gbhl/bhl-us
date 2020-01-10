@@ -1,24 +1,17 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using SortOrder = CustomDataAccess.SortOrder;
-using Paige = MOBOT.BHL.DataObjects.Page;
 using MOBOT.BHL.Utility;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Paige = MOBOT.BHL.DataObjects.Page;
+using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class ItemEdit : System.Web.UI.Page
+    public partial class ItemEdit : System.Web.UI.Page
 	{
 		private PageComparer.CompareEnum _sortColumn = PageComparer.CompareEnum.SequenceOrder;
 		private SortOrder _sortOrder = SortOrder.Ascending;
@@ -47,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedTitleId = this.selectedTitle.Value;
                 if (selectedTitleId != "")
                 {
-                    CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                    List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
                     ItemTitle itemTitle = new ItemTitle();
 
                     // Get details for "selectedTitleId" from database
@@ -130,14 +123,7 @@ namespace MOBOT.BHL.AdminWeb
 		private void fillCombos()
 		{
 			BHLProvider bp = new BHLProvider();
-            CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
-
-            /*
-            Institution emptyInstitution = new Institution();
-            emptyInstitution.InstitutionCode = "";
-            emptyInstitution.InstitutionName = "";
-            institutions.Insert(0, emptyInstitution);
-             */
+            List<Institution> institutions = bp.InstituationSelectAll();
 
             ddlInst.DataSource = institutions;
             ddlInst.DataTextField = "InstitutionName";
@@ -160,7 +146,7 @@ namespace MOBOT.BHL.AdminWeb
             ddlRights.DataValueField = "InstitutionCode";
             ddlRights.DataBind();
 
-            CustomGenericList<Language> languages = bp.LanguageSelectAll();
+            List<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
 			emptyLanguage.LanguageCode = "";
@@ -172,7 +158,7 @@ namespace MOBOT.BHL.AdminWeb
 			ddlLang.DataValueField = "LanguageCode";
 			ddlLang.DataBind();
 
-			CustomGenericList<Vault> vaults = bp.VaultSelectAll();
+            List<Vault> vaults = bp.VaultSelectAll();
 
 			Vault emptyVault = new Vault();
 			emptyVault.VaultID = 0;
@@ -184,7 +170,7 @@ namespace MOBOT.BHL.AdminWeb
 			ddlVault.DataValueField = "VaultID";
 			ddlVault.DataBind();
 
-			CustomGenericList<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
+            List<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
 
 			ddlItemStatus.DataSource = itemStatuses;
 			ddlItemStatus.DataTextField = "ItemStatusName";
@@ -222,7 +208,7 @@ namespace MOBOT.BHL.AdminWeb
                 copyrightEvidenceTextBox.Text = item.CopyrightEvidence;
                 externalUrlTextBox.Text = item.ExternalUrl;
 
-                CustomGenericList<ItemTitle> itemTitles = new CustomGenericList<ItemTitle>();
+                List<ItemTitle> itemTitles = new List<ItemTitle>();
                 foreach (TitleItem titleItem in item.TitleItems)
                 {
                     ItemTitle itemTitle = new ItemTitle();
@@ -408,7 +394,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void bindTitleData()
         {
-            CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
             titleList.DataSource = itemTitles;
             titleList.DataBind();
         }
@@ -420,7 +406,7 @@ namespace MOBOT.BHL.AdminWeb
             // Make sure that one and only one title is designated as the primary title.
             int primaryTitleId = 0;
             int numPrimary = 0;
-            CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
             foreach (ItemTitle itemTitle in itemTitles)
             {
                 if (itemTitle.IsPrimary)
@@ -536,7 +522,7 @@ namespace MOBOT.BHL.AdminWeb
             Item item = (Item)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted items
-            CustomGenericList<ItemLanguage> itemLanguages = new CustomGenericList<ItemLanguage>();
+            List<ItemLanguage> itemLanguages = new List<ItemLanguage>();
             foreach (ItemLanguage il in item.ItemLanguages)
             {
                 if (il.IsDeleted == false)
@@ -549,8 +535,8 @@ namespace MOBOT.BHL.AdminWeb
             languagesList.DataBind();
         }
 
-        CustomGenericList<Language> _itemLanguages = null;
-        protected CustomGenericList<Language> GetLanguages()
+        List<Language> _itemLanguages = null;
+        protected List<Language> GetLanguages()
         {
             BHLProvider bp = new BHLProvider();
             _itemLanguages = bp.LanguageSelectAll();
@@ -575,7 +561,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private ItemLanguage findItemLanguage(CustomGenericList<ItemLanguage> itemLanguages,
+        private ItemLanguage findItemLanguage(List<ItemLanguage> itemLanguages,
             int itemLanguageId, string languageCode)
         {
             foreach (ItemLanguage il in itemLanguages)
@@ -606,7 +592,7 @@ namespace MOBOT.BHL.AdminWeb
             Item item = (Item)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted items
-            CustomGenericList<ItemCollection> itemCollections = new CustomGenericList<ItemCollection>();
+            List<ItemCollection> itemCollections = new List<ItemCollection>();
             foreach (ItemCollection ic in item.ItemCollections)
             {
                 if (ic.IsDeleted == false)
@@ -619,8 +605,8 @@ namespace MOBOT.BHL.AdminWeb
             collectionsList.DataBind();
         }
 
-        CustomGenericList<Collection> _itemCollections = null;
-        protected CustomGenericList<Collection> GetCollections()
+        List<Collection> _itemCollections = null;
+        protected List<Collection> GetCollections()
         {
             BHLProvider bp = new BHLProvider();
             // Select collections that may contain items
@@ -650,7 +636,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private ItemCollection findCollection(CustomGenericList<ItemCollection> collections, int itemCollectionId,
+        private ItemCollection findCollection(List<ItemCollection> collections, int itemCollectionId,
             int collectionId)
         {
             foreach (ItemCollection ic in collections)
@@ -681,7 +667,7 @@ namespace MOBOT.BHL.AdminWeb
             Item item = (Item)Session["Item" + itemIdTextBox.Text];
 
             // filter out deleted segments
-            CustomGenericList<Segment> segments = new CustomGenericList<Segment>();
+            List<Segment> segments = new List<Segment>();
             foreach (Segment s in item.Segments)
             {
                 if (s.ItemID != null) segments.Add(s);
@@ -693,7 +679,7 @@ namespace MOBOT.BHL.AdminWeb
             segmentsList.DataBind();
         }
 
-        private Segment findSegment(CustomGenericList<Segment> segments, int segmentId)
+        private Segment findSegment(List<Segment> segments, int segmentId)
         {
             foreach (Segment s in segments)
             {
@@ -731,7 +717,7 @@ namespace MOBOT.BHL.AdminWeb
                 CheckBox checkBox = row.FindControl("isPrimaryCheckBoxEdit") as CheckBox;
                 if (checkBox != null)
                 {
-                    CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                    List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
                     bool isPrimary = checkBox.Checked;
 
                     String titleIdString = row.Cells[1].Text;
@@ -763,7 +749,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 int rowNum = int.Parse(e.CommandArgument.ToString());
                 int selectedTitle = (int)titleList.DataKeys[rowNum].Values[0];
-                CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
 
                 for (int i = 0; i < itemTitles.Count; i++)
                 {
@@ -1322,7 +1308,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 //----------------------------------------
                 // Update the title information
-                CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+                List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
 
                 // Add new titles
                 foreach (ItemTitle itemTitle in itemTitles)
@@ -1385,7 +1371,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             int titleId = 0;
 
-            CustomGenericList<ItemTitle> itemTitles = (CustomGenericList<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
+            List<ItemTitle> itemTitles = (List<ItemTitle>)Session["ItemTitleList" + itemIdTextBox.Text];
             foreach (ItemTitle itemTitle in itemTitles)
             {
                 if (itemTitle.IsPrimary) { titleId = itemTitle.TitleID; break; }

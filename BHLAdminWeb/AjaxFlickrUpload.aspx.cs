@@ -1,14 +1,10 @@
-﻿using System;
-using System.Web;
-using System.Text;
-using System.Collections.Generic;
-using System.Configuration;
-
-using FlickrUtility;
+﻿using FlickrUtility;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -75,8 +71,8 @@ namespace MOBOT.BHL.AdminWeb
                     string itemUrl = "https://biodiversitylibrary.org/item/" + item.ItemID;
                     string description = title.ShortTitle + "\n" + title.PublicationDetails + "\n" + pageUrl;
 
-                    CustomGenericList<TitleKeyword> titleKeywords = provider.TitleKeywordSelectByTitleID(titleId);
-                    CustomGenericList<Institution> institutions = provider.InstitutionSelectByItemID(item.ItemID);
+                    List<TitleKeyword> titleKeywords = provider.TitleKeywordSelectByTitleID(titleId);
+                    List<Institution> institutions = provider.InstitutionSelectByItemID(item.ItemID);
                     List<string> titleKeywordsList = new List<string>();
                     foreach (TitleKeyword tk in titleKeywords)
                     {
@@ -88,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb
                     }
                     string[] subjects = titleKeywordsList.ToArray();
 
-                    CustomGenericList<Author> authors = provider.AuthorSelectByTitleId(titleId);
+                    List<Author> authors = provider.AuthorSelectByTitleId(titleId);
                     string authorName = "";
                     if (authors != null && authors.Count > 0)
                         authorName = authors[0].FullName;

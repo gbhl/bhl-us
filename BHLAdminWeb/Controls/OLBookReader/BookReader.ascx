@@ -663,7 +663,7 @@
         br.ui = "embed";
 
         // Set flag indicating whether the annotations exist (if so, then page scans are left justified)
-        br.hasAnnotation = <%= HasAnnotations %>;
+        br.hasAnnotation = false;
 
         // Set the starting page (generally the title page) for the book
         br.titleLeaf = startPage;

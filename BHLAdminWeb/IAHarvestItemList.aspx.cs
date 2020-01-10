@@ -1,15 +1,12 @@
-﻿using System;
+﻿using MOBOT.BHL.Web.Utilities;
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHLImport.Server;
-using CustomDataAccess;
-using MOBOT.BHLImport.DataObjects;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -45,7 +42,7 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 BHLImportProvider service = new BHLImportProvider();
-                CustomGenericList<IAItemStatus> statuses = service.IAItemStatusSelectAll();
+                List<IAItemStatus> statuses = service.IAItemStatusSelectAll();
 
                 ddlStatusView.Items.Add(new ListItem("", "0"));
                 foreach (IAItemStatus status in statuses)

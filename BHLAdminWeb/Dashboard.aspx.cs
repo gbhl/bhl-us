@@ -1,22 +1,14 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
 using MOBOT.BHLImport.Server;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class Dashboard : System.Web.UI.Page
+    public partial class Dashboard : System.Web.UI.Page
 	{
 		protected void Page_Load( object sender, EventArgs e )
 		{
@@ -92,9 +84,9 @@ namespace MOBOT.BHL.AdminWeb
             itemSegmentsActiveCell.InnerHtml = stats.ItemSegmentCount.ToString();
 
             // Get the growth stats
-            CustomGenericList<MonthlyStats> growthYear = bp.MonthlyStatsSelectCurrentYearSummary();
-            CustomGenericList<MonthlyStats> growthMonth = bp.MonthlyStatsSelectCurrentMonthSummary();
-            CustomGenericList<MonthlyStats> growthPrevMonth = bp.MonthlyStatsSelectPreviousMonthSummary();
+            List<MonthlyStats> growthYear = bp.MonthlyStatsSelectCurrentYearSummary();
+            List<MonthlyStats> growthMonth = bp.MonthlyStatsSelectCurrentMonthSummary();
+            List<MonthlyStats> growthPrevMonth = bp.MonthlyStatsSelectPreviousMonthSummary();
             foreach (MonthlyStats stat in growthYear)
             {
                 switch (stat.StatType)
