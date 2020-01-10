@@ -1,12 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -18,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!this.IsPostBack)
             {
-                CustomGenericList<Institution> institutions = provider.InstitutionSelectWithPublishedItems(false);
+                List<Institution> institutions = provider.InstitutionSelectWithPublishedItems(false);
                 foreach (Institution institution in institutions)
                 {
                     ddlInstitutions.Items.Add(new ListItem(institution.InstitutionName, institution.InstitutionCode));
@@ -70,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb
             }
 
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(
+            List<MonthlyStats> stats = provider.MonthlyStatsSelectByDateAndInstitution(
                 startYear, startMonth, endYear, endMonth, institutionCode);
 
             imgMonthlyItems.Src = GetMonthlyChartUrl(stats, "Items", "Items");
@@ -80,7 +77,7 @@ namespace MOBOT.BHL.AdminWeb
             //imgCumulative.Src = GetCumulativeChartUrl(stats);
         }
 
-        private string GetMonthlyChartUrl(CustomGenericList<MonthlyStats> stats, string statType, string statLabel)
+        private string GetMonthlyChartUrl(List<MonthlyStats> stats, string statType, string statLabel)
         {
             int maxValue = 0;
             String data = String.Empty; //153,113,120|60,70,80|52,60,40|30,50,45
@@ -123,7 +120,7 @@ namespace MOBOT.BHL.AdminWeb
             return monthlyChartUrl;
         }
 
-        private string GetCumulativeChartUrl(CustomGenericList<MonthlyStats> stats)
+        private string GetCumulativeChartUrl(List<MonthlyStats> stats)
         {
             int maxCumulativeValue = 0;
             int cumulativeValue = 0;

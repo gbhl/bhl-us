@@ -1,13 +1,12 @@
-﻿using System;
+﻿using FredCK.FCKeditorV2;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using FredCK.FCKeditorV2;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -23,12 +22,12 @@ namespace MOBOT.BHL.AdminWeb
             {
                 txtHtml.ToolbarSet = "BHL";
 
-                CustomGenericList<Institution> institutions = bhlProvider.InstituationSelectAll();
+                List<Institution> institutions = bhlProvider.InstituationSelectAll();
                 ddlInstitution.DataSource = institutions;
                 ddlInstitution.DataBind();
                 ddlInstitution.Items.Insert(0, new ListItem("(select content provider)", ""));
 
-                CustomGenericList<Language> languages = bhlProvider.LanguageSelectAll();
+                List<Language> languages = bhlProvider.LanguageSelectAll();
                 ddlLanguage.DataSource = languages;
                 ddlLanguage.DataBind();
                 ddlLanguage.Items.Insert(0, new ListItem("(select language)", ""));
@@ -106,7 +105,7 @@ namespace MOBOT.BHL.AdminWeb
             BHLProvider bp = new BHLProvider();
             if (isNew)
             {
-                CustomGenericList<Collection> collections = bp.CollectionSelectByNameAndAllowedContent(
+                List<Collection> collections = bp.CollectionSelectByNameAndAllowedContent(
                     txtCollectionName.Text.Trim(),
                     (short)(rdoContents.SelectedValue == "T" ? 1 : 0),
                     (short)(rdoContents.SelectedValue == "I" ? 1 : 0));
@@ -128,7 +127,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             else
             {
-                CustomGenericList<Collection> collections = bp.CollectionSelectByUrl(txtCollectionURL.Text.Trim());
+                List<Collection> collections = bp.CollectionSelectByUrl(txtCollectionURL.Text.Trim());
                 if ((collections.Count > 0) && (collections[0].CollectionID != Convert.ToInt32(lblID.Text)))
                 {
                     flag = true;
@@ -143,7 +142,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void populateCollectionList()
         {
-            CustomGenericList<Collection> collections = bhlProvider.CollectionSelectAll();
+            List<Collection> collections = bhlProvider.CollectionSelectAll();
 
             Collection emptyCollection = new Collection();
             emptyCollection.CollectionID = -1;
@@ -365,7 +364,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 // Find the id of the just-inserted collection
                 string selectedValue = string.Empty;
-                foreach (Collection c in (CustomGenericList<Collection>)ddlCollections.DataSource)
+                foreach (Collection c in (List<Collection>)ddlCollections.DataSource)
                 {
                     if (c.CollectionName == txtCollectionName.Text.Trim() &&
                         c.CanContainTitles == (short)(rdoContents.SelectedValue == "T" ? 1 : 0) &&
@@ -423,12 +422,12 @@ namespace MOBOT.BHL.AdminWeb
                 int collectionID = int.Parse(ddlCollections.SelectedValue);
 
                 // search titles
-                CustomGenericList<Title> titles = bhlProvider.TitleSelectByCollection(collectionID);
+                List<Title> titles = bhlProvider.TitleSelectByCollection(collectionID);
                 gvwTitles.DataSource = titles;
                 gvwTitles.DataBind();
 
                 // search items
-                CustomGenericList<Item> items = bhlProvider.ItemSelectByCollection(collectionID);
+                List<Item> items = bhlProvider.ItemSelectByCollection(collectionID);
                 gvwItems.DataSource = items;
                 gvwItems.DataBind();
 
