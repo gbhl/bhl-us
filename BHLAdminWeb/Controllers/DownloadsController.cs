@@ -1,11 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Controllers
@@ -16,7 +12,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         public ActionResult ExternalContent()
         {
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<Tuple<string, string, string>> links = provider.LinkSelectToExternalContent();
+            List<Tuple<string, string, string>> links = provider.LinkSelectToExternalContent();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("\"Entity\",\"ID\",\"Title/Name\",\"External URL\"");

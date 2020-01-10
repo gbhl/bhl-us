@@ -1,10 +1,7 @@
-﻿using System;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using CustomDataAccess;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader.Viewer
 {
@@ -30,7 +27,7 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader.Viewer
 
             if (Int32.TryParse(itemIdStr, out itemId))
             {
-                CustomGenericList<PageSummaryView> pageSummary = bp.PageSummarySelectForViewerByItemID(itemId);
+                List<PageSummaryView> pageSummary = bp.PageSummarySelectForViewerByItemID(itemId);
 
                 if (Int32.TryParse(index1Str, out index1) && 
                     Int32.TryParse(height1Str, out height1) && 
@@ -50,7 +47,7 @@ namespace MOBOT.BHL.AdminWeb.Controls.OLBookReader.Viewer
             }
         }
 
-        private string GetImagePath(CustomGenericList<PageSummaryView> pageSummary, int index)
+        private string GetImagePath(List<PageSummaryView> pageSummary, int index)
         {
             string iaImagePath = "{0}/download/{1}/page/n{2}.jpg";
 

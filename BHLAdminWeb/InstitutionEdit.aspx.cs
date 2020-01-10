@@ -1,17 +1,10 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using FredCK.FCKeditorV2;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -29,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb
 		private void fillInstitutions()
 		{
 			BHLProvider bp = new BHLProvider();
-			CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+			List<Institution> institutions = bp.InstituationSelectAll();
 
 			Institution emptyInstitution = new Institution();
 			emptyInstitution.InstitutionCode = "";
@@ -121,7 +114,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+					List<Institution> institutions = bp.InstituationSelectAll();
 					string code = codeTextBox.Text.Trim().ToUpper();
 					foreach ( Institution inst in institutions )
 					{
