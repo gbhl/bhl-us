@@ -45,7 +45,7 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 BHLImportProvider service = new BHLImportProvider();
-                CustomGenericList<BSItemStatus> statuses = service.BSItemStatusSelectAll();
+                List<BSItemStatus> statuses = service.BSItemStatusSelectAll();
 
                 ddlStatusView.Items.Add(new ListItem("", "0"));
                 foreach (BSItemStatus status in statuses)

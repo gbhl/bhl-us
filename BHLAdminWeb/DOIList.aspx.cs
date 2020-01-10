@@ -1,15 +1,12 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -44,7 +41,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (!IsPostBack)
             {
-                CustomGenericList<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
+                List<DOIStatus> statuses = new BHLProvider().DOIStatusSelectAll();
 
                 ddlStatusView.Items.Add(new ListItem("", "0"));
                 foreach (DOIStatus status in statuses)
