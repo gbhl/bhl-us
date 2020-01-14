@@ -117,7 +117,7 @@
                     <span itemprop="genre"><%= Genre %></span>
                 </p>
                 <%if (!string.IsNullOrWhiteSpace(Material)) { %>
-                <h3>Material Type</h3>
+                <h3>Material</h3>
                 <p>
                     <span><%= Material %></span>
                 </p>
@@ -243,7 +243,7 @@
                     <%= Genre %>
                 </p>
                 <%if (!string.IsNullOrWhiteSpace(Material)) { %>
-                <h3>Material Type</h3>
+                <h3>Material</h3>
                 <p>
                     <span><%= Material %></span>
                 </p>
