@@ -27,7 +27,7 @@
                 <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
             </div>
             <div>
-                <p>Thank you for your feedback! BHL is voluntarily staffed by our Partner Libraries and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
                 <br />
             </div>
             <div style="margin-bottom:10px;">
