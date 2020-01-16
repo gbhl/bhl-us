@@ -41,6 +41,8 @@
 {
 	display:inline;
 	float:left;
+    position: absolute;
+    left: 8%;
 }
 
 #BRtoolbar-zoombuttons
