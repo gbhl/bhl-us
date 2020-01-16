@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -15,7 +10,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<Institution> institutions = provider.InstitutionSelectDOIStats(Convert.ToInt32(rblOrderBy.SelectedValue), chkIncludeAll.Checked ? 0 : 1);
+            List<Institution> institutions = provider.InstitutionSelectDOIStats(Convert.ToInt32(rblOrderBy.SelectedValue), chkIncludeAll.Checked ? 0 : 1);
 
             if (chkShow.Checked)
             {

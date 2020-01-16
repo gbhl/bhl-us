@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Web.UI;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -16,12 +13,12 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider bp = new BHLProvider();
-            CustomGenericList<Item> items = new CustomGenericList<Item>();
+            List<Item> items = new List<Item>();
             litMsg.Text = string.Empty;
 
             if (!IsPostBack)
             {
-                CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+                List<Institution> institutions = bp.InstituationSelectAll();
                 Institution emptyInstitution = new Institution();
                 emptyInstitution.InstitutionName = "(select content provider)";
                 emptyInstitution.InstitutionCode = "";

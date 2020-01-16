@@ -1,9 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -28,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                CustomGenericList<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
+                List<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 

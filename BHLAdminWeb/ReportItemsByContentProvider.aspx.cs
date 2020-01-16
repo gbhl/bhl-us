@@ -1,8 +1,8 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.UI;
@@ -44,13 +44,13 @@ namespace MOBOT.BHL.AdminWeb
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryUIPath"]);
 
             BHLProvider bp = new BHLProvider();
-            CustomGenericList<Item> items = new CustomGenericList<Item>();
+            List<Item> items = new List<Item>();
             litDisplayed.Text = string.Empty;
             litUpdateResult.Text = string.Empty;
 
             if (!IsPostBack)
             {
-                CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+                List<Institution> institutions = bp.InstituationSelectAll();
                 ddlInstitutions.Items.Add(new ListItem("(select content provider)", "^^^^^^^^"));
                 ddlInstitutions.Items.Add(new ListItem("- ASSIGNED - ", "_A_L_L_"));
                 ddlInstitutions.Items.Add(new ListItem("- UNASSIGNED -", ""));
@@ -63,7 +63,7 @@ namespace MOBOT.BHL.AdminWeb
                     ddlInstitutionChange.Items.Add(li);
                 }
 
-                CustomGenericList<InstitutionRole> roles = bp.InstitutionRoleSelectAll();
+                List<InstitutionRole> roles = bp.InstitutionRoleSelectAll();
                 ddlInstitutionRoles.Items.Add(new ListItem("(select role)", ""));
                 ddlInstitutionRoleChange.Items.Add(new ListItem("(select field to update)", ""));
                 foreach (InstitutionRole role in roles)

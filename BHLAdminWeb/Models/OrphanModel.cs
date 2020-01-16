@@ -1,11 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -21,7 +17,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public List<Orphan> GetOrphans()
         {
-            CustomGenericList<ReportOrphan> orphanList = new BHLProvider().ReportSelectOrphanedEntities();
+            List<ReportOrphan> orphanList = new BHLProvider().ReportSelectOrphanedEntities();
 
             List<Orphan> orphans = new List<Orphan>();
             foreach (ReportOrphan o in orphanList)

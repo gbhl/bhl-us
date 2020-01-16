@@ -1,7 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -31,9 +31,9 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _reportDateRange = value; }
         }
 
-        private CustomGenericList<TextImportBatch> _importBatchList = new CustomGenericList<TextImportBatch>();
+        private List<TextImportBatch> _importBatchList = new List<TextImportBatch>();
 
-        public CustomGenericList<TextImportBatch> ImportBatchList
+        public List<TextImportBatch> ImportBatchList
         {
             get { return _importBatchList; }
             set { _importBatchList = value; }

@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -17,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 			{
                 BHLProvider bp = new BHLProvider();
 
-                CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+                List<Institution> institutions = bp.InstituationSelectAll();
 
                 Institution emptyInstitution = new Institution();
                 emptyInstitution.InstitutionName = "(select contributor)";
@@ -52,7 +50,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider bp = new BHLProvider();
 
                 // Load gridview with import stats for the institution
-                CustomGenericList<MarcImportBatch> batches = bp.MarcImportBatchSelectStatsByInstitution(code);
+                List<MarcImportBatch> batches = bp.MarcImportBatchSelectStatsByInstitution(code);
                 gvwImportStats.DataSource = batches;
                 gvwImportStats.DataBind();
                 litNoRecords.Visible = (batches.Count == 0) ? true : false;

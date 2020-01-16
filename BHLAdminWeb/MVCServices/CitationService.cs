@@ -1,5 +1,4 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
@@ -35,21 +34,21 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         /// Provide the list of institutions (read from the DB) to be used during the segment import process
         /// </summary>
         /// <returns></returns>
-        public CustomGenericList<Institution> InstitutionList()
+        public List<Institution> InstitutionList()
         {
             BHLProvider provider = new BHLProvider();
             return provider.InstituationSelectAll();
         }
 
-        public CustomGenericList<SegmentGenre> GenreList()
+        public List<SegmentGenre> GenreList()
         {
             BHLProvider provider = new BHLProvider();
             return provider.SegmentGenreSelectAll();
         }
 
-        public CustomGenericList<ImportFileStatus> ImportFileStatusList()
+        public List<ImportFileStatus> ImportFileStatusList()
         {
-            CustomGenericList<ImportFileStatus> statusList = new BHLProvider().ImportFileStatusSelectAll();
+            List<ImportFileStatus> statusList = new BHLProvider().ImportFileStatusSelectAll();
             for (int x = statusList.Count - 1; x >= 0; x--)
             {
                 if (statusList[x].StatusName == "Loading") statusList.RemoveAt(x);
@@ -66,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         {
             Dictionary<string, string> statusList = new Dictionary<string, string>();
 
-            CustomGenericList<ImportRecordStatus> statuses = new BHLProvider().ImportRecordStatusSelectAll();
+            List<ImportRecordStatus> statuses = new BHLProvider().ImportRecordStatusSelectAll();
             foreach (ImportRecordStatus status in statuses)
             {
                 if (status.StatusName != "Imported") statusList.Add(status.ImportRecordStatusID.ToString(), status.StatusName);

@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.Script.Serialization;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -45,7 +44,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             try
             {
-                CustomGenericList<Page> pages = null;
+                List<Page> pages = null;
                 pages = new BHLProvider().PageSelectByItemID(itemId);
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 return js.Serialize(pages);

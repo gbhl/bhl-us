@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Web.Script.Serialization;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System.Web.Services;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -124,7 +120,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             try
             {
-                CustomGenericList<Item> items = null;
+                List<Item> items = null;
                 if (titleId != 0)
                 {
                     items = new BHLProvider().ItemSelectByTitleId(titleId);
@@ -150,7 +146,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             {
                 StringBuilder response = new StringBuilder();
 
-                CustomGenericList<Item> items = new BHLProvider().ItemSelectPaginationReport(paginationStatusId,
+                List<Item> items = new BHLProvider().ItemSelectPaginationReport(paginationStatusId,
                     startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
 
                 if (items.Count > 0)

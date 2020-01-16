@@ -1,7 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
+using System.Collections.Generic;
 using System.Security;
 using System.Text;
 using System.Web;
@@ -40,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "asc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "asc" : sortOrder;
 
-            CustomGenericList<Item> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
+            List<Item> searchResult = ItemSelectByInstitutionAndRole(institutionCode,
                 Convert.ToInt32(roleId), barcode, Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             string xmlResponse = GetItemXmlResponse(searchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
@@ -60,10 +60,10 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode,
+        private List<Item> ItemSelectByInstitutionAndRole(string institutionCode,
             int roleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            CustomGenericList<Item> items = new CustomGenericList<Item>();
+            List<Item> items = new List<Item>();
             BHLProvider service = null;
 
             try
@@ -79,7 +79,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             return items;
         }
 
-        private string GetItemXmlResponse(CustomGenericList<Item> searchResult, int pageNum, int numRows)
+        private string GetItemXmlResponse(List<Item> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 

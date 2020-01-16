@@ -1,11 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -35,9 +31,9 @@ namespace MOBOT.BHL.AdminWeb.Models
             set { _reportDateRange = value; }
         }
 
-        private CustomGenericList<ImportFile> _importFileList = new CustomGenericList<ImportFile>();
+        private List<ImportFile> _importFileList = new List<ImportFile>();
 
-        public CustomGenericList<ImportFile> ImportFileList
+        public List<ImportFile> ImportFileList
         {
             get { return _importFileList; }
             set { _importFileList = value; }

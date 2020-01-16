@@ -1,15 +1,7 @@
-﻿using System;
-using System.Web;
-using System.Text;
-using System.Web.UI.WebControls;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Configuration;
-using System.Collections.Generic;
-using System.Threading;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
-using FlickrUtility;
-using MOBOT.BHL.Web.Utilities;
+using System.Text;
 
 namespace MOBOT.BHL.AdminWeb
 {

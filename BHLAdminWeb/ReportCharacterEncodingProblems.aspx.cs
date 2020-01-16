@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Web.UI;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -17,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb
             {
                 BHLProvider bp = new BHLProvider();
 
-                CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+                List<Institution> institutions = bp.InstituationSelectAll();
 
                 Institution emptyInstitution = new Institution();
                 emptyInstitution.InstitutionName = "(select content provider)";
@@ -49,7 +46,7 @@ namespace MOBOT.BHL.AdminWeb
             // Load gridviews with data
             if (chkTitle.Checked)
             {
-                CustomGenericList<TitleSuspectCharacter> titles = bp.TitleSelectWithSuspectCharacters(institutionCode, maxAge);
+                List<TitleSuspectCharacter> titles = bp.TitleSelectWithSuspectCharacters(institutionCode, maxAge);
                 foreach(TitleSuspectCharacter tsc in titles)
                 {
                     if (tsc.InstitutionName.Contains("|")) tsc.InstitutionName = "Multiple institutions";
@@ -68,7 +65,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (chkSubject.Checked)
             {
-                CustomGenericList<KeywordSuspectCharacter> titleKeywords = bp.KeywordSelectWithSuspectCharacters(institutionCode, maxAge);
+                List<KeywordSuspectCharacter> titleKeywords = bp.KeywordSelectWithSuspectCharacters(institutionCode, maxAge);
                 foreach (KeywordSuspectCharacter ksc in titleKeywords)
                 {
                     if (ksc.InstitutionName.Contains("|")) ksc.InstitutionName = "Multiple institutions";
@@ -87,7 +84,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (chkAssociation.Checked)
             {
-                CustomGenericList<TitleAssociationSuspectCharacter> titleAssociations = bp.TitleAssociationSelectWithSuspectCharacters(institutionCode, maxAge);
+                List<TitleAssociationSuspectCharacter> titleAssociations = bp.TitleAssociationSelectWithSuspectCharacters(institutionCode, maxAge);
                 foreach (TitleAssociationSuspectCharacter tsc in titleAssociations)
                 {
                     if (tsc.InstitutionName.Contains("|")) tsc.InstitutionName = "Multiple institutions";
@@ -106,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (chkAuthor.Checked)
             {
-                CustomGenericList<AuthorSuspectCharacter> authors = bp.AuthorSelectWithSuspectCharacters(institutionCode, maxAge);
+                List<AuthorSuspectCharacter> authors = bp.AuthorSelectWithSuspectCharacters(institutionCode, maxAge);
                 foreach (AuthorSuspectCharacter asc in authors)
                 {
                     if (asc.InstitutionName.Contains("|")) asc.InstitutionName = "Multiple institutions";
@@ -125,7 +122,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (chkItem.Checked)
             {
-                CustomGenericList<ItemSuspectCharacter> items = bp.ItemSelectWithSuspectCharacters(institutionCode, maxAge);
+                List<ItemSuspectCharacter> items = bp.ItemSelectWithSuspectCharacters(institutionCode, maxAge);
                 foreach (ItemSuspectCharacter isc in items)
                 {
                     if (isc.InstitutionName.Contains("|")) isc.InstitutionName = "Multiple institutions";

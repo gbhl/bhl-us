@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Text;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -23,7 +20,7 @@ namespace MOBOT.BHL.AdminWeb
             string institutionCode = context.Request.QueryString["inst"] as string;
 
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<NonMemberMonograph> monographs = provider.ItemSelectNonMemberMonograph(sinceDate, isMember, institutionCode);
+            List<NonMemberMonograph> monographs = provider.ItemSelectNonMemberMonograph(sinceDate, isMember, institutionCode);
 
             this.WriteHttpHeaders(context, "text/csv", "MonographContributions" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 

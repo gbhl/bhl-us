@@ -1,12 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -69,7 +66,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider provider = new BHLProvider();
 
-            CustomGenericList<Marc> marcs = provider.MarcSelectForImportByBatchID(batchID);
+            List<Marc> marcs = provider.MarcSelectForImportByBatchID(batchID);
 
             foreach (Marc marc in marcs)
             {
@@ -87,37 +84,37 @@ namespace MOBOT.BHL.AdminWeb
                         title.IsNew = true;
 
                         // Grab all of the supporting data (subjects, languages, authors, identifiers, associations)
-                        CustomGenericList<TitleKeyword> titleKeywords = provider.MarcSelectTitleKeywordsByMarcID(marc.MarcID);
+                        List<TitleKeyword> titleKeywords = provider.MarcSelectTitleKeywordsByMarcID(marc.MarcID);
                         foreach (TitleKeyword titleKeyword in titleKeywords)
                         {
                             titleKeyword.IsNew = true;
                             title.TitleKeywords.Add(titleKeyword);
                         }
-                        CustomGenericList<TitleLanguage> titleLanguages = provider.MarcSelectTitleLanguagesByMarcID(marc.MarcID);
+                        List<TitleLanguage> titleLanguages = provider.MarcSelectTitleLanguagesByMarcID(marc.MarcID);
                         foreach (TitleLanguage titleLanguage in titleLanguages)
                         {
                             titleLanguage.IsNew = true;
                             title.TitleLanguages.Add(titleLanguage);
                         }
-                        CustomGenericList<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
+                        List<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
                         foreach(TitleNote titleNote in titleNotes)
                         {
                             titleNote.IsNew = true;
                             title.TitleNotes.Add(titleNote);
                         }
-                        CustomGenericList<TitleAuthor> titleAuthors = provider.MarcSelectAuthorsByMarcID(marc.MarcID);
+                        List<TitleAuthor> titleAuthors = provider.MarcSelectAuthorsByMarcID(marc.MarcID);
                         foreach (TitleAuthor titleAuthor in titleAuthors)
                         {
                             titleAuthor.IsNew = true;
                             title.TitleAuthors.Add(titleAuthor);
                         }
-                        CustomGenericList<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
+                        List<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
                         foreach (Title_Identifier titleIdentifier in titleIdentifiers)
                         {
                             titleIdentifier.IsNew = true;
                             title.TitleIdentifiers.Add(titleIdentifier);
                         }
-                        CustomGenericList<TitleAssociation> titleAssociations = provider.MarcSelectAssociationsByMarcID(marc.MarcID);
+                        List<TitleAssociation> titleAssociations = provider.MarcSelectAssociationsByMarcID(marc.MarcID);
                         foreach (TitleAssociation titleAssociation in titleAssociations)
                         {
                             titleAssociation.IsNew = true;
@@ -128,7 +125,7 @@ namespace MOBOT.BHL.AdminWeb
                             title.TitleAssociations.Add(titleAssociation);
                         }
 
-                        CustomGenericList<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
+                        List<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
                         foreach(TitleVariant titleVariant in titleVariants)
                         {
                             titleVariant.IsNew = true;
@@ -187,7 +184,7 @@ namespace MOBOT.BHL.AdminWeb
                             titleKeyword.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleKeyword> titleKeywords = provider.MarcSelectTitleKeywordsByMarcID(marc.MarcID);
+                        List<TitleKeyword> titleKeywords = provider.MarcSelectTitleKeywordsByMarcID(marc.MarcID);
                         foreach (TitleKeyword titleKeyword in titleKeywords)
                         {
                             titleKeyword.IsNew = true;
@@ -201,7 +198,7 @@ namespace MOBOT.BHL.AdminWeb
                             titlelanguage.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleLanguage> titleLanguages = provider.MarcSelectTitleLanguagesByMarcID(marc.MarcID);
+                        List<TitleLanguage> titleLanguages = provider.MarcSelectTitleLanguagesByMarcID(marc.MarcID);
                         foreach (TitleLanguage titleLanguage in titleLanguages)
                         {
                             titleLanguage.IsNew = true;
@@ -215,7 +212,7 @@ namespace MOBOT.BHL.AdminWeb
                             titleNote.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
+                        List<TitleNote> titleNotes = provider.MarcSelectTitleNotesByMarcID(marc.MarcID);
                         foreach (TitleNote titleNote in titleNotes)
                         {
                             titleNote.IsNew = true;
@@ -229,7 +226,7 @@ namespace MOBOT.BHL.AdminWeb
                             titleAuthor.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleAuthor> titleAuthors = provider.MarcSelectAuthorsByMarcID(marc.MarcID);
+                        List<TitleAuthor> titleAuthors = provider.MarcSelectAuthorsByMarcID(marc.MarcID);
                         foreach (TitleAuthor titleAuthor in titleAuthors)
                         {
                             titleAuthor.IsNew = true;
@@ -243,7 +240,7 @@ namespace MOBOT.BHL.AdminWeb
                             title_identifier.IsDeleted = true;
                         }
 
-                        CustomGenericList<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
+                        List<Title_Identifier> titleIdentifiers = provider.MarcSelectTitleIdentifiersByMarcID(marc.MarcID);
                         foreach (Title_Identifier titleIdentifier in titleIdentifiers)
                         {
                             titleIdentifier.IsNew = true;
@@ -257,7 +254,7 @@ namespace MOBOT.BHL.AdminWeb
                             titleAssociation.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleAssociation> titleAssociations = provider.MarcSelectAssociationsByMarcID(marc.MarcID);
+                        List<TitleAssociation> titleAssociations = provider.MarcSelectAssociationsByMarcID(marc.MarcID);
                         foreach (TitleAssociation titleAssociation in titleAssociations)
                         {
                             titleAssociation.IsNew = true;
@@ -276,7 +273,7 @@ namespace MOBOT.BHL.AdminWeb
                             titleVariant.IsDeleted = true;
                         }
 
-                        CustomGenericList<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
+                        List<TitleVariant> titleVariants = provider.MarcSelectVariantsByMarcID(marc.MarcID);
                         foreach(TitleVariant titleVariant in titleVariants)
                         {
                             titleVariant.IsNew = true;
@@ -290,8 +287,8 @@ namespace MOBOT.BHL.AdminWeb
                         try
                         {
                             // Copy MARC XML file to the appropriate location(s)
-                            CustomGenericList<PageSummaryView> folders = provider.PageSummarySelectFoldersForTitleID(title.TitleID);
-                            CustomGenericList<PageSummaryView> barcodes = provider.PageSummarySelectBarcodeForTitleID(title.TitleID);
+                            List<PageSummaryView> folders = provider.PageSummarySelectFoldersForTitleID(title.TitleID);
+                            List<PageSummaryView> barcodes = provider.PageSummarySelectBarcodeForTitleID(title.TitleID);
 
                             // For each folder containing items for this title
                             foreach (PageSummaryView folder in folders)

@@ -1,14 +1,11 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using System.Security;
-using MOBOT.BHLImport.Server;
-using MOBOT.BHLImport.DataObjects;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -51,7 +48,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     // Make sure sortColumn is a value column name
                     sortColumn = String.IsNullOrEmpty(sortColumn) ? "CreationDate" : sortColumn;
 
-                    CustomGenericList<BioStorHarvestItem> biostorSearchResult = this.BioStorHarvestItemSelectByStatus(
+                    List<BioStorHarvestItem> biostorSearchResult = this.BioStorHarvestItemSelectByStatus(
                         Convert.ToInt32(itemStatusId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
                     xmlResponse = GetBioStorHarvestItemXmlResponse(biostorSearchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
@@ -62,7 +59,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     // Make sure sortColumn is a value column name
                     sortColumn = String.IsNullOrEmpty(sortColumn) ? "IAIdentifier" : sortColumn;
 
-                    CustomGenericList<IAHarvestItem> iaSearchResult = this.IAHarvestItemSelectByStatus(
+                    List<IAHarvestItem> iaSearchResult = this.IAHarvestItemSelectByStatus(
                         Convert.ToInt32(itemStatusId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
                     xmlResponse = GetIAHarvestItemXmlResponse(iaSearchResult, Convert.ToInt32(pageNum), Convert.ToInt32(numRows));
@@ -82,16 +79,16 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private CustomGenericList<IAHarvestItem> IAHarvestItemSelectByStatus(
+        private List<IAHarvestItem> IAHarvestItemSelectByStatus(
             int itemStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            CustomGenericList<IAHarvestItem> items = new CustomGenericList<IAHarvestItem>();
+            List<IAHarvestItem> items = new List<IAHarvestItem>();
             BHLImportProvider service = null;
 
             try
             {
                 service = new BHLImportProvider();
-                CustomGenericList<IAItem> iaItems = service.IAItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
+                List<IAItem> iaItems = service.IAItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
 
                 foreach (IAItem iaItem in iaItems)
                 {
@@ -115,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             return items;
         }
 
-        private string GetIAHarvestItemXmlResponse(CustomGenericList<IAHarvestItem> searchResult, int pageNum, int numRows)
+        private string GetIAHarvestItemXmlResponse(List<IAHarvestItem> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 
@@ -150,16 +147,16 @@ namespace MOBOT.BHL.AdminWeb.Services
             return response.ToString();
         }
 
-        private CustomGenericList<BioStorHarvestItem> BioStorHarvestItemSelectByStatus(
+        private List<BioStorHarvestItem> BioStorHarvestItemSelectByStatus(
             int itemStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            CustomGenericList<BioStorHarvestItem> items = new CustomGenericList<BioStorHarvestItem>();
+            List<BioStorHarvestItem> items = new List<BioStorHarvestItem>();
             BHLImportProvider service = null;
 
             try
             {
                 service = new BHLImportProvider();
-                CustomGenericList<BSItem> bsItems = service.BSItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
+                List<BSItem> bsItems = service.BSItemSelectByStatus(itemStatusId, numRows, pageNum, sortColumn, sortOrder);
 
                 foreach (BSItem bsItem in bsItems)
                 {
@@ -182,7 +179,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             return items;
         }
 
-        private string GetBioStorHarvestItemXmlResponse(CustomGenericList<BioStorHarvestItem> searchResult, int pageNum, int numRows)
+        private string GetBioStorHarvestItemXmlResponse(List<BioStorHarvestItem> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 

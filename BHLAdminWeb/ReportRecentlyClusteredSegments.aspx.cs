@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -14,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void Page_Load(object sender, EventArgs e)
         {
             BHLProvider provider = new BHLProvider();
-            CustomGenericList<Segment> segments = provider.SegmentSelectRecentlyClustered(100);
+            List<Segment> segments = provider.SegmentSelectRecentlyClustered(100);
 
             StringBuilder sb = new StringBuilder();
             int prevClusterID = 0;

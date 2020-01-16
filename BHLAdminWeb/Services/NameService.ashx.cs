@@ -1,12 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Web.Script.Serialization;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -46,7 +43,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             try
             {
-                CustomGenericList<Name> names = new BHLProvider().NameSelectByNameString(name);
+                List<Name> names = new BHLProvider().NameSelectByNameString(name);
 
                 for (int x = (names.Count - 1); x >= 0; x--)
                 {

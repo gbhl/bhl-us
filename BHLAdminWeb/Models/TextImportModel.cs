@@ -1,12 +1,9 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.AdminWeb.MVCServices;
+﻿using MOBOT.BHL.AdminWeb.MVCServices;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -80,7 +77,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         public List<TextImportFileModel> GetFiles(int batchID)
         {
             List<TextImportFileModel> files = new List<TextImportFileModel>();
-            CustomGenericList<TextImportBatchFile> batchFiles = new BHLProvider().TextImportBatchFileSelectForBatch(batchID);
+            List<TextImportBatchFile> batchFiles = new BHLProvider().TextImportBatchFileSelectForBatch(batchID);
             foreach(TextImportBatchFile batchFile in batchFiles)
             {
                 TextImportFileModel file = new TextImportFileModel();
@@ -109,7 +106,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="sortDirection">Direction of sort</param>
         public TextImportBatchFileJson.Rootobject GetFiles(int batchID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            CustomGenericList<TextImportBatchFile> files = new BHLProvider().TextImportBatchFileDetailSelectForBatch(batchID,
+            List<TextImportBatchFile> files = new BHLProvider().TextImportBatchFileDetailSelectForBatch(batchID,
                 numRows, startRow, sortColumn, sortDirection);
 
             TextImportBatchFileJson.Rootobject json = new TextImportBatchFileJson.Rootobject();
@@ -289,9 +286,9 @@ namespace MOBOT.BHL.AdminWeb.Models
             return TextImportService.TextImportBatchFileStatuses[updatedFile.TextImportBatchFileStatusID];
         }
 
-        public CustomGenericList<Page> GetItemPages(int itemID)
+        public List<Page> GetItemPages(int itemID)
         {
-            CustomGenericList<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
+            List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
             return pages;
         }
     }
