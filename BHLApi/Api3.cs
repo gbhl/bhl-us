@@ -955,7 +955,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         public CustomGenericList<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string text, string textOp, string page, bool sqlFullText)
+            string notes, string notesOp, string text, string textOp, string page, bool sqlFullText)
         {
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(title) && string.IsNullOrWhiteSpace(authorName) && 
@@ -975,6 +975,19 @@ namespace MOBOT.BHL.API.BHLApi
                     break;
                 default:
                     throw new InvalidApiParamException("titleop (" + titleOp + ") must be one of the following values: All, Phrase");
+            }
+
+            if (string.IsNullOrWhiteSpace(notesOp)) notesOp = "All";
+            switch (notesOp.ToLower())
+            {
+                case "all":
+                    notesOp = "A";
+                    break;
+                case "phrase":
+                    notesOp = "P";
+                    break;
+                default:
+                    throw new InvalidApiParamException("notesop (" + notesOp + ") must be one of the following values: All, Phrase");
             }
 
             if (string.IsNullOrWhiteSpace(textOp)) textOp = "All";  // Default to "All" (an AND search)
@@ -1041,7 +1054,7 @@ namespace MOBOT.BHL.API.BHLApi
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
-                    collectionID, text, textOp, pageInt);
+                    collectionID, notes, notesOp, text, textOp, pageInt);
             }
             else
             {
@@ -1063,12 +1076,15 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="subject"></param>
         /// <param name="languageCode"></param>
         /// <param name="collectionID"></param>
+        /// <param name="notes"></param>
+        /// <param name="notesOp"></param>
         /// <param name="text"></param>
+        /// <param name="textOp"></param>
         /// <param name="page"></param>
         /// <returns></returns>
         private CustomGenericList<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
-            string text, string textOp, int page)
+            string notes, string notesOp, string text, string textOp, int page)
         {
             // Build the language and collection parameters
             Tuple<string, string> languageParam = null;
@@ -1099,6 +1115,8 @@ namespace MOBOT.BHL.API.BHLApi
                 string.Empty, year,
                 new SearchStringParam(subject, SearchStringParamOperator.And),
                 languageParam, collectionParam,
+                new SearchStringParam(notes,
+                    (notesOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)),
                 new SearchStringParam(text, 
                     (textOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)));
 
@@ -1191,9 +1209,9 @@ namespace MOBOT.BHL.API.BHLApi
                         pub.Contributors.Add(new Contributor { ContributorName = contributor });
                     }
                     */
-            }
+                }
 
-            pub.Title = hit.Title;
+                pub.Title = hit.Title;
                 pub.Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume);
                 //pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url);
@@ -1226,6 +1244,14 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
                     foreach (string id in hit.Issn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
+                }
+                */
+
+                /*
+                foreach(string aNote in hit.Notes)
+                {
+                    if (pub.Notes == null) pub.Notes = new CustomGenericList<TitleNote>();
+                    pub.Notes.Add(new TitleNote { NoteText = aNote });
                 }
                 */
 
@@ -1499,7 +1525,7 @@ namespace MOBOT.BHL.API.BHLApi
                 pub.PublisherName = p.PublisherName;
                 pub.PublisherPlace = p.PublisherPlace;
                 pub.Date = p.Date;
-                pub.Notes = p.Notes;
+                pub.Notes.Add(new TitleNote { NoteText = p.Notes });
                 pub.Language = p.Language;
                 pub.Doi = p.Doi;
                 pub.PageRange = (p.PageRange == "--" ? null : p.PageRange);

@@ -138,6 +138,10 @@
 					"type" : "keyword",
 					"include_in_all" : false
 				},
+				"notes" : {
+					"type" : "text",
+					"analyzer" : "default"
+				},
 				"oclc" : {
 					"type" : "text",
 					"analyzer" : "standard",

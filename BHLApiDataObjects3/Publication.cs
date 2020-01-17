@@ -338,8 +338,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _publicationDetails = value; }
         }
 
-        private string _notes = null;
-        public string Notes
+        private CustomGenericList<TitleNote> _notes = null;
+        public CustomGenericList<TitleNote> Notes
         {
             get { return _notes; }
             set { _notes = value; }
@@ -590,7 +590,22 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                         }
                     case "Notes":
                         {
-                            _notes = Utility.NullIfEmpty(column.Value);
+                            string noteString = Utility.EmptyIfNull(column.Value);
+                            if (noteString != string.Empty)
+                            {
+                                if (this.Notes == null) this.Notes = new CustomGenericList<TitleNote>();
+
+                                string[] notes = noteString.Split(new[] { "|||" }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (string note in notes)
+                                {
+                                    if (!string.IsNullOrEmpty(note))
+                                    {
+                                        TitleNote titleNote = new TitleNote();
+                                        titleNote.NoteText = note;
+                                        this.Notes.Add(titleNote);
+                                    }
+                                }
+                            }
                             break;
                         }
                     case "Series":

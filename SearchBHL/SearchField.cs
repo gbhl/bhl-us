@@ -25,6 +25,7 @@
         ItemKeywords,
         Language,
         MaterialType,
+        Notes,
         Oclc,
         PublicationPlace,
         Publisher,
