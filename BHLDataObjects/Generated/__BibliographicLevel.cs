@@ -1,7 +1,7 @@
 
-// Generated 8/3/2010 11:16:34 AM
+// Generated 1/2/2020 3:40:22 PM
 // Do not modify the contents of this code file.
-// This abstract class __BibliographicLevel is based upon BibliographicLevel.
+// This abstract class __BibliographicLevel is based upon dbo.BibliographicLevel.
 
 #region How To Implement
 
@@ -29,7 +29,7 @@ using CustomDataAccess;
 #endregion Using
 
 namespace MOBOT.BHL.DataObjects
-{	
+{
 	[Serializable]
 	public abstract class __BibliographicLevel : CustomObjectBase, ICloneable, IComparable, IDisposable, ISetValues
 	{
@@ -47,13 +47,16 @@ namespace MOBOT.BHL.DataObjects
 		/// </summary>
 		/// <param name="bibliographicLevelID"></param>
 		/// <param name="bibliographicLevelName"></param>
+		/// <param name="bibliographicLevelLabel"></param>
 		/// <param name="mARCCode"></param>
 		public __BibliographicLevel(int bibliographicLevelID, 
 			string bibliographicLevelName, 
+			string bibliographicLevelLabel, 
 			string mARCCode) : this()
 		{
 			_BibliographicLevelID = bibliographicLevelID;
 			BibliographicLevelName = bibliographicLevelName;
+			BibliographicLevelLabel = bibliographicLevelLabel;
 			MARCCode = mARCCode;
 		}
 		
@@ -91,12 +94,17 @@ namespace MOBOT.BHL.DataObjects
 						_BibliographicLevelName = (string)column.Value;
 						break;
 					}
+					case "BibliographicLevelLabel" :
+					{
+						_BibliographicLevelLabel = (string)column.Value;
+						break;
+					}
 					case "MARCCode" :
 					{
 						_MARCCode = (string)column.Value;
 						break;
 					}
-				}
+								}
 			}
 			
 			IsNew = false;
@@ -104,7 +112,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Set Values
 		
-		#region Properties		
+		#region Properties
 		
 		#region BibliographicLevelID
 		
@@ -162,6 +170,34 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion BibliographicLevelName
 		
+		#region BibliographicLevelLabel
+		
+		private string _BibliographicLevelLabel = string.Empty;
+		
+		/// <summary>
+		/// Column: BibliographicLevelLabel;
+		/// DBMS data type: nvarchar(50);
+		/// </summary>
+		[ColumnDefinition("BibliographicLevelLabel", DbTargetType=SqlDbType.NVarChar, Ordinal=3, CharacterMaxLength=50)]
+		public string BibliographicLevelLabel
+		{
+			get
+			{
+				return _BibliographicLevelLabel;
+			}
+			set
+			{
+				if (value != null) value = CalibrateValue(value, 50);
+				if (_BibliographicLevelLabel != value)
+				{
+					_BibliographicLevelLabel = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion BibliographicLevelLabel
+		
 		#region MARCCode
 		
 		private string _MARCCode = string.Empty;
@@ -170,7 +206,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: MARCCode;
 		/// DBMS data type: nchar(1);
 		/// </summary>
-		[ColumnDefinition("MARCCode", DbTargetType=SqlDbType.NChar, Ordinal=3, CharacterMaxLength=1)]
+		[ColumnDefinition("MARCCode", DbTargetType=SqlDbType.NChar, Ordinal=4, CharacterMaxLength=1)]
 		public string MARCCode
 		{
 			get
@@ -191,7 +227,7 @@ namespace MOBOT.BHL.DataObjects
 		#endregion MARCCode
 			
 		#endregion Properties
-				
+
 		#region From Array serialization
 		
 		/// <summary>
@@ -235,6 +271,7 @@ namespace MOBOT.BHL.DataObjects
 					o.IsDeleted == IsDeleted &&
 					o.BibliographicLevelID == BibliographicLevelID &&
 					GetComparisonString(o.BibliographicLevelName) == GetComparisonString(BibliographicLevelName) &&
+					GetComparisonString(o.BibliographicLevelLabel) == GetComparisonString(BibliographicLevelLabel) &&
 					GetComparisonString(o.MARCCode) == GetComparisonString(MARCCode) 
 				)
 				{
@@ -338,6 +375,7 @@ namespace MOBOT.BHL.DataObjects
 		{	
 			public const string BibliographicLevelID = "BibliographicLevelID";	
 			public const string BibliographicLevelName = "BibliographicLevelName";	
+			public const string BibliographicLevelLabel = "BibliographicLevelLabel";	
 			public const string MARCCode = "MARCCode";
 		}
 				
@@ -345,3 +383,4 @@ namespace MOBOT.BHL.DataObjects
 	}
 }
 // end of source generation
+

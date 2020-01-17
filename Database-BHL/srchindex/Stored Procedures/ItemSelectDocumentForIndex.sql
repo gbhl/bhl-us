@@ -77,7 +77,7 @@ SELECT DISTINCT
 		ISNULL(t.PartNumber, '') AS PartNumber,
 		ISNULL(t.PartName, '') AS PartName,
 		ISNULL(l.LanguageName, '') AS LanguageName,
-		ISNULL(b.BibliographicLevelName, '') AS BibliographicLevelName,
+		ISNULL(b.BibliographicLevelLabel, '') AS BibliographicLevelName,
 		ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
 		ISNULL(d.DOIName, '') AS DOIName,
 		ISNULL(i.ExternalUrl, '') AS Url,

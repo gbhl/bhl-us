@@ -72,7 +72,7 @@
                             <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
                                 <%:institution.InstitutionName%>
                             <%} else {%>
-                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>
+                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" rel="noopener noreferrer" target="_blank"><%:institution.InstitutionName%></a>
                             <%}%>
                             </p>
                         <%}
@@ -112,12 +112,12 @@
                         <br />
                     <% } %>
                 </p>
-                <h3>Genre</h3>
+                <h3>Type</h3>
                 <p>
                     <span itemprop="genre"><%= Genre %></span>
                 </p>
                 <%if (!string.IsNullOrWhiteSpace(Material)) { %>
-                <h3>Material Type</h3>
+                <h3>Material</h3>
                 <p>
                     <span><%= Material %></span>
                 </p>
@@ -167,7 +167,7 @@
                 </p>
                 <% } %>
                 <p>
-                    <a class="button" href="<%: LocalLibraryUrl %>" target="_blank">Find in a local library</a>
+                    <a class="button" href="<%: LocalLibraryUrl %>" rel="noopener noreferrer" target="_blank">Find in a local library</a>
                 </p>
             </div>
             <div id="details" class="tab-body">
@@ -216,7 +216,7 @@
                             <%if (string.IsNullOrWhiteSpace(institution.Url)) { %>
                                 <%:institution.InstitutionName%>
                             <%} else {%>
-                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" target="_blank"><%:institution.InstitutionName%></a>
+                                <a class="ExtLinkBrowse" href="<%:institution.Url%>" rel="noopener noreferrer" target="_blank"><%:institution.InstitutionName%></a>
                             <%}%>
                             </p>
                         <%}
@@ -238,12 +238,12 @@
                         <br />
                     <% } %>
                 </p>
-                <h3>Genre</h3>
+                <h3>Type</h3>
                 <p>
                     <%= Genre %>
                 </p>
                 <%if (!string.IsNullOrWhiteSpace(Material)) { %>
-                <h3>Material Type</h3>
+                <h3>Material</h3>
                 <p>
                     <span><%= Material %></span>
                 </p>
@@ -318,7 +318,7 @@
                 </p>
                 <% } %>
                 <p>
-                    <a class="button" href="<%: LocalLibraryUrl %>" target="_blank">Find in a local library</a>
+                    <a class="button" href="<%: LocalLibraryUrl %>" rel="noopener noreferrer" target="_blank">Find in a local library</a>
                 </p>
             </div>
             <div id="mods" class="tab-body">                                
@@ -382,7 +382,7 @@
                                         <% }
                                         else
                                         { %>
-                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                            <a target='_blank' rel="noopener noreferrer" href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
                                         <% }
                                     }
                                 }%>                 
@@ -402,7 +402,7 @@
                                         <% }
                                         else
                                         { %>
-                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                            <a target='_blank' rel="noopener noreferrer" href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
                                         <% } %>
                                         </p>
                                     <%}
@@ -416,7 +416,11 @@
                         <% } %>
 
                         <div class="booklinks">
-                            <a target="<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write("_blank"); else Response.Write("_self"); %>" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume<%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl)) Response.Write(" (External)"); %></a>
+                            <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl))  { %>
+                                <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume (External)</a>
+                            <% } else { %>
+                                <a target="_self" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume</a>
+                            <%} %>
                             <% if (bibliographyItem.Item.NumberOfSegments > 0)
                                 { %>
                                 <br />
@@ -444,7 +448,7 @@
                                 if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
                                 License Type:
                                 <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                    <a target="_blank" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
                                 <% } else {%>
                                     <%: bibliographyItem.Item.LicenseUrl%>
                                 <% }
@@ -454,7 +458,7 @@
                             <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
                                 Rights:
                                 <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                    <a target="_blank" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
                                 <% } else { %>
                                     <%: bibliographyItem.Item.Rights%>
                                 <% }
@@ -465,7 +469,7 @@
                                 Due Diligence: 
                                 <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
                                     { %>
-                                    <a target="_blank" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
                                 <% } else { %>
                                     <%: bibliographyItem.Item.DueDiligence%>
                                 <% }
@@ -500,7 +504,7 @@
                                         <% }
                                         else
                                         { %>
-                                            <a target='_blank' href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
+                                            <a target='_blank' rel="noopener noreferrer" href="<%: institution.InstitutionUrl %>"><%: institution.InstitutionName%></a>
                                         <% }
                                         showNone = false;
                                     }

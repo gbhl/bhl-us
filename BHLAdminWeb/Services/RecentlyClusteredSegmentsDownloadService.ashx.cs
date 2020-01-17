@@ -70,7 +70,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"ClusterID\",\"Date\",\"SegmentID\",\"Relationship\",\"Edit By\",\"ItemID\",\"StartPageID\",\"Genre\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Authors\",\"DOI\",\"StartPage\",\"EndPage\",\"PageRange\"");
+            csvString.AppendLine("\"ClusterID\",\"Date\",\"SegmentID\",\"Relationship\",\"Edit By\",\"ItemID\",\"StartPageID\",\"Type\",\"Title\",\"Container\",\"Volume\",\"Date\",\"Authors\",\"DOI\",\"StartPage\",\"EndPage\",\"PageRange\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 

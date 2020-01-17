@@ -82,7 +82,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Flush();
 
             // Write file header
-            csvString.AppendLine("\"Status\",\"Genre\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"Article DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"Summary\",\"Notes\",\"ItemID\",\"StartPageID\",\"EndPageID\",\"Errors\"");
+            csvString.AppendLine("\"Status\",\"Type\",\"Title\",\"Translated Title\",\"Authors\",\"Keywords\",\"Journal\",\"Volume\",\"Series\",\"Issue\",\"Edition\",\"Publication Details\",\"Publisher Name\",\"Publisher Place\",\"Year\",\"Journal Start Year\",\"Journal End Year\",\"Language\",\"Rights\",\"DueDiligence\",\"CopyrightStatus\",\"License\",\"LicenseUrl\",\"PageRange\",\"StartPage\",\"EndPage\",\"Url\",\"DownloadUrl\",\"Article DOI\",\"ISSN\",\"ISBN\",\"OCLC\",\"LCCN\",\"Summary\",\"Notes\",\"ItemID\",\"StartPageID\",\"EndPageID\",\"Errors\"");
 
             context.Response.Write(csvString.ToString());
             context.Response.Flush();

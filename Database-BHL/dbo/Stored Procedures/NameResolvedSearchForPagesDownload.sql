@@ -19,7 +19,7 @@ CREATE TABLE #tmp
 	ItemID INT NOT NULL,
 	PageID INT NOT NULL,
 	BibliographicLevelID int NULL,
-	BibliographicLevelName nvarchar(50) NULL,
+	BibliographicLevelLabel nvarchar(50) NULL,
 	FullTitle nvarchar(2000) NULL,
 	ShortTitle nvarchar(255) NULL,
 	SortTitle nvarchar(60) NULL,
@@ -47,7 +47,7 @@ INSERT #tmp
 		ItemID,
 		PageID,
 		BibliographicLevelID,
-		BibliographicLevelName,
+		BibliographicLevelLabel,
 		FullTitle,
 		ShortTitle,
 		SortTitle,
@@ -70,7 +70,7 @@ SELECT DISTINCT
 		i.ItemID,
 		p.PageID,
 		t.BibliographicLevelID,
-		'' AS BibliographicLevelName,
+		'' AS BibliographicLevelLabel,
 		t.FullTitle,
 		t.ShortTitle,
 		t.SortTitle,
@@ -101,7 +101,7 @@ WHERE	nr.CanonicalNameString = @CanonicalNameString
 
 -- Getting these values after the primary select cuts execution time by at least half
 UPDATE	#tmp
-SET		BibliographicLevelName = b.BibliographicLevelName
+SET		BibliographicLevelLabel = b.BibliographicLevelLabel
 FROM	#tmp t
 		INNER JOIN dbo.BibliographicLevel b WITH (NOLOCK) ON t.BibliographicLevelID = b.BibliographicLevelID
 
@@ -135,7 +135,7 @@ FROM	#tmp t
 SELECT	TitleID,
 		ItemID,
 		PageID,
-		BibliographicLevelName,
+		BibliographicLevelLabel,
 		FullTitle,
 		ShortTitle,
 		PartNumber,

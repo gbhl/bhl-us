@@ -236,6 +236,7 @@ namespace MOBOT.BHL.Web2
                                 link.Text = institution.InstitutionName;
                                 link.NavigateUrl = institution.InstitutionUrl;
                                 link.Target = "_blank";
+                                link.Attributes.Add("rel", "noopener noreferrer");
                                 attributionPlaceHolder.Controls.Add(link);
                             }
                             else
@@ -255,7 +256,7 @@ namespace MOBOT.BHL.Web2
                     foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
 
                     BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(CurrentTitle.BibliographicLevelID ?? 0);
-                    Genre = (bibliographicLevel == null) ? string.Empty : (bibliographicLevel.BibliographicLevelName.ToLower().Contains("serial") ? "Journal" : "Book");
+                    Genre = (bibliographicLevel == null) ? string.Empty : bibliographicLevel.BibliographicLevelLabel;
 
                     Authors = new List<Author>();
                     AdditionalAuthors = new List<Author>();
