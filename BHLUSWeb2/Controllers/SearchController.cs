@@ -357,7 +357,7 @@ namespace MOBOT.BHL.Web2.Controllers
                             model.Params.MaterialTypeFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
                         }
                         break;
-                    case SearchField.ItemAuthors:
+                    case SearchField.FacetItemAuthors:
                         foreach (var facetValue in facet.Value)
                         {
                             model.Params.AuthorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
@@ -375,7 +375,7 @@ namespace MOBOT.BHL.Web2.Controllers
                             model.Params.ContributorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
                         }
                         break;
-                    case SearchField.ItemKeywords:
+                    case SearchField.FacetItemKeywords:
                         foreach (var facetValue in facet.Value)
                         {
                             model.Params.KeywordFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
