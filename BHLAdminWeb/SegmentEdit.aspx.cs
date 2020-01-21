@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
@@ -58,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     // Get the description of the newly selected item
                     Item item = provider.ItemSelectAuto(Convert.ToInt32(selectedItemId));
-                    CustomGenericList<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(selectedItemId), InstitutionRole.Contributor);
+                    List<Institution> institutions = provider.InstitutionSelectByItemIDAndRole(Convert.ToInt32(selectedItemId), InstitutionRole.Contributor);
                     Title title = provider.TitleSelectAuto(item.PrimaryTitleID);
 
                     itemIDLabel.Text = selectedItemId;
@@ -124,7 +124,7 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
                     // Get a list of all of the segments for the item
-                    CustomGenericList<MOBOT.BHL.DataObjects.Segment> relatedSegments = provider.SegmentSelectRelated(Convert.ToInt32(itemIDLabel.Text));
+                    List<Segment> relatedSegments = provider.SegmentSelectRelated(Convert.ToInt32(itemIDLabel.Text));
 
                     if (selectedRelatedSegmentIds.EndsWith("|")) selectedRelatedSegmentIds = selectedRelatedSegmentIds.Substring(0, selectedRelatedSegmentIds.Length - 1);
                     String[] selectedRelatedSegmentsList = selectedRelatedSegmentIds.Split('|');
@@ -175,7 +175,7 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
                     // Get a list of all of the pages for the item
-                    CustomGenericList<MOBOT.BHL.DataObjects.Page> pages = provider.PageSelectByItemID(Convert.ToInt32(itemIDLabel.Text));
+                    List<DataObjects.Page> pages = provider.PageSelectByItemID(Convert.ToInt32(itemIDLabel.Text));
 
                     if (selectedPageIds.EndsWith("|")) selectedPageIds = selectedPageIds.Substring(0, selectedPageIds.Length - 1);
                     String[] selectedPageIdList = selectedPageIds.Split('|');
@@ -262,15 +262,15 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
 
-            CustomGenericList<SegmentStatus> statuses = bp.SegmentStatusSelectAll();
+            List<SegmentStatus> statuses = bp.SegmentStatusSelectAll();
             ddlSegmentStatus.DataSource = statuses;
             ddlSegmentStatus.DataBind();
 
-            CustomGenericList<SegmentGenre> genres= bp.SegmentGenreSelectAll();
+            List<SegmentGenre> genres= bp.SegmentGenreSelectAll();
             ddlSegmentGenre.DataSource = genres;
             ddlSegmentGenre.DataBind();
 
-            CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+            List<Institution> institutions = bp.InstituationSelectAll();
 
             Institution emptyInstitution = new Institution();
             emptyInstitution.InstitutionCode = string.Empty;
@@ -283,7 +283,7 @@ namespace MOBOT.BHL.AdminWeb
             ddlContributor2.DataSource = institutions;
             ddlContributor2.DataBind();
 
-            CustomGenericList<Language> languages = bp.LanguageSelectAll();
+            List<Language> languages = bp.LanguageSelectAll();
 
             Language emptyLanguage = new Language();
             emptyLanguage.LanguageCode = string.Empty;
@@ -416,7 +416,7 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<SegmentAuthor> segmentAuthors = new CustomGenericList<SegmentAuthor>();
+            List<SegmentAuthor> segmentAuthors = new List<SegmentAuthor>();
             foreach (SegmentAuthor sa in segment.AuthorList)
             {
                 if (sa.IsDeleted == false)
@@ -431,7 +431,7 @@ namespace MOBOT.BHL.AdminWeb
             authorsList.DataBind();
         }
 
-        private SegmentAuthor findSegmentAuthor(CustomGenericList<SegmentAuthor> segmentAuthors, int segmentAuthorId,
+        private SegmentAuthor findSegmentAuthor(List<SegmentAuthor> segmentAuthors, int segmentAuthorId,
             int authorId)
         {
             foreach (SegmentAuthor sa in segmentAuthors)
@@ -462,7 +462,7 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<SegmentKeyword> titleKeywords = new CustomGenericList<SegmentKeyword>();
+            List<SegmentKeyword> titleKeywords = new List<SegmentKeyword>();
             foreach (SegmentKeyword sk in segment.KeywordList)
             {
                 if (sk.IsDeleted == false)
@@ -475,7 +475,7 @@ namespace MOBOT.BHL.AdminWeb
             keywordsList.DataBind();
         }
 
-        private SegmentKeyword findSegmentKeyword(CustomGenericList<SegmentKeyword> segmentKeywords,
+        private SegmentKeyword findSegmentKeyword(List<SegmentKeyword> segmentKeywords,
             int segmentKeywordId, int keywordID, string keyword)
         {
             foreach (SegmentKeyword sk in segmentKeywords)
@@ -504,7 +504,7 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<SegmentIdentifier> segmentIdentifiers = new CustomGenericList<SegmentIdentifier>();
+            List<SegmentIdentifier> segmentIdentifiers = new List<SegmentIdentifier>();
             foreach (SegmentIdentifier si in segment.IdentifierList)
             {
                 if (si.IsDeleted == false)
@@ -517,8 +517,8 @@ namespace MOBOT.BHL.AdminWeb
             identifiersList.DataBind();
         }
 
-        CustomGenericList<Identifier> _identifiers = null;
-        protected CustomGenericList<Identifier> GetIdentifiers()
+        List<Identifier> _identifiers = null;
+        protected List<Identifier> GetIdentifiers()
         {
             BHLProvider bp = new BHLProvider();
             _identifiers = bp.IdentifierSelectAll();
@@ -547,7 +547,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private SegmentIdentifier findSegmentIdentifier(CustomGenericList<SegmentIdentifier> segmentIdentifiers,
+        private SegmentIdentifier findSegmentIdentifier(List<SegmentIdentifier> segmentIdentifiers,
             int segmentIdentifierId, int identifierID, string identifierValue)
         {
             foreach (SegmentIdentifier si in segmentIdentifiers)
@@ -586,7 +586,7 @@ namespace MOBOT.BHL.AdminWeb
             Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<SegmentPage> segmentPages = new CustomGenericList<SegmentPage>();
+            List<SegmentPage> segmentPages = new List<SegmentPage>();
             foreach (SegmentPage sp in segment.PageList)
             {
                 if (sp.IsDeleted == false)
@@ -601,7 +601,7 @@ namespace MOBOT.BHL.AdminWeb
             pagesList.DataBind();
         }
 
-        private SegmentPage findSegmentPage(CustomGenericList<SegmentPage> segmentPages, int segmentPageId,
+        private SegmentPage findSegmentPage(List<SegmentPage> segmentPages, int segmentPageId,
             int pageId)
         {
             foreach (SegmentPage sp in segmentPages)
@@ -633,7 +633,7 @@ namespace MOBOT.BHL.AdminWeb
 
             // filter out deleted segments
             bool relatedPrimary = false;
-            CustomGenericList<Segment> relatedSegments = new CustomGenericList<Segment>();
+            List<Segment> relatedSegments = new List<Segment>();
             foreach (Segment s in segment.RelatedSegmentList)
             {
                 if (!s.IsDeleted)
@@ -654,7 +654,7 @@ namespace MOBOT.BHL.AdminWeb
             relatedSegmentsList.DataBind();
         }
 
-        private Segment findRelatedSegment(CustomGenericList<Segment> relatedSegments, int segmentId)
+        private Segment findRelatedSegment(List<Segment> relatedSegments, int segmentId)
         {
             foreach (Segment s in relatedSegments)
             {
@@ -1026,7 +1026,7 @@ namespace MOBOT.BHL.AdminWeb
             CheckBox checkbox = (CheckBox)sender;
             if (checkbox.Checked)
             {
-                CustomGenericList<Segment> relatedSegments = new CustomGenericList<Segment>();
+                List<Segment> relatedSegments = new List<Segment>();
                 foreach (Segment s in segment.RelatedSegmentList)
                 {
                     s.IsPrimary = 0;
@@ -1088,7 +1088,7 @@ namespace MOBOT.BHL.AdminWeb
                 CheckBox checkBox = row.FindControl("isPrimaryCheckBoxEdit") as CheckBox;
                 if (checkBox != null)
                 {
-                    CustomGenericList<Segment> relatedSegments = segment.RelatedSegmentList;
+                    List<Segment> relatedSegments = segment.RelatedSegmentList;
                     
                     short isPrimary = (short)(checkBox.Checked ? 1 : 0);
 

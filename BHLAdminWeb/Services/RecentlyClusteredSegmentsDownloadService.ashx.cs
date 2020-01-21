@@ -1,11 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -22,7 +19,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         private void DoDownload(HttpContext context)
         {
-            CustomGenericList<Segment> segments = null;
+            List<Segment> segments = null;
 
             try
             {
@@ -65,7 +62,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// </summary>
         /// <param name="segments"></param>
         /// <returns></returns>
-        private void GetReportCSVString(HttpContext context, CustomGenericList<Segment> segments)
+        private void GetReportCSVString(HttpContext context, List<Segment> segments)
         {
             StringBuilder csvString = new StringBuilder();
 

@@ -1,14 +1,14 @@
-using System;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using SortOrder = CustomDataAccess.SortOrder;
-using System.Web.UI.HtmlControls;
-using System.Configuration;
 using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -172,7 +172,7 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			BHLProvider bp = new BHLProvider();
 
-            CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+            List<Institution> institutions = bp.InstituationSelectAll();
 
             Institution emptyInstitution = new Institution();
             emptyInstitution.InstitutionCode = string.Empty;
@@ -184,7 +184,7 @@ namespace MOBOT.BHL.AdminWeb
             ddlExtContent.DataValueField = "InstitutionCode";
             ddlExtContent.DataBind();
 
-            CustomGenericList<BibliographicLevel> bibliographicLevels = bp.BibliographicLevelSelectAll();
+            List<BibliographicLevel> bibliographicLevels = bp.BibliographicLevelSelectAll();
 
             BibliographicLevel emptyBibLevel = new BibliographicLevel();
             emptyBibLevel.BibliographicLevelID = 0;
@@ -196,7 +196,7 @@ namespace MOBOT.BHL.AdminWeb
             ddlBibliographicLevel.DataValueField = "BibliographicLevelID";
             ddlBibliographicLevel.DataBind();
 
-            CustomGenericList<MaterialType> materialTypes = bp.MaterialTypeSelectAll();
+            List<MaterialType> materialTypes = bp.MaterialTypeSelectAll();
 
             MaterialType emptyMaterialType = new MaterialType();
             emptyMaterialType.MaterialTypeID = 0;
@@ -208,7 +208,7 @@ namespace MOBOT.BHL.AdminWeb
             ddlMaterialType.DataValueField = "MaterialTypeID";
             ddlMaterialType.DataBind();
 
-            CustomGenericList<Language> languages = bp.LanguageSelectAll();
+            List<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
             emptyLanguage.LanguageCode = string.Empty;
@@ -232,7 +232,7 @@ namespace MOBOT.BHL.AdminWeb
 			Title title = bp.TitleSelectExtended( id );
 
             // Look up flickr status of each item associated with the title
-            CustomGenericList<Item> items = bp.ItemInFlickrByTitleID(id);
+            List<Item> items = bp.ItemInFlickrByTitleID(id);
             foreach(TitleItem item in title.TitleItems)
             {
                 foreach (Item flickrItem in items)
@@ -332,8 +332,8 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			Title title = (Title)Session[ "Title" + idLabel.Text ];
 
-			// filter out deleted items
-			CustomGenericList<TitleAuthor> titleAuthors = new CustomGenericList<TitleAuthor>();
+            // filter out deleted items
+            List<TitleAuthor> titleAuthors = new List<TitleAuthor>();
 			foreach ( TitleAuthor tc in title.TitleAuthors )
 			{
 				if ( tc.IsDeleted == false )
@@ -348,8 +348,8 @@ namespace MOBOT.BHL.AdminWeb
 			creatorsList.DataBind();
 		}
 
-		CustomGenericList<AuthorRole> _authorRoles = null;
-		protected CustomGenericList<AuthorRole> GetAuthorRoles()
+        List<AuthorRole> _authorRoles = null;
+		protected List<AuthorRole> GetAuthorRoles()
 		{
 			BHLProvider bp = new BHLProvider();
 			_authorRoles = bp.AuthorRoleSelectAll();
@@ -378,7 +378,7 @@ namespace MOBOT.BHL.AdminWeb
 			return 0;
 		}
 
-		private TitleAuthor findTitleAuthor( CustomGenericList<TitleAuthor> titleAuthors, int titleAuthorId,
+		private TitleAuthor findTitleAuthor(List<TitleAuthor> titleAuthors, int titleAuthorId,
 			int authorId, int authorRoleId )
 		{
 			foreach ( TitleAuthor tc in titleAuthors )
@@ -410,7 +410,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<TitleKeyword> titleKeywords = new CustomGenericList<TitleKeyword>();
+            List<TitleKeyword> titleKeywords = new List<TitleKeyword>();
             foreach (TitleKeyword tk in title.TitleKeywords)
             {
                 if (tk.IsDeleted == false)
@@ -423,7 +423,7 @@ namespace MOBOT.BHL.AdminWeb
             subjectsList.DataBind();
         }
 
-        private TitleKeyword findTitleKeyword(CustomGenericList<TitleKeyword> titleKeywords, 
+        private TitleKeyword findTitleKeyword(List<TitleKeyword> titleKeywords, 
             int titleKeywordId, int keywordID, string keyword)
         {
             foreach (TitleKeyword tk in titleKeywords)
@@ -452,7 +452,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<TitleNote> titleNotes = new CustomGenericList<TitleNote>();
+            List<TitleNote> titleNotes = new List<TitleNote>();
             foreach (TitleNote tn in title.TitleNotes)
             {
                 if (tn.IsDeleted == false)
@@ -466,7 +466,7 @@ namespace MOBOT.BHL.AdminWeb
             notesList.DataBind();
         }
 
-        private TitleNote findTitleNote(CustomGenericList<TitleNote> titleNotes,
+        private TitleNote findTitleNote(List<TitleNote> titleNotes,
             int titleNoteId, int noteTypeID, string noteText)
         {
             foreach (TitleNote tn in titleNotes)
@@ -502,8 +502,8 @@ namespace MOBOT.BHL.AdminWeb
             return maxSeq;
         }
 
-        CustomGenericList<NoteType> _noteTypes = null;
-        protected CustomGenericList<NoteType> GetNoteTypes()
+        List<NoteType> _noteTypes = null;
+        protected List<NoteType> GetNoteTypes()
         {
             BHLProvider bp = new BHLProvider();
             _noteTypes = bp.NoteTypeSelectAll();
@@ -541,7 +541,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<TitleVariant> titleVariants = new CustomGenericList<TitleVariant>();
+            List<TitleVariant> titleVariants = new List<TitleVariant>();
             foreach (TitleVariant tv in title.TitleVariants)
             {
                 if (!tv.IsDeleted) titleVariants.Add(tv);
@@ -551,8 +551,8 @@ namespace MOBOT.BHL.AdminWeb
             variantsList.DataBind();
         }
 
-        CustomGenericList<TitleVariantType> _titleVariantTypes = null;
-        protected CustomGenericList<TitleVariantType> GetVariants()
+        List<TitleVariantType> _titleVariantTypes = null;
+        protected List<TitleVariantType> GetVariants()
         {
             BHLProvider bp = new BHLProvider();
             _titleVariantTypes = bp.TitleVariantTypeSelectAll();
@@ -580,7 +580,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private TitleVariant findTitleVariant(CustomGenericList<TitleVariant> titleVariants,
+        private TitleVariant findTitleVariant(List<TitleVariant> titleVariants,
             int titleVariantId)
         {
             foreach (TitleVariant tv in titleVariants)
@@ -611,7 +611,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<Title_Identifier> titleIdentifiers = new CustomGenericList<Title_Identifier>();
+            List<Title_Identifier> titleIdentifiers = new List<Title_Identifier>();
             foreach (Title_Identifier ti in title.TitleIdentifiers)
             {
                 if (ti.IsDeleted == false)
@@ -624,8 +624,8 @@ namespace MOBOT.BHL.AdminWeb
             identifiersList.DataBind();
         }
 
-        CustomGenericList<Identifier> _identifiers = null;
-        protected CustomGenericList<Identifier> GetIdentifiers()
+        List<Identifier> _identifiers = null;
+        protected List<Identifier> GetIdentifiers()
         {
             BHLProvider bp = new BHLProvider();
             _identifiers = bp.IdentifierSelectAll();
@@ -654,7 +654,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private Title_Identifier findTitle_Identifier(CustomGenericList<Title_Identifier> titleIdentifiers, 
+        private Title_Identifier findTitle_Identifier(List<Title_Identifier> titleIdentifiers, 
             int titleIdentifierId, int identifierID, string identifierValue)
         {
             foreach (Title_Identifier tti in titleIdentifiers)
@@ -687,7 +687,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<TitleAssociation> titleAssociations = new CustomGenericList<TitleAssociation>();
+            List<TitleAssociation> titleAssociations = new List<TitleAssociation>();
             foreach (TitleAssociation ta in title.TitleAssociations)
             {
                 if (ta.IsDeleted == false)
@@ -700,7 +700,7 @@ namespace MOBOT.BHL.AdminWeb
             associationsList.DataBind();
         }
 
-        private TitleAssociation findTitleAssociation(CustomGenericList<TitleAssociation> titleAssociations,
+        private TitleAssociation findTitleAssociation(List<TitleAssociation> titleAssociations,
             int titleAssociationId)
         {
             foreach (TitleAssociation ta in titleAssociations)
@@ -731,7 +731,7 @@ namespace MOBOT.BHL.AdminWeb
             Title title = (Title)Session["Title" + idLabel.Text];
 
             // filter out deleted items
-            CustomGenericList<TitleLanguage> titleLanguages = new CustomGenericList<TitleLanguage>();
+            List<TitleLanguage> titleLanguages = new List<TitleLanguage>();
             foreach (TitleLanguage tl in title.TitleLanguages)
             {
                 if (tl.IsDeleted == false)
@@ -744,8 +744,8 @@ namespace MOBOT.BHL.AdminWeb
             languagesList.DataBind();
         }
 
-        CustomGenericList<Language> _titleLanguages = null;
-        protected CustomGenericList<Language> GetLanguages()
+        List<Language> _titleLanguages = null;
+        protected List<Language> GetLanguages()
         {
             BHLProvider bp = new BHLProvider();
             _titleLanguages = bp.LanguageSelectAll();
@@ -770,7 +770,7 @@ namespace MOBOT.BHL.AdminWeb
             return 0;
         }
 
-        private TitleLanguage findTitleLanguage(CustomGenericList<TitleLanguage> titleLanguages, 
+        private TitleLanguage findTitleLanguage(List<TitleLanguage> titleLanguages, 
             int titleLanguageId, string languageCode)
         {
             foreach (TitleLanguage tl in titleLanguages)
@@ -800,8 +800,8 @@ namespace MOBOT.BHL.AdminWeb
 		{
             Title title = (Title)Session["Title" + idLabel.Text];
 
-			// filter out deleted items
-            CustomGenericList<TitleCollection> titleCollections = new CustomGenericList<TitleCollection>();
+            // filter out deleted items
+            List<TitleCollection> titleCollections = new List<TitleCollection>();
             foreach (TitleCollection tc in title.TitleCollections)
 			{
 				if ( tc.IsDeleted == false )
@@ -814,8 +814,8 @@ namespace MOBOT.BHL.AdminWeb
 			collectionsList.DataBind();
 		}
 
-		CustomGenericList<Collection> _titleCollections = null;
-		protected CustomGenericList<Collection> GetCollections()
+        List<Collection> _titleCollections = null;
+		protected List<Collection> GetCollections()
 		{
 			BHLProvider bp = new BHLProvider();
             // Select collections that may contain titles
@@ -845,7 +845,7 @@ namespace MOBOT.BHL.AdminWeb
 			return 0;
 		}
 
-        private TitleCollection findCollection(CustomGenericList<TitleCollection> collections, int titleCollectionId,
+        private TitleCollection findCollection(List<TitleCollection> collections, int titleCollectionId,
 			int collectionId )
 		{
             foreach (TitleCollection tc in collections)
@@ -875,7 +875,7 @@ namespace MOBOT.BHL.AdminWeb
 		{
             Title title = (Title)Session["Title" + idLabel.Text];
 
-			CustomGenericList<TitleItem> items = new CustomGenericList<TitleItem>();
+            List<TitleItem> items = new List<TitleItem>();
 			if ( showPubRadioButton.Checked || ( showAllRadioButton.Checked == false && showPubRadioButton.Checked == false ) )
 			{
 				foreach ( TitleItem item in title.TitleItems )

@@ -1,9 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 
@@ -30,7 +28,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         private void DoDownload(HttpContext context, string importFileID)
         {
-            CustomGenericList<ImportRecord> searchResult = null;
+            List<ImportRecord> searchResult = null;
 
             try
             {
@@ -73,7 +71,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// </summary>
         /// <param name="searchResult"></param>
         /// <returns></returns>
-        private void GetReportCSVString(HttpContext context, CustomGenericList<ImportRecord> searchResult)
+        private void GetReportCSVString(HttpContext context, List<ImportRecord> searchResult)
         {
             StringBuilder csvString = new StringBuilder();
 

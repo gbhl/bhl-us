@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.DataObjects
@@ -70,17 +71,17 @@ namespace MOBOT.BHL.DataObjects
             set { _titleOfWork = value; }
         }
 
-        private CustomGenericList<AuthorName> _authorNames;
+        private List<AuthorName> _authorNames;
 
-        public CustomGenericList<AuthorName> AuthorNames
+        public List<AuthorName> AuthorNames
         {
             get { return _authorNames; }
             set { _authorNames = value; }
         }
 
-        private CustomGenericList<AuthorIdentifier> _authorIdentifiers;
+        private List<AuthorIdentifier> _authorIdentifiers;
 
-        public CustomGenericList<AuthorIdentifier> AuthorIdentifiers
+        public List<AuthorIdentifier> AuthorIdentifiers
         {
             get { return _authorIdentifiers; }
             set { _authorIdentifiers = value; }

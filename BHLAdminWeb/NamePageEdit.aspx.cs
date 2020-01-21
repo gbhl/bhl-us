@@ -479,7 +479,7 @@ namespace MOBOT.BHL.AdminWeb
 		protected void saveButton_Click( object sender, EventArgs e )
 		{
             PageSummaryView ps = (PageSummaryView)Session["Page" + pageIdTextBox.Text];
-            CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+			List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 
 			if ( validate( namePages ) )
 			{

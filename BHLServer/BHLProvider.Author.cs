@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
@@ -76,8 +77,8 @@ namespace MOBOT.BHL.Server
                         string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
 
                     Author targetAuthor = AuthorSelectAuto((int)author.RedirectAuthorID);
-                    targetAuthor.AuthorNames = new CustomGenericList<AuthorName>();
-                    targetAuthor.AuthorIdentifiers = new CustomGenericList<AuthorIdentifier>();
+                    targetAuthor.AuthorNames = new List<AuthorName>();
+                    targetAuthor.AuthorIdentifiers = new List<AuthorIdentifier>();
                     targetAuthor.Note += string.Format("{0}This author replaces {1}. {2} by {3}",
                         Environment.NewLine,
                         author.AuthorID.ToString(),
