@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE srchIndex.SearchPublication
+﻿CREATE PROCEDURE [srchindex].[SearchPublication]
 
 @SearchText		nvarchar(2000) = '',
 @StartPage		int = 1,
@@ -71,16 +71,33 @@ BEGIN TRY
 	--############## ITEM ##############
 
 	-- Select items that match the search text
-	SELECT	c.TitleID, 
-			c.ItemID,
-			ti.ItemSequence,
-			x.[RANK]
+	SELECT	TitleID, ItemID, ItemSequence, SUM([RANK]) AS [RANK]
 	INTO	#tmpItem
-	FROM	CONTAINSTABLE(SearchCatalog, (SearchText), @Search) x
-			INNER JOIN SearchCatalog c WITH (NOLOCK) ON c.SearchCatalogID = x.[KEY]
-			INNER JOIN dbo.Item i WITH (NOLOCK) ON c.ItemID = i.ItemID
-			INNER JOIN dbo.Title t WITH (NOLOCK) ON c.TitleID = t.TitleID
-			INNER JOIN dbo.TitleItem ti WITH (NOLOCK) on c.TitleID = ti.TitleID AND c.ItemID = ti.ItemID
+	FROM	(
+			SELECT	c.TitleID, 
+					c.ItemID,
+					ti.ItemSequence,
+					x.[RANK]
+			FROM	CONTAINSTABLE(SearchCatalog, (SearchText), @Search) x
+					INNER JOIN SearchCatalog c WITH (NOLOCK) ON c.SearchCatalogID = x.[KEY]
+					INNER JOIN dbo.Item i WITH (NOLOCK) ON c.ItemID = i.ItemID
+					INNER JOIN dbo.Title t WITH (NOLOCK) ON c.TitleID = t.TitleID
+					INNER JOIN dbo.TitleItem ti WITH (NOLOCK) on c.TitleID = ti.TitleID AND c.ItemID = ti.ItemID
+			UNION
+			SELECT	c.TitleID,
+					c.ItemID,
+					ti.ItemSequence,
+					0
+			FROM	SearchCatalog c
+					INNER JOIN dbo.Item i WITH (NOLOCK) ON c.ItemID = i.ItemID
+					INNER JOIN dbo.Title t WITH (NOLOCK) ON c.TitleID = t.TitleID
+					INNER JOIN dbo.TitleItem ti WITH (NOLOCK) on c.TitleID = ti.TitleID AND c.ItemID = ti.ItemID
+					INNER JOIN dbo.TitleNote n WITH (NOLOCK) ON t.TitleID = n.TitleID
+					INNER JOIN dbo.NoteType nt WITH (NOLOCK) ON n.NoteTypeID = nt.NoteTypeID
+			WHERE	nt.MarcDataFieldTag IN ('505', '525', '545')
+			AND		n.NoteText LIKE '%' + @SearchText + '%'
+			) X
+	GROUP BY TitleID, ItemID, ItemSequence
 
 	----------------------------------------------------------
 	-- Compile the final sortable result set.
@@ -110,7 +127,7 @@ BEGIN TRY
 			ISNULL(t.PartNumber, ''),
 			ISNULL(t.PartName, ''),
             ISNULL(l.LanguageName, '') AS LanguageName,
-            ISNULL(b.BibliographicLevelName, '') AS Genre,
+            ISNULL(b.BibliographicLevelLabel, '') AS Genre,
             ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
             ISNULL(d.DOIName, '') AS DOIName,
 			ISNULL(i.ExternalUrl, '') AS Url,

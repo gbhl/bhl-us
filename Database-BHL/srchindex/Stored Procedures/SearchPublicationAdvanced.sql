@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE srchIndex.SearchPublicationAdvanced
+﻿CREATE PROCEDURE [srchindex].[SearchPublicationAdvanced]
 
 @Title			nvarchar(2000) = '',
 @AuthorLastName	nvarchar(255) = '',
@@ -7,6 +7,7 @@
 @Subject		nvarchar(50) = '',
 @LanguageCode	nvarchar(10) = '',
 @CollectionID	int = NULL,
+@NoteText		nvarchar(MAX) = '',
 @StartPage		int = 1,
 @PageSize		int = 10
 
@@ -195,6 +196,21 @@ BEGIN TRY
 	UNION
 	SELECT DISTINCT TitleID, ItemID, TitleRank, AuthorRank, 0 AS SubjectRank FROM #AuthorFilter WHERE @SearchSubject = '"**"'
 
+	-- Filter items by notes
+	SELECT	tmp.TitleID,
+			tmp.ItemID,
+			tmp.TitleRank,
+			tmp.AuthorRank,
+			tmp.SubjectRank
+	INTO	#NoteFilter
+	FROM	#SubjectFilter tmp
+			INNER JOIN TitleNote n ON tmp.TitleID = n.TitleID
+			INNER JOIN NoteType nt ON n.NoteTypeID = nt.NoteTypeID 
+	WHERE	nt.MarcDataFieldTag IN ('505', '525', '545')
+	AND		n.NoteText LIKE '%' + @NoteText + '%'
+	UNION
+	SELECT	DISTINCT TitleID, ItemID, TitleRank, AuthorRank, SubjectRank FROM #SubjectFilter WHERE @NoteText = ''
+
 	-- Filter items by volume
 	CREATE TABLE #VolumeFilter
 		(
@@ -220,7 +236,7 @@ BEGIN TRY
 				tmp.TitleRank,
 				tmp.AuthorRank,
 				tmp.SubjectRank
-		FROM	#SubjectFilter tmp INNER JOIN dbo.Item i WITH (NOLOCK) ON tmp.ItemID = i.ItemID
+		FROM	#NoteFilter tmp INNER JOIN dbo.Item i WITH (NOLOCK) ON tmp.ItemID = i.ItemID
 		WHERE	i.StartVolume = @SearchVolume
 		OR		i.EndVolume = @SearchVolume
 		OR		@SearchVolume BETWEEN i.StartVolume AND i.EndVolume
@@ -233,7 +249,7 @@ BEGIN TRY
 		-- (maybe we DO have the volume, but the initial search didn't find it).
 		INSERT	#VolumeFilter 
 		SELECT	TitleID, ItemID, TitleRank, AuthorRank, SubjectRank 
-		FROM	#SubjectFilter
+		FROM	#NoteFilter
 	END
 
 	----------------------------------------------------------
@@ -264,7 +280,7 @@ BEGIN TRY
 			ISNULL(t.PartNumber, ''),
 			ISNULL(t.PartName, ''),
             ISNULL(l.LanguageName, '') AS LanguageName,
-            ISNULL(b.BibliographicLevelName, '') AS Genre,
+            ISNULL(b.BibliographicLevelLabel, '') AS Genre,
             ISNULL(m.MaterialTypeLabel, '') AS MaterialTypeLabel,
             ISNULL(d.DOIName, '') AS DOIName,
 			ISNULL(i.ExternalUrl, '') AS Url,

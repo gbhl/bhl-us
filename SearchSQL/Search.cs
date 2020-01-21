@@ -77,7 +77,7 @@ namespace BHL.Search.SQL
             long totalHits = 0;
             result.Items = new DataAccess(_connectionString).SearchItem(title.searchValue, author.searchValue, volume, 
                 year, keyword.searchValue, (language != null ? language.Item1 : null), 
-                (collection != null ? collection.Item1 : null), out totalHits, StartPage, NumResults);
+                (collection != null ? collection.Item1 : null), notes.searchValue, out totalHits, StartPage, NumResults);
             GetSearchResultStats(result, totalHits);
 
             if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
