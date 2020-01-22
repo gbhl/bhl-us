@@ -1,11 +1,10 @@
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 using System.Xml;
-using CustomDataAccess;
-using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHLImport.Server;
 
 namespace IAHarvest
 {
@@ -115,7 +114,7 @@ namespace IAHarvest
             {
                 this.LogMessage("Processing SETS");
 
-                CustomGenericList<IASet> sets = provider.IASetSelectForDownload();
+                List<IASet> sets = provider.IASetSelectForDownload();
                 foreach (IASet set in sets)
                 {
                     DateTime? startDate = set.LastFullDownloadDate;
@@ -236,7 +235,7 @@ namespace IAHarvest
                 this.LogMessage("Harvesting XML information");
 
                 // Download the XML files for each item and parse the data into the database
-                CustomGenericList<IAItem> items = provider.IAItemSelectForXMLDownload(configParms.Mode == MODE_ITEM ? configParms.Item : "");
+                List<IAItem> items = provider.IAItemSelectForXMLDownload(configParms.Mode == MODE_ITEM ? configParms.Item : "");
 
                 foreach (IAItem item in items)
                 {
@@ -250,7 +249,7 @@ namespace IAHarvest
                         // harvest the data from the files
                         if (item.ItemStatusID != ITEMSTATUS_COMPLETE)
                         {
-                            CustomGenericList<IAFile> fileList = provider.IAFileSelectByItem(item.ItemID);
+                            List<IAFile> fileList = provider.IAFileSelectByItem(item.ItemID);
                             this.HarvestDCMetadata(GetFile(fileList, configParms.DCMetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMetadataSourceData(GetFile(fileList, configParms.MetadataSourceExtension),  item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMetadata(GetFile(fileList, configParms.MetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
@@ -347,7 +346,7 @@ namespace IAHarvest
             }
 
             // Delete local files and database entries that no longer exist in FILES.XML
-            CustomGenericList<IAFile> itemFiles = provider.IAFileSelectByItem(item.ItemID);
+            List<IAFile> itemFiles = provider.IAFileSelectByItem(item.ItemID);
             foreach (IAFile itemFile in itemFiles)
             {
                 // Ignore the scandata.xml file (which will not appear in FILES.XML)
@@ -391,7 +390,7 @@ namespace IAHarvest
         /// <param name="fileList"></param>
         /// <param name="fileExtension"></param>
         /// <returns></returns>
-        private IAFile GetFile(CustomGenericList<IAFile> fileList, string fileExtension)
+        private IAFile GetFile(List<IAFile> fileList, string fileExtension)
         {
             IAFile file = null;
 
@@ -411,7 +410,7 @@ namespace IAHarvest
         {
             this.LogMessage("Downloading files for " + item.IAIdentifier);
 
-            CustomGenericList<IAFile> files = provider.IAFileSelectForDownload(item.ItemID);
+            List<IAFile> files = provider.IAFileSelectForDownload(item.ItemID);
             foreach (IAFile file in files)
             {
                 DateTime? remoteFileLastModifiedDate = DateTime.Parse("1/1/1980");
@@ -1197,7 +1196,7 @@ namespace IAHarvest
                 this.LogMessage("Publishing information to import tables");
 
                 // Get the items that are ready to be published
-                CustomGenericList<IAItem> items = provider.IAItemSelectForPublishToImportTables(configParms.Mode == MODE_ITEM ? configParms.Item : "");
+                List<IAItem> items = provider.IAItemSelectForPublishToImportTables(configParms.Mode == MODE_ITEM ? configParms.Item : "");
 
                 bool continuePublishing = true;
                 foreach (IAItem item in items)

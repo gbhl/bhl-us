@@ -173,6 +173,9 @@
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -180,9 +183,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.TitleBibTeX.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.TitleEndNote.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.Title_Identifier.datasource">

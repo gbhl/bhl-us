@@ -1,18 +1,14 @@
 ﻿using BHL.TextImportUtility;
-using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.FileAccess;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace BHL.TextImportProcessor
 {
@@ -68,8 +64,8 @@ namespace BHL.TextImportProcessor
 
                 // Get data for the first batch that needs to be processed
                 this.LogMessage("Getting Batch to be processed.");
-                CustomGenericList<TextImportBatch> batches = service.TextImportBatchSelectForFileCreation();
-                CustomGenericList<TextImportBatchFile> batchFiles = null;
+                List<TextImportBatch> batches = service.TextImportBatchSelectForFileCreation();
+                List<TextImportBatchFile> batchFiles = null;
 
                 while (batches.Count > 0)
                 {
@@ -91,7 +87,7 @@ namespace BHL.TextImportProcessor
                                     this.LogMessage("Generating text files for Text Import File " + batchFile.TextImportBatchFileID);
 
                                     // Get the Page information (including file paths) for the BHL Item
-                                    CustomGenericList<PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
+                                    List<PageSummaryView> pages = service.PageSummarySelectAllByItemID((int)batchFile.ItemID);
 
                                     // Get the text import file
                                     string textImportFilePath = string.Format("{0}{1}", configParms.TextImportFilePath, batchFile.Filename);

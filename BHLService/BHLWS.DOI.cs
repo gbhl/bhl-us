@@ -1,28 +1,26 @@
-﻿using System;
-using System.Web.Services;
-using System.ComponentModel;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Collections.Generic;
+using System.Web.Services;
 
 namespace MOBOT.BHL.WebService
 {
     public partial class BHLWS : System.Web.Services.WebService
     {
         [WebMethod]
-        public CustomGenericList<DOI> DOISelectSubmitted(int minutesSinceSubmit)
+        public List<DOI> DOISelectSubmitted(int minutesSinceSubmit)
         {
             return new BHLProvider().DOISelectSubmitted(minutesSinceSubmit);
         }
 
         [WebMethod]
-        public CustomGenericList<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new BHLProvider().TitleSelectWithoutSubmittedDOI(numberToReturn);
         }
 
         [WebMethod]
-        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new BHLProvider().SegmentSelectWithoutSubmittedDOI(numberToReturn);
         }

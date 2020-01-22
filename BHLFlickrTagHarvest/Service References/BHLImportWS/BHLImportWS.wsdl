@@ -78,6 +78,17 @@
               <s:element minOccurs="0" maxOccurs="1" name="ScanningInstitution" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="RightsHolder" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="ItemDescription" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndYear" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartVolume" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndVolume" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartIssue" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndIssue" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartSeries" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndSeries" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StartPart" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndPart" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>

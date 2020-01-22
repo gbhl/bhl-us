@@ -1,17 +1,13 @@
-using System;
-using System.Web.Services;
-using System.ComponentModel;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Xml;
-using Config = System.Configuration;
-using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Utility;
 using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Web.Services;
+using Config = System.Configuration;
 
 namespace MOBOT.BHL.WebService
 {
@@ -54,7 +50,7 @@ namespace MOBOT.BHL.WebService
         #region Title Methods
 
         [WebMethod]
-        public CustomGenericList<Title> TitleSelectAllPublished()
+        public List<Title> TitleSelectAllPublished()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.TitleSelectAllPublished();
@@ -75,34 +71,34 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllTitleCitations()
+        public List<TitleBibTeX> TitleBibTeXSelectAllTitleCitations()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.TitleBibTeXSelectAllTitleCitations();
         }
 
         [WebMethod]
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllItemCitations()
+        public List<TitleBibTeX> TitleBibTeXSelectAllItemCitations()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.TitleBibTeXSelectAllItemCitations();
         }
 
         [WebMethod]
-        public CustomGenericList<TitleBibTeX> SegmentSelectAllBibTeXCitations()
+        public List<TitleBibTeX> SegmentSelectAllBibTeXCitations()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.SegmentSelectAllBibTeXCitations();
         }
 
         [WebMethod]
-        public CustomGenericList<RISCitation> TitleSelectAllRISCitations()
+        public List<RISCitation> TitleSelectAllRISCitations()
         {
             return new BHLProvider().TitleSelectAllRISCitations();
         }
 
         [WebMethod]
-        public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
+        public List<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.Title_IdentifierSelectByTitleID(titleID);
@@ -120,7 +116,7 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<Item> ItemSelectByTitleID(int titleID)
+        public List<Item> ItemSelectByTitleID(int titleID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.ItemSelectByTitleId(titleID);
@@ -155,14 +151,14 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<Item> ItemSelectWithExpiredPageNames(int maxAge)
+        public List<Item> ItemSelectWithExpiredPageNames(int maxAge)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.ItemSelectWithExpiredPageNames(maxAge);
         }
 
         [WebMethod]
-        public CustomGenericList<Item> ItemSelectWithoutPageNames()
+        public List<Item> ItemSelectWithoutPageNames()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.ItemSelectWithoutPageNames();
@@ -190,14 +186,14 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<Item> ItemSelectPublished()
+        public List<Item> ItemSelectPublished()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.ItemSelectPublished();
         }
 
         [WebMethod]
-        public CustomGenericList<Item> ItemSelectRecentlyChanged(string startDate)
+        public List<Item> ItemSelectRecentlyChanged(string startDate)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.ItemSelectRecentlyChanged(startDate);
@@ -207,7 +203,7 @@ namespace MOBOT.BHL.WebService
         public List<string> ExportIAIdentifiers()
         {
             BHLProvider bhlServer = new BHLProvider();
-            CustomGenericList<Item> items = bhlServer.ItemSelectBarcodes();
+            List<Item> items = bhlServer.ItemSelectBarcodes();
 
             List<string> barcodes = new List<string>();
             foreach(Item item in items)
@@ -218,7 +214,7 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<RISCitation> ItemSelectAllRISCitations()
+        public List<RISCitation> ItemSelectAllRISCitations()
         {
             return new BHLProvider().ItemSelectAllRISCitations();
         }
@@ -228,7 +224,7 @@ namespace MOBOT.BHL.WebService
         #region Segment Methods
 
         [WebMethod]
-        public CustomGenericList<Segment> SegmentSelectPublished()
+        public List<Segment> SegmentSelectPublished()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.SegmentSelectPublished();
@@ -242,7 +238,7 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations()
+        public List<RISCitation> SegmentSelectAllRISCitations()
         {
             return new BHLProvider().SegmentSelectAllRISCitations();
         }
@@ -264,13 +260,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForCreate()
+        public List<ItemNameFileLog> ItemNameFileLogSelectForCreate()
         {
             return new BHLProvider().ItemNameFileLogSelectForCreate();
         }
 
         [WebMethod]
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForUpload()
+        public List<ItemNameFileLog> ItemNameFileLogSelectForUpload()
         {
             return new BHLProvider().ItemNameFileLogSelectForUpload();
         }
@@ -310,7 +306,7 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
+        public List<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.InstitutionSelectByItemIDAndRole(itemID, role);

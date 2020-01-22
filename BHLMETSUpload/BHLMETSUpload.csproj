@@ -106,9 +106,6 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.FindItItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -116,6 +113,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Page.datasource">
@@ -133,13 +133,19 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Segment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Title.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.TitleBibTeX.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.TitleEndNote.datasource">
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Title_Identifier.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLMETSUpload.BHLWS.Vault.datasource">

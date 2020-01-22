@@ -1,11 +1,10 @@
-﻿using System;
+﻿using MOBOT.IAAnalysis.DataObjects;
+using MOBOT.IAAnalysis.Server;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 using System.Xml;
-using CustomDataAccess;
-using MOBOT.IAAnalysis.DataObjects;
-using MOBOT.IAAnalysis.Server;
 
 namespace IAAnalysisHarvest
 {
@@ -103,7 +102,7 @@ namespace IAAnalysisHarvest
                 this.LogMessage("Harvesting Items");
 
                 // Download the XML files for each item and parse the data into the database
-                CustomGenericList<Item> items = provider.ItemSelectForXMLDownload();
+                List<Item> items = provider.ItemSelectForXMLDownload();
 
                 foreach (Item item in items)
                 {

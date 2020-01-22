@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
+﻿using MOBOT.BHL.OAI2;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
-using CustomDataAccess;
-using System.Net;
-using System.IO;
-using System.Xml;
-using MOBOT.BHL.OAI2;
+using System;
+using System.Collections.Generic;
+using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace BHLOAIHarvester
@@ -54,7 +49,7 @@ namespace BHLOAIHarvester
                 // return all sets (both active and inactive).  This allows us (in the next step) to select
                 // the specified set from the list, whether it is active or not.  If no set was specified,
                 // only select the active sets.
-                CustomGenericList<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll(string.IsNullOrWhiteSpace(configParms.HarvestSetID));
+                List<vwOAIHarvestSet> sets = new BHLImportProvider().OAIHarvestSetSelectAll(string.IsNullOrWhiteSpace(configParms.HarvestSetID));
 
                 Dictionary<string, string> formats = new Dictionary<string, string>();
                 foreach (vwOAIHarvestSet set in sets)
