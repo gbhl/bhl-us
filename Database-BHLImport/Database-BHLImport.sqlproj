@@ -79,7 +79,7 @@
     <None Include="dbo\Tables\ImportSourceItemSource.sql" />
     <None Include="dbo\Tables\Title_Creator.sql" />
     <None Include="dbo\Tables\IAScanCenterInstitution.sql" />
-    <None Include="dbo\Tables\SegmentAuthor.sql" />
+    <None Include="dbo\Tables\BSSegmentAuthor.sql" />
     <None Include="dbo\Tables\IAAnalysisHarvestLog.sql" />
     <None Include="dbo\Tables\Creator.sql" />
     <None Include="dbo\Tables\PageName.sql" />
