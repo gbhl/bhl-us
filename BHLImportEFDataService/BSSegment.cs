@@ -9,7 +9,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
 {
     public partial class DataService
     {
-        public void InsertSegment(BSSegment segment, List<SegmentAuthor> authors)
+        public void InsertSegment(BSSegment segment, List<BSSegmentAuthor> authors)
         {
             using (TransactionScope transaction = new TransactionScope())
             {
@@ -19,7 +19,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
                 context.SaveChanges();
 
                 int sequence = 1;
-                foreach (SegmentAuthor author in authors)
+                foreach (BSSegmentAuthor author in authors)
                 {
                     author.SegmentID = segment.SegmentID;
                     author.SequenceOrder = sequence;

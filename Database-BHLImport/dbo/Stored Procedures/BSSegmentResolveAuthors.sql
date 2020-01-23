@@ -11,10 +11,10 @@ SET NOCOUNT ON
 -- Compare BioStor IDs of authors in import DB and production.  If matches are found,
 -- update import DB with production author ID.
 -- Since matching on a unique ID, assume that we'll only match a single production author.
-UPDATE	dbo.SegmentAuthor
+UPDATE	dbo.BSSegmentAuthor
 SET		BHLAuthorID = ai.AuthorID
 FROM	dbo.BSSegment s
-		INNER JOIN dbo.SegmentAuthor sa ON s.SegmentID = sa.SegmentID
+		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 		INNER JOIN dbo.BHLAuthorIdentifier ai ON sa.BioStorID = ai.IdentifierValue
@@ -25,10 +25,10 @@ AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 -- Compare VIAF IDs of authors in import DB and production.  If matches are found,
 -- update import DB with production author ID.
 -- Since matching on a unique ID, assume that we'll only match a single production author.
-UPDATE	dbo.SegmentAuthor
+UPDATE	dbo.BSSegmentAuthor
 SET		BHLAuthorID = ai.AuthorID
 FROM	dbo.BSSegment s
-		INNER JOIN dbo.SegmentAuthor sa ON s.SegmentID = sa.SegmentID
+		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 		INNER JOIN dbo.BHLAuthorIdentifier ai ON sa.VIAFIdentifier = ai.IdentifierValue
@@ -42,7 +42,7 @@ AND		sa.VIAFIdentifier <> ''
 SELECT	an.AuthorID, sa.SegmentAuthorID
 INTO	#tmpNameAuthorID
 FROM	dbo.BSSegment s
-		INNER JOIN dbo.SegmentAuthor sa ON s.SegmentID = sa.SegmentID
+		INNER JOIN dbo.BSSegmentAuthor sa ON s.SegmentID = sa.SegmentID
 		-- Only segments contributed by BioStor
 		INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 		INNER JOIN dbo.BHLAuthorName an 
@@ -56,19 +56,19 @@ AND		sa.BHLAuthorID IS NULL	-- only authors not already resolved
 IF (@@ROWCOUNT = 1)
 BEGIN
 	-- Do the update
-	UPDATE	dbo.SegmentAuthor
+	UPDATE	dbo.BSSegmentAuthor
 	SET		BHLAuthorID = AuthorID
-	FROM	dbo.SegmentAuthor sa INNER JOIN #tmpNameAuthorID t 
+	FROM	dbo.BSSegmentAuthor sa INNER JOIN #tmpNameAuthorID t 
 				ON sa.SegmentAuthorID = t.SegmentAuthorID
 END
 
 -- If the selected production author ID has been redirected to a different 
 -- author, then use that author instead.  Follow the "redirect" chain up 
 -- to ten levels.
-UPDATE	dbo.SegmentAuthor
+UPDATE	dbo.BSSegmentAuthor
 SET		BHLAuthorID = COALESCE(a10.AuthorID, a9.AuthorID, a8.AuthorID, a7.AuthorID, a6.AuthorID,
 							a5.AuthorID, a4.AuthorID, a3.AuthorID, a2.AuthorID, a1.AuthorID)
-FROM	dbo.SegmentAuthor sa INNER JOIN dbo.BHLAuthor a1 ON sa.BHLAuthorID = a1.AuthorID
+FROM	dbo.BSSegmentAuthor sa INNER JOIN dbo.BHLAuthor a1 ON sa.BHLAuthorID = a1.AuthorID
 		LEFT JOIN dbo.BHLAuthor a2 ON a1.RedirectAuthorID = a2.AuthorID
 		LEFT JOIN dbo.BHLAuthor a3 ON a2.RedirectAuthorID = a3.AuthorID
 		LEFT JOIN dbo.BHLAuthor a4 ON a3.RedirectAuthorID = a4.AuthorID

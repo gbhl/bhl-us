@@ -75,6 +75,9 @@
     <Compile Include="BSSegment.cs">
       <DependentUpon>BHLImportModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="BSSegmentAuthor.cs">
+      <DependentUpon>BHLImportModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="BSSegmentPage.cs">
       <DependentUpon>BHLImportModel.tt</DependentUpon>
     </Compile>
@@ -82,9 +85,6 @@
       <DependentUpon>BHLImportModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SegmentAuthor.cs">
-      <DependentUpon>BHLImportModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="BHLImportModel.edmx">

@@ -49,7 +49,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\PageFlickrNote.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSItem.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSSegment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSSegmentPage.sql"
-sqlcmd -E -S %1 -d %2 -i "dbo\Tables\SegmentAuthor.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\BSSegmentAuthor.sql"
 
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IAItem.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IADCMetadata.sql"

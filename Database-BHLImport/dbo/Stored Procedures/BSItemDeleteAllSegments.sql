@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[BSItemDeleteAllSegments]
+﻿CREATE PROCEDURE [dbo].[BSItemDeleteAllSegments]
 
 @ItemID int
 
@@ -19,7 +18,7 @@ BEGIN TRY
 	DELETE FROM dbo.BSSegmentPage 
 	WHERE	SegmentID IN (SELECT SegmentID FROM dbo.BSSegment WHERE ItemID = @ItemID)
 	
-	DELETE FROM dbo.SegmentAuthor 
+	DELETE FROM dbo.BSSegmentAuthor 
 	WHERE	SegmentID IN (SELECT SegmentID FROM dbo.BSSegment WHERE ItemID = @ItemID)
 	AND		ImportSourceID = @ImportSourceID
 	
@@ -43,5 +42,3 @@ BEGIN CATCH
 END CATCH
 
 END
-
-

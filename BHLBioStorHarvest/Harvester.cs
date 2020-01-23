@@ -1,16 +1,14 @@
-﻿using System;
+﻿using MOBOT.BHL.SegmentClusterer;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Xml.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using EFModel = MOBOT.BHLImport.BHLImportEFDataModel;
 using EFService = MOBOT.BHLImport.BHLImportEFDataService;
-using CustomDataAccess;
-using MOBOT.BHL.SegmentClusterer;
 
 namespace MOBOT.BHL.BHLBioStorHarvest
 {
@@ -163,7 +161,7 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     {
                         sequenceOrder++;
                         EFModel.BSSegment segment = GetSegment(bhlItemID, sequenceOrder, article);
-                        List<EFModel.SegmentAuthor> segmentAuthors = GetAuthors(article);
+                        List<EFModel.BSSegmentAuthor> segmentAuthors = GetAuthors(article);
                         segment.ItemID = itemID;
                         provider.InsertSegment(segment, segmentAuthors);
                         articlesHarvested.Add(segment.Title);
@@ -268,9 +266,9 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             return segment;
         }
 
-        private List<EFModel.SegmentAuthor> GetAuthors(JObject article)
+        private List<EFModel.BSSegmentAuthor> GetAuthors(JObject article)
         {
-            List<EFModel.SegmentAuthor> segmentAuthors = new List<EFModel.SegmentAuthor>();
+            List<EFModel.BSSegmentAuthor> segmentAuthors = new List<EFModel.BSSegmentAuthor>();
 
             // Get the authors for the article
             JArray authors = (JArray)article["authors"];
@@ -287,10 +285,10 @@ namespace MOBOT.BHL.BHLBioStorHarvest
                     // Make sure this isn't a duplicate author
                     var duplicate = segmentAuthors.Find(a => 
                         a.BioStorID == bioStorId && a.LastName == lastName.Trim() && a.FirstName == firstName.Trim());
-                    if (duplicate == default(EFModel.SegmentAuthor))
+                    if (duplicate == default(EFModel.BSSegmentAuthor))
                     {
                         // Get the author info
-                        EFModel.SegmentAuthor segmentAuthor = new EFModel.SegmentAuthor();
+                        EFModel.BSSegmentAuthor segmentAuthor = new EFModel.BSSegmentAuthor();
                         segmentAuthor.ImportSourceID = configParms.ImportSourceID;
                         segmentAuthor.BioStorID = ((string)author["id"]) ?? string.Empty;
                         segmentAuthor.LastName = lastName.Trim();
@@ -488,8 +486,8 @@ namespace MOBOT.BHL.BHLBioStorHarvest
             List<EFModel.BSSegment> segments = provider.SelectSegmentsForItem(itemID);
             foreach (EFModel.BSSegment segment in segments)
             {
-                List<EFModel.SegmentAuthor> authors = provider.GetSegmentAuthorsForSegment(configParms.ImportSourceID, segment.SegmentID);
-                foreach (EFModel.SegmentAuthor author in authors)
+                List<EFModel.BSSegmentAuthor> authors = provider.GetSegmentAuthorsForSegment(configParms.ImportSourceID, segment.SegmentID);
+                foreach (EFModel.BSSegmentAuthor author in authors)
                 {
                     // TODO: Put the following in a separate assembly for sharing with other apps
                     // TODO: Get the VIAF identifier for the author

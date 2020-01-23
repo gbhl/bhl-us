@@ -47,6 +47,22 @@
           <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
           <Property Name="ContributorName" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="BSSegmentAuthor">
+          <Key>
+            <PropertyRef Name="SegmentAuthorID" />
+          </Key>
+          <Property Name="SegmentAuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImportSourceID" Type="int" Nullable="false" />
+          <Property Name="SegmentID" Type="int" Nullable="false" />
+          <Property Name="BioStorID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SequenceOrder" Type="int" Nullable="false" />
+          <Property Name="VIAFIdentifier" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="BHLAuthorID" Type="int" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="BSSegmentPage">
           <Key>
             <PropertyRef Name="SegmentPageID" />
@@ -64,22 +80,6 @@
           <Property Name="ImportSourceID" Type="int" Nullable="false" />
           <Property Name="Source" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SegmentAuthor">
-          <Key>
-            <PropertyRef Name="SegmentAuthorID" />
-          </Key>
-          <Property Name="SegmentAuthorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ImportSourceID" Type="int" Nullable="false" />
-          <Property Name="SegmentID" Type="int" Nullable="false" />
-          <Property Name="BioStorID" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="SequenceOrder" Type="int" Nullable="false" />
-          <Property Name="VIAFIdentifier" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="BHLAuthorID" Type="int" />
-          <Property Name="CreationDate" Type="datetime" Nullable="false" />
           <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_BSSegment_BSItem">
@@ -108,12 +108,12 @@
         </Association>
         <Association Name="FK_SegmentAuthor_ImportSource">
           <End Role="ImportSource" Type="Self.ImportSource" Multiplicity="1" />
-          <End Role="SegmentAuthor" Type="Self.SegmentAuthor" Multiplicity="*" />
+          <End Role="BSSegmentAuthor" Type="Self.BSSegmentAuthor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImportSource">
               <PropertyRef Name="ImportSourceID" />
             </Principal>
-            <Dependent Role="SegmentAuthor">
+            <Dependent Role="BSSegmentAuthor">
               <PropertyRef Name="ImportSourceID" />
             </Dependent>
           </ReferentialConstraint>
@@ -138,9 +138,9 @@
         <EntityContainer Name="BHLImportModelStoreContainer">
           <EntitySet Name="BSItem" EntityType="Self.BSItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BSSegment" EntityType="Self.BSSegment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BSSegmentAuthor" EntityType="Self.BSSegmentAuthor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BSSegmentPage" EntityType="Self.BSSegmentPage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImportSource" EntityType="Self.ImportSource" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SegmentAuthor" EntityType="Self.SegmentAuthor" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BSSegment_BSItem" Association="Self.FK_BSSegment_BSItem">
             <End Role="BSItem" EntitySet="BSItem" />
             <End Role="BSSegment" EntitySet="BSSegment" />
@@ -151,7 +151,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_SegmentAuthor_ImportSource" Association="Self.FK_SegmentAuthor_ImportSource">
             <End Role="ImportSource" EntitySet="ImportSource" />
-            <End Role="SegmentAuthor" EntitySet="SegmentAuthor" />
+            <End Role="BSSegmentAuthor" EntitySet="BSSegmentAuthor" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -178,11 +178,6 @@
             <Parameter Name="ItemStatusID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="ImportSources" EntityType="BHLImportModel.ImportSource" />
-          <EntitySet Name="SegmentAuthors" EntityType="BHLImportModel.SegmentAuthor" />
-          <AssociationSet Name="FK_SegmentAuthor_ImportSource" Association="BHLImportModel.FK_SegmentAuthor_ImportSource">
-            <End Role="ImportSource" EntitySet="ImportSources" />
-            <End Role="SegmentAuthor" EntitySet="SegmentAuthors" />
-          </AssociationSet>
           <FunctionImport Name="BSSegmentResolveAuthors">
           <Parameter Name="SegmentID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -193,6 +188,11 @@
           <FunctionImport Name="BSItemAvailabilityCheck" EntitySet="BSItems" ReturnType="Collection(BHLImportModel.BSItem)" >
           <Parameter Name="BHLItemID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="BSSegmentAuthors" EntityType="BHLImportModel.BSSegmentAuthor" />
+          <AssociationSet Name="FK_SegmentAuthor_ImportSource1" Association="BHLImportModel.FK_SegmentAuthor_ImportSource1">
+            <End Role="ImportSource" EntitySet="ImportSources" />
+            <End Role="BSSegmentAuthor" EntitySet="BSSegmentAuthors" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BSItem">
           <Key>
@@ -282,33 +282,33 @@
           <Property Type="String" Name="Source" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
           <Property Type="DateTime" Name="LastModifiedDate" Nullable="false" Precision="3" />
-          <NavigationProperty Name="SegmentAuthors" Relationship="BHLImportModel.FK_SegmentAuthor_ImportSource" FromRole="ImportSource" ToRole="SegmentAuthor" />
+          <NavigationProperty Name="BSSegmentAuthors" Relationship="BHLImportModel.FK_SegmentAuthor_ImportSource1" FromRole="ImportSource" ToRole="BSSegmentAuthor" />
         </EntityType>
-        <EntityType Name="SegmentAuthor">
+        <EntityType Name="BSSegmentAuthor">
           <Key>
             <PropertyRef Name="SegmentAuthorID" />
           </Key>
-          <Property Type="Int32" Name="SegmentAuthorID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ImportSourceID" Nullable="false" />
-          <Property Type="Int32" Name="SegmentID" Nullable="false" />
-          <Property Type="String" Name="BioStorID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="LastName" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="VIAFIdentifier" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="BHLAuthorID" />
-          <Property Type="DateTime" Name="CreationDate" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="LastModifiedDate" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ImportSource" Relationship="BHLImportModel.FK_SegmentAuthor_ImportSource" FromRole="SegmentAuthor" ToRole="ImportSource" />
-          <Property Type="Int32" Name="SequenceOrder" Nullable="false" />
+          <Property Name="SegmentAuthorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImportSourceID" Type="Int32" Nullable="false" />
+          <Property Name="SegmentID" Type="Int32" Nullable="false" />
+          <Property Name="BioStorID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SequenceOrder" Type="Int32" Nullable="false" />
+          <Property Name="VIAFIdentifier" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BHLAuthorID" Type="Int32" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ImportSource" Relationship="BHLImportModel.FK_SegmentAuthor_ImportSource1" FromRole="BSSegmentAuthor" ToRole="ImportSource" />
         </EntityType>
-        <Association Name="FK_SegmentAuthor_ImportSource">
+        <Association Name="FK_SegmentAuthor_ImportSource1">
           <End Type="BHLImportModel.ImportSource" Role="ImportSource" Multiplicity="1" />
-          <End Type="BHLImportModel.SegmentAuthor" Role="SegmentAuthor" Multiplicity="*" />
+          <End Type="BHLImportModel.BSSegmentAuthor" Role="BSSegmentAuthor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImportSource">
               <PropertyRef Name="ImportSourceID" />
             </Principal>
-            <Dependent Role="SegmentAuthor">
+            <Dependent Role="BSSegmentAuthor">
               <PropertyRef Name="ImportSourceID" />
             </Dependent>
           </ReferentialConstraint>
@@ -374,14 +374,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SegmentAuthors">
-            <EntityTypeMapping TypeName="BHLImportModel.SegmentAuthor">
-              <MappingFragment StoreEntitySet="SegmentAuthor">
-                <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
+          <FunctionImportMapping FunctionImportName="BSSegmentResolveAuthors" FunctionName="BHLImportModel.Store.BSSegmentResolveAuthors" />
+          <FunctionImportMapping FunctionImportName="BSSegmentPublishToProduction" FunctionName="BHLImportModel.Store.BSSegmentPublishToProduction" />
+          <FunctionImportMapping FunctionImportName="BSItemAvailabilityCheck" FunctionName="BHLImportModel.Store.BSItemAvailabilityCheck" />
+          <EntitySetMapping Name="BSSegmentAuthors">
+            <EntityTypeMapping TypeName="BHLImportModel.BSSegmentAuthor">
+              <MappingFragment StoreEntitySet="BSSegmentAuthor">
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="BHLAuthorID" ColumnName="BHLAuthorID" />
                 <ScalarProperty Name="VIAFIdentifier" ColumnName="VIAFIdentifier" />
+                <ScalarProperty Name="SequenceOrder" ColumnName="SequenceOrder" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="BioStorID" ColumnName="BioStorID" />
@@ -391,9 +394,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="BSSegmentResolveAuthors" FunctionName="BHLImportModel.Store.BSSegmentResolveAuthors" />
-          <FunctionImportMapping FunctionImportName="BSSegmentPublishToProduction" FunctionName="BHLImportModel.Store.BSSegmentPublishToProduction" />
-          <FunctionImportMapping FunctionImportName="BSItemAvailabilityCheck" FunctionName="BHLImportModel.Store.BSItemAvailabilityCheck" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -429,11 +429,8 @@
           <ConnectorPoint PointX="5.25" PointY="2.08550048828125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="BHLImportModel.ImportSource" Width="1.5" PointX="7.25" PointY="3.5" Height="1.7566536458333317" />
-        <EntityTypeShape EntityType="BHLImportModel.SegmentAuthor" Width="1.5" PointX="5.25" PointY="3.375" Height="2.7427376302083317" />
-        <AssociationConnector Association="BHLImportModel.FK_SegmentAuthor_ImportSource" >
-          <ConnectorPoint PointX="7.25" PointY="4.3783268229166659" />
-          <ConnectorPoint PointX="6.75" PointY="4.3783268229166659" />
-        </AssociationConnector>
+        <EntityTypeShape EntityType="BHLImportModel.BSSegmentAuthor" Width="1.5" PointX="9.5" PointY="2.875" />
+        <AssociationConnector Association="BHLImportModel.FK_SegmentAuthor_ImportSource1" />
       </Diagram>
     </Diagrams>
   </Designer>

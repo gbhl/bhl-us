@@ -104,6 +104,9 @@
 <a href="#BSSegment">BSSegment</a>
 </li>
 <li>
+<a href="#BSSegmentAuthor">BSSegmentAuthor</a>
+</li>
+<li>
 <a href="#BSSegmentPage">BSSegmentPage</a>
 </li>
 <li>
@@ -258,9 +261,6 @@
 </li>
 <li>
 <a href="#PageFlickrTag">PageFlickrTag</a>
-</li>
-<li>
-<a href="#SegmentAuthor">SegmentAuthor</a>
 </li>
 <li>
 <a href="#Title">Title</a>
@@ -488,7 +488,63 @@
 <li>
 <a href="#BSSegmentPage">BSSegmentPage</a> referencing (SegmentID)</li>
 <li>
-<a href="#SegmentAuthor">SegmentAuthor</a> referencing (SegmentID)</li>
+<a href="#BSSegmentAuthor">BSSegmentAuthor</a> referencing (SegmentID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>BSSegmentAuthor<a name="BSSegmentAuthor"></a>
+</h1>
+<h2>
+      (Physical Name: BSSegmentAuthor)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentAuthorID (PK)</td><td class="tdTableDefinition">SegmentAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SegmentID
+                &nbsp;(<a href="#BSSegment">FK</a>)
+              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BioStorID</td><td class="tdTableDefinition">BioStorID</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastName</td><td class="tdTableDefinition">LastName</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">FirstName</td><td class="tdTableDefinition">FirstName</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">VIAFIdentifier</td><td class="tdTableDefinition">VIAFIdentifier</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BHLAuthorID</td><td class="tdTableDefinition">BHLAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#BSSegment">BSSegment</a> through (SegmentID)</li>
 </ul>
 </div>
 </div>
@@ -3338,62 +3394,6 @@
 </tr>
 </table>
 <div class="references"></div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentAuthor<a name="SegmentAuthor"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentAuthor)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentAuthorID (PK)</td><td class="tdTableDefinition">SegmentAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">ImportSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#BSSegment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">BioStorID</td><td class="tdTableDefinition">BioStorID</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastName</td><td class="tdTableDefinition">LastName</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">FirstName</td><td class="tdTableDefinition">FirstName</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">VIAFIdentifier</td><td class="tdTableDefinition">VIAFIdentifier</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">BHLAuthorID</td><td class="tdTableDefinition">BHLAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#BSSegment">BSSegment</a> through (SegmentID)</li>
-</ul>
-</div>
 </div>
 <div class="tableNameHeading">
 <h1>Title<a name="Title"></a>

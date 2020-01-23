@@ -16,7 +16,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
     {
         public ImportSource()
         {
-            this.SegmentAuthors = new HashSet<SegmentAuthor>();
+            this.BSSegmentAuthors = new HashSet<BSSegmentAuthor>();
         }
     
         public int ImportSourceID { get; set; }
@@ -24,6 +24,6 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime LastModifiedDate { get; set; }
     
-        public virtual ICollection<SegmentAuthor> SegmentAuthors { get; set; }
+        public virtual ICollection<BSSegmentAuthor> BSSegmentAuthors { get; set; }
     }
 }

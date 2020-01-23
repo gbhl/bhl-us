@@ -230,7 +230,7 @@ BEGIN TRY
 	SELECT	BHLAuthorID, 
 			LastName + CASE WHEN LastName <> '' AND FirstName <> '' THEN ', ' ELSE '' END + FirstName, 
 			LastName, FirstName, 0, @UserID, @UserID
-	FROM	dbo.SegmentAuthor sa 
+	FROM	dbo.BSSegmentAuthor sa 
 			INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 	WHERE	sa.SegmentID = @SegmentID
 	AND		sa.BHLAuthorID IS NOT NULL
@@ -246,7 +246,7 @@ BEGIN TRY
 	SET		SequenceOrder = sa.SequenceOrder,
 			LastModifiedDate = GETDATE(),
 			LastModifiedUserID = 1
-	FROM	dbo.SegmentAuthor sa INNER JOIN dbo.ImportSource src
+	FROM	dbo.BSSegmentAuthor sa INNER JOIN dbo.ImportSource src
 				ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 			INNER JOIN dbo.BHLSegmentAuthor bsa
 				ON bsa.SegmentID = @BHLSegmentID
@@ -259,7 +259,7 @@ BEGIN TRY
 	-- SegmentAuthor records don't already exist)
 	INSERT dbo.BHLSegmentAuthor(SegmentID, AuthorID, SequenceOrder, CreationUserID, LastModifiedUserID)
 	SELECT	@BHLSegmentID, sa.BHLAuthorID, sa.SequenceOrder, @UserID, @UserID
-	FROM	dbo.SegmentAuthor sa INNER JOIN dbo.ImportSource src 
+	FROM	dbo.BSSegmentAuthor sa INNER JOIN dbo.ImportSource src 
 				ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 			LEFT JOIN dbo.BHLSegmentAuthor bsa
 				ON bsa.SegmentID = @BHLSegmentID
@@ -271,7 +271,7 @@ BEGIN TRY
 	-- Add new BHL Author records
 	DECLARE curAuthors CURSOR FOR
 	SELECT	SegmentAuthorID, BioStorID, LastName, FirstName, SequenceOrder, VIAFIdentifier
-	FROM	dbo.SegmentAuthor sa
+	FROM	dbo.BSSegmentAuthor sa
 			INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 	WHERE	sa.SegmentID = @SegmentID
 	AND		sa.BHLAuthorID IS NULL
@@ -325,7 +325,7 @@ BEGIN TRY
 			VALUES (@BHLSegmentID, @BHLAuthorID, @SequenceOrder, @UserID, @UserID)
 			
 			-- Update the SegmentAuthor table in the import DB with the BHL Author ID
-			UPDATE	dbo.SegmentAuthor 
+			UPDATE	dbo.BSSegmentAuthor 
 			SET		BHLAuthorID = @BHLAuthorID, LastModifiedDate = GETDATE() 
 			WHERE	SegmentAuthorID = @SegmentAuthorID
 		END
@@ -343,7 +343,7 @@ BEGIN TRY
 		FROM	(SELECT	* FROM dbo.BHLSegmentAuthor WHERE SegmentID = @BHLSegmentID AND CreationUserID = 1) p -- Production authors
 				LEFT JOIN 
 				(SELECT	sa.SegmentAuthorID, s.BHLSegmentID, sa.BHLAuthorID
-				 FROM	dbo.SegmentAuthor sa INNER JOIN dbo.BSSegment s ON sa.SegmentID = s.SegmentID
+				 FROM	dbo.BSSegmentAuthor sa INNER JOIN dbo.BSSegment s ON sa.SegmentID = s.SegmentID
 						INNER JOIN dbo.ImportSource src ON sa.ImportSourceID = src.ImportSourceID AND src.Source = 'BioStor'
 				 WHERE	s.SegmentID = @SegmentID) i  -- Imported authors
 					ON p.SegmentID = i.BHLSegmentID
