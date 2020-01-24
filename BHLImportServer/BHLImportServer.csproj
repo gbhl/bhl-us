@@ -70,6 +70,7 @@
     <Compile Include="BHLImportProvider.IAItemSet.cs" />
     <Compile Include="BHLImportProvider.IAItemStatus.cs" />
     <Compile Include="BHLImportProvider.IAMarc.cs" />
+    <Compile Include="BHLImportProvider.IASegment.cs" />
     <Compile Include="BHLImportProvider.IASet.cs" />
     <Compile Include="BHLImportProvider.OAIHarvestLog.cs" />
     <Compile Include="BHLImportProvider.OAIRecord.cs" />

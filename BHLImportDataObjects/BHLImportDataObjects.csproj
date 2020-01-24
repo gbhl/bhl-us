@@ -82,6 +82,9 @@
     <Compile Include="Concrete\IAScandata.cs" />
     <Compile Include="Concrete\IAScandataAltPageNumber.cs" />
     <Compile Include="Concrete\IAScandataAltPageType.cs" />
+    <Compile Include="Concrete\IASegment.cs" />
+    <Compile Include="Concrete\IASegmentAuthor.cs" />
+    <Compile Include="Concrete\IASegmentPage.cs" />
     <Compile Include="Concrete\IASet.cs" />
     <Compile Include="Concrete\ImportError.cs" />
     <Compile Include="Concrete\ImportLog.cs" />
@@ -128,6 +131,8 @@
     <Compile Include="Generated\__IAScandata.cs" />
     <Compile Include="Generated\__IAScandataAltPageNumber.cs" />
     <Compile Include="Generated\__IAScandataAltPageType.cs" />
+    <Compile Include="Generated\__IASegment.cs" />
+    <Compile Include="Generated\__IASegmentAuthor.cs" />
     <Compile Include="Generated\__IASet.cs" />
     <Compile Include="Generated\__ImportError.cs" />
     <Compile Include="Generated\__ImportLog.cs" />
@@ -146,6 +151,7 @@
     <Compile Include="Generated\__PageFlickrTag.cs" />
     <Compile Include="Generated\__PageName.cs" />
     <Compile Include="Generated\__Page_PageType.cs" />
+    <Compile Include="Generated\__IASegmentPage.cs" />
     <Compile Include="Generated\__Title.cs" />
     <Compile Include="Generated\__TitleAssociation.cs" />
     <Compile Include="Generated\__TitleAssociation_TitleIdentifier.cs" />
