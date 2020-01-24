@@ -1,15 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -35,7 +29,7 @@ namespace MOBOT.BHL.Web2
 
         private string BuildPageList(string conceptCode, int annotationSubjectCategoryID, int subjectId)
         {
-            CustomGenericList<SearchBookResult> pages = null;
+            List<SearchBookResult> pages = null;
             string indexTerm = string.Empty;
 
             if (conceptCode == string.Empty)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
@@ -118,22 +119,22 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _OcrText = value; }
         }
 
-        CustomGenericList<PageType> _PageTypes = null;
-        public CustomGenericList<PageType> PageTypes
+        List<PageType> _PageTypes = null;
+        public List<PageType> PageTypes
         {
             get { return _PageTypes; }
             set { _PageTypes = value; }
         }
 
-        CustomGenericList<PageNumber> _PageNumbers = null;
-        public CustomGenericList<PageNumber> PageNumbers
+        List<PageNumber> _PageNumbers = null;
+        public List<PageNumber> PageNumbers
         {
             get { return _PageNumbers; }
             set { _PageNumbers = value; }
         }
 
-        CustomGenericList<Name> _Names = null;
-        public CustomGenericList<Name> Names
+        List<Name> _Names = null;
+        public List<Name> Names
         {
             get { return _Names; }
             set { _Names = value; }

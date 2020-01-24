@@ -1,5 +1,5 @@
 using System;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects
 {
@@ -140,8 +140,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects
             }
         }
 
-        CustomGenericList<Item> _Items;
-        public CustomGenericList<Item> Items
+        List<Item> _Items;
+        public List<Item> Items
         {
             get
             {

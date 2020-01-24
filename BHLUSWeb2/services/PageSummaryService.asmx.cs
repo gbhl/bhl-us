@@ -1,21 +1,12 @@
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
 using System.Web.Script.Services;
-using System.Xml;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
+using System.Web.Services;
 
 namespace MOBOT.BHL.Web2.Services
 {

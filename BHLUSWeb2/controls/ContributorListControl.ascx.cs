@@ -1,13 +1,8 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.Web2.controls
 {
@@ -19,13 +14,13 @@ namespace MOBOT.BHL.Web2.controls
         {
             if (!IsPostBack)
             {
-                CustomGenericList<Institution> allInstitutions = null;
+                List<Institution> allInstitutions = null;
 
                 String cacheKey = "contributorBrowse";
                 if (Cache[cacheKey] != null)
                 {
                     // Use cached version
-                    allInstitutions = (CustomGenericList<Institution>)Cache[cacheKey];
+                    allInstitutions = (List<Institution>)Cache[cacheKey];
                 }
                 else
                 {
@@ -43,8 +38,8 @@ namespace MOBOT.BHL.Web2.controls
                 litNumContributors.Text = allInstitutions.Count.ToString();
 
                 // Separate the institutions into separate lists of BHL members and non-members
-                CustomGenericList<Institution> members = new CustomGenericList<Institution>();
-                CustomGenericList<Institution> nonMembers = new CustomGenericList<Institution>();
+                List<Institution> members = new List<Institution>();
+                List<Institution> nonMembers = new List<Institution>();
                 foreach (Institution institution in allInstitutions)
                 {
                     institution.InstitutionName = institution.InstitutionName.Replace("(archive.org)", "").Trim();
@@ -67,13 +62,13 @@ namespace MOBOT.BHL.Web2.controls
         /// Get a list of all institutions that have contributed either books or segments
         /// </summary>
         /// <returns></returns>
-        private CustomGenericList<Institution> GetInstitutions()
+        private List<Institution> GetInstitutions()
         {
-            CustomGenericList<Institution> institutions = new CustomGenericList<Institution>();
-            CustomGenericList<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Holding Institution");
-            CustomGenericList<Institution> contributorsWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Contributor");
-            CustomGenericList<Institution> rightsHolders = provider.InstitutionSelectWithPublishedItems(false, "Rights Holder");
-            CustomGenericList<Institution> rightsHoldersWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Rights Holder");
+            List<Institution> institutions = new List<Institution>();
+            List<Institution> contributors = provider.InstitutionSelectWithPublishedItems(false, "Holding Institution");
+            List<Institution> contributorsWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Contributor");
+            List<Institution> rightsHolders = provider.InstitutionSelectWithPublishedItems(false, "Rights Holder");
+            List<Institution> rightsHoldersWithSegments = provider.InstitutionSelectWithPublishedSegments(false, "Rights Holder");
 
             BuildInstitutionList(contributors, institutions);
             BuildInstitutionList(contributorsWithSegments, institutions);
@@ -86,7 +81,7 @@ namespace MOBOT.BHL.Web2.controls
             return institutions;
         }
 
-        private void BuildInstitutionList(CustomGenericList<Institution> source, CustomGenericList<Institution> target)
+        private void BuildInstitutionList(List<Institution> source, List<Institution> target)
         {
             foreach(Institution newInstitution in source)
             {

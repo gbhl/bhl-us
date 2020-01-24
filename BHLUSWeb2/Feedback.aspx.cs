@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Countersoft.Gemini.Api;
+using Countersoft.Gemini.Commons.Dto;
+using Countersoft.Gemini.Commons.Entity;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using Countersoft.Gemini.Commons.Entity;
-using Countersoft.Gemini.Api;
-using Countersoft.Gemini.Commons.Dto;
-using System.Net;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace MOBOT.BHL.Web2
 {
@@ -50,7 +49,7 @@ namespace MOBOT.BHL.Web2
         private void fillCombos()
         {
             BHLProvider bp = new BHLProvider();
-            CustomGenericList<Language> languages = bp.LanguageSelectAll();
+            List<Language> languages = bp.LanguageSelectAll();
 
             srLanguageList.DataSource = languages;
             srLanguageList.DataTextField = "LanguageName";

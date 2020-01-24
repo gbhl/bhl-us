@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MOBOT.BHL.API.BHLApi;
+using System;
 using System.Web;
 using System.Web.Services;
-using MOBOT.BHL.API.BHLApi;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2.api
 {

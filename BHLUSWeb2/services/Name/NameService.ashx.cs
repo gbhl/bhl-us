@@ -1,15 +1,9 @@
-using System;
-using System.Data;
-using System.Web;
-using System.Collections;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Web.Script;
-using System.Net;
-using System.IO;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects;
 using MOBOT.BHL.API.BHLApi;
+using MOBOT.BHL.API.BHLApiDataObjects;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Services;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -48,7 +42,7 @@ namespace MOBOT.BHL.Web2.Services
                 }
                 else if (String.Compare(operation, "NameList", true) == 0)
                 {
-                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
+                    ServiceResponse<List<Name>> serviceResponse = new ServiceResponse<List<Name>>();
                     serviceResponse.Result = this.NameList(startRow, batchSize, startDate, endDate);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -60,7 +54,7 @@ namespace MOBOT.BHL.Web2.Services
                 }
                 else if (String.Compare(operation, "NameSearch", true) == 0)
                 {
-                    ServiceResponse<CustomGenericList<Name>> serviceResponse = new ServiceResponse<CustomGenericList<Name>>();
+                    ServiceResponse<List<Name>> serviceResponse = new ServiceResponse<List<Name>>();
                     serviceResponse.Result = this.NameSearch(name);
                     response = serviceResponse.Serialize(outputType);
                 }
@@ -115,7 +109,7 @@ namespace MOBOT.BHL.Web2.Services
                 return nameService.NameCount();
         }
 
-        private CustomGenericList<Name> NameList(string startRow, string batchSize, string startDate, string endDate)
+        private List<Name> NameList(string startRow, string batchSize, string startDate, string endDate)
         {
             NameService nameService = new NameService();
             if ((startDate != null) || (endDate != null))
@@ -130,7 +124,7 @@ namespace MOBOT.BHL.Web2.Services
             return nameService.NameGetDetail(nameBankID);
         }
 
-        private CustomGenericList<Name> NameSearch(string name)
+        private List<Name> NameSearch(string name)
         {
             NameService nameService = new NameService();
             return nameService.NameSearch(name);

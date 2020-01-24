@@ -44,17 +44,16 @@ Updated:        Mike Lichtenberg
 
 #endregion License
 
+using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
+using System.Xml.Linq;
 
 namespace MOBOT.BHL.OAI2
 {
@@ -381,7 +380,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
 
-                CustomDataAccess.CustomGenericList<DataObjects.OAIIdentifier> oaiIDs = null;
+                List<DataObjects.OAIIdentifier> oaiIDs = null;
 
                 if (String.IsNullOrEmpty(errorMessage))
                 {
@@ -620,7 +619,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
 
-                CustomDataAccess.CustomGenericList<DataObjects.OAIIdentifier> oaiIDs = null;
+                List<DataObjects.OAIIdentifier> oaiIDs = null;
 
                 if (String.IsNullOrEmpty(errorMessage))
                 {

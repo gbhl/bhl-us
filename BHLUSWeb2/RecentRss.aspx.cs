@@ -1,12 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using CustomDataAccess;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -34,7 +30,7 @@ namespace MOBOT.BHL.Web2
             WriteLine("<lastBuildDate>" + DateTime.Now.ToUniversalTime().ToString() + "</lastBuildDate>");
             WriteLine("<generator>https://www.biodiversitylibrary.org/</generator>");
 
-            CustomGenericList<Item> list = new BHLProvider().ItemSelectRecent(top, languageCode, institutionCode);
+            List<Item> list = new BHLProvider().ItemSelectRecent(top, languageCode, institutionCode);
             foreach (Item item in list)
             {
                 String description = String.Empty;

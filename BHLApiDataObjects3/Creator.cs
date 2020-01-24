@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
@@ -136,15 +137,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _CreatorUrl = value; }
         }
 
-        private CustomGenericList<Identifier> _identifiers = null;
-        public CustomGenericList<Identifier> Identifiers
+        private List<Identifier> _identifiers = null;
+        public List<Identifier> Identifiers
         {
             get { return _identifiers; }
             set { _identifiers = value; }
         }
 
-        private CustomGenericList<Publication> _publications = null;
-        public CustomGenericList<Publication> Publications
+        private List<Publication> _publications = null;
+        public List<Publication> Publications
         {
             get { return _publications; }
             set { _publications = value; }

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -10,7 +10,7 @@ namespace MOBOT.BHL.Web2
     {
 
         protected string Start { get; set; }
-        protected CustomGenericList<Author> BhlAuthorList { get; set; }
+        protected List<Author> BhlAuthorList { get; set; }
 
         protected override void Page_Load(object sender, EventArgs e)
         {
@@ -39,7 +39,7 @@ namespace MOBOT.BHL.Web2
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                BhlAuthorList = (CustomGenericList<Author>)Cache[cacheKey];
+                BhlAuthorList = (List<Author>)Cache[cacheKey];
             }
             else
             {

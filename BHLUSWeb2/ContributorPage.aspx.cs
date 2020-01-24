@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.Server;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.UI;
 using Data = MOBOT.BHL.DataObjects;
@@ -44,14 +44,6 @@ namespace MOBOT.BHL.Web2
                 displayStart = (Start == "0") ? "a number" : "\"" + Start.ToUpper() + "\"";
 
                 //build header
-                /*
-                System.Text.StringBuilder html = new System.Text.StringBuilder();
-                if (Start.ToLower() == "all") html.Append("All c"); else html.Append("C");
-                html.Append("ontributions").
-                    Append(" from \"").Append(contributor.InstitutionName.Replace("(archive.org)", "").Trim()).Append("\"");
-                if (Start != String.Empty && Start.ToLower() != "all") html.Append(" beginning with ").Append((Start == "0") ? "a number" : Start.ToUpper());
-                ltlContributorHeader.Text = html.ToString();
-                 */
                 litHeader.Text = string.Format(litHeader.Text, contributor.InstitutionName.Replace("(archive.org)", "").Trim());
 
                 // Show the collection statistics
@@ -60,8 +52,8 @@ namespace MOBOT.BHL.Web2
                     stats.SegmentCount.ToString());
 
                 // Get data
-                CustomGenericList<Data.SearchBookResult> bookList = GetInstitutionBooks(institutionCode, Start);
-                CustomGenericList<Data.Segment> segmentList = GetInstitutionSegments(institutionCode, Start);
+                List<Data.SearchBookResult> bookList = GetInstitutionBooks(institutionCode, Start);
+                List<Data.Segment> segmentList = GetInstitutionSegments(institutionCode, Start);
 
                 count = bookList.Count;
                 BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
@@ -77,9 +69,9 @@ namespace MOBOT.BHL.Web2
             }
         }
 
-        private CustomGenericList<Data.SearchBookResult> GetInstitutionBooks(string institutionCode, string startString)
+        private List<Data.SearchBookResult> GetInstitutionBooks(string institutionCode, string startString)
         {
-            CustomGenericList<Data.SearchBookResult> list = new CustomGenericList<Data.SearchBookResult>();
+            List<Data.SearchBookResult> list = new List<Data.SearchBookResult>();
 
             if (startString.ToUpper() == "ALL") startString = String.Empty;
 
@@ -87,7 +79,7 @@ namespace MOBOT.BHL.Web2
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                list = (CustomGenericList<Data.SearchBookResult>)(Cache[cacheKey]);
+                list = (List<Data.SearchBookResult>)(Cache[cacheKey]);
             }
             else
             {
@@ -112,9 +104,9 @@ namespace MOBOT.BHL.Web2
             return list;
         }
 
-        private CustomGenericList<Data.Segment> GetInstitutionSegments(string institutionCode, string startString)
+        private List<Data.Segment> GetInstitutionSegments(string institutionCode, string startString)
         {
-            CustomGenericList<Data.Segment> list = new CustomGenericList<Data.Segment>();
+            List<Data.Segment> list = new List<Data.Segment>();
 
             if (startString.ToUpper() == "ALL") startString = String.Empty;
 
@@ -122,7 +114,7 @@ namespace MOBOT.BHL.Web2
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                list = (CustomGenericList<Data.Segment>)(Cache[cacheKey]);
+                list = (List<Data.Segment>)(Cache[cacheKey]);
             }
             else
             {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Web2.Controls
 {
@@ -16,7 +11,7 @@ namespace MOBOT.BHL.Web2.Controls
         {
             if (!IsPostBack)
             {
-                CustomGenericList<Collection> collections = new BHLProvider().CollectionSelectActive();
+                List<Collection> collections = new BHLProvider().CollectionSelectActive();
                 litNumCollections.Text = collections.Count.ToString();
                 rptCollections.DataSource = collections;
                 rptCollections.DataBind();

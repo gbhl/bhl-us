@@ -1,9 +1,9 @@
-﻿using MOBOT.BHL.API.BHLApiDAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects2;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLApiDALTest
 {
@@ -90,7 +90,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 3926;
-            CustomGenericList<Creator> actual;
+            List<Creator> actual;
             actual = target.AuthorSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -106,7 +106,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string name = "Z";
-            CustomGenericList<Creator> actual;
+            List<Creator> actual;
             actual = target.AuthorSelectNameStartsWith(sqlConnection, sqlTransaction, name);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -120,7 +120,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Collection> actual;
+            List<Collection> actual;
             actual = target.CollectionSelectActive(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -135,7 +135,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 200;
-            CustomGenericList<Collection> actual;
+            List<Collection> actual;
             actual = target.CollectionSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsNotNull(actual);
         }
@@ -150,7 +150,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 200;
-            CustomGenericList<Collection> actual;
+            List<Collection> actual;
             actual = target.CollectionSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsNotNull(actual);
         }
@@ -165,7 +165,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int pageID = 3003000;
-            CustomGenericList<PageNumber> actual;
+            List<PageNumber> actual;
             actual = target.IndicatedPageSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -210,7 +210,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 2187;
-            CustomGenericList<Item> actual;
+            List<Item> actual;
             actual = target.ItemSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -224,7 +224,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Item> actual;
+            List<Item> actual;
             actual = target.ItemSelectUnpublished(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -238,7 +238,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Language> actual;
+            List<Language> actual;
             actual = target.LanguageSelectWithPublishedItems(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -284,7 +284,7 @@ namespace BHLApiDALTest
             SqlTransaction sqlTransaction = null;
             int startRow = 1;
             int batchSize = 10;
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NameResolvedListActive(sqlConnection, sqlTransaction, startRow, batchSize);
             Assert.IsTrue(actual.Count == 10);
         }
@@ -302,7 +302,7 @@ namespace BHLApiDALTest
             int batchSize = 10;
             DateTime startDate = new DateTime(2008, 1, 1);
             DateTime endDate = new DateTime(2008, 2, 1);
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NameResolvedListActiveBetweenDates(sqlConnection, sqlTransaction, startRow, batchSize, startDate, endDate);
             Assert.IsTrue(actual.Count == 0);
         }
@@ -317,7 +317,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string name = "mollusca";
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NameResolvedSelectByNameLike(sqlConnection, sqlTransaction, name);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -332,7 +332,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int pageID = 3116320;
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NamePageSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -362,7 +362,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 22010;
-            CustomGenericList<PageDetail> actual;
+            List<PageDetail> actual;
             actual = target.PageSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -377,7 +377,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string nameBankID = "2661223";   // poa annua
-            CustomGenericList<PageDetail> actual;
+            List<PageDetail> actual;
             actual = target.PageSelectByNameBankID(sqlConnection, sqlTransaction, nameBankID);
             Assert.IsNotNull(actual);
         }
@@ -392,7 +392,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string nameConfirmed = "mollusca";
-            CustomGenericList<PageDetail> actual;
+            List<PageDetail> actual;
             actual = target.PageSelectByNameConfirmed(sqlConnection, sqlTransaction, nameConfirmed);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -407,7 +407,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int pageID = 3003000;
-            CustomGenericList<PageType> actual;
+            List<PageType> actual;
             actual = target.PageTypeSelectByPageID(sqlConnection, sqlTransaction, pageID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -422,7 +422,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string name = "huxley";
-            CustomGenericList<Creator> actual;
+            List<Creator> actual;
             actual = target.SearchAuthor(sqlConnection, sqlTransaction, name);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -445,7 +445,7 @@ namespace BHLApiDALTest
             string languageCode = string.Empty;
             Nullable<int> collectionID = new Nullable<int>();
             int returnCount = 10;
-            CustomGenericList<SearchBookResult> actual;
+            List<SearchBookResult> actual;
             actual = target.SearchBook(sqlConnection, sqlTransaction, title, authorLastName, volume, edition, year, subject, languageCode, collectionID, returnCount);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -468,7 +468,7 @@ namespace BHLApiDALTest
             string languageCode = string.Empty;
             Nullable<int> collectionID = new Nullable<int>();
             int returnCount = 10;
-            CustomGenericList<SearchBookResult> actual;
+            List<SearchBookResult> actual;
             actual = target.SearchBookFullText(sqlConnection, sqlTransaction, title, authorLastName, volume, edition, year, subject, languageCode, collectionID, returnCount);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -483,7 +483,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string tag = "birds";
-            CustomGenericList<Subject> actual;
+            List<Subject> actual;
             actual = target.SearchTitleKeyword(sqlConnection, sqlTransaction, tag);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -498,7 +498,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string title = "Proceedings National Shellfisheries";
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.SearchTitleSimple(sqlConnection, sqlTransaction, title);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -513,7 +513,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 2187;
-            CustomGenericList<Subject> actual;
+            List<Subject> actual;
             actual = target.SubjectSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -528,7 +528,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 3926;
-            CustomGenericList<TitleIdentifier> actual;
+            List<TitleIdentifier> actual;
             actual = target.TitleIdentifierSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -543,7 +543,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string subject = "bird";
-            CustomGenericList<Subject> actual;
+            List<Subject> actual;
             actual = target.TitleKeywordSelectLikeTag(sqlConnection, sqlTransaction, subject);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -573,7 +573,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int authorID = 1810;
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectByAuthor(sqlConnection, sqlTransaction, authorID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -588,7 +588,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string doi = "10.5962/bhl.title.3938";
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.IsTrue(actual.Count == 1);
         }
@@ -604,7 +604,7 @@ namespace BHLApiDALTest
             SqlTransaction sqlTransaction = null;
             string identifierName = "oclc";
             string identifierValue = "9680810";
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectByIdentifier(sqlConnection, sqlTransaction, identifierName, identifierValue);
             Assert.IsTrue(actual.Count == 1);
         }
@@ -619,7 +619,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string subject = "birds";
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectByKeyword(sqlConnection, sqlTransaction, subject);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -634,7 +634,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string title = "journal of shellfish";
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectSearchSimple(sqlConnection, sqlTransaction, title);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -648,7 +648,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Title> actual;
+            List<Title> actual;
             actual = target.TitleSelectUnpublished(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -663,7 +663,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int titleID = 4007;
-            CustomGenericList<TitleVariant> actual;
+            List<TitleVariant> actual;
             actual = target.TitleVariantSelectByTitleID(sqlConnection, sqlTransaction, titleID);
             Assert.IsTrue(actual.Count > 0);
         }
@@ -678,7 +678,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int itemID = 22418;
-            CustomGenericList<Part> actual = target.SegmentSelectByItemID(sqlConnection, sqlTransaction, itemID);
+            List<Part> actual = target.SegmentSelectByItemID(sqlConnection, sqlTransaction, itemID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -692,7 +692,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int authorID = 45632;
-            CustomGenericList<Part> actual = target.SegmentSelectByAuthor(sqlConnection, sqlTransaction, authorID);
+            List<Part> actual = target.SegmentSelectByAuthor(sqlConnection, sqlTransaction, authorID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -706,7 +706,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string doi = "10.4039/Ent13220-11";
-            CustomGenericList<Part> actual = target.SegmentSelectByDOI(sqlConnection, sqlTransaction, doi);
+            List<Part> actual = target.SegmentSelectByDOI(sqlConnection, sqlTransaction, doi);
             Assert.AreEqual(actual.Count, 1);
         }
 
@@ -721,7 +721,7 @@ namespace BHLApiDALTest
             SqlTransaction sqlTransaction = null;
             string identifierName = "ISSN";
             string identifierValue = "0037-962X";
-            CustomGenericList<Part> actual = target.SegmentSelectByIdentifier(sqlConnection, sqlTransaction, identifierName, identifierValue);
+            List<Part> actual = target.SegmentSelectByIdentifier(sqlConnection, sqlTransaction, identifierName, identifierValue);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -735,7 +735,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string subject = "Shells";
-            CustomGenericList<Part> actual = target.SegmentSelectByKeyword(sqlConnection, sqlTransaction, subject);
+            List<Part> actual = target.SegmentSelectByKeyword(sqlConnection, sqlTransaction, subject);
             Assert.IsNotNull(actual);
         }
 
@@ -748,7 +748,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Part> actual = target.SegmentSelectUnpublished(sqlConnection, sqlTransaction);
+            List<Part> actual = target.SegmentSelectUnpublished(sqlConnection, sqlTransaction);
             Assert.IsTrue(actual.Count >= 0);
         }
 
@@ -770,7 +770,7 @@ namespace BHLApiDALTest
             string issue = string.Empty;
             int returnCount = 1;
             string sortBy = "Title";
-            CustomGenericList<Part> actual = target.SearchSegment(sqlConnection, sqlTransaction, title, containerTitle, author, date, volume, series, issue, returnCount, sortBy);
+            List<Part> actual = target.SearchSegment(sqlConnection, sqlTransaction, title, containerTitle, author, date, volume, series, issue, returnCount, sortBy);
             Assert.AreEqual(actual.Count, 1);
         }
 
@@ -792,7 +792,7 @@ namespace BHLApiDALTest
             string issue = string.Empty;
             int returnCount = 1;
             string sortBy = "Title";
-            CustomGenericList<Part> actual = target.SearchSegmentFullText(sqlConnection, sqlTransaction, title, containerTitle, author, date, volume, series, issue, returnCount, sortBy);
+            List<Part> actual = target.SearchSegmentFullText(sqlConnection, sqlTransaction, title, containerTitle, author, date, volume, series, issue, returnCount, sortBy);
             Assert.AreEqual(actual.Count, 1);
         }
 
@@ -806,7 +806,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 2341;
-            CustomGenericList<Creator> actual = target.AuthorSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<Creator> actual = target.AuthorSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -820,7 +820,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 6450;
-            CustomGenericList<PartIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<PartIdentifier> actual = target.SegmentIdentifierSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -834,7 +834,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 41797;
-            CustomGenericList<Subject> actual = target.SubjectSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<Subject> actual = target.SubjectSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsNotNull(actual);
         }
 
@@ -848,7 +848,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 2341;
-            CustomGenericList<PageDetail> actual = target.PageSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<PageDetail> actual = target.PageSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -862,7 +862,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 25777;
-            CustomGenericList<Part> actual = target.SegmentSelectRelated(sqlConnection, sqlTransaction, segmentID);
+            List<Part> actual = target.SegmentSelectRelated(sqlConnection, sqlTransaction, segmentID);
             Assert.IsTrue(actual.Count > 0);
         }
 
@@ -876,7 +876,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             int segmentID = 41797;
-            CustomGenericList<Name> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
+            List<Name> actual = target.NameSegmentSelectBySegmentID(sqlConnection, sqlTransaction, segmentID);
             Assert.IsNotNull(actual);
         }
 
@@ -899,7 +899,7 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            CustomGenericList<Institution> actual = target.InstitutionSelectAll(sqlConnection, sqlTransaction);
+            List<Institution> actual = target.InstitutionSelectAll(sqlConnection, sqlTransaction);
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual.Count > 0);
         }

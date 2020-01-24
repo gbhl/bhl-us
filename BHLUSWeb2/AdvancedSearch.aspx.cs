@@ -1,17 +1,8 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
 
 namespace MOBOT.BHL.Web2
 {
@@ -45,14 +36,14 @@ namespace MOBOT.BHL.Web2
             {
                 // Initial populate of controls 
                 BHLProvider provider = new BHLProvider();
-                CustomGenericList<Language> languages = null;
+                List<Language> languages = null;
 
                 // Cache the results of the languages query
                 String cacheKey = "LanguagesWithPubItems";
                 if (Cache[cacheKey] != null)
                 {
                     // Use cached version
-                    languages = (CustomGenericList<Language>)Cache[cacheKey];
+                    languages = (List<Language>)Cache[cacheKey];
                 }
                 else
                 {
@@ -63,14 +54,14 @@ namespace MOBOT.BHL.Web2
                         System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
                 }
 
-                CustomGenericList<Collection> collections = null;
+                List<Collection> collections = null;
 
                 // Cache the results of the collections query
                 cacheKey = "CollectionListActive";
                 if (Cache[cacheKey] != null)
                 {
                     // Use cached version
-                    collections = (CustomGenericList<Collection>)Cache[cacheKey];
+                    collections = (List<Collection>)Cache[cacheKey];
                 }
                 else
                 {

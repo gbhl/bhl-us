@@ -1,11 +1,7 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Xml;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -127,12 +123,12 @@ namespace MOBOT.BHL.Web2
             }
 
             TitleKeywords = bhlProvider.TitleKeywordSelectKeywordByTitle(titleId);
-            TitleIdentifiers = bhlProvider.Title_IdentifierSelectForDisplayByTitleID(titleId).ToList();
-            TitleVariants = bhlProvider.TitleVariantSelectByTitleID(titleId).ToList();
-            TitleAssociations = bhlProvider.TitleAssociationSelectByTitleId(titleId, true).ToList();
-            TitleNotes = bhlProvider.TitleNoteSelectByTitleID(titleId).ToList();
-            Collections = bhlProvider.CollectionSelectAllForTitle(titleId).ToList();
-            Institutions = bhlProvider.InstitutionSelectByTitleID(titleId).ToList();
+            TitleIdentifiers = bhlProvider.Title_IdentifierSelectForDisplayByTitleID(titleId);
+            TitleVariants = bhlProvider.TitleVariantSelectByTitleID(titleId);
+            TitleAssociations = bhlProvider.TitleAssociationSelectByTitleId(titleId, true);
+            TitleNotes = bhlProvider.TitleNoteSelectByTitleID(titleId);
+            Collections = bhlProvider.CollectionSelectAllForTitle(titleId);
+            Institutions = bhlProvider.InstitutionSelectByTitleID(titleId);
             if (!string.IsNullOrEmpty(BhlTitle.LanguageCode)) LanguageName = bhlProvider.LanguageSelectAuto(BhlTitle.LanguageCode).LanguageName;
 
             BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(BhlTitle.BibliographicLevelID ?? 0);

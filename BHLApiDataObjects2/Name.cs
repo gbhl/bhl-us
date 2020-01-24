@@ -1,6 +1,6 @@
-using System;
-using System.Xml.Serialization;
 using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects2
 {
@@ -101,8 +101,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
 			}
 		}
 
-        CustomGenericList<Title> _Titles;
-        public CustomGenericList<Title> Titles
+        List<Title> _Titles;
+        public List<Title> Titles
         {
             get { return _Titles; }
             set { _Titles = value; }

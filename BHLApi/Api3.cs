@@ -1,10 +1,8 @@
 ﻿using BHL.Search;
-using CustomDataAccess;
 using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects3;
 using MOBOT.BHL.Web.Utilities;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -37,7 +35,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Page methods
 
-        public CustomGenericList<Page> GetPageMetadata(string pageID, string includeOcr, string includeNames)
+        public List<Page> GetPageMetadata(string pageID, string includeOcr, string includeNames)
         {
             // Validate the parameters
             int pageIDInt;
@@ -68,10 +66,10 @@ namespace MOBOT.BHL.API.BHLApi
                 if (names) page.Names = this.GetPageNames(pageID);
             }
 
-            return new CustomGenericList<Page> { page };
+            return new List<Page> { page };
         }
 
-        private CustomGenericList<Name> GetPageNames(string pageID)
+        private List<Name> GetPageNames(string pageID)
         {
             // Validate the page identifier
             int pageIDInt;
@@ -112,14 +110,14 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Item methods
 
-        public CustomGenericList<Item> GetItemMetadata(string id, string idType, string includePages)
+        public List<Item> GetItemMetadata(string id, string idType, string includePages)
         {
             return this.GetItemMetadata(id, idType, includePages, "f", "f");
         }
 
-        public CustomGenericList<Item> GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeSegments)
+        public List<Item> GetItemMetadata(string id, string idType, string includePages, string includeOcr, string includeSegments)
         {
-            CustomGenericList<Item> items = null;
+            List<Item> items = null;
 
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
@@ -168,9 +166,9 @@ namespace MOBOT.BHL.API.BHLApi
                 item.ItemPDFUrl = "https://www.biodiversitylibrary.org/itempdf/" + item.ItemID.ToString();
                 item.ItemImagesUrl = "https://www.biodiversitylibrary.org/itemimages/" + item.ItemID.ToString();
 
-                CustomGenericList<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = dal.InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(item.ItemID.ToString(), includeOcr);
@@ -180,7 +178,7 @@ namespace MOBOT.BHL.API.BHLApi
             return items;
         }
 
-        private CustomGenericList<Page> GetItemPages(string itemID, string includeOcr)
+        private List<Page> GetItemPages(string itemID, string includeOcr)
         {
             // Validate the parameters
             int itemIDint;
@@ -195,8 +193,8 @@ namespace MOBOT.BHL.API.BHLApi
             bool ocr = (includeOcr.ToLower() == "t" || includeOcr.ToLower() == "true");
 
             // Get the pages
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api3DAL().PageSelectByItemID(null, null, itemIDint);
+            List<Page> pages = new List<Page>();
+            List<PageDetail> pageDetails = new Api3DAL().PageSelectByItemID(null, null, itemIDint);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -210,8 +208,8 @@ namespace MOBOT.BHL.API.BHLApi
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
                 page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + page.PageID.ToString();
-                page.PageTypes = new CustomGenericList<PageType>();
-                page.PageNumbers = new CustomGenericList<PageNumber>();
+                page.PageTypes = new List<PageType>();
+                page.PageNumbers = new List<PageNumber>();
 
                 if (ocr) page.OcrText = this.GetPageOcrText(page.PageID.ToString());
 
@@ -256,7 +254,7 @@ namespace MOBOT.BHL.API.BHLApi
             return pages;
         }
 
-        private CustomGenericList<Part> GetItemSegments(string itemID)
+        private List<Part> GetItemSegments(string itemID)
         {
             // Validate the parameters
             int itemIDint;
@@ -266,8 +264,8 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Api3DAL dal = new Api3DAL();
-            CustomGenericList<Part> detailedParts = dal.SegmentSelectByItemID(null, null, itemIDint);
-            CustomGenericList<Part> simpleParts = detailedParts.Count == 0 ? null : new CustomGenericList<Part>();
+            List<Part> detailedParts = dal.SegmentSelectByItemID(null, null, itemIDint);
+            List<Part> simpleParts = detailedParts.Count == 0 ? null : new List<Part>();
             foreach (Part detailedPart in detailedParts)
             {
                 Part simplePart = new Part();
@@ -295,9 +293,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Title methods
 
-        public CustomGenericList<Title> GetTitleMetadata(string id, string idType, string includeItems)
+        public List<Title> GetTitleMetadata(string id, string idType, string includeItems)
         {
-            CustomGenericList<Title> titles = null;
+            List<Title> titles = null;
 
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
@@ -356,7 +354,7 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        private CustomGenericList<Item> GetTitleItems(string titleID)
+        private List<Item> GetTitleItems(string titleID)
         {
             // Validate the parameters
             int titleIDint;
@@ -366,8 +364,8 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the items
-            CustomGenericList<Item> detailedItems = new Api3DAL().ItemSelectByTitleID(null, null, titleIDint);
-            CustomGenericList<Item> simpleItems = detailedItems.Count == 0 ? null : new CustomGenericList<Item>();
+            List<Item> detailedItems = new Api3DAL().ItemSelectByTitleID(null, null, titleIDint);
+            List<Item> simpleItems = detailedItems.Count == 0 ? null : new List<Item>();
             foreach (Item detailedItem in detailedItems)
             {
                 Item simpleItem = new Item();
@@ -376,12 +374,6 @@ namespace MOBOT.BHL.API.BHLApi
                 simpleItem.Volume = detailedItem.Volume;
                 simpleItem.Year = detailedItem.Year;
                 simpleItem.ExternalUrl = detailedItem.ExternalUrl;
-                //CustomGenericList<Contributor> scanningInstitutions = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
-                //if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                //CustomGenericList<Contributor> rightsHolders = new Api3DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
-                //if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
-                //item.TitleUrl = (item.TitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.TitleID.ToString();
-                //item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
                 simpleItems.Add(simpleItem);
             }
 
@@ -392,9 +384,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Segment methods
 
-        public CustomGenericList<Part> GetSegmentMetadata(string id, string idType, string includePages, string includeNames)
+        public List<Part> GetSegmentMetadata(string id, string idType, string includePages, string includeNames)
         {
-            CustomGenericList<Part> parts = null;
+            List<Part> parts = null;
 
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
@@ -464,7 +456,7 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
-        private CustomGenericList<Name> GetSegmentNames(string segmentID)
+        private List<Name> GetSegmentNames(string segmentID)
         {
             // Validate the page identifier
             int segmentIDInt;
@@ -477,11 +469,11 @@ namespace MOBOT.BHL.API.BHLApi
             return new Api3DAL().NameSegmentSelectBySegmentID(null, null, segmentIDInt);
         }
 
-        private CustomGenericList<Page> GetSegmentPages(int segmentID)
+        private List<Page> GetSegmentPages(int segmentID)
         {
             // Get the pages
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api3DAL().PageSelectBySegmentID(null, null, segmentID);
+            List<Page> pages = new List<Page>();
+            List<PageDetail> pageDetails = new Api3DAL().PageSelectBySegmentID(null, null, segmentID);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -495,8 +487,8 @@ namespace MOBOT.BHL.API.BHLApi
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
                 page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext//" + page.PageID.ToString();
-                page.PageTypes = new CustomGenericList<PageType>();
-                page.PageNumbers = new CustomGenericList<PageNumber>();
+                page.PageTypes = new List<PageType>();
+                page.PageNumbers = new List<PageNumber>();
 
                 if (pageDetail.PageTypeName != string.Empty)
                 {
@@ -543,9 +535,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Subject methods
 
-        public CustomGenericList<Subject> GetSubjectMetadata(string keyword, string includePubs)
+        public List<Subject> GetSubjectMetadata(string keyword, string includePubs)
         {
-            CustomGenericList<Subject> subjects = null;
+            List<Subject> subjects = null;
 
             // Validate the parameters
 
@@ -567,17 +559,17 @@ namespace MOBOT.BHL.API.BHLApi
             return subjects;
         }
 
-        private CustomGenericList<Publication> GetSubjectPublications(string subject)
+        private List<Publication> GetSubjectPublications(string subject)
         {
             Api3DAL dal = new Api3DAL();
-            CustomGenericList<Title> titles = dal.TitleSelectByKeyword(null, null, subject);
-            CustomGenericList<Part> parts = dal.SegmentSelectByKeyword(null, null, subject);
+            List<Title> titles = dal.TitleSelectByKeyword(null, null, subject);
+            List<Part> parts = dal.SegmentSelectByKeyword(null, null, subject);
 
             foreach (Title title in titles) title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
             foreach (Part part in parts) part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
 
-            CustomGenericList<Publication> pubs = BuildPublicationList(titles);
-            CustomGenericList<Publication> partPubs = BuildPublicationList(parts);
+            List<Publication> pubs = BuildPublicationList(titles);
+            List<Publication> partPubs = BuildPublicationList(parts);
             foreach (Publication pub in partPubs) pubs.Add(pub);
 
             return pubs;
@@ -587,9 +579,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Author methods
 
-        public CustomGenericList<Author> GetAuthorMetadata(string id, string idType, string includePubs)
+        public List<Author> GetAuthorMetadata(string id, string idType, string includePubs)
         {
-            CustomGenericList<Author> authors = null;
+            List<Author> authors = null;
 
             // Validate the parameters
             if (string.IsNullOrWhiteSpace(idType)) idType = "bhl";
@@ -635,7 +627,7 @@ namespace MOBOT.BHL.API.BHLApi
             return authors;
         }
 
-        private CustomGenericList<Publication> GetAuthorPublications(string creatorID)
+        private List<Publication> GetAuthorPublications(string creatorID)
         {
             // Validate the parameters
             int creatorIDint;
@@ -645,14 +637,14 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Api3DAL dal = new Api3DAL();
-            CustomGenericList<Title> titles = dal.TitleSelectByAuthor(null, null, creatorIDint);
-            CustomGenericList<Part> parts = dal.SegmentSelectByAuthor(null, null, creatorIDint);
+            List<Title> titles = dal.TitleSelectByAuthor(null, null, creatorIDint);
+            List<Part> parts = dal.SegmentSelectByAuthor(null, null, creatorIDint);
 
             foreach (Title title in titles) title.Authors = dal.AuthorSelectByTitleID(null, null, title.TitleID);
             foreach (Part part in parts) part.Authors = dal.AuthorSelectBySegmentID(null, null, part.PartID);
 
-            CustomGenericList<Publication> pubs = BuildPublicationList(titles);
-            CustomGenericList<Publication> partPubs = BuildPublicationList(parts);
+            List<Publication> pubs = BuildPublicationList(titles);
+            List<Publication> partPubs = BuildPublicationList(parts);
             foreach (Publication pub in partPubs) pubs.Add(pub);
 
             return pubs;
@@ -662,7 +654,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Name Services
 
-        public CustomGenericList<Name> GetNameMetadata(string nameConfirmed, string idType, string id)
+        public List<Name> GetNameMetadata(string nameConfirmed, string idType, string id)
         {
             Name name = null;
 
@@ -675,7 +667,7 @@ namespace MOBOT.BHL.API.BHLApi
                 name = this.GetNameDetailByIdentifier(idType, id);
             }
 
-            return new CustomGenericList<Name> { name };
+            return new List<Name> { name };
         }
 
         private Name GetNameDetail(string resolvedName)
@@ -683,7 +675,7 @@ namespace MOBOT.BHL.API.BHLApi
             // Validate the input
             if (string.IsNullOrWhiteSpace(resolvedName)) throw new InvalidApiParamException("Please supply a Name.");
 
-            CustomGenericList<PageDetail> pageDetails = null;
+            List<PageDetail> pageDetails = null;
             pageDetails = new Api3DAL().PageSelectByResolvedName(null, null, resolvedName);
 
             return GetNameDetailFromPageDetails(pageDetails);
@@ -719,13 +711,13 @@ namespace MOBOT.BHL.API.BHLApi
 
             if (string.IsNullOrWhiteSpace(identifierName)) throw new InvalidApiParamException("Please supply one of the following identifier Types: namebank, eol, gni, ion, col, gbif, itis, ipni, worms.");
 
-            CustomGenericList<PageDetail> pageDetails = null;
+            List<PageDetail> pageDetails = null;
             pageDetails = new Api3DAL().PageSelectByNameIdentifier(null, null, identifierName, identifierValue);
 
             return GetNameDetailFromPageDetails(pageDetails);
         }
 
-        private Name GetNameDetailFromPageDetails(CustomGenericList<PageDetail> pageDetails)
+        private Name GetNameDetailFromPageDetails(List<PageDetail> pageDetails)
         {
             Name name = null;
             Title currentTitle = null;
@@ -739,7 +731,7 @@ namespace MOBOT.BHL.API.BHLApi
                 name.Identifiers = new Api3DAL().NameIdentifierSelectByNameResolvedID(null, null, pageDetails[0].NameResolvedID);
                 name.NameConfirmed = pageDetails[0].NameConfirmed;
                 name.NameCanonical = pageDetails[0].NameCanonical;
-                name.Titles = new CustomGenericList<Title>();
+                name.Titles = new List<Title>();
 
                 currentTitle = new Title();
                 currentItem = new Item();
@@ -759,7 +751,7 @@ namespace MOBOT.BHL.API.BHLApi
                         title.PublicationDate = pageDetail.PublicationDate;
                         title.CallNumber = pageDetail.CallNumber;
                         title.TitleUrl = pageDetail.TitleUrl;
-                        title.Items = new CustomGenericList<Item>();
+                        title.Items = new List<Item>();
                         name.Titles.Add(title);
                         currentTitle = title;
                     }
@@ -774,7 +766,7 @@ namespace MOBOT.BHL.API.BHLApi
                         item.Volume = pageDetail.VolumeInfo;
                         item.HoldingInstitution = pageDetail.HoldingInstitution;
                         item.ItemUrl = pageDetail.ItemUrl;
-                        item.Pages = new CustomGenericList<Page>();
+                        item.Pages = new List<Page>();
                         currentTitle.Items.Add(item);
                         currentItem = item;
                     }
@@ -793,11 +785,11 @@ namespace MOBOT.BHL.API.BHLApi
                         page.ThumbnailUrl = pageDetail.ThumbnailUrl;
                         page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
                         page.OcrUrl = pageDetail.OcrUrl;
-                        page.PageNumbers = new CustomGenericList<PageNumber>();
+                        page.PageNumbers = new List<PageNumber>();
                         page.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
 
                         // Get the page types
-                        page.PageTypes = new CustomGenericList<PageType>();
+                        page.PageTypes = new List<PageType>();
                         if (pageDetail.PageTypeName != String.Empty)
                         {
                             string[] pageTypes = pageDetail.PageTypeName.Split(',');
@@ -864,7 +856,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Language methods
 
-        public CustomGenericList<Language> GetLanguages()
+        public List<Language> GetLanguages()
         {
             // Get the languages from the DAL
             return new Api3DAL().LanguageSelectWithPublishedItems(null, null);
@@ -874,7 +866,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Collection methods
 
-        public CustomGenericList<Collection> GetCollections()
+        public List<Collection> GetCollections()
         {
             // Get the collections from the DAL
             return new Api3DAL().CollectionSelectActive(null, null);
@@ -884,10 +876,10 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Institution methods
 
-        public CustomGenericList<Institution> GetInstitutions()
+        public List<Institution> GetInstitutions()
         {
             Api3DAL dal = new Api3DAL();
-            CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
+            List<Institution> institutions = dal.InstitutionSelectAll(null, null);
             return institutions;
         }
 
@@ -895,7 +887,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Search methods
 
-        public CustomGenericList<Publication> SearchPublication(string searchTerm, string searchType, 
+        public List<Publication> SearchPublication(string searchTerm, string searchType, 
             string page, bool sqlFullText)
         {
             // Validate the parameters
@@ -940,7 +932,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationGlobal(searchTerm, searchType, pageInt);
@@ -953,7 +945,7 @@ namespace MOBOT.BHL.API.BHLApi
             return pubs;
         }
 
-        public CustomGenericList<Publication> SearchPublication(string title, string titleOp, 
+        public List<Publication> SearchPublication(string title, string titleOp, 
             string authorName, string year, string subject, string languageCode, string collectionID, 
             string notes, string notesOp, string text, string textOp, string page, bool sqlFullText)
         {
@@ -1050,7 +1042,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
             if (_useElasticSearch)
             {
                 pubs = SearchPublicationAdvanced(title, titleOp, authorName, year, subject, languageCode,
@@ -1082,7 +1074,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="textOp"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationAdvanced(string title, string titleOp,
+        private List<Publication> SearchPublicationAdvanced(string title, string titleOp,
             string authorName, string year, string subject, string languageCode, string collectionID, 
             string notes, string notesOp, string text, string textOp, int page)
         {
@@ -1121,7 +1113,7 @@ namespace MOBOT.BHL.API.BHLApi
                     (textOp == "A" ? SearchStringParamOperator.And : SearchStringParamOperator.Phrase)));
 
             // Build the list of results
-            CustomGenericList<Publication> pubs = BuildPublicationList(result);
+            List<Publication> pubs = BuildPublicationList(result);
 
             return pubs;
         }
@@ -1132,7 +1124,7 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page)
+        private List<Publication> SearchPublicationGlobal(string searchTerm, string searchType, int page)
         {
             // Submit the request to ElasticSearch
             ISearch search = new SearchFactory().GetSearch(ConfigurationManager.AppSettings["SearchProviders"]);
@@ -1154,7 +1146,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Build the list of results
-            CustomGenericList<Publication> pubs = BuildPublicationList(result);
+            List<Publication> pubs = BuildPublicationList(result);
 
             return pubs;
         }
@@ -1164,9 +1156,9 @@ namespace MOBOT.BHL.API.BHLApi
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> BuildPublicationList(ISearchResult result)
+        private List<Publication> BuildPublicationList(ISearchResult result)
         {
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
 
             foreach (ItemHit hit in result.Items)
             {
@@ -1182,7 +1174,6 @@ namespace MOBOT.BHL.API.BHLApi
                     pub.ItemUrl = pub.ItemID == null ? null : "https://www.biodiversitylibrary.org/item/" + pub.ItemID;
                     pub.Genre = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
                     pub.MaterialType = (string.IsNullOrWhiteSpace(hit.MaterialType) ? null : hit.MaterialType);
-                    //if (hit.Contributors.Count == 1) pub.HoldingInstitution = hit.Contributors[0];
                     pub.PublisherPlace = (string.IsNullOrWhiteSpace(hit.PublicationPlace) ? null : hit.PublicationPlace);
                     pub.PublisherName = (string.IsNullOrWhiteSpace(hit.Publisher) ? null : hit.Publisher);
                     if (hit.Dates.Count == 1) pub.PublicationDate = hit.Dates[0];
@@ -1192,7 +1183,6 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     pub.BHLType = BHLType.Part;
                     pub.PartID = hit.SegmentId.ToString();
-                    //pub.StartPageID = (hit.StartPageId == 0 ? null : hit.StartPageId.ToString());
                     pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + hit.SegmentId;
                     pub.ContainerTitle = (string.IsNullOrWhiteSpace(hit.Container) ? null : hit.Container);
                     pub.Genre = (string.IsNullOrWhiteSpace(hit.Genre) ? null : hit.Genre);
@@ -1201,59 +1191,17 @@ namespace MOBOT.BHL.API.BHLApi
                     pub.Issue = (string.IsNullOrWhiteSpace(hit.Issue) ? null : hit.Issue);
                     if (hit.Dates.Count == 1) pub.Date = hit.Dates[0];
                     if (hit.Dates.Count > 1) pub.Date = hit.Dates[0] + "-" + hit.Dates[hit.Dates.Count - 1];
-
-                    /*
-                    foreach (string contributor in hit.Contributors)
-                    {
-                        if (pub.Contributors == null) pub.Contributors = new CustomGenericList<Contributor>();
-                        pub.Contributors.Add(new Contributor { ContributorName = contributor });
-                    }
-                    */
                 }
 
                 pub.Title = hit.Title;
                 pub.Volume = (string.IsNullOrWhiteSpace(hit.Volume) ? null : hit.Volume);
-                //pub.Language = (string.IsNullOrWhiteSpace(hit.Language) ? null : hit.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(hit.Url) ? null : hit.Url);
-                //pub.Doi = (string.IsNullOrWhiteSpace(hit.Doi) ? null : hit.Doi);
 
-                /*
-                foreach (string cName in hit.Collections)
-                {
-                    if (pub.Collections == null) pub.Collections = new CustomGenericList<Collection>();
-                    pub.Collections.Add(new Collection { CollectionName = cName });
-                }
-                */
                 foreach (string aName in hit.Authors)
                 {
-                    if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
+                    if (pub.Authors == null) pub.Authors = new List<Author>();
                     pub.Authors.Add(new Author { Name = aName });
                 }
-                /*
-                if (hit.Oclc.Count > 0)
-                {
-                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
-                    foreach (string id in hit.Oclc) pub.Identifiers.Add(new Identifier { IdentifierName = "OCLC", IdentifierValue = id });
-                }
-                if (hit.Isbn.Count > 0)
-                {
-                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
-                    foreach (string id in hit.Isbn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISBN", IdentifierValue = id });
-                }
-                if (hit.Issn.Count > 0)
-                {
-                    if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
-                    foreach (string id in hit.Issn) pub.Identifiers.Add(new Identifier { IdentifierName = "ISSN", IdentifierValue = id });
-                }
-                */
-
-                /*
-                foreach(string aNote in hit.Notes)
-                {
-                    if (pub.Notes == null) pub.Notes = new CustomGenericList<TitleNote>();
-                    pub.Notes.Add(new TitleNote { NoteText = aNote });
-                }
-                */
 
                 if (hit.Highlights.Count == 0)
                 {
@@ -1286,9 +1234,9 @@ namespace MOBOT.BHL.API.BHLApi
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> BuildPublicationList(CustomGenericList<Title> titles)
+        private List<Publication> BuildPublicationList(List<Title> titles)
         {
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
 
             foreach (Title title in titles)
             {
@@ -1304,55 +1252,18 @@ namespace MOBOT.BHL.API.BHLApi
                 pub.PublisherPlace = (string.IsNullOrWhiteSpace(title.PublisherPlace) ? null : title.PublisherPlace);
                 pub.PublisherName = (string.IsNullOrWhiteSpace(title.PublisherName) ? null : title.PublisherName);
                 pub.PublicationDate = (string.IsNullOrWhiteSpace(title.PublicationDate) ? null : title.PublicationDate);
-                //pub.Doi = (string.IsNullOrWhiteSpace(title.Doi) ? null : title.Doi);
 
-                /*
-                if (title.Collections != null)
-                {
-                    foreach (Collection collection in title.Collections)
-                    {
-                        if (pub.Collections == null) pub.Collections = new CustomGenericList<Collection>();
-                        pub.Collections.Add(new Collection
-                        {
-                            CollectionID = collection.CollectionID,
-                            CollectionName = collection.CollectionName
-                        });
-                    }
-                }
-                */
                 if (title.Authors != null)
                 {
                     foreach (Author author in title.Authors)
                     {
-                        if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
+                        if (pub.Authors == null) pub.Authors = new List<Author>();
                         pub.Authors.Add(new Author
                         {
-                            //AuthorID = author.AuthorID,
-                            Name = author.Name//,
-                            //FullerForm = author.FullerForm,
-                            //Location = author.Location,
-                            //Role = author.Role,
-                            //Title = author.Title,
-                            //Unit = author.Unit,
-                            //Numeration = author.Numeration,
-                            //Dates = author.Dates
+                            Name = author.Name
                         });
                     }
                 }
-                /*
-                if (title.Identifiers != null)
-                {
-                    foreach (Identifier id in title.Identifiers)
-                    {
-                        if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
-                        pub.Identifiers.Add(new Identifier
-                        {
-                            IdentifierName = id.IdentifierName,
-                            IdentifierValue = id.IdentifierValue
-                        });
-                    }
-                }
-                */
                 pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);
@@ -1366,9 +1277,9 @@ namespace MOBOT.BHL.API.BHLApi
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> BuildPublicationList(CustomGenericList<Part> parts)
+        private List<Publication> BuildPublicationList(List<Part> parts)
         {
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
 
             foreach (Part part in parts)
             {
@@ -1377,69 +1288,28 @@ namespace MOBOT.BHL.API.BHLApi
 
                 pub.BHLType = BHLType.Part;
                 pub.PartID = part.PartID.ToString();
-                //pub.StartPageID = part.StartPageID;
                 pub.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID;
                 pub.Title = part.Title;
                 pub.ContainerTitle = (string.IsNullOrWhiteSpace(part.ContainerTitle) ? null : part.ContainerTitle);
-                //pub.PublisherPlace = (string.IsNullOrWhiteSpace(part.PublisherPlace) ? null : part.PublisherPlace);
-                //pub.PublisherName = (string.IsNullOrWhiteSpace(part.PublisherName) ? null : part.PublisherName);
                 pub.Date = (string.IsNullOrWhiteSpace(part.Date) ? null : part.Date);
                 pub.Genre = (string.IsNullOrWhiteSpace(part.Genre) ? null : part.Genre);
                 pub.Volume = (string.IsNullOrWhiteSpace(part.Volume) ? null : part.Volume);
                 pub.Series = (string.IsNullOrWhiteSpace(part.Series) ? null : part.Series);
                 pub.Issue = (string.IsNullOrWhiteSpace(part.Issue) ? null : part.Issue);
-                //pub.Language = (string.IsNullOrWhiteSpace(part.Language) ? null : part.Language);
                 pub.ExternalUrl = (string.IsNullOrWhiteSpace(part.ExternalUrl) ? null : part.ExternalUrl);
-                //pub.Rights = (string.IsNullOrWhiteSpace(part.RightsStatement) ? null : part.RightsStatement);
-                //pub.RightsStatus = (string.IsNullOrWhiteSpace(part.RightsStatus) ? null : part.RightsStatus);
                 pub.PageRange = (part.PageRange == "--" || string.IsNullOrWhiteSpace(part.PageRange) ? null : part.PageRange);
-                //pub.StartPageNumber = (string.IsNullOrWhiteSpace(part.StartPageNumber) ? null : part.StartPageNumber);
-                //pub.EndPageNumber = (string.IsNullOrWhiteSpace(part.EndPageNumber) ? null : part.EndPageNumber);
-                //pub.Doi = (string.IsNullOrWhiteSpace(part.Doi) ? null : part.Doi);
 
-                /*
-                if (part.Contributors != null)
-                {
-                    foreach (string contributor in part.Contributors)
-                    {
-                        if (pub.Contributors == null) pub.Contributors = new CustomGenericList<Contributor>();
-                        pub.Contributors.Add(new Contributor { ContributorName = contributor });
-                    }
-                }
-                */
                 if (part.Authors != null)
                 {
                     foreach (Author author in part.Authors)
                     {
-                        if (pub.Authors == null) pub.Authors = new CustomGenericList<Author>();
+                        if (pub.Authors == null) pub.Authors = new List<Author>();
                         pub.Authors.Add(new Author
                         {
-                            //AuthorID = author.AuthorID,
-                            Name = author.Name//,
-                            //FullerForm = author.FullerForm,
-                            //Location = author.Location,
-                            //Role = author.Role,
-                            //Title = author.Title,
-                            //Unit = author.Unit,
-                            //Numeration = author.Numeration,
-                            //Dates = author.Dates
+                            Name = author.Name
                         });
                     }
                 }
-                /*
-                if (part.Identifiers != null)
-                {
-                    foreach (Identifier id in part.Identifiers)
-                    {
-                        if (pub.Identifiers == null) pub.Identifiers = new CustomGenericList<Identifier>();
-                        pub.Identifiers.Add(new Identifier
-                        {
-                            IdentifierName = id.IdentifierName,
-                            IdentifierValue = id.IdentifierValue
-                        });
-                    }
-                }
-                */
                 pub.FoundIn = FoundIn.Metadata;
 
                 pubs.Add(pub);
@@ -1460,13 +1330,13 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="collectionID"></param>
         /// <param name="sqlFullText"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationAdvancedSQL(string title, string authorName, 
+        private List<Publication> SearchPublicationAdvancedSQL(string title, string authorName, 
             int year, string subject, string languageCode, int collectionID, bool sqlFullText)
         {
-            CustomGenericList<Publication> pubs = new CustomGenericList<Publication>();
+            List<Publication> pubs = new List<Publication>();
 
             // Perform a SQL search for books and articles
-            CustomGenericList<Title> titles = this.SearchBook(title, authorName, "", "",
+            List<Title> titles = this.SearchBook(title, authorName, "", "",
                 (int?)(year == 0 ? (int?)null : year), subject,
                 languageCode, (int?)(collectionID == 0 ? (int?)null : collectionID),
                 200, sqlFullText);
@@ -1503,7 +1373,7 @@ namespace MOBOT.BHL.API.BHLApi
                 }
             }
 
-            CustomGenericList<Part> parts = this.SearchSegment(title, "", authorName, year.ToString(), "", "", "", 200, "Title", sqlFullText);
+            List<Part> parts = this.SearchSegment(title, "", authorName, year.ToString(), "", "", "", 200, "Title", sqlFullText);
 
             foreach (Part p in parts)
             {
@@ -1552,19 +1422,19 @@ namespace MOBOT.BHL.API.BHLApi
         /// <param name="searchTerm"></param>
         /// <param name="sqlFullText"></param>
         /// <returns></returns>
-        private CustomGenericList<Publication> SearchPublicationGlobalSQL(string searchTerm, bool sqlFullText)
+        private List<Publication> SearchPublicationGlobalSQL(string searchTerm, bool sqlFullText)
         {
             // There is no non-ElasticSearch implementation
             throw new NotImplementedException();
         }
 
-        private CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
+        private List<Title> SearchBook(string title, string authorLastName, string volume, string edition,
             int? year, string subject, string languageCode, int? collectionID, int returnCount, bool sqlFullText)
         {
             Api3DAL dal = new Api3DAL();
 
             // Get the list of books
-            CustomGenericList<SearchBookResult> books = null;
+            List<SearchBookResult> books = null;
             if (sqlFullText)
             {
                 books = dal.SearchBookFullText(null, null, title, authorLastName, volume, edition,
@@ -1577,7 +1447,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Build the list of titles (with item, creator, and collection information) to return
-            CustomGenericList<Title> titles = new CustomGenericList<Title>();
+            List<Title> titles = new List<Title>();
             int prevTitleID = 0;
             Title currentTitle = null;
             foreach (SearchBookResult book in books)
@@ -1586,7 +1456,7 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     prevTitleID = book.TitleID;
                     currentTitle = new Title();
-                    currentTitle.Items = new CustomGenericList<Item>();
+                    currentTitle.Items = new List<Item>();
 
                     currentTitle.TitleID = book.TitleID;
                     currentTitle.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + book.TitleID.ToString();
@@ -1599,10 +1469,10 @@ namespace MOBOT.BHL.API.BHLApi
                     currentTitle.PublicationDate = book.PublicationDate;
                     currentTitle.Authors = dal.AuthorSelectByTitleID(null, null, book.TitleID);
 
-                    CustomGenericList<Collection> titleCollections = dal.CollectionSelectByTitleID(null, null, book.TitleID);
+                    List<Collection> titleCollections = dal.CollectionSelectByTitleID(null, null, book.TitleID);
                     foreach (Collection collection in titleCollections)
                     {
-                        if (currentTitle.Collections == null) currentTitle.Collections = new CustomGenericList<Collection>();
+                        if (currentTitle.Collections == null) currentTitle.Collections = new List<Collection>();
                         Collection newCollection = new Collection();
                         newCollection.CollectionID = collection.CollectionID;
                         newCollection.CollectionName = collection.CollectionName;
@@ -1619,10 +1489,10 @@ namespace MOBOT.BHL.API.BHLApi
                 newItem.Volume = book.Volume;
                 newItem.HoldingInstitution = book.HoldingInstitution;
 
-                CustomGenericList<Collection> itemCollections = dal.CollectionSelectByItemID(null, null, book.ItemID);
+                List<Collection> itemCollections = dal.CollectionSelectByItemID(null, null, book.ItemID);
                 foreach (Collection collection in itemCollections)
                 {
-                    if (newItem.Collections == null) newItem.Collections = new CustomGenericList<Collection>();
+                    if (newItem.Collections == null) newItem.Collections = new List<Collection>();
                     Collection newCollection = new Collection();
                     newCollection.CollectionID = collection.CollectionID;
                     newCollection.CollectionName = collection.CollectionName;
@@ -1635,13 +1505,13 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        private CustomGenericList<Part> SearchSegment(string title, string containerTitle, string author, string date, 
+        private List<Part> SearchSegment(string title, string containerTitle, string author, string date, 
             string volume, string series, string issue, int returnCount, string sortBy, bool sqlFullText)
         {
             Api3DAL dal = new Api3DAL();
 
             // Get the list of segments
-            CustomGenericList<Part> parts = null;
+            List<Part> parts = null;
             if (sqlFullText)
             {
                 parts = dal.SearchSegmentFullText(null, null, title, containerTitle, author, date, volume, 
@@ -1671,9 +1541,9 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
-        public CustomGenericList<Subject> SubjectSearch(string subject, bool sqlFullText)
+        public List<Subject> SubjectSearch(string subject, bool sqlFullText)
         {
-            CustomGenericList<Subject> subjects = new CustomGenericList<Subject>();
+            List<Subject> subjects = new List<Subject>();
 
             if (_useElasticSearch)
             {
@@ -1702,9 +1572,9 @@ namespace MOBOT.BHL.API.BHLApi
             return subjects;
         }
 
-        public CustomGenericList<Author> AuthorSearch(string name, bool sqlFullText)
+        public List<Author> AuthorSearch(string name, bool sqlFullText)
         {
-            CustomGenericList<Author> creators = new CustomGenericList<Author>();
+            List<Author> creators = new List<Author>();
 
             if (_useElasticSearch)
             {
@@ -1739,14 +1609,14 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public CustomGenericList<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name)
         {
             if (name == String.Empty)
             {
                 throw new InvalidApiParamException("Please supply a name for which to search.");
             }
 
-            CustomGenericList<Name> names = new CustomGenericList<Name>();
+            List<Name> names = new List<Name>();
 
             if (_useElasticSearch)
             {
@@ -1771,7 +1641,7 @@ namespace MOBOT.BHL.API.BHLApi
             return names;
         }
 
-        public CustomGenericList<Page> PageSearch(string itemID, string text)
+        public List<Page> PageSearch(string itemID, string text)
         {
             // Validate the parameters
             int itemIDint;
@@ -1784,7 +1654,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new InvalidApiParamException("Please supply text for which to search.");
             }
 
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
+            List<Page> pages = new List<Page>();
             DataTable pageIDs = new DataTable();
             pageIDs.Columns.Add(new DataColumn("ID", typeof(int)));
 
@@ -1817,13 +1687,13 @@ namespace MOBOT.BHL.API.BHLApi
 
                     pageIDs.Rows.Add(page.PageID);
 
-                    if (hit.PageTypes.Count > 0) page.PageTypes = new CustomGenericList<PageType>();
+                    if (hit.PageTypes.Count > 0) page.PageTypes = new List<PageType>();
                     foreach (string pageType in hit.PageTypes)
                     {
                         page.PageTypes.Add(new PageType { PageTypeName = pageType });
                     }
 
-                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new CustomGenericList<PageNumber>();
+                    if (hit.pageIndicators.Count > 0) page.PageNumbers = new List<PageNumber>();
                     foreach (string pageIndicator in hit.pageIndicators)
                     {
                         page.PageNumbers.Add(new PageNumber { Number = pageIndicator });
@@ -1842,7 +1712,7 @@ namespace MOBOT.BHL.API.BHLApi
             {
                 // Get additional page details from the database and add them to the results
                 Api3DAL dal = new Api3DAL();
-                CustomGenericList<Page> pageDetails = dal.PageSelectByPageIDList(null, null, pageIDs);
+                List<Page> pageDetails = dal.PageSelectByPageIDList(null, null, pageIDs);
 
                 foreach(Page pg in pages)
                 {

@@ -207,8 +207,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _ItemThumbUrl = value; }
         }
 
-        CustomGenericList<Collection> _Collections = null;
-        public CustomGenericList<Collection> Collections
+        List<Collection> _Collections = null;
+        public List<Collection> Collections
         {
             get { return _Collections; }
             set { _Collections = value; }
@@ -261,15 +261,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        CustomGenericList<Author> _Authors;
-        public CustomGenericList<Author> Authors
+        List<Author> _Authors;
+        public List<Author> Authors
         {
             get { return _Authors; }
             set { _Authors = value; }
         }
 
-        CustomGenericList<Identifier> _Identifiers;
-        public CustomGenericList<Identifier> Identifiers
+        List<Identifier> _Identifiers;
+        public List<Identifier> Identifiers
         {
             get { return _Identifiers; }
             set { _Identifiers = value; }
@@ -338,8 +338,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _publicationDetails = value; }
         }
 
-        private CustomGenericList<TitleNote> _notes = null;
-        public CustomGenericList<TitleNote> Notes
+        private List<TitleNote> _notes = null;
+        public List<TitleNote> Notes
         {
             get { return _notes; }
             set { _notes = value; }
@@ -415,22 +415,22 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _doi = value; }
         }
 
-        private CustomGenericList<Contributor> _contributors = null;
-        public CustomGenericList<Contributor> Contributors
+        private List<Contributor> _contributors = null;
+        public List<Contributor> Contributors
         {
             get { return _contributors; }
             set { _contributors = value; }
         }
 
-        private CustomGenericList<Subject> _subjects = null;
-        public CustomGenericList<Subject> Subjects
+        private List<Subject> _subjects = null;
+        public List<Subject> Subjects
         {
             get { return _subjects; }
             set { _subjects = value; }
         }
 
-        private CustomGenericList<Part> _relatedParts = null;
-        public CustomGenericList<Part> RelatedParts
+        private List<Part> _relatedParts = null;
+        public List<Part> RelatedParts
         {
             get { return _relatedParts; }
             set { _relatedParts = value; }
@@ -593,7 +593,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             string noteString = Utility.EmptyIfNull(column.Value);
                             if (noteString != string.Empty)
                             {
-                                if (this.Notes == null) this.Notes = new CustomGenericList<TitleNote>();
+                                if (this.Notes == null) this.Notes = new List<TitleNote>();
 
                                 string[] notes = noteString.Split(new[] { "|||" }, StringSplitOptions.RemoveEmptyEntries);
                                 foreach (string note in notes)
@@ -664,7 +664,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             string authorString = Utility.EmptyIfNull(column.Value);
                             if (authorString != string.Empty)
                             {
-                                if (this.Authors == null) this.Authors = new CustomGenericList<Author>();
+                                if (this.Authors == null) this.Authors = new List<Author>();
 
                                 string[] authors = authorString.Split(';');
                                 foreach (string author in authors)
@@ -684,7 +684,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             string keywordString = Utility.EmptyIfNull(column.Value);
                             if (keywordString != string.Empty)
                             {
-                                if (this.Subjects == null) this.Subjects = new CustomGenericList<Subject>();
+                                if (this.Subjects == null) this.Subjects = new List<Subject>();
 
                                 string[] keywords = keywordString.Split('|');
                                 foreach (string keyword in keywords)

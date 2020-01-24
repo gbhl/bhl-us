@@ -67,10 +67,6 @@
       <Project>{A4039079-6627-4D17-8B92-3B8B73B187E2}</Project>
       <Name>BHLApiDataObjects2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
-      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
-      <Name>CustomDataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
       <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>
       <Name>BHLApiDAL</Name>

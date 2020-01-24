@@ -631,7 +631,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects
 		
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
+		/// For example where list is a instance of <see cref="List">, 
         /// list.Sort(SortOrder.Ascending, Name.SortColumn.NameID);
 		/// </summary>
 		[Serializable]

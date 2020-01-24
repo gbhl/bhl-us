@@ -1,93 +1,93 @@
-﻿using System;
+﻿using MOBOT.BHL.API.BHLApiDataObjects3;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects3;
 
 namespace MOBOT.BHL.API.BHLApiDAL
 {
     public interface IApi3DAL
     {
-        CustomGenericList<Name> NamePageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
+        List<Name> NamePageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
         Page PageSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
-        CustomGenericList<PageNumber> IndicatedPageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
-        CustomGenericList<PageType> PageTypeSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
-        CustomGenericList<Item> ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID);
-        CustomGenericList<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
-        CustomGenericList<PageDetail> PageSelectByItemID(SqlConnection sqlConnection,
+        List<PageNumber> IndicatedPageSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
+        List<PageType> PageTypeSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID);
+        List<Item> ItemSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int itemID);
+        List<Item> ItemSelectByBarcode(SqlConnection sqlConnection, SqlTransaction sqlTransaction, String barcode);
+        List<PageDetail> PageSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID);
-        CustomGenericList<Part> SegmentSelectByItemID(SqlConnection sqlConnection,
+        List<Part> SegmentSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemID);
-        CustomGenericList<Author> AuthorSelectByTitleID(SqlConnection sqlConnection,
+        List<Author> AuthorSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Author> AuthorSelectBySegmentID(SqlConnection sqlConnection,
+        List<Author> AuthorSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Title> TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Item> ItemSelectByTitleID(SqlConnection sqlConnection,
+        List<Title> TitleSelectAuto(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleID);
+        List<Item> ItemSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
+        List<TitleVariant> TitleVariantSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Identifier> TitleIdentifierSelectByTitleID(SqlConnection sqlConnection,
+        List<Identifier> TitleIdentifierSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<TitleNote> TitleNoteSelectByTitleID(SqlConnection sqlConnection,
+        List<TitleNote> TitleNoteSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Subject> SubjectSelectByTitleID(SqlConnection sqlConnection,
+        List<Subject> SubjectSelectByTitleID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleID);
-        CustomGenericList<Title> TitleSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Title> TitleSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string identifierName, string identifierValue);
-        CustomGenericList<Title> TitleSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Title> TitleSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi);
-        CustomGenericList<Part> SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId);
-        CustomGenericList<Identifier> SegmentIdentifierSelectBySegmentID(SqlConnection sqlConnection,
+        List<Part> SegmentSelectForSegmentID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int segmentId);
+        List<Identifier> SegmentIdentifierSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Subject> SubjectSelectBySegmentID(SqlConnection sqlConnection,
+        List<Subject> SubjectSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Part> SegmentSelectRelated(SqlConnection sqlConnection,
+        List<Part> SegmentSelectRelated(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Name> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
+        List<Name> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
         SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Part> SegmentSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SegmentSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string identifierName, string identifierValue);
-        CustomGenericList<Part> SegmentSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SegmentSelectByDOI(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi);
-        CustomGenericList<PageDetail> PageSelectBySegmentID(SqlConnection sqlConnection,
+        List<PageDetail> PageSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID);
-        CustomGenericList<Collection> CollectionSelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
+        List<Collection> CollectionSelectActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction);
         ApiKey ApiKeySelectByKey(SqlConnection sqlConnection, SqlTransaction sqlTransaction, Guid keyValue);
-        CustomGenericList<Author> AuthorSelectNameStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Author> AuthorSelectNameStartsWith(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string name);
-        CustomGenericList<Author> SearchAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Author> SearchAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string name);
-        CustomGenericList<Subject> TitleKeywordSelectLikeTag(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Subject> TitleKeywordSelectLikeTag(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string subject);
-        CustomGenericList<Subject> SearchTitleKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string tag);
-        CustomGenericList<Name> NameResolvedSelectByNameLike(SqlConnection sqlConnection,
+        List<Subject> SearchTitleKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction, string tag);
+        List<Name> NameResolvedSelectByNameLike(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name);
-        CustomGenericList<PageDetail> PageSelectByResolvedName(SqlConnection sqlConnection,
+        List<PageDetail> PageSelectByResolvedName(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string nameConfirmed);
-        CustomGenericList<PageDetail> PageSelectByNameIdentifier(SqlConnection sqlConnection,
+        List<PageDetail> PageSelectByNameIdentifier(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string identifierName, string identifierValue);
-        CustomGenericList<Title> TitleSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Title> TitleSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int authorID);
-        CustomGenericList<Part> SegmentSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SegmentSelectByAuthor(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int authorID);
-        CustomGenericList<Title> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Title> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string subject);
-        CustomGenericList<Part> SegmentSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SegmentSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string subject);
-        CustomGenericList<Collection> CollectionSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Collection> CollectionSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleID);
-        CustomGenericList<Collection> CollectionSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Collection> CollectionSelectByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int itemID);
-        CustomGenericList<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
             int? collectionID, int returnCount);
-        CustomGenericList<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode,
             int? collectionID, int returnCount);
-        CustomGenericList<Part> SearchSegment(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SearchSegment(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string containerTitle, string author, string date, string volume, string series, string issue,
             int returnCount, string sortBy);
-        CustomGenericList<Part> SearchSegmentFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        List<Part> SearchSegmentFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string containerTitle, string author, string date, string volume, string series, string issue,
             int returnCount, string sortBy);
     }

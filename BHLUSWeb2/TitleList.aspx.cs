@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 
 namespace MOBOT.BHL.Web2
@@ -28,12 +28,12 @@ namespace MOBOT.BHL.Web2
             main.Page.Title = string.Format("Titles beginning with {0} - Biodiversity Heritage Library", displayStart);
 
             // Get the book data
-            CustomGenericList<SearchBookResult> searchBookResultList = new CustomGenericList<SearchBookResult>();
+            List<SearchBookResult> searchBookResultList = new List<SearchBookResult>();
 
             String cacheKey = "TitleBookBrowse" + Start ;
             if (Cache[cacheKey] != null)
             {
-                searchBookResultList = (CustomGenericList<SearchBookResult>)Cache[cacheKey];
+                searchBookResultList = (List<SearchBookResult>)Cache[cacheKey];
             }
             else
             {
@@ -55,12 +55,12 @@ namespace MOBOT.BHL.Web2
             Count = searchBookResultList.Count;
 
             // Get the segment data
-            CustomGenericList<Segment> segmentResultList = new CustomGenericList<Segment>();
+            List<Segment> segmentResultList = new List<Segment>();
 
             cacheKey = "TitleSegmentBrowse" + Start;
             if (Cache[cacheKey] != null)
             {
-                segmentResultList = (CustomGenericList<Segment>)Cache[cacheKey];
+                segmentResultList = (List<Segment>)Cache[cacheKey];
             }
             else
             {

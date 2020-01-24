@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web.Security;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web.UI;
 
 namespace MOBOT.BHL.Web2
 {
-   
+
     public partial class SiteMaster : System.Web.UI.MasterPage
     {
         public string bodyID {get; set;}
@@ -31,7 +22,7 @@ namespace MOBOT.BHL.Web2
                 DisplayAlertMessage();
             }
 
-            CustomGenericList<EntityCount> stats = this.GetStats();
+            List<EntityCount> stats = this.GetStats();
             foreach (EntityCount stat in stats)
             {
                 if (stat.EntityCountTypeID == EntityCount.EntityType.ActiveTitles) titlesOnlineLiteral.Text = stat.CountValue.ToString("0,0");
@@ -40,16 +31,16 @@ namespace MOBOT.BHL.Web2
             }
         }
 
-        private CustomGenericList<EntityCount> GetStats()
+        private List<EntityCount> GetStats()
         {
-            CustomGenericList<EntityCount> stats = new CustomGenericList<EntityCount>();
+            List<EntityCount> stats = new List<EntityCount>();
 
             // Cache the results of the institutions query for 24 hours
             String cacheKey = "StatsSelect";
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                stats = (CustomGenericList<EntityCount>)Cache[cacheKey];
+                stats = (List<EntityCount>)Cache[cacheKey];
             }
             else
             {

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Data = MOBOT.BHL.DataObjects;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
 using System.Configuration;
+using Data = MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -30,12 +24,12 @@ namespace MOBOT.BHL.Web2
             this.Title = (Subject == string.Empty ? this.Title : String.Format(ConfigurationManager.AppSettings["PageTitle"], Subject));
             //((SiteMaster)Page.Master).SetTweetMessage(Subject == string.Empty ? string.Empty : String.Format(ConfigurationManager.AppSettings["TweetMessage"], Subject));
 
-            CustomGenericList<Data.SearchBookResult> resultList = this.GetTitleList(Subject);
+            List<Data.SearchBookResult> resultList = this.GetTitleList(Subject);
             BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
             BookBrowse.Data = resultList;
             count = resultList.Count;
 
-            CustomGenericList<Data.Segment> segmentList = this.GetSegmentList(Subject);
+            List<Data.Segment> segmentList = this.GetSegmentList(Subject);
             SectionBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
             SectionBrowse.Data = segmentList;
             segmentcount = segmentList.Count;
@@ -47,15 +41,15 @@ namespace MOBOT.BHL.Web2
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns>List of SearchBookResults.</returns>
-        private CustomGenericList<Data.SearchBookResult> GetTitleList(string keyword)
+        private List<Data.SearchBookResult> GetTitleList(string keyword)
         {
-            CustomGenericList<Data.SearchBookResult> titleList = new CustomGenericList<Data.SearchBookResult>();
+            List<Data.SearchBookResult> titleList = new List<Data.SearchBookResult>();
 
             String cacheKey = "SubjectTitleBrowse" + keyword.Replace(" ", "");
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                titleList = (CustomGenericList<Data.SearchBookResult>)Cache[cacheKey];
+                titleList = (List<Data.SearchBookResult>)Cache[cacheKey];
             }
             else
             {
@@ -79,15 +73,15 @@ namespace MOBOT.BHL.Web2
         /// </summary>
         /// <param name="keyword"></param>
         /// <returns>List of Segments.</returns>
-        private CustomGenericList<Data.Segment> GetSegmentList(string keyword)
+        private List<Data.Segment> GetSegmentList(string keyword)
         {
-            CustomGenericList<Data.Segment> segmentList = new CustomGenericList<Data.Segment>();
+            List<Data.Segment> segmentList = new List<Data.Segment>();
 
             String cacheKey = "SubjectSegmentBrowse" + keyword.Replace(" ", "");
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                segmentList = (CustomGenericList<Data.Segment>)Cache[cacheKey];
+                segmentList = (List<Data.Segment>)Cache[cacheKey];
             }
             else
             {

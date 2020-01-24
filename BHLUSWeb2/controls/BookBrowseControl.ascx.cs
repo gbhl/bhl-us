@@ -1,11 +1,6 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
@@ -18,8 +13,8 @@ namespace MOBOT.BHL.Web2
             set { _showVolume = value; }
         }
 
-        CustomGenericList<SearchBookResult> _data = null;
-        public CustomGenericList<SearchBookResult> Data
+        List<SearchBookResult> _data = null;
+        public List<SearchBookResult> Data
         {
             get { return _data; }
             set { _data = value; }

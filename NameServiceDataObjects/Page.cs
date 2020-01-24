@@ -1,5 +1,5 @@
 using System;
-using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects
 {
@@ -155,8 +155,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects
             set { _OcrUrl = value; }
         }
 
-        CustomGenericList<PageType> _PageTypes;
-        public CustomGenericList<PageType> PageTypes
+        List<PageType> _PageTypes;
+        public List<PageType> PageTypes
         {
             get
             {

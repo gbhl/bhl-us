@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects2
@@ -123,15 +124,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
-        private CustomGenericList<Creator> _authors = null;
-        public CustomGenericList<Creator> Authors
+        private List<Creator> _authors = null;
+        public List<Creator> Authors
         {
             get { return _authors; }
             set { _authors = value; }
         }
 
-        private CustomGenericList<Collection> _collections = null;
-        public CustomGenericList<Collection> Collections
+        private List<Collection> _collections = null;
+        public List<Collection> Collections
         {
             get { return _collections; }
             set { _collections = value; }

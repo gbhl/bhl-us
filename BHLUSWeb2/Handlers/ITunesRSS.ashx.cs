@@ -1,14 +1,13 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
-using System.Xml;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System.Xml;
 
 namespace MOBOT.BHL.Web2.Handlers
 {
@@ -29,8 +28,7 @@ namespace MOBOT.BHL.Web2.Handlers
             int collectionID;
             bool gotCollection = false;
             bool isValid = true;
-            CustomDataAccess.CustomGenericList<MOBOT.BHL.DataObjects.Collection> collections =
-                new MOBOT.BHL.Server.BHLProvider().CollectionSelectByUrl((string)context.Request.RequestContext.RouteData.Values["id"]);
+            List<Collection> collections =new BHLProvider().CollectionSelectByUrl((string)context.Request.RequestContext.RouteData.Values["id"]);
 
             if (collections.Count > 0)
             {
@@ -38,7 +36,6 @@ namespace MOBOT.BHL.Web2.Handlers
             }
             else
             {
-
                 if (!int.TryParse((string)context.Request.RequestContext.RouteData.Values["id"], out collectionID))
                 {
                     isValid = false;
@@ -116,7 +113,7 @@ namespace MOBOT.BHL.Web2.Handlers
                     feed.ElementExtensions.Add(feedElement);
 
                     // Add the items in the collection
-                    CustomGenericList<Item> items = new BHLProvider().ItemSelectByCollection(collectionID);
+                    List<Item> items = new BHLProvider().ItemSelectByCollection(collectionID);
                     List<SyndicationItem> syndItems = new List<SyndicationItem>();
                     foreach (Item item in items)
                     {
@@ -180,11 +177,7 @@ namespace MOBOT.BHL.Web2.Handlers
                             XmlAttribute itemAttribute = doc.CreateAttribute("type");
                             itemAttribute.Value = "application/pdf";
                             itemElement.Attributes.Append(itemAttribute);
-                            //itemAttribute = doc.CreateAttribute("length");
-                            //itemAttribute.Value = item.PDFSize.ToString();  // size of pdf in bytes
-                            //itemElement.Attributes.Append(itemAttribute);
                             itemAttribute = doc.CreateAttribute("url");
-                            //itemAttribute.Value = domainRoot + "itempdf/" + item.ItemID.ToString();
                             itemAttribute.Value = string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.PdfFilename);
                             itemElement.Attributes.Append(itemAttribute);
                             syndItem.ElementExtensions.Add(itemElement);
@@ -231,106 +224,5 @@ namespace MOBOT.BHL.Web2.Handlers
                 }
             }
         }
-
-
-        /*
-        // Borrowed from http://stackoverflow.com/questions/1375119/how-do-you-add-another-namespace-to-wcf-syndicationfeed
-        public class ItunesFeed : SyndicationFeed
-        {
-            private string @namespace = "http://www.itunes.com/dtds/podcast-1.0.dtd";
-            private string prefix = "itunes";
-
-            public string Subtitle { get; set; }
-            public string Author { get; set; }
-            public string Summary { get; set; }
-            public string OwnerName { get; set; }
-            public string OwnerEmail { get; set; }
-            public bool Explicit { get; set; }
-            public List<List<string>> ItunesCategories = new List<List<string>>();
-
-            public ItunesFeed(string feedTitle, string feedDescription, Uri feedAlternateLink)
-                : base(feedTitle, feedDescription, feedAlternateLink)
-            {
-            }
-
-            protected override void WriteAttributeExtensions(XmlWriter writer, string version)
-            {
-                writer.WriteAttributeString("xmlns", prefix, null, @namespace);
-            }
-
-            protected override void WriteElementExtensions(XmlWriter writer, string version)
-            {
-                WriteItunesElement(writer, "subtitle", Subtitle);
-                WriteItunesElement(writer, "author", Author);
-                WriteItunesElement(writer, "summary", Summary);
-                if (ImageUrl != null)
-                {
-                    WriteItunesElement(writer, "image", ImageUrl.ToString());
-                }
-                WriteItunesElement(writer, "explicit", Explicit ? "yes" : "no");
-
-                writer.WriteStartElement(prefix, "owner", @namespace);
-                WriteItunesElement(writer, "name", OwnerName);
-                WriteItunesElement(writer, "email", OwnerEmail);
-                writer.WriteEndElement();
-
-                foreach (var category in ItunesCategories)
-                {
-                    writer.WriteStartElement(prefix, "category", @namespace);
-                    writer.WriteAttributeString("text", category[0]);
-                    if (category.Count == 2)
-                    {
-                        writer.WriteStartElement(prefix, "category", @namespace);
-                        writer.WriteAttributeString("text", category[1]);
-                        writer.WriteEndElement();
-                    }
-                    writer.WriteEndElement();
-                }
-            }
-
-            private void WriteItunesElement(XmlWriter writer, string name, string value)
-            {
-                if (value != null)
-                {
-                    writer.WriteStartElement(prefix, name, @namespace);
-                    writer.WriteValue(value);
-                    writer.WriteEndElement();
-                }
-            }
-        }
-
-
-        public class ItunesItem : SyndicationItem
-        {
-            private string @namespace = "http://www.itunes.com/dtds/podcast-1.0.dtd";
-            private string prefix = "itunes";
-
-            public string Subtitle { get; set; }
-            public string Author { get; set; }
-            public string Duration { get; set; }
-            public string Keywords { get; set; }
-            public bool Explicit { get; set; }
-
-            protected override void WriteElementExtensions(XmlWriter writer, string version)
-            {
-                WriteItunesElement(writer, "subtitle", Subtitle);
-                WriteItunesElement(writer, "author", Author);
-                WriteItunesElement(writer, "summary", Summary.Text);
-                WriteItunesElement(writer, "duration", Duration);
-                WriteItunesElement(writer, "keywords", Keywords);
-                WriteItunesElement(writer, "explicit", Explicit ? "yes" : "no");
-            }
-
-            private void WriteItunesElement(XmlWriter writer, string name, string value)
-            {
-                if (value != null)
-                {
-                    writer.WriteStartElement(prefix, name, @namespace);
-                    writer.WriteValue(value);
-                    writer.WriteEndElement();
-                }
-            }
-        }
-         */
     }
 }

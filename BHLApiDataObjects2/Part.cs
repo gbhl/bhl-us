@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects2
@@ -243,49 +244,49 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _doi = value; }
         }
 
-        private CustomGenericList<Creator> _authors = null;
+        private List<Creator> _authors = null;
 
-        public CustomGenericList<Creator> Authors
+        public List<Creator> Authors
         {
             get { return _authors; }
             set { _authors = value; }
         }
 
-        private CustomGenericList<Contributor> _contributors = null;
+        private List<Contributor> _contributors = null;
 
-        public CustomGenericList<Contributor> Contributors
+        public List<Contributor> Contributors
         {
             get { return _contributors; }
             set { _contributors = value; }
         }
 
-        private CustomGenericList<Subject> _subjects = null;
+        private List<Subject> _subjects = null;
 
-        public CustomGenericList<Subject> Subjects
+        public List<Subject> Subjects
         {
             get { return _subjects; }
             set { _subjects = value; }
         }
 
-        private CustomGenericList<PartIdentifier> _identifiers = null;
+        private List<PartIdentifier> _identifiers = null;
 
-        public CustomGenericList<PartIdentifier> Identifiers
+        public List<PartIdentifier> Identifiers
         {
             get { return _identifiers; }
             set { _identifiers = value; }
         }
 
-        private CustomGenericList<Page> _pages = null;
+        private List<Page> _pages = null;
 
-        public CustomGenericList<Page> Pages
+        public List<Page> Pages
         {
             get { return _pages; }
             set { _pages = value; }
         }
 
-        private CustomGenericList<Part> _relatedParts = null;
+        private List<Part> _relatedParts = null;
 
-        public CustomGenericList<Part> RelatedParts
+        public List<Part> RelatedParts
         {
             get { return _relatedParts; }
             set { _relatedParts = value; }
@@ -441,7 +442,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                             string authorString = Utility.EmptyIfNull(column.Value);
                             if (authorString != string.Empty)
                             {
-                                if (this.Authors == null) this.Authors = new CustomGenericList<Creator>();
+                                if (this.Authors == null) this.Authors = new List<Creator>();
 
                                 string[] authors = authorString.Split(';');
                                 foreach (string author in authors)
@@ -461,7 +462,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                             string keywordString = Utility.EmptyIfNull(column.Value);
                             if (keywordString != string.Empty)
                             {
-                                if (this.Subjects == null) this.Subjects = new CustomGenericList<Subject>();
+                                if (this.Subjects == null) this.Subjects = new List<Subject>();
 
                                 string[] keywords = keywordString.Split('|');
                                 foreach (string keyword in keywords)

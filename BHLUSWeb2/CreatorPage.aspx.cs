@@ -1,11 +1,6 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
@@ -26,7 +21,6 @@ namespace MOBOT.BHL.Web2
             if (!int.TryParse(RouteData.Values["creatorid"] as string, out creatorId)) Response.Redirect("~/authornotfound");
 
             // Find Author
-            // Author = bhlProvider.AuthorSelectAuto(creatorId);
             Author = bhlProvider.AuthorSelectWithNameByAuthorId(creatorId);
             if (Author == null) Response.Redirect("~/authornotfound");
             if (Author.RedirectAuthorID != null) Response.Redirect("~/creator/" + Author.RedirectAuthorID);
@@ -34,14 +28,14 @@ namespace MOBOT.BHL.Web2
             main.Page.Title = string.Format("{0} - Biodiversity Heritage Library", Author.FullName);
 
             // Find & Bind Author Titles
-            CustomGenericList<SearchBookResult> SearchBookResultList = bhlProvider.TitleSelectByAuthor(creatorId);
+            List<SearchBookResult> SearchBookResultList = bhlProvider.TitleSelectByAuthor(creatorId);
             BookBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
             BookBrowse.Data = SearchBookResultList;
             BookBrowse.ShowVolume = false;
             count = SearchBookResultList.Count;
 
             //Find & Bind Author Segments
-            CustomGenericList<Segment> SegmentsResultList = bhlProvider.SegmentSelectForAuthorID(creatorId);
+            List<Segment> SegmentsResultList = bhlProvider.SegmentSelectForAuthorID(creatorId);
             SectionBrowse.SortBy = string.IsNullOrEmpty(sortBy) ? null : sortBy;
             SectionBrowse.Data = SegmentsResultList;
             segmentcount = SegmentsResultList.Count;

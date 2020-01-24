@@ -1,9 +1,6 @@
-﻿using System;
-using System.Web;
+﻿using MOBOT.BHL.API.BHLApiDataObjects;
+using System.Collections.Generic;
 using System.Web.Services;
-using System.Web.Services.Protocols;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects;
 
 namespace MOBOT.BHL.Web2.api
 {
@@ -43,21 +40,21 @@ namespace MOBOT.BHL.Web2.api
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameList(string startRow, string batchSize)
+        public List<Name> NameList(string startRow, string batchSize)
         {
             MOBOT.BHL.Web2.Services.NameService nameService = new MOBOT.BHL.Web2.Services.NameService();
             return nameService.NameList(startRow, batchSize);
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
+        public List<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
         {
             MOBOT.BHL.Web2.Services.NameService nameService = new MOBOT.BHL.Web2.Services.NameService();
             return nameService.NameListBetweenDates(startRow, batchSize, startDate, endDate);
         }
         
         [WebMethod]
-        public CustomGenericList<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name)
         {
             MOBOT.BHL.Web2.Services.NameService nameService = new MOBOT.BHL.Web2.Services.NameService();
             return nameService.NameSearch(name);

@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.Server;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.UI;
 using Data = MOBOT.BHL.DataObjects;
@@ -31,9 +31,9 @@ namespace MOBOT.BHL.Web2
             int collectionID;
             // Parse CollectionId - may be "nice" name
 
-            CustomGenericList<Data.Collection> collections = null;
+            List<Data.Collection> collections = null;
             collections = (string.IsNullOrWhiteSpace((string)RouteData.Values["collectionid"])) ?
-                new CustomGenericList<Data.Collection>() :
+                new List<Data.Collection>() :
                 provider.CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
 
             if (collections.Count > 0)
@@ -76,7 +76,7 @@ namespace MOBOT.BHL.Web2
                         if (contentCount > 500) Start = "A";
                     }
 
-                    CustomGenericList<Data.SearchBookResult> list = null;
+                    List<Data.SearchBookResult> list = null;
                     list = GetCollectionList(collection, collectionID, Start);
                     //count = list.Count;
 
@@ -120,9 +120,9 @@ namespace MOBOT.BHL.Web2
             }
         }
 
-        private CustomGenericList<Data.SearchBookResult> GetCollectionList(Data.Collection collection, int collectionID, string startString)
+        private List<Data.SearchBookResult> GetCollectionList(Data.Collection collection, int collectionID, string startString)
         {
-            CustomGenericList<Data.SearchBookResult> list = new CustomGenericList<Data.SearchBookResult>();
+            List<Data.SearchBookResult> list = new List<Data.SearchBookResult>();
 
             if (startString.ToUpper() == "ALL") startString = String.Empty;
             if (collection.CanContainItems > 0) BookBrowse.ShowVolume = true;
@@ -131,7 +131,7 @@ namespace MOBOT.BHL.Web2
             if (Cache[cacheKey] != null)
             {
                 // Use cached version
-                list = (CustomGenericList<Data.SearchBookResult>)(Cache[cacheKey]);
+                list = (List<Data.SearchBookResult>)(Cache[cacheKey]);
             }
             else
             {
