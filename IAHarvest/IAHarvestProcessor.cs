@@ -1198,11 +1198,11 @@ namespace IAHarvest
                         XmlNode issueNode = segment.SelectSingleNode(nsPrefix + "issue", nsmgr);
                         if (issueNode != null) issue = issueNode.InnerText;
                         XmlNode seriesNode = segment.SelectSingleNode(nsPrefix + "series", nsmgr);
-                        if (seriesNode != null) issue = seriesNode.InnerText;
+                        if (seriesNode != null) series = seriesNode.InnerText;
                         XmlNode dateNode = segment.SelectSingleNode(nsPrefix + "date", nsmgr);
-                        if (dateNode != null) issue = dateNode.InnerText;
+                        if (dateNode != null) date = dateNode.InnerText;
                         XmlNode languageNode = segment.SelectSingleNode(nsPrefix + "language", nsmgr);
-                        if (languageNode != null) issue = languageNode.InnerText;
+                        if (languageNode != null) language = languageNode.InnerText;
                         XmlNode genreNode = segment.SelectSingleNode(nsPrefix + "genre", nsmgr);
                         if (genreNode != null)
                         {
@@ -1213,10 +1213,9 @@ namespace IAHarvest
                             genreName = genreNode.InnerText;
                         }
                         XmlNode doiNode = segment.SelectSingleNode(nsPrefix + "doi", nsmgr);
-                        if (doiNode != null) issue = doiNode.InnerText;
+                        if (doiNode != null) doi = doiNode.InnerText;
 
-                        IASegment iaSegment = provider.SaveIASegment(itemID, segmentSequence, title, volume, issue, series, date, language, 
-                            (genreId == int.MinValue ? (int?)null : genreId), genreName, doi);
+                        IASegment iaSegment = provider.SaveIASegment(itemID, segmentSequence, title, volume, issue, series, date, language, genreId, genreName, doi);
 
                         // Check for authors
                         XmlNodeList authors = segment.SelectNodes(nsPrefix + "authors/" + nsPrefix + "author", nsmgr);
@@ -1281,6 +1280,7 @@ namespace IAHarvest
             else
             {
                 // No local file, so remove anything in the database
+                provider.IASegmentDeleteByItem(itemID);
                 provider.IAScandataDeleteAllByItem(itemID);
             }
         }

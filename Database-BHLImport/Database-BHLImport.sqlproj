@@ -433,6 +433,10 @@
     <None Include="dbo\Tables\IASegment.sql" />
     <None Include="dbo\Tables\IASegmentPage.sql" />
     <None Include="dbo\Tables\IASegmentAuthor.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentDeleteByItem.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentSelectByItemAndSequence.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorSelectBySegmentAndSequence.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageSelectBySegmentAndSequence.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
