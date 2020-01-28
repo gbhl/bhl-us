@@ -1236,17 +1236,17 @@ namespace IAHarvest
                                 Int32.TryParse(author.Attributes["authorId"].Value, out authorId);
                             }
 
-                            XmlNode nameNode = segment.SelectSingleNode(nsPrefix + "name", nsmgr);
+                            XmlNode nameNode = author.SelectSingleNode(nsPrefix + "name", nsmgr);
                             if (nameNode != null) fullName = nameNode.InnerText;
-                            XmlNode lastNameNode = segment.SelectSingleNode(nsPrefix + "lastName", nsmgr);
+                            XmlNode lastNameNode = author.SelectSingleNode(nsPrefix + "lastName", nsmgr);
                             if (lastNameNode != null) lastName = lastNameNode.InnerText;
-                            XmlNode firstNameNode = segment.SelectSingleNode(nsPrefix + "firstName", nsmgr);
+                            XmlNode firstNameNode = author.SelectSingleNode(nsPrefix + "firstName", nsmgr);
                             if (firstNameNode != null) firstName = firstNameNode.InnerText;
-                            XmlNode startDateNode = segment.SelectSingleNode(nsPrefix + "startDate", nsmgr);
+                            XmlNode startDateNode = author.SelectSingleNode(nsPrefix + "startDate", nsmgr);
                             if (startDateNode != null) startDate = startDateNode.InnerText;
-                            XmlNode endDateNode = segment.SelectSingleNode(nsPrefix + "endDate", nsmgr);
+                            XmlNode endDateNode = author.SelectSingleNode(nsPrefix + "endDate", nsmgr);
                             if (endDateNode != null) endDate = endDateNode.InnerText;
-                            XmlNode identifierNode = segment.SelectSingleNode(nsPrefix + "identifier", nsmgr);
+                            XmlNode identifierNode = author.SelectSingleNode(nsPrefix + "identifier", nsmgr);
                             if (identifierNode != null)
                             {
                                 if (identifierNode.Attributes["typeId"] != null)
@@ -1256,8 +1256,8 @@ namespace IAHarvest
                                 identifierValue = identifierNode.InnerText;
                             }
 
-                            provider.SaveIASegmentAuthor(iaSegment.SegmentID, segmentSequence, (authorId == int.MinValue ? (int?)null : authorId), fullName, 
-                                lastName, firstName, startDate, endDate, (identifierId== int.MinValue ? (int?)null : identifierId), identifierValue);
+                            provider.SaveIASegmentAuthor(iaSegment.SegmentID, authorSequence, (authorId == int.MinValue || authorId == 0 ? (int?)null : authorId), 
+                                fullName, lastName, firstName, startDate, endDate, (identifierId == int.MinValue ? (int?)null : identifierId), identifierValue);
 
                             authorSequence++;
                         }

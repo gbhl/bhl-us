@@ -48,7 +48,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentID)
 		{
-			return IASegmentSelectAuto(	sqlConnection, sqlTransaction, "BHL",	segmentID );
+			return IASegmentSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	segmentID );
 		}
 			
 		/// <summary>
@@ -100,7 +100,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentID)
 		{
-			return IASegmentSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", segmentID );
+			return IASegmentSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", segmentID );
 		}
 		
 		/// <summary>
@@ -163,7 +163,7 @@ namespace MOBOT.BHLImport.DAL
 			string bHLSegmentGenreName,
 			string dOI)
 		{
-			return IASegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, sequence, title, volume, issue, series, date, languageCode, bHLSegmentGenreID, bHLSegmentGenreName, dOI );
+			return IASegmentInsertAuto( sqlConnection, sqlTransaction, "BHLImport", itemID, sequence, title, volume, issue, series, date, languageCode, bHLSegmentGenreID, bHLSegmentGenreName, dOI );
 		}
 		
 		/// <summary>
@@ -247,7 +247,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegment value)
 		{
-			return IASegmentInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+			return IASegmentInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
 		}
 		
 		/// <summary>
@@ -294,7 +294,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentID)
 		{
-			return IASegmentDeleteAuto( sqlConnection, sqlTransaction, "BHL", segmentID );
+			return IASegmentDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID );
 		}
 		
 		/// <summary>
@@ -374,7 +374,7 @@ namespace MOBOT.BHLImport.DAL
 			string bHLSegmentGenreName,
 			string dOI)
 		{
-			return IASegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, sequence, title, volume, issue, series, date, languageCode, bHLSegmentGenreID, bHLSegmentGenreName, dOI);
+			return IASegmentUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, itemID, sequence, title, volume, issue, series, date, languageCode, bHLSegmentGenreID, bHLSegmentGenreName, dOI);
 		}
 		
 		/// <summary>
@@ -460,7 +460,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegment value)
 		{
-			return IASegmentUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+			return IASegmentUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
 		}
 		
 		/// <summary>
@@ -510,7 +510,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegment value  )
 		{
-			return IASegmentManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+			return IASegmentManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
 		}
 		
 		/// <summary>

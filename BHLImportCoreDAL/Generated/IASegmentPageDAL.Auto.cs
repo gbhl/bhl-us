@@ -48,7 +48,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentPageID)
 		{
-			return IASegmentPageSelectAuto(	sqlConnection, sqlTransaction, "BHL",	segmentPageID );
+			return IASegmentPageSelectAuto(	sqlConnection, sqlTransaction, "BHLImport",	segmentPageID );
 		}
 			
 		/// <summary>
@@ -100,7 +100,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentPageID)
 		{
-			return IASegmentPageSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", segmentPageID );
+			return IASegmentPageSelectAutoRaw( sqlConnection, sqlTransaction, "BHLImport", segmentPageID );
 		}
 		
 		/// <summary>
@@ -145,7 +145,7 @@ namespace MOBOT.BHLImport.DAL
 			int segmentID,
 			int pageSequence)
 		{
-			return IASegmentPageInsertAuto( sqlConnection, sqlTransaction, "BHL", segmentID, pageSequence );
+			return IASegmentPageInsertAuto( sqlConnection, sqlTransaction, "BHLImport", segmentID, pageSequence );
 		}
 		
 		/// <summary>
@@ -202,7 +202,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegmentPage value)
 		{
-			return IASegmentPageInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+			return IASegmentPageInsertAuto(sqlConnection, sqlTransaction, "BHLImport", value);
 		}
 		
 		/// <summary>
@@ -240,7 +240,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			int segmentPageID)
 		{
-			return IASegmentPageDeleteAuto( sqlConnection, sqlTransaction, "BHL", segmentPageID );
+			return IASegmentPageDeleteAuto( sqlConnection, sqlTransaction, "BHLImport", segmentPageID );
 		}
 		
 		/// <summary>
@@ -302,7 +302,7 @@ namespace MOBOT.BHLImport.DAL
 			int segmentID,
 			int pageSequence)
 		{
-			return IASegmentPageUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentPageID, segmentID, pageSequence);
+			return IASegmentPageUpdateAuto( sqlConnection, sqlTransaction, "BHLImport", segmentPageID, segmentID, pageSequence);
 		}
 		
 		/// <summary>
@@ -361,7 +361,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegmentPage value)
 		{
-			return IASegmentPageUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+			return IASegmentPageUpdateAuto(sqlConnection, sqlTransaction, "BHLImport", value );
 		}
 		
 		/// <summary>
@@ -402,7 +402,7 @@ namespace MOBOT.BHLImport.DAL
 			SqlTransaction sqlTransaction, 
 			IASegmentPage value  )
 		{
-			return IASegmentPageManageAuto( sqlConnection, sqlTransaction, "BHL", value  );
+			return IASegmentPageManageAuto( sqlConnection, sqlTransaction, "BHLImport", value  );
 		}
 		
 		/// <summary>
