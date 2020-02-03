@@ -351,6 +351,15 @@ BEGIN TRY
 		PageSequenceOrder int NULL
 		)
 
+	CREATE TABLE #tmpSegmentIdentifier
+		(
+		ItemID int NOT NULL,
+		BarCode nvarchar(40) NOT NULL,
+		SegmentSequenceOrder smallint NOT NULL,
+		IdentifierName nvarchar(40) NOT NULL,
+		IdentifierValue nvarchar(125) NULL,
+		)
+
 	CREATE TABLE #tmpSegmentAuthor
 		(
 		ItemID int NOT NULL,
@@ -1920,6 +1929,17 @@ BEGIN TRY
 			INNER JOIN dbo.IAScandata scstart ON p.ItemID = scstart.ItemID AND p.StartPageSeq = scstart.Sequence
 			INNER JOIN dbo.IAScandata scend ON p.ItemID = scend.ItemID AND p.EndPageSeq = scend.Sequence
 
+	-- Get Segment Identifiers
+	INSERT INTO #tmpSegmentIdentifier
+	SELECT DISTINCT
+			s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			'DOI',
+			s.DOI
+	FROM	dbo.IASegment s
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+
 	-- Get Segment Authors
 	INSERT INTO #tmpSegmentAuthor ( ItemID, BarCode, SegmentSequenceOrder, SequenceOrder, BHLAuthorID, LastName, FirstName, StartDate, EndDate )
 	SELECT	s.ItemID,
@@ -2219,6 +2239,15 @@ BEGIN TRY
 
 		-- =======================================================================
 
+		-- Insert new segment identifiers into the import tables
+		INSERT INTO dbo.SegmentIdentifier (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder,
+			IdentifierName, IdentifierValue)
+		SELECT	10, @ImportSourceID, BarCode, SegmentSequenceOrder, IdentifierName, IdentifierValue
+		FROM	#tmpSegmentIdentifier
+		WHERE	ISNULL(IdentifierValue, '') <> ''
+
+		-- =======================================================================
+
 		-- Insert new segment authors into the import tables
 		INSERT INTO dbo.SegmentAuthor (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder, 
 			SequenceOrder, LastName, FirstName, StartDate, EndDate, ProductionAuthorID)
@@ -2302,6 +2331,7 @@ BEGIN TRY
 	DROP TABLE #tmpSegmentAuthorIdentifier
 	DROP TABLE #tmpSegmentAuthor
 	DROP TABLE #tmpSegmentPage
+	DROP TABLE #tmpSegmentIdentifier
 	DROP TABLE #tmpSegment
 END TRY
 BEGIN CATCH

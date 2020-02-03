@@ -87,6 +87,7 @@ sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Page_PageType.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\IndicatedPage.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\Segment.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\SegmentPage.sql"
+sqlcmd -E -S %1 -d %2 -i "dbo\Tables\SegmentIdentifier.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\SegmentAuthor.sql"
 sqlcmd -E -S %1 -d %2 -i "dbo\Tables\SegmentAuthorIdentifier.sql"
 

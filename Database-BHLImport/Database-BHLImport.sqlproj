@@ -441,6 +441,7 @@
     <None Include="dbo\Tables\SegmentPage.sql" />
     <None Include="dbo\Tables\SegmentAuthor.sql" />
     <None Include="dbo\Tables\SegmentAuthorIdentifier.sql" />
+    <None Include="dbo\Tables\SegmentIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />

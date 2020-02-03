@@ -58,6 +58,8 @@ DECLARE @SegmentInstitutionInsert int
 DECLARE @SegmentInstitutionUpdate int
 DECLARE @SegmentPageInsert int
 DECLARE @SegmentPageUpdate int
+DECLARE @SegmentIdentifierInsert int
+DECLARE @SegmentIdentifierUpdate int
 DECLARE @SegmentAuthorInsert int
 DECLARE @SegmentAuthorUpdate int
 DECLARE @SegmentAuthorIdentifierInsert int
@@ -395,6 +397,14 @@ BEGIN TRY
 		[SegmentSequenceOrder] smallint NOT NULL,
 		[PageSequenceOrder] int NOT NULL
 	)
+
+	CREATE TABLE #tmpSegmentIdentifier(
+		[SegmentIdentifierID] [int] NOT NULL,
+		[BarCode] nvarchar(40) NOT NULL,
+		[SegmentSequenceOrder] smallint NOT NULL,
+		[IdentifierName] [nvarchar](40) NOT NULL,
+		[IdentifierValue] [nvarchar](125) NOT NULL
+		)
 
 	CREATE TABLE #tmpSegmentAuthor (
 		[SegmentAuthorID] [int] NOT NULL,
@@ -1144,6 +1154,21 @@ BEGIN TRY
 	-- =======================================================================
 	-- =======================================================================
 	-- =======================================================================
+	-- Get Segment Identifiers
+	INSERT INTO #tmpSegmentIdentifier
+	SELECT	si.[SegmentIdentifierID],
+			si.[BarCode],
+			si.[SegmentSequenceOrder],
+			si.[IdentifierName],
+			si.[IdentifierValue]
+	FROM	dbo.SegmentIdentifier si
+	WHERE	si.ImportStatusID = 10
+	AND		si.ImportSourceID = @ImportSourceID
+	AND		si.BarCode = @BarCode
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
 	-- Get Segment Authors
 
 	INSERT INTO #tmpSegmentAuthor
@@ -1592,8 +1617,8 @@ BEGIN TRY
 
 		-- Insert new DOI records into the production database
 		DECLARE @DOIEntityTypeID int
-		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
 		DECLARE @DOIStatusID int
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
 		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
 
 		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
@@ -2121,6 +2146,45 @@ BEGIN TRY
 
 		-- =======================================================================
 
+		-- Insert new segmentidentifier records into the production database
+		INSERT INTO dbo.BHLSegmentIdentifier (SegmentID, IdentifierID,
+			IdentifierValue, CreationDate, LastModifiedDate)
+		SELECT DISTINCT s.SegmentID, id.IdentifierID, t.IdentifierValue, GETDATE(), GETDATE()
+		FROM	#tmpSegmentIdentifier t
+				INNER JOIN dbo.BHLIdentifier id ON t.IdentifierName = id.IdentifierName
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				LEFT JOIN dbo.BHLSegmentIdentifier si
+					ON s.SegmentID = si.SegmentID
+					AND id.IdentifierID = si.IdentifierID
+					AND t.IdentifierValue = si.IdentifierValue
+		WHERE	si.SegmentIdentifierID IS NULL
+		AND		t.IdentifierName <> 'DOI'
+
+		SELECT @SegmentIdentifierInsert = @@ROWCOUNT
+
+		-- Insert new DOI records into the production database
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Segment'
+		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
+
+		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
+			DOIName, StatusDate, IsValid, Creationdate, LastModifiedDate)
+		SELECT DISTINCT @DOIEntityTypeID, s.SegmentID, @DOIStatusID, t.IdentifierValue, 
+			GETDATE(), 1, GETDATE(), GETDATE()
+		FROM	#tmpSegmentIdentifier t
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				LEFT JOIN dbo.BHLDOI d
+					ON d.DOIEntityTypeID = @DOIEntityTypeID
+					AND d.EntityID = s.SegmentID
+					AND d.DOIName = t.IdentifierValue 
+		WHERE	d.DOIID IS NULL
+		AND		t.IdentifierName = 'DOI'
+
+		SELECT @SegmentIdentifierInsert = @SegmentIdentifierInsert + @@ROWCOUNT
+
+		-- =======================================================================
+
 		-- Insert new authors of segments into the production database
 		DECLARE @StartDate nvarchar(25)
 		DECLARE @EndDate nvarchar(25)
@@ -2307,6 +2371,10 @@ BEGIN TRY
 		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
 		FROM	dbo.SegmentPage p INNER JOIN #tmpSegmentPage t ON p.SegmentPageID = t.SegmentPageID
 
+		UPDATE	dbo.SegmentIdentifier
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.SegmentIdentifier i INNER JOIN #tmpSegmentIdentifier t ON i.SegmentIdentifierID = t.SegmentIdentifierID
+
 		UPDATE	dbo.SegmentAuthor
 		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
 		FROM	dbo.SegmentAuthor a INNER JOIN #tmpSegmentAuthor t ON a.SegmentAuthorID = t.SegmentAuthorID
@@ -2400,6 +2468,7 @@ BEGIN TRY
 	SELECT * FROM #tmpPage_PageType
 	SELECT * FROM #tmpSegment
 	SELECT * FROM #tmpSegmentPage
+	SELECT * FROM #tmpSegmentIdentifier
 	SELECT * FROM #tmpSegmentAuthor
 	SELECT * FROM #tmpSegmentAuthorIdentifier
 	*/
@@ -2423,6 +2492,7 @@ BEGIN TRY
 	DROP TABLE #tmpPage_PageType
 	DROP TABLE #tmpSegment
 	DROP TABLE #tmpSegmentPage
+	DROP TABLE #tmpSegmentIdentifier
 	DROP TABLE #tmpSegmentAuthor
 	DROP TABLE #tmpSegmentAuthorIdentifier
 END TRY
