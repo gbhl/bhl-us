@@ -1,33 +1,17 @@
 ﻿CREATE TABLE [dbo].[ImportLog] (
-    [ImportLogID]                           INT           IDENTITY (1, 1) NOT NULL,
-    [ImportDate]                            DATETIME      DEFAULT (getdate()) NOT NULL,
-    [ImportSourceID]                        INT           NULL,
-    [BarCode]                               NVARCHAR (40) NULL,
-    [ImportResult]                          NVARCHAR (30) DEFAULT ('') NOT NULL,
-    [TitleInsert]                           INT           DEFAULT ((0)) NOT NULL,
-    [TitleUpdate]                           INT           DEFAULT ((0)) NOT NULL,
-    [CreatorInsert]                         INT           DEFAULT ((0)) NOT NULL,
-    [CreatorUpdate]                         INT           DEFAULT ((0)) NOT NULL,
-    [TitleCreatorInsert]                    INT           DEFAULT ((0)) NOT NULL,
-    [TitleCreatorUpdate]                    INT           DEFAULT ((0)) NOT NULL,
-    [TitleTagInsert]                        INT           DEFAULT ((0)) NOT NULL,
-    [TitleTagUpdate]                        INT           DEFAULT ((0)) NOT NULL,
-    [ItemInsert]                            INT           DEFAULT ((0)) NOT NULL,
-    [ItemUpdate]                            INT           DEFAULT ((0)) NOT NULL,
-    [PageInsert]                            INT           DEFAULT ((0)) NOT NULL,
-    [PageUpdate]                            INT           DEFAULT ((0)) NOT NULL,
-    [IndicatedPageInsert]                   INT           DEFAULT ((0)) NOT NULL,
-    [IndicatedPageUpdate]                   INT           DEFAULT ((0)) NOT NULL,
-    [PagePageTypeInsert]                    INT           DEFAULT ((0)) NOT NULL,
-    [PagePageTypeUpdate]                    INT           DEFAULT ((0)) NOT NULL,
-    [PageNameInsert]                        INT           DEFAULT ((0)) NOT NULL,
-    [PageNameUpdate]                        INT           DEFAULT ((0)) NOT NULL,
-    [TitleTitleIdentifierInsert]            INT           CONSTRAINT [DF_ImportLog_TitleTitleIdentifierInsert] DEFAULT ((0)) NULL,
-    [TitleTitleIdentifierUpdate]            INT           CONSTRAINT [DF_ImportLog_TitleTitleIdentifierUpdate] DEFAULT ((0)) NULL,
-    [TitleAssociationInsert]                INT           NULL,
-    [TitleAssociationTitleIdentifierInsert] INT           NULL,
-    [TitleItemInsert]                       INT           NULL,
-    [TitleVariantInsert]                    INT           NULL,
+	[ImportLogID]                           int           IDENTITY(1,1) NOT NULL,
+	[ImportDate]                            datetime      NOT NULL,
+	[ImportSourceID]                        int           NULL,
+	[BarCode]                               nvarchar(40)  NULL,
+	[ImportResult]                          nvarchar(30)  NOT NULL,
+	[TableName]                             nvarchar(100) NOT NULL,
+	[Action]                                nvarchar(20)  NOT NULL,
+	[Rows]                                  int           NOT NULL
     CONSTRAINT [PK_ImportLog] PRIMARY KEY CLUSTERED ([ImportLogID] ASC)
 );
 
+ALTER TABLE dbo.ImportLog ADD CONSTRAINT DF_ImportLog_ImportDate DEFAULT GETDATE() FOR ImportDate;
+ALTER TABLE dbo.ImportLog ADD CONSTRAINT DF_ImportLog_ImportResult DEFAULT('') FOR ImportResult;
+ALTER TABLE dbo.ImportLog ADD CONSTRAINT DF_ImportLog_TableName DEFAULT('') FOR TableName;
+ALTER TABLE dbo.ImportLog ADD CONSTRAINT DF_ImportLog_Action DEFAULT('') FOR [Action];
+ALTER TABLE dbo.ImportLog ADD CONSTRAINT DF_ImportLog_Rows DEFAULT(0) FOR [Rows];
