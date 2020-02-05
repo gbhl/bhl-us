@@ -1945,7 +1945,7 @@ BEGIN TRY
 	SELECT	s.ItemID,
 			i.BarCode,
 			s.Sequence,
-			a.Sequence,
+			ROW_NUMBER() OVER (PARTITION BY i.BarCode, s.Sequence ORDER BY i.BarCode, s.Sequence, a.Sequence),
 			a.BHLAuthorID,
 			a.LastName,
 			a.FirstName,
@@ -1954,6 +1954,7 @@ BEGIN TRY
 	FROM	dbo.IASegmentAuthor a
 			INNER JOIN dbo.IASegment s ON a.SegmentID = s.SegmentID
 			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+	WHERE	(a.LastName <> '' OR a.FirstName <> '')
 
 	-- Get Segment Author Identifiers
 	INSERT INTO #tmpSegmentAuthorIdentifier
@@ -1968,13 +1969,14 @@ BEGIN TRY
 	SELECT	s.ItemID,
 			i.BarCode,
 			s.Sequence,
-			a.Sequence,
+			ROW_NUMBER() OVER (PARTITION BY i.BarCode, s.Sequence ORDER BY i.BarCode, s.Sequence, a.Sequence),
 			a.BHLIdentifierID,
 			a.IdentifierValue
 	FROM	dbo.IASegmentAuthor a
 			INNER JOIN dbo.IASegment s ON a.SegmentID = s.SegmentID
 			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
 	WHERE	a.BHLIdentifierID IS NOT NULL
+	AND		(a.LastName <> '' OR a.FirstName <> '')
 
 	-- =======================================================================
 	-- =======================================================================

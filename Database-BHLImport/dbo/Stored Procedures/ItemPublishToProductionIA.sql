@@ -2372,12 +2372,13 @@ BEGIN TRY
 		-- Insert new segment author records into the production database
 		INSERT INTO dbo.BHLSegmentAuthor (SegmentID, AuthorID, SequenceOrder, CreationDate,
 			LastModifiedDate, CreationUserID, LastModifiedUserID)
-		SELECT	s.SegmentID, t.ProductionAuthorID, t.SequenceOrder, GETDATE(), GETDATE(), 1, 1
+		SELECT	s.SegmentID, t.ProductionAuthorID, MIN(t.SequenceOrder), GETDATE(), GETDATE(), 1, 1
 		FROM	#tmpSegmentAuthor t
 				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
 				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
 				LEFT JOIN dbo.BHLSegmentAuthor a ON s.SegmentID = a.SegmentID AND t.ProductionAuthorID = a.AuthorID
 		WHERE a.SegmentAuthorID IS NULL
+		GROUP BY s.SegmentID, t.ProductionAuthorID
 		
 		SELECT @RowCount = @@ROWCOUNT
 		IF (@RowCount > 0)

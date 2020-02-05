@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[StatsSelectReadyForProductionBySource]
+﻿CREATE PROCEDURE [dbo].[StatsSelectReadyForProductionBySource]
 
 @ImportSourceID INT
 
@@ -60,11 +59,46 @@ FROM	dbo.ImportSource src LEFT JOIN dbo.TitleAssociation_TitleIdentifier t
 			AND t.ImportStatusID = 10
 WHERE	src.ImportSourceID = @ImportSourceID
 GROUP BY src.Source
+UNION 
+SELECT	src.Source, @Status, 'TitleLanguage' AS [Type], SUM(CASE WHEN t.TitleLanguageID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.TitleLanguage t
+			ON src.ImportSourceID = t.ImportSourceID
+			AND t.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION 
+SELECT	src.Source, @Status, 'TitleNote' AS [Type], SUM(CASE WHEN t.TitleNoteID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.TitleNote t
+			ON src.ImportSourceID = t.ImportSourceID
+			AND t.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION 
+SELECT	src.Source, @Status, 'TitleTag' AS [Type], SUM(CASE WHEN t.TitleTagID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.TitleTag t
+			ON src.ImportSourceID = t.ImportSourceID
+			AND t.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION 
+SELECT	src.Source, @Status, 'TitleVariant' AS [Type], SUM(CASE WHEN t.TitleVariantID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.TitleVariant t
+			ON src.ImportSourceID = t.ImportSourceID
+			AND t.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
 UNION
 SELECT	src.Source, @Status, 'Item' AS [Type], SUM(CASE WHEN i.ItemID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
 FROM	dbo.ImportSource src LEFT JOIN dbo.Item i
 			ON src.ImportSourceID = i.ImportSourceID
 			AND i.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'ItemLanguage' AS [Type], SUM(CASE WHEN l.ItemLanguageID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.ItemLanguage l
+			ON src.ImportSourceID = l.ImportSourceID
+			AND l.ImportStatusID = 10
 WHERE	src.ImportSourceID = @ImportSourceID
 GROUP BY src.Source
 UNION
@@ -93,6 +127,41 @@ SELECT	src.Source, @Status, 'PageName' AS [Type], SUM(CASE WHEN pn.PageNameID IS
 FROM	dbo.ImportSource src LEFT JOIN dbo.PageName pn
 			ON src.ImportSourceID = pn.ImportSourceID
 			AND pn.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'Segment' AS [Type], SUM(CASE WHEN s.SegmentID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.Segment s
+			ON src.ImportSourceID = s.ImportSourceID
+			AND s.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'SegmentAuthor' AS [Type], SUM(CASE WHEN s.SegmentAuthorID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.SegmentAuthor s
+			ON src.ImportSourceID = s.ImportSourceID
+			AND s.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'SegmentAuthorIdentifier' AS [Type], SUM(CASE WHEN s.SegmentAuthorIdentifierID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.SegmentAuthorIdentifier s
+			ON src.ImportSourceID = s.ImportSourceID
+			AND s.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'SegmentIdentifier' AS [Type], SUM(CASE WHEN s.SegmentIdentifierID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.SegmentIdentifier s
+			ON src.ImportSourceID = s.ImportSourceID
+			AND s.ImportStatusID = 10
+WHERE	src.ImportSourceID = @ImportSourceID
+GROUP BY src.Source
+UNION
+SELECT	src.Source, @Status, 'SegmentPage' AS [Type], SUM(CASE WHEN s.SegmentPageID IS NULL THEN 0 ELSE 1 END) AS [Number Of Items]
+FROM	dbo.ImportSource src LEFT JOIN dbo.SegmentPage s
+			ON src.ImportSourceID = s.ImportSourceID
+			AND s.ImportStatusID = 10
 WHERE	src.ImportSourceID = @ImportSourceID
 GROUP BY src.Source
 ORDER BY [Type]
