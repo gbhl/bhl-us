@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class IAHarvestDashboard {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class IAHarvestDashboard
+    {
+
         /// <summary>
         /// contentPanel control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ContentPanel contentPanel;
-        
+
         /// <summary>
         /// hypNumItems control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HyperLink hypNumItems;
-        
+
         /// <summary>
         /// gvItemCountByStatus control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvItemCountByStatus;
-        
+
         /// <summary>
         /// gvIAReadyToPublish control.
         /// </summary>
@@ -47,16 +49,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvIAReadyToPublish;
-        
+
         /// <summary>
-        /// gvLatestPubToProdLogs control.
+        /// tblImportLog control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvLatestPubToProdLogs;
-        
+        protected global::System.Web.UI.HtmlControls.HtmlTable tblImportLog;
+
         /// <summary>
         /// gvLatestPubToProdErrors control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvLatestPubToProdErrors;
-        
+
         /// <summary>
         /// gvIAItemErrors control.
         /// </summary>

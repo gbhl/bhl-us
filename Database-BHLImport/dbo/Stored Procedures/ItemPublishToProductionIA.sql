@@ -28,30 +28,7 @@ SET NOCOUNT ON
 DECLARE @ImportKey nvarchar(50)
 DECLARE @ImportSourceID int
 DECLARE @ProductionDate DATETIME
-DECLARE @TitleInsert int
-DECLARE @TitleUpdate int
-DECLARE @CreatorInsert int
-DECLARE @CreatorUpdate int
-DECLARE @TitleCreatorInsert int
-DECLARE @TitleCreatorUpdate int
-DECLARE @TitleKeywordInsert int
-DECLARE @TitleKeywordUpdate int
-DECLARE @TitleIdentifierInsert int
-DECLARE @TitleIdentifierUpdate int
-DECLARE @TitleAssociationInsert int
-DECLARE @TitleAssociationTitleIdentifierInsert int
-DECLARE @TitleVariantInsert int
-DECLARE @ItemInsert int
-DECLARE @ItemUpdate int
-DECLARE @TitleItemInsert int
-DECLARE @PageInsert int
-DECLARE @PageUpdate int
-DECLARE @IndicatedPageInsert int
-DECLARE @IndicatedPageUpdate int
-DECLARE @PagePageTypeInsert int
-DECLARE @PagePageTypeUpdate int
-DECLARE @PageNameInsert int
-DECLARE @PageNameUpdate int
+DECLARE @RowCount int
 SET @ImportSourceID = 1
 SET @ProductionDate = GETDATE()
 
@@ -345,6 +322,77 @@ BEGIN TRY
 		[ExternalLastModifiedUser] [int] NULL
 		)
 
+	CREATE TABLE #tmpSegment (
+		[SegmentID] [int] NOT NULL,
+		[BarCode] nvarchar(40) NOT NULL,
+		[SequenceOrder] smallint NOT NULL DEFAULT ((1)),
+		[SegmentStatusID] [int] NOT NULL,
+		[SegmentGenreID] [int] NOT NULL,
+		[Title] [nvarchar](2000) NOT NULL DEFAULT (''),
+		[TranslatedTitle] [nvarchar](2000) NOT NULL DEFAULT (''),
+		[SortTitle] [nvarchar](2000) NOT NULL DEFAULT (''),
+		[ContainerTitle] [nvarchar](2000) NOT NULL DEFAULT (''),
+		[PublicationDetails] [nvarchar](400) NOT NULL DEFAULT (''),
+		[PublisherName] [nvarchar](250) NOT NULL DEFAULT (''),
+		[PublisherPlace] [nvarchar](150) NOT NULL DEFAULT (''),
+		[Notes] [nvarchar](max) NOT NULL DEFAULT (''),
+		[Summary] [nvarchar](max) NOT NULL DEFAULT (''),
+		[Volume] [nvarchar](100) NOT NULL DEFAULT (''),
+		[Series] [nvarchar](100) NOT NULL DEFAULT (''),
+		[Issue] [nvarchar](100) NOT NULL,
+		[Edition] [nvarchar](400) NOT NULL DEFAULT (''),
+		[Date] [nvarchar](20) NOT NULL DEFAULT (''),
+		[PageRange] [nvarchar](50) NOT NULL DEFAULT (''),
+		[StartPageNumber] [nvarchar](20) NOT NULL DEFAULT (''),
+		[EndPageNumber] [nvarchar](20) NOT NULL DEFAULT (''),
+		[StartPageID] [int] NULL,
+		[InstitutionCode] [nvarchar](10) NULL,
+		[LanguageCode] [nvarchar](10) NULL,
+		[Url] [nvarchar](200) NOT NULL DEFAULT (''),
+		[DownloadUrl] [nvarchar](200) NOT NULL DEFAULT (''),
+		[RightsStatus] [nvarchar](500) NOT NULL DEFAULT (''),
+		[RightsStatement] [nvarchar](500) NOT NULL DEFAULT (''),
+		[LicenseName] [nvarchar](200) NOT NULL DEFAULT (''),
+		[LicenseUrl] [nvarchar](200) NOT NULL DEFAULT ('')
+	)
+
+	CREATE TABLE #tmpSegmentPage (
+		[SegmentPageID] int NOT NULL,
+		[BarCode] nvarchar(40) NOT NULL,
+		[SegmentSequenceOrder] smallint NOT NULL,
+		[PageSequenceOrder] int NOT NULL
+	)
+
+	CREATE TABLE #tmpSegmentIdentifier(
+		[SegmentIdentifierID] [int] NOT NULL,
+		[BarCode] nvarchar(40) NOT NULL,
+		[SegmentSequenceOrder] smallint NOT NULL,
+		[IdentifierName] [nvarchar](40) NOT NULL,
+		[IdentifierValue] [nvarchar](125) NOT NULL
+		)
+
+	CREATE TABLE #tmpSegmentAuthor (
+		[SegmentAuthorID] [int] NOT NULL,
+		[BarCode] [nvarchar](40) NOT NULL DEFAULT (''),
+		[SegmentSequenceOrder] [int] NOT NULL,
+		[SequenceOrder] [int] NOT NULL,
+		[FullName] [nvarchar](300) NOT NULL DEFAULT(''),
+		[LastName] [nvarchar](150) NOT NULL DEFAULT (''),
+		[FirstName] [nvarchar](150) NOT NULL DEFAULT (''),
+		[StartDate] [nvarchar](25) NOT NULL DEFAULT (''),
+		[EndDate] [nvarchar](25) NOT NULL DEFAULT (''),
+		[ProductionAuthorID] [int] NULL,
+		[ProductionAuthorNameID] [int] NULL
+	)
+
+	CREATE TABLE #tmpSegmentAuthorIdentifier (
+		[SegmentAuthorIdentifierID] [int] NOT NULL,
+		[BarCode] [nvarchar](40) NOT NULL DEFAULT (''),
+		[SegmentSequenceOrder] [int] NOT NULL,
+		[SequenceOrder] [int] NOT NULL,
+		[ProductionIdentifierID] [int] NOT NULL,
+		[IdentifierValue] [nvarchar](125) NOT NULL DEFAULT ('')
+	)
 
 	-- =======================================================================
 	-- =======================================================================
@@ -1014,6 +1062,177 @@ BEGIN TRY
 	-- =======================================================================
 	-- =======================================================================
 	-- =======================================================================
+	-- Get Segments
+
+	INSERT INTO #tmpSegment
+	SELECT	[SegmentID],
+			[BarCode],
+			[SequenceOrder],
+			[SegmentStatusID],
+			[SegmentGenreID],
+			[Title],
+			[TranslatedTitle],
+			[SortTitle],
+			[ContainerTitle],
+			[PublicationDetails],
+			[PublisherName],
+			[PublisherPlace],
+			[Notes],
+			[Summary],
+			[Volume],
+			[Series],
+			[Issue],
+			[Edition],
+			[Date],
+			[PageRange],
+			[StartPageNumber],
+			[EndPageNumber],
+			[StartPageID],
+			[InstitutionCode],
+			CASE WHEN [LanguageCode] = '' THEN NULL ELSE [LanguageCode] END,
+			[Url],
+			[DownloadUrl],
+			[RightsStatus],
+			[RightsStatement],
+			[LicenseName],
+			[LicenseUrl]
+	FROM	dbo.Segment
+	WHERE	ImportStatusID = 10
+	AND		ImportSourceID = @ImportSourceID
+	AND		BarCode = @BarCode
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Segment Pages
+
+	INSERT INTO #tmpSegmentPage
+	SELECT	[SegmentPageID],
+			[BarCode],
+			[SegmentSequenceOrder],
+			[PageSequenceOrder]
+	FROM	dbo.SegmentPage
+	WHERE	ImportStatusID = 10
+	AND		ImportSourceID = @ImportSourceID
+	AND		BarCode = @BarCode
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Segment Identifiers
+	INSERT INTO #tmpSegmentIdentifier
+	SELECT	si.[SegmentIdentifierID],
+			si.[BarCode],
+			si.[SegmentSequenceOrder],
+			si.[IdentifierName],
+			si.[IdentifierValue]
+	FROM	dbo.SegmentIdentifier si
+	WHERE	si.ImportStatusID = 10
+	AND		si.ImportSourceID = @ImportSourceID
+	AND		si.BarCode = @BarCode
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Segment Authors
+
+	INSERT INTO #tmpSegmentAuthor
+	SELECT	[SegmentAuthorID],
+			[BarCode],
+			[SegmentSequenceOrder],
+			[SequenceOrder],
+			[LastName] + ', ' + [FirstName],
+			[LastName],
+			[FirstName],
+			[StartDate],
+			[EndDate],
+			[ProductionAuthorID],
+			NULL
+	FROM	dbo.SegmentAuthor
+	WHERE	ImportStatusID = 10
+	AND		ImportSourceID = @ImportSourceID
+	AND		BarCode = @BarCode
+
+	-- Look for production Author IDs for the selected authors
+	-- First try to match identifiers
+	UPDATE	#tmpSegmentAuthor
+	SET		ProductionAuthorID = bai.AuthorID
+	FROM	#tmpSegmentAuthor a INNER JOIN #tmpSegmentAuthorIdentifier i 
+				ON a.BarCode = i.BarCode 
+				AND a.SegmentSequenceOrder = i.SegmentSequenceOrder 
+				AND a.SequenceOrder = i.SequenceOrder
+			INNER JOIN dbo.BHLAuthorIdentifier bai
+				ON i.ProductionIdentifierID = bai.IdentifierID
+				AND i.IdentifierValue = bai.IdentifierValue
+	WHERE	a.ProductionAuthorID IS NULL
+
+	-- Next try to match names and dates
+	SELECT	t.SegmentAuthorID, 
+			MIN(a.AuthorID) AS ProductionAuthorID, 
+			MIN(n.AuthorNameID) AS ProductionAuthorNameID
+	INTO	#tmpSAUpdate
+	FROM	#tmpSegmentAuthor t INNER JOIN dbo.BHLAuthor a
+			ON	ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.Startdate), '')
+				AND	ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
+			INNER JOIN dbo.BHLAuthorName n
+				ON a.AuthorID = n.AuthorID
+				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
+					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '')
+					COLLATE SQL_Latin1_General_CP1_CI_AI
+				AND LTRIM(RTRIM(t.FirstName)) = LTRIM(RTRIM(n.FirstName))
+				AND	LTRIM(RTRIM(t.LastName)) = LTRIM(RTRIM(n.LastName))
+	WHERE		t.ProductionAuthorID IS NULL
+	GROUP BY t.SegmentAuthorID
+
+	UPDATE	#tmpSegmentAuthor
+	SET		ProductionAuthorID = tu.ProductionAuthorID,
+			ProductionAuthorNameID = tu.ProductionAuthorNameID
+	FROM	#tmpSegmentAuthor sa 
+			INNER JOIN #tmpSAUpdate tu ON sa.SegmentAuthorID = tu.SegmentAuthorID
+
+	DROP TABLE #tmpSAUpdate
+
+	-- If a selected production Author ID has been redirected to a different 
+	-- author ID, then use that author ID instead.  Follow the "redirect" chain
+	-- up to ten levels.
+	UPDATE	#tmpSegmentAuthor
+	SET		ProductionAuthorID = COALESCE(a10.AuthorID, a9.AuthorID, a8.AuthorID, a7.AuthorID, a6.AuthorID,
+										a5.AuthorID, a4.AuthorID, a3.AuthorID, a2.AuthorID, a1.AuthorID)
+	FROM	#tmpSegmentAuthor t 
+			INNER JOIN dbo.SegmentAuthor a ON t.SegmentAuthorID = a.SegmentAuthorID
+			INNER JOIN dbo.BHLAuthor a1 ON t.ProductionAuthorID = a1.AuthorID
+			LEFT JOIN dbo.BHLAuthor a2 ON a1.RedirectAuthorID = a2.AuthorID
+			LEFT JOIN dbo.BHLAuthor a3 ON a2.RedirectAuthorID = a3.AuthorID
+			LEFT JOIN dbo.BHLAuthor a4 ON a3.RedirectAuthorID = a4.AuthorID
+			LEFT JOIN dbo.BHLAuthor a5 ON a4.RedirectAuthorID = a5.AuthorID
+			LEFT JOIN dbo.BHLAuthor a6 ON a5.RedirectAuthorID = a6.AuthorID
+			LEFT JOIN dbo.BHLAuthor a7 ON a6.RedirectAuthorID = a7.AuthorID
+			LEFT JOIN dbo.BHLAuthor a8 ON a7.RedirectAuthorID = a8.AuthorID
+			LEFT JOIN dbo.BHLAuthor a9 ON a8.RedirectAuthorID = a9.AuthorID
+			LEFT JOIN dbo.BHLAuthor a10 ON a9.RedirectAuthorID = a10.AuthorID
+	WHERE	t.ProductionAuthorID IS NOT NULL
+	AND		a.ProductionAuthorID IS NULL	-- Only do this for production IDs that were NOT user-supplied
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
+	-- Get Segment Author Identifiers
+
+	INSERT INTO #tmpSegmentAuthorIdentifier
+	SELECT	[SegmentAuthorIdentifierID],
+			[BarCode],
+			[SegmentSequenceOrder],
+			[SequenceOrder],
+			[ProductionIdentifierID],
+			[IdentifierValue]
+	FROM	dbo.SegmentAuthorIdentifier
+	WHERE	ImportStatusID = 10
+	AND		ImportSourceID = @ImportSourceID
+	AND		BarCode = @BarCode
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
 	-- Resolve titles.  
 
 	-- Multiple attempts are made to find a matching title in production.  In
@@ -1137,7 +1356,12 @@ BEGIN TRY
 		FROM	#tmpTitle tmp INNER JOIN dbo.BHLTitle t
 					ON tmp.ProductionTitleID = t.TitleID
 
-		SELECT @TitleUpdate = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title', 'Update', @RowCount)
+		END
 
 		-- Insert new titles into the production database
 		INSERT INTO dbo.BHLTitle (MARCBibID, MARCLeader, FullTitle, ShortTitle,
@@ -1161,7 +1385,12 @@ BEGIN TRY
 		FROM	#tmpTitle tmp
 		WHERE	tmp.ProductionTitleID IS NULL
 
-		SELECT @TitleInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title', 'Insert', @RowCount)
+		END
 
 		-- Get the IDs of the newly inserted titles
 		UPDATE	#tmpTitle
@@ -1211,7 +1440,7 @@ BEGIN TRY
 
 		-- =======================================================================
 
-		-- Insert new authors into the production database
+		-- Insert new authors of titles into the production database
 		DECLARE @NewAuthorID int
 		DECLARE @CreatorID int
 		DECLARE @DOB nvarchar(50)
@@ -1224,7 +1453,7 @@ BEGIN TRY
 		DECLARE @MARCCreator_q nvarchar(450)
 		DECLARE @ExternalCreationDate datetime
 		DECLARE @ExternalLastModifiedDate datetime
-		SET @CreatorInsert = 0
+		SET @RowCount = 0
 
 		DECLARE	curInsert CURSOR 
 		FOR SELECT DISTINCT
@@ -1271,7 +1500,7 @@ BEGIN TRY
 				AND		ISNULL(MARCCreator_d, '') = ISNULL(@MarcCreator_d, '')
 				AND		ISNULL(MARCCreator_q, '') = ISNULL(@MarcCreator_q, '')
 
-				SET @CreatorInsert = @CreatorInsert + 1
+				SET @RowCount = @Rowcount + 1
 			END
 
 			FETCH NEXT FROM curInsert INTO @MARCDataFieldTag, @DOB, @DOD, @CreatorName,
@@ -1280,6 +1509,12 @@ BEGIN TRY
 
 		CLOSE curInsert
 		DEALLOCATE curInsert
+
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Author', 'Insert', @RowCount)
+		END
 
 		-- Copy new production author IDs to #tmpTitle_Creator
 		UPDATE	#tmpTitle_Creator
@@ -1337,7 +1572,12 @@ BEGIN TRY
 					AND tmpC.CreatorRoleTypeID = ta.AuthorRoleID
 		WHERE	ta.TitleID IS NULL
 				
-		SELECT @TitleCreatorInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Author', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1359,12 +1599,17 @@ BEGIN TRY
 		WHERE	ti.TitleIdentifierID IS NULL
 		AND		tmp.IdentifierName <> 'DOI'
 
-		SELECT @TitleIdentifierInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Identifier', 'Insert', @RowCount)
+		END
 
 		-- Insert new DOI records into the production database
 		DECLARE @DOIEntityTypeID int
-		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
 		DECLARE @DOIStatusID int
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Title'
 		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
 
 		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
@@ -1383,7 +1628,12 @@ BEGIN TRY
 		WHERE	d.DOIID IS NULL
 		AND		tmp.IdentifierName = 'DOI'
 
-		SELECT @TitleIdentifierInsert = @TitleIdentifierInsert + @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'DOI', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1411,7 +1661,12 @@ BEGIN TRY
 					AND tmp.Relationship = a.Relationship
 		WHERE	a.TitleAssociationID IS NULL
 
-		SELECT @TitleAssociationInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Association', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1443,7 +1698,12 @@ BEGIN TRY
 					AND tmp.IdentifierValue = i.IdentifierValue					
 		WHERE	i.TitleAssociation_TitleIdentifierID IS NULL
 
-		SELECT @TitleAssociationTitleIdentifierInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Association Identifier', 'Insert', @RowCount)
+		END
 
 		-- Update the AssociatedTitleIDs in the production TitleAssociation table
 		UPDATE	dbo.BHLTitleAssociation
@@ -1479,7 +1739,12 @@ BEGIN TRY
 					AND tmp.PartName = v.PartName
 		WHERE	v.TitleVariantID IS NULL
 
-		SELECT @TitleVariantInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Variant', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1529,7 +1794,12 @@ BEGIN TRY
 		WHERE	tk.MarcDataFieldTag <> tmp.MarcDataFieldTag
 		OR		tk.MarcSubFieldCode <> tmp.MarcSubFieldCode
 
-		SELECT @TitleKeywordUpdate = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Keyword', 'Update', @RowCount)
+		END
 
 		-- Insert new title keywords into the production database
 		INSERT INTO dbo.BHLTitleKeyword (TitleID, KeywordID, MarcDataFieldTag, MarcSubFieldCode,
@@ -1560,7 +1830,12 @@ BEGIN TRY
 					AND tmp.ProductionKeywordID = tk.KeywordID
 		WHERE	tk.TitleKeywordID IS NULL
 		
-		SELECT @TitleKeywordInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Keyword', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1575,6 +1850,13 @@ BEGIN TRY
 					ON t.TitleID = tl.TitleID
 					AND tmp.LanguageCode = tl.LanguageCode
 		WHERE	tl.TitleLanguageID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Language', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1618,7 +1900,12 @@ BEGIN TRY
 					ON tmp.ImportSourceID = isis.ImportSourceID
 		WHERE	i.ItemID IS NULL
 
-		SELECT @ItemInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Item', 'Insert', @RowCount)
+		END
 
 		-- Insert title->item relationships into the production TitleItem table
 		INSERT INTO dbo.BHLTitleItem (TitleID, ItemID, ItemSequence)
@@ -1634,7 +1921,12 @@ BEGIN TRY
 					AND i.ItemID = ti.ItemID
 		WHERE	ti.TitleItemID IS NULL
 
-		SELECT @TitleItemInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Item', 'Insert', @RowCount)
+		END
 
 		-- Make sure the auto-assigned ItemSequence values are unique.
 		-- Calculate the ItemSequence by ordering each title by the TitleItemID.
@@ -1675,15 +1967,26 @@ BEGIN TRY
 		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
 		WHERE	tmp.InstitutionCode IS NOT NULL
 
+		SELECT @RowCount = @@ROWCOUNT
+
 		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
 		SELECT	i.ItemID, tmp.ScanningInstitutionCode, @ScanningInstitutionRoleID
 		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
 		WHERE	tmp.ScanningInstitutionCode IS NOT NULL
 
+		SELECT @RowCount = @RowCount + @@ROWCOUNT
+
 		INSERT	dbo.BHLItemInstitution (ItemID, InstitutionCode, InstitutionRoleID)
 		SELECT	i.ItemID, tmp.RightsHolderCode, @RightsHolderRoleID
 		FROM	#tmpItem tmp INNER JOIN dbo.BHLItem i ON tmp.BarCode = i.BarCode
 		WHERE	tmp.RightsHolderCode IS NOT NULL
+
+		SELECT @RowCount = @RowCount + @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Item Institution', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1711,6 +2014,13 @@ BEGIN TRY
 						ON x.ItemID = y.ItemID
 						AND x.CollectionID = y.CollectionID
 		WHERE	y.ItemID IS NULL	-- Only select the items not already in the collections
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Item Collection', 'Insert', @RowCount)
+		END
 
 		-- Find titles related to new items that match the auto-add criteria for at least one title-based collection.
 		INSERT	dbo.BHLTitleCollection (TitleID, CollectionID)
@@ -1740,6 +2050,13 @@ BEGIN TRY
 						AND x.CollectionID = y.CollectionID
 		WHERE	y.TitleID IS NULL	-- Only select the titles not already in the collections
 
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Title Collection', 'Insert', @RowCount)
+		END
+
 		-- =======================================================================
 
 		-- Insert new itemlanguage records into the production database
@@ -1751,6 +2068,13 @@ BEGIN TRY
 					ON i.ItemID = il.ItemID
 					AND tmp.LanguageCode = il.LanguageCode
 		WHERE	il.ItemLanguageID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Item Language', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1773,7 +2097,12 @@ BEGIN TRY
 					AND t.FileNamePrefix = p.FileNamePrefix
 		WHERE	p.PageID IS NULL
 
-		SELECT @PageInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Page', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1795,7 +2124,12 @@ BEGIN TRY
 					AND t.Sequence = ip.Sequence
 		WHERE	ip.PageID IS NULL
 
-		SELECT @IndicatedPageInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Indicated Page', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1816,7 +2150,267 @@ BEGIN TRY
 					AND t.PageTypeID = ppt.PageTypeID
 		WHERE	ppt.PageID IS NULL
 				
-		SELECT @PagePageTypeInsert = @@ROWCOUNT
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Page PageType', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Get the Start Page IDs for each segment
+
+		SELECT	s.SegmentID, MIN(p.PageSequenceOrder) AS FirstPage 
+		INTO	#FirstPages
+		FROM	#tmpSegment s INNER JOIN #tmpSegmentPage p 
+					ON s.BarCode = p.BarCode 
+					AND s.SequenceOrder = p.SegmentSequenceOrder
+		GROUP BY s.SegmentID
+
+		UPDATE	#tmpSegment
+		SET		StartPageID = p.PageID
+		FROM	#tmpSegment t 
+				INNER JOIN #tmpSegmentPage sp ON t.BarCode = sp.BarCode
+				INNER JOIN #FirstPages f ON t.SegmentID = f.SegmentID AND sp.PageSequenceOrder = f.FirstPage
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLPage p ON i.ItemID = p.ItemID AND f.FirstPage = p.SequenceOrder
+
+		-- Insert new segment records into the production database
+
+		INSERT INTO dbo.BHLSegment (ItemID, SequenceOrder, SegmentStatusID, SegmentGenreID, 
+			Title, TranslatedTitle, SortTitle, ContainerTitle, PublicationDetails,
+			PublisherName, PublisherPlace, Notes, Summary, Volume, Series, Issue, Edition,
+			[Date], PageRange, StartPageNumber, EndPageNumber, StartPageID, LanguageCode, 
+			Url, DownloadUrl, RightsStatus, RightsStatement, LicenseName, LicenseUrl, 
+			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT	i.ItemID, t.SequenceOrder, t.SegmentStatusID, t.SegmentGenreID, t.Title,
+				t.TranslatedTitle, t.SortTitle, t.ContainerTitle, t.PublicationDetails,
+				t.PublisherName, t.PublisherPlace, t.Notes, t.Summary, t.Volume, t.Series, 
+				t.Issue, t.Edition, t.[Date], t.PageRange, t.StartPageNumber, t.EndPageNumber, 
+				t.StartPageID, t.LanguageCode, t.Url, t.DownloadUrl, t.RightsStatus, 
+				t.RightsStatement, t.LicenseName, t.LicenseUrl, GETDATE(), GETDATE(), 1, 1
+		FROM	#tmpSegment t 
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				LEFT JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND t.SequenceOrder = s.SequenceOrder
+		WHERE	s.SegmentID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Insert new segment institution records into the production database
+		DECLARE @ContributorInstitutionRoleID int
+		SELECT	@ContributorInstitutionRoleID = InstitutionRoleID FROM dbo.BHLInstitutionRole WHERE InstitutionRoleName = 'Contributor'
+
+		INSERT INTO dbo.BHLSegmentInstitution (SegmentID, InstitutionCode, InstitutionRoleID,
+			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT	s.SegmentID, t.InstitutionCode, @ContributorInstitutionRoleID, GETDATE(), GETDATE(), 1, 1
+		FROM	#tmpSegment t
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SequenceOrder
+				LEFT JOIN dbo.BHLSegmentInstitution inst ON s.SegmentID = inst.SegmentID AND t.InstitutionCode = inst.InstitutionCode
+		WHERE	inst.SegmentInstitutionID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment Institution', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Insert new segment page records into the production database
+		INSERT INTO dbo.BHLSegmentPage (SegmentID, PageID, SequenceOrder, CreationDate,
+			LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT	s.SegmentID, p.PageID, t.PageSequenceOrder, GETDATE(), GETDATE(), 1, 1
+		FROM	#tmpSegmentPage t
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				INNER JOIN dbo.BHLPage p ON i.ItemID = p.ItemID AND t.PageSequenceOrder = p.SequenceOrder
+				LEFT JOIN dbo.BHLSegmentPage sp ON p.PageID = sp.PageID
+		WHERE	sp.SegmentPageID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment Page', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Insert new segmentidentifier records into the production database
+		INSERT INTO dbo.BHLSegmentIdentifier (SegmentID, IdentifierID,
+			IdentifierValue, CreationDate, LastModifiedDate)
+		SELECT DISTINCT s.SegmentID, id.IdentifierID, t.IdentifierValue, GETDATE(), GETDATE()
+		FROM	#tmpSegmentIdentifier t
+				INNER JOIN dbo.BHLIdentifier id ON t.IdentifierName = id.IdentifierName
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				LEFT JOIN dbo.BHLSegmentIdentifier si
+					ON s.SegmentID = si.SegmentID
+					AND id.IdentifierID = si.IdentifierID
+					AND t.IdentifierValue = si.IdentifierValue
+		WHERE	si.SegmentIdentifierID IS NULL
+		AND		t.IdentifierName <> 'DOI'
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment Identifier', 'Insert', @RowCount)
+		END
+
+		-- Insert new DOI records into the production database
+		SELECT @DOIEntityTypeID = DOIEntityTypeID FROM dbo.BHLDOIEntityType WHERE DOIEntityTypeName = 'Segment'
+		SELECT @DOIStatusID = DOIStatusID FROM dbo.BHLDOIStatus WHERE DOIStatusName = 'External DOI'
+
+		INSERT INTO dbo.BHLDOI (DOIEntityTypeID, EntityID, DOIStatusID, 
+			DOIName, StatusDate, IsValid, Creationdate, LastModifiedDate)
+		SELECT DISTINCT @DOIEntityTypeID, s.SegmentID, @DOIStatusID, t.IdentifierValue, 
+			GETDATE(), 1, GETDATE(), GETDATE()
+		FROM	#tmpSegmentIdentifier t
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				LEFT JOIN dbo.BHLDOI d
+					ON d.DOIEntityTypeID = @DOIEntityTypeID
+					AND d.EntityID = s.SegmentID
+					AND d.DOIName = t.IdentifierValue 
+		WHERE	d.DOIID IS NULL
+		AND		t.IdentifierName = 'DOI'
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'DOI', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Insert new authors of segments into the production database
+		DECLARE @StartDate nvarchar(25)
+		DECLARE @EndDate nvarchar(25)
+		DECLARE @FullName nvarchar(300)
+		DECLARE @LastName nvarchar(150)
+		DECLARE @FirstName nvarchar(150)
+		SET @RowCount = 0
+
+		DECLARE	curInsert CURSOR 
+		FOR SELECT	StartDate, EndDate, FullName, LastName, FirstName
+			FROM	#tmpSegmentAuthor
+			WHERE	ProductionAuthorID IS NULL
+			GROUP BY StartDate, EndDate, FullName, LastName, FirstName
+		
+		OPEN curInsert
+		FETCH NEXT FROM curInsert INTO @StartDate, @EndDate, @FullName, @LastName, @FirstName
+
+		WHILE (@@fetch_status <> -1)
+		BEGIN
+			IF (@@fetch_status <> -2)
+			BEGIN
+
+				-- Insert a new author record into the production database
+				INSERT INTO dbo.BHLAuthor (AuthorTypeID, StartDate, EndDate, IsActive, 
+					CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+				VALUES (1, @StartDate, @EndDate, 1, GETDATE(), GETDATE(), 1, 1)
+						
+				-- Save the ID of the newly inserted author record
+				SELECT @NewAuthorID = SCOPE_IDENTITY()
+				
+				UPDATE	#tmpSegmentAuthor
+				SET		ProductionAuthorID = @NewAuthorID,
+						ProductionAuthorNameID = 0
+				WHERE	StartDate = @StartDate
+				AND		EndDate = @EndDate
+				AND		FullName = @FullName
+				AND		LastName = @LastName
+				AND		FirstName = @FirstName
+				AND		ProductionAuthorID IS NULL
+
+				SET @RowCount = @RowCount + 1
+			END
+
+			FETCH NEXT FROM curInsert INTO @StartDate, @EndDate, @FullName, @LastName, @FirstName
+		END
+
+		CLOSE curInsert
+		DEALLOCATE curInsert
+
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Author', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+		
+		-- Insert new AuthorName records into the production database
+		INSERT INTO dbo.BHLAuthorName (AuthorID, FullName, LastName, FirstName, IsPreferredName,
+			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT DISTINCT
+				ProductionAuthorID,
+				FullName,
+				LastName,
+				FirstName,
+				1,
+				GETDATE(),
+				GETDATE(),
+				1, 1
+		FROM	#tmpSegmentAuthor
+		WHERE	ProductionAuthorNameID = 0
+
+		-- =======================================================================
+
+		-- Insert new segment author records into the production database
+		INSERT INTO dbo.BHLSegmentAuthor (SegmentID, AuthorID, SequenceOrder, CreationDate,
+			LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT	s.SegmentID, t.ProductionAuthorID, MIN(t.SequenceOrder), GETDATE(), GETDATE(), 1, 1
+		FROM	#tmpSegmentAuthor t
+				INNER JOIN dbo.BHLItem i ON t.BarCode = i.BarCode
+				INNER JOIN dbo.BHLSegment s ON i.ItemID = s.ItemID AND s.SequenceOrder = t.SegmentSequenceOrder
+				LEFT JOIN dbo.BHLSegmentAuthor a ON s.SegmentID = a.SegmentID AND t.ProductionAuthorID = a.AuthorID
+		WHERE a.SegmentAuthorID IS NULL
+		GROUP BY s.SegmentID, t.ProductionAuthorID
+		
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment Author', 'Insert', @RowCount)
+		END
+
+		-- =======================================================================
+
+		-- Insert new segment author identifier records into the production database
+		INSERT INTO dbo.BHLAuthorIdentifier (AuthorID, IdentifierID, IdentifierValue,
+			CreationDate, LastModifiedDate, CreationUserID, LastModifiedUserID)
+		SELECT	a.ProductionAuthorID, t.ProductionIdentifierID, t.IdentifierValue, 
+				GETDATE(), GETDATE(), 1, 1
+		FROM	#tmpSegmentAuthorIdentifier t
+				INNER JOIN #tmpSegmentAuthor a 
+					ON t.BarCode = a.BarCode 
+					AND t.SegmentSequenceOrder = a.SegmentSequenceOrder
+					AND t.SequenceOrder = a.Sequenceorder
+				LEFT JOIN dbo.BHLAuthorIdentifier i
+					ON a.ProductionAuthorID = i.AuthorID
+					AND t.ProductionIdentifierID = i.IdentifierID
+					AND t.IdentifierValue = i.IdentifierValue
+		WHERE	i.AuthorIdentifierID IS NULL
+
+		SELECT @RowCount = @@ROWCOUNT
+		IF (@RowCount > 0)
+		BEGIN
+			INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+			VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 'Segment Author Identifier', 'Insert', @RowCount)
+		END
 
 		-- =======================================================================
 
@@ -1897,31 +2491,29 @@ BEGIN TRY
 		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
 		FROM	dbo.Page_PageType ppt INNER JOIN #tmpPage_PageType t ON ppt.PagePageTypeID = t.PagePageTypeID
 
+		UPDATE	dbo.Segment
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.Segment s INNER JOIN #tmpSegment t ON s.SegmentID = t.SegmentID
+
+		UPDATE	dbo.SegmentPage
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.SegmentPage p INNER JOIN #tmpSegmentPage t ON p.SegmentPageID = t.SegmentPageID
+
+		UPDATE	dbo.SegmentIdentifier
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.SegmentIdentifier i INNER JOIN #tmpSegmentIdentifier t ON i.SegmentIdentifierID = t.SegmentIdentifierID
+
+		UPDATE	dbo.SegmentAuthor
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.SegmentAuthor a INNER JOIN #tmpSegmentAuthor t ON a.SegmentAuthorID = t.SegmentAuthorID
+
+		UPDATE	dbo.SegmentAuthorIdentifier
+		SET		ImportStatusID = @StatusComplete, ProductionDate = @ProductionDate
+		FROM	dbo.SegmentAuthorIdentifier i INNER JOIN #tmpSegmentAuthorIdentifier t ON i.SegmentAuthorIdentifierID = t.SegmentAuthorIdentifierID
+
 		-- =======================================================================
 
 		COMMIT TRAN
-
-		-- Log results of import
-		INSERT INTO dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult,
-			TitleInsert, TitleUpdate, CreatorInsert, CreatorUpdate,
-			TitleCreatorInsert, TitleCreatorUpdate, TitleTagInsert, TitleTagUpdate,
-			TitleTitleIdentifierInsert, TitleTitleIdentifierUpdate,
-			TitleAssociationInsert, TitleAssociationTitleIdentifierInsert,
-			TitleVariantInsert, ItemInsert, ItemUpdate, TitleItemInsert, PageInsert, PageUpdate,
-			IndicatedPageInsert, IndicatedPageUpdate, PagePageTypeInsert, PagePageTypeUpdate,
-			PageNameInsert, PageNameUpdate)
-		VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Success', 
-			ISNULL(@TitleInsert, 0), ISNULL(@TitleUpdate, 0), ISNULL(@CreatorInsert, 0), 
-			ISNULL(@CreatorUpdate, 0), ISNULL(@TitleCreatorInsert, 0), 
-			ISNULL(@TitleCreatorUpdate, 0), ISNULL(@TitleKeywordInsert, 0), 
-			ISNULL(@TitleKeywordUpdate, 0), ISNULL(@TitleIdentifierInsert, 0),
-			ISNULL(@TitleIdentifierUpdate, 0),	
-			ISNULL(@TitleAssociationInsert, 0), ISNULL(@TitleAssociationTitleIdentifierInsert, 0),
-			ISNULL(@TitleVariantInsert, 0), ISNULL(@ItemInsert, 0), ISNULL(@ItemUpdate, 0), 
-			ISNULL(@TitleItemInsert, 0), ISNULL(@PageInsert, 0), ISNULL(@PageUpdate, 0), 
-			ISNULL(@IndicatedPageInsert, 0), ISNULL(@IndicatedPageUpdate, 0), 
-			ISNULL(@PagePageTypeInsert, 0), ISNULL(@PagePageTypeUpdate, 0), 
-			ISNULL(@PageNameInsert, 0), ISNULL(@PageNameUpdate, 0))
 
 		SELECT 1 AS Result
 	END TRY
@@ -1935,26 +2527,8 @@ BEGIN TRY
 			ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), ERROR_MESSAGE()
 
 		-- Log results of import
-		INSERT INTO dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult,
-			TitleInsert, TitleUpdate, CreatorInsert, CreatorUpdate,
-			TitleCreatorInsert, TitleCreatorUpdate, TitleTagInsert, TitleTagUpdate,
-			TitleTitleIdentifierInsert, TitleTitleIdentifierUpdate,
-			TitleAssociationInsert, TitleAssociationTitleIdentifierInsert,
-			TitleVariantInsert, ItemInsert, ItemUpdate, TitleItemInsert, PageInsert, PageUpdate,
-			IndicatedPageInsert, IndicatedPageUpdate, PagePageTypeInsert, PagePageTypeUpdate,
-			PageNameInsert, PageNameUpdate)
-		VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Error', 
-			ISNULL(@TitleInsert, 0), ISNULL(@TitleUpdate, 0), ISNULL(@CreatorInsert, 0), 
-			ISNULL(@CreatorUpdate, 0), ISNULL(@TitleCreatorInsert, 0), 
-			ISNULL(@TitleCreatorUpdate, 0), ISNULL(@TitleKeywordInsert, 0), 
-			ISNULL(@TitleKeywordUpdate, 0), ISNULL(@TitleIdentifierInsert, 0),
-			ISNULL(@TitleIdentifierUpdate, 0),	
-			ISNULL(@TitleAssociationInsert, 0), ISNULL(@TitleAssociationTitleIdentifierInsert, 0),
-			ISNULL(@TitleVariantInsert, 0), ISNULL(@ItemInsert, 0), ISNULL(@ItemUpdate, 0), 
-			ISNULL(@TitleItemInsert, 0), ISNULL(@PageInsert, 0), ISNULL(@PageUpdate, 0), 
-			ISNULL(@IndicatedPageInsert, 0), ISNULL(@IndicatedPageUpdate, 0), 
-			ISNULL(@PagePageTypeInsert, 0), ISNULL(@PagePageTypeUpdate, 0), 
-			ISNULL(@PageNameInsert, 0), ISNULL(@PageNameUpdate, 0))
+		INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+		VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Error', '', '', 0)
 
 		SELECT 0 AS Result
 	END CATCH
@@ -1972,12 +2546,19 @@ BEGIN TRY
 	SELECT * FROM #tmpTitleAssociation_TitleIdentifier
 	SELECT * FROM #tmpTitleVariant
 	SELECT * FROM #tmpTitleNote
+	SELECT * FROM #tmpTitleLanguage
 	SELECT * FROM #tmpCreator
 	SELECT * FROM #tmpTitle_Creator
 	SELECT * FROM #tmpItem
+	SELECT * FROM #tmpItemLanguage
 	SELECT * FROM #tmpPage
 	SELECT * FROM #tmpIndicatedPage
 	SELECT * FROM #tmpPage_PageType
+	SELECT * FROM #tmpSegment
+	SELECT * FROM #tmpSegmentPage
+	SELECT * FROM #tmpSegmentIdentifier
+	SELECT * FROM #tmpSegmentAuthor
+	SELECT * FROM #tmpSegmentAuthorIdentifier
 	*/
 
 	-- Clean up temp tables
@@ -1989,12 +2570,19 @@ BEGIN TRY
 	DROP TABLE #tmpTitleAssociation_TitleIdentifier
 	DROP TABLE #tmpTitleVariant
 	DROP TABLE #tmpTitleNote
+	DROP TABLE #tmpTitleLanguage
 	DROP TABLE #tmpCreator
 	DROP TABLE #tmpTitle_Creator
 	DROP TABLE #tmpItem
+	DROP TABLE #tmpItemLanguage
 	DROP TABLE #tmpPage
 	DROP TABLE #tmpIndicatedPage
 	DROP TABLE #tmpPage_PageType
+	DROP TABLE #tmpSegment
+	DROP TABLE #tmpSegmentPage
+	DROP TABLE #tmpSegmentIdentifier
+	DROP TABLE #tmpSegmentAuthor
+	DROP TABLE #tmpSegmentAuthorIdentifier
 END TRY
 BEGIN CATCH
 	-- Record the error
@@ -2004,26 +2592,8 @@ BEGIN CATCH
 		ERROR_STATE(), ERROR_PROCEDURE(), ERROR_LINE(), ERROR_MESSAGE()
 
 	-- Log results of import
-	INSERT INTO dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult,
-		TitleInsert, TitleUpdate, CreatorInsert, CreatorUpdate,
-		TitleCreatorInsert, TitleCreatorUpdate, TitleTagInsert, TitleTagUpdate,
-		TitleTitleIdentifierInsert, TitleTitleIdentifierUpdate,
-		TitleAssociationInsert, TitleAssociationTitleIdentifierInsert,
-		TitleVariantInsert, ItemInsert, ItemUpdate, TitleItemInsert, PageInsert, PageUpdate,
-		IndicatedPageInsert, IndicatedPageUpdate, PagePageTypeInsert, PagePageTypeUpdate,
-		PageNameInsert, PageNameUpdate)
-	VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Error', 
-		ISNULL(@TitleInsert, 0), ISNULL(@TitleUpdate, 0), ISNULL(@CreatorInsert, 0), 
-		ISNULL(@CreatorUpdate, 0), ISNULL(@TitleCreatorInsert, 0), 
-		ISNULL(@TitleCreatorUpdate, 0), ISNULL(@TitleKeywordInsert, 0), 
-		ISNULL(@TitleKeywordUpdate, 0), ISNULL(@TitleIdentifierInsert, 0),
-		ISNULL(@TitleIdentifierUpdate, 0),	
-		ISNULL(@TitleAssociationInsert, 0), ISNULL(@TitleAssociationTitleIdentifierInsert, 0),
-		ISNULL(@TitleVariantInsert, 0), ISNULL(@ItemInsert, 0), ISNULL(@ItemUpdate, 0), 
-		ISNULL(@TitleItemInsert, 0), ISNULL(@PageInsert, 0), ISNULL(@PageUpdate, 0), 
-		ISNULL(@IndicatedPageInsert, 0), ISNULL(@IndicatedPageUpdate, 0), 
-		ISNULL(@PagePageTypeInsert, 0), ISNULL(@PagePageTypeUpdate, 0), 
-		ISNULL(@PageNameInsert, 0), ISNULL(@PageNameUpdate, 0))
+	INSERT dbo.ImportLog (ImportDate, ImportSourceID, BarCode, ImportResult, TableName, [Action], [Rows]) 
+	VALUES (@ProductionDate, @ImportSourceID, @BarCode, 'Error', '', '', 0)
 
 	SELECT 0 AS Result
 END CATCH

@@ -87,6 +87,9 @@
     <Compile Include="Generated\IAScandataAltPageNumberDAL.Auto.cs" />
     <Compile Include="Generated\IAScandataAltPageTypeDAL.Auto.cs" />
     <Compile Include="Generated\IAScandataDAL.Auto.cs" />
+    <Compile Include="Generated\IASegmentAuthorDAL.Auto.cs" />
+    <Compile Include="Generated\IASegmentDAL.Auto.cs" />
+    <Compile Include="Generated\IASegmentPageDAL.Auto.cs" />
     <Compile Include="Generated\IASetDAL.Auto.cs" />
     <Compile Include="Generated\IndicatedPageDAL.Auto.cs" />
     <Compile Include="Generated\ItemDAL.Auto.cs" />
@@ -122,6 +125,9 @@
     <Compile Include="IAPageDAL.cs" />
     <Compile Include="IAScandataAltPageNumberDAL.cs" />
     <Compile Include="IAScandataAltPageTypeDAL.cs" />
+    <Compile Include="IASegmentAuthorDAL.cs" />
+    <Compile Include="IASegmentDAL.cs" />
+    <Compile Include="IASegmentPageDAL.cs" />
     <Compile Include="ImportErrorDAL.cs" />
     <Compile Include="ImportLogDAL.cs" />
     <Compile Include="IndicatedPageDAL.cs" />

@@ -56,15 +56,20 @@ BEGIN TRY
 		-- Remove all downloaded data for this item (we need to reload it)
 		BEGIN TRY
 			BEGIN TRANSACTION
-			DELETE FROM iadcmetadata WHERE itemid = @itemid
-			DELETE FROM iamarcsubfield WHERE marcdatafieldid in (SELECT marcdatafieldid FROM iamarcdatafield WHERE marcid IN (SELECT marcid FROM iamarc WHERE itemid = @itemid))
-			DELETE FROM iamarcdatafield WHERE marcid in (SELECT marcid FROM iamarc WHERE itemid = @itemid)
-			DELETE FROM iamarccontrol WHERE marcid in (SELECT marcid FROM iamarc WHERE itemid = @itemid)
-			DELETE FROM iamarc WHERE itemid = @itemid
-			DELETE FROM iapage WHERE itemid = @itemid
-			DELETE FROM iascandata WHERE itemid = @itemid
-			UPDATE iafile SET remotefilelastmodifieddate = '1/1/1980' WHERE itemid = @itemid AND remotefilelastmodifieddate IS NOT NULL
-			UPDATE iaitem SET lastxmldataharvestdate = NULL WHERE itemid = @itemid
+			DELETE FROM dbo.IADCMetadata WHERE ItemID = @ItemID
+			DELETE FROM dbo.IAMarcSubField WHERE MarcDataFieldID in (SELECT MarcDataFieldID FROM dbo.IAMarcDataField WHERE MARCID IN (SELECT MARCID FROM dbo.IAMarc WHERE ItemID = @ItemID))
+			DELETE FROM dbo.IAMarcDataField WHERE MarcID IN (SELECT MarcID FROM dbo.IAMarc WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IAMarcControl WHERE MarcID IN (SELECT MarcID FROM dbo.IAMarc WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IAMarc WHERE ItemID = @ItemID
+			DELETE FROM dbo.IAPage WHERE ItemID = @ItemID
+			DELETE FROM dbo.IASegmentAuthor WHERE SegmentID IN (SELECT SegmentID FROM dbo.IASegment WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IASegmentPage WHERE SegmentID IN (SELECT SegmentID FROM dbo.IASegment WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IASegment WHERE ItemID = @ItemID
+			DELETE FROM dbo.IAScandataAltPageNumber WHERE ScandataID IN (SELECT ScandataID FROM dbo.IAScandata WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IAScandataAltPageType WHERE ScandataID IN (SELECT ScandataID FROM dbo.IAScandata WHERE ItemID = @ItemID)
+			DELETE FROM dbo.IAScandata WHERE ItemID = @ItemID
+			UPDATE dbo.IAFile SET RemoteFileLastModifiedDate = '1/1/1980' WHERE ItemID = @ItemID AND RemoteFileLastModifiedDate IS NOT NULL
+			UPDATE dbo.IAItem SET LastXMLDataHarvestDate = NULL WHERE ItemID = @ItemID
 			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
@@ -310,6 +315,72 @@ BEGIN TRY
 		[PagePrefix] [nvarchar](40) NULL,
 		[PageNumber] [nvarchar](20) NULL,
 		[Implied] [bit] NOT NULL DEFAULT(0)
+		)
+
+	CREATE TABLE #tmpSegment (
+		ItemID int NOT NULL,
+		BarCode nvarchar(40) NOT NULL,
+		SequenceOrder smallint NOT NULL DEFAULT ((1)),
+		SegmentGenreID int NOT NULL,
+		Title nvarchar(2000) NOT NULL DEFAULT (''),
+		SortTitle nvarchar(2000) NOT NULL DEFAULT (''),
+		ContainerTitle nvarchar(2000) NOT NULL DEFAULT (''),
+ 		PublicationDetails nvarchar(400) NOT NULL DEFAULT (''),
+		PublisherName nvarchar(250) NOT NULL DEFAULT (''),
+		PublisherPlace nvarchar(150) NOT NULL DEFAULT (''),
+		Volume nvarchar(100) NOT NULL DEFAULT (''),
+		Series nvarchar(100) NOT NULL DEFAULT (''),
+		Issue nvarchar(100) NOT NULL DEFAULT (''),
+		Edition nvarchar(400) NOT NULL DEFAULT (''),
+		[Date] nvarchar(20) NOT NULL DEFAULT (''),
+		PageRange nvarchar(50) NOT NULL DEFAULT (''),
+		StartPageNumber nvarchar(20) NOT NULL DEFAULT (''),
+		EndPageNumber nvarchar(20) NOT NULL DEFAULT (''),
+		InstitutionCode nvarchar(10) NULL,
+		LanguageCode nvarchar(10) NULL,
+		RightsStatus nvarchar(500) NOT NULL DEFAULT (''),
+		RightsStatement nvarchar(500) NOT NULL DEFAULT (''),
+		LicenseName nvarchar(200) NOT NULL DEFAULT (''),
+		LicenseUrl nvarchar(200) NOT NULL DEFAULT ('')
+		)
+
+	CREATE TABLE #tmpSegmentPage (
+		ItemID int NOT NULL,
+		BarCode nvarchar(40) NOT NULL,
+		SegmentSequenceOrder smallint NOT NULL,
+		PageSequenceOrder int NULL
+		)
+
+	CREATE TABLE #tmpSegmentIdentifier
+		(
+		ItemID int NOT NULL,
+		BarCode nvarchar(40) NOT NULL,
+		SegmentSequenceOrder smallint NOT NULL,
+		IdentifierName nvarchar(40) NOT NULL,
+		IdentifierValue nvarchar(125) NULL,
+		)
+
+	CREATE TABLE #tmpSegmentAuthor
+		(
+		ItemID int NOT NULL,
+		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		SegmentSequenceOrder int NOT NULL,
+		SequenceOrder int NOT NULL,
+		BHLAuthorID int NULL,
+		LastName nvarchar(150) NOT NULL DEFAULT(''),
+		FirstName nvarchar(150) NOT NULL DEFAULT(''),
+		StartDate nvarchar(25) NOT NULL DEFAULT(''),
+		EndDate nvarchar(25) NOT NULL DEFAULT('')
+		)
+
+	CREATE TABLE #tmpSegmentAuthorIdentifier
+		(
+		ItemID int NOT NULL,
+		BarCode	nvarchar(40) NOT NULL DEFAULT(''),
+		SegmentSequenceOrder int NOT NULL,
+		SequenceOrder int NOT NULL,
+		ProductionIdentifierID int NOT NULL,
+		IdentifierValue nvarchar(125) NOT NULL DEFAULT('')
 		)
 
 	-- =======================================================================
@@ -1775,6 +1846,141 @@ BEGIN TRY
 	-- =======================================================================
 	-- =======================================================================
 	-- =======================================================================
+	-- Get Segments
+
+	INSERT INTO #tmpSegment (ItemID, BarCode, SequenceOrder, SegmentGenreID, Title, SortTitle, ContainerTitle, PublicationDetails,
+		PublisherName, PublisherPlace, Volume, Series, Issue, Edition, [Date], InstitutionCode, LanguageCode, RightsStatus,
+		RightsStatement, LicenseUrl
+		)
+	SELECT	s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			s.BHLSegmentGenreID,
+			s.Title,
+			CASE
+				WHEN LEFT(s.Title, 1) = '"' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+				WHEN LEFT(s.Title, 1) = '''' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+				WHEN LEFT(s.Title, 1) = '[' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1)) 
+				WHEN LEFT(s.Title, 1) = '(' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+				WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
+				WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'de ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 3)) = 'le ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'das ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'der ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'die ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'ein ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'las ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'les ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'los ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				WHEN LOWER(LEFT(s.Title, 4)) = 'the ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 4)) 
+				ELSE s.Title
+			END AS SortTitle,
+			SUBSTRING(t.FullTitle, 1, 2000) AS ContainerTitle,
+			ISNULL(t.PublicationDetails, ''),
+			SUBSTRING(ISNULL(t.Datafield_260_b, ''), 1, 250) AS PublisherName,
+			ISNULL(t.Datafield_260_a, '') AS PublisherPlace,
+			s.Volume,
+			s.Series,
+			s.Issue,
+			SUBSTRING(ISNULL(t.EditionStatement, ''), 1, 400),
+			s.[Date],
+			i.InstitutionCode,
+			s.LanguageCode,
+			ISNULL(i.CopyrightStatus, ''),
+			ISNULL(i.Rights, ''),
+			ISNULL(i.LicenseUrl, '')
+	FROM	dbo.IASegment s 
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+			INNER JOIN #tmpTitle t ON s.ItemID = t.ItemID
+
+	-- Get Segment Pages
+	INSERT INTO #tmpSegmentPage (ItemID, BarCode, SegmentSequenceOrder, PageSequenceOrder )
+	SELECT	s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			p.PageSequence
+	FROM	dbo.IASegmentPage p
+			INNER JOIN dbo.IASegment s ON p.SegmentID = s.SegmentID
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID;
+
+	-- Add page range information to the segment metadata
+	WITH StartEndPages (ItemID, SegmentSequenceOrder, StartPageSeq, EndPageSeq)
+	AS (
+		SELECT	ItemID, SegmentSequenceOrder, MIN(PageSequenceOrder), MAX(PageSequenceOrder)
+		FROM	#tmpSegmentPage
+		GROUP BY ItemID, SegmentSequenceOrder
+	)
+	UPDATE	#tmpSegment
+	SET		PageRange =	
+				CASE
+					WHEN scstart.PageNumber <> '' OR scend.PageNumber <> '' 
+					THEN scstart.PageNumber + '--' + scend.PageNumber
+					ELSE ''
+				END,
+			StartPageNumber = scstart.PageNumber,
+			EndPageNumber = scend.PageNumber
+	FROM	#tmpSegment s
+			INNER JOIN StartEndPages p ON s.ItemID = p.ItemID AND s.SequenceOrder = p.SegmentSequenceOrder
+			INNER JOIN dbo.IAScandata scstart ON p.ItemID = scstart.ItemID AND p.StartPageSeq = scstart.Sequence
+			INNER JOIN dbo.IAScandata scend ON p.ItemID = scend.ItemID AND p.EndPageSeq = scend.Sequence
+
+	-- Get Segment Identifiers
+	INSERT INTO #tmpSegmentIdentifier
+	SELECT DISTINCT
+			s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			'DOI',
+			s.DOI
+	FROM	dbo.IASegment s
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+
+	-- Get Segment Authors
+	INSERT INTO #tmpSegmentAuthor ( ItemID, BarCode, SegmentSequenceOrder, SequenceOrder, BHLAuthorID, LastName, FirstName, StartDate, EndDate )
+	SELECT	s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			ROW_NUMBER() OVER (PARTITION BY i.BarCode, s.Sequence ORDER BY i.BarCode, s.Sequence, a.Sequence),
+			a.BHLAuthorID,
+			a.LastName,
+			a.FirstName,
+			a.StartDate,
+			a.EndDate
+	FROM	dbo.IASegmentAuthor a
+			INNER JOIN dbo.IASegment s ON a.SegmentID = s.SegmentID
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+	WHERE	(a.LastName <> '' OR a.FirstName <> '')
+
+	-- Get Segment Author Identifiers
+	INSERT INTO #tmpSegmentAuthorIdentifier
+		(
+		ItemID,
+		BarCode,
+		SegmentSequenceOrder,
+		SequenceOrder,
+		ProductionIdentifierID,
+		IdentifierValue
+		)
+	SELECT	s.ItemID,
+			i.BarCode,
+			s.Sequence,
+			ROW_NUMBER() OVER (PARTITION BY i.BarCode, s.Sequence ORDER BY i.BarCode, s.Sequence, a.Sequence),
+			a.BHLIdentifierID,
+			a.IdentifierValue
+	FROM	dbo.IASegmentAuthor a
+			INNER JOIN dbo.IASegment s ON a.SegmentID = s.SegmentID
+			INNER JOIN #tmpItem i ON s.ItemID = i.ItemID
+	WHERE	a.BHLIdentifierID IS NOT NULL
+	AND		(a.LastName <> '' OR a.FirstName <> '')
+
+	-- =======================================================================
+	-- =======================================================================
+	-- =======================================================================
 	-- Update the import tables
 	BEGIN TRY
 		DECLARE @ImportSourceID int
@@ -2003,6 +2209,75 @@ BEGIN TRY
 
 		-- =======================================================================
 
+		-- Insert new segments into the import tables
+		INSERT INTO	dbo.Segment (ImportStatusID, ImportSourceID, BarCode, SequenceOrder, SegmentStatusID,
+			SegmentGenreID, Title, SortTitle, ContainerTitle, PublicationDetails, PublisherName, 
+			PublisherPlace, Volume, Series, Issue, Edition, [Date], PageRange, StartPageNumber, EndPageNumber, 
+			InstitutionCode, LanguageCode, RightsStatus, RightsStatement, LicenseName, LicenseUrl)
+		SELECT	10, @ImportSourceID, t.BarCode, t.SequenceOrder, 10, t.SegmentGenreID, t.Title, t.SortTitle, 
+				t.ContainerTitle, t.PublicationDetails, t.PublisherName, t.PublisherPlace, t.Volume, t.Series, 
+				t.Issue, t.Edition, t.[Date], t.PageRange, t.StartPageNumber, t.EndPageNumber, t.InstitutionCode, 
+				t.LanguageCode, t.RightsStatus, t.RightsStatement, t.LicenseName, t.LicenseUrl
+		FROM	#tmpSegment t LEFT JOIN dbo.Segment s
+					ON t.BarCode = s.BarCode
+					AND	t.SequenceOrder = s.SequenceOrder
+		WHERE	s.SegmentID IS NULL
+
+		-- =======================================================================
+
+		-- Insert new segment pages into the import tables
+		INSERT INTO dbo.SegmentPage (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder, 
+			PageSequenceOrder)
+		SELECT	10, @ImportSourceID, t.Barcode, t.SegmentSequenceOrder, p.SequenceOrderCorrected
+		FROM	#tmpSegmentPage t 
+				INNER JOIN #tmpPage p
+					ON t.BarCode = p.BarCode
+					AND t.PageSequenceOrder = p.SequenceOrder
+				LEFT JOIN dbo.SegmentPage sp 
+					ON t.BarCode = sp.BarCode 
+					AND t.SegmentSequenceOrder = sp.SegmentSequenceOrder 
+					AND p.SequenceOrderCorrected = sp.PageSequenceOrder
+		WHERE	sp.SegmentPageID IS NULL
+
+		-- =======================================================================
+
+		-- Insert new segment identifiers into the import tables
+		INSERT INTO dbo.SegmentIdentifier (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder,
+			IdentifierName, IdentifierValue)
+		SELECT	10, @ImportSourceID, BarCode, SegmentSequenceOrder, IdentifierName, IdentifierValue
+		FROM	#tmpSegmentIdentifier
+		WHERE	ISNULL(IdentifierValue, '') <> ''
+
+		-- =======================================================================
+
+		-- Insert new segment authors into the import tables
+		INSERT INTO dbo.SegmentAuthor (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder, 
+			SequenceOrder, LastName, FirstName, StartDate, EndDate, ProductionAuthorID)
+		SELECT	10, @ImportSourceID, t.BarCode, t.SegmentSequenceOrder, t.SequenceOrder, t.LastName, 
+				t.FirstName, t.Startdate, t.EndDate, t.BHLAuthorID
+		FROM	#tmpSegmentAuthor t LEFT JOIN dbo.SegmentAuthor a
+					ON t.BarCode = a.BarCode
+					AND t.SegmentSequenceOrder = a.SegmentSequenceOrder
+					AND t.SequenceOrder = a.SequenceOrder
+		WHERE	a.SegmentAuthorID IS NULL
+
+		-- =======================================================================
+
+		-- Insert new segment author identifiers into the import tables
+		INSERT INTO dbo.SegmentAuthorIdentifier (ImportStatusID, ImportSourceID, BarCode, SegmentSequenceOrder, 
+			SequenceOrder, ProductionIdentifierID, IdentifierValue)
+		SELECT	10, @ImportSourceID, t.BarCode, t.SegmentSequenceOrder, t.SequenceOrder, t.ProductionIdentifierID, 
+				t.IdentifierValue
+		FROM	#tmpSegmentAuthorIdentifier t LEFT JOIN dbo.SegmentAuthorIdentifier a
+					ON t.BarCode = a.BarCode
+					AND t.SegmentSequenceOrder = a.SegmentSequenceOrder
+					AND t.SequenceOrder = a.SequenceOrder
+					AND	t.ProductionIdentifierID = a.ProductionIdentifierID
+					AND t.IdentifierValue = a.IdentifierValue
+		WHERE	a.SegmentAuthorIdentifierID IS NULL
+
+		-- =======================================================================
+
 		-- Update the statuses of the items just loaded into the import tables.
 		-- Also, save the identifiers with the original item information.
 		UPDATE	dbo.IAItem
@@ -2055,6 +2330,11 @@ BEGIN TRY
 	DROP TABLE #tmpPage
 	DROP TABLE #tmpPage_PageType
 	DROP TABLE #tmpIndicatedPage
+	DROP TABLE #tmpSegmentAuthorIdentifier
+	DROP TABLE #tmpSegmentAuthor
+	DROP TABLE #tmpSegmentPage
+	DROP TABLE #tmpSegmentIdentifier
+	DROP TABLE #tmpSegment
 END TRY
 BEGIN CATCH
 	-- Record the error

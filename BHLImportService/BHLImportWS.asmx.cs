@@ -42,12 +42,6 @@ namespace MOBOT.BHLImport.WebService
         }
 
         [WebMethod]
-        public List<ImportLog> ImportLogSelectRecent(int numLogs)
-        {
-            return (new BHLImportProvider().ImportLogSelectRecent(numLogs));
-        }
-
-        [WebMethod]
         public string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder)
         {
             return (new BHLImportProvider().IAItemQueueForDownload(iaIdentifier, localFileFolder));

@@ -1103,6 +1103,7 @@ namespace IAHarvest
                     String nsPrefix = String.Empty;
                     XmlNamespaceManager nsmgr = null;
                     XmlNodeList pages = xml.SelectNodes("book/pageData/page");
+                    XmlNodeList segments = xml.SelectNodes("book/bhlSegmentData/segment");
 
                     // If we didn't find any pages in the file, try again... after first
                     // adding a namespace to the XML document
@@ -1112,8 +1113,10 @@ namespace IAHarvest
                         nsmgr.AddNamespace("ns", "http://archive.org/scribe/xml");
                         nsPrefix = "ns:";
                         pages = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "pageData/" + nsPrefix + "page", nsmgr);
+                        if (segments.Count == 0) segments = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "bhlSegmentData/" + nsPrefix + "segment", nsmgr);
                     }
 
+                    // Get page metadata
                     foreach (XmlNode page in pages)
                     {
                         // The only scandata we need to save is pages that have an addToAccessFormats 
@@ -1173,11 +1176,111 @@ namespace IAHarvest
                             }
                         }
                     }
+
+                    // Get segment metadata
+                    int segmentSequence = 1;
+                    foreach (XmlNode segment in segments)
+                    {
+                        string title = string.Empty;
+                        string volume = string.Empty;
+                        string issue = string.Empty;
+                        string series = string.Empty;
+                        string date = string.Empty;
+                        string language = string.Empty;
+                        int genreId = int.MinValue;
+                        string genreName = string.Empty;
+                        string doi = string.Empty;
+
+                        XmlNode titleNode = segment.SelectSingleNode(nsPrefix + "title", nsmgr);
+                        if (titleNode != null) title = titleNode.InnerText;
+                        XmlNode volumeNode = segment.SelectSingleNode(nsPrefix + "volume", nsmgr);
+                        if (volumeNode != null) volume = volumeNode.InnerText;
+                        XmlNode issueNode = segment.SelectSingleNode(nsPrefix + "issue", nsmgr);
+                        if (issueNode != null) issue = issueNode.InnerText;
+                        XmlNode seriesNode = segment.SelectSingleNode(nsPrefix + "series", nsmgr);
+                        if (seriesNode != null) series = seriesNode.InnerText;
+                        XmlNode dateNode = segment.SelectSingleNode(nsPrefix + "date", nsmgr);
+                        if (dateNode != null) date = dateNode.InnerText;
+                        XmlNode languageNode = segment.SelectSingleNode(nsPrefix + "language", nsmgr);
+                        if (languageNode != null) language = languageNode.InnerText;
+                        XmlNode genreNode = segment.SelectSingleNode(nsPrefix + "genre", nsmgr);
+                        if (genreNode != null)
+                        {
+                            if (genreNode.Attributes["id"] != null)
+                            {
+                                Int32.TryParse(genreNode.Attributes["id"].Value, out genreId);
+                            }
+                            genreName = genreNode.InnerText;
+                        }
+                        XmlNode doiNode = segment.SelectSingleNode(nsPrefix + "doi", nsmgr);
+                        if (doiNode != null) doi = doiNode.InnerText;
+
+                        IASegment iaSegment = provider.SaveIASegment(itemID, segmentSequence, title, volume, issue, series, date, language, genreId, genreName, doi);
+
+                        // Check for authors
+                        XmlNodeList authors = segment.SelectNodes(nsPrefix + "authors/" + nsPrefix + "author", nsmgr);
+                        int authorSequence = 1;
+                        foreach (XmlNode author in authors)
+                        {
+                            int authorId = int.MinValue;
+                            string fullName = string.Empty;
+                            string firstName = string.Empty;
+                            string lastName = string.Empty;
+                            string startDate = string.Empty;
+                            string endDate = string.Empty;
+                            int identifierId = int.MinValue;
+                            string identifierValue = string.Empty;
+
+                            if (author.Attributes["authorId"] != null)
+                            {
+                                Int32.TryParse(author.Attributes["authorId"].Value, out authorId);
+                            }
+
+                            XmlNode nameNode = author.SelectSingleNode(nsPrefix + "name", nsmgr);
+                            if (nameNode != null) fullName = nameNode.InnerText;
+                            XmlNode lastNameNode = author.SelectSingleNode(nsPrefix + "lastName", nsmgr);
+                            if (lastNameNode != null) lastName = lastNameNode.InnerText;
+                            XmlNode firstNameNode = author.SelectSingleNode(nsPrefix + "firstName", nsmgr);
+                            if (firstNameNode != null) firstName = firstNameNode.InnerText;
+                            XmlNode startDateNode = author.SelectSingleNode(nsPrefix + "startDate", nsmgr);
+                            if (startDateNode != null) startDate = startDateNode.InnerText;
+                            XmlNode endDateNode = author.SelectSingleNode(nsPrefix + "endDate", nsmgr);
+                            if (endDateNode != null) endDate = endDateNode.InnerText;
+                            XmlNode identifierNode = author.SelectSingleNode(nsPrefix + "identifier", nsmgr);
+                            if (identifierNode != null)
+                            {
+                                if (identifierNode.Attributes["typeId"] != null)
+                                {
+                                    Int32.TryParse(identifierNode.Attributes["typeId"].Value, out identifierId);
+                                }
+                                identifierValue = identifierNode.InnerText;
+                            }
+
+                            provider.SaveIASegmentAuthor(iaSegment.SegmentID, authorSequence, (authorId == int.MinValue || authorId == 0 ? (int?)null : authorId), 
+                                fullName, lastName, firstName, startDate, endDate, (identifierId == int.MinValue ? (int?)null : identifierId), identifierValue);
+
+                            authorSequence++;
+                        }
+
+                        // Check for pages
+                        XmlNodeList segmentPages = segment.SelectNodes(nsPrefix + "leafNums/" + nsPrefix + "leafNum", nsmgr);
+                        int altPageNumSequence = 1;
+                        foreach (XmlNode segmentPage in segmentPages)
+                        {
+                            int pageSequence = Convert.ToInt32(segmentPage.InnerText);
+
+                            provider.SaveIASegmentPage(iaSegment.SegmentID, pageSequence);
+                            altPageNumSequence++;
+                        }
+
+                        segmentSequence++;
+                    }
                 }
             }
             else
             {
                 // No local file, so remove anything in the database
+                provider.IASegmentDeleteByItem(itemID);
                 provider.IAScandataDeleteAllByItem(itemID);
             }
         }

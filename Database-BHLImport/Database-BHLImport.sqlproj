@@ -430,6 +430,18 @@
     <None Include="dbo\Stored Procedures\IAItemIdentifierDeleteByItem.sql" />
     <None Include="dbo\Stored Procedures\IAItemIdentifierSelect.sql" />
     <None Include="dbo\Stored Procedures\BHLItemCollectionInsertSeedCatalogItems.sql" />
+    <None Include="dbo\Tables\IASegment.sql" />
+    <None Include="dbo\Tables\IASegmentPage.sql" />
+    <None Include="dbo\Tables\IASegmentAuthor.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentDeleteByItem.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentSelectByItemAndSequence.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorSelectBySegmentAndSequence.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageSelectBySegmentAndSequence.sql" />
+    <None Include="dbo\Tables\Segment.sql" />
+    <None Include="dbo\Tables\SegmentPage.sql" />
+    <None Include="dbo\Tables\SegmentAuthor.sql" />
+    <None Include="dbo\Tables\SegmentAuthorIdentifier.sql" />
+    <None Include="dbo\Tables\SegmentIdentifier.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\TitleNote.sql" />
@@ -470,5 +482,17 @@
     <Build Include="dbo\Stored Procedures\IAItemIdentifierInsertAuto.sql" />
     <Build Include="dbo\Stored Procedures\IAItemIdentifierSelectAuto.sql" />
     <Build Include="dbo\Stored Procedures\IAItemIdentifierUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentAuthorDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentAuthorInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentAuthorSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentAuthorUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentPageDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentPageInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentPageSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentPageUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\IASegmentUpdateAuto.sql" />
   </ItemGroup>
 </Project>

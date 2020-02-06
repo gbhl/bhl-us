@@ -1,5 +1,4 @@
-﻿
-CREATE PROCEDURE [dbo].[ImportLogSelectRecent]
+﻿CREATE PROCEDURE [dbo].[ImportLogSelectRecent]
 
 @NumLogs INT = 10
 
@@ -8,40 +7,34 @@ BEGIN
 
 SET NOCOUNT ON
 
-SELECT	l.ImportLogID,
-		l.ImportDate,
-		ISNULL(src.Source, ISNULL(l.BarCode, '')) AS [ImportSource],
-		ISNULL(l.BarCode, '') AS [BarCode],
-		l.ImportResult,
-		l.TitleInsert,
-		l.TitleUpdate,
-		l.CreatorInsert,
-		l.CreatorUpdate,
-		l.TitleCreatorInsert,
-		l.TitleCreatorUpdate,
-		l.TitleTagInsert,
-		l.TitleTagUpdate,
-		l.TitleTitleIdentifierInsert,
-		l.TitleTitleIdentifierUpdate,
-		l.TitleAssociationInsert,
-		l.TitleAssociationTitleIdentifierInsert,
-		l.TitleVariantInsert,
-		l.ItemInsert,
-		l.ItemUpdate,
-		l.TitleItemInsert,
-		l.PageInsert,
-		l.PageUpdate,
-		l.IndicatedPageInsert,
-		l.IndicatedPageUpdate,
-		l.PagePageTypeInsert,
-		l.PagePageTypeUpdate,
-		l.PageNameInsert,
-		l.PageNameUpdate
-FROM	dbo.ImportLog l LEFT JOIN dbo.ImportSource src
-			ON l.ImportSourceID = src.ImportSourceID
-WHERE	DATEDIFF(day, l.ImportDate, GETDATE()) <= @NumLogs
-ORDER BY
-		l.ImportLogID DESC
+DECLARE @columns NVARCHAR(MAX)
+DECLARE @sql NVARCHAR(MAX)
+
+SET @columns = N''
+
+SELECT	@columns += N', p.' + QUOTENAME(Name)
+FROM	(SELECT DISTINCT TableName + ' ' + [Action] AS Name FROM dbo.ImportLog) AS x
+ORDER BY [Name]
+
+SET @sql = N'
+SELECT ImportDate AS ImportDate, BarCode, Result, ' + STUFF(@columns, 1, 2, '') + '
+FROM
+(
+  SELECT CONVERT(nvarchar(20), ImportDate, 120) AS ImportDate, 
+    ISNULL(BarCode, '''') AS BarCode, 
+	ImportResult AS Result,
+	TableName + '' '' + [Action] AS Name, 
+	[Rows]
+  FROM dbo.ImportLog
+  WHERE DATEDIFF(day, ImportDate, GETDATE()) <= ' + CONVERT(varchar(5), @NumLogs) + '
+) AS j
+PIVOT
+(
+  SUM([Rows]) FOR Name IN (' + STUFF(REPLACE(@columns, ', p.[', ',['), 1, 1, '') + ')
+) AS p
+ORDER BY ImportDate DESC'
+
+EXEC sp_executesql @sql
 		
 IF @@ERROR <> 0
 BEGIN
@@ -54,4 +47,3 @@ ELSE BEGIN
 END
 
 END
-
