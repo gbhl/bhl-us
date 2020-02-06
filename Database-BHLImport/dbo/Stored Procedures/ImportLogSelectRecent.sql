@@ -13,7 +13,8 @@ DECLARE @sql NVARCHAR(MAX)
 SET @columns = N''
 
 SELECT	@columns += N', p.' + QUOTENAME(Name)
-FROM	(SELECT DISTINCT TableName + ' ' + [Action] AS Name FROM dbo.ImportLog) AS x
+FROM	(SELECT DISTINCT TableName + ' ' + [Action] AS Name FROM dbo.ImportLog
+		WHERE DATEDIFF(day, ImportDate, GETDATE()) <= @NumLogs) AS x
 ORDER BY [Name]
 
 SET @sql = N'
