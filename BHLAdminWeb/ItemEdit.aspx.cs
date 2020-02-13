@@ -428,27 +428,27 @@ namespace MOBOT.BHL.AdminWeb
 
             if (startYearTextBox.Text.Trim().Length > 0)
             {
-                if (DataCleaner.ValidateItemYear(startYearTextBox.Text.Trim().Replace(" ", "")))
+                if (DataCleaner.ValidateItemSimpleYear(startYearTextBox.Text.Trim().Replace(" ", "")))
                 {
                     startYearTextBox.Text = startYearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
                 }
                 else
                 {
                     flag = true;
-                    errorControl.AddErrorText("Year values must be formatted as 'YYYY'.");
+                    errorControl.AddErrorText("Start Year must be formatted as 'YYYY'.");
                 }
             }
 
             if (endYearTextBox.Text.Trim().Length > 0)
             {
-                if (DataCleaner.ValidateItemYear(endYearTextBox.Text.Trim().Replace(" ", "")))
+                if (DataCleaner.ValidateItemSimpleYear(endYearTextBox.Text.Trim().Replace(" ", "")))
                 {
                     endYearTextBox.Text = endYearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
                 }
                 else
                 {
                     flag = true;
-                    errorControl.AddErrorText("Year values must be formatted as 'YYYY'");
+                    errorControl.AddErrorText("End Year must be formatted as 'YYYY'");
                 }
             }
 

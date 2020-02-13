@@ -344,7 +344,7 @@
 					<asp:TextBox ID="startYearTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="50px" onblur="validateYear(document.getElementById('startYearTextBox').value);" ></asp:TextBox>
 					-
 					<asp:TextBox ID="endYearTextBox" style="position:absolute;left:70px" ClientIDMode="Static" runat="server" MaxLength="20" Width="50px" onblur="validateYear(document.getElementById('endYearTextBox').value);" ></asp:TextBox>
-                    <span id="spanYearMessage" style="display:none; color:red">The Year values must be formatted as "YYYY".</span>
+                    <span id="spanYearMessage" style="display:none; color:red">Start and End Year must be formatted as "YYYY".</span>
 				</td>
 			</tr>
 			<tr>
