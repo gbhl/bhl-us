@@ -252,14 +252,14 @@ namespace MOBOT.BHL.Web2
                 sb.Append(ViewState["TitleID"].ToString());
             }
 
-            if (sb.Length > 0) sb.Append("<br/><br/>");
+            if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append(Server.HtmlEncode(commentTextBox.Text.Trim()));
 
             if (urlTextBox.Text.Trim().Length > 0)
             {
-                if (sb.Length > 0) sb.Append("<br/><br/>");
+                if (sb.Length > 0) sb.Append("<br><br>");
                 sb.Append(Server.HtmlEncode(string.Format("URL: {0}", urlTextBox.Text.Trim())));
-            }            
+            }
 
             return sb.ToString();
         }
