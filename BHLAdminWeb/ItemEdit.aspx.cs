@@ -195,7 +195,8 @@ namespace MOBOT.BHL.AdminWeb
                 notesTextBox.Text = item.Note;
                 replacedByTextBox.Text = item.RedirectItemID.ToString();
                 replacedByOrig.Value = item.RedirectItemID.ToString();
-                yearTextBox.Text = item.Year;
+                startYearTextBox.Text = item.Year;
+                endYearTextBox.Text = item.EndYear;
                 identifierBibTextBox.Text = item.IdentifierBib;
                 zQueryTextBox.Text = item.ZQuery;
                 sponsorTextBox.Text = item.Sponsor;
@@ -425,16 +426,29 @@ namespace MOBOT.BHL.AdminWeb
                 errorControl.AddErrorText("One and only one title must be designated the Primary title for this item.");
             }
 
-            if (yearTextBox.Text.Trim().Length > 0)
+            if (startYearTextBox.Text.Trim().Length > 0)
             {
-                if (DataCleaner.ValidateItemYear(yearTextBox.Text.Trim().Replace(" ", "")))
+                if (DataCleaner.ValidateItemYear(startYearTextBox.Text.Trim().Replace(" ", "")))
                 {
-                    yearTextBox.Text = yearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
+                    startYearTextBox.Text = startYearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
                 }
                 else
                 {
                     flag = true;
-                    errorControl.AddErrorText("Year must be formatted as 'YYYY', 'YYYY-YYYY', or 'YYYY,YYYY'.");
+                    errorControl.AddErrorText("Year values must be formatted as 'YYYY'.");
+                }
+            }
+
+            if (endYearTextBox.Text.Trim().Length > 0)
+            {
+                if (DataCleaner.ValidateItemYear(endYearTextBox.Text.Trim().Replace(" ", "")))
+                {
+                    endYearTextBox.Text = endYearTextBox.Text.Trim().Replace(" ", "");   // Remove spaces
+                }
+                else
+                {
+                    flag = true;
+                    errorControl.AddErrorText("Year values must be formatted as 'YYYY'");
                 }
             }
 
@@ -1232,7 +1246,8 @@ namespace MOBOT.BHL.AdminWeb
 				item.LanguageCode = ( ddlLang.SelectedValue.Length == 0 ? null : ddlLang.SelectedValue );
                 item.ItemDescription = itemDescriptionTextBox.Text.Trim();
 				item.Note = notesTextBox.Text.Trim();
-                item.Year = yearTextBox.Text.Trim();
+                item.Year = startYearTextBox.Text.Trim();
+                item.EndYear = endYearTextBox.Text.Trim();
                 item.IdentifierBib = identifierBibTextBox.Text.Trim();
                 item.ZQuery = zQueryTextBox.Text.Trim();
                 item.Sponsor = sponsorTextBox.Text.Trim();

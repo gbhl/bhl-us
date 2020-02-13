@@ -285,6 +285,8 @@ namespace IAHarvest
                             // it will automatically get reprocessed the next time the harvest process runs.
                             //provider.IAItemUpdateItemStatusSetError(item.ItemID, ITEMSTATUS_XMLERROR, "HarvestXMLInformation",
                             //    ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
+                            provider.IAItemUpdateItemStatusSetError(item.ItemID, item.ItemStatusID, "HarvestXMLInformation",
+                                ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
                         }
                         // don't rethrow; we want to continue processing
                     }

@@ -178,7 +178,13 @@ namespace MOBOT.BHLImport.Server
             // Standardize the format of the year value
             year = DataCleaner.CleanYear(year);
 
-            // Parse the volume into its component parts
+            if (!DataCleaner.ValidateItemYear(year))
+            {
+                throw new Exception(string.Format("Invalid Year format in metadata file: {0}", year));
+            }
+
+            // Parse the year and volume into their component parts
+            YearData yearData = DataCleaner.ParseYearString(year);
             VolumeData volumeData = DataCleaner.ParseVolumeString(volume);
 
             IAItemDAL dal = new IAItemDAL();
@@ -197,7 +203,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanDate = scanDate;
                 savedItem.ExternalStatus = externalStatus;
                 savedItem.TitleID = titleID;
-                savedItem.Year = string.IsNullOrWhiteSpace(year) ? volumeData.StartYear : year;
+                savedItem.Year = string.IsNullOrWhiteSpace(year) ? volumeData.StartYear : yearData.StartYear;
                 savedItem.IdentifierBib = identifierBib;
                 savedItem.LicenseUrl = licenseUrl;
                 savedItem.Rights = rights;
@@ -212,7 +218,7 @@ namespace MOBOT.BHLImport.Server
                 savedItem.ScanningInstitution = scanningInstitution;
                 savedItem.RightsHolder = rightsHolder;
                 savedItem.ItemDescription = itemDescription;
-                savedItem.EndYear = volumeData.EndYear;
+                savedItem.EndYear = string.IsNullOrWhiteSpace(year) ? volumeData.EndYear : yearData.EndYear;
                 savedItem.StartVolume = volumeData.StartVolume;
                 savedItem.EndVolume = volumeData.EndVolume;
                 savedItem.StartIssue = volumeData.StartIssue;
