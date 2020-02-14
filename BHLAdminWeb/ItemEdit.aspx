@@ -35,9 +35,9 @@
         executeServiceCall('services/segmentservice.ashx?op=SegmentSearch&segmentID=' + segmentId + '&title=' + title, showSegmentList);
     }
 
-    function validateYear(year) {
+    function validateYear(year, updateFunc) {
         year = year.trim().replace(" ", "");
-        executeServiceCall('services/utilityservice.ashx?op=ValidYear&year=' + encodeURIComponent(year), updateYear);
+        executeServiceCall('services/utilityservice.ashx?op=ValidYear&year=' + encodeURIComponent(year), updateFunc);
     }
 
     function showTitleList(result)
@@ -108,11 +108,14 @@
         document.getElementById('srchSegmentResultTable').style.display = 'block';
     }
 
-    function updateYear(result)
+    function updateStartYear(result) { updateYear(result, 'spanStartYearMessage'); }
+    function updateEndYear(result) { updateYear(result, 'spanEndYearMessage'); }
+
+    function updateYear(result, span)
     {
         var spanStyle = "none";
         if (result != true) spanStyle = "block";
-        document.getElementById('spanYearMessage').style.display = spanStyle;
+        document.getElementById(span).style.display = spanStyle;
 
         if (_submitMousedown) {
             _submitMousedown = false;
@@ -336,12 +339,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">
-					Year:
+				<td style="white-space: nowrap" align="right" class="dataHeader">
+					<span style="position:relative;top:8px;">Year:</span>
 				</td>
-				<td>
-					<asp:TextBox ID="yearTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="400px" onblur="validateYear(document.getElementById('yearTextBox').value);" ></asp:TextBox>
-                    <span id="spanYearMessage" style="display:none; color:red">The Year value must be formatted as "YYYY", "YYYY-YYYY", or "YYYY,YYYY".</span>
+				<td style="position:relative">
+					<span>Start</span><span style="position:absolute;left:70px">End</span><br />
+					<asp:TextBox ID="startYearTextBox" ClientIDMode="Static" runat="server" MaxLength="20" Width="50px" onblur="validateYear(document.getElementById('startYearTextBox').value, updateStartYear);" ></asp:TextBox>
+					-
+					<asp:TextBox ID="endYearTextBox" style="position:absolute;left:70px" ClientIDMode="Static" runat="server" MaxLength="20" Width="50px" onblur="validateYear(document.getElementById('endYearTextBox').value, updateEndYear);" ></asp:TextBox>
+                    <span id="spanStartYearMessage" style="display:none; color:red">Start Year must be formatted as "YYYY".</span>
+                    <span id="spanEndYearMessage" style="display:none; color:red">End Year must be formatted as "YYYY".</span>
 				</td>
 			</tr>
 			<tr>

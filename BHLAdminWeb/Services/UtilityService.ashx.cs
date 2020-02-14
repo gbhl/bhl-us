@@ -53,7 +53,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         private string ValidateYear(string year)
         {
-            bool isValid = DataCleaner.ValidateItemYear(year);
+            bool isValid = DataCleaner.ValidateItemSimpleYear(year);
             JavaScriptSerializer js = new JavaScriptSerializer();
             return js.Serialize(isValid);
         }

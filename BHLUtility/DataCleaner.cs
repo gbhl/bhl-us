@@ -102,9 +102,86 @@ namespace MOBOT.BHL.Utility
                     match = regex.Match(year);
                     isValid = match.Success;
                 }
+
+                if (!isValid)
+                {
+                    // YYYY/YYYY
+                    regex = new Regex("^[0-9]{4}/[0-9]{4}$");
+                    match = regex.Match(year);
+                    isValid = match.Success;
+                }
             }
 
             return isValid;
+        }
+
+        public static bool ValidateItemSimpleYear(string year)
+        {
+            bool isValid = true;
+
+            if (!string.IsNullOrWhiteSpace(year))
+            {
+                // YYYY
+                Regex regex = new Regex("^[0-9]{4}$");
+                Match match = regex.Match(year);
+                isValid = match.Success;
+            }
+
+            return isValid;
+        }
+
+        public static YearData ParseYearString(string year)
+        {
+            bool found = false;
+
+            YearData yearData = new YearData();
+            yearData.Year = year;
+
+            // YYYY
+            GroupCollection groups = GetMatchGroups("^([0-9]{4})$", yearData.Year);
+            if (groups != null)
+            {
+                yearData.StartYear = groups[1].Value;
+                found = true;
+            }
+
+            if (!found)
+            {
+                // YYYY-YYYY
+                groups = GetMatchGroups("^([0-9]{4})-([0-9]{4})$", yearData.Year);
+                if (groups != null)
+                {
+                    yearData.StartYear = groups[1].Value;
+                    yearData.EndYear = groups[2].Value;
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                // YYYY,YYYY
+                groups = GetMatchGroups("^([0-9]{4}),([0-9]{4})$", yearData.Year);
+                if (groups != null)
+                {
+                    yearData.StartYear = groups[1].Value;
+                    yearData.EndYear = groups[2].Value;
+                    found = true;
+                }
+            }
+
+            if (!found)
+            {
+                // YYYY/YYYY
+                groups = GetMatchGroups("^([0-9]{4})/([0-9]{4})$", yearData.Year);
+                if (groups != null)
+                {
+                    yearData.StartYear = groups[1].Value;
+                    yearData.EndYear = groups[2].Value;
+                    found = true;
+                }
+            }
+
+            return yearData;
         }
 
         /// <summary>
@@ -1146,5 +1223,22 @@ namespace MOBOT.BHL.Utility
         public string EndSeries { get; set; }
         public string StartPart { get; set; }
         public string EndPart { get; set; }
+    }
+
+    /// <summary>
+    /// Data structure to contain individual elements of a parsed year string
+    /// </summary>
+    public class YearData
+    {
+        public YearData()
+        {
+            StartYear = string.Empty;
+            EndYear = string.Empty;
+        }
+
+        public string Year { get; set; }  // The unparsed, unmodified year string
+
+        public string StartYear { get; set; }
+        public string EndYear { get; set; }
     }
 }
