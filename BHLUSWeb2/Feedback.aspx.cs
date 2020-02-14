@@ -231,11 +231,23 @@ namespace MOBOT.BHL.Web2
                 sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
             }
 
-            if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            string url = string.Empty;
+            if (urlTextBox.Text.Trim().Length > 0)
+            {
+                // Display the user-supplied URL, if it exists
+                url = Server.HtmlEncode(urlTextBox.Text.Trim());
+            }
+            else if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            {
+                // Else display the referrer URL
+                url = ViewState["FeedbackRefererURL"].ToString();
+            }
+
+            if (url.Length > 0)
             {
                 sb.Append("<br>");
-                sb.Append("<b>Referer URL: </b>");
-                sb.Append(ViewState["FeedbackRefererURL"].ToString());
+                sb.Append("<b>URL: </b>");
+                sb.Append(url);
             }
 
             if (ViewState["PageID"] != null)
@@ -254,12 +266,6 @@ namespace MOBOT.BHL.Web2
 
             if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append(Server.HtmlEncode(commentTextBox.Text.Trim()));
-
-            if (urlTextBox.Text.Trim().Length > 0)
-            {
-                if (sb.Length > 0) sb.Append("<br><br>");
-                sb.Append(Server.HtmlEncode(string.Format("URL: {0}", urlTextBox.Text.Trim())));
-            }
 
             return sb.ToString();
         }
