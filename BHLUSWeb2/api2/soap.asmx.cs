@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MOBOT.BHL.API.BHLApi;
+using MOBOT.BHL.API.BHLApiDataObjects2;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects2;
-using MOBOT.BHL.API.BHLApi;
 
 namespace MOBOT.BHL.Web2.api2
 {
@@ -84,7 +84,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameList(string startRow, string batchSize, string apiKey)
+        public List<Name> NameList(string startRow, string batchSize, string apiKey)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate, string apiKey)
+        public List<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate, string apiKey)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace MOBOT.BHL.Web2.api2
         }
         
         [WebMethod]
-        public CustomGenericList<Name> NameSearch(string name, string apiKey)
+        public List<Name> NameSearch(string name, string apiKey)
         {
             try
             {
@@ -158,7 +158,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Name> GetPageNames(string pageID, string apiKey)
+        public List<Name> GetPageNames(string pageID, string apiKey)
         {
             try
             {
@@ -205,7 +205,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Page> GetItemPages(string itemID, string includeOcr, string apiKey)
+        public List<Page> GetItemPages(string itemID, string includeOcr, string apiKey)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> GetItemParts(string itemID, string apiKey)
+        public List<Part> GetItemParts(string itemID, string apiKey)
         {
             try
             {
@@ -233,7 +233,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Item> GetUnpublishedItems(string apiKey)
+        public List<Item> GetUnpublishedItems(string apiKey)
         {
             try
             {
@@ -265,7 +265,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Item> GetTitleItems(string titleID, string apiKey)
+        public List<Item> GetTitleItems(string titleID, string apiKey)
         {
             try
             {
@@ -279,7 +279,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Title> GetTitleByIdentifier(string identifierType, string identifierValue, string apiKey)
+        public List<Title> GetTitleByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Title> TitleSearchSimple(string title, string apiKey)
+        public List<Title> TitleSearchSimple(string title, string apiKey)
         {
             try
             {
@@ -335,7 +335,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Title> GetUnpublishedTitles(string apiKey)
+        public List<Title> GetUnpublishedTitles(string apiKey)
         {
             try
             {
@@ -367,7 +367,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Name> GetPartNames(string partID, string apiKey)
+        public List<Name> GetPartNames(string partID, string apiKey)
         {
             try
             {
@@ -381,7 +381,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> GetPartByIdentifier(string identifierType, string identifierValue, string apiKey)
+        public List<Part> GetPartByIdentifier(string identifierType, string identifierValue, string apiKey)
         {
             try
             {
@@ -395,7 +395,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> GetUnpublishedParts(string apiKey)
+        public List<Part> GetUnpublishedParts(string apiKey)
         {
             try
             {
@@ -441,7 +441,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Subject methods
 
         [WebMethod]
-        public CustomGenericList<Subject> SubjectSearch(string subject, string apiKey)
+        public List<Subject> SubjectSearch(string subject, string apiKey)
         {
             try
             {
@@ -455,7 +455,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Title> GetSubjectTitles(string subject, string apiKey)
+        public List<Title> GetSubjectTitles(string subject, string apiKey)
         {
             try
             {
@@ -469,7 +469,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> GetSubjectParts(string subject, string apiKey)
+        public List<Part> GetSubjectParts(string subject, string apiKey)
         {
             try
             {
@@ -487,7 +487,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Author methods
 
         [WebMethod]
-        public CustomGenericList<Creator> AuthorSearch(string name, string apiKey)
+        public List<Creator> AuthorSearch(string name, string apiKey)
         {
             try
             {
@@ -501,7 +501,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Title> GetAuthorTitles(string creatorID, string apiKey)
+        public List<Title> GetAuthorTitles(string creatorID, string apiKey)
         {
             try
             {
@@ -515,7 +515,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> GetAuthorParts(string creatorID, string apiKey)
+        public List<Part> GetAuthorParts(string creatorID, string apiKey)
         {
             try
             {
@@ -533,7 +533,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Language methods
 
         [WebMethod]
-        public CustomGenericList<Language> GetLanguages(string apiKey)
+        public List<Language> GetLanguages(string apiKey)
         {
             try
             {
@@ -551,7 +551,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Collection methods
 
         [WebMethod]
-        public CustomGenericList<Collection> GetCollections(string apiKey)
+        public List<Collection> GetCollections(string apiKey)
         {
             try
             {
@@ -569,7 +569,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Search methods
 
         [WebMethod]
-        public CustomGenericList<Title> BookSearch(string title, string authorLastName, string volume, string edition,
+        public List<Title> BookSearch(string title, string authorLastName, string volume, string edition,
             string year, string subject, string languageCode, string collectionID, string apiKey)
         {
             try
@@ -587,7 +587,7 @@ namespace MOBOT.BHL.Web2.api2
         }
 
         [WebMethod]
-        public CustomGenericList<Part> PartSearch(string title, string containerTitle, string author, string date, string volume,
+        public List<Part> PartSearch(string title, string containerTitle, string author, string date, string volume,
             string series, string issue, string apiKey)
         {
             try
@@ -643,7 +643,7 @@ namespace MOBOT.BHL.Web2.api2
         #region Institution methods
 
         [WebMethod]
-        public CustomGenericList<Institution> GetInstitutions(string apiKey)
+        public List<Institution> GetInstitutions(string apiKey)
         {
             try
             {

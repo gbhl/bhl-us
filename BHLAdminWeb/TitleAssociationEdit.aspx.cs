@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -69,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
 
-            CustomGenericList<TitleAssociationType> types = bp.TitleAssociationTypeSelectAll();
+            List<TitleAssociationType> types = bp.TitleAssociationTypeSelectAll();
 
             foreach (TitleAssociationType type in types)
             {
@@ -304,8 +302,8 @@ namespace MOBOT.BHL.AdminWeb
 
         #region Identifier methods
 
-        CustomGenericList<Identifier> _identifiers = null;
-        protected CustomGenericList<Identifier> GetIdentifiers()
+        List<Identifier> _identifiers = null;
+        protected List<Identifier> GetIdentifiers()
         {
             BHLProvider bp = new BHLProvider();
             _identifiers = bp.IdentifierSelectAll();
@@ -341,7 +339,7 @@ namespace MOBOT.BHL.AdminWeb
             TitleAssociation association = this.FindTitleAssociation(titleAssociationId);
 
             // filter out deleted items
-            CustomGenericList<TitleAssociation_TitleIdentifier> titleIdentifiers = new CustomGenericList<TitleAssociation_TitleIdentifier>();
+            List<TitleAssociation_TitleIdentifier> titleIdentifiers = new List<TitleAssociation_TitleIdentifier>();
             foreach (TitleAssociation_TitleIdentifier ti in association.TitleAssociationIdentifiers)
             {
                 if (ti.IsDeleted == false)
@@ -355,7 +353,7 @@ namespace MOBOT.BHL.AdminWeb
         }
 
         private TitleAssociation_TitleIdentifier FindTitleAssociation_TitleIdentifier(
-            CustomGenericList<TitleAssociation_TitleIdentifier> titleTitleIdentifiers,
+            List<TitleAssociation_TitleIdentifier> titleTitleIdentifiers,
             int titleAssociationTitleIdentifierId, int titleIdentifierID, string identifierValue)
         {
             foreach (TitleAssociation_TitleIdentifier tati in titleTitleIdentifiers)

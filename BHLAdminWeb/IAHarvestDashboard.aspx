@@ -115,36 +115,7 @@
                 <td>
 	                <span class="BlackHeading">Latest Import Logs (Results of Publish To Production)</span>
                     <div style="overflow:scroll;height:400px;width:785px;border-style:solid;border-color:Black;border-width:1px">
-                        <asp:GridView ID="gvLatestPubToProdLogs" runat="server" AutoGenerateColumns="false" Width="70%" HorizontalAlign="center" GridLines="none">
-                        <Columns>
-                            <asp:BoundField DataField="ImportDate" HeaderText="Import Date" HeaderStyle-HorizontalAlign="left" HeaderStyle-Wrap="false" HeaderStyle-VerticalAlign="bottom" ItemStyle-Wrap="false"/>
-                            <asp:BoundField DataField="ImportSource" HeaderText="Import Source" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-Wrap="false" ItemStyle-BackColor="#EEEEEE" />
-                            <asp:BoundField DataField="ImportResult" HeaderText="Result" HeaderStyle-HorizontalAlign="left" HeaderStyle-Wrap="false" HeaderStyle-VerticalAlign="bottom" />
-                            <asp:BoundField DataField="TitleInsert" HeaderText="Title Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleUpdate" HeaderText="Title Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="CreatorInsert" HeaderText="Creator Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="CreatorUpdate" HeaderText="Creator Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleCreatorInsert" HeaderText="Title Creator Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleCreatorUpdate" HeaderText="Title Creator Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleTagInsert" HeaderText="Title Keyword Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleTagUpdate" HeaderText="Title Keyword Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleTitleIdentifierInsert" HeaderText="Title ID Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleTitleIdentifierUpdate" HeaderText="Title ID Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleAssociationInsert" HeaderText="Title Assoc Insert" HeaderStyle-HorizontalAlign="Left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleAssociationTitleIdentifierInsert" HeaderText="Title Assoc ID Insert" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="ItemInsert" HeaderText="Item Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="ItemUpdate" HeaderText="Item Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="TitleItemInsert" HeaderText="TitleItem Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PageInsert" HeaderText="Page Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PageUpdate" HeaderText="Page Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="IndicatedPageInsert" HeaderText="Indicated Page Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="IndicatedPageUpdate" HeaderText="Indicated Page Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PagePageTypeInsert" HeaderText="Page Type Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PagePageTypeUpdate" HeaderText="Page Type Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PageNameInsert" HeaderText="Page Name Inserts" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" ItemStyle-HorizontalAlign="center"/>
-                            <asp:BoundField DataField="PageNameUpdate" HeaderText="Page Name Updates" HeaderStyle-HorizontalAlign="left" HeaderStyle-VerticalAlign="bottom" HeaderStyle-BackColor="#EEEEEE" ItemStyle-BackColor="#EEEEEE" ItemStyle-HorizontalAlign="center"/>
-                        </Columns>
-                        </asp:GridView>
+                        <table runat="server" clientidmode="Static" id="tblImportLog" style="width:70%;border-collapse:collapse;" cellspacing="0"></table>
                     </div>
                 </td>
             </tr>

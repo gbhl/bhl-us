@@ -1,16 +1,14 @@
-using System;
-using System.Web.Services;
-using System.ComponentModel;
-using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
+using System.Collections.Generic;
+using System.Web.Services;
 
 namespace MOBOT.BHLImport.WebService
 {
     public partial class BHLImportWS : System.Web.Services.WebService
     {
         [WebMethod]
-        public CustomGenericList<Stats> StatsSelectReadyForProductionBySource(int importSourceID)
+        public List<Stats> StatsSelectReadyForProductionBySource(int importSourceID)
         {
             return (new BHLImportProvider().StatsSelectReadyForProductionBySource(importSourceID));
         }
@@ -22,19 +20,19 @@ namespace MOBOT.BHLImport.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<Stats> StatsSelectIAItemGroupByStatus()
+        public List<Stats> StatsSelectIAItemGroupByStatus()
         {
             return (new BHLImportProvider().StatsSelectIAItemGroupByStatus());
         }
 
         [WebMethod]
-        public CustomGenericList<Stats> StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays)
+        public List<Stats> StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays)
         {
             return (new BHLImportProvider().StatsSelectIAItemPendingApprovalGroupByAge(ageInDays));
         }
 
         [WebMethod]
-        public CustomGenericList<Stats> StatsSelectBSItemGroupByStatus()
+        public List<Stats> StatsSelectBSItemGroupByStatus()
         {
             return (new BHLImportProvider().StatsSelectBSItemGroupByStatus());
         }

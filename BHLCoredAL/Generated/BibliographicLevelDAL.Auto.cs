@@ -1,8 +1,8 @@
 
-// Generated 8/3/2010 11:16:34 AM
+// Generated 1/2/2020 3:40:22 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class BibliographicLevelDAL is based upon BibliographicLevel.
+// This partial class BibliographicLevelDAL is based upon dbo.BibliographicLevel.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from BibliographicLevel by primary key(s).
+		/// Select values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
 		}
 			
 		/// <summary>
-		/// Select values from BibliographicLevel by primary key(s).
+		/// Select values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -89,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BibliographicLevel by primary key(s).
+		/// Select values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -104,7 +104,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from BibliographicLevel by primary key(s).
+		/// Select values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -128,33 +128,36 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into BibliographicLevel.
+		/// Insert values into dbo.BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="bibliographicLevelName"></param>
+		/// <param name="bibliographicLevelLabel"></param>
 		/// <param name="mARCCode"></param>
 		/// <returns>Object of type BibliographicLevel.</returns>
 		public BibliographicLevel BibliographicLevelInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string bibliographicLevelName,
+			string bibliographicLevelLabel,
 			string mARCCode)
 		{
-			return BibliographicLevelInsertAuto( sqlConnection, sqlTransaction, "BHL", bibliographicLevelName, mARCCode );
+			return BibliographicLevelInsertAuto( sqlConnection, sqlTransaction, "BHL", bibliographicLevelName, bibliographicLevelLabel, mARCCode );
 		}
 		
 		/// <summary>
-		/// Insert values into BibliographicLevel.
+		/// Insert values into dbo.BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="bibliographicLevelName"></param>
+		/// <param name="bibliographicLevelLabel"></param>
 		/// <param name="mARCCode"></param>
 		/// <returns>Object of type BibliographicLevel.</returns>
 		public BibliographicLevel BibliographicLevelInsertAuto(
@@ -162,6 +165,7 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			string bibliographicLevelName,
+			string bibliographicLevelLabel,
 			string mARCCode)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -170,6 +174,7 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BibliographicLevelInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("BibliographicLevelID", SqlDbType.Int, null, false),
 					CustomSqlHelper.CreateInputParameter("BibliographicLevelName", SqlDbType.NVarChar, 50, false, bibliographicLevelName),
+					CustomSqlHelper.CreateInputParameter("BibliographicLevelLabel", SqlDbType.NVarChar, 50, false, bibliographicLevelLabel),
 					CustomSqlHelper.CreateInputParameter("MARCCode", SqlDbType.NChar, 1, false, mARCCode), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -191,7 +196,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Insert values into dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -206,7 +211,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Insert values into BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Insert values into dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -221,6 +226,7 @@ namespace MOBOT.BHL.DAL
 		{
 			return BibliographicLevelInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.BibliographicLevelName,
+				value.BibliographicLevelLabel,
 				value.MARCCode);
 		}
 		
@@ -229,7 +235,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from BibliographicLevel by primary key(s).
+		/// Delete values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -244,7 +250,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Delete values from BibliographicLevel by primary key(s).
+		/// Delete values from dbo.BibliographicLevel by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -287,12 +293,13 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Update values in dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="bibliographicLevelID"></param>
 		/// <param name="bibliographicLevelName"></param>
+		/// <param name="bibliographicLevelLabel"></param>
 		/// <param name="mARCCode"></param>
 		/// <returns>Object of type BibliographicLevel.</returns>
 		public BibliographicLevel BibliographicLevelUpdateAuto(
@@ -300,19 +307,21 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int bibliographicLevelID,
 			string bibliographicLevelName,
+			string bibliographicLevelLabel,
 			string mARCCode)
 		{
-			return BibliographicLevelUpdateAuto( sqlConnection, sqlTransaction, "BHL", bibliographicLevelID, bibliographicLevelName, mARCCode);
+			return BibliographicLevelUpdateAuto( sqlConnection, sqlTransaction, "BHL", bibliographicLevelID, bibliographicLevelName, bibliographicLevelLabel, mARCCode);
 		}
 		
 		/// <summary>
-		/// Update values in BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Update values in dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="bibliographicLevelID"></param>
 		/// <param name="bibliographicLevelName"></param>
+		/// <param name="bibliographicLevelLabel"></param>
 		/// <param name="mARCCode"></param>
 		/// <returns>Object of type BibliographicLevel.</returns>
 		public BibliographicLevel BibliographicLevelUpdateAuto(
@@ -321,6 +330,7 @@ namespace MOBOT.BHL.DAL
 			string connectionKeyName,
 			int bibliographicLevelID,
 			string bibliographicLevelName,
+			string bibliographicLevelLabel,
 			string mARCCode)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
@@ -329,6 +339,7 @@ namespace MOBOT.BHL.DAL
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("BibliographicLevelUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("BibliographicLevelID", SqlDbType.Int, null, false, bibliographicLevelID),
 					CustomSqlHelper.CreateInputParameter("BibliographicLevelName", SqlDbType.NVarChar, 50, false, bibliographicLevelName),
+					CustomSqlHelper.CreateInputParameter("BibliographicLevelLabel", SqlDbType.NVarChar, 50, false, bibliographicLevelLabel),
 					CustomSqlHelper.CreateInputParameter("MARCCode", SqlDbType.NChar, 1, false, mARCCode), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
@@ -350,7 +361,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Update values in dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -365,7 +376,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in BibliographicLevel. Returns an object of type BibliographicLevel.
+		/// Update values in dbo.BibliographicLevel. Returns an object of type BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -381,6 +392,7 @@ namespace MOBOT.BHL.DAL
 			return BibliographicLevelUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.BibliographicLevelID,
 				value.BibliographicLevelName,
+				value.BibliographicLevelLabel,
 				value.MARCCode);
 		}
 		
@@ -389,9 +401,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage BibliographicLevel object.
+		/// Manage dbo.BibliographicLevel object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BibliographicLevel.
+		/// then either insert values into, delete values from, or update values in dbo.BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -406,9 +418,9 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Manage BibliographicLevel object.
+		/// Manage dbo.BibliographicLevel object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in BibliographicLevel.
+		/// then either insert values into, delete values from, or update values in dbo.BibliographicLevel.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -427,6 +439,7 @@ namespace MOBOT.BHL.DAL
 				
 				BibliographicLevel returnValue = BibliographicLevelInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.BibliographicLevelName,
+						value.BibliographicLevelLabel,
 						value.MARCCode);
 				
 				return new CustomDataAccessStatus<BibliographicLevel>(
@@ -455,6 +468,7 @@ namespace MOBOT.BHL.DAL
 				BibliographicLevel returnValue = BibliographicLevelUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.BibliographicLevelID,
 						value.BibliographicLevelName,
+						value.BibliographicLevelLabel,
 						value.MARCCode);
 					
 				return new CustomDataAccessStatus<BibliographicLevel>(
@@ -473,4 +487,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

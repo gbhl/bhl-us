@@ -27,7 +27,7 @@
                 <p id="spanErrorText" class="ErrorText" style="margin-left:160px;display:block !important"></p>
             </div>
             <div>
-                <p>Thank you for your feedback! BHL is voluntarily staffed by our Partner Libraries and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
+                <p>Thank you for your feedback! BHL is voluntarily staffed by our <a href="<%= System.Configuration.ConfigurationManager.AppSettings["WikiPageMembers"] %>">Partner Libraries</a> and we are limited in our ability to respond personally to each contact with our patrons. We appreciate your patience. A BHL staff member may contact you if we require further information.</p>
                 <br />
             </div>
             <div style="margin-bottom:10px;">
@@ -52,6 +52,11 @@
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="commentTextBox">Comment:</label>
                     <asp:TextBox ID="commentTextBox" ClientIDMode="Static" runat="server" Height="100px" Width="375" TextMode="MultiLine"></asp:TextBox>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label class="caption" for="urlTextBox">URL:</label>
+                    <asp:TextBox ID="urlTextBox" ClientIDMode="Static" runat="server" Width="375" placeholder="Related page link (ex: https://biodiversitylibrary.org/page/1234)"></asp:TextBox>
+                    <span style="font-style:italic">(optional)</span>
                 </div>
             </div>
 		    <!-- End Feedback Form -->

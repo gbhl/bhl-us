@@ -159,6 +159,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Segment.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -168,7 +171,7 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.TitleBibTeX.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.TitleEndNote.datasource">
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Title_Identifier.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLNameFileGenerator.BHLWS.Vault.datasource">

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects2
@@ -184,50 +185,50 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             }
         }
 
-        CustomGenericList<Creator> _Authors;
-        public CustomGenericList<Creator> Authors
+        List<Creator> _Authors;
+        public List<Creator> Authors
         {
             get { return _Authors; }
             set { _Authors = value; }
         }
 
-        CustomGenericList<Subject> _Subjects;
-        public CustomGenericList<Subject> Subjects
+        List<Subject> _Subjects;
+        public List<Subject> Subjects
         {
             get { return _Subjects; }
             set { _Subjects = value; }
         }
 
-        CustomGenericList<TitleIdentifier> _Identifiers;
-        public CustomGenericList<TitleIdentifier> Identifiers
+        List<TitleIdentifier> _Identifiers;
+        public List<TitleIdentifier> Identifiers
         {
             get { return _Identifiers; }
             set { _Identifiers = value; }
         }
 
-        CustomGenericList<Collection> _Collections;
-        public CustomGenericList<Collection> Collections
+        List<Collection> _Collections;
+        public List<Collection> Collections
         {
             get { return _Collections; }
             set { _Collections = value; }
         }
 
-        CustomGenericList<TitleVariant> _Variants;
-        public CustomGenericList<TitleVariant> Variants
+        List<TitleVariant> _Variants;
+        public List<TitleVariant> Variants
         {
             get { return _Variants; }
             set { _Variants = value; }
         }
 
-        CustomGenericList<Item> _Items;
-        public CustomGenericList<Item> Items
+        List<Item> _Items;
+        public List<Item> Items
         {
             get { return _Items; }
             set { _Items = value; }
         }
 
-        CustomGenericList<TitleNote> _Notes;
-        public CustomGenericList<TitleNote> Notes
+        List<TitleNote> _Notes;
+        public List<TitleNote> Notes
         {
             get { return _Notes; }
             set { _Notes = value; }

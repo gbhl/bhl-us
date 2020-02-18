@@ -70,14 +70,14 @@ namespace BHL.Search.SQL
 
         public ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
-            SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
+            SearchStringParam notes, SearchStringParam text, List<Tuple<SearchField, string>> limits = null)
         {
             SearchResult result = new SearchResult();
 
             long totalHits = 0;
             result.Items = new DataAccess(_connectionString).SearchItem(title.searchValue, author.searchValue, volume, 
                 year, keyword.searchValue, (language != null ? language.Item1 : null), 
-                (collection != null ? collection.Item1 : null), out totalHits, StartPage, NumResults);
+                (collection != null ? collection.Item1 : null), notes.searchValue, out totalHits, StartPage, NumResults);
             GetSearchResultStats(result, totalHits);
 
             if (!string.IsNullOrWhiteSpace(title.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Title, title.searchValue));
@@ -87,6 +87,7 @@ namespace BHL.Search.SQL
             if (!string.IsNullOrWhiteSpace(keyword.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Keyword, keyword.searchValue));
             if (language != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Language, language.Item1));
             if (collection != null) result.Query.Add(new Tuple<SearchField, string>(SearchField.Collections, collection.Item1));
+            if (!string.IsNullOrWhiteSpace(notes.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Notes, notes.searchValue));
             if (!string.IsNullOrWhiteSpace(text.searchValue)) result.Query.Add(new Tuple<SearchField, string>(SearchField.Text, text.searchValue));
             result.QueryLimits = limits;
             return result;

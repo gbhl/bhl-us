@@ -1,10 +1,9 @@
 #region Using
 
-using System;
+using CustomDataAccess;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CustomDataAccess;
-using MOBOT.BHLImport.DataObjects;
 
 #endregion Using
 
@@ -12,7 +11,7 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class ImportLogDAL
     {
-        public CustomGenericList<ImportLog> ImportLogSelectRecent(
+        public List<CustomDataRow> ImportLogSelectRecent(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int numLogs)
@@ -23,10 +22,13 @@ namespace MOBOT.BHLImport.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("ImportLogSelectRecent", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("NumLogs", SqlDbType.Int, null, false, numLogs)))
             {
-                using (CustomSqlHelper<ImportLog> helper = new CustomSqlHelper<ImportLog>())
+                return CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+/*
+                using (CustomSqlHelper<CustomDataRow> helper = new CustomSqlHelper<CustomDataRow>())
                 {
                     return helper.ExecuteReader(command);
                 }
+                */
             }
         }
     }

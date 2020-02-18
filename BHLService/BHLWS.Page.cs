@@ -1,11 +1,8 @@
-using System;
-using System.Web.Services;
-using System.Collections.Generic;
-using System.ComponentModel;
-using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Web.Services;
 
 namespace MOBOT.BHL.WebService
 {
@@ -14,42 +11,42 @@ namespace MOBOT.BHL.WebService
         #region Page Methods
 
         [WebMethod]
-        public CustomGenericList<Page> PageSelectByItemID(int itemID)
+        public List<Page> PageSelectByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageSelectByItemID(itemID);
         }
 
         [WebMethod]
-        public CustomGenericList<Page> PageSelectFileNameByItemID(int itemID)
+        public List<Page> PageSelectFileNameByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageSelectFileNameByItemID(itemID);
         }
 
         [WebMethod]
-        public CustomGenericList<Page> PageMetadataSelectByItemID(int itemID)
+        public List<Page> PageMetadataSelectByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageMetadataSelectByItemID(itemID);
         }
 
         [WebMethod]
-        public CustomGenericList<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge)
+        public List<Page> PageSelectWithExpiredPageNamesByItemID(int itemID, int maxAge)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageSelectWithExpiredPageNamesByItemID(itemID, maxAge);
         }
 
         [WebMethod]
-        public CustomGenericList<Page> PageSelectWithoutPageNamesByItemID(int itemID)
+        public List<Page> PageSelectWithoutPageNamesByItemID(int itemID)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageSelectWithoutPageNamesByItemID(itemID);
         }
 
         [WebMethod]
-        public CustomGenericList<Page> PageSelectWithoutPageNames()
+        public List<Page> PageSelectWithoutPageNames()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageSelectWithoutPageNames();
@@ -100,14 +97,14 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<PageFlickr> PageFlickrSelectRandom(int numberToReturn)
+        public List<PageFlickr> PageFlickrSelectRandom(int numberToReturn)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageFlickrSelectRandom(numberToReturn);
         }
 
         [WebMethod]
-        public CustomGenericList<PageFlickr> PageFlickrSelectAll()
+        public List<PageFlickr> PageFlickrSelectAll()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PageFlickrSelectAll();

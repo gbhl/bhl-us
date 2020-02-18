@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Countersoft.Gemini.Api;
+using Countersoft.Gemini.Commons.Dto;
+using Countersoft.Gemini.Commons.Entity;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Net;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using Countersoft.Gemini.Commons.Entity;
-using Countersoft.Gemini.Api;
-using Countersoft.Gemini.Commons.Dto;
-using System.Net;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace MOBOT.BHL.Web2
 {
@@ -50,7 +49,7 @@ namespace MOBOT.BHL.Web2
         private void fillCombos()
         {
             BHLProvider bp = new BHLProvider();
-            CustomGenericList<Language> languages = bp.LanguageSelectAll();
+            List<Language> languages = bp.LanguageSelectAll();
 
             srLanguageList.DataSource = languages;
             srLanguageList.DataTextField = "LanguageName";
@@ -232,9 +231,24 @@ namespace MOBOT.BHL.Web2
                 sb.Append(Server.HtmlEncode(nameTextBox.Text.Trim()));
             }
 
-            sb.Append("<br>");
-            sb.Append("<b>URL: </b>");
-            sb.Append(ViewState["FeedbackRefererURL"].ToString());
+            string url = string.Empty;
+            if (urlTextBox.Text.Trim().Length > 0)
+            {
+                // Display the user-supplied URL, if it exists
+                url = Server.HtmlEncode(urlTextBox.Text.Trim());
+            }
+            else if (!string.IsNullOrWhiteSpace((string)ViewState["FeedbackRefererURL"]))
+            {
+                // Else display the referrer URL
+                url = ViewState["FeedbackRefererURL"].ToString();
+            }
+
+            if (url.Length > 0)
+            {
+                sb.Append("<br>");
+                sb.Append("<b>URL: </b>");
+                sb.Append(url);
+            }
 
             if (ViewState["PageID"] != null)
             {
@@ -250,10 +264,7 @@ namespace MOBOT.BHL.Web2
                 sb.Append(ViewState["TitleID"].ToString());
             }
 
-            if (sb.Length > 0)
-            {
-                sb.Append("<br><br>");
-            }
+            if (sb.Length > 0) sb.Append("<br><br>");
             sb.Append(Server.HtmlEncode(commentTextBox.Text.Trim()));
 
             return sb.ToString();

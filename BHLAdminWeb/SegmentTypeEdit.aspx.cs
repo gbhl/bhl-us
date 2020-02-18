@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -16,7 +14,7 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 BHLProvider bp = new BHLProvider();
-                CustomGenericList<SegmentGenre> segmentGenres = bp.SegmentGenreSelectAll();
+                List<SegmentGenre> segmentGenres = bp.SegmentGenreSelectAll();
 
                 segmentGenres.Sort();
 

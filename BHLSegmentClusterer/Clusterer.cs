@@ -1,12 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.DocumentResolver;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CustomDataAccess;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.DocumentResolver;
 
 namespace MOBOT.BHL.SegmentClusterer
 {
@@ -23,8 +20,8 @@ namespace MOBOT.BHL.SegmentClusterer
 
         public void Cluster(int? itemID = null)
         {
-            CustomGenericList<Segment> newSegments = provider.SegmentSelectByStatusID(_segmentStatusNew);
-            CustomGenericList<Segment> publishedSegments = provider.SegmentSelectByStatusID(_segmentStatusPublished);
+            List<Segment> newSegments = provider.SegmentSelectByStatusID(_segmentStatusNew);
+            List<Segment> publishedSegments = provider.SegmentSelectByStatusID(_segmentStatusPublished);
             Dictionary<int, Segment> segmentDictionary = GetSegmentDictionary(newSegments, publishedSegments);
             Dictionary<int, Segment> segments = GetSegmentsToCluster(newSegments, itemID);
 
@@ -138,8 +135,7 @@ namespace MOBOT.BHL.SegmentClusterer
         /// Convert new and published segment lists into a single dictionary of segments.
         /// </summary>
         /// <returns></returns>
-        private Dictionary<int, Segment> GetSegmentDictionary(CustomGenericList<Segment> newSegments, 
-            CustomGenericList<Segment> publishedSegments)
+        private Dictionary<int, Segment> GetSegmentDictionary(List<Segment> newSegments, List<Segment> publishedSegments)
         {
             Dictionary<int, Segment> dictionary = new Dictionary<int, Segment>();
             foreach (Segment segment in newSegments)
@@ -176,7 +172,7 @@ namespace MOBOT.BHL.SegmentClusterer
         /// Convert the list of new, unclustered segments into a dictionary.
         /// </summary>
         /// <returns></returns>
-        private Dictionary<int, Segment> GetSegmentsToCluster(CustomGenericList<Segment> newSegments, int? itemID = null)
+        private Dictionary<int, Segment> GetSegmentsToCluster(List<Segment> newSegments, int? itemID = null)
         {
             Dictionary<int, Segment> dictionary = new Dictionary<int, Segment>();
             foreach (Segment segment in newSegments)

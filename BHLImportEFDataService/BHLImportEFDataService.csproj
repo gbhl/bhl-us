@@ -58,7 +58,7 @@
     <Compile Include="BSSegmentPage.cs" />
     <Compile Include="DataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SegmentAuthor.cs" />
+    <Compile Include="BSSegmentAuthor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BHLImportEFDataModel\BHLImportEFDataModel.csproj">

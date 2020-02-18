@@ -30,7 +30,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public DbSet<BSSegment> BSSegments { get; set; }
         public DbSet<BSSegmentPage> BSSegmentPages { get; set; }
         public DbSet<ImportSource> ImportSources { get; set; }
-        public DbSet<SegmentAuthor> SegmentAuthors { get; set; }
+        public DbSet<BSSegmentAuthor> BSSegmentAuthors { get; set; }
     
         public virtual int BSItemDeleteAllSegments(Nullable<int> itemID)
         {

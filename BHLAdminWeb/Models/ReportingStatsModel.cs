@@ -1,11 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -14,7 +10,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         public int ContentProviderTarget { get; set; }
         public string SortOrder { get; set; }
         public string InstitutionCode { get; set; }
-        public CustomGenericList<Institution> Institutions { get; set; }
+        public List<Institution> Institutions { get; set; }
         public List<ReportStat> ReportStats { get; set; }
         public byte[] DownloadStats { get; set; }
 
@@ -28,7 +24,7 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public void GetStats()
         {
-            CustomGenericList<MonthlyStats> stats = null;
+            List<MonthlyStats> stats = null;
 
             switch (ContentProviderTarget)
             {
@@ -99,25 +95,25 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             // Convert CSV to byte array
-            DownloadStats = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
+            DownloadStats = Encoding.UTF8.GetBytes(sb.ToString());
         }
 
-        private CustomGenericList<MonthlyStats> GetStatsForInstitution(string institutionCode)
+        private List<MonthlyStats> GetStatsForInstitution(string institutionCode)
         {
             return new BHLProvider().MonthlyStatsSelectByInstitution(institutionCode);
         }
 
-        private CustomGenericList<MonthlyStats> GetDetailedStats(bool bhlMemberLibrary)
+        private List<MonthlyStats> GetDetailedStats(bool bhlMemberLibrary)
         {
             return new BHLProvider().MonthlyStatsSelectDetailed(bhlMemberLibrary);
         }
 
-        private CustomGenericList<MonthlyStats> GetSummaryStats(bool bhlMemberLibrary)
+        private List<MonthlyStats> GetSummaryStats(bool bhlMemberLibrary)
         {
             return new BHLProvider().MonthlyStatsSelectSummaryStats(bhlMemberLibrary);
         }
 
-        private List<ReportStat> ConvertToReportStat(CustomGenericList<MonthlyStats> stats)
+        private List<ReportStat> ConvertToReportStat(List<MonthlyStats> stats)
         {
             List<ReportStat> reportStats = new List<ReportStat>();
 
@@ -193,7 +189,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             return institutionName;
         }
 
-        private CustomGenericList<MonthlyStats> SortStats(CustomGenericList<MonthlyStats> stats,
+        private List<MonthlyStats> SortStats(List<MonthlyStats> stats,
             CustomDataAccess.SortOrder sortOrder)
         {
             IComparer<MonthlyStats> comp;

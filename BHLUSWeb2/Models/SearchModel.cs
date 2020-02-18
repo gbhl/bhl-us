@@ -155,6 +155,8 @@ namespace MOBOT.BHL.Web2.Models
             SubjectInclude = "A";
             Language = null;
             Collection = null;
+            Notes = string.Empty;
+            NotesInclude = "A";
             Text = string.Empty;
             TextInclude = "A";
         }
@@ -172,6 +174,7 @@ namespace MOBOT.BHL.Web2.Models
         public string TermInclude { get; set; }
         public string LastNameInclude { get; set; }
         public string SubjectInclude { get; set; }
+        public string NotesInclude { get; set; }
         public string TextInclude { get; set; }
 
         public string LastName { get; set; }
@@ -181,6 +184,7 @@ namespace MOBOT.BHL.Web2.Models
         public Tuple<string, string> Language { get; set; }
         public Tuple<string, string> Collection { get; set; }
 
+        public string Notes { get; set; }
         public string Text { get; set; }
 
         private List<FacetParam> _genreFacets = new List<FacetParam>();

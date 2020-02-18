@@ -1,11 +1,7 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Xml;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 using System.Web.UI.HtmlControls;
 
 namespace MOBOT.BHL.Web2
@@ -88,7 +84,7 @@ namespace MOBOT.BHL.Web2
                         break;
                 }
 
-                CustomGenericList<DOI> dois = bhlProvider.DOISelectValidForSegment(SegmentID);
+                List<DOI> dois = bhlProvider.DOISelectValidForSegment(SegmentID);
                 if (dois.Count > 0) DOI = ConfigurationManager.AppSettings["DOIResolverURL"] + dois[0].DOIName;
 
                 main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlSegment.Title);

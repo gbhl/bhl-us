@@ -72,7 +72,7 @@ namespace BHL.Search
         /// <returns>Object containing the publications returned by the search.</returns>
         ISearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
             SearchStringParam keyword, Tuple<string, string> language, Tuple<string, string> collection, 
-            SearchStringParam text, List<Tuple<SearchField, string>> limits = null);
+            SearchStringParam notes, SearchStringParam text, List<Tuple<SearchField, string>> limits = null);
 
         /// <summary>
         /// Global catalog search for publications

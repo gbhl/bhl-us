@@ -60,6 +60,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Connected Services\BHLWS\BHL.Export.IAID.BHLWS.AnnotatedItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

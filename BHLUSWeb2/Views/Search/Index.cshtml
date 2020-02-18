@@ -57,6 +57,8 @@
     @Html.HiddenFor(m => m.Params.SubjectInclude)
     @Html.HiddenFor(m => m.Params.Language)
     @Html.HiddenFor(m => m.Params.Collection)
+    @Html.HiddenFor(m => m.Params.Notes)
+    @Html.HiddenFor(m => m.Params.NotesInclude)
     @Html.HiddenFor(m => m.Params.Text)
     @Html.HiddenFor(m => m.Params.TextInclude)
     @Html.HiddenFor(m => m.ItemPage, new { @id = "ItemPage" })
@@ -131,7 +133,7 @@
                                                     <div class="catOnlyControl">
                                                         Too many results?&nbsp;&nbsp;
                                                         <div class="catOnly" onclick="$('#ItemPage').val(1);$('#Params_SearchType').val('C');pagerClick('');">Search only the Catalog.</div>&nbsp;&nbsp;
-                                                        <a target="_blank" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="images/help.png" style="margin-bottom:-2px;" alt="Search help" title="What's This?" height="16" width="16" /></a>
+                                                        <a target="_blank" rel="noopener noreferrer" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="images/help.png" style="margin-bottom:-2px;" alt="Search help" title="What's This?" height="16" width="16" /></a>
                                                     </div>
                                                     }
                                                     @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "" } })
@@ -142,7 +144,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-9">
                                                                     <div style="padding-bottom:10px">
-                                                                        @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                        @if (item.TitleId > 0)
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
@@ -150,24 +152,31 @@
                                                                             }
                                                                             else
                                                                             {
-                                                                                <a target="_blank" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" href="/item/@item.ItemId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                             }
                                                                         }
                                                                         else
                                                                         {
                                                                             if (string.IsNullOrWhiteSpace(item.Url))
                                                                             {
-                                                                                <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                if (item.StartPageId > 0)
+                                                                                {
+                                                                                    <a href="~/page/@item.StartPageId">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.Raw(Server.HtmlEncode(item.Title))
+                                                                                }
                                                                             }
                                                                             else
                                                                             {
-                                                                                <a target="_blank" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
+                                                                                <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" href="@item.Url">@Html.Raw(Server.HtmlEncode(item.Title))</a>
                                                                             }
                                                                         }
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3 pubResultLinks">
-                                                                    @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                    @if (item.TitleId > 0)
                                                                     {
                                                                         <a class="titleviewbook" style="position:relative;top:-25px;" href="~/bibliography/@item.TitleId">View Metadata</a>
                                                                     }
@@ -183,7 +192,7 @@
                                                                     {
                                                                         <div class="pubResultLine">Type: @Html.Raw(Server.HtmlEncode(item.Genre))</div>
                                                                     }
-                                                                    @if (!string.IsNullOrWhiteSpace(item.Volume) && (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre)))
+                                                                    @if (!string.IsNullOrWhiteSpace(item.Volume) && (item.TitleId > 0))
                                                                     {
                                                                         <div class="pubResultLine">Volume: @Html.Raw(Server.HtmlEncode(item.Volume))</div>
                                                                     }
@@ -193,7 +202,7 @@
                                                                             By: @Html.Raw(Server.HtmlEncode(string.Join(" - ", item.Authors)))
                                                                         </div>
                                                                     }
-                                                                    @if (!(item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre)))
+                                                                    @if (item.SegmentId > 0)
                                                                     {
                                                                         if (!string.IsNullOrWhiteSpace(item.Container))
                                                                         {
@@ -239,7 +248,7 @@
                                                                             }
                                                                         </div>
                                                                     }
-                                                                    @if (item.Genre.Contains("Monograph") || item.Genre.Contains("Serial") || item.Genre.Contains("Collection") || string.IsNullOrWhiteSpace(item.Genre))
+                                                                    @if (item.TitleId > 0)
                                                                     {
                                                                         foreach (var association in item.Associations)
                                                                         {
@@ -566,6 +575,8 @@
                 "&sinc=" + $('#Params_SubjectInclude').val() +
                 '&lang=' + $('#Params_Language').val() +
                 '&col=' + encodeURIComponent( $('#Params_Collection').val() ) +
+                '&nt=' + encodeURIComponent( $('#Params_Notes').val() ) + 
+                '&ntinc=' + $('#Params_NotesInclude').val() + 
                 '&txt=' + encodeURIComponent( $('#Params_Text').val() ) + 
                 '&txinc=' + $('#Params_TextInclude').val() + 
                 '&ppage=' + $('#ItemPage').val() +

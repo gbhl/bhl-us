@@ -1,22 +1,21 @@
-﻿using System;
+﻿using MOBOT.BHLImport.BHLImportEFDataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MOBOT.BHLImport.BHLImportEFDataModel;
 
 namespace MOBOT.BHLImport.BHLImportEFDataService
 {
     public partial class DataService
     {
-        public void InsertAuthor(SegmentAuthor author)
+        public void InsertAuthor(BSSegmentAuthor author)
         {
             BHLImportEntities context = GetDataContext();
             this.SetSegmentAuthorDefaults(author);
-            context.SegmentAuthors.Add(author);
+            context.BSSegmentAuthors.Add(author);
             context.SaveChanges();
         }
 
-        private void SetSegmentAuthorDefaults(SegmentAuthor author)
+        private void SetSegmentAuthorDefaults(BSSegmentAuthor author)
         {
             DateTime date = DateTime.Now;
 
@@ -29,10 +28,10 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             author.LastModifiedDate = (author.LastModifiedDate == DateTime.MinValue ? date : author.LastModifiedDate);
         }
 
-        public List<SegmentAuthor> GetSegmentAuthorsForSegment(int importSourceID, int segmentID)
+        public List<BSSegmentAuthor> GetSegmentAuthorsForSegment(int importSourceID, int segmentID)
         {
             BHLImportEntities context = GetDataContext();
-            var authors = context.SegmentAuthors.Where(i => i.ImportSourceID == importSourceID && i.SegmentID == segmentID);
+            var authors = context.BSSegmentAuthors.Where(i => i.ImportSourceID == importSourceID && i.SegmentID == segmentID);
             return authors.ToList();
         }
     }

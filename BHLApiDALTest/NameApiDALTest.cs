@@ -1,9 +1,9 @@
-﻿using MOBOT.BHL.API.BHLApiDAL;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Data.SqlClient;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MOBOT.BHL.API.BHLApiDAL;
 using MOBOT.BHL.API.BHLApiDataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace BHLApiDALTest
 {
@@ -104,7 +104,7 @@ namespace BHLApiDALTest
             SqlTransaction sqlTransaction = null;
             int startRow = 1;
             int batchSize = 10;
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NameListActive(sqlConnection, sqlTransaction, startRow, batchSize);
             Assert.IsTrue(actual.Count == 10);
         }
@@ -122,7 +122,7 @@ namespace BHLApiDALTest
             int batchSize = 10;
             DateTime startDate = new DateTime(2008, 1, 24);
             DateTime endDate = new DateTime(2008, 1, 26);
-            CustomGenericList<Name> actual;
+            List<Name> actual;
             actual = target.NameListActiveBetweenDates(sqlConnection, sqlTransaction, startRow, batchSize, startDate, endDate);
             Assert.IsNotNull(actual);
         }
@@ -137,7 +137,7 @@ namespace BHLApiDALTest
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
             string nameBankID = "2661223"; // poa annua
-            CustomGenericList<PageDetail> actual;
+            List<PageDetail> actual;
             actual = target.PageSelectByNameBankID(sqlConnection, sqlTransaction, nameBankID);
             Assert.IsNotNull(actual);
         }

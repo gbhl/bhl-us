@@ -1,14 +1,10 @@
+using MOBOT.BHL.API.BHLApiDAL;
+using MOBOT.BHL.API.BHLApiDataObjects;
 using System;
-using System.Data;
-using System.Web;
-using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using System.ComponentModel;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects;
-using MOBOT.BHL.API.BHLApiDAL;
-using System.Collections.Generic;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -52,7 +48,7 @@ namespace MOBOT.BHL.Web2.Services
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameList(string startRow, string batchSize)
+        public List<Name> NameList(string startRow, string batchSize)
         {
             // Validate the input
             int startRowValid;
@@ -63,7 +59,7 @@ namespace MOBOT.BHL.Web2.Services
         }
 
         [WebMethod]
-        public CustomGenericList<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
+        public List<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
         {
             // Validate the input
             int startRowValid;
@@ -119,21 +115,8 @@ namespace MOBOT.BHL.Web2.Services
             }
         }
 
-        /*
         [WebMethod]
-        // FOR TESTING PURPOSES ONLY!!!!!
-        public CustomGenericList<Name> NameList2(int startRow, int batchSize)
-        {
-            if (batchSize > 1000)
-            {
-                throw new SoapException("batchSize (" + batchSize + ") must be between 1 and 1000.", SoapException.ClientFaultCode);
-            }
-            return NameServiceDAL.PageNameListActive(null, null, startRow, batchSize);
-        }
-         */
-
-        [WebMethod]
-        public CustomGenericList<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name)
         {
             if (name == String.Empty)
             {
@@ -142,7 +125,7 @@ namespace MOBOT.BHL.Web2.Services
 
             try
             {
-                CustomGenericList<Name> names = new CustomGenericList<Name>();
+                List<Name> names = new List<Name>();
 
                 // Use the existing name search functionality
                 Server.BHLProvider provider = new Server.BHLProvider();
@@ -182,7 +165,7 @@ namespace MOBOT.BHL.Web2.Services
 
             try
             {
-                CustomGenericList<PageDetail> pageDetails = new NameApiDAL().PageSelectByNameBankID(null, null, nameBankID);
+                List<PageDetail> pageDetails = new NameApiDAL().PageSelectByNameBankID(null, null, nameBankID);
 
                 if (pageDetails.Count > 0)
                 {
@@ -190,9 +173,9 @@ namespace MOBOT.BHL.Web2.Services
                     name = new Name();
                     name.NameBankID = pageDetails[0].NameBankID;
                     name.NameConfirmed = pageDetails[0].NameConfirmed;
-                    name.Titles = new CustomGenericList<MOBOT.BHL.API.BHLApiDataObjects.Title>();
+                    name.Titles = new List<Title>();
 
-                    currentTitle = new MOBOT.BHL.API.BHLApiDataObjects.Title();
+                    currentTitle = new Title();
                     currentItem = new Item();
                     currentPage = new Page();
 
@@ -212,7 +195,7 @@ namespace MOBOT.BHL.Web2.Services
                             title.TL2 = pageDetail.TL2;
                             title.Abbreviation = pageDetail.Abbreviation;
                             title.TitleUrl = pageDetail.TitleUrl;
-                            title.Items = new CustomGenericList<Item>();
+                            title.Items = new List<Item>();
                             name.Titles.Add(title);
                             currentTitle = title;
                         }
@@ -227,7 +210,7 @@ namespace MOBOT.BHL.Web2.Services
                             item.CallNumber = pageDetail.CallNumber;
                             item.VolumeInfo = pageDetail.VolumeInfo;
                             item.ItemUrl = pageDetail.ItemUrl;
-                            item.Pages = new CustomGenericList<Page>();
+                            item.Pages = new List<Page>();
                             currentTitle.Items.Add(item);
                             currentItem = item;
                         }
@@ -247,7 +230,7 @@ namespace MOBOT.BHL.Web2.Services
                             page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
                             page.OcrUrl = pageDetail.OcrUrl;
                             page.ImageUrl = pageDetail.ImageUrl;
-                            page.PageTypes = new CustomGenericList<PageType>();
+                            page.PageTypes = new List<PageType>();
                             currentItem.Pages.Add(page);
                             currentPage = page;
                         }

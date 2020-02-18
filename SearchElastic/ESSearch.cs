@@ -206,6 +206,7 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.PUBLICATIONPLACE + "^5"));
                 fields.Add(new Field(ESField.PUBLISHER + "^5"));
                 fields.Add(new Field(ESField.SEARCHAUTHORS + "^5"));
+                fields.Add(new Field(ESField.NOTES));
                 fields.Add(new Field(ESField.TEXT));
 
                 // Construct the query.
@@ -256,7 +257,7 @@ namespace BHL.Search.Elastic
         /// <param name="query"></param>
         //public SearchResult SearchItem(List<Tuple<string, string>> args, List<Tuple<string, string>> limits = null)
         public SearchResult SearchCatalog(SearchStringParam title, SearchStringParam author, string volume, string year, 
-            SearchStringParam keyword, string language, string collection, SearchStringParam text, 
+            SearchStringParam keyword, string language, string collection, SearchStringParam notes, SearchStringParam text, 
             List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
@@ -268,6 +269,7 @@ namespace BHL.Search.Elastic
                 !string.IsNullOrWhiteSpace(keyword.searchValue) ||
                 !string.IsNullOrWhiteSpace(language) ||
                 !string.IsNullOrWhiteSpace(collection) ||
+                !string.IsNullOrWhiteSpace(notes.searchValue) ||
                 !string.IsNullOrWhiteSpace(text.searchValue))
             {
                 // Initialize the query object
@@ -338,6 +340,20 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(language)) mustQueries.Add(new MatchQuery { Field = ESField.LANGUAGE, Query = language });
                 if (!string.IsNullOrWhiteSpace(collection)) mustQueries.Add(new MatchQuery { Field = ESField.COLLECTIONS, Query = collection });
 
+                if (!string.IsNullOrWhiteSpace(notes.searchValue))
+                {
+                    if (notes.ParamOperator == SearchStringParamOperator.Phrase)
+                    {
+                        mustQueries.Add(new MatchPhraseQuery { Field = ESField.NOTES, Query = CleanQuery(notes.searchValue) });
+                    }
+                    else
+                    {
+                        Nest.Operator matchOperator = Operator.And;
+                        if (notes.ParamOperator == SearchStringParamOperator.Or) matchOperator = Operator.Or;
+                        mustQueries.Add(new MatchQuery { Field = ESField.NOTES, Query = CleanQuery(notes.searchValue), Operator = matchOperator, Fuzziness = Fuzziness.EditDistance(0), PrefixLength = 3 });
+                    }
+                }
+
                 if (!string.IsNullOrWhiteSpace(text.searchValue))
                 {
                     if (text.ParamOperator == SearchStringParamOperator.Phrase)
@@ -356,7 +372,7 @@ namespace BHL.Search.Elastic
                 {
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2 });
+                        mustQueries.Add(new MatchQuery { Field = limit.Item1, Query = limit.Item2, Operator = Operator.And });
                     }
                 }
 
@@ -382,6 +398,7 @@ namespace BHL.Search.Elastic
                 if (!string.IsNullOrWhiteSpace(keyword.searchValue)) args.Add(new Tuple<string, string>(ESField.KEYWORDS, keyword.searchValue));
                 if (!string.IsNullOrWhiteSpace(language)) args.Add(new Tuple<string, string>(ESField.LANGUAGE, language));
                 if (!string.IsNullOrWhiteSpace(collection)) args.Add(new Tuple<string, string>(ESField.COLLECTIONS, collection));
+                if (!string.IsNullOrWhiteSpace(notes.searchValue)) args.Add(new Tuple<string, string>(ESField.NOTES, notes.searchValue));
                 if (!string.IsNullOrWhiteSpace(text.searchValue)) args.Add(new Tuple<string, string>(ESField.TEXT, text.searchValue));
 
                 // Set the fields to use when determining alternate search suggestions
@@ -1061,7 +1078,7 @@ namespace BHL.Search.Elastic
                 case ESField.GENRE:
                     searchField = SearchField.Genre; break;
                 case ESField.KEYWORDS_RAW:
-                    searchField = SearchField.ItemKeywords; break;
+                    searchField = SearchField.FacetItemKeywords; break;
                 case ESField.LANGUAGE:
                     searchField = SearchField.Language; break;
                 case ESField.NAMES_RAW:
@@ -1085,7 +1102,7 @@ namespace BHL.Search.Elastic
                 case ESField.AUTHORS:
                     searchField = SearchField.ItemAuthors; break;
                 case ESField.FACETAUTHORS:
-                    searchField = SearchField.ItemAuthors; break;
+                    searchField = SearchField.FacetItemAuthors; break;
                 case ESField.KEYWORDS:
                     searchField = SearchField.ItemKeywords; break;
                 case ESField.KEYWORD:

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-using MOBOT.OpenUrl.Utilities;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.DAL;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using MOBOT.OpenUrl.Utilities;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.OpenUrlProvider
 {
@@ -86,7 +82,7 @@ namespace MOBOT.BHL.OpenUrlProvider
                     }
 
                     // If we've got a page id, submit a query to database
-                    CustomGenericList<OpenUrlCitation> citations = new CustomGenericList<OpenUrlCitation>();
+                    List<OpenUrlCitation> citations = new List<OpenUrlCitation>();
                     if (pageID > 0) citations = ouDAL.OpenUrlCitationSelectByPageID(null, null, pageID);
                     if (citations.Count > 0) foundCitation = true;
 

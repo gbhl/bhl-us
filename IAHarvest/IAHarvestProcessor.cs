@@ -1,11 +1,10 @@
+using MOBOT.BHLImport.DataObjects;
+using MOBOT.BHLImport.Server;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 using System.Xml;
-using CustomDataAccess;
-using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHLImport.Server;
 
 namespace IAHarvest
 {
@@ -115,7 +114,7 @@ namespace IAHarvest
             {
                 this.LogMessage("Processing SETS");
 
-                CustomGenericList<IASet> sets = provider.IASetSelectForDownload();
+                List<IASet> sets = provider.IASetSelectForDownload();
                 foreach (IASet set in sets)
                 {
                     DateTime? startDate = set.LastFullDownloadDate;
@@ -236,7 +235,7 @@ namespace IAHarvest
                 this.LogMessage("Harvesting XML information");
 
                 // Download the XML files for each item and parse the data into the database
-                CustomGenericList<IAItem> items = provider.IAItemSelectForXMLDownload(configParms.Mode == MODE_ITEM ? configParms.Item : "");
+                List<IAItem> items = provider.IAItemSelectForXMLDownload(configParms.Mode == MODE_ITEM ? configParms.Item : "");
 
                 foreach (IAItem item in items)
                 {
@@ -250,7 +249,7 @@ namespace IAHarvest
                         // harvest the data from the files
                         if (item.ItemStatusID != ITEMSTATUS_COMPLETE)
                         {
-                            CustomGenericList<IAFile> fileList = provider.IAFileSelectByItem(item.ItemID);
+                            List<IAFile> fileList = provider.IAFileSelectByItem(item.ItemID);
                             this.HarvestDCMetadata(GetFile(fileList, configParms.DCMetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMetadataSourceData(GetFile(fileList, configParms.MetadataSourceExtension),  item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
                             this.HarvestMetadata(GetFile(fileList, configParms.MetadataExtension), item.ItemID, item.IAIdentifier, item.LocalFileFolder, item.LastXMLDataHarvestDate);
@@ -286,6 +285,8 @@ namespace IAHarvest
                             // it will automatically get reprocessed the next time the harvest process runs.
                             //provider.IAItemUpdateItemStatusSetError(item.ItemID, ITEMSTATUS_XMLERROR, "HarvestXMLInformation",
                             //    ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
+                            provider.IAItemUpdateItemStatusSetError(item.ItemID, item.ItemStatusID, "HarvestXMLInformation",
+                                ex.Message.Substring(0, ((ex.Message.Length > 4000) ? 4000 : ex.Message.Length)));
                         }
                         // don't rethrow; we want to continue processing
                     }
@@ -347,7 +348,7 @@ namespace IAHarvest
             }
 
             // Delete local files and database entries that no longer exist in FILES.XML
-            CustomGenericList<IAFile> itemFiles = provider.IAFileSelectByItem(item.ItemID);
+            List<IAFile> itemFiles = provider.IAFileSelectByItem(item.ItemID);
             foreach (IAFile itemFile in itemFiles)
             {
                 // Ignore the scandata.xml file (which will not appear in FILES.XML)
@@ -391,7 +392,7 @@ namespace IAHarvest
         /// <param name="fileList"></param>
         /// <param name="fileExtension"></param>
         /// <returns></returns>
-        private IAFile GetFile(CustomGenericList<IAFile> fileList, string fileExtension)
+        private IAFile GetFile(List<IAFile> fileList, string fileExtension)
         {
             IAFile file = null;
 
@@ -411,7 +412,7 @@ namespace IAHarvest
         {
             this.LogMessage("Downloading files for " + item.IAIdentifier);
 
-            CustomGenericList<IAFile> files = provider.IAFileSelectForDownload(item.ItemID);
+            List<IAFile> files = provider.IAFileSelectForDownload(item.ItemID);
             foreach (IAFile file in files)
             {
                 DateTime? remoteFileLastModifiedDate = DateTime.Parse("1/1/1980");
@@ -1104,6 +1105,7 @@ namespace IAHarvest
                     String nsPrefix = String.Empty;
                     XmlNamespaceManager nsmgr = null;
                     XmlNodeList pages = xml.SelectNodes("book/pageData/page");
+                    XmlNodeList segments = xml.SelectNodes("book/bhlSegmentData/segment");
 
                     // If we didn't find any pages in the file, try again... after first
                     // adding a namespace to the XML document
@@ -1113,8 +1115,10 @@ namespace IAHarvest
                         nsmgr.AddNamespace("ns", "http://archive.org/scribe/xml");
                         nsPrefix = "ns:";
                         pages = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "pageData/" + nsPrefix + "page", nsmgr);
+                        if (segments.Count == 0) segments = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "bhlSegmentData/" + nsPrefix + "segment", nsmgr);
                     }
 
+                    // Get page metadata
                     foreach (XmlNode page in pages)
                     {
                         // The only scandata we need to save is pages that have an addToAccessFormats 
@@ -1174,11 +1178,111 @@ namespace IAHarvest
                             }
                         }
                     }
+
+                    // Get segment metadata
+                    int segmentSequence = 1;
+                    foreach (XmlNode segment in segments)
+                    {
+                        string title = string.Empty;
+                        string volume = string.Empty;
+                        string issue = string.Empty;
+                        string series = string.Empty;
+                        string date = string.Empty;
+                        string language = string.Empty;
+                        int genreId = int.MinValue;
+                        string genreName = string.Empty;
+                        string doi = string.Empty;
+
+                        XmlNode titleNode = segment.SelectSingleNode(nsPrefix + "title", nsmgr);
+                        if (titleNode != null) title = titleNode.InnerText;
+                        XmlNode volumeNode = segment.SelectSingleNode(nsPrefix + "volume", nsmgr);
+                        if (volumeNode != null) volume = volumeNode.InnerText;
+                        XmlNode issueNode = segment.SelectSingleNode(nsPrefix + "issue", nsmgr);
+                        if (issueNode != null) issue = issueNode.InnerText;
+                        XmlNode seriesNode = segment.SelectSingleNode(nsPrefix + "series", nsmgr);
+                        if (seriesNode != null) series = seriesNode.InnerText;
+                        XmlNode dateNode = segment.SelectSingleNode(nsPrefix + "date", nsmgr);
+                        if (dateNode != null) date = dateNode.InnerText;
+                        XmlNode languageNode = segment.SelectSingleNode(nsPrefix + "language", nsmgr);
+                        if (languageNode != null) language = languageNode.InnerText;
+                        XmlNode genreNode = segment.SelectSingleNode(nsPrefix + "genre", nsmgr);
+                        if (genreNode != null)
+                        {
+                            if (genreNode.Attributes["id"] != null)
+                            {
+                                Int32.TryParse(genreNode.Attributes["id"].Value, out genreId);
+                            }
+                            genreName = genreNode.InnerText;
+                        }
+                        XmlNode doiNode = segment.SelectSingleNode(nsPrefix + "doi", nsmgr);
+                        if (doiNode != null) doi = doiNode.InnerText;
+
+                        IASegment iaSegment = provider.SaveIASegment(itemID, segmentSequence, title, volume, issue, series, date, language, genreId, genreName, doi);
+
+                        // Check for authors
+                        XmlNodeList authors = segment.SelectNodes(nsPrefix + "authors/" + nsPrefix + "author", nsmgr);
+                        int authorSequence = 1;
+                        foreach (XmlNode author in authors)
+                        {
+                            int authorId = int.MinValue;
+                            string fullName = string.Empty;
+                            string firstName = string.Empty;
+                            string lastName = string.Empty;
+                            string startDate = string.Empty;
+                            string endDate = string.Empty;
+                            int identifierId = int.MinValue;
+                            string identifierValue = string.Empty;
+
+                            if (author.Attributes["authorId"] != null)
+                            {
+                                Int32.TryParse(author.Attributes["authorId"].Value, out authorId);
+                            }
+
+                            XmlNode nameNode = author.SelectSingleNode(nsPrefix + "name", nsmgr);
+                            if (nameNode != null) fullName = nameNode.InnerText;
+                            XmlNode lastNameNode = author.SelectSingleNode(nsPrefix + "lastName", nsmgr);
+                            if (lastNameNode != null) lastName = lastNameNode.InnerText;
+                            XmlNode firstNameNode = author.SelectSingleNode(nsPrefix + "firstName", nsmgr);
+                            if (firstNameNode != null) firstName = firstNameNode.InnerText;
+                            XmlNode startDateNode = author.SelectSingleNode(nsPrefix + "startDate", nsmgr);
+                            if (startDateNode != null) startDate = startDateNode.InnerText;
+                            XmlNode endDateNode = author.SelectSingleNode(nsPrefix + "endDate", nsmgr);
+                            if (endDateNode != null) endDate = endDateNode.InnerText;
+                            XmlNode identifierNode = author.SelectSingleNode(nsPrefix + "identifier", nsmgr);
+                            if (identifierNode != null)
+                            {
+                                if (identifierNode.Attributes["typeId"] != null)
+                                {
+                                    Int32.TryParse(identifierNode.Attributes["typeId"].Value, out identifierId);
+                                }
+                                identifierValue = identifierNode.InnerText;
+                            }
+
+                            provider.SaveIASegmentAuthor(iaSegment.SegmentID, authorSequence, (authorId == int.MinValue || authorId == 0 ? (int?)null : authorId), 
+                                fullName, lastName, firstName, startDate, endDate, (identifierId == int.MinValue ? (int?)null : identifierId), identifierValue);
+
+                            authorSequence++;
+                        }
+
+                        // Check for pages
+                        XmlNodeList segmentPages = segment.SelectNodes(nsPrefix + "leafNums/" + nsPrefix + "leafNum", nsmgr);
+                        int altPageNumSequence = 1;
+                        foreach (XmlNode segmentPage in segmentPages)
+                        {
+                            int pageSequence = Convert.ToInt32(segmentPage.InnerText);
+
+                            provider.SaveIASegmentPage(iaSegment.SegmentID, pageSequence);
+                            altPageNumSequence++;
+                        }
+
+                        segmentSequence++;
+                    }
                 }
             }
             else
             {
                 // No local file, so remove anything in the database
+                provider.IASegmentDeleteByItem(itemID);
                 provider.IAScandataDeleteAllByItem(itemID);
             }
         }
@@ -1197,7 +1301,7 @@ namespace IAHarvest
                 this.LogMessage("Publishing information to import tables");
 
                 // Get the items that are ready to be published
-                CustomGenericList<IAItem> items = provider.IAItemSelectForPublishToImportTables(configParms.Mode == MODE_ITEM ? configParms.Item : "");
+                List<IAItem> items = provider.IAItemSelectForPublishToImportTables(configParms.Mode == MODE_ITEM ? configParms.Item : "");
 
                 bool continuePublishing = true;
                 foreach (IAItem item in items)

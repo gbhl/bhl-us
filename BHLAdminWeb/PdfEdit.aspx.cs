@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Web.UI;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -119,7 +116,7 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
 
-            CustomGenericList<PDFStatus> pdfStatuses = bp.PDFStatusSelectAll();
+            List<PDFStatus> pdfStatuses = bp.PDFStatusSelectAll();
 
             ddlPdfStatus.DataSource = pdfStatuses;
             ddlPdfStatus.DataTextField = "PdfStatusName";

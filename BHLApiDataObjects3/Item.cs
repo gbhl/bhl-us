@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
@@ -216,22 +217,22 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         private string _ItemImagesUrl;
         public string ItemImagesUrl { get => _ItemImagesUrl; set => _ItemImagesUrl = value; }
 
-        CustomGenericList<Page> _Pages = null;
-        public CustomGenericList<Page> Pages
+        List<Page> _Pages = null;
+        public List<Page> Pages
         {
             get { return _Pages; }
             set { _Pages = value; }
         }
 
-        CustomGenericList<Part> _Parts = null;
-        public CustomGenericList<Part> Parts
+        List<Part> _Parts = null;
+        public List<Part> Parts
         {
             get { return _Parts; }
             set { _Parts = value; }
         }
 
-        CustomGenericList<Collection> _Collections = null;
-        public CustomGenericList<Collection> Collections
+        List<Collection> _Collections = null;
+        public List<Collection> Collections
         {
             get { return _Collections; }
             set { _Collections = value; }
@@ -302,15 +303,15 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
-        CustomGenericList<Author> _Authors;
-        public CustomGenericList<Author> Authors
+        List<Author> _Authors;
+        public List<Author> Authors
         {
             get { return _Authors; }
             set { _Authors = value; }
         }
 
-        CustomGenericList<Identifier> _Identifiers;
-        public CustomGenericList<Identifier> Identifiers
+        List<Identifier> _Identifiers;
+        public List<Identifier> Identifiers
         {
             get { return _Identifiers; }
             set { _Identifiers = value; }

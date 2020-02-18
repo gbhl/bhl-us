@@ -1,11 +1,6 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
-using System.Text;
-using System.Xml;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -35,9 +30,8 @@ namespace MOBOT.BHL.Web2
             }
             else
             {
-
                 BhlTitle = bhlProvider.TitleSelect(BhlItem.PrimaryTitleID);
-               CustomGenericList<Segment> segments = bhlProvider.SegmentSelectByItemID(ItemID);
+                List<Segment> segments = bhlProvider.SegmentSelectByItemID(ItemID);
 
                if (!(segments == null))
                {
@@ -45,10 +39,6 @@ namespace MOBOT.BHL.Web2
                    segmentRepeater.DataBind();
                }
             }
-
-
-
-
         }
     }
 }

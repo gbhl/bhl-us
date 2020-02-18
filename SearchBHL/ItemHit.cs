@@ -20,6 +20,7 @@ namespace BHL.Search
         private List<string> _associations = new List<string>();
         private List<string> _variants = new List<string>();
         private List<string> _contributors = new List<string>();
+        private List<string> _notes = new List<string>();
         private string _volume = string.Empty;
         private string _issue = string.Empty;
         private string _series = string.Empty;
@@ -135,6 +136,12 @@ namespace BHL.Search
         {
             get { return _contributors; }
             set { _contributors = value ?? new List<string>(); }
+        }
+
+        public List<string> Notes
+        {
+            get { return _notes; }
+            set { _notes = value ?? new List<string>(); }
         }
 
         public string Volume

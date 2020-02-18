@@ -1,20 +1,15 @@
+using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using System.Xml;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 using SortOrder = CustomDataAccess.SortOrder;
 
 namespace MOBOT.BHL.AdminWeb
@@ -46,7 +41,7 @@ namespace MOBOT.BHL.AdminWeb
                 String selectedNameId = this.selectedName.Value;
                 if (selectedNameId != "")
                 {
-                    CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+                    List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 
                     // Make sure the selected name isn't already associated with this title
                     bool nameExists = false;
@@ -114,7 +109,7 @@ namespace MOBOT.BHL.AdminWeb
             btnFindName.Disabled = false;
 			saveButton.Enabled = true;
 
-            namePageList.DataSource = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+            namePageList.DataSource = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 			namePageList.DataBind();
 
             string viewerUrl = ConfigurationManager.AppSettings["BaseUrl"] + "/pageimage/" + ps.PageID.ToString();
@@ -129,7 +124,7 @@ namespace MOBOT.BHL.AdminWeb
             if (ps == null) ps = new PageSummaryView();
             Session["Page" + pageIdTextBox.Text] = ps;
 
-			CustomGenericList<NamePage> namePageList = bp.NamePageSelectByPageID( ps.PageID );
+			List<NamePage> namePageList = bp.NamePageSelectByPageID( ps.PageID );
             Session["NamePages" + pageIdTextBox.Text] = namePageList;
 
 			fillUI();
@@ -139,10 +134,10 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void bindNamePageData( bool sort )
 		{
-            CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+            List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 
 			// filter out deleted items
-            CustomGenericList<NamePage> pns = new CustomGenericList<NamePage>();
+            List<NamePage> pns = new List<NamePage>();
             foreach (NamePage pn in namePages)
 			{
 				if ( pn.IsDeleted == false )
@@ -181,7 +176,7 @@ namespace MOBOT.BHL.AdminWeb
 			namePageList.DataBind();
 		}
 
-        private NamePage findNamePage(CustomGenericList<NamePage> namePages, int namePageId, string nameString,
+        private NamePage findNamePage(List<NamePage> namePages, int namePageId, string nameString,
 			string resolvedNameString, string nameBankId )
 		{
             foreach (NamePage pn in namePages)
@@ -253,7 +248,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 		}
 
-		private bool validate( CustomGenericList<NamePage> namePages )
+		private bool validate( List<NamePage> namePages )
 		{
 			bool flag = false;
 
@@ -318,7 +313,7 @@ namespace MOBOT.BHL.AdminWeb
 				if ( firstCheckBox != null && nameStringTextBox != null && resolvedNameStringTextBox != null && 
                     namebankIDTextBox != null && eolIDTextBox != null)
 				{
-                    CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+                    List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
                     bool first = firstCheckBox.Checked;
 					string nameString = nameStringTextBox.Text.Trim();
                     string resolvedNameString = resolvedNameStringTextBox.Text.Trim();
@@ -358,7 +353,7 @@ namespace MOBOT.BHL.AdminWeb
 			pn.PageID = ps.PageID;
             pn.IsActive = 1;
             pn.NameSourceID = 1; // User reported
-            CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+            List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 			namePages.Add( pn );
 
             // Determine edit index by counting names that are not deleted
@@ -377,7 +372,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( e.CommandName.Equals( "RemoveButton" ) )
 			{
 				int rowNum = int.Parse( e.CommandArgument.ToString() );
-                CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+                List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 
                 NamePage namePage = findNamePage(namePages,
 					(int)namePageList.DataKeys[ rowNum ].Values[ 0 ],
@@ -484,7 +479,7 @@ namespace MOBOT.BHL.AdminWeb
 		protected void saveButton_Click( object sender, EventArgs e )
 		{
             PageSummaryView ps = (PageSummaryView)Session["Page" + pageIdTextBox.Text];
-            CustomGenericList<NamePage> namePages = (CustomGenericList<NamePage>)Session["NamePages" + pageIdTextBox.Text];
+			List<NamePage> namePages = (List<NamePage>)Session["NamePages" + pageIdTextBox.Text];
 
 			if ( validate( namePages ) )
 			{

@@ -12,7 +12,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class SegmentAuthor
+    public partial class BSSegmentAuthor
     {
         public int SegmentAuthorID { get; set; }
         public int ImportSourceID { get; set; }
@@ -20,11 +20,11 @@ namespace MOBOT.BHLImport.BHLImportEFDataModel
         public string BioStorID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
+        public int SequenceOrder { get; set; }
         public string VIAFIdentifier { get; set; }
         public Nullable<int> BHLAuthorID { get; set; }
         public System.DateTime CreationDate { get; set; }
         public System.DateTime LastModifiedDate { get; set; }
-        public int SequenceOrder { get; set; }
     
         public virtual ImportSource ImportSource { get; set; }
     }

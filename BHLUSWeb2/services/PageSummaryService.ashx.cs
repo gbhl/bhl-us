@@ -1,17 +1,12 @@
-using System;
-using System.Data;
-using System.Web;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Web.Script.Serialization;
-using System.Net;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -22,7 +17,6 @@ namespace MOBOT.BHL.Web2.Services
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     public class PageSummaryService1 : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
             String response;
@@ -180,7 +174,7 @@ namespace MOBOT.BHL.Web2.Services
                 int itemID;
                 if (Int32.TryParse(itemIDString, out itemID))
                 {
-                    CustomGenericList<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
+                    List<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
 
                     // Serialize only the information we need
                     List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();

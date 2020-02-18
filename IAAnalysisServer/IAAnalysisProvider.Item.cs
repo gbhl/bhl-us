@@ -1,7 +1,7 @@
-using System;
-using CustomDataAccess;
 using MOBOT.IAAnalysis.DAL;
 using MOBOT.IAAnalysis.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.IAAnalysis.Server
 {
@@ -32,7 +32,7 @@ namespace MOBOT.IAAnalysis.Server
             return (new ItemDAL().ItemSelectAuto(null, null, itemID));
         }
 
-        public CustomGenericList<Item> ItemSelectForXMLDownload()
+        public List<Item> ItemSelectForXMLDownload()
         {
             return (new ItemDAL().ItemSelectForXMLDownload(null, null));
         }

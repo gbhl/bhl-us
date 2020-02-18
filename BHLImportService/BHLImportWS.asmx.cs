@@ -1,10 +1,8 @@
-using System;
-using System.Web.Services;
-using System.ComponentModel;
-using Config = System.Configuration;
-using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
 using MOBOT.BHLImport.Server;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Web.Services;
 
 namespace MOBOT.BHLImport.WebService
 {
@@ -20,89 +18,83 @@ namespace MOBOT.BHLImport.WebService
         #region Dashboard methods
 
         [WebMethod]
-        public CustomGenericList<IAItem> IAItemSelectPendingApproval(int ageInDays)
+        public List<IAItem> IAItemSelectPendingApproval(int ageInDays)
         {
-            return (new BHLImport.Server.BHLImportProvider().IAItemSelectPendingApproval(ageInDays));
+            return (new BHLImportProvider().IAItemSelectPendingApproval(ageInDays));
         }
 
         [WebMethod]
-        public CustomGenericList<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(int numLogs)
+        public List<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(int numLogs)
         {
-            return (new BHLImport.Server.BHLImportProvider().BotanicusHarvestLogSelectRecent(numLogs));
+            return (new BHLImportProvider().BotanicusHarvestLogSelectRecent(numLogs));
         }
 
         [WebMethod]
-        public CustomGenericList<IAItemError> IAItemErrorSelectRecent(int numErrors)
+        public List<IAItemError> IAItemErrorSelectRecent(int numErrors)
         {
-            return (new BHLImport.Server.BHLImportProvider().IAItemErrorSelectRecent(numErrors));
+            return (new BHLImportProvider().IAItemErrorSelectRecent(numErrors));
         }
 
         [WebMethod]
-        public CustomGenericList<ImportError> ImportErrorSelectRecent(int numErrors)
+        public List<ImportError> ImportErrorSelectRecent(int numErrors)
         {
-            return (new BHLImport.Server.BHLImportProvider().ImportErrorSelectRecent(numErrors));
-        }
-
-        [WebMethod]
-        public CustomGenericList<ImportLog> ImportLogSelectRecent(int numLogs)
-        {
-            return (new BHLImport.Server.BHLImportProvider().ImportLogSelectRecent(numLogs));
+            return (new BHLImportProvider().ImportErrorSelectRecent(numErrors));
         }
 
         [WebMethod]
         public string[] IAItemQueueForDownload(string iaIdentifier, string localFileFolder)
         {
-            return (new BHLImport.Server.BHLImportProvider().IAItemQueueForDownload(iaIdentifier, localFileFolder));
+            return (new BHLImportProvider().IAItemQueueForDownload(iaIdentifier, localFileFolder));
         }
 
         [WebMethod]
-        public CustomGenericList<IAItemStatus> IAItemStatusSelectAll()
+        public List<IAItemStatus> IAItemStatusSelectAll()
         {
-            return new BHLImport.Server.BHLImportProvider().IAItemStatusSelectAll();
+            return new BHLImportProvider().IAItemStatusSelectAll();
         }
 
         [WebMethod]
-        public CustomGenericList<IAItem> IAItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber,
+        public List<IAItem> IAItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
-            return new BHLImport.Server.BHLImportProvider().IAItemSelectByStatus(itemStatusId, numberOfRows, pageNumber, 
+            return new BHLImportProvider().IAItemSelectByStatus(itemStatusId, numberOfRows, pageNumber, 
                 sortColumn, sortDirection);
         }
 
         [WebMethod]
         public string[] IAItemUpdateStatus(int itemId, int itemStatusId)
         {
-            return new BHLImport.Server.BHLImportProvider().IAItemUpdateStatus(itemId, itemStatusId);
+            return new BHLImportProvider().IAItemUpdateStatus(itemId, itemStatusId);
         }
 
         [WebMethod]
-        public CustomGenericList<BSItemStatus> BSItemStatusSelectAll()
+        public List<BSItemStatus> BSItemStatusSelectAll()
         {
-            return new BHLImport.Server.BHLImportProvider().BSItemStatusSelectAll();
+            return new BHLImportProvider().BSItemStatusSelectAll();
         }
 
         [WebMethod]
-        public CustomGenericList<BSItem> BSItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber,
+        public List<BSItem> BSItemSelectByStatus(int itemStatusId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
-            return new BHLImport.Server.BHLImportProvider().BSItemSelectByStatus(itemStatusId, numberOfRows, pageNumber,
+            return new BHLImportProvider().BSItemSelectByStatus(itemStatusId, numberOfRows, pageNumber,
                 sortColumn, sortDirection);
         }
 
         [WebMethod]
         public string[] BSItemUpdateStatus(int itemId, int itemStatusId)
         {
-            return new BHLImport.Server.BHLImportProvider().BSItemUpdateStatus(itemId, itemStatusId);
+            return new BHLImportProvider().BSItemUpdateStatus(itemId, itemStatusId);
         }
 
         [WebMethod]
-        public CustomGenericList<BSSegment> BSSegmentSelectByItem(int itemId)
+        public List<BSSegment> BSSegmentSelectByItem(int itemId)
         {
-            return new BHLImport.Server.BHLImportProvider().BSSegmentSelectByItem(itemId);
+            return new BHLImportProvider().BSSegmentSelectByItem(itemId);
         }
 
         [WebMethod]
-        public CustomGenericList<PageFlickrTag> PageFlickrTagSelectForPageID(int pageID)
+        public List<PageFlickrTag> PageFlickrTagSelectForPageID(int pageID)
         {
             return new BHLImportProvider().PageFlickrTagSelectForPageID(pageID);
         }
@@ -114,7 +106,7 @@ namespace MOBOT.BHLImport.WebService
         }
 
         [WebMethod]
-        public CustomGenericList<PageFlickrNote> PageFlickrNoteSelectForPageID(int pageID)
+        public List<PageFlickrNote> PageFlickrNoteSelectForPageID(int pageID)
         {
             return new BHLImportProvider().PageFlickrNoteSelectForPageID(pageID);
         }
@@ -124,7 +116,6 @@ namespace MOBOT.BHLImport.WebService
         {
             new BHLImportProvider().PageFlickrNoteUpdateForPageID(pageID, notes);
         }
-
 
         #endregion Dashboard methods
     }

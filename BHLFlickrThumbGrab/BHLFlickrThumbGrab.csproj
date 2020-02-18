@@ -109,9 +109,6 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.FindItItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Institution.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -119,6 +116,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Page.datasource">
@@ -136,13 +136,19 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.PDF.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.RISCitation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Segment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Title.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.TitleBibTeX.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.TitleEndNote.datasource">
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Title_Identifier.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLFlickrThumbGrab.BHLWS.Vault.datasource">

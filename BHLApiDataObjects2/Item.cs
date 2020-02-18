@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects2
@@ -207,22 +208,22 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _ItemThumbUrl = value; }
         }
 
-        CustomGenericList<Page> _Pages = null;
-        public CustomGenericList<Page> Pages
+        List<Page> _Pages = null;
+        public List<Page> Pages
         {
             get { return _Pages; }
             set { _Pages = value; }
         }
 
-        CustomGenericList<Part> _Parts = null;
-        public CustomGenericList<Part> Parts
+        List<Part> _Parts = null;
+        public List<Part> Parts
         {
             get { return _Parts; }
             set { _Parts = value; }
         }
 
-        CustomGenericList<Collection> _Collections = null;
-        public CustomGenericList<Collection> Collections
+        List<Collection> _Collections = null;
+        public List<Collection> Collections
         {
             get { return _Collections; }
             set { _Collections = value; }

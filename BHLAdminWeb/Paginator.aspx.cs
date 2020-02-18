@@ -1,4 +1,3 @@
-using CustomDataAccess;
 using FlickrUtility;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
@@ -15,7 +14,7 @@ using Page = MOBOT.BHL.DataObjects.Page;
 
 namespace MOBOT.BHL.AdminWeb
 {
-    public partial class Paginator : System.Web.UI.Page
+	public partial class Paginator : System.Web.UI.Page
 	{
 		private BHLProvider bp = new BHLProvider();
 		private bool _maintainScrollPos = true;
@@ -29,7 +28,7 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void fillItemsDropDown( int titleId )
 		{
-			CustomGenericList<Item> items = bp.ItemSelectByTitleId( titleId );
+			List<Item> items = bp.ItemSelectByTitleId( titleId );
 
             itemDropDownList.DataSource = items;
 			itemDropDownList.DataTextField = "Volume";
@@ -51,7 +50,7 @@ namespace MOBOT.BHL.AdminWeb
 		private void fillPageList( int itemId )
 		{
 			checkPaginationStatus();
-			CustomGenericList<Page> pages = bp.PageMetadataSelectByItemID( itemId );
+			List<Page> pages = bp.PageMetadataSelectByItemID( itemId );
 
 			detailGridView.DataSource = pages;
 			detailGridView.DataBind();
@@ -63,7 +62,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void loadPageTypes()
 		{
-			CustomGenericList<PageType> pageTypes = bp.PageTypeSelectAll();
+			List<PageType> pageTypes = bp.PageTypeSelectAll();
 			pageTypeCombo.DataSource = pageTypes;
 			pageTypeCombo.DataValueField = "PageTypeID";
 			pageTypeCombo.DataTextField = "PageTypeName";

@@ -52,7 +52,7 @@
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
-            <div class="segmentdetails"><h3>Genre</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
+            <div class="segmentdetails"><h3>Type</h3> <p><span itemprop="genre"><%: BhlSegment.GenreName %></span></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
             <div class="segmentdetails"><h3>Date of Publication</h3> <p><span itemprop="datePublished"><%: BhlSegment.Date%></span></p></div>
@@ -89,7 +89,7 @@
                 <div class="segmentdetails"><h3>Contributed by</h3> <p>
                     <%foreach (Institution institution in BhlSegment.ContributorList) {
                         if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {%>
-                            <a target="_blank" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
+                            <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
                         <%}
                         else
                         {%>
@@ -142,7 +142,7 @@
                 </p>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.GenreName)) { %>
-            <div class="segmentdetails"><h3>Genre</h3> <p><%: BhlSegment.GenreName %></p></div>
+            <div class="segmentdetails"><h3>Type</h3> <p><%: BhlSegment.GenreName %></p></div>
             <% } %>
             <% if (!String.IsNullOrEmpty(BhlSegment.Date)) { %>
             <div class="segmentdetails"><h3>Date of Publication</h3> <p><%: BhlSegment.Date%></p></div>
@@ -179,7 +179,7 @@
                 <div class="segmentdetails"><h3>Contributed by</h3> <p>
                     <%foreach (Institution institution in BhlSegment.ContributorList) {
                         if (!string.IsNullOrWhiteSpace(institution.InstitutionUrl)) {%>
-                            <a target="_blank" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
+                            <a target="_blank" rel="noopener noreferrer" class="ExtLinkBrowse" style="line-height:19px" href="<%: institution.InstitutionUrl %>" title="Contributor"><%: institution.InstitutionName %></a>
                         <%}
                         else
                         {%>
@@ -236,7 +236,7 @@
             <% if (!String.IsNullOrEmpty(BhlSegment.RightsStatement)) { %>
             <div class="segmentdetails"><h3>Rights Statement</h3> <p>
                 <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.RightsStatement, "^(https?|ftp|file)://.+$")) {%>
-                    <a target="_blank" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
+                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.RightsStatement%>"><%: BhlSegment.RightsStatement%></a>
                 <% } else {%>
                     <%: BhlSegment.RightsStatement%>
                 <% } %>
@@ -248,7 +248,7 @@
             <% if (!String.IsNullOrEmpty(BhlSegment.LicenseUrl)) { %>
             <div class="segmentdetails"><h3>Rights License URL</h3><p>
                 <%if (System.Text.RegularExpressions.Regex.IsMatch(BhlSegment.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                    <a target="_blank" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
+                    <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.LicenseUrl%>"><%: BhlSegment.LicenseUrl%></a>
                 <% } else {%>
                     <%: BhlSegment.LicenseUrl%>
                 <% } %>
@@ -305,7 +305,7 @@
 
                     <% if (! string.IsNullOrEmpty(BhlSegment.Url))
                     { %>
-                        <a target="_blank" href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />
+                        <a target="_blank" rel="noopener noreferrer" href="<%: BhlSegment.Url %>">View <%: BhlSegment.GenreName%> (External Location)</a> <br />
                     <% } %>
 
                     <% if (! string.IsNullOrEmpty(BhlSegment.DownloadUrl))

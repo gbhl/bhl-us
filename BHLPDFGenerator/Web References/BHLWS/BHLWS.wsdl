@@ -2,19 +2,19 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.mobot.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.mobot.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.mobot.org/">
-      <s:element name="DOIUpdateBatchID">
+      <s:element name="DOIUpdateDOIName">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
             <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
-            <s:element minOccurs="0" maxOccurs="1" name="doiBatchID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="DOIUpdateBatchIDResponse">
+      <s:element name="DOIUpdateDOINameResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="DOIUpdateBatchIDResult" type="tns:DOI" />
+            <s:element minOccurs="0" maxOccurs="1" name="DOIUpdateDOINameResult" type="tns:DOI" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -49,6 +49,22 @@
         </s:complexContent>
       </s:complexType>
       <s:complexType name="CustomObjectBase" abstract="true" />
+      <s:element name="DOIUpdateBatchID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="doiBatchID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DOIUpdateBatchIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DOIUpdateBatchIDResult" type="tns:DOI" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="DOIGetFileContents">
         <s:complexType>
           <s:sequence>
@@ -130,6 +146,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="ShortTitle" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="RareBooks" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="SegmentID" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="GenreName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="WebDisplay" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="FlickrURL" type="s:string" />
             </s:sequence>
@@ -296,6 +313,18 @@
             <s:element minOccurs="1" maxOccurs="1" name="PageCheckForOcrTextResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
+      </s:element>
+      <s:element name="PageTextLogInsertForItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="textSource" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="userID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PageTextLogInsertForItemResponse">
+        <s:complexType />
       </s:element>
       <s:element name="PageFlickrSelectRandom">
         <s:complexType>
@@ -1196,8 +1225,11 @@
               <s:element minOccurs="0" maxOccurs="1" name="TitleVariants" type="tns:ArrayOfTitleVariant" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleLanguages" type="tns:ArrayOfTitleLanguage" />
               <s:element minOccurs="0" maxOccurs="1" name="TitleNotes" type="tns:ArrayOfTitleNote" />
+              <s:element minOccurs="0" maxOccurs="1" name="TitleInstitutions" type="tns:ArrayOfInstitution" />
               <s:element minOccurs="0" maxOccurs="1" name="InstitutionName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="DOIName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1278,6 +1310,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedDate" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationUserID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastModifiedUserID" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" type="s:short" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1310,6 +1343,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Note" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:short" />
               <s:element minOccurs="1" maxOccurs="1" name="RedirectAuthorID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="CreationDate" nillable="true" type="s:dateTime" />
@@ -1468,6 +1502,14 @@
               <s:element minOccurs="1" maxOccurs="1" name="TotalItems" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="FirstPageID" nillable="true" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="HasFlickrImages" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="TextFilename" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PdfFilename" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ImagesFilename" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DjvuFilename" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ScandataFilename" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OcrFolderShare" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1552,6 +1594,7 @@
               <s:element minOccurs="1" maxOccurs="1" name="EntityInstitutionID" nillable="true" type="s:int" />
               <s:element minOccurs="0" maxOccurs="1" name="InstitutionRoleName" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="InstitutionRoleLabel" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -1691,6 +1734,8 @@
               <s:element minOccurs="0" maxOccurs="1" name="Authors" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="IsPrimary" type="s:short" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
               <s:element minOccurs="0" maxOccurs="1" name="AuthorList" type="tns:ArrayOfSegmentAuthor" />
               <s:element minOccurs="0" maxOccurs="1" name="KeywordList" type="tns:ArrayOfSegmentKeyword" />
               <s:element minOccurs="0" maxOccurs="1" name="IdentifierList" type="tns:ArrayOfSegmentIdentifier" />
@@ -2167,6 +2212,8 @@
           <s:element minOccurs="1" maxOccurs="1" name="Pages" type="s:int" />
           <s:element minOccurs="0" maxOccurs="1" name="PageRange" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="Keywords" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
         </s:sequence>
       </s:complexType>
       <s:element name="TitleBibTeXSelectAllItemCitations">
@@ -2226,6 +2273,8 @@
           <s:element minOccurs="0" maxOccurs="1" name="Abstract" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="StartPage" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="EndPage" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasLocalContent" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="HasExternalContent" type="s:boolean" />
         </s:sequence>
       </s:complexType>
       <s:element name="Title_IdentifierSelectByTitleID">
@@ -2267,6 +2316,20 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="ItemSelectByTitleIDResult" type="tns:ArrayOfItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ItemSelectFilenames">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ItemSelectFilenamesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ItemSelectFilenamesResult" type="tns:Item" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -2831,24 +2894,14 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="DOIUpdateDOIName">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="doiID" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="doiStatusId" type="s:int" />
-            <s:element minOccurs="0" maxOccurs="1" name="doiName" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="DOIUpdateDOINameResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="DOIUpdateDOINameResult" type="tns:DOI" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="DOIUpdateDOINameSoapIn">
+    <wsdl:part name="parameters" element="tns:DOIUpdateDOIName" />
+  </wsdl:message>
+  <wsdl:message name="DOIUpdateDOINameSoapOut">
+    <wsdl:part name="parameters" element="tns:DOIUpdateDOINameResponse" />
+  </wsdl:message>
   <wsdl:message name="DOIUpdateBatchIDSoapIn">
     <wsdl:part name="parameters" element="tns:DOIUpdateBatchID" />
   </wsdl:message>
@@ -2938,6 +2991,12 @@
   </wsdl:message>
   <wsdl:message name="PageCheckForOcrTextSoapOut">
     <wsdl:part name="parameters" element="tns:PageCheckForOcrTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="PageTextLogInsertForItemSoapIn">
+    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItem" />
+  </wsdl:message>
+  <wsdl:message name="PageTextLogInsertForItemSoapOut">
+    <wsdl:part name="parameters" element="tns:PageTextLogInsertForItemResponse" />
   </wsdl:message>
   <wsdl:message name="PageFlickrSelectRandomSoapIn">
     <wsdl:part name="parameters" element="tns:PageFlickrSelectRandom" />
@@ -3215,6 +3274,12 @@
   <wsdl:message name="ItemSelectByTitleIDSoapOut">
     <wsdl:part name="parameters" element="tns:ItemSelectByTitleIDResponse" />
   </wsdl:message>
+  <wsdl:message name="ItemSelectFilenamesSoapIn">
+    <wsdl:part name="parameters" element="tns:ItemSelectFilenames" />
+  </wsdl:message>
+  <wsdl:message name="ItemSelectFilenamesSoapOut">
+    <wsdl:part name="parameters" element="tns:ItemSelectFilenamesResponse" />
+  </wsdl:message>
   <wsdl:message name="ItemUpdateStatusSoapIn">
     <wsdl:part name="parameters" element="tns:ItemUpdateStatus" />
   </wsdl:message>
@@ -3443,13 +3508,11 @@
   <wsdl:message name="DOIUpdateStatusSoapOut">
     <wsdl:part name="parameters" element="tns:DOIUpdateStatusResponse" />
   </wsdl:message>
-  <wsdl:message name="DOIUpdateDOINameSoapIn">
-    <wsdl:part name="parameters" element="tns:DOIUpdateDOIName" />
-  </wsdl:message>
-  <wsdl:message name="DOIUpdateDOINameSoapOut">
-    <wsdl:part name="parameters" element="tns:DOIUpdateDOINameResponse" />
-  </wsdl:message>
   <wsdl:portType name="BHLWSSoap">
+    <wsdl:operation name="DOIUpdateDOIName">
+      <wsdl:input message="tns:DOIUpdateDOINameSoapIn" />
+      <wsdl:output message="tns:DOIUpdateDOINameSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateBatchID">
       <wsdl:input message="tns:DOIUpdateBatchIDSoapIn" />
       <wsdl:output message="tns:DOIUpdateBatchIDSoapOut" />
@@ -3509,6 +3572,10 @@
     <wsdl:operation name="PageCheckForOcrText">
       <wsdl:input message="tns:PageCheckForOcrTextSoapIn" />
       <wsdl:output message="tns:PageCheckForOcrTextSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <wsdl:input message="tns:PageTextLogInsertForItemSoapIn" />
+      <wsdl:output message="tns:PageTextLogInsertForItemSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="PageFlickrSelectRandom">
       <wsdl:input message="tns:PageFlickrSelectRandomSoapIn" />
@@ -3694,6 +3761,10 @@
       <wsdl:input message="tns:ItemSelectByTitleIDSoapIn" />
       <wsdl:output message="tns:ItemSelectByTitleIDSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="ItemSelectFilenames">
+      <wsdl:input message="tns:ItemSelectFilenamesSoapIn" />
+      <wsdl:output message="tns:ItemSelectFilenamesSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ItemUpdateStatus">
       <wsdl:input message="tns:ItemUpdateStatusSoapIn" />
       <wsdl:output message="tns:ItemUpdateStatusSoapOut" />
@@ -3846,13 +3917,18 @@
       <wsdl:input message="tns:DOIUpdateStatusSoapIn" />
       <wsdl:output message="tns:DOIUpdateStatusSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="DOIUpdateDOIName">
-      <wsdl:input message="tns:DOIUpdateDOINameSoapIn" />
-      <wsdl:output message="tns:DOIUpdateDOINameSoapOut" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BHLWSSoap" type="tns:BHLWSSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DOIUpdateDOIName">
+      <soap:operation soapAction="http://www.mobot.org/DOIUpdateDOIName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateBatchID">
       <soap:operation soapAction="http://www.mobot.org/DOIUpdateBatchID" style="document" />
       <wsdl:input>
@@ -3981,6 +4057,15 @@
     </wsdl:operation>
     <wsdl:operation name="PageCheckForOcrText">
       <soap:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <soap:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -4402,6 +4487,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ItemSelectFilenames">
+      <soap:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemUpdateStatus">
       <soap:operation soapAction="http://www.mobot.org/ItemUpdateStatus" style="document" />
       <wsdl:input>
@@ -4744,18 +4838,18 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="DOIUpdateDOIName">
-      <soap:operation soapAction="http://www.mobot.org/DOIUpdateDOIName" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="BHLWSSoap12" type="tns:BHLWSSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DOIUpdateDOIName">
+      <soap12:operation soapAction="http://www.mobot.org/DOIUpdateDOIName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="DOIUpdateBatchID">
       <soap12:operation soapAction="http://www.mobot.org/DOIUpdateBatchID" style="document" />
       <wsdl:input>
@@ -4884,6 +4978,15 @@
     </wsdl:operation>
     <wsdl:operation name="PageCheckForOcrText">
       <soap12:operation soapAction="http://www.mobot.org/PageCheckForOcrText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageTextLogInsertForItem">
+      <soap12:operation soapAction="http://www.mobot.org/PageTextLogInsertForItem" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -5305,6 +5408,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="ItemSelectFilenames">
+      <soap12:operation soapAction="http://www.mobot.org/ItemSelectFilenames" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ItemUpdateStatus">
       <soap12:operation soapAction="http://www.mobot.org/ItemUpdateStatus" style="document" />
       <wsdl:input>
@@ -5640,15 +5752,6 @@
     </wsdl:operation>
     <wsdl:operation name="DOIUpdateStatus">
       <soap12:operation soapAction="http://www.mobot.org/DOIUpdateStatus" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DOIUpdateDOIName">
-      <soap12:operation soapAction="http://www.mobot.org/DOIUpdateDOIName" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

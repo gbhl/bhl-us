@@ -18,6 +18,7 @@ namespace BHL.SearchIndexer
             issn = new List<string>();
             keywords = new List<string>();
             oclc = new List<string>();
+            notes = new List<string>();
             searchAuthors = new List<string>();
             variants = new List<string>();
             volumes = new List<Volume>();
@@ -42,6 +43,7 @@ namespace BHL.SearchIndexer
         public string language { get; set; }
         public string materialType { get; set; }
         public List<string> oclc { get; set; }
+        public List<string> notes { get; set; }
         public string pageRange { get; set; }
         public string publicationPlace { get; set; }
         public string publisher { get; set; }

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2.Services
 {
@@ -96,7 +95,7 @@ namespace MOBOT.BHL.Web2.Services
             string searchLastName, string searchVolume, string searchEdition, int searchYear, string searchSubject, 
             int searchCollection, string searchIssue, string searchStartPage, string searchArticleTitle)
         {
-            CustomGenericList<SearchBookResult> searchResult = null;
+            List<SearchBookResult> searchResult = null;
 
             try
             {
@@ -164,7 +163,7 @@ namespace MOBOT.BHL.Web2.Services
         private void PerformSegmentDownload(HttpContext context, string searchCat, string searchTerm, string searchContainerTitle,
             string searchLastName, string searchYear)
         {
-            CustomGenericList<Segment> searchResult = null;
+            List<Segment> searchResult = null;
 
             try
             {
@@ -224,7 +223,7 @@ namespace MOBOT.BHL.Web2.Services
         /// </summary>
         /// <param name="searchResult"></param>
         /// <returns></returns>
-        private void GetBookCSVString(HttpContext context, CustomGenericList<SearchBookResult> searchResult)
+        private void GetBookCSVString(HttpContext context, List<SearchBookResult> searchResult)
         {
             StringBuilder csvString = new StringBuilder();
 
@@ -261,7 +260,7 @@ namespace MOBOT.BHL.Web2.Services
         /// </summary>
         /// <param name="searchResult"></param>
         /// <returns></returns>
-        private void GetSegmentCSVString(HttpContext context, CustomGenericList<Segment> searchResult)
+        private void GetSegmentCSVString(HttpContext context, List<Segment> searchResult)
         {
             StringBuilder csvString = new StringBuilder();
 

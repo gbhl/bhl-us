@@ -1,11 +1,9 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -35,7 +33,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
         private void DoDownload(HttpContext context, string paginationStatusId, string startDate, string endDate)
         {
-            CustomGenericList<Item> searchResult = null;
+            List<Item> searchResult = null;
 
             try
             {
@@ -79,7 +77,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// </summary>
         /// <param name="searchResult"></param>
         /// <returns></returns>
-        private void GetReportCSVString(HttpContext context, CustomGenericList<Item> searchResult)
+        private void GetReportCSVString(HttpContext context, List<Item> searchResult)
         {
             StringBuilder csvString = new StringBuilder();
 

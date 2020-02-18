@@ -1,5 +1,4 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using MOBOT.BHL.Web.Utilities;
 using System;
@@ -69,8 +68,8 @@ namespace MOBOT.BHL.AdminWeb
                 // New author
                 author.IsActive = 1;
                 author.AuthorTypeID = 1;
-                author.AuthorNames = new CustomGenericList<AuthorName>();
-                author.AuthorIdentifiers = new CustomGenericList<AuthorIdentifier>();
+                author.AuthorNames = new List<AuthorName>();
+                author.AuthorIdentifiers = new List<AuthorIdentifier>();
                 author.IsNew = true;
             }
             else

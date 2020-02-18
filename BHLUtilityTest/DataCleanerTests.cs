@@ -7,6 +7,122 @@ namespace BHLUtilityTest
     public class DataCleanerTests
     {
         [TestMethod]
+        public void ValidateItemYearTest001()
+        {
+            bool expected = true;
+            bool actual = DataCleaner.ValidateItemYear("1900");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest002()
+        {
+            bool expected = true;
+            bool actual = DataCleaner.ValidateItemYear("1900-1901");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest003()
+        {
+            bool expected = true;
+            bool actual = DataCleaner.ValidateItemYear("1900,1901");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest004()
+        {
+            bool expected = true;
+            bool actual = DataCleaner.ValidateItemYear("1900/1901");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest005()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("[1900]");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest006()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("19XX");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest007()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("19??");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest008()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("2001:Jan-Sept.");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest009()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("April 2001");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ValidateItemYearTest010()
+        {
+            bool expected = false;
+            bool actual = DataCleaner.ValidateItemYear("c1901");
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ParseYearStringTest001()
+        {
+            RunParseYearStringTest(
+                year: "1901",
+                startYear: "1901",
+                endYear: "");
+        }
+
+        [TestMethod]
+        public void ParseYearStringTest002()
+        {
+            RunParseYearStringTest(
+                year: "1901-1902",
+                startYear: "1901",
+                endYear: "1902");
+        }
+
+        [TestMethod]
+        public void ParseYearStringTest003()
+        {
+            RunParseYearStringTest(
+                year: "1901,1902",
+                startYear: "1901",
+                endYear: "1902");
+        }
+
+        [TestMethod]
+        public void ParseYearStringTest004()
+        {
+            RunParseYearStringTest(
+                year: "1901/1902",
+                startYear: "1901",
+                endYear: "1902");
+        }
+
+        [TestMethod]
         public void ParseVolumeStringTest001()
         {
             RunParseVolumeStringTest(
@@ -1187,6 +1303,16 @@ namespace BHLUtilityTest
             Assert.AreEqual(expected, actual);
         }
 
+        private void RunParseYearStringTest(string year, string startYear, string endYear)
+        {
+            YearData y = DataCleaner.ParseYearString(year);
+
+            string expected = ConvertYearDataToString(year, startYear, endYear);
+            string actual = ConvertYearDataToString(y.Year, y.StartYear, y.EndYear);
+
+            Assert.AreEqual(expected, actual);
+        }
+
         private string ConvertVolumeDataToString(string volumeString, string startVolume,
             string endVolume, string startYear, string endYear, string startSeries,
             string endSeries, string startPart, string endPart, string startNumber,
@@ -1209,6 +1335,15 @@ namespace BHLUtilityTest
                 volumeString, startVolume, endVolume, startYear, endYear, startSeries,
                 endSeries, startPart, endPart, startNumber, endNumber, startIssue,
                 endIssue);
+        }
+
+        private string ConvertYearDataToString(string year, string startYear, string endYear)
+        {
+            return string.Format(
+                "Year: {0}\n" +
+                "SYr: {1}\n" +
+                "EYr: {2}\n",
+                year, startYear, endYear);
         }
 
         #endregion ParseVolumeStringTest supporting methods

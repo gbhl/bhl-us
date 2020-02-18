@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -22,7 +23,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<int> helper = new CustomSqlHelper<int>())
                 {
-                    CustomGenericList<int> list = helper.ExecuteReader(command);
+                    List<int> list = helper.ExecuteReader(command);
 
                     if (list.Count == 0)
                     {
@@ -53,7 +54,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             {
                 using (CustomSqlHelper<int> helper = new CustomSqlHelper<int>())
                 {
-                    CustomGenericList<int> list = helper.ExecuteReader(command);
+                    List<int> list = helper.ExecuteReader(command);
 
                     if (list.Count == 0)
                     {
@@ -67,7 +68,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<Name> NameListActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Name> NameListActive(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int startRow, int batchSize)
         {
             SqlConnection connection = sqlConnection;
@@ -90,7 +91,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<Name> NameListActiveBetweenDates(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Name> NameListActiveBetweenDates(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int startRow, int batchSize, DateTime startDate, DateTime endDate)
         {
             SqlConnection connection = sqlConnection;
@@ -114,7 +115,7 @@ namespace MOBOT.BHL.API.BHLApiDAL
             }
         }
 
-        public CustomGenericList<PageDetail> PageSelectByNameBankID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<PageDetail> PageSelectByNameBankID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string nameBankID)
         {
             SqlConnection connection = sqlConnection;

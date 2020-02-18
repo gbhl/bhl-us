@@ -1,16 +1,10 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -21,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( !IsPostBack )
 			{
 				BHLProvider bp = new BHLProvider();
-				CustomGenericList<NoteType> noteTypes = bp.NoteTypeSelectAll();
+				List<NoteType> noteTypes = bp.NoteTypeSelectAll();
 
                 NoteType emptyType = new NoteType();
 				noteTypes.Insert(0, emptyType);

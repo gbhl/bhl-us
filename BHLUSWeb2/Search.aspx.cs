@@ -1,5 +1,4 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
@@ -48,9 +47,6 @@ namespace MOBOT.BHL.Web2
 
         protected void Page_Load(object sender, EventArgs e)
         {
-          //  ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, "/Scripts/ResizeBrowseUtils.js");
-          //  ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onload", "ResizeBrowseDivs();ResizeContentPanel('browseContentPanel', 258);");
-          //  ControlGenerator.AddAttributesAndPreserveExisting(main.Body, "onresize", "ResizeBrowseDivs();ResizeContentPanel('browseContentPanel', 258);");
             sortBy = string.Empty;
             string searchTerm = string.Empty;
             string searchCat = string.Empty;
@@ -333,7 +329,7 @@ namespace MOBOT.BHL.Web2
 
             if (authors.Visible)
             {
-                CustomGenericList<Author> authorsList = null;
+                List<Author> authorsList = null;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     authorsList = bhlProvider.SearchAuthor(searchTerm, authorReturnCount);
@@ -376,7 +372,7 @@ namespace MOBOT.BHL.Web2
                     if (collection != null) canContainItems = collection.CanContainItems;
                 }
 
-                CustomGenericList<SearchBookResult> books = null;
+                List<SearchBookResult> books = null;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     if (searchCat.Length > 0)
@@ -463,7 +459,7 @@ namespace MOBOT.BHL.Web2
             }
             if (subjects.Visible)
             {
-                CustomGenericList<TitleKeyword> keywords = null;
+                List<TitleKeyword> keywords = null;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     keywords = bhlProvider.SearchTitleKeyword(searchTerm, searchLang, subjectReturnCount);
@@ -503,7 +499,7 @@ namespace MOBOT.BHL.Web2
                 searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
                 searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
                 //do section search
-                CustomGenericList<Segment> segments = null;
+                List<Segment> segments = null;
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["EnableFullTextSearch"]))
                 {
                     if (searchCat.Length > 0)
@@ -563,7 +559,7 @@ namespace MOBOT.BHL.Web2
                 searchYearInt = (searchYear == string.Empty ? null : (int?)Convert.ToInt32(searchYear));
                 searchCollectionInt = (searchCollection == string.Empty ? null : (int?)Convert.ToInt32(searchCollection));
 
-                CustomGenericList<SearchAnnotationResult> annotationsList = bhlProvider.SearchAnnotation(searchAnnotation, searchTerm,
+                List<SearchAnnotationResult> annotationsList = bhlProvider.SearchAnnotation(searchAnnotation, searchTerm,
                     searchLastName, searchVolume, searchEdition, searchYearInt, searchCollectionInt, 1, 10000);
                 if (annotations != null)
                 {
@@ -589,7 +585,7 @@ namespace MOBOT.BHL.Web2
 
             if (annotationConcepts.Visible)
             {
-                CustomGenericList<AnnotationConcept> concepts = bhlProvider.AnnotationConceptSelectByConceptText(searchAnnotation, 1);
+                List<AnnotationConcept> concepts = bhlProvider.AnnotationConceptSelectByConceptText(searchAnnotation, 1);
                 if (concepts != null)
                 {
                     if ((concepts.Count == maxDefaultResults) && (annotationConceptMax == "0"))
@@ -614,7 +610,7 @@ namespace MOBOT.BHL.Web2
 
             if (annotationSubjects.Visible)
             {
-                CustomGenericList<AnnotationSubject> subjectsList = bhlProvider.AnnotationSubjectSelectBySubjectText(searchAnnotation, 1);
+                List<AnnotationSubject> subjectsList = bhlProvider.AnnotationSubjectSelectBySubjectText(searchAnnotation, 1);
                 if (subjectsList != null)
                 {
                     if ((subjectsList.Count == maxDefaultResults) && (annotationConceptMax == "0"))
@@ -636,7 +632,6 @@ namespace MOBOT.BHL.Web2
                 annotationSubjectRepeater.DataBind();
                 annoSubjectCount = annotationSubjectRepeater.Items.Count.ToString();
             }
-
         }
 
 
@@ -662,8 +657,7 @@ namespace MOBOT.BHL.Web2
             }
             else{
                 return string.Concat(number +" <span class=\"highlight\">" + plural + "</span>");
-            }
-                
+            }                
         }
     }
 }

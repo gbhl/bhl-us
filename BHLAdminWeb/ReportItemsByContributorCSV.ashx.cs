@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Text;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -22,7 +19,7 @@ namespace MOBOT.BHL.AdminWeb
 
             BHLProvider provider = new BHLProvider();
             Institution institution = provider.InstitutionSelectAuto(institutionCode);
-            CustomGenericList<Item> items = provider.ItemSelectByInstitution(institutionCode, 1000000, "Date");
+            List<Item> items = provider.ItemSelectByInstitution(institutionCode, 1000000, "Date");
 
             this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProvider" + institutionCode + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 

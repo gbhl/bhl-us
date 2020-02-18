@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
@@ -32,15 +30,15 @@ namespace MOBOT.BHL.Web2
                 sortBaseURL = string.Format("/browse/year/{0}/{1}", StartDate, EndDate);
             }
 
-            main.Page.Title = string.Format("Browsing Titles between {0} and {1} - Biodiversity Heritage Library", StartDate, EndDate);            
+            main.Page.Title = string.Format("Browsing Titles between {0} and {1} - Biodiversity Heritage Library", StartDate, EndDate);
 
             // Get the book data
-            CustomGenericList<SearchBookResult> searchBookResultList = new CustomGenericList<SearchBookResult>();
+            List<SearchBookResult> searchBookResultList = new List<SearchBookResult>();
 
             String cacheKey = "YearBookBrowse" + StartDate + EndDate;
             if (Cache[cacheKey] != null)
             {
-                searchBookResultList = (CustomGenericList<SearchBookResult>)Cache[cacheKey];
+                searchBookResultList = (List<SearchBookResult>)Cache[cacheKey];
             }
             else
             {
@@ -56,12 +54,12 @@ namespace MOBOT.BHL.Web2
             BookBrowse.Data = searchBookResultList;
 
             // Get the segment data
-            CustomGenericList<Segment> segmentResultList = new CustomGenericList<Segment>();
+            List<Segment> segmentResultList = new List<Segment>();
 
             cacheKey = "YearSegmentBrowse" + StartDate + EndDate;
             if (Cache[cacheKey] != null)
             {
-                segmentResultList = (CustomGenericList<Segment>)Cache[cacheKey];
+                segmentResultList = (List<Segment>)Cache[cacheKey];
             }
             else
             {

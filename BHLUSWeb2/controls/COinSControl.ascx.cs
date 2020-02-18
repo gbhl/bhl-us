@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.Server;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 using System.Web.UI;
-using MOBOT.BHL.Server;
 using Data = MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
@@ -42,7 +42,7 @@ namespace MOBOT.BHL.Web2
             if (titleId != 0)
             {
                 coins = provider.ItemCOinSSelectByTitleId(titleId);
-                CustomGenericList<Data.DOI> doi = provider.DOISelectValidForTitle(titleId);
+                List<Data.DOI> doi = provider.DOISelectValidForTitle(titleId);
                 if (doi != null && coins != null)
                 {
                     if (doi.Count > 0) coins.Doi = doi[0].DOIName;
@@ -108,34 +108,6 @@ namespace MOBOT.BHL.Web2
                         }
 
                         break;
-                    /*
-                    case "journal":   // journal
-                        output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:journal"));
-                        output.Append("&amp;rft.genre=journal");
-                        if (coins.Rft_title != String.Empty) output.Append("&amp;rft.jtitle=" + Server.UrlEncode(coins.Rft_title));
-                        if (coins.Rft_stitle != String.Empty) output.Append("&amp;rft.stitle=" + Server.UrlEncode(coins.Rft_stitle));
-                        if (coins.Rft_volume != String.Empty && this.ItemID != 0) output.Append("&amp;rft.volume=" + Server.UrlEncode(coins.Rft_volume));
-                        if (coins.Rft_coden != String.Empty) output.Append("&amp;rft.coden=" + Server.UrlEncode(coins.Rft_coden));
-
-                        if (coins.Rft_issn != String.Empty) output.Append("&amp;rft.issn=" + Server.UrlEncode(coins.Rft_issn));
-                        if (coins.Rft_isbn != String.Empty) output.Append("&amp;rft.isbn=" + Server.UrlEncode(coins.Rft_isbn));
-                        if (coins.Rft_aufirst != String.Empty) output.Append("&amp;rft.aufirst=" + Server.UrlEncode(coins.Rft_aufirst));
-                        if (coins.Rft_aulast != String.Empty) output.Append("&amp;rft.aulast=" + Server.UrlEncode(coins.Rft_aulast));
-                        if (coins.Rft_aucorp != String.Empty) output.Append("&amp;rft.aucorp=" + Server.UrlEncode(coins.Rft_aucorp));
-                        if (coins.Rft_au_BOOK != String.Empty)
-                        {
-                            String[] authors = coins.Rft_au_BOOK.Split('|');
-                            foreach (String author in authors)
-                            {
-                                if (author != String.Empty) output.Append("&amp;rft.au=" + Server.UrlEncode(author));
-                            }
-                        }
-
-                        // rft.pages does not apply to journals
-                        //if ((coins.Rft_tpages ?? 0) != 0) output.Append("&amp;rft.pages=" + coins.Rft_tpages.ToString());
-
-                        break;
-                    */
                     default:    // dublin core
                         output.Append("&amp;rft_val_fmt=" + Server.UrlEncode("info:ofi/fmt:kev:mtx:dc"));
                         output.Append("&amp;rft.source=" + Server.UrlEncode("Biodiversity Heritage Library"));
@@ -206,7 +178,7 @@ namespace MOBOT.BHL.Web2
 
             // Get the data
             coins = provider.SegmentCOinSSelectBySegmentId(segmentId);
-            CustomGenericList<Data.DOI> doi = provider.DOISelectValidForSegment(segmentId);
+            List<Data.DOI> doi = provider.DOISelectValidForSegment(segmentId);
             if (doi != null && coins != null) 
             {
                 if (doi.Count > 0) coins.Doi = doi[0].DOIName;

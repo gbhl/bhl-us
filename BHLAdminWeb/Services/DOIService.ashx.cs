@@ -1,12 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Text;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -40,7 +38,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             sortOrder = String.IsNullOrEmpty(sortOrder) ? "desc" : sortOrder;
             sortOrder = (!(sortOrder.ToLower() == "asc") && !(sortOrder.ToLower() == "desc")) ? "desc" : sortOrder;
 
-            CustomGenericList<DOI> searchResult = this.DOISelectByStatus(
+            List<DOI> searchResult = this.DOISelectByStatus(
                 Convert.ToInt32(doiStatusId), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
 
             context.Response.ContentType = "text/xml";
@@ -56,10 +54,10 @@ namespace MOBOT.BHL.AdminWeb.Services
         /// <param name="sortColumn"></param>
         /// <param name="sortOrder"></param>
         /// <returns></returns>
-        private CustomGenericList<DOI> DOISelectByStatus(
+        private List<DOI> DOISelectByStatus(
             int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
-            CustomGenericList<DOI> items = new CustomGenericList<DOI>();
+            List<DOI> items = new List<DOI>();
 
             try
             {
@@ -74,7 +72,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             return items;
         }
 
-        private string GetXmlResponse(CustomGenericList<DOI> searchResult, int pageNum, int numRows)
+        private string GetXmlResponse(List<DOI> searchResult, int pageNum, int numRows)
         {
             StringBuilder response = new StringBuilder(); ;
 

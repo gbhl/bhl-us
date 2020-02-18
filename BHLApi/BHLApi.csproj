@@ -88,10 +88,6 @@
       <Project>{7E1631E8-F28A-4F9E-97E4-F8A69522D9DD}</Project>
       <Name>BHLWebUtilities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
-      <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
-      <Name>CustomDataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NameServiceDAL\BHLApiDAL.csproj">
       <Project>{DB3BF959-1D08-441B-8622-F4E066DE91DC}</Project>
       <Name>BHLApiDAL</Name>

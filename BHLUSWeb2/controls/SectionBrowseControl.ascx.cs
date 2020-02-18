@@ -1,18 +1,13 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.Web2
 {
     public partial class SectionBrowseControl : System.Web.UI.UserControl
     {
-        CustomGenericList<Segment> _data = null;
-        public CustomGenericList<Segment> Data
+        List<Segment> _data = null;
+        public List<Segment> Data
         {
             get { return _data; }
             set { _data = value; }

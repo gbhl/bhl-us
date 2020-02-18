@@ -1,12 +1,9 @@
 ﻿using BHL.TextImportUtility;
-using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace MOBOT.BHL.AdminWeb.MVCServices
 {
@@ -95,15 +92,15 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         /// Provide the list of institutions (read from the DB) to be used during the text import process
         /// </summary>
         /// <returns></returns>
-        public CustomGenericList<Institution> InstitutionList()
+        public List<Institution> InstitutionList()
         {
             BHLProvider provider = new BHLProvider();
             return provider.InstituationSelectAll();
         }
 
-        public CustomGenericList<TextImportBatchStatus> TextImportBatchStatusList()
+        public List<TextImportBatchStatus> TextImportBatchStatusList()
         {
-            CustomGenericList<TextImportBatchStatus> statusList = new BHLProvider().TextImportBatchStatusSelectAll();
+            List<TextImportBatchStatus> statusList = new BHLProvider().TextImportBatchStatusSelectAll();
 
             return statusList;
         }
@@ -112,7 +109,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
         {
             Dictionary<string, string> statusList = new Dictionary<string, string>();
 
-            CustomGenericList<TextImportBatchFileStatus> statuses = new BHLProvider().TextImportBatchFileStatusSelectAll();
+            List<TextImportBatchFileStatus> statuses = new BHLProvider().TextImportBatchFileStatusSelectAll();
             foreach (TextImportBatchFileStatus status in statuses)
             {
                 if (status.StatusName != "Imported") statusList.Add(status.TextImportBatchFileStatusID.ToString(), status.StatusName);

@@ -1,13 +1,8 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
@@ -19,8 +14,7 @@ namespace MOBOT.BHL.Web2
             base.Page_Load(sender, e);
             int collectionID;
 
-                CustomDataAccess.CustomGenericList<MOBOT.BHL.DataObjects.Collection> collections =
-                new MOBOT.BHL.Server.BHLProvider().CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
+                List<Collection> collections = new BHLProvider().CollectionSelectByUrl((string)RouteData.Values["collectionid"]);
                 if (collections.Count > 0)
                 {
                     int.TryParse(collections[0].CollectionID.ToString(), out collectionID);
@@ -42,9 +36,7 @@ namespace MOBOT.BHL.Web2
            {
                 ltlHtmlContent.Text = this.GetHtmlContent(collection);
                 this.Title = this.GetPageTitle(collection);
-             //   ((Main)Page.Master).SetTweetMessage(this.GetTweetText(collection));
            }
-
         }
 
         /// <summary>

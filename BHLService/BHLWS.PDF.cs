@@ -1,37 +1,36 @@
-﻿using System;
-using System.Web.Services;
-using System.ComponentModel;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
+﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using System;
+using System.Collections.Generic;
+using System.Web.Services;
 
 namespace MOBOT.BHL.WebService
 {
     public partial class BHLWS : System.Web.Services.WebService
     {
         [WebMethod]
-        public CustomGenericList<PDF> PDFSelectForFileCreation()
+        public List<PDF> PDFSelectForFileCreation()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PDFSelectForFileCreation();
         }
 
         [WebMethod]
-        public CustomGenericList<PDF> PDFSelectForDeletion()
+        public List<PDF> PDFSelectForDeletion()
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PDFSelectForDeletion();
         }
 
         [WebMethod]
-        public CustomGenericList<PDF> PDFSelectDuplicateForPdfID(int pdfId)
+        public List<PDF> PDFSelectDuplicateForPdfID(int pdfId)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PDFSelectDuplicateForPdfID(pdfId);
         }
 
         [WebMethod]
-        public CustomGenericList<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId)
+        public List<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId)
         {
             BHLProvider bhlServer = new BHLProvider();
             return bhlServer.PDFPageSummaryViewSelectByPdfID(pdfId);

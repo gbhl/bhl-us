@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.OAI2
 {
@@ -528,7 +527,7 @@ namespace MOBOT.BHL.OAI2
                 this.JournalVolume = item.Volume;
                 this.Date = item.Year;
 
-                CustomGenericList<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
+                List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
                 if (contributors.Count > 0)
                 {
                     foreach(Institution contributor in contributors)
@@ -541,7 +540,7 @@ namespace MOBOT.BHL.OAI2
                 //if (!String.IsNullOrEmpty(item.Rights)) this.Rights.Add(item.Rights);
                 //if (!String.IsNullOrEmpty(item.LicenseUrl)) this.Rights.Add(item.LicenseUrl);
 
-                CustomGenericList<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(item.ItemID);
+                List<ItemLanguage> itemLanguages = provider.ItemLanguageSelectByItemID(item.ItemID);
                 if (itemLanguages.Count > 0)
                 {
                     foreach (ItemLanguage itemLanguage in itemLanguages)
@@ -559,7 +558,7 @@ namespace MOBOT.BHL.OAI2
                 }
 
                 this.Sequence = "1";
-                CustomGenericList<TitleItem> titleItems = provider.TitleItemSelectByItem(item.ItemID);
+                List<TitleItem> titleItems = provider.TitleItemSelectByItem(item.ItemID);
                 foreach (TitleItem titleItem in titleItems)
                 {
                     if (titleItem.TitleID == item.PrimaryTitleID) this.Sequence = titleItem.ItemSequence.ToString();
@@ -573,7 +572,7 @@ namespace MOBOT.BHL.OAI2
 
                 if (_includeExtraDetail)
                 {
-                    CustomGenericList<CustomDataRow> pages = provider.NameMetadataSelectByItemID(item.ItemID);
+                    List<CustomDataRow> pages = provider.NameMetadataSelectByItemID(item.ItemID);
 
                     OAIRecord.Page oaiPage = null;
                     int currentPageID = 0;
@@ -642,13 +641,13 @@ namespace MOBOT.BHL.OAI2
                     MaterialType materialType = provider.MaterialTypeSelect(title.MaterialTypeID ?? 0);
                     if (materialType != null) this.MaterialCode = materialType.MARCCode;
 
-                    CustomGenericList<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(item.PrimaryTitleID);
+                    List<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(item.PrimaryTitleID);
                     foreach (TitleKeyword subject in subjects)
                     {
                         this.Subjects.Add(new KeyValuePair<string, string>(subject.MarcDataFieldTag + "|" + subject.MarcSubFieldCode, subject.Keyword));
                     }
 
-                    CustomGenericList<DataObjects.Author> authors = provider.AuthorSelectByTitleId(item.PrimaryTitleID);
+                    List<DataObjects.Author> authors = provider.AuthorSelectByTitleId(item.PrimaryTitleID);
                     foreach (DataObjects.Author author in authors)
                     {
                         OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration), 
@@ -663,23 +662,23 @@ namespace MOBOT.BHL.OAI2
                         this.TitleVariants.Add(new KeyValuePair<string, 
                             OAIRecord.TitleVariant>("uniform", new OAIRecord.TitleVariant(title.UniformTitle, string.Empty, string.Empty)));
                     }
-                    CustomGenericList<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(item.PrimaryTitleID);
+                    List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(item.PrimaryTitleID);
                     foreach (DataObjects.TitleVariant variant in variants)
                     {
                         OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
                         this.TitleVariants.Add(new KeyValuePair<string,OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                     }
 
-                    CustomGenericList<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(item.PrimaryTitleID);
+                    List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(item.PrimaryTitleID);
                     this.LoadIdentifiers(titleIdentifiers, this);
 
-                    CustomGenericList<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
+                    List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
                     foreach (DOI doi in dois)
                     {
                         this.SetIdentifier("doi", doi.DOIName, this);
                     }
 
-                    CustomGenericList<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
+                    List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                     foreach (TitleAssociation titleAssociation in titleAssociations)
                     {
                         OAIRecord association = new OAIRecord();
@@ -755,19 +754,19 @@ namespace MOBOT.BHL.OAI2
                 MaterialType materialType = provider.MaterialTypeSelect(title.MaterialTypeID ?? 0);
                 if (materialType != null) this.MaterialCode = materialType.MARCCode;
 
-                CustomGenericList<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(title.TitleID);
+                List<TitleKeyword> subjects = provider.TitleKeywordSelectByTitleID(title.TitleID);
                 foreach (TitleKeyword subject in subjects)
                 {
                     this.Subjects.Add(new KeyValuePair<string, string>(subject.MarcDataFieldTag + "|" + subject.MarcSubFieldCode, subject.Keyword));
                 }
 
-                CustomGenericList<TitleNote> notes = provider.TitleNoteSelectByTitleID(title.TitleID);
+                List<TitleNote> notes = provider.TitleNoteSelectByTitleID(title.TitleID);
                 foreach(TitleNote note in notes)
                 {
                     this.Notes.Add(new KeyValuePair<string, string>(this.GetNoteType(note.MarcDataFieldTag), note.NoteText));
                 }
 
-                CustomGenericList<DataObjects.Author> authors = provider.AuthorSelectByTitleId(title.TitleID);
+                List<DataObjects.Author> authors = provider.AuthorSelectByTitleId(title.TitleID);
                 foreach (DataObjects.Author author in authors)
                 {
                     OAIRecord.Creator creator = new OAIRecord.Creator(author.FullName, (string.IsNullOrEmpty(author.Numeration) ? author.Unit : author.Numeration),
@@ -777,7 +776,7 @@ namespace MOBOT.BHL.OAI2
                     this.Creators.Add(authorData);
                 }
 
-                CustomGenericList<TitleLanguage> titleLanguages = provider.TitleLanguageSelectByTitleID(title.TitleID);
+                List<TitleLanguage> titleLanguages = provider.TitleLanguageSelectByTitleID(title.TitleID);
                 if (titleLanguages.Count > 0)
                 {
                     foreach (TitleLanguage titleLanguage in titleLanguages)
@@ -794,7 +793,7 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                CustomGenericList<Institution> contributors = provider.TitleHoldingInstitutionSelectByTitleID(title.TitleID);
+                List<Institution> contributors = provider.TitleHoldingInstitutionSelectByTitleID(title.TitleID);
                 if (contributors.Count > 0)
                 {
                     foreach (Institution contributor in contributors)
@@ -809,23 +808,23 @@ namespace MOBOT.BHL.OAI2
                     this.TitleVariants.Add(new KeyValuePair<string,
                         OAIRecord.TitleVariant>("uniform", new OAIRecord.TitleVariant(title.UniformTitle, string.Empty, string.Empty)));
                 }
-                CustomGenericList<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(title.TitleID);
+                List<DataObjects.TitleVariant> variants = provider.TitleVariantSelectByTitleID(title.TitleID);
                 foreach (DataObjects.TitleVariant variant in variants)
                 {
                     OAIRecord.TitleVariant newVariant = new TitleVariant((variant.Title + " " + variant.TitleRemainder).Trim(), variant.PartNumber, variant.PartName);
                     this.TitleVariants.Add(new KeyValuePair<string, OAIRecord.TitleVariant>(variant.TitleVariantLabel.ToLower(), newVariant));
                 }
 
-                CustomGenericList<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
+                List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                 this.LoadIdentifiers(titleIdentifiers, this);
 
-                CustomGenericList<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
+                List<DOI> dois = provider.DOISelectValidForTitle(title.TitleID);
                 foreach(DOI doi in dois)
                 {
                     this.SetIdentifier("doi", doi.DOIName, this);
                 }
 
-                CustomGenericList<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
+                List<TitleAssociation> titleAssociations = provider.TitleAssociationSelectExtendedForTitle(title.TitleID);
                 foreach (TitleAssociation titleAssociation in titleAssociations)
                 {
                     OAIRecord association = new OAIRecord();
@@ -886,7 +885,7 @@ namespace MOBOT.BHL.OAI2
                     }
                 }
 
-                CustomGenericList<PDFPage> pdfPages = provider.PDFPageSelectForPdfID(pdf.PdfID);
+                List<PDFPage> pdfPages = provider.PDFPageSelectForPdfID(pdf.PdfID);
                 if (pdfPages != null)
                 {
                     if (pdfPages.Count > 0)
@@ -913,7 +912,7 @@ namespace MOBOT.BHL.OAI2
                     this.JournalVolume = item.Volume;
                     this.Date = item.Year;
 
-                    CustomGenericList<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
+                    List<Institution> contributors = provider.ItemHoldingInstitutionSelectByItemID(item.ItemID);
                     if (contributors.Count > 0)
                     {
                         foreach (Institution contributor in contributors)
@@ -950,7 +949,7 @@ namespace MOBOT.BHL.OAI2
                         this.PublicationFrequency = (title.CurrentPublicationFrequency == null) ? String.Empty : title.CurrentPublicationFrequency;
                         if (String.IsNullOrEmpty(this.Date) && title.StartYear != null) this.Date = title.StartYear.ToString();
 
-                        CustomGenericList<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
+                        List<Title_Identifier> titleIdentifiers = provider.Title_IdentifierSelectForDisplayByTitleID(title.TitleID);
                         this.LoadIdentifiers(titleIdentifiers, this);
                     }
                 }
@@ -1046,7 +1045,7 @@ namespace MOBOT.BHL.OAI2
         /// </summary>
         /// <param name="identifierList"></param>
         /// <param name="record"></param>
-        private void LoadIdentifiers(CustomGenericList<Title_Identifier> identifierList, OAIRecord record)
+        private void LoadIdentifiers(List<Title_Identifier> identifierList, OAIRecord record)
         {
             foreach (Title_Identifier titleIdentifier in identifierList)
             {
@@ -1059,7 +1058,7 @@ namespace MOBOT.BHL.OAI2
         /// </summary>
         /// <param name="identifierList"></param>
         /// <param name="record"></param>
-        private void LoadIdentifiers(CustomGenericList<TitleAssociation_TitleIdentifier> identifierList, OAIRecord record)
+        private void LoadIdentifiers(List<TitleAssociation_TitleIdentifier> identifierList, OAIRecord record)
         {
             foreach (TitleAssociation_TitleIdentifier titleAssociationId in identifierList)
             {
@@ -1072,7 +1071,7 @@ namespace MOBOT.BHL.OAI2
         /// </summary>
         /// <param name="identifierList"></param>
         /// <param name="record"></param>
-        private void LoadIdentifiers(CustomGenericList<SegmentIdentifier> identifierList, OAIRecord record)
+        private void LoadIdentifiers(List<SegmentIdentifier> identifierList, OAIRecord record)
         {
             foreach (SegmentIdentifier segmentIdentifier in identifierList)
             {

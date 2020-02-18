@@ -62,7 +62,7 @@ namespace MOBOT.BHL.Server
             new NamePageDAL().NamePageDeleteByItemID(null, null, itemID);
         }
 
-        public void NamePageSave(CustomGenericList<NamePage> namePages, int userId)
+        public void NamePageSave(List<NamePage> namePages, int userId)
         {
             NameDAL nameDAL = new NameDAL();
             NamePageDAL namePageDAL = new NamePageDAL();

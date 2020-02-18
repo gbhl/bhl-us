@@ -1,17 +1,9 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using FredCK.FCKeditorV2;
+using System;
+using System.Collections.Generic;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -29,7 +21,7 @@ namespace MOBOT.BHL.AdminWeb
 		private void fillLanguages()
 		{
 			BHLProvider bp = new BHLProvider();
-			CustomGenericList<Language> languages = bp.LanguageSelectAll();
+			List<Language> languages = bp.LanguageSelectAll();
 
 			Language emptyLanguage = new Language();
 			emptyLanguage.LanguageCode = "";
@@ -114,7 +106,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					CustomGenericList<Language> languages = bp.LanguageSelectAll();
+					List<Language> languages = bp.LanguageSelectAll();
 					string code = codeTextBox.Text.Trim().ToUpper();
 					foreach ( Language language in languages )
 					{

@@ -1,17 +1,10 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
+using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
-using FredCK.FCKeditorV2;
+using System;
+using System.Collections.Generic;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -22,7 +15,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( !IsPostBack )
 			{
 				BHLProvider bp = new BHLProvider();
-				CustomGenericList<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
+				List<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
 
 				itemStatuses.Sort();
 
@@ -113,7 +106,7 @@ namespace MOBOT.BHL.AdminWeb
 					{
 						BHLProvider bp = new BHLProvider();
 
-						CustomGenericList<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
+						List<ItemStatus> itemStatuses = bp.ItemStatusSelectAll();
 						foreach ( ItemStatus its in itemStatuses )
 						{
 							if ( its.ItemStatusID == id )

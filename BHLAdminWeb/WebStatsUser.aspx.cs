@@ -1,14 +1,12 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -82,11 +80,7 @@ namespace MOBOT.BHL.AdminWeb
 
             List<RequestLogStat> gsList = requestLog.SelectUserTotal(applicationID, startDate, endDate);
 
-            // Get the CustomGenericList of APIKeys and convert it to a "regular" List
-            CustomGenericList<APIKey> apiKeysCustom = new CustomGenericList<APIKey>();
-            apiKeysCustom = new BHLProvider().ApiKeySelectAll();
-            List<APIKey> apiKeys = new List<APIKey>();
-            foreach (APIKey key in apiKeysCustom) apiKeys.Add(key);
+            List<APIKey> apiKeys = new BHLProvider().ApiKeySelectAll();
 
             // Use LINQ to Entities to combine the detailed stats with the API Keys.  This will ensure that we
             // display the correct user name.

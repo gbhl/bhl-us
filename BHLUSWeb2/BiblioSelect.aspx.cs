@@ -1,19 +1,13 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.Web2
 {
     public partial class BiblioSelect : BasePage
     {
 
-        protected CustomGenericList<Title> TitleList { get; set; }
+        protected List<Title> TitleList { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,7 +16,7 @@ namespace MOBOT.BHL.Web2
             {
                 int itemId;
                 String itemIdString = (string)RouteData.Values["itemid"];
-                TitleList = new CustomGenericList<Title>();
+                TitleList = new List<Title>();
 
                 if (int.TryParse(itemIdString, out itemId))
                 {

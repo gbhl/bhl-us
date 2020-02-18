@@ -23,12 +23,14 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="BHLWSSoap", Namespace="http://www.mobot.org/")]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(CustomObjectBase))]
     public partial class BHLWS : System.Web.Services.Protocols.SoapHttpClientProtocol {
+        
+        private System.Threading.SendOrPostCallback DOIUpdateDOINameOperationCompleted;
         
         private System.Threading.SendOrPostCallback DOIUpdateBatchIDOperationCompleted;
         
@@ -59,6 +61,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private System.Threading.SendOrPostCallback PageUpdateLastPageNameLookupDateOperationCompleted;
         
         private System.Threading.SendOrPostCallback PageCheckForOcrTextOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback PageTextLogInsertForItemOperationCompleted;
         
         private System.Threading.SendOrPostCallback PageFlickrSelectRandomOperationCompleted;
         
@@ -152,6 +156,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         
         private System.Threading.SendOrPostCallback ItemSelectByTitleIDOperationCompleted;
         
+        private System.Threading.SendOrPostCallback ItemSelectFilenamesOperationCompleted;
+        
         private System.Threading.SendOrPostCallback ItemUpdateStatusOperationCompleted;
         
         private System.Threading.SendOrPostCallback ItemUpdatePaginationStatusOperationCompleted;
@@ -228,8 +234,6 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         
         private System.Threading.SendOrPostCallback DOIUpdateStatusOperationCompleted;
         
-        private System.Threading.SendOrPostCallback DOIUpdateDOINameOperationCompleted;
-        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -267,6 +271,9 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.useDefaultCredentialsSetExplicitly = true;
             }
         }
+        
+        /// <remarks/>
+        public event DOIUpdateDOINameCompletedEventHandler DOIUpdateDOINameCompleted;
         
         /// <remarks/>
         public event DOIUpdateBatchIDCompletedEventHandler DOIUpdateBatchIDCompleted;
@@ -312,6 +319,9 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         
         /// <remarks/>
         public event PageCheckForOcrTextCompletedEventHandler PageCheckForOcrTextCompleted;
+        
+        /// <remarks/>
+        public event PageTextLogInsertForItemCompletedEventHandler PageTextLogInsertForItemCompleted;
         
         /// <remarks/>
         public event PageFlickrSelectRandomCompletedEventHandler PageFlickrSelectRandomCompleted;
@@ -452,6 +462,9 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         public event ItemSelectByTitleIDCompletedEventHandler ItemSelectByTitleIDCompleted;
         
         /// <remarks/>
+        public event ItemSelectFilenamesCompletedEventHandler ItemSelectFilenamesCompleted;
+        
+        /// <remarks/>
         public event ItemUpdateStatusCompletedEventHandler ItemUpdateStatusCompleted;
         
         /// <remarks/>
@@ -566,7 +579,37 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         public event DOIUpdateStatusCompletedEventHandler DOIUpdateStatusCompleted;
         
         /// <remarks/>
-        public event DOIUpdateDOINameCompletedEventHandler DOIUpdateDOINameCompleted;
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateDOIName", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName) {
+            object[] results = this.Invoke("DOIUpdateDOIName", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiName});
+            return ((DOI)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName) {
+            this.DOIUpdateDOINameAsync(doiID, doiStatusId, doiName, null);
+        }
+        
+        /// <remarks/>
+        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, object userState) {
+            if ((this.DOIUpdateDOINameOperationCompleted == null)) {
+                this.DOIUpdateDOINameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateDOINameOperationCompleted);
+            }
+            this.InvokeAsync("DOIUpdateDOIName", new object[] {
+                        doiID,
+                        doiStatusId,
+                        doiName}, this.DOIUpdateDOINameOperationCompleted, userState);
+        }
+        
+        private void OnDOIUpdateDOINameOperationCompleted(object arg) {
+            if ((this.DOIUpdateDOINameCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DOIUpdateDOINameCompleted(this, new DOIUpdateDOINameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateBatchID", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -1030,6 +1073,38 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
             if ((this.PageCheckForOcrTextCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.PageCheckForOcrTextCompleted(this, new PageCheckForOcrTextCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/PageTextLogInsertForItem", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void PageTextLogInsertForItem(int itemID, string textSource, int userID) {
+            this.Invoke("PageTextLogInsertForItem", new object[] {
+                        itemID,
+                        textSource,
+                        userID});
+        }
+        
+        /// <remarks/>
+        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID) {
+            this.PageTextLogInsertForItemAsync(itemID, textSource, userID, null);
+        }
+        
+        /// <remarks/>
+        public void PageTextLogInsertForItemAsync(int itemID, string textSource, int userID, object userState) {
+            if ((this.PageTextLogInsertForItemOperationCompleted == null)) {
+                this.PageTextLogInsertForItemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPageTextLogInsertForItemOperationCompleted);
+            }
+            this.InvokeAsync("PageTextLogInsertForItem", new object[] {
+                        itemID,
+                        textSource,
+                        userID}, this.PageTextLogInsertForItemOperationCompleted, userState);
+        }
+        
+        private void OnPageTextLogInsertForItemOperationCompleted(object arg) {
+            if ((this.PageTextLogInsertForItemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.PageTextLogInsertForItemCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -2432,6 +2507,35 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/ItemSelectFilenames", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Item ItemSelectFilenames(int itemID) {
+            object[] results = this.Invoke("ItemSelectFilenames", new object[] {
+                        itemID});
+            return ((Item)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ItemSelectFilenamesAsync(int itemID) {
+            this.ItemSelectFilenamesAsync(itemID, null);
+        }
+        
+        /// <remarks/>
+        public void ItemSelectFilenamesAsync(int itemID, object userState) {
+            if ((this.ItemSelectFilenamesOperationCompleted == null)) {
+                this.ItemSelectFilenamesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnItemSelectFilenamesOperationCompleted);
+            }
+            this.InvokeAsync("ItemSelectFilenames", new object[] {
+                        itemID}, this.ItemSelectFilenamesOperationCompleted, userState);
+        }
+        
+        private void OnItemSelectFilenamesOperationCompleted(object arg) {
+            if ((this.ItemSelectFilenamesCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ItemSelectFilenamesCompleted(this, new ItemSelectFilenamesCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/ItemUpdateStatus", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public Item ItemUpdateStatus(int itemID, int itemStatusID) {
             object[] results = this.Invoke("ItemUpdateStatus", new object[] {
@@ -3557,39 +3661,6 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://www.mobot.org/DOIUpdateDOIName", RequestNamespace="http://www.mobot.org/", ResponseNamespace="http://www.mobot.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public DOI DOIUpdateDOIName(int doiID, int doiStatusId, string doiName) {
-            object[] results = this.Invoke("DOIUpdateDOIName", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiName});
-            return ((DOI)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName) {
-            this.DOIUpdateDOINameAsync(doiID, doiStatusId, doiName, null);
-        }
-        
-        /// <remarks/>
-        public void DOIUpdateDOINameAsync(int doiID, int doiStatusId, string doiName, object userState) {
-            if ((this.DOIUpdateDOINameOperationCompleted == null)) {
-                this.DOIUpdateDOINameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDOIUpdateDOINameOperationCompleted);
-            }
-            this.InvokeAsync("DOIUpdateDOIName", new object[] {
-                        doiID,
-                        doiStatusId,
-                        doiName}, this.DOIUpdateDOINameOperationCompleted, userState);
-        }
-        
-        private void OnDOIUpdateDOINameOperationCompleted(object arg) {
-            if ((this.DOIUpdateDOINameCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.DOIUpdateDOINameCompleted(this, new DOIUpdateDOINameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -3609,7 +3680,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3655,7 +3726,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3878,7 +3949,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(@__DOI))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(DOI))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3887,7 +3958,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -3933,6 +4004,10 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private string startPageField;
         
         private string endPageField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         /// <remarks/>
         public string Genre {
@@ -4133,10 +4208,30 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.endPageField = value;
             }
         }
+        
+        /// <remarks/>
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4174,6 +4269,10 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private string pageRangeField;
         
         private string keywordsField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         /// <remarks/>
         public string CitationKey {
@@ -4334,10 +4433,30 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.keywordsField = value;
             }
         }
+        
+        /// <remarks/>
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4395,7 +4514,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Vault))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4464,7 +4583,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4486,7 +4605,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemNameFileLog))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4593,7 +4712,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4639,7 +4758,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleNote))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4735,7 +4854,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4793,7 +4912,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4863,7 +4982,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4885,7 +5004,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleVariant))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5028,7 +5147,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5062,7 +5181,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation_TitleIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5171,7 +5290,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5193,7 +5312,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAssociation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5387,7 +5506,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5445,7 +5564,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5566,7 +5685,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5588,7 +5707,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(NameSegment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5707,7 +5826,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5766,7 +5885,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5873,7 +5992,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -5920,7 +6039,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6040,7 +6159,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6074,7 +6193,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentKeyword))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6169,7 +6288,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6191,7 +6310,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(SegmentAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6298,7 +6417,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6415,7 +6534,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6520,7 +6639,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6530,7 +6649,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorName))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6675,7 +6794,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6697,7 +6816,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AuthorIdentifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6805,7 +6924,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Author))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -6827,6 +6946,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private string unitField;
         
         private string locationField;
+        
+        private string noteField;
         
         private short isActiveField;
         
@@ -6922,6 +7043,16 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
+        public string Note {
+            get {
+                return this.noteField;
+            }
+            set {
+                this.noteField = value;
+            }
+        }
+        
+        /// <remarks/>
         public short IsActive {
             get {
                 return this.isActiveField;
@@ -6989,7 +7120,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Segment))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7449,7 +7580,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7493,6 +7624,10 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private string keywordsField;
         
         private short isPrimaryField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         private SegmentAuthor[] authorListField;
         
@@ -7702,6 +7837,26 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
         public SegmentAuthor[] AuthorList {
             get {
                 return this.authorListField;
@@ -7773,7 +7928,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7791,6 +7946,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private string institutionRoleNameField;
         
         private string institutionRoleLabelField;
+        
+        private string urlField;
         
         /// <remarks/>
         public int TitleDOIs {
@@ -7852,11 +8009,21 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.institutionRoleLabelField = value;
             }
         }
+        
+        /// <remarks/>
+        public string Url {
+            get {
+                return this.urlField;
+            }
+            set {
+                this.urlField = value;
+            }
+        }
     }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Institution))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -7978,7 +8145,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8035,7 +8202,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8069,7 +8236,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ItemLanguage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8139,7 +8306,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8161,7 +8328,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8271,7 +8438,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -8365,7 +8532,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Item))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9077,7 +9244,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9127,6 +9294,22 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private System.Nullable<int> firstPageIDField;
         
         private bool hasFlickrImagesField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
+        
+        private string textFilenameField;
+        
+        private string pdfFilenameField;
+        
+        private string imagesFilenameField;
+        
+        private string djvuFilenameField;
+        
+        private string scandataFilenameField;
+        
+        private string ocrFolderShareField;
         
         /// <remarks/>
         public Institution[] Institutions {
@@ -9349,10 +9532,90 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.hasFlickrImagesField = value;
             }
         }
+        
+        /// <remarks/>
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TextFilename {
+            get {
+                return this.textFilenameField;
+            }
+            set {
+                this.textFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PdfFilename {
+            get {
+                return this.pdfFilenameField;
+            }
+            set {
+                this.pdfFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ImagesFilename {
+            get {
+                return this.imagesFilenameField;
+            }
+            set {
+                this.imagesFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DjvuFilename {
+            get {
+                return this.djvuFilenameField;
+            }
+            set {
+                this.djvuFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ScandataFilename {
+            get {
+                return this.scandataFilenameField;
+            }
+            set {
+                this.scandataFilenameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OcrFolderShare {
+            get {
+                return this.ocrFolderShareField;
+            }
+            set {
+                this.ocrFolderShareField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9380,6 +9643,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private bool rareBooksField;
         
         private System.Nullable<int> segmentIDField;
+        
+        private string genreNameField;
         
         private string webDisplayField;
         
@@ -9497,6 +9762,16 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
+        public string GenreName {
+            get {
+                return this.genreNameField;
+            }
+            set {
+                this.genreNameField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string WebDisplay {
             get {
                 return this.webDisplayField;
@@ -9519,7 +9794,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Page))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9825,7 +10100,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -9852,9 +10127,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         
         private TitleNote[] titleNotesField;
         
+        private Institution[] titleInstitutionsField;
+        
         private string institutionNameField;
         
         private string dOINameField;
+        
+        private bool hasLocalContentField;
+        
+        private bool hasExternalContentField;
         
         /// <remarks/>
         public TitleAuthor[] TitleAuthors {
@@ -9957,6 +10238,16 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         }
         
         /// <remarks/>
+        public Institution[] TitleInstitutions {
+            get {
+                return this.titleInstitutionsField;
+            }
+            set {
+                this.titleInstitutionsField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string InstitutionName {
             get {
                 return this.institutionNameField;
@@ -9975,10 +10266,30 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.dOINameField = value;
             }
         }
+        
+        /// <remarks/>
+        public bool HasLocalContent {
+            get {
+                return this.hasLocalContentField;
+            }
+            set {
+                this.hasLocalContentField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool HasExternalContent {
+            get {
+                return this.hasExternalContentField;
+            }
+            set {
+                this.hasExternalContentField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10084,7 +10395,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleAuthor))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10110,6 +10421,8 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private System.Nullable<int> creationUserIDField;
         
         private System.Nullable<int> lastModifiedUserIDField;
+        
+        private short sequenceOrderField;
         
         /// <remarks/>
         public int TitleAuthorID {
@@ -10213,10 +10526,20 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
                 this.lastModifiedUserIDField = value;
             }
         }
+        
+        /// <remarks/>
+        public short SequenceOrder {
+            get {
+                return this.sequenceOrderField;
+            }
+            set {
+                this.sequenceOrderField = value;
+            }
+        }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10250,7 +10573,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title_Identifier))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10359,7 +10682,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10393,7 +10716,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(TitleCollection))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10451,7 +10774,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Title))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10867,7 +11190,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationSubject))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10961,7 +11284,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -10996,7 +11319,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation_AnnotationConcept))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11065,7 +11388,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11075,7 +11398,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationNote))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11180,7 +11503,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11190,7 +11513,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotationRelation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11259,7 +11582,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11269,7 +11592,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Annotation))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11422,7 +11745,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11456,7 +11779,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPageCharacteristic))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11550,7 +11873,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11560,7 +11883,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedPage))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11666,7 +11989,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11676,7 +11999,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedItem))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11770,7 +12093,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11780,7 +12103,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(AnnotatedTitle))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11970,7 +12293,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -11980,7 +12303,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageSummaryView))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12378,7 +12701,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12400,7 +12723,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PDF))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12627,7 +12950,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12661,7 +12984,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageType))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12706,7 +13029,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12716,7 +13039,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(PageFlickr))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12787,7 +13110,7 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -12832,11 +13155,37 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void DOIUpdateDOINameCompletedEventHandler(object sender, DOIUpdateDOINameCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DOIUpdateDOINameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DOIUpdateDOINameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public DOI Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((DOI)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DOIUpdateBatchIDCompletedEventHandler(object sender, DOIUpdateBatchIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DOIUpdateBatchIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12858,11 +13207,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DOIGetFileContentsCompletedEventHandler(object sender, DOIGetFileContentsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DOIGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12884,19 +13233,19 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void IndicatedPageSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void IndicatedPageDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageSelectByItemIDCompletedEventHandler(object sender, PageSelectByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12918,11 +13267,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageSelectFileNameByItemIDCompletedEventHandler(object sender, PageSelectFileNameByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageSelectFileNameByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12944,11 +13293,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageMetadataSelectByItemIDCompletedEventHandler(object sender, PageMetadataSelectByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageMetadataSelectByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12970,11 +13319,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageSelectWithExpiredPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageSelectWithExpiredPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -12996,11 +13345,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageSelectWithoutPageNamesByItemIDCompletedEventHandler(object sender, PageSelectWithoutPageNamesByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageSelectWithoutPageNamesByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13022,11 +13371,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageSelectWithoutPageNamesCompletedEventHandler(object sender, PageSelectWithoutPageNamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageSelectWithoutPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13048,27 +13397,27 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageUpdateYearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageUpdateVolumeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageUpdateIssueCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageUpdateLastPageNameLookupDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageCheckForOcrTextCompletedEventHandler(object sender, PageCheckForOcrTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageCheckForOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13090,11 +13439,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void PageTextLogInsertForItemCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageFlickrSelectRandomCompletedEventHandler(object sender, PageFlickrSelectRandomCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageFlickrSelectRandomCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13116,11 +13469,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageFlickrSelectAllCompletedEventHandler(object sender, PageFlickrSelectAllCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageFlickrSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13142,11 +13495,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageNameUpdateListCompletedEventHandler(object sender, PageNameUpdateListCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageNameUpdateListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13168,15 +13521,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void NamePageDeleteByItemIDCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PageTypeSelectAllCompletedEventHandler(object sender, PageTypeSelectAllCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PageTypeSelectAllCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13198,19 +13551,19 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void Page_PageTypeSaveCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void Page_PageTypeDeleteAllForPageCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetPaginationStatusPendingCompletedEventHandler(object sender, GetPaginationStatusPendingCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetPaginationStatusPendingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13232,11 +13585,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetPaginationStatusInProgressCompletedEventHandler(object sender, GetPaginationStatusInProgressCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetPaginationStatusInProgressCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13258,11 +13611,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetPaginationStatusCompleteCompletedEventHandler(object sender, GetPaginationStatusCompleteCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetPaginationStatusCompleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13284,11 +13637,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetPaginationStatusStringCompletedEventHandler(object sender, GetPaginationStatusStringCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetPaginationStatusStringCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13310,11 +13663,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFSelectForFileCreationCompletedEventHandler(object sender, PDFSelectForFileCreationCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFSelectForFileCreationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13336,11 +13689,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFSelectForDeletionCompletedEventHandler(object sender, PDFSelectForDeletionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFSelectForDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13362,11 +13715,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFSelectDuplicateForPdfIDCompletedEventHandler(object sender, PDFSelectDuplicateForPdfIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFSelectDuplicateForPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13388,11 +13741,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFPageSummaryViewSelectByPdfIDCompletedEventHandler(object sender, PDFPageSummaryViewSelectByPdfIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFPageSummaryViewSelectByPdfIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13414,11 +13767,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdateGenerationInfoCompletedEventHandler(object sender, PDFUpdateGenerationInfoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdateGenerationInfoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13440,11 +13793,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdateFileDeletionCompletedEventHandler(object sender, PDFUpdateFileDeletionCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdateFileDeletionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13466,11 +13819,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdatePdfStatusProcessingCompletedEventHandler(object sender, PDFUpdatePdfStatusProcessingCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdatePdfStatusProcessingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13492,11 +13845,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdatePdfStatusGeneratedCompletedEventHandler(object sender, PDFUpdatePdfStatusGeneratedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdatePdfStatusGeneratedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13518,11 +13871,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdatePdfStatusErrorCompletedEventHandler(object sender, PDFUpdatePdfStatusErrorCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdatePdfStatusErrorCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13544,11 +13897,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void PDFUpdatePdfStatusRejectedCompletedEventHandler(object sender, PDFUpdatePdfStatusRejectedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PDFUpdatePdfStatusRejectedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13570,11 +13923,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotatedTitleSaveCompletedEventHandler(object sender, AnnotatedTitleSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedTitleSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13596,11 +13949,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotatedItemSaveCompletedEventHandler(object sender, AnnotatedItemSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedItemSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13622,11 +13975,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotatedPageSaveCompletedEventHandler(object sender, AnnotatedPageSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13648,11 +14001,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotatedPageCharacteristicDeleteByPageIDCompletedEventHandler(object sender, AnnotatedPageCharacteristicDeleteByPageIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageCharacteristicDeleteByPageIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13674,11 +14027,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotatedPageCharacteristicSaveCompletedEventHandler(object sender, AnnotatedPageCharacteristicSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotatedPageCharacteristicSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13700,11 +14053,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationSelectAutoCompletedEventHandler(object sender, AnnotationSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13726,11 +14079,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationSaveCompletedEventHandler(object sender, AnnotationSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13752,11 +14105,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationSaveTextCompletedEventHandler(object sender, AnnotationSaveTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSaveTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13778,15 +14131,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationClearCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationRelationSaveCompletedEventHandler(object sender, AnnotationRelationSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationRelationSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13808,11 +14161,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationNoteSaveCompletedEventHandler(object sender, AnnotationNoteSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationNoteSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13834,11 +14187,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void Annotation_AnnotationConceptSaveCompletedEventHandler(object sender, Annotation_AnnotationConceptSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class Annotation_AnnotationConceptSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13860,11 +14213,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void AnnotationSubjectSaveCompletedEventHandler(object sender, AnnotationSubjectSaveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AnnotationSubjectSaveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13886,11 +14239,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetNamesFromOcrCompletedEventHandler(object sender, GetNamesFromOcrCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetNamesFromOcrCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13912,11 +14265,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetOcrTextCompletedEventHandler(object sender, GetOcrTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13938,11 +14291,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleSelectAllPublishedCompletedEventHandler(object sender, TitleSelectAllPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectAllPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13964,11 +14317,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleSelectByTitleIDCompletedEventHandler(object sender, TitleSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -13990,11 +14343,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleSelectDetailByTitleIDCompletedEventHandler(object sender, TitleSelectDetailByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectDetailByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14016,11 +14369,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleBibTeXSelectAllTitleCitationsCompletedEventHandler(object sender, TitleBibTeXSelectAllTitleCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleBibTeXSelectAllTitleCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14042,11 +14395,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleBibTeXSelectAllItemCitationsCompletedEventHandler(object sender, TitleBibTeXSelectAllItemCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleBibTeXSelectAllItemCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14068,11 +14421,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SegmentSelectAllBibTeXCitationsCompletedEventHandler(object sender, SegmentSelectAllBibTeXCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectAllBibTeXCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14094,11 +14447,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleSelectAllRISCitationsCompletedEventHandler(object sender, TitleSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14120,11 +14473,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void Title_IdentifierSelectByTitleIDCompletedEventHandler(object sender, Title_IdentifierSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class Title_IdentifierSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14146,11 +14499,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectByBarCodeCompletedEventHandler(object sender, ItemSelectByBarCodeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectByBarCodeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14172,11 +14525,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectByTitleIDCompletedEventHandler(object sender, ItemSelectByTitleIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectByTitleIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14198,11 +14551,37 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void ItemSelectFilenamesCompletedEventHandler(object sender, ItemSelectFilenamesCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ItemSelectFilenamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ItemSelectFilenamesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Item Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Item)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemUpdateStatusCompletedEventHandler(object sender, ItemUpdateStatusCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemUpdateStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14224,11 +14603,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemUpdatePaginationStatusCompletedEventHandler(object sender, ItemUpdatePaginationStatusCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemUpdatePaginationStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14250,11 +14629,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectAutoCompletedEventHandler(object sender, ItemSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14276,11 +14655,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectWithExpiredPageNamesCompletedEventHandler(object sender, ItemSelectWithExpiredPageNamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectWithExpiredPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14302,11 +14681,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectWithoutPageNamesCompletedEventHandler(object sender, ItemSelectWithoutPageNamesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectWithoutPageNamesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14328,11 +14707,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemUpdateLastPageNameLookupDateCompletedEventHandler(object sender, ItemUpdateLastPageNameLookupDateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemUpdateLastPageNameLookupDateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14354,11 +14733,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemCheckForOcrTextCompletedEventHandler(object sender, ItemCheckForOcrTextCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemCheckForOcrTextCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14380,11 +14759,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemGetNamesXMLByItemIDCompletedEventHandler(object sender, ItemGetNamesXMLByItemIDCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemGetNamesXMLByItemIDCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14406,11 +14785,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectPublishedCompletedEventHandler(object sender, ItemSelectPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14432,11 +14811,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectRecentlyChangedCompletedEventHandler(object sender, ItemSelectRecentlyChangedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectRecentlyChangedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14458,11 +14837,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ExportIAIdentifiersCompletedEventHandler(object sender, ExportIAIdentifiersCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ExportIAIdentifiersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14484,11 +14863,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemSelectAllRISCitationsCompletedEventHandler(object sender, ItemSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14510,11 +14889,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SegmentSelectPublishedCompletedEventHandler(object sender, SegmentSelectPublishedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectPublishedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14536,11 +14915,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SegmentSelectExtendedCompletedEventHandler(object sender, SegmentSelectExtendedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectExtendedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14562,11 +14941,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SegmentSelectAllRISCitationsCompletedEventHandler(object sender, SegmentSelectAllRISCitationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectAllRISCitationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14588,11 +14967,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GenerateRISCitationCompletedEventHandler(object sender, GenerateRISCitationCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GenerateRISCitationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14614,15 +14993,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemNameFileLogRefreshSinceDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemNameFileLogSelectForCreateCompletedEventHandler(object sender, ItemNameFileLogSelectForCreateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemNameFileLogSelectForCreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14644,11 +15023,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemNameFileLogSelectForUploadCompletedEventHandler(object sender, ItemNameFileLogSelectForUploadCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ItemNameFileLogSelectForUploadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14670,19 +15049,19 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemNameFileLogUpdateCreateDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ItemNameFileLogUpdateUploadDateCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void VaultSelectCompletedEventHandler(object sender, VaultSelectCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class VaultSelectCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14704,11 +15083,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void InstitutionSelectAutoCompletedEventHandler(object sender, InstitutionSelectAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class InstitutionSelectAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14730,11 +15109,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void InstitutionSelectByItemIDAndRoleCompletedEventHandler(object sender, InstitutionSelectByItemIDAndRoleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class InstitutionSelectByItemIDAndRoleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14756,11 +15135,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SendEmailCompletedEventHandler(object sender, SendEmailCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SendEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14782,11 +15161,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetMODSRecordForTitleCompletedEventHandler(object sender, GetMODSRecordForTitleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForTitleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14808,11 +15187,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetMODSRecordForItemCompletedEventHandler(object sender, GetMODSRecordForItemCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForItemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14834,11 +15213,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetMODSRecordForSegmentCompletedEventHandler(object sender, GetMODSRecordForSegmentCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetMODSRecordForSegmentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14860,11 +15239,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void OcrJobExistsCompletedEventHandler(object sender, OcrJobExistsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class OcrJobExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14886,15 +15265,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void OcrCreateJobCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void MARCFileExistsCompletedEventHandler(object sender, MARCFileExistsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class MARCFileExistsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14916,11 +15295,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void MARCGetFileContentsCompletedEventHandler(object sender, MARCGetFileContentsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class MARCGetFileContentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14942,15 +15321,15 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void MarcCreateFileCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DOISelectSubmittedCompletedEventHandler(object sender, DOISelectSubmittedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DOISelectSubmittedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14972,11 +15351,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void TitleSelectWithoutSubmittedDOICompletedEventHandler(object sender, TitleSelectWithoutSubmittedDOICompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class TitleSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -14998,11 +15377,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void SegmentSelectWithoutSubmittedDOICompletedEventHandler(object sender, SegmentSelectWithoutSubmittedDOICompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class SegmentSelectWithoutSubmittedDOICompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -15024,11 +15403,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DOIInsertAutoCompletedEventHandler(object sender, DOIInsertAutoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DOIInsertAutoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -15050,11 +15429,11 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DOIUpdateStatusCompletedEventHandler(object sender, DOIUpdateStatusCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DOIUpdateStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -15062,32 +15441,6 @@ namespace MOBOT.BHL.BHLPDFGenerator.BHLWS {
         private object[] results;
         
         internal DOIUpdateStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public DOI Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((DOI)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
-    public delegate void DOIUpdateDOINameCompletedEventHandler(object sender, DOIUpdateDOINameCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3190.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class DOIUpdateDOINameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal DOIUpdateDOINameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

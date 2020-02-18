@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using MOBOT.BHL.Server;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Web.Utilities;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -20,45 +20,12 @@ namespace MOBOT.BHL.AdminWeb
             // jQuery UI library
             ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryUIPath"]);
 
-            //CustomGenericList<NonMemberMonograph> contributions = new CustomGenericList<NonMemberMonograph>();
             litMsg.Text = string.Empty;
 
             BHLProvider provider = new BHLProvider();
-            if (this.IsPostBack)
+            if (!this.IsPostBack)
             {
-                /*
-                string msg = string.Empty;
-
-                string institutionCode = string.Empty;
-                ddlNonMembers.Enabled = false;
-                ddlMembers.Enabled = false;
-                if (rdoMember.Checked)
-                {
-                    institutionCode = ddlMembers.SelectedValue;
-                    ddlMembers.Enabled = true;
-                }
-                if (rdoNonMember.Checked)
-                {
-                    institutionCode = ddlNonMembers.SelectedValue;
-                    ddlNonMembers.Enabled = true;
-                }
-
-                if (this.ValidateDate(txtSinceDate.Text, out msg))
-                {
-                    contributions = provider.ItemSelectNonMemberMonograph(txtSinceDate.Text, 
-                        (rdoNonMember.Checked || rdoAllNonMembers.Checked ? 0 : 1), 
-                        institutionCode);
-                    if (contributions.Count == 0) litMsg.Text = string.Format(_MsgFormat, "No results");
-                }
-                else
-                {
-                    litMsg.Text = string.Format(_MsgFormat, msg);
-                }
-                 */
-            }
-            else
-            {
-                CustomGenericList<Institution> institutions = provider.InstituationSelectAll();
+                List<Institution> institutions = provider.InstituationSelectAll();
                 foreach (Institution institution in institutions)
                 {
                     if (institution.BHLMemberLibrary) 
@@ -67,10 +34,6 @@ namespace MOBOT.BHL.AdminWeb
                         ddlNonMembers.Items.Add(new ListItem(institution.InstitutionName, institution.InstitutionCode));
                 }
             }
-            /*
-            monographList.DataSource = contributions;
-            monographList.DataBind();
-             */
         }
 
         protected void btnDownload_Click(object sender, EventArgs e)
@@ -97,7 +60,7 @@ namespace MOBOT.BHL.AdminWeb
         protected void btnShow_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            CustomGenericList<NonMemberMonograph> contributions = new CustomGenericList<NonMemberMonograph>();
+            List<NonMemberMonograph> contributions = new List<NonMemberMonograph>();
 
             string institutionCode = string.Empty;
             ddlNonMembers.Enabled = false;

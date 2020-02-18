@@ -1,25 +1,19 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml;
+using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
-using FredCK.FCKeditorV2;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Xml;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class TitleSearch : System.Web.UI.Page
+    public partial class TitleSearch : System.Web.UI.Page
 	{
 		private bool _isExactSearch = false;
 		private bool _refreshSearch = false;
@@ -56,7 +50,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 BHLProvider bp = new BHLProvider();
 
-                CustomGenericList<Institution> institutions = bp.InstituationSelectAll();
+                List<Institution> institutions = bp.InstituationSelectAll();
 
                 listInstitutions.DataSource = institutions;
                 listInstitutions.DataBind();
@@ -92,7 +86,7 @@ namespace MOBOT.BHL.AdminWeb
 
 			BHLProvider bp = new BHLProvider();
 			buildSearchCriteria();
-			CustomGenericList<Title> results = bp.TitleSearchPaging( _searchCriteria );
+			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
 			if ( results.Count == 1 )
 			{
 				Response.Redirect( _redirectUrl + results[ 0 ].TitleID.ToString() );

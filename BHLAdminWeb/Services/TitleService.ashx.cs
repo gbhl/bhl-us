@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Web;
-using System.Web.Services;
-using System.Web.Services.Protocols;
-using System.Web.Script.Serialization;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -61,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 criteria.PageSize = 10000;
                 criteria.OrderBy = TitleSearchOrderBy.Title;
                 criteria.SortOrder = SortOrder.Ascending;
-                CustomGenericList<Title> titles = new BHLProvider().TitleSearchPaging(criteria);
+                List<Title> titles = new BHLProvider().TitleSearchPaging(criteria);
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 return js.Serialize(titles);
             }

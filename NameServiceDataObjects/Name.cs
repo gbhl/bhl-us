@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects
@@ -80,8 +81,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects
 			}
 		}
 
-        CustomGenericList<Title> _Titles;
-        public CustomGenericList<Title> Titles
+		List<Title> _Titles;
+        public List<Title> Titles
         {
             get
             {
@@ -94,13 +95,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects
         }
 
 		#endregion Properties
-		
+
 		#region SortColumn
-		
+
 		/// <summary>
 		/// Use when defining sort columns for a collection sort request.
-		/// For example where list is a instance of <see cref="CustomGenericList">, 
-        /// list.Sort(SortOrder.Ascending, Name.SortColumn.NameID);
+		/// For example where list is a instance of <see cref="List">, 
+		/// list.Sort(SortOrder.Ascending, Name.SortColumn.NameID);
 		/// </summary>
 		[Serializable]
 		public sealed class SortColumn

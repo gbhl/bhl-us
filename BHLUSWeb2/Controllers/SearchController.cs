@@ -17,8 +17,8 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Index
         [HttpGet]
         public ActionResult Index(string searchTerm, string tinc, string stype, string searchCat, string lname, string ninc,
-            string yr, string subj, string sinc, string lang, string col, string txt, string txinc, string ppage, string apage, 
-            string kpage, string npage, string[] facet)
+            string yr, string subj, string sinc, string lang, string col, string nt, string ntinc, string txt, string txinc, 
+            string ppage, string apage, string kpage, string npage, string[] facet)
         {
             // Prevent browser Back button page caching
             Response.Cache.SetCacheability(HttpCacheability.NoCache);  // HTTP 1.1
@@ -86,6 +86,8 @@ namespace MOBOT.BHL.Web2.Controllers
 
                 model.Params.Collection = new Tuple<string, string>(collectionID.ToString(), collectionName);
             }
+            model.Params.Notes = nt ?? string.Empty;
+            model.Params.NotesInclude = (ntinc ?? string.Empty).Trim().ToUpper();
             model.Params.Text = txt ?? string.Empty;
             model.Params.TextInclude = (txinc ?? string.Empty).Trim().ToUpper();
             int startPage;
@@ -142,6 +144,8 @@ namespace MOBOT.BHL.Web2.Controllers
                     "&subj=" + Server.UrlEncode(Request.Form["txtPubSubject"]) +
                     "&lang=" + Server.UrlEncode(Request.Form["ddlPubLanguage"]) +
                     "&col=" + Server.UrlEncode(Request.Form["ddlPubCollection"]) +
+                    "&nt=" + Server.UrlEncode(Request.Form["txtPubNote"]) +
+                    "&ntinc=" + Server.UrlEncode(Request.Form["rdoNoteInclude"]) +
                     "&txt=" + Server.UrlEncode(Request.Form["txtPubText"] ?? string.Empty) + 
                     "&txinc=" + Server.UrlEncode(Request.Form["rdoTextInclude"]) + 
                     "&SearchCat=T&stype=C&return=ADV";
@@ -298,6 +302,7 @@ namespace MOBOT.BHL.Web2.Controllers
                         model.Params.Volume, model.Params.Year, 
                         new SearchStringParam(model.Params.Subject, GetParamOperator(model.Params.SubjectInclude)), 
                         model.Params.Language, model.Params.Collection, 
+                        new SearchStringParam(model.Params.Notes, GetParamOperator(model.Params.NotesInclude)),
                         new SearchStringParam(model.Params.Text, GetParamOperator(model.Params.TextInclude)), limits);
                 }
                 if (model.Params.SearchCategory.Equals("S"))
@@ -352,7 +357,7 @@ namespace MOBOT.BHL.Web2.Controllers
                             model.Params.MaterialTypeFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
                         }
                         break;
-                    case SearchField.ItemAuthors:
+                    case SearchField.FacetItemAuthors:
                         foreach (var facetValue in facet.Value)
                         {
                             model.Params.AuthorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
@@ -370,7 +375,7 @@ namespace MOBOT.BHL.Web2.Controllers
                             model.Params.ContributorFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));
                         }
                         break;
-                    case SearchField.ItemKeywords:
+                    case SearchField.FacetItemKeywords:
                         foreach (var facetValue in facet.Value)
                         {
                             model.Params.KeywordFacets.Add(new FacetParam(facet.Key.ToString(), facetValue.Key, facetValue.Value, IsFacetLimited(facet.Key, facetValue.Key, limits)));

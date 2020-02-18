@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace MOBOT.BHL.DataObjects
 {
-	public class NameSearchPage
+    public class NameSearchPage
 	{
         private int _titleID = 0;
         private int _itemID = 0;
 		private int _pageID = 0;
-        private string _bibliographicLevelName = string.Empty;
+        private string _bibliographicLevelLabel = string.Empty;
         private string _fullTitle = string.Empty;
         private string _shortTitle = string.Empty;
         private string _partNumber = string.Empty;
@@ -44,10 +40,10 @@ namespace MOBOT.BHL.DataObjects
 			set { _pageID = value; }
 		}
 
-        public string BibliographicLevelName
+        public string BibliographicLevelLabel
         {
-            get { return _bibliographicLevelName; }
-            set { _bibliographicLevelName = value; }
+            get { return _bibliographicLevelLabel; }
+            set { _bibliographicLevelLabel = value; }
         }
 
         public string FullTitle

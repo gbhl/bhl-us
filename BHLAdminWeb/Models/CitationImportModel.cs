@@ -1,6 +1,5 @@
-﻿using CustomDataAccess;
-using Excel;
-using MOBOT.BHL.DAL;
+﻿using Excel;
+using MOBOT.BHL.AdminWeb.MVCServices;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
@@ -8,8 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
-using MOBOT.BHL.AdminWeb.MVCServices;
 
 namespace MOBOT.BHL.AdminWeb.Models
 {
@@ -465,7 +462,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         /// <param name="sortDirection">Direction of sort</param>
         public ImportRecordJson.Rootobject GetImportRecords(int importFileID, int numRows, int startRow, string sortColumn, string sortDirection)
         {
-            CustomGenericList<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(importFileID,
+            List<ImportRecord> records = new BHLProvider().ImportRecordSelectByImportFileID(importFileID,
                 numRows, startRow, sortColumn, sortDirection, 1);
 
             ImportRecordJson.Rootobject json = new ImportRecordJson.Rootobject();

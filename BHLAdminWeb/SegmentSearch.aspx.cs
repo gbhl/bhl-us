@@ -1,14 +1,11 @@
-﻿using System;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
-using CustomDataAccess;
-using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.AdminWeb
 {
@@ -37,7 +34,7 @@ namespace MOBOT.BHL.AdminWeb
             if (txtSegmentID.Text.Trim().Length == 0 && txtTitle.Text.Trim().Length == 0) return;
 
             BHLProvider bp = new BHLProvider();
-            CustomGenericList<Segment> results = new CustomGenericList<Segment>();
+            List<Segment> results = new List<Segment>();
             if (txtSegmentID.Text.Trim().Length > 0)
             {
                 Segment result = bp.SegmentSelectForSegmentID(Convert.ToInt32(txtSegmentID.Text));

@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.Script.Serialization;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
 
 namespace MOBOT.BHL.AdminWeb.Services
 {
@@ -47,7 +46,7 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             try
             {
-                CustomGenericList<Segment> segments = new CustomGenericList<Segment>();
+                List<Segment> segments = new List<Segment>();
                 if (segmentId != 0)
                 {
                     segments.Add(new BHLProvider().SegmentSelectForSegmentID(segmentId));

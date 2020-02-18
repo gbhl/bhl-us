@@ -1,11 +1,10 @@
-﻿using System;
+﻿using MOBOT.BHL.API.BHLApiDAL;
+using MOBOT.BHL.API.BHLApiDataObjects2;
+using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using CustomDataAccess;
-using MOBOT.BHL.API.BHLApiDataObjects2;
-using MOBOT.BHL.API.BHLApiDAL;
-using MOBOT.BHL.Web.Utilities;
-using MOBOT.BHL.Server;
 
 namespace MOBOT.BHL.API.BHLApi
 {
@@ -28,7 +27,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Page methods
 
-        public CustomGenericList<Name> GetPageNames(string pageID)
+        public List<Name> GetPageNames(string pageID)
         {
             // Validate the page identifier
             int pageIDInt;
@@ -134,9 +133,9 @@ namespace MOBOT.BHL.API.BHLApi
                 item.TitleUrl = (item.PrimaryTitleID == null) ? null : "https://www.biodiversitylibrary.org/bibliography/" + item.PrimaryTitleID.ToString();
                 item.ItemThumbUrl = (item.ThumbnailPageID == null) ? null : "https://www.biodiversitylibrary.org/pagethumb/" + item.ThumbnailPageID.ToString();
 
-                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 if (pages) item.Pages = this.GetItemPages(itemID, includeOcr);
@@ -146,12 +145,12 @@ namespace MOBOT.BHL.API.BHLApi
             return item;
         }
 
-        public CustomGenericList<Page> GetItemPages(string itemID)
+        public List<Page> GetItemPages(string itemID)
         {
             return this.GetItemPages(itemID, "f");
         }
 
-        public CustomGenericList<Page> GetItemPages(string itemID, string includeOcr)
+        public List<Page> GetItemPages(string itemID, string includeOcr)
         {
             // Validate the parameters
             int itemIDint;
@@ -166,8 +165,8 @@ namespace MOBOT.BHL.API.BHLApi
             bool ocr = (includeOcr.ToLower() == "t" || includeOcr.ToLower() == "true");
 
             // Get the pages
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api2DAL().PageSelectByItemID(null, null, itemIDint);
+            List<Page> pages = new List<Page>();
+            List<PageDetail> pageDetails = new Api2DAL().PageSelectByItemID(null, null, itemIDint);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -180,8 +179,8 @@ namespace MOBOT.BHL.API.BHLApi
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
                 page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + page.PageID.ToString();
-                page.PageTypes = new CustomGenericList<PageType>();
-                page.PageNumbers = new CustomGenericList<PageNumber>();
+                page.PageTypes = new List<PageType>();
+                page.PageNumbers = new List<PageNumber>();
 
                 if (ocr) page.OcrText = this.GetPageOcrText(page.PageID.ToString());
 
@@ -239,9 +238,9 @@ namespace MOBOT.BHL.API.BHLApi
                         item = dal.ItemSelectByBarcode(null, null, identifierValue);
                         if (item != null)
                         {
-                            CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                            List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                             if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                            CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                            List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                             if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                             item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -258,12 +257,12 @@ namespace MOBOT.BHL.API.BHLApi
             return item;
         }
 
-        public CustomGenericList<Item> ItemSelectUnpublished()
+        public List<Item> ItemSelectUnpublished()
         {
             return new Api2DAL().ItemSelectUnpublished(null, null);
         }
 
-        public CustomGenericList<Part> GetItemSegments(string itemID)
+        public List<Part> GetItemSegments(string itemID)
         {
             // Validate the parameters
             int itemIDint;
@@ -273,7 +272,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Api2DAL dal = new Api2DAL();
-            CustomGenericList<Part> parts = dal.SegmentSelectByItemID(null, null, itemIDint);
+            List<Part> parts = dal.SegmentSelectByItemID(null, null, itemIDint);
             foreach (Part part in parts)
             {
                 part.PartUrl = "https://www.biodiversitylibrary.org/part/" + part.PartID.ToString();
@@ -321,7 +320,7 @@ namespace MOBOT.BHL.API.BHLApi
             return title;
         }
 
-        public CustomGenericList<Item> GetTitleItems(string titleID)
+        public List<Item> GetTitleItems(string titleID)
         {
             // Validate the parameters
             int titleIDint;
@@ -331,12 +330,12 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Get the items
-            CustomGenericList<Item> items = new Api2DAL().ItemSelectByTitleID(null, null, titleIDint);
+            List<Item> items = new Api2DAL().ItemSelectByTitleID(null, null, titleIDint);
             foreach (Item item in items)
             {
-                CustomGenericList<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
+                List<Contributor> scanningInstitutions = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Scanning Institution");
                 if (scanningInstitutions.Count > 0) item.ScanningInstitution = scanningInstitutions[0].ContributorName;
-                CustomGenericList<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
+                List<Contributor> rightsHolders = new Api2DAL().InstitutionSelectByItemIDAndRole(null, null, item.ItemID, "Rights Holder");
                 if (rightsHolders.Count > 0) item.RightsHolder = rightsHolders[0].ContributorName;
 
                 item.ItemUrl = "https://www.biodiversitylibrary.org/item/" + item.ItemID.ToString();
@@ -347,9 +346,9 @@ namespace MOBOT.BHL.API.BHLApi
             return items;
         }
 
-        public CustomGenericList<Title> GetTitleByIdentifier(string identifierType, string identifierValue)
+        public List<Title> GetTitleByIdentifier(string identifierType, string identifierValue)
         {
-            CustomGenericList<Title> titles = new CustomGenericList<Title>();
+            List<Title> titles = new List<Title>();
 
             switch (identifierType.ToLower())
             {
@@ -402,7 +401,7 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Title> TitleSearchSimple(string title, bool fullText)
+        public List<Title> TitleSearchSimple(string title, bool fullText)
         {
             if (fullText)
                 return new Api2DAL().SearchTitleSimple(null, null, title);
@@ -436,7 +435,7 @@ namespace MOBOT.BHL.API.BHLApi
             return provider.ItemSelectRISCitationsForTitleID(titleIDint);
         }
 
-        public CustomGenericList<Title> TitleSelectUnpublished()
+        public List<Title> TitleSelectUnpublished()
         {
             return new Api2DAL().TitleSelectUnpublished(null, null);
         }
@@ -474,7 +473,7 @@ namespace MOBOT.BHL.API.BHLApi
             return part;
         }
 
-        public CustomGenericList<Name> GetSegmentNames(string segmentID)
+        public List<Name> GetSegmentNames(string segmentID)
         {
             // Validate the page identifier
             int segmentIDInt;
@@ -487,14 +486,14 @@ namespace MOBOT.BHL.API.BHLApi
             return new Api2DAL().NameSegmentSelectBySegmentID(null, null, segmentIDInt);
         }
 
-        public CustomGenericList<Part> SegmentSelectUnpublished()
+        public List<Part> SegmentSelectUnpublished()
         {
             return new Api2DAL().SegmentSelectUnpublished(null, null);
         }
 
-        public CustomGenericList<Part> GetSegmentByIdentifier(string identifierType, string identifierValue)
+        public List<Part> GetSegmentByIdentifier(string identifierType, string identifierValue)
         {
-            CustomGenericList<Part> parts = new CustomGenericList<Part>();
+            List<Part> parts = new List<Part>();
 
             switch (identifierType.ToLower())
             {
@@ -558,11 +557,11 @@ namespace MOBOT.BHL.API.BHLApi
             return parts;
         }
 
-        private CustomGenericList<Page> GetSegmentPages(int segmentID)
+        private List<Page> GetSegmentPages(int segmentID)
         {
             // Get the pages
-            CustomGenericList<Page> pages = new CustomGenericList<Page>();
-            CustomGenericList<PageDetail> pageDetails = new Api2DAL().PageSelectBySegmentID(null, null, segmentID);
+            List<Page> pages = new List<Page>();
+            List<PageDetail> pageDetails = new Api2DAL().PageSelectBySegmentID(null, null, segmentID);
             foreach (PageDetail pageDetail in pageDetails)
             {
                 Page page = new Page();
@@ -575,8 +574,8 @@ namespace MOBOT.BHL.API.BHLApi
                 page.ThumbnailUrl = "https://www.biodiversitylibrary.org/pagethumb/" + page.PageID.ToString();
                 page.FullSizeImageUrl = "https://www.biodiversitylibrary.org/pageimage/" + page.PageID.ToString();
                 page.OcrUrl = "https://www.biodiversitylibrary.org/pagetext/" + page.PageID.ToString();
-                page.PageTypes = new CustomGenericList<PageType>();
-                page.PageNumbers = new CustomGenericList<PageNumber>();
+                page.PageTypes = new List<PageType>();
+                page.PageNumbers = new List<PageNumber>();
 
                 if (pageDetail.PageTypeName != string.Empty)
                 {
@@ -649,7 +648,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Subject methods
 
-        public CustomGenericList<Subject> SubjectSearch(string subject, bool fullText)
+        public List<Subject> SubjectSearch(string subject, bool fullText)
         {
             Api2DAL dal = new Api2DAL();
             if (fullText)
@@ -658,9 +657,9 @@ namespace MOBOT.BHL.API.BHLApi
                 return dal.TitleKeywordSelectLikeTag(null, null, subject);
         }
 
-        public CustomGenericList<Title> GetSubjectTitles(string subject)
+        public List<Title> GetSubjectTitles(string subject)
         {
-            CustomGenericList<Title> titles = new Api2DAL().TitleSelectByKeyword(null, null, subject);
+            List<Title> titles = new Api2DAL().TitleSelectByKeyword(null, null, subject);
 
             foreach(Title title in titles)
             {
@@ -670,10 +669,10 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Part> GetSubjectSegments(string subject)
+        public List<Part> GetSubjectSegments(string subject)
         {
             Api2DAL dal = new Api2DAL();
-            CustomGenericList<Part> parts = dal.SegmentSelectByKeyword(null, null, subject);
+            List<Part> parts = dal.SegmentSelectByKeyword(null, null, subject);
 
             foreach (Part part in parts)
             {
@@ -689,9 +688,9 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Author methods
 
-        public CustomGenericList<Creator> AuthorSearch(string name, bool fullText)
+        public List<Creator> AuthorSearch(string name, bool fullText)
         {
-            CustomGenericList<Creator> creators = null;
+            List<Creator> creators = null;
 
             if (fullText)
                 creators = new Api2DAL().SearchAuthor(null, null, name);
@@ -706,7 +705,7 @@ namespace MOBOT.BHL.API.BHLApi
             return creators;
         }
 
-        public CustomGenericList<Title> GetAuthorTitles(string creatorID)
+        public List<Title> GetAuthorTitles(string creatorID)
         {
             // Validate the parameters
             int creatorIDint;
@@ -715,7 +714,7 @@ namespace MOBOT.BHL.API.BHLApi
                 throw new Exception("creatorID (" + creatorID + ") must be a valid integer value.");
             }
 
-            CustomGenericList<Title> titles = new Api2DAL().TitleSelectByAuthor(null, null, creatorIDint);
+            List<Title> titles = new Api2DAL().TitleSelectByAuthor(null, null, creatorIDint);
 
             foreach (Title title in titles)
             {
@@ -725,7 +724,7 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Part> GetAuthorSegments(string creatorID)
+        public List<Part> GetAuthorSegments(string creatorID)
         {
             // Validate the parameters
             int creatorIDint;
@@ -735,7 +734,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             Api2DAL dal = new Api2DAL();
-            CustomGenericList<Part> parts = dal.SegmentSelectByAuthor(null, null, creatorIDint);
+            List<Part> parts = dal.SegmentSelectByAuthor(null, null, creatorIDint);
 
             foreach (Part part in parts)
             {
@@ -797,7 +796,7 @@ namespace MOBOT.BHL.API.BHLApi
 
             try
             {
-                CustomGenericList<PageDetail> pageDetails = null;
+                List<PageDetail> pageDetails = null;
                 if (!string.IsNullOrEmpty(nameBankID))
                 {
                     pageDetails = new Api2DAL().PageSelectByNameBankID(null, null, nameBankID);
@@ -813,7 +812,7 @@ namespace MOBOT.BHL.API.BHLApi
                     name = new Name();
                     name.NameBankID = pageDetails[0].NameBankID;
                     name.NameConfirmed = pageDetails[0].NameConfirmed;
-                    name.Titles = new CustomGenericList<Title>();
+                    name.Titles = new List<Title>();
 
                     currentTitle = new Title();
                     currentItem = new Item();
@@ -833,7 +832,7 @@ namespace MOBOT.BHL.API.BHLApi
                             title.PublicationDate = pageDetail.PublicationDate;
                             title.CallNumber = pageDetail.CallNumber;
                             title.TitleUrl = pageDetail.TitleUrl;
-                            title.Items = new CustomGenericList<Item>();
+                            title.Items = new List<Item>();
                             name.Titles.Add(title);
                             currentTitle = title;
                         }
@@ -848,7 +847,7 @@ namespace MOBOT.BHL.API.BHLApi
                             item.Volume = pageDetail.VolumeInfo;
                             item.HoldingInstitution = pageDetail.HoldingInstitution;
                             item.ItemUrl = pageDetail.ItemUrl;
-                            item.Pages = new CustomGenericList<Page>();
+                            item.Pages = new List<Page>();
                             currentTitle.Items.Add(item);
                             currentItem = item;
                         }
@@ -866,11 +865,11 @@ namespace MOBOT.BHL.API.BHLApi
                             page.ThumbnailUrl = pageDetail.ThumbnailUrl;
                             page.FullSizeImageUrl = pageDetail.FullSizeImageUrl;
                             page.OcrUrl = pageDetail.OcrUrl;
-                            page.PageNumbers = new CustomGenericList<PageNumber>();
+                            page.PageNumbers = new List<PageNumber>();
                             page.PageNumbers.Add(new PageNumber(pageDetail.Prefix, pageDetail.Number));
 
                             // Get the page types
-                            page.PageTypes = new CustomGenericList<PageType>();
+                            page.PageTypes = new List<PageType>();
                             if (pageDetail.PageTypeName != String.Empty)
                             {
                                 string[] pageTypes = pageDetail.PageTypeName.Split(',');
@@ -903,7 +902,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
         }
 
-        public CustomGenericList<Name> NameList(string startRow, string batchSize)
+        public List<Name> NameList(string startRow, string batchSize)
         {
             // Validate the input
             int startRowValid;
@@ -913,7 +912,7 @@ namespace MOBOT.BHL.API.BHLApi
             return new Api2DAL().NameResolvedListActive(null, null, startRowValid, batchSizeValid);
         }
 
-        public CustomGenericList<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
+        public List<Name> NameListBetweenDates(string startRow, string batchSize, string startDate, string endDate)
         {
             // Validate the input
             int startRowValid;
@@ -934,7 +933,7 @@ namespace MOBOT.BHL.API.BHLApi
             return new Api2DAL().NameResolvedListActiveBetweenDates(null, null, startRowValid, batchSizeValid, startDT, endDT);
         }
 
-        public CustomGenericList<Name> NameSearch(string name)
+        public List<Name> NameSearch(string name)
         {
             if (name == String.Empty)
             {
@@ -983,7 +982,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Language methods
 
-        public CustomGenericList<Language> GetLanguages()
+        public List<Language> GetLanguages()
         {
             // Get the languages from the DAL
             return new Api2DAL().LanguageSelectWithPublishedItems(null, null);
@@ -993,7 +992,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Collection methods
 
-        public CustomGenericList<Collection> GetCollections()
+        public List<Collection> GetCollections()
         {
             // Get the collections from the DAL
             return new Api2DAL().CollectionSelectActive(null, null);
@@ -1003,7 +1002,7 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Search methods
 
-        public CustomGenericList<Title> SearchBook(string title, string authorLastName, string volume, string edition,
+        public List<Title> SearchBook(string title, string authorLastName, string volume, string edition,
             string year, string subject, string languageCode, string collectionID, int returnCount, bool fullText)
         {
             // Validate the parameters
@@ -1033,7 +1032,7 @@ namespace MOBOT.BHL.API.BHLApi
             Api2DAL dal = new Api2DAL();
 
             // Get the list of books
-            CustomGenericList<SearchBookResult> books = null;
+            List<SearchBookResult> books = null;
             if (fullText)
             {
                 books = dal.SearchBookFullText(null, null, title, authorLastName, volume, edition,
@@ -1048,7 +1047,7 @@ namespace MOBOT.BHL.API.BHLApi
             }
 
             // Build the list of titles (with item, creator, and collection information) to return
-            CustomGenericList<Title> titles = new CustomGenericList<Title>();
+            List<Title> titles = new List<Title>();
             int prevTitleID = 0;
             Title currentTitle = null;
             foreach (SearchBookResult book in books)
@@ -1057,7 +1056,7 @@ namespace MOBOT.BHL.API.BHLApi
                 {
                     prevTitleID = book.TitleID;
                     currentTitle = new Title();
-                    currentTitle.Items = new CustomGenericList<Item>();
+                    currentTitle.Items = new List<Item>();
 
                     currentTitle.TitleID = book.TitleID;
                     currentTitle.TitleUrl = "https://www.biodiversitylibrary.org/bibliography/" + book.TitleID.ToString();
@@ -1070,10 +1069,10 @@ namespace MOBOT.BHL.API.BHLApi
                     currentTitle.PublicationDate = book.PublicationDate;
                     currentTitle.Authors = dal.AuthorSelectByTitleID(null, null, book.TitleID);
 
-                    CustomGenericList<Collection> titleCollections = dal.CollectionSelectByTitleID(null, null, book.TitleID);
+                    List<Collection> titleCollections = dal.CollectionSelectByTitleID(null, null, book.TitleID);
                     foreach (Collection collection in titleCollections)
                     {
-                        if (currentTitle.Collections == null) currentTitle.Collections = new CustomGenericList<Collection>();
+                        if (currentTitle.Collections == null) currentTitle.Collections = new List<Collection>();
                         Collection newCollection = new Collection();
                         newCollection.CollectionID = collection.CollectionID;
                         newCollection.CollectionName = collection.CollectionName;
@@ -1090,10 +1089,10 @@ namespace MOBOT.BHL.API.BHLApi
                 newItem.Volume = book.Volume;
                 newItem.HoldingInstitution = book.HoldingInstitution;
 
-                CustomGenericList<Collection> itemCollections = dal.CollectionSelectByItemID(null, null, book.ItemID);
+                List<Collection> itemCollections = dal.CollectionSelectByItemID(null, null, book.ItemID);
                 foreach (Collection collection in itemCollections)
                 {
-                    if (newItem.Collections == null) newItem.Collections = new CustomGenericList<Collection>();
+                    if (newItem.Collections == null) newItem.Collections = new List<Collection>();
                     Collection newCollection = new Collection();
                     newCollection.CollectionID = collection.CollectionID;
                     newCollection.CollectionName = collection.CollectionName;
@@ -1106,7 +1105,7 @@ namespace MOBOT.BHL.API.BHLApi
             return titles;
         }
 
-        public CustomGenericList<Part> SearchSegment(string title, string containerTitle, string author, string date, 
+        public List<Part> SearchSegment(string title, string containerTitle, string author, string date, 
             string volume, string series, string issue, int returnCount, string sortBy, bool fullText)
         {
             // Validate the parameters
@@ -1118,7 +1117,7 @@ namespace MOBOT.BHL.API.BHLApi
             Api2DAL dal = new Api2DAL();
 
             // Get the list of segments
-            CustomGenericList<Part> parts = null;
+            List<Part> parts = null;
             if (fullText)
             {
                 parts = dal.SearchSegmentFullText(null, null, title, containerTitle, author, date, volume, 
@@ -1274,10 +1273,10 @@ namespace MOBOT.BHL.API.BHLApi
 
         #region Institution methods
 
-        public CustomGenericList<Institution> GetInstitutions()
+        public List<Institution> GetInstitutions()
         {
             Api2DAL dal = new Api2DAL();
-            CustomGenericList<Institution> institutions = dal.InstitutionSelectAll(null, null);
+            List<Institution> institutions = dal.InstitutionSelectAll(null, null);
             return institutions;
         }
 

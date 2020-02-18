@@ -392,7 +392,7 @@
 				<td colspan="4" style="width: 100%"><asp:DropDownList ID="ddlContributor2" DataTextField="InstitutionName" DataValueField="InstitutionCode" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Genre:</td>
+				<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Type:</td>
 				<td><asp:DropDownList ID="ddlSegmentGenre" DataTextField="GenreName" DataValueField="SegmentGenreID" runat="server"></asp:DropDownList></td>
 			</tr>
 			<tr>

@@ -56,7 +56,7 @@ namespace BHL.Search.SQL
         }
 
         public List<IHit> SearchItem(string title, string author, string volume, string year, string subject,
-            string languageCode, string collectionID, out long totalHits, int startPage = 1, int pageSize = 10)
+            string languageCode, string collectionID, string notes, out long totalHits, int startPage = 1, int pageSize = 10)
         {
             List<IHit> pubs = new List<IHit>();
             totalHits = 0;
@@ -97,6 +97,8 @@ namespace BHL.Search.SQL
                         paramCollection.Value = null;
                     else
                         paramCollection.Value = collectionNum;
+                    SqlParameter paramNotes = sqlCommand.Parameters.Add("@NoteText", SqlDbType.NVarChar, 1073741823);
+                    paramNotes.Value = notes;
                     SqlParameter paramStartPage = sqlCommand.Parameters.Add("@StartPage", SqlDbType.Int);
                     paramStartPage.Value = startPage;
                     SqlParameter paramPageSize = sqlCommand.Parameters.Add("@PageSize", SqlDbType.Int);
