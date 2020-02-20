@@ -74,6 +74,24 @@
                     <a href="/advsearch" title="Advanced Search">advanced search</a>
                     <input type="text" name="searchTerm" id="searchTerm" class="field" />
                     <input type="submit" id="btnSearchSubmit" class="button" value="submit" />
+                    @if (System.Web.Configuration.WebConfigurationManager.AppSettings["IIIFState"] == "toggle")
+                    {
+                        <style>
+                            #book-master header #iiifLink a {
+                                font-size: 12px;
+                                color: #ff8400;
+                                font-weight: bold;
+                                text-decoration: none
+                            }
+
+                                #book-master header #iiifLink a:hover, #iiifLink a:active {
+                                    color: #949494;
+                                }
+                        </style>
+                        <div id="iiifLink" style="float:right; margin-top:30px;">
+                            <a href="@ViewBag.IIIFLinkTarget?iiif=0">Use the "Classic" Book Viewer</a>
+                        </div>
+                    }
                 </form>
             </div>
         </div>

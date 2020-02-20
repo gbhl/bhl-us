@@ -187,6 +187,9 @@ namespace MOBOT.BHL.Web2
                         Response.Redirect("~/itemunavailable");
                     }
 
+                    // IIIF toggle action
+                    if (ViewerRedirect()) Response.Redirect("/iiif" + Request.Url.AbsolutePath);
+
                     Page firstPage = null;
                     int? sequenceOrder = PageSummary.SequenceOrder;
                     mendeley.ItemID = PageSummary.ItemID;
@@ -602,6 +605,45 @@ Append("</a>").
             }
 
             return containsAuthor;
+        }
+
+        /// <summary>
+        /// Toggle IIIF behavior
+        /// </summary>
+        /// <returns></returns>
+        private bool ViewerRedirect()
+        {
+            bool redirect = false;
+            bool switchViewer = false;
+
+            // If IIIF usage is turned on, immediately redirect to the original search
+            if (ConfigurationManager.AppSettings["IIIFState"] == "on") return true;
+
+            // If IIIF usage is turned off, never redirect
+            if (ConfigurationManager.AppSettings["IIIFState"] == "off") return false;
+
+            // Toggle mode, so need to see if user switched to or from IIIF viewing
+
+            // User requested to switch to iiif book viewer, so set cookie
+            if (Request.QueryString["iiif"] == "0")
+            {
+                // Set cookie to use the iiif viewer
+                System.Web.HttpCookie cookie = new System.Web.HttpCookie("iiifviewer");
+                cookie.Value = "0";
+                cookie.Expires = DateTime.Now.AddDays(7);
+                cookie.Domain = ".biodiversitylibrary.org";
+                Response.Cookies.Add(cookie);
+
+                switchViewer = true;
+            }
+
+            // If IIIF viewer cookie exists, then check its value to determine if redirect is needed
+            if (Request.Cookies["iiifviewer"] != null && !switchViewer)
+            {
+                if (Request.Cookies["iiifviewer"].Value == "1") redirect = true;
+            }
+
+            return redirect;
         }
     }
 }

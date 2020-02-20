@@ -51,12 +51,6 @@ namespace MOBOT.BHL.Web2
                 routes.MapPageRoute("Advanced-Search", "advsearch", "~/AdvancedSearch.aspx");
             }
 
-            routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
-            routes.MapRoute("IIIFTextManifest", "iiif/{itemId}/text/{pageSeq}", new { controller = "IIIF", action = "TextManifest" });
-            routes.MapRoute("IIIFNameManifest", "iiif/{itemId}/names/{pageSeq}", new { controller = "IIIF", action = "NameManifest" });
-            routes.MapRoute("IIIFItem", "iiif/item/{itemId}", new { controller = "IIIF", action = "Item" });
-            routes.MapRoute("IIIFPage", "iiif/page/{pageId}", new { controller = "IIIF", action = "Page" });
-
             routes.MapPageRoute("Browse-TitleList", "browse/titles/{start}/{*sort}", "~/TitleList.aspx", false,
                 new RouteValueDictionary { {"start", "a"}, {"sort",""} } );
 
@@ -101,9 +95,29 @@ namespace MOBOT.BHL.Web2
 
             routes.MapPageRoute("Title", "title/{titleid}", "~/TitlePage.aspx");
 
-            routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
-
-            routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
+            if (ConfigurationManager.AppSettings["IIIFState"] == "off") // IIIF disabled
+            {
+                routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
+                routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
+            }
+            else if (ConfigurationManager.AppSettings["IIIFState"] == "on")  // IIIF enabled
+            {
+                routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
+                routes.MapRoute("IIIFTextManifest", "iiif/{itemId}/text/{pageSeq}", new { controller = "IIIF", action = "TextManifest" });
+                routes.MapRoute("IIIFNameManifest", "iiif/{itemId}/names/{pageSeq}", new { controller = "IIIF", action = "NameManifest" });
+                routes.MapRoute("Item", "item/{itemId}", new { controller = "IIIF", action = "Item" });
+                routes.MapRoute("Page", "page/{pageId}", new { controller = "IIIF", action = "Page" });
+            }
+            else // toggle
+            {
+                routes.MapRoute("IIIFManifest", "iiif/{itemId}/manifest", new { controller = "IIIF", action = "Manifest" });
+                routes.MapRoute("IIIFTextManifest", "iiif/{itemId}/text/{pageSeq}", new { controller = "IIIF", action = "TextManifest" });
+                routes.MapRoute("IIIFNameManifest", "iiif/{itemId}/names/{pageSeq}", new { controller = "IIIF", action = "NameManifest" });
+                routes.MapRoute("IIIFItem", "iiif/item/{itemId}", new { controller = "IIIF", action = "Item" });
+                routes.MapRoute("IIIFPage", "iiif/page/{pageId}", new { controller = "IIIF", action = "Page" });
+                routes.MapPageRoute("Item", "item/{itemid}", "~/TitlePage.aspx");
+                routes.MapPageRoute("Page", "page/{pageid}", "~/TitlePage.aspx");
+            }
 
             routes.Add("PageThumb", new Route("pagethumb/{pageid},{w},{h}", new HttpHandlerRouteHandler<GetPageThumb>()));
 

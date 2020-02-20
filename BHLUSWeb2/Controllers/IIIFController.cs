@@ -12,6 +12,8 @@ namespace MOBOT.BHL.Web2.Controllers
         [HttpGet]
         public ActionResult Item(string itemId)
         {
+            if (ViewerRedirect()) return new RedirectResult("/item/" + itemId); // IIIF toggle action
+
             BHLProvider provider = new BHLProvider();
             PageSummaryView page = provider.PageSummarySelectByItemId(Convert.ToInt32(itemId), true);
 
@@ -29,6 +31,7 @@ namespace MOBOT.BHL.Web2.Controllers
             // Get the details of the first page to display
             Page firstPage = provider.PageSelectFirstPageForItem(Convert.ToInt32(itemId));
 
+            ViewBag.IIIFLinkTarget = "/item/" + itemId; // Used for IIIF toggle
             ViewBag.ItemID = itemId;
             ViewBag.PageSequence = (firstPage == null ? 1 : firstPage.SequenceOrder);
             ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
@@ -38,6 +41,8 @@ namespace MOBOT.BHL.Web2.Controllers
 
         public ActionResult Page(string pageId)
         {
+            if (ViewerRedirect()) return new RedirectResult("/page/" + pageId); // IIIF toggle action
+
             PageSummaryView page = new BHLProvider().PageSummarySelectByPageId(Convert.ToInt32(pageId), true);
 
             // Check to make sure this item is found, is published, and hasn't been replaced.  If it has been replaced, redirect to the appropriate itemid.  
@@ -46,6 +51,7 @@ namespace MOBOT.BHL.Web2.Controllers
             if (page.RedirectItemID != null) return new RedirectResult("~/item/" + page.RedirectItemID);
             if (page.ItemStatusID != 40) return new RedirectResult("~/itemunavailable");
 
+            ViewBag.IIIFLinkTarget = "/page/" + pageId; // Used for IIIF toggle
             ViewBag.ItemID = page.ItemID;
             ViewBag.PageSequence = page.SequenceOrder;
             ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
@@ -112,6 +118,34 @@ namespace MOBOT.BHL.Web2.Controllers
 
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
+        }
+
+        /// <summary>
+        /// Toggle IIIF behavior
+        /// </summary>
+        /// <returns></returns>
+        private bool ViewerRedirect()
+        {
+            // If IIIF usage is turned off, immediately redirect to the original search
+            if (ConfigurationManager.AppSettings["IIIFState"] == "off") return true;
+
+            // If IIIF usage is turned on, never redirect
+            if (ConfigurationManager.AppSettings["IIIFState"] == "on") return false;
+
+            // Toggle mode
+
+            // User requested to switch to iiif book viewer, so set cookie to enable IIIF viewer for seven days
+            if (Request.QueryString["iiif"] == "1") 
+            {
+                // Set cookie to use the iiif viewer
+                System.Web.HttpCookie cookie = new System.Web.HttpCookie("iiifviewer");
+                cookie.Value = "1";
+                cookie.Expires = DateTime.Now.AddDays(7);
+                cookie.Domain = ".biodiversitylibrary.org";
+                Response.Cookies.Add(cookie);
+            }
+
+            return false;
         }
     }
 }

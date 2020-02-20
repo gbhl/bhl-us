@@ -76,6 +76,22 @@
                         <a href="/advsearch" title="Advanced Search">advanced search</a>
         	            <asp:TextBox id="tbSearchTerm" CssClass="field" runat="server" ClientIDMode="Static" />
                         <asp:Button id="btnSearchSubmit" CssClass="button" runat="server" Text="submit" OnClick="btnSearchSubmit_Click" ClientIDMode="Static" />
+                        <%if (System.Configuration.ConfigurationManager.AppSettings["IIIFState"] == "toggle") {%>
+                        <style>
+					        #book-master header #iiifLink a {
+						        font-size:12px;
+						        color:#ff8400;
+						        font-weight:bold;
+						        text-decoration:none
+					        }
+					        #book-master header #iiifLink a:hover, #iiifLink a:active {
+						        color: #949494;
+					        }
+                        </style>
+                        <div id="iiifLink" style="float:right; margin-top:33px;">
+                            <a href="/iiif<%: Request.Url.AbsolutePath %>?iiif=1">Use the IIIF Book Viewer</a>
+                        </div>
+                        <%} %>
                     </div>
                 </div>
             </header>

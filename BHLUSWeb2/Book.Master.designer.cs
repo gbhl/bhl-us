@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.Web2 {
-    
-    
-    public partial class Book {
-        
+namespace MOBOT.BHL.Web2
+{
+
+
+    public partial class Book
+    {
+
         /// <summary>
         /// Head1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-        
+
         /// <summary>
         /// PageHeaderIncludesPlaceHolder control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder PageHeaderIncludesPlaceHolder;
-        
+
         /// <summary>
         /// Form1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
-        
+
         /// <summary>
         /// rdoSearchTypeF control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeF;
-        
+
         /// <summary>
         /// rdoSearchTypeC control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeC;
-        
+
         /// <summary>
         /// tbSearchTerm control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearchTerm;
-        
+
         /// <summary>
         /// btnSearchSubmit control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearchSubmit;
-        
+
         /// <summary>
         /// divAlert control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAlert;
-        
+
         /// <summary>
         /// litAlertMessage control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litAlertMessage;
-        
+
         /// <summary>
         /// mainContentPlaceHolder control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace MOBOT.BHL.Web2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder mainContentPlaceHolder;
-        
+
         /// <summary>
         /// scriptContentPlaceHolder control.
         /// </summary>

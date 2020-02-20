@@ -24,6 +24,9 @@
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="https://beta.biodiversitylibrary.org/oai"/>
 
+    <!-- Feature toggle for IIIF implementation:  Valid values are "on", "off", and "toggle" -->
+    <add key="IIIFState" value="off" />
+    
     <!-- Feature toggle for ElasticSearch implementation -->
     <add key="UseElasticSearch" value="false"/>
     <add key="DebugSearch" value="true" />
