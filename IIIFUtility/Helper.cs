@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Xml;
+using System.Configuration;
 
 namespace BHL.IIIF
 {
@@ -16,50 +17,87 @@ namespace BHL.IIIF
 
             WebClient wc = new WebClient();
             XmlDocument xml = new XmlDocument();
-            xml.Load(wc.OpenRead(string.Format("https://www.archive.org/download/{0}/{1}", barCode, item.ScandataFilename)));
 
-            String nsPrefix = String.Empty;
-            XmlNamespaceManager nsmgr = null;
-            XmlNodeList pages = xml.SelectNodes("book/pageData/page");
+            bool loaded = true;
 
-            // If we didn't find any pages in the file, try again... after first
-            // adding a namespace to the XML document
-            if (pages.Count == 0)
+            // Load the scandata.xml file
+            PageSummaryView psv = new BHLProvider().PageSummarySelectByItemId(itemId, true);
+            string filePath = psv.OCRFolderShare + "\\" + psv.FileRootFolder + "\\" + psv.BarCode + "_scandata.xml";
+            try
             {
-                nsmgr = new XmlNamespaceManager(xml.NameTable);
-                nsmgr.AddNamespace("ns", "http://archive.org/scribe/xml");
-                nsPrefix = "ns:";
-                pages = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "pageData/" + nsPrefix + "page", nsmgr);
+                // Local for a local copy first
+                System.IO.StringReader reader = new System.IO.StringReader(
+                    new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filePath)
+                    );
+                xml.Load(reader);
+            }
+            catch
+            {
+                // No local file found; look for a remote copy (at Internet Archive)
+                try
+                {
+                    xml.Load(wc.OpenRead(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], barCode, item.ScandataFilename)));
+                }
+                catch
+                {
+                    // Direct path to scandata file failed, try scandata.zip instead
+                    try
+                    {
+                        xml.Load(wc.OpenRead(string.Format(ConfigurationManager.AppSettings["IADownloadScandataLink"], barCode)));
+                    }
+                    catch (Exception ex)
+                    {
+                        MOBOT.BHL.Web.Utilities.ExceptionUtility.LogException(ex, "BHL.IIIF.Helper.GetScandata");
+                        loaded = false;
+                    }
+                }
             }
 
             ScanData scanData = new ScanData();
-            int sequence = 1;
-            int displaySequence = 1;
-            foreach (XmlNode page in pages)
+            if (loaded)
             {
-                if (sequence == 1) if (page.Attributes["leafNum"] != null) scanData.StartLeafNumber = Convert.ToInt32(page.Attributes["leafNum"].Value);
+                String nsPrefix = String.Empty;
+                XmlNamespaceManager nsmgr = null;
+                XmlNodeList pages = xml.SelectNodes("book/pageData/page");
 
-                PageScanData pageScanData = new PageScanData();
-                pageScanData.Sequence = sequence;
-                XmlNode addToAccessFormatsNode = page.SelectSingleNode(nsPrefix + "addToAccessFormats", nsmgr);
-                if (addToAccessFormatsNode != null) pageScanData.Display = Convert.ToBoolean(addToAccessFormatsNode.InnerText);
-                XmlNode heightNode = page.SelectSingleNode(nsPrefix + "origHeight", nsmgr);
-                if (heightNode != null) pageScanData.Height = Convert.ToInt32(heightNode.InnerText);
-                XmlNode widthNode = page.SelectSingleNode(nsPrefix + "origWidth", nsmgr);
-                if (widthNode != null) pageScanData.Width = Convert.ToInt32(widthNode.InnerText);
+                // If we didn't find any pages in the file, try again... after first
+                // adding a namespace to the XML document
+                if (pages.Count == 0)
+                {
+                    nsmgr = new XmlNamespaceManager(xml.NameTable);
+                    nsmgr.AddNamespace("ns", "http://archive.org/scribe/xml");
+                    nsPrefix = "ns:";
+                    pages = xml.SelectNodes(nsPrefix + "book/" + nsPrefix + "pageData/" + nsPrefix + "page", nsmgr);
+                }
 
-                if (pageScanData.Display)
+                int sequence = 1;
+                int displaySequence = 1;
+                foreach (XmlNode page in pages)
                 {
-                    scanData.ShowPageCount++;
-                    pageScanData.DisplaySequence = displaySequence;
-                    displaySequence++;
+                    if (sequence == 1) if (page.Attributes["leafNum"] != null) scanData.StartLeafNumber = Convert.ToInt32(page.Attributes["leafNum"].Value);
+
+                    PageScanData pageScanData = new PageScanData();
+                    pageScanData.Sequence = sequence;
+                    XmlNode addToAccessFormatsNode = page.SelectSingleNode(nsPrefix + "addToAccessFormats", nsmgr);
+                    if (addToAccessFormatsNode != null) pageScanData.Display = Convert.ToBoolean(addToAccessFormatsNode.InnerText);
+                    XmlNode heightNode = page.SelectSingleNode(nsPrefix + "origHeight", nsmgr);
+                    if (heightNode != null) pageScanData.Height = Convert.ToInt32(heightNode.InnerText);
+                    XmlNode widthNode = page.SelectSingleNode(nsPrefix + "origWidth", nsmgr);
+                    if (widthNode != null) pageScanData.Width = Convert.ToInt32(widthNode.InnerText);
+
+                    if (pageScanData.Display)
+                    {
+                        scanData.ShowPageCount++;
+                        pageScanData.DisplaySequence = displaySequence;
+                        displaySequence++;
+                    }
+                    else
+                    {
+                        scanData.HidePageCount++;
+                    }
+                    scanData.Pages.Add(pageScanData);
+                    sequence++;
                 }
-                else
-                {
-                    scanData.HidePageCount++;
-                }
-                scanData.Pages.Add(pageScanData);
-                sequence++;
             }
 
             return scanData;

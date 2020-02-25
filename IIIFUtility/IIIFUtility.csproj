@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,9 +57,17 @@
       <Project>{65499e9e-4829-469e-8b5e-3f96012649af}</Project>
       <Name>BHLDataObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BHLFileAccess\BHLFileAccess.csproj">
+      <Project>{90020027-ad6a-4052-820e-057bebaa8e2e}</Project>
+      <Name>BHLFileAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BHLServer\BHLServer.csproj">
       <Project>{20fc0f67-c32a-46fe-9ff2-ba5fc74725af}</Project>
       <Name>BHLServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLWebUtilities\BHLWebUtilities.csproj">
+      <Project>{7e1631e8-f28a-4f9e-97e4-f8a69522d9dd}</Project>
+      <Name>BHLWebUtilities</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>
