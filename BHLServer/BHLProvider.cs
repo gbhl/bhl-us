@@ -159,123 +159,15 @@ namespace MOBOT.BHL.Server
 
             switch (resolverName)
             {
-                case "GNRD":
-                    nameFinderResponses = this.GetNamesFromOcrGNRD(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
-                    break;
                 case "TaxonFinder":
+                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    break;
+                case "GNFinder":
                 default:
-                    nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, useRemoteFileAccessProvider);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
                     break;
             }
 
-            return nameFinderResponses;
-        }
-
-        /// <summary>
-        /// Use the TaxonFinder service to extract names from the OCR for a page.
-        /// </summary>
-        /// <param name="pageID"></param>
-        /// <param name="useRemoteFileAccessProvider"></param>
-        /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool useRemoteFileAccessProvider)
-        {
-            bool tooLarge = false;
-            string webServiceUrl = string.Empty;
-
-            PageSummaryView ps = this.PageSummarySelectByPageId(pageID);
-            string filepath = ps.OcrTextLocation;
-
-            if (this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileSizeInKB(filepath) <= 5)
-            {
-                // OCR text not too large for URI, so send it in the UBIO request
-
-                // Get the OCR text and start to build the UBIO url
-                string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
-                StringBuilder webServiceUrlSB = new StringBuilder();
-                webServiceUrlSB.Append(ConfigurationManager.AppSettings["TaxonFinderRequestText"]);
-                webServiceUrlSB.Append(System.Web.HttpUtility.UrlEncode(ocrText));
-
-                // Add the existing page names for this Page to the UBIO url
-                CustomGenericList<NamePage> namePages = this.NamePageSelectByPageID(pageID);
-                foreach (NamePage namePage in namePages)
-                {
-                    webServiceUrlSB.Append(System.Web.HttpUtility.UrlEncode("  " + namePage.NameString));
-                }
-
-                // Get the final UBIO url
-                webServiceUrl = webServiceUrlSB.ToString();
-
-                // If the url is too large after all UrlEncoding is complete, just send the file path
-                if (((long)webServiceUrl.Length / 1024) > 5)
-                    tooLarge = true;
-            }
-            else
-            {
-                tooLarge = true;
-            }
-
-            // OCR text is too large, so just send the file path
-            if (tooLarge)
-                webServiceUrl = String.Format(ConfigurationManager.AppSettings["TaxonFinderRequestUrl"], pageID.ToString());
-
-            List<NameFinderResponse> nameFinderResponses = new List<NameFinderResponse>();
-            XmlTextReader reader = null;
-            try
-            {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
-                req.Method = "POST";
-                req.Timeout = 15000;
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                reader = new XmlTextReader((System.IO.Stream)resp.GetResponseStream());
-                StringBuilder sb = new StringBuilder();
-
-                NameFinderResponse nameFinderResponse = null;
-                string currentStage = "";
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Whitespace)
-                        continue;
-
-                    if (reader.HasValue)
-                        sb.Append(reader.Value);
-                    if (currentStage == "nameString" && reader.Value != "")
-                    {
-                        nameFinderResponse.Name = reader.Value;
-                    }
-                    if (currentStage == "namebankID" && reader.Value != "")
-                    {
-                        nameFinderResponse.NameResolved = nameFinderResponse.Name;
-                        nameFinderResponse.Identifiers.Add("NameBank|" + reader.Value);
-                    }
-                    else if (reader.NodeType != XmlNodeType.EndElement)
-                    {
-                        sb.Append("\n" + reader.Name + ": ");
-                        currentStage = reader.Name;
-                        if (reader.Name == "entity")
-                        {
-                            nameFinderResponse = new NameFinderResponse();
-                        }
-                    }
-                    else
-                    {
-                        if (reader.Name == "entity")
-                        {
-                            nameFinderResponses.Add(nameFinderResponse);
-                        }
-                    }
-                }
-            }
-            catch (XmlException xex)
-            {
-                // Catch and ignore xml exceptions, as they likely represent a 
-                // malformed response from the uBio service.  Just return what 
-                // we were able to read before the problem was found.
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-            }
             return nameFinderResponses;
         }
 
@@ -287,7 +179,7 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNRD(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrTaxonFinder(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
@@ -325,8 +217,8 @@ namespace MOBOT.BHL.Server
                 // Data source identifiers listed at http://resolver.globalnames.org/data_sources
                 // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
                 // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
-                webServiceUrl = ConfigurationManager.AppSettings["GNRDBaseAddress"];
-                ocrText = string.Format(ConfigurationManager.AppSettings["GNRDRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
+                webServiceUrl = ConfigurationManager.AppSettings["GNRDTaxonFinderBaseAddress"];
+                ocrText = string.Format(ConfigurationManager.AppSettings["GNRDTaxonFinderRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
 
                 try
                 {
@@ -452,7 +344,7 @@ namespace MOBOT.BHL.Server
                     else if (retryCount >= maxReadAttempts)
                     {
                         // No response available.  Throw an error.
-                        throw new Exception("No response received from GNRD name finding service.");
+                        throw new Exception("No response received from GNRD TaxonFinder name finding service.");
                     }
                 }
                 catch
@@ -462,6 +354,213 @@ namespace MOBOT.BHL.Server
             }
 
             return (nameResponseList);
+        }
+
+        /// <summary>
+        /// Use the GNRD service to extract names from the OCR for a page.
+        /// </summary>
+        /// <param name="pageID"></param>
+        /// <param name="useRemoteFileAccessProvider"></param>
+        /// <param name="usePreferredResults"></param>
+        /// <param name="maxReadAttempts"></param>
+        /// <returns></returns>
+        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        {
+            string webServiceUrl = string.Empty;
+
+            PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+            string filepath = ps.OcrTextLocation;
+
+            // Get the OCR text
+            string ocrText = this.GetFileAccessProvider(useRemoteFileAccessProvider).GetFileText(filepath);
+
+            // Replace non-printing control characters (tabs, line feeds, etc) with spaces.
+            // The GNRD service doesn't like 'empty' strings that contain no printable characters
+            StringBuilder cleanOcrText = new StringBuilder();
+            for (int i = 0; i < ocrText.Length; i++)
+            {
+                if ((byte)ocrText[i] < 32)
+                    cleanOcrText.Append(" ");
+                else
+                    cleanOcrText.Append(ocrText[i]);
+            }
+            ocrText = cleanOcrText.ToString().Trim();
+
+            // Only continue if we have OCR with printable characters.  Otherwise just return.
+            List<NameFinderResponse> nameResponseList = new List<NameFinderResponse>();
+            if (ocrText.Length > 0)
+            {
+                // Add the user-reported page names for this Page to the ocrText
+                CustomGenericList<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
+                foreach (NamePage namePage in namePages)
+                {
+                    // NameSourceID 1 = "User Reported"
+                    if (namePage.NameSourceID == 1) ocrText += "  " + namePage.NameString;
+                }
+
+                // Get the name finding service url and POST body
+                // Data source identifiers listed at http://resolver.globalnames.org/data_sources
+                // Use preferred data sources of NameBank (ID: 169) and EOL (ID: 12).
+                // The GET url for the service is: http://gnrd.globalnames.org/name_finder.json?text={0}&all_data_sources=true&best_match_only=true&preferred_data_sources=12|169
+                webServiceUrl = ConfigurationManager.AppSettings["GNRDGNFinderBaseAddress"];
+                ocrText = string.Format(ConfigurationManager.AppSettings["GNRDGNFinderRequestContent"], System.Web.HttpUtility.UrlEncode(ocrText));
+
+                try
+                {
+                    HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
+                    req.Method = "POST";
+                    req.Timeout = 60000;
+                    byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(ocrText);
+                    req.ContentType = "application/x-www-form-urlencoded";
+                    req.ContentLength = byteArray.Length;
+                    Stream dataStream = req.GetRequestStream();
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    dataStream.Close();
+
+                    JObject jsonResponse = null;
+                    using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                    {
+                        using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                        {
+                            jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        }
+                    }
+                    req = null;
+
+                    // First response from name service may contain a redirect url and no name data.
+                    // Might also be true for subsequent requests.  Continue re-requesting until we
+                    // get a valid response.  If no response after specified number of attempts, just 
+                    // move on.
+                    int retryCount = 0;
+                    while (jsonResponse["total"] == null && retryCount < maxReadAttempts)
+                    {
+                        Thread.Sleep(1500);     //  A 1.5 SECOND DELAY SEEMS TO BE IDEAL (1.0, 1.5, and 2.0 tested)
+                        req = (HttpWebRequest)WebRequest.Create((string)jsonResponse["token_url"]);
+                        req.Method = "GET";
+                        req.Timeout = 60000;
+                        using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                        {
+                            using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                            {
+                                jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                            }
+                        }
+
+                        retryCount++;
+                    }
+
+                    // Did we get name data?
+                    if (jsonResponse["total"] != null)
+                    {
+                        // Read the name data from the JSON response
+                        if (jsonResponse["total"].ToString() != "0")
+                        {
+                            foreach (JToken name in jsonResponse["verified_names"])
+                            {
+                                bool usePreferredIds = false;
+                                JToken nameDetail = null;
+
+                                if (usePreferredResults && name["preferred_results"] != null)
+                                {
+                                    // Read the metadata from the "preferred_results" section of the response.  This
+                                    // is the best result returned by the preferred source of data (ie. "EOL", 
+                                    // "Namebank", ect).
+                                    if (name["preferred_results"].HasValues)
+                                    {
+                                        nameDetail = name["preferred_results"][0];
+                                        usePreferredIds = true;
+                                    }
+                                }
+                                if (nameDetail == null && name["results"] != null)
+                                {
+                                    // Read the metadata from the "results" section of the response.  This is the best
+                                    // result returned from any data source.
+                                    if (name["results"].HasValues) nameDetail = name["results"];
+                                }
+
+                                string nameString = (string)(name["supplied_name_string"] ?? string.Empty);
+                                string nameResolvedString = string.Empty;
+                                string canonicalName = string.Empty;
+                                List<string> identifiers = new List<string>();
+
+                                if (nameDetail != null)   // If the name was resolved, get the details
+                                {
+                                    if (nameDetail.HasValues)
+                                    {
+                                        string matchType = null;
+                                        if (nameDetail["match_type"] != null) matchType = nameDetail["match_type"].ToString();
+                                        if (matchType == null) matchType = (nameDetail["match_value"] ?? "NONE").ToString();
+
+                                        // Possible match_type values
+                                        // NONE
+                                        // EXACT - exact string match
+                                        // FUZZY - fuzzy match of canonical form
+                                        // PARTIAL_EXACT - partial match on trinomial, or exact match on genus but no match on species (binomial) part (mostly good results here)
+                                        // PARTIAL_FUZZY - fuzzy partial match on trinomial
+                                        if (matchType != "NONE")  // Don't use questionable matches
+                                        {
+                                            nameResolvedString = (string)(nameDetail["matched_name"] ?? string.Empty);
+                                            canonicalName = (string)(nameDetail["matched_canonical"] ?? string.Empty);
+
+                                            // Get the identifiers
+                                            string identifier = string.Empty;
+
+                                            if (usePreferredIds)
+                                            {
+                                                foreach(JToken identifierDetail in name["preferred_results"])
+                                                {
+                                                    identifier = this.GetIdentifierFromGNFinder(identifierDetail);
+                                                    if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                identifier = this.GetIdentifierFromGNFinder(nameDetail);
+                                                if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // Add the data from the JSON response to our list of names to return 
+                                NameFinderResponse nameFinderResponse = new NameFinderResponse();
+                                nameFinderResponse.Name = nameString;
+                                nameFinderResponse.NameResolved = nameResolvedString;
+                                nameFinderResponse.CanonicalName = canonicalName;
+                                nameFinderResponse.Identifiers = identifiers;
+                                nameResponseList.Add(nameFinderResponse);
+                            }
+                        }
+                    }
+                    else if (retryCount >= maxReadAttempts)
+                    {
+                        // No response available.  Throw an error.
+                        throw new Exception("No response received from GNRD GNFinder name finding service.");
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+
+            return (nameResponseList);
+        }
+
+        /// <summary>
+        /// Read a name identifier type and value from the supplied JSON node of a GNFinder response
+        /// </summary>
+        /// <param name="nameDetail"></param>
+        /// <returns></returns>
+        public string GetIdentifierFromGNFinder(JToken nameDetail)
+        {
+            string identifier = string.Empty;
+            string identifierValue = (string)(nameDetail["taxon_id"] ?? string.Empty);
+            if (nameDetail["data_source_title"] != null && !string.IsNullOrWhiteSpace(identifierValue))
+            {
+                identifier = (string)nameDetail["data_source_title"] + "|" + identifierValue;
+            }
+            return identifier;
         }
 
         /// <summary>

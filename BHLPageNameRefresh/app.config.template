@@ -17,7 +17,7 @@
 		<!-- Number of seconds between UBIO web service calls -->
 		<add key="ExternalWebServiceInterval" value="0"/>
     <!-- Source name of the name service -->
-    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+    <add key="NameServiceSourceName" value="Global Names (GNRD GNFinder)"/>
     <!-- "true" to process pages asynchronously, "false" for synchronous processing -->
     <add key="DoAsync" value="true"/>
     <!-- Maximum allowed number of concurrent calls to the finding service.  Only valid if DoAsync is 'true'.-->

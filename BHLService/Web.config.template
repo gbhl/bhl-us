@@ -16,25 +16,25 @@
     <!-- OCR Job file locations -->
     <add key="OCRJobNewPath" value="OCR_JOB_ROOT_FOLDER\new\" />
 
-    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
-    <add key="NameFinderService" value="GNRD"/>
+    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNFinder" -->
+    <add key="NameFinderService" value="TaxonFinder"/>
 
     <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
-    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+    <add key="NameServiceSourceName" value="Global Names (GNRD TaxonFinder)"/>
 
-    <!-- TaxonFinder name service request URL that contains text to be evaluated -->
-    <add key="TaxonFinderRequestText" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;freeText=" />
+    <!-- Base address of GNRD TaxonFinder name service -->
+    <add key="GNRDTaxonFinderBaseAddress" value="http://gnrdbhl.globalnames.org/name_finder.json" />
 
-    <!-- TaxonFinder name service request URL that contains pointer (url) to text to be evaluated -->
-    <add key="TaxonFinderRequestUrl" value="http://www.ubio.org/webservices/service.php?function=taxonFinder&amp;includeLinks=0&amp;url=http://www.biodiversitylibrary.org/pageocr/{0}" />
+    <!-- Payload for GNRD TaxonFinder name service request -->
+    <add key="GNRDTaxonFinderRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169" />
 
-    <!-- Base address of GNRD name service -->
-    <add key="GNRDBaseAddress" value="http://gnrd.globalnames.org/name_finder.json" />
+    <!-- Base address of GNRD GNFinder name service -->
+    <add key="GNRDGNFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json"/>
+    
+    <!-- Payload for GNRD GNFinder name service request -->
+    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|12|169"/>
 
-    <!-- Payload for GNRD name service request -->
-    <add key="GNRDRequestContent" value="text={0}&amp;all_data_sources=true&amp;best_match_only=true&amp;preferred_data_sources=12|169" />
-
-    <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
+    <!-- Only applies to the GNRD name finding services.  True to favor results from the "favored" name source. -->
     <add key="UsePreferredNameResults" value="true"/>
 
     <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->

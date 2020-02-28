@@ -62,6 +62,10 @@ BEGIN
 		INTO	#Identifiers 
 		FROM	dbo.fn_Split(@IdentifierString, '^')
 
+		-- Convert Identifier Names to BHL-preferred values
+		UPDATE #Identifiers SET Name = 'EOL' WHERE Name = 'Encyclopedia of Life'
+		UPDATE #Identifiers SET Name = 'NameBank' WHERE Name = 'uBio NameBank'
+		
 		-- Get the IdentifierID for each item in the @IdentifierString
 		SELECT	i.IdentifierID, t.Value
 		INTO	#NameIDs
@@ -164,4 +168,3 @@ FROM	dbo.NamePage
 WHERE	NamePageID = @NamePageID
 
 END
-

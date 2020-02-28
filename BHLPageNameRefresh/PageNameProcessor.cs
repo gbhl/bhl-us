@@ -654,6 +654,9 @@ namespace MOBOT.BHL.PageNameRefresh
                 log.Error(message, ex);
                 while (ex.InnerException != null) ex = ex.InnerException;
                 errorMessages.Add(message + ":" + ex.Message);
+
+            // -- Uncomment during debugging --
+            // Console.Write("ERROR: " + ex.Message + "\r\n");
             }
         }
 

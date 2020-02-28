@@ -115,11 +115,26 @@ namespace BHLServerTest
         }
 
         [TestMethod]
-        public void GetNamesFromOcrTest()
+        public void GetNamesFromOcrTest1()
         {
             BHLProvider target = new BHLProvider();
 
-            string resolverName = "GNRD";
+            string resolverName = "TaxonFinder";
+            int pageID = 3001717;
+            bool useRemoteFileAccessProvider = false;
+            bool usePreferredResults = true;
+            int maxReadAttempts = 5;
+            List<NameFinderResponse> actual = null;
+            actual = target.GetNamesFromOcr(resolverName, pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+            Assert.IsTrue(actual.Count > 0);
+        }
+
+        [TestMethod]
+        public void GetNamesFromOcrTest2()
+        {
+            BHLProvider target = new BHLProvider();
+
+            string resolverName = "GNFinder";
             int pageID = 3001717;
             bool useRemoteFileAccessProvider = false;
             bool usePreferredResults = true;

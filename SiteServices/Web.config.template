@@ -14,10 +14,10 @@
     <add key="DOISubmitLogFileLocation" value="DOI_SERVICE_ROOT_FOLDER\submitlog\{0}.log.xml" />
     <!-- OCR Job file locations -->
     <add key="OCRJobNewPath" value="OCR_JOB_ROOT_FOLDER\new\" />
-    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNRD" -->
-    <add key="NameFinderService" value="GNRD"/>
+    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNFinder" -->
+    <add key="NameFinderService" value="TaxonFinder"/>
     <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
-    <add key="NameServiceSourceName" value="Global Names (GNRD)"/>
+    <add key="NameServiceSourceName" value="Global Names (GNRD TaxonFinder)"/>
     <!-- Only applies to the GNRD name finding service.  True to favor results from the "favored" name source. -->
     <add key="UsePreferredNameResults" value="true"/>
     <!-- Only applies to the GNRD name finding service.  Maximum number of times to try to get a response (1.5 seconds between attempts).-->
