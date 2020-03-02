@@ -65,6 +65,7 @@ BEGIN
 		-- Convert Identifier Names to BHL-preferred values
 		UPDATE #Identifiers SET Name = 'EOL' WHERE Name = 'Encyclopedia of Life'
 		UPDATE #Identifiers SET Name = 'NameBank' WHERE Name = 'uBio NameBank'
+		UPDATE #Identifiers SET Value = REPLACE(Value, 'urn:lsid:ubio.org:namebank:', '') WHERE Name = 'NameBank'
 		
 		-- Get the IdentifierID for each item in the @IdentifierString
 		SELECT	i.IdentifierID, t.Value
