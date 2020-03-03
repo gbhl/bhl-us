@@ -214,6 +214,13 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
+        public List<KBART> ExportKBART(string urlRoot)
+        {
+            BHLProvider bhlServer = new BHLProvider();
+            return bhlServer.ExportKBART(urlRoot);
+        }
+
+        [WebMethod]
         public List<RISCitation> ItemSelectAllRISCitations()
         {
             return new BHLProvider().ItemSelectAllRISCitations();

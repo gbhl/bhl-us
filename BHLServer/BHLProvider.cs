@@ -948,6 +948,11 @@ namespace MOBOT.BHL.Server
             return new DownloadDAL().LinkSelectToExternalContent(null, null);
         }
 
+        public List<KBART> ExportKBART(string urlRoot)
+        {
+            return new KBARTDAL().Export(null, null, urlRoot);
+        }
+
         [Serializable]
         public class ViewerPage
         {

@@ -1117,6 +1117,7 @@
     <None Include="dbo\Functions\fnNoteIndexStringForTitle.sql" />
     <None Include="dbo\Stored Procedures\ApiPageSelectByResolvedName.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSelectByResolvedName.sql" />
+    <None Include="dbo\Stored Procedures\ExportKBART.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

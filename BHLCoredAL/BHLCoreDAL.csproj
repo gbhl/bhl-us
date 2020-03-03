@@ -218,6 +218,7 @@
     <Compile Include="ItemLanguageDAL.cs" />
     <Compile Include="ItemNameFileLogDAL.cs" />
     <Compile Include="ItemSourceDAL.cs" />
+    <Compile Include="KBARTDAL.cs" />
     <Compile Include="KeywordDAL.cs" />
     <Compile Include="MarcControlDAL.cs" />
     <Compile Include="MarcDAL.cs" />

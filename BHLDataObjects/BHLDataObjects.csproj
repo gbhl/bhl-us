@@ -114,6 +114,7 @@
     <Compile Include="Concrete\ItemLanguage.cs" />
     <Compile Include="Concrete\ItemNameFileLog.cs" />
     <Compile Include="Concrete\ItemSource.cs" />
+    <Compile Include="Concrete\KBART.cs" />
     <Compile Include="Concrete\Keyword.cs" />
     <Compile Include="Concrete\Marc.cs" />
     <Compile Include="Concrete\MarcControl.cs" />

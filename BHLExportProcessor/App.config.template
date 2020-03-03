@@ -28,7 +28,7 @@
         MODS | BHL.Export.MODS
         BibTeX | BHL.Export.BibTeX
     -->
-    <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX&#xA;IAID | BHL.Export.IAID&#xA;TSV | BHL.Export.TSV" />
+    <add key="Processors" value="RIS | BHL.Export.RIS&#xA;MODS | BHL.Export.MODS&#xA;BibTeX | BHL.Export.BibTeX&#xA;IAID | BHL.Export.IAID&#xA;TSV | BHL.Export.TSV&#xA;KBART | BHL.Export.KBART" />
 
     <!-- ********************************** -->
     <!--    Settings for each processor     -->
@@ -128,6 +128,10 @@
     <!-- *** IA Identifiers *** -->
     <add key="IAIDFolder" value="iaidentifiers" />
     <add key="IAIDFile" value="iaidentifiers.txt" />
+
+    <!-- *** KBART *** -->
+    <add key="KBARTFile" value="bhlkbart.txt" />
+    <add key="KBARTUrlRoot" value="https://www.biodiversitylibrary.org/bibliography/" />
 
     <!-- ********************************** -->
 
