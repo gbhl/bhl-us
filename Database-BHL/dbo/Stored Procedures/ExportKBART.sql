@@ -36,6 +36,7 @@ CREATE TABLE #kbart
 		parent_publication_title_id nvarchar(1) NULL DEFAULT(''),
 		preceeding_publication_title_id nvarchar(60) NULL DEFAULT(''),
 		access_type char(1) NULL DEFAULT('f'),
+		SortTitle nvarchar(60) NULL DEFAULT(''),
 		ItemID int NULL,
 		ItemSequence int NULL
 	)
@@ -53,6 +54,7 @@ INSERT INTO #kbart
 	date_monograph_published_online,
 	monograph_volume,
 	monograph_edition,
+	SortTitle,
 	ItemID,
 	ItemSequence
 	)
@@ -70,6 +72,7 @@ SELECT	t.FullTitle,
 			ELSE '' 
 		END,
 		CASE WHEN b.MARCCode = 'm' THEN ISNULL(t.EditionStatement, '') ELSE '' END,
+		t.SortTitle,
 		i.ItemID,
 		ti.ItemSequence
 FROM	dbo.Title t
@@ -152,9 +155,12 @@ SELECT DISTINCT
 		first_editor,
 		parent_publication_title_id,
 		preceeding_publication_title_id,
-		access_type
+		access_type,
+		SortTitle,
+		RIGHT('00000000000000000000' + num_first_vol_online, 20) AS SortVolume,
+		RIGHT('00000000000000000000' + num_first_issue_online, 20) AS SortIssue
 FROM	#kbart 
-ORDER BY title_id, num_first_vol_online, num_first_issue_online
+ORDER BY SortTitle, SortVolume, SortIssue
 
 -- Clean up
 DROP TABLE #kbart

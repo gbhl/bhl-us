@@ -93,9 +93,9 @@ namespace BHL.Export.KBART
 
                     string kbartLine = 
                         string.Format("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}\t{7}\t{8}\t{9}\t{10}\t{11}\t{12}\t{13}\t{14}\t{15}\t{16}\t{17}\t{18}\t{19}\t{20}\t{21}\t{22}\t{23}\t{24}",
-                        kbart.PublicationTitle,
-                        kbart.PrintIdentifier,
-                        kbart.OnlineIdentifier,
+                        ScrubData(kbart.PublicationTitle),
+                        ScrubData(kbart.PrintIdentifier),
+                        ScrubData(kbart.OnlineIdentifier),
                         kbart.DateFirstIssueOnline,
                         kbart.NumFirstVolOnline,
                         kbart.NumFirstIssueOnline,
@@ -103,20 +103,20 @@ namespace BHL.Export.KBART
                         kbart.NumLastVolOnline,
                         kbart.NumLastIssueOnline,
                         kbart.TitleUrl,
-                        kbart.FirstAuthor,
+                        ScrubData(kbart.FirstAuthor),
                         kbart.TitleID,
-                        kbart.EmbargoInfo,
+                        ScrubData(kbart.EmbargoInfo),
                         kbart.CoverageDepth,
                         kbart.Notes,
-                        kbart.PublisherName,
+                        ScrubData(kbart.PublisherName),
                         kbart.PublicationType,
-                        kbart.DateMonographPublishedPrint,
-                        kbart.DateMonographPublishedOnline,
-                        kbart.MonographVolume,
-                        kbart.MonographEdition,
-                        kbart.FirstEditor,
-                        kbart.ParentPublicationTitleID,
-                        kbart.PrecedingPublicationTitleID,
+                        ScrubData(kbart.DateMonographPublishedPrint),
+                        ScrubData(kbart.DateMonographPublishedOnline),
+                        ScrubData(kbart.MonographVolume),
+                        ScrubData(kbart.MonographEdition),
+                        ScrubData(kbart.FirstEditor),
+                        ScrubData(kbart.ParentPublicationTitleID),
+                        ScrubData(kbart.PrecedingPublicationTitleID),
                         kbart.AccessType
                         );
                     sb.AppendLine(kbartLine);
@@ -126,14 +126,14 @@ namespace BHL.Export.KBART
                     if (linesToWrite >= 100)
                     {
                         // Write the content to the file
-                        File.AppendAllText(outputFile, sb.ToString());
+                        File.AppendAllText(outputFile, sb.ToString(), Encoding.UTF8);
                         sb.Clear();
                         linesToWrite = 0;
                     }
                 }
 
                 // Write the last of the content to the file
-                if (linesToWrite > 0) File.AppendAllText(outputFile, sb.ToString());
+                if (linesToWrite > 0) File.AppendAllText(outputFile, sb.ToString(), Encoding.UTF8);
 
                 _log.Info(string.Format("{0} items exported", _stats[statsKey]));
             }
@@ -142,6 +142,17 @@ namespace BHL.Export.KBART
                 _log.Error("Exception processing KBART.", ex);
                 _errors.Add(string.Format("Exception processing KBART:  {0}", ex.Message));
             }
+        }
+
+        /// <summary>
+        /// Remove invalid characters from the data to be exported
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private string ScrubData(string data)
+        {
+            // Remove extra tabs and line breaks
+            return data.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
         }
 
         /// <summary>
