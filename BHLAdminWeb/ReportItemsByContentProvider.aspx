@@ -19,7 +19,7 @@
                     </tr>
                     <tr>
                         <td><b>Role:</b></td>
-                        <td><asp:DropDownList ID="ddlInstitutionRoles" runat="server" DataTextField="InstitutionRoleName" DataValueField="InstitutionRoleID"/></td>
+                        <td><asp:DropDownList ID="ddlInstitutionRoles" runat="server" DataTextField="InstitutionRoleLabel" DataValueField="InstitutionRoleID"/></td>
                     </tr>
                 </table>
             </td>
@@ -57,7 +57,7 @@
                 url: 'services/rptItemByContentProviderService.ashx?id=<%=selectedInstitutionCode%>&role=<%=selectedRoleID%>&barcode=<%=specifiedBarcode%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Item ID', 'IA Identifier', 'Title ID', 'Title', 'Volume', 'Year', 'Holding Institution', 'Rights Holder', 'Scanning Institution', 'Date Added', 'Date Updated'],    // column names
+                colNames: ['Item ID', 'IA Identifier', 'Title ID', 'Title', 'Volume', 'Year', 'Holding Institution', 'Rights Holder', 'Added By', 'Date Added', 'Date Updated'],    // column names
                 colModel: [
                   { name: 'ItemID', index: 'ItemID', sortable: false, width: 60 },
                   { name: 'Barcode', index: 'Barcode' },

@@ -70,7 +70,7 @@ namespace MOBOT.BHL.AdminWeb
                 {
                     if (role.InstitutionRoleName != "Contributor" && role.InstitutionRoleName != "External Content Holder")
                     {
-                        ListItem li = new ListItem(role.InstitutionRoleName, role.InstitutionRoleID.ToString());
+                        ListItem li = new ListItem(role.InstitutionRoleLabel, role.InstitutionRoleID.ToString());
                         ddlInstitutionRoles.Items.Add(li);
                         ddlInstitutionRoleChange.Items.Add(li);
                     }

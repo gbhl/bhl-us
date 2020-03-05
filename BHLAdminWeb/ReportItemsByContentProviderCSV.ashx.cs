@@ -32,7 +32,7 @@ namespace MOBOT.BHL.AdminWeb
 
                 // Write file header
                 StringBuilder csvString = new StringBuilder();
-                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title ID\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Scanning Institution\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
+                csvString.AppendLine("\"Content Provider\",\"Role\",\"Item ID\",\"IA Identifier\",\"Title ID\",\"Title\",\"Volume\",\"Year\",\"Authors\",\"Holding Institution\",\"Rights Holder\",\"Added By\",\"Copyright Status\",\"Rights\",\"License Type\",\"Due Diligence\",\"Date Added\",\"Date Updated\"");
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();
 
