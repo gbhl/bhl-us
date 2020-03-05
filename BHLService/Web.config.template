@@ -32,7 +32,21 @@
     <add key="GNRDGNFinderBaseAddress" value="http://gnrd.globalnames.org/name_finder.json"/>
     
     <!-- Payload for GNRD GNFinder name service request -->
-    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|12|169"/>
+    <!-- Data Sources
+        1 = Catalogue of Life
+        2 = Wikispecies
+        3 = ITIS
+        5 = Index Fungorum
+        7 = Union 4
+        8 = Interim Reg. of Marine/Nonmarine Genera
+        9 = WoRMS
+       11 = GBIF Taxonomic Backbone
+       12 = EOL
+      167 = The International Plant Names Index
+      168 = Index to Organism Names
+      169 = NameBank
+    -->
+    <add key="GNRDGNFinderRequestContent" value="text={0}&amp;preferred_data_sources=1|2|3|5|7|8|9|11|12|167|168|169"/>
 
     <!-- Only applies to the GNRD name finding services.  True to favor results from the "favored" name source. -->
     <add key="UsePreferredNameResults" value="true"/>

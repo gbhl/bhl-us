@@ -556,9 +556,32 @@ namespace MOBOT.BHL.Server
         {
             string identifier = string.Empty;
             string identifierValue = (string)(nameDetail["taxon_id"] ?? string.Empty);
-            if (nameDetail["data_source_title"] != null && !string.IsNullOrWhiteSpace(identifierValue))
+            if (nameDetail["data_source_id"] != null && !string.IsNullOrWhiteSpace(identifierValue))
             {
-                identifier = (string)nameDetail["data_source_title"] + "|" + identifierValue;
+                string dataSourceID = nameDetail["data_source_id"].ToString();
+                string dataSourceName = string.Empty;
+                // Full list of data sources at http://resolver.globalnames.org/data_sources
+                switch (dataSourceID)
+                {
+                    case "1": dataSourceName = "Catalogue of Life"; break;
+                    case "2": dataSourceName = "Wikispecies"; break;
+                    case "3": dataSourceName = "ITIS"; break;
+                    case "4": dataSourceName = "NCBI"; break;
+                    case "5": dataSourceName = "Index Fungorum"; break;
+                    case "7": dataSourceName = "Union 4"; break;
+                    case "8": dataSourceName = "Interim Reg. of Marine/Nonmarine Genera"; break;
+                    case "9": dataSourceName = "WoRMS"; break;
+                    case "11": dataSourceName = "GBIF Taxonomic Backbone"; break;
+                    case "12": dataSourceName = "EOL"; break;
+                    case "132": dataSourceName = "ZooBank"; break;
+                    case "158": dataSourceName = "EUNIS"; break;
+                    case "164": dataSourceName = "BioLib.cz"; break;
+                    case "165": dataSourceName = "Tropicos"; break;
+                    case "167": dataSourceName = "The International Plant Names Index"; break;
+                    case "168": dataSourceName = "Index to Organism Names"; break;
+                    case "169": dataSourceName = "NameBank"; break;
+                }
+                identifier = dataSourceName + "|" + identifierValue;
             }
             return identifier;
         }
