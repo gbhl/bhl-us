@@ -1,22 +1,26 @@
 {
 	"settings": {
+		"merge": {
+			"scheduler": {
+				"max_thread_count": "1"
+			}
+		},
 		"analysis": {
 			"analyzer": {
 				"fragment": {
 					"tokenizer": "icu_tokenizer",
-					"filter":  [ "lowercase", "icu_folding", "cat_ngram" ]
-				}
-				,
+					"filter": [ "lowercase", "icu_folding", "cat_ngram" ]
+				},
 				"default": {
 					"tokenizer": "icu_tokenizer",
-					"filter":  [ "lowercase", "icu_folding" ]
+					"filter": [ "lowercase", "icu_folding" ]
 				}
 			},
-			"filter" : {
-				"cat_ngram" : {
-					"type" : "edgeNGram",
-					"min_gram" : 1,
-					"max_gram" : 15
+			"filter": {
+				"cat_ngram": {
+					"type": "edgeNGram",
+					"min_gram": 1,
+					"max_gram": 15
 				}
 			}
 		}
