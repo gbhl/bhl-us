@@ -87,7 +87,7 @@ namespace BHL.IIIF
                   "\"resource\": {" +
                     "\"@type\": \"cnt:ContentAsText\"," +
                     "\"format\": \"text/plain\"," +
-                    "\"chars\": \"" + text.Replace("\"", "\\\"") + "\"" +
+                    "\"chars\": \"" + Helper.CleanManifestData(text) + "\"" +
                   "}," +
                   "\"on\": \"" + iiifRootAddress + "/canvas\"" +
                 "}";

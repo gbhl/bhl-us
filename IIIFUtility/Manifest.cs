@@ -54,7 +54,7 @@ namespace BHL.IIIF
                   "\"attribution\": \"\"," +
                   "\"description\": \"\"," +
                   "\"logo\": \"\"," +
-                  "\"label\": \"" + title.FullTitle.Replace("\"", "\\\"") + "\"," +
+                  "\"label\": \"" + Helper.CleanManifestData(title.FullTitle) + "\"," +
                   thumbnailAttr +
                   GetMetadata(title, item) +
                   GetSeeAlso(itemId) +
@@ -91,7 +91,7 @@ namespace BHL.IIIF
                 {
                     titleAuthor.Author.FullName = titleAuthor.FullName;
                     titleAuthor.Author.FullerForm = titleAuthor.FullerForm;
-                    string authorString = "<a target='_top' href='" + _rootUrl + "/creator/" + titleAuthor.AuthorID.ToString() + "'>" + titleAuthor.Author.NameExtended.Replace("\"", "\\\"") + "</a>";
+                    string authorString = "<a target='_top' href='" + _rootUrl + "/creator/" + titleAuthor.AuthorID.ToString() + "'>" + Helper.CleanManifestData(titleAuthor.Author.NameExtended) + "</a>";
                     authors.Add(authorString);
                 }
 
@@ -171,8 +171,8 @@ namespace BHL.IIIF
         {
             string metadata =
                 "{" +
-                  "\"label\": \"" + label.Replace("\"", "\\\"") + "\"," +
-                  "\"value\": \"" + value.Replace("\"", "\\\"") + "\"" +
+                  "\"label\": \"" + Helper.CleanManifestData(label) + "\"," +
+                  "\"value\": \"" + Helper.CleanManifestData(value) + "\"" +
                 "}";
 
             return metadata;
@@ -295,7 +295,7 @@ namespace BHL.IIIF
                 "{" +
                   "\"@id\": \"" + iiifRootAddress + "/canvas\"," +
                   "\"@type\": \"sc:Canvas\"," +
-                  "\"label\": \"" + page.WebDisplay.Replace("\"", "\\\"") + "\"," +
+                  "\"label\": \"" + Helper.CleanManifestData(page.WebDisplay) + "\"," +
                   "\"height\": " + height.ToString() + "," +
                   "\"width\": " + width.ToString() + "," +
                   "\"metadata\": [" +
@@ -382,7 +382,7 @@ namespace BHL.IIIF
             "{" +
               "\"@id\": \"" + _rootUrl + "/part/" + segment.SegmentID.ToString() + "\"," +
               "\"@type\": \"sc:Range\"," +
-              "\"label\": \"" + segment.Title.Replace("\"", "\\\"") + "\"," +
+              "\"label\": \"" + Helper.CleanManifestData(segment.Title) + "\"," +
               "\"canvases\": [\"" +
                 string.Join("\",\"", canvasList) +
               "\"]" +

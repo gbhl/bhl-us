@@ -10,6 +10,19 @@ namespace BHL.IIIF
 {
     class Helper
     {
+        /// <summary>
+        /// Escape the necessary values for inclusion in JSON IIIF Manifests
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        static public string CleanManifestData(string data)
+        {
+            return data
+                .Replace("\\", "\\\\")  // Replace backslash with backslash-backslash
+                .Replace("\"", "\\\"")  // Replace doublequote with backslash-doublequote
+                ;
+        }
+
         public ScanData GetScanData(int itemId, string barCode)
         {
             Item item = new BHLProvider().ItemSelectFilenames(itemId);
