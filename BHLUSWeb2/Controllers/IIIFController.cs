@@ -84,9 +84,7 @@ namespace MOBOT.BHL.Web2.Controllers
             string manifest = string.Empty;
             int itemIdInt = int.MinValue;
             int pageSeqInt = int.MinValue;
-            //IIIF.TextManifest manifestService = new IIIF.TextManifest(Request.Url.GetLeftPart(UriPartial.Authority));
-            // TODO:  Insert proper URL for text file root address
-            IIIF.TextManifest manifestService = new IIIF.TextManifest("https://www.biodiversitylibrary.org");
+            IIIF.TextManifest manifestService = new IIIF.TextManifest(Request.Url.GetLeftPart(UriPartial.Authority));
             if (Int32.TryParse(itemId, out itemIdInt) && Int32.TryParse(pageSeq, out pageSeqInt))
             {
                 manifest = manifestService.GetManifest(itemIdInt, pageSeqInt);

@@ -60,8 +60,8 @@ namespace BHL.IIIF
                                 if (resourceCount > 1) resources += ",";
 
                                 name.UrlName = name.ResolvedNameString.Replace(' ', '_').Replace('.', '$').Replace('?', '^').Replace('&', '~');
-                                string nameString = string.Format("<a href='/name/{0}'>{1}</a>", Helper.CleanManifestData(name.UrlName), Helper.CleanManifestData(name.ResolvedNameString));
-                                if (!string.IsNullOrWhiteSpace(name.EOLID)) nameString += " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>";
+                                string nameString = string.Format("<a href='" + _rootUrl + "/name/{0}'>{1}</a>", Helper.CleanManifestData(name.UrlName), Helper.CleanManifestData(name.ResolvedNameString));
+                                if (!string.IsNullOrWhiteSpace(name.EOLID)) nameString += " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='" + _rootUrl + "/images/eol_11px.png'></a>";
                                 resources += GetResource(itemId, leafNum, resourceCount, nameString);
 
                                 resourceCount++;
