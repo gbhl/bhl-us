@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ExportKBART
+﻿CREATE PROCEDURE [dbo].[ExportKBART]
 
 @UrlRoot nvarchar(200) = 'http://www.biodiversitylibrary.org/bibliography/'
 
@@ -130,8 +130,7 @@ SET		first_author = CASE WHEN CHARINDEX(',', first_author_temp) > 0 THEN LEFT(fi
 WHERE	publication_type = 'monograph'
 
 -- Final result set
-SELECT DISTINCT
-		publication_title,
+SELECT	publication_title,
 		print_identifier,
 		online_identifier,
 		date_first_issue_online,
@@ -149,7 +148,7 @@ SELECT DISTINCT
 		publisher_name,
 		publication_type,
 		date_monograph_published_print,
-		date_monograph_published_online,
+		MIN(date_monograph_published_online) AS date_monograph_published_online,
 		monograph_volume,
 		monograph_edition,
 		first_editor,
@@ -160,6 +159,34 @@ SELECT DISTINCT
 		RIGHT('00000000000000000000' + num_first_vol_online, 20) AS SortVolume,
 		RIGHT('00000000000000000000' + num_first_issue_online, 20) AS SortIssue
 FROM	#kbart 
+GROUP BY
+		publication_title,
+		print_identifier,
+		online_identifier,
+		date_first_issue_online,
+		num_first_vol_online,
+		num_first_issue_online,
+		date_last_issue_online,
+		num_last_vol_online,
+		num_last_issue_online,
+		title_url,
+		first_author,
+		CONVERT(nvarchar(10), title_id),
+		embargo_info,
+		coverage_depth,
+		notes,
+		publisher_name,
+		publication_type,
+		date_monograph_published_print,
+		monograph_volume,
+		monograph_edition,
+		first_editor,
+		parent_publication_title_id,
+		preceeding_publication_title_id,
+		access_type,
+		SortTitle,
+		RIGHT('00000000000000000000' + num_first_vol_online, 20),
+		RIGHT('00000000000000000000' + num_first_issue_online, 20)
 ORDER BY SortTitle, SortVolume, SortIssue
 
 -- Clean up
