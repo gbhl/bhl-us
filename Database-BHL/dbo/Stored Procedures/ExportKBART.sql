@@ -88,17 +88,32 @@ AND		b.MARCCode NOT IN ('c', 'd') -- Omit collections until we decide appropriat
 UPDATE	#kbart
 SET		date_first_issue_online = ISNULL(LEFT(i.Year, 4), ''),
 		num_first_vol_online = ISNULL(i.StartVolume, ''),
-		num_first_issue_online = ISNULL(CASE WHEN i.StartIssue = '' THEN i.StartNumber ELSE i.StartIssue END, ''),
+		num_first_issue_online = 
+			ISNULL(
+				CASE 
+					WHEN i.StartIssue = '' 
+					THEN CASE WHEN i.StartNumber = '' THEN i.StartPart ELSE i.StartNumber END
+					ELSE i.StartIssue 
+				END,
+			 ''),
 		date_last_issue_online = ISNULL(CASE WHEN i.EndYear = '' THEN i.Year ELSE i.EndYear END, ''),
 		num_last_vol_online = ISNULL(CASE WHEN i.EndVolume = '' THEN i.StartVolume ELSE i.EndVolume END, ''),
 		num_last_issue_online = 
 			CASE 
+			WHEN 
+				(CASE WHEN i.EndPart = '' THEN i.StartPart ELSE i.EndPart END) = ''
+			THEN
+
+				CASE 
 				WHEN 
-					CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END = ''
+					(CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END) = ''
 				THEN 
 					CASE WHEN i.EndNumber = '' THEN i.StartNumber ELSE i.EndNumber END
 				ELSE
 					CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END
+				END
+			ELSE
+				CASE WHEN i.EndPart = '' THEN i.StartPart ELSE i.EndPart END
 			END
 FROM	#kbart k
 		INNER JOIN dbo.Item i ON k.ItemID = i.ItemID
