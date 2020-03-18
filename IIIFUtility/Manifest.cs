@@ -57,7 +57,7 @@ namespace BHL.IIIF
                   "\"label\": \"" + Helper.CleanManifestData(title.FullTitle) + "\"," +
                   thumbnailAttr +
                   GetMetadata(title, item) +
-                  GetSeeAlso(itemId) +
+                  GetSeeAlso(itemId, item.BarCode) +
                   GetSequences(itemId, item.BarCode, pages, scanData) +
                   GetStructures(itemId, segments, pages, scanData) +
                   GetRelated(titles.Count, item) +
@@ -213,7 +213,7 @@ namespace BHL.IIIF
             return related;
         }
 
-        private string GetSeeAlso(int itemId)
+        private string GetSeeAlso(int itemId, string barCode)
         {
             string seeAlso = 
                 "\"seeAlso\": [" +
@@ -231,6 +231,11 @@ namespace BHL.IIIF
                       "\"@id\": \"" + _rootUrl + "/itemtext/" + itemId.ToString() + "\"," +
                       "\"label\": \"Text\"," +
                       "\"format\": \"text/plain\"" +
+                  "}," +
+                  "{" +
+                      "\"@id\": \"https://www.archive.org/download/" + barCode + "\"," +
+                      "\"label\": \"Download All\"," +
+                      "\"format\": \"text/html\"" +
                   "}" +
                 "],";
 
@@ -290,6 +295,8 @@ namespace BHL.IIIF
         {
             string iiifRootAddress = _rootUrl + "/iiif/" + itemId.ToString() + "$" + count.ToString();
             string imageRootAddress = "https://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
+            string metadataFlickr = string.Empty;
+            if (!string.IsNullOrWhiteSpace(page.FlickrURL)) { metadataFlickr = ", " + GetMetadataSingleValue("view page in flickr", page.FlickrURL);  }
 
             string canvas =
                 "{" +
@@ -298,8 +305,9 @@ namespace BHL.IIIF
                   "\"label\": \"" + Helper.CleanManifestData(page.WebDisplay) + "\"," +
                   "\"height\": " + height.ToString() + "," +
                   "\"width\": " + width.ToString() + "," +
-                  "\"metadata\": [" +
+                  "\"metadata\": [" + 
                     GetMetadataSingleValue("permalink to this page", _rootUrl + "/iiif/page/" + page.PageID.ToString()) +
+                    metadataFlickr +
                   "]," + 
                   "\"images\": [" +
                     "{" +
