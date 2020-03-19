@@ -58,11 +58,11 @@ INSERT INTO #kbart
 	ItemID,
 	ItemSequence
 	)
-SELECT	t.FullTitle,
+SELECT	RTRIM(t.FullTitle),
 		@UrlRoot + CONVERT(varchar(10), t.TitleID),
 		t.TitleID,
 		CASE WHEN b.MARCCode = 's' THEN 'Coverage information is for a single journal issue.' ELSE '' END,
-		ISNULL(t.Datafield_260_b, ''),
+		ISNULL(RTRIM(t.Datafield_260_b), ''),
 		ISNULL(CASE WHEN b.MARCCode = 'm' THEN 'monograph' WHEN b.MARCCode = 's' THEN 'serial' ELSE b.BibliographicLevelName END, ''),
 		CASE WHEN b.MARCCode = 'm' THEN ISNULL(CONVERT(varchar(10), t.StartYear), '') ELSE '' END,
 		CASE WHEN b.MARCCode = 'm' THEN ISNULL(CONVERT(varchar(20), i.CreationDate, 101), '05-04-2006') ELSE '' END,
@@ -84,6 +84,23 @@ WHERE	t.PublishReady = 1
 AND		i.ItemStatusID = 40
 AND		c.HasLocalContent = 1
 AND		b.MARCCode NOT IN ('c', 'd') -- Omit collections until we decide appropriate 'publication_type' value
+
+-- Trim trailing punctuation from Titles and Publisher Names
+UPDATE	#kbart
+SET		publication_title = RTRIM(
+			CASE 
+				WHEN RIGHT(publication_title, 1) = '/' 
+				THEN SUBSTRING(publication_title, 1, LEN(publication_title) - 1) 
+				ELSE RTRIM(publication_title) 
+			END
+		),
+		publisher_name = RTRIM(
+			CASE 
+				WHEN RIGHT(publisher_name, 1) IN (',', ';', ':') 
+				THEN SUBSTRING(publisher_name, 1, LEN(publisher_name) - 1) 
+				ELSE publisher_name 
+			END
+		)
 
 UPDATE	#kbart
 SET		date_first_issue_online = ISNULL(LEFT(i.Year, 4), ''),
@@ -130,7 +147,13 @@ AND		a.AssociatedTitleID IS NOT NULL
 
 -- Get print identifiers
 UPDATE	#kbart
-SET		print_identifier = ti.IdentifierValue
+SET		print_identifier = RTRIM(
+			CASE 
+				WHEN CHARINDEX('(', ti.IdentifierValue) > 1 
+				THEN LEFT(ti.IdentifierValue, CHARINDEX('(', ti.IdentifierValue) - 1) 
+				ELSE ti.IdentifierValue 
+			END
+		)
 FROM	#kbart k
 		INNER JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON k.title_id = ti.TitleID
 WHERE	ti.IdentifierID IN (2, 3) -- ISSN and ISBN
