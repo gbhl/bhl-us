@@ -31,14 +31,15 @@
                 url: 'services/itemservice.ashx?op=ItemPaginationReport&psid=<%=statusId%>&sdate=<%=startDate%>&edate=<%=endDate%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Item ID', 'Internet Archive ID', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
+                colNames: ['Item ID', 'Internet Archive ID', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
                 colModel: [
                   { name: 'ItemID', index: 'ItemID', width: '40px' },
-                  { name: 'Barcode', index: 'Barcode', width: '120px' },
-                  { name: 'PaginationStatusName', index: 'PaginationStatusName', sortable: false, width: '75px' },
-                  { name: 'PaginationStatusDate', index: 'PaginationStatusDate', width: '100px' },
-                  { name: 'PaginationUserName', index: 'PaginationUserName', width: '100px' },
-                  { name: 'NumberOfPages', index: 'NumPages', sortable: false, width: '50px' },
+                  { name: 'Barcode', index: 'Barcode', width: '100px' },
+                  { name: 'Holding Institution', index: 'InstitutionStrings', width: '100px' },
+                  { name: 'PaginationStatusName', index: 'PaginationStatusName', sortable: false, width: '55px' },
+                  { name: 'PaginationStatusDate', index: 'PaginationStatusDate', width: '80px' },
+                  { name: 'PaginationUserName', index: 'PaginationUserName', width: '80px' },
+                  { name: 'NumberOfPages', index: 'NumPages', sortable: false, width: '30px' },
                 ],  // model of the columns to display
                 pager: '#pager',    // show a pager bar for record navigation
                 rowNum: 200,    // rows in grid

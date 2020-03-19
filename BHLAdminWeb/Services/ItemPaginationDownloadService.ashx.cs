@@ -82,7 +82,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"ItemId\",\"InternetArchiveId\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
+            csvString.AppendLine("\"ItemId\",\"InternetArchiveId\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
@@ -92,6 +92,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Remove(0, csvString.Length);
                 csvString.Append("\"" + item.ItemID.ToString() + "\",");
                 csvString.Append("\"" + item.BarCode + "\",");
+                csvString.Append("\"" + item.InstitutionStrings[0] + "\",");
                 csvString.Append("\"" + item.PaginationStatusName + "\",");
                 csvString.Append("\"" + item.PaginationStatusDate.ToString() + "\",");
                 csvString.Append("\"" + item.PaginationUserName + "\",");

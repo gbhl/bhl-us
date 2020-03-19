@@ -168,6 +168,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                         response.Append("<row id='" + item.ItemID.ToString() + "'>");
                         response.Append("<cell> <![CDATA[<a title=\"Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
                         response.Append("<cell> " + item.BarCode + " </cell>");
+                        response.Append("<cell> <![CDATA[" + item.InstitutionStrings[0] + "]]> </cell>");
                         response.Append("<cell> " + item.PaginationStatusName  + " </cell>");
                         response.Append("<cell> " + item.PaginationStatusDate.ToString() + " </cell>");
                         response.Append("<cell> " + item.PaginationUserName + " </cell>");
