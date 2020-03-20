@@ -296,7 +296,7 @@ namespace BHL.IIIF
             string iiifRootAddress = _rootUrl + "/iiif/" + itemId.ToString() + "$" + count.ToString();
             string imageRootAddress = "https://iiif.archivelab.org/iiif/" + barCode + "$" + count.ToString();
             string metadataFlickr = string.Empty;
-            if (!string.IsNullOrWhiteSpace(page.FlickrURL)) { metadataFlickr = ", " + GetMetadataSingleValue("view page in flickr", page.FlickrURL);  }
+            if (!string.IsNullOrWhiteSpace(page.FlickrURL)) { metadataFlickr = ", " + GetMetadataSingleValue("Flickr", page.FlickrURL);  }
 
             string canvas =
                 "{" +
@@ -306,7 +306,7 @@ namespace BHL.IIIF
                   "\"height\": " + height.ToString() + "," +
                   "\"width\": " + width.ToString() + "," +
                   "\"metadata\": [" + 
-                    GetMetadataSingleValue("permalink to this page", _rootUrl + "/iiif/page/" + page.PageID.ToString()) +
+                    GetMetadataSingleValue("Permalink", _rootUrl + "/iiif/page/" + page.PageID.ToString()) +
                     metadataFlickr +
                   "]," + 
                   "\"images\": [" +
