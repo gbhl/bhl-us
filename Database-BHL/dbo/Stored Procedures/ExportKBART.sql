@@ -15,10 +15,10 @@ CREATE TABLE #kbart
 		online_identifier char(1) NULL DEFAULT(''),
 		date_first_issue_online nvarchar(5) NULL DEFAULT(''),
 		num_first_vol_online nvarchar(10) NULL DEFAULT(''),
-		num_first_issue_online nvarchar(5) NULL DEFAULT(''),
+		num_first_issue_online nvarchar(10) NULL DEFAULT(''),
 		date_last_issue_online nvarchar(5) NULL DEFAULT(''),
 		num_last_vol_online nvarchar(10) NULL DEFAULT(''),
-		num_last_issue_online nvarchar(5) NULL DEFAULT(''),
+		num_last_issue_online nvarchar(10) NULL DEFAULT(''),
 		title_url nvarchar(60) NULL DEFAULT(''),
 		first_author_temp nvarchar(100) NULL DEFAULT(''),
 		first_author nvarchar(50) NULL DEFAULT(''),
@@ -61,17 +61,21 @@ INSERT INTO #kbart
 SELECT	RTRIM(t.FullTitle),
 		@UrlRoot + CONVERT(varchar(10), t.TitleID),
 		t.TitleID,
-		CASE WHEN b.MARCCode = 's' THEN 'Coverage information is for a single journal issue.' ELSE '' END,
-		ISNULL(RTRIM(t.Datafield_260_b), ''),
-		ISNULL(CASE WHEN b.MARCCode = 'm' THEN 'monograph' WHEN b.MARCCode = 's' THEN 'serial' ELSE b.BibliographicLevelName END, ''),
-		CASE WHEN b.MARCCode = 'm' THEN ISNULL(CONVERT(varchar(10), t.StartYear), '') ELSE '' END,
-		CASE WHEN b.MARCCode = 'm' THEN ISNULL(CONVERT(varchar(20), i.CreationDate, 101), '05-04-2006') ELSE '' END,
+		CASE WHEN b.MARCCode IN ('b','s') THEN 'Coverage information is for a single journal issue.' ELSE '' END,
 		CASE 
-			WHEN b.MARCCode = 'm' 
-			THEN ISNULL(i.StartVolume, '') + CASE WHEN i.EndVolume <> '' THEN '-' + i.EndVolume ELSE '' END
-			ELSE '' 
+			WHEN (ISNULL(RTRIM(Datafield_260_b), '') = '' OR ISNULL(RTRIM(Datafield_260_b), '') LIKE '%s.n%')
+			THEN '[Publisher not identified]'
+			ELSE ISNULL(RTRIM(t.Datafield_260_b), '')
 		END,
-		CASE WHEN b.MARCCode = 'm' THEN ISNULL(t.EditionStatement, '') ELSE '' END,
+		ISNULL(CASE WHEN b.MARCCode IN ('b','s') THEN 'serial' ELSE 'monograph' END, ''),
+		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(10), t.StartYear), '') END,
+		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(20), i.CreationDate, 101), '05-04-2006') END,
+		CASE 
+			WHEN b.MARCCode IN ('b','s')
+			THEN '' 
+			ELSE ISNULL(i.StartVolume, '') + CASE WHEN i.EndVolume <> '' THEN '-' + i.EndVolume ELSE '' END
+		END,
+		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(t.EditionStatement, '') END,
 		t.SortTitle,
 		i.ItemID,
 		ti.ItemSequence
@@ -113,14 +117,13 @@ SET		date_first_issue_online = ISNULL(LEFT(i.Year, 4), ''),
 					ELSE i.StartIssue 
 				END,
 			 ''),
-		date_last_issue_online = ISNULL(CASE WHEN i.EndYear = '' THEN i.Year ELSE i.EndYear END, ''),
+		date_last_issue_online = ISNULL(LEFT(CASE WHEN i.EndYear = '' THEN i.Year ELSE i.EndYear END, 4), ''),
 		num_last_vol_online = ISNULL(CASE WHEN i.EndVolume = '' THEN i.StartVolume ELSE i.EndVolume END, ''),
 		num_last_issue_online = 
 			CASE 
 			WHEN 
 				(CASE WHEN i.EndPart = '' THEN i.StartPart ELSE i.EndPart END) = ''
 			THEN
-
 				CASE 
 				WHEN 
 					(CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END) = ''
@@ -134,11 +137,11 @@ SET		date_first_issue_online = ISNULL(LEFT(i.Year, 4), ''),
 			END
 FROM	#kbart k
 		INNER JOIN dbo.Item i ON k.ItemID = i.ItemID
-WHERE	k.publication_type like 'serial%'
+WHERE	k.publication_type = 'serial'
 
 -- Get preceeding title identifiers
 UPDATE	#kbart
-SET		preceeding_publication_title_id = @UrlRoot + CONVERT(nvarchar(10), a.AssociatedTitleID)
+SET		preceeding_publication_title_id = CONVERT(nvarchar(10), a.AssociatedTitleID)
 FROM	#kbart k 
 		INNER JOIN dbo.TitleAssociation a WITH (NOLOCK) ON k.title_id = a.TitleID
 		INNER JOIN dbo.TitleAssociationType tat WITH (NOLOCK) ON a.TitleAssociationTypeID = tat.TitleAssociationTypeID
