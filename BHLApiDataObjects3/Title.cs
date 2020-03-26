@@ -179,6 +179,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _TitleUrl = value; }
         }
 
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
         List<Author> _Authors;
         public List<Author> Authors
         {
@@ -311,6 +318,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "DOIName":
                         {
                             _doi = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
                             break;
                         }
                 }

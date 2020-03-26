@@ -217,6 +217,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         private string _ItemImagesUrl;
         public string ItemImagesUrl { get => _ItemImagesUrl; set => _ItemImagesUrl = value; }
 
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
         List<Page> _Pages = null;
         public List<Page> Pages
         {
@@ -442,6 +449,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "Datafield_260_c":
                         {
                             _PublicationDate = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
                             break;
                         }
                 }

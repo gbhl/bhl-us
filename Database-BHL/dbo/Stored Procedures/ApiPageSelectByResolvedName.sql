@@ -26,7 +26,7 @@ IF (@CanonicalNameString IS NULL) SELECT @CanonicalNameString = CanonicalNameStr
 
 -- Get the detail for the specified NameBankID
 SELECT DISTINCT
-		ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString,
+		ni.IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString, nr.CreationDate,
 		t.TitleID, t.MARCBibID, t.ShortTitle, t.SortTitle,
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber else i.CallNumber END AS CallNumber, 
 		t.Datafield_260_a AS PublisherPlace, 
@@ -70,7 +70,7 @@ FROM	dbo.NameResolved nr WITH (NOLOCK)
 			ON t.TitleID = tl2.TitleID AND tl2.IdentifierID = @TL2
 WHERE	nr.CanonicalNameString = @CanonicalNameString
 
-SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, TitleID, MARCBibID, ShortTitle, 
+SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, CreationDate, TitleID, MARCBibID, ShortTitle, 
 		CallNumber, PublisherPlace, PublisherName, PublicationDate, TL2Author, BPH, TL2, Abbreviation, TitleURL, 
 		ItemID, SourceName, Barcode, MARCItemID, VolumeInfo, InstitutionName, ItemURL, PageID, [Year], Volume, 
 		Issue, TextSource, PagePrefix, PageNumber, PageURL, ThumbnailURL, FullSizeImageURL, OcrURL, PageTypeName

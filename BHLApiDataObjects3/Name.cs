@@ -56,6 +56,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                             _NameCanonical = Utility.EmptyIfNull(column.Value);
                             break;
                         }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
+                            break;
+                        }
                 }
             }
         }
@@ -103,6 +108,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                 if (value != null) value = CalibrateValue(value, 100);
                 _NameCanonical = value;
             }
+        }
+
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
         }
 
         List<Title> _Titles;

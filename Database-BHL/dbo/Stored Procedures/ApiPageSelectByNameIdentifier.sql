@@ -18,7 +18,7 @@ SELECT @TL2 = IdentifierID FROM dbo.Identifier WHERE IdentifierName = 'TL2'
 SELECT @IdentifierID = IdentifierID FROM dbo.Identifier WHERE IdentifierName = @IdentifierName
 
 -- Find the Resolved Name matching the specified identifier, and return all names with matching Canonical forms
-SELECT	canon.NameResolvedID, canon.ResolvedNameString, canon.CanonicalNameString
+SELECT	canon.NameResolvedID, canon.ResolvedNameString, canon.CanonicalNameString, canon.CreationDate
 INTO	#NameResolved
 FROM	dbo.NameIdentifier ni WITH (NOLOCK)
 		INNER JOIN dbo.NameResolved nr WITH (NOLOCK) ON ni.NameResolvedID = nr.NameResolvedID
@@ -28,7 +28,7 @@ AND		ni.IdentifierID = @IdentifierID
 
 -- Get the detail for the specified NameBankID
 SELECT DISTINCT
-		@IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString,
+		@IdentifierValue AS NameBankID, nr.NameResolvedID, nr.ResolvedNameString, nr.CanonicalNameString, nr.CreationDate,
 		t.TitleID, t.MARCBibID, t.ShortTitle, t.SortTitle,
 		CASE WHEN ISNULL(i.CallNumber, '') = '' THEN t.CallNumber else i.CallNumber END AS CallNumber, 
 		t.Datafield_260_a AS PublisherPlace, 
@@ -74,7 +74,7 @@ FROM	#NameResolved nr
 		LEFT JOIN Title_Identifier tl2 WITH (NOLOCK)
 			ON t.TitleID = tl2.TitleID AND tl2.IdentifierID = @TL2
 
-SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, TitleID, MARCBibID, 
+SELECT	NameBankID, NameResolvedID, ResolvedNameString, CanonicalNameString, CreationDate, TitleID, MARCBibID, 
 		ShortTitle, CallNumber, PublisherPlace, PublisherName, PublicationDate, TL2Author, BPH, TL2, 
 		Abbreviation, TitleURL, ItemID, SourceName, Barcode, MARCItemID, VolumeInfo, InstitutionName,
 		ItemURL, PageID, [Year], Volume, Issue, TextSource, PagePrefix, PageNumber, PageURL, ThumbnailURL, 

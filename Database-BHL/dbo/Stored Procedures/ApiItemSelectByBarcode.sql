@@ -29,7 +29,8 @@ ELSE
 			ISNULL(i.DueDiligence, '') AS DueDiligence,
 			ISNULL(i.CopyrightStatus, '') AS CopyrightStatus,
 			ISNULL(i.CopyrightRegion, '') AS CopyrightRegion,
-			ISNULL(i.ExternalUrl, '') AS ExternalUrl
+			ISNULL(i.ExternalUrl, '') AS ExternalUrl,
+			i.CreationDate
 	FROM	dbo.Item i 
 			LEFT JOIN dbo.Language l ON i.LanguageCode = l.LanguageCode
 			INNER JOIN dbo.ItemSource s ON i.ItemSourceID = s.ItemSourceID

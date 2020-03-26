@@ -31,6 +31,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
         private List<Publication> _publications = null;
         public List<Publication> Publications
         {
@@ -51,6 +58,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "Keyword":
                         {
                             _SubjectText = (string)column.Value;
+                            break;
+                        }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
                             break;
                         }
                 }

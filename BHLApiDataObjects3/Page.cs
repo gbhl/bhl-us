@@ -119,6 +119,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             set { _OcrText = value; }
         }
 
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
         List<PageType> _PageTypes = null;
         public List<PageType> PageTypes
         {
@@ -178,6 +185,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "TextSource":
                         {
                             _TextSource = (string)column.Value;
+                            break;
+                        }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
                             break;
                         }
                 }

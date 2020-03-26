@@ -64,6 +64,7 @@ namespace MOBOT.BHL.API.BHLApi
 
                 if (ocr) page.OcrText = this.GetPageOcrText(pageID);
                 if (names) page.Names = this.GetPageNames(pageID);
+                foreach (Name name in page.Names) name.CreationDate = null;
             }
 
             return new List<Page> { page };
@@ -731,6 +732,7 @@ namespace MOBOT.BHL.API.BHLApi
                 name.Identifiers = new Api3DAL().NameIdentifierSelectByNameResolvedID(null, null, pageDetails[0].NameResolvedID);
                 name.NameConfirmed = pageDetails[0].NameConfirmed;
                 name.NameCanonical = pageDetails[0].NameCanonical;
+                name.CreationDate = pageDetails[0].CreationDate;
                 name.Titles = new List<Title>();
 
                 currentTitle = new Title();

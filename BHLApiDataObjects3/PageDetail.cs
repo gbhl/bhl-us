@@ -1,4 +1,5 @@
 ﻿using CustomDataAccess;
+using System;
 
 namespace MOBOT.BHL.API.BHLApiDataObjects3
 {
@@ -36,7 +37,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             string textSource,
             string pageUrl,
             string thumbnailUrl,
-            string pageTypeName) : this()
+            string pageTypeName,
+            string creationDate) : this()
         {
             _NameBankID = nameBankID;
             _NameResolvedID = nameResolvedID;
@@ -62,6 +64,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             _PageUrl = pageUrl;
             _ThumbnailUrl = thumbnailUrl;
             _PageTypeName = pageTypeName;
+            _creationDate = creationDate;
         }
 
         #endregion Constructors
@@ -225,6 +228,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "PageNumbers":
                         {
                             _PageNumbers = (string)column.Value;
+                            break;
+                        }
+                    case "CreationDate":
+                        {
+                            _creationDate = column.Value == null ? null : ((DateTime)column.Value).ToString("yyyy/MM/dd HH:mm:ss");
                             break;
                         }
                 }
@@ -601,6 +609,13 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
         {
             get { return _PageNumbers; }
             set { _PageNumbers = value; }
+        }
+
+        private string _creationDate = null;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
         }
 
         #endregion Properties
