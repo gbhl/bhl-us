@@ -760,7 +760,7 @@ namespace MOBOT.BHL.DAL
                     SegmentClusterSegmentDAL clusterDAL = new SegmentClusterSegmentDAL();
 
                     // Delete the existing records
-                    clusterDAL.SegmentClusterSegmentDeleteForSegment(connection, transaction, segment.SegmentID);
+                    clusterDAL.SegmentClusterSegmentDeleteForSegment(connection, transaction, updatedSegment.ReturnObject.SegmentID);
 
                     // Add new records
                     foreach (SegmentClusterTypes type in Enum.GetValues(typeof(SegmentClusterTypes)))
@@ -772,6 +772,8 @@ namespace MOBOT.BHL.DAL
                         int? segmentClusterID = null;
                         foreach (Segment relatedSegment in relatedSegments)
                         {
+                            if (relatedSegment.SegmentID == 0) relatedSegment.SegmentID = updatedSegment.ReturnObject.SegmentID;
+
                             // Each part-of relationship contains only two segments, so
                             // reset the cluster ID for each pair saved.  Other relationships
                             // may contain multiple segments, so reuse the same cluster ID.
@@ -787,7 +789,7 @@ namespace MOBOT.BHL.DAL
                                 segmentClusterID = segmentCluster.SegmentClusterID;
 
                                 // Insert/Update the SegmentClusterSegment record for the current segment
-                                clusterDAL.SegmentClusterSegmentInsert(connection, transaction, segment.SegmentID,
+                                clusterDAL.SegmentClusterSegmentInsert(connection, transaction, updatedSegment.ReturnObject.SegmentID,
                                     segmentClusterID, segment.IsPrimary, relatedSegment.SegmentClusterTypeId,
                                     userId);
                             }

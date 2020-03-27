@@ -124,7 +124,7 @@ namespace MOBOT.BHL.AdminWeb
                     Segment segment = (Segment)Session["Segment" + idLabel.Text];
 
                     // Get a list of all of the segments for the item
-                    List<Segment> relatedSegments = provider.SegmentSelectRelated(Convert.ToInt32(itemIDLabel.Text));
+                    List<Segment> relatedSegments = provider.SegmentSelectRelated(Convert.ToInt32(string.IsNullOrWhiteSpace(itemIDLabel.Text) ? "0" : itemIDLabel.Text));
 
                     if (selectedRelatedSegmentIds.EndsWith("|")) selectedRelatedSegmentIds = selectedRelatedSegmentIds.Substring(0, selectedRelatedSegmentIds.Length - 1);
                     String[] selectedRelatedSegmentsList = selectedRelatedSegmentIds.Split('|');
