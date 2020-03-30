@@ -21,7 +21,14 @@ SELECT DISTINCT
 			ISNULL(NULLIF(n.FullerForm + ' ', ' '), '') +
 			ISNULL(NULLIF(a.Title + ' ', ' '), '') +
 			ISNULL(NULLIF(a.Unit + ' ', ' '), '') +
-			ISNULL(NULLIF(a.Location + ' ', ' '), ''))) AS PrimaryAuthorName
+			ISNULL(NULLIF(a.Location + ' ', ' '), ''))) + 
+			CASE 
+				WHEN a.StartDate <> '' AND a.EndDate = '' THEN ' ' + a.StartDate + '-'
+				WHEN a.StartDate = '' AND a.EndDate <> '' THEN ' -' + a.EndDate
+				WHEN a.StartDate <> '' AND a.EndDate <> '' THEN ' ' + a.StartDate + '-' + a.EndDate
+				ELSE ''
+			END
+			AS PrimaryAuthorName
 FROM	dbo.Author a WITH (NOLOCK)
         INNER JOIN dbo.AuthorName n WITH (NOLOCK) ON a.AuthorID = n.AuthorID
 WHERE	n.IsPreferredName = 1
@@ -43,5 +50,3 @@ AND		a.AuthorID IN (
 		ORDER BY AuthorID
 		)
 ORDER BY a.AuthorID
-
-END
