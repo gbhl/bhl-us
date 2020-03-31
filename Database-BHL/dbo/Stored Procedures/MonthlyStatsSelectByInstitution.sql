@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.MonthlyStatsSelectByInstitution
+﻿CREATE PROCEDURE [dbo].[MonthlyStatsSelectByInstitution]
 
 @InstitutionCode nvarchar(10)
 
@@ -11,6 +11,7 @@ SET NOCOUNT ON
 -- Select stats (including cumulative stats) for a particular institution
 SELECT	s.InstitutionCode, 
 		InstitutionName,
+		dbo.fnGroupStringForInstitution(s.InstitutionCode) AS InstitutionGroupNames,
 		StatType, 
 		[Year], 
 		[Month], 

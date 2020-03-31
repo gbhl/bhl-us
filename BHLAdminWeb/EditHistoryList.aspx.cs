@@ -50,6 +50,10 @@ namespace MOBOT.BHL.AdminWeb
                         entityName = "Content Provider";
                         historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "Institution", entityID);
                         break;
+                    case "institutiongroup":
+                        entityName = "Content Provider Group";
+                        historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "InstitutionGroup", entityID);
+                        break;
                     case "notetype":
                         entityName = "Note Type";
                         if (isInt) historyList.DataSource = provider.EditHistorySelectByEntityAndID("dbo", "NoteType", entityID);

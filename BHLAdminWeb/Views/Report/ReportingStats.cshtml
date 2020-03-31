@@ -12,15 +12,18 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Post))
 {
-    <div style="margin-bottom:20px;" class="col-md-6">
-        <div>@Html.Label("Show")</div>
-        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 1, new { Checked = "true" }) All Content Provider Statistics</div>
-        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 2) All Content Provider BHL Totals</div>
-        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 3) All BHL Partner Content Provider Statistics</div>
-        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 4) BHL Partner Totals</div>
-        <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 5) Selected Content Provider Statistics
-        @Html.DropDownListFor(m => m.InstitutionCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })</div>
+<div style="margin-bottom:20px;" class="col-md-6">
+    <div>@Html.Label("Show")</div>
+    <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 1, new { Checked = "true" }) All Content Provider Statistics</div>
+    <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 2) All Content Provider BHL Totals</div>
+    <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 3) All Content Provider Group Statistics</div>
+    <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 4) All BHL Partner Content Provider Statistics</div>
+    <div>@Html.RadioButtonFor(m => m.ContentProviderTarget, 5) BHL Partner Totals</div>
+    <div>
+        @Html.RadioButtonFor(m => m.ContentProviderTarget, 6) Selected Content Provider Statistics
+        @Html.DropDownListFor(m => m.InstitutionCode, new SelectList(Model.Institutions, "InstitutionCode", "InstitutionName"), new { Style = "width:60%" })
     </div>
+</div>
     <div style="margin-bottom:20px;" class="col-md-3">
         <div>@Html.Label("Sort Order")</div>
         <div>@Html.RadioButtonFor(m => m.SortOrder, "Asc", new { Checked = "true" }) Oldest First</div>
@@ -35,7 +38,20 @@
         <table cellpadding="0" cellspacing="0" border="0" class="display table-bordered" id="recordlist" style="width:100%">
             <thead>
                 <tr>
-                    <th width="30%">Institution Name</th>
+                    @{
+                        if (Model.ContentProviderTarget == 3)
+                        {
+                            <th width="30%">Content Provider Group Name</th>
+                        }
+                        else
+                        {
+                            <th width="30%">Content Provider Name</th>
+                        }
+                        if (Model.ContentProviderTarget == 1 || Model.ContentProviderTarget == 4 || Model.ContentProviderTarget == 6)
+                        {
+                            <th width="20%">Content Provider Groups</th>
+                        }
+                    }
                     <th width="5%">Year</th>
                     <th width="5%">Month</th>
                     <th width="5%" style="border-left-width:3px; background-color:whitesmoke">New<br />Items</th>
@@ -43,7 +59,7 @@
                     <th width="5%" style="background-color:whitesmoke">New<br />Names</th>
                     <th width="5%" style="background-color:whitesmoke">New<br />Segments</th>
                     @{
-                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
+                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 5)
                         {
                             <th width="5%" style="background-color:whitesmoke">New<br />PDFs</th>
                             <th width="5%" style="background-color:whitesmoke">New<br />DOIs</th>
@@ -54,7 +70,7 @@
                     <th width="5%">Total<br />Names</th>
                     <th width="5%">Total<br />Segments</th>
                     @{
-                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
+                        if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 5)
                         {
                             <th width="5%">Total<br />PDFs</th>
                             <th width="5%">Total<br />DOIs</th>
@@ -65,12 +81,20 @@
             <tbody>
                 @{
                     string prevInstitutionName = string.Empty;
+                    string prevGroupNames = string.Empty;
                     foreach (MOBOT.BHL.AdminWeb.Models.ReportingStatsModel.ReportStat reportStat in Model.ReportStats)
                     {
                         string institutionName = (prevInstitutionName != reportStat.InstitutionName) ? reportStat.InstitutionName : string.Empty;
+                        string groupNames = (prevInstitutionName != reportStat.InstitutionName) ? reportStat.GroupNames : string.Empty;
                         string topWidth = (prevInstitutionName != reportStat.InstitutionName) ? "3px" : "1px";
                         <tr>
                             <td style="border-top-width:@topWidth">@institutionName</td>
+                            @{ 
+                                if (Model.ContentProviderTarget == 1 || Model.ContentProviderTarget == 4 || Model.ContentProviderTarget == 6)
+                                {
+                                    <td style="border-top-width:@topWidth">@groupNames</td>
+                                }
+                            }
                             <td style="border-top-width:@topWidth">@reportStat.Year</td>
                             <td style="border-top-width:@topWidth">@reportStat.Month</td>
                             <td style="border-top-width:@topWidth; border-left-width:3px; background-color:whitesmoke">@reportStat.Items</td>
@@ -78,7 +102,7 @@
                             <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Names</td>
                             <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.Segments</td>
                             @{
-                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
+                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 5)
                                 {
                                     <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.PDFs</td>
                                     <td style="border-top-width:@topWidth; background-color:whitesmoke">@reportStat.DOIs</td>
@@ -89,7 +113,7 @@
                             <td style="border-top-width:@topWidth">@reportStat.TotalNames</td>
                             <td style="border-top-width:@topWidth">@reportStat.TotalSegments</td>
                             @{
-                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 4)
+                                if (Model.ContentProviderTarget == 2 || Model.ContentProviderTarget == 5)
                                 {
                                     <td style="border-top-width:@topWidth">@reportStat.TotalPDFs</td>
                                     <td style="border-top-width:@topWidth">@reportStat.TotalDOIs</td>
@@ -97,6 +121,7 @@
                             }
                         </tr>
                         prevInstitutionName = reportStat.InstitutionName;
+                        prevGroupNames = reportStat.GroupNames;
                     }
                 }
             </tbody>
@@ -107,11 +132,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        if ($("form input:radio[name='ContentProviderTarget']:checked").val() != "5") $("#InstitutionCode").attr("disabled", true);
+        if ($("form input:radio[name='ContentProviderTarget']:checked").val() != "6") $("#InstitutionCode").attr("disabled", true);
     });
 
     $("form input:radio[name='ContentProviderTarget']").change(function () {
-        if ($(this).val() == '5') {
+        if ($(this).val() == '6') {
             $("#InstitutionCode").removeAttr("disabled");
         }
         else {

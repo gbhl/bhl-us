@@ -268,6 +268,7 @@
     </Compile>
     <Compile Include="ContentPanel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CitationImportController.cs" />
     <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -448,6 +449,7 @@
       <DependentUpon>MarcDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminModels.cs" />
     <Compile Include="Models\CitationImportHistoryModel.cs" />
     <Compile Include="Models\CitationImportModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -458,6 +460,7 @@
     <Compile Include="Models\SegmentResolutionLogModel.cs" />
     <Compile Include="Models\TextImportHistoryModel.cs" />
     <Compile Include="Models\TextImportModel.cs" />
+    <Compile Include="MVCServices\AdminService.cs" />
     <Compile Include="MVCServices\CitationService.cs" />
     <Compile Include="MVCServices\EmailService.cs" />
     <Compile Include="MVCServices\TextImportService.cs" />
@@ -1115,6 +1118,9 @@
     <Content Include="Views\TextImport\Review.cshtml" />
     <Content Include="Views\Report\TextImportHistory.cshtml" />
     <Content Include="Services\rptItemByContentProviderService.ashx" />
+    <Content Include="Views\Admin\Groups.cshtml" />
+    <Content Include="Views\Admin\GroupEdit.cshtml" />
+    <Content Include="Views\Admin\GroupInstitutions.cshtml" />
     <None Include="Web.config.template">
       <SubType>Designer</SubType>
     </None>

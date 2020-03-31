@@ -31,6 +31,11 @@
 						</td>
 					</tr>
 					<tr>
+						<td align="center" runat="server" id="tdInstitutionGroups">
+							<a href="/admin/groups">Content Provider Groups</a>
+						</td>
+					</tr>
+					<tr>
 						<td align="center" runat="server" id="tdLanguages">
 							<a href="/LanguageEdit.aspx">Languages</a>
 						</td>

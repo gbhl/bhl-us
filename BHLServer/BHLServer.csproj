@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="BHLProvider.Institution.cs">
     </Compile>
+    <Compile Include="BHLProvider.InstitutionGroup.cs" />
     <Compile Include="BHLProvider.Item.cs">
     </Compile>
     <Compile Include="BHLProvider.ItemSummaryView.cs">

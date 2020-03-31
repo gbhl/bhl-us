@@ -203,6 +203,8 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminUserAdvanced))
             {
+                tdInstitutionGroups.InnerHtml = GetMenuText(tdInstitutionGroups.InnerHtml);
+
                 tdAlertMessage.InnerHtml = GetMenuText(tdAlertMessage.InnerHtml);
                 tdApiV2Stats.InnerHtml = apiv2StatsLink.InnerText;
                 tdApiV3Stats.InnerHtml = apiv3StatsLink.InnerText;
