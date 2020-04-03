@@ -74,7 +74,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Item Identifier: {0}", itemId);
             }
 
-            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
 
@@ -94,7 +94,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
             }
 
-            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
 
@@ -114,7 +114,7 @@ namespace MOBOT.BHL.Web2.Controllers
                 manifest = string.Format("Invalid Page Identifier: {0}-{1}", itemId, pageSeq);
             }
 
-            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            //HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Content(manifest);
         }
 

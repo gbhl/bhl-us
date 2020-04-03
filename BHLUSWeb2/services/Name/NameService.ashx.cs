@@ -88,7 +88,7 @@ namespace MOBOT.BHL.Web2.Services
                     break;
             }
 
-            context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            //context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             context.Response.Write(response);
         }
 
