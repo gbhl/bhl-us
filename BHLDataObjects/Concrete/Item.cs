@@ -11,6 +11,7 @@ namespace MOBOT.BHL.DataObjects
 		private string _titleName;
         private string _fullTitle;
         private string _shortTitle;
+        private string _bibliographicLevel;
         private string _partNumber;
         private string _partName;
 		private string _paginationStatusName;
@@ -116,6 +117,11 @@ namespace MOBOT.BHL.DataObjects
             set { this._shortTitle = value; }
         }
 
+        public string BibliographicLevel
+        {
+            get { return this._bibliographicLevel; }
+            set { this._bibliographicLevel = value; }
+        }
         public string PartNumber
         {
             get { return _partNumber; }
@@ -381,6 +387,11 @@ namespace MOBOT.BHL.DataObjects
                     case "ShortTitle":
                         {
                             _shortTitle = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "BibliographicLevel":
+                        {
+                            _bibliographicLevel = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                     case "PartNumber":

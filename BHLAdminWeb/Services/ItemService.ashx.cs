@@ -166,8 +166,13 @@ namespace MOBOT.BHL.AdminWeb.Services
                     foreach (Item item in items)
                     {
                         response.Append("<row id='" + item.ItemID.ToString() + "'>");
-                        response.Append("<cell> <![CDATA[<a title=\"Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
-                        response.Append("<cell> " + item.BarCode + " </cell>");
+                        response.Append("<cell> <![CDATA[<a title=\"Title Info\" href=\"titleedit.aspx?id=" + item.PrimaryTitleID.ToString() + "\">" + item.PrimaryTitleID.ToString() + "</a>]]> </cell>");
+                        response.Append("<cell> <![CDATA[" + item.FullTitle + "]]> </cell>");
+                        response.Append("<cell> " + item.BibliographicLevel + " </cell>");
+                        response.Append("<cell> <![CDATA[<a title=\"Item Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
+                        response.Append("<cell> <![CDATA[" + item.Volume + "]]> </cell>");
+                        response.Append("<cell> " + item.Year + " </cell>");
+                        response.Append("<cell> " + item.ScanningDate.ToString() + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.InstitutionStrings[0] + "]]> </cell>");
                         response.Append("<cell> " + item.PaginationStatusName  + " </cell>");
                         response.Append("<cell> " + item.PaginationStatusDate.ToString() + " </cell>");
