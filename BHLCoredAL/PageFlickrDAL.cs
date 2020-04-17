@@ -96,5 +96,16 @@ namespace MOBOT.BHL.DAL
                 }
             }
         }
-	}
+
+        public void PageFlickrDeleteByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("PageFlickrDeleteByPageID", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID)))
+            {
+                command.ExecuteNonQuery();
+            }
+        }
+    }
 }

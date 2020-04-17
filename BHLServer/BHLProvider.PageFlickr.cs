@@ -27,5 +27,11 @@ namespace MOBOT.BHL.Server
         {
             return new PageFlickrDAL().PageFlickrSelectRandom(null, null, numberToReturn);
         }
-	}
+
+        public void PageFlickrDelete(List<int> pages, int userId)
+        {
+            PageFlickrDAL dal = new PageFlickrDAL();
+            foreach (int pageID in pages) dal.PageFlickrDeleteByPageID(null, null, pageID);
+        }
+    }
 }

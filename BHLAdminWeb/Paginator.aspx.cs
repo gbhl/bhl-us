@@ -219,6 +219,7 @@ namespace MOBOT.BHL.AdminWeb
                 }
 			}
 
+			FlickrDeleteRow.Visible = Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced);
 			errorControl.Visible = false;
 		}
 
@@ -649,6 +650,36 @@ namespace MOBOT.BHL.AdminWeb
                     ClientScript.RegisterStartupScript(this.GetType(), "OpenFlickerLogin", js.ToString(), true);
                 }
             }
+		}
+
+		protected void FlickrDelete_Click(object sender, EventArgs e)
+		{
+			bool flag = false;
+			List<int> pages = getSelectedPageIds();
+			if (pages.Count == 0)
+			{
+				flag = true;
+				errorControl.AddErrorText("You must select at least one page to update.");
+			}
+			else
+			{
+				int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+				bp.PageFlickrDelete(pages, userId);
+
+				// By manually clearing the Flickr Image Buttons in the datagrid (instead of just
+				// refreshing/refilling the dataset), we are able to preserve the checked fields 
+				// and the scroll position of the grid.
+				foreach (GridViewRow gvr in detailGridView.Rows)
+				{
+					CheckBox cb = (CheckBox)gvr.FindControl("pageCheckBox");
+					if (cb.Checked)
+					{
+						((ImageButton)gvr.FindControl("FlickrLinkButton")).Visible = false;
+					}
+				}
+			}
+
+			errorControl.Visible = flag;
 		}
 
 		protected void clearIndicatedPageButton_Click( object sender, EventArgs e )
