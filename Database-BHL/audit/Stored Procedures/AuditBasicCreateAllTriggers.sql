@@ -17,7 +17,7 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Title', 'TitleID', NULL, NULL, NU
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Title', 'TitleID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'U'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleLanguage', 'TitleLanguageID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo', 'Language', 'LanguageCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'I'
-exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', 'TitleID', 'ItemID', 'dbo', 'Title', 'TitleID', 'dbo', 'Item', 'ItemID', 'D'
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleItem', 'TitleItemID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo', 'Item', 'ItemID', 'D'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociation', 'TitleAssociationID', NULL, NULL, 'dbo', 'Title', 'TitleID'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleAssociation_TitleIdentifier', 'TitleAssociation_TitleIdentifierID', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleVariant', 'TitleVariantID', NULL, NULL, 'dbo', 'Title', 'TitleID'
@@ -46,6 +46,8 @@ exec [audit].[AuditBasicCreateTrigger] 'dbo', 'DOIStatus', 'DOIStatusID', NULL, 
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'Institution', 'InstitutionCode', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'AspNetUsers', 'Id', NULL, NULL
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionRole', 'InstitutionRoleID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionGroup', 'InstitutionGroupID', NULL, NULL
+exec [audit].[AuditBasicCreateTrigger] 'dbo', 'InstitutionGroupInstitution', 'InstitutionGroupInstitutionID', NULL, NULL, 'dbo', 'InstitutionGroup', 'InstitutionGroupID', 'dbo', 'Institution', 'InstitutionCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'ItemInstitution', 'ItemInstitutionID', NULL, NULL, 'dbo', 'Item', 'ItemID', 'dbo',' Institution', 'InstitutionCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'SegmentInstitution', 'SegmentInstitutionID', NULL, NULL, 'dbo', 'Segment', 'SegmentID', 'dbo',' Institution', 'InstitutionCode'
 exec [audit].[AuditBasicCreateTrigger] 'dbo', 'TitleInstitution', 'TitleInstitutionID', NULL, NULL, 'dbo', 'Title', 'TitleID', 'dbo',' Institution', 'InstitutionCode'

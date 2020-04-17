@@ -1,0 +1,95 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.InstitutionGroupModel
+
+@{
+    ViewBag.Title = "Edit Content Providers for Group: " + Model.InstitutionGroupName;
+}
+
+<input type="hidden" id="selectTab" value="@ViewBag.Action" />
+<p>
+    <a href="/">&lt; Return to Dashboard</a><br />
+    <a href="/admin/groups">&lt; Return to Groups</a>
+</p>
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
+
+@using (Html.BeginForm("GroupInstitutions", "Admin", FormMethod.Post, new { id = "saveForm" }))
+{
+    @Html.HiddenFor(m => m.InstitutionGroupID)
+    @Html.HiddenFor(m => m.InstitutionGroupName)
+    <div style="display:inline-block; margin-bottom:10px;">
+        <div style="display:inline; float:left;">
+            <div class="pagesubheader">Available (<span id="availSpan">@Model.InstitutionList.Count</span>)</div>
+            <div>
+                @Html.ListBoxFor(m => m.SelectedInstitutions, Model.InstitutionList, new { style = "height:500px;width:500px;padding:5px;overflow:scroll" })
+            </div>
+        </div>
+        <div style="display:inline; float:left; margin-top:200px; margin-left:10px; margin-right:10px;">
+            <div style="margin-bottom:20px;"><input type="button" id="MoveRightBtn" value=">" onclick="moveRight();" /></div>
+            <div><input type="button" id="MoveLeftBtn" value="<" onclick="moveLeft()"/></div>
+        </div>
+        <div style="display:inline; float:left;">
+            <div class="pagesubheader">Selected  (<span id="selectSpan">@Model.GroupInstitutionList.Count</span>)</div>
+            <div>
+                @Html.ListBoxFor(m => m.SelectedGroupInstitutions, Model.GroupInstitutionList, new { style = "height:500px;width:500px;padding:5px;overflow:scroll" })
+            </div>
+        </div>
+    </div>
+    <p>
+        <input type="button" name="saveButton" value="Save" id="saveButton" onclick="formSubmit();" />
+        <input type="button" name="closeButton" value="Close" id="closeButton" onclick="closeForm();" />
+    </p>
+}
+<script>
+    function closeForm() {
+        window.location.href = '/admin/groups';
+    }
+
+    function moveRight() {
+        moveInstitution("SelectedInstitutions", "SelectedGroupInstitutions");
+    }
+
+    function moveLeft() {
+        moveInstitution("SelectedGroupInstitutions", "SelectedInstitutions");
+    }
+
+    function moveInstitution(sourceElement, destinationElement) {
+        var source = document.getElementById(sourceElement);
+        for (var i = source.options.length - 1; i >= 0; i--) {
+            if (source.options[i].selected) {
+
+                // Add to destination list
+                var option = document.createElement("option");
+                option.text = source.options[i].text;
+                option.value = source.options[i].value;
+                listInsert(document.getElementById(destinationElement), option);
+
+                // Remove from source list
+                source.remove(i);
+            }
+        }
+
+        var availSpan = document.getElementById("availSpan");
+        var selectSpan = document.getElementById("selectSpan");
+        availSpan.innerText = document.getElementById("SelectedInstitutions").options.length;
+        selectSpan.innerText = document.getElementById("SelectedGroupInstitutions").options.length;
+    }
+
+    function listInsert(list, option) {
+        // Insert into list in alphabetical order
+        var index = 0;
+        for (var i = 0; i < list.options.length; i++) {
+            if (option.text.toLowerCase().localeCompare(list.options[i].text.toLowerCase()) < 0) break;
+            index = i + 1;
+        }
+        list.add(option, list.options[index]);
+    }
+
+    function formSubmit() {
+        // Mark all institutions in lists as selected to that they will be posted correctly
+        var institutionList = document.getElementById("SelectedInstitutions");
+        var groupInstitutionList = document.getElementById("SelectedGroupInstitutions");
+        for (var i = 0; i < institutionList.options.length; i++) institutionList.options[i].selected = true;
+        for (var i = 0; i < groupInstitutionList.options.length; i++) groupInstitutionList.options[i].selected = true;
+        document.getElementById("saveForm").submit();
+    }
+</script>

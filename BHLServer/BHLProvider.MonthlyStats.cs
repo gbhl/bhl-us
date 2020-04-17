@@ -2,6 +2,7 @@
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using CustomDataAccess;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -40,6 +41,11 @@ namespace MOBOT.BHL.Server
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectByInstitution(string institutionCode)
         {
             return GetMonthlyStatsDalInstance().MonthlyStatsSelectByInstitution(null, null, institutionCode);
+        }
+
+        public List<MonthlyStats> MonthlyStatsSelectDetailedForGroup()
+        {
+            return GetMonthlyStatsDalInstance().MonthlyStatsSelectDetailedForGroup(null, null);
         }
 
         public CustomGenericList<MonthlyStats> MonthlyStatsSelectDetailed(bool bhlMemberLibraryOnly)

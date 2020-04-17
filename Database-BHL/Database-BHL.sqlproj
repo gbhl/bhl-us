@@ -1118,6 +1118,14 @@
     <None Include="dbo\Stored Procedures\ApiPageSelectByResolvedName.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSelectByResolvedName.sql" />
     <None Include="dbo\Stored Procedures\ExportKBART.sql" />
+    <None Include="dbo\Tables\InstitutionGroup.sql" />
+    <None Include="dbo\Tables\InstitutionGroupInstitution.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupSelectInstitutions.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupDelete.sql" />
+    <None Include="dbo\Types\InstitutionCodeTable.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInstitutionsInsertList.sql" />
+    <None Include="dbo\Stored Procedures\MonthlyStatsSelectDetailedForGroup.sql" />
+    <None Include="dbo\Functions\fnGroupStringForInstitution.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1444,5 +1452,14 @@
     <None Include="dbo\Stored Procedures\TitleInstitutionSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleInstitutionUpdateAuto.sql" />
     <Build Include="dbo\Functions\fnGetDatesFromString.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionUpdateAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupSelectAuto.sql" />
+    <Build Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupSelectAll.sql" />
   </ItemGroup>
 </Project>

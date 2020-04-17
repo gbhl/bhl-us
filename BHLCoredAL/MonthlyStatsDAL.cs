@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -64,6 +65,21 @@ namespace MOBOT.BHL.DAL
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
                     CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    return (list);
+                }
+            }
+        }
+
+        public List<MonthlyStats> MonthlyStatsSelectDetailedForGroup(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("MonthlyStatsSelectDetailedForGroup", connection, transaction))
+            {
+                using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
+                {
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

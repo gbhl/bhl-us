@@ -107,6 +107,8 @@
     <Compile Include="Concrete\ImportRecordKeyword.cs" />
     <Compile Include="Concrete\ImportRecordPage.cs" />
     <Compile Include="Concrete\ImportRecordStatus.cs" />
+    <Compile Include="Concrete\InstitutionGroup.cs" />
+    <Compile Include="Concrete\InstitutionGroupInstitution.cs" />
     <Compile Include="Concrete\InstitutionRole.cs" />
     <Compile Include="Concrete\ItemCOinSView.cs" />
     <Compile Include="Concrete\ItemCollection.cs" />
@@ -232,6 +234,8 @@
     <Compile Include="Generated\__ImportRecordKeyword.cs" />
     <Compile Include="Generated\__ImportRecordPage.cs" />
     <Compile Include="Generated\__ImportRecordStatus.cs" />
+    <Compile Include="Generated\__InstitutionGroup.cs" />
+    <Compile Include="Generated\__InstitutionGroupInstitution.cs" />
     <Compile Include="Generated\__InstitutionRole.cs" />
     <Compile Include="Generated\__ItemCOinSView.cs" />
     <Compile Include="Generated\__ItemCollection.cs" />

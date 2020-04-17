@@ -1,0 +1,56 @@
+﻿@model MOBOT.BHL.AdminWeb.Models.InstitutionGroupModel
+
+@{
+    ViewBag.Title = "Edit Content Provider Group";
+}
+
+<input type="hidden" id="selectTab" value="@ViewBag.Action" />
+<p><a href="/">&lt; Return to Dashboard</a><br />
+<a href="/admin/groups">&lt; Return to Groups</a></p>
+<span class="pageHeader">@ViewBag.Title</span>
+<hr />
+
+<form method="post">
+    <p>
+        <div class="box" style="padding:10px;margin-right:5px;width:800px">
+            <p>
+                <table style="border-collapse:separate; border-spacing:3px;" width="100%">
+                    <tbody>
+                        <tr>
+                            <td style="white-space: nowrap" align="right">
+                                Name:
+                            </td>
+                            <td>
+                                <input type="hidden" name="InstitutionGroupID" id="InstitutionGroupID" value="@Model.InstitutionGroupID">
+                                <input name="InstitutionGroupName" type="text" maxlength="255" id="InstitutionGroupName" style="width:400px;" value="@Model.InstitutionGroupName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="white-space: nowrap" align="right">
+                                Description:
+                            </td>
+                            <td>
+                                <input name="InstitutionGroupDescription" type="text" id="InstitutionGroupDescription" style="width:400px;" value="@Model.InstitutionGroupDescription"> <i>(optional)</i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+            <input type="submit" name="saveButton" value="Save" id="saveButton">
+            <input type="button" name="closeButton" value="Close" id="closeButton" onclick="closeForm();">
+            <div style="float:right;">
+                <a href="javascript:void(0);" id="hypHistory" onclick="openEditHistory();">View Edit History</a>
+            </div>
+
+        </div>
+    </p>
+</form>
+<script>
+    function openEditHistory() {
+        window.open('/EditHistoryList.aspx?name=InstitutionGroup&id=' + document.getElementById('InstitutionGroupID').value, '', 'width=800,height=600,location=0,status=0,scrollbars=1');
+    }
+
+    function closeForm() {
+        window.location.href = '/admin/groups';
+    }
+</script>

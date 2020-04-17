@@ -11,6 +11,7 @@ SET NOCOUNT ON
 -- Select stats (including cumulative stats) for every institution
 SELECT	x.InstitutionCode, 
 		InstitutionName,
+		dbo.fnGroupStringForInstitution(x.InstitutionCode) AS InstitutionGroupNames,
 		StatType, 
 		[Year], 
 		[Month], 

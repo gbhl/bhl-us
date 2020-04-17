@@ -1,7 +1,4 @@
-﻿DROP PROCEDURE [audit].[AuditBasicDropAllTriggers]
-GO
-
-CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
+﻿CREATE PROCEDURE [audit].[AuditBasicDropAllTriggers]
 
 AS
 
@@ -37,6 +34,8 @@ exec [audit].[AuditBasicDropTrigger] 'dbo', 'DOIStatus'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'Institution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'AspNetUsers'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionRole'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionGroup'
+exec [audit].[AuditBasicDropTrigger] 'dbo', 'InstitutionGroupInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'ItemInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'SegmentInstitution'
 exec [audit].[AuditBasicDropTrigger] 'dbo', 'TitleInstitution'

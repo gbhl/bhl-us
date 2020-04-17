@@ -35,12 +35,15 @@ namespace MOBOT.BHL.AdminWeb.Models
                     stats = GetSummaryStats(false);
                     break;
                 case 3:
-                    stats = GetDetailedStats(true);
+                    stats = GetGroupStats();
                     break;
                 case 4:
-                    stats = GetSummaryStats(true);
+                    stats = GetDetailedStats(true);
                     break;
                 case 5:
+                    stats = GetSummaryStats(true);
+                    break;
+                case 6:
                     stats = GetStatsForInstitution(InstitutionCode ?? string.Empty);
                     break;
             }
@@ -58,26 +61,34 @@ namespace MOBOT.BHL.AdminWeb.Models
             StringBuilder sb = new StringBuilder();
 
             // Add CSV header
-            if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
+            if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
             {
-                sb.AppendLine("\"Institution\",\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"New PDFs\",\"New DOIs\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\",\"Total PDFs\",\"Total DOIs\"");
+                sb.AppendLine("\"Content Provider\",\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"New PDFs\",\"New DOIs\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\",\"Total PDFs\",\"Total DOIs\"");
             }
             else
             {
-                sb.AppendLine("\"Institution\",\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\"");
+                if (this.ContentProviderTarget == 3) 
+                    sb.Append("\"Content Provider Group\",");
+                else
+                    sb.Append("\"Content Provider\",");
+
+                if (this.ContentProviderTarget == 1 || this.ContentProviderTarget == 4 || this.ContentProviderTarget == 6) sb.Append("\"Content Provider Groups\",");
+
+                sb.AppendLine("\"Year\",\"Month\",\"New Items\",\"New Pages\",\"New Names\",\"New Segments\",\"Total Items\",\"Total Pages\",\"Total Names\",\"Total Segments\"");
             }
 
             // Add CSV data
             foreach (ReportStat reportStat in ReportStats)
             {
                 sb.Append("\"" + reportStat.InstitutionName.Replace("\"", "'") + "\"");
+                if (this.ContentProviderTarget == 1 || this.ContentProviderTarget == 4 || this.ContentProviderTarget == 6) sb.Append(",\"" + reportStat.GroupNames + "\"");
                 sb.Append(",\"" + reportStat.Year + "\"");
                 sb.Append(",\"" + reportStat.Month + "\"");
                 sb.Append(",\"" + reportStat.Items + "\"");
                 sb.Append(",\"" + reportStat.Pages + "\"");
                 sb.Append(",\"" + reportStat.Names + "\"");
                 sb.Append(",\"" + reportStat.Segments + "\"");
-                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
+                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
                 {
                     sb.Append(",\"" + reportStat.PDFs + "\"");
                     sb.Append(",\"" + reportStat.DOIs + "\"");
@@ -86,7 +97,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                 sb.Append(",\"" + reportStat.TotalPages + "\"");
                 sb.Append(",\"" + reportStat.TotalNames + "\"");
                 sb.Append(",\"" + reportStat.TotalSegments + "\"");
-                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 4)
+                if (this.ContentProviderTarget == 2 || this.ContentProviderTarget == 5)
                 {
                     sb.Append(",\"" + reportStat.TotalPDFs + "\"");
                     sb.Append(",\"" + reportStat.TotalDOIs + "\"");
@@ -101,6 +112,11 @@ namespace MOBOT.BHL.AdminWeb.Models
         private List<MonthlyStats> GetStatsForInstitution(string institutionCode)
         {
             return new BHLProvider().MonthlyStatsSelectByInstitution(institutionCode);
+        }
+
+        private List<MonthlyStats> GetGroupStats()
+        {
+            return new BHLProvider().MonthlyStatsSelectDetailedForGroup();
         }
 
         private List<MonthlyStats> GetDetailedStats(bool bhlMemberLibrary)
@@ -130,6 +146,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     if (reportStat != null) reportStats.Add(reportStat);
                     reportStat = new ReportStat();
                     reportStat.InstitutionName = GetReportStatInstitutionName(stat.InstitutionName);
+                    reportStat.GroupNames = stat.InstitutionGroupNames;
                     reportStat.Year = stat.Year;
                     reportStat.Month = stat.Month;
                 }
@@ -180,7 +197,7 @@ namespace MOBOT.BHL.AdminWeb.Models
                     case 2:
                         institutionName = "All Content Providers";
                         break;
-                    case 4:
+                    case 5:
                         institutionName = "BHL Partner Content Providers";
                         break;
                 }
@@ -206,6 +223,7 @@ namespace MOBOT.BHL.AdminWeb.Models
         public class ReportStat
         {
             public string InstitutionName { get; set; }
+            public string GroupNames { get; set; }
             public int Year { get; set; }
             public int Month { get; set; }
             public int? Items { get; set; }

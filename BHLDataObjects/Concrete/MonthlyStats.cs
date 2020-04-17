@@ -19,6 +19,14 @@ namespace MOBOT.BHL.DataObjects
             set { _institutionCode = value; }
         }
 
+        private string _institutionGroupNames = string.Empty;
+
+        public string InstitutionGroupNames
+        { 
+            get { return _institutionGroupNames; } 
+            set { _institutionGroupNames = value; }
+        }
+
         private int _cumulativeValue = 0;
 
         public int CumulativeValue
@@ -34,6 +42,10 @@ namespace MOBOT.BHL.DataObjects
                 if (column.Name == "InstitutionCode")
                 {
                     _institutionCode = Utility.EmptyIfNull(column.Value);
+                }
+                if (column.Name == "InstitutionGroupNames")
+                {
+                    _institutionGroupNames = Utility.EmptyIfNull(column.Value);
                 }
                 if (column.Name == "CumulativeValue")
                 {
