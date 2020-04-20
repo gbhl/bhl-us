@@ -232,6 +232,17 @@
                                         <asp:HiddenField ID="hidPageIds" runat="server" />
 									</td>
 								</tr>
+								<tr runat="server" id="FlickrDeleteRow">
+									<td align="right" style="padding-right: 5px">
+										Flickr Delete
+									</td>
+									<td>
+										<asp:Button ID="FlickrDelete" runat="server" ClientIDMode="Static" Font-Size="12px" Text="Delete" Enabled="true" OnClick="FlickrDelete_Click" />
+									</td>
+									<td>
+										(Remove the Flickr links from the selected pages)
+									</td>
+								</tr>
 							</table>
 						</td>
 					</tr>
@@ -335,4 +346,9 @@
 			</tr>
 		</table>
 	</div>
+	<script>
+        $('#FlickrDelete').click(function () {
+            return confirm('Are you sure you want to delete the Flickr links for all of the selected pages ?\r\n\r\nNote: This process will not delete this image(s) in Flickr.  It will only delete the Flickr link(s) for the selected page(s) in BHL.  You must manually delete the images from Flickr.');
+        });
+	</script>
 </asp:Content>
