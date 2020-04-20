@@ -17,8 +17,15 @@ DECLARE @TotalItems INT
 -- Create a temp table for the initial data set
 CREATE TABLE #Step1
 	(
+	PrimaryTitleID int NOT NULL,
+	FullTitle nvarchar(2000) NOT NULL,
+	SortTitle nvarchar(60) NOT NULL,
+	BibliographicLevel nvarchar(50) NOT NULL,
 	ItemID int NOT NULL,
 	BarCode nvarchar(50) NOT NULL,
+	Volume nvarchar(100) NOT NULL,
+	[Year] nvarchar(20) NOT NULL,
+	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
 	PaginationUserName nvarchar(65) NOT NULL,
@@ -27,13 +34,22 @@ CREATE TABLE #Step1
 
 -- Get the initial data set
 INSERT	#Step1
-SELECT	i.ItemID,
+SELECT	i.PrimaryTitleID,
+		ISNULL(t.FullTitle, '') AS FullTitle,
+		ISNULL(t.SortTitle, '') AS SortTitle,
+		ISNULL(b.BibliographicLevelLabel, '') AS BibliographicLevel,
+		i.ItemID,
 		i.BarCode,
+		ISNULL(i.Volume, '') AS Volume,
+		ISNULL(i.[Year], '') AS [Year],
+		i.ScanningDate,
 		inst.InstitutionName,
 		ISNULL(i.PaginationStatusDate, i.CreationDate) AS PaginationStatusDate,
 		ISNULL(u.LastName + ', ' + u.FirstName, '') AS PaginationUserName,
 		ps.PaginationStatusName
-FROM	[dbo].[Item] i
+FROM	dbo.Item i
+		INNER JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
+		LEFT JOIN dbo.BibliographicLevel b on t.BibliographicLevelID = b.BibliographicLevelID
 		INNER JOIN dbo.PaginationStatus ps ON ps.PaginationStatusID = i.PaginationStatusID
 		LEFT JOIN dbo.AspNetUsers u ON u.Id = i.PaginationStatusUserID
 		LEFT JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
@@ -46,8 +62,15 @@ AND		ISNULL(i.PaginationStatusDate, i.CreationDate) BETWEEN @StartDate AND @EndD
 -- Create a temp table for the second step
 CREATE TABLE #Step2
 	(
+	PrimaryTitleID int NOT NULL,
+	FullTitle nvarchar(2000) NOT NULL,
+	SortTitle nvarchar(60) NOT NULL,
+	BibliographicLevel nvarchar(50) NOT NULL,
 	ItemID int NOT NULL,
 	BarCode nvarchar(50) NOT NULL,
+	Volume nvarchar(100) NOT NULL,
+	[Year] nvarchar(20) NOT NULL,
+	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
 	PaginationUserName nvarchar(65) NOT NULL,
@@ -56,78 +79,22 @@ CREATE TABLE #Step2
 	)
 
 -- Add a row number to the data set, first sorting by the specified field
-IF (@SortColumn = 'ItemID' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY ItemID)
-	FROM	#Step1
-END
-IF (@SortColumn = 'ItemID' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY ItemID DESC)
-	FROM	#Step1
-END
-
-IF (@SortColumn = 'BarCode' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY BarCode)
-	FROM	#Step1
-END
-IF (@SortColumn = 'BarCode' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY BarCode DESC)
-	FROM	#Step1
-END
-
-IF (@SortColumn = 'InstitutionStrings' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY InstitutionName)
-	FROM	#Step1
-END
-IF (@SortColumn = 'InstitutionStrings' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY InstitutionName DESC)
-	FROM	#Step1
-END
-
-IF (@SortColumn = 'PaginationStatusDate' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY PaginationStatusDate)
-	FROM	#Step1
-END
-IF (@SortColumn = 'PaginationStatusDate' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY PaginationStatusDate DESC)
-	FROM	#Step1
-END
-
-IF (@SortColumn = 'PaginationUserName' AND LOWER(@SortDirection) = 'asc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY PaginationUserName)
-	FROM	#Step1
-END
-IF (@SortColumn = 'PaginationUserName' AND LOWER(@SortDirection) = 'desc')
-BEGIN
-	INSERT	#Step2
-	SELECT	*, ROW_NUMBER() OVER (ORDER BY PaginationUserName DESC)
-	FROM	#Step1
-END
+DECLARE @SQL nvarchar(MAX) = 'SELECT *, ROW_NUMBER() OVER(ORDER BY ' + @SortColumn + ' ' + @SortDirection + ') FROM #Step1'
+INSERT #Step2 exec sp_executesql @SQL
 
 -- Count the total number of items
 SELECT @TotalItems = COUNT(*) FROM #Step2
 
 -- Return the final result set
 SELECT TOP (@NumRows) 
+		PrimaryTitleID,
+		FullTitle,
+		BibliographicLevel,
 		ItemID,
 		BarCode,
+		Volume,
+		[Year],
+		ScanningDate,
 		InstitutionName AS ContributorTextString,
 		PaginationStatusName,
 		PaginationStatusDate,

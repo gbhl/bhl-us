@@ -24,18 +24,33 @@
     <asp:HiddenField ID="hidStartDate" runat="server" />
     <asp:HiddenField ID="hidEndDate" runat="server" />
     <asp:Literal ID="litUpdateResult" runat="server"></asp:Literal>
-
+    <style>
+        .ui-jqgrid .ui-jqgrid-htable th div {
+            height:auto;
+            overflow:hidden;
+            padding-right:4px;
+            padding-top:2px;
+            position:relative;
+            vertical-align:text-top;
+            white-space:normal !important;
+        }
+    </style>
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery("#list").jqGrid({
                 url: 'services/itemservice.ashx?op=ItemPaginationReport&psid=<%=statusId%>&sdate=<%=startDate%>&edate=<%=endDate%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Item ID', 'Internet Archive ID', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
+                colNames: ['Title ID', 'Title', 'Bib Level', 'Item ID', 'Volume', 'Year', 'Scanning Date', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
                 colModel: [
+                  { name: 'TitleID', index: 'PrimaryTitleID', width: '40px' },
+                  { name: 'Title', index: 'SortTitle', width: '100px' },
+                  { name: 'Bibliographic Level', index: 'BibliographicLevel', width: '50px' },
                   { name: 'ItemID', index: 'ItemID', width: '40px' },
-                  { name: 'Barcode', index: 'Barcode', width: '100px' },
-                  { name: 'Holding Institution', index: 'InstitutionStrings', width: '100px' },
+                  { name: 'Volume', index: 'Volume', width: '50px' },
+                  { name: 'Year', index: 'Year', width: '40px' },
+                  { name: 'Scanning Date', index: 'ScanningDate', width: '50px' },
+                  { name: 'Holding Institution', index: 'InstitutionName', width: '100px' },
                   { name: 'PaginationStatusName', index: 'PaginationStatusName', sortable: false, width: '55px' },
                   { name: 'PaginationStatusDate', index: 'PaginationStatusDate', width: '80px' },
                   { name: 'PaginationUserName', index: 'PaginationUserName', width: '80px' },

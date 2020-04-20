@@ -44,7 +44,7 @@ namespace MOBOT.BHL.AdminWeb.Services
 
                 // Search terms specified individually (title, author, volume, etc)
                 searchResult = provider.ItemSelectPaginationReport(Convert.ToInt32(paginationStatusId), 
-                    Convert.ToDateTime(startDate), Convert.ToDateTime(endDate), 1000000, 1, "ItemID", "asc");
+                    Convert.ToDateTime(startDate), Convert.ToDateTime(endDate), 1000000, 1, "InstitutionName, ItemID", "asc");
 
                 // Output the data as CSV
                 this.GetReportCSVString(context, searchResult);
@@ -82,7 +82,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"ItemId\",\"InternetArchiveId\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
+            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
@@ -90,12 +90,18 @@ namespace MOBOT.BHL.AdminWeb.Services
             {
                 // Write record
                 csvString.Remove(0, csvString.Length);
+                csvString.Append("\"" + item.PrimaryTitleID.ToString() + "\",");
+                csvString.Append("\"" + item.FullTitle.Replace("\"", "\"\"") + "\",");
+                csvString.Append("\"" + item.BibliographicLevel + "\",");
                 csvString.Append("\"" + item.ItemID.ToString() + "\",");
                 csvString.Append("\"" + item.BarCode + "\",");
-                csvString.Append("\"" + item.InstitutionStrings[0] + "\",");
+                csvString.Append("\"" + item.Volume.Replace("\"", "\"\"") + "\",");
+                csvString.Append("\"" + item.Year + "\",");
+                csvString.Append("\"" + item.ScanningDate.ToString() + "\",");
+                csvString.Append("\"" + item.InstitutionStrings[0].Replace("\"", "\"\"") + "\",");
                 csvString.Append("\"" + item.PaginationStatusName + "\",");
                 csvString.Append("\"" + item.PaginationStatusDate.ToString() + "\",");
-                csvString.Append("\"" + item.PaginationUserName + "\",");
+                csvString.Append("\"" + item.PaginationUserName.Replace("\"", "\"\"") + "\",");
                 csvString.AppendLine("\"" + item.NumberOfPages.ToString() + "\",");
 
                 context.Response.Write(csvString.ToString());
