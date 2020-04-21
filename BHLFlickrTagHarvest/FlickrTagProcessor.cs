@@ -5,12 +5,13 @@ using System.Net.Mail;
 using System.Text;
 using BHLFlickrTagHarvest.BHLWS;
 using BHLFlickrTagHarvest.BHLImportWS;
+using System.Threading;
 
 namespace BHLFlickrTagHarvest
 {
     public class FlickrTagProcessor
     {
-        static log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private ConfigParms configParms = new ConfigParms();
         private List<string> pagesProcessed = new List<string>();
@@ -50,56 +51,23 @@ namespace BHLFlickrTagHarvest
         {
             try
             {
-                BHLWSSoapClient bhlWSClient = new BHLWSSoapClient();
-
-                BHLImportWSSoapClient bhlImportWSClient = new BHLImportWSSoapClient();
-
-                PageFlickr[] pages = bhlWSClient.PageFlickrSelectAll();
+                PageFlickr[] pages = new BHLWSSoapClient().PageFlickrSelectAll();
                 LogMessage(string.Format("Found {0} pages to process", pages.Length));
+                int numRequests = 0;
+                DateTime dtStart = DateTime.Now;
                 foreach (PageFlickr page in pages)
                 {
-                    string photoID = string.Empty;
+                    HarvestPage(page);
 
-                    try
+                    // Make sure we harvest no more than 3600 pages per hour, so that we do not exceed Flickr's API rate limits
+                    numRequests++;
+                    if (numRequests >= 3600)
                     {
-                        // Get the tags and notes from Flickr for the current page
-                        string[] flickrUrlParts = page.FlickrURL.Split('/');
-                        photoID = flickrUrlParts[5];
-                        PhotoInfo photoInfo = this.GetFlickrPhotoInfo(photoID);
-                        List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID, photoInfo);
-                        List<PageFlickrNote> flickrNotes = this.GetFlickrNotes(page.PageID, photoID, photoInfo);
-
-                        // Get the tags and notes from the database for the current page
-                        PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
-                        PageFlickrNote[] bhlNotes = bhlImportWSClient.PageFlickrNoteSelectForPageID(page.PageID);
-
-                        // Merge the tags and notes in the database with the new lists from Flickr
-                        List<PageFlickrTag> updateTags = this.CompareTags(new List<PageFlickrTag>(bhlTags), flickrTags);
-                        List<PageFlickrNote> updateNotes = this.CompareNotes(new List<PageFlickrNote>(bhlNotes), flickrNotes);
-
-                        // Update the database with the new sets of tags and notes for the page
-                        bhlImportWSClient.PageFlickrTagUpdateForPageID(page.PageID, updateTags.ToArray());
-                        bhlImportWSClient.PageFlickrNoteUpdateForPageID(page.PageID, updateNotes.ToArray());
+                        TimeSpan ts = DateTime.Now - dtStart;
+                        if (ts.TotalSeconds < 3600) Thread.Sleep((int)((3600 - ts.TotalSeconds) * 1000));
+                        dtStart = DateTime.Now;
+                        numRequests = 0;
                     }
-                    catch (FlickrApiException fex)
-                    {
-                        if (fex.Code == 1)  // Photo not found
-                        {
-                            photosNotFound.Add(photoID);
-                        }
-                        else
-                        {
-                            LogMessage(string.Format("Flickr error processing page {0}", page.PageID.ToString()), fex);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LogMessage(string.Format("Flickr error processing page {0}", page.PageID.ToString()), ex);
-                    }
-
-                    pagesProcessed.Add(page.PageID.ToString());
-
-                    if ((pagesProcessed.Count % 500) == 0) LogMessage(string.Format("Completed {0} pages", pagesProcessed.Count));
                 }
             }
             catch(Exception ex)
@@ -107,6 +75,52 @@ namespace BHLFlickrTagHarvest
                 LogMessage("Error harvesting tags", ex);
             }
 
+        }
+
+        private void HarvestPage(PageFlickr page)
+        {
+            BHLImportWSSoapClient bhlImportWSClient = new BHLImportWSSoapClient();
+            string photoID = string.Empty;
+
+            try
+            {
+                // Get the tags and notes from Flickr for the current page
+                string[] flickrUrlParts = page.FlickrURL.Split('/');
+                photoID = flickrUrlParts[5];
+                PhotoInfo photoInfo = this.GetFlickrPhotoInfo(photoID);
+                List<PageFlickrTag> flickrTags = this.GetFlickrTags(page.PageID, photoID, photoInfo);
+                List<PageFlickrNote> flickrNotes = this.GetFlickrNotes(page.PageID, photoID, photoInfo);
+
+                // Get the tags and notes from the database for the current page
+                PageFlickrTag[] bhlTags = bhlImportWSClient.PageFlickrTagSelectForPageID(page.PageID);
+                PageFlickrNote[] bhlNotes = bhlImportWSClient.PageFlickrNoteSelectForPageID(page.PageID);
+
+                // Merge the tags and notes in the database with the new lists from Flickr
+                List<PageFlickrTag> updateTags = this.CompareTags(new List<PageFlickrTag>(bhlTags), flickrTags);
+                List<PageFlickrNote> updateNotes = this.CompareNotes(new List<PageFlickrNote>(bhlNotes), flickrNotes);
+
+                // Update the database with the new sets of tags and notes for the page
+                bhlImportWSClient.PageFlickrTagUpdateForPageID(page.PageID, updateTags.ToArray());
+                bhlImportWSClient.PageFlickrNoteUpdateForPageID(page.PageID, updateNotes.ToArray());
+            }
+            catch (FlickrApiException fex)
+            {
+                if (fex.Code == 1)  // Photo not found
+                {
+                    photosNotFound.Add(photoID);
+                }
+                else
+                {
+                    LogMessage(string.Format("Flickr error processing page {0}", page.PageID.ToString()), fex);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogMessage(string.Format("Flickr error processing page {0}", page.PageID.ToString()), ex);
+            }
+
+            pagesProcessed.Add(page.PageID.ToString());
+            if ((pagesProcessed.Count % 500) == 0) LogMessage(string.Format("Completed {0} pages", pagesProcessed.Count));
         }
 
         /// <summary>
@@ -164,10 +178,14 @@ namespace BHLFlickrTagHarvest
 
             foreach (PhotoInfoTag tag in photoInfo.Tags)
             {
-                // Only include tags not entered by BioDivLibrary user.  During upload of new
-                // images, the BioDivLibrary user adds tags that we are not interested in 
-                // harvesting here. 
-                if (tag.AuthorId != configParms.BHLFlickrUserID)
+                // Ignore "bhl:page" and "dc:identifier" tags entered by the BioDivLibrary user.
+                // Keep all other tags, no matter to added them.
+                if (tag.AuthorId == configParms.BHLFlickrUserID &&
+                    (tag.Raw.StartsWith("bhl:page") || tag.Raw.StartsWith("dc:identifier")))
+                {
+                    // skip this tag
+                }
+                else
                 {
                     PageFlickrTag flickrTag = new PageFlickrTag();
 
