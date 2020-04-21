@@ -1,8 +1,10 @@
 ﻿using FlickrUtility;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Web;
 
@@ -99,9 +101,16 @@ namespace MOBOT.BHL.AdminWeb
                 }
                 catch (Exception ex)
                 {
+                    string errorMsg = ex.Message;
+
+                    if (ConfigurationManager.AppSettings["LogExceptions"] == "true")
+                    {
+                        ExceptionUtility.LogException(ex, "AjaxFlickrUpload.Page_Load");
+                    }
+
                     StringBuilder sb = new StringBuilder("");
                     sb.Append("{\"errorMsg\":\"");
-                    sb.Append(ex.Message);
+                    sb.Append(errorMsg);
                     sb.Append("\"}");
                     Response.Write(sb.ToString());
                 }
