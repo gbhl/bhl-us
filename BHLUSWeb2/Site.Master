@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=1080" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/style.css?v=18" />
+    <link rel="stylesheet" href="/css/style.css?v=19" />
     <script src="/js/libs/modernizr-1.6.min.js"></script> 
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-540641666fd1b673"></script>
 
@@ -99,7 +99,7 @@
                 <div id="socialmiddle" class="socialcolumn">
                     <h3>BHL on Twitter</h3>
                     <twit:TwitterFeed ID="twitterFeedControl" runat="server" />
-                    <a class="community" title="Our BHL Community" target="_blank" rel="noopener noreferrer" href="http://mytweeps.com/community/BioDivLibrary">BHL Twitter Community</a>
+                    <a class="community" title="Twitter Feed" target="_blank" rel="noopener noreferrer" href="https://twitter.com/biodivlibrary">BHL Twitter Feed</a>
                 </div>
                 <div id="socialright" class="socialcolumn">
                     <h3>Now Online    <a title="Recent RSS" href="/recentrss">
