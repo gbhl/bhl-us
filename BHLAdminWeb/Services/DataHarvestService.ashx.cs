@@ -200,7 +200,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 for (int x = 0; x < searchResult.Count; x++)
                 {
                     response.Append("<row id='" + searchResult[x].ItemId.ToString() + "'>");
-                    response.Append("<cell> <![CDATA[<a title=\"Info\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"/item/" + searchResult[x].BHLItemId + "\">" + searchResult[x].BHLItemId + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Info\" rel=\"noopener noreferrer\" href=\"/ItemEdit.aspx?id=" + searchResult[x].BHLItemId + "\">" + searchResult[x].BHLItemId + "</a>]]> </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Title) + " </cell>");
                     response.Append("<cell> " + SecurityElement.Escape(searchResult[x].Volume) + " </cell>");
                     response.Append("<cell> <![CDATA[<a href=\"#\" title=\"Segments\" onclick=\"window.open('BioStorSegmentsForItem.aspx?id=" + searchResult[x].ItemId.ToString() + "', 'Segments', 'resizeable=0,scrollbars=1,height=500,width=500,status=0,toolbar=0,menubar=0,location=0');\">" + searchResult[x].TotalSegments + "</a>]]> </cell>");
