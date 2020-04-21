@@ -165,7 +165,7 @@ namespace MOBOT.BHL.Server
                 {
                     segment.SortTitle = segment.Title.Substring(2);
                 }
-                else if (thirdChar == "an " || thirdChar == "de " || thirdChar == "el " || 
+                else if (thirdChar == "an " || thirdChar == "el " || 
                         thirdChar == "il " || thirdChar == "la " || thirdChar == "le ")
                 {
                     segment.SortTitle = segment.Title.Substring(3);

@@ -1865,7 +1865,6 @@ BEGIN TRY
 				WHEN LEFT(s.Title, 1) = '|' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 1))
 				WHEN LOWER(LEFT(s.Title, 2)) = 'a ' AND s.Title <> 'a' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 2)) 
 				WHEN LOWER(LEFT(s.Title, 3)) = 'an ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
-				WHEN LOWER(LEFT(s.Title, 3)) = 'de ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
 				WHEN LOWER(LEFT(s.Title, 3)) = 'el ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
 				WHEN LOWER(LEFT(s.Title, 3)) = 'il ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 
 				WHEN LOWER(LEFT(s.Title, 3)) = 'la ' THEN LTRIM(RIGHT(s.Title, LEN(s.Title) - 3)) 

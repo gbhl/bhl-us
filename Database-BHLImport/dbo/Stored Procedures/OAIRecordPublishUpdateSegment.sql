@@ -65,7 +65,6 @@ SET		Title = @Title,
 			WHEN LEFT(@Title, 1) = '|' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 1))
 			WHEN LOWER(LEFT(@Title, 2)) = 'a ' AND Title <> 'a' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 2)) 
 			WHEN LOWER(LEFT(@Title, 3)) = 'an ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
-			WHEN LOWER(LEFT(@Title, 3)) = 'de ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
 			WHEN LOWER(LEFT(@Title, 3)) = 'el ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
 			WHEN LOWER(LEFT(@Title, 3)) = 'il ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 
 			WHEN LOWER(LEFT(@Title, 3)) = 'la ' THEN LTRIM(RIGHT(@Title, LEN(@Title) - 3)) 

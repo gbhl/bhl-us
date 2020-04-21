@@ -60,7 +60,6 @@ SELECT	r.BHLInstitutionCode + REPLACE(REPLACE(o.OAIIdentifier, ':', ''), '/', ''
 			WHEN LEFT(o.Title, 1) = '|' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 1))
 			WHEN LOWER(LEFT(o.Title, 2)) = 'a ' AND Title <> 'a' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 2)) 
 			WHEN LOWER(LEFT(o.Title, 3)) = 'an ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
-			WHEN LOWER(LEFT(o.Title, 3)) = 'de ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
 			WHEN LOWER(LEFT(o.Title, 3)) = 'el ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
 			WHEN LOWER(LEFT(o.Title, 3)) = 'il ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
 			WHEN LOWER(LEFT(o.Title, 3)) = 'la ' THEN LTRIM(RIGHT(o.Title, LEN(o.Title) - 3)) 
