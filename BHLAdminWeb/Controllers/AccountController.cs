@@ -479,6 +479,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.FNameSort = "fname";
             ViewBag.UNameSort = "uname";
             ViewBag.EmailSort = "email";
+            ViewBag.DisabledSort = "disabled";
 
             // Set up the filter variable
             int selectedRole = String.IsNullOrWhiteSpace(role) ? _roleAny : Convert.ToInt32(role);
@@ -513,6 +514,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 case "email":
                     users = users.OrderBy(u => u.Email);
                     ViewBag.EmailSort = sortBy + "_desc";
+                    break;
+                case "disabled_desc":
+                    users = users.OrderByDescending(u => u.Disabled);
+                    break;
+                case "disabled":
+                    users = users.OrderBy(u => u.Disabled);
+                    ViewBag.DisabledSort = sortBy + "_desc";
                     break;
                 default:    // lname
                     users = users.OrderBy(u => u.LastName);
@@ -580,9 +588,17 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
+                bool wasDisabled = false;
+                if (model.Disabled && !user.Disabled) wasDisabled = true;   // Flag users being disabled
                 user.Disabled = model.Disabled;
                 Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 await Db.SaveChangesAsync();
+                // If user was just disabled, remove from all roles
+                if (wasDisabled)
+                {
+                    var idManager = new IdentityManager();
+                    idManager.ClearUserRoles(user.Id);
+                }
                 return RedirectToAction("Index");
             }
 

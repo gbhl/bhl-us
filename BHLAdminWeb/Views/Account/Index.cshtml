@@ -33,7 +33,7 @@
             @Html.ActionLink("Email", "Index", new { sort = ViewBag.EmailSort, role = ViewBag.SelectedRole })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Disabled)
+            @Html.ActionLink("Disabled", "Index", new { sort = ViewBag.DisabledSort, role = ViewBag.SelectedRole })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Locked)
