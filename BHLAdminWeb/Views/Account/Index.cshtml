@@ -41,6 +41,9 @@
         <th>
             @Html.DisplayNameFor(model => model.HasRoles)
         </th>
+        <th>
+            @Html.ActionLink("Last Login Date", "Index", new { sort = ViewBag.LastLoginSort, role = ViewBag.SelectedRole })
+        </th>
         <th></th>
     </tr>
 
@@ -66,6 +69,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.HasRoles)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLoginDateUtc)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.UserName }) |

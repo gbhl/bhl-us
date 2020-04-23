@@ -106,6 +106,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.LastName = user.LastName;
             this.Email = user.Email;
             this.Disabled = user.Disabled;
+            this.LastLoginDateUtc = (user.LastLoginDateUtc == null) ? (DateTime?)null : ((DateTime)user.LastLoginDateUtc).ToLocalTime();
             this.Locked = (user.LockoutEndDateUtc > DateTime.UtcNow) && user.LockoutEnabled;
         }
 
@@ -126,9 +127,12 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public bool Locked { get; set; }
 
+        [Display(Name = "Last Login Date")]
+        public DateTime? LastLoginDateUtc { get; set; }
+
         public bool AllowDelete = false;
 
-        [Display(Name = "Has Assigned Roles")]
+        [Display(Name = "Has Roles")]
         public bool HasRoles { get; set; }
     }
 

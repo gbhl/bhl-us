@@ -19,6 +19,8 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public bool Disabled { get; set; }
 
+        public DateTime? LastLoginDateUtc { get; set; }
+
         //public int uid { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(BHLUserManager manager)

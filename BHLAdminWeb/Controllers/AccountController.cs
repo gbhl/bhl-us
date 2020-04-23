@@ -480,6 +480,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.UNameSort = "uname";
             ViewBag.EmailSort = "email";
             ViewBag.DisabledSort = "disabled";
+            ViewBag.LastLoginSort = "login";
 
             // Set up the filter variable
             int selectedRole = String.IsNullOrWhiteSpace(role) ? _roleAny : Convert.ToInt32(role);
@@ -521,6 +522,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 case "disabled":
                     users = users.OrderBy(u => u.Disabled);
                     ViewBag.DisabledSort = sortBy + "_desc";
+                    break;
+                case "login_desc":
+                    users = users.OrderByDescending(u => u.LastLoginDateUtc);
+                    break;
+                case "login":
+                    users = users.OrderBy(u => u.LastLoginDateUtc);
+                    ViewBag.LastLoginSort = sortBy + "_desc";
                     break;
                 default:    // lname
                     users = users.OrderBy(u => u.LastName);
@@ -779,6 +787,13 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+
+            // Update the last login date
+            var Db = new ApplicationDbContext();
+            var updateUser = Db.Users.First(u => u.Id == user.Id);
+            updateUser.LastLoginDateUtc = DateTime.Now.ToUniversalTime();
+            Db.Entry(updateUser).State = System.Data.Entity.EntityState.Modified;
+            await Db.SaveChangesAsync();
         }
 
         private void AddErrors(IdentityResult result)

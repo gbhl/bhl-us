@@ -4,10 +4,21 @@
     ViewBag.Title = "Edit";
 }
 
+<style>
+    .custom-control-label {
+        padding-top:0px;
+        margin-bottom:0px;
+        text-align:right;
+    }
+    .formField {
+        padding-top:0px;
+    }
+</style>
 <br/>
 <span class="pageHeader">Edit User Account</span>
 <hr />
 
+    <p>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -15,38 +26,45 @@
         <div class="form-horizontal">
             @Html.ValidationSummary(true)
             <div class="form-group">
-                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.UserName, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
                     @Html.DisplayFor(model => model.UserName)
                     @Html.HiddenFor(model => model.UserName)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.FirstName, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
                     @Html.EditorFor(model => model.FirstName)
                     @Html.ValidationMessageFor(model => model.FirstName)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.LastName, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
                     @Html.EditorFor(model => model.LastName)
                     @Html.ValidationMessageFor(model => model.LastName)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.Email, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
                     @Html.EditorFor(model => model.Email)
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
             </div>
-            <div class="form_group">
-                @Html.LabelFor(Model => Model.Disabled, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div class="form-group">
+                @Html.LabelFor(Model => Model.Disabled, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
                     @Html.EditorFor(model => model.Disabled)
                     @Html.ValidationMessageFor(model => model.Disabled)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(Model => Model.LastLoginDateUtc, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
+                    @Html.DisplayFor(model => model.LastLoginDateUtc)
+                    @Html.HiddenFor(model => model.LastLoginDateUtc)
                 </div>
             </div>
             <div class="form-group">
@@ -56,6 +74,7 @@
             </div>
         </div>
     }
+    </p>
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
