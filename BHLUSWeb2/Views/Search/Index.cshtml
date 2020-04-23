@@ -133,7 +133,7 @@
                                                     <div class="catOnlyControl">
                                                         Too many results?&nbsp;&nbsp;
                                                         <div class="catOnly" onclick="$('#ItemPage').val(1);$('#Params_SearchType').val('C');pagerClick('');">Search only the Catalog.</div>&nbsp;&nbsp;
-                                                        <a target="_blank" rel="noopener noreferrer" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="images/help.png" style="margin-bottom:-2px;" alt="Search help" title="What's This?" height="16" width="16" /></a>
+                                                        <a target="_blank" rel="noopener noreferrer" href="https://about.biodiversitylibrary.org/ufaqs/how-do-i-search-the-bhl-collection/"><img src="/images/help.png" style="margin-bottom:-2px;" alt="Search help" title="What's This?" height="16" width="16" /></a>
                                                     </div>
                                                     }
                                                     @Html.Partial("_SearchPager", new ViewDataDictionary { { "searchResult", Model.ItemResult }, { "currentPageField", "ItemPage" }, { "searchTab", "" } })
@@ -274,7 +274,7 @@
                                                             {
                                                                 <div class="row">
                                                                     <div class="col-sm-12 highlightContainer">
-                                                                        <div class="highlightHead"><img src="images/bib_plus.gif">&nbsp;Details</div>
+                                                                        <div class="highlightHead"><img src="/images/bib_plus.gif">&nbsp;Details</div>
                                                                         <div class="highlightBody">
                                                                             @foreach (Tuple<string, string> highlight in item.Highlights)
                                                                             {
@@ -520,7 +520,7 @@
             $content.slideToggle(0, function () {
                 $img = $header.children("img");
                 $img.attr("src", function () {
-                    return $content.is(":visible") ? "images/bib_minus.gif" : "images/bib_plus.gif";
+                    return $content.is(":visible") ? "/images/bib_minus.gif" : "/images/bib_plus.gif";
                 });
             });
         });
@@ -541,7 +541,7 @@
             $content.slideToggle(200, function() {
                 $img = $header.children("img");
                 $img.attr("src", function () {
-                    return $content.is(":visible") ? "images/bib_minus.gif" : "images/bib_plus.gif";
+                    return $content.is(":visible") ? "/images/bib_minus.gif" : "/images/bib_plus.gif";
                 });
             });
         });

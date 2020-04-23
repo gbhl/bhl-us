@@ -303,6 +303,14 @@
         -->
         <rewrite>
           <rules>
+			<rule name="AddTrailingSlashRule1" stopProcessing="true">
+				<match url="(.*[^/])$" />
+				<conditions>
+					<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+					<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+				</conditions>
+				<action type="Redirect" url="{R:1}/" />
+			</rule>
             <rule name="Canonical Redirect" enabled="true" stopProcessing="false">
               <match url="(.*)" />
               <conditions>
