@@ -21,6 +21,8 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public DateTime? LastLoginDateUtc { get; set; }
 
+        public string HomeInstitutionCode { get; set; }
+
         //public int uid { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(BHLUserManager manager)

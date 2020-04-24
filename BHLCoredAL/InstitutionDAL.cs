@@ -24,7 +24,33 @@ namespace MOBOT.BHL.DAL
 			}
 		}
 
-		public CustomGenericList<Institution> InstitutionSelectByItemID(
+        public Institution InstitutionSelectWithGroups(
+                SqlConnection sqlConnection,
+                SqlTransaction sqlTransaction,
+                string institutionCode)
+        {
+            SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+            SqlTransaction transaction = sqlTransaction;
+
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("InstitutionSelectWithGroups", connection, transaction,
+                    CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
+            {
+                using (CustomSqlHelper<Institution> helper = new CustomSqlHelper<Institution>())
+                {
+                    CustomGenericList<Institution> list = helper.ExecuteReader(command);
+                    if (list.Count > 0)
+                    {
+                        return list[0];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
+        public CustomGenericList<Institution> InstitutionSelectByItemID(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int itemID )

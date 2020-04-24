@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -106,6 +107,8 @@ namespace MOBOT.BHL.AdminWeb.Models
             this.LastName = user.LastName;
             this.Email = user.Email;
             this.Disabled = user.Disabled;
+            this.HomeInstitutionCode = user.HomeInstitutionCode;
+            GetInstitutionDetail(user.HomeInstitutionCode);
             this.LastLoginDateUtc = (user.LastLoginDateUtc == null) ? (DateTime?)null : ((DateTime)user.LastLoginDateUtc).ToLocalTime();
             this.Locked = (user.LockoutEndDateUtc > DateTime.UtcNow) && user.LockoutEnabled;
         }
@@ -130,12 +133,32 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Display(Name = "Last Login Date")]
         public DateTime? LastLoginDateUtc { get; set; }
 
+        public string HomeInstitutionCode { get; set; }
+
+        [Display(Name = "Content Provider")]
+        public string HomeInstitutionName { get; set; }
+
+        [Display(Name = "Provider Group")]
+        public string InstitutionGroupName { get; set; }
+
         public bool AllowDelete = false;
 
         [Display(Name = "Has Roles")]
         public bool HasRoles { get; set; }
-    }
 
+        private void GetInstitutionDetail(string institutionCode)
+        {
+            if (institutionCode != null)
+            {
+                Institution institution = new BHLProvider().InstitutionSelectWithGroups(institutionCode);
+                if (institution != null)
+                {
+                    this.HomeInstitutionName = institution.InstitutionName;
+                    this.InstitutionGroupName = institution.InstitutionGroups;
+                }
+            }
+        }
+    }
 
     public class ForgotViewModel
     {

@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using CsvHelper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using MOBOT.BHL.AdminWeb.Models;
+using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Dynamic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -479,6 +485,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             ViewBag.FNameSort = "fname";
             ViewBag.UNameSort = "uname";
             ViewBag.EmailSort = "email";
+            ViewBag.InstitutionSort = "institution";
+            ViewBag.GroupSort = "group";
             ViewBag.DisabledSort = "disabled";
             ViewBag.LastLoginSort = "login";
 
@@ -488,53 +496,6 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             var Db = new ApplicationDbContext();
             var users = Db.Users.Where(r => r.Id != 1).OrderBy(r => r.UserName);
-
-            // Sort the list as specified
-            switch (sortBy)
-            {
-                case "lname_desc":
-                    users = users.OrderByDescending(u => u.LastName);
-                    break;
-                case "fname_desc":
-                    users = users.OrderByDescending(u => u.FirstName);
-                    break;
-                case "fname":
-                    users = users.OrderBy(u => u.FirstName);
-                    ViewBag.FNameSort = sortBy + "_desc";
-                    break;
-                case "uname_desc":
-                    users = users.OrderByDescending(u => u.UserName);
-                    break;
-                case "uname":
-                    users = users.OrderBy(u => u.UserName);
-                    ViewBag.UNameSort = sortBy + "_desc";
-                    break;
-                case "email_desc":
-                    users = users.OrderByDescending(u => u.Email);
-                    break;
-                case "email":
-                    users = users.OrderBy(u => u.Email);
-                    ViewBag.EmailSort = sortBy + "_desc";
-                    break;
-                case "disabled_desc":
-                    users = users.OrderByDescending(u => u.Disabled);
-                    break;
-                case "disabled":
-                    users = users.OrderBy(u => u.Disabled);
-                    ViewBag.DisabledSort = sortBy + "_desc";
-                    break;
-                case "login_desc":
-                    users = users.OrderByDescending(u => u.LastLoginDateUtc);
-                    break;
-                case "login":
-                    users = users.OrderBy(u => u.LastLoginDateUtc);
-                    ViewBag.LastLoginSort = sortBy + "_desc";
-                    break;
-                default:    // lname
-                    users = users.OrderBy(u => u.LastName);
-                    ViewBag.LNameSort = sortBy + "_desc";
-                    break;
-            }
 
             // Populate the Roles dropdown list
             List<CustomRole> roleList = Db.Roles.ToList();
@@ -571,7 +532,119 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                     }
                 }
             }
+
+            // Sort the list as specified
+            switch (sortBy)
+            {
+                case "lname_desc":
+                    model = model.OrderByDescending(u => u.LastName).ToList();
+                    break;
+                case "fname_desc":
+                    model = model.OrderByDescending(u => u.FirstName).ToList();
+                    break;
+                case "fname":
+                    model = model.OrderBy(u => u.FirstName).ToList();
+                    ViewBag.FNameSort = sortBy + "_desc";
+                    break;
+                case "uname_desc":
+                    model = model.OrderByDescending(u => u.UserName).ToList();
+                    break;
+                case "uname":
+                    model = model.OrderBy(u => u.UserName).ToList();
+                    ViewBag.UNameSort = sortBy + "_desc";
+                    break;
+                case "email_desc":
+                    model = model.OrderByDescending(u => u.Email).ToList();
+                    break;
+                case "email":
+                    model = model.OrderBy(u => u.Email).ToList();
+                    ViewBag.EmailSort = sortBy + "_desc";
+                    break;
+                case "institution_desc":
+                    model = model.OrderByDescending(u => u.HomeInstitutionName).ToList();
+                    break;
+                case "institution":
+                    model = model.OrderBy(u => u.HomeInstitutionName).ToList();
+                    ViewBag.InstitutionSort = sortBy + "_desc";
+                    break;
+                case "group_desc":
+                    model = model.OrderByDescending(u => u.InstitutionGroupName).ToList();
+                    break;
+                case "group":
+                    model = model.OrderBy(u => u.InstitutionGroupName).ToList();
+                    ViewBag.GroupSort = sortBy + "_desc";
+                    break;
+                case "disabled_desc":
+                    model = model.OrderByDescending(u => u.Disabled).ToList();
+                    break;
+                case "disabled":
+                    model = model.OrderBy(u => u.Disabled).ToList();
+                    ViewBag.DisabledSort = sortBy + "_desc";
+                    break;
+                case "login_desc":
+                    model = model.OrderByDescending(u => u.LastLoginDateUtc).ToList();
+                    break;
+                case "login":
+                    model = model.OrderBy(u => u.LastLoginDateUtc).ToList();
+                    ViewBag.LastLoginSort = sortBy + "_desc";
+                    break;
+                default:    // lname
+                    model = model.OrderBy(u => u.LastName).ToList();
+                    ViewBag.LNameSort = sortBy + "_desc";
+                    break;
+            }
+
             return model;
+        }
+
+        [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
+        public ActionResult DownloadList()
+        {
+            List<List<Tuple<string, object>>> rows = new BHLProvider().AspNetUserSelectAll();
+
+            // Accumulate the CSV data
+            var records = new List<dynamic>();
+            foreach (List<Tuple<string, object>> row in rows)
+            {
+                dynamic record = new ExpandoObject();
+                for (int x = 0; x < row.Count; x++)
+                {
+                    AddCsvProperty(record, row[x].Item1, row[x].Item2);
+                }
+                records.Add(record);
+            }
+
+            // Convert the output to a byte array of a CSV string
+            byte[] downloadString = null;
+            using (var writer = new StringWriter())
+            {
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(records);
+                }
+
+                downloadString = Encoding.UTF8.GetBytes(writer.ToString());
+            }
+
+               // Write the byte array to the output stream
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                FileName = string.Format("UserAccounts{0}.csv", System.DateTime.Now.ToString("yyyyMMddHHmmss")),
+                Inline = false,  // prompt the user for downloading, set true to show the file in the browser
+            };
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            return File(downloadString, "text/csv");
+        }
+
+        private void AddCsvProperty(ExpandoObject expando, string propertyName, object propertyValue)
+        {
+            // ExpandoObject supports IDictionary so we can extend it like this
+            var expandoDict = expando as IDictionary<string, object>;
+            if (expandoDict.ContainsKey(propertyName))
+                expandoDict[propertyName] = propertyValue;
+            else
+                expandoDict.Add(propertyName, propertyValue);
         }
 
         [Authorize(Roles = "BHL.Admin.Admin, BHL.Admin.SysAdmin")]
@@ -581,6 +654,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             var user = Db.Users.First(u => u.UserName == id);
             var model = new EditUserViewModel(user);
             ViewBag.MessageId = Message;
+            ViewBag.Institutions = GetInstitutions();
             return View(model);
         }
 
@@ -596,6 +670,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
+                user.HomeInstitutionCode = model.HomeInstitutionCode;
                 bool wasDisabled = false;
                 if (model.Disabled && !user.Disabled) wasDisabled = true;   // Flag users being disabled
                 user.Disabled = model.Disabled;
@@ -612,6 +687,21 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public IEnumerable<SelectListItem> GetInstitutions()
+        {
+            List<SelectListItem> institutions = new Server.BHLProvider().InstituationSelectAll()
+                .OrderBy(n => n.InstitutionName)
+                .Select(n => new SelectListItem
+                {
+                    Value = n.InstitutionCode,
+                    Text = n.InstitutionName
+                }).ToList();
+
+            var institutionTip = new SelectListItem() { Value = null, Text = "--- select content provider ---" };
+            institutions.Insert(0, institutionTip);
+            return new SelectList(institutions, "Value", "Text");
         }
 
 

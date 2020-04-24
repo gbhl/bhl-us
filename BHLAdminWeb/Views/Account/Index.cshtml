@@ -6,7 +6,11 @@
 
 <a href="/">&lt; Return to Dashboard</a><br />
 <br />
-<span class="pageHeader">User Accounts</span><hr /><br/>
+<div>
+    <div class="pageHeader" style="float:left">User Accounts</div>
+    <div style="float:right">@Html.ActionLink("Download All", "DownloadList") </div>
+</div>
+<hr style="clear:left" /><br/>
 
 @using (@Html.BeginForm())
 { 
@@ -31,6 +35,12 @@
         </th>
         <th>
             @Html.ActionLink("Email", "Index", new { sort = ViewBag.EmailSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.ActionLink("Content Provider", "Index", new { sort = ViewBag.InstitutionSort, role = ViewBag.SelectedRole })
+        </th>
+        <th>
+            @Html.ActionLink("Provider Groups", "Index", new { sort = ViewBag.GroupSort, role = ViewBag.SelectedRole })
         </th>
         <th>
             @Html.ActionLink("Disabled", "Index", new { sort = ViewBag.DisabledSort, role = ViewBag.SelectedRole })
@@ -60,6 +70,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.HomeInstitutionName)
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.InstitutionGroupName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Disabled)

@@ -54,14 +54,20 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(Model => Model.Disabled, new { @class = "custom-control-label col-md-2" })
+                @Html.LabelFor(model => model.HomeInstitutionName, new { @class = "custom-control-label col-md-2" })
+                <div class="formField col-md-10">
+                    @Html.DropDownListFor(model => model.HomeInstitutionCode, new System.Web.Mvc.SelectList(ViewBag.Institutions, "Value", "Text"), htmlAttributes: new { @class = "formField", id = "HomeInstitutionCode" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Disabled, new { @class = "custom-control-label col-md-2" })
                 <div class="formField col-md-10">
                     @Html.EditorFor(model => model.Disabled)
                     @Html.ValidationMessageFor(model => model.Disabled)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(Model => Model.LastLoginDateUtc, new { @class = "custom-control-label col-md-2" })
+                @Html.LabelFor(model => model.LastLoginDateUtc, new { @class = "custom-control-label col-md-2" })
                 <div class="formField col-md-10">
                     @Html.DisplayFor(model => model.LastLoginDateUtc)
                     @Html.HiddenFor(model => model.LastLoginDateUtc)

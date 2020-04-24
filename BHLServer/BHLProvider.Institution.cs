@@ -1,6 +1,7 @@
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -17,7 +18,12 @@ namespace MOBOT.BHL.Server
 			return ( GetInstitutionDalInstance().InstitutionSelectAll( null, null ) );
 		}
 
-		public CustomGenericList<Institution> InstitutionSelectByItemID( int itemID )
+        public Institution InstitutionSelectWithGroups(string institutionCode)
+        {
+            return GetInstitutionDalInstance().InstitutionSelectWithGroups(null, null, institutionCode);
+        }
+
+        public CustomGenericList<Institution> InstitutionSelectByItemID( int itemID )
 		{
 			return GetInstitutionDalInstance().InstitutionSelectByItemID( null, null, itemID );
 		}
