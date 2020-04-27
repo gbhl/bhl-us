@@ -319,7 +319,31 @@
               <action type="Redirect" url="https://www.biodiversitylibrary.org/{R:1}" appendQueryString="true" redirectType="Permanent" />
             </rule>
           </rules>
-        </rewrite></system.webServer>
+          <outboundRules>
+            <rule name="CORS Allow Origin" enabled="true">
+              <match serverVariable="RESPONSE_Access_Control_Allow_Origin" pattern=".*" />
+              <conditions>
+                <add input="{URL}" pattern="^/(api|api2|api3|services/name|iiif|favicon\.ico).*" />
+              </conditions>
+              <action type="Rewrite" value="*" />
+            </rule>
+            <rule name="CORS Allow Methods" enabled="true">
+              <match serverVariable="RESPONSE_Access_Control_Allow_Methods" pattern=".*" />
+              <conditions>
+                <add input="{URL}" pattern="^/(api|api2|api3|services/name|iiif|favicon\.ico).*" />
+              </conditions>
+              <action type="Rewrite" value="GET,HEAD,OPTIONS,POST" />
+            </rule>
+            <rule name="CORS Allow Headers" enabled="true">
+              <match serverVariable="RESPONSE_Access_Control_Allow_Headers" pattern=".*" />
+              <conditions>
+                <add input="{URL}" pattern="^/(api|api2|api3|services/name|iiif|favicon\.ico).*" />
+              </conditions>
+              <action type="Rewrite" value="Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers" />
+            </rule>
+          </outboundRules>
+        </rewrite>
+    </system.webServer>
   <system.serviceModel>
     <bindings>
       <basicHttpBinding>
