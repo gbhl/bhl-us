@@ -18,8 +18,8 @@ ORDER BY DisplaySequence DESC
 
 
 SET @sql = N'
-SELECT FirstName, LastName, UserName, Email, Disabled, LockoutEndDateUtc, LastLoginDateUtc,
-	InstitutionName, InstitutionGroup, ' + STUFF(@columns, 1, 2, '') + '
+SELECT FirstName, LastName, UserName, Email, CASE WHEN Disabled = 1 THEN ''X'' ELSE '''' END AS Disabled, 
+	LockoutEndDateUtc, LastLoginDateUtc, InstitutionName, InstitutionGroup, ' + STUFF(@columns, 1, 2, '') + '
 FROM
 (
   SELECT u.Id, u.FirstName, u.LastName, u.UserName, u.Email, u.Disabled, u.LockoutEndDateUtc, u.LastLoginDateUtc,

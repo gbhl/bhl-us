@@ -609,7 +609,18 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 dynamic record = new ExpandoObject();
                 for (int x = 0; x < row.Count; x++)
                 {
-                    AddCsvProperty(record, row[x].Item1, row[x].Item2);
+                    if (row[x].Item1 == "LockoutEndDateUtc")
+                    {
+                        AddCsvProperty(record,
+                            "Locked",
+                            row[x].Item2 == null ? "" : (DateTime.Compare((DateTime)row[x].Item2, DateTime.Now.ToUniversalTime()) > 0 ? "X" : ""));
+                    }
+                    else
+                    {
+                        AddCsvProperty(record,
+                            row[x].Item1.EndsWith("Utc") ? row[x].Item1.Substring(0, row[x].Item1.Length - 3) : row[x].Item1,
+                            row[x].Item2);
+                    }
                 }
                 records.Add(record);
             }
