@@ -629,7 +629,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
             byte[] downloadString = null;
             using (var writer = new StringWriter())
             {
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                using (var csv = new CsvWriter(writer))
                 {
                     csv.WriteRecords(records);
                 }
