@@ -1653,12 +1653,12 @@ BEGIN TRY
 				LEFT JOIN dbo.BHLTitleAssociation a
 					ON t.TitleID = a.TitleID
 					AND at.TitleAssociationTypeID = a.TitleAssociationTypeID
-					AND tmp.Title = a.Title
-					AND tmp.Section = a.Section
-					AND tmp.Volume = a.Volume
-					AND tmp.Heading = a.Heading
-					AND tmp.Publication = a.Publication
-					AND tmp.Relationship = a.Relationship
+					AND dbo.fnFilterString(tmp.Title, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Title, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Section, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Section, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Volume, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Volume, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Heading, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Heading, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Publication, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Publication, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Relationship, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Relationship, '[a-zA-Z0-9]', '')
 		WHERE	a.TitleAssociationID IS NULL
 
 		SELECT @RowCount = @@ROWCOUNT
@@ -1684,12 +1684,12 @@ BEGIN TRY
 				INNER JOIN dbo.BHLTitleAssociation a
 					ON t.TitleID = a.TitleID
 					AND at.TitleAssociationTypeID = a.TitleAssociationTypeID
-					AND tmp.Title = a.Title
-					AND tmp.Section = a.Section
-					AND tmp.Volume = a.Volume
-					AND tmp.Heading = a.Heading
-					AND tmp.Publication = a.Publication
-					AND tmp.Relationship = a.Relationship
+					AND dbo.fnFilterString(tmp.Title, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Title, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Section, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Section, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Volume, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Volume, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Heading, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Heading, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Publication, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Publication, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.Relationship, '[a-zA-Z0-9]', '') = dbo.fnFilterString(a.Relationship, '[a-zA-Z0-9]', '')
 				INNER JOIN dbo.BHLIdentifier ti
 					ON tmp.IdentifierName = ti.IdentifierName
 				LEFT JOIN dbo.BHLTitleAssociation_TitleIdentifier i
@@ -1733,10 +1733,10 @@ BEGIN TRY
 				LEFT JOIN dbo.BHLTitleVariant v
 					ON t.TitleID = v.TitleID
 					AND vt.TitleVariantTypeID = v.TitleVariantTypeID
-					AND tmp.Title = v.Title
-					AND tmp.TitleRemainder = v.TitleRemainder
-					AND tmp.PartNumber = v.PartNumber
-					AND tmp.PartName = v.PartName
+					AND dbo.fnFilterString(tmp.Title, '[a-zA-Z0-9]', '') = dbo.fnFilterString(v.Title, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.TitleRemainder, '[a-zA-Z0-9]', '') = dbo.fnFilterString(v.TitleRemainder, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.PartNumber, '[a-zA-Z0-9]', '') = dbo.fnFilterString(v.PartNumber, '[a-zA-Z0-9]', '')
+					AND dbo.fnFilterString(tmp.PartName, '[a-zA-Z0-9]', '') = dbo.fnFilterString(v.PartName, '[a-zA-Z0-9]', '')
 		WHERE	v.TitleVariantID IS NULL
 
 		SELECT @RowCount = @@ROWCOUNT
@@ -1761,7 +1761,7 @@ BEGIN TRY
 				LEFT JOIN dbo.BHLTitleNote n
 					ON t.TitleID = n.TitleID
 					AND nt.NoteTypeID = n.NoteTypeID
-					AND tmp.NoteText = n.NoteText
+					AND dbo.fnFilterString(tmp.NoteText, '[a-zA-Z0-9]', '') = dbo.fnFilterString(n.NoteText, '[a-zA-Z0-9]', '')
 		WHERE	n.TitleNoteID IS NULL
 
 		-- =======================================================================
