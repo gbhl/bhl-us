@@ -1,4 +1,6 @@
 ﻿using CsvHelper;
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +28,12 @@ namespace BHL.TextImportUtility
             {
                 fileFormat = "stc";
             }
+            else if (fileContent.ToLower().Contains("pageid") && 
+                    fileContent.ToLower().Contains("sequencenumber") && 
+                    fileContent.ToLower().Contains("text"))
+            {
+                fileFormat = "bhlcsv";
+            }
             else
             {
                 throw new Exception(string.Format("Unknown file format for {0}", savedFileName));
@@ -49,6 +57,9 @@ namespace BHL.TextImportUtility
                     break;
                 case "stc":
                     fileContents = ParseSTC(fileName);
+                    break;
+                case "bhlcsv":
+                    fileContents = ParseBHLCSV(fileName);
                     break;
             }
 
@@ -76,9 +87,12 @@ namespace BHL.TextImportUtility
                 case "stc":
                     fileContents = ParseSTC(fileName);
                     break;
+                case "bhlcsv":
+                    fileContents = ParseBHLCSV(fileName);
+                    break;
             }
 
-            if (sequence > fileContents.Count)
+            if (!fileContents.ContainsKey(sequence))
                 fileText = string.Format("Page {0} not found in file.", seqNo);
             else
                 fileText = fileContents[sequence];
@@ -182,6 +196,60 @@ namespace BHL.TextImportUtility
                 foreach (var record in records)
                 {
                     contents.Add(sequenceNumber++, record.tl1_text);
+                }
+            }
+
+            return contents;
+        }
+
+        /// <summary>
+        /// Parse the transcription contents from a file that uses the generic BHL CSV format
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private Dictionary<int, string> ParseBHLCSV(string fileName)
+        {
+            Dictionary<int, string> contents = new Dictionary<int, string>();
+
+            using (StreamReader reader = File.OpenText(fileName))
+            {
+                CsvReader csv = new CsvReader(reader);
+                csv.Configuration.HasHeaderRecord = true;
+
+                var dvRecord = new
+                {
+                    PageID = string.Empty,
+                    SequenceNumber = string.Empty,
+                    Text = string.Empty
+                };
+                var records = csv.GetRecords(dvRecord);
+
+                // Get the pages for the item from the database
+                string itemID = Path.GetFileNameWithoutExtension(fileName);
+                List<Page> pages = new BHLProvider().PageSelectByItemID(Convert.ToInt32(itemID));
+
+                foreach (var record in records)
+                {
+                    int? sequenceOrder = null;
+                    if (!string.IsNullOrWhiteSpace(record.PageID))
+                    {
+                        // Get the sequence number for the page from the database records
+                        sequenceOrder = (
+                            from page in pages
+                            where page.PageID == Convert.ToInt32(record.PageID)
+                            select new
+                            {
+                                page.SequenceOrder
+                            }).First().SequenceOrder; 
+                        
+                    }
+                    else
+                    {
+                        // Get the sequence order from the file
+                        sequenceOrder = Convert.ToInt32(record.SequenceNumber);
+                    }
+
+                    contents.Add((int)sequenceOrder, record.Text);
                 }
             }
 
