@@ -124,14 +124,18 @@ namespace BHL.TextImportProcessor
                                     }
 
                                     File.AppendAllText(textImportFileLocalPath, importFileContents, Encoding.UTF8);
-                                    importTool.AddSequenceNumbers(textImportFileLocalPath); // Add sequence numbers to the file, if necessary
 
                                     // Validate the file
                                     int filePageCount = importTool.PageCount(textImportFileLocalPath);
                                     if (filePageCount == 0) throw new Exception(string.Format("No pages found in {0}", batchFile.Filename));
 
                                     string fileFormat = importTool.GetFileFormat(textImportFileLocalPath);
-                                    if (fileFormat != _fileFormatBHL && filePageCount != pages.Count)
+                                    if (fileFormat == _fileFormatBHL)
+                                    {
+                                        // Add sequence numbers to the file, if necessary.  Throws error if Page ID not part of in Item.
+                                        importTool.AddSequenceNumbers(textImportFileLocalPath);
+                                    }
+                                    else if (filePageCount != pages.Count)
                                     {
                                         throw new Exception(string.Format("Number of pages {0} in item {1} does not match the number of pages {2} in the file {3}",
                                             pages.Count, batchFile.ItemID, filePageCount, batchFile.Filename));

@@ -262,14 +262,14 @@ namespace BHL.TextImportUtility
                     if (!string.IsNullOrWhiteSpace(record.PageID))
                     {
                         // Get the sequence number for the page from the database records
-                        sequenceOrder = (
+                        var bhlPages = (
                             from page in pages
                             where page.PageID == Convert.ToInt32(record.PageID)
                             select new
                             {
                                 page.SequenceOrder
-                            }).First().SequenceOrder; 
-                        
+                            });
+                        if (bhlPages.Count() > 0) sequenceOrder = (int)bhlPages.First().SequenceOrder;
                     }
                     else
                     {
@@ -277,7 +277,7 @@ namespace BHL.TextImportUtility
                         sequenceOrder = Convert.ToInt32(record.SequenceNumber);
                     }
 
-                    contents.Add((int)sequenceOrder, record.Text);
+                    if (sequenceOrder != null) contents.Add((int)sequenceOrder, record.Text);
                 }
             }
 
@@ -324,13 +324,19 @@ namespace BHL.TextImportUtility
                         else
                         {
                             // Get the sequence number for the page from the database records
-                            sequenceOrder = (
+                            var bhlPages = (
                                 from page in pages
-                                where page.PageID == Convert.ToInt32(record.PageID)
+                                where page.PageID == Convert.ToInt32(record.PageID) && page.ItemID == Convert.ToInt32(itemID)
                                 select new
                                 {
                                     page.SequenceOrder
-                                }).First().SequenceOrder.ToString();
+                                });
+                            if (bhlPages.Count() == 0) throw new Exception(string.Format(
+                                    "Page {0} not found in Item {1}.  Make sure all Page IDs are valid for the Item.", 
+                                    record.PageID, 
+                                    itemID
+                                ));
+                            sequenceOrder = bhlPages.First().SequenceOrder.ToString();
 
                             // Add the sequence to the record in the file
                             writeRecords.Add(new { record.PageID, SequenceNumber = sequenceOrder, record.Text });
