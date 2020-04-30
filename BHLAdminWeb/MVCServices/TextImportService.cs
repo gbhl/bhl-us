@@ -11,6 +11,7 @@ namespace MOBOT.BHL.AdminWeb.MVCServices
     {
         public Dictionary<string, string> FileFormats = new Dictionary<string, string> {
             { "", "Unknown" },
+            {"bhlcsv", "Generic BHL Text Import template" },
             {"dv", "DigiVol" },
             {"ftp", "From The Page" },
             {"stc", "Smithsonian Transcription Center" }

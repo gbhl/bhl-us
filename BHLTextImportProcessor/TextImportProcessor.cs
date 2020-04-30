@@ -27,6 +27,8 @@ namespace BHL.TextImportProcessor
         private List<string> processedPages = new List<string>();
         private List<string> errorMessages = new List<string>();
 
+        private const string _fileFormatBHL = "bhlcsv";
+
         /// <summary>
         /// Read and validate configuration parameters, read the queued batches, and process them.
         /// </summary>
@@ -122,11 +124,14 @@ namespace BHL.TextImportProcessor
                                     }
 
                                     File.AppendAllText(textImportFileLocalPath, importFileContents, Encoding.UTF8);
+                                    importTool.AddSequenceNumbers(textImportFileLocalPath); // Add sequence numbers to the file, if necessary
 
                                     // Validate the file
                                     int filePageCount = importTool.PageCount(textImportFileLocalPath);
                                     if (filePageCount == 0) throw new Exception(string.Format("No pages found in {0}", batchFile.Filename));
-                                    if (filePageCount != pages.Count)
+
+                                    string fileFormat = importTool.GetFileFormat(textImportFileLocalPath);
+                                    if (fileFormat != _fileFormatBHL && filePageCount != pages.Count)
                                     {
                                         throw new Exception(string.Format("Number of pages {0} in item {1} does not match the number of pages {2} in the file {3}",
                                             pages.Count, batchFile.ItemID, filePageCount, batchFile.Filename));
@@ -135,22 +140,25 @@ namespace BHL.TextImportProcessor
                                     // Parse the transcriptions from the file
                                     foreach (PageSummaryView page in pages)
                                     {
-                                        // Get the new text for the page from the text import file
-                                        string pageText = importTool.GetText(textImportFileLocalPath, page.SequenceOrder.ToString());
+                                        if (importTool.TextAvailable(textImportFileLocalPath, page.SequenceOrder.ToString()))
+                                        {
+                                            // Get the new text for the page from the text import file
+                                            string pageText = importTool.GetText(textImportFileLocalPath, page.SequenceOrder.ToString());
 
-                                        // Write new text file to the correct item path.
-                                        // Only write files to final destination if not in debug mode.
-                                        string filePath = (configParms.DebugMode ?
-                                            string.Format("{0}\\{1}.txt", configParms.DebugPath, page.FileNamePrefix) :
-                                            page.OcrTextLocation);
-                                        this.PageTextWriteFile(filePath, pageText);
+                                            // Write new text file to the correct item path.
+                                            // Only write files to final destination if not in debug mode.
+                                            string filePath = (configParms.DebugMode ?
+                                                string.Format("{0}\\{1}.txt", configParms.DebugPath, page.FileNamePrefix) :
+                                                page.OcrTextLocation);
+                                            this.PageTextWriteFile(filePath, pageText);
 
-                                        // Update the page so that it will be indexed for search, and write log entry 
-                                        // for the page to track updates to the page text.
-                                        service.PageUpdateAndLogTextChange(page.PageID, "Text Import", batchFile.TextImportBatchFileID, batchFile.LastModifiedUserID);
+                                            // Update the page so that it will be indexed for search, and write log entry 
+                                            // for the page to track updates to the page text.
+                                            service.PageUpdateAndLogTextChange(page.PageID, "Text Import", batchFile.TextImportBatchFileID, batchFile.LastModifiedUserID);
 
-                                        // Count the pages processed
-                                        this.processedPages.Add(page.PageID.ToString());
+                                            // Count the pages processed
+                                            this.processedPages.Add(page.PageID.ToString());
+                                        }
                                     }
 
                                     // Update the file status
