@@ -20,6 +20,144 @@ namespace MOBOT.BHL.Web2.SiteService {
     public class ArrayOfString : System.Collections.Generic.List<string> {
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ViewerPage", Namespace="https://biodiversitylibrary.org/")]
+    [System.SerializableAttribute()]
+    public partial class ViewerPage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalBaseUrlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AltExternalUrlField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BarCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FlickrUrlField;
+        
+        private System.Nullable<int> SequenceOrderField;
+        
+        private int WidthField;
+        
+        private int HeightField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string ExternalBaseUrl {
+            get {
+                return this.ExternalBaseUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalBaseUrlField, value) != true)) {
+                    this.ExternalBaseUrlField = value;
+                    this.RaisePropertyChanged("ExternalBaseUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string AltExternalUrl {
+            get {
+                return this.AltExternalUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AltExternalUrlField, value) != true)) {
+                    this.AltExternalUrlField = value;
+                    this.RaisePropertyChanged("AltExternalUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string BarCode {
+            get {
+                return this.BarCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BarCodeField, value) != true)) {
+                    this.BarCodeField = value;
+                    this.RaisePropertyChanged("BarCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string FlickrUrl {
+            get {
+                return this.FlickrUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FlickrUrlField, value) != true)) {
+                    this.FlickrUrlField = value;
+                    this.RaisePropertyChanged("FlickrUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
+        public System.Nullable<int> SequenceOrder {
+            get {
+                return this.SequenceOrderField;
+            }
+            set {
+                if ((this.SequenceOrderField.Equals(value) != true)) {
+                    this.SequenceOrderField = value;
+                    this.RaisePropertyChanged("SequenceOrder");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
+        public int Width {
+            get {
+                return this.WidthField;
+            }
+            set {
+                if ((this.WidthField.Equals(value) != true)) {
+                    this.WidthField = value;
+                    this.RaisePropertyChanged("Width");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=6)]
+        public int Height {
+            get {
+                return this.HeightField;
+            }
+            set {
+                if ((this.HeightField.Equals(value) != true)) {
+                    this.HeightField = value;
+                    this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="https://biodiversitylibrary.org/", ConfigurationName="SiteService.SiteServiceSoap")]
     public interface SiteServiceSoap {
@@ -61,6 +199,10 @@ namespace MOBOT.BHL.Web2.SiteService {
         // CODEGEN: Generating message contract since element name marcBibID from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/MarcCreateFile", ReplyAction="*")]
         MOBOT.BHL.Web2.SiteService.MarcCreateFileResponse MarcCreateFile(MOBOT.BHL.Web2.SiteService.MarcCreateFileRequest request);
+        
+        // CODEGEN: Generating message contract since element name pages from namespace https://biodiversitylibrary.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/PageGetImageDimensions", ReplyAction="*")]
+        MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponse PageGetImageDimensions(MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest request);
         
         // CODEGEN: Generating message contract since element name from from namespace https://biodiversitylibrary.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="https://biodiversitylibrary.org/SendEmail", ReplyAction="*")]
@@ -621,6 +763,78 @@ namespace MOBOT.BHL.Web2.SiteService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PageGetImageDimensionsRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PageGetImageDimensions", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequestBody Body;
+        
+        public PageGetImageDimensionsRequest() {
+        }
+        
+        public PageGetImageDimensionsRequest(MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class PageGetImageDimensionsRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public MOBOT.BHL.Web2.SiteService.ViewerPage[] pages;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public int itemID;
+        
+        public PageGetImageDimensionsRequestBody() {
+        }
+        
+        public PageGetImageDimensionsRequestBody(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemID) {
+            this.pages = pages;
+            this.itemID = itemID;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PageGetImageDimensionsResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PageGetImageDimensionsResponse", Namespace="https://biodiversitylibrary.org/", Order=0)]
+        public MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponseBody Body;
+        
+        public PageGetImageDimensionsResponse() {
+        }
+        
+        public PageGetImageDimensionsResponse(MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://biodiversitylibrary.org/")]
+    public partial class PageGetImageDimensionsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public MOBOT.BHL.Web2.SiteService.ViewerPage[] PageGetImageDimensionsResult;
+        
+        public PageGetImageDimensionsResponseBody() {
+        }
+        
+        public PageGetImageDimensionsResponseBody(MOBOT.BHL.Web2.SiteService.ViewerPage[] PageGetImageDimensionsResult) {
+            this.PageGetImageDimensionsResult = PageGetImageDimensionsResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SendEmailRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="SendEmail", Namespace="https://biodiversitylibrary.org/", Order=0)]
@@ -845,6 +1059,20 @@ namespace MOBOT.BHL.Web2.SiteService {
             inValue.Body.marcBibID = marcBibID;
             inValue.Body.content = content;
             MOBOT.BHL.Web2.SiteService.MarcCreateFileResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).MarcCreateFile(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponse MOBOT.BHL.Web2.SiteService.SiteServiceSoap.PageGetImageDimensions(MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest request) {
+            return base.Channel.PageGetImageDimensions(request);
+        }
+        
+        public MOBOT.BHL.Web2.SiteService.ViewerPage[] PageGetImageDimensions(MOBOT.BHL.Web2.SiteService.ViewerPage[] pages, int itemID) {
+            MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest inValue = new MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequest();
+            inValue.Body = new MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsRequestBody();
+            inValue.Body.pages = pages;
+            inValue.Body.itemID = itemID;
+            MOBOT.BHL.Web2.SiteService.PageGetImageDimensionsResponse retVal = ((MOBOT.BHL.Web2.SiteService.SiteServiceSoap)(this)).PageGetImageDimensions(inValue);
+            return retVal.Body.PageGetImageDimensionsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

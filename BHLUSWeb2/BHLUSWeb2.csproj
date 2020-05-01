@@ -505,6 +505,9 @@
     <None Include="Properties\PublishProfiles\Beta - BHL %28SI%29.pubxml" />
     <None Include="Properties\PublishProfiles\Production - BHL %28local%29.pubxml" />
     <None Include="Remoting.config.template" />
+    <Content Include="Service References\SiteService\MOBOT.BHL.Web2.SiteService.ViewerPage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SiteService\SiteService.wsdl" />
     <None Include="services\Name\Web.config.template" />
     <Content Include="Views\_ViewStart.cshtml" />

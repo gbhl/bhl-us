@@ -1017,6 +1017,15 @@
     <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetQueueMessageCountResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.GetItemTextResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.PageGetImageDimensionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\SiteService\MOBOT.BHL.AdminWeb.SiteService.ViewerPage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\SiteService\SiteService.disco" />
     <None Include="Service References\SiteService\configuration91.svcinfo" />
     <None Include="Service References\SiteService\configuration.svcinfo" />

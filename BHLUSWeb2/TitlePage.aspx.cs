@@ -322,11 +322,12 @@ namespace MOBOT.BHL.Web2
                     SetGoogleScholarTags(PageSummary.ItemID);
 
                     // Serialize only the information we need
-                    List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
+                    List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
+
                     List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
                     foreach (PageSummaryView pageview in pageviews)
                     {
-                        BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage
+                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
                         {
                             ExternalBaseUrl = pageview.ExternalBaseURL,
                             BarCode = pageview.BarCode,
@@ -336,7 +337,7 @@ namespace MOBOT.BHL.Web2
                         viewerPages.Add(viewerPage);
                     }
 
-                    viewerPages = bhlProvider.PageGetImageDimensions(viewerPages, PageSummary.ItemID);
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), PageSummary.ItemID)).ToList();
 
                     Pages = JsonConvert.SerializeObject(pages.ToList().Join(viewerPages,
                                                     p => p.SequenceOrder,

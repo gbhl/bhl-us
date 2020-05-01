@@ -64,32 +64,27 @@ namespace MOBOT.BHL.Server
         {
             try
             {
-                // Load the scandata.xml file
-                PageSummaryView psv = this.PageSummarySelectByItemId(itemID, true);
-                string filePath = psv.OCRFolderShare + "\\" + psv.FileRootFolder + "\\" + psv.BarCode + "_scandata.xml";
                 var xml = new XDocument();
-                try
+                bool scanDataLoaded = false;
+                string scanData = this.ScandataGetFileContents(itemID);
+                if (!string.IsNullOrWhiteSpace(scanData))
                 {
-                    // Local for a local copy first
-                    System.IO.StringReader reader = new System.IO.StringReader(
-                        new BHLProvider().GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true").GetFileText(filePath)
-                        );
-                    xml = XDocument.Load(reader);
+                    try
+                    {
+                        xml = XDocument.Load(new StringReader(scanData));
+                        scanDataLoaded = true;
+                    }
+                    catch
+                    {
+                        // Could not load, try a remote copy instead
+                    }
                 }
-                catch
+
+                if (!scanDataLoaded)
                 {
-                    // No local file found; look for a remote copy (at Internet Archive)
-                    if (string.IsNullOrEmpty(psv.AltExternalURL))
-                    {
-                        // No external images, so don't look for external scandata file
-                        return pages;
-                    }
-                    else
-                    {
-                        Item item = this.ItemSelectFilenames(itemID);
-                        filePath = String.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename);
-                        xml = XDocument.Load(filePath);
-                    }
+                    // Local file not loaded; look for a remote copy (at Internet Archive)
+                    Item item = this.ItemSelectFilenames(itemID);
+                    xml = XDocument.Load(string.Format(ConfigurationManager.AppSettings["IADownloadLink"], item.BarCode, item.ScandataFilename));
                 }
 
                 XNamespace ns = string.Empty;
@@ -834,6 +829,45 @@ namespace MOBOT.BHL.Server
                     fileAccess.SaveFile(Encoding.ASCII.GetBytes(content), destinationFile);
                 }
             }
+        }
+
+        /// <summary>
+        /// Determine if a Scandata file exists for the specified item
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Path to the file</returns>
+        public string ScandataFileExists(int id)
+        {
+            string filepath = string.Empty;
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+
+            PageSummaryView ps = this.PageSummarySelectByItemId(id, false);
+            if (ps != null)
+            {
+                if (fileAccessProvider.FileExists(ps.ScandataXmlLocation)) filepath = ps.ScandataXmlLocation;
+            }
+
+            return filepath;
+        }
+
+        /// <summary>
+        /// Get the contents of the Scandata file
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string ScandataGetFileContents(int id)
+        {
+            string fileContents = string.Empty;
+            string filepath = string.Empty;
+
+            IFileAccessProvider fileAccessProvider = this.GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
+            filepath = this.ScandataFileExists(id);
+            if (!string.IsNullOrWhiteSpace(filepath))
+            {
+                fileContents = fileAccessProvider.GetFileText(filepath);
+            }
+
+            return fileContents;
         }
 
         /// <summary>

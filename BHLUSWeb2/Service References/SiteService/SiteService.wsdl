@@ -140,6 +140,37 @@
       <s:element name="MarcCreateFileResponse">
         <s:complexType />
       </s:element>
+      <s:element name="PageGetImageDimensions">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="pages" type="tns:ArrayOfViewerPage" />
+            <s:element minOccurs="1" maxOccurs="1" name="itemID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfViewerPage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ViewerPage" nillable="true" type="tns:ViewerPage" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ViewerPage">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ExternalBaseUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AltExternalUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BarCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FlickrUrl" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SequenceOrder" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PageGetImageDimensionsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PageGetImageDimensionsResult" type="tns:ArrayOfViewerPage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="SendEmail">
         <s:complexType>
           <s:sequence>
@@ -221,6 +252,12 @@
   <wsdl:message name="MarcCreateFileSoapOut">
     <wsdl:part name="parameters" element="tns:MarcCreateFileResponse" />
   </wsdl:message>
+  <wsdl:message name="PageGetImageDimensionsSoapIn">
+    <wsdl:part name="parameters" element="tns:PageGetImageDimensions" />
+  </wsdl:message>
+  <wsdl:message name="PageGetImageDimensionsSoapOut">
+    <wsdl:part name="parameters" element="tns:PageGetImageDimensionsResponse" />
+  </wsdl:message>
   <wsdl:message name="SendEmailSoapIn">
     <wsdl:part name="parameters" element="tns:SendEmail" />
   </wsdl:message>
@@ -267,6 +304,10 @@
     <wsdl:operation name="MarcCreateFile">
       <wsdl:input message="tns:MarcCreateFileSoapIn" />
       <wsdl:output message="tns:MarcCreateFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PageGetImageDimensions">
+      <wsdl:input message="tns:PageGetImageDimensionsSoapIn" />
+      <wsdl:output message="tns:PageGetImageDimensionsSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="SendEmail">
       <wsdl:input message="tns:SendEmailSoapIn" />
@@ -358,6 +399,15 @@
     </wsdl:operation>
     <wsdl:operation name="MarcCreateFile">
       <soap:operation soapAction="https://biodiversitylibrary.org/MarcCreateFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageGetImageDimensions">
+      <soap:operation soapAction="https://biodiversitylibrary.org/PageGetImageDimensions" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -460,6 +510,15 @@
     </wsdl:operation>
     <wsdl:operation name="MarcCreateFile">
       <soap12:operation soapAction="https://biodiversitylibrary.org/MarcCreateFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PageGetImageDimensions">
+      <soap12:operation soapAction="https://biodiversitylibrary.org/PageGetImageDimensions" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

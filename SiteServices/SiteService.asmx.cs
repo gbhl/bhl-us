@@ -255,6 +255,18 @@ namespace BHL.SiteServices
 
         #endregion MARC File Methods
 
+        /// <summary>
+        /// Add a height and width to each element in the specified list of pages
+        /// </summary>
+        /// <param name="pages"></param>
+        /// <param name="itemID"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public List<BHLProvider.ViewerPage> PageGetImageDimensions(List<BHLProvider.ViewerPage> pages, int itemID)
+        {
+            return new BHLProvider().PageGetImageDimensions(pages, itemID);
+        }
+
         #region Email Methods
 
         [WebMethod]

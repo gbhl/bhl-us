@@ -4,6 +4,8 @@
     <add key="OCRTextLocation" value="{0}\{1}\{2}\{3}.txt"/>
     <add key="ItemTextLocation" value="{0}\{1}\{2}" />
     <add key="MARCXmlLocation" value="{0}\{1}\{2}_marc.xml"/>
+    <add key="ScandataXmlLocation" value="{0}\{1}\{2}_scandata.xml"/>
+    <add key="IADownloadLink" value="https://www.archive.org/download/{0}/{1}"/>
     <add key="SMTPHost" value="smtp host name"/>
     <add key="UseRemoteFileAccessProvider" value="false"/>
     <add key="DBCommandTimeout" value="1800"/>

@@ -30,6 +30,14 @@ namespace MOBOT.BHL.DataObjects
             }
         }
 
+        public string ScandataXmlLocation
+        {
+            get
+            {
+                return String.Format(ConfigurationManager.AppSettings["ScandataXmlLocation"], this.OCRFolderShare, this.FileRootFolder, this.BarCode);
+            }
+        }
+
         private string _flickrUrl = string.Empty;
 
         public string FlickrUrl

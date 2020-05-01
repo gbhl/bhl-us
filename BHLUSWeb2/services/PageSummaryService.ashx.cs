@@ -3,6 +3,7 @@ using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -177,10 +178,10 @@ namespace MOBOT.BHL.Web2.Services
                     List<PageSummaryView> pages = new BHLProvider().PageSummarySelectForViewerByItemID(itemID);
 
                     // Serialize only the information we need
-                    List<BHLProvider.ViewerPage> viewerPages = new List<BHLProvider.ViewerPage>();
+                    List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
                     foreach (PageSummaryView page in pages)
                     {
-                        BHLProvider.ViewerPage viewerPage = new BHLProvider.ViewerPage();
+                        SiteService.ViewerPage viewerPage = new SiteService.ViewerPage();
                         viewerPage.ExternalBaseUrl = page.ExternalBaseURL;
                         viewerPage.AltExternalUrl = page.AltExternalURL;
                         viewerPage.BarCode = page.BarCode;
@@ -189,7 +190,7 @@ namespace MOBOT.BHL.Web2.Services
                     }
 
                     // Add the height and width of each page to the list
-                    viewerPages = new BHLProvider().PageGetImageDimensions(viewerPages, itemID);
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), itemID)).ToList();
 
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     return js.Serialize(viewerPages);
