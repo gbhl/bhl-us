@@ -30,6 +30,9 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			List<Item> items = bp.ItemSelectByTitleId( titleId );
 
+			// Dont' include items without local content (no pages to paginate)
+			for(int x = items.Count - 1; x >= 0; x--) if (!items[x].HasLocalContent) items.RemoveAt(x);
+
             itemDropDownList.DataSource = items;
 			itemDropDownList.DataTextField = "Volume";
 			itemDropDownList.DataValueField = "ItemID";

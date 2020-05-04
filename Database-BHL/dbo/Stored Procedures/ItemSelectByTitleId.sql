@@ -25,7 +25,8 @@ SELECT	i.[ItemID],
 		ISNULL(i.CopyrightComment, '') AS CopyrightComment,
 		ISNULL(i.CopyrightEvidence, '') AS CopyrightEvidence,
 		(SELECT COUNT(*) FROM dbo.SearchCatalogSegment WHERE ItemID = i.ItemID) AS NumberOfSegments,
-		c.FirstPageID
+		c.FirstPageID,
+		c.HasLocalContent
 FROM	[dbo].[Item] i 
 		LEFT JOIN [dbo].[ItemSource] s ON i.[ItemSourceID] = s.[ItemSourceID]
 		LEFT JOIN [dbo].[Vault] v ON i.[VaultID] = v.[VaultID]
