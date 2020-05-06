@@ -29,6 +29,8 @@ namespace MOBOT.BHL.Web2
 
             routes.Add("itunes", new Route("itunesurss/collection/{id}", new HttpHandlerRouteHandler<MOBOT.BHL.Web2.Handlers.ITunesRSS>()));
 
+            routes.MapRoute("ServiceDefault", "service/{action}", new { controller = "Service" });
+
             if (ConfigurationManager.AppSettings["UseElasticSearch"] == "true")
             {
                 // Use new routes to MVC views if elasticsearch is enabled

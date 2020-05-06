@@ -700,17 +700,19 @@
                 success: function (data, textStatus, jqXHR) {
                     if(data.length > 0) {
                         pageNames.empty();
-                        $.each(data, function(index, name) {
-                            var ubioLink = $('<span/>', { 'class' : 'ubio-links' }).append(
-                                $('<a/>', { 
-                                    'href' : '/name/' + name.UrlName,
-                                    'text' : name.ResolvedNameString
+                        $.each(data, function (index, name) {
+                            var ubioLink = $('<span/>', { 'class': 'ubio-links' }).append(
+                                $('<a/>', {
+                                    'href': '/name/' + name.UrlName,
+                                    'text': name.ResolvedNameString
                                 })).appendTo(pageNames);
 
-                            if(name.EOLID > 0) {
-                                ubioLink.append(
-                                    " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
-                            }
+                            //if(name.EOLID > 0) {
+                            //    ubioLink.append(
+                            //        " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
+                            //}
+
+                            ubioLink.append("<a href='' class='lnkNameDetails' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/eol_11px.png' style='margin-left:3px' /></a>");
                         });
                     } else {
                         pageNames.empty();
@@ -1565,6 +1567,42 @@
         });
 
     });
+
+    function showNameSources(e, lnk) {
+        e.stopPropagation();
+        e.preventDefault();
+        var resolvedName = $(lnk).attr('data-resolved-name');
+
+        $.ajax({
+            type: 'get',
+            //url: 'http://resolver.globalnames.org/name_resolvers.json',
+            url: 'http://localhost:49275/service/getnamedatasources',
+            data: {
+                //'names': resolvedName
+                'name': resolvedName
+            },
+            success: function (data, textStatus, jqXHR) {
+                if (data.length > 0) {
+                //if (data.status === "success") {
+                    console.log(data);
+                    /*
+                    data.data.forEach(dataElement =>
+                        dataElement.results.forEach(element =>
+                            console.log(element.canonical_form + ' (' + element.data_source_title + ':' + (element.local_id ? element.local_id : element.taxon_id) + ') ' + element.url)));
+                    */
+                    data.forEach(element =>
+                        console.log(element.NameString + ' (' + element.DataSourceTitle + ':' + (element.LocalID ? element.LocalID : element.TaxonID) + ') ' + element.Url));
+
+                    alert('Information found for ' + resolvedName + '.  Check the console for details.');
+                } else {
+                    alert('No infomation found for ' + resolvedName);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Error getting information for ' + resolvedName);
+            }
+        });
+    }
 
     $(window).bind('resize', this, function (e) {
         //var rightPanelHeight = $("#right-panel2").height();
