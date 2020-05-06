@@ -80,6 +80,22 @@ namespace MOBOT.BHL.AdminWeb.Models
         [Required]
         public string Email { get; set; }
 
+        public string HomeInstitutionCode { get; set; }
+
+        [Display(Name = "Content Provider")]
+        public string HomeInstitutionName { get { return GetInstitutionDetail(); } }
+
+        private string GetInstitutionDetail()
+        {
+            string institutionName = string.Empty;
+            if (!string.IsNullOrWhiteSpace(HomeInstitutionCode))
+            {
+                Institution institution = new BHLProvider().InstitutionSelectWithGroups(HomeInstitutionCode);
+                if (institution != null) institutionName = institution.InstitutionName;
+            }
+            return institutionName;
+        }
+
         // Return a pre-poulated instance of ApplicationUser:
         public ApplicationUser GetUser()
         {

@@ -145,6 +145,8 @@ namespace MOBOT.BHL.AdminWeb.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            ViewBag.Institutions = GetInstitutions();
             return View();
         }
 
@@ -164,6 +166,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Email = model.Email;
+                user.HomeInstitutionCode = model.HomeInstitutionCode;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -184,6 +187,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                         emailBody = emailBody.Replace("<<<FIRSTNAME>>>", user.FirstName);
                         emailBody = emailBody.Replace("<<<LASTNAME>>>", user.LastName);
                         emailBody = emailBody.Replace("<<<EMAILADDRESS>>>", user.Email);
+                        emailBody = emailBody.Replace("<<<CONTENTPROVIDER>>>", model.HomeInstitutionName);
                         emailBody = emailBody.Replace("<<<HELPLINK>>>", helpLink);
 
                         List<string> bccList = new List<string>();
@@ -196,6 +200,7 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 else
                 {
                     AddErrors(result);
+                    ViewBag.Institutions = GetInstitutions();
                 }
             }
 
