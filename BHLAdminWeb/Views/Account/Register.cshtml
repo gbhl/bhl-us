@@ -71,7 +71,7 @@
         @Html.LabelFor(m => m.HomeInstitutionName, new { @class = "custom-control-label col-md-2" })
         <div class="formField col-md-10">
             @Html.DropDownListFor(model => model.HomeInstitutionCode, new System.Web.Mvc.SelectList(ViewBag.Institutions, "Value", "Text"), htmlAttributes: new { @class = "formField form-control", id = "HomeInstitutionCode" })
-            <div>If your Content Provider (Home Institution) is not listed, please choose "Unknown".</div>
+            <div>Please choose your institutional affiliation. If not yet listed, choose Unknown.</div>
         </div>
     </div>
 
