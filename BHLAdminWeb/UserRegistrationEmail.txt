@@ -4,6 +4,7 @@ Username: <<<USERNAME>>>
 First Name: <<<FIRSTNAME>>>
 Last Name: <<<LASTNAME>>>
 Email Address: <<<EMAILADDRESS>>>
+Content Provider: <<<CONTENTPROVIDER>>>
 
 Review documentation for Admin Dashboard functionality via the "Help" link in the top right or <<<HELPLINK>>>
 

@@ -72,6 +72,13 @@ namespace MOBOT.BHL.DataObjects
             set { _institutionRoleLabel = value; }
         }
 
+        public string _institutionGroups = string.Empty;
+        public string InstitutionGroups
+        {
+            get { return _institutionGroups; }
+            set { _institutionGroups = value; }
+        }
+
         private string _url = string.Empty;
         /// <summary>
         /// Typically, this is a repository URL associated with a Title-Institution relationship
@@ -120,6 +127,11 @@ namespace MOBOT.BHL.DataObjects
                     case "InstitutionRoleLabel":
                         {
                             _institutionRoleLabel = (string)column.Value;
+                            break;
+                        }
+                    case "InstitutionGroups":
+                        {
+                            _institutionGroups = (string)column.Value;
                             break;
                         }
                     case "Url":

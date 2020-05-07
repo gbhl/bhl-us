@@ -1127,6 +1127,8 @@
     <None Include="dbo\Stored Procedures\MonthlyStatsSelectDetailedForGroup.sql" />
     <None Include="dbo\Functions\fnGroupStringForInstitution.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrDeleteByPageID.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionSelectWithGroups.sql" />
+    <None Include="dbo\Stored Procedures\AspNetUserSelectAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
