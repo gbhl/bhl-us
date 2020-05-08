@@ -82,7 +82,7 @@ namespace MOBOT.BHL.AdminWeb.Services
             StringBuilder csvString = new StringBuilder();
 
             // Write file header
-            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
+            csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"Item Status\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
@@ -97,6 +97,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Append("\"" + item.BarCode + "\",");
                 csvString.Append("\"" + item.Volume.Replace("\"", "\"\"") + "\",");
                 csvString.Append("\"" + item.Year + "\",");
+                csvString.Append("\"" + item.ItemStatusName.Replace("\"", "\"\"") + "\",");
                 csvString.Append("\"" + item.ScanningDate.ToString() + "\",");
                 csvString.Append("\"" + item.InstitutionStrings[0].Replace("\"", "\"\"") + "\",");
                 csvString.Append("\"" + item.PaginationStatusName + "\",");

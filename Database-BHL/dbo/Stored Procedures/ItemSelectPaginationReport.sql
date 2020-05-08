@@ -25,6 +25,7 @@ CREATE TABLE #Step1
 	BarCode nvarchar(50) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
 	[Year] nvarchar(20) NOT NULL,
+	ItemStatusName nvarchar(50) NOT NULL,
 	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
@@ -42,6 +43,7 @@ SELECT	i.PrimaryTitleID,
 		i.BarCode,
 		ISNULL(i.Volume, '') AS Volume,
 		ISNULL(i.[Year], '') AS [Year],
+		s.ItemStatusName,
 		i.ScanningDate,
 		inst.InstitutionName,
 		ISNULL(i.PaginationStatusDate, i.CreationDate) AS PaginationStatusDate,
@@ -55,6 +57,7 @@ FROM	dbo.Item i
 		LEFT JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
 		LEFT JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID 
 		LEFT JOIN dbo.Institution inst ON ii.InstitutionCode = inst.InstitutionCode
+		INNER JOIN dbo.ItemStatus s ON i.ItemStatusID = s.ItemStatusID
 WHERE	(i.PaginationStatusID = @PaginationStatusID OR @PaginationStatusID = 0)
 AND		(r.InstitutionRoleName = 'Holding Institution' OR r.InstitutionRoleName IS NULL)
 AND		ISNULL(i.PaginationStatusDate, i.CreationDate) BETWEEN @StartDate AND @EndDate
@@ -70,6 +73,7 @@ CREATE TABLE #Step2
 	BarCode nvarchar(50) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
 	[Year] nvarchar(20) NOT NULL,
+	ItemStatusName nvarchar(50) NOT NULL,
 	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
@@ -94,6 +98,7 @@ SELECT TOP (@NumRows)
 		BarCode,
 		Volume,
 		[Year],
+		ItemStatusName,
 		ScanningDate,
 		InstitutionName AS ContributorTextString,
 		PaginationStatusName,

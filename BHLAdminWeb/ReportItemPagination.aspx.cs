@@ -1,22 +1,16 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Configuration;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class ReportItemPagination : System.Web.UI.Page
+    public partial class ReportItemPagination : System.Web.UI.Page
 	{
         protected string statusId = "0";
         protected DateTime startDate;
@@ -74,7 +68,7 @@ namespace MOBOT.BHL.AdminWeb
 
             if (ValidateData())
             {
-                litDisplayed.Text = (ddlStatusView.SelectedValue == PAGINATIONSTATUS_NONESELECTED) ? string.Empty : "Items in <b>" + ddlStatusView.SelectedItem.Text + "</b> status with a Status Date between <b>" + txtStartDate.Text + "</b> and <b>" + txtEndDate.Text + "</b>.";
+                litDisplayed.Text = (ddlStatusView.SelectedValue == PAGINATIONSTATUS_NONESELECTED) ? string.Empty : "Items with Pagination Status <b>" + ddlStatusView.SelectedItem.Text + "</b> and Pagination Status Date between <b>" + txtStartDate.Text + "</b> and <b>" + txtEndDate.Text + "</b>.";
                 statusId = ddlStatusView.SelectedValue;
                 startDate = Convert.ToDateTime(txtStartDate.Text);
                 endDate = Convert.ToDateTime(txtEndDate.Text);
@@ -182,7 +176,7 @@ namespace MOBOT.BHL.AdminWeb
             isValid = !(ddlStatusView.SelectedValue == PAGINATIONSTATUS_NONESELECTED);
             if (!isValid)
             {
-                this.SetMessage("Select a status to display.");
+                this.SetMessage("Select a pagination status to display.");
             }
             else
             {

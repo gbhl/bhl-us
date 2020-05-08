@@ -4,8 +4,8 @@
 	<br />
 	<span class="pageHeader">Pagination Report</span><hr />
 	<p>
-    View Items in Status:&nbsp;<asp:DropDownList ID="ddlStatusView" runat="server"></asp:DropDownList>&nbsp;&nbsp;<a class="small" href="#" title="About" onclick="window.open('PaginationStatusAbout.html', 'About', 'resizeable=0,scrollbars=1,height=300,width=300,status=0,toolbar=0,menubar=0,location=0');">Status descriptions</a><br />
-    With a Status Date Between:&nbsp;<asp:TextBox ID="txtStartDate" Width="75px" runat="server"></asp:TextBox> and <asp:TextBox ID="txtEndDate" Width="75px" runat="server"></asp:TextBox>&nbsp;
+    View Items in Pagination Status:&nbsp;<asp:DropDownList ID="ddlStatusView" runat="server"></asp:DropDownList>&nbsp;&nbsp;<a class="small" href="#" title="About" onclick="window.open('PaginationStatusAbout.html', 'About', 'resizeable=0,scrollbars=1,height=300,width=300,status=0,toolbar=0,menubar=0,location=0');">Status descriptions</a><br />
+    With a Pagination Status Date Between:&nbsp;<asp:TextBox ID="txtStartDate" Width="75px" runat="server"></asp:TextBox> and <asp:TextBox ID="txtEndDate" Width="75px" runat="server"></asp:TextBox>&nbsp;
     <asp:Button ID="btnView" runat="server" Text="Go" OnClick="btnView_Click" />
     </p>
     <asp:Literal ID="litDisplayed" runat="server"></asp:Literal>
@@ -16,7 +16,7 @@
         <div id="pager"></div>
     </div>
     <span runat="server" id="spanStatusChange">
-    Change Status of Selected Items to:&nbsp;<asp:DropDownList ID="ddlStatusChange" runat="server"></asp:DropDownList>&nbsp;<asp:Button ID="btnChange" runat="server" Text="Update" OnClientClick="return getSelected();" OnClick="btnChange_Click" />
+    Change Pagination Status of Selected Items to:&nbsp;<asp:DropDownList ID="ddlStatusChange" runat="server"></asp:DropDownList>&nbsp;<asp:Button ID="btnChange" runat="server" Text="Update" OnClientClick="return getSelected();" OnClick="btnChange_Click" />
     <asp:HiddenField ID="hidSelected" runat="server" ClientIDMode="Static" /></span>
     <b><a id="lnkDownloadAll" title="DownloadAll" style="float:right" href="Services/ItemPaginationDownloadService.ashx?psid=0&sdate=1/1/1980&edate=12/31/2099">Click here to download pagination data for ALL items</a></b>
     <br />
@@ -41,7 +41,7 @@
                 url: 'services/itemservice.ashx?op=ItemPaginationReport&psid=<%=statusId%>&sdate=<%=startDate%>&edate=<%=endDate%>', // tells where to get the data
                 datatype: 'xml',    // format of the data (xml,json,jsonp,array,xmlstring,jsonstring,script,function)
                 mtype: 'GET',   // specify if AJAX call is a GET or POST
-                colNames: ['Title ID', 'Title', 'Bib Level', 'Item ID', 'Volume', 'Year', 'Scanning Date', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
+                colNames: ['Title ID', 'Title', 'Bib Level', 'Item ID', 'Volume', 'Year', 'Item Status', 'Scanning Date', 'Holding Institution', 'Pagination Status', 'Pagination Status Date', 'Pagination User', '# Pages'],    // column names
                 colModel: [
                   { name: 'TitleID', index: 'PrimaryTitleID', width: '40px' },
                   { name: 'Title', index: 'SortTitle', width: '100px' },
@@ -49,12 +49,13 @@
                   { name: 'ItemID', index: 'ItemID', width: '40px' },
                   { name: 'Volume', index: 'Volume', width: '50px' },
                   { name: 'Year', index: 'Year', width: '40px' },
+                  { name: 'Item Status', index: 'ItemStatusName', width: '55px' },
                   { name: 'Scanning Date', index: 'ScanningDate', width: '50px' },
                   { name: 'Holding Institution', index: 'InstitutionName', width: '100px' },
-                  { name: 'PaginationStatusName', index: 'PaginationStatusName', sortable: false, width: '55px' },
-                  { name: 'PaginationStatusDate', index: 'PaginationStatusDate', width: '80px' },
-                  { name: 'PaginationUserName', index: 'PaginationUserName', width: '80px' },
-                  { name: 'NumberOfPages', index: 'NumPages', sortable: false, width: '30px' },
+                  { name: 'Pagination Status', index: 'PaginationStatusName', sortable: false, width: '55px' },
+                  { name: 'Pagination Status Date', index: 'PaginationStatusDate', width: '80px' },
+                  { name: 'Pagination User', index: 'PaginationUserName', width: '80px' },
+                  { name: '# of Pages', index: 'NumPages', sortable: false, width: '30px' },
                 ],  // model of the columns to display
                 pager: '#pager',    // show a pager bar for record navigation
                 rowNum: 200,    // rows in grid
@@ -78,7 +79,7 @@
         }
 
         function getSelected() {
-            if (confirm("Are you sure you want to change the status of the selected items?")) {
+            if (confirm("Are you sure you want to change the pagination status of the selected items?")) {
 
                 jQuery("#hidSelected").attr("value", "");
                 var selected = jQuery(".cbox:checked");
