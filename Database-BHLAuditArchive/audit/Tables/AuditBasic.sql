@@ -10,14 +10,11 @@
     [SystemUserID]      NVARCHAR (128) NOT NULL,
     [SQLStatement]      NVARCHAR (MAX) NOT NULL,
     CONSTRAINT [PK_AuditBasic] PRIMARY KEY CLUSTERED ([AuditBasicID] ASC)
-);
-
-
+)
+WITH (DATA_COMPRESSION = PAGE);
 GO
+
 CREATE NONCLUSTERED INDEX [IX_AuditBasic_EntityName_Key1]
 	ON [audit].[AuditBasic] ([EntityName] ASC, [EntityKey1] ASC)
 	INCLUDE ([AuditDate], [Operation], [ApplicationUserID]);
-
 GO
-
-

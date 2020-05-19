@@ -21,10 +21,9 @@
     [MarcGetStatus]           NVARCHAR (30)  CONSTRAINT [DF__Item__MarcGetStatus] DEFAULT ('') NOT NULL,
     [CreationDate]            DATETIME       CONSTRAINT [DF__Item__CreationDate] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_Item] PRIMARY KEY CLUSTERED ([ItemID] ASC)
-);
-
-
+)
+WITH (DATA_COMPRESSION = PAGE);
 GO
+
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Item_Identifier]
     ON [dbo].[Item]([Identifier] ASC);
-

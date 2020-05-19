@@ -5,5 +5,5 @@
     CONSTRAINT [PK_ItemSet] PRIMARY KEY CLUSTERED ([ItemID] ASC, [CollectionID] ASC),
     CONSTRAINT [FK_ItemCollection_Collection] FOREIGN KEY ([CollectionID]) REFERENCES [dbo].[Collection] ([CollectionID]),
     CONSTRAINT [FK_ItemCollection_Item] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[Item] ([ItemID])
-);
-
+)
+WITH (DATA_COMPRESSION = PAGE);
