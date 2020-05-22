@@ -206,23 +206,29 @@ namespace MOBOT.BHL.DAL
 		}
 
 		public CustomGenericList<Item> ItemSelectPaginationReport( SqlConnection sqlConnection, 
-			SqlTransaction sqlTransaction, int paginationStatusId, DateTime startDate, DateTime endDate,
-            int numRows, int pageNum, string sortColumn, string sortDirection)
+			SqlTransaction sqlTransaction, int publishedOnly, string institutionCode, DataTable statusIDs, 
+            DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortDirection)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
 			SqlTransaction transaction = sqlTransaction;
 
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "ItemSelectPaginationReport", connection, transaction,
-                CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, false, paginationStatusId),
-                CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate),
-                CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.DateTime, null, false, endDate),
-                CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows),
-                CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum),
-                CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
-                CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection)))
-			{
-				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
+            using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.ItemSelectPaginationReport", connection, transaction))
+            {
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("PublishedOnly", SqlDbType.Int, null, false, publishedOnly));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode));
+                SqlParameter idListParam = command.Parameters.AddWithValue("@StatusIDList", statusIDs);
+                idListParam.SqlDbType = SqlDbType.Structured;
+                idListParam.TypeName = "dbo.IDListInt";
+                //command.Parameters.Add((CustomSqlHelper.CreateInputParameter("StatusIDList", SqlDbType.Structured, null, false, statusIDs).TypeName = "dbo.IDListInt"));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("StartDate", SqlDbType.DateTime, null, false, startDate));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("EndDate", SqlDbType.DateTime, null, false, endDate));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("NumRows", SqlDbType.Int, null, false, numRows));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("PageNum", SqlDbType.Int, null, false, pageNum));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn));
+                command.Parameters.Add(CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection));
+
+                using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
 					CustomGenericList<Item> list = helper.ExecuteReader( command );
 					return ( list );

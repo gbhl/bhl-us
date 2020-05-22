@@ -7,20 +7,58 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class ReportItemPagination {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class ReportItemPagination
+    {
+
         /// <summary>
-        /// ddlStatusView control.
+        /// listInstitutions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatusView;
-        
+        protected global::System.Web.UI.WebControls.DropDownList listInstitutions;
+
+        /// <summary>
+        /// chkPStatNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPStatNew;
+
+        /// <summary>
+        /// chkPStatIncomplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPStatIncomplete;
+
+        /// <summary>
+        /// chkPStatInProgress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPStatInProgress;
+
+        /// <summary>
+        /// chkPStatComplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPStatComplete;
+
         /// <summary>
         /// txtStartDate control.
         /// </summary>
@@ -29,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStartDate;
-        
+
         /// <summary>
         /// txtEndDate control.
         /// </summary>
@@ -38,7 +76,16 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEndDate;
-        
+
+        /// <summary>
+        /// chkPublished control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPublished;
+
         /// <summary>
         /// btnView control.
         /// </summary>
@@ -47,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnView;
-        
+
         /// <summary>
         /// litDisplayed control.
         /// </summary>
@@ -56,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litDisplayed;
-        
+
         /// <summary>
         /// lnkDownloadResults control.
         /// </summary>
@@ -65,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkDownloadResults;
-        
+
         /// <summary>
         /// spanStatusChange control.
         /// </summary>
@@ -74,7 +121,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanStatusChange;
-        
+
         /// <summary>
         /// ddlStatusChange control.
         /// </summary>
@@ -83,7 +130,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatusChange;
-        
+
         /// <summary>
         /// btnChange control.
         /// </summary>
@@ -92,7 +139,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChange;
-        
+
         /// <summary>
         /// hidSelected control.
         /// </summary>
@@ -101,7 +148,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidSelected;
-        
+
         /// <summary>
         /// hidStatus control.
         /// </summary>
@@ -110,7 +157,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidStatus;
-        
+
         /// <summary>
         /// hidStartDate control.
         /// </summary>
@@ -119,7 +166,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidStartDate;
-        
+
         /// <summary>
         /// hidEndDate control.
         /// </summary>
@@ -128,7 +175,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hidEndDate;
-        
+
         /// <summary>
         /// litUpdateResult control.
         /// </summary>
