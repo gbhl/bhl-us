@@ -75,49 +75,20 @@
                 loadui: 'block',    // block actions on the grid while data is being retrieved
                 multiselect: true,   // allow multiple row selection (adds checkbox at left)
                 loadComplete: function () {
-                    // we make all rows "protected", so that will be not selectable
-                    var cbs = $("tr.jqgrow > td > input.cbox", jQuery("#grid")[0]);
-                    cbs.attr("disabled", "disabled");
-                    cbs.toggle();
-
-                    /*
-                    var lista = $(”#list”).getDataIDs();
-                    for(i=0;i<lista.length;i++){
-                        rowData=$(”#list″).getRowData(lista[i]);
-                        rowData.fieldName1
-                        rowData.fieldName2
-                     }
-                    */
-
-                    /*
-                    function loadCompleted() {
-                        var $grid = jQuery("#jqGrid"), rows = $grid[0].rows;
-
-                        for (var i = 1; i < rows.length; i++) {
-                            var row = rows[i];
-                            var id = row.cells[0].innerHTML;
-
-                            $(row.cells[1]).html("<a href='#' onclick='deleteApp(" + id + "); return false;'>Delete</a>");
+                    // Turn off the selection checkbox for any rows not 'In Progress'
+                    var rows = jQuery("#list")[0].rows;
+                    for (var i = 1; i < rows.length; i++) {
+                        var row = rows[i];
+                        if (row.cells[10].innerHTML.trim() !== "In Progress") {
+                            $(row.cells[0]).children().attr("disabled", "disabled");
+                            $(row.cells[0]).children().toggle();
                         }
                     }
-                     */
 
                     $("#jqgh_list_cb").toggle();    // turn off the "select all" checkbox
-                },                
-                rowattr: function (rowData, currentObj, rowid) {
-                    if (rowData['Pagination Status'].trim() === "In Progress") {
-                        var cbs = $("tr#" + rowid + ".jqgrow > td > input.cbox", jQuery("#grid")[0]);
-                        console.log(cbs);
-                        cbs.attr("disabled", "disabled");
-                        cbs.toggle();
-                    }
-                    
-                    //if (parseInt(item.ID, 10) % 3 === 0) {
-                        //return { "class": "ui-state-disabled ui-jqgrid-disablePointerEvents" };
-                    //}
                 },
                 beforeSelectRow: function (rowid, e) {
-                    var cbsdis = $("tr#" + rowid + ".jqgrow > td > input.cbox:disabled", jQuery("#grid")[0]);
+                    var cbsdis = $("tr#" + rowid + ".jqgrow > td > input.cbox:disabled", jQuery("#list")[0]);
                     if (cbsdis.length === 0) {
                         return true;    // allow select the row
                     } else {
