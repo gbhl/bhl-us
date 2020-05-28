@@ -16,10 +16,12 @@
     <div style="margin:3px;"><asp:Checkbox ID="chkPublished" ClientIDMode="Static" runat="server" Text="Limit the List to Published Items" Checked="true" />&nbsp;
     <asp:Button ID="btnView" runat="server" Text="Go" OnClick="btnView_Click" /></div>
     </div>
-    <asp:Literal ID="litDisplayed" runat="server"></asp:Literal>
-    <b><a id="lnkDownloadResults" runat="server" title="Download Results" style="float:right" visible="false" href="#">Download Results</a></b>
+    <div style="margin-top:8px;">
+        <asp:Literal ID="litDisplayed" runat="server"></asp:Literal>
+        <b><a id="lnkDownloadResults" runat="server" title="Download Results" style="float:right" visible="false" href="#">Download Results</a></b>
+    </div>
 
-    <div id="listDiv" style="height:100%; overflow:auto;">
+    <div id="listDiv" style="height:100%; overflow:auto; margin:3px;">
         <table id="list"></table>
         <div id="pager"></div>
     </div>
@@ -104,7 +106,7 @@
 
         function resizeGrid() {
             jQuery("#list").setGridWidth(jQuery(window).width() - 40);
-            jQuery("#list").setGridHeight(jQuery(window).height() - 315);
+            jQuery("#list").setGridHeight(jQuery(window).height() - 350);
         }
 
         function getSelected() {
