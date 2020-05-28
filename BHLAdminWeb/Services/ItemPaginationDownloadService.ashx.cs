@@ -94,6 +94,9 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             StringBuilder csvString = new StringBuilder();
 
+            // Add a BOM (Byte-Order Mark) to the output
+            csvString.Append(Encoding.UTF8.GetString(new UTF8Encoding(true).GetPreamble()));
+
             // Write file header
             csvString.AppendLine("\"TitleId\",\"Title\",\"BibliographicLevel\",\"ItemId\",\"InternetArchiveId\",\"Volume\",\"Year\",\"Item Status\",\"ScanningDate\",\"Holding Institution\",\"PaginationStatusName\",\"PaginationStatusDate\",\"PaginationUserName\",\"NumberOfPages\"");
             context.Response.Write(csvString.ToString());
