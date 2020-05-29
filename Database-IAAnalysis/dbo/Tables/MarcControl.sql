@@ -12,4 +12,6 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_MarcControl_ItemID]
     ON [dbo].[MarcControl]([ItemID] ASC)
-    INCLUDE([MarcControlID]);
+    INCLUDE([MarcControlID])
+	WITH (DATA_COMPRESSION = PAGE);
+GO

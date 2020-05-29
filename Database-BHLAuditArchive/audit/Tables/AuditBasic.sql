@@ -16,5 +16,6 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_AuditBasic_EntityName_Key1]
 	ON [audit].[AuditBasic] ([EntityName] ASC, [EntityKey1] ASC)
-	INCLUDE ([AuditDate], [Operation], [ApplicationUserID]);
+	INCLUDE ([AuditDate], [Operation], [ApplicationUserID])
+	WITH (DATA_COMPRESSION = PAGE);
 GO

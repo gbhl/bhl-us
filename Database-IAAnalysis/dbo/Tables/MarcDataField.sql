@@ -13,9 +13,12 @@ GO
 
 CREATE NONCLUSTERED INDEX [IX_MarcDataField_Tag]
     ON [dbo].[MarcDataField]([Tag] ASC)
-    INCLUDE([MarcDataFieldID], [ItemID]);
+    INCLUDE([MarcDataFieldID], [ItemID])
+	WITH (DATA_COMPRESSION = PAGE);
 GO
 
 CREATE NONCLUSTERED INDEX [IX_MarcDataField_ItemID]
     ON [dbo].[MarcDataField]([ItemID] ASC)
-    INCLUDE([MarcDataFieldID], [Tag], [Indicator1], [Indicator2]);
+    INCLUDE([MarcDataFieldID], [Tag], [Indicator1], [Indicator2])
+	WITH (DATA_COMPRESSION = PAGE);
+GO

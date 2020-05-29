@@ -26,4 +26,6 @@ WITH (DATA_COMPRESSION = PAGE);
 GO
 
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Item_Identifier]
-    ON [dbo].[Item]([Identifier] ASC);
+    ON [dbo].[Item]([Identifier] ASC)
+	WITH (DATA_COMPRESSION = PAGE);
+GO
