@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
@@ -78,10 +79,10 @@ namespace MOBOT.BHL.Server
 			return ( new ItemDAL().ItemSelectWithoutPageNames( null, null ) );
 		}
 
-		public CustomGenericList<Item> ItemSelectPaginationReport(int paginationStatusId, DateTime startDate, DateTime endDate,
-            int numRows, int pageNum, string sortColumn, string sortDirection)
+		public CustomGenericList<Item> ItemSelectPaginationReport(int publishedOnly, string institutionCode, DataTable statusIDs, 
+            DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortDirection)
 		{
-			return new ItemDAL().ItemSelectPaginationReport( null, null, paginationStatusId, startDate, endDate, numRows,
+			return new ItemDAL().ItemSelectPaginationReport( null, null, publishedOnly, institutionCode, statusIDs, startDate, endDate, numRows,
                 pageNum, sortColumn, sortDirection);
 		}
 

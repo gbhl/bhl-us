@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[ItemSelectPaginationReport]
 
-@PaginationStatusID int = 20,
+@PublishedOnly int = 0,
+@Institutioncode nvarchar(10) = '',
+@StatusIDList AS dbo.IDListInt READONLY,
 @StartDate datetime = '1/1/1980',
 @EndDate datetime = '12/31/2099',
 @NumRows int = 100,
@@ -50,6 +52,7 @@ SELECT	i.PrimaryTitleID,
 		ISNULL(u.LastName + ', ' + u.FirstName, '') AS PaginationUserName,
 		ps.PaginationStatusName
 FROM	dbo.Item i
+		INNER JOIN @StatusIDList list ON i.PaginationStatusID = list.ID
 		INNER JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b on t.BibliographicLevelID = b.BibliographicLevelID
 		INNER JOIN dbo.PaginationStatus ps ON ps.PaginationStatusID = i.PaginationStatusID
@@ -58,7 +61,8 @@ FROM	dbo.Item i
 		LEFT JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID 
 		LEFT JOIN dbo.Institution inst ON ii.InstitutionCode = inst.InstitutionCode
 		INNER JOIN dbo.ItemStatus s ON i.ItemStatusID = s.ItemStatusID
-WHERE	(i.PaginationStatusID = @PaginationStatusID OR @PaginationStatusID = 0)
+WHERE	(@PublishedOnly <> 1 OR i.ItemStatusID = 40)
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		(r.InstitutionRoleName = 'Holding Institution' OR r.InstitutionRoleName IS NULL)
 AND		ISNULL(i.PaginationStatusDate, i.CreationDate) BETWEEN @StartDate AND @EndDate
 
