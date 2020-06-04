@@ -16,6 +16,8 @@ using CustomDataAccess;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using MOBOT.FileAccess;
+using System.Web.ModelBinding;
+using System.Web.Hosting;
 
 namespace MOBOT.BHL.Server
 {
@@ -158,8 +160,11 @@ namespace MOBOT.BHL.Server
                     nameFinderResponses = this.GetNamesFromOcrTaxonFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
                     break;
                 case "GNFinder":
+                    nameFinderResponses = this.GetNamesFromOcrGNFinderService(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    break;
+                case "GNFinderLocal":
                 default:
-                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID, useRemoteFileAccessProvider, usePreferredResults, maxReadAttempts);
+                    nameFinderResponses = this.GetNamesFromOcrGNFinder(pageID, useRemoteFileAccessProvider);
                     break;
             }
 
@@ -359,7 +364,7 @@ namespace MOBOT.BHL.Server
         /// <param name="usePreferredResults"></param>
         /// <param name="maxReadAttempts"></param>
         /// <returns></returns>
-        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
+        private List<NameFinderResponse> GetNamesFromOcrGNFinderService(int pageID, bool useRemoteFileAccessProvider, bool usePreferredResults, int maxReadAttempts)
         {
             string webServiceUrl = string.Empty;
 
@@ -504,13 +509,13 @@ namespace MOBOT.BHL.Server
                                             {
                                                 foreach(JToken identifierDetail in name["preferred_results"])
                                                 {
-                                                    identifier = this.GetIdentifierFromGNFinder(identifierDetail);
+                                                    identifier = this.GetIdentifierFromGNFinder(identifierDetail, "taxon_id", "data_source_id");
                                                     if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
                                                 }
                                             }
                                             else
                                             {
-                                                identifier = this.GetIdentifierFromGNFinder(nameDetail);
+                                                identifier = this.GetIdentifierFromGNFinder(nameDetail, "taxon_id", "data_source_id");
                                                 if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
                                             }
                                         }
@@ -543,40 +548,143 @@ namespace MOBOT.BHL.Server
         }
 
         /// <summary>
+        /// Use the gnfinder tool to extract names from the OCR for a page.
+        /// </summary>
+        /// <param name="pageID"></param>
+        /// <param name="useRemoteFileAccessProvider"></param>
+        /// <param name="maxReadAttempts"></param>
+        /// <returns></returns>
+        private List<NameFinderResponse> GetNamesFromOcrGNFinder(int pageID, bool useRemoteFileAccessProvider)
+        {
+            List<NameFinderResponse> nameResponseList = new List<NameFinderResponse>();
+
+            // Only continue if the gnfinder tool exists
+            string toolPath = AppDomain.CurrentDomain.BaseDirectory + "bin\\gnfinder.exe";
+            if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(toolPath))
+            {
+                PageSummaryView ps = new BHLProvider().PageSummarySelectByPageId(pageID);
+                string filepath = ps.OcrTextLocation;
+
+                if (this.GetFileAccessProvider(useRemoteFileAccessProvider).FileExists(filepath))
+                {
+                    try
+                    {
+                        string gnfinderOutput = string.Empty;
+                        using (System.Diagnostics.Process process = new System.Diagnostics.Process())
+                        {
+                            process.StartInfo.FileName = toolPath;
+                            process.StartInfo.Arguments = "find -c " + filepath;
+                            process.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+                            process.StartInfo.UseShellExecute = false;
+                            process.StartInfo.RedirectStandardOutput = true;
+                            process.Start();
+
+                            // Synchronously read the standard output of the spawned process.
+                            gnfinderOutput = process.StandardOutput.ReadToEnd();
+                            process.WaitForExit();
+                        }
+
+                        JObject jsonResponse = JObject.Parse(gnfinderOutput);
+                        JToken metadata = jsonResponse["metadata"];
+
+                        // Did we get name data?
+                        if (metadata["totalNames"].ToString() != "0")
+                        {
+                            // Read the name data from the JSON response
+                            foreach (JToken name in jsonResponse["names"])
+                            {
+                                string nameString = (string)(name["name"] ?? string.Empty);
+                                string nameResolvedString = string.Empty;
+                                string canonicalName = string.Empty;
+                                List<string> identifiers = new List<string>();
+                                string matchType = string.Empty;
+                                double odds = (double)name["odds"];
+                                string curation = string.Empty;
+
+                                JToken verification = name["verification"];
+                                if (verification != null)   // If the name was resolved, get the details
+                                {
+                                    curation = (string)(verification["dataSourceQuality"] ?? string.Empty);
+                                    JToken bestResult = verification["bestResult"];
+                                    if (bestResult != null)
+                                    {
+                                        matchType = (bestResult["matchType"] != null) ? bestResult["matchType"].ToString() : "";
+
+                                        // Possible match_type values
+                                        // (blank) - unknown; probable error processing name
+                                        // NoMatch - no match
+                                        // ExactMatch - exact string match
+                                        // ExactCanonicalMatch - exact string match
+                                        // ExactPartialMatch - partial match on trinomial, or exact match on genus but no match on species (binomial) part (mostly good results here)
+                                        // FuzzyCanonicalMatch - fuzzy match of canonical form
+                                        // FuzzyPartialMatch - fuzzy partial match on trinomial
+                                        if (matchType != "" && matchType != "NoMatch")
+                                        {
+                                            nameResolvedString = (string)(bestResult["matchedName"] ?? string.Empty);
+                                            canonicalName = (string)(bestResult["matchedCanonicalFull"] ?? string.Empty);
+
+                                            // Get the identifiers
+                                            string identifier = string.Empty;
+                                            identifier = this.GetIdentifierFromGNFinder(bestResult, "taxonId", "dataSourceId");
+                                            if (!string.IsNullOrWhiteSpace(identifier)) identifiers.Add(identifier);
+                                        }
+                                    }
+                                }
+
+                                // Add the data from the JSON response to our list of names to return 
+                                bool keepName = false;
+                                if ((matchType == "ExactMatch" || matchType == "ExactCanonicalMatch") && curation != "Unknown") keepName = true;
+                                if ((matchType == "FuzzyCanonical" || matchType == "FuzzyPartial" || matchType == "NoMatch" || matchType == "") && odds > 1000000) keepName = true;
+                                if (matchType == "ExactPartialMatch") keepName = true;
+
+                                if (keepName)
+                                {
+                                    NameFinderResponse nameFinderResponse = new NameFinderResponse();
+                                    nameFinderResponse.Name = nameString;
+                                    nameFinderResponse.NameResolved = nameResolvedString;
+                                    nameFinderResponse.CanonicalName = canonicalName;
+                                    nameFinderResponse.MatchType = matchType;
+                                    nameFinderResponse.Curation = curation;
+                                    nameFinderResponse.Identifiers = identifiers;
+                                    nameResponseList.Add(nameFinderResponse);
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                else
+                {
+                    throw new Exception(string.Format("File {0} not found.", filepath));
+                }
+            }
+            else
+            {
+                throw new Exception("Name-finding utility (gnfinder.exe) not found.");
+            }
+
+            return (nameResponseList);
+        }
+
+        /// <summary>
         /// Read a name identifier type and value from the supplied JSON node of a GNFinder response
         /// </summary>
         /// <param name="nameDetail"></param>
         /// <returns></returns>
-        public string GetIdentifierFromGNFinder(JToken nameDetail)
+        public string GetIdentifierFromGNFinder(JToken nameDetail, string taxonIdField, string dataSourceIdField)
         {
             string identifier = string.Empty;
-            string identifierValue = (string)(nameDetail["taxon_id"] ?? string.Empty);
-            if (nameDetail["data_source_id"] != null && !string.IsNullOrWhiteSpace(identifierValue))
+            string identifierValue = (string)(nameDetail[taxonIdField] ?? string.Empty);
+            if (nameDetail[dataSourceIdField] != null && !string.IsNullOrWhiteSpace(identifierValue))
             {
-                string dataSourceID = nameDetail["data_source_id"].ToString();
-                string dataSourceName = string.Empty;
+                int dataSourceID = (int)nameDetail[dataSourceIdField];
+
                 // Full list of data sources at http://resolver.globalnames.org/data_sources
-                switch (dataSourceID)
-                {
-                    case "1": dataSourceName = "Catalogue of Life"; break;
-                    case "2": dataSourceName = "Wikispecies"; break;
-                    case "3": dataSourceName = "ITIS"; break;
-                    case "4": dataSourceName = "NCBI"; break;
-                    case "5": dataSourceName = "Index Fungorum"; break;
-                    case "7": dataSourceName = "Union 4"; break;
-                    case "8": dataSourceName = "Interim Reg. of Marine/Nonmarine Genera"; break;
-                    case "9": dataSourceName = "WoRMS"; break;
-                    case "11": dataSourceName = "GBIF Taxonomic Backbone"; break;
-                    case "12": dataSourceName = "EOL"; break;
-                    case "132": dataSourceName = "ZooBank"; break;
-                    case "158": dataSourceName = "EUNIS"; break;
-                    case "164": dataSourceName = "BioLib.cz"; break;
-                    case "165": dataSourceName = "Tropicos"; break;
-                    case "167": dataSourceName = "The International Plant Names Index"; break;
-                    case "168": dataSourceName = "Index to Organism Names"; break;
-                    case "169": dataSourceName = "NameBank"; break;
-                }
-                identifier = dataSourceName + "|" + identifierValue;
+                Identifier id = this.IdentifierSelectByGNFinderDataSource(dataSourceID);
+                if (id != null) identifier = id.IdentifierName + "|" + identifierValue;
             }
             return identifier;
         }

@@ -1129,6 +1129,14 @@
     <None Include="dbo\Stored Procedures\PageFlickrDeleteByPageID.sql" />
     <None Include="dbo\Stored Procedures\InstitutionSelectWithGroups.sql" />
     <None Include="dbo\Stored Procedures\AspNetUserSelectAll.sql" />
+    <None Include="dbo\Tables\IDType.sql" />
+    <None Include="dbo\Tables\IdentifierIDType.sql" />
+    <None Include="Data\dbo.IDType.Table.sql" />
+    <None Include="Data\dbo.IdentifierIDType.Table.sql" />
+    <None Include="dbo\Stored Procedures\IdentifierSelectByIDType.sql" />
+    <None Include="dbo\Tables\NameSourceGNFinder.sql" />
+    <None Include="dbo\Stored Procedures\IdentifierSelectByGNFinderDataSource.sql" />
+    <None Include="Data\dbo.NameSourceGNfinder.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1455,14 +1463,14 @@
     <None Include="dbo\Stored Procedures\TitleInstitutionSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleInstitutionUpdateAuto.sql" />
     <Build Include="dbo\Functions\fnGetDatesFromString.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupInstitutionUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInstitutionDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInstitutionInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInstitutionSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupInstitutionUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionGroupSelectAll.sql" />
     <Build Include="dbo\Stored Procedures\ItemResetPaginationLock.sql" />
   </ItemGroup>
