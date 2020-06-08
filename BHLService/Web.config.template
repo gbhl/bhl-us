@@ -16,7 +16,7 @@
     <!-- OCR Job file locations -->
     <add key="OCRJobNewPath" value="OCR_JOB_ROOT_FOLDER\new\" />
 
-    <!-- Valid values for NameFinderService are "TaxonFinder" and "GNFinder" -->
+    <!-- Valid values for NameFinderService are "TaxonFinder", "GNFinder", and "GNFinderLocal" -->
     <add key="NameFinderService" value="TaxonFinder"/>
 
     <!-- Source name of the name service.  Should match the values in the SourceName field in the NameSource table. -->
