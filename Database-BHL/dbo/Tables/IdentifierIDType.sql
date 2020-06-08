@@ -5,8 +5,8 @@
 	IDTypeID INT NOT NULL,
 	CreationDate DATETIME CONSTRAINT DF_IdentifierIDType_CreationDate DEFAULT (GETDATE()) NOT NULL,
 	LastModifiedDate DATETIME CONSTRAINT DF_IdentifierIDType_LastModifiedDate DEFAULT (GETDATE()) NOT NULL,
-	CreationUserID DATETIME CONSTRAINT DF_IdentifierIDType_CreationUserID DEFAULT (1) NOT NULL,
-	LastModifiedUserID DATETIME CONSTRAINT DF_IdentifierIDType_LastModifiedUserID  DEFAULT (1) NOT NULL
+	CreationUserID INT CONSTRAINT DF_IdentifierIDType_CreationUserID DEFAULT (1) NOT NULL,
+	LastModifiedUserID INT CONSTRAINT DF_IdentifierIDType_LastModifiedUserID  DEFAULT (1) NOT NULL
 )
 GO
 ALTER TABLE dbo.IdentifierIDType 
