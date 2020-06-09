@@ -73,9 +73,13 @@
                     <label class="caption" for="srTitleTextBox">Book Title:</label>
                     <asp:TextBox ID="srTitleTextBox" ClientIDMode="Static" runat="server" Width="400px" MaxLength="500"></asp:TextBox>
                 </div>
-                <div style="margin-bottom:10px;">
+                <div style="margin-bottom:1px;">
                     <label class="caption" for="srYearTextBox">Year:</label>
-                    <asp:TextBox ID="srYearTextBox" ClientIDMode="Static" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox><span style="font-style:italic"> (For © compliance, must be prior to <b>1923</b>)</span>
+                    <asp:TextBox ID="srYearTextBox" ClientIDMode="Static" runat="server" Width="50px" MaxLength="20" style="width: 50px !important"></asp:TextBox>
+                </div>
+                <div style="margin-bottom:10px;">
+                    <label class="caption" for="srYearMsg"></label>
+                    <textarea id="srYearMsg" style="color:#000000;background-color:#FFFFFF;font-style:italic;border:none;overflow: auto;outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;resize: none;" type="text" value="" rows="3" cols="55" disabled="">(Materials must be in the public domain or legally permitted. For U.S. © compliance, public domain = current year minus 95 years.)</textarea>
                 </div>
                 <div style="margin-bottom:10px;">
                     <label class="caption" for="typeList">Subject:</label>
