@@ -1798,6 +1798,8 @@
 <a href="#PDF">PDF</a> referencing (ItemID)</li>
 <li>
 <a href="#Page">Page</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemInstitution">ItemInstitution</a> referencing (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -1856,7 +1858,9 @@
 <td class="tdTableDefinition">ItemInstitutionID (PK)</td><td class="tdTableDefinition">ItemInstitutionID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">InstitutionCode
@@ -1888,6 +1892,8 @@
 <a href="#InstitutionRole">InstitutionRole</a> through (InstitutionRoleID)</li>
 <li>
 <a href="#Institution">Institution</a> through (InstitutionCode)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 </div>
 </div>
