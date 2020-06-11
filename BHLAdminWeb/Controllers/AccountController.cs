@@ -691,14 +691,24 @@ namespace MOBOT.BHL.AdminWeb.Controllers
                 if (model.Disabled && !user.Disabled) wasDisabled = true;   // Flag users being disabled
                 user.Disabled = model.Disabled;
                 Db.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                await Db.SaveChangesAsync();
-                // If user was just disabled, remove from all roles
-                if (wasDisabled)
+
+                IdentityResult result = await UserManager.UserValidator.ValidateAsync(user);
+                if (result.Succeeded)
                 {
-                    var idManager = new IdentityManager();
-                    idManager.ClearUserRoles(user.Id);
+                    await Db.SaveChangesAsync();
+                    // If user was just disabled, remove from all roles
+                    if (wasDisabled)
+                    {
+                        var idManager = new IdentityManager();
+                        idManager.ClearUserRoles(user.Id);
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                else
+                {
+                    AddErrors(result);
+                    ViewBag.Institutions = GetInstitutions();
+                }
             }
 
             // If we got this far, something failed, redisplay form
