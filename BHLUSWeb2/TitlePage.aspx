@@ -712,7 +712,7 @@
                             //        " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
                             //}
 
-                            ubioLink.append("<a href='' class='lnkNameDetails' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/eol_11px.png' style='margin-left:3px' /></a>");
+                            ubioLink.append("<a href='' class='lnkNameDetails' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px.png' style='margin-left:3px;top:1px;position:relative;' /></a>");
                         });
                     } else {
                         pageNames.empty();

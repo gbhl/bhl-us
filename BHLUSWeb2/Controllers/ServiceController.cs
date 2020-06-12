@@ -1,4 +1,6 @@
-﻿using MOBOT.BHL.Server;
+﻿using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MOBOT.BHL.Web2.Controllers
@@ -8,12 +10,12 @@ namespace MOBOT.BHL.Web2.Controllers
         // GET: Service
         public ActionResult GetNameDataSources(string name)
         {
-            // TODO: Read/write cached GN Resolver API data here, so we don't have to hit the remote API each time
+            List<GNResolverResponse> nameSources = new List<GNResolverResponse>();
 
-            return Json(
-                new BHLProvider().GetNameDetailFromGNResolver(name),
-                JsonRequestBehavior.AllowGet
-            );
+            // TODO: Read/write cached GN Resolver API data here, so we don't have to hit the remote API each time
+            nameSources = new BHLProvider().GetNameDetailFromGNResolver(name);
+
+            return Json(nameSources, JsonRequestBehavior.AllowGet);
         }
     }
 }
