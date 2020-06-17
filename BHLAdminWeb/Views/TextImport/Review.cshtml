@@ -65,7 +65,7 @@
 
                 // Get pages and populate list
                 $.ajax({
-                    url: "/textimport/GetItemPages?itemID=" + itemid
+                    url: "/textimport/GetItemPages?itemID=" + itemid + "&fileName=" + filename
                 }).done(function (data) {
                     $("#pageTable > tbody").empty();
 

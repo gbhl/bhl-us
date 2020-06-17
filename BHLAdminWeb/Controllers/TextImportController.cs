@@ -150,9 +150,23 @@ namespace MOBOT.BHL.AdminWeb.Controllers
 
         // AJAX method to support /TextImport/Review
         [HttpGet]
-        public ActionResult GetItemPages(int itemID)
+        public ActionResult GetItemPages(int itemID, string fileName)
         {
-            return Json(new TextImportFileModel().GetItemPages(itemID), JsonRequestBehavior.AllowGet);
+            List<DataObjects.Page> dbPages = new TextImportFileModel().GetItemPages(itemID);
+            List<DataObjects.Page> displayPages = new List<DataObjects.Page>();
+
+            foreach(DataObjects.Page page in dbPages)
+            {
+                if (new TextImportTool().TextAvailable(
+                        Path.Combine(System.Configuration.ConfigurationManager.AppSettings["TextImportPath"], fileName), 
+                        page.SequenceOrder.ToString())
+                    )
+                {
+                    displayPages.Add(page);
+                }
+            }
+
+            return Json(displayPages, JsonRequestBehavior.AllowGet);
         }
 
         // AJAX method to support /TextImport/Review
