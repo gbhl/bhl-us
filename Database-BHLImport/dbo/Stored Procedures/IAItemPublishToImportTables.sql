@@ -888,6 +888,7 @@ BEGIN TRY
 				ON t.ItemID = m.ItemID
 	WHERE	m.DataFieldTag = '020'
 	AND		m.Code = 'a'
+	AND		LEN(m.SubFieldValue) <= 125
 
 	-- Get the ISSN identifiers
 	INSERT INTO #tmpTitleIdentifier
@@ -899,6 +900,7 @@ BEGIN TRY
 				ON t.ItemID = m.ItemID
 	WHERE	m.DataFieldTag = '022'
 	AND		m.Code = 'a'
+	AND		LEN(m.SubFieldValue) <= 125
 
 	-- Get the CODEN codes
 	INSERT INTO #tmpTitleIdentifier

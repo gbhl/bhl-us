@@ -306,7 +306,7 @@ namespace MOBOT.BHL.AdminWeb
         protected List<Identifier> GetIdentifiers()
         {
             BHLProvider bp = new BHLProvider();
-            _identifiers = bp.IdentifierSelectAll();
+            _identifiers = bp.IdentifierSelectByIDType("title");
 
             return _identifiers;
         }

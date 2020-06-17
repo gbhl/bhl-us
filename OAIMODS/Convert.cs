@@ -313,7 +313,7 @@ namespace MOBOT.BHL.OAIMODS
             var issn = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "issn"
                         select d;
-            if (issn.Count() > 0) _oaiRecord.Doi = issn.First().Value;
+            if (issn.Count() > 0) _oaiRecord.Issn = issn.First().Value;
 
             var lccn = from d in root.Elements(ns + "identifier")
                         where d.Attribute("type").Value == "lccn"
@@ -327,13 +327,14 @@ namespace MOBOT.BHL.OAIMODS
             {
                 // See if a DOI is embedded within the URI
                 string uriValue = uri.Value;
-                if (uriValue.Contains("http://dx.doi.org/"))
-                {
-                    _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
-                }
+                if (!string.IsNullOrWhiteSpace(_oaiRecord.Doi)) _oaiRecord.Url = uriValue;  // Already have a DOI
                 else
                 {
-                    _oaiRecord.Url = uriValue;
+                    if (uriValue.Contains("http://dx.doi.org/")) _oaiRecord.Doi = uriValue.Replace("http://dx.doi.org/", "");
+                    else if (uriValue.Contains("https://dx.doi.org/")) _oaiRecord.Doi = uriValue.Replace("https://dx.doi.org/", "");
+                    else if (uriValue.Contains("http://doi.org/")) _oaiRecord.Doi = uriValue.Replace("http://doi.org/", "");
+                    else if (uriValue.Contains("https://doi.org/")) _oaiRecord.Doi = uriValue.Replace("https://doi.org/", "");
+                    else _oaiRecord.Url = uriValue;
                 }
             }
 

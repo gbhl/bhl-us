@@ -1,23 +1,20 @@
-using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
-using CustomDataAccess;
 using MOBOT.BHL.Web.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class ReportItemPagination : System.Web.UI.Page
+    public partial class ReportItemPagination : System.Web.UI.Page
 	{
+        protected string publishedOnly = "1";
+        protected string institutionCode = string.Empty;
         protected string statusId = "0";
         protected DateTime startDate;
         protected DateTime endDate;
@@ -50,13 +47,17 @@ namespace MOBOT.BHL.AdminWeb
             if (!IsPostBack)
             {
                 txtStartDate.Text = "1/1/1980";
-                txtEndDate.Text = DateTime.Now.ToShortDateString();
-                ddlStatusView.Items.Add(new ListItem("New", "5"));
-                ddlStatusView.Items.Add(new ListItem("Incomplete", "10"));
-                ddlStatusView.Items.Add(new ListItem("In Progress", "20"));
-                ddlStatusView.Items.Add(new ListItem("Complete", "30"));
-                ddlStatusView.SelectedIndex = 2;
+                txtEndDate.Text = DateTime.Now.AddDays(1).ToShortDateString();
                 spanStatusChange.Visible = false;
+
+                BHLProvider bp = new BHLProvider();
+                List<Institution> institutions = bp.InstituationSelectAll();
+                Institution allInstitutions = new Institution();
+                allInstitutions.InstitutionName = "(Any content provider)";
+                allInstitutions.InstitutionCode = "";
+                institutions.Insert(0, allInstitutions);
+                listInstitutions.DataSource = institutions;
+                listInstitutions.DataBind();
             }
 
             this.SetMessage(string.Empty);
@@ -69,19 +70,36 @@ namespace MOBOT.BHL.AdminWeb
         /// <param name="e"></param>
         protected void btnView_Click(object sender, EventArgs e)
         {
-            // Modify ddlStatusChange list to contain items that are valid for the displayed status
-            SetStatusChangeItems(ddlStatusView.SelectedValue, ddlStatusView.Items);
+            // Modify ddlStatusChange list to contain items that are valid for the displayed statuses
+            SetStatusChangeItems();
 
             if (ValidateData())
             {
-                litDisplayed.Text = (ddlStatusView.SelectedValue == PAGINATIONSTATUS_NONESELECTED) ? string.Empty : "Items in <b>" + ddlStatusView.SelectedItem.Text + "</b> status with a Status Date between <b>" + txtStartDate.Text + "</b> and <b>" + txtEndDate.Text + "</b>.";
-                statusId = ddlStatusView.SelectedValue;
+                List<string> statuses = new List<string>();
+                if (chkPStatNew.Checked) statuses.Add("New");
+                if (chkPStatIncomplete.Checked) statuses.Add("Incomplete");
+                if (chkPStatInProgress.Checked) statuses.Add("In Progress");
+                if (chkPStatComplete.Checked) statuses.Add("Complete");
+
+                litDisplayed.Text = (statuses.Count > 0) ?
+                    string.Format("<b>{0}</b> Items Held By <b>{1}</b> with Pagination Status <b>{2}</b> and Pagination Status Date between <b>{3}</b> and <b>{4}</b>.",
+                        chkPublished.Checked ? "Published" : "All", 
+                        listInstitutions.SelectedValue == "" ? "All Content Providers" : listInstitutions.SelectedItem.Text, 
+                        string.Join("|", statuses.ToArray()),
+                        txtStartDate.Text, 
+                        txtEndDate.Text) :
+                    string.Empty;
+
+                publishedOnly = chkPublished.Checked ? "1" : "0";
+                institutionCode = listInstitutions.SelectedValue;
+                statusId = GetStatusID();
                 startDate = Convert.ToDateTime(txtStartDate.Text);
                 endDate = Convert.ToDateTime(txtEndDate.Text);
                 hidStatus.Value = statusId;
                 hidStartDate.Value = startDate.ToShortDateString();
                 hidEndDate.Value = endDate.ToShortDateString();
-                lnkDownloadResults.HRef = "Services/ItemPaginationDownloadService.ashx?psid=" + Server.UrlEncode(statusId) +
+                lnkDownloadResults.HRef = "Services/ItemPaginationDownloadService.ashx?pub=" + Server.UrlEncode(publishedOnly) + 
+                    "&inst=" + Server.UrlEncode(institutionCode) + "&psid=" + Server.UrlEncode(statusId) +
                     "&sdate=" + Server.UrlEncode(hidStartDate.Value) + "&edate=" + Server.UrlEncode(hidEndDate.Value);
                 lnkDownloadResults.Visible = true;
                 this.SetMessage(string.Empty);
@@ -133,7 +151,22 @@ namespace MOBOT.BHL.AdminWeb
 
             // Refresh the grid
             this.SetMessage(updateMsg);
-            statusId = ddlStatusView.SelectedValue;
+            publishedOnly = chkPublished.Checked ? "1" : "0";
+            institutionCode = listInstitutions.SelectedValue;
+            statusId = GetStatusID();
+            startDate = Convert.ToDateTime(txtStartDate.Text);
+            endDate = Convert.ToDateTime(txtEndDate.Text);
+        }
+
+        private string GetStatusID()
+        {
+            string statusId = string.Format("{0}|{1}|{2}|{3}",
+                (chkPStatNew.Checked ? PAGINATIONSTATUS_NEW : ""),
+                (chkPStatIncomplete.Checked ? PAGINATIONSTATUS_INCOMPLETE : ""),
+                (chkPStatInProgress.Checked ? PAGINATIONSTATUS_INPROGRESS : ""),
+                (chkPStatComplete.Checked ? PAGINATIONSTATUS_COMPLETE : ""));
+
+            return statusId;
         }
 
         private const string PAGINATIONSTATUS_NONESELECTED = "0";
@@ -143,30 +176,20 @@ namespace MOBOT.BHL.AdminWeb
         private const string PAGINATIONSTATUS_COMPLETE = "30";
 
         /// <summary>
-        /// Add the appropriate items to the StatusChange dropdown, based on the status of the currently displayed items
+        /// Add the appropriate items to the StatusChange dropdown, based on the selected status checkboxes
         /// </summary>
-        /// <param name="selectedStatus"></param>
-        /// <param name="statuses"></param>
-        private void SetStatusChangeItems(string selectedStatus, ListItemCollection statuses)
+        private void SetStatusChangeItems()
         {
             ddlStatusChange.Items.Clear();
             spanStatusChange.Visible = false;
 
-            switch (selectedStatus)
+            if (chkPStatInProgress.Checked)
             {
-                case PAGINATIONSTATUS_NONESELECTED:
-                case PAGINATIONSTATUS_NEW:
-                case PAGINATIONSTATUS_INCOMPLETE:
-                case PAGINATIONSTATUS_COMPLETE:
-                default:
-                    break;
-                case PAGINATIONSTATUS_INPROGRESS:
-                    if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced)) // Only members of the BHL.Admin.SuperUser role can unlock items
-                    {
-                        spanStatusChange.Visible = true;
-                        ddlStatusChange.Items.Add(new ListItem(statuses.FindByValue(PAGINATIONSTATUS_INCOMPLETE).Text, PAGINATIONSTATUS_INCOMPLETE));
-                    }
-                    break;
+                if (Helper.IsUserAuthorized(new HttpRequestWrapper(Request), Helper.SecurityRole.BHLAdminUserAdvanced)) // Only members of the BHL.Admin.SuperUser role can unlock items
+                {
+                    spanStatusChange.Visible = true;
+                    ddlStatusChange.Items.Add(new ListItem("Incomplete", PAGINATIONSTATUS_INCOMPLETE));
+                }
             }
         }
 
@@ -179,10 +202,10 @@ namespace MOBOT.BHL.AdminWeb
             if (string.IsNullOrEmpty(startDate)) { startDate = "1/1/1980"; txtStartDate.Text = startDate; }
             if (string.IsNullOrEmpty(endDate)) { endDate = DateTime.Now.ToShortDateString(); txtEndDate.Text = endDate; }
 
-            isValid = !(ddlStatusView.SelectedValue == PAGINATIONSTATUS_NONESELECTED);
+            isValid = (chkPStatNew.Checked || chkPStatIncomplete.Checked || chkPStatInProgress.Checked || chkPStatComplete.Checked);
             if (!isValid)
             {
-                this.SetMessage("Select a status to display.");
+                this.SetMessage("Select at least one pagination status to display.");
             }
             else
             {

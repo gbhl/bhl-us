@@ -139,6 +139,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="gnfinder.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Remoting.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

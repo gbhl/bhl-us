@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Policy;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.DataObjects
@@ -15,6 +16,8 @@ namespace MOBOT.BHL.DataObjects
 		private string _name = string.Empty;
         private string _nameResolved = string.Empty;
 		private string _canonicalName = string.Empty;
+		private string _matchType = string.Empty;
+		private string _curation = string.Empty;
         private List<string> _identifiers = new List<string>();
 
 		#endregion
@@ -38,6 +41,18 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._canonicalName; }
 			set { this._canonicalName = value; }
 		}
+
+		public string MatchType
+        {
+			get { return this._matchType; }
+			set { this._matchType = value; }
+        }
+
+		public string Curation
+        {
+			get { return this._curation; }
+			set { this._curation = value; }
+        }
 
         public List<string> Identifiers
         {

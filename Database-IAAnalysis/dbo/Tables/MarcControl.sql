@@ -6,11 +6,12 @@
     [CreationDate]  DATETIME       CONSTRAINT [DF__MarcContr__Creat__29572725] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_MarcControl] PRIMARY KEY CLUSTERED ([MarcControlID] ASC),
     CONSTRAINT [FK_MarcControl_Item] FOREIGN KEY ([ItemID]) REFERENCES [dbo].[Item] ([ItemID])
-);
-
-
+)
+WITH (DATA_COMPRESSION = PAGE);
 GO
+
 CREATE NONCLUSTERED INDEX [IX_MarcControl_ItemID]
     ON [dbo].[MarcControl]([ItemID] ASC)
-    INCLUDE([MarcControlID]);
-
+    INCLUDE([MarcControlID])
+	WITH (DATA_COMPRESSION = PAGE);
+GO

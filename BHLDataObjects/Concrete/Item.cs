@@ -14,6 +14,7 @@ namespace MOBOT.BHL.DataObjects
         private string _bibliographicLevel;
         private string _partNumber;
         private string _partName;
+        private string _itemStatusName;
 		private string _paginationStatusName;
 		private string _paginationUserName;
 		private string _downloadUrl;
@@ -134,6 +135,11 @@ namespace MOBOT.BHL.DataObjects
             set { _partName = value; }
         }
 
+        public string ItemStatusName
+        {
+            get { return this._itemStatusName; }
+            set { this._itemStatusName = value; }
+        }
         public string PaginationStatusName
 		{
 			get { return this._paginationStatusName; }
@@ -402,6 +408,11 @@ namespace MOBOT.BHL.DataObjects
                     case "PartName":
                         {
                             _partName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "ItemStatusName":
+                        {
+                            _itemStatusName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
 					case "PaginationStatusName":

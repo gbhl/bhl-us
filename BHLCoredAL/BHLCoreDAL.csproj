@@ -83,6 +83,7 @@
     <Compile Include="AnnotationSubjectDAL.cs" />
     <Compile Include="Annotation_AnnotationConceptDAL.cs" />
     <Compile Include="APIKeyDAL.cs" />
+    <Compile Include="AspNetUserDAL.cs" />
     <Compile Include="AuthorDAL.cs" />
     <Compile Include="AuthorIdentifierDAL.cs" />
     <Compile Include="AuthorNameDAL.cs" />

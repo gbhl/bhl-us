@@ -2,6 +2,7 @@
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -26,7 +27,10 @@ namespace MOBOT.BHL.AdminWeb.Services
             String qsTitleID = context.Request.QueryString["titleID"] as String;
             String marcBibId = context.Request.QueryString["marcBibId"] as String;
 
-            String paginationStatusId = context.Request.QueryString["psid"] as String;
+            string published = context.Request.QueryString["pub"] as string;
+            int publishedOnly = Int32.MinValue;
+            string institutionCode = context.Request.QueryString["inst"] as string;
+            String paginationStatuses = context.Request.QueryString["psid"] as String;
             String startDate = context.Request.QueryString["sdate"] as String;
             String endDate = context.Request.QueryString["edate"] as String;
             String numRows = context.Request.QueryString["rows"] as String;
@@ -43,7 +47,8 @@ namespace MOBOT.BHL.AdminWeb.Services
 
             // Make sure paginationStatusId, startDate, endDate, numRows, and pageNum are valid values
             int verifyInt;
-            paginationStatusId = String.IsNullOrEmpty(paginationStatusId) ? "0" : (!Int32.TryParse(paginationStatusId, out verifyInt) ? "0" : paginationStatusId);
+            paginationStatuses = String.IsNullOrEmpty(paginationStatuses) ? "" : paginationStatuses;
+            if (!Int32.TryParse(published, out publishedOnly)) publishedOnly = 0;
             DateTime verifyDate;
             startDate = DateTime.TryParse(startDate, out verifyDate) ? startDate : "1/1/1980";
             endDate = DateTime.TryParse(endDate, out verifyDate) ? endDate : DateTime.Now.ToShortDateString();
@@ -78,7 +83,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                         sortColumn = String.IsNullOrEmpty(sortColumn) ? "ItemID" : sortColumn;
 
                         context.Response.ContentType = "text/xml";
-                        response = this.ItemPaginationReport(Convert.ToInt32(paginationStatusId), Convert.ToDateTime(startDate),
+                        response = this.ItemPaginationReport(publishedOnly, institutionCode, paginationStatuses, Convert.ToDateTime(startDate),
                             Convert.ToDateTime(endDate), Convert.ToInt32(numRows), Convert.ToInt32(pageNum), sortColumn, sortOrder);
                         break;
                     }
@@ -139,14 +144,22 @@ namespace MOBOT.BHL.AdminWeb.Services
             }
         }
 
-        private string ItemPaginationReport(
-            int paginationStatusId, DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
+        private string ItemPaginationReport(int publishedOnly, string institutionCode,
+            string paginationStatuses, DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             try
             {
                 StringBuilder response = new StringBuilder();
 
-                List<Item> items = new BHLProvider().ItemSelectPaginationReport(paginationStatusId,
+                DataTable statusIDs = new DataTable();
+                statusIDs.Columns.Add(new DataColumn("ID", typeof(int)));
+                string[] statuses = paginationStatuses.Split('|');
+                foreach (string status in statuses)
+                {
+                    if (!string.IsNullOrWhiteSpace(status)) statusIDs.Rows.Add(Convert.ToInt32(status));
+                }
+
+                List<Item> items = new BHLProvider().ItemSelectPaginationReport(publishedOnly, institutionCode, statusIDs,
                     startDate, endDate, numRows, pageNum, sortColumn, sortOrder);
 
                 if (items.Count > 0)
@@ -172,6 +185,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                         response.Append("<cell> <![CDATA[<a title=\"Item Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
                         response.Append("<cell> <![CDATA[" + item.Volume + "]]> </cell>");
                         response.Append("<cell> " + item.Year + " </cell>");
+                        response.Append("<cell> <![CDATA[" + item.ItemStatusName + "]]> </cell>");
                         response.Append("<cell> " + item.ScanningDate.ToString() + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.InstitutionStrings[0] + "]]> </cell>");
                         response.Append("<cell> " + item.PaginationStatusName  + " </cell>");

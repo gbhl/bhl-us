@@ -1,6 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[ItemSelectPaginationReport]
 
-@PaginationStatusID int = 20,
+@PublishedOnly int = 0,
+@Institutioncode nvarchar(10) = '',
+@StatusIDList AS dbo.IDListInt READONLY,
 @StartDate datetime = '1/1/1980',
 @EndDate datetime = '12/31/2099',
 @NumRows int = 100,
@@ -25,6 +27,7 @@ CREATE TABLE #Step1
 	BarCode nvarchar(50) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
 	[Year] nvarchar(20) NOT NULL,
+	ItemStatusName nvarchar(50) NOT NULL,
 	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
@@ -42,12 +45,14 @@ SELECT	i.PrimaryTitleID,
 		i.BarCode,
 		ISNULL(i.Volume, '') AS Volume,
 		ISNULL(i.[Year], '') AS [Year],
+		s.ItemStatusName,
 		i.ScanningDate,
 		inst.InstitutionName,
 		ISNULL(i.PaginationStatusDate, i.CreationDate) AS PaginationStatusDate,
 		ISNULL(u.LastName + ', ' + u.FirstName, '') AS PaginationUserName,
 		ps.PaginationStatusName
 FROM	dbo.Item i
+		INNER JOIN @StatusIDList list ON i.PaginationStatusID = list.ID
 		INNER JOIN dbo.Title t ON i.PrimaryTitleID = t.TitleID
 		LEFT JOIN dbo.BibliographicLevel b on t.BibliographicLevelID = b.BibliographicLevelID
 		INNER JOIN dbo.PaginationStatus ps ON ps.PaginationStatusID = i.PaginationStatusID
@@ -55,7 +60,9 @@ FROM	dbo.Item i
 		LEFT JOIN dbo.ItemInstitution ii ON i.ItemID = ii.ItemID
 		LEFT JOIN dbo.InstitutionRole r ON ii.InstitutionRoleID = r.InstitutionRoleID 
 		LEFT JOIN dbo.Institution inst ON ii.InstitutionCode = inst.InstitutionCode
-WHERE	(i.PaginationStatusID = @PaginationStatusID OR @PaginationStatusID = 0)
+		INNER JOIN dbo.ItemStatus s ON i.ItemStatusID = s.ItemStatusID
+WHERE	(@PublishedOnly <> 1 OR i.ItemStatusID = 40)
+AND		(ii.InstitutionCode = @InstitutionCode OR @InstitutionCode = '')
 AND		(r.InstitutionRoleName = 'Holding Institution' OR r.InstitutionRoleName IS NULL)
 AND		ISNULL(i.PaginationStatusDate, i.CreationDate) BETWEEN @StartDate AND @EndDate
 
@@ -70,6 +77,7 @@ CREATE TABLE #Step2
 	BarCode nvarchar(50) NOT NULL,
 	Volume nvarchar(100) NOT NULL,
 	[Year] nvarchar(20) NOT NULL,
+	ItemStatusName nvarchar(50) NOT NULL,
 	ScanningDate datetime NULL,
 	InstitutionName nvarchar(255) NOT NULL,
 	PaginationStatusDate datetime NOT NULL,
@@ -94,6 +102,7 @@ SELECT TOP (@NumRows)
 		BarCode,
 		Volume,
 		[Year],
+		ItemStatusName,
 		ScanningDate,
 		InstitutionName AS ContributorTextString,
 		PaginationStatusName,

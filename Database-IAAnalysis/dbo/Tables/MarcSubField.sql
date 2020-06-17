@@ -6,17 +6,18 @@
     [CreationDate]    DATETIME       CONSTRAINT [DF__MarcSubFi__Creat__3D5E1FD2] DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_MarcSubField] PRIMARY KEY CLUSTERED ([MarcSubFieldID] ASC),
     CONSTRAINT [FK_MarcSubField_MarcDataField] FOREIGN KEY ([MarcDataFieldID]) REFERENCES [dbo].[MarcDataField] ([MarcDataFieldID]) ON DELETE CASCADE
-);
-
-
+)
+WITH (DATA_COMPRESSION = PAGE);
 GO
+
 CREATE NONCLUSTERED INDEX [IX_MarcSubField_CodeValue]
     ON [dbo].[MarcSubField]([Code] ASC, [Value] ASC)
-    INCLUDE([MarcDataFieldID], [MarcSubFieldID]);
-
-
+    INCLUDE([MarcDataFieldID], [MarcSubFieldID])
+	WITH (DATA_COMPRESSION = PAGE);
 GO
+
 CREATE NONCLUSTERED INDEX [IX_MarcSubField_MarcDataFieldID]
     ON [dbo].[MarcSubField]([MarcDataFieldID] ASC)
-    INCLUDE([MarcSubFieldID], [Code], [Value]);
-
+    INCLUDE([MarcSubFieldID], [Code], [Value])
+	WITH (DATA_COMPRESSION = PAGE);
+GO

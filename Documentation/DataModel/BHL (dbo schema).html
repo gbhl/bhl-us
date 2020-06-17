@@ -155,10 +155,22 @@
 <a href="#Identifier">Identifier</a>
 </li>
 <li>
+<a href="#IdentifierIDType">IdentifierIDType</a>
+</li>
+<li>
+<a href="#IDType">IDType</a>
+</li>
+<li>
 <a href="#IndicatedPage">IndicatedPage</a>
 </li>
 <li>
 <a href="#Institution">Institution</a>
+</li>
+<li>
+<a href="#InstitutionGroup">InstitutionGroup</a>
+</li>
+<li>
+<a href="#InstitutionGroupInstitution">InstitutionGroupInstitution</a>
 </li>
 <li>
 <a href="#InstitutionRole">InstitutionRole</a>
@@ -234,6 +246,9 @@
 </li>
 <li>
 <a href="#NameSource">NameSource</a>
+</li>
+<li>
+<a href="#NameSourceGNFinder">NameSourceGNFinder</a>
 </li>
 <li>
 <a href="#NoteType">NoteType</a>
@@ -1241,6 +1256,95 @@
 <a href="#NameIdentifier">NameIdentifier</a> referencing (IdentifierID)</li>
 <li>
 <a href="#SegmentIdentifier">SegmentIdentifier</a> referencing (IdentifierID)</li>
+<li>
+<a href="#IdentifierIDType">IdentifierIDType</a> referencing (IdentifierID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>IdentifierIDType<a name="IdentifierIDType"></a>
+</h1>
+<h2>
+      (Physical Name: IdentifierIDType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierIDTypeID (PK)</td><td class="tdTableDefinition">IdentifierIDTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierID
+                &nbsp;(<a href="#Identifier">FK</a>)
+              </td><td class="tdTableDefinition">IdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IDTypeID
+                &nbsp;(<a href="#IDType">FK</a>)
+              </td><td class="tdTableDefinition">IDTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Identifier">Identifier</a> through (IdentifierID)</li>
+<li>
+<a href="#IDType">IDType</a> through (IDTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>IDType<a name="IDType"></a>
+</h1>
+<h2>
+      (Physical Name: IDType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IDTypeID (PK)</td><td class="tdTableDefinition">IDTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IDTypeName</td><td class="tdTableDefinition">IDTypeName</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#IdentifierIDType">IdentifierIDType</a> referencing (IDTypeID)</li>
 </ul>
 </div>
 </div>
@@ -1343,6 +1447,92 @@
 <a href="#ItemInstitution">ItemInstitution</a> referencing (InstitutionCode)</li>
 <li>
 <a href="#SegmentInstitution">SegmentInstitution</a> referencing (InstitutionCode)</li>
+<li>
+<a href="#InstitutionGroupInstitution">InstitutionGroupInstitution</a> referencing (InstitutionCode)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>InstitutionGroup<a name="InstitutionGroup"></a>
+</h1>
+<h2>
+      (Physical Name: InstitutionGroup)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionGroupID (PK)</td><td class="tdTableDefinition">InstitutionGroupID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionGroupName</td><td class="tdTableDefinition">InstitutionGroupName</td><td class="tdTableDefinition">NVARCHAR(300)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionGroupDescription</td><td class="tdTableDefinition">InstitutionGroupDescription</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#InstitutionGroupInstitution">InstitutionGroupInstitution</a> referencing (InstitutionGroupID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>InstitutionGroupInstitution<a name="InstitutionGroupInstitution"></a>
+</h1>
+<h2>
+      (Physical Name: InstitutionGroupInstitution)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionGroupInstitutionID (PK)</td><td class="tdTableDefinition">InstitutionGroupInstitutionID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionGroupID
+                &nbsp;(<a href="#InstitutionGroup">FK</a>)
+              </td><td class="tdTableDefinition">InstitutionGroupID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">InstitutionCode
+                &nbsp;(<a href="#Institution">FK</a>)
+              </td><td class="tdTableDefinition">InstitutionCode</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Institution">Institution</a> through (InstitutionCode)</li>
+<li>
+<a href="#InstitutionGroup">InstitutionGroup</a> through (InstitutionGroupID)</li>
 </ul>
 </div>
 </div>
@@ -1608,6 +1798,8 @@
 <a href="#PDF">PDF</a> referencing (ItemID)</li>
 <li>
 <a href="#Page">Page</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemInstitution">ItemInstitution</a> referencing (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -1666,7 +1858,9 @@
 <td class="tdTableDefinition">ItemInstitutionID (PK)</td><td class="tdTableDefinition">ItemInstitutionID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">InstitutionCode
@@ -1698,6 +1892,8 @@
 <a href="#InstitutionRole">InstitutionRole</a> through (InstitutionRoleID)</li>
 <li>
 <a href="#Institution">Institution</a> through (InstitutionCode)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -2624,6 +2820,30 @@
 <a href="#NameSegment">NameSegment</a> referencing (NameSourceID)</li>
 </ul>
 </div>
+</div>
+<div class="tableNameHeading">
+<h1>NameSourceGNFinder<a name="NameSourceGNFinder"></a>
+</h1>
+<h2>
+      (Physical Name: NameSourceGNFinder)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">DataSourceID (PK)</td><td class="tdTableDefinition">DataSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">GNDataSourceName</td><td class="tdTableDefinition">GNDataSourceName</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BHLIdentifierID</td><td class="tdTableDefinition">BHLIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references"></div>
 </div>
 <div class="tableNameHeading">
 <h1>NoteType<a name="NoteType"></a>

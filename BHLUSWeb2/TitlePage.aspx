@@ -246,21 +246,6 @@
                             <div>
                                 <div class="sibResultsHeader">Results For:  <span id="sibTextEcho"></span> <span id="sibNumResults"></span></div>
                             </div>
-
-                            <!-- facets -->
-                            <!--
-                            <div class="sibFacetContainer">
-                                <div class="sibFacetBox">
-                                    <div class="sibFacetHeader">Narrow Search By:</div>
-                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Type</div>
-                                    <div class="sibFacetValues"><input type="checkbox" /> Text (38) <input type="checkbox" /> Illustration (5) <input type="checkbox" /> Drawing (4) <input type="checkbox" /> Cover (2)</div>
-                                    <hr />
-                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Name</div>
-                                    <div class="sibFacetValues"><input type="checkbox" /> Mollusca (7) <input type="checkbox" /> Lepidoptera (4) <input type="checkbox" /> Brachiopoda (3) <input type="checkbox" /> Astraea (2)</div>
-                                </div>
-                            </div>
-                            -->
-
                             <div class="sibResultsContainer">
                                 <div class="sibResultsBox">
                                  </div>
@@ -493,7 +478,6 @@
         var isModalDialogChange;
         var cancelPdfSelection = false;
         var newpageOCR = $("#pageOCR-panel");
-        //var newpageReaderComments = $("#pageReaderComments-panelInner");
         var pageNames = $("#names-panel");
 
         // On Hide Action for Dialogs
@@ -707,12 +691,7 @@
                                     'text': name.ResolvedNameString
                                 })).appendTo(pageNames);
 
-                            //if(name.EOLID > 0) {
-                            //    ubioLink.append(
-                            //        " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
-                            //}
-
-                            ubioLink.append("<a href='' class='lnkNameDetails' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px.png' style='margin-left:3px;top:1px;position:relative;' /></a>");
+                            ubioLink.append("<a href='' class='brlnkNameSources' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px_arrow.png' /></a>");
                         });
                     } else {
                         pageNames.empty();
@@ -805,7 +784,6 @@
             onHide: onHideAction
         });
         $(".buttondrop.download").click(function(){
-            // $(".downloadcontents").slideToggle("fast"); 
             if ($(".downloadcontents").css("display") == "block") {
                 $(".downloadcontents").slideUp("fast"); 
             } else {
@@ -813,11 +791,8 @@
             }
             
             $(document).mouseup(function (e){
-                var container = $(".downloadcontents");
-                //if (container.has(e.target).length === 0) {
-                    $(".downloadcontents").slideUp("fast"); 
-                    $(document).unbind("mouseup");
-                //}
+                $(".downloadcontents").slideUp("fast"); 
+                $(document).unbind("mouseup");
             });
         });
         $(".selectpages").click(function(){
@@ -936,7 +911,6 @@
         // Binder for "Show More" link
         $(document).delegate(".showmore a", "click", function() {
             var leftPanelHeight = $("#left-panel2").height();
-            var tocHeight = $("#lstPages").height();
             var newHeight = leftPanelHeight;
             var showMore = ($(this).html() === "Show More");
 
@@ -975,7 +949,6 @@
                 $.each(pdfPages, function(index, pdfPageIndex) { 
                     var pdfPage;
                     var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).click(function() {
-                        //$('#ptb' + pdfPageIndex).trigger(pageToolBoxEvent);
                         pdfPageCount = pdfPages.remove(index);
                         $('#ptb' + pdfPageIndex).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
                         lastPdfIndex = -1;
@@ -1364,7 +1337,7 @@
             pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
                 if(pdfPageCount <= 0) {
                     pdfCounter.text('No Pages Added');
-                    pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
+                    pdfBar.removeClass('active').addClass('disabled');
                 } else if(pdfPageCount == 1) {
                     pdfCounter.text(pdfPageCount + ' Page Added');
                     pdfReviewCounter.text(pdfPageCount + ' Page');
@@ -1568,46 +1541,113 @@
 
     });
 
+    // ---- Name Sources Popup (start) ------
+    function hideNameSourceList(e) {
+        var nameSourcePopup = $(".brNameSourcePopup");
+        if (!nameSourcePopup.is(e.target) // if the target of the click isn't the container...
+            && (nameSourcePopup.has(e.target).length === 0) // ... nor a descendant of the container
+            && (e.target != nameSourcePopup.get(0))) // nor the scrollbar
+        {
+            nameSourcePopup.hide();
+            unbindClickOutsideTrigger();
+        }
+    }
+
+    function unbindClickOutsideTrigger() {
+        document.removeEventListener("mouseup", hideNameSourceList, false);
+    }
+    function bindClickOutsideTrigger() {
+        document.addEventListener("mouseup", hideNameSourceList, false);
+    }
+
     function showNameSources(e, lnk) {
         e.stopPropagation();
         e.preventDefault();
-        var resolvedName = $(lnk).attr('data-resolved-name');
+
+        if (document.getElementsByClassName('brNameSourcePopup').length === 0) createBRNameSourcePopup();
+
+        var resolvedName = lnk.getAttribute('data-resolved-name');
+        document.getElementsByClassName('brNameSourceLabel')[0].innerText = "Sources For " + resolvedName;
+
+        var nameSourceList = document.getElementsByClassName('brNameSourceList')[0];
+        while (nameSourceList.firstChild) {
+            nameSourceList.removeChild(nameSourceList.firstChild);
+        }
 
         $.ajax({
             type: 'get',
-            //url: 'http://resolver.globalnames.org/name_resolvers.json',
             url: 'http://localhost:49275/service/getnamedatasources',
             data: {
-                //'names': resolvedName
                 'name': resolvedName
             },
             success: function (data, textStatus, jqXHR) {
                 if (data.length > 0) {
-                //if (data.status === "success") {
-                    console.log(data);
-                    /*
-                    data.data.forEach(dataElement =>
-                        dataElement.results.forEach(element =>
-                            console.log(element.canonical_form + ' (' + element.data_source_title + ':' + (element.local_id ? element.local_id : element.taxon_id) + ') ' + element.url)));
-                    */
                     data.forEach(element =>
-                        console.log(element.NameString + ' (' + element.DataSourceTitle + ':' + (element.LocalID ? element.LocalID : element.TaxonID) + ') ' + element.Url));
+                        {
+                        //console.log(element.NameString + ' (' + element.DataSourceTitle + ':' + (element.LocalID ? element.LocalID : element.TaxonID) + ') ' + element.Url)
+                        var nameSource;
+                        if (element.Url.length > 0) {
+                            nameSource = document.createElement('a');
+                            nameSource.setAttribute('href', element.Url);
+                            nameSource.setAttribute('target', '_blank');
+                            nameSource.setAttribute('rel', 'noopener noreferrer');
+                            nameSource.innerText = element.DataSourceTitle + ' (' + element.NameString + ')';
+                        }
+                        else {
+                            nameSource = document.createTextNode(element.DataSourceTitle + ' (' + element.NameString + ')');
+                        }
+                        addBRNameSourceName(nameSource, nameSourceList);
+                        }
+                    );
 
-                    alert('Information found for ' + resolvedName + '.  Check the console for details.');
+                    showBRNameSourcePopup(lnk, data.length);
+                    bindClickOutsideTrigger();
                 } else {
-                    alert('No infomation found for ' + resolvedName);
+                    addBRNameSourceName(document.createTextNode('No sources found'), nameSourceList);
+                    showBRNameSourcePopup(lnk, 1);
+                    bindClickOutsideTrigger();
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('Error getting information for ' + resolvedName);
+                addBRNameSourceName(document.createTextNode('Error getting sources'), nameSourceList);
+                showBRNameSourcePopup(lnk, 1);
+                bindClickOutsideTrigger();
             }
         });
     }
 
+    function createBRNameSourcePopup() {
+        var nameSourcePopup = document.createElement('div');
+        nameSourcePopup.setAttribute('class', 'brNameSourcePopup');
+
+        var nameSourceLabel = document.createElement('div');
+        nameSourceLabel.setAttribute('class', 'brNameSourceLabel');
+        nameSourcePopup.appendChild(nameSourceLabel);
+
+        var nameSourceList = document.createElement('div');
+        nameSourceList.setAttribute('class', 'brNameSourceList');
+        nameSourcePopup.appendChild(nameSourceList);
+
+        document.body.appendChild(nameSourcePopup);
+    }
+
+    function addBRNameSourceName(element, list) {
+        var nameDiv = document.createElement('div');
+        nameDiv.setAttribute('class', 'brNameSourceName');
+        nameDiv.appendChild(element);
+        list.appendChild(nameDiv);
+    }
+
+    function showBRNameSourcePopup(anchor, dataLength) {
+        var nameSourcePopup = document.getElementsByClassName('brNameSourcePopup')[0];
+        nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY - ((dataLength > 25 ? 240 : dataLength * 15))) + 'px';
+        nameSourcePopup.style.left = anchor.getBoundingClientRect().left + window.scrollX + anchor.offsetWidth + 'px';
+        nameSourcePopup.style.position = 'absolute';
+        nameSourcePopup.style.display = 'inline';
+    }
+    // ---- Name Sources Popup (end) ------
+
     $(window).bind('resize', this, function (e) {
-        //var rightPanelHeight = $("#right-panel2").height();
-        //var pageOCRHeaderHeight = $("#pageOCR-panel .header").height();
-        //var pageReaderCommentsHeaderHeight = $("#pageReaderComments-panel .header").height();
         updateUIHeights(); 
     });
 
@@ -1615,8 +1655,6 @@
         var leftPanelHeight = $("#left-panel2").height();
         var pagesPanel = $("#lstPages").outerHeight();
         var namesPanel = $("#names-panel").outerHeight();
-        //var topLeftPanelHeight = $("#left-panel2 .left-panel-boxes:first-child").outerHeight();
-        //var bottomLeftPanelHeight = $("#left-panel2 .left-panel-boxes:last-child").outerHeight();
 
         var topTotalHeight = 0; 
         $("#left-panel2 .left-panel-boxes:first-child").children().each(function(){
@@ -1630,15 +1668,11 @@
         });
         bottomTotalHeight = bottomTotalHeight-namesPanel;
 
-        var lphh = (leftPanelHeight)/4;  // -topLeftPanelHeight-bottomLeftPanelHeight
-        //var lcpd = (topTotalHeight - bottomTotalHeight)/2; 
+        var lphh = (leftPanelHeight)/4;
 
         if (leftPanelHeight < 720) {
             topTotalHeight = 0;
             bottomTotalHeight = 0; 
-        } else {
-            //topTotalHeight += 10;
-            //bottomTotalHeight += 10; 
         }
 
         if (topTotalHeight >= bottomTotalHeight) {
@@ -1755,7 +1789,6 @@
 
     //initialize annotation box
     var $_AnnotationBox = $('#AnnotationBox'),
-        //$_toggleAnnotationBox = $('#AnnotationBox #toggleAnnotationBox'),
         $_hide_annotations = $('#AnnotationBox #hide-annotations'),
         $_stub = $('#AnnotationBox #stub'),
         $_show_annotations = $('#AnnotationBox #show-annotations'),
