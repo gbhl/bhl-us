@@ -1473,5 +1473,9 @@
     <None Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionGroupSelectAll.sql" />
     <Build Include="dbo\Stored Procedures\ItemResetPaginationLock.sql" />
+    <Build Include="dbo\Stored Procedures\NameSourceGNFinderDeleteAuto.sql" />
+    <Build Include="dbo\Stored Procedures\NameSourceGNFinderInsertAuto.sql" />
+    <Build Include="dbo\Stored Procedures\NameSourceGNFinderSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\NameSourceGNFinderUpdateAuto.sql" />
   </ItemGroup>
 </Project>

@@ -131,6 +131,7 @@
     <Compile Include="Concrete\NameResolved.cs" />
     <Compile Include="Concrete\NameSegment.cs" />
     <Compile Include="Concrete\NameSource.cs" />
+    <Compile Include="Concrete\NameSourceGNFinder.cs" />
     <Compile Include="Concrete\NoteType.cs" />
     <Compile Include="Concrete\OAIIdentifier.cs" />
     <Compile Include="Concrete\OpenUrlCitation.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Generated\__NameResolved.cs" />
     <Compile Include="Generated\__NameSegment.cs" />
     <Compile Include="Generated\__NameSource.cs" />
+    <Compile Include="Generated\__NameSourceGNFinder.cs" />
     <Compile Include="Generated\__NoteType.cs" />
     <Compile Include="Generated\__PageAnnotation.cs" />
     <Compile Include="Generated\__PageFlickr.cs" />

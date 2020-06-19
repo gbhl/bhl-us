@@ -148,6 +148,7 @@
     <Compile Include="Generated\NameResolvedDAL.Auto.cs" />
     <Compile Include="Generated\NameSegmentDAL.Auto.cs" />
     <Compile Include="Generated\NameSourceDAL.Auto.cs" />
+    <Compile Include="Generated\NameSourceGNFinderDAL.Auto.cs" />
     <Compile Include="Generated\NoteTypeDAL.Auto.cs" />
     <Compile Include="Generated\PageAnnotationDAL.Auto.cs" />
     <Compile Include="Generated\PageFlickrDAL.Auto.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="NameResolvedDAL.cs" />
     <Compile Include="NameSegmentDAL.cs" />
     <Compile Include="NameSourceDAL.cs" />
+    <Compile Include="NameSourceGNFinderDAL.cs" />
     <Compile Include="NoteTypeDAL.cs" />
     <Compile Include="OAIIdentifierDAL.cs" />
     <Compile Include="OpenUrlCitationDAL.cs" />

@@ -789,6 +789,28 @@ namespace MOBOT.BHL.Server
                 throw;
             }
 
+            // Update name details with name source metadata from database
+            if (nameDetails.Count > 0)
+            {
+                List<NameSourceGNFinder> nameSources = new BHLProvider().NameSourceGNFinderSelectAll();
+
+                foreach(GNResolverResponse nameDetail in nameDetails)
+                {
+                    NameSourceGNFinder nameSource = nameSources.Find(delegate(NameSourceGNFinder x) { return x.DataSourceID == nameDetail.DataSourceID; });
+                    if (nameSource != null)
+                    {
+                        nameDetail.DataSourceTitle = nameSource.GNDataSourceLabel;
+                        if (nameSource.GNDataSourceURLFormat == null) nameDetail.Url = string.Empty;
+                        if (!string.IsNullOrWhiteSpace(nameSource.GNDataSourceURLFormat))
+                        {
+                            nameDetail.Url = string.Format(nameSource.GNDataSourceURLFormat,
+                                !string.IsNullOrWhiteSpace(nameDetail.LocalID) ? nameDetail.LocalID : nameDetail.TaxonID
+                                );
+                        }
+                    }
+                }
+            }
+
             return nameDetails;
         }
 
