@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="BHLProvider.AnnotatedPageType.cs" />
     <Compile Include="BHLProvider.Annotation.cs" />
+    <Compile Include="BHLProvider.ApplicationCache.cs" />
     <Compile Include="BHLProvider.AspNetUser.cs" />
     <Compile Include="BHLProvider.Author.cs" />
     <Compile Include="BHLProvider.AuthorRole.cs" />

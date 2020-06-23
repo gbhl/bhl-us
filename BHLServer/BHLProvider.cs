@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using MOBOT.FileAccess;
 using System.Web.ModelBinding;
 using System.Web.Hosting;
+using Newtonsoft.Json.Schema;
 
 namespace MOBOT.BHL.Server
 {
@@ -707,19 +708,31 @@ namespace MOBOT.BHL.Server
 
             try
             {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
-                req.Method = "GET";
-                req.Timeout = 60000;
-
                 JObject jsonResponse = null;
-                using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                string cacheKey = string.Format("NameSource-{0}", name);
+
+                string json = ApplicationCacheGet(cacheKey);
+                if (json == null)
                 {
-                    using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                    HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
+                    req.Method = "GET";
+                    req.Timeout = 60000;
+
+                    using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
                     {
-                        jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                        {
+                            jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        }
                     }
+
+                    ApplicationCacheAdd(cacheKey, jsonResponse.ToString(), expiration: DateTime.Now.AddDays(7));
+                    req = null;
                 }
-                req = null;
+                else
+                {
+                    jsonResponse = JObject.Parse(json);
+                }
 
                 // Did the service successfully evaluate the name?
                 string status = (string)jsonResponse.SelectToken("status");

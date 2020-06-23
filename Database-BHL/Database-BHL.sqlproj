@@ -1137,6 +1137,7 @@
     <None Include="dbo\Tables\NameSourceGNFinder.sql" />
     <None Include="dbo\Stored Procedures\IdentifierSelectByGNFinderDataSource.sql" />
     <None Include="Data\dbo.NameSourceGNfinder.Table.sql" />
+    <None Include="dbo\Stored Procedures\ApplicationCacheSelectByKey.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1473,9 +1474,14 @@
     <None Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionGroupSelectAll.sql" />
     <Build Include="dbo\Stored Procedures\ItemResetPaginationLock.sql" />
-    <Build Include="dbo\Stored Procedures\NameSourceGNFinderDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\NameSourceGNFinderInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\NameSourceGNFinderSelectAll.sql" />
-    <Build Include="dbo\Stored Procedures\NameSourceGNFinderUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\NameSourceGNFinderDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\NameSourceGNFinderInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\NameSourceGNFinderSelectAll.sql" />
+    <None Include="dbo\Stored Procedures\NameSourceGNFinderUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ApplicationCacheDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ApplicationCacheInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ApplicationCacheSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ApplicationCacheUpdateAuto.sql" />
+    <None Include="dbo\Tables\ApplicationCache.sql" />
   </ItemGroup>
 </Project>

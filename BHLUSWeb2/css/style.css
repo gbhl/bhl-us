@@ -2686,41 +2686,6 @@ section .column3 {
     padding-left: 10px;
 }
 
-/* Name Source Popup in book reader */
-.brlnkNameSources {
-    margin-left: 3px;
-    top: 1px;
-    position: relative;
-}
-
-.brNameSourcePopup {
-    color: #000000;
-    display: none;
-    padding: 3px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #3e3d3d;
-    background-color: #ebedcc;
-    max-height: 250px;
-    overflow: auto;
-    position: absolute;
-}
-
-.brNameSourceLabel {
-    text-transform: uppercase;
-    margin-bottom: 5px;
-}
-
-.brNameSourceList {
-
-}
-
-.brNameSourceName {
-    font-family:Georgia;
-    font-size:11px;
-    margin-bottom:2px;
-}
-
 /** START SELECT styles **/
 #content section.search select, #content section .form select {
     padding: 5px;

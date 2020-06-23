@@ -83,6 +83,7 @@
     <Compile Include="AnnotationSubjectDAL.cs" />
     <Compile Include="Annotation_AnnotationConceptDAL.cs" />
     <Compile Include="APIKeyDAL.cs" />
+    <Compile Include="ApplicationCacheDAL.cs" />
     <Compile Include="AspNetUserDAL.cs" />
     <Compile Include="AuthorDAL.cs" />
     <Compile Include="AuthorIdentifierDAL.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Generated\AnnotationSubjectDAL.Auto.cs" />
     <Compile Include="Generated\Annotation_AnnotationConceptDAL.Auto.cs" />
     <Compile Include="Generated\APIKeyDAL.Auto.cs" />
+    <Compile Include="Generated\ApplicationCacheDAL.Auto.cs" />
     <Compile Include="Generated\AuthorDAL.Auto.cs" />
     <Compile Include="Generated\AuthorIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\AuthorNameDAL.Auto.cs" />

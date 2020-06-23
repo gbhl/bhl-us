@@ -85,6 +85,7 @@
     <Compile Include="Concrete\AnnotationSubjectCategory.cs" />
     <Compile Include="Concrete\Annotation_AnnotationConcept.cs" />
     <Compile Include="Concrete\APIKey.cs" />
+    <Compile Include="Concrete\ApplicationCache.cs" />
     <Compile Include="Concrete\Author.cs" />
     <Compile Include="Concrete\AuthorIdentifier.cs" />
     <Compile Include="Concrete\AuthorName.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Generated\__AnnotationSubjectCategory.cs" />
     <Compile Include="Generated\__Annotation_AnnotationConcept.cs" />
     <Compile Include="Generated\__APIKey.cs" />
+    <Compile Include="Generated\__ApplicationCache.cs" />
     <Compile Include="Generated\__Author.cs" />
     <Compile Include="Generated\__AuthorIdentifier.cs" />
     <Compile Include="Generated\__AuthorName.cs" />

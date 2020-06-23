@@ -1,0 +1,40 @@
+﻿.brlnkNameSources {
+    margin-left: 3px;
+    top: 1px;
+    position: relative;
+}
+
+.brNameSourcePopup {
+    color: #000000;
+    display: none;
+    padding: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3e3d3d;
+    background-color: #ebedcc;
+    max-height: 250px;
+    min-width:250px;
+    max-width:400px;
+    overflow: auto;
+    position: absolute;
+}
+
+.brNameSourceLabel {
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    float:left;
+}
+
+.brNameSourceClose {
+    float:right;
+}
+
+.brNameSourceList {
+    clear:left;
+}
+
+.brNameSourceName {
+    font-family: Georgia;
+    font-size: 11px;
+    margin-bottom: 2px;
+}

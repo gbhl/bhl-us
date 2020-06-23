@@ -409,6 +409,7 @@
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=7" />
+    <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -424,6 +425,7 @@
 <script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
 <script src="/js/libs/dragscrollable.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
+<script src="/js/nspop.js?v=1" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -691,7 +693,7 @@
                                     'text': name.ResolvedNameString
                                 })).appendTo(pageNames);
 
-                            ubioLink.append("<a href='' class='brlnkNameSources' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px_arrow.png' /></a>");
+                            ubioLink.append("<a href='#' class='brlnkNameSources' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px_arrow.png' /></a>");
                         });
                     } else {
                         pageNames.empty();
@@ -1540,112 +1542,6 @@
         });
 
     });
-
-    // ---- Name Sources Popup (start) ------
-    function hideNameSourceList(e) {
-        var nameSourcePopup = $(".brNameSourcePopup");
-        if (!nameSourcePopup.is(e.target) // if the target of the click isn't the container...
-            && (nameSourcePopup.has(e.target).length === 0) // ... nor a descendant of the container
-            && (e.target != nameSourcePopup.get(0))) // nor the scrollbar
-        {
-            nameSourcePopup.hide();
-            unbindClickOutsideTrigger();
-        }
-    }
-
-    function unbindClickOutsideTrigger() {
-        document.removeEventListener("mouseup", hideNameSourceList, false);
-    }
-    function bindClickOutsideTrigger() {
-        document.addEventListener("mouseup", hideNameSourceList, false);
-    }
-
-    function showNameSources(e, lnk) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (document.getElementsByClassName('brNameSourcePopup').length === 0) createBRNameSourcePopup();
-
-        var resolvedName = lnk.getAttribute('data-resolved-name');
-        document.getElementsByClassName('brNameSourceLabel')[0].innerText = "Sources For " + resolvedName;
-
-        var nameSourceList = document.getElementsByClassName('brNameSourceList')[0];
-        while (nameSourceList.firstChild) {
-            nameSourceList.removeChild(nameSourceList.firstChild);
-        }
-
-        $.ajax({
-            type: 'get',
-            url: 'http://localhost:49275/service/getnamedatasources',
-            data: {
-                'name': resolvedName
-            },
-            success: function (data, textStatus, jqXHR) {
-                if (data.length > 0) {
-                    data.forEach(element =>
-                        {
-                        //console.log(element.NameString + ' (' + element.DataSourceTitle + ':' + (element.LocalID ? element.LocalID : element.TaxonID) + ') ' + element.Url)
-                        var nameSource;
-                        if (element.Url.length > 0) {
-                            nameSource = document.createElement('a');
-                            nameSource.setAttribute('href', element.Url);
-                            nameSource.setAttribute('target', '_blank');
-                            nameSource.setAttribute('rel', 'noopener noreferrer');
-                            nameSource.innerText = element.DataSourceTitle + ' (' + element.NameString + ')';
-                        }
-                        else {
-                            nameSource = document.createTextNode(element.DataSourceTitle + ' (' + element.NameString + ')');
-                        }
-                        addBRNameSourceName(nameSource, nameSourceList);
-                        }
-                    );
-
-                    showBRNameSourcePopup(lnk, data.length);
-                    bindClickOutsideTrigger();
-                } else {
-                    addBRNameSourceName(document.createTextNode('No sources found'), nameSourceList);
-                    showBRNameSourcePopup(lnk, 1);
-                    bindClickOutsideTrigger();
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                addBRNameSourceName(document.createTextNode('Error getting sources'), nameSourceList);
-                showBRNameSourcePopup(lnk, 1);
-                bindClickOutsideTrigger();
-            }
-        });
-    }
-
-    function createBRNameSourcePopup() {
-        var nameSourcePopup = document.createElement('div');
-        nameSourcePopup.setAttribute('class', 'brNameSourcePopup');
-
-        var nameSourceLabel = document.createElement('div');
-        nameSourceLabel.setAttribute('class', 'brNameSourceLabel');
-        nameSourcePopup.appendChild(nameSourceLabel);
-
-        var nameSourceList = document.createElement('div');
-        nameSourceList.setAttribute('class', 'brNameSourceList');
-        nameSourcePopup.appendChild(nameSourceList);
-
-        document.body.appendChild(nameSourcePopup);
-    }
-
-    function addBRNameSourceName(element, list) {
-        var nameDiv = document.createElement('div');
-        nameDiv.setAttribute('class', 'brNameSourceName');
-        nameDiv.appendChild(element);
-        list.appendChild(nameDiv);
-    }
-
-    function showBRNameSourcePopup(anchor, dataLength) {
-        var nameSourcePopup = document.getElementsByClassName('brNameSourcePopup')[0];
-        nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY - ((dataLength > 25 ? 240 : dataLength * 15))) + 'px';
-        nameSourcePopup.style.left = anchor.getBoundingClientRect().left + window.scrollX + anchor.offsetWidth + 'px';
-        nameSourcePopup.style.position = 'absolute';
-        nameSourcePopup.style.display = 'inline';
-    }
-    // ---- Name Sources Popup (end) ------
 
     $(window).bind('resize', this, function (e) {
         updateUIHeights(); 

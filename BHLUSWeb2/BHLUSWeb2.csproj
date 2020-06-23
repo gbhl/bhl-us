@@ -166,6 +166,7 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="css\nspop.css" />
     <Content Include="Docs\api3\AuthorSearch.xml" />
     <Content Include="Docs\api3.html" />
     <Content Include="Docs\api3\GetAuthorMetadata.xml" />
@@ -429,6 +430,7 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="js\nspop.js" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
     <Content Include="tify\tifysrc\tify-logo-white.svg" />
