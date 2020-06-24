@@ -37,7 +37,7 @@ function showNameSources(e, lnk) {
 
     $.ajax({
         type: 'get',
-        url: 'http://localhost:49275/service/getnamedatasources',
+        url: '/service/getnamedatasources',
         data: {
             'name': resolvedName
         },
