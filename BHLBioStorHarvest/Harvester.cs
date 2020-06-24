@@ -417,26 +417,33 @@ namespace MOBOT.BHL.BHLBioStorHarvest
         {
             bool isArticle = false;
 
-            string doiQuery = string.Format(configParms.CrossRefOpenUrlDOIGet, doi);
-            XDocument xDoc = XDocument.Load(doiQuery);
-
-            XElement queryElement = null;
-            XNamespace ns = "http://www.crossref.org/qrschema/2.0";
-            XElement crossrefResult = xDoc.Element(ns + "crossref_result");
-            if (crossrefResult != null) crossrefResult = crossrefResult.Element(ns + "query_result");
-            if (crossrefResult != null) crossrefResult = crossrefResult.Element(ns + "body");
-            if (crossrefResult != null) queryElement = crossrefResult.Element(ns + "query");
-
-            if (queryElement != null)
+            try
             {
-                XAttribute queryStatus = queryElement.Attribute("status");
-                if (queryStatus.Value == "resolved")
-                {
-                    XElement doiElement = queryElement.Element(ns + "doi");
-                    XAttribute doiType = doiElement.Attribute("type");
+                string doiQuery = string.Format(configParms.CrossRefOpenUrlDOIGet, doi);
+                XDocument xDoc = XDocument.Load(doiQuery);
 
-                    if (doiType.Value == "journal_article") isArticle = true;
+                XElement queryElement = null;
+                XNamespace ns = "http://www.crossref.org/qrschema/2.0";
+                XElement crossrefResult = xDoc.Element(ns + "crossref_result");
+                if (crossrefResult != null) crossrefResult = crossrefResult.Element(ns + "query_result");
+                if (crossrefResult != null) crossrefResult = crossrefResult.Element(ns + "body");
+                if (crossrefResult != null) queryElement = crossrefResult.Element(ns + "query");
+
+                if (queryElement != null)
+                {
+                    XAttribute queryStatus = queryElement.Attribute("status");
+                    if (queryStatus.Value == "resolved")
+                    {
+                        XElement doiElement = queryElement.Element(ns + "doi");
+                        XAttribute doiType = doiElement.Attribute("type");
+
+                        if (doiType.Value == "journal_article") isArticle = true;
+                    }
                 }
+            }
+            catch
+            {
+                // Do nothing, DOI will be discarded
             }
 
             return isArticle;
