@@ -1137,6 +1137,7 @@
     <None Include="dbo\Tables\NameSourceGNFinder.sql" />
     <None Include="dbo\Stored Procedures\IdentifierSelectByGNFinderDataSource.sql" />
     <None Include="Data\dbo.NameSourceGNfinder.Table.sql" />
+    <None Include="dbo\Functions\fnRemoveNonAlphaNumericCharacters.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />

@@ -167,8 +167,7 @@ BEGIN TRY
 				ON t.AuthorTypeID = a.AuthorTypeID
 				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
 				AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
-				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
-					REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(a.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
+				AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(a.FullName) 
 				AND	(  -- If b is blank, match records with blank Numeration/Unit values
 					(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
 					OR  -- If b is not blank, find records with matching Numeration/Unit values
@@ -245,8 +244,7 @@ FROM	#tmpAuthor t INNER JOIN (SELECT a.AuthorID, AuthorTypeID, StartDate, EndDat
 			ON t.AuthorTypeID = a.AuthorTypeID
 			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.StartDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.StartDate), '')
 			AND ISNULL(dbo.fnRemoveNonNumericCharacters(t.EndDate), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
-			AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
-				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(a.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
+			AND dbo.fnRemoveNonAlphaNumericCharacters(t.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(a.FullName) 
 			AND	(  -- If b is blank, match records with blank Numeration/Unit values
 				(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
 				OR  -- If b is not blank, find records with matching Numeration/Unit values

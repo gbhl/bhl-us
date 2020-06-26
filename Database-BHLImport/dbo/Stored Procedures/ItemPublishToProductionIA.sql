@@ -704,9 +704,7 @@ BEGIN TRY
 	INTO	#tmpTCUpdate
 	FROM	#tmpTitle_Creator t 
 			LEFT JOIN dbo.BHLAuthorName n 
-				ON REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
-				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
-					COLLATE SQL_Latin1_General_CP1_CI_AI
+				ON dbo.fnRemoveNonAlphaNumericCharacters(t.CreatorName) = dbo.fnRemoveNonAlphaNumericCharacters(n.FullName) COLLATE SQL_Latin1_General_CP1_CI_AI
 			LEFT JOIN dbo.BHLAuthor a ON a.AuthorID = n.AuthorID
 	WHERE	(  -- If b is blank, match records with blank Numeration/Unit values
 			(ISNULL(t.MARCCreator_b, '') = '' AND ISNULL(a.Numeration, '') = '' AND ISNULL(a.Unit, '') = '') 
@@ -824,9 +822,7 @@ BEGIN TRY
 				AND	ISNULL(dbo.fnRemoveNonNumericCharacters(t.DOD), '') = ISNULL(dbo.fnRemoveNonNumericCharacters(a.EndDate), '')
 			INNER JOIN dbo.BHLAuthorName n
 				ON a.AuthorID = n.AuthorID
-				AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(t.CreatorName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') = 
-				REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(n.FullName, '.', ''), ',', ''), '(', ''), ')', ''), ' ', '') 
-					COLLATE SQL_Latin1_General_CP1_CI_AI
+				AND dbo.fnRemoveNonAlphaNumericCharacters(t.CreatorName) = dbo.fnRemoveNonAlphaNumericCharacters(n.FullName) COLLATE SQL_Latin1_General_CP1_CI_AI
 	GROUP BY t.CreatorID
 
 	UPDATE	#tmpCreator

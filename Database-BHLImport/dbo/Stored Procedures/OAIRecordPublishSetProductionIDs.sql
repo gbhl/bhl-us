@@ -42,10 +42,14 @@ WHILE (@@fetch_status <> -1)
 BEGIN
 	IF (@@fetch_status <> -2)
 	BEGIN
-
 		IF NOT EXISTS(	SELECT a.AuthorID FROM dbo.BHLAuthor a INNER JOIN dbo.BHLAuthorName n ON a.AuthorID = n.AuthorID
-						WHERE (n.FullName = @FullName OR dbo.fnReverseAuthorName(n.FullName) = @FullName)
-						AND a.StartDate = @StartDate AND a.EndDate = @EndDate)
+						WHERE (
+								dbo.fnRemoveNonAlphaNumericCharacters(n.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(@FullName) OR 
+								dbo.fnRemoveNonAlphaNumericCharacters(dbo.fnReverseAuthorName(n.FullName)) = dbo.fnRemoveNonAlphaNumericCharacters(@FullName)
+								)
+						AND dbo.fnRemoveNonNumericCharacters(a.StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) 
+						AND dbo.fnRemoveNonNumericCharacters(a.EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate)
+					)
 		BEGIN
 			BEGIN TRAN
 
@@ -180,7 +184,7 @@ FROM	dbo.OAIRecordCreator c
 			ON dbo.fnRemoveNonNumericCharacters(c.StartDate) = dbo.fnRemoveNonNumericCharacters(a.StartDate) 
 			AND dbo.fnRemoveNonNumericCharacters(c.EndDate) = dbo.fnRemoveNonNumericCharacters(a.EndDate)
 		INNER JOIN dbo.BHLAuthorName n ON a.AuthorID = n.AuthorID
-WHERE	n.FullName = c.FullName
+WHERE	dbo.fnRemoveNonAlphaNumericCharacters(n.FullName) = dbo.fnRemoveNonAlphaNumericCharacters(c.FullName)
 AND		c.ProductionAuthorID IS NULL
 
 UPDATE	dbo.OAIRecordCreator
@@ -192,7 +196,7 @@ FROM	dbo.OAIRecordCreator c
 			ON dbo.fnRemoveNonNumericCharacters(c.StartDate) = dbo.fnRemoveNonNumericCharacters(a.StartDate)
 			AND dbo.fnRemoveNonNumericCharacters(c.EndDate) = dbo.fnRemoveNonNumericCharacters(a.EndDate)
 		INNER JOIN dbo.BHLAuthorName n ON a.AuthorID = n.AuthorID
-WHERE	dbo.fnReverseAuthorName(n.FullName) = c.FullName
+WHERE	dbo.fnRemoveNonAlphaNumericCharacters(dbo.fnReverseAuthorName(n.FullName)) = dbo.fnRemoveNonAlphaNumericCharacters(c.FullName)
 AND		c.ProductionAuthorID IS NULL
 
 -- If the selected production author ID has been redirected to a different 
