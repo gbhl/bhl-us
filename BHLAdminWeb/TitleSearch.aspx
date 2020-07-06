@@ -11,48 +11,35 @@
 	<mobot:ErrorControl runat="server" id="errorControl"></mobot:ErrorControl>
 	<br />
     
-    <div id="tabs">
+    <div id="tabs" style="width:575px;">
     <ul>
     <li><a href="#fragment-1"><span>Search</span></a></li>
     <li runat="server" id="liImport"><a href="#fragment-2"><span>Import</span></a></li>  <!-- remove "fragment-2" to disable -->
     </ul>
 	<div id="fragment-1">
-	
-	<span class="pageSubHeader">Search For Existing Title</span>
+	<div id="divSearchType" runat="server" style="margin-bottom:10px" visible="false">
+		Search For: <input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeTitle" class="titleSearchType" name="rdoSearchType" value="Title" checked />
+		<label for="rdoSearchTypeTitle">Title</label>&nbsp;
+		<input type="radio" runat="server" clientidmode="Static" id="rdoSearchTypeItem" class="titleSearchType" name="rdoSearchType" value="Item" />
+		<label for="rdoSearchTypeItem">Item</label>
+	</div>	
+	<div class="pageSubHeader">Complete at least one field</div>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 	<td>
 
 	<asp:Panel ID="searchPanel" Height="30px" CssClass="box" DefaultButton="searchButton" runat="server">
 		<div id="simpleSearchPanelDiv">
-			<table cellpadding="3" class="SearchText">
-				<tr>
-					<td style="white-space: nowrap">
-						Title ID:
-					</td>
-					<td>
-						<asp:TextBox ID="titleidTextBox" runat="server" CssClass="SearchText" />
-					</td>
-					<td style="white-space: nowrap">
-						MARC Bib ID:
-					</td>
-					<td>
-						<asp:TextBox ID="bibidTextBox" runat="server" CssClass="SearchText" />
-					</td>
-					<td style="white-space: nowrap">
-						Full Title:
-					</td>
-					<td>
-						<asp:TextBox ID="titleTextBox" runat="server" CssClass="SearchText" />
-					</td>
-					<td>
-						<asp:Button ID="searchButton" runat="server" OnClick="searchButton_Click" Text="Search" CssClass="SearchText" />
-					</td>
-					<td>
-						<asp:Button ID="searchExactButton" runat="server" OnClick="searchExactButton_Click" Text="Search Exact" CssClass="SearchText" />
-					</td>
-				</tr>
-			</table>
+			<div style="margin:5px;">
+				<div id="divTitleFields" style="display:inline">
+					Title ID:&nbsp;&nbsp;<asp:TextBox ID="titleidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
+					Full Title:&nbsp;&nbsp;<asp:TextBox ID="titleTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
+				</div>
+				<div id="divItemFields" style="display:none">
+					Item ID:&nbsp;&nbsp;<asp:TextBox ID="itemidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
+				</div>
+				<asp:Button ID="searchButton" runat="server" OnClick="searchButton_Click" Text="Search" CssClass="SearchText" />
+			</div>
 		</div>
 	</asp:Panel>
 	<br />
@@ -69,7 +56,6 @@
 					RowStyle-BackColor="white" Width="100%" OnRowDataBound="gvwResults_RowDataBound">
 					<Columns>
 						<asp:BoundField DataField="TitleID" HeaderText="Title ID" SortExpression="TitleID" />
-						<asp:BoundField DataField="MARCBibID" HeaderText="MARC Bib ID" SortExpression="MARCBibID" />
 						<asp:HyperLinkField HeaderText="Title" DataNavigateUrlFields="TitleID" DataNavigateUrlFormatString="/TitleEdit.aspx?id={0}" DataTextField="SortTitle"
 							NavigateUrl="/TitleEdit.aspx" SortExpression="SortTitle" ControlStyle-Width="100%" />
 					</Columns>
@@ -133,7 +119,17 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#tabs").tabs();
-        });
+
+            $('.titleSearchType').change(function () {
+                if ($('#rdoSearchTypeTitle').prop('checked')) {
+					$('#divTitleFields').css('display', 'inline');
+                    $('#divItemFields').css('display', 'none');
+                } else {
+                    $('#divTitleFields').css('display', 'none');
+                    $('#divItemFields').css('display', 'inline');
+                }
+            });
+		});
     </script>
 
 </asp:Content>

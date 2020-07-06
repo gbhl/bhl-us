@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -15,13 +16,12 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleSearch : System.Web.UI.Page
 	{
-		private bool _isExactSearch = false;
 		private bool _refreshSearch = false;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 		private TitleSearchOrderBy _orderBy = TitleSearchOrderBy.Title;
 		private TitleSearchCriteria _searchCriteria;
-		private int _sortColumnIndex = 2;
-        private String _redirectUrl = "/TitleEdit.aspx?id=";
+		private int _sortColumnIndex = 1;
+        private String _redirectUrl = "/TitleEdit.aspx?id={0}";
 
 		protected void Page_Load( object sender, EventArgs e )
 		{
@@ -38,7 +38,6 @@ namespace MOBOT.BHL.AdminWeb
 				if ( ViewState[ "SearchCriteria" ] != null )
 				{
 					_searchCriteria = (TitleSearchCriteria)ViewState[ "SearchCriteria" ];
-					_isExactSearch = (bool)ViewState[ "IsExactSearch" ];
 					_orderBy = (TitleSearchOrderBy)ViewState[ "OrderBy" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
 				}
@@ -64,10 +63,11 @@ namespace MOBOT.BHL.AdminWeb
                     litHeader.Text = "Pagination";
                     liImport.Visible = false;
                     divImport.Visible = false;
-                    HyperLinkField linkField = (HyperLinkField)gvwResults.Columns[2];
+                    divSearchType.Visible = true;
+                    HyperLinkField linkField = (HyperLinkField)gvwResults.Columns[1];
                     linkField.NavigateUrl = "/Paginator.aspx";
                     linkField.DataNavigateUrlFormatString = "/Paginator.aspx?TitleID={0}";
-                    _redirectUrl = "/Paginator.aspx?TitleID=";
+                    _redirectUrl = "/Paginator.aspx?TitleID={0}&ItemID={1}";
                 }
             }
 
@@ -78,25 +78,21 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void search()
 		{
-			if ( titleidTextBox.Text.Trim().Length == 0 && bibidTextBox.Text.Trim().Length == 0 && 
-				titleTextBox.Text.Trim().Length == 0  )
-			{
-				return;
-			}
+			if ( rdoSearchTypeTitle.Checked & titleidTextBox.Text.Trim().Length == 0 && titleTextBox.Text.Trim().Length == 0  ) return;
+            if ( rdoSearchTypeItem.Checked & itemidTextBox.Text.Trim().Length == 0 ) return;
 
 			BHLProvider bp = new BHLProvider();
 			buildSearchCriteria();
 			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
 			if ( results.Count == 1 )
 			{
-				Response.Redirect( _redirectUrl + results[ 0 ].TitleID.ToString() );
+				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), ""));
 			}
 			else
 			{
 				pagingUserControl.TotalRecords = bp.TitleSearchCount( _searchCriteria );
 				pagingUserControl.UpdateDisplay();
 
-				ViewState[ "IsExactSearch" ] = _isExactSearch;
 				ViewState[ "SearchCriteria" ] = _searchCriteria;
 				ViewState[ "OrderBy" ] = _orderBy;
 				ViewState[ "SortOrder" ] = _sortOrder;
@@ -116,9 +112,7 @@ namespace MOBOT.BHL.AdminWeb
 			if ( _refreshSearch )
 			{
 				_searchCriteria = new TitleSearchCriteria();
-
 				_searchCriteria.Title = getNullableString( titleTextBox.Text.Trim() );
-				_searchCriteria.MARCBibID = getNullableString( bibidTextBox.Text.Trim() );
 
 				int id;
 				_searchCriteria.TitleID = null;
@@ -140,17 +134,7 @@ namespace MOBOT.BHL.AdminWeb
 
 		private string getNullableString( string input )
 		{
-			if ( input != null && input.Trim().Length > 0 )
-			{
-				if ( _isExactSearch )
-				{
-					return string.Format( "{0}", input.Trim() );
-				}
-				else
-				{
-					return input.Trim() + "%";
-				}
-			}
+			if ( input != null && input.Trim().Length > 0 ) return '%' + input.Trim() + "%";
 			return null;
 		}
 
@@ -322,15 +306,6 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void searchButton_Click( object sender, EventArgs e )
 		{
-			_isExactSearch = false;
-			_refreshSearch = true;
-			pagingUserControl.PageNumber = 1;
-			search();
-		}
-
-		protected void searchExactButton_Click( object sender, EventArgs e )
-		{
-			_isExactSearch = true;
 			_refreshSearch = true;
 			pagingUserControl.PageNumber = 1;
 			search();
@@ -350,15 +325,10 @@ namespace MOBOT.BHL.AdminWeb
 				_orderBy = TitleSearchOrderBy.TitleID;
 				_sortColumnIndex = 0;
 			}
-			else if ( e.SortExpression.Equals( "MARCBibID" ) )
-			{
-				_orderBy = TitleSearchOrderBy.MARCBibID;
-				_sortColumnIndex = 1;
-			}
 			else if ( e.SortExpression.Equals( "SortTitle" ) )
 			{
 				_orderBy = TitleSearchOrderBy.Title;
-				_sortColumnIndex = 2;
+				_sortColumnIndex = 1;
 			}
 
 			if ( origOrderBy == _orderBy )
