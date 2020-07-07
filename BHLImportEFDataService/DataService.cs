@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using MOBOT.BHLImport.BHLImportEFDataModel;
@@ -55,6 +56,7 @@ namespace MOBOT.BHLImport.BHLImportEFDataService
             {
                 BHLImportEntities newContext = new BHLImportEntities();
                 newContext.Configuration.AutoDetectChangesEnabled = false;
+                ((IObjectContextAdapter)newContext).ObjectContext.CommandTimeout = 600;
                 if (persist) context = newContext;
                 return newContext;
             }
