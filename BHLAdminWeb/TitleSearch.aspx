@@ -31,7 +31,7 @@
 	<asp:Panel ID="searchPanel" Height="30px" CssClass="box" DefaultButton="searchButton" runat="server">
 		<div id="simpleSearchPanelDiv">
 			<div style="margin:5px;">
-				<div id="divTitleFields" style="display:inline">
+				<div id="divTitleFields" style="display:none">
 					Title ID:&nbsp;&nbsp;<asp:TextBox ID="titleidTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
 					Full Title:&nbsp;&nbsp;<asp:TextBox ID="titleTextBox" runat="server" CssClass="SearchText" />&nbsp;&nbsp;
 				</div>
@@ -118,18 +118,26 @@
 	
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#tabs").tabs();
+			$("#tabs").tabs();
 
-            $('.titleSearchType').change(function () {
-                if ($('#rdoSearchTypeTitle').prop('checked')) {
-					$('#divTitleFields').css('display', 'inline');
-                    $('#divItemFields').css('display', 'none');
-                } else {
-                    $('#divTitleFields').css('display', 'none');
-                    $('#divItemFields').css('display', 'inline');
-                }
-            });
+			$('.titleSearchType').change(function () {
+				showSearchFields();
+			});
 		});
+
+		$(window).on('load', function (e) {
+			this.showSearchFields();
+		})
+
+		function showSearchFields() {
+            if ($('#rdoSearchTypeItem').prop('checked')) {
+                $('#divTitleFields').css('display', 'none');
+                $('#divItemFields').css('display', 'inline');
+            } else {
+                $('#divTitleFields').css('display', 'inline');
+                $('#divItemFields').css('display', 'none');
+            }
+        }
     </script>
 
 </asp:Content>

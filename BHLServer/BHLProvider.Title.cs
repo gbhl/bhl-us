@@ -142,9 +142,32 @@ namespace MOBOT.BHL.Server
 
         #endregion
 
-        public CustomGenericList<Title> TitleSearchPaging( TitleSearchCriteria criteria )
-		{
-			return new TitleDAL().TitleSearch( null, null, criteria );
+        public CustomGenericList<Title> TitleSearchPaging(TitleSearchCriteria criteria)
+        {
+            if (criteria.ItemSearch)
+            {
+                CustomGenericList<Title> titles = new CustomGenericList<Title>();
+
+                if (criteria.ItemID != null)
+                { 
+                    Item item = new ItemDAL().ItemSelectAuto(null, null, (int)criteria.ItemID);
+                    if (item != null)
+                    {
+                        Title title = new TitleDAL().TitleSelectAuto(null, null, item.PrimaryTitleID);
+                        if (title != null)
+                        {
+                            title.Items.Add(item);
+                            titles.Add(title);
+                        }
+                    }
+                }
+
+                return titles;
+            }
+            else
+            {
+                return new TitleDAL().TitleSearch(null, null, criteria);
+            }
 		}
 
 		public int TitleSearchCount( TitleSearchCriteria criteria )

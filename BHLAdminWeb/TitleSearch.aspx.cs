@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -19,7 +18,7 @@ namespace MOBOT.BHL.AdminWeb
 		private bool _refreshSearch = false;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 		private TitleSearchOrderBy _orderBy = TitleSearchOrderBy.Title;
-		private TitleSearchCriteria _searchCriteria;
+		public TitleSearchCriteria _searchCriteria;
 		private int _sortColumnIndex = 1;
         private String _redirectUrl = "/TitleEdit.aspx?id={0}";
 
@@ -40,8 +39,9 @@ namespace MOBOT.BHL.AdminWeb
 					_searchCriteria = (TitleSearchCriteria)ViewState[ "SearchCriteria" ];
 					_orderBy = (TitleSearchOrderBy)ViewState[ "OrderBy" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
-				}
-				pagingUserControl.Visible = true;
+                    _searchCriteria.ItemSearch = rdoSearchTypeItem.Checked;
+                }
+                pagingUserControl.Visible = true;
 			}
 			else
 			{
@@ -86,11 +86,12 @@ namespace MOBOT.BHL.AdminWeb
 			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
 			if ( results.Count == 1 )
 			{
-				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), ""));
+                string itemID = (results[0].Items.Count > 0) ? results[0].Items[0].ItemID.ToString() : string.Empty;
+				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), itemID));
 			}
 			else
 			{
-				pagingUserControl.TotalRecords = bp.TitleSearchCount( _searchCriteria );
+				pagingUserControl.TotalRecords = (results.Count <= 1) ? results.Count : bp.TitleSearchCount( _searchCriteria );
 				pagingUserControl.UpdateDisplay();
 
 				ViewState[ "SearchCriteria" ] = _searchCriteria;
@@ -112,18 +113,28 @@ namespace MOBOT.BHL.AdminWeb
 			if ( _refreshSearch )
 			{
 				_searchCriteria = new TitleSearchCriteria();
-				_searchCriteria.Title = getNullableString( titleTextBox.Text.Trim() );
+                _searchCriteria.TitleID = null;
+                _searchCriteria.ItemID = null;
 
-				int id;
-				_searchCriteria.TitleID = null;
-				if ( titleidTextBox.Text.Trim().Length > 0 )
-				{
-					bool idExists = int.TryParse( titleidTextBox.Text.Trim(), out id );
-					if ( idExists )
-					{
-						_searchCriteria.TitleID = id;
-					}
-				}
+                int id;
+                if (rdoSearchTypeTitle.Checked)
+                {
+                    _searchCriteria.ItemSearch = false;
+                    _searchCriteria.Title = getNullableString(titleTextBox.Text.Trim());
+                    if (titleidTextBox.Text.Trim().Length > 0)
+                    {
+                        if (int.TryParse(titleidTextBox.Text.Trim(), out id)) _searchCriteria.TitleID = id;
+                    }
+                }
+                else
+                {
+                    _searchCriteria.ItemSearch = true;
+                    if (itemidTextBox.Text.Trim().Length > 0)
+                    {
+                        if (int.TryParse(itemidTextBox.Text.Trim(), out id)) _searchCriteria.ItemID = id;
+                    }
+                }
+
 			}
 
 			_searchCriteria.OrderBy = _orderBy;
