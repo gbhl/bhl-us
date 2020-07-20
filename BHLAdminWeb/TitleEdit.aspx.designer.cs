@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MOBOT.BHL.AdminWeb {
-    
-    
-    public partial class TitleEdit {
-        
+namespace MOBOT.BHL.AdminWeb
+{
+
+
+    public partial class TitleEdit
+    {
+
         /// <summary>
         /// errorControl control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.ErrorControl errorControl;
-        
+
         /// <summary>
         /// litMessage control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litMessage;
-        
+
         /// <summary>
         /// idLabel control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label idLabel;
-        
+
         /// <summary>
         /// publishReadyCheckBox control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox publishReadyCheckBox;
-        
+
         /// <summary>
         /// publishReadyOrig control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField publishReadyOrig;
-        
+
         /// <summary>
         /// replacedByTextBox control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox replacedByTextBox;
-        
+
         /// <summary>
         /// replacedByOrig control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField replacedByOrig;
-        
+
         /// <summary>
         /// marcLeaderLabel control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label marcLeaderLabel;
-        
+
         /// <summary>
         /// marcBibIdLabel control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label marcBibIdLabel;
-        
+
         /// <summary>
         /// doiTextBox control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox doiTextBox;
-        
+
         /// <summary>
         /// ddlBibliographicLevel control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlBibliographicLevel;
-        
+
         /// <summary>
         /// ddlMaterialType control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlMaterialType;
-        
+
         /// <summary>
         /// fullTitleTextBox control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox fullTitleTextBox;
-        
+
         /// <summary>
         /// partNumberTextBox control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox partNumberTextBox;
-        
+
         /// <summary>
         /// partNameTextBox control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox partNameTextBox;
-        
+
         /// <summary>
         /// shortTitleTextBox control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox shortTitleTextBox;
-        
+
         /// <summary>
         /// sortTitleTextBox control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox sortTitleTextBox;
-        
+
         /// <summary>
         /// uniformTitleTextBox control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox uniformTitleTextBox;
-        
+
         /// <summary>
         /// callNumberTextBox control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox callNumberTextBox;
-        
+
         /// <summary>
         /// ddlLang control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlLang;
-        
+
         /// <summary>
         /// descTextBox control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox descTextBox;
-        
+
         /// <summary>
         /// publicationPlaceTextBox control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox publicationPlaceTextBox;
-        
+
         /// <summary>
         /// publisherNameTextBox control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox publisherNameTextBox;
-        
+
         /// <summary>
         /// publicationDateTextBox control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox publicationDateTextBox;
-        
+
         /// <summary>
         /// startYearTextBox control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox startYearTextBox;
-        
+
         /// <summary>
         /// endYearTextBox control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox endYearTextBox;
-        
+
         /// <summary>
         /// OrigCatalogSourceTextBox control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox OrigCatalogSourceTextBox;
-        
+
         /// <summary>
         /// EditionStatementTextBox control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EditionStatementTextBox;
-        
+
         /// <summary>
         /// PubFrequencyTextBox control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PubFrequencyTextBox;
-        
+
         /// <summary>
         /// ddlExtContent control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlExtContent;
-        
+
         /// <summary>
         /// RepositoryUrlTextBox control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox RepositoryUrlTextBox;
-        
+
         /// <summary>
         /// notesTextBox control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox notesTextBox;
-        
+
         /// <summary>
         /// creatorsList control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView creatorsList;
-        
+
         /// <summary>
         /// subjectsList control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView subjectsList;
-        
+
         /// <summary>
         /// addSubjectButton control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addSubjectButton;
-        
+
         /// <summary>
         /// notesList control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView notesList;
-        
+
         /// <summary>
         /// addTitleNoteButton control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addTitleNoteButton;
-        
+
         /// <summary>
         /// identifiersList control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView identifiersList;
-        
+
         /// <summary>
         /// addTitleIdentifierButton control.
         /// </summary>
@@ -362,7 +364,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addTitleIdentifierButton;
-        
+
         /// <summary>
         /// languagesList control.
         /// </summary>
@@ -371,7 +373,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView languagesList;
-        
+
         /// <summary>
         /// addLanguageButton control.
         /// </summary>
@@ -380,7 +382,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addLanguageButton;
-        
+
         /// <summary>
         /// variantsList control.
         /// </summary>
@@ -389,7 +391,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView variantsList;
-        
+
         /// <summary>
         /// addTitleVariantButton control.
         /// </summary>
@@ -398,7 +400,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addTitleVariantButton;
-        
+
         /// <summary>
         /// associationsList control.
         /// </summary>
@@ -407,7 +409,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView associationsList;
-        
+
         /// <summary>
         /// btnTitleAssociationAdd control.
         /// </summary>
@@ -416,7 +418,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton btnTitleAssociationAdd;
-        
+
         /// <summary>
         /// collectionsList control.
         /// </summary>
@@ -425,7 +427,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView collectionsList;
-        
+
         /// <summary>
         /// addCollectionButton control.
         /// </summary>
@@ -434,7 +436,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button addCollectionButton;
-        
+
         /// <summary>
         /// showAllRadioButton control.
         /// </summary>
@@ -443,7 +445,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton showAllRadioButton;
-        
+
         /// <summary>
         /// showPubRadioButton control.
         /// </summary>
@@ -452,7 +454,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButton showPubRadioButton;
-        
+
         /// <summary>
         /// itemsList control.
         /// </summary>
@@ -461,7 +463,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView itemsList;
-        
+
         /// <summary>
         /// saveButton control.
         /// </summary>
@@ -470,7 +472,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button saveButton;
-        
+
         /// <summary>
         /// editHistoryControl control.
         /// </summary>
@@ -479,7 +481,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::MOBOT.BHL.AdminWeb.Controls.EditHistoryLink editHistoryControl;
-        
+
         /// <summary>
         /// selectedAuthor control.
         /// </summary>
@@ -488,7 +490,34 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedAuthor;
-        
+
+        /// <summary>
+        /// divSearchType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSearchType;
+
+        /// <summary>
+        /// rdoSearchTypeTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeTitle;
+
+        /// <summary>
+        /// rdoSearchTypeItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rdoSearchTypeItem;
+
         /// <summary>
         /// makePrimary control.
         /// </summary>
@@ -497,7 +526,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox makePrimary;
-        
+
         /// <summary>
         /// selectedItem control.
         /// </summary>
@@ -506,7 +535,7 @@ namespace MOBOT.BHL.AdminWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden selectedItem;
-        
+
         /// <summary>
         /// associationsUpdated control.
         /// </summary>

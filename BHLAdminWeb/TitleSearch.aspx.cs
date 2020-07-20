@@ -15,13 +15,12 @@ namespace MOBOT.BHL.AdminWeb
 {
     public partial class TitleSearch : System.Web.UI.Page
 	{
-		private bool _isExactSearch = false;
 		private bool _refreshSearch = false;
 		private SortOrder _sortOrder = SortOrder.Ascending;
 		private TitleSearchOrderBy _orderBy = TitleSearchOrderBy.Title;
-		private TitleSearchCriteria _searchCriteria;
-		private int _sortColumnIndex = 2;
-        private String _redirectUrl = "/TitleEdit.aspx?id=";
+		public TitleSearchCriteria _searchCriteria;
+		private int _sortColumnIndex = 1;
+        private String _redirectUrl = "/TitleEdit.aspx?id={0}";
 
 		protected void Page_Load( object sender, EventArgs e )
 		{
@@ -38,11 +37,11 @@ namespace MOBOT.BHL.AdminWeb
 				if ( ViewState[ "SearchCriteria" ] != null )
 				{
 					_searchCriteria = (TitleSearchCriteria)ViewState[ "SearchCriteria" ];
-					_isExactSearch = (bool)ViewState[ "IsExactSearch" ];
 					_orderBy = (TitleSearchOrderBy)ViewState[ "OrderBy" ];
 					_sortOrder = (SortOrder)ViewState[ "SortOrder" ];
-				}
-				pagingUserControl.Visible = true;
+                    _searchCriteria.ItemSearch = rdoSearchTypeItem.Checked;
+                }
+                pagingUserControl.Visible = true;
 			}
 			else
 			{
@@ -64,10 +63,11 @@ namespace MOBOT.BHL.AdminWeb
                     litHeader.Text = "Pagination";
                     liImport.Visible = false;
                     divImport.Visible = false;
-                    HyperLinkField linkField = (HyperLinkField)gvwResults.Columns[2];
+                    divSearchType.Visible = true;
+                    HyperLinkField linkField = (HyperLinkField)gvwResults.Columns[1];
                     linkField.NavigateUrl = "/Paginator.aspx";
                     linkField.DataNavigateUrlFormatString = "/Paginator.aspx?TitleID={0}";
-                    _redirectUrl = "/Paginator.aspx?TitleID=";
+                    _redirectUrl = "/Paginator.aspx?TitleID={0}&ItemID={1}";
                 }
             }
 
@@ -78,25 +78,22 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void search()
 		{
-			if ( titleidTextBox.Text.Trim().Length == 0 && bibidTextBox.Text.Trim().Length == 0 && 
-				titleTextBox.Text.Trim().Length == 0  )
-			{
-				return;
-			}
+			if ( rdoSearchTypeTitle.Checked & titleidTextBox.Text.Trim().Length == 0 && titleTextBox.Text.Trim().Length == 0  ) return;
+            if ( rdoSearchTypeItem.Checked & itemidTextBox.Text.Trim().Length == 0 ) return;
 
 			BHLProvider bp = new BHLProvider();
 			buildSearchCriteria();
 			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
 			if ( results.Count == 1 )
 			{
-				Response.Redirect( _redirectUrl + results[ 0 ].TitleID.ToString() );
+                string itemID = (results[0].Items.Count > 0) ? results[0].Items[0].ItemID.ToString() : string.Empty;
+				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), itemID));
 			}
 			else
 			{
-				pagingUserControl.TotalRecords = bp.TitleSearchCount( _searchCriteria );
+				pagingUserControl.TotalRecords = (results.Count <= 1) ? results.Count : bp.TitleSearchCount( _searchCriteria );
 				pagingUserControl.UpdateDisplay();
 
-				ViewState[ "IsExactSearch" ] = _isExactSearch;
 				ViewState[ "SearchCriteria" ] = _searchCriteria;
 				ViewState[ "OrderBy" ] = _orderBy;
 				ViewState[ "SortOrder" ] = _sortOrder;
@@ -116,20 +113,28 @@ namespace MOBOT.BHL.AdminWeb
 			if ( _refreshSearch )
 			{
 				_searchCriteria = new TitleSearchCriteria();
+                _searchCriteria.TitleID = null;
+                _searchCriteria.ItemID = null;
 
-				_searchCriteria.Title = getNullableString( titleTextBox.Text.Trim() );
-				_searchCriteria.MARCBibID = getNullableString( bibidTextBox.Text.Trim() );
+                int id;
+                if (rdoSearchTypeTitle.Checked)
+                {
+                    _searchCriteria.ItemSearch = false;
+                    _searchCriteria.Title = getNullableString(titleTextBox.Text.Trim());
+                    if (titleidTextBox.Text.Trim().Length > 0)
+                    {
+                        if (int.TryParse(titleidTextBox.Text.Trim(), out id)) _searchCriteria.TitleID = id;
+                    }
+                }
+                else
+                {
+                    _searchCriteria.ItemSearch = true;
+                    if (itemidTextBox.Text.Trim().Length > 0)
+                    {
+                        if (int.TryParse(itemidTextBox.Text.Trim(), out id)) _searchCriteria.ItemID = id;
+                    }
+                }
 
-				int id;
-				_searchCriteria.TitleID = null;
-				if ( titleidTextBox.Text.Trim().Length > 0 )
-				{
-					bool idExists = int.TryParse( titleidTextBox.Text.Trim(), out id );
-					if ( idExists )
-					{
-						_searchCriteria.TitleID = id;
-					}
-				}
 			}
 
 			_searchCriteria.OrderBy = _orderBy;
@@ -140,17 +145,7 @@ namespace MOBOT.BHL.AdminWeb
 
 		private string getNullableString( string input )
 		{
-			if ( input != null && input.Trim().Length > 0 )
-			{
-				if ( _isExactSearch )
-				{
-					return string.Format( "{0}", input.Trim() );
-				}
-				else
-				{
-					return input.Trim() + "%";
-				}
-			}
+			if ( input != null && input.Trim().Length > 0 ) return '%' + input.Trim() + "%";
 			return null;
 		}
 
@@ -322,15 +317,6 @@ namespace MOBOT.BHL.AdminWeb
 
 		protected void searchButton_Click( object sender, EventArgs e )
 		{
-			_isExactSearch = false;
-			_refreshSearch = true;
-			pagingUserControl.PageNumber = 1;
-			search();
-		}
-
-		protected void searchExactButton_Click( object sender, EventArgs e )
-		{
-			_isExactSearch = true;
 			_refreshSearch = true;
 			pagingUserControl.PageNumber = 1;
 			search();
@@ -350,15 +336,10 @@ namespace MOBOT.BHL.AdminWeb
 				_orderBy = TitleSearchOrderBy.TitleID;
 				_sortColumnIndex = 0;
 			}
-			else if ( e.SortExpression.Equals( "MARCBibID" ) )
-			{
-				_orderBy = TitleSearchOrderBy.MARCBibID;
-				_sortColumnIndex = 1;
-			}
 			else if ( e.SortExpression.Equals( "SortTitle" ) )
 			{
 				_orderBy = TitleSearchOrderBy.Title;
-				_sortColumnIndex = 2;
+				_sortColumnIndex = 1;
 			}
 
 			if ( origOrderBy == _orderBy )

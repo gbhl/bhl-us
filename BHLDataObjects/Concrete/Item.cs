@@ -51,10 +51,11 @@ namespace MOBOT.BHL.DataObjects
 		{
 			get
 			{
-				if ( Volume.Length > 32 )
-					return Volume.Substring( 0, 32 ) + "...";
-				else
-					return Volume;
+                if (Volume != null)
+                {
+                    return (Volume.Length > 32) ? Volume.Substring(0, 32) + "..." : Volume;
+                }
+                else { return Volume; }
 			}
 		}
 

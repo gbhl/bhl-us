@@ -7,8 +7,10 @@ namespace MOBOT.BHL.DataObjects
 	public class TitleSearchCriteria
 	{
 		private int? _titleID;
+		private int? _itemID;
 		private string _MARCBibId;
 		private string _title;
+		private bool _itemSearch = false;
 
 		private int _pageSize = 1000;
 		private long _startRow = 1;
@@ -23,6 +25,18 @@ namespace MOBOT.BHL.DataObjects
 			get { return this._titleID; }
 			set { this._titleID = value; }
 		}
+
+		public int? ItemID
+        {
+			get { return this._itemID; }
+			set { this._itemID = value; }
+        }
+
+		public bool ItemSearch
+        {
+			get { return _itemSearch; }
+			set { _itemSearch = value; }
+        }
 
 		public string MARCBibID
 		{

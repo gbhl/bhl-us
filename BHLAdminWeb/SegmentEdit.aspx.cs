@@ -1,7 +1,9 @@
 ﻿using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
+using MOBOT.BHL.Web.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -15,6 +17,8 @@ namespace MOBOT.BHL.AdminWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ControlGenerator.AddScriptControl(Page.Master.Page.Header.Controls, ConfigurationManager.AppSettings["jQueryPath"]);
+
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptSelectItem", "<script language='javascript'>function selectItem(itemId) { if (itemId != '') document.getElementById('" + selectedItem.ClientID + "').value=itemId; overlay(); __doPostBack('',''); }</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearItem", "<script language='javascript'>function clearItem() { document.getElementById('" + selectedItem.ClientID + "').value=''; __doPostBack('', '');}</script>");
             ClientScript.RegisterClientScriptBlock(this.GetType(), "scptClearAuthor", "<script language='javascript'>function clearAuthor() { document.getElementById('" + selectedAuthor.ClientID + "').value=''; overlayAuthorSearch(); __doPostBack('', '');}</script>");

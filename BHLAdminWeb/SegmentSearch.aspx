@@ -24,7 +24,7 @@
 						<asp:TextBox ID="txtSegmentID" runat="server" CssClass="SearchText" />
 					</td>
 					<td style="white-space: nowrap">
-						Title:
+						Segment Title:
 					</td>
 					<td>
 						<asp:TextBox ID="txtTitle" runat="server" CssClass="SearchText" />
