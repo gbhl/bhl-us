@@ -78,6 +78,17 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
             }
         }
 
+        private string _EndYear = null;
+        public string EndYear
+        {
+            get { return _EndYear; }
+            set
+            {
+                if (value != null) value = CalibrateValue(value, 20);
+                _EndYear = value;
+            }
+        }
+
         private string _CopySpecificInformation = null;
         public string CopySpecificInformation
         {
@@ -369,6 +380,11 @@ namespace MOBOT.BHL.API.BHLApiDataObjects3
                     case "Year":
                         {
                             _Year = Utility.NullIfEmpty(column.Value);
+                            break;
+                        }
+                    case "EndYear":
+                        {
+                            _EndYear = Utility.NullIfEmpty(column.Value);
                             break;
                         }
                     case "ItemDescription":

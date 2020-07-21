@@ -20,6 +20,7 @@ ELSE
 			i.Barcode,
 			i.Volume,
 			i.Year,
+			i.EndYear,
 			i.ItemDescription,
 			c.ItemContributors AS InstitutionName,
 			i.Sponsor,

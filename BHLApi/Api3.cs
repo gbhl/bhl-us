@@ -374,6 +374,7 @@ namespace MOBOT.BHL.API.BHLApi
                 simpleItem.ItemUrl = "https://www.biodiversitylibrary.org/item/" + simpleItem.ItemID.ToString();
                 simpleItem.Volume = detailedItem.Volume;
                 simpleItem.Year = detailedItem.Year;
+                simpleItem.EndYear = detailedItem.EndYear;
                 simpleItem.ExternalUrl = detailedItem.ExternalUrl;
                 simpleItems.Add(simpleItem);
             }
