@@ -131,7 +131,7 @@
                     <div id="lblNameError" class="ErrorText" style="display:none;">Please specify a Name.</div>
                 </div>
                 <div class="searchinfoblock">
-                    <p>Biodiversity Heritage Library uses Global Names Architecture's Global Names Recognition and Discovery (GNRD), a taxonomic name recognition algorithm, to search through all of the texts digitized in BHL and extract the scientific names.  Searching for a name will return a list of all the individual pages where that name occurs.  NOTE: The text is currently uncorrected text automatically generated from Optical Character Recognition (OCR) programs and is of variable quality for each scanned book.</p>
+                    <p>Biodiversity Heritage Library uses Global Names Architecture's <a href="https://github.com/gnames/gnfinder" target="_blank">gnfinder</a>, a taxonomic name finding tool, to search through all of the texts digitized in BHL and extract the scientific names.  Searching for a name will return a list of all the individual pages where that name occurs.  NOTE: The text is currently uncorrected text automatically generated from Optical Character Recognition (OCR) programs and is of variable quality for each scanned book.</p>
                     <p>Here are some examples of scientific names that you can find in the Biodiversity Heritage Library:</p>
                     <table width="100%" cellpadding="3" cellspacing="3" role="presentation">
                         <tr>
