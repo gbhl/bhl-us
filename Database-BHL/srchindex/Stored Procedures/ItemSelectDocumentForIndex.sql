@@ -85,7 +85,18 @@ SELECT DISTINCT
 		dbo.fnGetIdentifierStringForTitle(t.TitleID, 'ISSN') AS ISSN,
 		dbo.fnGetIdentifierStringForTitle(t.TitleID, 'ISBN') AS ISBN,
 		dbo.fnCollectionStringForTitleAndItem(t.TitleID, i.ItemID) AS Collections,
-		ISNULL(CASE WHEN ISNULL(i.Year, '') = '' THEN CONVERT(nvarchar(20), t.StartYear) ELSE i.Year END, '') as [Date],
+		ISNULL(
+			CASE 
+			WHEN ISNULL(i.Year, '') = '' AND ISNULL(i.EndYear, '') = '' THEN
+				CASE 
+					WHEN t.StartYear IS NULL AND t.EndYear IS NULL THEN ''
+					WHEN t.StartYear IS NULL THEN CONVERT(nvarchar(20), t.EndYear)
+					ELSE CONVERT(nvarchar(20), t.StartYear) + CASE WHEN t.EndYear IS NULL THEN '' ELSE '-' + CONVERT(nvarchar(20), t.EndYear) END
+				END
+			WHEN ISNULL(i.Year, '') = '' THEN i.EndYear
+			ELSE i.Year + CASE WHEN ISNULL(i.EndYear, '') = '' THEN '' ELSE '-' + i.EndYear END
+			END
+			, '') as [Date],
 		i.Barcode,
 		i.ThumbnailPageID AS FirstPageID
 FROM	dbo.Item i WITH (NOLOCK)

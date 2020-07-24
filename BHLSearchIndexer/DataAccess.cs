@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -251,12 +252,28 @@ namespace BHL.SearchIndexer
                 catalogItem.id = string.Format("t-{0}", item.titleId.ToString());
                 catalogItem.itemId = this.SelectFirstItem(item.titleId) ?? item.itemId;
                 catalogItem.volumes = this.GetVolumeDocuments(item.titleId);
-                // Reset the volume string of the parent record to the volume string of the first child record
+
                 if (catalogItem.volumes.Count() > 0)
                 {
+                    // Reset the volume string of the parent record to the volume string of the first child record
                     catalogItem.volume = catalogItem.volumes[0].volume;
-                    catalogItem.dates = GetCleanDates(catalogItem.volumes[0].date);
-                    catalogItem.dateRanges = GetDateRanges(catalogItem.dates);
+
+                    // Accumulate the dates for ALL volumes
+                    List<string> cleanDates = new List<string>();
+                    foreach (Volume vol in catalogItem.volumes)
+                    {
+                        List<string> cdates = GetCleanDates(vol.date);
+                        foreach(string dt in cdates) if (!cleanDates.Contains(dt)) cleanDates.Add(dt);
+                    }
+                    cleanDates.Sort();
+
+                    // Only reset the dates of the parent item if any dates were accumulated from the volumes.  (If no dates accumulated, then the
+                    // parent dates will already be set to any title dates that exist.)
+                    if (cleanDates.Count > 0)
+                    {
+                        catalogItem.dates = cleanDates;
+                        catalogItem.dateRanges = GetDateRanges(catalogItem.dates);
+                    }
                 }
             }
 

@@ -24,7 +24,11 @@ INSERT	#tmpVolumes
 SELECT  ti.ItemSequence,
 		i.ItemID,
         ISNULL(i.Volume, '') AS Volume,
-        ISNULL(i.Year, '') AS [Year],
+		CASE 
+			WHEN ISNULL(i.Year, '') = '' AND ISNULL(i.EndYear, '') = '' THEN ''
+			WHEN ISNULL(i.Year, '') = '' THEN i.EndYear
+			ELSE i.Year + CASE WHEN ISNULL(i.EndYear, '') = '' THEN '' ELSE '-' + i.EndYear END
+		END AS [Year],
 		CASE WHEN ISNULL(RTRIM(i.ExternalUrl), '') = '' THEN 0 ELSE 1 END AS HasExternalContent,
         0 AS HasLocalContent,
         0 AS HasIllustrations,
