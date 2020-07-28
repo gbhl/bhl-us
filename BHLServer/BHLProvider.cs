@@ -824,7 +824,35 @@ namespace MOBOT.BHL.Server
                 }
             }
 
-            return nameDetails;
+            // Format the Global Names response
+
+            // Get the distinct name strings in the response, along with the 'best' match type for each
+            // source.  Match type is a value from 1 to 6, with 1 being the best (most definite) match,
+            // and 6 being the worst (most questionable) match.  Order the list by match type and by
+            // name string.
+            var distinctSources = from n in nameDetails
+                                  group n by n.NameString into g
+                                  let MatchType = g.Min(n => n.MatchType)
+                                  orderby MatchType, g.Key
+                                  select new { NameString = g.Key, MatchType };
+
+            // For each name string, accumulate every result for that string and add it to the final 
+            // ordered result set.
+            List<GNResolverResponse> displayNames = new List<GNResolverResponse>();
+            foreach (var nameString in distinctSources)
+            {
+                var sourceNames = from n in nameDetails
+                                  where n.NameString == nameString.NameString
+                                  orderby n.MatchType, n.DataSourceTitle, n.Score
+                                  select n;
+
+                foreach (GNResolverResponse nameDetail in sourceNames)
+                {
+                    displayNames.Add(nameDetail);
+                }
+            }
+
+            return displayNames;
         }
 
         /// <summary>
