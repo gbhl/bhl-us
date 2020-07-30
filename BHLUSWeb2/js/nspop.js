@@ -1,4 +1,7 @@
-﻿function hideNameSourceList(e) {
+﻿var _nameForms = [];
+var _nameSources = [];
+
+function hideNameSourceList(e) {
     var nameSourcePopup = $(".brNameSourcePopup");
     if (!nameSourcePopup.is(e.target) // if the target of the click isn't the container...
         && (nameSourcePopup.has(e.target).length === 0) // ... nor a descendant of the container
@@ -28,13 +31,17 @@ function showNameSources(e, lnk) {
     if (document.getElementsByClassName('brNameSourcePopup').length === 0) createBRNameSourcePopup();
 
     var resolvedName = lnk.getAttribute('data-resolved-name');
-    document.getElementsByClassName('brNameSourceLabel')[0].innerText = "Sources For " + resolvedName;
+    document.getElementsByClassName('brNameSourceLabel')[0].innerText = "Sources for " + resolvedName;
 
     var nameSourceList = document.getElementsByClassName('brNameSourceList')[0];
     while (nameSourceList.firstChild) {
         nameSourceList.removeChild(nameSourceList.firstChild);
     }
 
+    getNameDataSources(lnk, resolvedName, nameSourceList);
+}
+
+function getNameDataSources(lnk, resolvedName, nameSourceList) {
     $.ajax({
         type: 'get',
         url: '/service/getnamedatasources',
@@ -43,22 +50,7 @@ function showNameSources(e, lnk) {
         },
         success: function (data, textStatus, jqXHR) {
             if (data.length > 0) {
-                data.forEach(element => {
-                    var nameSource;
-                    if (element.Url.length > 0) {
-                        nameSource = document.createElement('a');
-                        nameSource.setAttribute('href', element.Url);
-                        nameSource.setAttribute('target', '_blank');
-                        nameSource.setAttribute('rel', 'noopener noreferrer');
-                        nameSource.innerText = element.DataSourceTitle + ' (' + element.NameString + ')';
-                    }
-                    else {
-                        nameSource = document.createTextNode(element.DataSourceTitle + ' (' + element.NameString + ')');
-                    }
-                    addBRNameSourceName(nameSource, nameSourceList);
-                }
-                );
-
+                populateNameSourcesList(data, resolvedName, nameSourceList);
                 showBRNameSourcePopup(lnk, data.length);
                 bindClickOutsideTrigger();
             } else {
@@ -75,6 +67,56 @@ function showNameSources(e, lnk) {
     });
 }
 
+function populateNameSourcesList(data, resolvedName, nameSourceList) {
+    /*
+    data.forEach(element => {
+        var nameSource;
+        if (element.Url.length > 0) {
+            nameSource = document.createElement('a');
+            nameSource.setAttribute('href', element.Url);
+            nameSource.setAttribute('target', '_blank');
+            nameSource.setAttribute('rel', 'noopener noreferrer');
+            nameSource.innerText = element.DataSourceTitle + ' (' + element.NameString + ')';
+        }
+        else {
+            nameSource = document.createTextNode(element.DataSourceTitle + ' (' + element.NameString + ')');
+        }
+        addBRNameSourceName(nameSource, nameSourceList);
+    });
+    */
+
+    _nameForms.length = 0;
+    _nameSources.length = 0;
+    var prevForm = '';
+    var formSources = [];
+    data.forEach(element => {
+        if (prevForm !== element.NameString) {
+            if (formSources.length > 0) _nameSources.push(formSources);
+            formSources = [];
+            _nameForms.push(element.NameString);
+            prevForm = element.NameString;
+        }
+
+        var nameSource;
+        if (element.Url.length > 0) {
+            nameSource = document.createElement('a');
+            nameSource.setAttribute('href', element.Url);
+            nameSource.setAttribute('target', '_blank');
+            nameSource.setAttribute('rel', 'noopener noreferrer');
+            nameSource.innerText = element.DataSourceTitle; // + ' (' + element.NameString + ')';
+        }
+        else {
+            nameSource = document.createTextNode(element.DataSourceTitle);// + ' (' + element.NameString + ')');
+        }
+
+        formSources.push(nameSource);
+    });
+    if (formSources.length > 0) _nameSources.push(formSources);
+
+    var selectedIndex = fillBRNameSourceDD(resolvedName);
+    addBRNameSourceList(selectedIndex, nameSourceList);
+}
+
 function createBRNameSourcePopup() {
     var nameSourcePopup = document.createElement('div');
     nameSourcePopup.setAttribute('class', 'brNameSourcePopup');
@@ -87,12 +129,25 @@ function createBRNameSourcePopup() {
     nameSourceCloseLink.setAttribute('href', '#');
     nameSourceCloseLink.setAttribute('class', 'brNameSourceCloseLink');
     nameSourceCloseLink.setAttribute('onClick', 'closeNameSources();');
-    nameSourceCloseLink.innerText = "close";
 
+    var nameSourceCloseImg = document.createElement('img');
+    nameSourceCloseImg.setAttribute('src', '/images/close-button.png');
+    nameSourceCloseImg.setAttribute('height', '20px');
+    nameSourceCloseImg.setAttribute('width', '20px');
+    nameSourceCloseLink.appendChild(nameSourceCloseImg);
+    
     var nameSourceClose = document.createElement('div');
     nameSourceClose.setAttribute('class', 'brNameSourceClose');
     nameSourceClose.appendChild(nameSourceCloseLink);
     nameSourcePopup.appendChild(nameSourceClose);
+
+    var nameSelect = document.createElement('select');
+    nameSelect.setAttribute('class', 'brNameSourceDD');
+    nameSelect.setAttribute('onchange', 'brNameSourceDDChange(this)');
+    var nameSelectDiv = document.createElement('div')
+    nameSelectDiv.setAttribute('class', 'brNameSourceDDDiv');
+    nameSelectDiv.append(nameSelect);
+    nameSourcePopup.appendChild(nameSelectDiv);
 
     var nameSourceList = document.createElement('div');
     nameSourceList.setAttribute('class', 'brNameSourceList');
@@ -108,6 +163,36 @@ function addBRNameSourceName(element, list) {
     list.appendChild(nameDiv);
 }
 
+function fillBRNameSourceDD(resolvedName) {
+    var nameSelect = document.getElementsByClassName('brNameSourceDD')[0];
+    while (nameSelect.options.length > 0) nameSelect.remove(0);
+
+    _nameForms.forEach(form => {
+        var nameOption = document.createElement('option');
+        nameOption.setAttribute('value', form);
+        if (stripDiacritic(form) === stripDiacritic(resolvedName)) nameOption.setAttribute('selected', 'selected');
+        nameOption.textContent = form;
+        nameSelect.append(nameOption);        
+    });
+
+    return nameSelect.selectedIndex;
+}
+
+function stripDiacritic(name) {
+    return name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+}
+
+function brNameSourceDDChange(dd) {
+   addBRNameSourceList(dd.selectedIndex, document.getElementsByClassName('brNameSourceList')[0]);
+}
+
+function addBRNameSourceList(element, list) {
+    list.innerHTML = '';
+    _nameSources[element].forEach(source => {
+        addBRNameSourceName(source, list);
+    });
+}
+
 function showBRNameSourcePopup(anchor, dataLength) {
     var nameSourcePopup = document.getElementsByClassName('brNameSourcePopup')[0];
 
@@ -117,7 +202,8 @@ function showBRNameSourcePopup(anchor, dataLength) {
         nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY) + 'px';
     }
     else {
-        nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY - ((dataLength > 25 ? 240 : dataLength * 10.5))) + 'px';
+        //nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY - ((dataLength > 25 ? 240 : dataLength * 10.5))) + 'px';
+        nameSourcePopup.style.top = (anchor.getBoundingClientRect().top + window.scrollY - 250) + 'px';
     }
 
     var windowRight = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);

@@ -360,6 +360,7 @@
     <Content Include="images\browse_map_small.png" />
     <Content Include="images\browse_titles_small.png" />
     <Content Include="images\browse_year_small.png" />
+    <Content Include="images\close-button.png" />
     <Content Include="images\collection_icon-home.png" />
     <Content Include="images\contributor_icon-home.png" />
     <Content Include="images\cul-logo.gif" />

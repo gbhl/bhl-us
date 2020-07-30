@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE dbo.ApplicationCacheSelectByKey
+﻿CREATE PROCEDURE [dbo].[ApplicationCacheSelectByKey]
 
 @CacheKey NVARCHAR(100)
 
@@ -18,6 +18,7 @@ SELECT	CacheKey,
 		CreationDate
 FROM	dbo.ApplicationCache
 WHERE	CacheKey = @CacheKey
-
-GO
-
+AND		(
+		AbsoluteExpirationDate > GETDATE() OR
+		DATEADD(mi, SlidingExpirationDuration, LastAccessDate) > GETDATE()
+		)
