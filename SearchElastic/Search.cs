@@ -170,9 +170,10 @@ namespace BHL.Search.Elastic
             if (!string.IsNullOrWhiteSpace(text.searchValue)) highlightFields.Add(ESField.TEXT);
 
             // Perform the search.  Use the CATALOG index unless a value is specified for the "text"
-            // parameter.  In that case, use the ITEMS index to perform a full-text search on the 
-            // text of the items.
-            ConfigureSearch((string.IsNullOrWhiteSpace(text.searchValue) ? ESIndex.CATALOG : ESIndex.ITEMS), 
+            // or "year" parameters.  In that case, use the ITEMS index to perform a full-text search 
+            // (text) or to find the specific volume (year).
+            ConfigureSearch(
+                (string.IsNullOrWhiteSpace(text.searchValue) && string.IsNullOrWhiteSpace(year) ? ESIndex.CATALOG : ESIndex.ITEMS), 
                 returnFields, facetFields, highlightFields);
             ISearchResult result = _esSearch.SearchCatalog(title, author, volume, year, keyword, 
                 (language != null ? language.Item2 : null), 
