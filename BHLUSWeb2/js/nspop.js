@@ -146,7 +146,7 @@ function createBRNameSourcePopup() {
     nameSelect.setAttribute('onchange', 'brNameSourceDDChange(this)');
     var nameSelectDiv = document.createElement('div')
     nameSelectDiv.setAttribute('class', 'brNameSourceDDDiv');
-    nameSelectDiv.append(nameSelect);
+    nameSelectDiv.appendChild(nameSelect);
     nameSourcePopup.appendChild(nameSelectDiv);
 
     var nameSourceList = document.createElement('div');
@@ -172,7 +172,7 @@ function fillBRNameSourceDD(resolvedName) {
         nameOption.setAttribute('value', form);
         if (stripDiacritic(form) === stripDiacritic(resolvedName)) nameOption.setAttribute('selected', 'selected');
         nameOption.textContent = form;
-        nameSelect.append(nameOption);        
+        nameSelect.appendChild(nameOption);        
     });
 
     return nameSelect.selectedIndex;
@@ -207,13 +207,13 @@ function showBRNameSourcePopup(anchor, dataLength) {
     }
 
     var windowRight = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    var popRight = anchor.getBoundingClientRect().left + window.scrollX + anchor.offsetWidth + 400;
+    var popRight = anchor.getBoundingClientRect().left + window.scrollX + anchor.offsetWidth + 350;
     if (popRight <= windowRight) {
         nameSourcePopup.style.left = (anchor.getBoundingClientRect().left + window.scrollX + anchor.offsetWidth) + 'px';
     }
     else {
-        nameSourcePopup.style.width = '400px';
-        nameSourcePopup.style.left = (anchor.getBoundingClientRect().left + window.scrollX - 410) + 'px';
+        nameSourcePopup.style.width = '350px';
+        nameSourcePopup.style.left = (anchor.getBoundingClientRect().left + window.scrollX - 360) + 'px';
     }
 
     nameSourcePopup.style.position = 'absolute';

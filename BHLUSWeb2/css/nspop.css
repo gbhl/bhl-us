@@ -13,11 +13,10 @@
     border-color: #0365A5;
     background-color: #CDD5DB;
     height: 250px;
-    width: 400px;
+    width: 350px;
     max-height: 250px;
     min-width: 250px;
-    max-width: 400px;
-    overflow: auto;
+    max-width: 350px;
     position: absolute;
 }
 
@@ -28,16 +27,19 @@
     font-style: normal;
     font-size: 15px;
     margin-bottom: 5px;
+    padding: 5px;
     float: left;
+    width: 90%;
 }
 
 .brNameSourceDDDiv {
     clear:left;
+    margin-left: 5px;
 }
 .brNameSourceDD {
     padding-right: 0px !important;
     height: auto !important;
-    max-width: 380px;
+    width: 330px;
 }
 
 .brNameSourceClose {
