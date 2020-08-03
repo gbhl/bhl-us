@@ -63,8 +63,11 @@ namespace MOBOT.BHL.API.BHLApi
                 page.PageTypes = dal.PageTypeSelectByPageID(null, null, pageIDInt);
 
                 if (ocr) page.OcrText = this.GetPageOcrText(pageID);
-                if (names) page.Names = this.GetPageNames(pageID);
-                foreach (Name name in page.Names) name.CreationDate = null;
+                if (names)
+                {
+                    page.Names = this.GetPageNames(pageID);
+                    foreach (Name name in page.Names) name.CreationDate = null;
+                }
             }
 
             return new List<Page> { page };
