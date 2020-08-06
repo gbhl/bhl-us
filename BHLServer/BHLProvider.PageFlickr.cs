@@ -28,10 +28,26 @@ namespace MOBOT.BHL.Server
             return new PageFlickrDAL().PageFlickrSelectRandom(null, null, numberToReturn);
         }
 
-        public void PageFlickrDelete(List<int> pages, int userId)
-        {
-            PageFlickrDAL dal = new PageFlickrDAL();
-            foreach (int pageID in pages) dal.PageFlickrDeleteByPageID(null, null, pageID);
-        }
-    }
+		public void PageFlickrDelete(List<int> pages, int userId)
+		{
+			TransactionController transactionController = new TransactionController();
+			try
+			{
+				transactionController.BeginTransaction();
+
+				PageFlickrDAL dal = new PageFlickrDAL();
+				foreach (int pageID in pages) dal.PageFlickrDeleteByPageID(transactionController.Connection, transactionController.Transaction, pageID);
+
+				transactionController.CommitTransaction();
+			}
+			catch
+			{
+				transactionController.RollbackTransaction();
+			}
+			finally
+			{
+				transactionController.Dispose();
+			}
+		}
+	}
 }
