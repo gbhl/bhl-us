@@ -196,8 +196,8 @@
                 </div>
 					 <div class="content column-wrap">
                     <section class="js-hide">
-						<p>Biodiversity Heritage Library uses <em>taxonomic intelligence</em> tools, including <a href="http://gnrd.globalnames.org" title="GNRD">
-							Global Names Recognition and Discovery (GNRD)</a> developed by <a href="http://globalnames.org/" title="uBio">Global Names Architecture</a>, to locate, verify, and record scientific names located
+						<p>Biodiversity Heritage Library uses <em>taxonomic intelligence</em> tools, including <a href="https://github.com/gnames/gnfinder" title="gnfinder" target="_blank">gnfinder</a> developed
+						by <a href="http://globalnames.org/" title="uBio">Global Names Architecture</a>, to locate, verify, and record scientific names located
 						within the text of each digitized page. <b>Note:</b> The text used for this identification is uncorrected OCR, so may not include
 						all results expected or visible in the page.</p>
  			        <asp:Literal ID="litNameRefine" Visible="false" runat="server" Text="<p><br />More than 500 scientific names were found.  You might want to refine your search if these were more results than you expected.</p>" />
