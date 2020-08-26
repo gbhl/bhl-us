@@ -447,6 +447,15 @@ BEGIN TRY
 				AND dfB.DataFieldTag = '245'
 				AND dfB.Code = 'b'
 
+	-- Strip forward slashes, commas, and semicolons from the end of title strings
+	UPDATE	#tmpTitle
+	SET		FullTitle = RTRIM(SUBSTRING(CONVERT(nvarchar(max), FullTitle), 1, LEN(CONVERT(nvarchar(max), FullTitle)) - 1))
+	WHERE	SUBSTRING(REVERSE(RTRIM(CONVERT(nvarchar(max), FullTitle))), 1, 1) in ('/', ',', ';')
+
+	UPDATE	#tmpTitle
+	SET		ShortTitle = RTRIM(SUBSTRING(ShortTitle, 1, LEN(ShortTitle) - 1))
+	WHERE	SUBSTRING(REVERSE(RTRIM(ShortTitle)), 1, 1) in ('/', ',', ';')
+
 	-- Part Number and Part Name
 	UPDATE	#tmpTitle
 	SET		PartNumber = SUBSTRING(df.SubFieldValue, 1, 255)

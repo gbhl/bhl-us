@@ -107,11 +107,16 @@ FROM	dbo.Marc m INNER JOIN dbo.vwMarcDataField dfA
 			ON m.MarcID = dfB.MarcID
 			AND dfB.DataFieldTag = '245'
 			AND dfB.Code = 'b'
---		LEFT JOIN dbo.vwMarcDataField dfC
---			ON m.MarcID = dfC.MarcID
---			AND dfC.DataFieldTag = '245'
---			AND dfC.Code = 'c'
 WHERE	m.MarcID = @MarcID
+
+-- Strip forward slashes, commas, and semicolons from the end of title strings
+UPDATE	#tmpTitle
+SET		FullTitle = RTRIM(SUBSTRING(CONVERT(nvarchar(max), FullTitle), 1, LEN(CONVERT(nvarchar(max), FullTitle)) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(CONVERT(nvarchar(max), FullTitle))), 1, 1) in ('/', ',', ';')
+
+UPDATE	#tmpTitle
+SET		ShortTitle = RTRIM(SUBSTRING(ShortTitle, 1, LEN(ShortTitle) - 1))
+WHERE	SUBSTRING(REVERSE(RTRIM(ShortTitle)), 1, 1) in ('/', ',', ';')
 
 -- Part Number and Part Name
 UPDATE	#tmpTitle
