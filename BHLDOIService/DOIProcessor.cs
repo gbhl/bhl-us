@@ -297,8 +297,8 @@ namespace MOBOT.BHL.BHLDOIService
         private string GenerateDOIName(string prefix, int entityTypeId, int entityID)
         {
             string doiName = string.Empty;
-            string entityTypeName = GetEntityTypeName(entityTypeId);
-            doiName = string.Format(configParms.DoiFormat, prefix, entityTypeName, entityID.ToString());
+            string entityTypeAbbreviation = GetEntityTypeAbbreviation(entityTypeId);
+            doiName = string.Format(configParms.DoiFormat, prefix, entityTypeAbbreviation, entityID.ToString());
             return doiName;
         }
 
@@ -317,6 +317,23 @@ namespace MOBOT.BHL.BHLDOIService
             if (entityTypeId == configParms.DoiEntityTypeSegment) entityTypeName = "part";
 
             return entityTypeName;
+        }
+
+        /// <summary>
+        /// Get the abbreviation for the entity type represented by the type identifier.  Abbreviation is used in the DOI name.
+        /// </summary>
+        /// <param name="entityTypeId"></param>
+        /// <returns></returns>
+        private string GetEntityTypeAbbreviation(int entityTypeId)
+        {
+            string entityTypeAbbreviation = string.Empty;
+
+            if (entityTypeId == configParms.DoiEntityTypeTitle) entityTypeAbbreviation = "t";
+            if (entityTypeId == configParms.DoiEntityTypeItem) entityTypeAbbreviation = "i";
+            if (entityTypeId == configParms.DoiEntityTypePage) entityTypeAbbreviation = "pg";
+            if (entityTypeId == configParms.DoiEntityTypeSegment) entityTypeAbbreviation = "p";
+
+            return entityTypeAbbreviation;
         }
 
         /// <summary>

@@ -14,8 +14,8 @@
     <add key="EmailToAddress" value="EMAIL RECIPIENT ADDRESS"/>
     <!-- Prefix assigned to BHL by CrossRef.  All BHL DOIs must begin with this prefix.  -->
     <add key="DOIPrefix" value="00.0000"/>
-    <!-- Format for new DOIs.  Completed DOI should look like "10.5962/bhl.title.1000" -->
-    <add key="DOIFormat" value="{0}/bhl.{1}.{2}"/>
+    <!-- Format for new DOIs.  Completed DOI should look like "10.5962/t.1000" -->
+    <add key="DOIFormat" value="{0}/{1}.{2}"/>
     <!-- CrossRef information -->
     <add key="CrossRefDepositorName" value="CROSSREF DEPOSITOR NAME"/>
     <add key="CrossRefDepositorEmail" value="CROSSREF DEPOSITOR EMAIL ADDRESS"/>
@@ -24,12 +24,12 @@
     <add key="CrossRefPassword" value="CROSSREF PASSWORD"/>
     <add key="CrossRefDepositArea" value="live"/>  <!-- valid values are "live" and "test" -->
     
-    <add key="CrossRefDepositUrlBase" value="http://doi.crossref.org/servlet"/>
-    <!--<add key="CrossRefDepositUrlBase" value="http://doi.crossref.org/servlet"/> -->
+    <add key="CrossRefDepositUrlBase" value="https://doi.crossref.org/servlet"/>
+    <!--<add key="CrossRefDepositUrlBase" value="https://doi.crossref.org/servlet"/> -->
     <add key="CrossRefDepositUrlQueryFormat" value="deposit?operation=doMDUpload&amp;login_id={0}&amp;login_passwd={1}&amp;area={2}"/>
-    <add key="CrossRefCheckSubmissionUrlFormat" value="http://doi.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/>
-    <!-- <add key="CrossRefCheckSubmissionUrlFormat" value="http://test.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/> -->
-    <add key="CrossRefXmlQueryUrlBase" value="http://doi.crossref.org/servlet"/>
+    <add key="CrossRefCheckSubmissionUrlFormat" value="https://doi.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/>
+    <!-- <add key="CrossRefCheckSubmissionUrlFormat" value="https://test.crossref.org/servlet/submissionDownload?usr={0}&amp;pwd={1}&amp;doi_batch_id={2}&amp;file_name={3}&amp;type=result"/> -->
+    <add key="CrossRefXmlQueryUrlBase" value="https://doi.crossref.org/servlet"/>
     <add key="CrossRefXmlQueryFormat" value="query?usr={0}&amp;pwd={1}&amp;format=unixsd&amp;qdata={2}"/>
 
     <!-- Number of DOIs to generate and submit to CrossRef during each execution of this app -->
