@@ -650,11 +650,17 @@ namespace MOBOT.BHL.DAL
                     if (!string.IsNullOrWhiteSpace(segment.DOIName))
                     {
                         // Update
-                        doi.DOIName = segment.DOIName;
-                        doi.DOIStatusID = 200;
-                        doi.StatusDate = DateTime.Now;
-                        doi.StatusMessage = "User-edited";
-                        doi.LastModifiedDate = DateTime.Now;
+                        if (string.Compare(doi.DOIName, segment.DOIName, true) != 0)
+                        {
+                            doi.DOIName = segment.DOIName;
+                            if (!doi.DOIName.StartsWith("10.5962"))
+                            {
+                                doi.DOIStatusID = 200;
+                                doi.StatusDate = DateTime.Now;
+                            }
+                            doi.StatusMessage = "User-edited";
+                            doi.LastModifiedDate = DateTime.Now;
+                        }
                     }
                     else
                     {

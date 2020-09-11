@@ -235,8 +235,9 @@ namespace MOBOT.BHL.Server
                         title.TitleID.ToString(),
                         DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss tt"),
                         string.IsNullOrWhiteSpace(userDescription) ? "unknown" : userDescription);
-
-                    new TitleDAL().Save(null, null, targetTitle, userId);
+                    targetTitle.LastModifiedDate = DateTime.Now;
+                    targetTitle.LastModifiedUserID = userId;
+                    new TitleDAL().TitleUpdateAuto(null, null, targetTitle);
                 }
             }
 
