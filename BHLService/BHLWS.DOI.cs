@@ -56,5 +56,11 @@ namespace MOBOT.BHL.WebService
         {
             return new BHLProvider().DOIGetFileContents(batchId, type);
         }
+
+        [WebMethod]
+        public List<DOI> DOISelectValidForTitle(int titleID)
+        {
+            return new BHLProvider().DOISelectValidForTitle(titleID);
+        }
     }
 }

@@ -121,6 +121,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.ItemNameFileLog.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.KBART.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.NameFinderResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

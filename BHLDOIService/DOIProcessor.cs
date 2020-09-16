@@ -515,6 +515,18 @@ namespace MOBOT.BHL.BHLDOIService
                     }
                 }
 
+                // If still no ISSN, use the DOI of the associated title
+                if (string.IsNullOrWhiteSpace(data.Issn))
+                {
+                    DOI[] titleDOIs = wsClient.DOISelectValidForTitle(segment.TitleId ?? 0);
+                    foreach(DOI doi in titleDOIs)
+                    {
+                        data.TitleDOIName = doi.DOIName;
+                        data.TitleDOIResource = string.Format(configParms.BhlTitleUrlFormat, segment.TitleId);
+                        break;
+                    }
+                }
+
                 bool first = true;
                 foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
                 {

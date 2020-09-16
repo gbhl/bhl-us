@@ -107,6 +107,13 @@ namespace MOBOT.BHL.DOIDeposit
             {
                 content.AppendLine("<issn media_type=\"print\">" + HttpUtility.HtmlEncode(Data.Issn) + "</issn>");
             }
+            else if (!string.IsNullOrEmpty(Data.TitleDOIName))
+            {
+                content.AppendLine("<doi_data>");
+                content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.TitleDOIName) + "</doi>");
+                content.AppendLine("<resource>" + HttpUtility.HtmlEncode(Data.TitleDOIResource) + "</resource>");
+                content.AppendLine("</doi_data>");
+            }
             content.AppendLine("</journal_metadata>");
 
             // Build the journal_issue content
@@ -174,10 +181,10 @@ namespace MOBOT.BHL.DOIDeposit
                 if (!string.IsNullOrWhiteSpace(Data.LastPage)) content.AppendLine("<last_page>" + HttpUtility.HtmlEncode(Data.LastPage) + "</last_page>");
                 content.AppendLine("</pages>");
             }
-            content.AppendLine("<doi_data>\n");
-            content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.DoiName) + "</doi>\n");
-            content.AppendLine("<resource>" + HttpUtility.HtmlEncode(Data.DoiResource) + "</resource>\n");
-            content.AppendLine("</doi_data>\n");
+            content.AppendLine("<doi_data>");
+            content.AppendLine("<doi>" + HttpUtility.HtmlEncode(Data.DoiName) + "</doi>");
+            content.AppendLine("<resource>" + HttpUtility.HtmlEncode(Data.DoiResource) + "</resource>");
+            content.AppendLine("</doi_data>");
             content.AppendLine("</journal_article>");
 
             // Insert the book metadata into the template and return the result

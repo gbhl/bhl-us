@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<doi_batch version="4.3.0" xmlns="http://www.crossref.org/schema/4.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.crossref.org/schema/4.3.0  http://www.crossref.org/schema/deposit/crossref4.3.0.xsd">
+<doi_batch version="4.4.2" xmlns="http://www.crossref.org/schema/4.4.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.crossref.org/schema/4.4.2  http://www.crossref.org/schema/deposit/crossref4.4.2.xsd">
   <head>
     <doi_batch_id>{doi_batch_id}</doi_batch_id>
     <timestamp>{timestamp}</timestamp>
     <depositor>
-      <name>{depositor_name}</name>
+      <depositor_name>{depositor_name}</depositor_name>
       <email_address>{depositor_email_address}</email_address>
     </depositor>
     <registrant>{registrant}</registrant>

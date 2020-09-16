@@ -89,6 +89,20 @@ namespace MOBOT.BHL.DOIDeposit
             set { _title = value; }
         }
 
+        private string _titleDOIName = string.Empty;
+        public string TitleDOIName
+        {
+            get { return _titleDOIName; }
+            set { _titleDOIName = value; }
+        }
+
+        private string _titleDOIResource = string.Empty;
+        public string TitleDOIResource
+        {
+            get { return _titleDOIResource; }
+            set { _titleDOIResource = value; }
+        }
+
         private string _publicationDate = string.Empty;
         public string PublicationDate
         {
