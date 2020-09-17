@@ -29,11 +29,12 @@ SELECT DISTINCT TOP (@NumToReturn)
 FROM	dbo.Segment s WITH (NOLOCK) 
 		INNER JOIN dbo.SegmentInstitution sinst WITH (NOLOCK) ON s.SegmentID = sinst.SegmentID
 		INNER JOIN dbo.InstitutionRole r WITH (NOLOCK) ON sinst.InstitutionRoleID = r.InstitutionRoleID
-		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON s.SegmentID = d.EntityID	AND d.DOIEntityTypeID = 40 -- Segment
+		LEFT JOIN dbo.DOI d WITH (NOLOCK) ON s.SegmentID = d.EntityID AND d.DOIEntityTypeID = 40 -- Segment
 		INNER JOIN dbo.SearchCatalogSegment c WITH (NOLOCK) ON s.SegmentID = c.SegmentID
 		INNER JOIN dbo.Item i WITH (NOLOCK) ON s.ItemID = i.ItemID
 		LEFT JOIN dbo.Title_Identifier ti WITH (NOLOCK) ON i.PrimaryTitleID = ti.TitleID AND ti.IdentifierID = @ISSNID
 		LEFT JOIN dbo.SegmentIdentifier si WITH (NOLOCK) ON s.SegmentID = si.SegmentID AND si.IsContainerIdentifier = 1 AND si.IdentifierID = @ISSNID
+		LEFT JOIN dbo.DOI td ON i.PrimaryTitleID = td.EntityID AND td.IsValid = 1 AND td.DOIEntityTypeID = 10 -- Title
 WHERE	s.SegmentStatusID = 20 -- Published
 AND		(d.DOIStatusID = 10 -- No DOI
 OR		d.DOIStatusID = 20 -- DOI Assigned (but not submitted)
@@ -44,7 +45,7 @@ AND		r.InstitutionRoleName = 'Contributor'
 AND		s.CreationDate <= @MaxDate -- Only select segments older than specified # of days
 AND		c.HasLocalContent = 1 -- Make sure that the segment content is held within BHL
 AND		sinst.InstitutionCode <> 'USER'  -- No user-contributed segments
-AND		(ti.IdentifierValue IS NOT NULL OR si.IdentifierValue IS NOT NULL) -- Make sure that an ISSN exists for the segment container
+AND		(ti.IdentifierValue IS NOT NULL OR si.IdentifierValue IS NOT NULL OR td.DOIName IS NOT NULL) -- Make sure that an ISSN or DOI exists for the segment container
 AND		s.SegmentGenreID <> @TreatmentID	-- Any segment types except treatments
 
 END
