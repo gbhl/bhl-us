@@ -27,251 +27,253 @@
 		}
 	},
 	"mappings" : {
-		"item" : {
-			"properties" : {
-				"associations" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
+		"properties" : {
+			"_all" : {
+				"type" : "text"
+			},
+			"associations" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
 					}
 				},
-				"authors" : {
-					"type" : "keyword",
-					"index" : false
-				},
-				"collections" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"container" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
+				"copy_to" : "_all"
+			},
+			"authors" : {
+				"type" : "keyword",
+				"index" : false
+			},
+			"collections" : {
+				"type" : "keyword"
+			},
+			"container" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
 					},
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
 					}
 				},
-				"contributors" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					},
-					"include_in_all" : false
-				},
-				"dateRanges" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"dates" : {
-					"type" : "keyword"
-				},
-				"doi" : {
-					"type" : "text",
-					"analyzer" : "standard",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
+				"copy_to" : "_all"
+			},
+			"contributors" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
 					}
-				},
-				"facetAuthors" : {
-					"type" : "keyword"
-				},			
-				"genre" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"hasExternalContent" : {
-					"type" : "boolean"
-				},
-				"hasIllustrations" : {
-					"type" : "boolean"
-				},
-				"hasLocalContent" : {
-					"type" : "boolean"
-				},
-				"hasSegments" : {
-					"type" : "boolean"
-				},
-				"id" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"isbn" : {
-					"type" : "text",
-					"analyzer" : "standard",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					}
-				},
-				"issn" : {
-					"type" : "text",
-					"analyzer" : "standard",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					}
-				},
-				"issue" : {
-					"type" : "text",
-					"analyzer" : "default"
-				},
-				"itemId" : {
-					"type" : "long",
-					"include_in_all" : false
-				},
-				"keywords" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					}
-				},
-				"language" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"materialType" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"notes" : {
-					"type" : "text",
-					"analyzer" : "default"
-				},
-				"oclc" : {
-					"type" : "text",
-					"analyzer" : "standard",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					}
-				},
-				"pageRange" : {
-					"type" : "keyword",
-					"index" : false
-				},
-				"publicationPlace" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					},
-					"include_in_all" : false
-				},
-				"publisher" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					},
-					"include_in_all" : false
-				},
-				"searchAuthors" : {
-					"type" : "text",
-					"analyzer" : "default"
-				},
-				"segmentId" : {
-					"type" : "long",
-					"include_in_all" : false
-				},
-				"series" : {
-					"type" : "text",
-					"analyzer" : "default"
-				},
-				"sortTitle" : {
-					"type" : "keyword",
-					"include_in_all" : false
-				},
-				"startPageId" : {
-					"type" : "long",
-					"include_in_all" : false
-				},
-				"text" : {
-					"type" : "text",
-					"analyzer" : "default"
-				},
-				"title" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
-					},
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
-					}
-				},
-				"titleId" : {
-					"type" : "long",
-					"include_in_all" : false
-				},
-				"translatedTitle" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
-					}
-				},
-				"uniformTitle" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
-					}
-				},
-				"url" : {
-					"type" : "keyword",
-					"index" : false
-				},
-				"variants" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"abbr" : {
-							"type" : "text",
-							"analyzer" : "fragment"
-						}
-					}
-				},
-				"volume" : {
-					"type" : "text",
-					"analyzer" : "default"
 				}
+			},
+			"dateRanges" : {
+				"type" : "keyword"
+			},
+			"dates" : {
+				"type" : "keyword",
+				"copy_to" : "_all"
+			},
+			"doi" : {
+				"type" : "text",
+				"analyzer" : "standard",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"facetAuthors" : {
+				"type" : "keyword",
+				"copy_to" : "_all"
+			},			
+			"genre" : {
+				"type" : "keyword"
+			},
+			"hasExternalContent" : {
+				"type" : "boolean"
+			},
+			"hasIllustrations" : {
+				"type" : "boolean"
+			},
+			"hasLocalContent" : {
+				"type" : "boolean"
+			},
+			"hasSegments" : {
+				"type" : "boolean"
+			},
+			"id" : {
+				"type" : "keyword"
+			},
+			"isbn" : {
+				"type" : "text",
+				"analyzer" : "standard",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"issn" : {
+				"type" : "text",
+				"analyzer" : "standard",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"issue" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
+			},
+			"itemId" : {
+				"type" : "long"
+			},
+			"keywords" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"language" : {
+				"type" : "keyword"
+			},
+			"materialType" : {
+				"type" : "keyword"
+			},
+			"notes" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
+			},
+			"oclc" : {
+				"type" : "text",
+				"analyzer" : "standard",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"pageRange" : {
+				"type" : "keyword",
+				"index" : false
+			},
+			"publicationPlace" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				}
+			},
+			"publisher" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					}
+				}
+			},
+			"searchAuthors" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
+			},
+			"segmentId" : {
+				"type" : "long"
+			},
+			"series" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
+			},
+			"sortTitle" : {
+				"type" : "keyword"
+			},
+			"startPageId" : {
+				"type" : "long"
+			},
+			"text" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
+			},
+			"title" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
+					},
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"titleId" : {
+				"type" : "long"
+			},
+			"translatedTitle" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"uniformTitle" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"url" : {
+				"type" : "keyword",
+				"index" : false
+			},
+			"variants" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"abbr" : {
+						"type" : "text",
+						"analyzer" : "fragment"
+					}
+				},
+				"copy_to" : "_all"
+			},
+			"volume" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"copy_to" : "_all"
 			}
 		}
 	}

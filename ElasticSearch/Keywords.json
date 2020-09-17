@@ -1,5 +1,6 @@
 {
 	"settings": {
+		"number_of_shards": 5,
 		"merge": {
 			"scheduler": {
 				"max_thread_count": "1"
@@ -15,21 +16,22 @@
 		}
 	},
 	"mappings" : {
-		"keyword" : {
-			"properties" : {
-				"id" : {
-					"type" : "long",
-					"include_in_all" : false
-				},
-				"keyword" : {
-					"type" : "text",
-					"analyzer" : "default",
-					"fields" : {
-						"raw" : {
-							"type" : "keyword"
-						}
+		"properties" : {
+			"_all" : {
+				"type" : "text"
+			},
+			"id" : {
+				"type" : "long"
+			},
+			"keyword" : {
+				"type" : "text",
+				"analyzer" : "default",
+				"fields" : {
+					"raw" : {
+						"type" : "keyword"
 					}
-				}
+				},
+				"copy_to" : "_all"
 			}
 		}
 	}
