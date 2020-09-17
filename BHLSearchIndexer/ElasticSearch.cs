@@ -41,14 +41,14 @@ namespace BHL.SearchIndexer
         {
             string queryString = string.Format("titleId:{0} AND itemId:{1}", titleId, itemId);
             ISearchResponse<dynamic> results = QueryStringSearch(queryString);
-            return (results.HitsMetaData.Total > 0);
+            return (results.HitsMetadata.Total.Value > 0);
         }
 
         public bool IndexEntryExists(string titleId)
         {
             string queryString = string.Format("titleId:{0}", titleId);
             ISearchResponse<dynamic> results = QueryStringSearch(queryString);
-            return (results.HitsMetaData.Total > 0);
+            return (results.HitsMetadata.Total.Value > 0);
         }
 
         private ISearchResponse<dynamic> QueryStringSearch(string queryString)
@@ -71,12 +71,12 @@ namespace BHL.SearchIndexer
 
         public void Index(Item document)
         {
-            if (document != null) _es.Index(document);
+            if (document != null) _es.IndexDocument(document);
         }
 
         public void Index(CatalogItem document)
         {
-            if (document != null) _es.Index(document);
+            if (document != null) _es.IndexDocument(document);
         }
 
         public void IndexMany(List<CatalogItem> documents)
@@ -165,7 +165,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<CatalogItem>(document, d => d
+                DeleteResponse response = _es.Delete<CatalogItem>(document, d => d
                                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -176,7 +176,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<Item>(document, d => d
+                DeleteResponse response = _es.Delete<Item>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -187,7 +187,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<Author>(document, d => d
+                DeleteResponse response = _es.Delete<Author>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -198,7 +198,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<Keyword>(document, d => d
+                DeleteResponse response = _es.Delete<Keyword>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -209,7 +209,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<Name>(document, d => d
+                DeleteResponse response = _es.Delete<Name>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -220,7 +220,7 @@ namespace BHL.SearchIndexer
         {
             if (document != null)
             {
-                IDeleteResponse response = _es.Delete<Page>(document, d => d
+                DeleteResponse response = _es.Delete<Page>(document, d => d
                     .Refresh(Elasticsearch.Net.Refresh.WaitFor)
                     );
                 if (!response.IsValid) throw new Exception(GetIndexErrorString(response));
@@ -289,7 +289,7 @@ namespace BHL.SearchIndexer
             // Clean up the index
             ForceMergeRequest fmRequest = new ForceMergeRequest(_indexName);
             fmRequest.OnlyExpungeDeletes = true;
-            _es.ForceMerge(fmRequest);
+            _es.Indices.ForceMerge(fmRequest);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace BHL.SearchIndexer
             ClusterHealthRequest healthRequest = new ClusterHealthRequest();
             healthRequest.Timeout = new Time("30s");
             healthRequest.WaitForStatus = Elasticsearch.Net.WaitForStatus.Yellow;
-            var healthResponse = _es.ClusterHealth(healthRequest);
+            var healthResponse = _es.Cluster.Health(healthRequest);
             if (!healthResponse.IsValid) ProcessError(healthResponse);
         }
 
