@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Nest;
 
 namespace BHL.Search.Elastic
@@ -45,12 +46,6 @@ namespace BHL.Search.Elastic
         {
             get { return _indexName; }
             set { _indexName = value ?? ESIndex.DEFAULT; }
-        }
-
-        public string TypeName
-        {
-            get { return _typeName; }
-            set { _typeName = value ?? ESType.ALL; }
         }
 
         public List<string> ReturnFields
@@ -728,7 +723,6 @@ namespace BHL.Search.Elastic
             // Construct the query
             SearchDescriptor<dynamic> searchDesc = new SearchDescriptor<dynamic>();
             searchDesc.Index(_indexName);
-            searchDesc.Type(TypeName ?? "");
             searchDesc.From((_startPage - 1) * _numResults);
             searchDesc.Size(_numResults);               // Max number of results to return
             searchDesc.Timeout("10s");                  // 10 second timeout (valid units are d, h, m, s, ms, micros, nanos)
@@ -829,7 +823,8 @@ namespace BHL.Search.Elastic
                     .Terms(facet.Item1, t => t
                         .Field(facet.Item1)
                         .Size(_numFacets)
-                        .Order(facet.Item2 == ESFacetSortOrder.COUNT ? TermsOrder.CountDescending : TermsOrder.TermAscending)));
+                        .Order(f => facet.Item2 == ESFacetSortOrder.COUNT ? f.CountDescending() : f.KeyAscending())));
+                        //.Order(facet.Item2 == ESFacetSortOrder.COUNT ? TermsOrder.CountDescending : TermsOrder.KeyAscending)));
             }
 
             searchDesc.Aggregations(aggDescriptor =>
@@ -881,7 +876,7 @@ namespace BHL.Search.Elastic
             if (results != null)
             {
                 // Get metadata about search results
-                result.TotalHits = results.HitsMetaData.Total;
+                result.TotalHits = results.HitsMetadata.Total.Value;
                 result.TotalPages = (result.TotalHits / (long)result.PageSize) + 1;
                 result.IsValid = results.IsValid;
                 if (_debug || !results.IsValid) result.DebugInfo = results.DebugInformation;
@@ -894,47 +889,65 @@ namespace BHL.Search.Elastic
                 // Get the search hits
                 foreach (var hit in results.Hits)
                 {
-                    switch (hit.Type)
-                    {
-                        case ESType.CATALOGITEM:
-                            string title = hit.Source.title;
-                            ItemHit item = hit.Source.ToObject<ItemHit>();
-                            item.Score = hit.Score;
-                            item.Highlights = GetHighlights(hit);
-                            result.Items.Add(item);
-                            break;
-                        case ESType.ITEM:
-                            title = hit.Source.title;
-                            item = hit.Source.ToObject<ItemHit>();
-                            item.Score = hit.Score;
-                            item.Highlights = GetHighlights(hit);
-                            result.Items.Add(item);
-                            break;
-                        case ESType.PAGE:
-                            PageHit page = hit.Source.ToObject<PageHit>();
-                            page.Score = hit.Score;
-                            page.Highlights = GetHighlights(hit);
-                            result.Pages.Add(page);
-                            break;
-                        case ESType.NAME:
-                            NameHit name = hit.Source.ToObject<NameHit>();
-                            name.Score = hit.Score;
-                            name.Highlights = GetHighlights(hit);
-                            result.Names.Add(name);
-                            break;
-                        case ESType.AUTHOR:
-                            AuthorHit author = hit.Source.ToObject<AuthorHit>();
-                            author.Score = hit.Score;
-                            author.Highlights = GetHighlights(hit);
-                            result.Authors.Add(author);
-                            break;
-                        case ESType.KEYWORD:
-                            KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
-                            keyword.Score = hit.Score;
-                            keyword.Highlights = GetHighlights(hit);
-                            result.Keywords.Add(keyword);
-                            break;
+                    //switch (hit.Type)
+                    //{
+                    if (hit.Index.ToLower() == ESIndex.CATALOG.ToLower())
+                    { 
+                        //case ESType.CATALOGITEM:
+                        string title = hit.Source.title;
+                        ItemHit item = hit.Source.ToObject<ItemHit>();
+                        item.Score = hit.Score;
+                        item.Highlights = GetHighlights(hit);
+                        result.Items.Add(item);
+                        //break;
                     }
+                    if (hit.Index.ToLower() == ESIndex.ITEMS.ToLower())
+                    {
+                        //case ESType.ITEM:
+                        string title = hit.Source.title;
+                        ItemHit item = hit.Source.ToObject<ItemHit>();
+                        item.Score = hit.Score;
+                        item.Highlights = GetHighlights(hit);
+                        result.Items.Add(item);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.PAGES.ToLower())
+                    {
+                        //case ESType.PAGE:
+                        PageHit page = hit.Source.ToObject<PageHit>();
+                        page.Score = hit.Score;
+                        page.Highlights = GetHighlights(hit);
+                        result.Pages.Add(page);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.NAMES.ToLower())
+                    {
+                        //case ESType.NAME:
+                        NameHit name = hit.Source.ToObject<NameHit>();
+                        name.Score = hit.Score;
+                        name.Highlights = GetHighlights(hit);
+                        result.Names.Add(name);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.AUTHORS.ToLower())
+                    {
+                        //case ESType.AUTHOR:
+                        AuthorHit author = hit.Source.ToObject<AuthorHit>();
+                        author.Score = hit.Score;
+                        author.Highlights = GetHighlights(hit);
+                        result.Authors.Add(author);
+                        //break;
+                    }
+                    if (hit.Index.ToLower() == ESIndex.KEYWORDS.ToLower())
+                    {
+                        //case ESType.KEYWORD:
+                        KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
+                        keyword.Score = hit.Score;
+                        keyword.Highlights = GetHighlights(hit);
+                        result.Keywords.Add(keyword);
+                        //break;
+                    }
+                    //}
                 }
 
                 // Get facets
@@ -960,21 +973,28 @@ namespace BHL.Search.Elastic
                 }
 
                 // Get suggestions
-                foreach (var suggestResults in results.Suggest)
+                foreach(var suggestKey in results.Suggest.Keys)
+                //foreach (var suggestResults in results.Suggest)
                 {
-                    foreach (var suggestion in suggestResults.Value)
+                    foreach (var suggestion in results.Suggest[suggestKey])
+                    //foreach (var suggestion in suggestResults.Value)
                     {
                         foreach (var option in suggestion.Options)
                         {
-                            SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
-                            if (result.Suggestions.ContainsKey(suggestKey))
+                            SearchField suggestField = GetSearchFieldEnum(suggestKey);
+                            //SearchField suggestKey = GetSearchFieldEnum(suggestResults.Key);
+                            if (result.Suggestions.ContainsKey(suggestField))
+                            //if (result.Suggestions.ContainsKey(suggestKey))
                             {
-                                if (!result.Suggestions[suggestKey].Contains(option.Text))
-                                    result.Suggestions[suggestKey].Add(option.Text);
+                                if (!result.Suggestions[suggestField].Contains(option.Text))
+                                    result.Suggestions[suggestField].Add(option.Text);
+                                //if (!result.Suggestions[suggestKey].Contains(option.Text))
+                                //    result.Suggestions[suggestKey].Add(option.Text);
                             }
                             else
                             {
-                                result.Suggestions.Add(suggestKey, new List<string> { option.Text });
+                                result.Suggestions.Add(suggestField, new List<string> { option.Text });
+                                //result.Suggestions.Add(suggestKey, new List<string> { option.Text });
                             }
 
                         }
@@ -994,15 +1014,15 @@ namespace BHL.Search.Elastic
         {
             List<Tuple<string, string>> highlights = new List<Tuple<string, string>>();
 
-            foreach (var highlight in hit.Highlights)
+            foreach (var highlight in hit.Highlight)
             {
-                HighlightHit highlightHit = highlight.Value;
-                foreach (string highlightString in highlightHit.Highlights)
+                IReadOnlyCollection<string> highlightHit = highlight.Value;
+                foreach (string highlightString in highlightHit)
                 {
                     // Replace "_abbr" field names with the name of the "parent" field.  For example, replace "title_abbr"
                     // with "title".
                     string highlightField = string.Empty;
-                    switch(highlightHit.Field)
+                    switch(highlight.Key)
                     {
                         case ESField.ASSOCIATIONS_ABBR:
                             highlightField = ESField.ASSOCIATIONS;
@@ -1023,7 +1043,7 @@ namespace BHL.Search.Elastic
                             highlightField = ESField.VARIANTS;
                             break;
                         default:
-                            highlightField = highlightHit.Field;
+                            highlightField = highlight.Key;
                             break;
                     }
 
@@ -1054,7 +1074,7 @@ namespace BHL.Search.Elastic
             ClusterHealthRequest healthRequest = new ClusterHealthRequest();
             healthRequest.Timeout = new Time("30s");
             healthRequest.WaitForStatus = Elasticsearch.Net.WaitForStatus.Yellow;
-            var healthResponse = _es.ClusterHealth(healthRequest);
+            var healthResponse = _es.Cluster.Health(healthRequest);
             if (!healthResponse.IsValid) ProcessError(healthResponse);
         }
 
@@ -1199,7 +1219,6 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("QUERY: {0}", query));
             Console.WriteLine(string.Format("LIMIT: {0}", limit));
             Console.WriteLine(string.Format("INDEX: {0}", IndexName));
-            Console.WriteLine(string.Format("TYPE: {0}", TypeName));
             Console.WriteLine(string.Format("RETURN FIELDS: {0}", string.Join(",", ReturnFields.ToArray())));
             Console.WriteLine(string.Format("SORT FIELDS: {0}", SortField));
 
@@ -1213,7 +1232,7 @@ namespace BHL.Search.Elastic
             Console.WriteLine(string.Format("HIGHLIGHT FIELDS: {0}", string.Join(",", HighlightFields.ToArray())));
             Console.WriteLine(string.Format("SUGGEST: {0}", Suggest ? "TRUE" : "FALSE"));
             Console.WriteLine(string.Format("RESULTS: {0} returned out of {1} total hits",
-                results.HitsMetaData.Hits.Count, results.HitsMetaData.Total));
+                results.HitsMetadata.Hits.Count, results.HitsMetadata.Total.Value));
             Console.WriteLine();
             Console.WriteLine("REQUEST:");
             Console.WriteLine(System.Text.Encoding.UTF8.GetString(results.ApiCall.RequestBodyInBytes));
@@ -1247,33 +1266,39 @@ namespace BHL.Search.Elastic
 
             foreach (var hit in results.Hits)
             {
-                foreach (var highlight in hit.Highlights)
+                foreach (var highlight in hit.Highlight)
                 {
-                    HighlightHit highlightHit = highlight.Value;
-                    foreach (string highlightString in highlightHit.Highlights)
+                    IReadOnlyCollection<string> highlightHits = highlight.Value;
+                    foreach (string highlightString in highlightHits)
                     {
-                        Console.WriteLine(string.Format("Highlight {0}:{1}-{2}", hit.Id, highlightHit.Field, highlightString));
+                        Console.WriteLine(string.Format("Highlight {0}:{1}-{2}", hit.Id, highlight.Key, highlightString));
                     }
                 }
 
-                if (hit.Highlights.Count > 0) Console.WriteLine();
+                if (hit.Highlight.Count > 0) Console.WriteLine();
             }
 
             Dictionary<string, List<string>> suggestions = new Dictionary<string, List<string>>();
-            foreach (var suggestResults in results.Suggest)
+            foreach (var suggestKey in results.Suggest.Keys)
+            //foreach (var suggestResults in results.Suggest)
             {
-                foreach (var suggestion in suggestResults.Value)
+                foreach (var suggestion in results.Suggest[suggestKey])
+                //foreach (var suggestion in suggestResults.Value)
                 {
                     foreach (var option in suggestion.Options)
                     {
-                        if (suggestions.ContainsKey(suggestResults.Key))
+                        if (suggestions.ContainsKey(suggestKey))
+                        //if (suggestions.ContainsKey(suggestResults.Key))
                         {
-                            if (!suggestions[suggestResults.Key].Contains(option.Text))
-                                suggestions[suggestResults.Key].Add(option.Text);
+                            if (!suggestions[suggestKey].Contains(option.Text))
+                                suggestions[suggestKey].Add(option.Text);
+                            //if (!suggestions[suggestResults.Key].Contains(option.Text))
+                            //    suggestions[suggestResults.Key].Add(option.Text);
                         }
                         else
                         {
-                            suggestions.Add(suggestResults.Key, new List<string> { option.Text });
+                            suggestions.Add(suggestKey, new List<string> { option.Text });
+                            //suggestions.Add(suggestResults.Key, new List<string> { option.Text });
                         }
                     }
                 }
