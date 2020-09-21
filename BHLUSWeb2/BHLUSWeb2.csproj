@@ -166,6 +166,7 @@
     <Content Include="api2\docs\SubjectSearch.xml" />
     <Content Include="api2\docs\TitleSearchSimple.xml" />
     <Content Include="api2\soap.asmx" />
+    <Content Include="css\nspop.css" />
     <Content Include="Docs\api3\AuthorSearch.xml" />
     <Content Include="Docs\api3.html" />
     <Content Include="Docs\api3\GetAuthorMetadata.xml" />
@@ -359,6 +360,7 @@
     <Content Include="images\browse_map_small.png" />
     <Content Include="images\browse_titles_small.png" />
     <Content Include="images\browse_year_small.png" />
+    <Content Include="images\close-button.png" />
     <Content Include="images\collection_icon-home.png" />
     <Content Include="images\contributor_icon-home.png" />
     <Content Include="images\cul-logo.gif" />
@@ -368,6 +370,7 @@
     <Content Include="images\darwin_book_header.png" />
     <Content Include="images\date_icon-home.png" />
     <Content Include="images\DMP-Logo2.png" />
+    <Content Include="images\dna_9px_arrow.png" />
     <Content Include="images\down.gif" />
     <Content Include="images\envelope_icon.png" />
     <Content Include="images\eol_11px.png" />
@@ -429,6 +432,7 @@
     <Content Include="images\view_page.gif" />
     <Content Include="ItemNotFound.aspx" />
     <Content Include="ItemPage.aspx" />
+    <Content Include="js\nspop.js" />
     <Content Include="tify\tify.html" />
     <Content Include="tify\tifysrc\supporters\sub-logo.svg" />
     <Content Include="tify\tifysrc\tify-logo-white.svg" />
@@ -686,6 +690,7 @@
     <Compile Include="Controllers\IIIFController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="controls\BookBrowseControl.ascx.cs">
       <DependentUpon>BookBrowseControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1037,6 +1042,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Service\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

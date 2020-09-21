@@ -246,21 +246,6 @@
                             <div>
                                 <div class="sibResultsHeader">Results For:  <span id="sibTextEcho"></span> <span id="sibNumResults"></span></div>
                             </div>
-
-                            <!-- facets -->
-                            <!--
-                            <div class="sibFacetContainer">
-                                <div class="sibFacetBox">
-                                    <div class="sibFacetHeader">Narrow Search By:</div>
-                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Type</div>
-                                    <div class="sibFacetValues"><input type="checkbox" /> Text (38) <input type="checkbox" /> Illustration (5) <input type="checkbox" /> Drawing (4) <input type="checkbox" /> Cover (2)</div>
-                                    <hr />
-                                    <div class="sibFacetLabel"><img src="/images/bib_minus.gif" /> Name</div>
-                                    <div class="sibFacetValues"><input type="checkbox" /> Mollusca (7) <input type="checkbox" /> Lepidoptera (4) <input type="checkbox" /> Brachiopoda (3) <input type="checkbox" /> Astraea (2)</div>
-                                </div>
-                            </div>
-                            -->
-
                             <div class="sibResultsContainer">
                                 <div class="sibResultsBox">
                                  </div>
@@ -424,6 +409,7 @@
     runat="server">
     <link rel="stylesheet" type="text/css" href="/css/BookReader.css?v=4" />
     <link rel="stylesheet" type="text/css" href="/css/bookviewer_extra.css?v=7" />
+    <link rel="stylesheet" type="text/css" href="/css/nspop.css?v=1" />
 </asp:Content>
 <asp:content id="scriptContent" contentplaceholderid="scriptContentPlaceHolder" runat="server">
 <script src="/js/libs/jquery.easing.1.3.js" type="text/javascript"></script>
@@ -439,6 +425,7 @@
 <script src="/js/libs/BookReader.js?v=4" type="text/javascript"></script>
 <script src="/js/libs/dragscrollable.js" type="text/javascript"></script>
 <script src="/js/libs/jquery.text-overflow.min.js" type="text/javascript"></script>
+<script src="/js/nspop.js?v=1" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -493,7 +480,6 @@
         var isModalDialogChange;
         var cancelPdfSelection = false;
         var newpageOCR = $("#pageOCR-panel");
-        //var newpageReaderComments = $("#pageReaderComments-panelInner");
         var pageNames = $("#names-panel");
 
         // On Hide Action for Dialogs
@@ -700,17 +686,14 @@
                 success: function (data, textStatus, jqXHR) {
                     if(data.length > 0) {
                         pageNames.empty();
-                        $.each(data, function(index, name) {
-                            var ubioLink = $('<span/>', { 'class' : 'ubio-links' }).append(
-                                $('<a/>', { 
-                                    'href' : '/name/' + name.UrlName,
-                                    'text' : name.ResolvedNameString
+                        $.each(data, function (index, name) {
+                            var ubioLink = $('<span/>', { 'class': 'ubio-links' }).append(
+                                $('<a/>', {
+                                    'href': '/name/' + name.UrlName,
+                                    'text': name.ResolvedNameString
                                 })).appendTo(pageNames);
 
-                            if(name.EOLID > 0) {
-                                ubioLink.append(
-                                    " <a href='http://www.eol.org/pages/" + name.EOLID + "'><img src='/images/eol_11px.png'></a>")
-                            }
+                            ubioLink.append("<a href='#' class='brlnkNameSources' data-resolved-name='" + name.ResolvedNameString + "' onclick='showNameSources(event, this);'><img src='/images/dna_9px_arrow.png' /></a>");
                         });
                     } else {
                         pageNames.empty();
@@ -803,7 +786,6 @@
             onHide: onHideAction
         });
         $(".buttondrop.download").click(function(){
-            // $(".downloadcontents").slideToggle("fast"); 
             if ($(".downloadcontents").css("display") == "block") {
                 $(".downloadcontents").slideUp("fast"); 
             } else {
@@ -811,11 +793,8 @@
             }
             
             $(document).mouseup(function (e){
-                var container = $(".downloadcontents");
-                //if (container.has(e.target).length === 0) {
-                    $(".downloadcontents").slideUp("fast"); 
-                    $(document).unbind("mouseup");
-                //}
+                $(".downloadcontents").slideUp("fast"); 
+                $(document).unbind("mouseup");
             });
         });
         $(".selectpages").click(function(){
@@ -934,7 +913,6 @@
         // Binder for "Show More" link
         $(document).delegate(".showmore a", "click", function() {
             var leftPanelHeight = $("#left-panel2").height();
-            var tocHeight = $("#lstPages").height();
             var newHeight = leftPanelHeight;
             var showMore = ($(this).html() === "Show More");
 
@@ -973,7 +951,6 @@
                 $.each(pdfPages, function(index, pdfPageIndex) { 
                     var pdfPage;
                     var deletePage = $("<a/>", { 'class': 'delete', text: 'delete' }).click(function() {
-                        //$('#ptb' + pdfPageIndex).trigger(pageToolBoxEvent);
                         pdfPageCount = pdfPages.remove(index);
                         $('#ptb' + pdfPageIndex).removeClass('selected').attr('bt-xtitle', 'Add to My PDF');
                         lastPdfIndex = -1;
@@ -1362,7 +1339,7 @@
             pdfCounter.stop(true, true).animate({ backgroundColor : activeBG }, 100, 'easeOutQuad', function() {
                 if(pdfPageCount <= 0) {
                     pdfCounter.text('No Pages Added');
-                    pdfBar.removeClass('active').addClass('disabled'); //.fadeTo(200, 0.5);
+                    pdfBar.removeClass('active').addClass('disabled');
                 } else if(pdfPageCount == 1) {
                     pdfCounter.text(pdfPageCount + ' Page Added');
                     pdfReviewCounter.text(pdfPageCount + ' Page');
@@ -1567,9 +1544,6 @@
     });
 
     $(window).bind('resize', this, function (e) {
-        //var rightPanelHeight = $("#right-panel2").height();
-        //var pageOCRHeaderHeight = $("#pageOCR-panel .header").height();
-        //var pageReaderCommentsHeaderHeight = $("#pageReaderComments-panel .header").height();
         updateUIHeights(); 
     });
 
@@ -1577,8 +1551,6 @@
         var leftPanelHeight = $("#left-panel2").height();
         var pagesPanel = $("#lstPages").outerHeight();
         var namesPanel = $("#names-panel").outerHeight();
-        //var topLeftPanelHeight = $("#left-panel2 .left-panel-boxes:first-child").outerHeight();
-        //var bottomLeftPanelHeight = $("#left-panel2 .left-panel-boxes:last-child").outerHeight();
 
         var topTotalHeight = 0; 
         $("#left-panel2 .left-panel-boxes:first-child").children().each(function(){
@@ -1592,15 +1564,11 @@
         });
         bottomTotalHeight = bottomTotalHeight-namesPanel;
 
-        var lphh = (leftPanelHeight)/4;  // -topLeftPanelHeight-bottomLeftPanelHeight
-        //var lcpd = (topTotalHeight - bottomTotalHeight)/2; 
+        var lphh = (leftPanelHeight)/4;
 
         if (leftPanelHeight < 720) {
             topTotalHeight = 0;
             bottomTotalHeight = 0; 
-        } else {
-            //topTotalHeight += 10;
-            //bottomTotalHeight += 10; 
         }
 
         if (topTotalHeight >= bottomTotalHeight) {
@@ -1717,7 +1685,6 @@
 
     //initialize annotation box
     var $_AnnotationBox = $('#AnnotationBox'),
-        //$_toggleAnnotationBox = $('#AnnotationBox #toggleAnnotationBox'),
         $_hide_annotations = $('#AnnotationBox #hide-annotations'),
         $_stub = $('#AnnotationBox #stub'),
         $_show_annotations = $('#AnnotationBox #show-annotations'),
