@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Nest;
+using Newtonsoft.Json.Serialization;
 
 namespace BHL.Search.Elastic
 {
@@ -892,10 +894,11 @@ namespace BHL.Search.Elastic
                     //switch (hit.Type)
                     //{
                     if (hit.Index.ToLower() == ESIndex.CATALOG.ToLower())
-                    { 
+                    {
                         //case ESType.CATALOGITEM:
-                        string title = hit.Source.title;
-                        ItemHit item = hit.Source.ToObject<ItemHit>();
+                        //string title = hit.Source.title;
+                        ItemHit item = HitToObject<ItemHit>(hit);
+                        //ItemHit item = hit.Source.ToObject<ItemHit>();
                         item.Score = hit.Score;
                         item.Highlights = GetHighlights(hit);
                         result.Items.Add(item);
@@ -904,8 +907,9 @@ namespace BHL.Search.Elastic
                     if (hit.Index.ToLower() == ESIndex.ITEMS.ToLower())
                     {
                         //case ESType.ITEM:
-                        string title = hit.Source.title;
-                        ItemHit item = hit.Source.ToObject<ItemHit>();
+                        //string title = hit.Source.title;
+                        ItemHit item = HitToObject<ItemHit>(hit);
+                        //ItemHit item = hit.Source.ToObject<ItemHit>();
                         item.Score = hit.Score;
                         item.Highlights = GetHighlights(hit);
                         result.Items.Add(item);
@@ -914,7 +918,8 @@ namespace BHL.Search.Elastic
                     if (hit.Index.ToLower() == ESIndex.PAGES.ToLower())
                     {
                         //case ESType.PAGE:
-                        PageHit page = hit.Source.ToObject<PageHit>();
+                        PageHit page = HitToObject<PageHit>(hit);
+                        //PageHit page = hit.Source.ToObject<PageHit>();
                         page.Score = hit.Score;
                         page.Highlights = GetHighlights(hit);
                         result.Pages.Add(page);
@@ -923,7 +928,8 @@ namespace BHL.Search.Elastic
                     if (hit.Index.ToLower() == ESIndex.NAMES.ToLower())
                     {
                         //case ESType.NAME:
-                        NameHit name = hit.Source.ToObject<NameHit>();
+                        NameHit name = HitToObject<NameHit>(hit);
+                        //NameHit name = hit.Source.ToObject<NameHit>();
                         name.Score = hit.Score;
                         name.Highlights = GetHighlights(hit);
                         result.Names.Add(name);
@@ -932,7 +938,8 @@ namespace BHL.Search.Elastic
                     if (hit.Index.ToLower() == ESIndex.AUTHORS.ToLower())
                     {
                         //case ESType.AUTHOR:
-                        AuthorHit author = hit.Source.ToObject<AuthorHit>();
+                        AuthorHit author = HitToObject<AuthorHit>(hit);
+                        //AuthorHit author = hit.Source.ToObject<AuthorHit>();
                         author.Score = hit.Score;
                         author.Highlights = GetHighlights(hit);
                         result.Authors.Add(author);
@@ -941,7 +948,8 @@ namespace BHL.Search.Elastic
                     if (hit.Index.ToLower() == ESIndex.KEYWORDS.ToLower())
                     {
                         //case ESType.KEYWORD:
-                        KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
+                        KeywordHit keyword = HitToObject<KeywordHit>(hit);
+                        //KeywordHit keyword = hit.Source.ToObject<KeywordHit>();
                         keyword.Score = hit.Score;
                         keyword.Highlights = GetHighlights(hit);
                         result.Keywords.Add(keyword);
@@ -1003,6 +1011,75 @@ namespace BHL.Search.Elastic
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Deserialize the specified hit into a particular Hit object
+        /// </summary>
+        /// <remarks>
+        /// An alternate to this method is to install the NEST.JsonNetSerializer nuget package
+        /// and allow it to do the deserialization (via Json.NET).  After installing the package,
+        /// set up the ElasticSearch connection like so:
+        /// 
+        ///     var pool = new SingleNodeConnectionPool(new Uri("http://localhost:9200"));
+        ///     var connectionSettings = new ConnectionSettings(pool, sourceSerializer: JsonNetSerializer.Default);
+        ///     var client = new ElasticClient(connectionSettings);
+        /// 
+        /// Then, instead of calling this method this way:
+        /// 
+        ///     AuthorHit author = HitToObject<AuthorHit>(hit);
+        ///     
+        /// Do this instead:
+        /// 
+        ///     AuthorHit author = hit.Source.ToObject<AuthorHit>();
+        /// 
+        /// </remarks>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="hit"></param>
+        /// <returns></returns>
+        private T HitToObject<T>(dynamic hit)
+        {
+            dynamic oHit = new Hit();
+            if (typeof(T).ToString().Contains("AuthorHit"))
+            {
+                oHit = new AuthorHit();
+                oHit.PrimaryAuthorName = (string)((Dictionary<string, object>)hit.Source)["primaryAuthorName"];
+                List<object> names = (List<object>)((Dictionary<string, object>)hit.Source)["authorNames"];
+                foreach (string name in names) oHit.AuthorNames.Add(name);
+            }
+            if (typeof(T).ToString().Contains("KeywordHit"))
+            {
+                oHit = new KeywordHit();
+                oHit.Keyword = (string)((Dictionary<string, object>)hit.Source)["keyword"];
+            }
+            if (typeof(T).ToString().Contains("NameHit"))
+            {
+                oHit = new NameHit();
+                oHit.Name = (string)((Dictionary<string, object>)hit.Source)["name"];
+                oHit.Count = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["count"]);
+            }
+            if (typeof(T).ToString().Contains("PageHit"))
+            {
+                oHit = new PageHit();
+                oHit.ItemId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["itemId"]);
+                oHit.Sequence = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["sequence"]);
+                List<object> indicators = (List<object>)((Dictionary<string, object>)hit.Source)["pageIndicators"];
+                foreach (string indicator in indicators) oHit.pageIndicators.Add(indicator);
+                List<object> types = (List<object>)((Dictionary<string, object>)hit.Source)["pageTypes"];
+                foreach (string type in types) oHit.PageTypes.Add(type);
+            }
+            if (typeof(T).ToString().Contains("ItemHit"))
+            {
+                oHit = new ItemHit();
+                oHit.Title = (string)((Dictionary<string, object>)hit.Source)["title"];
+
+
+
+            }
+
+            oHit.Id = (((Dictionary<string, object>)hit.Source)["id"]).ToString();
+
+            return oHit;
         }
 
         /// <summary>
