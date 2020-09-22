@@ -1071,15 +1071,65 @@ namespace BHL.Search.Elastic
             if (typeof(T).ToString().Contains("ItemHit"))
             {
                 oHit = new ItemHit();
+                oHit.TitleId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["titleId"]);
+                oHit.ItemId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["itemId"]);
+                oHit.SegmentId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["segmentId"]);
+                oHit.StartPageId = Convert.ToInt32(((Dictionary<string, object>)hit.Source)["startPageId"]);
                 oHit.Title = (string)((Dictionary<string, object>)hit.Source)["title"];
-
-
-
+                oHit.TranslatedTitle = (string)GetHitValue(hit.Source, "translatedTitle");
+                oHit.UniformTitle = (string)GetHitValue(hit.Source, "uniformTitle");
+                oHit.SortTitle = (string)GetHitValue(hit.Source, "sortTitle");
+                oHit.Genre = (string)GetHitValue(hit.Source, "genre");
+                oHit.MaterialType = (string)GetHitValue(hit.Source, "materialType");
+                oHit.Volume = (string)GetHitValue(hit.Source, "volume");
+                oHit.Issue = (string)GetHitValue(hit.Source, "issue");
+                oHit.Series = (string)GetHitValue(hit.Source, "series");
+                oHit.Publisher = (string)GetHitValue(hit.Source, "publisher");
+                oHit.PublicationPlace = (string)GetHitValue(hit.Source, "publicationPlace");
+                oHit.Language = (string)GetHitValue(hit.Source, "language");
+                oHit.Doi = (string)GetHitValue(hit.Source, "doi");
+                oHit.Url = (string)GetHitValue(hit.Source, "url");
+                oHit.Container = (string)GetHitValue(hit.Source, "container");
+                oHit.PageRange = (string)GetHitValue(hit.Source, "pageRange");
+                oHit.Text = (string)GetHitValue(hit.Source, "text");
+                oHit.HasSegments = (bool)(GetHitValue(hit.Source, "hasSegments") ?? false);
+                oHit.HasLocalContent = (bool)(GetHitValue(hit.Source, "hasLocalContent") ?? false);
+                oHit.HasExternalContent = (bool)(GetHitValue(hit.Source, "hasExternalContent") ?? false);
+                oHit.Authors = GetHitValueList<string>(hit.Source, "authors");
+                oHit.SearchAuthors = GetHitValueList<string>(hit.Source, "searchAuthors");
+                oHit.Keywords = GetHitValueList<string>(hit.Source, "keywords");
+                oHit.Associations = GetHitValueList<string>(hit.Source, "associations");
+                oHit.Variants = GetHitValueList<string>(hit.Source, "variants");
+                oHit.Contributors = GetHitValueList<string>(hit.Source, "contributors");
+                oHit.Notes = GetHitValueList<string>(hit.Source, "notes");
+                oHit.Dates = GetHitValueList<string>(hit.Source, "dates");
+                oHit.DateRanges = GetHitValueList<string>(hit.Source, "dateRanges");
+                oHit.Oclc = GetHitValueList<string>(hit.Source, "oclc");
+                oHit.Issn = GetHitValueList<string>(hit.Source, "issn");
+                oHit.Isbn = GetHitValueList<string>(hit.Source, "isbn");
+                oHit.Collections = GetHitValueList<string>(hit.Source, "collections");
             }
 
             oHit.Id = (((Dictionary<string, object>)hit.Source)["id"]).ToString();
 
             return oHit;
+        }
+
+        private object GetHitValue(Dictionary<string, object> hit, string fieldName)
+        {
+            if (hit.ContainsKey(fieldName))
+                return hit[fieldName];
+            else
+                return null as object;
+        }
+        private List<T> GetHitValueList<T>(Dictionary<string, object> hit, string fieldName)
+        {
+            List<T> values = new List<T>();
+            if (hit.ContainsKey(fieldName))
+            {
+                foreach (T value in (List<object>)hit[fieldName]) values.Add(value);
+            }
+            return values;
         }
 
         /// <summary>
