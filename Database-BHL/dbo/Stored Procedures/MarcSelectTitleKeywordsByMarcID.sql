@@ -28,11 +28,14 @@ FROM	dbo.vwMarcDataField m
 WHERE	m.DataFieldTag IN ('600', '610', '611', '630', '648', '650', '651', '652', 
 							'653', '654', '655', '656', '657', '658', '662', '690')
 AND		m.Indicator2 <> '6'	-- skip non-english-language subjects
+AND		m.Code in ('a', 'b', 'c', 'd', 'g', 'q', 't', 'v', 'x', 'y', 'z')
+/*
 AND		m.Code <> 'e' -- skip sources of tags
 AND		m.Code <> '4' -- skip sources of tags
 AND		m.Code <> '3' -- skip sources of tags
 AND		m.Code <> '2' -- skip sources of tags
 AND		m.Code <> '0' -- skip authority record control numbers
+*/
 AND		m.MarcID = @MarcID
 
 -- =======================================================================
