@@ -182,6 +182,14 @@ namespace MOBOT.BHL.DOIDeposit
         }
 
         // Optional
+        private string _issue = string.Empty;
+        public string Issue
+        {
+            get { return _issue; }
+            set { _issue = value; }
+        }
+
+        // Optional
         private string _coden = string.Empty;
         public string Coden
         {
