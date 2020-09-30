@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MOBOT.BHL.Web2</RootNamespace>
     <AssemblyName>BHLUSWeb2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <SccProjectName>
     </SccProjectName>
@@ -58,15 +58,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Countersoft.Foundation.Commons">
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Foundation.Commons.dll</HintPath>
-    </Reference>
-    <Reference Include="Countersoft.Gemini.Api">
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Gemini.Api.dll</HintPath>
-    </Reference>
-    <Reference Include="Countersoft.Gemini.Commons, Version=3.6.4.2630, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
+    <Reference Include="Countersoft.Foundation.Commons, Version=5.0.0.3530, Culture=neutral, PublicKeyToken=0e17ff0349390ca9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\Countersoft.Gemini.Commons.dll</HintPath>
+      <HintPath>..\SharedLibraries\CounterSoft7.0.0\Countersoft.Foundation.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini.Api, Version=6.1.0.4073, Culture=neutral, PublicKeyToken=7d1cd24c5b90fda4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft7.0.0\Countersoft.Gemini.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Countersoft.Gemini.Commons, Version=6.1.0.4073, Culture=neutral, PublicKeyToken=7d1cd24c5b90fda4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharedLibraries\CounterSoft7.0.0\Countersoft.Gemini.Commons.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -76,9 +78,9 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp, Version=105.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RestSharp, Version=102.7.0.0, Culture=neutral, PublicKeyToken=3aeec8c590ff36f5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SharedLibraries\CounterSoft5.0.0\RestSharp.dll</HintPath>
+      <HintPath>..\SharedLibraries\CounterSoft7.0.0\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

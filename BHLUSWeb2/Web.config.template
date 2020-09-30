@@ -24,6 +24,23 @@
     <!-- OAI Settings -->
     <add key="OAIBaseUrl" value="https://beta.biodiversitylibrary.org/oai"/>
 
+    <!-- Gemini settings -->
+    <add key="GeminiURL" value="issue tracking service URL"/>
+    <add key="GeminiUser" value="issue tracking service username"/>
+    <add key="GeminiPassword" value="issue tracking service password"/>
+    <add key="GeminiDesc" value="A new issue from the web"/>
+    <add key="GeminiProjectId" value="7"/>
+    <add key="GeminiComponentIdScanRequest" value="78"/>
+    <add key="GeminiComponentIdFeedback" value="56"/>
+    <add key="GeminiTypeIdScanRequest" value="60"/>
+    <add key="GeminiTypeIdTechFeedback" value="22"/>
+    <add key="GeminiTypeIdSuggestion" value="36"/>
+    <add key="GeminiTypeIdBiblioIssue" value="55"/>
+    <add key="GeminiStatusId" value="28"/>
+    <add key="GeminiPriorityId" value="17"/>
+    <add key="GeminiSeverityId" value="19"/>
+    <add key="GeminiResolutionId" value="15"/>
+
     <!-- Feature toggle for IIIF implementation:  Valid values are "on", "off", and "toggle" -->
     <add key="IIIFState" value="off" />
     
@@ -174,12 +191,6 @@
     <add key="KeywordResultDefaultSort" value="Keyword" /> <!-- Valid values: Score, Keyword -->
     <add key="NameResultDefaultSort" value="Name" /> <!-- Valid values: Score, Name -->
     <add key="PageResultDefaultSort" value="Sequence" /> <!-- Valid values: Score, Sequence -->
-    <!-- Gemini settings for feedback page -->
-    <add key="GeminiURL" value="issue tracking service URL"/>
-    <add key="GeminiUser" value="issue tracking service username"/>
-    <add key="GeminiPassword" value="issue tracking service password"/>
-    <add key="GeminiProjectId" value="7"/>
-    <add key="GeminiDesc" value="A new issue from the web"/>
     <!-- Required for forms with large numbers of fields -->
     <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
     <!-- Google ReCaptcha keys -->
@@ -383,6 +394,11 @@
       <dependentAssembly>
         <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35"/>
         <bindingRedirect oldVersion="1.0.0.0-5.2.3.0" newVersion="5.2.3.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed"/>
+        <codeBase version="4.5.0.0" href="libs\countersoft\Newtonsoft.Json.dll"/>
+        <bindingRedirect oldVersion="0.0.0.0-12.0.0.0" newVersion="10.0.0.0"/>
       </dependentAssembly>
     </assemblyBinding>
   </runtime>

@@ -92,11 +92,21 @@ namespace MOBOT.BHL.Web2
             string issueLongDesc = string.Empty;
 
             // Get Gemini data from web.config file
-            string geminiWebServiceURL = ConfigurationManager.AppSettings.GetValues("GeminiURL")[0];
-            string geminiUserName = ConfigurationManager.AppSettings.GetValues("GeminiUser")[0];
-            string geminiUserPassword = ConfigurationManager.AppSettings.GetValues("GeminiPassword")[0];
-            string issueSummary = ConfigurationManager.AppSettings.GetValues("GeminiDesc")[0];
-            int projectId = int.Parse(ConfigurationManager.AppSettings.GetValues("GeminiProjectId")[0]);
+            string geminiWebServiceURL = ConfigurationManager.AppSettings["GeminiURL"];
+            string geminiUserName = ConfigurationManager.AppSettings["GeminiUser"];
+            string geminiUserPassword = ConfigurationManager.AppSettings["GeminiPassword"];
+            string issueSummary = ConfigurationManager.AppSettings["GeminiDesc"];
+            int projectId = int.Parse(ConfigurationManager.AppSettings["GeminiProjectId"]);
+            int scanReqComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdScanRequest"]);
+            int feedbackComponentId = int.Parse(ConfigurationManager.AppSettings["GeminiComponentIdFeedback"]);
+            int scanReqTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdScanRequest"]);
+            int techFeedTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdTechFeedback"]);
+            int suggestTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdSuggestion"]);
+            int bibIssueTypeId = int.Parse(ConfigurationManager.AppSettings["GeminiTypeIdBiblioIssue"]);
+            int statusId = int.Parse(ConfigurationManager.AppSettings["GeminiStatusId"]);
+            int priorityId = int.Parse(ConfigurationManager.AppSettings["GeminiPriorityId"]);
+            int severityId = int.Parse(ConfigurationManager.AppSettings["GeminiSeverityId"]);
+            int resolutionId = int.Parse(ConfigurationManager.AppSettings["GeminiResolutionId"]);
 
             ServiceManager serviceManager = new ServiceManager(geminiWebServiceURL, geminiUserName, geminiUserPassword, "", false);
             UserDto user = serviceManager.Admin.WhoAmI();
@@ -115,8 +125,8 @@ namespace MOBOT.BHL.Web2
                 }
                 issueLongDesc = getScanRequest();
 
-                data.AddComponent(78);  // Collections
-                data.TypeId = Convert.ToInt32(subjectScanReq.Value);    // 60=Scan Request
+                data.AddComponent(scanReqComponentId);  // Collections
+                data.TypeId = scanReqTypeId;    // 60=Scan Request
             }
             else
             {
@@ -124,18 +134,18 @@ namespace MOBOT.BHL.Web2
                 if (!string.IsNullOrWhiteSpace(emailTextBox.Text)) issueSummary = emailTextBox.Text.Trim();
                 issueLongDesc = getComment();
 
-                data.AddComponent(56);  // Web-Other
-                if (subjectTech.Checked) data.TypeId = Convert.ToInt32(subjectTech.Value);    // 22=Tech Issue
-                if (subjectSuggest.Checked) data.TypeId = Convert.ToInt32(subjectSuggest.Value);    // 36=Suggestion
-                if (subjectBibIssue.Checked) data.TypeId = Convert.ToInt32(subjectBibIssue.Value);    // 55=Bib Issue
+                data.AddComponent(feedbackComponentId);  // Web-Other
+                if (subjectTech.Checked) data.TypeId = techFeedTypeId;    // 22=Tech Issue
+                if (subjectSuggest.Checked) data.TypeId = suggestTypeId;    // 36=Suggestion
+                if (subjectBibIssue.Checked) data.TypeId = bibIssueTypeId;    // 55=Bib Issue
             }
 
             data.Description = issueLongDesc;
             data.Title = (issueSummary.Length > 245) ? (issueSummary.Substring(0, 245) + "...") : issueSummary;
-            data.PriorityId = 17;       // 17=Low, 18=Medium, 19=High
-            data.ResolutionId = 15;      // 15=Unresolved
-            data.StatusId = 28;         // 28=Unassigned
-            data.SeverityId = 19;        // 19=Null
+            data.PriorityId = priorityId;       // 17=Low, 18=Medium, 19=High
+            data.ResolutionId = resolutionId;      // 15=Unresolved
+            data.StatusId = statusId;         // 28=Unassigned
+            data.SeverityId = severityId;        // 19=Null
             data.ReportedBy = user.Entity.Id;
             data.ProjectId = projectId;
 
