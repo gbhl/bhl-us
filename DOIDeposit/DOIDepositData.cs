@@ -9,7 +9,7 @@ namespace MOBOT.BHL.DOIDeposit
     {
         public DOIDepositData()
         {
-            _timestamp = DateTime.Now.ToString("yyyyMMddhhmmss");
+            _timestamp = DateTime.Now.ToString("yyyyMMddhhmmssffff");
         }
 
         #region Deposit Head properties
