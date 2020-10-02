@@ -1,0 +1,68 @@
+﻿.brlnkNameSources {
+    margin-left: 3px;
+    top: 1px;
+    position: relative;
+}
+
+.brNameSourcePopup {
+    color: #000000;
+    display: none;
+    padding: 3px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #0365A5;
+    background-color: #CDD5DB;
+    height: 250px;
+    width: 350px;
+    max-height: 250px;
+    min-width: 250px;
+    max-width: 350px;
+    position: absolute;
+}
+
+.brNameSourceLabel {
+    color: #2b3c4d;
+    font-weight: bold;
+    font-family: Georgia;
+    font-style: normal;
+    font-size: 15px;
+    margin-bottom: 5px;
+    padding: 5px;
+    float: left;
+    width: 90%;
+}
+
+.brNameSourceDDDiv {
+    clear:left;
+    margin-left: 5px;
+}
+.brNameSourceDD {
+    padding-right: 0px !important;
+    height: auto !important;
+    width: 330px;
+}
+
+.brNameSourceClose {
+    float: right;
+}
+
+.brNameSourceList {
+    clear:left;
+    margin-top:2px;
+    margin-bottom:10px;
+    max-height:195px;
+    overflow-y:auto;
+}
+
+.brNameSourceName {
+    font-family: Georgia;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.brNameSourceName a {
+    color: #2b3c4d;
+}

@@ -492,6 +492,7 @@ namespace MOBOT.BHL.BHLDOIService
 
                 data.Title = segment.TitleFullTitle;
                 data.Volume = string.IsNullOrWhiteSpace(segment.Volume) ? segment.ItemVolume : segment.Volume;
+                data.Issue = segment.Issue;
 
                 foreach(SegmentIdentifier segmentIdentifier in segment.IdentifierList)
                 {

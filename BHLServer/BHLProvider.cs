@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using MOBOT.FileAccess;
 using System.Web.ModelBinding;
 using System.Web.Hosting;
+using Newtonsoft.Json.Schema;
 
 namespace MOBOT.BHL.Server
 {
@@ -707,19 +708,31 @@ namespace MOBOT.BHL.Server
 
             try
             {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
-                req.Method = "GET";
-                req.Timeout = 60000;
-
                 JObject jsonResponse = null;
-                using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
+                string cacheKey = string.Format("NameSource-{0}", name);
+
+                string json = ApplicationCacheGet(cacheKey);
+                if (json == null)
                 {
-                    using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                    HttpWebRequest req = (HttpWebRequest)WebRequest.Create(webServiceUrl);
+                    req.Method = "GET";
+                    req.Timeout = 60000;
+
+                    using (HttpWebResponse resp = (HttpWebResponse)req.GetResponse())
                     {
-                        jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        using (StreamReader reader = new StreamReader((System.IO.Stream)resp.GetResponseStream()))
+                        {
+                            jsonResponse = (JObject)JToken.ReadFrom(new JsonTextReader(reader));
+                        }
                     }
+
+                    ApplicationCacheAdd(cacheKey, jsonResponse.ToString(), expiration: DateTime.Now.AddDays(7));
+                    req = null;
                 }
-                req = null;
+                else
+                {
+                    jsonResponse = JObject.Parse(json);
+                }
 
                 // Did the service successfully evaluate the name?
                 string status = (string)jsonResponse.SelectToken("status");
@@ -789,7 +802,57 @@ namespace MOBOT.BHL.Server
                 throw;
             }
 
-            return nameDetails;
+            // Update name details with name source metadata from database
+            if (nameDetails.Count > 0)
+            {
+                List<NameSourceGNFinder> nameSources = new BHLProvider().NameSourceGNFinderSelectAll();
+
+                foreach(GNResolverResponse nameDetail in nameDetails)
+                {
+                    NameSourceGNFinder nameSource = nameSources.Find(delegate(NameSourceGNFinder x) { return x.DataSourceID == nameDetail.DataSourceID; });
+                    if (nameSource != null)
+                    {
+                        nameDetail.DataSourceTitle = nameSource.GNDataSourceLabel;
+                        if (nameSource.GNDataSourceURLFormat == null) nameDetail.Url = string.Empty;
+                        if (!string.IsNullOrWhiteSpace(nameSource.GNDataSourceURLFormat))
+                        {
+                            nameDetail.Url = string.Format(nameSource.GNDataSourceURLFormat,
+                                !string.IsNullOrWhiteSpace(nameDetail.LocalID) ? nameDetail.LocalID : nameDetail.TaxonID
+                                );
+                        }
+                    }
+                }
+            }
+
+            // Format the Global Names response
+
+            // Get the distinct name strings in the response, along with the 'best' match type for each
+            // name.  Match type is a value from 1 to 6, with 1 being the best (most definite) match,
+            // and 6 being the worst (most questionable) match.  Order the list by match type and by
+            // name string.
+            var distinctSources = from n in nameDetails
+                                  group n by n.NameString into g
+                                  let MatchType = g.Min(n => n.MatchType)
+                                  orderby g.Key
+                                  select new { NameString = g.Key, MatchType };
+
+            // For each name string, accumulate every result for that string and add it to the final 
+            // ordered result set.
+            List<GNResolverResponse> displayNames = new List<GNResolverResponse>();
+            foreach (var nameString in distinctSources)
+            {
+                var sourceNames = from n in nameDetails
+                                  where n.NameString == nameString.NameString
+                                  orderby n.MatchType, n.DataSourceTitle, n.Score
+                                  select n;
+
+                foreach (GNResolverResponse nameDetail in sourceNames)
+                {
+                    displayNames.Add(nameDetail);
+                }
+            }
+
+            return displayNames;
         }
 
         /// <summary>

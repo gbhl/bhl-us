@@ -130,6 +130,10 @@ namespace MOBOT.BHL.DOIDeposit
                 content.AppendLine("<volume>" + HttpUtility.HtmlEncode(Data.Volume) + "</volume>");
                 content.AppendLine("</journal_volume>");
             }
+            if (!string.IsNullOrWhiteSpace(Data.Issue))
+            {
+                content.AppendLine("<issue>" + HttpUtility.HtmlEncode(Data.Issue) + "</issue>");
+            }
             content.AppendLine("</journal_issue>");
 
             // Build the journal_article content

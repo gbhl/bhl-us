@@ -22,5 +22,10 @@ namespace MOBOT.BHL.Server
         {
             return new NameDAL().NameMetadataSelectByItemID(null, null, itemId);
         }
+
+        public List<NameSourceGNFinder> NameSourceGNFinderSelectAll()
+        {
+            return new NameSourceGNFinderDAL().NameSourceGNFinderSelectAll(null, null);
+        }
     }
 }
