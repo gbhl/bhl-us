@@ -88,7 +88,7 @@
     <add key="jqGridLocalePath" value="/js/grid.locale-en.js" />
     <add key="jqGridPath" value="/js/jquery.jqGrid.min.js" />
     <!-- Required for forms with large numbers of fields (such as the paginator) -->
-    <add key="aspnet:MaxHttpCollectionKeys" value="2500" />
+    <add key="aspnet:MaxHttpCollectionKeys" value="10000" />
     <add key="StatsNumberOfLogItemsToDisplay" value="10" />
     <add key="StatsPendingApprovalDownloadLimit" value="7" />
     <!-- value is in days -->
