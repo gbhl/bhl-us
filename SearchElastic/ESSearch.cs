@@ -146,6 +146,7 @@ namespace BHL.Search.Elastic
         public SearchResult SearchAll(string query, List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(query))
             {
@@ -164,16 +165,14 @@ namespace BHL.Search.Elastic
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
                 string queryString = string.Empty;
-                if (limits == null)
+                queryString = CleanQuery(query);
+
+                List<QueryContainer> limitQueries = new List<QueryContainer>();
+                if (limits != null)
                 {
-                    queryString = CleanQuery(query);
-                }
-                else
-                {
-                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        queryString = string.Format("{0} AND {1}:\"{2}\"", queryString, limit.Item1, limit.Item2);
+                        limitQueries.Add(new MatchPhraseQuery { Field = limit.Item1, Query = limit.Item2 });
                     }
                 }
 
@@ -207,13 +206,18 @@ namespace BHL.Search.Elastic
                 fields.Add(new Field(ESField.TEXT));
 
                 // Construct the query.
-                searchDesc.Query(q => q
-                    .QueryString(qu => qu
-                        .Analyzer("default")
-                        .Query(queryString)
-                        .Fields(fields.ToArray())
-                        .DefaultOperator(Operator.And)
-                    )
+                searchDesc.Query(b => b
+                    .Bool(q => q
+                        .Must(qs => qs
+                            .QueryString(qu => qu
+                                .Analyzer("default")
+                                .Query(queryString)
+                                .Fields(fields.ToArray())
+                                .DefaultOperator(Operator.And)
+                            )
+                        )
+                        .Filter(limitQueries.ToArray())
+                    )                        
                 );
 
                 //// TODO: Validate the query string.  Check validateResponse.Valid for result.
@@ -258,6 +262,7 @@ namespace BHL.Search.Elastic
             List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(title.searchValue) ||
                 !string.IsNullOrWhiteSpace(author.searchValue) ||
@@ -443,6 +448,7 @@ namespace BHL.Search.Elastic
             List<Tuple<string, string>> limits = null)
         {
             ISearchResponse<dynamic> results = null;
+            if (limits != null && limits.Count == 0) limits = null;
 
             if (!string.IsNullOrWhiteSpace(query))
             {
@@ -461,16 +467,14 @@ namespace BHL.Search.Elastic
                 // A query string of "cat OR dog" and limits of "type=pet" and age=5 should produce this query:
                 //      (cat OR dog) AND type:pet AND age:5
                 string queryString = string.Empty;
-                if (limits == null)
+                queryString = CleanQuery(query);
+
+                List<QueryContainer> limitQueries = new List<QueryContainer>();
+                if (limits != null)
                 {
-                    queryString = CleanQuery(query);
-                }
-                else
-                {
-                    queryString = string.Format("({0})", CleanQuery(query));
                     foreach (Tuple<string, string> limit in limits)
                     {
-                        queryString = string.Format("{0} AND {1}:{2}", queryString, limit.Item1, limit.Item2);
+                        limitQueries.Add(new MatchPhraseQuery { Field = limit.Item1, Query = limit.Item2 });
                     }
                 }
 
@@ -482,11 +486,16 @@ namespace BHL.Search.Elastic
                 // If necessary, add fields to be boosted here - i.e. "fields.Add(new Field("title^2"))
 
                 // Construct the query.
-                searchDesc.Query(q => q
-                    .QueryString(qu => qu
-                        .Query(queryString)
-                        .Fields(fields.ToArray())
-                        .DefaultOperator(Operator.And)
+                searchDesc.Query(b => b
+                    .Bool(q => q
+                        .Must(qs => qs
+                            .QueryString(qu => qu
+                                .Query(queryString)
+                                .Fields(fields.ToArray())
+                                .DefaultOperator(Operator.And)
+                            )
+                        )
+                        .Filter(limitQueries.ToArray())
                     )
                 );
 
