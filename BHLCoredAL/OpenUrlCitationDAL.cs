@@ -139,10 +139,10 @@ namespace MOBOT.BHL.DAL
             foreach (CustomDataRow row in list)
             {
                 OpenUrlCitation citation = new OpenUrlCitation();
-                citation.PageID = Utility.ZeroIfNull(row["PageID"].Value);
-                citation.ItemID = Utility.ZeroIfNull(row["ItemID"].Value);
-                citation.TitleID = Utility.ZeroIfNull(row["TitleID"].Value);
-                citation.PartID = Utility.ZeroIfNull(row["SegmentID"].Value);
+                citation.PageID = DataObjects.Utility.ZeroIfNull(row["PageID"].Value);
+                citation.ItemID = DataObjects.Utility.ZeroIfNull(row["ItemID"].Value);
+                citation.TitleID = DataObjects.Utility.ZeroIfNull(row["TitleID"].Value);
+                citation.PartID = DataObjects.Utility.ZeroIfNull(row["SegmentID"].Value);
                 citation.FullTitle = row["FullTitle"].Value.ToString();
                 citation.ArticleTitle = row["SegmentTitle"].Value.ToString();
                 citation.JournalTitle = row["ContainerTitle"].Value.ToString();

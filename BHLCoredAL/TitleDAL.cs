@@ -43,9 +43,9 @@ namespace MOBOT.BHL.DAL
 
 				title.TitleCollections = new TitleCollectionDAL().SelectByTitle( connection, transaction, titleId );
 
-				title.Items = new ItemDAL().ItemSelectByTitleID( connection, transaction, titleId );
+				title.Books = new BookDAL().BookSelectByTitleID( connection, transaction, titleId );
 
-                title.TitleItems = new TitleItemDAL().TitleItemSelectByTitle(connection, transaction, titleId);
+                title.ItemTitles = new ItemTitleDAL().ItemTitleSelectByTitle(connection, transaction, titleId);
 
                 title.TitleKeywords = new TitleKeywordDAL().TitleKeywordSelectByTitleID(connection, transaction, titleId);
 
@@ -512,17 +512,17 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 
-				if ( title.TitleItems.Count > 0 )
+				if ( title.ItemTitles.Count > 0 )
 				{
 					ItemDAL itemDAL = new ItemDAL();
-                    TitleItemDAL titleItemDAL = new TitleItemDAL();
-					foreach ( TitleItem titleItem in title.TitleItems )
+                    ItemTitleDAL itemTitleDAL = new ItemTitleDAL();
+					foreach (ItemTitle itemTitle in title.ItemTitles )
 					{
                         // Update the item
-                        if (titleItem.TitleID == 0) titleItem.TitleID = updatedTitle.ReturnObject.TitleID;
-						titleItemDAL.TitleItemManageAuto( connection, transaction, titleItem, userId );
+                        if (itemTitle.TitleID == 0) itemTitle.TitleID = updatedTitle.ReturnObject.TitleID;
+						itemTitleDAL.ItemTitleManageAuto( connection, transaction, itemTitle, userId );
                         // Update the primary title id (stored on the Item table)
-                        itemDAL.ItemUpdatePrimaryTitleID(connection, transaction, titleItem.ItemID, titleItem.PrimaryTitleID);
+                        itemDAL.ItemUpdatePrimaryTitleID(connection, transaction, itemTitle.ItemID, itemTitle.PrimaryTitleID);
 					}
 				}
 

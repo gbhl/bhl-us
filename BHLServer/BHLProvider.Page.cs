@@ -96,12 +96,6 @@ namespace MOBOT.BHL.Server
 
         #endregion
 
-        public CustomGenericList<CustomDataRow> PageResolve( int titleID, string volume, string issue, string year, 
-			string startPage )
-		{
-			return ( new PageDAL().PageResolve( null, null, titleID, volume, issue, year, startPage ) );
-		}
-
 		public Page PageUpdateYear( int pageID, string year, int userID )
 		{
             year = DataCleaner.CleanYear(year);

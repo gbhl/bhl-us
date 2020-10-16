@@ -239,22 +239,30 @@ namespace MOBOT.BHL.AdminWeb.Models
 
             int batchFileStatus = TextImportService.GetTextImportBatchFileStatusReady();
             string errorMessage = string.Empty;
-            int itemIDInt;
-            if (!Int32.TryParse(this.ItemID, out itemIDInt))
+            bool error = false;
+            if (!Int32.TryParse(this.ItemID, out _))
             {
                 // Invalid Item ID format
                 batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
                 errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
+                error = true;
             }
-            else if (provider.ItemSelectAuto(Convert.ToInt32(this.ItemID)) == null)
+
+            Book book = null;
+            if (!error)
             {
-                // Item ID not found in BHL
-                itemIDInt = 0;
-                this.ItemID = string.Empty;
-                batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
-                errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
+                book = provider.BookSelectAuto(Convert.ToInt32(this.ItemID));
+                if (book == null)
+                {
+                    // Item ID not found in BHL
+                    this.ItemID = string.Empty;
+                    batchFileStatus = TextImportService.GetTextImportBatchFileStatusError();
+                    errorMessage += "Invalid Item ID.  Make sure the filename matches a BHL item identifier. | ";
+                    error = true;
+                }
             }
-            else if (provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0)
+
+            if (!error && provider.PageTextLogSelectForItem(Convert.ToInt32(this.ItemID)).Count > 0)
             {
                 // Text to be replaced NOT from IA, so user must review and approve replacement
                 batchFileStatus = TextImportService.GetTextImportBatchFileStatusReview();
@@ -268,7 +276,7 @@ namespace MOBOT.BHL.AdminWeb.Models
             }
 
             TextImportBatchFile file = provider.TextImportBatchFileInsertAuto(batchId, 
-                batchFileStatus, (itemIDInt == 0 ?  (int?)null : itemIDInt), this.FileName, 
+                batchFileStatus, (book == null ?  (int?)null : book.ItemID), this.FileName, 
                 this.FileFormat, errorMessage, userId);
         }
 
@@ -288,7 +296,9 @@ namespace MOBOT.BHL.AdminWeb.Models
 
         public List<Page> GetItemPages(int itemID)
         {
-            List<Page> pages = new BHLProvider().PageSelectByItemID(itemID);
+            List<Page> pages = new List<Page>();
+            Book book = new BHLProvider().BookSelectByItemID(itemID);
+            if (book != null) pages = new BHLProvider().PageSelectByItemID(book.BookID);
             return pages;
         }
     }

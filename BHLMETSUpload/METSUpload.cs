@@ -39,13 +39,13 @@ namespace MOBOT.BHL.BHLMETSUpload
 
             BHLWS.BHLWSSoapClient service = new BHLWS.BHLWSSoapClient();
 
-            BHLWS.Item[] items = null;
+            BHLWS.Book[] items = null;
             try
             {
                 //1 - Get new Items
                 //2 - check for updated items (including title, pages, authors, etc)
                 string startDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy 0:00");
-                items = service.ItemSelectRecentlyChanged(startDate);
+                items = service.BookSelectRecentlyChanged(startDate);
             }
             catch (Exception e)
             {
@@ -54,17 +54,17 @@ namespace MOBOT.BHL.BHLMETSUpload
 
             if (items != null && items.Length > 0)
             {
-                foreach (BHLWS.Item item in items)
+                foreach (BHLWS.Book item in items)
                 {
                     try
                     {
                         //3 - generate mets file for all new & updated items
-                        BHLWS.Title title = service.TitleSelectByTitleID(item.PrimaryTitleID);
-                        string mods = service.GetMODSRecordForItem(item.ItemID);
-                        BHLWS.Page[] pages = service.PageMetadataSelectByItemID(item.ItemID);
+                        BHLWS.Title title = service.TitleSelectByTitleID((int)item.PrimaryTitleID);
+                        string mods = service.GetMODSRecordForItem(item.BookID);
+                        BHLWS.Page[] pages = service.PageMetadataSelectByItemID(item.BookID);
 
                         StringBuilder sb = new StringBuilder("");
-                        sb.AppendFormat("<mets:mets xmlns:mods=\"http://www.loc.gov/mods/v3\" xmlns:rights=\"http://www.loc.gov/rights/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:lc=\"http://www.loc.gov/mets/profiles\" xmlns:mets=\"http://www.loc.gov/METS/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\" OBJID=\"item/{0}\" LABEL=\"{1}\" PROFILE=\"lc:printMaterial\">", item.ItemID, HttpUtility.HtmlEncode(title.FullTitle));
+                        sb.AppendFormat("<mets:mets xmlns:mods=\"http://www.loc.gov/mods/v3\" xmlns:rights=\"http://www.loc.gov/rights/\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:lc=\"http://www.loc.gov/mets/profiles\" xmlns:mets=\"http://www.loc.gov/METS/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/METS_Profile/ http://www.loc.gov/standards/mets/profile_docs/mets.profile.v1-2.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\" OBJID=\"item/{0}\" LABEL=\"{1}\" PROFILE=\"lc:printMaterial\">", item.BookID, HttpUtility.HtmlEncode(title.FullTitle));
                         sb.AppendFormat("<mets:metsHdr CREATEDATE=\"{0}\">", DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss"));
                         sb.Append("<mets:agent ROLE=\"CREATOR\" TYPE=\"ORGANIZATION\">");
                         sb.Append("<mets:name>Biodiversity Heritage Library</mets:name>");
@@ -151,14 +151,14 @@ namespace MOBOT.BHL.BHLMETSUpload
                         }
                         sb.Append("</mets:mets>");
 
-                        File.WriteAllText(configParms.UploadFilePath + item.ItemID + ".xml", sb.ToString());
+                        File.WriteAllText(configParms.UploadFilePath + item.BookID + ".xml", sb.ToString());
 
-                        filesCreated.Add(item.ItemID.ToString());
-                        this.LogMessage("METS file created (" + item.ItemID + ")");
+                        filesCreated.Add(item.BookID.ToString());
+                        this.LogMessage("METS file created (" + item.BookID+ ")");
                     }
                     catch (Exception ex)
                     {
-                        this.LogMessage("Error creating mets file(" + item.ItemID + "): " + ex.Message, true);
+                        this.LogMessage("Error creating mets file(" + item.BookID + "): " + ex.Message, true);
                     }
 
                     //4 - upload the mets file to IA
@@ -172,7 +172,7 @@ namespace MOBOT.BHL.BHLMETSUpload
             this.LogMessage("METSUpload Processing Complete");
         }
 
-        private void UploadFiles(BHLWS.Item item)
+        private void UploadFiles(BHLWS.Book item)
         {
             S3 s3 = null;
 
@@ -187,25 +187,25 @@ namespace MOBOT.BHL.BHLMETSUpload
                 try
                 {
                     // Upload the file
-                    string putResult = s3.PutObject(configParms.UploadFilePath + item.ItemID + ".xml", item.BarCode,
+                    string putResult = s3.PutObject(configParms.UploadFilePath + item.BookID.ToString() + ".xml", item.BarCode,
                         item.BarCode + configParms.IAFileName,
                         "application/xml", null, true, false);
 
                     // Update log information
                     if (putResult == "Success")
                     {
-                        filesUploaded.Add(item.ItemID.ToString());
-                        this.LogMessage("Mets file uploaded for item " + item.ItemID.ToString());
-                        File.Delete(configParms.UploadFilePath + item.ItemID + ".xml");
+                        filesUploaded.Add(item.BookID.ToString());
+                        this.LogMessage("Mets file uploaded for item " + item.BookID.ToString());
+                        File.Delete(configParms.UploadFilePath + item.BookID.ToString() + ".xml");
                     }
                     else if (putResult.ToLower().Contains("403"))   // "Forbidden" error; see details below
                     {
-                        filesSkipped.Add(item.ItemID.ToString());
-                        this.LogMessage("Mets file skipped (forbidden) for item " + item.ItemID.ToString());
+                        filesSkipped.Add(item.BookID.ToString());
+                        this.LogMessage("Mets file skipped (forbidden) for item " + item.BookID.ToString());
                     }
                     else
                     {
-                        this.LogMessage("Error uploading file for item " + item.ItemID + ": " + putResult, true);
+                        this.LogMessage("Error uploading file for item " + item.BookID.ToString() + ": " + putResult, true);
                     }
 
                     // Clear consecutive error count on "Success" or "403" message.  "403" is
@@ -220,7 +220,7 @@ namespace MOBOT.BHL.BHLMETSUpload
                 catch (Exception ex)
                 {
                     consecutiveErrors++;
-                    LogMessage("Error uploading file for item " + item.ItemID + ": " + ex.Message, true);
+                    LogMessage("Error uploading file for item " + item.BookID + ": " + ex.Message, true);
 
                     // If we've had 10 consecutive upload failures, then it's time to give up
                     if (consecutiveErrors >= 10)
@@ -231,14 +231,14 @@ namespace MOBOT.BHL.BHLMETSUpload
             }
             catch (Exception ex)
             {
-                LogMessage("Error uploading file (" + item.ItemID + "): " + ex.Message, true);
+                LogMessage("Error uploading file (" + item.BookID + "): " + ex.Message, true);
             }
             finally
             {
                 if (s3 != null) s3 = null;
-                if(File.Exists(configParms.UploadFilePath + item.ItemID + ".xml"))
+                if(File.Exists(configParms.UploadFilePath + item.BookID + ".xml"))
                 {
-                    File.Delete(configParms.UploadFilePath + item.ItemID + ".xml");
+                    File.Delete(configParms.UploadFilePath + item.BookID + ".xml");
                 }
             }
         }

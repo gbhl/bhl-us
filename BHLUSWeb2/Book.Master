@@ -117,7 +117,7 @@
         ga('create', 'UA-3353213-1', 'auto');
         ga('send', 'pageview', {
             "dimension1": "<%: holdingInstitution %>",
-            "dimension2": "<%: itemID %>",
+            "dimension2": "<%: bookID %>",
             "dimension3": "<%: sponsor %>"
         });
     </script>

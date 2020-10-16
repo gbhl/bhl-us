@@ -130,6 +130,7 @@ namespace BHLFlickrTagHarvest
         /// <returns></returns>
         private PhotoInfo GetFlickrPhotoInfo(string photoID)
         {
+            Flickr.CacheDisabled = true;
             Flickr flickr = new Flickr();
             flickr.ApiKey = configParms.FlickrApiKey;
             PhotoInfo photoInfo = null;

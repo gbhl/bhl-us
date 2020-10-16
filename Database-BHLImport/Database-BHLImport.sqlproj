@@ -64,6 +64,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Data\" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Views\" />
@@ -334,10 +335,7 @@
     <None Include="dbo\Synonyms\BHLDOIEntityType.sql" />
     <None Include="dbo\Synonyms\BHLDOIStatus.sql" />
     <None Include="dbo\Synonyms\BHLSegment.sql" />
-    <None Include="dbo\Synonyms\BHLSegmentAuthor.sql" />
     <None Include="dbo\Synonyms\BHLSegmentGenre.sql" />
-    <None Include="dbo\Synonyms\BHLSegmentIdentifier.sql" />
-    <None Include="dbo\Synonyms\BHLSegmentPage.sql" />
     <None Include="dbo\Synonyms\BHLLanguage.sql" />
     <None Include="dbo\Synonyms\IAAnalysisItemCollection.sql" />
     <None Include="dbo\Synonyms\IAAnalysisCollection.sql" />
@@ -404,7 +402,6 @@
     <None Include="dbo\Functions\fnReverseAuthorName.sql" />
     <None Include="dbo\Tables\OAIRecordRelatedTitleTypeAssociation.sql" />
     <None Include="dbo\Tables\OAIRecordRelatedTitleTypeVariant.sql" />
-    <None Include="dbo\Synonyms\BHLSegmentKeyword.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordPublishSetProductionIDs.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordPublishInsertSegment.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordPublishUpdateTitle.sql" />
@@ -420,7 +417,6 @@
     <None Include="dbo\Stored Procedures\OAIRecordPublishDeleteTitleAndItem.sql" />
     <None Include="dbo\Stored Procedures\OAIRecordPublishToProduction.sql" />
     <None Include="BHLImportDBBuildScript.bat" />
-    <None Include="dbo\Synonyms\BHLSegmentInstitution.sql" />
     <None Include="dbo\Synonyms\BHLInstitutionRole.sql" />
     <None Include="dbo\Synonyms\BHLItemInstitution.sql" />
     <None Include="dbo\Synonyms\BHLMaterialType.sql" />
@@ -479,21 +475,46 @@
     <None Include="dbo\Stored Procedures\PageFlickrNoteSelectForPageID.sql" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stored Procedures\IAItemIdentifierDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IAItemIdentifierInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IAItemIdentifierSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IAItemIdentifierUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentAuthorDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentAuthorInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentAuthorSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentAuthorUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentPageDeleteAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentPageInsertAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentPageSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentPageUpdateAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentSelectAuto.sql" />
-    <Build Include="dbo\Stored Procedures\IASegmentUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\IAItemIdentifierUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentAuthorUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentPageUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\IASegmentUpdateAuto.sql" />
+    <None Include="dbo\Synonyms\BHLItemRelationship.sql" />
+    <None Include="dbo\Synonyms\BHLItemPage.sql" />
+    <None Include="dbo\Synonyms\BHLItemKeyword.sql" />
+    <None Include="dbo\Synonyms\BHLItemIdentifier.sql" />
+    <None Include="dbo\Synonyms\BHLItemAuthor.sql" />
+    <None Include="dbo\Synonyms\BHLBook.sql" />
+    <None Include="Data\dbo.IAScandataPageType.Table.sql" />
+    <None Include="Data\dbo.IAItemStatus.Table.sql" />
+    <None Include="Data\dbo.BSItemStatus.Table.sql" />
+    <None Include="Data\dbo.IAFileFormat.Table.sql" />
+    <None Include="Data\dbo.IAScanCenterInstitution.Table.sql" />
+    <None Include="Data\dbo.IASet.Table.sql" />
+    <None Include="Data\dbo.ImportSource.Table.sql" />
+    <None Include="Data\dbo.ImportSourceItemSource.Table.sql" />
+    <None Include="Data\dbo.ImportStatus.Table.sql" />
+    <None Include="Data\dbo.MarcCountryCode.Table.sql" />
+    <None Include="Data\dbo.OAIFormat.Table.sql" />
+    <None Include="Data\dbo.OAIHarvestSet.Table.sql" />
+    <None Include="Data\dbo.OAIRecordLanguage.Table.sql" />
+    <None Include="Data\dbo.OAIRecordRelatedTitleTypeAssociation.Table.sql" />
+    <None Include="Data\dbo.OAIRecordRelatedTitleTypeVariant.Table.sql" />
+    <None Include="Data\dbo.OAIRecordStatus.Table.sql" />
+    <None Include="Data\dbo.OAIRepository.Table.sql" />
+    <None Include="Data\dbo.OAIRepositoryFormat.Table.sql" />
+    <None Include="Data\dbo.OAISet.Table.sql" />
   </ItemGroup>
 </Project>

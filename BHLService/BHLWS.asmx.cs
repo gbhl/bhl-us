@@ -116,10 +116,10 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public List<Item> ItemSelectByTitleID(int titleID)
+        public List<Book> BookSelectByTitleID(int titleID)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemSelectByTitleId(titleID);
+            return bhlServer.BookSelectByTitleId(titleID);
         }
 
         [WebMethod]
@@ -137,10 +137,10 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public Item ItemUpdatePaginationStatus(int itemID, int paginationStatusID, int userID)
+        public Book BookUpdatePaginationStatus(int bookID, int paginationStatusID, int userID)
         {
             BHLProvider provider = new BHLProvider();
-            return provider.ItemUpdatePaginationStatus(itemID, paginationStatusID, userID);
+            return provider.BookUpdatePaginationStatus(bookID, paginationStatusID, userID);
         }
 
         [WebMethod]
@@ -148,6 +148,13 @@ namespace MOBOT.BHL.WebService
         {
             BHLProvider provider = new BHLProvider();
             return provider.ItemSelectAuto(itemID);
+        }
+
+        [WebMethod]
+        public Book BookSelectAuto(int bookID)
+        {
+            BHLProvider provider = new BHLProvider();
+            return provider.BookSelectAuto(bookID);
         }
 
         [WebMethod]
@@ -193,10 +200,10 @@ namespace MOBOT.BHL.WebService
         }
 
         [WebMethod]
-        public List<Item> ItemSelectRecentlyChanged(string startDate)
+        public List<Book> BookSelectRecentlyChanged(string startDate)
         {
             BHLProvider bhlServer = new BHLProvider();
-            return bhlServer.ItemSelectRecentlyChanged(startDate);
+            return bhlServer.BookSelectRecentlyChanged(startDate);
         }
 
         [WebMethod]

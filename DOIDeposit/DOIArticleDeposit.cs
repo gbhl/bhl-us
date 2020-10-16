@@ -120,8 +120,12 @@ namespace MOBOT.BHL.DOIDeposit
             content.AppendLine("<journal_issue>");
             if (!string.IsNullOrEmpty(Data.PublicationDate))
             {
+                DOIDate doiDate = new DOIDate(Data.PublicationDate);
+
                 content.AppendLine("<publication_date media_type=\"print\">");
-                content.AppendLine("<year>" + HttpUtility.HtmlEncode(Data.PublicationDate) + "</year>");
+                if (doiDate.Month != null) content.AppendLine("<month>" + HttpUtility.HtmlEncode(doiDate.Month) + "</month>");
+                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</dat>");
+                content.AppendLine("<year>" + HttpUtility.HtmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
                 content.AppendLine("</publication_date>");
             }
             if (!string.IsNullOrWhiteSpace(Data.Volume))
@@ -174,8 +178,12 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrWhiteSpace(Data.ArticlePublicationDate))
             {
+                DOIDate doiDate = new DOIDate(Data.ArticlePublicationDate);
+
                 content.AppendLine("<publication_date media_type=\"print\">");
-                content.AppendLine("<year>" + HttpUtility.HtmlEncode(Data.ArticlePublicationDate) + "</year>");
+                if (doiDate.Month != null) content.AppendLine("<month>" + HttpUtility.HtmlEncode(doiDate.Month) + "</month>");
+                if (doiDate.Day != null) content.AppendLine("<day>" + HttpUtility.HtmlEncode(doiDate.Day) + "</day>");
+                content.AppendLine("<year>" + HttpUtility.HtmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
                 content.AppendLine("</publication_date>");
             }
             if (!string.IsNullOrWhiteSpace(Data.FirstPage) || !string.IsNullOrWhiteSpace(Data.LastPage))

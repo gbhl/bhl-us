@@ -17,7 +17,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
             get { return _pdfRecord; }
             set { 
                 _pdfRecord = value; 
-                _pageMetadata = (new BHLWS.BHLWS()).PageMetadataSelectByItemID(_pdfRecord.ItemID);
+                _pageMetadata = (new BHLWS.BHLWS()).PageMetadataSelectByItemID((int)(_pdfRecord.BookID ?? _pdfRecord.SegmentID));
             }
         }
 
@@ -116,7 +116,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 // to construct the filename.
                 // ex. 000100000001000.pdf, 000100100023546.pdf
                 fileName = this.PdfRecord.PdfID.ToString().PadLeft(7, '0') +
-                    this.PdfRecord.ItemID.ToString().PadLeft(8, '0');
+                    (this.PdfRecord.BookID ?? this.PdfRecord.SegmentID).ToString().PadLeft(8, '0');
 
                 // Initialize the PDF document
                 doc = new Document();
@@ -512,7 +512,7 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 String titleUrl = "https://www.biodiversitylibrary.org/bibliography/" + pages[0].TitleID.ToString();
                 Anchor titleAnchor = new Anchor(titleUrl, standardFont);
                 titleAnchor.Reference = titleUrl;
-                String itemUrl = "https://www.biodiversitylibrary.org/item/" + pages[0].ItemID.ToString();
+                String itemUrl = "https://www.biodiversitylibrary.org/item/" + pages[0].BookID.ToString();
                 Anchor itemAnchor = new Anchor(itemUrl, standardFont);
                 itemAnchor.Reference = itemUrl;
                 Anchor pdfAnchor = new Anchor(String.Format(this.UrlFormat, fileName + ".pdf"), smallFont);
@@ -574,8 +574,8 @@ namespace MOBOT.BHL.BHLPDFGenerator
                 this.AddSpace(doc, standardFont);
 
                 string sponsor = string.Empty;
-                Item item = service.ItemSelectAuto(pages[0].ItemID);
-                if (item != null) sponsor = item.Sponsor;
+                Book book = service.BookSelectAuto(pages[0].BookID);
+                if (book != null) sponsor = book.Sponsor;
                 Institution[] institutions = service.InstitutionSelectByItemIDAndRole(pages[0].ItemID, "Holding Institution");
                 
                 if (institutions != null || sponsor != string.Empty)

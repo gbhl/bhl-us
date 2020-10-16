@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
@@ -11,19 +12,14 @@ namespace MOBOT.BHL.Server
 	{
 		#region Select methods
 
-		public Item ItemSelectByBarcodeOrItemID( int? itemId, string barcode )
+		public Book BookSelectByBarcodeOrItemID( int? itemId, string barcode )
 		{
-			return new ItemDAL().ItemSelectByBarCodeOrItemID( null, null, itemId, barcode );
+			return new BookDAL().BookSelectByBarCodeOrItemID( null, null, itemId, barcode );
 		}
 
-		public CustomGenericList<Item> ItemSelectByTitleId( int titleID )
-		{
-			return new ItemDAL().ItemSelectByTitleID( null, null, titleID );
-		}
-
-        public CustomGenericList<Item> ItemSelectByMarcBibId(string marcBibId)
+        public List<Book> BookSelectByMarcBibId(string marcBibId)
         {
-            return new ItemDAL().ItemSelectByMarcBibId(null, null, marcBibId);
+            return new BookDAL().BookSelectByMarcBibId(null, null, marcBibId);
         }
 
 		public Item ItemSelectByBarCode( string barCode )
@@ -36,21 +32,6 @@ namespace MOBOT.BHL.Server
 			ItemDAL dal = new ItemDAL();
 			return dal.ItemSelectAuto( null, null, itemID );
 		}
-
-        public Item ItemSelectOAIDetail(int itemID)
-        {
-            return new ItemDAL().ItemSelectOAIDetail(null, null, itemID);
-        }
-
-		public Item ItemSelectPagination( int itemID )
-		{
-			return new ItemDAL().ItemSelectPagination( null, null, itemID );
-		}
-        
-        public CustomGenericList<Item> ItemSelectRecent( int top, string languageCode, string institutionCode)
-        {
-            return new ItemDAL().ItemSelectRecent(null, null, top, languageCode, institutionCode);
-        }
 
 		/// <summary>
 		/// Select all Items that have expired Page Names.
@@ -113,11 +94,6 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, issue, year);
         }
 
-        public Item ItemSelectTextPathForItemID(int itemID)
-        {
-            return new ItemDAL().ItemSelectTextPathForItemID(null, null, itemID);
-        }
-
         #endregion
 
         public Item ItemUpdateStatus( int itemID, int itemStatusID )
@@ -134,24 +110,6 @@ namespace MOBOT.BHL.Server
 				throw new Exception( "Could not find existing item record" );
 			}
 			return item;
-		}
-
-		public Item ItemUpdatePaginationStatus( int itemID, int paginationStatusID, int userID )
-		{
-			ItemDAL dal = new ItemDAL();
-			Item savedItem = dal.ItemSelectAuto( null, null, itemID );
-			if ( savedItem != null )
-			{
-				savedItem.PaginationStatusID = paginationStatusID;
-				savedItem.PaginationStatusUserID = userID;
-				savedItem.PaginationStatusDate = DateTime.Now;
-				savedItem = dal.ItemUpdateAuto( null, null, savedItem );
-			}
-			else
-			{
-				throw new Exception( "Could not find existing Item record." );
-			}
-			return savedItem;
 		}
 
 		public Item ItemUpdateLastPageNameLookupDate( int itemID )
@@ -267,30 +225,6 @@ namespace MOBOT.BHL.Server
 			}
 		}
 
-		public void ItemSave( Item item, int userId )
-		{
-            item.Year = DataCleaner.CleanYear(item.Year);
-            item.EndYear = DataCleaner.CleanYear(item.EndYear);
-
-            // Parse the volume into its component parts.
-            // NOTE: Once a UI for the component parts of the volume string is available, the parsing should probably be removed from here.
-            VolumeData volumeData = DataCleaner.ParseVolumeString(item.Volume);
-            item.Year = string.IsNullOrWhiteSpace(item.Year) && string.IsNullOrWhiteSpace(item.EndYear) ? volumeData.StartYear : item.Year;
-            item.EndYear = string.IsNullOrWhiteSpace(item.Year) && string.IsNullOrWhiteSpace(item.EndYear) ?  volumeData.EndYear : item.EndYear;
-            item.StartVolume = volumeData.StartVolume;
-            item.EndVolume = volumeData.EndVolume;
-            item.StartIssue = volumeData.StartIssue;
-            item.EndIssue = volumeData.EndIssue;
-            item.StartPart = volumeData.StartPart;
-            item.EndPart = volumeData.EndPart;
-            item.StartNumber = volumeData.StartNumber;
-            item.EndNumber = volumeData.EndNumber;
-            item.StartSeries = volumeData.StartSeries;
-            item.EndSeries = volumeData.EndSeries;
-
-            new ItemDAL().Save( null, null, item, userId );
-		}
-
         public CustomGenericList<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(String institutionCode, int maxAge)
         {
             return new ItemDAL().ItemSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
@@ -301,35 +235,15 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemGetNamesXMLByItemID(null, null, itemID);
         }
 
-        public CustomGenericList<Item> ItemSelectByCollection(int collectionID)
-        {
-            return new ItemDAL().ItemSelectByCollection(null, null, collectionID);
-        }
-
         public CustomGenericList<Item> ItemSelectPublished()
         {
             return new ItemDAL().ItemSelectPublished(null, null);
-        }
-
-        public CustomGenericList<Item> ItemSelectRecentlyChanged(string startDate)
-        {
-            return new ItemDAL().ItemSelectRecentlyChanged(null, null, startDate);
         }
 
         public CustomGenericList<NonMemberMonograph> ItemSelectNonMemberMonograph(string sinceDate, 
             int isMember, string institutionCode)
         {
             return new ItemDAL().ItemSelectNonMemberMonograph(null, null, sinceDate, isMember, institutionCode);
-        }
-
-        public CustomGenericList<Item> ItemSelectByInstitution(string institutionCode, int returnCode, string sortBy)
-        {
-            return new ItemDAL().ItemSelectByInstitution(null, null, institutionCode, returnCode, sortBy);
-        }
-
-        public CustomGenericList<Item> ItemSelectByInstitutionAndRole(string institutionCode, int institutionRoleID, string barcode, int numRows, int pageNum, string sortColumn, string sortOrder)
-        {
-            return new ItemDAL().ItemSelectByInstitutionAndRole(null, null, institutionCode, institutionRoleID, barcode, numRows, pageNum, sortColumn, sortOrder);
         }
 
         public int ItemCountByInstitution(string institutionCode)

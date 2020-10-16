@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MOBOT.BHL.BHLPDFGenerator</RootNamespace>
     <AssemblyName>BHLPDFGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -132,6 +132,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Web References\BHLWS\BHLWS.disco" />
+    <None Include="Web References\BHLWS\Book.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\BHLWS\DOI.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -142,6 +145,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\ItemNameFileLog1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\BHLWS\KBART.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\NameFinderResponse.datasource">

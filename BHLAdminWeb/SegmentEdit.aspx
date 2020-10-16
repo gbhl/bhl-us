@@ -184,8 +184,8 @@
         var td1 = document.createElement("td");
         var a = document.createElement("a");
         a.setAttribute("href", "#");
-        a.onclick = new Function("selectItem('" + item.ItemID + "')");
-        a.appendChild(document.createTextNode(item.ItemID));
+        a.onclick = new Function("selectItem('" + item.BookID + "')");
+        a.appendChild(document.createTextNode(item.BookID));
         td1.appendChild(a);
         var td2 = document.createElement("td");
         td2.appendChild(document.createTextNode(item.BarCode));
@@ -399,7 +399,7 @@
         </tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Status:</td>
-			<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="StatusName" DataValueField="SegmentStatusID" runat="server"></asp:DropDownList></td>
+			<td><asp:DropDownList ID="ddlSegmentStatus" DataTextField="ItemStatusName" DataValueField="ItemStatusID" runat="server"></asp:DropDownList></td>
 		</tr>
 		<tr>
 			<td style="white-space: nowrap" align="right" valign="top" class="dataHeader">Replaced By (Segment ID):</td>
@@ -523,7 +523,7 @@
 		<asp:GridView ID="authorsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="authorsList_RowCancelingEdit" OnRowEditing="authorsList_RowEditing"
-			OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="SegmentAuthorID,AuthorID">
+			OnRowUpdating="authorsList_RowUpdating" OnRowCommand="authorsList_RowCommand" DataKeyNames="ItemAuthorID,AuthorID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:BoundField DataField="AuthorID" HeaderText="Author ID" ItemStyle-Width="60px" ReadOnly="true" />
@@ -561,7 +561,7 @@
 		<asp:GridView ID="keywordsList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="keywordsList_RowCancelingEdit" OnRowEditing="keywordsList_RowEditing"
-			OnRowUpdating="keywordsList_RowUpdating" OnRowCommand="keywordsList_RowCommand" DataKeyNames="SegmentKeywordID, KeywordID, Keyword">
+			OnRowUpdating="keywordsList_RowUpdating" OnRowCommand="keywordsList_RowCommand" DataKeyNames="ItemKeywordID, KeywordID, Keyword">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Subject" ItemStyle-Width="220px" HeaderStyle-HorizontalAlign="Left">
@@ -590,7 +590,7 @@
 		<asp:GridView ID="identifiersList" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 		AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="identifiersList_RowCancelingEdit" OnRowEditing="identifiersList_RowEditing"
-			OnRowUpdating="identifiersList_RowUpdating" OnRowCommand="identifiersList_RowCommand" DataKeyNames="SegmentIdentifierID, IdentifierID, IdentifierValue">
+			OnRowUpdating="identifiersList_RowUpdating" OnRowCommand="identifiersList_RowCommand" DataKeyNames="ItemIdentifierID, IdentifierID, IdentifierValue">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Identifier" ItemStyle-Width="400px" HeaderStyle-HorizontalAlign="Left">
@@ -610,14 +610,6 @@
 						<asp:TextBox ID="txtIdentifierValue" runat="server" Text='<%# Eval( "IdentifierValue") %>' />
 					</EditItemTemplate>
 				</asp:TemplateField>
-                <asp:TemplateField HeaderText="Is Original Publication ID" ItemStyle-Width="70px" HeaderStyle-HorizontalAlign="Left" HeaderStyle-Wrap="false">
-                    <ItemTemplate>
-						<asp:CheckBox ID="isContainerIdentifierCheckBox" Enabled="false" Checked='<%# Convert.ToInt32(Eval("IsContainerIdentifier")) == 1 %>' runat="server" />
-                    </ItemTemplate>
-                    <EditItemTemplate>
-						<asp:CheckBox ID="isContainerIdentifierCheckBoxEdit" Checked='<%# Convert.ToInt32(Eval("IsContainerIdentifier")) == 1 %>' runat="server" />
-                    </EditItemTemplate>
-                </asp:TemplateField>
 				<asp:TemplateField ItemStyle-Width="130px">
 					<ItemTemplate>
 						<asp:LinkButton ID="editSegmentIdentifierButton" runat="server" CommandName="Edit" Text="Edit"></asp:LinkButton>
@@ -712,7 +704,7 @@
 		<asp:GridView ID="pagesList" ClientIDMode="Static" runat="server" AutoGenerateColumns="False" CellPadding="5" GridLines="None" 
 			AlternatingRowStyle-BackColor="#F7FAFB" RowStyle-BackColor="white"
 			Width="800px" CssClass="boxTable" OnRowCancelingEdit="pagesList_RowCancelingEdit" OnRowEditing="pagesList_RowEditing"
-			OnRowUpdating="pagesList_RowUpdating" OnRowCommand="pagesList_RowCommand" DataKeyNames="SegmentPageID, PageID">
+			OnRowUpdating="pagesList_RowUpdating" OnRowCommand="pagesList_RowCommand" DataKeyNames="ItemPageID, PageID">
 			<Columns>
 				<asp:ButtonField ButtonType="Link" Text="Remove" CommandName="RemoveButton" ItemStyle-Width="50px" />
 				<asp:TemplateField HeaderText="Page ID" ItemStyle-Width="120px" HeaderStyle-HorizontalAlign="Left">

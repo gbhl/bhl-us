@@ -88,7 +88,8 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrWhiteSpace(pubDate))
             {
-                content.Append("<year match=\"optional\">" + XmlEncode(pubDate) + "</year>");
+                DOIDate doiDate = new DOIDate(pubDate);
+                content.Append("<year match=\"optional\">" + XmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
             }
 
             if (!string.IsNullOrWhiteSpace(Data.Volume))

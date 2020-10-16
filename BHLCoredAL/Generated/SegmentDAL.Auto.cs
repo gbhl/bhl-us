@@ -1,5 +1,5 @@
 
-// Generated 6/2/2016 9:32:37 AM
+// Generated 10/28/2020 3:25:03 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
 // This partial class SegmentDAL is based upon dbo.Segment.
@@ -32,7 +32,7 @@ using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	partial class SegmentDAL : ISegmentDAL
+	partial class SegmentDAL 
 	{
  		#region ===== SELECT =====
 
@@ -137,16 +137,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="itemID"></param>
-		/// <param name="segmentStatusID"></param>
-		/// <param name="sequenceOrder"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="languageCode"></param>
+		/// <param name="barCode"></param>
+		/// <param name="mARCItemID"></param>
 		/// <param name="title"></param>
+		/// <param name="sortTitle"></param>
 		/// <param name="translatedTitle"></param>
 		/// <param name="containerTitle"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
-		/// <param name="notes"></param>
 		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
@@ -156,35 +160,45 @@ namespace MOBOT.BHL.DAL
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="languageCode"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
-		/// <param name="rightsStatus"></param>
-		/// <param name="rightsStatement"></param>
 		/// <param name="licenseName"></param>
 		/// <param name="licenseUrl"></param>
-		/// <param name="contributorCreationDate"></param>
-		/// <param name="contributorLastModifiedDate"></param>
+		/// <param name="rightsStatus"></param>
+		/// <param name="rightsStatement"></param>
+		/// <param name="copyrightStatus"></param>
+		/// <param name="copyrightRegion"></param>
+		/// <param name="copyrightComment"></param>
+		/// <param name="copyrightEvidence"></param>
+		/// <param name="scanningUser"></param>
+		/// <param name="scanningDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sortTitle"></param>
-		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int? itemID,
-			int segmentStatusID,
-			short sequenceOrder,
+			int itemID,
+			int? redirectSegmentID,
 			int segmentGenreID,
+			int? startPageID,
+			int? thumbnailPageID,
+			string languageCode,
+			string barCode,
+			string mARCItemID,
 			string title,
+			string sortTitle,
 			string translatedTitle,
 			string containerTitle,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
-			string notes,
 			string summary,
 			string volume,
 			string series,
@@ -194,22 +208,28 @@ namespace MOBOT.BHL.DAL
 			string pageRange,
 			string startPageNumber,
 			string endPageNumber,
-			int? startPageID,
-			string languageCode,
 			string url,
 			string downloadUrl,
-			string rightsStatus,
-			string rightsStatement,
 			string licenseName,
 			string licenseUrl,
-			DateTime? contributorCreationDate,
-			DateTime? contributorLastModifiedDate,
+			string rightsStatus,
+			string rightsStatement,
+			string copyrightStatus,
+			string copyrightRegion,
+			string copyrightComment,
+			string copyrightEvidence,
+			string scanningUser,
+			DateTime? scanningDate,
+			int? paginationStatusID,
+			DateTime? paginationStatusDate,
+			int? paginationStatusUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationCompleteUserID,
+			DateTime? lastPageNameLookupDate,
 			int? creationUserID,
-			int? lastModifiedUserID,
-			string sortTitle,
-			int? redirectSegmentID)
+			int? lastModifiedUserID)
 		{
-			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, segmentStatusID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, creationUserID, lastModifiedUserID, sortTitle, redirectSegmentID );
+			return SegmentInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, creationUserID, lastModifiedUserID );
 		}
 		
 		/// <summary>
@@ -219,16 +239,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="itemID"></param>
-		/// <param name="segmentStatusID"></param>
-		/// <param name="sequenceOrder"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="languageCode"></param>
+		/// <param name="barCode"></param>
+		/// <param name="mARCItemID"></param>
 		/// <param name="title"></param>
+		/// <param name="sortTitle"></param>
 		/// <param name="translatedTitle"></param>
 		/// <param name="containerTitle"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
-		/// <param name="notes"></param>
 		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
@@ -238,36 +262,46 @@ namespace MOBOT.BHL.DAL
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="languageCode"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
-		/// <param name="rightsStatus"></param>
-		/// <param name="rightsStatement"></param>
 		/// <param name="licenseName"></param>
 		/// <param name="licenseUrl"></param>
-		/// <param name="contributorCreationDate"></param>
-		/// <param name="contributorLastModifiedDate"></param>
+		/// <param name="rightsStatus"></param>
+		/// <param name="rightsStatement"></param>
+		/// <param name="copyrightStatus"></param>
+		/// <param name="copyrightRegion"></param>
+		/// <param name="copyrightComment"></param>
+		/// <param name="copyrightEvidence"></param>
+		/// <param name="scanningUser"></param>
+		/// <param name="scanningDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="creationUserID"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sortTitle"></param>
-		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
-			int? itemID,
-			int segmentStatusID,
-			short sequenceOrder,
+			int itemID,
+			int? redirectSegmentID,
 			int segmentGenreID,
+			int? startPageID,
+			int? thumbnailPageID,
+			string languageCode,
+			string barCode,
+			string mARCItemID,
 			string title,
+			string sortTitle,
 			string translatedTitle,
 			string containerTitle,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
-			string notes,
 			string summary,
 			string volume,
 			string series,
@@ -277,38 +311,48 @@ namespace MOBOT.BHL.DAL
 			string pageRange,
 			string startPageNumber,
 			string endPageNumber,
-			int? startPageID,
-			string languageCode,
 			string url,
 			string downloadUrl,
-			string rightsStatus,
-			string rightsStatement,
 			string licenseName,
 			string licenseUrl,
-			DateTime? contributorCreationDate,
-			DateTime? contributorLastModifiedDate,
+			string rightsStatus,
+			string rightsStatement,
+			string copyrightStatus,
+			string copyrightRegion,
+			string copyrightComment,
+			string copyrightEvidence,
+			string scanningUser,
+			DateTime? scanningDate,
+			int? paginationStatusID,
+			DateTime? paginationStatusDate,
+			int? paginationStatusUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationCompleteUserID,
+			DateTime? lastPageNameLookupDate,
 			int? creationUserID,
-			int? lastModifiedUserID,
-			string sortTitle,
-			int? redirectSegmentID)
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("SegmentID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
-					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID),
-					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID),
 					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, false, segmentGenreID),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
+					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
+					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, true, barCode),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
 					CustomSqlHelper.CreateInputParameter("TranslatedTitle", SqlDbType.NVarChar, 2000, false, translatedTitle),
 					CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
-					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, null, false, notes),
-					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, null, false, summary),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -317,20 +361,26 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
 					CustomSqlHelper.CreateInputParameter("EndPageNumber", SqlDbType.NVarChar, 20, false, endPageNumber),
-					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
-					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("DownloadUrl", SqlDbType.NVarChar, 200, false, downloadUrl),
-					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
-					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
 					CustomSqlHelper.CreateInputParameter("LicenseName", SqlDbType.NVarChar, 200, false, licenseName),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
-					CustomSqlHelper.CreateInputParameter("ContributorCreationDate", SqlDbType.DateTime, null, true, contributorCreationDate),
-					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
+					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
+					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
+					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
+					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, false, copyrightRegion),
+					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, false, copyrightComment),
+					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, false, copyrightEvidence),
+					CustomSqlHelper.CreateInputParameter("ScanningUser", SqlDbType.NVarChar, 100, true, scanningUser),
+					CustomSqlHelper.CreateInputParameter("ScanningDate", SqlDbType.DateTime, null, true, scanningDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
+					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
-					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID), 
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -381,16 +431,20 @@ namespace MOBOT.BHL.DAL
 		{
 			return SegmentInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
-				value.SegmentStatusID,
-				value.SequenceOrder,
+				value.RedirectSegmentID,
 				value.SegmentGenreID,
+				value.StartPageID,
+				value.ThumbnailPageID,
+				value.LanguageCode,
+				value.BarCode,
+				value.MARCItemID,
 				value.Title,
+				value.SortTitle,
 				value.TranslatedTitle,
 				value.ContainerTitle,
 				value.PublicationDetails,
 				value.PublisherName,
 				value.PublisherPlace,
-				value.Notes,
 				value.Summary,
 				value.Volume,
 				value.Series,
@@ -400,20 +454,26 @@ namespace MOBOT.BHL.DAL
 				value.PageRange,
 				value.StartPageNumber,
 				value.EndPageNumber,
-				value.StartPageID,
-				value.LanguageCode,
 				value.Url,
 				value.DownloadUrl,
-				value.RightsStatus,
-				value.RightsStatement,
 				value.LicenseName,
 				value.LicenseUrl,
-				value.ContributorCreationDate,
-				value.ContributorLastModifiedDate,
+				value.RightsStatus,
+				value.RightsStatement,
+				value.CopyrightStatus,
+				value.CopyrightRegion,
+				value.CopyrightComment,
+				value.CopyrightEvidence,
+				value.ScanningUser,
+				value.ScanningDate,
+				value.PaginationStatusID,
+				value.PaginationStatusDate,
+				value.PaginationStatusUserID,
+				value.PaginationCompleteDate,
+				value.PaginationCompleteUserID,
+				value.LastPageNameLookupDate,
 				value.CreationUserID,
-				value.LastModifiedUserID,
-				value.SortTitle,
-				value.RedirectSegmentID);
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== INSERT =====
@@ -485,16 +545,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <param name="segmentID"></param>
 		/// <param name="itemID"></param>
-		/// <param name="segmentStatusID"></param>
-		/// <param name="sequenceOrder"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="languageCode"></param>
+		/// <param name="barCode"></param>
+		/// <param name="mARCItemID"></param>
 		/// <param name="title"></param>
+		/// <param name="sortTitle"></param>
 		/// <param name="translatedTitle"></param>
 		/// <param name="containerTitle"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
-		/// <param name="notes"></param>
 		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
@@ -504,35 +568,45 @@ namespace MOBOT.BHL.DAL
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="languageCode"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
-		/// <param name="rightsStatus"></param>
-		/// <param name="rightsStatement"></param>
 		/// <param name="licenseName"></param>
 		/// <param name="licenseUrl"></param>
-		/// <param name="contributorCreationDate"></param>
-		/// <param name="contributorLastModifiedDate"></param>
+		/// <param name="rightsStatus"></param>
+		/// <param name="rightsStatement"></param>
+		/// <param name="copyrightStatus"></param>
+		/// <param name="copyrightRegion"></param>
+		/// <param name="copyrightComment"></param>
+		/// <param name="copyrightEvidence"></param>
+		/// <param name="scanningUser"></param>
+		/// <param name="scanningDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sortTitle"></param>
-		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int segmentID,
-			int? itemID,
-			int segmentStatusID,
-			short sequenceOrder,
+			int itemID,
+			int? redirectSegmentID,
 			int segmentGenreID,
+			int? startPageID,
+			int? thumbnailPageID,
+			string languageCode,
+			string barCode,
+			string mARCItemID,
 			string title,
+			string sortTitle,
 			string translatedTitle,
 			string containerTitle,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
-			string notes,
 			string summary,
 			string volume,
 			string series,
@@ -542,21 +616,27 @@ namespace MOBOT.BHL.DAL
 			string pageRange,
 			string startPageNumber,
 			string endPageNumber,
-			int? startPageID,
-			string languageCode,
 			string url,
 			string downloadUrl,
-			string rightsStatus,
-			string rightsStatement,
 			string licenseName,
 			string licenseUrl,
-			DateTime? contributorCreationDate,
-			DateTime? contributorLastModifiedDate,
-			int? lastModifiedUserID,
-			string sortTitle,
-			int? redirectSegmentID)
+			string rightsStatus,
+			string rightsStatement,
+			string copyrightStatus,
+			string copyrightRegion,
+			string copyrightComment,
+			string copyrightEvidence,
+			string scanningUser,
+			DateTime? scanningDate,
+			int? paginationStatusID,
+			DateTime? paginationStatusDate,
+			int? paginationStatusUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationCompleteUserID,
+			DateTime? lastPageNameLookupDate,
+			int? lastModifiedUserID)
 		{
-			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, segmentStatusID, sequenceOrder, segmentGenreID, title, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, notes, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, startPageID, languageCode, url, downloadUrl, rightsStatus, rightsStatement, licenseName, licenseUrl, contributorCreationDate, contributorLastModifiedDate, lastModifiedUserID, sortTitle, redirectSegmentID);
+			return SegmentUpdateAuto( sqlConnection, sqlTransaction, "BHL", segmentID, itemID, redirectSegmentID, segmentGenreID, startPageID, thumbnailPageID, languageCode, barCode, mARCItemID, title, sortTitle, translatedTitle, containerTitle, publicationDetails, publisherName, publisherPlace, summary, volume, series, issue, edition, date, pageRange, startPageNumber, endPageNumber, url, downloadUrl, licenseName, licenseUrl, rightsStatus, rightsStatement, copyrightStatus, copyrightRegion, copyrightComment, copyrightEvidence, scanningUser, scanningDate, paginationStatusID, paginationStatusDate, paginationStatusUserID, paginationCompleteDate, paginationCompleteUserID, lastPageNameLookupDate, lastModifiedUserID);
 		}
 		
 		/// <summary>
@@ -567,16 +647,20 @@ namespace MOBOT.BHL.DAL
 		/// <param name="connectionKeyName">Connection key name located in config file.</param>
 		/// <param name="segmentID"></param>
 		/// <param name="itemID"></param>
-		/// <param name="segmentStatusID"></param>
-		/// <param name="sequenceOrder"></param>
+		/// <param name="redirectSegmentID"></param>
 		/// <param name="segmentGenreID"></param>
+		/// <param name="startPageID"></param>
+		/// <param name="thumbnailPageID"></param>
+		/// <param name="languageCode"></param>
+		/// <param name="barCode"></param>
+		/// <param name="mARCItemID"></param>
 		/// <param name="title"></param>
+		/// <param name="sortTitle"></param>
 		/// <param name="translatedTitle"></param>
 		/// <param name="containerTitle"></param>
 		/// <param name="publicationDetails"></param>
 		/// <param name="publisherName"></param>
 		/// <param name="publisherPlace"></param>
-		/// <param name="notes"></param>
 		/// <param name="summary"></param>
 		/// <param name="volume"></param>
 		/// <param name="series"></param>
@@ -586,36 +670,46 @@ namespace MOBOT.BHL.DAL
 		/// <param name="pageRange"></param>
 		/// <param name="startPageNumber"></param>
 		/// <param name="endPageNumber"></param>
-		/// <param name="startPageID"></param>
-		/// <param name="languageCode"></param>
 		/// <param name="url"></param>
 		/// <param name="downloadUrl"></param>
-		/// <param name="rightsStatus"></param>
-		/// <param name="rightsStatement"></param>
 		/// <param name="licenseName"></param>
 		/// <param name="licenseUrl"></param>
-		/// <param name="contributorCreationDate"></param>
-		/// <param name="contributorLastModifiedDate"></param>
+		/// <param name="rightsStatus"></param>
+		/// <param name="rightsStatement"></param>
+		/// <param name="copyrightStatus"></param>
+		/// <param name="copyrightRegion"></param>
+		/// <param name="copyrightComment"></param>
+		/// <param name="copyrightEvidence"></param>
+		/// <param name="scanningUser"></param>
+		/// <param name="scanningDate"></param>
+		/// <param name="paginationStatusID"></param>
+		/// <param name="paginationStatusDate"></param>
+		/// <param name="paginationStatusUserID"></param>
+		/// <param name="paginationCompleteDate"></param>
+		/// <param name="paginationCompleteUserID"></param>
+		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="lastModifiedUserID"></param>
-		/// <param name="sortTitle"></param>
-		/// <param name="redirectSegmentID"></param>
 		/// <returns>Object of type Segment.</returns>
 		public Segment SegmentUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			string connectionKeyName,
 			int segmentID,
-			int? itemID,
-			int segmentStatusID,
-			short sequenceOrder,
+			int itemID,
+			int? redirectSegmentID,
 			int segmentGenreID,
+			int? startPageID,
+			int? thumbnailPageID,
+			string languageCode,
+			string barCode,
+			string mARCItemID,
 			string title,
+			string sortTitle,
 			string translatedTitle,
 			string containerTitle,
 			string publicationDetails,
 			string publisherName,
 			string publisherPlace,
-			string notes,
 			string summary,
 			string volume,
 			string series,
@@ -625,37 +719,47 @@ namespace MOBOT.BHL.DAL
 			string pageRange,
 			string startPageNumber,
 			string endPageNumber,
-			int? startPageID,
-			string languageCode,
 			string url,
 			string downloadUrl,
-			string rightsStatus,
-			string rightsStatement,
 			string licenseName,
 			string licenseUrl,
-			DateTime? contributorCreationDate,
-			DateTime? contributorLastModifiedDate,
-			int? lastModifiedUserID,
-			string sortTitle,
-			int? redirectSegmentID)
+			string rightsStatus,
+			string rightsStatement,
+			string copyrightStatus,
+			string copyrightRegion,
+			string copyrightComment,
+			string copyrightEvidence,
+			string scanningUser,
+			DateTime? scanningDate,
+			int? paginationStatusID,
+			DateTime? paginationStatusDate,
+			int? paginationStatusUserID,
+			DateTime? paginationCompleteDate,
+			int? paginationCompleteUserID,
+			DateTime? lastPageNameLookupDate,
+			int? lastModifiedUserID)
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("SegmentUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
-					CustomSqlHelper.CreateInputParameter("SegmentStatusID", SqlDbType.Int, null, false, segmentStatusID),
-					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.SmallInt, null, false, sequenceOrder),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID),
 					CustomSqlHelper.CreateInputParameter("SegmentGenreID", SqlDbType.Int, null, false, segmentGenreID),
+					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
+					CustomSqlHelper.CreateInputParameter("ThumbnailPageID", SqlDbType.Int, null, true, thumbnailPageID),
+					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
+					CustomSqlHelper.CreateInputParameter("BarCode", SqlDbType.NVarChar, 200, true, barCode),
+					CustomSqlHelper.CreateInputParameter("MARCItemID", SqlDbType.NVarChar, 50, true, mARCItemID),
 					CustomSqlHelper.CreateInputParameter("Title", SqlDbType.NVarChar, 2000, false, title),
+					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
 					CustomSqlHelper.CreateInputParameter("TranslatedTitle", SqlDbType.NVarChar, 2000, false, translatedTitle),
 					CustomSqlHelper.CreateInputParameter("ContainerTitle", SqlDbType.NVarChar, 2000, false, containerTitle),
 					CustomSqlHelper.CreateInputParameter("PublicationDetails", SqlDbType.NVarChar, 400, false, publicationDetails),
 					CustomSqlHelper.CreateInputParameter("PublisherName", SqlDbType.NVarChar, 250, false, publisherName),
 					CustomSqlHelper.CreateInputParameter("PublisherPlace", SqlDbType.NVarChar, 150, false, publisherPlace),
-					CustomSqlHelper.CreateInputParameter("Notes", SqlDbType.NVarChar, null, false, notes),
-					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, null, false, summary),
+					CustomSqlHelper.CreateInputParameter("Summary", SqlDbType.NVarChar, 1073741823, false, summary),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 100, false, volume),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 100, false, series),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 100, false, issue),
@@ -664,19 +768,25 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("PageRange", SqlDbType.NVarChar, 50, false, pageRange),
 					CustomSqlHelper.CreateInputParameter("StartPageNumber", SqlDbType.NVarChar, 20, false, startPageNumber),
 					CustomSqlHelper.CreateInputParameter("EndPageNumber", SqlDbType.NVarChar, 20, false, endPageNumber),
-					CustomSqlHelper.CreateInputParameter("StartPageID", SqlDbType.Int, null, true, startPageID),
-					CustomSqlHelper.CreateInputParameter("LanguageCode", SqlDbType.NVarChar, 10, true, languageCode),
 					CustomSqlHelper.CreateInputParameter("Url", SqlDbType.NVarChar, 200, false, url),
 					CustomSqlHelper.CreateInputParameter("DownloadUrl", SqlDbType.NVarChar, 200, false, downloadUrl),
-					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
-					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
 					CustomSqlHelper.CreateInputParameter("LicenseName", SqlDbType.NVarChar, 200, false, licenseName),
 					CustomSqlHelper.CreateInputParameter("LicenseUrl", SqlDbType.NVarChar, 200, false, licenseUrl),
-					CustomSqlHelper.CreateInputParameter("ContributorCreationDate", SqlDbType.DateTime, null, true, contributorCreationDate),
-					CustomSqlHelper.CreateInputParameter("ContributorLastModifiedDate", SqlDbType.DateTime, null, true, contributorLastModifiedDate),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
-					CustomSqlHelper.CreateInputParameter("SortTitle", SqlDbType.NVarChar, 2000, false, sortTitle),
-					CustomSqlHelper.CreateInputParameter("RedirectSegmentID", SqlDbType.Int, null, true, redirectSegmentID), 
+					CustomSqlHelper.CreateInputParameter("RightsStatus", SqlDbType.NVarChar, 500, false, rightsStatus),
+					CustomSqlHelper.CreateInputParameter("RightsStatement", SqlDbType.NVarChar, 500, false, rightsStatement),
+					CustomSqlHelper.CreateInputParameter("CopyrightStatus", SqlDbType.NVarChar, 1073741823, false, copyrightStatus),
+					CustomSqlHelper.CreateInputParameter("CopyrightRegion", SqlDbType.NVarChar, 50, false, copyrightRegion),
+					CustomSqlHelper.CreateInputParameter("CopyrightComment", SqlDbType.NVarChar, 1073741823, false, copyrightComment),
+					CustomSqlHelper.CreateInputParameter("CopyrightEvidence", SqlDbType.NVarChar, 1073741823, false, copyrightEvidence),
+					CustomSqlHelper.CreateInputParameter("ScanningUser", SqlDbType.NVarChar, 100, true, scanningUser),
+					CustomSqlHelper.CreateInputParameter("ScanningDate", SqlDbType.DateTime, null, true, scanningDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusID", SqlDbType.Int, null, true, paginationStatusID),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusDate", SqlDbType.DateTime, null, true, paginationStatusDate),
+					CustomSqlHelper.CreateInputParameter("PaginationStatusUserID", SqlDbType.Int, null, true, paginationStatusUserID),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteDate", SqlDbType.DateTime, null, true, paginationCompleteDate),
+					CustomSqlHelper.CreateInputParameter("PaginationCompleteUserID", SqlDbType.Int, null, true, paginationCompleteUserID),
+					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
@@ -728,16 +838,20 @@ namespace MOBOT.BHL.DAL
 			return SegmentUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.SegmentID,
 				value.ItemID,
-				value.SegmentStatusID,
-				value.SequenceOrder,
+				value.RedirectSegmentID,
 				value.SegmentGenreID,
+				value.StartPageID,
+				value.ThumbnailPageID,
+				value.LanguageCode,
+				value.BarCode,
+				value.MARCItemID,
 				value.Title,
+				value.SortTitle,
 				value.TranslatedTitle,
 				value.ContainerTitle,
 				value.PublicationDetails,
 				value.PublisherName,
 				value.PublisherPlace,
-				value.Notes,
 				value.Summary,
 				value.Volume,
 				value.Series,
@@ -747,19 +861,25 @@ namespace MOBOT.BHL.DAL
 				value.PageRange,
 				value.StartPageNumber,
 				value.EndPageNumber,
-				value.StartPageID,
-				value.LanguageCode,
 				value.Url,
 				value.DownloadUrl,
-				value.RightsStatus,
-				value.RightsStatement,
 				value.LicenseName,
 				value.LicenseUrl,
-				value.ContributorCreationDate,
-				value.ContributorLastModifiedDate,
-				value.LastModifiedUserID,
-				value.SortTitle,
-				value.RedirectSegmentID);
+				value.RightsStatus,
+				value.RightsStatement,
+				value.CopyrightStatus,
+				value.CopyrightRegion,
+				value.CopyrightComment,
+				value.CopyrightEvidence,
+				value.ScanningUser,
+				value.ScanningDate,
+				value.PaginationStatusID,
+				value.PaginationStatusDate,
+				value.PaginationStatusUserID,
+				value.PaginationCompleteDate,
+				value.PaginationCompleteUserID,
+				value.LastPageNameLookupDate,
+				value.LastModifiedUserID);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -805,16 +925,20 @@ namespace MOBOT.BHL.DAL
 				value.LastModifiedUserID = userId;
 				Segment returnValue = SegmentInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
-						value.SegmentStatusID,
-						value.SequenceOrder,
+						value.RedirectSegmentID,
 						value.SegmentGenreID,
+						value.StartPageID,
+						value.ThumbnailPageID,
+						value.LanguageCode,
+						value.BarCode,
+						value.MARCItemID,
 						value.Title,
+						value.SortTitle,
 						value.TranslatedTitle,
 						value.ContainerTitle,
 						value.PublicationDetails,
 						value.PublisherName,
 						value.PublisherPlace,
-						value.Notes,
 						value.Summary,
 						value.Volume,
 						value.Series,
@@ -824,20 +948,26 @@ namespace MOBOT.BHL.DAL
 						value.PageRange,
 						value.StartPageNumber,
 						value.EndPageNumber,
-						value.StartPageID,
-						value.LanguageCode,
 						value.Url,
 						value.DownloadUrl,
-						value.RightsStatus,
-						value.RightsStatement,
 						value.LicenseName,
 						value.LicenseUrl,
-						value.ContributorCreationDate,
-						value.ContributorLastModifiedDate,
+						value.RightsStatus,
+						value.RightsStatement,
+						value.CopyrightStatus,
+						value.CopyrightRegion,
+						value.CopyrightComment,
+						value.CopyrightEvidence,
+						value.ScanningUser,
+						value.ScanningDate,
+						value.PaginationStatusID,
+						value.PaginationStatusDate,
+						value.PaginationStatusUserID,
+						value.PaginationCompleteDate,
+						value.PaginationCompleteUserID,
+						value.LastPageNameLookupDate,
 						value.CreationUserID,
-						value.LastModifiedUserID,
-						value.SortTitle,
-						value.RedirectSegmentID);
+						value.LastModifiedUserID);
 				
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Insert, 
@@ -865,16 +995,20 @@ namespace MOBOT.BHL.DAL
 				Segment returnValue = SegmentUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.SegmentID,
 						value.ItemID,
-						value.SegmentStatusID,
-						value.SequenceOrder,
+						value.RedirectSegmentID,
 						value.SegmentGenreID,
+						value.StartPageID,
+						value.ThumbnailPageID,
+						value.LanguageCode,
+						value.BarCode,
+						value.MARCItemID,
 						value.Title,
+						value.SortTitle,
 						value.TranslatedTitle,
 						value.ContainerTitle,
 						value.PublicationDetails,
 						value.PublisherName,
 						value.PublisherPlace,
-						value.Notes,
 						value.Summary,
 						value.Volume,
 						value.Series,
@@ -884,19 +1018,25 @@ namespace MOBOT.BHL.DAL
 						value.PageRange,
 						value.StartPageNumber,
 						value.EndPageNumber,
-						value.StartPageID,
-						value.LanguageCode,
 						value.Url,
 						value.DownloadUrl,
-						value.RightsStatus,
-						value.RightsStatement,
 						value.LicenseName,
 						value.LicenseUrl,
-						value.ContributorCreationDate,
-						value.ContributorLastModifiedDate,
-						value.LastModifiedUserID,
-						value.SortTitle,
-						value.RedirectSegmentID);
+						value.RightsStatus,
+						value.RightsStatement,
+						value.CopyrightStatus,
+						value.CopyrightRegion,
+						value.CopyrightComment,
+						value.CopyrightEvidence,
+						value.ScanningUser,
+						value.ScanningDate,
+						value.PaginationStatusID,
+						value.PaginationStatusDate,
+						value.PaginationStatusUserID,
+						value.PaginationCompleteDate,
+						value.PaginationCompleteUserID,
+						value.LastPageNameLookupDate,
+						value.LastModifiedUserID);
 					
 				return new CustomDataAccessStatus<Segment>(
 					CustomDataAccessContext.Update, 

@@ -39,7 +39,7 @@
             <% if (BhlSegment.AuthorList.Count > 0) { %>
                 <h3>By</h3>
                 <p>
-                    <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
+                    <% foreach (ItemAuthor author in BhlSegment.AuthorList)
                     { %>
                         <span itemprop="author" itemscope itemtype='https://schema.org/Person'>
                         <a href="/creator/<%: author.AuthorID %>">
@@ -132,7 +132,7 @@
             <% if (BhlSegment.AuthorList.Count > 0) { %>
                 <h3>By</h3>
                 <p>
-                    <% foreach (SegmentAuthor author in BhlSegment.AuthorList)
+                    <% foreach (ItemAuthor author in BhlSegment.AuthorList)
                        { %>
                         <a href="/creator/<%: author.AuthorID %>">
 							<%: author.NameExtended%>
@@ -218,14 +218,14 @@
             <% } %>
             <% if (BhlSegment.IdentifierList.Count > 0) { %>
                 <h3>Identifiers</h3><p>
-                    <%foreach (SegmentIdentifier segmentIdentifier in BhlSegment.IdentifierList) {%>
-                        <%: segmentIdentifier.IdentifierLabel %>: 
-                        <%if (string.Compare(segmentIdentifier.IdentifierLabel, "BioStor", true) == 0) {%>
-                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="https://biostor.org/reference/<%: segmentIdentifier.IdentifierValue%>"><span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span></a><br />
+                    <%foreach (ItemIdentifier itemIdentifier in BhlSegment.IdentifierList) {%>
+                        <%: itemIdentifier.IdentifierLabel %>: 
+                        <%if (string.Compare(itemIdentifier.IdentifierLabel, "BioStor", true) == 0) {%>
+                            <a target="blank" class="ExtLinkBrowse" style="line-height:19px" href="https://biostor.org/reference/<%: itemIdentifier.IdentifierValue%>"><span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValue %></span></a><br />
                         <%}
                         else
                         {%>
-                            <span itemprop="<%: segmentIdentifier.IdentifierLabel%>"><%: segmentIdentifier.IdentifierValue %></span><br />
+                            <span itemprop="<%: itemIdentifier.IdentifierLabel%>"><%: itemIdentifier.IdentifierValue %></span><br />
                         <%}
                     }%>
                 </p>

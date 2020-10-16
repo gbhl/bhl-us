@@ -98,22 +98,22 @@ namespace MOBOT.BHL.AdminWeb.Services
                     {
                         case "Title":
                         {
-                                entityUrl = string.Format(ConfigurationManager.AppSettings["BibPageUrl"], searchResult[x].EntityID.ToString());
+                                entityUrl = string.Format("/TitleEdit.aspx?id={0}", searchResult[x].EntityID.ToString());
                                 break;
                         }
                         case "Item":
                             {
-                                entityUrl = string.Format(ConfigurationManager.AppSettings["ItemPageUrl"], searchResult[x].EntityID.ToString());
+                                entityUrl = string.Format("/ItemEdit.aspx?id={0}", searchResult[x].EntityID.ToString());
                                 break;
                             }
                         case "Page":
                             {
-                                entityUrl = string.Format(ConfigurationManager.AppSettings["PagePageUrl"], searchResult[x].EntityID.ToString());
+                                entityUrl = string.Format("/PageEdit.aspx?id={0}", searchResult[x].EntityID.ToString());
                                 break;
                             }
                         case "Segment":
                             {
-                                entityUrl = string.Format(ConfigurationManager.AppSettings["PartPageUrl"], searchResult[x].EntityID.ToString());
+                                entityUrl = string.Format("/SegmentEdit.aspx?id={0}", searchResult[x].EntityID.ToString());
                                 break;
                             }
                         default:
@@ -124,7 +124,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     }
 
                     response.Append("<row id='" + searchResult[x].DOIID.ToString() + "'>");
-                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" rel=\"noopener noreferrer\" target=\"_blank\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
+                    response.Append("<cell> <![CDATA[<a title=\"Entity Info\" rel=\"noopener noreferrer\" href=\"" + entityUrl + "\">" + entityID + "</a>]]> </cell>");
                     response.Append("<cell> " + HttpUtility.HtmlEncode(searchResult[x].EntityDetail) + " </cell>");
                     response.Append("<cell> <![CDATA[<a title=\"DOI Info\" target=\"_blank\" href=\"DOISubmissionDetail.aspx?id=" + searchResult[x].DOIBatchID + "&type=d\">" + searchResult[x].DOIBatchID + "</a>]]> </cell>");
                     response.Append("<cell> " + searchResult[x].DOIName + " </cell>");

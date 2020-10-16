@@ -27,8 +27,8 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _PageID = value; }
         }
 
-        private int _ItemID = default(int);
-        public int ItemID
+        private int? _ItemID = default(int);
+        public int? ItemID
         {
             get { return _ItemID; }
             set { _ItemID = value; }
@@ -150,7 +150,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                         }
                     case "ItemID":
                         {
-                            _ItemID = (int)column.Value;
+                            _ItemID = (int?)column.Value;
                             break;
                         }
                     case "Volume":

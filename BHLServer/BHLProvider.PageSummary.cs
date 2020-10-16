@@ -90,16 +90,6 @@ namespace MOBOT.BHL.Server
     }
 
     /// <summary>
-    /// Select values from PageSummaryView by MARC Bib Id.
-    /// </summary>
-    /// <param name="bibID"></param>
-    /// <returns>Object of type PageSummaryView.</returns>
-    public PageSummaryView PageSummarySelectByBibID(string bibID)
-    {
-        return (new PageSummaryDAL().PageSummarySelectByBibId(null, null, bibID));
-    }
-
-    /// <summary>
     /// Select values from PageSummaryView by Page Id.
     /// </summary>
     /// <param name="pageId"></param>

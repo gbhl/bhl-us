@@ -83,7 +83,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                     csvString.Append("\"System\",");
                 else 
                     csvString.Append("\"User\",");
-                csvString.Append("\"" + segment.ItemID.ToString() + "\",");
+                csvString.Append("\"" + segment.BookID.ToString() + "\",");
                 csvString.Append("\"" + segment.StartPageID.ToString() + "\",");
                 csvString.Append("\"" + segment.GenreName + "\",");
                 csvString.Append("\"" + segment.Title+ "\",");

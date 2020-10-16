@@ -113,7 +113,6 @@ namespace MOBOT.BHL.DataObjects
                             break;
                         }
                     case "ItemInstitutionID":
-                    case "SegmentInstitutionID":
                     case "TitleInstitutionID":
                         {
                             _entityInstitutionID = (int?)column.Value;

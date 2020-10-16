@@ -719,8 +719,8 @@ namespace BHLApiDALTest
             Api2DAL target = new Api2DAL();
             SqlConnection sqlConnection = null;
             SqlTransaction sqlTransaction = null;
-            string identifierName = "ISSN";
-            string identifierValue = "0037-962X";
+            string identifierName = "BioStor";
+            string identifierValue = "127216";
             List<Part> actual = target.SegmentSelectByIdentifier(sqlConnection, sqlTransaction, identifierName, identifierValue);
             Assert.IsTrue(actual.Count > 0);
         }

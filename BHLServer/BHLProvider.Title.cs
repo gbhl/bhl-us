@@ -150,14 +150,17 @@ namespace MOBOT.BHL.Server
 
                 if (criteria.ItemID != null)
                 { 
-                    Item item = new ItemDAL().ItemSelectAuto(null, null, (int)criteria.ItemID);
-                    if (item != null)
+                    Book book  = new BookDAL().BookSelectByBarCodeOrItemID(null, null, criteria.ItemID, null);
+                    if (book != null)
                     {
-                        Title title = new TitleDAL().TitleSelectAuto(null, null, item.PrimaryTitleID);
-                        if (title != null)
+                        if (book.PrimaryTitleID != null)
                         {
-                            title.Items.Add(item);
-                            titles.Add(title);
+                            Title title = new TitleDAL().TitleSelectAuto(null, null, (int)book.PrimaryTitleID);
+                            if (title != null)
+                            {
+                                title.Books.Add(book);
+                                titles.Add(title);
+                            }
                         }
                     }
                 }

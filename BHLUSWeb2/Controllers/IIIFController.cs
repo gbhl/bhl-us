@@ -21,11 +21,11 @@ namespace MOBOT.BHL.Web2.Controllers
             if (page == null)
             {
                 // If no pages then see if we should redirect to an external url
-                Item item = provider.ItemSelectAuto(Convert.ToInt32(itemId));
-                if (item != null) if (!string.IsNullOrWhiteSpace(item.ExternalUrl)) return new RedirectResult(item.ExternalUrl);
+                DataObjects.Book book = provider.BookSelectAuto(Convert.ToInt32(itemId));
+                if (book != null) if (!string.IsNullOrWhiteSpace(book.ExternalUrl)) return new RedirectResult(book.ExternalUrl);
                 return new RedirectResult("~/itemnotfound");
             }
-            if (page.RedirectItemID != null) return new RedirectResult("~/item/" + page.RedirectItemID);
+            if (page.RedirectBookID != null) return new RedirectResult("~/item/" + page.RedirectBookID);
             if (page.ItemStatusID != 40) return new RedirectResult("~/itemunavailable");
 
             // Get the details of the first page to display
@@ -48,11 +48,11 @@ namespace MOBOT.BHL.Web2.Controllers
             // Check to make sure this item is found, is published, and hasn't been replaced.  If it has been replaced, redirect to the appropriate itemid.  
             // That won't find the correct page, but at least puts the user in the correct item... better than "not found".
             if (page == null) return new RedirectResult("~/itemnotfound");
-            if (page.RedirectItemID != null) return new RedirectResult("~/item/" + page.RedirectItemID);
+            if (page.RedirectBookID != null) return new RedirectResult("~/item/" + page.RedirectBookID);
             if (page.ItemStatusID != 40) return new RedirectResult("~/itemunavailable");
 
             ViewBag.IIIFLinkTarget = "/page/" + pageId; // Used for IIIF toggle
-            ViewBag.ItemID = page.ItemID;
+            ViewBag.ItemID = page.BookID;
             ViewBag.PageSequence = page.SequenceOrder;
             ViewBag.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(page.Volume) ? String.Empty : page.Volume + " - ") + page.ShortTitle);
 

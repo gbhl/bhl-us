@@ -1,13 +1,13 @@
+using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class SegmentDAL
+    public partial class SegmentDAL
 	{
         /// <summary>
         /// Select the specified segment and all of its related objects for editing.
@@ -29,8 +29,11 @@ namespace MOBOT.BHL.DAL
                 // NOTE: The selection of IsPrimary and PageRange values could be included with the previous database request
                 // Get a couple extra segment details for editing
                 Segment segmentExtra = SegmentSelectForSegmentID(connection, transaction, segmentId);
+                segment.BookID = segmentExtra.BookID;
+                segment.SegmentStatusID = segmentExtra.SegmentStatusID;
                 segment.IsPrimary = segmentExtra.IsPrimary;
                 segment.PageRange = segmentExtra.PageRange;
+                segment.Notes = segmentExtra.Notes;
             }
 
             // Get the rest of the segment details
@@ -71,28 +74,33 @@ namespace MOBOT.BHL.DAL
         {
             if (segment != null)
             {
-                if (segment.ItemID != null)
-                {
-                    Item item = new ItemDAL().ItemSelectAuto(connection, transaction, (int)segment.ItemID);
-                    segment.ItemVolume = item.Volume;
-                    segment.ItemYear = item.Year ?? string.Empty;
+                segment.Item = new ItemDAL().ItemSelectAuto(connection, transaction, segment.ItemID);
 
-                    Title title = new TitleDAL().TitleSelectAuto(connection, transaction, item.PrimaryTitleID);
-                    segment.TitleId = title.TitleID;
-                    segment.TitleFullTitle = title.FullTitle;
-                    segment.TitleShortTitle = title.ShortTitle;
-                    segment.TitlePublicationPlace = title.Datafield_260_a;
-                    segment.TitlePublisherName = title.Datafield_260_b;
-                    segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+                if (segment.BookID != null)
+                {
+                    Book book = new BookDAL().BookSelectByBarCodeOrItemID(connection, transaction, segment.BookID, null);
+                    segment.ItemVolume = book.Volume;
+                    segment.ItemYear = book.StartYear ?? string.Empty;
+
+                    if (book.PrimaryTitleID != null)
+                    {
+                        Title title = new TitleDAL().TitleSelectAuto(connection, transaction, (int)book.PrimaryTitleID);
+                        segment.TitleId = title.TitleID;
+                        segment.TitleFullTitle = title.FullTitle;
+                        segment.TitleShortTitle = title.ShortTitle;
+                        segment.TitlePublicationPlace = title.Datafield_260_a;
+                        segment.TitlePublisherName = title.Datafield_260_b;
+                        segment.TitlePublicationDate = (title.StartYear == null ? "" : title.StartYear.ToString());
+                    }
                 }
 
-                segment.AuthorList = new SegmentAuthorDAL().SegmentAuthorSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.AuthorList = new ItemAuthorDAL().ItemAuthorSelectBySegmentID(connection, transaction, segment.SegmentID);
                 if (segment.AuthorList != null && segment.AuthorList.Count > 0)
                 {
                     AuthorDAL authorDAL = new AuthorDAL();
-                    foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
+                    foreach (ItemAuthor itemAuthor in segment.AuthorList)
                     {
-                        segmentAuthor.Author = authorDAL.AuthorSelectAuto(connection, transaction, segmentAuthor.AuthorID);
+                        itemAuthor.Author = authorDAL.AuthorSelectAuto(connection, transaction, itemAuthor.AuthorID);
                     }
                 }
 
@@ -105,11 +113,13 @@ namespace MOBOT.BHL.DAL
                 }
 
                 segment.ContributorList = new InstitutionDAL().InstitutionSelectBySegmentIDAndRole(connection, transaction, segment.SegmentID, InstitutionRole.Contributor);
-                segment.IdentifierList = new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
-                segment.KeywordList = new SegmentKeywordDAL().SegmentKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
-                segment.PageList = new SegmentPageDAL().SegmentPageSelectBySegmentID(connection, transaction, segment.SegmentID);
-                segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.IdentifierList = new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(connection, transaction, segment.SegmentID, null);
+                segment.KeywordList = new ItemKeywordDAL().ItemKeywordSelectBySegmentID(connection, transaction, segment.SegmentID);
+                segment.PageList = new ItemPageDAL().ItemPageSelectBySegmentID(connection, transaction, segment.SegmentID);
+                // The data held in NameList is not used anywhere, so the expensive NameSegmentSelectBySegmentID database query is unnecessary
+                //segment.NameList = new NameSegmentDAL().NameSegmentSelectBySegmentID(connection, transaction, segment.SegmentID);
                 segment.RelatedSegmentList = SegmentSelectRelated(connection, transaction, segment.SegmentID);
+                segment.RelationshipList = new ItemRelationshipDAL().ItemRelationshipSelectByItemID(connection, transaction, segment.ItemID);
             }
         }
 
@@ -615,6 +625,11 @@ namespace MOBOT.BHL.DAL
             {
                 transaction = CustomSqlHelper.BeginTransaction(connection, transaction, isTransactionCoordinator);
 
+                CustomDataAccessStatus<Item> updatedItem =
+                    new ItemDAL().ItemManageAuto(connection, transaction, segment.Item, userId);
+
+                if (segment.IsNew) segment.ItemID = updatedItem.ReturnObject.ItemID;
+
                 CustomDataAccessStatus<Segment> updatedSegment =
                     new SegmentDAL().SegmentManageAuto(connection, transaction, segment, userId);
 
@@ -672,16 +687,16 @@ namespace MOBOT.BHL.DAL
 
                 if (segment.ContributorList.Count > 0)
                 {
-                    SegmentInstitutionDAL segmentInstitutionDAL = new SegmentInstitutionDAL();
+                    ItemInstitutionDAL itemInstitutionDAL = new ItemInstitutionDAL();
                     foreach (Institution institution in segment.ContributorList)
                     {
                         if (institution.IsDeleted)
                         {
-                            segmentInstitutionDAL.SegmentInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
+                            itemInstitutionDAL.ItemInstitutionDeleteAuto(connection, transaction, (int)institution.EntityInstitutionID);
                         }
                         if (institution.IsNew)
                         {
-                            segmentInstitutionDAL.SegmentInstitutionInsert(connection, transaction, segmentID, 
+                            itemInstitutionDAL.ItemInstitutionInsert(connection, transaction, (int)segment.ItemID, 
                                 institution.InstitutionCode, institution.InstitutionRoleName, userId);
                         }
                     }
@@ -689,29 +704,39 @@ namespace MOBOT.BHL.DAL
 
                 if (segment.AuthorList.Count > 0)
                 {
-                    SegmentAuthorDAL segmentAuthorDAL = new SegmentAuthorDAL();
-                    foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
+                    ItemAuthorDAL itemAuthorDAL = new ItemAuthorDAL();
+                    foreach (ItemAuthor itemAuthor in segment.AuthorList)
                     {
-                        if (segmentAuthor.SegmentID == 0) segmentAuthor.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentAuthorDAL.SegmentAuthorManageAuto(connection, transaction, segmentAuthor, userId);
+                        if (itemAuthor.ItemID == 0) itemAuthor.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemAuthorDAL.ItemAuthorManageAuto(connection, transaction, itemAuthor, userId);
                     }
+                }
+
+                if (segment.RelationshipList.Count > 0)
+                {
+                    ItemRelationshipDAL irDAL = new ItemRelationshipDAL();
+                    foreach(ItemRelationship ir in segment.RelationshipList)
+                    {
+                        if (ir.ChildID == 0) ir.ChildID = (int)updatedSegment.ReturnObject.ItemID;
+                        irDAL.ItemRelationshipManageAuto(connection, transaction, ir, userId);
+                    }    
                 }
 
                 if (segment.KeywordList.Count > 0)
                 {
-                    SegmentKeywordDAL segmentKeywordDAL = new SegmentKeywordDAL();
+                    ItemKeywordDAL itemKeywordDAL = new ItemKeywordDAL();
                     KeywordDAL keywordDAL = new KeywordDAL();
-                    foreach (SegmentKeyword segmentKeyword in segment.KeywordList)
+                    foreach (ItemKeyword itemKeyword in segment.KeywordList)
                     {
                         // If we have a newly entered keyword, insert it and/or get its ID
-                        if (segmentKeyword.KeywordID == 0)
+                        if (itemKeyword.KeywordID == 0)
                         {
-                            Keyword keyword = keywordDAL.KeywordSelectByKeyword(connection, transaction, segmentKeyword.Keyword);
+                            Keyword keyword = keywordDAL.KeywordSelectByKeyword(connection, transaction, itemKeyword.Keyword);
                             if (keyword == null)
                             {
                                 // Keyword not found, so insert a new one
                                 keyword = new Keyword();
-                                keyword.Keyword = segmentKeyword.Keyword;
+                                keyword.Keyword = itemKeyword.Keyword;
                                 keyword.CreationUserID = userId;
                                 keyword.CreationDate = DateTime.Now;
                                 keyword.LastModifiedUserID = userId;
@@ -719,32 +744,32 @@ namespace MOBOT.BHL.DAL
                                 keyword.IsNew = true;
                                 keyword = keywordDAL.KeywordInsertAuto(connection, transaction, keyword);
                             }
-                            segmentKeyword.KeywordID = keyword.KeywordID;
+                            itemKeyword.KeywordID = keyword.KeywordID;
                         }
 
                         // Insert/Update the TitleKeyword record
-                        if (segmentKeyword.SegmentID == 0) segmentKeyword.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentKeywordDAL.SegmentKeywordManageAuto(connection, transaction, segmentKeyword, userId);
+                        if (itemKeyword.ItemID == 0) itemKeyword.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemKeywordDAL.ItemKeywordManageAuto(connection, transaction, itemKeyword, userId);
                     }
                 }
 
                 if (segment.IdentifierList.Count > 0)
                 {
-                    SegmentIdentifierDAL segmentIdentifierDAL = new SegmentIdentifierDAL();
-                    foreach (SegmentIdentifier segmentIdentifier in segment.IdentifierList)
+                    ItemIdentifierDAL itemIdentifierDAL = new ItemIdentifierDAL();
+                    foreach (ItemIdentifier itemIdentifier in segment.IdentifierList)
                     {
-                        if (segmentIdentifier.SegmentID == 0) segmentIdentifier.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentIdentifierDAL.SegmentIdentifierManageAuto(connection, transaction, segmentIdentifier, userId);
+                        if (itemIdentifier.ItemID == 0) itemIdentifier.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemIdentifierDAL.ItemIdentifierManageAuto(connection, transaction, itemIdentifier, userId);
                     }
                 }
 
                 if (segment.PageList.Count > 0)
                 {
-                    SegmentPageDAL segmentPageDAL = new SegmentPageDAL();
-                    foreach (SegmentPage segmentPage in segment.PageList)
+                    ItemPageDAL itemPageDAL = new ItemPageDAL();
+                    foreach (ItemPage itemPage in segment.PageList)
                     {
-                        if (segmentPage.SegmentID == 0) segmentPage.SegmentID = updatedSegment.ReturnObject.SegmentID;
-                        segmentPageDAL.SegmentPageManageAuto(connection, transaction, segmentPage, userId);
+                        if (itemPage.ItemID == 0) itemPage.ItemID = (int)updatedSegment.ReturnObject.ItemID;
+                        itemPageDAL.ItemPageManageAuto(connection, transaction, itemPage, userId);
                     }
                 }
 

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DOIArticleDeposit.cs" />
+    <Compile Include="DOIDate.cs" />
     <Compile Include="DOIDeposit.cs" />
     <Compile Include="DOIDepositData.cs" />
     <Compile Include="DOIDepositFactory.cs" />

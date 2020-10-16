@@ -131,6 +131,9 @@
 <a href="#BibliographicLevel">BibliographicLevel</a>
 </li>
 <li>
+<a href="#Book">Book</a>
+</li>
+<li>
 <a href="#Collection">Collection</a>
 </li>
 <li>
@@ -179,10 +182,19 @@
 <a href="#Item">Item</a>
 </li>
 <li>
+<a href="#ItemAuthor">ItemAuthor</a>
+</li>
+<li>
 <a href="#ItemCollection">ItemCollection</a>
 </li>
 <li>
+<a href="#ItemIdentifier">ItemIdentifier</a>
+</li>
+<li>
 <a href="#ItemInstitution">ItemInstitution</a>
+</li>
+<li>
+<a href="#ItemKeyword">ItemKeyword</a>
 </li>
 <li>
 <a href="#ItemLanguage">ItemLanguage</a>
@@ -191,10 +203,22 @@
 <a href="#ItemNameFileLog">ItemNameFileLog</a>
 </li>
 <li>
+<a href="#ItemPage">ItemPage</a>
+</li>
+<li>
+<a href="#ItemRelationship">ItemRelationship</a>
+</li>
+<li>
 <a href="#ItemSource">ItemSource</a>
 </li>
 <li>
 <a href="#ItemStatus">ItemStatus</a>
+</li>
+<li>
+<a href="#ItemTitle">ItemTitle</a>
+</li>
+<li>
+<a href="#ItemType">ItemType</a>
 </li>
 <li>
 <a href="#Keyword">Keyword</a>
@@ -240,9 +264,6 @@
 </li>
 <li>
 <a href="#NameResolved">NameResolved</a>
-</li>
-<li>
-<a href="#NameSegment">NameSegment</a>
 </li>
 <li>
 <a href="#NameSource">NameSource</a>
@@ -302,9 +323,6 @@
 <a href="#Segment">Segment</a>
 </li>
 <li>
-<a href="#SegmentAuthor">SegmentAuthor</a>
-</li>
-<li>
 <a href="#SegmentCluster">SegmentCluster</a>
 </li>
 <li>
@@ -317,22 +335,7 @@
 <a href="#SegmentGenre">SegmentGenre</a>
 </li>
 <li>
-<a href="#SegmentIdentifier">SegmentIdentifier</a>
-</li>
-<li>
-<a href="#SegmentInstitution">SegmentInstitution</a>
-</li>
-<li>
-<a href="#SegmentKeyword">SegmentKeyword</a>
-</li>
-<li>
-<a href="#SegmentPage">SegmentPage</a>
-</li>
-<li>
 <a href="#SegmentResolutionLog">SegmentResolutionLog</a>
-</li>
-<li>
-<a href="#SegmentStatus">SegmentStatus</a>
 </li>
 <li>
 <a href="#Title">Title</a>
@@ -357,9 +360,6 @@
 </li>
 <li>
 <a href="#TitleInstitution">TitleInstitution</a>
-</li>
-<li>
-<a href="#TitleItem">TitleItem</a>
 </li>
 <li>
 <a href="#TitleKeyword">TitleKeyword</a>
@@ -694,7 +694,7 @@
 <li>
 <a href="#Author">Author</a> referencing (AuthorID)</li>
 <li>
-<a href="#SegmentAuthor">SegmentAuthor</a> referencing (AuthorID)</li>
+<a href="#ItemAuthor">ItemAuthor</a> referencing (AuthorID)</li>
 </ul>
 </div>
 </div>
@@ -913,6 +913,181 @@
 <ul>
 <li>
 <a href="#Title">Title</a> referencing (BibliographicLevelID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>Book<a name="Book"></a>
+</h1>
+<h2>
+      (Physical Name: Book)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BookID (PK)</td><td class="tdTableDefinition">BookID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RedirectBookID
+                &nbsp;(<a href="#Book">FK</a>)
+              </td><td class="tdTableDefinition">RedirectBookID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LanguageCode
+                &nbsp;(<a href="#Language">FK</a>)
+              </td><td class="tdTableDefinition">LanguageCode</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CallNumber</td><td class="tdTableDefinition">CallNumber</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartYear</td><td class="tdTableDefinition">StartYear</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndYear</td><td class="tdTableDefinition">EndYear</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartVolume</td><td class="tdTableDefinition">StartVolume</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndVolume</td><td class="tdTableDefinition">EndVolume</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartIssue</td><td class="tdTableDefinition">StartIssue</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndIssue</td><td class="tdTableDefinition">EndIssue</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartNumber</td><td class="tdTableDefinition">StartNumber</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndNumber</td><td class="tdTableDefinition">EndNumber</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartSeries</td><td class="tdTableDefinition">StartSeries</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndSeries</td><td class="tdTableDefinition">EndSeries</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">StartPart</td><td class="tdTableDefinition">StartPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierBib</td><td class="tdTableDefinition">IdentifierBib</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ZQuery</td><td class="tdTableDefinition">ZQuery</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Sponsor</td><td class="tdTableDefinition">Sponsor</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ExternalUrl</td><td class="tdTableDefinition">ExternalUrl</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">Rights</td><td class="tdTableDefinition">Rights</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">DueDiligence</td><td class="tdTableDefinition">DueDiligence</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusID
+                &nbsp;(<a href="#PaginationStatus">FK</a>)
+              </td><td class="tdTableDefinition">PaginationStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IsVirtual</td><td class="tdTableDefinition">IsVirtual</td><td class="tdTableDefinition">TINYINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Language">Language</a> through (LanguageCode)</li>
+<li>
+<a href="#PaginationStatus">PaginationStatus</a> through (PaginationStatusID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
+<li>
+<a href="#Book">Book</a> through (RedirectBookID)</li>
+</ul>
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#Book">Book</a> referencing (BookID)</li>
 </ul>
 </div>
 </div>
@@ -1255,9 +1430,9 @@
 <li>
 <a href="#NameIdentifier">NameIdentifier</a> referencing (IdentifierID)</li>
 <li>
-<a href="#SegmentIdentifier">SegmentIdentifier</a> referencing (IdentifierID)</li>
-<li>
 <a href="#IdentifierIDType">IdentifierIDType</a> referencing (IdentifierID)</li>
+<li>
+<a href="#ItemIdentifier">ItemIdentifier</a> referencing (IdentifierID)</li>
 </ul>
 </div>
 </div>
@@ -1446,8 +1621,6 @@
 <li>
 <a href="#ItemInstitution">ItemInstitution</a> referencing (InstitutionCode)</li>
 <li>
-<a href="#SegmentInstitution">SegmentInstitution</a> referencing (InstitutionCode)</li>
-<li>
 <a href="#InstitutionGroupInstitution">InstitutionGroupInstitution</a> referencing (InstitutionCode)</li>
 </ul>
 </div>
@@ -1596,39 +1769,13 @@
 <td class="tdTableDefinition">ItemID (PK)</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">PrimaryTitleID
-                &nbsp;(<a href="#Title">FK</a>)
-              </td><td class="tdTableDefinition">PrimaryTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(40)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CallNumber</td><td class="tdTableDefinition">CallNumber</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">Volume</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LanguageCode</td><td class="tdTableDefinition">LanguageCode</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ItemDescription</td><td class="tdTableDefinition">ItemDescription</td><td class="tdTableDefinition">CLOB</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ScannedBy</td><td class="tdTableDefinition">ScannedBy</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PDFSize</td><td class="tdTableDefinition">PDFSize</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+<td class="tdTableDefinition">ItemDescription</td><td class="tdTableDefinition">ItemDescription</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">VaultID</td><td class="tdTableDefinition">VaultID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">Note</td><td class="tdTableDefinition">Note</td><td class="tdTableDefinition">NVARCHAR(255)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+<td class="tdTableDefinition">Note</td><td class="tdTableDefinition">Note</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
@@ -1648,158 +1795,110 @@
               </td><td class="tdTableDefinition">ItemStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PaginationStatusID
-                &nbsp;(<a href="#PaginationStatus">FK</a>)
-              </td><td class="tdTableDefinition">PaginationStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
 <td class="tdTableDefinition">ItemSourceID
                 &nbsp;(<a href="#ItemSource">FK</a>)
-              </td><td class="tdTableDefinition">ItemSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Year</td><td class="tdTableDefinition">Year</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">IdentifierBib</td><td class="tdTableDefinition">IdentifierBib</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+              </td><td class="tdTableDefinition">ItemSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">FileRootFolder</td><td class="tdTableDefinition">FileRootFolder</td><td class="tdTableDefinition">NVARCHAR(250)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ZQuery</td><td class="tdTableDefinition">ZQuery</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Sponsor</td><td class="tdTableDefinition">Sponsor</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Rights</td><td class="tdTableDefinition">Rights</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">DueDiligence</td><td class="tdTableDefinition">DueDiligence</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightEvidenceOperator</td><td class="tdTableDefinition">CopyrightEvidenceOperator</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CopyrightEvidenceDate</td><td class="tdTableDefinition">CopyrightEvidenceDate</td><td class="tdTableDefinition">NVARCHAR(30)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">RedirectItemID</td><td class="tdTableDefinition">RedirectItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ExternalUrl</td><td class="tdTableDefinition">ExternalUrl</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndYear</td><td class="tdTableDefinition">EndYear</td><td class="tdTableDefinition">NVARCHAR(20)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StartVolume</td><td class="tdTableDefinition">StartVolume</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndVolume</td><td class="tdTableDefinition">EndVolume</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StartIssue</td><td class="tdTableDefinition">StartIssue</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndIssue</td><td class="tdTableDefinition">EndIssue</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StartNumber</td><td class="tdTableDefinition">StartNumber</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndNumber</td><td class="tdTableDefinition">EndNumber</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StartSeries</td><td class="tdTableDefinition">StartSeries</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndSeries</td><td class="tdTableDefinition">EndSeries</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StartPart</td><td class="tdTableDefinition">StartPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">EndPart</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">VolumeReviewed</td><td class="tdTableDefinition">VolumeReviewed</td><td class="tdTableDefinition">TINYINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">VolumeReviewedDate</td><td class="tdTableDefinition">VolumeReviewedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">VolumeReviewedUserID</td><td class="tdTableDefinition">VolumeReviewedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+<td class="tdTableDefinition">ItemTypeID
+                &nbsp;(<a href="#ItemType">FK</a>)
+              </td><td class="tdTableDefinition">ItemTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#Title">Title</a> through (PrimaryTitleID)</li>
-<li>
 <a href="#ItemStatus">ItemStatus</a> through (ItemStatusID)</li>
 <li>
 <a href="#ItemSource">ItemSource</a> through (ItemSourceID)</li>
 <li>
-<a href="#PaginationStatus">PaginationStatus</a> through (PaginationStatusID)</li>
+<a href="#ItemType">ItemType</a> through (ItemTypeID)</li>
 </ul>
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#TitleItem">TitleItem</a> referencing (ItemID)</li>
+<a href="#ItemCollection">ItemCollection</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemInstitution">ItemInstitution</a> referencing (ItemID)</li>
 <li>
 <a href="#ItemLanguage">ItemLanguage</a> referencing (ItemID)</li>
-<li>
-<a href="#ItemCollection">ItemCollection</a> referencing (ItemID)</li>
 <li>
 <a href="#ItemNameFileLog">ItemNameFileLog</a> referencing (ItemID)</li>
 <li>
 <a href="#PDF">PDF</a> referencing (ItemID)</li>
 <li>
-<a href="#Page">Page</a> referencing (ItemID)</li>
+<a href="#ItemTitle">ItemTitle</a> referencing (ItemID)</li>
 <li>
-<a href="#ItemInstitution">ItemInstitution</a> referencing (ItemID)</li>
+<a href="#Segment">Segment</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemPage">ItemPage</a> referencing (ItemID)</li>
+<li>
+<a href="#Book">Book</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemRelationship">ItemRelationship</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemRelationship">ItemRelationship</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemKeyword">ItemKeyword</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemIdentifier">ItemIdentifier</a> referencing (ItemID)</li>
+<li>
+<a href="#ItemAuthor">ItemAuthor</a> referencing (ItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemAuthor<a name="ItemAuthor"></a>
+</h1>
+<h2>
+      (Physical Name: ItemAuthor)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemAuthorID (PK)</td><td class="tdTableDefinition">ItemAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">AuthorID
+                &nbsp;(<a href="#Author">FK</a>)
+              </td><td class="tdTableDefinition">AuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Author">Author</a> through (AuthorID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 </div>
 </div>
@@ -1837,6 +1936,57 @@
 <ul>
 <li>
 <a href="#Collection">Collection</a> through (CollectionID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemIdentifier<a name="ItemIdentifier"></a>
+</h1>
+<h2>
+      (Physical Name: ItemIdentifier)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemIdentifierID (PK)</td><td class="tdTableDefinition">ItemIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierID
+                &nbsp;(<a href="#Identifier">FK</a>)
+              </td><td class="tdTableDefinition">IdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">NVARCHAR(125)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Identifier">Identifier</a> through (IdentifierID)</li>
 <li>
 <a href="#Item">Item</a> through (ItemID)</li>
 </ul>
@@ -1892,6 +2042,54 @@
 <a href="#InstitutionRole">InstitutionRole</a> through (InstitutionRoleID)</li>
 <li>
 <a href="#Institution">Institution</a> through (InstitutionCode)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemKeyword<a name="ItemKeyword"></a>
+</h1>
+<h2>
+      (Physical Name: ItemKeyword)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemKeywordID (PK)</td><td class="tdTableDefinition">ItemKeywordID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">KeywordID
+                &nbsp;(<a href="#Keyword">FK</a>)
+              </td><td class="tdTableDefinition">KeywordID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Keyword">Keyword</a> through (KeywordID)</li>
 <li>
 <a href="#Item">Item</a> through (ItemID)</li>
 </ul>
@@ -1987,6 +2185,108 @@
 </div>
 </div>
 <div class="tableNameHeading">
+<h1>ItemPage<a name="ItemPage"></a>
+</h1>
+<h2>
+      (Physical Name: ItemPage)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemPageID (PK)</td><td class="tdTableDefinition">ItemPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PageID
+                &nbsp;(<a href="#Page">FK</a>)
+              </td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Page">Page</a> through (PageID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemRelationship<a name="ItemRelationship"></a>
+</h1>
+<h2>
+      (Physical Name: ItemRelationship)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">RelationshipID (PK)</td><td class="tdTableDefinition">RelationshipID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ParentID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ParentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ChildID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ChildID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Item">Item</a> through (ChildID)</li>
+<li>
+<a href="#Item">Item</a> through (ParentID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
 <h1>ItemSource<a name="ItemSource"></a>
 </h1>
 <h2>
@@ -2053,6 +2353,93 @@
 </div>
 </div>
 <div class="tableNameHeading">
+<h1>ItemTitle<a name="ItemTitle"></a>
+</h1>
+<h2>
+      (Physical Name: ItemTitle)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemTitleID (PK)</td><td class="tdTableDefinition">ItemTitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">TitleID
+                &nbsp;(<a href="#Title">FK</a>)
+              </td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemSequence</td><td class="tdTableDefinition">ItemSequence</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">IsPrimary</td><td class="tdTableDefinition">IsPrimary</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">References</p>
+<ul>
+<li>
+<a href="#Title">Title</a> through (TitleID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
+<h1>ItemType<a name="ItemType"></a>
+</h1>
+<h2>
+      (Physical Name: ItemType)
+      </h2>
+</div>
+<div class="table">
+<table class="tableDefinition" width="100%">
+<tr>
+<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemTypeID (PK)</td><td class="tdTableDefinition">ItemTypeID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemTypeName</td><td class="tdTableDefinition">ItemTypeName</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemTypeLabel</td><td class="tdTableDefinition">ItemTypeLabel</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ItemTypeDescription</td><td class="tdTableDefinition">ItemTypeDescription</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+</table>
+<div class="references">
+<p class="subTitle">Referenced By</p>
+<ul>
+<li>
+<a href="#Item">Item</a> referencing (ItemTypeID)</li>
+</ul>
+</div>
+</div>
+<div class="tableNameHeading">
 <h1>Keyword<a name="Keyword"></a>
 </h1>
 <h2>
@@ -2089,7 +2476,7 @@
 <li>
 <a href="#TitleKeyword">TitleKeyword</a> referencing (KeywordID)</li>
 <li>
-<a href="#SegmentKeyword">SegmentKeyword</a> referencing (KeywordID)</li>
+<a href="#ItemKeyword">ItemKeyword</a> referencing (KeywordID)</li>
 </ul>
 </div>
 </div>
@@ -2128,6 +2515,8 @@
 <a href="#ItemLanguage">ItemLanguage</a> referencing (LanguageCode)</li>
 <li>
 <a href="#Segment">Segment</a> referencing (LanguageCode)</li>
+<li>
+<a href="#Book">Book</a> referencing (LanguageCode)</li>
 </ul>
 </div>
 </div>
@@ -2559,8 +2948,6 @@
 <ul>
 <li>
 <a href="#NamePage">NamePage</a> referencing (NameID)</li>
-<li>
-<a href="#NameSegment">NameSegment</a> referencing (NameID)</li>
 </ul>
 </div>
 </div>
@@ -2721,64 +3108,6 @@
 </div>
 </div>
 <div class="tableNameHeading">
-<h1>NameSegment<a name="NameSegment"></a>
-</h1>
-<h2>
-      (Physical Name: NameSegment)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">NameSegmentID (PK)</td><td class="tdTableDefinition">NameSegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">NameID
-                &nbsp;(<a href="#Name">FK</a>)
-              </td><td class="tdTableDefinition">NameID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">NameSourceID
-                &nbsp;(<a href="#NameSource">FK</a>)
-              </td><td class="tdTableDefinition">NameSourceID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">IsFirstOccurrence</td><td class="tdTableDefinition">IsFirstOccurrence</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Name">Name</a> through (NameID)</li>
-<li>
-<a href="#NameSource">NameSource</a> through (NameSourceID)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
 <h1>NameSource<a name="NameSource"></a>
 </h1>
 <h2>
@@ -2816,8 +3145,6 @@
 <a href="#Name">Name</a> referencing (NameSourceID)</li>
 <li>
 <a href="#NamePage">NamePage</a> referencing (NameSourceID)</li>
-<li>
-<a href="#NameSegment">NameSegment</a> referencing (NameSourceID)</li>
 </ul>
 </div>
 </div>
@@ -2909,9 +3236,7 @@
 <td class="tdTableDefinition">PageID (PK)</td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ItemID
-                &nbsp;(<a href="#Item">FK</a>)
-              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">FileNamePrefix</td><td class="tdTableDefinition">FileNamePrefix</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -2981,25 +3306,20 @@
 </tr>
 </table>
 <div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Item">Item</a> through (ItemID)</li>
-</ul>
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
 <a href="#NamePage">NamePage</a> referencing (PageID)</li>
-<li>
-<a href="#SegmentPage">SegmentPage</a> referencing (PageID)</li>
-<li>
-<a href="#Segment">Segment</a> referencing (PageID)</li>
 <li>
 <a href="#PageFlickr">PageFlickr</a> referencing (PageID)</li>
 <li>
 <a href="#Page_PageType">Page_PageType</a> referencing (PageID)</li>
 <li>
 <a href="#IndicatedPage">IndicatedPage</a> referencing (PageID)</li>
+<li>
+<a href="#Segment">Segment</a> referencing (PageID)</li>
+<li>
+<a href="#ItemPage">ItemPage</a> referencing (PageID)</li>
 </ul>
 </div>
 </div>
@@ -3166,7 +3486,9 @@
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
-<a href="#Item">Item</a> referencing (PaginationStatusID)</li>
+<a href="#Segment">Segment</a> referencing (PaginationStatusID)</li>
+<li>
+<a href="#Book">Book</a> referencing (PaginationStatusID)</li>
 </ul>
 </div>
 </div>
@@ -3245,9 +3567,9 @@
 <p class="subTitle">References</p>
 <ul>
 <li>
-<a href="#Item">Item</a> through (ItemID)</li>
-<li>
 <a href="#PDFStatus">PDFStatus</a> through (PdfStatusID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 <p class="subTitle">Referenced By</p>
 <ul>
@@ -3643,15 +3965,9 @@
 <td class="tdTableDefinition">SegmentID (PK)</td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentStatusID
-                &nbsp;(<a href="#SegmentStatus">FK</a>)
-              </td><td class="tdTableDefinition">SegmentStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">ItemID
+                &nbsp;(<a href="#Item">FK</a>)
+              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">SegmentGenreID
@@ -3675,9 +3991,6 @@
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">PublisherPlace</td><td class="tdTableDefinition">PublisherPlace</td><td class="tdTableDefinition">NVARCHAR(150)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">Notes</td><td class="tdTableDefinition">Notes</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">Summary</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -3726,19 +4039,13 @@
 <td class="tdTableDefinition">RightsStatus</td><td class="tdTableDefinition">RightsStatus</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
-<td class="tdTableDefinition">RightsStatement</td><td class="tdTableDefinition">RightsStatement</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+<td class="tdTableDefinition">RightsStatement</td><td class="tdTableDefinition">RightsStatement</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">LicenseName</td><td class="tdTableDefinition">LicenseName</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">LicenseUrl</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ContributorCreationDate</td><td class="tdTableDefinition">ContributorCreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ContributorLastModifiedDate</td><td class="tdTableDefinition">ContributorLastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
 </tr>
 <tr valign="top">
 <td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
@@ -3760,6 +4067,53 @@
                 &nbsp;(<a href="#Segment">FK</a>)
               </td><td class="tdTableDefinition">RedirectSegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
 </tr>
+<tr valign="top">
+<td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">ThumbnailPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">BarCode</td><td class="tdTableDefinition">NVARCHAR(200)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">MARCItemID</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">CopyrightStatus</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">CopyrightRegion</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">CopyrightComment</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">CopyrightEvidence</td><td class="tdTableDefinition">NVARCHAR(1073741823)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">ScanningUser</td><td class="tdTableDefinition">NVARCHAR(100)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">ScanningDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusID
+                &nbsp;(<a href="#PaginationStatus">FK</a>)
+              </td><td class="tdTableDefinition">PaginationStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">PaginationStatusDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">PaginationStatusUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">PaginationCompleteDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">PaginationCompleteUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
+<tr valign="top">
+<td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">LastPageNameLookupDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
+</tr>
 </table>
 <div class="references">
 <p class="subTitle">References</p>
@@ -3767,83 +4121,22 @@
 <li>
 <a href="#Language">Language</a> through (LanguageCode)</li>
 <li>
-<a href="#Page">Page</a> through (StartPageID)</li>
+<a href="#PaginationStatus">PaginationStatus</a> through (PaginationStatusID)</li>
 <li>
-<a href="#SegmentStatus">SegmentStatus</a> through (SegmentStatusID)</li>
+<a href="#Page">Page</a> through (StartPageID)</li>
 <li>
 <a href="#SegmentGenre">SegmentGenre</a> through (SegmentGenreID)</li>
 <li>
 <a href="#Segment">Segment</a> through (RedirectSegmentID)</li>
+<li>
+<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 <p class="subTitle">Referenced By</p>
 <ul>
 <li>
 <a href="#Segment">Segment</a> referencing (SegmentID)</li>
 <li>
-<a href="#SegmentAuthor">SegmentAuthor</a> referencing (SegmentID)</li>
-<li>
 <a href="#SegmentClusterSegment">SegmentClusterSegment</a> referencing (SegmentID)</li>
-<li>
-<a href="#SegmentIdentifier">SegmentIdentifier</a> referencing (SegmentID)</li>
-<li>
-<a href="#SegmentInstitution">SegmentInstitution</a> referencing (SegmentID)</li>
-<li>
-<a href="#SegmentKeyword">SegmentKeyword</a> referencing (SegmentID)</li>
-<li>
-<a href="#SegmentPage">SegmentPage</a> referencing (SegmentID)</li>
-<li>
-<a href="#NameSegment">NameSegment</a> referencing (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentAuthor<a name="SegmentAuthor"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentAuthor)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentAuthorID (PK)</td><td class="tdTableDefinition">SegmentAuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">AuthorID
-                &nbsp;(<a href="#Author">FK</a>)
-              </td><td class="tdTableDefinition">AuthorID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Author">Author</a> through (AuthorID)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
 </ul>
 </div>
 </div>
@@ -4001,210 +4294,6 @@
 </div>
 </div>
 <div class="tableNameHeading">
-<h1>SegmentIdentifier<a name="SegmentIdentifier"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentIdentifier)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentIdentifierID (PK)</td><td class="tdTableDefinition">SegmentIdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">IdentifierID
-                &nbsp;(<a href="#Identifier">FK</a>)
-              </td><td class="tdTableDefinition">IdentifierID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">IdentifierValue</td><td class="tdTableDefinition">NVARCHAR(125)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">IsContainerIdentifier</td><td class="tdTableDefinition">IsContainerIdentifier</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Identifier">Identifier</a> through (IdentifierID)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentInstitution<a name="SegmentInstitution"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentInstitution)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentInstitutionID (PK)</td><td class="tdTableDefinition">SegmentInstitutionID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">InstitutionCode
-                &nbsp;(<a href="#Institution">FK</a>)
-              </td><td class="tdTableDefinition">InstitutionCode</td><td class="tdTableDefinition">NVARCHAR(10)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">InstitutionRoleID</td><td class="tdTableDefinition">InstitutionRoleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Institution">Institution</a> through (InstitutionCode)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentKeyword<a name="SegmentKeyword"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentKeyword)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentKeywordID (PK)</td><td class="tdTableDefinition">SegmentKeywordID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">KeywordID
-                &nbsp;(<a href="#Keyword">FK</a>)
-              </td><td class="tdTableDefinition">KeywordID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Keyword">Keyword</a> through (KeywordID)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentPage<a name="SegmentPage"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentPage)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentPageID (PK)</td><td class="tdTableDefinition">SegmentPageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentID
-                &nbsp;(<a href="#Segment">FK</a>)
-              </td><td class="tdTableDefinition">SegmentID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">PageID
-                &nbsp;(<a href="#Page">FK</a>)
-              </td><td class="tdTableDefinition">PageID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SequenceOrder</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Page">Page</a> through (PageID)</li>
-<li>
-<a href="#Segment">Segment</a> through (SegmentID)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
 <h1>SegmentResolutionLog<a name="SegmentResolutionLog"></a>
 </h1>
 <h2>
@@ -4242,48 +4331,6 @@
 </tr>
 </table>
 <div class="references"></div>
-</div>
-<div class="tableNameHeading">
-<h1>SegmentStatus<a name="SegmentStatus"></a>
-</h1>
-<h2>
-      (Physical Name: SegmentStatus)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">SegmentStatusID (PK)</td><td class="tdTableDefinition">SegmentStatusID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StatusName</td><td class="tdTableDefinition">StatusName</td><td class="tdTableDefinition">NVARCHAR(50)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">StatusDescription</td><td class="tdTableDefinition">StatusDescription</td><td class="tdTableDefinition">NVARCHAR(500)</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">Referenced By</p>
-<ul>
-<li>
-<a href="#Segment">Segment</a> referencing (SegmentStatusID)</li>
-</ul>
-</div>
 </div>
 <div class="tableNameHeading">
 <h1>Title<a name="Title"></a>
@@ -4428,8 +4475,6 @@
 <li>
 <a href="#TitleInstitution">TitleInstitution</a> referencing (TitleID)</li>
 <li>
-<a href="#TitleItem">TitleItem</a> referencing (TitleID)</li>
-<li>
 <a href="#Title_Identifier">Title_Identifier</a> referencing (TitleID)</li>
 <li>
 <a href="#TitleAuthor">TitleAuthor</a> referencing (TitleID)</li>
@@ -4444,7 +4489,7 @@
 <li>
 <a href="#TitleLanguage">TitleLanguage</a> referencing (TitleID)</li>
 <li>
-<a href="#Item">Item</a> referencing (TitleID)</li>
+<a href="#ItemTitle">ItemTitle</a> referencing (TitleID)</li>
 </ul>
 </div>
 </div>
@@ -4825,57 +4870,6 @@
 <a href="#InstitutionRole">InstitutionRole</a> through (InstitutionRoleID)</li>
 <li>
 <a href="#Institution">Institution</a> through (InstitutionCode)</li>
-</ul>
-</div>
-</div>
-<div class="tableNameHeading">
-<h1>TitleItem<a name="TitleItem"></a>
-</h1>
-<h2>
-      (Physical Name: TitleItem)
-      </h2>
-</div>
-<div class="table">
-<table class="tableDefinition" width="100%">
-<tr>
-<td class="tdTableHeading tdLogicalColName">Logical Column Name</td><td class="tdTableHeading tdPhysicalColName">Physical Column Name</td><td class="tdTableHeading tdDataType">Type</td><td class="tdTableHeading tdPkFlag">PK</td><td class="tdTableHeading tdNullFlag">Nullable</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">TitleItemID (PK)</td><td class="tdTableDefinition">TitleItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap>PK</td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">TitleID
-                &nbsp;(<a href="#Title">FK</a>)
-              </td><td class="tdTableDefinition">TitleID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ItemID
-                &nbsp;(<a href="#Item">FK</a>)
-              </td><td class="tdTableDefinition">ItemID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap>NOT NULL</td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">ItemSequence</td><td class="tdTableDefinition">ItemSequence</td><td class="tdTableDefinition">SMALLINT</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">CreationDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">LastModifiedDate</td><td class="tdTableDefinition">DATE</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">CreationUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-<tr valign="top">
-<td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">LastModifiedUserID</td><td class="tdTableDefinition">INTEGER</td><td class="tdTableDefinition" nowrap></td><td class="tdTableDefinition" nowrap></td>
-</tr>
-</table>
-<div class="references">
-<p class="subTitle">References</p>
-<ul>
-<li>
-<a href="#Title">Title</a> through (TitleID)</li>
-<li>
-<a href="#Item">Item</a> through (ItemID)</li>
 </ul>
 </div>
 </div>

@@ -52,9 +52,9 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
             set { _startPageID = value; }
         }
 
-        private short _sequenceOrder = default(int);
+        private int _sequenceOrder = default(int);
 
-        public short SequenceOrder
+        public int SequenceOrder
         {
             get { return _sequenceOrder; }
             set { _sequenceOrder = value; }
@@ -319,7 +319,7 @@ namespace MOBOT.BHL.API.BHLApiDataObjects2
                         }
                     case "SequenceOrder":
                         {
-                            _sequenceOrder = (short)column.Value;
+                            _sequenceOrder = (int)column.Value;
                             break;
                         }
                     case "GenreName":

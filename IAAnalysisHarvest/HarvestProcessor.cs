@@ -156,7 +156,7 @@ namespace IAAnalysisHarvest
             XmlDocument xml = null;
             try
             {
-                xml = provider.GetIAXmlData("http://www.archive.org/download/" + identifier + "/" + identifier + configParms.MetadataExtension);
+                xml = provider.GetIAXmlData("https://www.archive.org/download/" + identifier + "/" + identifier + configParms.MetadataExtension);
             }
             catch (System.Net.WebException wex)
             {
@@ -270,7 +270,7 @@ namespace IAAnalysisHarvest
             XmlDocument xml = null;
             try
             {
-                xml = provider.GetIAXmlData("http://www.archive.org/download/" + identifier + "/" + identifier + configParms.MarcExtension);
+                xml = provider.GetIAXmlData("https://www.archive.org/download/" + identifier + "/" + identifier + configParms.MarcExtension);
             }
             catch (System.Net.WebException wex)
             {

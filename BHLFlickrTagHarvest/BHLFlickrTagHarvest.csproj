@@ -143,6 +143,9 @@
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.Annotation_AnnotationConcept.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.Book.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -153,6 +156,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.ItemNameFileLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.KBART.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BHLWS\BHLFlickrTagHarvest.BHLWS.NameFinderResponse.datasource">

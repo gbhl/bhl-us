@@ -183,7 +183,7 @@ namespace MOBOT.BHL.Web2.Services
                     {
                         SiteService.ViewerPage viewerPage = new SiteService.ViewerPage();
                         viewerPage.ExternalBaseUrl = page.ExternalBaseURL;
-                        viewerPage.AltExternalUrl = page.AltExternalURL;
+                        viewerPage.AltExternalUrl = page.ExternalURL;
                         viewerPage.BarCode = page.BarCode;
                         viewerPage.SequenceOrder = page.SequenceOrder;
                         viewerPages.Add(viewerPage);

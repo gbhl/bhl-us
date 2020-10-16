@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>MOBOT.BHL.API.BHLApiDataObjects3</AssemblyName>
     <RootNamespace>MOBOT.BHL.API.BHLApiDataObjects3</RootNamespace>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
     </SccProjectName>

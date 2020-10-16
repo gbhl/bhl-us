@@ -40,7 +40,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -90,6 +90,7 @@
     <Compile Include="BHLProvider.Author.cs" />
     <Compile Include="BHLProvider.AuthorRole.cs" />
     <Compile Include="BHLProvider.AuthorType.cs" />
+    <Compile Include="BHLProvider.Book.cs" />
     <Compile Include="BHLProvider.DOI.cs" />
     <Compile Include="BHLProvider.EditHistory.cs" />
     <Compile Include="BHLProvider.Identifier.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="BHLProvider.InstitutionGroup.cs" />
     <Compile Include="BHLProvider.Item.cs">
     </Compile>
+    <Compile Include="BHLProvider.ItemRelationsihp.cs" />
     <Compile Include="BHLProvider.ItemSummaryView.cs">
     </Compile>
     <Compile Include="BHLProvider.Keyword.cs" />

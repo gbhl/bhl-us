@@ -86,7 +86,7 @@ namespace MOBOT.BHL.AdminWeb
 			List<Title> results = bp.TitleSearchPaging( _searchCriteria );
 			if ( results.Count == 1 )
 			{
-                string itemID = (results[0].Items.Count > 0) ? results[0].Items[0].ItemID.ToString() : string.Empty;
+                string itemID = (results[0].Books.Count > 0) ? results[0].Books[0].BookID.ToString() : string.Empty;
 				Response.Redirect( string.Format(_redirectUrl, results[ 0 ].TitleID.ToString(), itemID));
 			}
 			else

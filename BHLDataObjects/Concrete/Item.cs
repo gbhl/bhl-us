@@ -16,13 +16,15 @@ namespace MOBOT.BHL.DataObjects
         private string _partName;
         private string _itemStatusName;
 		private string _paginationStatusName;
+        private DateTime? _paginationStatusDate;
 		private string _paginationUserName;
-		private string _downloadUrl;
+        private DateTime? _scanningDate;
+        private string _downloadUrl;
         private short? _itemSequence = null;
         private CustomGenericList<Institution> _institutions = new CustomGenericList<Institution>();
 		private CustomGenericList<Page> _pages = new CustomGenericList<Page>();
         private CustomGenericList<Title> _titles = new CustomGenericList<Title>();
-        private CustomGenericList<TitleItem> _titleItems = new CustomGenericList<TitleItem>();
+        private CustomGenericList<ItemTitle> _itemTitles = new CustomGenericList<ItemTitle>();
         private CustomGenericList<ItemLanguage> _itemLanguages = new CustomGenericList<ItemLanguage>();
         private CustomGenericList<ItemCollection> _itemCollections = new CustomGenericList<ItemCollection>();
         private CustomGenericList<Segment> _segments = new CustomGenericList<Segment>();
@@ -46,18 +48,10 @@ namespace MOBOT.BHL.DataObjects
         private string _djvuFilename;
         private string _scandataFilename;
         private string _ocrFolderShare = string.Empty;
-
-        public string DisplayedShortVolume
-		{
-			get
-			{
-                if (Volume != null)
-                {
-                    return (Volume.Length > 32) ? Volume.Substring(0, 32) + "..." : Volume;
-                }
-                else { return Volume; }
-			}
-		}
+        private int? _primaryTitleID;
+        private string _barCode;
+        private string _volume;
+        private string _startYear;
 
         public CustomGenericList<Institution> Institutions
         {
@@ -77,10 +71,10 @@ namespace MOBOT.BHL.DataObjects
             set { this._titles = value; }
         }
 
-        public CustomGenericList<TitleItem> TitleItems
+        public CustomGenericList<ItemTitle> ItemTitles
         {
-            get { return this._titleItems; }
-            set { this._titleItems = value; }
+            get { return this._itemTitles; }
+            set { this._itemTitles = value; }
         }
 
         public CustomGenericList<ItemLanguage> ItemLanguages
@@ -147,17 +141,41 @@ namespace MOBOT.BHL.DataObjects
 			set { this._paginationStatusName = value; }
 		}
 
+        public DateTime? PaginationStatusDate
+        {
+            get { return _paginationStatusDate; }
+            set { this._paginationStatusDate = value; }
+        }
+
 		public string PaginationUserName
 		{
 			get { return this._paginationUserName; }
 			set { this._paginationUserName = value; }
 		}
 
+        public DateTime? ScanningDate
+        {
+            get { return this._scanningDate; }
+            set { this._scanningDate = value; }
+        }
+
 		public string DownloadUrl
 		{
 			get { return this._downloadUrl; }
 			set { this._downloadUrl = value; }
 		}
+
+        public int? PrimaryTitleID
+        {
+            get { return this._primaryTitleID; }
+            set { this._primaryTitleID = value; }
+        }
+
+        public string BarCode
+        {
+            get { return this._barCode; }
+            set { this._barCode = value; }
+        }
 
         public short? ItemSequence
         {
@@ -289,6 +307,18 @@ namespace MOBOT.BHL.DataObjects
             set { _ocrFolderShare = value; }
         }
 
+        public string Volume
+        {
+            get { return _volume; }
+            set { _volume = value; }
+        }
+
+        public string StartYear
+        {
+            get { return _startYear; }
+            set { _startYear = value; }
+        }
+
         #endregion
 
         private void ProcessTagTextString(string value)
@@ -349,8 +379,8 @@ namespace MOBOT.BHL.DataObjects
 		{
 			foreach ( CustomDataColumn column in row )
 			{
-				switch ( column.Name )
-				{
+                switch (column.Name)
+                {
                     case "KeywordString":
                         {
                             ProcessTagTextString(Utility.EmptyIfNull(column.Value));
@@ -382,10 +412,10 @@ namespace MOBOT.BHL.DataObjects
                             break;
                         }
                     case "TitleName":
-						{
-							_titleName = Utility.EmptyIfNull( column.Value );
-							break;
-						}
+                        {
+                            _titleName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "FullTitle":
                         {
                             _fullTitle = Utility.EmptyIfNull(column.Value);
@@ -416,21 +446,31 @@ namespace MOBOT.BHL.DataObjects
                             _itemStatusName = Utility.EmptyIfNull(column.Value);
                             break;
                         }
-					case "PaginationStatusName":
-						{
-							_paginationStatusName = Utility.EmptyIfNull( column.Value );
-							break;
-						}
-					case "PaginationUserName":
-						{
-							_paginationUserName = Utility.EmptyIfNull( column.Value );
-							break;
-						}
-					case "DownloadUrl":
-						{
-							_downloadUrl = Utility.EmptyIfNull( column.Value );
-							break;
-						}
+                    case "PaginationStatusName":
+                        {
+                            _paginationStatusName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "PaginationStatusDate":
+                        {
+                            _paginationStatusDate = (DateTime?)column.Value;
+                            break;
+                        }
+                    case "PaginationUserName":
+                        {
+                            _paginationUserName = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "ScanningDate":
+                        {
+                            _scanningDate = (DateTime?)column.Value;
+                            break;
+                        }
+                    case "DownloadUrl":
+                        {
+                            _downloadUrl = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
                     case "ItemSequence":
                         {
                             _itemSequence = (short?)column.Value;
@@ -504,6 +544,26 @@ namespace MOBOT.BHL.DataObjects
                     case "OcrFolderShare":
                         {
                             _ocrFolderShare = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "PrimaryTitleID":
+                        {
+                            _primaryTitleID = (int?)column.Value;
+                            break;
+                        }
+                    case "BarCode":
+                        {
+                            _barCode = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "Volume":
+                        {
+                            _volume = Utility.EmptyIfNull(column.Value);
+                            break;
+                        }
+                    case "StartYear":
+                        {
+                            _startYear = Utility.EmptyIfNull(column.Value);
                             break;
                         }
                 }

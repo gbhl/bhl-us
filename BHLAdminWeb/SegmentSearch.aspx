@@ -55,7 +55,7 @@
                         <asp:BoundField DataField="Date" HeaderText="Date" HeaderStyle-HorizontalAlign="Left" ItemStyle-Wrap="false" ItemStyle-VerticalAlign="Top" />
 					    <asp:TemplateField HeaderText="Is Active" HeaderStyle-HorizontalAlign="Left" HeaderStyle-Wrap="false" ItemStyle-VerticalAlign="Top">
 						    <ItemTemplate>
-						        <asp:CheckBox ID="isActiveCheckBox" Enabled="false" Checked='<%#(Convert.ToInt32(Eval("SegmentStatusID")) <= 20)%>' runat="server" />
+						        <asp:CheckBox ID="isActiveCheckBox" Enabled="false" Checked='<%#(Convert.ToInt32(Eval("SegmentStatusID")) == 30 || Convert.ToInt32(Eval("SegmentStatusID")) == 40)%>' runat="server" />
 						    </ItemTemplate>
 					    </asp:TemplateField>
 					</Columns>

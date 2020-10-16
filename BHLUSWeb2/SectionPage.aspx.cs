@@ -42,14 +42,14 @@ namespace MOBOT.BHL.Web2
                     }
 
                     // Make sure the title is published.
-                    if (BhlSegment.SegmentStatusID != (int)SegmentStatusValue.New && 
-                        BhlSegment.SegmentStatusID != (int)SegmentStatusValue.Published)
+                    if (BhlSegment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.New && 
+                        BhlSegment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.Published)
                     {
                         Response.Redirect("~/itemunavailable");
                     }
                 }
 
-                BhlSegment.IdentifierList = bhlProvider.SegmentIdentifierSelectForDisplayBySegmentID(SegmentID);
+                BhlSegment.IdentifierList = bhlProvider.ItemIdentifierSelectForDisplayBySegmentID(SegmentID);
                 InstitutionNameComparer comp = new InstitutionNameComparer();
                 BhlSegment.ContributorList.Sort(comp);
 

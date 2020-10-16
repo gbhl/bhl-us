@@ -164,39 +164,6 @@ namespace MOBOT.BHL.DAL
     }
 
     /// <summary>
-    /// Select values from PageSummaryView by MARC Bib Id.
-    /// </summary>
-    /// <param name="sqlConnection">Sql connection or null.</param>
-    /// <param name="sqlTransaction">Sql transaction or null.</param>
-    /// <param name="bibID"></param>
-    /// <returns>Object of type Title.</returns>
-    public PageSummaryView PageSummarySelectByBibId(
-        SqlConnection sqlConnection,
-        SqlTransaction sqlTransaction,
-        string bibID)
-    {
-        SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
-        SqlTransaction transaction = sqlTransaction;
-
-        using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSummarySelectByBibId", connection, transaction,
-            CustomSqlHelper.CreateInputParameter("BibID", SqlDbType.VarChar, 50, false, bibID)))
-        {
-            using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
-            {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
-                if (list.Count > 0)
-                {
-                    return list[0];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-    }
-
-    /// <summary>
     /// Select values from PageSummaryView by Page Id.
     /// </summary>
     /// <param name="sqlConnection">Sql connection or null.</param>

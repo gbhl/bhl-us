@@ -48,6 +48,11 @@ namespace MOBOT.BHL.AdminWeb
         {
             BHLProvider bp = new BHLProvider();
             PDF pdf = bp.PDFSelectAuto(id);
+            if (pdf != null)
+            {
+                Book book = bp.BookSelectByItemID(pdf.ItemID);
+                if (book != null) pdf.BookID = book.BookID;
+            }
             Session["Pdf" + id.ToString()] = pdf;
             fillUI(id);
         }
@@ -59,8 +64,8 @@ namespace MOBOT.BHL.AdminWeb
             if (pdf != null)
             {
                 pdfIdLabel.Text = pdf.PdfID.ToString();
-                hypItemID.Text = pdf.ItemID.ToString();
-                hypItemID.NavigateUrl = "/ItemEdit.aspx?id=" + pdf.ItemID.ToString();
+                hypItemID.Text = pdf.BookID.ToString();
+                hypItemID.NavigateUrl = "/ItemEdit.aspx?id=" + pdf.BookID.ToString();
                 emailAddressLabel.Text = pdf.EmailAddress;
                 shareWithLabel.Text = pdf.ShareWithEmailAddresses;
                 includeOCRLabel.Text = (pdf.ImagesOnly ? "No" : "Yes");

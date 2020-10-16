@@ -130,9 +130,9 @@ namespace MOBOT.BHL.AdminWeb
                         bool doInsert = true;
                         if (collectionType == "Item")
                         {
-                            Item item = provider.ItemSelectAuto(idInt);
-                            if (item == null) { idListOutput += id + " - Item Not Found\n"; doInsert = false; }
-                            if (doInsert) provider.ItemCollectionInsert(idInt, collectionID);
+                            Book book = provider.BookSelectAuto(idInt);
+                            if (book == null) { idListOutput += id + " - Item Not Found\n"; doInsert = false; }
+                            if (doInsert) provider.ItemCollectionInsert(book.ItemID, collectionID);
                         }
                         else
                         {

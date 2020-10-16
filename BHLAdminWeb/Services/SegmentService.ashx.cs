@@ -49,7 +49,8 @@ namespace MOBOT.BHL.AdminWeb.Services
                 List<Segment> segments = new List<Segment>();
                 if (segmentId != 0)
                 {
-                    segments.Add(new BHLProvider().SegmentSelectForSegmentID(segmentId));
+                    Segment segment = new BHLProvider().SegmentSelectForSegmentID(segmentId);
+                    if (segment != null) segments.Add(segment);
                 }
                 else if (!string.IsNullOrEmpty(title))
                 {
@@ -58,7 +59,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 for (int x = (segments.Count - 1); x >= 0; x--)
                 {
                     // Remove inactive segments.
-                    if (segments[x].SegmentStatusID > 20) segments.RemoveAt(x);
+                    if (segments[x].SegmentStatusID != 30 && segments[x].SegmentStatusID != 40) segments.RemoveAt(x);
                 }
 
                 JavaScriptSerializer js = new JavaScriptSerializer();

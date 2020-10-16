@@ -34,7 +34,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -139,6 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\BHLWS\BHLWS.disco" />
+    <None Include="Web References\BHLWS\Book.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\BHLWS\DOI.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -146,6 +149,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\ItemNameFileLog.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\BHLWS\KBART.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\BHLWS\NameFinderResponse.datasource">
