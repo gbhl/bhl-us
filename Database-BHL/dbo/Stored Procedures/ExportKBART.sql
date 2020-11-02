@@ -167,7 +167,7 @@ SET		first_author_temp = dbo.fnCOinSGetFirstAuthorNameForTitle(title_id, '100')
 WHERE	publication_type = 'monograph'
 
 UPDATE	#kbart
-SET		first_author = CASE WHEN CHARINDEX(',', first_author_temp) > 0 THEN LEFT(first_author_temp, CHARINDEX(',', first_author_temp) - 1) ELSE first_author_temp END
+SET		first_author = SUBSTRING(CASE WHEN CHARINDEX(',', first_author_temp) > 0 THEN LEFT(first_author_temp, CHARINDEX(',', first_author_temp) - 1) ELSE first_author_temp END, 1, 50)
 WHERE	publication_type = 'monograph'
 
 -- Final result set
