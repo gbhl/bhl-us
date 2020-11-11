@@ -122,7 +122,8 @@ namespace MOBOT.BHL.DOIDeposit
 
             if (!string.IsNullOrEmpty(pubDate))
             {
-                content.Append("<year match=\"optional\">" + XmlEncode(pubDate) + "</year>");
+                DOIDate doiDate = new DOIDate(pubDate);
+                content.Append("<year match=\"optional\">" + XmlEncode(doiDate.Year ?? doiDate.DateString) + "</year>");
             }
 
             if (!string.IsNullOrWhiteSpace(articleTitle))
