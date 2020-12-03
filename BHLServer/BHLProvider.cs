@@ -599,16 +599,8 @@ namespace MOBOT.BHL.Server
                                 string canonicalName = string.Empty;
                                 List<string> identifiers = new List<string>();
                                 string matchType = string.Empty;
+                                double odds = (double)name["odds"];
                                 string curation = string.Empty;
-
-                                // Odds values can be up to 21 digits to the left of the decimal.  We only care if the value
-                                // is greater than 1,000,000, so limit them to avoid errors due to data type overflows.
-                                string tempOdds = (string)name["odds"];
-                                int dot = tempOdds.IndexOf('.');
-                                if (dot == 0) tempOdds = "0";
-                                if (dot > 0) tempOdds = tempOdds.Substring(0, dot);
-                                if (tempOdds.Length > 7) tempOdds = "10000000";
-                                double odds = Convert.ToDouble(tempOdds);
 
                                 JToken verification = name["verification"];
                                 if (verification != null)   // If the name was resolved, get the details
