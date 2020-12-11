@@ -40,7 +40,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -93,6 +93,7 @@
     <Compile Include="Concrete\AuthorType.cs" />
     <Compile Include="Concrete\BibliographicLevel.cs" />
     <Compile Include="Concrete\BioStorHarvestItem.cs" />
+    <Compile Include="Concrete\Book.cs" />
     <Compile Include="Concrete\Collection.cs" />
     <Compile Include="Concrete\Configuration.cs" />
     <Compile Include="Concrete\EditHistory.cs" />
@@ -111,12 +112,18 @@
     <Compile Include="Concrete\InstitutionGroup.cs" />
     <Compile Include="Concrete\InstitutionGroupInstitution.cs" />
     <Compile Include="Concrete\InstitutionRole.cs" />
+    <Compile Include="Concrete\ItemAuthor.cs" />
     <Compile Include="Concrete\ItemCOinSView.cs" />
     <Compile Include="Concrete\ItemCollection.cs" />
+    <Compile Include="Concrete\ItemIdentifier.cs" />
     <Compile Include="Concrete\ItemInstitution.cs" />
+    <Compile Include="Concrete\ItemKeyword.cs" />
     <Compile Include="Concrete\ItemLanguage.cs" />
     <Compile Include="Concrete\ItemNameFileLog.cs" />
+    <Compile Include="Concrete\ItemPage.cs" />
+    <Compile Include="Concrete\ItemRelationship.cs" />
     <Compile Include="Concrete\ItemSource.cs" />
+    <Compile Include="Concrete\ItemTitle.cs" />
     <Compile Include="Concrete\KBART.cs" />
     <Compile Include="Concrete\Keyword.cs" />
     <Compile Include="Concrete\Marc.cs" />
@@ -130,7 +137,6 @@
     <Compile Include="Concrete\NameIdentifier.cs" />
     <Compile Include="Concrete\NamePage.cs" />
     <Compile Include="Concrete\NameResolved.cs" />
-    <Compile Include="Concrete\NameSegment.cs" />
     <Compile Include="Concrete\NameSource.cs" />
     <Compile Include="Concrete\NameSourceGNFinder.cs" />
     <Compile Include="Concrete\NoteType.cs" />
@@ -151,17 +157,11 @@
     <Compile Include="Concrete\RISCitation.cs" />
     <Compile Include="Concrete\ScanningRequest.cs" />
     <Compile Include="Concrete\Segment.cs" />
-    <Compile Include="Concrete\SegmentAuthor.cs" />
     <Compile Include="Concrete\SegmentCluster.cs" />
     <Compile Include="Concrete\SegmentClusterSegment.cs" />
     <Compile Include="Concrete\SegmentCOinSView.cs" />
     <Compile Include="Concrete\SegmentGenre.cs" />
-    <Compile Include="Concrete\SegmentIdentifier.cs" />
-    <Compile Include="Concrete\SegmentInstitution.cs" />
-    <Compile Include="Concrete\SegmentKeyword.cs" />
-    <Compile Include="Concrete\SegmentPage.cs" />
     <Compile Include="Concrete\SegmentResolutionLog.cs" />
-    <Compile Include="Concrete\SegmentStatus.cs" />
     <Compile Include="Concrete\TextImportBatch.cs" />
     <Compile Include="Concrete\TextImportBatchFile.cs" />
     <Compile Include="Concrete\TextImportBatchFileStatus.cs" />
@@ -173,7 +173,6 @@
     <Compile Include="Concrete\TitleBibTeX.cs" />
     <Compile Include="Concrete\TitleCollection.cs" />
     <Compile Include="Concrete\TitleInstitution.cs" />
-    <Compile Include="Concrete\TitleItem.cs" />
     <Compile Include="Concrete\TitleKeyword.cs" />
     <Compile Include="Concrete\TitleLanguage.cs" />
     <Compile Include="Concrete\TitleNote.cs" />
@@ -225,6 +224,7 @@
     <Compile Include="Generated\__AuthorRole.cs" />
     <Compile Include="Generated\__AuthorType.cs" />
     <Compile Include="Generated\__BibliographicLevel.cs" />
+    <Compile Include="Generated\__Book.cs" />
     <Compile Include="Generated\__Collection.cs" />
     <Compile Include="Generated\__DOI.cs" />
     <Compile Include="Generated\__DOIStatus.cs" />
@@ -240,12 +240,18 @@
     <Compile Include="Generated\__InstitutionGroup.cs" />
     <Compile Include="Generated\__InstitutionGroupInstitution.cs" />
     <Compile Include="Generated\__InstitutionRole.cs" />
+    <Compile Include="Generated\__ItemAuthor.cs" />
     <Compile Include="Generated\__ItemCOinSView.cs" />
     <Compile Include="Generated\__ItemCollection.cs" />
+    <Compile Include="Generated\__ItemIdentifier.cs" />
     <Compile Include="Generated\__ItemInstitution.cs" />
+    <Compile Include="Generated\__ItemKeyword.cs" />
     <Compile Include="Generated\__ItemLanguage.cs" />
     <Compile Include="Generated\__ItemNameFileLog.cs" />
+    <Compile Include="Generated\__ItemPage.cs" />
+    <Compile Include="Generated\__ItemRelationship.cs" />
     <Compile Include="Generated\__ItemSource.cs" />
+    <Compile Include="Generated\__ItemTitle.cs" />
     <Compile Include="Generated\__Keyword.cs" />
     <Compile Include="Generated\__Marc.cs" />
     <Compile Include="Generated\__MarcControl.cs" />
@@ -258,7 +264,6 @@
     <Compile Include="Generated\__NameIdentifier.cs" />
     <Compile Include="Generated\__NamePage.cs" />
     <Compile Include="Generated\__NameResolved.cs" />
-    <Compile Include="Generated\__NameSegment.cs" />
     <Compile Include="Generated\__NameSource.cs" />
     <Compile Include="Generated\__NameSourceGNFinder.cs" />
     <Compile Include="Generated\__NoteType.cs" />
@@ -270,17 +275,11 @@
     <Compile Include="Generated\__PDFStatus.cs" />
     <Compile Include="Generated\__ScanningRequest.cs" />
     <Compile Include="Generated\__Segment.cs" />
-    <Compile Include="Generated\__SegmentAuthor.cs" />
     <Compile Include="Generated\__SegmentCluster.cs" />
     <Compile Include="Generated\__SegmentClusterSegment.cs" />
     <Compile Include="Generated\__SegmentCOinSView.cs" />
     <Compile Include="Generated\__SegmentGenre.cs" />
-    <Compile Include="Generated\__SegmentIdentifier.cs" />
-    <Compile Include="Generated\__SegmentInstitution.cs" />
-    <Compile Include="Generated\__SegmentKeyword.cs" />
-    <Compile Include="Generated\__SegmentPage.cs" />
     <Compile Include="Generated\__SegmentResolutionLog.cs" />
-    <Compile Include="Generated\__SegmentStatus.cs" />
     <Compile Include="Generated\__TextImportBatch.cs" />
     <Compile Include="Generated\__TextImportBatchFile.cs" />
     <Compile Include="Generated\__TextImportBatchFileStatus.cs" />
@@ -291,7 +290,6 @@
     <Compile Include="Generated\__TitleAuthor.cs" />
     <Compile Include="Generated\__TitleCollection.cs" />
     <Compile Include="Generated\__TitleInstitution.cs" />
-    <Compile Include="Generated\__TitleItem.cs" />
     <Compile Include="Generated\__TitleKeyword.cs" />
     <Compile Include="Generated\__TitleLanguage.cs" />
     <Compile Include="Generated\__TitleNote.cs" />
@@ -323,20 +321,20 @@
     <Compile Include="Generated\__Title.cs" />
     <Compile Include="Generated\__Vault.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ItemComparer.cs" />
+    <Compile Include="BookComparer.cs" />
     <Compile Include="SearchAnnotationResult.cs" />
     <Compile Include="SearchBookResult.cs" />
     <Compile Include="SearchBookResultComparer.cs" />
     <Compile Include="SearchCriteria\RequestLog.RequestLogSearchOrderBy.cs" />
     <Compile Include="SearchCriteria\TitleSearchCriteria.cs" />
-    <Compile Include="SegmentAuthorComparer.cs" />
+    <Compile Include="ItemAuthorComparer.cs" />
     <Compile Include="SegmentComparer.cs" />
-    <Compile Include="SegmentPageComparer.cs" />
+    <Compile Include="ItemPageComparer.cs" />
     <Compile Include="TitleAssociationSuspectCharacter.cs" />
     <Compile Include="AuthorSuspectCharacter.cs" />
     <Compile Include="TitleAuthorComparer.cs" />
     <Compile Include="TitleNoteComparer.cs" />
-    <Compile Include="TitleItemComparer.cs" />
+    <Compile Include="ItemTitleComparer.cs" />
     <Compile Include="TitleSuspectCharacter.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

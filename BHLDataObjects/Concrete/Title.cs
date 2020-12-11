@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 #endregion Using
@@ -13,84 +14,84 @@ namespace MOBOT.BHL.DataObjects
 	{
 		#region Properties
 
-        private CustomGenericList<TitleAuthor> _titleAuthors = new CustomGenericList<TitleAuthor>();
-        private CustomGenericList<Title_Identifier> _titleIdentifiers = new CustomGenericList<Title_Identifier>();
-		private CustomGenericList<TitleCollection> _titleCollections = new CustomGenericList<TitleCollection>();
-		private CustomGenericList<Item> _items = new CustomGenericList<Item>();
-        private CustomGenericList<TitleItem> _titleItems = new CustomGenericList<TitleItem>();
-        private CustomGenericList<TitleKeyword> _titleKeywords = new CustomGenericList<TitleKeyword>();
-        private CustomGenericList<TitleAssociation> _titleAssociations = new CustomGenericList<TitleAssociation>();
-        private CustomGenericList<TitleVariant> _titleVariants = new CustomGenericList<TitleVariant>();
-        private CustomGenericList<TitleLanguage> _titleLanguages = new CustomGenericList<TitleLanguage>();
-        private CustomGenericList<TitleNote> _titleNotes = new CustomGenericList<TitleNote>();
-        private CustomGenericList<Institution> _titleInstitutions = new CustomGenericList<Institution>();
+        private List<TitleAuthor> _titleAuthors = new List<TitleAuthor>();
+        private List<Title_Identifier> _titleIdentifiers = new List<Title_Identifier>();
+		private List<TitleCollection> _titleCollections = new List<TitleCollection>();
+		private List<Book> _books = new List<Book>();
+        private List<ItemTitle> _itemTitles = new List<ItemTitle>();
+        private List<TitleKeyword> _titleKeywords = new List<TitleKeyword>();
+        private List<TitleAssociation> _titleAssociations = new List<TitleAssociation>();
+        private List<TitleVariant> _titleVariants = new List<TitleVariant>();
+        private List<TitleLanguage> _titleLanguages = new List<TitleLanguage>();
+        private List<TitleNote> _titleNotes = new List<TitleNote>();
+        private List<Institution> _titleInstitutions = new List<Institution>();
 		private long _rowNum;
 		private string _institutionName;
         private string _doiName;
         private bool _hasLocalContent = true;
         private bool _hasExternalContent = false;
 
-        public CustomGenericList<TitleAuthor> TitleAuthors
+        public List<TitleAuthor> TitleAuthors
 		{
 			get { return _titleAuthors; }
 			set { _titleAuthors = value; }
 		}
 
-        public CustomGenericList<Title_Identifier> TitleIdentifiers
+        public List<Title_Identifier> TitleIdentifiers
         {
             get { return _titleIdentifiers; }
             set { _titleIdentifiers = value; }
         }
 
-		public CustomGenericList<TitleCollection> TitleCollections
+		public List<TitleCollection> TitleCollections
 		{
 			get { return this._titleCollections; }
 			set { this._titleCollections = value; }
 		}
 
-		public CustomGenericList<Item> Items
+		public List<Book> Books
 		{
-			get { return this._items; }
-			set { this._items = value; }
+			get { return this._books; }
+			set { this._books = value; }
 		}
 
-        public CustomGenericList<TitleItem> TitleItems
+        public List<ItemTitle> ItemTitles
         {
-            get { return this._titleItems; }
-            set { this._titleItems = value; }
+            get { return this._itemTitles; }
+            set { this._itemTitles = value; }
         }
         
-        public CustomGenericList<TitleKeyword> TitleKeywords
+        public List<TitleKeyword> TitleKeywords
         {
             get { return _titleKeywords; }
             set { _titleKeywords = value; }
         }
 
-        public CustomGenericList<TitleAssociation> TitleAssociations
+        public List<TitleAssociation> TitleAssociations
         {
             get { return _titleAssociations; }
             set { _titleAssociations = value; }
         }
 
-        public CustomGenericList<TitleVariant> TitleVariants
+        public List<TitleVariant> TitleVariants
         {
             get { return _titleVariants; }
             set { _titleVariants = value; }
         }
 
-        public CustomGenericList<TitleLanguage> TitleLanguages
+        public List<TitleLanguage> TitleLanguages
         {
             get { return _titleLanguages; }
             set { _titleLanguages = value; }
         }
 
-        public CustomGenericList<TitleNote> TitleNotes
+        public List<TitleNote> TitleNotes
         {
             get { return _titleNotes; }
             set { _titleNotes = value; }
         }
 
-        public CustomGenericList<Institution> TitleInstitutions
+        public List<Institution> TitleInstitutions
         {
             get { return _titleInstitutions; }
             set { _titleInstitutions = value; }

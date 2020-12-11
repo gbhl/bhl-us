@@ -11,3 +11,7 @@
 	CONSTRAINT [FK_PageTextLog_TextImportBatchFile] FOREIGN KEY([TextImportBatchFileID])
 		REFERENCES [txtimport].[TextImportBatchFile] ([TextImportBatchFileID])
 )
+GO
+CREATE NONCLUSTERED INDEX IX_PageTextLog_PageID 
+	ON [dbo].[PageTextLog] ([PageID])
+GO

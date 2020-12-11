@@ -40,7 +40,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -91,6 +91,7 @@
     <Compile Include="AuthorRoleDAL.cs" />
     <Compile Include="AuthorTypeDAL.cs" />
     <Compile Include="BibliographicLevelDAL.cs" />
+    <Compile Include="BookDAL.cs" />
     <Compile Include="CollectionDAL.cs" />
     <Compile Include="ConfigurationDAL.cs" />
     <Compile Include="DOIDAL.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Generated\AuthorRoleDAL.Auto.cs" />
     <Compile Include="Generated\AuthorTypeDAL.Auto.cs" />
     <Compile Include="Generated\BibliographicLevelDAL.Auto.cs" />
+    <Compile Include="Generated\BookDAL.Auto.cs" />
     <Compile Include="Generated\CollectionDAL.Auto.cs" />
     <Compile Include="Generated\ConfigurationDAL.Auto.cs" />
     <Compile Include="Generated\DOIDAL.Auto.cs" />
@@ -133,10 +135,16 @@
     <Compile Include="Generated\InstitutionGroupDAL.Auto.cs" />
     <Compile Include="Generated\InstitutionGroupInstitutionDAL.Auto.cs" />
     <Compile Include="Generated\InstitutionRoleDAL.Auto.cs" />
+    <Compile Include="Generated\ItemAuthorDAL.Auto.cs" />
     <Compile Include="Generated\ItemCollectionDAL.Auto.cs" />
+    <Compile Include="Generated\ItemIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\ItemInstitutionDAL.Auto.cs" />
+    <Compile Include="Generated\ItemKeywordDAL.Auto.cs" />
     <Compile Include="Generated\ItemLanguageDAL.Auto.cs" />
     <Compile Include="Generated\ItemNameFileLogDAL.Auto.cs" />
+    <Compile Include="Generated\ItemPageDAL.Auto.cs" />
+    <Compile Include="Generated\ItemRelationshipDAL.Auto.cs" />
+    <Compile Include="Generated\ItemTitleDAL.Auto.cs" />
     <Compile Include="Generated\KeywordDAL.Auto.cs" />
     <Compile Include="Generated\MarcControlDAL.Auto.cs" />
     <Compile Include="Generated\MarcDAL.Auto.cs" />
@@ -148,7 +156,6 @@
     <Compile Include="Generated\NameIdentifierDAL.Auto.cs" />
     <Compile Include="Generated\NamePageDAL.Auto.cs" />
     <Compile Include="Generated\NameResolvedDAL.Auto.cs" />
-    <Compile Include="Generated\NameSegmentDAL.Auto.cs" />
     <Compile Include="Generated\NameSourceDAL.Auto.cs" />
     <Compile Include="Generated\NameSourceGNFinderDAL.Auto.cs" />
     <Compile Include="Generated\NoteTypeDAL.Auto.cs" />
@@ -161,17 +168,11 @@
     <Compile Include="Generated\RequestLog.ApplicationDAL.Auto.cs" />
     <Compile Include="Generated\RequestLog.RequestLogDAL.Auto.cs" />
     <Compile Include="Generated\ScanningRequestDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentAuthorDAL.Auto.cs" />
     <Compile Include="Generated\SegmentClusterDAL.Auto.cs" />
     <Compile Include="Generated\SegmentClusterSegmentDAL.Auto.cs" />
     <Compile Include="Generated\SegmentDAL.Auto.cs" />
     <Compile Include="Generated\SegmentGenreDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentIdentifierDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentInstitutionDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentKeywordDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentPageDAL.Auto.cs" />
     <Compile Include="Generated\SegmentResolutionLogDAL.Auto.cs" />
-    <Compile Include="Generated\SegmentStatusDAL.Auto.cs" />
     <Compile Include="Generated\TextImportBatchDAL.Auto.cs" />
     <Compile Include="Generated\TextImportBatchFileDAL.Auto.cs" />
     <Compile Include="Generated\TextImportBatchFileStatusDAL.Auto.cs" />
@@ -210,7 +211,6 @@
     <Compile Include="Interfaces\IItemCollectionDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemDAL.Auto.cs" />
     <Compile Include="Interfaces\IItemInstitutionDAL.Auto.cs" />
-    <Compile Include="Interfaces\ISegmentInstitutionDAL.Auto.cs" />
     <Compile Include="Interfaces\IStatsDAL.cs" />
     <Compile Include="Interfaces\IKeywordDAL.Auto.cs" />
     <Compile Include="Interfaces\IMarcDAL.Auto.cs" />
@@ -220,12 +220,18 @@
     <Compile Include="Interfaces\ITitleCollectionDAL.Auto.cs" />
     <Compile Include="Interfaces\ITitleDAL.Auto.cs" />
     <Compile Include="Interfaces\ITitleNoteDAL.Auto.cs" />
+    <Compile Include="ItemAuthorDAL.cs" />
     <Compile Include="ItemCOinSDAL.cs" />
     <Compile Include="ItemCollectionDAL.cs" />
+    <Compile Include="ItemIdentifierDAL.cs" />
     <Compile Include="ItemInstitutionDAL.cs" />
+    <Compile Include="ItemKeywordDAL.cs" />
     <Compile Include="ItemLanguageDAL.cs" />
     <Compile Include="ItemNameFileLogDAL.cs" />
+    <Compile Include="ItemPageDAL.cs" />
+    <Compile Include="ItemRelationshipDAL.cs" />
     <Compile Include="ItemSourceDAL.cs" />
+    <Compile Include="ItemTitleDAL.cs" />
     <Compile Include="KBARTDAL.cs" />
     <Compile Include="KeywordDAL.cs" />
     <Compile Include="MarcControlDAL.cs" />
@@ -248,7 +254,6 @@
     <Compile Include="Generated\TitleAssociationDAL.Auto.cs" />
     <Compile Include="Generated\TitleAssociationTypeDAL.Auto.cs" />
     <Compile Include="Generated\TitleAssociation_TitleIdentifierDAL.Auto.cs" />
-    <Compile Include="Generated\TitleItemDAL.Auto.cs" />
     <Compile Include="PageAnnotationDAL.cs" />
     <Compile Include="PageFlickrDAL.cs" />
     <Compile Include="PageTextLogDAL.cs" />
@@ -261,16 +266,11 @@
     <Compile Include="RequestLog.RequestLogDAL.cs" />
     <Compile Include="ScanningRequestDAL.cs" />
     <Compile Include="SearchDAL.cs" />
-    <Compile Include="SegmentAuthorDAL.cs" />
     <Compile Include="SegmentClusterDAL.cs" />
     <Compile Include="SegmentClusterSegmentDAL.cs" />
     <Compile Include="SegmentCOinSDAL.cs" />
     <Compile Include="SegmentDAL.cs" />
     <Compile Include="SegmentGenreDAL.cs" />
-    <Compile Include="SegmentIdentifierDAL.cs" />
-    <Compile Include="SegmentInstitutionDAL.cs" />
-    <Compile Include="SegmentKeywordDAL.cs" />
-    <Compile Include="SegmentPageDAL.cs" />
     <Compile Include="SegmentResolutionLogDAL.cs" />
     <Compile Include="SegmentStatusDAL.cs" />
     <Compile Include="TextImportBatchDAL.cs" />
@@ -283,7 +283,6 @@
     <Compile Include="TitleAuthorDAL.cs" />
     <Compile Include="TitleCollectionDAL.cs" />
     <Compile Include="TitleInstitutionDAL.cs" />
-    <Compile Include="TitleItemDAL.cs" />
     <Compile Include="TitleKeywordDAL.cs" />
     <Compile Include="TitleLanguageDAL.cs" />
     <Compile Include="TitleNoteDAL.cs" />
@@ -319,6 +318,10 @@
     <ProjectReference Include="..\BHLDataObjects\BHLDataObjects.csproj">
       <Project>{65499E9E-4829-469E-8B5E-3F96012649AF}</Project>
       <Name>BHLDataObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BHLUtility\BHLUtility.csproj">
+      <Project>{270E7816-13EC-4D51-A27F-C959981B1275}</Project>
+      <Name>BHLUtility</Name>
     </ProjectReference>
     <ProjectReference Include="..\CustomDataAccess\CustomDataAccess.csproj">
       <Project>{28227df3-62e5-46b2-babb-c21684ea7425}</Project>

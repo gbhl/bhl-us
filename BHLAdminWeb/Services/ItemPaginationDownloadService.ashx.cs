@@ -112,7 +112,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 csvString.Append("\"" + item.ItemID.ToString() + "\",");
                 csvString.Append("\"" + item.BarCode + "\",");
                 csvString.Append("\"" + item.Volume.Replace("\"", "\"\"") + "\",");
-                csvString.Append("\"" + item.Year + "\",");
+                csvString.Append("\"" + item.StartYear + "\",");
                 csvString.Append("\"" + item.ItemStatusName.Replace("\"", "\"\"") + "\",");
                 csvString.Append("\"" + item.ScanningDate.ToString() + "\",");
                 csvString.Append("\"" + item.InstitutionStrings[0].Replace("\"", "\"\"") + "\",");

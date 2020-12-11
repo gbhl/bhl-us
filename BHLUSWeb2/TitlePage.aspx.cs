@@ -15,7 +15,7 @@ namespace MOBOT.BHL.Web2
     public partial class TitlePage : BasePage
     {
         protected PageSummaryView PageSummary { get; set; }
-        protected Item CurrentItem { get; set; }
+        protected DataObjects.Book CurrentBook { get; set; }
         protected Title CurrentTitle { get; set; }
         protected List<Author> Authors {get;set;}
         protected List<Author> AdditionalAuthors { get; set; }
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.Web2
         protected int SegmentCount { get; set; }
         protected string Pages = String.Empty;
         protected string PageTitle { get; set; }
-        protected int CurrentItemID { get; set; }
+        protected int CurrentBookID { get; set; }
         protected string UrlRoot { get; set; }
         protected string Genre { get; set; }
 
@@ -67,9 +67,9 @@ namespace MOBOT.BHL.Web2
                         // least puts the user in the correct item... better than "not found".
                         if (PageSummary != null)
                         {
-                            if (PageSummary.RedirectItemID != null)
+                            if (PageSummary.RedirectBookID != null)
                             {
-                                Response.Redirect("~/item/" + PageSummary.RedirectItemID);
+                                Response.Redirect("~/item/" + PageSummary.RedirectBookID);
                             }
                         }
                     }
@@ -132,18 +132,18 @@ namespace MOBOT.BHL.Web2
                         // to the appropriate itemid.
                         if (PageSummary != null)
                         {
-                            if (PageSummary.RedirectItemID != null)
+                            if (PageSummary.RedirectBookID != null)
                             {
-                                Response.Redirect("~/item/" + PageSummary.RedirectItemID);
+                                Response.Redirect("~/item/" + PageSummary.RedirectBookID);
                             }
                         }
                         else
                         {
                             // If no pages then see if we should redirect to an external url
-                            Item item = bhlProvider.ItemSelectAuto(itemid);
-                            if (item != null)
+                            DataObjects.Book book = bhlProvider.BookSelectAuto(itemid);
+                            if (book != null)
                             {
-                                if (!string.IsNullOrWhiteSpace(item.ExternalUrl)) Response.Redirect(item.ExternalUrl);
+                                if (!string.IsNullOrWhiteSpace(book.ExternalUrl)) Response.Redirect(book.ExternalUrl);
                             }
                         }
                     }
@@ -159,9 +159,9 @@ namespace MOBOT.BHL.Web2
                         // to the appropriate itemid.
                         if (PageSummary != null)
                         {
-                            if (PageSummary.RedirectItemID != null)
+                            if (PageSummary.RedirectBookID != null)
                             {
-                                Response.Redirect("~/item/" + PageSummary.RedirectItemID);
+                                Response.Redirect("~/item/" + PageSummary.RedirectBookID);
                             }
                         }
                 }
@@ -192,13 +192,13 @@ namespace MOBOT.BHL.Web2
 
                     Page firstPage = null;
                     int? sequenceOrder = PageSummary.SequenceOrder;
-                    mendeley.ItemID = PageSummary.ItemID;
+                    mendeley.ItemID = PageSummary.BookID;
 
                     UrlRoot = Request.Url.GetLeftPart(UriPartial.Authority);
 
                     if (getFirstPage)
                     {
-                        firstPage = bhlProvider.PageSelectFirstPageForItem(PageSummary.ItemID);
+                        firstPage = bhlProvider.PageSelectFirstPageForItem(PageSummary.BookID);
                         sequenceOrder = firstPage.SequenceOrder;
                         pageid = firstPage.PageID;
                     }
@@ -206,26 +206,24 @@ namespace MOBOT.BHL.Web2
                     Page.Title = string.Format(ConfigurationManager.AppSettings["PageTitle"], (String.IsNullOrEmpty(PageSummary.Volume) ? String.Empty : PageSummary.Volume + " - ") + PageSummary.ShortTitle);
 
                     // Set the item for the COinS
-                    COinS.ItemID = PageSummary.ItemID;
+                    COinS.ItemID = PageSummary.BookID;
 
                     // Set Volume drop down list
-                    IList<Item> items = bhlProvider
-                        .ItemSelectByTitleId(PageSummary.TitleID)
-                        //.ToList()
-                        //.Where(x => !string.IsNullOrWhiteSpace(x.Volume))
+                    List<DataObjects.Book> books = bhlProvider
+                        .BookSelectByTitleId(PageSummary.TitleID)
                         .ToList();
 
-                    foreach (Item item in items)
+                    foreach (DataObjects.Book book in books)
                     {
-                        if (PageSummary.ItemID == item.ItemID) CurrentItem = item;
-                        if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                        if (PageSummary.ItemID == book.ItemID) CurrentBook = book;
+                        if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
                     }
 
-                    ddlVolumes.DataSource = items;
+                    ddlVolumes.DataSource = books;
                     ddlVolumes.DataTextField = "DisplayedShortVolume";
-                    ddlVolumes.DataValueField = "ItemID";
+                    ddlVolumes.DataValueField = "BookID";
                     ddlVolumes.DataBind();
-                    ddlVolumes.SelectedValue = PageSummary.ItemID.ToString();
+                    ddlVolumes.SelectedValue = PageSummary.BookID.ToString();
 
                     ItemInstitutions = bhlProvider.InstitutionSelectByItemID(PageSummary.ItemID);
 
@@ -256,7 +254,7 @@ namespace MOBOT.BHL.Web2
                     }
 
                     // Used to determine where to send people for bibliographic curiosity
-                    Titles = bhlProvider.TitleSelectByItem(PageSummary.ItemID);
+                    Titles = bhlProvider.TitleSelectByItem(PageSummary.BookID);
                     foreach (Title title in Titles) if (PageSummary.TitleID == title.TitleID) CurrentTitle = title;
 
                     BibliographicLevel bibliographicLevel = bhlProvider.BibliographicLevelSelect(CurrentTitle.BibliographicLevelID ?? 0);
@@ -280,7 +278,7 @@ namespace MOBOT.BHL.Web2
                     // Set the Book Reader properties
                     StartPage = sequenceOrder.Value; // Why is this a nullable int? it is never checked for null...
                     
-                    List<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.ItemID);
+                    List<Page> pages = bhlProvider.PageMetadataSelectByItemID(PageSummary.BookID);
 
                     //SCS Set the Pages drop down list   
                     lstPages.DataSource = pages;
@@ -293,7 +291,7 @@ namespace MOBOT.BHL.Web2
                     foreach (ListItem item in lstPages.Items)
                         item.Attributes["title"] = item.Text;
 
-                    Segments = bhlProvider.SegmentSelectByItemID(PageSummary.ItemID);
+                    Segments = bhlProvider.SegmentSelectByItemID(PageSummary.BookID);
                     SegmentCount = Segments.Count;
 
                     // Listbox used by iDevices
@@ -302,8 +300,8 @@ namespace MOBOT.BHL.Web2
                     lbSegments.DataValueField = "StartPageID";
                     lbSegments.DataBind();
 
-                    CurrentItemID = PageSummary.ItemID;
-                    ((Book)this.Master).itemID = CurrentItemID.ToString();
+                    CurrentBookID = PageSummary.BookID;
+                    ((Book)this.Master).bookID = CurrentBookID.ToString();
                     ((Book)this.Master).sponsor = 
                         PageSummary.Sponsor == null ? 
                         string.Empty : 
@@ -312,19 +310,19 @@ namespace MOBOT.BHL.Web2
                     // Check and set up Annotations SCS
                     if (Convert.ToBoolean(ConfigurationManager.AppSettings["ShowAnnotations"]))
                     {
-                        setAnnotationContent();
+                        setAnnotationContent(PageSummary.ItemID);
                     }
 
                     // Get any segment ID associated with the current page
                     segmentid = GetSegmentID(pages, pageid);
 
                     // Add Google Scholar metadata to the page headers
-                    SetGoogleScholarTags(PageSummary.ItemID);
+                    SetGoogleScholarTags(PageSummary.BookID);
 
                     // Serialize only the information we need
                     List<SiteService.ViewerPage> viewerPages = new List<SiteService.ViewerPage>();
 
-                    List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.ItemID);
+                    List<PageSummaryView> pageviews = bhlProvider.PageSummarySelectForViewerByItemID(PageSummary.BookID);
                     foreach (PageSummaryView pageview in pageviews)
                     {
                         SiteService.ViewerPage viewerPage = new SiteService.ViewerPage
@@ -337,7 +335,7 @@ namespace MOBOT.BHL.Web2
                         viewerPages.Add(viewerPage);
                     }
 
-                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), PageSummary.ItemID)).ToList();
+                    viewerPages = (new SiteService.SiteServiceSoapClient().PageGetImageDimensions(viewerPages.ToArray(), PageSummary.BookID)).ToList();
 
                     Pages = JsonConvert.SerializeObject(pages.ToList().Join(viewerPages,
                                                     p => p.SequenceOrder,
@@ -407,19 +405,19 @@ namespace MOBOT.BHL.Web2
         /// we left justify the page image.  Changes to this and any other desired front-end 
         /// adjustments should be done within the InitializeViewer javascript function.
         /// </summary>
-        private void setAnnotationContent()
+        private void setAnnotationContent(int itemID)
         {
             //Set Annotation content
             BHLProvider provider = new BHLProvider();
 
-            List<Annotation> annotationList = provider.AnnotationsSelectByItemID(CurrentItemID);
+            List<Annotation> annotationList = provider.AnnotationsSelectByItemID(itemID);
 
             if (annotationList != null && annotationList.Count > 0)
             {
                 //this item has annotations, so set any flags to be used within the InitializeViewer javascript function
                 _hasAnnotations = "true";
 
-                ltlBookIndicator.Text = (provider.AnnotatedItemCheckForSurrogate(CurrentItemID) ? "Darwin's copy of this book" : "surrogate copy of this work");
+                ltlBookIndicator.Text = (provider.AnnotatedItemCheckForSurrogate(itemID) ? "Darwin's copy of this book" : "surrogate copy of this work");
                 StringBuilder sbPageBlock = new StringBuilder(),
                               sbScrollItems = new StringBuilder();
 

@@ -494,16 +494,6 @@ namespace MOBOT.BHL.BHLDOIService
                 data.Volume = string.IsNullOrWhiteSpace(segment.Volume) ? segment.ItemVolume : segment.Volume;
                 data.Issue = segment.Issue;
 
-                foreach(SegmentIdentifier segmentIdentifier in segment.IdentifierList)
-                {
-                    if (segmentIdentifier.IdentifierID == configParms.TitleIdentifierISSN && 
-                        segmentIdentifier.IsContainerIdentifier == 1)
-                    {
-                        data.Issn = segmentIdentifier.IdentifierValue;
-                    }
-                }
-
-                // If no ISSN was found in the segment identifier list, check the identifiers of the associated title
                 if (string.IsNullOrWhiteSpace(data.Issn))
                 {
                     Title_Identifier[] titleIdentifierList = wsClient.Title_IdentifierSelectByTitleID(segment.TitleId ?? 0);
@@ -529,11 +519,11 @@ namespace MOBOT.BHL.BHLDOIService
                 }
 
                 bool first = true;
-                foreach (SegmentAuthor segmentAuthor in segment.AuthorList)
+                foreach (ItemAuthor itemAuthor in segment.AuthorList)
                 {
                     DOIDepositData.Contributor contributor = new DOIDepositData.Contributor();
 
-                    contributor.PersonName = segmentAuthor.FullName;
+                    contributor.PersonName = itemAuthor.FullName;
                     contributor.Role = DOIDepositData.ContributorRole.Author;
                     contributor.Sequence = (first ?
                                             DOIDepositData.PersonNameSequence.First :

@@ -1,4 +1,9 @@
-﻿CREATE PROCEDURE [dbo].[ExportKBART]
+﻿SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ExportKBART]
 
 @UrlRoot nvarchar(200) = 'http://www.biodiversitylibrary.org/bibliography/'
 
@@ -61,33 +66,35 @@ INSERT INTO #kbart
 SELECT	RTRIM(t.FullTitle),
 		@UrlRoot + CONVERT(varchar(10), t.TitleID),
 		t.TitleID,
-		CASE WHEN b.MARCCode IN ('b','s') THEN 'Coverage information is for a single journal issue.' ELSE '' END,
+		CASE WHEN bl.MARCCode IN ('b','s') THEN 'Coverage information is for a single journal issue.' ELSE '' END,
 		CASE 
 			WHEN (ISNULL(RTRIM(Datafield_260_b), '') = '' OR ISNULL(RTRIM(Datafield_260_b), '') LIKE '%s.n%')
 			THEN '[Publisher not identified]'
 			ELSE ISNULL(RTRIM(t.Datafield_260_b), '')
 		END,
-		ISNULL(CASE WHEN b.MARCCode IN ('b','s') THEN 'serial' ELSE 'monograph' END, ''),
-		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(10), t.StartYear), '') END,
-		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(20), i.CreationDate, 101), '05-04-2006') END,
+		ISNULL(CASE WHEN bl.MARCCode IN ('b','s') THEN 'serial' ELSE 'monograph' END, ''),
+		CASE WHEN bl.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(10), t.StartYear), '') END,
+		CASE WHEN bl.MARCCode IN ('b','s') THEN '' ELSE ISNULL(CONVERT(varchar(20), i.CreationDate, 101), '05-04-2006') END,
 		CASE 
-			WHEN b.MARCCode IN ('b','s')
+			WHEN bl.MARCCode IN ('b','s')
 			THEN '' 
-			ELSE ISNULL(i.StartVolume, '') + CASE WHEN i.EndVolume <> '' THEN '-' + i.EndVolume ELSE '' END
+			ELSE ISNULL(b.StartVolume, '') + CASE WHEN b.EndVolume <> '' THEN '-' + b.EndVolume ELSE '' END
 		END,
-		CASE WHEN b.MARCCode IN ('b','s') THEN '' ELSE ISNULL(t.EditionStatement, '') END,
+		CASE WHEN bl.MARCCode IN ('b','s') THEN '' ELSE ISNULL(t.EditionStatement, '') END,
 		t.SortTitle,
-		i.ItemID,
-		ti.ItemSequence
+		b.BookID,
+		it.ItemSequence
 FROM	dbo.Title t
-		LEFT JOIN dbo.BibliographicLevel b WITH (NOLOCK) ON t.BibliographicLevelID = b.BibliographicLevelID
-		INNER JOIN dbo.TitleItem ti ON t.TitleID = ti.TitleID
-		INNER JOIN dbo.Item i WITH (NOLOCK) ON ti.ItemID = i.ItemID AND t.TitleID = i.PrimaryTitleID
-		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND i.ItemID = c.ItemID
+		LEFT JOIN dbo.BibliographicLevel bl WITH (NOLOCK) ON t.BibliographicLevelID = bl.BibliographicLevelID
+		INNER JOIN dbo.ItemTitle it ON t.TitleID = it.TitleID
+		INNER JOIN dbo.Item i WITH (NOLOCK) ON it.ItemID = i.ItemID 
+		INNER JOIN dbo.vwItemPrimaryTitle pt ON i.ItemID = pt.ItemID
+		INNER JOIN dbo.Book b WITH (NOLOCK) ON i.ItemID = b.ItemID
+		INNER JOIN dbo.SearchCatalog c WITH (NOLOCK) ON t.TitleID = c.TitleID AND b.BookID = c.ItemID
 WHERE	t.PublishReady = 1
 AND		i.ItemStatusID = 40
 AND		c.HasLocalContent = 1
-AND		b.MARCCode NOT IN ('c', 'd') -- Omit collections until we decide appropriate 'publication_type' value
+AND		bl.MARCCode NOT IN ('c', 'd') -- Omit collections until we decide appropriate 'publication_type' value
 
 -- Trim trailing punctuation from Titles and Publisher Names
 UPDATE	#kbart
@@ -107,36 +114,36 @@ SET		publication_title = RTRIM(
 		)
 
 UPDATE	#kbart
-SET		date_first_issue_online = ISNULL(LEFT(i.Year, 4), ''),
-		num_first_vol_online = ISNULL(i.StartVolume, ''),
+SET		date_first_issue_online = ISNULL(LEFT(b.StartYear, 4), ''),
+		num_first_vol_online = ISNULL(b.StartVolume, ''),
 		num_first_issue_online = 
 			ISNULL(
 				CASE 
-					WHEN i.StartIssue = '' 
-					THEN CASE WHEN i.StartNumber = '' THEN i.StartPart ELSE i.StartNumber END
-					ELSE i.StartIssue 
+					WHEN b.StartIssue = '' 
+					THEN CASE WHEN b.StartNumber = '' THEN b.StartPart ELSE b.StartNumber END
+					ELSE b.StartIssue 
 				END,
 			 ''),
-		date_last_issue_online = ISNULL(LEFT(CASE WHEN i.EndYear = '' THEN i.Year ELSE i.EndYear END, 4), ''),
-		num_last_vol_online = ISNULL(CASE WHEN i.EndVolume = '' THEN i.StartVolume ELSE i.EndVolume END, ''),
+		date_last_issue_online = ISNULL(LEFT(CASE WHEN b.EndYear = '' THEN b.StartYear ELSE b.EndYear END, 4), ''),
+		num_last_vol_online = ISNULL(CASE WHEN b.EndVolume = '' THEN b.StartVolume ELSE b.EndVolume END, ''),
 		num_last_issue_online = 
 			CASE 
 			WHEN 
-				(CASE WHEN i.EndPart = '' THEN i.StartPart ELSE i.EndPart END) = ''
+				(CASE WHEN b.EndPart = '' THEN b.StartPart ELSE b.EndPart END) = ''
 			THEN
 				CASE 
 				WHEN 
-					(CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END) = ''
+					(CASE WHEN b.EndIssue = '' THEN b.StartIssue ELSE b.EndIssue END) = ''
 				THEN 
-					CASE WHEN i.EndNumber = '' THEN i.StartNumber ELSE i.EndNumber END
+					CASE WHEN b.EndNumber = '' THEN b.StartNumber ELSE b.EndNumber END
 				ELSE
-					CASE WHEN i.EndIssue = '' THEN i.StartIssue ELSE i.EndIssue END
+					CASE WHEN b.EndIssue = '' THEN b.StartIssue ELSE b.EndIssue END
 				END
 			ELSE
-				CASE WHEN i.EndPart = '' THEN i.StartPart ELSE i.EndPart END
+				CASE WHEN b.EndPart = '' THEN b.StartPart ELSE b.EndPart END
 			END
 FROM	#kbart k
-		INNER JOIN dbo.Item i ON k.ItemID = i.ItemID
+		INNER JOIN dbo.Book b ON k.ItemID = b.BookID
 WHERE	k.publication_type = 'serial'
 
 -- Get preceeding title identifiers
@@ -234,3 +241,6 @@ ORDER BY SortTitle, SortVolume, SortIssue
 DROP TABLE #kbart
 
 END
+
+
+GO

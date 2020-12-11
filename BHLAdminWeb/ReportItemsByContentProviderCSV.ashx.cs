@@ -26,7 +26,7 @@ namespace MOBOT.BHL.AdminWeb
                 BHLProvider provider = new BHLProvider();
                 Institution institution = provider.InstitutionSelectAuto(institutionCode);
                 InstitutionRole institutionRole = provider.InstitutionRoleSelectAuto(roleId);
-                List<Item> items = provider.ItemSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
+                List<Book> books = provider.BookSelectByInstitutionAndRole(institutionCode, roleId, barcode, 1000000, 1, "CreationDate", "desc");
 
                 this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProviderAndRole" + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
@@ -36,28 +36,28 @@ namespace MOBOT.BHL.AdminWeb
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();
 
-                foreach (Item item in items)
+                foreach (Book book in books)
                 {
                     // Write record
                     csvString.Remove(0, csvString.Length);
                     csvString.Append("\"" + (institutionCode == "_A_L_L_" ? "- ASSIGNED -" : ((institution != null) ? institution.InstitutionName.Replace(", ", " ") : "- UNASSIGNED -")) + "\",");
                     csvString.Append("\"" + institutionRole.InstitutionRoleLabel.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.ItemID.ToString() + "\",");
-                    csvString.Append("\"" + item.BarCode + "\",");
-                    csvString.Append("\"" + item.PrimaryTitleID + "\",");
-                    csvString.Append("\"" + (item.TitleName ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + (item.Volume ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + (item.Year ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
-                    csvString.Append("\"" + item.AuthorListString.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.InstitutionStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.RightsHolderStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + string.Join("|", item.ScanningInstitutionStrings).Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.CopyrightStatus.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.Rights.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.LicenseUrl.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.DueDiligence.Replace(",", " ") + "\",");
-                    csvString.Append("\"" + item.CreationDate + "\",");
-                    csvString.AppendLine("\"" + item.LastModifiedDate + "\"");
+                    csvString.Append("\"" + book.BookID.ToString() + "\",");
+                    csvString.Append("\"" + book.BarCode + "\",");
+                    csvString.Append("\"" + book.PrimaryTitleID + "\",");
+                    csvString.Append("\"" + (book.TitleName ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
+                    csvString.Append("\"" + (book.Volume ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
+                    csvString.Append("\"" + (book.StartYear ?? string.Empty).Replace(",", " ").Replace('"', '\'') + "\",");
+                    csvString.Append("\"" + book.AuthorListString.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", book.InstitutionStrings).Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", book.RightsHolderStrings).Replace(",", " ") + "\",");
+                    csvString.Append("\"" + string.Join("|", book.ScanningInstitutionStrings).Replace(",", " ") + "\",");
+                    csvString.Append("\"" + book.CopyrightStatus.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + book.Rights.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + book.LicenseUrl.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + book.DueDiligence.Replace(",", " ") + "\",");
+                    csvString.Append("\"" + book.CreationDate + "\",");
+                    csvString.AppendLine("\"" + book.LastModifiedDate + "\"");
 
                     context.Response.Write(csvString.ToString());
                     context.Response.Flush();

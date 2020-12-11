@@ -33,7 +33,7 @@ namespace MOBOT.BHL.Web2
                 if (language != null) languageName = language.LanguageName;
             }
 
-            rptRecent.DataSource = bhlProvider.ItemSelectRecent(top, languageCode, institutionCode);
+            rptRecent.DataSource = bhlProvider.BookSelectRecent(top, languageCode, institutionCode);
             rptRecent.DataBind();
 
             string recentLink = string.Format("http://{0}/RecentRss/{1}", Request.ServerVariables["HTTP_HOST"], top.ToString());

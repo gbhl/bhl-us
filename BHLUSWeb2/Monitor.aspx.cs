@@ -30,7 +30,7 @@ namespace MOBOT.BHL.Web2
                 // If it takes too long for the following methods to complete, then 
                 // it is likely that the database is responding unusually slowly.
                 provider.AuthorSelectByTitleId(4);
-                provider.ItemSelectByTitleId(4);
+                provider.BookSelectByTitleId(4);
                 provider.TitleKeywordSelectKeywordByTitle(4);
                 provider.NamePageSelectByPageID(1000000);
                 provider.NameResolvedSelectByPageID(1000000);

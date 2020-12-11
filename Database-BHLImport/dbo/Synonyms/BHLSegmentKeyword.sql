@@ -1,1 +1,0 @@
-﻿CREATE SYNONYM [dbo].[BHLSegmentKeyword] FOR [BHL].[dbo].[SegmentKeyword];

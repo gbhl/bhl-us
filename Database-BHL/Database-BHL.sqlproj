@@ -108,13 +108,11 @@
     <None Include="dbo\Tables\MarcImportBatch.sql" />
     <None Include="dbo\Tables\Configuration.sql" />
     <None Include="dbo\Tables\TitleKeyword.sql" />
-    <None Include="dbo\Tables\SegmentAuthor.sql" />
     <None Include="annotation\Tables\AnnotatedPageType.sql" />
     <None Include="dbo\Tables\ItemStatus.sql" />
     <None Include="dbo\Tables\MonthlyStats.sql" />
     <None Include="dbo\Tables\MarcImportStatus.sql" />
     <None Include="dbo\Tables\TitleAuthor.sql" />
-    <None Include="dbo\Tables\SegmentKeyword.sql" />
     <None Include="audit\Tables\AuditBasicSummary.sql" />
     <None Include="annotation\Tables\AnnotatedTitle.sql" />
     <None Include="audit\Tables\AuditBasic.sql" />
@@ -130,7 +128,6 @@
     <None Include="dbo\Tables\SegmentClusterSegment.sql" />
     <None Include="annotation\Tables\AnnotationPolygon.sql" />
     <None Include="dbo\Tables\ItemSource.sql" />
-    <None Include="dbo\Tables\SegmentIdentifier.sql" />
     <None Include="annotation\Tables\AnnotationConcept.sql" />
     <None Include="dbo\Tables\PaginationStatus.sql" />
     <None Include="dbo\Tables\PageNameCount.sql" />
@@ -149,7 +146,6 @@
     <None Include="dbo\Tables\NameIdentifier.sql" />
     <None Include="dbo\Tables\Collection.sql" />
     <None Include="annotation\Tables\AnnotationSource.sql" />
-    <None Include="dbo\Tables\NameSegment.sql" />
     <None Include="dbo\Tables\Name.sql" />
     <None Include="dbo\Tables\BibliographicLevel.sql" />
     <None Include="dbo\Tables\TitleAssociation.sql" />
@@ -162,13 +158,11 @@
     <None Include="dbo\Tables\AuthorType.sql" />
     <None Include="dbo\Tables\Item.sql" />
     <None Include="dbo\Tables\NamePage.sql" />
-    <None Include="dbo\Tables\TitleItem.sql" />
     <None Include="dbo\Tables\TitleCollection.sql" />
     <None Include="dbo\Tables\SearchCatalogSegment.sql" />
     <None Include="dbo\Tables\Title_Identifier.sql" />
     <None Include="annotation\Tables\AnnotationKeywordTarget.sql" />
     <None Include="dbo\Tables\AuthorRole.sql" />
-    <None Include="dbo\Tables\SegmentStatus.sql" />
     <None Include="dbo\Tables\TitleVariantType.sql" />
     <None Include="dbo\Tables\Identifier.sql" />
     <None Include="annotation\Tables\AnnotationSubject.sql" />
@@ -176,7 +170,6 @@
     <None Include="dbo\Tables\ItemCollection.sql" />
     <None Include="dbo\Tables\DOIEntityType.sql" />
     <None Include="annotation\Tables\AnnotationMark.sql" />
-    <None Include="dbo\Tables\SegmentPage.sql" />
     <None Include="dbo\Tables\ItemNameFileLog.sql" />
     <None Include="dbo\Tables\PageType.sql" />
     <None Include="dbo\Tables\Page.sql" />
@@ -204,7 +197,6 @@
     <None Include="annotation\Views\vwAnnotation.sql" />
     <None Include="dbo\Views\TitleAuthorView.sql" />
     <None Include="dbo\Views\vwMarcDataField.sql" />
-    <None Include="dbo\Views\PageDetailView.sql" />
     <None Include="dbo\Views\ItemCOinSView.sql" />
     <None Include="dbo\Views\PageSummaryView.sql" />
     <None Include="Storage\BHLSearchCatalog.sql" />
@@ -223,7 +215,6 @@
     <None Include="dbo\Functions\fnAssociationStringForTitle.sql" />
     <None Include="dbo\Functions\fnCOinSAuthorStringForTitle.sql" />
     <None Include="dbo\Functions\fnCOinSGetFirstAuthorNameForTitle.sql" />
-    <None Include="dbo\Functions\fnTropicosCheckVolumeExists.sql" />
     <None Include="dbo\Functions\fnGetPageCountForSegment.sql" />
     <None Include="dbo\Functions\fnContainsSuspectCharacter.sql" />
     <None Include="dbo\Functions\fnContainsDiacritic.sql" />
@@ -317,7 +308,6 @@
     <None Include="dbo\Stored Procedures\ItemGetNamesXMLByItemID.sql" />
     <None Include="annotation\Stored Procedures\Annotation_AnnotationConceptSelectByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySelectByBarcode.sql" />
-    <None Include="dbo\Stored Procedures\SegmentAuthorUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcDataFieldSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\SearchSegmentComplete.sql" />
     <None Include="dbo\Stored Procedures\SegmentIdentifierDeleteAuto.sql" />
@@ -334,7 +324,6 @@
     <None Include="dbo\Stored Procedures\TitleItemSelectByItem.sql" />
     <None Include="dbo\Stored Procedures\InstitutionSelectByItemID.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentKeywordInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleItemSelectByTitle.sql" />
     <None Include="dbo\Stored Procedures\MarcControlUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentAuthorUpdateAuthorID.sql" />
@@ -349,7 +338,6 @@
     <None Include="dbo\Stored Procedures\APIKeyDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcUpdateStatusError.sql" />
     <None Include="dbo\Stored Procedures\PDFPageSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentKeywordDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiKeySelectByKey.sql" />
     <None Include="dbo\Stored Procedures\MarcImportBatchUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\SegmentGenreInsertAuto.sql" />
@@ -400,7 +388,6 @@
     <None Include="dbo\Stored Procedures\KeywordSelectByKeyword.sql" />
     <None Include="annotation\Stored Procedures\AnnotationConceptSelectByConceptText.sql" />
     <None Include="dbo\Stored Procedures\PDFSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentAuthorSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleSelectWithoutSubmittedDOI.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleSelectByIdentifier.sql" />
     <None Include="dbo\Stored Procedures\ApiAuthorSelectByTitleID.sql" />
@@ -410,7 +397,6 @@
     <None Include="dbo\Stored Procedures\ApiAuthorSelectNameStartsWith.sql" />
     <None Include="dbo\Stored Procedures\KeywordSelectKeywordByTitleID.sql" />
     <None Include="dbo\Stored Procedures\CollectionSelectByNameLike.sql" />
-    <None Include="dbo\Stored Procedures\SegmentAuthorDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiTitleSelectByAuthor.sql" />
     <None Include="dbo\Stored Procedures\MarcResolveTitles.sql" />
@@ -434,15 +420,12 @@
     <None Include="dbo\Stored Procedures\SegmentPageSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\VaultUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorIdentifierInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentKeywordUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\PageSummarySelectByBibID.sql" />
     <None Include="dbo\Stored Procedures\VaultDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorIdentifierSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectTitleDetailsByMarcID.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordDeleteAuto.sql" />
     <None Include="audit\Stored Procedures\AuditBasicCreateTrigger.sql" />
     <None Include="annotation\Stored Procedures\AnnotationConceptUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentKeywordSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiItemSelectUnpublished.sql" />
     <None Include="dbo\Stored Procedures\PageSummarySelectByItemIDAndTitleID.sql" />
     <None Include="dbo\Stored Procedures\AuthorIdentifierSelectByAuthorID.sql" />
@@ -466,7 +449,6 @@
     <None Include="dbo\Stored Procedures\TitleKeywordSelectByTitleID.sql" />
     <None Include="dbo\Stored Procedures\ItemCOinSSelectByTitleID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationPolygonDeleteByAnnotationID.sql" />
-    <None Include="dbo\Stored Procedures\SegmentAuthorInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\AuthorNameDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\MarcSelectTitleLanguagesByMarcID.sql" />
     <None Include="dbo\Stored Procedures\TitleKeywordUpdateAuto.sql" />
@@ -549,7 +531,6 @@
     <None Include="dbo\Stored Procedures\PageSelectWithoutPageNamesByItemID.sql" />
     <None Include="dbo\Stored Procedures\AuthorTypeSelectAll.sql" />
     <None Include="dbo\Stored Procedures\ItemSourceSelectAll.sql" />
-    <None Include="dbo\Stored Procedures\OpenUrlCitationSelectByTitleIdentifier.sql" />
     <None Include="dbo\Stored Procedures\SegmentSelectRelated.sql" />
     <None Include="dbo\Stored Procedures\AuthorTypeSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PaginationStatusSelectAuto.sql" />
@@ -687,7 +668,6 @@
     <None Include="annotation\Stored Procedures\AnnotationNoteDeleteAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationNoteSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\BibliographicLevelDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\TitleItemUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiItemSelectByTitleId.sql" />
     <None Include="dbo\Stored Procedures\LanguageInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiPageSelectBySegmentID.sql" />
@@ -699,7 +679,6 @@
     <None Include="dbo\Stored Procedures\PDFUpdatePdfStatus.sql" />
     <None Include="annotation\Stored Procedures\AnnotationRelationSelectByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\BibliographicLevelInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\TitleItemDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\ApiItemSelectByBarcode.sql" />
     <None Include="dbo\Stored Procedures\OpenUrlCitationSelectBySegmentID.sql" />
     <None Include="annotation\Stored Procedures\AnnotationMarkDeleteAuto.sql" />
@@ -722,13 +701,11 @@
     <None Include="dbo\Stored Procedures\PdfStatsSelectOverview.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedTitleSelectByExternalIdentifer.sql" />
     <None Include="dbo\Stored Procedures\NamePageInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\OpenUrlCitationSelectByItem.sql" />
     <None Include="dbo\Stored Procedures\PDFStatusUpdateAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationRelationDeleteByAnnotationID.sql" />
     <None Include="dbo\Stored Procedures\NameIdentifierInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleSearchPaging.sql" />
-    <None Include="dbo\Stored Procedures\OpenUrlCitationSelectByTitle.sql" />
     <None Include="dbo\Stored Procedures\PDFSelectForWeekAndStatus.sql" />
     <None Include="annotation\Stored Procedures\AnnotationConceptSelectByCode.sql" />
     <None Include="dbo\Stored Procedures\NameSourceInsertAuto.sql" />
@@ -745,7 +722,6 @@
     <None Include="annotation\Stored Procedures\AnnotatedPageCharacteristicDeleteByPageID.sql" />
     <None Include="dbo\Stored Procedures\NamePageUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionDeleteForCollection.sql" />
-    <None Include="dbo\Stored Procedures\TitleItemInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PDFPageSelectForPdfID.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedPageSelectByExternalIdentifer.sql" />
     <None Include="dbo\Stored Procedures\NameResolvedSelectAuto.sql" />
@@ -754,14 +730,12 @@
     <None Include="dbo\Stored Procedures\NameResolvedSelectByPageID.sql" />
     <None Include="dbo\Stored Procedures\PDFStatusSelectAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedPageTypeDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\NameSegmentUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\BibliographicLevelSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\PDFStatusDeleteAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotatedPageSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\NameInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\CollectionSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\TitleItemSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageTypeDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\NamePageUpdate.sql" />
     <None Include="dbo\Stored Procedures\Title_IdentifierUpdateAuto.sql" />
@@ -778,14 +752,12 @@
     <None Include="dbo\Stored Procedures\TitleAssociation_TitleIdentifierSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageTypeInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\IdentifierInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\NameSegmentDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\CollectionUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\PageTypeUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemNameFileLogInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\Title_IdentifierInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\PageSelectFileNameByItemID.sql" />
-    <None Include="dbo\Stored Procedures\NameSegmentSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\PageFlickrSelectAll.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\TitleAssociationTypeInsertAuto.sql" />
@@ -803,7 +775,6 @@
     <None Include="dbo\Stored Procedures\DOISelectAuto.sql" />
     <None Include="dbo\Stored Procedures\Title_IdentifierSelectAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSelectByExternalIdentifer.sql" />
-    <None Include="dbo\Stored Procedures\NameSegmentInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemCollectionUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemNameFileLogDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\Title_IdentifierSelectByTitleID.sql" />
@@ -838,7 +809,6 @@
     <None Include="dbo\Stored Procedures\DOIUpdateAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\NameCountUniqueConfirmedBetweenDates.sql" />
-    <None Include="dbo\Stored Procedures\PageResolve.sql" />
     <None Include="dbo\Stored Procedures\DOIInsertAuto.sql" />
     <None Include="annotation\Stored Procedures\AnnotationSubjectCategorySelectAuto.sql" />
     <None Include="dbo\Stored Procedures\NamePageSelectByPageIDAndNameString.sql" />
@@ -898,7 +868,6 @@
     <None Include="Data\dbo.NameIdentifier.Table.sql" />
     <None Include="Data\dbo.NamePage.Table.sql" />
     <None Include="Data\dbo.NameResolved.Table.sql" />
-    <None Include="Data\dbo.NameSegment.Table.sql" />
     <None Include="Data\dbo.NameSource.Table.sql" />
     <None Include="Data\dbo.Page.Table.sql" />
     <None Include="Data\dbo.Page_PageType.Table.sql" />
@@ -1140,6 +1109,18 @@
     <None Include="dbo\Functions\fnRemoveNonAlphaNumericCharacters.sql" />
     <None Include="dbo\Stored Procedures\ApplicationCacheSelectByKey.sql" />
     <None Include="dbo\Stored Procedures\ApplicationCacheDeleteExpired.sql" />
+    <None Include="dbo\Tables\ItemTitle.sql" />
+    <None Include="dbo\Tables\ItemRelationship.sql" />
+    <None Include="dbo\Tables\Book.sql" />
+    <None Include="dbo\Tables\ItemAuthor.sql" />
+    <None Include="dbo\Tables\ItemIdentifier.sql" />
+    <None Include="dbo\Tables\ItemKeyword.sql" />
+    <None Include="dbo\Tables\ItemPage.sql" />
+    <None Include="dbo\Tables\ItemType.sql" />
+    <None Include="dbo\Views\vwItemPrimaryTitle.sql" />
+    <None Include="Data\dbo.TitleInstitution.Table.sql" />
+    <None Include="dbo\Stored Procedures\ApiSegmentSelectForSegmentID.sql" />
+    <None Include="dbo\Functions\fnReverseAuthorNameISV.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Database-BHL.refactorlog" />
@@ -1281,9 +1262,6 @@
     <None Include="dbo\Tables\ItemInstitution.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dbo\Tables\SegmentInstitution.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Data\dbo.InstitutionRole.Table.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -1297,10 +1275,6 @@
     <None Include="dbo\Stored Procedures\ItemInstitutionInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemInstitutionSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ItemInstitutionUpdateAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentInstitutionDeleteAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentInstitutionInsertAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentInstitutionSelectAuto.sql" />
-    <None Include="dbo\Stored Procedures\SegmentInstitutionUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionRoleDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionRoleInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionRoleSelectAuto.sql" />
@@ -1326,9 +1300,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ItemInstitutionInsert.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="dbo\Stored Procedures\SegmentInstitutionInsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\MonthlyStatsSelectSummary.sql" />
@@ -1475,7 +1446,7 @@
     <None Include="dbo\Stored Procedures\InstitutionGroupSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionGroupUpdateAuto.sql" />
     <None Include="dbo\Stored Procedures\InstitutionGroupSelectAll.sql" />
-    <Build Include="dbo\Stored Procedures\ItemResetPaginationLock.sql" />
+    <None Include="dbo\Stored Procedures\ItemResetPaginationLock.sql" />
     <None Include="dbo\Stored Procedures\NameSourceGNFinderDeleteAuto.sql" />
     <None Include="dbo\Stored Procedures\NameSourceGNFinderInsertAuto.sql" />
     <None Include="dbo\Stored Procedures\NameSourceGNFinderSelectAll.sql" />
@@ -1485,5 +1456,49 @@
     <None Include="dbo\Stored Procedures\ApplicationCacheSelectAuto.sql" />
     <None Include="dbo\Stored Procedures\ApplicationCacheUpdateAuto.sql" />
     <None Include="dbo\Tables\ApplicationCache.sql" />
+    <None Include="dbo\Stored Procedures\ItemTitleDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemTitleInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemTitleSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemTitleUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemRelationshipDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemRelationshipInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemRelationshipSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemRelationshipUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\BookDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\BookInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\BookSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\BookUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemAuthorDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemAuthorInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemAuthorSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemAuthorUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemIdentifierDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemIdentifierInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemIdentifierSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemIdentifierUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemKeywordDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemKeywordInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemKeywordSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemKeywordUpdateAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemPageDeleteAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemPageInsertAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemPageSelectAuto.sql" />
+    <None Include="dbo\Stored Procedures\ItemPageUpdateAuto.sql" />
+    <None Include="dbo\Views\PageSummarySegmentView.sql" />
+    <None Include="srchindex\Stored Procedures\SelectItemMetadata.sql" />
+    <None Include="srchindex\Stored Procedures\SelectSegmentMetadata.sql" />
+    <None Include="dbo\Stored Procedures\AuthorSelectByNameLikeAndInstitution.sql" />
+    <None Include="dbo\Stored Procedures\BookSelectByItemID.sql" />
+    <None Include="dbo\Stored Procedures\ItemRelationshipSelectByItemID.sql" />
+    <None Include="Data\dbo.Book.Table.sql" />
+    <None Include="Data\dbo.InstitutionGroup.Table.sql" />
+    <None Include="Data\dbo.InstitutionGroupInstitution.Table.sql" />
+    <None Include="Data\dbo.ItemAuthor.Table.sql" />
+    <None Include="Data\dbo.ItemIdentifier.Table.sql" />
+    <None Include="Data\dbo.ItemKeyword.Table.sql" />
+    <None Include="Data\dbo.ItemPage.Table.sql" />
+    <None Include="Data\dbo.ItemRelationship.Table.sql" />
+    <None Include="Data\dbo.ItemTitle.Table.sql" />
+    <None Include="Data\dbo.ItemType.Table.sql" />
   </ItemGroup>
 </Project>

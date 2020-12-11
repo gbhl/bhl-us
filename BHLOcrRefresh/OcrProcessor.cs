@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Xml;
-using System.Xml.Xsl;
 
 namespace MOBOT.BHL.BHLOcrRefresh
 {
@@ -34,26 +31,26 @@ namespace MOBOT.BHL.BHLOcrRefresh
             // validate config values
             if (!this.ValidateConfiguration()) return;
 
-            string itemID = string.Empty;
+            string bookID = string.Empty;
             try
             {
                 BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
 
-                itemID = GetNextJobId();
-                while (!string.IsNullOrWhiteSpace(itemID))
+                bookID = GetNextJobId();
+                while (!string.IsNullOrWhiteSpace(bookID))
                 {
-                    string status = this.GetOcrForItem(itemID);
-                    client.NamePageDeleteByItemID(Convert.ToInt32(itemID)); // Clear names and reset last name lookup date
-                    client.PageTextLogInsertForItem(Convert.ToInt32(itemID), "OCR", 1); // Log the new source of the page text
+                    string status = this.GetOcrForItem(bookID);
+                    client.NamePageDeleteByItemID(Convert.ToInt32(bookID)); // Clear names and reset last name lookup date
+                    client.PageTextLogInsertForItem(Convert.ToInt32(bookID), "OCR", 1); // Log the new source of the page text
                     LogMessage(status);
-                    MarkJobComplete(itemID, status);
-                    itemID = GetNextJobId();
+                    MarkJobComplete(bookID, status);
+                    bookID = GetNextJobId();
                 }
             }
             catch(Exception ex)
             {
                 LogMessage("Error processing Ocr job", ex);
-                if (!string.IsNullOrWhiteSpace(itemID)) MarkJobError(itemID, ex.Message + "\n\r" + ex.StackTrace);
+                if (!string.IsNullOrWhiteSpace(bookID)) MarkJobError(bookID, ex.Message + "\n\r" + ex.StackTrace);
             }
 
             // Report the results of pdf generation
@@ -116,21 +113,21 @@ namespace MOBOT.BHL.BHLOcrRefresh
 
         #endregion Job File Methods
 
-        private string GetOcrForItem(string itemID)
+        private string GetOcrForItem(string bookID)
         {
             string status = string.Empty;
             string tempFolder = string.Empty;
 
             try
             {
-                string barcode = GetBarcodeForItem(itemID);
+                string barcode = GetBarcodeForItem(bookID);
 
                 // Create a temp directory for processing this item
                 tempFolder = string.Format("{0}{1}", configParms.OcrJobTempPath, barcode);
                 if (!Directory.Exists(tempFolder)) Directory.CreateDirectory(tempFolder);
 
                 // Get the DJVU from IA
-                string djvu = GetDJVU(itemID);
+                string djvu = GetDJVU(bookID);
 
                 // Convert the DJVU into XML files (one per page)
                 ConvertDjvuToXml(djvu, tempFolder, barcode);
@@ -139,7 +136,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
                 TransformXmlToText(tempFolder);
 
                 // Move the OCR files to their final destination
-                status = MoveOcrToProduction(itemID, tempFolder);
+                status = MoveOcrToProduction(bookID, tempFolder);
             }
             finally
             {
@@ -153,15 +150,15 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// <summary>
         /// Get the barcode for the specified Item
         /// </summary>
-        /// <param name="itemID"></param>
+        /// <param name="bookID"></param>
         /// <returns></returns>
-        private string GetBarcodeForItem(string itemID)
+        private string GetBarcodeForItem(string bookID)
         {
             string barcode = string.Empty;
 
             BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
-            if (item != null) barcode = item.BarCode;
+            BHLWS.Book book = client.BookSelectAuto(Convert.ToInt32(bookID));
+            if (book != null) barcode = book.BarCode;
 
             return barcode;
         }
@@ -267,14 +264,14 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// Move the OCR files for the specified item from the specified temp folder
         /// to their production location.
         /// </summary>
-        /// <param name="barcode"></param>
+        /// <param name="bookID"></param>
         /// <param name="tempFolder"></param>
         /// <returns></returns>
-        private string MoveOcrToProduction(string itemID, string tempFolder)
+        private string MoveOcrToProduction(string bookID, string tempFolder)
         {
             string status = string.Empty;
 
-            string path = GetFilePath(itemID);
+            string path = GetFilePath(bookID);
             if (!string.IsNullOrWhiteSpace(path))
             {
                 string[] files = Directory.GetFiles(tempFolder);
@@ -287,7 +284,7 @@ namespace MOBOT.BHL.BHLOcrRefresh
             }
             else
             {
-                throw new Exception("File Path for Item " + itemID + " not found.");
+                throw new Exception("File Path for Item " + bookID + " not found.");
             }
 
             return status;
@@ -298,17 +295,19 @@ namespace MOBOT.BHL.BHLOcrRefresh
         /// </summary>
         /// <param name="barcode"></param>
         /// <returns></returns>
-        private string GetFilePath(string itemID)
+        private string GetFilePath(string bookID)
         {
             string path = string.Empty;
 
             BHLWS.BHLWSSoapClient client = new BHLWS.BHLWSSoapClient();
-            BHLWS.Item item = client.ItemSelectAuto(Convert.ToInt32(itemID));
+            BHLWS.Book book = client.BookSelectAuto(Convert.ToInt32(bookID));
 
-            if (item != null)
+            if (book != null)
             {
+                BHLWS.Item item = client.ItemSelectAuto(book.ItemID);
+
                 BHLWS.Vault vault = client.VaultSelect((int)item.VaultID);
-                path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, item.BarCode);
+                path = string.Format("{0}\\{1}\\{2}", vault.OCRFolderShare, item.FileRootFolder, book.BarCode);
             }
 
             return path;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
@@ -190,8 +191,7 @@ namespace MOBOT.BHL.Server
             Segment segment = dal.SegmentSelectAuto(null, null, segmentID);
             if (segment != null)
             {
-                segment.SegmentStatusID = segmentStatusID;
-                segment = dal.SegmentUpdateAuto(null, null, segment);
+                this.ItemUpdateStatus((int)segment.ItemID, segmentStatusID);
             }
             else
             {
@@ -212,12 +212,12 @@ namespace MOBOT.BHL.Server
             return dal.SegmentClusterSegmentInsertAuto(null, null, segmentID, clusterID, 0, userID, userID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByStatusID(int segmentStatusID)
+        public List<Segment> SegmentSelectByStatusID(int segmentStatusID)
         {
             return new SegmentDAL().SegmentSelectByStatusID(null, null, segmentStatusID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectRecentlyClustered(int numberOfClusters)
+        public List<Segment> SegmentSelectRecentlyClustered(int numberOfClusters)
         {
             return new SegmentDAL().SegmentSelectRecentlyClustered(null, null, numberOfClusters);
         }
@@ -227,22 +227,22 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public CustomGenericList<SegmentIdentifier> SegmentIdentifierSelectForDisplayBySegmentID(int segmentID)
+        public List<ItemIdentifier> ItemIdentifierSelectForDisplayBySegmentID(int segmentID)
         {
-            return (new SegmentIdentifierDAL().SegmentIdentifierSelectBySegmentID(null, null, segmentID, 1));
+            return (new ItemIdentifierDAL().ItemIdentifierSelectBySegmentID(null, null, segmentID, 1));
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
+        public List<Segment> SegmentSelectByInstitutionAndStartsWith(string institutionCode, string startsWith)
         {
             return new SegmentDAL().SegmentSelectByInstitutionAndStartsWith(null, null, institutionCode, startsWith);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
+        public List<Segment> SegmentSelectByInstitutionAndStartsWithout(string institutionCode, string startsWith)
         {
             return new SegmentDAL().SegmentSelectByInstitutionAndStartsWithout(null, null, institutionCode, startsWith);
         }
 
-        public CustomGenericList<Segment> SegmentResolve(string doi, int startPageID)
+        public List<Segment> SegmentResolve(string doi, int startPageID)
         {
             return new SegmentDAL().SegmentResolve(null, null, doi, startPageID);
         }

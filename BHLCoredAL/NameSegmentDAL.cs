@@ -15,7 +15,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="authorId">Identifier of the author</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<NameSegment> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
+        public CustomGenericList<Name> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -25,9 +25,9 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("NameSegmentSelectBySegmentID", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, false, segmentID)))
             {
-                using (CustomSqlHelper<NameSegment> helper = new CustomSqlHelper<NameSegment>())
+                using (CustomSqlHelper<Name> helper = new CustomSqlHelper<Name>())
                 {
-                    CustomGenericList<NameSegment> list = helper.ExecuteReader(command);
+                    CustomGenericList<Name> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

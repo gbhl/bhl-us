@@ -117,17 +117,17 @@ namespace MOBOT.BHL.BHLPDFGenerator
                                     pdfPage.FileNamePrefix);
 
                                 String extUrl = String.Empty;
-                                if (pdfPage.AltExternalURL.EndsWith(".jp2"))
+                                if (pdfPage.ExternalURL.EndsWith(".jp2"))
                                 {
-                                    extUrl = pdfPage.AltExternalURL.Substring(0, pdfPage.AltExternalURL.Length - 3) + "jpg";
+                                    extUrl = pdfPage.ExternalURL.Substring(0, pdfPage.ExternalURL.Length - 3) + "jpg";
                                 }
-                                else if (pdfPage.AltExternalURL.IndexOf("/download/" + pdfPage.BarCode + "/page/n", StringComparison.OrdinalIgnoreCase) >= 0)
+                                else if (pdfPage.ExternalURL.IndexOf("/download/" + pdfPage.BarCode + "/page/n", StringComparison.OrdinalIgnoreCase) >= 0)
                                 {
-                                    extUrl = pdfPage.AltExternalURL + "_w1000"; // scale the image down a bit for inclusion in the PDF
+                                    extUrl = pdfPage.ExternalURL + "_w1000"; // scale the image down a bit for inclusion in the PDF
                                 }
                                 else
                                 {
-                                    extUrl = pdfPage.AltExternalURL;
+                                    extUrl = pdfPage.ExternalURL;
                                 }
                                 urlString = extUrl;
 

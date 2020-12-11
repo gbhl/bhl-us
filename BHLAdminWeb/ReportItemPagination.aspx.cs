@@ -136,7 +136,7 @@ namespace MOBOT.BHL.AdminWeb
                         {
                             string id = ids[x].Replace("jqg_list_", "");
                             // Call the web service to update the item
-                            new BHLProvider().ItemUpdatePaginationStatus(Convert.ToInt32(id),
+                            new BHLProvider().BookUpdatePaginationStatus(Convert.ToInt32(id),
                                 Convert.ToInt32(ddlStatusChange.SelectedValue), userId);
                         }
                     }

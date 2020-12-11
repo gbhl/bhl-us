@@ -7,9 +7,9 @@ namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<TitleItem> TitleItemSelectByItem(int itemID)
+        public CustomGenericList<ItemTitle> ItemTitleSelectByItem(int itemID)
         {
-            return (new TitleItemDAL().TitleItemSelectByItem(null, null, itemID));
+            return (new ItemTitleDAL().ItemTitleSelectByItem(null, null, itemID));
         }
 
     }

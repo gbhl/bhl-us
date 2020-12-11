@@ -14,7 +14,7 @@ using Page = MOBOT.BHL.DataObjects.Page;
 
 namespace MOBOT.BHL.AdminWeb
 {
-	public partial class Paginator : System.Web.UI.Page
+    public partial class Paginator : System.Web.UI.Page
 	{
 		private BHLProvider bp = new BHLProvider();
 		private bool _maintainScrollPos = true;
@@ -28,28 +28,28 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void fillItemsDropDown( int titleId )
 		{
-			List<Item> items = bp.ItemSelectByTitleId( titleId );
+			List<Book> books = bp.BookSelectByTitleId( titleId );
 
-			for (int x = items.Count - 1; x >= 0; x--)
+			for (int x = books.Count - 1; x >= 0; x--)
 			{
-				if (!items[x].HasLocalContent)
+				if (!books[x].HasLocalContent)
 				{
 					// Dont' include items without local content (no pages to paginate)
-					items.RemoveAt(x);
+					books.RemoveAt(x);
 				}
                 else
                 {
 					// Add Item ID to volume string
-					items[x].Volume = string.Format("{0} ~ Item ID: {1}", items[x].Volume, items[x].ItemID.ToString()).Trim();
+					books[x].Volume = string.Format("{0} ~ Item ID: {1}", books[x].Volume, books[x].BookID.ToString()).Trim();
                 }
 			}
 
-            itemDropDownList.DataSource = items;
+            itemDropDownList.DataSource = books;
 			itemDropDownList.DataTextField = "Volume";
-			itemDropDownList.DataValueField = "ItemID";
+			itemDropDownList.DataValueField = "BookID";
 			itemDropDownList.DataBind();
 
-			if ( items.Count == 0 )
+			if ( books.Count == 0 )
 			{
 				detailGridView.DataSource = null;
 				detailGridView.DataBind();
@@ -57,7 +57,7 @@ namespace MOBOT.BHL.AdminWeb
 			}
 			else
 			{
-				fillPageList( items[ 0 ].ItemID );
+				fillPageList( books[ 0 ].BookID );
 			}
 		}
 
@@ -118,55 +118,55 @@ namespace MOBOT.BHL.AdminWeb
 
 		private void checkPaginationStatus()
 		{
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			int bookID = int.Parse( itemDropDownList.SelectedValue );
+			Book book = bp.BookSelectPagination( bookID );
 
-			if ( item != null )
+			if ( book != null )
 			{
-				paginationStatusLabel.Text = PaginationStatus.GetStatusString( item.PaginationStatusID );
+				paginationStatusLabel.Text = PaginationStatus.GetStatusString( book.PaginationStatusID );
 
-				if ( item.PaginationStatusID != 5 )
+				if ( book.PaginationStatusID != 5 )
 				{
-					DateTime paginationStatusDate = (DateTime)item.PaginationStatusDate;
-					paginationDetailStatusLabel.Text = "Pagination status set by " + item.PaginationUserName + " on " +
+					DateTime paginationStatusDate = (DateTime)book.PaginationStatusDate;
+					paginationDetailStatusLabel.Text = "Pagination status set by " + book.PaginationUserName + " on " +
 						paginationStatusDate.ToShortDateString() + " at " + paginationStatusDate.ToShortTimeString();
-					if ( item.PaginationStatusID == (int)PaginationStatus.InProgress )
+					if ( book.PaginationStatusID == (int)PaginationStatus.InProgress )
 					{
 						// Look up userid based on token string
                         int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
-                        configurePaginationStatusButtons( item, ( item.PaginationStatusUserID == userId ) );
-						toggleButtons( item.PaginationStatusUserID == userId );
+                        configurePaginationStatusButtons( book, ( book.PaginationStatusUserID == userId ) );
+						toggleButtons( book.PaginationStatusUserID == userId );
 					}
 					else
 					{
-						configurePaginationStatusButtons( item, true );
+						configurePaginationStatusButtons( book, true );
 						toggleButtons( false );
 					}
 				}
 				else
 				{
 					paginationDetailStatusLabel.Text = "Pagination status has not been manually updated";
-					configurePaginationStatusButtons( item, true );
+					configurePaginationStatusButtons( book, true );
 					toggleButtons( false );
 				}
 			}
 		}
 
-		private void configurePaginationStatusButtons( Item selectedItem, bool enabled )
+		private void configurePaginationStatusButtons( Book selectedBook, bool enabled )
 		{
-			if ( selectedItem.PaginationStatusID.HasValue == false ||
-                selectedItem.PaginationStatusID.Value == PaginationStatus.New ||
-				selectedItem.PaginationStatusID.Value == PaginationStatus.Pending )
+			if ( selectedBook.PaginationStatusID.HasValue == false ||
+                selectedBook.PaginationStatusID.Value == PaginationStatus.New ||
+				selectedBook.PaginationStatusID.Value == PaginationStatus.Pending )
 			{
 				lockButton.Text = _lockEditStatus;
 				statusButton.Text = _completeStatus;
 			}
-			else if ( selectedItem.PaginationStatusID.Value == PaginationStatus.InProgress )
+			else if ( selectedBook.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				lockButton.Text = _unlockStatus;
 				statusButton.Text = _completeStatus;
 			}
-			else if ( selectedItem.PaginationStatusID.Value == PaginationStatus.Complete )
+			else if ( selectedBook.PaginationStatusID.Value == PaginationStatus.Complete )
 			{
 				lockButton.Text = _pendingStatus;
 				statusButton.Text = _lockEditStatus;
@@ -195,9 +195,9 @@ namespace MOBOT.BHL.AdminWeb
 			errorControl.Visible = true;
 		}
 
-		private void updatePaginationStatus( int itemId, int paginationStatusId, int userId )
+		private void updatePaginationStatus( int bookID, int paginationStatusId, int userId )
 		{
-			bp.ItemUpdatePaginationStatus( itemId, paginationStatusId, userId );
+			bp.BookUpdatePaginationStatus( bookID, paginationStatusId, userId );
 			checkPaginationStatus();
 		}
 
@@ -286,8 +286,8 @@ namespace MOBOT.BHL.AdminWeb
 				PageSummaryView ps = bp.PageSummarySelectByPageId( pageId );
 
                 // Set the Book Reader properties
-                BookReader1.ItemID = ps.ItemID;
-                BookReader1.NumPages = new BHLProvider().PageSelectCountByItemID(ps.ItemID);
+                BookReader1.ItemID = ps.BookID;
+                BookReader1.NumPages = new BHLProvider().PageSelectCountByItemID(ps.BookID);
                 BookReader1.StartPage = ps.SequenceOrder;
                 BookReader1.FixedImageHeight = 2400;
                 BookReader1.FixedImageWidth = 1600;
@@ -835,14 +835,14 @@ namespace MOBOT.BHL.AdminWeb
 		protected void lockButton_Click( object sender, EventArgs e )
 		{
 			// Validate the state of the button and the selected item before performing any updates
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			int bookID = int.Parse( itemDropDownList.SelectedValue );
+			Book book = bp.BookSelectPagination( bookID );
 			string paginationStatus = lockButton.Text;
             int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
-			if ( item.PaginationStatusID.HasValue == false || 
-                item.PaginationStatusID.Value == PaginationStatus.New ||
-                item.PaginationStatusID.Value == PaginationStatus.Pending )
+			if ( book.PaginationStatusID.HasValue == false || 
+                book.PaginationStatusID.Value == PaginationStatus.New ||
+                book.PaginationStatusID.Value == PaginationStatus.Pending )
 			{
 				// if the status is pending, validate that the action will set it to "In Progress"
 				if ( paginationStatus.Equals( _lockEditStatus ) == false )
@@ -851,23 +851,23 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
+					updatePaginationStatus( bookID, PaginationStatus.InProgress, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
+			else if ( book.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				// If the status is "In Progress", validate that the action will set it to "Pending"
 				// also make sure that the logged in user has rights to unlock this item
-				if ( paginationStatus.Equals( _unlockStatus ) == false || item.PaginationStatusUserID != userId )
+				if ( paginationStatus.Equals( _unlockStatus ) == false || book.PaginationStatusUserID != userId )
 				{
 					displayPaginationStatusInvalid();
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
+					updatePaginationStatus( bookID, PaginationStatus.Pending, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
+			else if ( book.PaginationStatusID.Value == PaginationStatus.Complete )
 			{
 				// If the status is "Complete", validate that the action will set it to "Pending"
 				if ( paginationStatus.Equals( _pendingStatus ) == false )
@@ -876,7 +876,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Pending, userId );
+					updatePaginationStatus( bookID, PaginationStatus.Pending, userId );
 				}
 			}
 		}
@@ -884,12 +884,12 @@ namespace MOBOT.BHL.AdminWeb
 		protected void statusButton_Click( object sender, EventArgs e )
 		{
 			// Validate the state of the button and the selected item before performing any updates
-			int itemId = int.Parse( itemDropDownList.SelectedValue );
-			Item item = bp.ItemSelectPagination( itemId );
+			int bookID = int.Parse( itemDropDownList.SelectedValue );
+			Book book = bp.BookSelectPagination( bookID );
 			string paginationStatus = statusButton.Text;
             int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
-			if ( item.PaginationStatusID.HasValue == false || item.PaginationStatusID.Value == PaginationStatus.Pending )
+			if ( book.PaginationStatusID.HasValue == false || book.PaginationStatusID.Value == PaginationStatus.Pending )
 			{
 				// if the status is pending, validate that the action will set it to "Complete"
 				if ( paginationStatus.Equals( _completeStatus ) == false )
@@ -898,23 +898,23 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
+					updatePaginationStatus( bookID, PaginationStatus.Complete, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.InProgress )
+			else if ( book.PaginationStatusID.Value == PaginationStatus.InProgress )
 			{
 				// If the status is "In Progress", validate that the action will set it to "Complete"
 				// also make sure that the logged in user has rights to unlock this item
-				if ( paginationStatus.Equals( _completeStatus ) == false || item.PaginationStatusUserID != userId )
+				if ( paginationStatus.Equals( _completeStatus ) == false || book.PaginationStatusUserID != userId )
 				{
 					displayPaginationStatusInvalid();
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.Complete, userId );
+					updatePaginationStatus( bookID, PaginationStatus.Complete, userId );
 				}
 			}
-			else if ( item.PaginationStatusID.Value == PaginationStatus.Complete )
+			else if ( book.PaginationStatusID.Value == PaginationStatus.Complete )
 			{
 				// If the status is "Complete", validate that the action will set it to "In Progress"
 				if ( paginationStatus.Equals( _lockEditStatus ) == false )
@@ -923,7 +923,7 @@ namespace MOBOT.BHL.AdminWeb
 				}
 				else
 				{
-					updatePaginationStatus( itemId, PaginationStatus.InProgress, userId );
+					updatePaginationStatus( bookID, PaginationStatus.InProgress, userId );
 				}
 			}
 		}

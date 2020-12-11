@@ -68,7 +68,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                 case "ItemSearch":
                     {
                         context.Response.ContentType = "application/json";
-                        response = this.ItemSearch(itemID, barCode);
+                        response = this.ItemSearch(itemID);//, barCode);
                         break;
                     }
                 case "ItemSearchByTitle":
@@ -98,22 +98,26 @@ namespace MOBOT.BHL.AdminWeb.Services
             context.Response.Write(response);
         }
 
-        private string ItemSearch(int itemId, String barCode)
+        private string ItemSearch(int itemId)//, String barCode)
         {
             try
             {
-                Item item = null;
+                Book book = null;
+                /*
                 if (itemId != 0)
                 {
-                    item = new BHLProvider().ItemSelectAuto(itemId);
+                */
+                    book = new BHLProvider().BookSelectByBarcodeOrItemID(itemId, null);
+                /*
                 }
                 else
                 {
                     item = new BHLProvider().ItemSelectByBarCode(barCode);
                 }
+                */
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                return js.Serialize(item);
+                return js.Serialize(book);
             }
             catch
             {
@@ -125,14 +129,14 @@ namespace MOBOT.BHL.AdminWeb.Services
         {
             try
             {
-                List<Item> items = null;
+                List<Book> items = null;
                 if (titleId != 0)
                 {
-                    items = new BHLProvider().ItemSelectByTitleId(titleId);
+                    items = new BHLProvider().BookSelectByTitleId(titleId);
                 }
                 else
                 {
-                    items = new BHLProvider().ItemSelectByMarcBibId(marcBibId);
+                    items = new BHLProvider().BookSelectByMarcBibId(marcBibId);
                 }
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
@@ -184,7 +188,7 @@ namespace MOBOT.BHL.AdminWeb.Services
                         response.Append("<cell> " + item.BibliographicLevel + " </cell>");
                         response.Append("<cell> <![CDATA[<a title=\"Item Info\" href=\"itemedit.aspx?id=" + item.ItemID.ToString() + "\">" + item.ItemID.ToString() + "</a>]]> </cell>");
                         response.Append("<cell> <![CDATA[" + item.Volume + "]]> </cell>");
-                        response.Append("<cell> " + item.Year + " </cell>");
+                        response.Append("<cell> " + item.StartYear + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.ItemStatusName + "]]> </cell>");
                         response.Append("<cell> " + item.ScanningDate.ToString() + " </cell>");
                         response.Append("<cell> <![CDATA[" + item.InstitutionStrings[0] + "]]> </cell>");

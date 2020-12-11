@@ -6,7 +6,7 @@ namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<SegmentStatus> SegmentStatusSelectAll()
+        public CustomGenericList<ItemStatus> SegmentStatusSelectAll()
         {
             return (new SegmentStatusDAL().SegmentStatusSelectAll(null, null));
         }

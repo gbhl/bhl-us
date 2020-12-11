@@ -19,7 +19,7 @@ namespace MOBOT.BHL.AdminWeb
 
             BHLProvider provider = new BHLProvider();
             Institution institution = provider.InstitutionSelectAuto(institutionCode);
-            List<Item> items = provider.ItemSelectByInstitution(institutionCode, 1000000, "Date");
+            List<Book> books = provider.BookSelectByInstitution(institutionCode, 1000000, "Date");
 
             this.WriteHttpHeaders(context, "text/csv", "ItemsByContentProvider" + institutionCode + DateTime.Now.ToString("yyyyMMdd") + ".csv");
 
@@ -29,22 +29,22 @@ namespace MOBOT.BHL.AdminWeb
             context.Response.Write(csvString.ToString());
             context.Response.Flush();
 
-            foreach (Item item in items)
+            foreach (Book book in books)
             {
                 // Write record
                 csvString.Remove(0, csvString.Length);
                 csvString.Append("\"" + institution.InstitutionName + "\",");
-                csvString.Append("\"" + item.ItemID.ToString() + "\",");
-                csvString.Append("\"" + item.BarCode + "\",");
-                csvString.Append("\"" + (item.TitleName ?? string.Empty).Replace('"', '\'') + "\",");
-                csvString.Append("\"" + (item.Volume ?? string.Empty).Replace('"', '\'') + "\",");
-                csvString.Append("\"" + (item.Year ?? string.Empty).Replace('"', '\'') + "\",");
-                csvString.Append("\"" + item.AuthorListString + "\",");
-                csvString.Append("\"" + item.CopyrightStatus + "\",");
-                csvString.Append("\"" + item.Rights + "\",");
-                csvString.Append("\"" + item.LicenseUrl + "\",");
-                csvString.Append("\"" + item.DueDiligence + "\",");
-                csvString.AppendLine("\"" + item.CreationDate + "\"");
+                csvString.Append("\"" + book.ItemID.ToString() + "\",");
+                csvString.Append("\"" + book.BarCode + "\",");
+                csvString.Append("\"" + (book.TitleName ?? string.Empty).Replace('"', '\'') + "\",");
+                csvString.Append("\"" + (book.Volume ?? string.Empty).Replace('"', '\'') + "\",");
+                csvString.Append("\"" + (book.StartYear ?? string.Empty).Replace('"', '\'') + "\",");
+                csvString.Append("\"" + book.AuthorListString + "\",");
+                csvString.Append("\"" + book.CopyrightStatus + "\",");
+                csvString.Append("\"" + book.Rights + "\",");
+                csvString.Append("\"" + book.LicenseUrl + "\",");
+                csvString.Append("\"" + book.DueDiligence + "\",");
+                csvString.AppendLine("\"" + book.CreationDate + "\"");
 
                 context.Response.Write(csvString.ToString());
                 context.Response.Flush();

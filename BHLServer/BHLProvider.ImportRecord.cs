@@ -3,6 +3,7 @@ using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Utility;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace MOBOT.BHL.Server
@@ -58,7 +59,7 @@ namespace MOBOT.BHL.Server
                 {
 
                     // Resolve with production segments.  If duplicates found, set status to Duplicate.
-                    CustomGenericList<Segment> segments = SegmentResolve(citation.DOI, citation.StartPageID ?? 0);
+                    List<Segment> segments = SegmentResolve(citation.DOI, citation.StartPageID ?? 0);
                     if (segments.Count > 0)
                     {
                         citation.ImportRecordStatusID = (int)DataObjects.Enum.ImportRecordStatus.Duplicate;
@@ -88,7 +89,7 @@ namespace MOBOT.BHL.Server
                     savedImportRecord.ImportRecordStatusID == (int)DataObjects.Enum.ImportRecordStatus.Rejected))
                 {
                     // Resolve with production segments.  If duplicates found, set status to Duplicate.
-                    CustomGenericList<Segment> segments = SegmentResolve(savedImportRecord.DOI,
+                    List<Segment> segments = SegmentResolve(savedImportRecord.DOI,
                         savedImportRecord.StartPageID ?? 0);
                     if (segments.Count > 0)
                     {
@@ -161,7 +162,7 @@ namespace MOBOT.BHL.Server
             // Make sure Item ID is valid BHL identifier
             if (citation.ItemID != null)
             {
-                if (ItemSelectAuto((int)citation.ItemID) == null)
+                if (BookSelectAuto((int)citation.ItemID) == null)
                 {
                     citation.Errors.Add(GetNewImportRecordError(string.Format("Item {0} not found", citation.ItemIDString)));
                     isValid = false;
@@ -181,7 +182,7 @@ namespace MOBOT.BHL.Server
                 else
                 {
                     citation.StartPageID = startPageID;
-                    Page page = PageSelectAuto(startPageID);
+                    PageSummaryView page = PageSummarySelectByPageId(startPageID);
                     if (page == null)
                     {
                         citation.Errors.Add(GetNewImportRecordError(string.Format("Start Page {0} not found", citation.StartPageID)));
@@ -189,7 +190,7 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (citation.ItemID == null) citation.ItemID = page.ItemID;
+                        if (citation.ItemID == null) citation.ItemID = page.BookID;
                     }
                 }
             }
@@ -204,7 +205,7 @@ namespace MOBOT.BHL.Server
                 else
                 {
                     citation.EndPageID = endPageID;
-                    Page page = PageSelectAuto(endPageID);
+                    PageSummaryView page = PageSummarySelectByPageId(endPageID);
                     if (page == null)
                     {
                         citation.Errors.Add(GetNewImportRecordError(string.Format("End Page {0} not found", citation.EndPageID)));
@@ -212,7 +213,7 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (citation.ItemID == null) citation.ItemID = page.ItemID;
+                        if (citation.ItemID == null) citation.ItemID = page.BookID;
                     }
                 }
             }
@@ -283,7 +284,7 @@ namespace MOBOT.BHL.Server
                 if (Int32.TryParse(pageID, out int pid))
                 {
                     // Make sure page id is valid BHL identifier
-                    Page page = PageSelectAuto(pid);
+                    PageSummaryView page = PageSummarySelectByPageId(pid);
                     if (page == null)
                     {
                         citation.Errors.Add(GetNewImportRecordError(string.Format("Page {0} not found", pid.ToString())));
@@ -291,7 +292,7 @@ namespace MOBOT.BHL.Server
                     }
                     else
                     {
-                        if (page.ItemID != citation.ItemID && !string.IsNullOrEmpty(citation.ItemIDString))
+                        if (page.BookID != citation.ItemID && !string.IsNullOrEmpty(citation.ItemIDString))
                         {
                             citation.Errors.Add(GetNewImportRecordError(string.Format("Page {0} not part of Item {1}", pid.ToString(), citation.ItemID)));
                             isValid = false;

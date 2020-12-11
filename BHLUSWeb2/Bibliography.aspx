@@ -359,12 +359,12 @@
             <div class="volume js-hide">
                 <h4 class="title">
                     <a class="expand no-js-hide" title="expand or collapse volume description">expand</a>
-                    <span class="text"><%: bibliographyItem.Item.Volume%></span>
-                     <a class="viewbook" href="/item/<%: bibliographyItem.Item.ItemID %>" title="View Volume">view volume</a>
+                    <span class="text"><%: bibliographyItem.Book.Volume%></span>
+                     <a class="viewbook" href="/item/<%: bibliographyItem.Book.BookID%>" title="View Volume">view volume</a>
                 </h4>
                 <div class="body">
                     <% if(!string.IsNullOrWhiteSpace(bibliographyItem.ThumbUrl)) { %>
-                    <a href="/item/<%: bibliographyItem.Item.ItemID %>">
+                    <a href="/item/<%: bibliographyItem.Book.BookID %>">
                         <img src="<%: bibliographyItem.ThumbUrl %>" width="100" />
                     </a>
                     <div class="summary">
@@ -388,7 +388,7 @@
                                 }%>                 
                         </p>
                         <h5>Sponsor:</h5>
-                        <p><%: bibliographyItem.Item.Sponsor%></p>
+                        <p><%: bibliographyItem.Book.Sponsor%></p>
 
 
                             <%foreach (Institution institution in bibliographyItem.institutions)
@@ -410,32 +410,32 @@
 
 
 
-                        <% if (bibliographyItem.Item.ScanningDate != null) { %>                        
+                        <% if (bibliographyItem.Book.ScanningDate != null) { %>                        
                             <h5>Date Scanned:</h5>
-                            <p><%: bibliographyItem.Item.ScanningDate.Value.ToString("MM/dd/yyyy")%></p>
+                            <p><%: bibliographyItem.Book.ScanningDate.Value.ToString("MM/dd/yyyy")%></p>
                         <% } %>
 
                         <div class="booklinks">
-                            <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ExternalUrl))  { %>
-                                <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume (External)</a>
+                            <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ExternalUrl))  { %>
+                                <a target="_blank" rel="noopener noreferrer" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume (External)</a>
                             <% } else { %>
-                                <a target="_self" href="/item/<%: bibliographyItem.Item.ItemID %>">View Volume</a>
+                                <a target="_self" href="/item/<%: bibliographyItem.Book.BookID %>">View Volume</a>
                             <%} %>
-                            <% if (bibliographyItem.Item.NumberOfSegments > 0)
+                            <% if (bibliographyItem.Book.NumberOfSegments > 0)
                                 { %>
                                 <br />
-                                <a href="/itemdetails/<%: bibliographyItem.Item.ItemID %>">View Identified Parts</a>
+                                <a href="/itemdetails/<%: bibliographyItem.Book.BookID %>">View Identified Parts</a>
                             <%} %>
                         </div>
 
                     </div>
                     
-                    <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.ItemDescription)) { %>
+                    <%if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.ItemDescription)) { %>
                     
                         <div class="copyspecific copyright">
                             <h5>Copy-specific information:</h5>
                             <p>
-                                <%: bibliographyItem.Item.ItemDescription %>
+                                <%: bibliographyItem.Book.ItemDescription %>
                             </p>
                         </div>
 
@@ -445,51 +445,51 @@
                         <h5>Copyright &amp; Usage:</h5>
                         <p>
                             <%  bool showNone = true;
-                                if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.LicenseUrl)) { %>
+                                if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.LicenseUrl)) { %>
                                 License Type:
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.LicenseUrl%>"><%: bibliographyItem.Item.LicenseUrl%></a>
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.LicenseUrl%>"><%: bibliographyItem.Book.LicenseUrl%></a>
                                 <% } else {%>
-                                    <%: bibliographyItem.Item.LicenseUrl%>
+                                    <%: bibliographyItem.Book.LicenseUrl%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.Rights)) { %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.Rights)) { %>
                                 Rights:
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.Rights%>"><%: bibliographyItem.Item.Rights%></a>
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.Rights%>"><%: bibliographyItem.Book.Rights%></a>
                                 <% } else { %>
-                                    <%: bibliographyItem.Item.Rights%>
+                                    <%: bibliographyItem.Book.Rights%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.DueDiligence)) { %>
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.DueDiligence)) { %>
                                 Due Diligence: 
-                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Item.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                <%if (System.Text.RegularExpressions.Regex.IsMatch(bibliographyItem.Book.DueDiligence, "^(https?|ftp|file)://.+$"))
                                     { %>
-                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Item.DueDiligence%>"><%: bibliographyItem.Item.DueDiligence%></a>
+                                    <a target="_blank" rel="noopener noreferrer" href="<%: bibliographyItem.Book.DueDiligence%>"><%: bibliographyItem.Book.DueDiligence%></a>
                                 <% } else { %>
-                                    <%: bibliographyItem.Item.DueDiligence%>
+                                    <%: bibliographyItem.Book.DueDiligence%>
                                 <% }
                                 showNone = false;%>
                                 <br />
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightStatus)) { %>
-                                Copyright Status: <%: bibliographyItem.Item.CopyrightStatus%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightStatus)) { %>
+                                Copyright Status: <%: bibliographyItem.Book.CopyrightStatus%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightRegion)) { %>
-                                Copyright Region: <%: bibliographyItem.Item.CopyrightRegion%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightRegion)) { %>
+                                Copyright Region: <%: bibliographyItem.Book.CopyrightRegion%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightComment)) { %>
-                                Copyright Comments: <%: bibliographyItem.Item.CopyrightComment%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightComment)) { %>
+                                Copyright Comments: <%: bibliographyItem.Book.CopyrightComment%><br />
                                 <%showNone = false;%>
                             <% } %>
-                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Item.CopyrightEvidence)) { %>
-                                Copyright Evidence: <%: bibliographyItem.Item.CopyrightEvidence%><br />
+                            <% if (!string.IsNullOrWhiteSpace(bibliographyItem.Book.CopyrightEvidence)) { %>
+                                Copyright Evidence: <%: bibliographyItem.Book.CopyrightEvidence%><br />
                                 <%showNone = false;%>
                             <% } %>
 
@@ -516,13 +516,13 @@
                             <% } %>
                         </p>
                     </div>
-                    <% if (bibliographyItem.Item.ItemSourceID.ToString().Trim() == "1") { %>
+                    <% if (bibliographyItem.Book.ItemSourceID.ToString().Trim() == "1") { %>
                     <div class="download">
                         Download volume:
-                        <a class="icon all" href="<%: bibliographyItem.Item.DownloadUrl %>">All</a>
-                        <a class="icon jp2" href="/itemimages/<%: bibliographyItem.Item.ItemID %>">JP2</a>
-                        <a class="icon ocr" download="<%: bibliographyItem.Item.ItemID %>.txt" href="/itemtext/<%: bibliographyItem.Item.ItemID %>">OCR</a>
-                        <a class="icon pdf" download="<%: bibliographyItem.Item.ItemID %>.pdf" href="/itempdf/<%: bibliographyItem.Item.ItemID %>">PDF</a>
+                        <a class="icon all" href="<%: bibliographyItem.Book.DownloadUrl %>">All</a>
+                        <a class="icon jp2" href="/itemimages/<%: bibliographyItem.Book.BookID %>">JP2</a>
+                        <a class="icon ocr" download="<%: bibliographyItem.Book.BookID %>.txt" href="/itemtext/<%: bibliographyItem.Book.BookID %>">OCR</a>
+                        <a class="icon pdf" download="<%: bibliographyItem.Book.BookID %>.pdf" href="/itempdf/<%: bibliographyItem.Book.BookID %>">PDF</a>
                     </div>
                     <% } %>
                 </div>

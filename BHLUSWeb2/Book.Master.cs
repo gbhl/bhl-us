@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MOBOT.BHL.Web.Utilities;
+using System;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using MOBOT.BHL.Web.Utilities;
 
 namespace MOBOT.BHL.Web2
 {
@@ -13,7 +9,7 @@ namespace MOBOT.BHL.Web2
     {
         public string searchTerm { get; set; }
         public string holdingInstitution { get; set; }
-        public string itemID { get; set; }
+        public string bookID { get; set; }
         public string sponsor { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)

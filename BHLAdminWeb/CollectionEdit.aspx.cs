@@ -427,8 +427,8 @@ namespace MOBOT.BHL.AdminWeb
                 gvwTitles.DataBind();
 
                 // search items
-                List<Item> items = bhlProvider.ItemSelectByCollection(collectionID);
-                gvwItems.DataSource = items;
+                List<Book> books = bhlProvider.BookSelectByCollection(collectionID);
+                gvwItems.DataSource = books;
                 gvwItems.DataBind();
 
                 contentPanel.Visible = true;

@@ -44,14 +44,13 @@ Updated:        Mike Lichtenberg
 
 #endregion License
 
+using MOBOT.BHL.DataObjects;
+using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Server;
 
 namespace MOBOT.BHL.OAI2
 {
@@ -62,7 +61,6 @@ namespace MOBOT.BHL.OAI2
             public const String ITEMSET = "item";
             public const String ITEMEXTSET = "itemexternal";
             public const String TITLESET = "title";
-            public const String ARTICLESET = "articlepdf";
             public const String SEGMENTSET = "part";
             public const String SEGMENTEXTSET = "partexternal";
         }
@@ -71,7 +69,6 @@ namespace MOBOT.BHL.OAI2
         {
             public const String ITEM = "item";
             public const String TITLE = "title";
-            public const String ARTICLE = "articlepdf";
             public const String SEGMENT = "part";
         }
 
@@ -362,7 +359,6 @@ namespace MOBOT.BHL.OAI2
             }
             else if (idSplit[0].ToLower() != OAI2Util.IDPrefix.TITLE && 
                     idSplit[0].ToLower() != OAI2Util.IDPrefix.ITEM && 
-                    idSplit[0].ToLower() != OAI2Util.IDPrefix.ARTICLE &&
                     idSplit[0].ToLower() != OAI2Util.IDPrefix.SEGMENT)
             {
                 // Valid prefixes for the localIdentifier are "title", "item", and "articlepdf"
@@ -428,39 +424,16 @@ namespace MOBOT.BHL.OAI2
                         }
                     }
                 }
-                else if (idSplit[0] == OAI2Util.IDPrefix.ARTICLE)
-                {
-                    // Validate PDF identifier
-                    PDF pdf = provider.PDFSelectAuto(idInt);
-
-                    if (pdf == null)
-                    {
-                        errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
-                    }
-                    else if ((pdf.FileDeletionDate != null) ||
-                        (String.IsNullOrEmpty(pdf.ArticleTitle) &&
-                        String.IsNullOrEmpty(pdf.ArticleTags) &&
-                        String.IsNullOrEmpty(pdf.ArticleCreators)))
-                    {
-                        // File deleted, or no article metadata available (file will be deleted)
-                        errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
-                    }
-                    else if (pdf.LastModifiedDate != null)
-                    {
-                        DateTime lastModDateTime = (DateTime)pdf.LastModifiedDate;
-                        lastModDate = lastModDateTime.ToString("u");
-                    }
-                }
                 else if (idSplit[0] == OAI2Util.IDPrefix.SEGMENT)
                 {
                     // Validate segment identifier
-                    Segment segment = provider.SegmentSelectAuto(idInt);
+                    Segment segment = provider.SegmentSelectForSegmentID(idInt);
 
                     if (segment == null)
                     {
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
                     }
-                    else if (segment.SegmentStatusID > 20)
+                    else if (segment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.New && segment.SegmentStatusID != (int)ItemStatus.ItemStatusValue.Published)
                     {
                         errorMessage = @"<error code=""idDoesNotExist"">identifier '" + HttpUtility.HtmlEncode(identifier) + "' not found.</error>";
                     }
@@ -553,7 +526,6 @@ namespace MOBOT.BHL.OAI2
                 if (setSpec != OAI2Util.SetSpecification.TITLESET && 
                     setSpec != OAI2Util.SetSpecification.ITEMSET &&
                     setSpec != OAI2Util.SetSpecification.ITEMEXTSET &&
-                    setSpec != OAI2Util.SetSpecification.ARTICLESET &&
                     setSpec != OAI2Util.SetSpecification.SEGMENTSET &&
                     setSpec != OAI2Util.SetSpecification.SEGMENTEXTSET)
                 {

@@ -176,7 +176,7 @@
       </basicHttpBinding>
     </bindings>
     <client>
-      <endpoint address="http://localhost:55786/SiteService.asmx" binding="basicHttpBinding"
+      <endpoint address="http://localhost:60786/SiteService.asmx" binding="basicHttpBinding"
         bindingConfiguration="SiteServiceSoap" contract="SiteService.SiteServiceSoap"
         name="SiteServiceSoap" />
     </client>

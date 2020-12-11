@@ -1,5 +1,5 @@
 
-// Generated 7/18/2017 11:14:00 AM
+// Generated 10/22/2020 9:42:37 AM
 // Do not modify the contents of this code file.
 // This abstract class __PageSummaryView is based upon dbo.PageSummaryView.
 
@@ -54,12 +54,12 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="sortTitle"></param>
 		/// <param name="partNumber"></param>
 		/// <param name="partName"></param>
+		/// <param name="bookID"></param>
 		/// <param name="itemStatusID"></param>
 		/// <param name="itemID"></param>
-		/// <param name="redirectItemID"></param>
+		/// <param name="redirectBookID"></param>
 		/// <param name="primaryTitleID"></param>
 		/// <param name="barCode"></param>
-		/// <param name="pDFSize"></param>
 		/// <param name="volume"></param>
 		/// <param name="fileRootFolder"></param>
 		/// <param name="sponsor"></param>
@@ -70,9 +70,8 @@ namespace MOBOT.BHL.DataObjects
 		/// <param name="sequenceOrder"></param>
 		/// <param name="illustration"></param>
 		/// <param name="active"></param>
-		/// <param name="externalURL"></param>
 		/// <param name="externalBaseURL"></param>
-		/// <param name="altExternalURL"></param>
+		/// <param name="externalURL"></param>
 		/// <param name="webVirtualDirectory"></param>
 		/// <param name="oCRFolderShare"></param>
 		/// <param name="downloadUrl"></param>
@@ -86,12 +85,12 @@ namespace MOBOT.BHL.DataObjects
 			string sortTitle, 
 			string partNumber, 
 			string partName, 
+			int bookID, 
 			int itemStatusID, 
 			int itemID, 
-			int? redirectItemID, 
+			int? redirectBookID, 
 			int primaryTitleID, 
 			string barCode, 
-			int? pDFSize, 
 			string volume, 
 			string fileRootFolder, 
 			string sponsor, 
@@ -99,12 +98,11 @@ namespace MOBOT.BHL.DataObjects
 			int pageID, 
 			string fileNamePrefix, 
 			string pageDescription, 
-			int? sequenceOrder, 
+			short sequenceOrder, 
 			bool illustration, 
 			bool active, 
-			string externalURL, 
 			string externalBaseURL, 
-			string altExternalURL, 
+			string externalURL, 
 			string webVirtualDirectory, 
 			string oCRFolderShare, 
 			string downloadUrl, 
@@ -119,12 +117,12 @@ namespace MOBOT.BHL.DataObjects
 			SortTitle = sortTitle;
 			PartNumber = partNumber;
 			PartName = partName;
+			BookID = bookID;
 			ItemStatusID = itemStatusID;
 			ItemID = itemID;
-			RedirectItemID = redirectItemID;
+			RedirectBookID = redirectBookID;
 			PrimaryTitleID = primaryTitleID;
 			BarCode = barCode;
-			PDFSize = pDFSize;
 			Volume = volume;
 			FileRootFolder = fileRootFolder;
 			Sponsor = sponsor;
@@ -135,9 +133,8 @@ namespace MOBOT.BHL.DataObjects
 			SequenceOrder = sequenceOrder;
 			Illustration = illustration;
 			Active = active;
-			ExternalURL = externalURL;
 			ExternalBaseURL = externalBaseURL;
-			AltExternalURL = altExternalURL;
+			ExternalURL = externalURL;
 			WebVirtualDirectory = webVirtualDirectory;
 			OCRFolderShare = oCRFolderShare;
 			DownloadUrl = downloadUrl;
@@ -213,6 +210,11 @@ namespace MOBOT.BHL.DataObjects
 						_PartName = (string)column.Value;
 						break;
 					}
+					case "BookID" :
+					{
+						_BookID = (int)column.Value;
+						break;
+					}
 					case "ItemStatusID" :
 					{
 						_ItemStatusID = (int)column.Value;
@@ -223,9 +225,9 @@ namespace MOBOT.BHL.DataObjects
 						_ItemID = (int)column.Value;
 						break;
 					}
-					case "RedirectItemID" :
+					case "RedirectBookID" :
 					{
-						_RedirectItemID = (int?)column.Value;
+						_RedirectBookID = (int?)column.Value;
 						break;
 					}
 					case "PrimaryTitleID" :
@@ -236,11 +238,6 @@ namespace MOBOT.BHL.DataObjects
 					case "BarCode" :
 					{
 						_BarCode = (string)column.Value;
-						break;
-					}
-					case "PDFSize" :
-					{
-						_PDFSize = (int?)column.Value;
 						break;
 					}
 					case "Volume" :
@@ -280,7 +277,7 @@ namespace MOBOT.BHL.DataObjects
 					}
 					case "SequenceOrder" :
 					{
-						_SequenceOrder = (int?)column.Value;
+						_SequenceOrder = (int)column.Value;
 						break;
 					}
 					case "Illustration" :
@@ -293,19 +290,14 @@ namespace MOBOT.BHL.DataObjects
 						_Active = (bool)column.Value;
 						break;
 					}
-					case "ExternalURL" :
-					{
-						_ExternalURL = (string)column.Value;
-						break;
-					}
 					case "ExternalBaseURL" :
 					{
 						_ExternalBaseURL = (string)column.Value;
 						break;
 					}
-					case "AltExternalURL" :
+					case "ExternalURL" :
 					{
-						_AltExternalURL = (string)column.Value;
+						_ExternalURL = (string)column.Value;
 						break;
 					}
 					case "WebVirtualDirectory" :
@@ -587,6 +579,33 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion PartName
 		
+		#region BookID
+		
+		private int _BookID = default(int);
+		
+		/// <summary>
+		/// Column: BookID;
+		/// DBMS data type: int;
+		/// </summary>
+		[ColumnDefinition("BookID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10)]
+		public int BookID
+		{
+			get
+			{
+				return _BookID;
+			}
+			set
+			{
+				if (_BookID != value)
+				{
+					_BookID = value;
+					_IsDirty = true;
+				}
+			}
+		}
+		
+		#endregion BookID
+		
 		#region ItemStatusID
 		
 		private int _ItemStatusID = default(int);
@@ -595,7 +614,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ItemStatusID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("ItemStatusID", DbTargetType=SqlDbType.Int, Ordinal=10, NumericPrecision=10)]
+		[ColumnDefinition("ItemStatusID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10)]
 		public int ItemStatusID
 		{
 			get
@@ -622,7 +641,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ItemID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("ItemID", DbTargetType=SqlDbType.Int, Ordinal=11, NumericPrecision=10)]
+		[ColumnDefinition("ItemID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10)]
 		public int ItemID
 		{
 			get
@@ -641,32 +660,32 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ItemID
 		
-		#region RedirectItemID
+		#region RedirectBookID
 		
-		private int? _RedirectItemID = null;
+		private int? _RedirectBookID = null;
 		
 		/// <summary>
-		/// Column: RedirectItemID;
+		/// Column: RedirectBookID;
 		/// DBMS data type: int; Nullable;
 		/// </summary>
-		[ColumnDefinition("RedirectItemID", DbTargetType=SqlDbType.Int, Ordinal=12, NumericPrecision=10, IsNullable=true)]
-		public int? RedirectItemID
+		[ColumnDefinition("RedirectBookID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10, IsNullable=true)]
+		public int? RedirectBookID
 		{
 			get
 			{
-				return _RedirectItemID;
+				return _RedirectBookID;
 			}
 			set
 			{
-				if (_RedirectItemID != value)
+				if (_RedirectBookID != value)
 				{
-					_RedirectItemID = value;
+					_RedirectBookID = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion RedirectItemID
+		#endregion RedirectBookID
 		
 		#region PrimaryTitleID
 		
@@ -676,7 +695,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: PrimaryTitleID;
 		/// DBMS data type: int;
 		/// </summary>
-		[ColumnDefinition("PrimaryTitleID", DbTargetType=SqlDbType.Int, Ordinal=13, NumericPrecision=10)]
+		[ColumnDefinition("PrimaryTitleID", DbTargetType=SqlDbType.Int, Ordinal=14, NumericPrecision=10)]
 		public int PrimaryTitleID
 		{
 			get
@@ -701,9 +720,9 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: BarCode;
-		/// DBMS data type: nvarchar(40);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=14, CharacterMaxLength=40)]
+		[ColumnDefinition("BarCode", DbTargetType=SqlDbType.NVarChar, Ordinal=15, CharacterMaxLength=200)]
 		public string BarCode
 		{
 			get
@@ -712,7 +731,7 @@ namespace MOBOT.BHL.DataObjects
 			}
 			set
 			{
-				if (value != null) value = CalibrateValue(value, 40);
+				if (value != null) value = CalibrateValue(value, 200);
 				if (_BarCode != value)
 				{
 					_BarCode = value;
@@ -722,33 +741,6 @@ namespace MOBOT.BHL.DataObjects
 		}
 		
 		#endregion BarCode
-		
-		#region PDFSize
-		
-		private int? _PDFSize = null;
-		
-		/// <summary>
-		/// Column: PDFSize;
-		/// DBMS data type: int; Nullable;
-		/// </summary>
-		[ColumnDefinition("PDFSize", DbTargetType=SqlDbType.Int, Ordinal=15, NumericPrecision=10, IsNullable=true)]
-		public int? PDFSize
-		{
-			get
-			{
-				return _PDFSize;
-			}
-			set
-			{
-				if (_PDFSize != value)
-				{
-					_PDFSize = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion PDFSize
 		
 		#region Volume
 		
@@ -894,7 +886,7 @@ namespace MOBOT.BHL.DataObjects
 		
 		/// <summary>
 		/// Column: FileNamePrefix;
-		/// DBMS data type: nvarchar(50);
+		/// DBMS data type: nvarchar(200);
 		/// </summary>
 		[ColumnDefinition("FileNamePrefix", DbTargetType=SqlDbType.NVarChar, Ordinal=21, CharacterMaxLength=200)]
 		public string FileNamePrefix
@@ -946,14 +938,14 @@ namespace MOBOT.BHL.DataObjects
 		
 		#region SequenceOrder
 		
-		private int? _SequenceOrder = null;
+		private int _SequenceOrder = default(int);
 		
 		/// <summary>
 		/// Column: SequenceOrder;
-		/// DBMS data type: int; Nullable;
+		/// DBMS data type: smallint;
 		/// </summary>
-		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10, IsNullable=true)]
-		public int? SequenceOrder
+		[ColumnDefinition("SequenceOrder", DbTargetType=SqlDbType.Int, Ordinal=23, NumericPrecision=10)]
+		public int SequenceOrder
 		{
 			get
 			{
@@ -1025,34 +1017,6 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion Active
 		
-		#region ExternalURL
-		
-		private string _ExternalURL = null;
-		
-		/// <summary>
-		/// Column: ExternalURL;
-		/// DBMS data type: nvarchar(500); Nullable;
-		/// </summary>
-		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=500, IsNullable=true)]
-		public string ExternalURL
-		{
-			get
-			{
-				return _ExternalURL;
-			}
-			set
-			{
-				if (value != null) value = CalibrateValue(value, 500);
-				if (_ExternalURL != value)
-				{
-					_ExternalURL = value;
-					_IsDirty = true;
-				}
-			}
-		}
-		
-		#endregion ExternalURL
-		
 		#region ExternalBaseURL
 		
 		private string _ExternalBaseURL = null;
@@ -1061,7 +1025,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ExternalBaseURL;
 		/// DBMS data type: nvarchar(1000); Nullable;
 		/// </summary>
-		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1000, IsNullable=true)]
+		[ColumnDefinition("ExternalBaseURL", DbTargetType=SqlDbType.NVarChar, Ordinal=26, CharacterMaxLength=1000, IsNullable=true)]
 		public string ExternalBaseURL
 		{
 			get
@@ -1081,33 +1045,33 @@ namespace MOBOT.BHL.DataObjects
 		
 		#endregion ExternalBaseURL
 		
-		#region AltExternalURL
+		#region ExternalURL
 		
-		private string _AltExternalURL = null;
+		private string _ExternalURL = null;
 		
 		/// <summary>
-		/// Column: AltExternalURL;
+		/// Column: ExternalURL;
 		/// DBMS data type: nvarchar(1500); Nullable;
 		/// </summary>
-		[ColumnDefinition("AltExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=1500, IsNullable=true)]
-		public string AltExternalURL
+		[ColumnDefinition("ExternalURL", DbTargetType=SqlDbType.NVarChar, Ordinal=27, CharacterMaxLength=1500, IsNullable=true)]
+		public string ExternalURL
 		{
 			get
 			{
-				return _AltExternalURL;
+				return _ExternalURL;
 			}
 			set
 			{
 				if (value != null) value = CalibrateValue(value, 1500);
-				if (_AltExternalURL != value)
+				if (_ExternalURL != value)
 				{
-					_AltExternalURL = value;
+					_ExternalURL = value;
 					_IsDirty = true;
 				}
 			}
 		}
 		
-		#endregion AltExternalURL
+		#endregion ExternalURL
 		
 		#region WebVirtualDirectory
 		
@@ -1117,7 +1081,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: WebVirtualDirectory;
 		/// DBMS data type: nvarchar(30); Nullable;
 		/// </summary>
-		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=30, IsNullable=true)]
+		[ColumnDefinition("WebVirtualDirectory", DbTargetType=SqlDbType.NVarChar, Ordinal=28, CharacterMaxLength=30, IsNullable=true)]
 		public string WebVirtualDirectory
 		{
 			get
@@ -1145,7 +1109,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: OCRFolderShare;
 		/// DBMS data type: nvarchar(100); Nullable;
 		/// </summary>
-		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100, IsNullable=true)]
+		[ColumnDefinition("OCRFolderShare", DbTargetType=SqlDbType.NVarChar, Ordinal=29, CharacterMaxLength=100, IsNullable=true)]
 		public string OCRFolderShare
 		{
 			get
@@ -1173,7 +1137,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: DownloadUrl;
 		/// DBMS data type: nvarchar(100);
 		/// </summary>
-		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=100)]
+		[ColumnDefinition("DownloadUrl", DbTargetType=SqlDbType.NVarChar, Ordinal=30, CharacterMaxLength=100)]
 		public string DownloadUrl
 		{
 			get
@@ -1201,7 +1165,7 @@ namespace MOBOT.BHL.DataObjects
 		/// Column: ImageServerUrlFormat;
 		/// DBMS data type: nvarchar(200);
 		/// </summary>
-		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=32, CharacterMaxLength=200)]
+		[ColumnDefinition("ImageServerUrlFormat", DbTargetType=SqlDbType.NVarChar, Ordinal=31, CharacterMaxLength=200)]
 		public string ImageServerUrlFormat
 		{
 			get
@@ -1273,12 +1237,12 @@ namespace MOBOT.BHL.DataObjects
 					GetComparisonString(o.SortTitle) == GetComparisonString(SortTitle) &&
 					GetComparisonString(o.PartNumber) == GetComparisonString(PartNumber) &&
 					GetComparisonString(o.PartName) == GetComparisonString(PartName) &&
+					o.BookID == BookID &&
 					o.ItemStatusID == ItemStatusID &&
 					o.ItemID == ItemID &&
-					o.RedirectItemID == RedirectItemID &&
+					o.RedirectBookID == RedirectBookID &&
 					o.PrimaryTitleID == PrimaryTitleID &&
 					GetComparisonString(o.BarCode) == GetComparisonString(BarCode) &&
-					o.PDFSize == PDFSize &&
 					GetComparisonString(o.Volume) == GetComparisonString(Volume) &&
 					GetComparisonString(o.FileRootFolder) == GetComparisonString(FileRootFolder) &&
 					GetComparisonString(o.Sponsor) == GetComparisonString(Sponsor) &&
@@ -1289,9 +1253,8 @@ namespace MOBOT.BHL.DataObjects
 					o.SequenceOrder == SequenceOrder &&
 					o.Illustration == Illustration &&
 					o.Active == Active &&
-					GetComparisonString(o.ExternalURL) == GetComparisonString(ExternalURL) &&
 					GetComparisonString(o.ExternalBaseURL) == GetComparisonString(ExternalBaseURL) &&
-					GetComparisonString(o.AltExternalURL) == GetComparisonString(AltExternalURL) &&
+					GetComparisonString(o.ExternalURL) == GetComparisonString(ExternalURL) &&
 					GetComparisonString(o.WebVirtualDirectory) == GetComparisonString(WebVirtualDirectory) &&
 					GetComparisonString(o.OCRFolderShare) == GetComparisonString(OCRFolderShare) &&
 					GetComparisonString(o.DownloadUrl) == GetComparisonString(DownloadUrl) &&
@@ -1405,12 +1368,12 @@ namespace MOBOT.BHL.DataObjects
 			public const string SortTitle = "SortTitle";	
 			public const string PartNumber = "PartNumber";	
 			public const string PartName = "PartName";	
+			public const string BookID = "BookID";	
 			public const string ItemStatusID = "ItemStatusID";	
 			public const string ItemID = "ItemID";	
-			public const string RedirectItemID = "RedirectItemID";	
+			public const string RedirectBookID = "RedirectBookID";	
 			public const string PrimaryTitleID = "PrimaryTitleID";	
 			public const string BarCode = "BarCode";	
-			public const string PDFSize = "PDFSize";	
 			public const string Volume = "Volume";	
 			public const string FileRootFolder = "FileRootFolder";	
 			public const string Sponsor = "Sponsor";	
@@ -1421,9 +1384,8 @@ namespace MOBOT.BHL.DataObjects
 			public const string SequenceOrder = "SequenceOrder";	
 			public const string Illustration = "Illustration";	
 			public const string Active = "Active";	
-			public const string ExternalURL = "ExternalURL";	
 			public const string ExternalBaseURL = "ExternalBaseURL";	
-			public const string AltExternalURL = "AltExternalURL";	
+			public const string ExternalURL = "ExternalURL";	
 			public const string WebVirtualDirectory = "WebVirtualDirectory";	
 			public const string OCRFolderShare = "OCRFolderShare";	
 			public const string DownloadUrl = "DownloadUrl";	

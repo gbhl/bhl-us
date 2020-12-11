@@ -32,13 +32,13 @@ namespace MOBOT.BHL.Web2
 
         public class BibliographyItem
         {
-            public Item Item { get; set; }
+            public DataObjects.Book Book { get; set; }
             public string ThumbUrl { get; set; }
             public List<Institution> institutions { get; set; }
 
-            public BibliographyItem(Item item, string thumbUrl)
+            public BibliographyItem(DataObjects.Book book, string thumbUrl)
             {
-                Item = item;
+                Book = book;
                 ThumbUrl = thumbUrl;
                 institutions = new List<Institution>();
             }
@@ -82,18 +82,18 @@ namespace MOBOT.BHL.Web2
                 }
             }
 
-            List<Item> Items = bhlProvider.ItemSelectByTitleId(titleId);
-            if (Items == null)
+            List<DataObjects.Book> Books = bhlProvider.BookSelectByTitleId(titleId);
+            if (Books == null)
             {
                 Response.Redirect("~/titleunavailable");
             }
-            if (Items.Count == 0)
+            if (Books.Count == 0)
             {
                 Response.Redirect("~/titleunavailable");
             }
             else
             {
-                Barcode = Items[0].BarCode;
+                Barcode = Books[0].BarCode;
             }
 
             // Set the title for the COinS
@@ -143,14 +143,14 @@ namespace MOBOT.BHL.Web2
             main.Page.Title = string.Format("Details - {0} - Biodiversity Heritage Library", BhlTitle.FullTitle);
 
             BibliographyItems = new List<BibliographyItem>();
-            foreach (Item item in Items)
+            foreach (DataObjects.Book book in Books)
             {
                 // Populate empty volume descriptions with default text
-                if (string.IsNullOrWhiteSpace(item.Volume)) item.Volume = "Volume details";
+                if (string.IsNullOrWhiteSpace(book.Volume)) book.Volume = "Volume details";
 
-                string externalUrl = (item.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", item.FirstPageID.ToString());
-                BibliographyItem bibliographyItem = new BibliographyItem(item, externalUrl);
-                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID(item.ItemID);
+                string externalUrl = (book.FirstPageID == null) ? "" : string.Format("/pagethumb/{0},100,100", book.FirstPageID.ToString());
+                BibliographyItem bibliographyItem = new BibliographyItem(book, externalUrl);
+                bibliographyItem.institutions = bhlProvider.InstitutionSelectByItemID((int)book.ItemID);
 
                 BibliographyItems.Add(bibliographyItem);
             }

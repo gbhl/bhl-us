@@ -1,8 +1,8 @@
 
-// Generated 2/26/2008 2:23:06 PM
+// Generated 10/23/2020 4:14:57 PM
 // Do not modify the contents of this code file.
 // This is part of a data access layer. 
-// This partial class PageDAL is based upon Page.
+// This partial class PageDAL is based upon dbo.Page.
 
 #region How To Implement
 
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== SELECT =====
 
 		/// <summary>
-		/// Select values from Page by primary key(s).
+		/// Select values from dbo.Page by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -48,7 +48,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int pageID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return PageSelectAuto(	sqlConnection, sqlTransaction, "BHL",	pageID );
+		}
+			
+		/// <summary>
+		/// Select values from dbo.Page by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <returns>Object of type Page.</returns>
+		public Page PageSelectAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID )
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings( connectionKeyName ), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectAuto", connection, transaction, 
@@ -72,7 +89,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Select values from Page by primary key(s).
+		/// Select values from dbo.Page by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -83,7 +100,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int pageID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return PageSelectAutoRaw( sqlConnection, sqlTransaction, "BHL", pageID );
+		}
+		
+		/// <summary>
+		/// Select values from dbo.Page by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <returns>CustomGenericList&lt;CustomDataRow&gt;</returns>
+		public CustomGenericList<CustomDataRow> PageSelectAutoRaw(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageSelectAuto", connection, transaction,
@@ -94,11 +128,11 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		#endregion ===== SELECT =====
-	
+
  		#region ===== INSERT =====
 
 		/// <summary>
-		/// Insert values into Page.
+		/// Insert values into dbo.Page.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -110,24 +144,24 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="fileSize_Temp"></param>
 		/// <param name="fileExtension"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <param name="active"></param>
 		/// <param name="year"></param>
 		/// <param name="series"></param>
 		/// <param name="volume"></param>
 		/// <param name="issue"></param>
 		/// <param name="externalURL"></param>
-		/// <param name="altExternalURL"></param>
 		/// <param name="issuePrefix"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="paginationUserID"></param>
 		/// <param name="paginationDate"></param>
-		/// <param name="creationUserID"></param>
-		/// <param name="lastModifiedUserID"></param>
+		/// <param name="altExternalURL"></param>
 		/// <returns>Object of type Page.</returns>
 		public Page PageInsertAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
-			int itemID,
+			int? itemID,
 			string fileNamePrefix,
 			int? sequenceOrder,
 			string pageDescription,
@@ -135,26 +169,83 @@ namespace MOBOT.BHL.DAL
 			string note,
 			int? fileSize_Temp,
 			string fileExtension,
+			int? creationUserID,
+			int? lastModifiedUserID,
 			bool active,
 			string year,
 			string series,
 			string volume,
 			string issue,
 			string externalURL,
-			string altExternalURL,
 			string issuePrefix,
 			DateTime? lastPageNameLookupDate,
 			int? paginationUserID,
 			DateTime? paginationDate,
-			int? creationUserID,
-			int? lastModifiedUserID)
+			string altExternalURL)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return PageInsertAuto( sqlConnection, sqlTransaction, "BHL", itemID, fileNamePrefix, sequenceOrder, pageDescription, illustration, note, fileSize_Temp, fileExtension, creationUserID, lastModifiedUserID, active, year, series, volume, issue, externalURL, issuePrefix, lastPageNameLookupDate, paginationUserID, paginationDate, altExternalURL );
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Page.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="itemID"></param>
+		/// <param name="fileNamePrefix"></param>
+		/// <param name="sequenceOrder"></param>
+		/// <param name="pageDescription"></param>
+		/// <param name="illustration"></param>
+		/// <param name="note"></param>
+		/// <param name="fileSize_Temp"></param>
+		/// <param name="fileExtension"></param>
+		/// <param name="creationUserID"></param>
+		/// <param name="lastModifiedUserID"></param>
+		/// <param name="active"></param>
+		/// <param name="year"></param>
+		/// <param name="series"></param>
+		/// <param name="volume"></param>
+		/// <param name="issue"></param>
+		/// <param name="externalURL"></param>
+		/// <param name="issuePrefix"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="paginationUserID"></param>
+		/// <param name="paginationDate"></param>
+		/// <param name="altExternalURL"></param>
+		/// <returns>Object of type Page.</returns>
+		public Page PageInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int? itemID,
+			string fileNamePrefix,
+			int? sequenceOrder,
+			string pageDescription,
+			bool illustration,
+			string note,
+			int? fileSize_Temp,
+			string fileExtension,
+			int? creationUserID,
+			int? lastModifiedUserID,
+			bool active,
+			string year,
+			string series,
+			string volume,
+			string issue,
+			string externalURL,
+			string issuePrefix,
+			DateTime? lastPageNameLookupDate,
+			int? paginationUserID,
+			DateTime? paginationDate,
+			string altExternalURL)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageInsertAuto", connection, transaction, 
 				CustomSqlHelper.CreateOutputParameter("PageID", SqlDbType.Int, null, false),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("PageDescription", SqlDbType.NVarChar, 255, true, pageDescription),
@@ -162,19 +253,19 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("FileSize_Temp", SqlDbType.Int, null, true, fileSize_Temp),
 					CustomSqlHelper.CreateInputParameter("FileExtension", SqlDbType.NVarChar, 5, true, fileExtension),
+					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 20, true, series),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 20, true, volume),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 20, true, issue),
 					CustomSqlHelper.CreateInputParameter("ExternalURL", SqlDbType.NVarChar, 500, true, externalURL),
-					CustomSqlHelper.CreateInputParameter("AltExternalURL", SqlDbType.NVarChar, 500, true, altExternalURL),
 					CustomSqlHelper.CreateInputParameter("IssuePrefix", SqlDbType.NVarChar, 20, true, issuePrefix),
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("PaginationUserID", SqlDbType.Int, null, true, paginationUserID),
 					CustomSqlHelper.CreateInputParameter("PaginationDate", SqlDbType.DateTime, null, true, paginationDate),
-					CustomSqlHelper.CreateInputParameter("CreationUserID", SqlDbType.Int, null, true, creationUserID),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("AltExternalURL", SqlDbType.NVarChar, 500, true, altExternalURL), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
@@ -195,7 +286,7 @@ namespace MOBOT.BHL.DAL
 		}
 
 		/// <summary>
-		/// Insert values into Page. Returns an object of type Page.
+		/// Insert values into dbo.Page. Returns an object of type Page.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -206,7 +297,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page value)
 		{
-			return PageInsertAuto(sqlConnection, sqlTransaction, 
+			return PageInsertAuto(sqlConnection, sqlTransaction, "BHL", value);
+		}
+		
+		/// <summary>
+		/// Insert values into dbo.Page. Returns an object of type Page.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page.</param>
+		/// <returns>Object of type Page.</returns>
+		public Page PageInsertAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page value)
+		{
+			return PageInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.ItemID,
 				value.FileNamePrefix,
 				value.SequenceOrder,
@@ -215,19 +323,19 @@ namespace MOBOT.BHL.DAL
 				value.Note,
 				value.FileSize_Temp,
 				value.FileExtension,
+				value.CreationUserID,
+				value.LastModifiedUserID,
 				value.Active,
 				value.Year,
 				value.Series,
 				value.Volume,
 				value.Issue,
 				value.ExternalURL,
-				value.AltExternalURL,
 				value.IssuePrefix,
 				value.LastPageNameLookupDate,
 				value.PaginationUserID,
 				value.PaginationDate,
-				value.CreationUserID,
-				value.LastModifiedUserID);
+				value.AltExternalURL);
 		}
 		
 		#endregion ===== INSERT =====
@@ -235,7 +343,7 @@ namespace MOBOT.BHL.DAL
 		#region ===== DELETE =====
 
 		/// <summary>
-		/// Delete values from Page by primary key(s).
+		/// Delete values from dbo.Page by primary key(s).
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -246,7 +354,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			int pageID)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return PageDeleteAuto( sqlConnection, sqlTransaction, "BHL", pageID );
+		}
+		
+		/// <summary>
+		/// Delete values from dbo.Page by primary key(s).
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <returns>true if successful otherwise false.</returns>
+		public bool PageDeleteAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageDeleteAuto", connection, transaction, 
@@ -276,7 +401,7 @@ namespace MOBOT.BHL.DAL
  		#region ===== UPDATE =====
 
 		/// <summary>
-		/// Update values in Page. Returns an object of type Page.
+		/// Update values in dbo.Page. Returns an object of type Page.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -289,24 +414,24 @@ namespace MOBOT.BHL.DAL
 		/// <param name="note"></param>
 		/// <param name="fileSize_Temp"></param>
 		/// <param name="fileExtension"></param>
+		/// <param name="lastModifiedUserID"></param>
 		/// <param name="active"></param>
 		/// <param name="year"></param>
 		/// <param name="series"></param>
 		/// <param name="volume"></param>
 		/// <param name="issue"></param>
 		/// <param name="externalURL"></param>
-		/// <param name="altExternalURL"></param>
 		/// <param name="issuePrefix"></param>
 		/// <param name="lastPageNameLookupDate"></param>
 		/// <param name="paginationUserID"></param>
 		/// <param name="paginationDate"></param>
-		/// <param name="lastModifiedUserID"></param>
+		/// <param name="altExternalURL"></param>
 		/// <returns>Object of type Page.</returns>
 		public Page PageUpdateAuto(
 			SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, 
 			int pageID,
-			int itemID,
+			int? itemID,
 			string fileNamePrefix,
 			int? sequenceOrder,
 			string pageDescription,
@@ -314,25 +439,82 @@ namespace MOBOT.BHL.DAL
 			string note,
 			int? fileSize_Temp,
 			string fileExtension,
+			int? lastModifiedUserID,
 			bool active,
 			string year,
 			string series,
 			string volume,
 			string issue,
 			string externalURL,
-			string altExternalURL,
 			string issuePrefix,
 			DateTime? lastPageNameLookupDate,
 			int? paginationUserID,
 			DateTime? paginationDate,
-			int? lastModifiedUserID)
+			string altExternalURL)
 		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
+			return PageUpdateAuto( sqlConnection, sqlTransaction, "BHL", pageID, itemID, fileNamePrefix, sequenceOrder, pageDescription, illustration, note, fileSize_Temp, fileExtension, lastModifiedUserID, active, year, series, volume, issue, externalURL, issuePrefix, lastPageNameLookupDate, paginationUserID, paginationDate, altExternalURL);
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Page. Returns an object of type Page.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="pageID"></param>
+		/// <param name="itemID"></param>
+		/// <param name="fileNamePrefix"></param>
+		/// <param name="sequenceOrder"></param>
+		/// <param name="pageDescription"></param>
+		/// <param name="illustration"></param>
+		/// <param name="note"></param>
+		/// <param name="fileSize_Temp"></param>
+		/// <param name="fileExtension"></param>
+		/// <param name="lastModifiedUserID"></param>
+		/// <param name="active"></param>
+		/// <param name="year"></param>
+		/// <param name="series"></param>
+		/// <param name="volume"></param>
+		/// <param name="issue"></param>
+		/// <param name="externalURL"></param>
+		/// <param name="issuePrefix"></param>
+		/// <param name="lastPageNameLookupDate"></param>
+		/// <param name="paginationUserID"></param>
+		/// <param name="paginationDate"></param>
+		/// <param name="altExternalURL"></param>
+		/// <returns>Object of type Page.</returns>
+		public Page PageUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			int pageID,
+			int? itemID,
+			string fileNamePrefix,
+			int? sequenceOrder,
+			string pageDescription,
+			bool illustration,
+			string note,
+			int? fileSize_Temp,
+			string fileExtension,
+			int? lastModifiedUserID,
+			bool active,
+			string year,
+			string series,
+			string volume,
+			string issue,
+			string externalURL,
+			string issuePrefix,
+			DateTime? lastPageNameLookupDate,
+			int? paginationUserID,
+			DateTime? paginationDate,
+			string altExternalURL)
+		{
+			SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings(connectionKeyName), sqlConnection);
 			SqlTransaction transaction = sqlTransaction;
 			
 			using (SqlCommand command = CustomSqlHelper.CreateCommand("PageUpdateAuto", connection, transaction, 
 				CustomSqlHelper.CreateInputParameter("PageID", SqlDbType.Int, null, false, pageID),
-					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemID),
+					CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, true, itemID),
 					CustomSqlHelper.CreateInputParameter("FileNamePrefix", SqlDbType.NVarChar, 200, false, fileNamePrefix),
 					CustomSqlHelper.CreateInputParameter("SequenceOrder", SqlDbType.Int, null, true, sequenceOrder),
 					CustomSqlHelper.CreateInputParameter("PageDescription", SqlDbType.NVarChar, 255, true, pageDescription),
@@ -340,18 +522,18 @@ namespace MOBOT.BHL.DAL
 					CustomSqlHelper.CreateInputParameter("Note", SqlDbType.NVarChar, 255, true, note),
 					CustomSqlHelper.CreateInputParameter("FileSize_Temp", SqlDbType.Int, null, true, fileSize_Temp),
 					CustomSqlHelper.CreateInputParameter("FileExtension", SqlDbType.NVarChar, 5, true, fileExtension),
+					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID),
 					CustomSqlHelper.CreateInputParameter("Active", SqlDbType.Bit, null, false, active),
 					CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
 					CustomSqlHelper.CreateInputParameter("Series", SqlDbType.NVarChar, 20, true, series),
 					CustomSqlHelper.CreateInputParameter("Volume", SqlDbType.NVarChar, 20, true, volume),
 					CustomSqlHelper.CreateInputParameter("Issue", SqlDbType.NVarChar, 20, true, issue),
 					CustomSqlHelper.CreateInputParameter("ExternalURL", SqlDbType.NVarChar, 500, true, externalURL),
-					CustomSqlHelper.CreateInputParameter("AltExternalURL", SqlDbType.NVarChar, 500, true, altExternalURL),
 					CustomSqlHelper.CreateInputParameter("IssuePrefix", SqlDbType.NVarChar, 20, true, issuePrefix),
 					CustomSqlHelper.CreateInputParameter("LastPageNameLookupDate", SqlDbType.DateTime, null, true, lastPageNameLookupDate),
 					CustomSqlHelper.CreateInputParameter("PaginationUserID", SqlDbType.Int, null, true, paginationUserID),
 					CustomSqlHelper.CreateInputParameter("PaginationDate", SqlDbType.DateTime, null, true, paginationDate),
-					CustomSqlHelper.CreateInputParameter("LastModifiedUserID", SqlDbType.Int, null, true, lastModifiedUserID), 
+					CustomSqlHelper.CreateInputParameter("AltExternalURL", SqlDbType.NVarChar, 500, true, altExternalURL), 
 					CustomSqlHelper.CreateReturnValueParameter("ReturnCode", SqlDbType.Int, null, false)))
 			{
 				using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
@@ -372,7 +554,7 @@ namespace MOBOT.BHL.DAL
 		}
 		
 		/// <summary>
-		/// Update values in Page. Returns an object of type Page.
+		/// Update values in dbo.Page. Returns an object of type Page.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -383,7 +565,24 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page value)
 		{
-			return PageUpdateAuto(sqlConnection, sqlTransaction,
+			return PageUpdateAuto(sqlConnection, sqlTransaction, "BHL", value );
+		}
+		
+		/// <summary>
+		/// Update values in dbo.Page. Returns an object of type Page.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page.</param>
+		/// <returns>Object of type Page.</returns>
+		public Page PageUpdateAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page value)
+		{
+			return PageUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 				value.PageID,
 				value.ItemID,
 				value.FileNamePrefix,
@@ -393,18 +592,18 @@ namespace MOBOT.BHL.DAL
 				value.Note,
 				value.FileSize_Temp,
 				value.FileExtension,
+				value.LastModifiedUserID,
 				value.Active,
 				value.Year,
 				value.Series,
 				value.Volume,
 				value.Issue,
 				value.ExternalURL,
-				value.AltExternalURL,
 				value.IssuePrefix,
 				value.LastPageNameLookupDate,
 				value.PaginationUserID,
 				value.PaginationDate,
-				value.LastModifiedUserID);
+				value.AltExternalURL);
 		}
 		
 		#endregion ===== UPDATE =====
@@ -412,9 +611,9 @@ namespace MOBOT.BHL.DAL
 		#region ===== MANAGE =====
 		
 		/// <summary>
-		/// Manage Page object.
+		/// Manage dbo.Page object.
 		/// If the object is of type CustomObjectBase, 
-		/// then either insert values into, delete values from, or update values in Page.
+		/// then either insert values into, delete values from, or update values in dbo.Page.
 		/// </summary>
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
@@ -425,11 +624,30 @@ namespace MOBOT.BHL.DAL
 			SqlTransaction sqlTransaction, 
 			Page value , int userId )
 		{
+			return PageManageAuto( sqlConnection, sqlTransaction, "BHL", value , userId );
+		}
+		
+		/// <summary>
+		/// Manage dbo.Page object.
+		/// If the object is of type CustomObjectBase, 
+		/// then either insert values into, delete values from, or update values in dbo.Page.
+		/// </summary>
+		/// <param name="sqlConnection">Sql connection or null.</param>
+		/// <param name="sqlTransaction">Sql transaction or null.</param>
+		/// <param name="connectionKeyName">Connection key name located in config file.</param>
+		/// <param name="value">Object of type Page.</param>
+		/// <returns>Object of type CustomDataAccessStatus<Page>.</returns>
+		public CustomDataAccessStatus<Page> PageManageAuto(
+			SqlConnection sqlConnection, 
+			SqlTransaction sqlTransaction, 
+			string connectionKeyName,
+			Page value , int userId )
+		{
 			if (value.IsNew && !value.IsDeleted)
 			{
 				value.CreationUserID = userId;
 				value.LastModifiedUserID = userId;
-				Page returnValue = PageInsertAuto(sqlConnection, sqlTransaction, 
+				Page returnValue = PageInsertAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.ItemID,
 						value.FileNamePrefix,
 						value.SequenceOrder,
@@ -438,19 +656,19 @@ namespace MOBOT.BHL.DAL
 						value.Note,
 						value.FileSize_Temp,
 						value.FileExtension,
+						value.CreationUserID,
+						value.LastModifiedUserID,
 						value.Active,
 						value.Year,
 						value.Series,
 						value.Volume,
 						value.Issue,
 						value.ExternalURL,
-						value.AltExternalURL,
 						value.IssuePrefix,
 						value.LastPageNameLookupDate,
 						value.PaginationUserID,
 						value.PaginationDate,
-						value.CreationUserID,
-						value.LastModifiedUserID);
+						value.AltExternalURL);
 				
 				return new CustomDataAccessStatus<Page>(
 					CustomDataAccessContext.Insert, 
@@ -458,7 +676,7 @@ namespace MOBOT.BHL.DAL
 			}
 			else if (!value.IsNew && value.IsDeleted)
 			{
-				if (PageDeleteAuto(sqlConnection, sqlTransaction, 
+				if (PageDeleteAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageID))
 				{
 				return new CustomDataAccessStatus<Page>(
@@ -475,7 +693,7 @@ namespace MOBOT.BHL.DAL
 			else if (value.IsDirty && !value.IsDeleted)
 			{
 				value.LastModifiedUserID = userId;
-				Page returnValue = PageUpdateAuto(sqlConnection, sqlTransaction, 
+				Page returnValue = PageUpdateAuto(sqlConnection, sqlTransaction, connectionKeyName,
 					value.PageID,
 						value.ItemID,
 						value.FileNamePrefix,
@@ -485,18 +703,18 @@ namespace MOBOT.BHL.DAL
 						value.Note,
 						value.FileSize_Temp,
 						value.FileExtension,
+						value.LastModifiedUserID,
 						value.Active,
 						value.Year,
 						value.Series,
 						value.Volume,
 						value.Issue,
 						value.ExternalURL,
-						value.AltExternalURL,
 						value.IssuePrefix,
 						value.LastPageNameLookupDate,
 						value.PaginationUserID,
 						value.PaginationDate,
-						value.LastModifiedUserID);
+						value.AltExternalURL);
 					
 				return new CustomDataAccessStatus<Page>(
 					CustomDataAccessContext.Update, 
@@ -514,4 +732,4 @@ namespace MOBOT.BHL.DAL
 
 	}	
 }
-// end of source generation
+

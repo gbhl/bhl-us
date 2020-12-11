@@ -6,7 +6,7 @@ namespace MOBOT.BHL.Web2
 {
     public partial class ItemPage : BasePage
     {
-        protected Item BhlItem { get; set; }
+        protected DataObjects.Book BhlBook { get; set; }
         protected int ItemID { get; set; }
         protected Title BhlTitle { get; set; }
         protected void Page_Load(object sender, EventArgs e)
@@ -22,15 +22,15 @@ namespace MOBOT.BHL.Web2
                 ItemID = itemID;
             }
 
-            BhlItem = bhlProvider.ItemSelectAuto(ItemID);
-            if (BhlItem == null)
+            BhlBook = bhlProvider.BookSelectByBarcodeOrItemID(ItemID, null);
+            if (BhlBook == null)
             {
 
                 Response.Redirect("~/pagenotfound");
             }
             else
             {
-                BhlTitle = bhlProvider.TitleSelect(BhlItem.PrimaryTitleID);
+                BhlTitle = bhlProvider.TitleSelect((int)BhlBook.PrimaryTitleID);
                 List<Segment> segments = bhlProvider.SegmentSelectByItemID(ItemID);
 
                if (!(segments == null))

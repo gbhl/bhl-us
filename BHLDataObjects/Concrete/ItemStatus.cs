@@ -19,5 +19,15 @@ namespace MOBOT.BHL.DataObjects
 			: base( itemStatusID, itemStatusName )
 		{
 		}
+
+		public enum ItemStatusValue : int
+		{
+			Removed = 5,
+			Inappropriate = 10,
+			Copyright = 15,
+			QA = 20,
+			New = 30,
+			Published = 40
+		}
 	}
 }

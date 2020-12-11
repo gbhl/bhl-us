@@ -274,26 +274,6 @@ namespace MOBOT.BHL.DAL
 
         #endregion
 
-        public CustomGenericList<CustomDataRow> PageResolve( SqlConnection sqlConnection, SqlTransaction sqlTransaction, 
-			int titleID, string volume, string issue, string year, string startPage )
-		{
-			SqlConnection connection = CustomSqlHelper.CreateConnection( 
-				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
-			SqlTransaction transaction = sqlTransaction;
-
-			using ( SqlCommand command = CustomSqlHelper.CreateCommand( "PageResolve", connection, transaction,
-					CustomSqlHelper.CreateInputParameter( "TitleID", SqlDbType.Int, 4, false, titleID ),
-					CustomSqlHelper.CreateInputParameter( "Volume", SqlDbType.VarChar, 20, false, volume ),
-					CustomSqlHelper.CreateInputParameter( "Issue", SqlDbType.VarChar, 20, false, issue ),
-					CustomSqlHelper.CreateInputParameter( "Year", SqlDbType.VarChar, 20, false, year ),
-					CustomSqlHelper.CreateInputParameter( "StartPage", SqlDbType.VarChar, 20, false, startPage ) ) )
-			{
-
-				CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows( command );
-				return list;
-			}
-		}
-
 		/// <summary>
 		/// Update the LastPageNameLookupDate for the specified Page.
 		/// </summary>

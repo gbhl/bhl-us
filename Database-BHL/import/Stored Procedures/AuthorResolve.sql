@@ -13,6 +13,7 @@ BEGIN
 
 SET NOCOUNT ON
 
+CREATE TABLE #AuthorDates (AuthorID int NOT NULL, StartDate nvarchar(25) NOT NULL, EndDate nvarchar(25) NOT NULL)
 CREATE TABLE #Author (AuthorID int NOT NULL)
 
 IF (@AuthorID IS NULL)
@@ -21,34 +22,46 @@ BEGIN
 
 	-- Not an ideal query for matching author name variants, but the full-text alternative 
 	-- produces too many false positives (too many hits instead of not enough).
-	INSERT	#Author
-	SELECT	a.AuthorID
+	INSERT	#AuthorDates
+	SELECT	a.AuthorID, a.StartDate, a.EndDate
 	FROM	dbo.Author a
 			INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+			CROSS APPLY dbo.fnReverseAuthorNameISV(n.FullName) r
 	-- Ignore periods and commas in author names
 	WHERE	(REPLACE(REPLACE(n.FullName,',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
-			 REPLACE(REPLACE(dbo.fnReverseAuthorName(n.FullName),',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
+			 REPLACE(REPLACE(r.FullNameReversed,',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
 			(n.LastName = @LastName AND n.FirstName = @FirstName AND ISNULL(@LastName, '') <> '' AND ISNULL(@FirstName, '') <> ''))
-	AND		(dbo.fnRemoveNonNumericCharacters(a.StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) OR ISNULL(@StartDate, '') = '')
-	AND		(dbo.fnRemoveNonNumericCharacters(a.EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate) OR ISNULL(@EndDate, '') = '')
 	AND		a.IsActive = 1
+
+	INSERT	#Author
+	SELECT	AuthorID
+	FROM	#AuthorDates
+	WHERE	(dbo.fnRemoveNonNumericCharacters(StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) OR ISNULL(@StartDate, '') = '')
+	AND		(dbo.fnRemoveNonNumericCharacters(EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate) OR ISNULL(@EndDate, '') = '')
 
 	SELECT @NumHits = @@ROWCOUNT
 
 	IF (@NumHits = 0)
 	BEGIN
+		TRUNCATE TABLE #AuthorDates
+
 		-- No active authors found, try inactive authors instead
-		INSERT	#Author
-		SELECT	a.AuthorID
+		INSERT	#AuthorDates
+		SELECT	a.AuthorID, a.StartDate, a.EndDate
 		FROM	dbo.Author a
 				INNER JOIN dbo.AuthorName n ON a.AuthorID = n.AuthorID
+				CROSS APPLY dbo.fnReverseAuthorNameISV(n.FullName) r
 		-- Ignore periods and commas in author names
 		WHERE	(REPLACE(REPLACE(n.FullName,',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
-				 REPLACE(REPLACE(dbo.fnReverseAuthorName(n.FullName),',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
+				 REPLACE(REPLACE(r.FullNameReversed,',',''),'.','') = REPLACE(REPLACE(@FullName,',',''),'.','') OR
 				(n.LastName = @LastName AND n.FirstName = @FirstName AND ISNULL(@LastName, '') <> '' AND ISNULL(@FirstName, '') <> ''))
-		AND		(dbo.fnRemoveNonNumericCharacters(a.StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) OR ISNULL(@StartDate, '') = '')
-		AND		(dbo.fnRemoveNonNumericCharacters(a.EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate) OR ISNULL(@EndDate, '') = '')
 		AND		a.IsActive = 0
+
+		INSERT	#Author
+		SELECT	AuthorID
+		FROM	#AuthorDates
+		WHERE	(dbo.fnRemoveNonNumericCharacters(StartDate) = dbo.fnRemoveNonNumericCharacters(@StartDate) OR ISNULL(@StartDate, '') = '')
+		AND		(dbo.fnRemoveNonNumericCharacters(EndDate) = dbo.fnRemoveNonNumericCharacters(@EndDate) OR ISNULL(@EndDate, '') = '')
 	END
 END
 ELSE
@@ -81,3 +94,5 @@ FROM	#Author a
 SELECT f.AuthorID FROM #Final f INNER JOIN dbo.Author a ON f.AuthorID = a.AuthorID WHERE a.IsActive = 1
 
 END
+
+GO

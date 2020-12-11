@@ -109,6 +109,9 @@
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Annotation_AnnotationConcept.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.Book.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BHLWS\MOBOT.BHL.BHLDOIService.BHLWS.DOI.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -10,7 +10,7 @@
             <% if (!string.IsNullOrWhiteSpace(PageSummary.DownloadUrl)) { %>
                 <div class="buttondrop download">Download Contents<div class="play"></div></div> 
                 <div class="downloadcontents">
-                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>">View Metadata</a></div>
+                    <div><a href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.BookID : "/bibliography/" + PageSummary.TitleID %>">View Metadata</a></div>
                     <div><a href="#" class="selectpages">Select pages to download</a></div>
                     <div><a href="#" class="selectpart">Download Part</a></div>
                     <div><a href="#" class="downloadbook">Download Book</a></div>
@@ -22,10 +22,10 @@
                         <h2>Download book</h2>
                         <hr />
                     </div>
-                    <a class="large-icon pdf" download="<%: PageSummary.ItemID %>.pdf" href="/itempdf/<%: PageSummary.ItemID %>">Download PDF</a>
+                    <a class="large-icon pdf" download="<%: PageSummary.BookID %>.pdf" href="/itempdf/<%: PageSummary.BookID %>">Download PDF</a>
                     <a class="large-icon all" href="<%= PageSummary.DownloadUrl + PageSummary.BarCode %>">Download All</a>
-                    <a class="large-icon jp2" href="/itemimages/<%: PageSummary.ItemID %>">Download JPEG 2000</a>
-                    <a class="large-icon ocr" download="<%: PageSummary.ItemID %>.txt" href="/itemtext/<%: PageSummary.ItemID %>">Download Text</a>                
+                    <a class="large-icon jp2" href="/itemimages/<%: PageSummary.BookID %>">Download JPEG 2000</a>
+                    <a class="large-icon ocr" download="<%: PageSummary.BookID %>.txt" href="/itemtext/<%: PageSummary.BookID %>">Download Text</a>                
                 </div>
             <% } %>
 
@@ -37,7 +37,7 @@
             <% } %>
         </div>
         <div id="titletext">
-            <a class="ellipsis journaltitlelink" href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.ItemID : "/bibliography/" + PageSummary.TitleID %>"><%: PageSummary.FullTitle %></a>
+            <a class="ellipsis journaltitlelink" href="<%: (Titles.Count > 1) ? "/biblioselect/" + PageSummary.BookID : "/bibliography/" + PageSummary.TitleID %>"><%: PageSummary.FullTitle %></a>
             <a id="articleTitleLink" class="ellipsis articletitlelink" href="#"></a>
         </div>
     <uc:COinS ID="COinS" runat="server" />
@@ -128,9 +128,9 @@
                                 <div class="header">Publication Details</div>
                                 <div class="detail"><%: CurrentTitle.PublicationDetails %></div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(CurrentItem.Year)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentBook.StartYear)) { %>
                                 <div class="header">Year</div>
-                                <div class="detail"><%: CurrentItem.Year %></div>
+                                <div class="detail"><%: CurrentBook.StartYear %></div>
                             <%} %>
                             <%foreach (Institution institution in ItemInstitutions)
                             {
@@ -152,58 +152,58 @@
                                 <div class="header">Sponsor</div>
                                 <div class="detail"><%: PageSummary.Sponsor %></div>
                             <%} %>
-                            <%if (!string.IsNullOrWhiteSpace(CurrentItem.ItemDescription)) { %>
+                            <%if (!string.IsNullOrWhiteSpace(CurrentBook.ItemDescription)) { %>
                                 <div class="header">Copy-specific Information</div>
-                                <div class="detail"><%: CurrentItem.ItemDescription %></div>
+                                <div class="detail"><%: CurrentBook.ItemDescription %></div>
                             <%} %>
                             <div class="header">Copyright & Usage</div>
                             <div class="detail">
                                 <%  bool showNone = true;
-                                    if (!string.IsNullOrWhiteSpace(CurrentItem.LicenseUrl)) { %>
+                                                                        if (!string.IsNullOrWhiteSpace(CurrentBook.LicenseUrl)) { %>
                                         License Type:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.LicenseUrl%>"><%: CurrentItem.LicenseUrl%></a>
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.LicenseUrl, "^(https?|ftp|file)://.+$")) {%>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.LicenseUrl%>"><%: CurrentBook.LicenseUrl%></a>
                                         <% } else {%>
-                                            <%: CurrentItem.LicenseUrl%>
+                                            <%: CurrentBook.LicenseUrl%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.Rights)) { %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.Rights)) { %>
                                         Rights:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.Rights, "^(https?|ftp|file)://.+$")) { %>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.Rights%>"><%: CurrentItem.Rights%></a>
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.Rights, "^(https?|ftp|file)://.+$")) { %>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.Rights%>"><%: CurrentBook.Rights%></a>
                                         <% } else { %>
-                                            <%: CurrentItem.Rights%>
+                                            <%: CurrentBook.Rights%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.DueDiligence)) { %>
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.DueDiligence)) { %>
                                         Due Diligence:<br />
-                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentItem.DueDiligence, "^(https?|ftp|file)://.+$"))
-                                            { %>
-                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentItem.DueDiligence%>"><%: CurrentItem.DueDiligence%></a>
+                                        <%if (System.Text.RegularExpressions.Regex.IsMatch(CurrentBook.DueDiligence, "^(https?|ftp|file)://.+$"))
+                                                                        { %>
+                                            <a rel="noopener noreferrer" target="_blank" href="<%: CurrentBook.DueDiligence%>"><%: CurrentBook.DueDiligence%></a>
                                         <% } else { %>
-                                            <%: CurrentItem.DueDiligence%>
+                                            <%: CurrentBook.DueDiligence%>
                                         <% }
                                         showNone = false;%>
                                         <br /><br />
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightStatus)) { %>
-                                    Copyright Status:<br /><%: CurrentItem.CopyrightStatus%><br /><br />
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightStatus)) { %>
+                                    Copyright Status:<br /><%: CurrentBook.CopyrightStatus%><br /><br />
                                     <%showNone = false;%>
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightRegion)) { %>
-                                    Copyright Region:<br /><%: CurrentItem.CopyrightRegion%><br /><br />
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightRegion)) { %>
+                                    Copyright Region:<br /><%: CurrentBook.CopyrightRegion%><br /><br />
                                     <%showNone = false;%>
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightComment)) { %>
-                                    Copyright Comments:<br /><%: CurrentItem.CopyrightComment%><br /><br />
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightComment)) { %>
+                                    Copyright Comments:<br /><%: CurrentBook.CopyrightComment%><br /><br />
                                     <%showNone = false;%>
                                 <% } %>
-                                <% if (!string.IsNullOrWhiteSpace(CurrentItem.CopyrightEvidence)) { %>
-                                    Copyright Evidence:<br /><%: CurrentItem.CopyrightEvidence%><br /><br />
+                                <% if (!string.IsNullOrWhiteSpace(CurrentBook.CopyrightEvidence)) { %>
+                                    Copyright Evidence:<br /><%: CurrentBook.CopyrightEvidence%><br /><br />
                                     <%showNone = false;%>
                                 <% } %>
 
@@ -726,7 +726,7 @@
             $.ajax({
                 type: 'get',
                 url: '/search/pages',
-                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PageSummary.ItemID %>,
+                data: 'q=' + encodeURIComponent($("#sibSearchText").val()) + '&itemId=' + <%: PageSummary.BookID %>,
                 success: function (data, textStatus, jqXHR) {
                     if (data.length > 0) {
                         $("#sibNumResults").html("(" + data.length + ")");
@@ -1172,7 +1172,7 @@
             else
             {
                 if (updateMendeleyLink !== undefined) {
-                    updateMendeleyLink('item', '<%: CurrentItemID %>');
+                    updateMendeleyLink('item', '<%: CurrentBookID %>');
                 }
             }
 
@@ -1186,7 +1186,7 @@
             }
 
             // Update the Altmetric badge
-            $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: CurrentItemID %>");
+            $(".altmetric-embed").attr("data-uri", "https://www.biodiversitylibrary.org/item/" + "<%: CurrentBookID %>");
             if (typeof _altmetric_embed_init === 'function') _altmetric_embed_init();
 
             // Update page URL and names

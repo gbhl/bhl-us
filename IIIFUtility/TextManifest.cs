@@ -23,9 +23,9 @@ namespace BHL.IIIF
         public string GetManifest(int itemId, int pageSequence)
         {
             BHLProvider provider = new BHLProvider();
-            Item item = provider.ItemSelectAuto(itemId);
+            Book book = provider.BookSelectAuto(itemId);
             List<Page> pages = provider.PageMetadataSelectByItemID(itemId);
-            ScanData scanData = new Helper().GetScanData(itemId, item.BarCode);
+            ScanData scanData = new Helper().GetScanData(itemId, book.BarCode);
 
             string iiifRootAddress = _rootUrl;
 

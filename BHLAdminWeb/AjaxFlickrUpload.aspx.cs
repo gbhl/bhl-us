@@ -67,14 +67,14 @@ namespace MOBOT.BHL.AdminWeb
                     double.TryParse(Request["rotate"], out rotate);
 
                     Page page = provider.PageMetadataSelectByPageID(pageId);
-                    Item item = provider.ItemSelectByBarcodeOrItemID(null, page.BarCode);
+                    Book book = provider.BookSelectByBarcodeOrItemID(null, page.BarCode);
                     Title title = provider.TitleSelect(titleId);
                     string pageUrl = "https://biodiversitylibrary.org/page/" + pageId;
-                    string itemUrl = "https://biodiversitylibrary.org/item/" + item.ItemID;
+                    string itemUrl = "https://biodiversitylibrary.org/item/" + book.BookID;
                     string description = title.ShortTitle + "\n" + title.PublicationDetails + "\n" + pageUrl;
 
                     List<TitleKeyword> titleKeywords = provider.TitleKeywordSelectByTitleID(titleId);
-                    List<Institution> institutions = provider.InstitutionSelectByItemID(item.ItemID);
+                    List<Institution> institutions = provider.InstitutionSelectByItemID((int)book.ItemID);
                     List<string> titleKeywordsList = new List<string>();
                     foreach (TitleKeyword tk in titleKeywords)
                     {
@@ -92,7 +92,7 @@ namespace MOBOT.BHL.AdminWeb
                         authorName = authors[0].FullName;
 
                     string fileName = "n" + (page.SequenceOrder - 1) + "_w1150";
-                    string iaUrl = item.DownloadUrl + "/page/" + fileName + ".jpg";
+                    string iaUrl = book.DownloadUrl + "/page/" + fileName + ".jpg";
                     string flickrImageUrl = FlickrTools.UploadImageToFlickr(iaUrl, authorName, description, subjects, itemUrl, 
                         Request["oAuthAccessToken"], Request["oAuthAccessTokenSecret"], fileName, 
                         "bhl:page=" + pageId + ",dc:identifier=" + pageUrl, rotate);

@@ -102,7 +102,7 @@ namespace MOBOT.BHL.AdminWeb
 			pageIdLabel.Text = ps.PageID.ToString();
 			titleLink.NavigateUrl = "/TitleEdit.aspx?id=" + ps.TitleID.ToString();
 			titleLink.Text = ps.ShortTitle + " (" + ps.TitleID.ToString() + ")";
-            itemLink.NavigateUrl = "/ItemEdit.aspx?id=" + ps.ItemID.ToString();
+            itemLink.NavigateUrl = "/ItemEdit.aspx?id=" + ps.BookID.ToString();
             itemLink.Text = (ps.Volume == "") ? "(click to edit volume)" : ps.Volume;
 			descriptionLabel.Text = ps.PageDescription;
 			addNamePageButton.Enabled = true;

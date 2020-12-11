@@ -15,3 +15,5 @@ GO
 CREATE NONCLUSTERED INDEX [IX_NameResolved_ResolvedNameString]
     ON [dbo].[NameResolved]([ResolvedNameString] ASC);
 
+CREATE NONCLUSTERED INDEX IX_NameResolved_CanonicalNameString 
+	ON [dbo].[NameResolved] ([CanonicalNameString]);

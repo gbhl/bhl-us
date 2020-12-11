@@ -97,7 +97,7 @@
             a.appendChild(document.createTextNode(segments[i].Title));
             td2.appendChild(a);
             var td3 = document.createElement("td");
-            td3.appendChild(document.createTextNode(segments[i].ItemID == null ? "" : segments[i].ItemID));
+            td3.appendChild(document.createTextNode(segments[i].BookID == null ? "" : segments[i].BookID));
             row.appendChild(td1);
             row.appendChild(td2);
             row.appendChild(td3);
@@ -502,10 +502,10 @@
 
 					<asp:TemplateField HeaderText="Primary" ItemStyle-Width="70px">
 						<ItemTemplate>
-						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled=false Checked='<%# Eval("IsPrimary") %>' runat="server" />
+						    <asp:CheckBox ID="isPrimaryCheckBox" Enabled=false Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
 						</ItemTemplate>
 						<EditItemTemplate>
-						    <asp:CheckBox ID="isPrimaryCheckBoxEdit" Checked='<%# Eval("IsPrimary") %>' runat="server" />
+						    <asp:CheckBox ID="isPrimaryCheckBoxEdit" Checked='<%# Eval("IsPrimary").ToString() == "1" %>' runat="server" />
 						</EditItemTemplate>
 					</asp:TemplateField>
 

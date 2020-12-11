@@ -898,14 +898,14 @@ namespace MOBOT.BHL.Server
 
         public string GetItemText(int itemID)
         {
-            Item item = this.ItemSelectTextPathForItemID(itemID);
+            Book book = this.BookSelectTextPathForItemID(itemID);
             string itemText = "Text unavailable for this item.";
 
             // Make sure we found an active item
-            if (item != null)
+            if (book != null)
             {
                 IFileAccessProvider fileAccessProvider = GetFileAccessProvider(ConfigurationManager.AppSettings["UseRemoteFileAccessProvider"] == "true");
-                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], item.OcrFolderShare, item.FileRootFolder, item.BarCode);
+                String ocrTextLocation = String.Format(ConfigurationManager.AppSettings["ItemTextLocation"], book.OcrFolderShare, book.FileRootFolder, book.BarCode);
 
                 string[] files = fileAccessProvider.GetFiles(ocrTextLocation);
                 Array.Sort(files);
@@ -1052,37 +1052,37 @@ namespace MOBOT.BHL.Server
             List<KeyValuePair<string, string>> tags = new List<KeyValuePair<string, string>>();
 
             BHLProvider service = new BHLProvider();
-            Item item = service.ItemSelectByBarcodeOrItemID(itemID, null);
+            Book book = service.BookSelectByBarcodeOrItemID(itemID, null);
 
-            if (item != null)
+            if (book != null)
             {
                 // Return no tags for external segments
-                if (string.IsNullOrWhiteSpace(item.ExternalUrl))
+                if (string.IsNullOrWhiteSpace(book.ExternalUrl))
                 {
-                    Title title = service.TitleSelectAuto(item.PrimaryTitleID);
-                    string itemDate = string.IsNullOrWhiteSpace(item.Year) ? title.StartYear.ToString() : item.Year;
+                    Title title = service.TitleSelectAuto((int)book.PrimaryTitleID);
+                    string itemDate = string.IsNullOrWhiteSpace(book.StartYear) ? title.StartYear.ToString() : book.StartYear;
 
-                    AddGoogleScholarTag(tags, "citation_title", item.TitleName);
+                    AddGoogleScholarTag(tags, "citation_title", book.TitleName);
                     AddGoogleScholarTag(tags, "citation_publication_date", itemDate);
                     AddGoogleScholarTag(tags, "citation_publisher", title.Datafield_260_b);
-                    AddGoogleScholarTag(tags, "citation_language", item.LanguageCode);
-                    AddGoogleScholarTag(tags, "citation_volume", item.Volume);
+                    AddGoogleScholarTag(tags, "citation_language", book.LanguageCode);
+                    AddGoogleScholarTag(tags, "citation_volume", book.Volume);
 
-                    AddGoogleScholarTag(tags, "DC.title", item.TitleName);
+                    AddGoogleScholarTag(tags, "DC.title", book.TitleName);
                     AddGoogleScholarTag(tags, "DC.issued", itemDate);
                     AddGoogleScholarTag(tags, "DC.publisher", title.Datafield_260_b);
-                    AddGoogleScholarTag(tags, "DC.language", item.LanguageCode);
-                    AddGoogleScholarTag(tags, "DC.citation.volume", item.Volume);
-                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, item.ItemID.ToString()));
+                    AddGoogleScholarTag(tags, "DC.language", book.LanguageCode);
+                    AddGoogleScholarTag(tags, "DC.citation.volume", book.Volume);
+                    AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, book.BookID.ToString()));
 
-                    CustomGenericList<TitleAuthor> authors = service.TitleAuthorSelectByTitle(item.PrimaryTitleID);
+                    CustomGenericList<TitleAuthor> authors = service.TitleAuthorSelectByTitle((int)book.PrimaryTitleID);
                     foreach (TitleAuthor author in authors)
                     {
                         AddGoogleScholarTag(tags, "citation_author", author.FullName);
                         AddGoogleScholarTag(tags, "DC.creator", author.FullName);
                     }
 
-                    CustomGenericList<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID(item.PrimaryTitleID);
+                    CustomGenericList<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (Title_Identifier identifier in identifiers)
                     {
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
@@ -1132,24 +1132,21 @@ namespace MOBOT.BHL.Server
                     AddGoogleScholarTag(tags, "DC.citation.epage", segment.EndPageNumber);
                     AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, segment.SegmentID.ToString()));
 
-                    foreach (SegmentAuthor author in segment.AuthorList)
+                    foreach (ItemAuthor author in segment.AuthorList)
                     {
                         AddGoogleScholarTag(tags, "citation_author", author.FullName);
                         AddGoogleScholarTag(tags, "DC.creator", author.FullName);
                     }
 
-                    foreach (SegmentKeyword keyword in segment.KeywordList)
+                    foreach (ItemKeyword keyword in segment.KeywordList)
                     {
                         AddGoogleScholarTag(tags, "citation_keywords", keyword.Keyword);
                         AddGoogleScholarTag(tags, "DC.subject", keyword.Keyword);
                     }
 
-                    foreach (SegmentIdentifier identifier in segment.IdentifierList)
+                    foreach (ItemIdentifier identifier in segment.IdentifierList)
                     {
-                        if ((identifier.IsContainerIdentifier ?? 0) == 0)
-                        {
-                            AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
-                        }
+                        AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
 
                     CustomGenericList<DOI> dois = service.DOISelectValidForSegment(segmentID);

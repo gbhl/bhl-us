@@ -311,7 +311,7 @@ namespace BHL.Export.TSV
             string partID = GetDBInt32(reader, "SegmentID");
             string itemID = GetDBInt32(reader, "ItemID");
             string contributorName = GetDBString(reader, "ContributorName");
-            string sequenceOrder = GetDBInt16(reader, "SequenceOrder");
+            string sequenceOrder = GetDBInt32(reader, "SequenceOrder");
             string segmentType = GetDBString(reader, "SegmentType");
             string title = GetDBString(reader, "Title");
             string containerTitle = GetDBString(reader, "ContainerTitle");
