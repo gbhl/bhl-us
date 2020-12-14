@@ -168,7 +168,6 @@ namespace MOBOT.BHL.AdminWeb
                 tdInstitutions.InnerHtml = GetMenuText(tdInstitutions.InnerHtml);
                 tdLanguages.InnerHtml = GetMenuText(tdLanguages.InnerHtml);
                 tdNoteTypes.InnerHtml = GetMenuText(tdNoteTypes.InnerHtml);
-                tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 tdPDFRequests.InnerHtml = GetMenuText(tdPDFRequests.InnerHtml);
                 tdSegmentTypes.InnerHtml = GetMenuText(tdSegmentTypes.InnerHtml);
 
@@ -213,6 +212,7 @@ namespace MOBOT.BHL.AdminWeb
             }
             if (!Helper.IsUserAuthorized(new HttpRequestWrapper(request), Helper.SecurityRole.BHLAdminSysAdmin))
             {
+                tdPageTypes.InnerHtml = GetMenuText(tdPageTypes.InnerHtml);
                 spnMonitor.Visible = false;
                 //tdImageServer.InnerHtml = GetMenuText(tdImageServer.InnerHtml);
                 //tdVaults.InnerHtml = GetMenuText(tdVaults.InnerHtml);

@@ -34,12 +34,12 @@ Inherits="MOBOT.BHL.AdminWeb.PageTypeEdit"	ValidateRequest="false" %>
 				</td>
 			</tr>
 			<tr>
-				<td style="white-space: nowrap" align="right">
-					Description:
-				</td>
-				<td>
-					<asp:TextBox ID="descriptionTextBox" runat="server" Width="400px" MaxLength="255"></asp:TextBox>
-				</td>
+			    <td style="white-space: nowrap" align="right">
+			        Is Active:
+			    </td>
+			    <td>
+			        <asp:CheckBox ID="chkActive" runat="server" />
+			    </td>
 			</tr>
 		</table>
 		<br />

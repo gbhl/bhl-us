@@ -1,5 +1,4 @@
-﻿
-CREATE FUNCTION [dbo].[fnPageTypeStringForPage] 
+﻿CREATE FUNCTION [dbo].[fnPageTypeStringForPage] 
 (
 	@PageID int
 )
@@ -8,15 +7,6 @@ AS
 BEGIN
 	
 	DECLARE @PageTypeString nvarchar(1024)
-/*
-	DECLARE @NumRecords int
-
-	SELECT @NumRecords = COUNT(*)
-	FROM Page p
-	INNER JOIN Page_PageType ppt ON (p.PageID = ppt.PageID)
-	INNER JOIN PageType pt ON (ppt.PageTypeID = pt.PageTypeID)
-	WHERE p.PageID = @PageID
-*/
 	DECLARE @CurrentRecord int
 	SELECT @CurrentRecord = 1
 
@@ -29,7 +19,7 @@ BEGIN
 	INNER JOIN Page_PageType ppt ON (p.PageID = ppt.PageID)
 	INNER JOIN PageType pt ON (ppt.PageTypeID = pt.PageTypeID)
 	WHERE p.PageID = @PageID
-	--ORDER BY ip.Sequence ASC
+	ORDER BY pt.PageTypeName ASC
 
 	RETURN LTRIM(RTRIM(COALESCE(@PageTypeString, '')))
 END

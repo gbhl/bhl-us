@@ -14,8 +14,8 @@ namespace MOBOT.BHL.DataObjects
 		{
 		}
 
-		public PageType( int pageTypeID, string pageTypeName, string pageTypeDescription )
-			: base( pageTypeID, pageTypeName, pageTypeDescription )
+		public PageType( int pageTypeID, string pageTypeName, string pageTypeDescription, byte active, DateTime? creationDate, DateTime? lastModifiedDate, int? creationUserId, int? lastModifiedUserId )
+			: base( pageTypeID, pageTypeName, pageTypeDescription, active, creationDate, lastModifiedDate, creationUserId, lastModifiedUserId )
 		{
 		}
 	}

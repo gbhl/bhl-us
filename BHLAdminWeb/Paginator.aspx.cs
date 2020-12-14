@@ -76,7 +76,7 @@ namespace MOBOT.BHL.AdminWeb
 
         private void loadPageTypes()
 		{
-			List<PageType> pageTypes = bp.PageTypeSelectAll();
+			List<PageType> pageTypes = bp.PageTypeSelectActive();
 			pageTypeCombo.DataSource = pageTypes;
 			pageTypeCombo.DataValueField = "PageTypeID";
 			pageTypeCombo.DataTextField = "PageTypeName";

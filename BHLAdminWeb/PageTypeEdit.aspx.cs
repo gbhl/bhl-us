@@ -2,6 +2,7 @@ using MOBOT.BHL.DataObjects;
 using MOBOT.BHL.Server;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -75,13 +76,15 @@ namespace MOBOT.BHL.AdminWeb
 					return;
 				}
 
-				PageType pageType = new PageType( int.Parse( idLabel.Text ), nameTextBox.Text.Trim(),
-					descriptionTextBox.Text.Trim() );
-
-				pageType.IsNew = false;
+				int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
 
 				BHLProvider bp = new BHLProvider();
-				bp.SavePageType( pageType );
+				PageType pageType = bp.PageTypeSelectAuto(int.Parse(idLabel.Text));
+				pageType.PageTypeName = nameTextBox.Text.Trim();
+				pageType.Active = (byte)(chkActive.Checked ? 1 : 0);
+				pageType.LastModifiedDate = DateTime.Now;
+				pageType.IsNew = false;
+				bp.SavePageType(pageType, userId);
 			}
 			else
 			{
@@ -95,13 +98,19 @@ namespace MOBOT.BHL.AdminWeb
 		{
 			if ( validate() )
 			{
-				PageType pageType = new PageType( 0, nameTextBox.Text.Trim(),
-					descriptionTextBox.Text.Trim() );
-
+				int userId = Helper.GetCurrentUserUID(new HttpRequestWrapper(Request));
+				PageType pageType = new PageType {
+					PageTypeID = 0,
+					PageTypeName = nameTextBox.Text.Trim(),
+					PageTypeDescription = "",
+					Active = (byte)(chkActive.Checked ? 1 : 0),
+					CreationDate = DateTime.Now,
+					LastModifiedDate = DateTime.Now
+				};
 				pageType.IsNew = true;
 
 				BHLProvider bp = new BHLProvider();
-				bp.SavePageType( pageType );
+				bp.SavePageType( pageType, userId );
 			}
 			else
 			{
@@ -128,7 +137,7 @@ namespace MOBOT.BHL.AdminWeb
 				{
 					idLabel.Text = pageType.PageTypeID.ToString();
 					nameTextBox.Text = pageType.PageTypeName;
-					descriptionTextBox.Text = BHL.DataObjects.Utility.EmptyIfNull( pageType.PageTypeDescription );
+					chkActive.Checked = (pageType.Active == 1);
 					ddlPageTypes.SelectedValue = pageType.PageTypeID.ToString();
 
                     editHistoryControl.EntityName = "pagetype";

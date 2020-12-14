@@ -1,6 +1,4 @@
-﻿
-
-CREATE PROCEDURE [dbo].[PageTypeSelectAll]
+﻿CREATE PROCEDURE [dbo].[PageTypeSelectAll]
 AS 
 
 SET NOCOUNT ON
@@ -8,9 +6,13 @@ SET NOCOUNT ON
 SELECT 
 	[PageTypeID],
 	[PageTypeName],
-	[PageTypeDescription]
+	[PageTypeDescription],
+	[Active],
+	[CreationDate],
+	[LastModifiedDate],
+	[CreationUserID],
+	[LastModifiedUserID]
 FROM [dbo].[PageType]
-WHERE [PageTypeName] NOT IN ('Article Start', 'Article End')
 ORDER BY PageTypeName
 
 IF @@ERROR <> 0
