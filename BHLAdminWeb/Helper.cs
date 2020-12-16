@@ -89,7 +89,6 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("admin/group")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
             else if (path.Contains("languageedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("notetypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
-            else if (path.Contains("pagetypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("pdfedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
             else if (path.Contains("segmenttypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserBasic);
 
@@ -129,6 +128,7 @@ namespace MOBOT.BHL.AdminWeb
             else if (path.Contains("openurlresult")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminUserAdvanced);
 
             // URLs available to "SysAdmin" users
+            else if (path.Contains("pagetypeedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("imageserveredit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("vaultedit")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);
             else if (path.Contains("library/align")) authorized = IsUserAuthorized(request, SecurityRole.BHLAdminSysAdmin);

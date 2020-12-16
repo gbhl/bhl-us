@@ -126,13 +126,14 @@
 										<asp:Button ID="clearIndicatedPageButton" runat="server" Font-Size="12px" Text="Clear All" Enabled="false" OnClick="clearIndicatedPageButton_Click" />
 									</td>
 								</tr>
-								<tr>
-									<td align="right" style="padding-right: 5px; white-space: nowrap">
+								<tr valign="top">
+									<td align="right" style="padding-top:5px; padding-right: 5px; white-space: nowrap">
 										Page Type
 									</td>
-									<td style="padding-right: 5px">
+									<td style="padding-right: 5px;">
 										<asp:DropDownList ID="pageTypeCombo" CssClass="TextBox" Style="background-color:White; height:20px" runat="server">
-										</asp:DropDownList>
+										</asp:DropDownList><br />
+										<a href="https://s.si.edu/BHLpagetypes" target="_blank" title="Page Type Definitions" class="small">Page Type Definitions</a>
 									</td>
 									<td style="padding-right: 5px">
 										<asp:Button ID="assignPageTypeButton" runat="server" Font-Size="12px" Text="Assign" Enabled="false" OnClick="assignPageTypeButton_Click" />

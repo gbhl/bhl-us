@@ -213,8 +213,8 @@ namespace MOBOT.BHL.DataObjects
                 string pageNums = this.IndicatedPages;
 
                 string pageTypes = this.PageTypes;
-                pageTypes = pageTypes.Replace("Text, ", "");
-                pageTypes = pageTypes.Replace(", Text", "");
+                //pageTypes = pageTypes.Replace("Text, ", "");
+                //pageTypes = pageTypes.Replace(", Text", "");
 
                 if (pageTypes.Contains("Issue Start"))
                 {

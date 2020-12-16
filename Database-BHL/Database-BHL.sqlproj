@@ -884,16 +884,11 @@
     <None Include="Data\dbo.SearchCatalogKeyword.Table.sql" />
     <None Include="Data\dbo.SearchCatalogSegment.Table.sql" />
     <None Include="Data\dbo.Segment.Table.sql" />
-    <None Include="Data\dbo.SegmentAuthor.Table.sql" />
     <None Include="Data\dbo.SegmentCluster.Table.sql" />
     <None Include="Data\dbo.SegmentClusterSegment.Table.sql" />
     <None Include="Data\dbo.SegmentClusterType.Table.sql" />
     <None Include="Data\dbo.SegmentGenre.Table.sql" />
-    <None Include="Data\dbo.SegmentIdentifier.Table.sql" />
-    <None Include="Data\dbo.SegmentKeyword.Table.sql" />
-    <None Include="Data\dbo.SegmentPage.Table.sql" />
     <None Include="Data\dbo.SegmentResolutionLog.Table.sql" />
-    <None Include="Data\dbo.SegmentStatus.Table.sql" />
     <None Include="Data\dbo.Title.Table.sql" />
     <None Include="Data\dbo.Title_Identifier.Table.sql" />
     <None Include="Data\dbo.TitleAssociation.Table.sql" />
@@ -901,7 +896,6 @@
     <None Include="Data\dbo.TitleAssociationType.Table.sql" />
     <None Include="Data\dbo.TitleAuthor.Table.sql" />
     <None Include="Data\dbo.TitleCollection.Table.sql" />
-    <None Include="Data\dbo.TitleItem.Table.sql" />
     <None Include="Data\dbo.TitleKeyword.Table.sql" />
     <None Include="Data\dbo.TitleLanguage.Table.sql" />
     <None Include="Data\dbo.TitleVariant.Table.sql" />
@@ -1266,9 +1260,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data\dbo.ItemInstitution.Table.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\dbo.SegmentInstitution.Table.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Stored Procedures\ItemInstitutionDeleteAuto.sql" />
