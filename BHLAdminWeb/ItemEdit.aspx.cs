@@ -1399,6 +1399,7 @@ namespace MOBOT.BHL.AdminWeb
                         DataObjects.ItemTitle newTitleItem = new DataObjects.ItemTitle();
                         newTitleItem.TitleID = itemTitle.TitleID;
                         newTitleItem.ItemID = (int)book.ItemID;
+                        newTitleItem.IsPrimary = itemTitle.IsPrimary;
                         newTitleItem.ItemSequence = 10000;
                         newTitleItem.IsNew = true;
                         book.ItemTitles.Add(newTitleItem);
