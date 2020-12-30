@@ -1,6 +1,7 @@
 
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -31,7 +32,7 @@ namespace MOBOT.IAAnalysis.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -51,7 +52,7 @@ namespace MOBOT.IAAnalysis.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<Item> ItemSelectForXMLDownload(
+        public List<Item> ItemSelectForXMLDownload(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -62,7 +63,7 @@ namespace MOBOT.IAAnalysis.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
