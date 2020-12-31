@@ -207,7 +207,7 @@ namespace MOBOT.BHL.Server
             if (ocrText.Length > 0)
             {
                 // Add the user-reported page names for this Page to the ocrText
-                CustomGenericList<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
+                List<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
                 foreach (NamePage namePage in namePages)
                 {
                     // NameSourceID 1 = "User Reported"
@@ -392,7 +392,7 @@ namespace MOBOT.BHL.Server
             if (ocrText.Length > 0)
             {
                 // Add the user-reported page names for this Page to the ocrText
-                CustomGenericList<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
+                List<NamePage> namePages = new BHLProvider().NamePageSelectByPageID(pageID);
                 foreach (NamePage namePage in namePages)
                 {
                     // NameSourceID 1 = "User Reported"
@@ -1075,14 +1075,14 @@ namespace MOBOT.BHL.Server
                     AddGoogleScholarTag(tags, "DC.citation.volume", book.Volume);
                     AddGoogleScholarTag(tags, "DC.identifier.URI", string.Format(uriFormat, book.BookID.ToString()));
 
-                    CustomGenericList<TitleAuthor> authors = service.TitleAuthorSelectByTitle((int)book.PrimaryTitleID);
+                    List<TitleAuthor> authors = service.TitleAuthorSelectByTitle((int)book.PrimaryTitleID);
                     foreach (TitleAuthor author in authors)
                     {
                         AddGoogleScholarTag(tags, "citation_author", author.FullName);
                         AddGoogleScholarTag(tags, "DC.creator", author.FullName);
                     }
 
-                    CustomGenericList<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID((int)book.PrimaryTitleID);
+                    List<Title_Identifier> identifiers = service.Title_IdentifierSelectByTitleID((int)book.PrimaryTitleID);
                     foreach (Title_Identifier identifier in identifiers)
                     {
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
@@ -1149,7 +1149,7 @@ namespace MOBOT.BHL.Server
                         AddGoogleScholarTag(tags, "citation_" + identifier.IdentifierName.ToLower(), identifier.IdentifierValue);
                     }
 
-                    CustomGenericList<DOI> dois = service.DOISelectValidForSegment(segmentID);
+                    List<DOI> dois = service.DOISelectValidForSegment(segmentID);
                     foreach (DOI doi in dois)
                     {
                         AddGoogleScholarTag(tags, "citation_doi", doi.DOIName);
@@ -1168,7 +1168,7 @@ namespace MOBOT.BHL.Server
             }
         }
 
-        public CustomGenericList<Tuple<string, string, string>> LinkSelectToExternalContent()
+        public List<Tuple<string, string, string>> LinkSelectToExternalContent()
         {
             return new DownloadDAL().LinkSelectToExternalContent(null, null);
         }

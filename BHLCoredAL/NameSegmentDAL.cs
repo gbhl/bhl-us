@@ -1,12 +1,12 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NameSegmentDAL
+    public partial class NameSegmentDAL
 	{
         /// <summary>
         /// Select the segments associated with the specified author
@@ -15,7 +15,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="authorId">Identifier of the author</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Name> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
+        public List<Name> NameSegmentSelectBySegmentID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Name> helper = new CustomSqlHelper<Name>())
                 {
-                    CustomGenericList<Name> list = helper.ExecuteReader(command);
+                    List<Name> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

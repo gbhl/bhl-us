@@ -1,6 +1,7 @@
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace MOBOT.BHL.DAL
                     }
                 }
 
-                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segment.SegmentID);
+                List<DOI> dois = new DOIDAL().DOISelectValidForSegment(connection, transaction, segment.SegmentID);
                 foreach (DOI doi in dois)
                 {
                     // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
@@ -130,7 +131,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="authorId">Identifier of the author</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSimpleSelectByAuthor(SqlConnection sqlConnection,
+        public List<Segment> SegmentSimpleSelectByAuthor(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int authorId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -142,7 +143,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -156,7 +157,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="authorId">Identifier of the author</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectForAuthorID(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectForAuthorID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int authorId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -168,7 +169,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -183,7 +184,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByDateRange(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByDateRange(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string startDate, string endDate)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -196,7 +197,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -211,7 +212,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectByTitleLike(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByTitleLike(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string title)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -223,7 +224,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -238,7 +239,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="title"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectByTitleNotLike(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByTitleNotLike(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string title)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -250,7 +251,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -264,7 +265,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="keyword">The keyword with which segments are associated</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectForKeyword(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectForKeyword(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string keyword)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -276,7 +277,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -290,7 +291,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="itemId">Identifier of the item.</param>
         /// <returns>A list of type segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByItemID(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemId, short showAll)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -303,7 +304,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -316,7 +317,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> SegmentSelectAllBibTeXCitations(
+        public List<TitleBibTeX> SegmentSelectAllBibTeXCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -326,7 +327,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -339,7 +340,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="titleId">Segment identifier for which to get BibTex data</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> SegmentSelectBibTexForSegmentID(
+        public List<TitleBibTeX> SegmentSelectBibTexForSegmentID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int segmentId,
@@ -353,7 +354,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -366,7 +367,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="titleId">Segment identifier for which to get BibTex data</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<Segment> SegmentSelectPublished(
+        public List<Segment> SegmentSelectPublished(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -376,7 +377,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -388,7 +389,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations(
+        public List<RISCitation> SegmentSelectAllRISCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -398,7 +399,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -410,7 +411,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation>SegmentSelectRISCitationForSegmentID(
+        public List<RISCitation>SegmentSelectRISCitationForSegmentID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int segmentID)
@@ -422,7 +423,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -435,7 +436,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="segmentId">Identifier of the segment</param>
         /// <returns>A list of type Segment</returns>
-        public CustomGenericList<Segment> SegmentSelectRelated(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectRelated(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int segmentId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -447,7 +448,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -470,7 +471,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return (list[0]);
                     else
@@ -486,7 +487,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="statusId">Segment status for which to search.</param>
         /// <returns>A list of type segment</returns>
-        public CustomGenericList<Segment> SegmentSelectByStatusID(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectByStatusID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int statusId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -498,7 +499,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -512,7 +513,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="numberOfClusters">The number of clusters to return.</param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentSelectRecentlyClustered(SqlConnection sqlConnection,
+        public List<Segment> SegmentSelectRecentlyClustered(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int numberOfClusters)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -524,14 +525,14 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
 
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWith(
+        public List<Segment> SegmentSelectByInstitutionAndStartsWith(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String institutionCode,
@@ -545,13 +546,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SegmentSelectByInstitutionAndStartsWithout(
+        public List<Segment> SegmentSelectByInstitutionAndStartsWithout(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String institutionCode,
@@ -565,7 +566,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -580,7 +581,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="startPageID"></param>
         /// <param name="endPageID"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SegmentResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Segment> SegmentResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string doi, int? startPageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -593,7 +594,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -636,7 +637,7 @@ namespace MOBOT.BHL.DAL
                 segmentID = updatedSegment.ReturnObject.SegmentID;
 
                 DOIDAL doiDAL = new DOIDAL();
-                CustomGenericList<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
+                List<DOI> doiList = doiDAL.DOISelectValidForSegment(connection, transaction, segmentID);
 
                 DOI doi = null;
                 if (doiList.Count == 0)
@@ -844,7 +845,7 @@ namespace MOBOT.BHL.DAL
             return segmentID;
         }
 
-        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
+        public List<DOI> SegmentSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int numberToReturn)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -855,7 +856,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

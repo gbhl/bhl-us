@@ -1,7 +1,7 @@
-﻿using System;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -28,7 +28,7 @@ namespace MOBOT.BHL.Server
             return apiKey;
         }
 
-        public CustomGenericList<APIKey> ApiKeySelectAll()
+        public List<APIKey> ApiKeySelectAll()
         {
             return new APIKeyDAL().ApiKeySelectAll(null, null);
         }

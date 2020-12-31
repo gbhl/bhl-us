@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -8,7 +9,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class MarcImportBatchDAL
 	{
-        public CustomGenericList<MarcImportBatch> MarcImportBatchSelectStatsByInstitution(
+        public List<MarcImportBatch> MarcImportBatchSelectStatsByInstitution(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode)
@@ -22,7 +23,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MarcImportBatch> helper = new CustomSqlHelper<MarcImportBatch>())
                 {
-                    CustomGenericList<MarcImportBatch> list = helper.ExecuteReader(command);
+                    List<MarcImportBatch> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -23,7 +24,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForCreate(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<ItemNameFileLog> ItemNameFileLogSelectForCreate(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -33,7 +34,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemNameFileLog> helper = new CustomSqlHelper<ItemNameFileLog>())
                 {
-                    CustomGenericList<ItemNameFileLog> list = helper.ExecuteReader(command);
+                    List<ItemNameFileLog> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list;
@@ -46,7 +47,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<ItemNameFileLog> ItemNameFileLogSelectForUpload(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<ItemNameFileLog> ItemNameFileLogSelectForUpload(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -56,7 +57,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemNameFileLog> helper = new CustomSqlHelper<ItemNameFileLog>())
                 {
-                    CustomGenericList<ItemNameFileLog> list = helper.ExecuteReader(command);
+                    List<ItemNameFileLog> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list;

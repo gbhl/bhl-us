@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NoteTypeDAL
+    public partial class NoteTypeDAL
 	{
-        public CustomGenericList<NoteType> NoteTypeSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<NoteType> NoteTypeSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -18,7 +18,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NoteType> helper = new CustomSqlHelper<NoteType>())
                 {
-                    CustomGenericList<NoteType> list = helper.ExecuteReader(command);
+                    List<NoteType> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

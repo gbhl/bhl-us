@@ -1,17 +1,18 @@
 #region Using
 
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NameIdentifierDAL
+    public partial class NameIdentifierDAL
 	{
-        public CustomGenericList<NameIdentifier> NameIdentifierSelectForResolvedName(
+        public List<NameIdentifier> NameIdentifierSelectForResolvedName(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string resolvedName)
@@ -26,7 +27,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NameIdentifier> helper = new CustomSqlHelper<NameIdentifier>())
                 {
-                    CustomGenericList<NameIdentifier> list = helper.ExecuteReader(command);
+                    List<NameIdentifier> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -11,7 +11,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
+        public List<Title_Identifier> Title_IdentifierSelectByTitleID(int titleID)
         {
             return (new Title_IdentifierDAL().Title_IdentifierSelectByTitleID(null, null, titleID, null));
         }
@@ -21,7 +21,7 @@ namespace MOBOT.BHL.Server
         /// </summary>
         /// <param name="titleID"></param>
         /// <returns></returns>
-        public CustomGenericList<Title_Identifier> Title_IdentifierSelectForDisplayByTitleID(int titleID)
+        public List<Title_Identifier> Title_IdentifierSelectForDisplayByTitleID(int titleID)
         {
             return (new Title_IdentifierDAL().Title_IdentifierSelectByTitleID(null, null, titleID, 1));
         }

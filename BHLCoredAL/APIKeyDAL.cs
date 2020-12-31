@@ -28,7 +28,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<APIKey> helper = new CustomSqlHelper<APIKey>())
                 {
-                    CustomGenericList<APIKey> list = helper.ExecuteReader(command);
+                    List<APIKey> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -50,7 +50,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<APIKey> helper = new CustomSqlHelper<APIKey>())
                 {
-                    CustomGenericList<APIKey> list = helper.ExecuteReader(command);
+                    List<APIKey> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -59,7 +59,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<APIKey> ApiKeySelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<APIKey> ApiKeySelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;

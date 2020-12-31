@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -31,7 +32,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorSelectByNameLike(
+        public List<Author> AuthorSelectByNameLike(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string fullName,
@@ -46,13 +47,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Author> AuthorSelectByTitleId(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Author> AuthorSelectByTitleId(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
           int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -64,7 +65,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -82,7 +83,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -91,7 +92,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Author> AuthorSelectByIdentifier(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int identifierID, string identifierValue)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -104,7 +105,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -118,7 +119,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return authors</param>
         /// <param name="maxAge">Age in days of authors to consider (i.e. authors new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
+        public List<AuthorSuspectCharacter> AuthorSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -132,7 +133,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AuthorSuspectCharacter> helper = new CustomSqlHelper<AuthorSuspectCharacter>())
                 {
-                    CustomGenericList<AuthorSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<AuthorSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -149,7 +150,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns>Object of type Author.</returns>
-        public CustomGenericList<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Author> AuthorResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string fullName, string lastName, string firstName, string startDate, string endDate, int? authorID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -165,7 +166,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

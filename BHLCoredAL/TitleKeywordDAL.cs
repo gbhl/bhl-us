@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class TitleKeywordDAL
+    public partial class TitleKeywordDAL
 	{
-        public CustomGenericList<TitleKeyword> TitleKeywordSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<TitleKeyword> TitleKeywordSelectByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -25,13 +25,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<TitleKeyword> TitleKeywordSelectLikeTag(SqlConnection sqlConnection,
+        public List<TitleKeyword> TitleKeywordSelectLikeTag(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string tag,
             string languageCode,
@@ -48,13 +48,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<TitleKeyword> TitleKeywordSelectKeywordByTitle(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<TitleKeyword> TitleKeywordSelectKeywordByTitle(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -66,7 +66,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

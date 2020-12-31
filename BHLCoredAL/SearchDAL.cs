@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -18,7 +19,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> SearchBook(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode, 
             int? collectionID, int returnCount, string searchSort)
         {
@@ -39,13 +40,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<SearchAnnotationResult> SearchAnnotation(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchAnnotationResult> SearchAnnotation(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string annotationText, string title, string authorLastName, string volume, string edition, int? year, int? collectionID, 
             int? annotationSourceID, int returnCount)
         {
@@ -65,7 +66,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchAnnotationResult> helper = new CustomSqlHelper<SearchAnnotationResult>())
                 {
-                    CustomGenericList<SearchAnnotationResult> list = helper.ExecuteReader(command);
+                    List<SearchAnnotationResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -77,7 +78,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameLike(
+        public List<SearchBookResult> TitleSelectByNameLike(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         string name)
@@ -90,7 +91,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -102,7 +103,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByNameNotLike(
+        public List<SearchBookResult> TitleSelectByNameNotLike(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         string name)
@@ -115,7 +116,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -127,7 +128,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByAuthor(
+        public List<SearchBookResult> TitleSelectByAuthor(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int authorId)
@@ -140,13 +141,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWith(
+        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWith(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String institutionCode,
@@ -160,13 +161,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(
+        public List<SearchBookResult> TitleSelectByInstitutionAndStartsWithout(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String institutionCode,
@@ -180,7 +181,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -193,7 +194,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="languageCode">ID of the language for which to retrieve titles</param>
         /// <returns>List of objects of type SearchBookResult.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByLanguage(
+        public List<SearchBookResult> TitleSelectByLanguage(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         String languageCode)
@@ -205,13 +206,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> TitleSelectByKeyword(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string keyword)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -222,7 +223,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -234,7 +235,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of SearchBookResults.</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByDateRange(
+        public List<SearchBookResult> TitleSelectByDateRange(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int startYear, int endYear)
@@ -248,7 +249,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -263,7 +264,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResults</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWith(
+        public List<SearchBookResult> TitleSelectByCollectionAndStartsWith(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -278,7 +279,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -293,7 +294,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> TitleSelectByCollectionAndStartsWithout(
+        public List<SearchBookResult> TitleSelectByCollectionAndStartsWithout(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -308,7 +309,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -323,7 +324,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SearchBookResult</returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWith(
+        public List<SearchBookResult> ItemSelectByCollectionAndStartsWith(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -338,7 +339,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -353,7 +354,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="collectionID"></param>
         /// <param name="startString"></param>
         /// <returns>List of SesarchBookresult</returns>
-        public CustomGenericList<SearchBookResult> ItemSelectByCollectionAndStartsWithout(
+        public List<SearchBookResult> ItemSelectByCollectionAndStartsWithout(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int collectionID,
@@ -368,7 +369,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -383,7 +384,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="languageCode"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<TitleKeyword> SearchTitleKeyword(
+        public List<TitleKeyword> SearchTitleKeyword(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string keyword,
@@ -401,7 +402,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -415,7 +416,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="creatorName"></param>
         /// <param name="returnCount"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthor(
+        public List<Author> SearchAuthor(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string authorName,
@@ -430,7 +431,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -443,7 +444,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="creatorName"></param>
         /// <returns></returns>
-        public CustomGenericList<Author> SearchAuthorComplete(
+        public List<Author> SearchAuthorComplete(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string authorName)
@@ -456,7 +457,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Author> helper = new CustomSqlHelper<Author>())
                 {
-                    CustomGenericList<Author> list = helper.ExecuteReader(command);
+                    List<Author> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -469,7 +470,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="creatorName"></param>
         /// <returns></returns>
-        public CustomGenericList<Segment> SearchSegmentComplete(
+        public List<Segment> SearchSegmentComplete(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title)
@@ -482,13 +483,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegment(
+        public List<Segment> SearchSegment(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title,
@@ -518,13 +519,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegmentFullText(
+        public List<Segment> SearchSegmentFullText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string searchText,
@@ -541,13 +542,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<Segment> SearchSegmentAdvancedFullText(
+        public List<Segment> SearchSegmentAdvancedFullText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string title,
@@ -577,7 +578,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Segment> helper = new CustomSqlHelper<Segment>())
                 {
-                    CustomGenericList<Segment> list = helper.ExecuteReader(command);
+                    List<Segment> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -593,7 +594,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<SearchBookResult> SearchBookFullText(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string authorLastName, string volume, string edition, int? year, string subject, string languageCode, 
             int? collectionID, int returnCount, string searchSort)
         {
@@ -614,7 +615,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -630,7 +631,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<SearchBookResult> SearchBookGlobalFullText(SqlConnection sqlConnection, 
+        public List<SearchBookResult> SearchBookGlobalFullText(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, string searchText, int returnCount, string searchSort)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -643,7 +644,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<SearchBookResult> helper = new CustomSqlHelper<SearchBookResult>())
                 {
-                    CustomGenericList<SearchBookResult> list = helper.ExecuteReader(command);
+                    List<SearchBookResult> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

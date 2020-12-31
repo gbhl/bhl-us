@@ -1,6 +1,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -18,7 +19,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>Object of type Title.</returns>
-        public CustomGenericList<TitleAssociation> TitleAssociationSelectByTitleID(
+        public List<TitleAssociation> TitleAssociationSelectByTitleID(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int titleID,
@@ -34,7 +35,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
                 {
-                    CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+                    List<TitleAssociation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -59,7 +60,7 @@ namespace MOBOT.BHL.DAL
             return titleAssociation;
         }
 
-        public CustomGenericList<TitleAssociation> TitleAssociationSelectExtendedForTitle(
+        public List<TitleAssociation> TitleAssociationSelectExtendedForTitle(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int titleID)
@@ -68,7 +69,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
 
-            CustomGenericList<TitleAssociation> titleAssociations = this.TitleAssociationSelectByTitleID(connection, transaction, titleID, null);
+            List<TitleAssociation> titleAssociations = this.TitleAssociationSelectByTitleID(connection, transaction, titleID, null);
 
             foreach (TitleAssociation titleAssociation in titleAssociations)
             {
@@ -131,7 +132,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return associations</param>
         /// <param name="maxAge">Age in days of associations to consider (i.e. associations new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<TitleAssociationSuspectCharacter> TitleAssociationSelectWithSuspectCharacters(
+        public List<TitleAssociationSuspectCharacter> TitleAssociationSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -145,7 +146,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleAssociationSuspectCharacter> helper = new CustomSqlHelper<TitleAssociationSuspectCharacter>())
                 {
-                    CustomGenericList<TitleAssociationSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<TitleAssociationSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

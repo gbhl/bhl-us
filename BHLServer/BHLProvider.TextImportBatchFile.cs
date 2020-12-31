@@ -1,11 +1,7 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MOBOT.BHL.Server
 {
@@ -28,23 +24,23 @@ namespace MOBOT.BHL.Server
             return new TextImportBatchFileDAL().TextImportBatchFileUpdateAuto(null, null, textImportBatchFile);
         }
 
-        public CustomGenericList<TextImportBatchFileStatus> TextImportBatchFileStatusSelectAll()
+        public List<TextImportBatchFileStatus> TextImportBatchFileStatusSelectAll()
         {
             return new TextImportBatchFileStatusDAL().SelectAll(null, null);
         }
 
-        public CustomGenericList<TextImportBatchFile> TextImportBatchFileSelectForBatch(int batchID)
+        public List<TextImportBatchFile> TextImportBatchFileSelectForBatch(int batchID)
         {
             return new TextImportBatchFileDAL().TextImportBatchFileSelectForBatch(null, null, batchID);
         }
 
-        public CustomGenericList<TextImportBatchFile> TextImportBatchFileDetailSelectForBatch(int batchID,
+        public List<TextImportBatchFile> TextImportBatchFileDetailSelectForBatch(int batchID,
             int numRows, int startRow, string sortColumn, string sortDirection)
         {
             return new TextImportBatchFileDAL().TextImportBatchFileDetailSelectForBatch(null, null, batchID, numRows, startRow, sortColumn, sortDirection);
         }
 
-        public CustomGenericList<TextImportBatchFile> TextImportBatchFileSelectForProcessing(int batchID)
+        public List<TextImportBatchFile> TextImportBatchFileSelectForProcessing(int batchID)
         {
             return new TextImportBatchFileDAL().TextImportBatchFileSelectForProcessing(null, null, batchID);
         }

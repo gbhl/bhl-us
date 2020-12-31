@@ -1,14 +1,12 @@
+using MOBOT.BHL.DAL;
+using MOBOT.BHL.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using CustomDataAccess;
-using MOBOT.BHL.DAL;
-using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Utility;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
 		#region Select methods
 
@@ -42,7 +40,7 @@ namespace MOBOT.BHL.Server
 		/// Page Names are considered to be expired if the LastPageNameLookupDate on the
 		/// Item object is older than the specified number of days.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithExpiredPageNames( int maxAge )
+		public List<Item> ItemSelectWithExpiredPageNames( int maxAge )
 		{
 			return ( new ItemDAL().ItemSelectWithExpiredPageNames( null, null, maxAge ) );
 		}
@@ -55,19 +53,19 @@ namespace MOBOT.BHL.Server
 		/// Items are considered to not have page names if the LastPageNameLookupDate 
 		/// is null.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithoutPageNames()
+		public List<Item> ItemSelectWithoutPageNames()
 		{
 			return ( new ItemDAL().ItemSelectWithoutPageNames( null, null ) );
 		}
 
-		public CustomGenericList<Item> ItemSelectPaginationReport(int publishedOnly, string institutionCode, DataTable statusIDs, 
+		public List<Item> ItemSelectPaginationReport(int publishedOnly, string institutionCode, DataTable statusIDs, 
             DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortDirection)
 		{
 			return new ItemDAL().ItemSelectPaginationReport( null, null, publishedOnly, institutionCode, statusIDs, startDate, endDate, numRows,
                 pageNum, sortColumn, sortDirection);
 		}
 
-        public CustomGenericList<RISCitation> ItemSelectAllRISCitations()
+        public List<RISCitation> ItemSelectAllRISCitations()
         {
             return new ItemDAL().ItemSelectAllRISCitations(null, null);
         }
@@ -75,7 +73,7 @@ namespace MOBOT.BHL.Server
         public string ItemSelectRISCitationsForTitleID(int titleID)
         {
             System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-            CustomGenericList<RISCitation> citations = new ItemDAL().ItemSelectRISCitationsForTitleID(null, null, titleID);
+            List<RISCitation> citations = new ItemDAL().ItemSelectRISCitationsForTitleID(null, null, titleID);
             foreach (RISCitation citation in citations)
             {
                 risString.Append(this.GenerateRISCitation(citation));
@@ -88,7 +86,7 @@ namespace MOBOT.BHL.Server
             return (new ItemDAL().ItemSelectFilenames(null, null, itemID));
         }
 
-        public CustomGenericList<Item> ItemResolve(string title, string issn, string isbn, string oclc,
+        public List<Item> ItemResolve(string title, string issn, string isbn, string oclc,
             string volume, string issue, string year)
         {
             return new ItemDAL().ItemResolve(null, null, title, issn, isbn, oclc, volume, issue, year);
@@ -225,7 +223,7 @@ namespace MOBOT.BHL.Server
 			}
 		}
 
-        public CustomGenericList<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(String institutionCode, int maxAge)
+        public List<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(String institutionCode, int maxAge)
         {
             return new ItemDAL().ItemSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
@@ -235,12 +233,12 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemGetNamesXMLByItemID(null, null, itemID);
         }
 
-        public CustomGenericList<Item> ItemSelectPublished()
+        public List<Item> ItemSelectPublished()
         {
             return new ItemDAL().ItemSelectPublished(null, null);
         }
 
-        public CustomGenericList<NonMemberMonograph> ItemSelectNonMemberMonograph(string sinceDate, 
+        public List<NonMemberMonograph> ItemSelectNonMemberMonograph(string sinceDate, 
             int isMember, string institutionCode)
         {
             return new ItemDAL().ItemSelectNonMemberMonograph(null, null, sinceDate, isMember, institutionCode);
@@ -251,12 +249,12 @@ namespace MOBOT.BHL.Server
             return new ItemDAL().ItemCountByInstitution(null, null, institutionCode);
         }
 
-        public CustomGenericList<Item> ItemSelectBarcodes()
+        public List<Item> ItemSelectBarcodes()
         {
             return new ItemDAL().ItemSelectBarcodes(null, null);
         }
 
-        public CustomGenericList<Item> ItemInFlickrByTitleID(int titleId)
+        public List<Item> ItemInFlickrByTitleID(int titleId)
         {
             return new ItemDAL().ItemInFlickrByTitleID(null, null, titleId);
         }

@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class DOIDAL
+    public partial class DOIDAL
 	{
-        public CustomGenericList<DOI> DOISelectSubmitted(SqlConnection sqlConnection,
+        public List<DOI> DOISelectSubmitted(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int minutesSinceSubmit)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -19,13 +19,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<DOI> DOISelectValidForTitle(SqlConnection sqlConnection,
+        public List<DOI> DOISelectValidForTitle(SqlConnection sqlConnection,
         SqlTransaction sqlTransaction, int titleID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -36,13 +36,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<DOI> DOISelectValidForSegment(SqlConnection sqlConnection,
+        public List<DOI> DOISelectValidForSegment(SqlConnection sqlConnection,
         SqlTransaction sqlTransaction, int segmentID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -53,13 +53,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<DOI> DOISelectByStatus(SqlConnection sqlConnection,
+        public List<DOI> DOISelectByStatus(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int doiStatusID, int numRows, int pageNum,
             string sortColumn, string sortOrder)
         {
@@ -75,13 +75,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<DOIStatus> DOIStatusSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<DOIStatus> DOIStatusSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -90,7 +90,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOIStatus> helper = new CustomSqlHelper<DOIStatus>())
                 {
-                    CustomGenericList<DOIStatus> list = helper.ExecuteReader(command);
+                    List<DOIStatus> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

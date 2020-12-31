@@ -1,5 +1,6 @@
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -20,7 +21,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ApplicationCache> helper = new CustomSqlHelper<ApplicationCache>())
                 {
-                    CustomGenericList<ApplicationCache> list = helper.ExecuteReader(command);
+                    List<ApplicationCache> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

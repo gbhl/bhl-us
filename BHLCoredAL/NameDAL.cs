@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NameDAL
+    public partial class NameDAL
 	{
         /// <summary>
         /// Return all active names that match partically or exactly the specified string.
@@ -20,7 +20,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public CustomGenericList<Name> NameSelectByNameString(SqlConnection sqlConnection,
+        public List<Name> NameSelectByNameString(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -54,7 +54,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Name> helper = new CustomSqlHelper<Name>())
                 {
-                    CustomGenericList<Name> list = helper.ExecuteReader(command);
+                    List<Name> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -74,7 +74,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Name> helper = new CustomSqlHelper<Name>())
                 {
-                    CustomGenericList<Name> names =  helper.ExecuteReader(command);
+                    List<Name> names =  helper.ExecuteReader(command);
                     if (names.Count > 0)
                         return names[0];
                     else
@@ -83,7 +83,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<CustomDataRow> NameMetadataSelectByItemID(SqlConnection sqlConnection,
+        public List<CustomDataRow> NameMetadataSelectByItemID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -92,7 +92,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("NameMetadataSelectByItemID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("ItemID", SqlDbType.Int, null, false, itemId)))
             {
-                CustomGenericList<CustomDataRow> names = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> names = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return names;
             }
         }
@@ -119,7 +119,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Name> helper = new CustomSqlHelper<Name>())
                 {
-                    CustomGenericList<Name> names = helper.ExecuteReader(command);
+                    List<Name> names = helper.ExecuteReader(command);
                     if (names.Count > 0)
                         return names[0];
                     else

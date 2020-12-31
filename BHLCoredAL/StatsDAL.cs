@@ -1,5 +1,6 @@
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -68,7 +69,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("EOLPages", SqlDbType.Bit, null, false, eolPages)))
 			{
                 command.CommandTimeout = 300;   // Set timeout to 5 minutes (name stats can take a while to generate)
-				CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows( command );
+				List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows( command );
 				CustomDataRow row = list[ 0 ];
 				Stats stats = new Stats();
 				stats.TitleCount = (int)row[ "TitleCount" ].Value;
@@ -109,7 +110,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("CollectionID", SqlDbType.Int, null, false, collectionID)))
             {
                 command.CommandTimeout = 60;   // Set timeout to 1 minutes (stats can take a while to generate)
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 CustomDataRow row = list[0];
 
                 Stats stats = new Stats();
@@ -132,7 +133,7 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("InstitutionCode", SqlDbType.NVarChar, 10, false, institutionCode)))
             {
                 command.CommandTimeout = 60;   // Set timeout to 1 minutes (stats can take a while to generate)
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 CustomDataRow row = list[0];
 
                 Stats stats = new Stats();
@@ -145,11 +146,11 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<EntityCount> EntityCountSelectLatest(
+        public List<EntityCount> EntityCountSelectLatest(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
-            CustomGenericList<EntityCount> counts = new CustomGenericList<EntityCount>();
+            List<EntityCount> counts = new List<EntityCount>();
 
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -157,7 +158,7 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("dbo.EntityCountSelectLatest", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 foreach(CustomDataRow row in list)
                 {
                     EntityCount count = new EntityCount();

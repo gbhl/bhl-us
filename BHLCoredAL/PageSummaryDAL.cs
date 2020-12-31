@@ -1,5 +1,6 @@
 #region using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -11,7 +12,7 @@ namespace MOBOT.BHL.DAL
 {
   public partial class PageSummaryDAL
   {
-    public CustomGenericList<PageSummaryView> PageSummarySelectByItemId( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+    public List<PageSummaryView> PageSummarySelectByItemId( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
      int itemId)
     {
       SqlConnection connection = CustomSqlHelper.CreateConnection( 
@@ -23,7 +24,7 @@ namespace MOBOT.BHL.DAL
       {
         using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
         {
-          CustomGenericList<PageSummaryView> list = helper.ExecuteReader( command );
+          List<PageSummaryView> list = helper.ExecuteReader( command );
           if ( list.Count > 0 )
           {
               return list;
@@ -36,7 +37,7 @@ namespace MOBOT.BHL.DAL
       }
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectAllByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+    public List<PageSummaryView> PageSummarySelectAllByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
         int itemId)
     {
         SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -67,7 +68,7 @@ namespace MOBOT.BHL.DAL
         {
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
+                List<PageSummaryView> list = helper.ExecuteReader(command);
                 if (list.Count > 0)
                 {
                     return list[0];
@@ -80,7 +81,7 @@ namespace MOBOT.BHL.DAL
         }
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectForViewerByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+    public List<PageSummaryView> PageSummarySelectForViewerByItemID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
         int itemId)
     {
         SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -92,7 +93,7 @@ namespace MOBOT.BHL.DAL
         {
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
+                List<PageSummaryView> list = helper.ExecuteReader(command);
                 if (list.Count > 0)
                 {
                     return list;
@@ -112,7 +113,7 @@ namespace MOBOT.BHL.DAL
     /// <param name="sqlTransaction">Sql transaction or null.</param>
     /// <param name="barcode"></param>
     /// <returns>Object of type Title.</returns>
-    public CustomGenericList<PageSummaryView> PageSummarySelectByBarcode(
+    public List<PageSummaryView> PageSummarySelectByBarcode(
         SqlConnection sqlConnection,
         SqlTransaction sqlTransaction,
         string barcode)
@@ -125,7 +126,7 @@ namespace MOBOT.BHL.DAL
       {
         using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
         {
-          CustomGenericList<PageSummaryView> list = helper.ExecuteReader( command );
+          List<PageSummaryView> list = helper.ExecuteReader( command );
           if ( list.Count > 0 )
           {
               return list;
@@ -150,7 +151,7 @@ namespace MOBOT.BHL.DAL
         {
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
+                List<PageSummaryView> list = helper.ExecuteReader(command);
                 if (list.Count > 0)
                 {
                     return list[0];
@@ -170,7 +171,7 @@ namespace MOBOT.BHL.DAL
     /// <param name="sqlTransaction">Sql transaction or null.</param>
     /// <param name="pageId"></param>
     /// <returns>Object of type Title.</returns>
-    public CustomGenericList<PageSummaryView> PageSummarySelectByPageId(
+    public List<PageSummaryView> PageSummarySelectByPageId(
         SqlConnection sqlConnection,
         SqlTransaction sqlTransaction,
         int pageId )
@@ -183,7 +184,7 @@ namespace MOBOT.BHL.DAL
       {
         using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
         {
-          CustomGenericList<PageSummaryView> list = helper.ExecuteReader( command );
+          List<PageSummaryView> list = helper.ExecuteReader( command );
           if ( list.Count > 0 )
           {
             return list;
@@ -219,7 +220,7 @@ namespace MOBOT.BHL.DAL
       {
         using ( CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>() )
         {
-          CustomGenericList<PageSummaryView> list = helper.ExecuteReader( command );
+          List<PageSummaryView> list = helper.ExecuteReader( command );
           if ( list.Count > 0 )
           {
             return list[ 0 ];
@@ -232,7 +233,7 @@ namespace MOBOT.BHL.DAL
       }
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectBarcodeForTitleID(
+    public List<PageSummaryView> PageSummarySelectBarcodeForTitleID(
         SqlConnection sqlConnection,
         SqlTransaction sqlTransaction,
         int titleID)
@@ -245,13 +246,13 @@ namespace MOBOT.BHL.DAL
         {
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
+                List<PageSummaryView> list = helper.ExecuteReader(command);
                 return list;
             }
         }
     }
 
-    public CustomGenericList<PageSummaryView> PageSummarySelectFoldersForTitleID(
+    public List<PageSummaryView> PageSummarySelectFoldersForTitleID(
         SqlConnection sqlConnection,
         SqlTransaction sqlTransaction,
         int titleID)
@@ -264,7 +265,7 @@ namespace MOBOT.BHL.DAL
         {
             using (CustomSqlHelper<PageSummaryView> helper = new CustomSqlHelper<PageSummaryView>())
             {
-                CustomGenericList<PageSummaryView> list = helper.ExecuteReader(command);
+                List<PageSummaryView> list = helper.ExecuteReader(command);
                 return list;
             }
         }

@@ -1,9 +1,10 @@
 ﻿#region using
 
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion using
 
@@ -23,7 +24,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemCOinSView> helper = new CustomSqlHelper<ItemCOinSView>())
                 {
-                    CustomGenericList<ItemCOinSView> list = helper.ExecuteReader(command);
+                    List<ItemCOinSView> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list[0];
@@ -48,7 +49,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemCOinSView> helper = new CustomSqlHelper<ItemCOinSView>())
                 {
-                    CustomGenericList<ItemCOinSView> list = helper.ExecuteReader(command);
+                    List<ItemCOinSView> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list[0];

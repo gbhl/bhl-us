@@ -3,7 +3,6 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -216,7 +215,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<Book> helper = new CustomSqlHelper<Book>())
 				{
-					CustomGenericList<Book> list = helper.ExecuteReader(command);
+					List<Book> list = helper.ExecuteReader(command);
 					if (list.Count > 0)
 					{
 						Book book = (Book)list[0];

@@ -1,34 +1,34 @@
-﻿using System;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<DOI> DOISelectSubmitted(int minutesSinceSubmit)
+        public List<DOI> DOISelectSubmitted(int minutesSinceSubmit)
         {
             return new DOIDAL().DOISelectSubmitted(null, null, minutesSinceSubmit);
         }
 
-        public CustomGenericList<DOI> DOISelectValidForTitle(int titleID)
+        public List<DOI> DOISelectValidForTitle(int titleID)
         {
             return new DOIDAL().DOISelectValidForTitle(null, null, titleID);
         }
 
-        public CustomGenericList<DOI> DOISelectValidForSegment(int segmentID)
+        public List<DOI> DOISelectValidForSegment(int segmentID)
         {
             return new DOIDAL().DOISelectValidForSegment(null, null, segmentID);
         }
 
-        public CustomGenericList<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> TitleSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new TitleDAL().TitleSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
 
-        public CustomGenericList<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
+        public List<DOI> SegmentSelectWithoutSubmittedDOI(int numberToReturn)
         {
             return new SegmentDAL().SegmentSelectWithoutSubmittedDOI(null, null, numberToReturn);
         }
@@ -40,7 +40,7 @@ namespace MOBOT.BHL.Server
                 doiEntityTypeId, entityId, doiStatusId, doiBatchId, doiName, DateTime.Now, message, isValid);
         }
 
-        public CustomGenericList<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
+        public List<DOI> DOISelectByStatus(int doiStatusId, int numRows, int pageNum, string sortColumn, string sortOrder)
         {
             return new DOIDAL().DOISelectByStatus(null, null, doiStatusId, numRows, pageNum, sortColumn, sortOrder);
         }
@@ -87,7 +87,7 @@ namespace MOBOT.BHL.Server
             return this.DOIUpdateStatus(doiID, doiStatusID, null, null, doiBatchID, null);
         }
 
-        public CustomGenericList<DOIStatus> DOIStatusSelectAll()
+        public List<DOIStatus> DOIStatusSelectAll()
         {
             return new DOIDAL().DOIStatusSelectAll(null, null);
         }

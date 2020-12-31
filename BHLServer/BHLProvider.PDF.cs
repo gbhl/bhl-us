@@ -15,27 +15,27 @@ namespace MOBOT.BHL.Server
                 articleTitle, articleCreators, articleTags, pageIDs);
         }
 
-        public CustomGenericList<PDF> PDFSelectForFileCreation()
+        public List<PDF> PDFSelectForFileCreation()
         {
             return new PDFDAL().PDFSelectForFileCreation(null, null);
         }
 
-        public CustomGenericList<PDF> PDFSelectForDeletion()
+        public List<PDF> PDFSelectForDeletion()
         {
             return new PDFDAL().PDFSelectForDeletion(null, null);
         }
 
-        public CustomGenericList<PDF> PDFSelectDuplicateForPdfID(int pdfId)
+        public List<PDF> PDFSelectDuplicateForPdfID(int pdfId)
         {
             return new PDFDAL().PDFSelectDuplicateForPdfID(null, null, pdfId);
         }
 
-        public CustomGenericList<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId)
+        public List<PageSummaryView> PDFPageSummaryViewSelectByPdfID(int pdfId)
         {
             return new PDFPageDAL().PDFPageSummaryViewSelectByPdfID(null, null, pdfId);
         }
 
-        public CustomGenericList<PDF> PDFSelectForWeekAndStatus(int year, int week, int pdfStatusId)
+        public List<PDF> PDFSelectForWeekAndStatus(int year, int week, int pdfStatusId)
         {
             return new PDFDAL().PDFSelectForWeekAndStatus(null, null, year, week, pdfStatusId);
         }

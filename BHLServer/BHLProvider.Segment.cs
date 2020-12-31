@@ -14,47 +14,47 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectAuto(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSimpleSelectByAuthor(int authorID)
+        public List<Segment> SegmentSimpleSelectByAuthor(int authorID)
         {
             return new SegmentDAL().SegmentSimpleSelectByAuthor(null, null, authorID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectForAuthorID(int authorID)
+        public List<Segment> SegmentSelectForAuthorID(int authorID)
         {
             return new SegmentDAL().SegmentSelectForAuthorID(null, null, authorID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByDateRange(string startDate, string endDate)
+        public List<Segment> SegmentSelectByDateRange(string startDate, string endDate)
         {
             return new SegmentDAL().SegmentSelectByDateRange(null, null, startDate, endDate);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByTitleLike(string title)
+        public List<Segment> SegmentSelectByTitleLike(string title)
         {
             return new SegmentDAL().SegmentSelectByTitleLike(null, null, title);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByTitleNotLike(string title)
+        public List<Segment> SegmentSelectByTitleNotLike(string title)
         {
             return new SegmentDAL().SegmentSelectByTitleNotLike(null, null, title);
         }
 
-        public CustomGenericList<Segment> SegmentSelectForKeyword(string keyword)
+        public List<Segment> SegmentSelectForKeyword(string keyword)
         {
             return new SegmentDAL().SegmentSelectForKeyword(null, null, keyword);
         }
 
-        public CustomGenericList<Segment> SegmentSelectByItemID(int itemID)
+        public List<Segment> SegmentSelectByItemID(int itemID)
         {
             return new SegmentDAL().SegmentSelectByItemID(null, null, itemID, 0);
         }
 
-        public CustomGenericList<TitleBibTeX> SegmentSelectAllBibTeXCitations()
+        public List<TitleBibTeX> SegmentSelectAllBibTeXCitations()
         {
             return new SegmentDAL().SegmentSelectAllBibTeXCitations(null, null);
         }
 
-        public CustomGenericList<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
+        public List<TitleBibTeX> SegmentSelectBibTeXForSegmentID(int segmentID, short includeNoContent)
         {
             return new SegmentDAL().SegmentSelectBibTexForSegmentID(null, null, segmentID, includeNoContent);
         }
@@ -62,7 +62,7 @@ namespace MOBOT.BHL.Server
         public String SegmentBibTeXGetCitationStringForSegmentID(int segmentID, bool includeNoContent)
         {
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-            CustomGenericList<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
+            List<TitleBibTeX> citations = this.SegmentSelectBibTeXForSegmentID(segmentID, (short)(includeNoContent ? 1 : 0));
             foreach (TitleBibTeX citation in citations)
             {
                 string journal = String.Empty;
@@ -107,7 +107,7 @@ namespace MOBOT.BHL.Server
             return bibtexString.ToString();
         }
 
-        public CustomGenericList<RISCitation> SegmentSelectAllRISCitations()
+        public List<RISCitation> SegmentSelectAllRISCitations()
         {
             return new SegmentDAL().SegmentSelectAllRISCitations(null, null);
         }
@@ -115,7 +115,7 @@ namespace MOBOT.BHL.Server
         public String SegmentGetRISCitationStringForSegmentID(int segmentID)
         {
             System.Text.StringBuilder risString = new System.Text.StringBuilder("");
-            CustomGenericList<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
+            List<RISCitation> citations = new SegmentDAL().SegmentSelectRISCitationForSegmentID(null, null, segmentID);
             foreach (RISCitation citation in citations)
             {
                 risString.Append(this.GenerateRISCitation(citation));
@@ -128,7 +128,7 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectForSegmentID(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectPublished()
+        public List<Segment> SegmentSelectPublished()
         {
             return new SegmentDAL().SegmentSelectPublished(null, null);
         }
@@ -143,7 +143,7 @@ namespace MOBOT.BHL.Server
             return new SegmentDAL().SegmentSelectExtended(null, null, segmentID);
         }
 
-        public CustomGenericList<Segment> SegmentSelectRelated(int segmentID)
+        public List<Segment> SegmentSelectRelated(int segmentID)
         {
             return new SegmentDAL().SegmentSelectRelated(null, null, segmentID);
         }

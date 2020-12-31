@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ItemStatusDAL
+    public partial class ItemStatusDAL
 	{
-		public CustomGenericList<ItemStatus> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
+		public List<ItemStatus> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
@@ -17,7 +17,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<ItemStatus> helper = new CustomSqlHelper<ItemStatus>() )
 				{
-					CustomGenericList<ItemStatus> list = helper.ExecuteReader( command );
+					List<ItemStatus> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}

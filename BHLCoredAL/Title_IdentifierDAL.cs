@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class Title_IdentifierDAL
+    public partial class Title_IdentifierDAL
 	{
-        public CustomGenericList<Title_Identifier> Title_IdentifierSelectByTitleID(
+        public List<Title_Identifier> Title_IdentifierSelectByTitleID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int titleID,
@@ -24,7 +24,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Title_Identifier> helper = new CustomSqlHelper<Title_Identifier>())
                 {
-                    CustomGenericList<Title_Identifier> list = helper.ExecuteReader(command);
+                    List<Title_Identifier> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

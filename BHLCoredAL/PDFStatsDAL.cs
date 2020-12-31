@@ -1,14 +1,14 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
-using CustomDataAccess;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
     public partial class PDFStatsDAL
     {
-        public CustomGenericList<PDFStats> PDFStatsSelectOverview(
+        public List<PDFStats> PDFStatsSelectOverview(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -17,8 +17,8 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFStatsSelectOverview", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<PDFStats> listOfStats = new CustomGenericList<PDFStats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<PDFStats> listOfStats = new List<PDFStats>();
                 foreach (CustomDataRow row in list)
                 {
                     PDFStats stats = new PDFStats();
@@ -36,7 +36,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<PDFStats> PDFStatsSelectExpanded(
+        public List<PDFStats> PDFStatsSelectExpanded(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction)
         {
@@ -45,8 +45,8 @@ namespace MOBOT.BHL.DAL
 
             using (SqlCommand command = CustomSqlHelper.CreateCommand("PDFStatsSelectExpanded", connection, transaction))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
-                CustomGenericList<PDFStats> listOfStats = new CustomGenericList<PDFStats>();
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<PDFStats> listOfStats = new List<PDFStats>();
                 foreach (CustomDataRow row in list)
                 {
                     PDFStats stats = new PDFStats();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -7,7 +8,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class TitleCollectionDAL
 	{
-        public CustomGenericList<TitleCollection> SelectByTitle(SqlConnection sqlConnection,
+        public List<TitleCollection> SelectByTitle(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -19,7 +20,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleCollection> helper = new CustomSqlHelper<TitleCollection>())
                 {
-                    CustomGenericList<TitleCollection> list = helper.ExecuteReader(command);
+                    List<TitleCollection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -87,7 +88,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<TitleCollection> TitleCollectionSelectByTitleAndCollection(
+        public List<TitleCollection> TitleCollectionSelectByTitleAndCollection(
             SqlConnection sqlConnection, SqlTransaction sqlTransaction, int titleId, int collectionID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -101,7 +102,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleCollection> helper = new CustomSqlHelper<TitleCollection>())
                 {
-                    CustomGenericList<TitleCollection> list = helper.ExecuteReader(command);
+                    List<TitleCollection> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

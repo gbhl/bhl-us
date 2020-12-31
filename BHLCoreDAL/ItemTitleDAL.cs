@@ -3,7 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ItemTitleDAL
+    public partial class ItemTitleDAL
 	{
         /// <summary>
         /// Update the ItemSequence for the specified ItemTitle.
@@ -36,7 +36,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
                 {
-                    CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+                    List<ItemTitle> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -45,7 +45,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<ItemTitle> ItemTitleSelectByItem(
+        public List<ItemTitle> ItemTitleSelectByItem(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int itemID)
@@ -57,13 +57,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
                 {
-                    CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+                    List<ItemTitle> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<ItemTitle> ItemTitleSelectByTitle(
+        public List<ItemTitle> ItemTitleSelectByTitle(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int titleID)
@@ -75,7 +75,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemTitle> helper = new CustomSqlHelper<ItemTitle>())
                 {
-                    CustomGenericList<ItemTitle> list = helper.ExecuteReader(command);
+                    List<ItemTitle> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

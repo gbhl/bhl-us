@@ -1,7 +1,7 @@
-﻿using System;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -17,7 +17,7 @@ namespace MOBOT.BHL.Server
             return new MarcImportBatchDAL().MarcImportBatchDeleteAuto(null, null, batchID);
         }
 
-        public CustomGenericList<MarcImportBatch> MarcImportBatchSelectStatsByInstitution(String institutionCode)
+        public List<MarcImportBatch> MarcImportBatchSelectStatsByInstitution(String institutionCode)
         {
             return new MarcImportBatchDAL().MarcImportBatchSelectStatsByInstitution(null, null, institutionCode);
         }

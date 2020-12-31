@@ -8,7 +8,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class InstitutionGroupDAL
 	{
-		public CustomGenericList<InstitutionGroup> InstitutionGroupSelectAll(
+		public List<InstitutionGroup> InstitutionGroupSelectAll(
 			SqlConnection sqlConnection,
 			SqlTransaction sqlTransaction)
 		{
@@ -18,7 +18,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroup> helper = new CustomSqlHelper<InstitutionGroup>())
 				{
-					CustomGenericList<InstitutionGroup> list = helper.ExecuteReader(command);
+					List<InstitutionGroup> list = helper.ExecuteReader(command);
 					return (list);
 				}
 			}
@@ -36,7 +36,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using (CustomSqlHelper<InstitutionGroupInstitution> helper = new CustomSqlHelper<InstitutionGroupInstitution>())
 				{
-					CustomGenericList<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
+					List<InstitutionGroupInstitution> list = helper.ExecuteReader(command);
 					return (list);
 				}
 			}

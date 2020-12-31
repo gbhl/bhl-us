@@ -1,17 +1,18 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ConfigurationDAL
+    public partial class ConfigurationDAL
 	{
         public Configuration ConfigurationSelectByName(
             SqlConnection sqlConnection, 
@@ -27,7 +28,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Configuration> helper = new CustomSqlHelper<Configuration>())
                 {
-                    CustomGenericList<Configuration> list = helper.ExecuteReader(command);
+                    List<Configuration> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

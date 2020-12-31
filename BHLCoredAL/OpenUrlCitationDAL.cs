@@ -1,14 +1,14 @@
-﻿using System;
+﻿using CustomDataAccess;
+using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CustomDataAccess;
-using MOBOT.BHL.DataObjects;
 
 namespace MOBOT.BHL.DAL
 {
     public class OpenUrlCitationDAL
     {
-        public CustomGenericList<OpenUrlCitation> OpenUrlCitationSelectByPageID(
+        public List<OpenUrlCitation> OpenUrlCitationSelectByPageID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int pageID)
@@ -19,12 +19,12 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("OpenUrlCitationSelectByPageID", connection, transaction,
     				CustomSqlHelper.CreateInputParameter( "PageID", SqlDbType.Int, null, true, pageID) ))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return this.GetOpenUrlCitationList(list);
             }
         }
 
-        public CustomGenericList<OpenUrlCitation> OpenUrlCitationSelectBySegmentID(
+        public List<OpenUrlCitation> OpenUrlCitationSelectBySegmentID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int segmentID)
@@ -35,12 +35,12 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("OpenUrlCitationSelectBySegmentID", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("SegmentID", SqlDbType.Int, null, true, segmentID)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return this.GetOpenUrlCitationList(list);
             }
         }
 
-        public CustomGenericList<OpenUrlCitation> OpenUrlCitationSelectByDOI(
+        public List<OpenUrlCitation> OpenUrlCitationSelectByDOI(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string doi)
@@ -51,12 +51,12 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("OpenUrlCitationSelectByDOI", connection, transaction,
                     CustomSqlHelper.CreateInputParameter("DOIName", SqlDbType.NVarChar, 50, false, doi)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return this.GetOpenUrlCitationList(list);
             }
         }
 
-        public CustomGenericList<OpenUrlCitation> OpenUrlCitationSelectByCitationDetails(
+        public List<OpenUrlCitation> OpenUrlCitationSelectByCitationDetails(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int titleID,
@@ -87,12 +87,12 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
                     CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, true, startPage)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return this.GetOpenUrlCitationList(list);
             }
         }
 
-        public CustomGenericList<OpenUrlCitation> OpenUrlCitationSelectByCitationDetailsFT(
+        public List<OpenUrlCitation> OpenUrlCitationSelectByCitationDetailsFT(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int titleID,
@@ -123,7 +123,7 @@ namespace MOBOT.BHL.DAL
                     CustomSqlHelper.CreateInputParameter("Year", SqlDbType.NVarChar, 20, true, year),
                     CustomSqlHelper.CreateInputParameter("StartPage", SqlDbType.NVarChar, 20, true, startPage)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return this.GetOpenUrlCitationList(list);
             }
         }
@@ -133,9 +133,9 @@ namespace MOBOT.BHL.DAL
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        private CustomGenericList<OpenUrlCitation> GetOpenUrlCitationList(CustomGenericList<CustomDataRow> list)
+        private List<OpenUrlCitation> GetOpenUrlCitationList(List<CustomDataRow> list)
         {
-            CustomGenericList<OpenUrlCitation> citations = new CustomGenericList<OpenUrlCitation>();
+            List<OpenUrlCitation> citations = new List<OpenUrlCitation>();
             foreach (CustomDataRow row in list)
             {
                 OpenUrlCitation citation = new OpenUrlCitation();

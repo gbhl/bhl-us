@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -30,7 +31,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 					{
 						return list[ 0 ];
@@ -54,7 +55,7 @@ namespace MOBOT.BHL.DAL
 		/// Page Names are considered to be expired if the LastPageNameLookupDate on the
 		/// Item object is older than the specified number of days.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithExpiredPageNames(
+		public List<Item> ItemSelectWithExpiredPageNames(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction,
 				int maxAge )
@@ -67,7 +68,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -83,7 +84,7 @@ namespace MOBOT.BHL.DAL
 		/// Items are considered to not have page names if the LastPageNameLookupDate 
 		/// is null.
 		/// </remarks>
-		public CustomGenericList<Item> ItemSelectWithoutPageNames(
+		public List<Item> ItemSelectWithoutPageNames(
 				SqlConnection sqlConnection,
 				SqlTransaction sqlTransaction )
 		{
@@ -94,13 +95,13 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-		public CustomGenericList<Item> ItemSelectPaginationReport( SqlConnection sqlConnection, 
+		public List<Item> ItemSelectPaginationReport( SqlConnection sqlConnection, 
 			SqlTransaction sqlTransaction, int publishedOnly, string institutionCode, DataTable statusIDs, 
             DateTime startDate, DateTime endDate, int numRows, int pageNum, string sortColumn, string sortDirection)
 		{
@@ -125,7 +126,7 @@ namespace MOBOT.BHL.DAL
 
                 using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -137,7 +138,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> ItemSelectAllRISCitations(
+        public List<RISCitation> ItemSelectAllRISCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -147,7 +148,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -159,7 +160,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> ItemSelectRISCitationsForTitleID(
+        public List<RISCitation> ItemSelectRISCitationsForTitleID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int titleID)
@@ -171,7 +172,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -190,7 +191,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="volume"></param>
         /// <param name="year"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Item> ItemResolve(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string title, string issn, string isbn, string oclc, string volume, string issue, string year)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -208,7 +209,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -235,7 +236,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>() )
 				{
-					CustomGenericList<Item> list = helper.ExecuteReader( command );
+					List<Item> list = helper.ExecuteReader( command );
 					if ( list.Count > 0 )
 						return list[ 0 ];
 					else
@@ -256,7 +257,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -370,7 +371,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return items</param>
         /// <param name="maxAge">Age in days of items to consider (i.e. items new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(
+        public List<ItemSuspectCharacter> ItemSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -384,7 +385,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ItemSuspectCharacter> helper = new CustomSqlHelper<ItemSuspectCharacter>())
                 {
-                    CustomGenericList<ItemSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<ItemSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -408,7 +409,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection"></param>
         /// <param name="sqlTransaction"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemSelectPublished(
+        public List<Item> ItemSelectPublished(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction
             )
@@ -419,13 +420,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<NonMemberMonograph> ItemSelectNonMemberMonograph(
+        public List<NonMemberMonograph> ItemSelectNonMemberMonograph(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string sinceDate,
@@ -443,7 +444,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NonMemberMonograph> helper = new CustomSqlHelper<NonMemberMonograph>())
                 {
-                    CustomGenericList<NonMemberMonograph> list = helper.ExecuteReader(command);
+                    List<NonMemberMonograph> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -462,7 +463,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<Item> ItemSelectBarcodes(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<Item> ItemSelectBarcodes(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
                 CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -472,7 +473,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> barcodes = helper.ExecuteReader(command);
+                    List<Item> barcodes = helper.ExecuteReader(command);
                     return barcodes;
                 }
             }
@@ -486,7 +487,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="titleId"></param>
         /// <returns></returns>
-        public CustomGenericList<Item> ItemInFlickrByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<Item> ItemInFlickrByTitleID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int titleId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -497,7 +498,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -521,7 +522,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list == null || list.Count == 0)
                         return null;
                     else
@@ -541,7 +542,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
                     if (list == null || list.Count == 0)
                         return null;
                     else

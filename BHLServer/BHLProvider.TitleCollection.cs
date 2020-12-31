@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -32,7 +32,7 @@ namespace MOBOT.BHL.Server
             TitleCollectionDAL dal = new TitleCollectionDAL();
             TitleCollection titleCollection = null;
 
-            CustomGenericList<TitleCollection> titles = dal.TitleCollectionSelectByTitleAndCollection(null, null, titleID, collectionID);
+            List<TitleCollection> titles = dal.TitleCollectionSelectByTitleAndCollection(null, null, titleID, collectionID);
             if (titles.Count == 0) titleCollection = dal.TitleCollectionInsertAuto(null, null, titleID, collectionID);
 
             return titleCollection;

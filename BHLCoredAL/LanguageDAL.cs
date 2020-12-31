@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class LanguageDAL
+    public partial class LanguageDAL
 	{
-		public CustomGenericList<Language> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
+		public List<Language> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection( 
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
@@ -18,13 +18,13 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Language> helper = new CustomSqlHelper<Language>() )
 				{
-					CustomGenericList<Language> list = helper.ExecuteReader( command );
+					List<Language> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
 		}
 
-        public CustomGenericList<Language> LanguageSelectWithPublishedItems(
+        public List<Language> LanguageSelectWithPublishedItems(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction)
         {
@@ -34,7 +34,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Language> helper = new CustomSqlHelper<Language>())
                 {
-                    CustomGenericList<Language> list = helper.ExecuteReader(command);
+                    List<Language> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

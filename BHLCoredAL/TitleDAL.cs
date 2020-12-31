@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -31,7 +32,7 @@ namespace MOBOT.BHL.DAL
 					}
 				}
 
-                CustomGenericList<DOI> dois = new DOIDAL().DOISelectValidForTitle(connection, transaction, titleId);
+                List<DOI> dois = new DOIDAL().DOISelectValidForTitle(connection, transaction, titleId);
                 foreach (DOI doi in dois)
                 {
                     // Grab the first DOI for the segment (by the very nature of DOIs, there should only be one)
@@ -69,7 +70,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAll(
+		public List<Title> TitleSelectAll(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction )
 		{
@@ -79,7 +80,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>() )
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader( command );
+					List<Title> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -91,7 +92,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAllPublished(
+		public List<Title> TitleSelectAllPublished(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction )
 		{
@@ -102,7 +103,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>() )
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader( command );
+					List<Title> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -114,7 +115,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAllNonPublished(
+		public List<Title> TitleSelectAllNonPublished(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction )
 		{
@@ -125,7 +126,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>() )
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader( command );
+					List<Title> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -137,7 +138,7 @@ namespace MOBOT.BHL.DAL
 		/// <param name="sqlConnection">Sql connection or null.</param>
 		/// <param name="sqlTransaction">Sql transaction or null.</param>
 		/// <returns>Object of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectSearchName(
+		public List<Title> TitleSelectSearchName(
 						SqlConnection sqlConnection,
 						SqlTransaction sqlTransaction,
                         string name, 
@@ -154,7 +155,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>() )
 				{
-					CustomGenericList<Title> list = helper.ExecuteReader( command );
+					List<Title> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -162,7 +163,7 @@ namespace MOBOT.BHL.DAL
 
 		#endregion
 
-		public CustomGenericList<Title> TitleSearch( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+		public List<Title> TitleSearch( SqlConnection sqlConnection, SqlTransaction sqlTransaction,
 			TitleSearchCriteria tsc )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -199,14 +200,14 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<int> helper = new CustomSqlHelper<int>() )
 				{
-					CustomGenericList<int> k = helper.ExecuteReader( command );
+					List<int> k = helper.ExecuteReader( command );
 
 					return k[ 0 ];
 				}
 			}
 		}
 
-        public CustomGenericList<CreatorTitle> TitleSimpleSelectByAuthor(SqlConnection sqlConnection,
+        public List<CreatorTitle> TitleSimpleSelectByAuthor(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int authorId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -218,7 +219,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<CreatorTitle> helper = new CustomSqlHelper<CreatorTitle>())
                 {
-                    CustomGenericList<CreatorTitle> list = helper.ExecuteReader(command);
+                    List<CreatorTitle> list = helper.ExecuteReader(command);
 
                     return list;
                 }
@@ -232,7 +233,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="itemID">Identifier of the item for which to get titles</param>
         /// <returns>Object of type Title.</returns>
-        public CustomGenericList<Title> TitleSelectByItem(
+        public List<Title> TitleSelectByItem(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int itemID)
@@ -244,7 +245,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
                 {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    List<Title> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -256,7 +257,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllItemCitations(
+        public List<TitleBibTeX> TitleBibTeXSelectAllItemCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -266,7 +267,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -278,7 +279,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllTitleCitations(
+        public List<TitleBibTeX> TitleBibTeXSelectAllTitleCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -288,7 +289,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -301,7 +302,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="titleId">Title identifier for which to get BibTex data</param>
         /// <returns>List of type TitleBibTeX.</returns>
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectForTitleID(
+        public List<TitleBibTeX> TitleBibTeXSelectForTitleID(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction,
                         int titleId)
@@ -313,7 +314,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleBibTeX> helper = new CustomSqlHelper<TitleBibTeX>())
                 {
-                    CustomGenericList<TitleBibTeX> list = helper.ExecuteReader(command);
+                    List<TitleBibTeX> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -325,7 +326,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of type RISCitation.</returns>
-        public CustomGenericList<RISCitation> TitleSelectAllRISCitations(
+        public List<RISCitation> TitleSelectAllRISCitations(
                         SqlConnection sqlConnection,
                         SqlTransaction sqlTransaction)
         {
@@ -335,7 +336,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<RISCitation> helper = new CustomSqlHelper<RISCitation>())
                 {
-                    CustomGenericList<RISCitation> list = helper.ExecuteReader(command);
+                    List<RISCitation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -362,7 +363,7 @@ namespace MOBOT.BHL.DAL
                 updatedTitle = new TitleDAL().TitleManageAuto( connection, transaction, title, userId );
 
                 DOIDAL doiDAL = new DOIDAL();
-                CustomGenericList<DOI> doiList = doiDAL.DOISelectValidForTitle(connection, transaction, title.TitleID);
+                List<DOI> doiList = doiDAL.DOISelectValidForTitle(connection, transaction, title.TitleID);
 
                 DOI doi = null;
                 if (doiList.Count == 0)
@@ -567,7 +568,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="institutionCode">Institution for which to return titles</param>
         /// <param name="maxAge">Age in days of titles to consider (i.e. titles new in the last 30 days)</param>
         /// <returns></returns>
-        public CustomGenericList<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(
+        public List<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 String institutionCode,
@@ -581,7 +582,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleSuspectCharacter> helper = new CustomSqlHelper<TitleSuspectCharacter>())
                 {
-                    CustomGenericList<TitleSuspectCharacter> list = helper.ExecuteReader(command);
+                    List<TitleSuspectCharacter> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -594,7 +595,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="sqlTransaction"></param>
         /// <param name="collectionID"></param>
         /// <returns></returns>
-        public CustomGenericList<Title> TitleSelectByCollection(
+        public List<Title> TitleSelectByCollection(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int collectionID)
@@ -607,13 +608,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
                 {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    List<Title> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<DOI> TitleSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
+        public List<DOI> TitleSelectWithoutSubmittedDOI(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int numberToReturn)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -624,7 +625,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<DOI> helper = new CustomSqlHelper<DOI>())
                 {
-                    CustomGenericList<DOI> list = helper.ExecuteReader(command);
+                    List<DOI> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -19,7 +20,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<OAIIdentifier> OAIIdentifierSelectItems(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<OAIIdentifier> OAIIdentifierSelectItems(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate, Int16 includeLocalContent, Int16 includeExternalContent)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -35,7 +36,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
-                    CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
+                    List<OAIIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -52,7 +53,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<OAIIdentifier> OAIIdentifierSelectPDFs(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<OAIIdentifier> OAIIdentifierSelectPDFs(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -66,7 +67,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
-                    CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
+                    List<OAIIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -83,7 +84,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<OAIIdentifier> OAIIdentifierSelectTitles(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<OAIIdentifier> OAIIdentifierSelectTitles(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -97,7 +98,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
-                    CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
+                    List<OAIIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -114,7 +115,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<OAIIdentifier> OAIIdentifierSelectSegments(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<OAIIdentifier> OAIIdentifierSelectSegments(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int maxIdentifiers, int startId, DateTime? fromDate, DateTime? untilDate, Int16 includeLocalContent, Int16 includeExternalContent)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -130,7 +131,7 @@ namespace MOBOT.BHL.DAL
            {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
-                    CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
+                    List<OAIIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -148,7 +149,7 @@ namespace MOBOT.BHL.DAL
         /// <param name="fromDate"></param>
         /// <param name="untilDate"></param>
         /// <returns></returns>
-        public CustomGenericList<OAIIdentifier> OAIIdentifierSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<OAIIdentifier> OAIIdentifierSelectAll(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int maxIdentifiers, int startId, String set, DateTime? fromDate, DateTime? untilDate)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -163,7 +164,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<OAIIdentifier> helper = new CustomSqlHelper<OAIIdentifier>())
                 {
-                    CustomGenericList<OAIIdentifier> list = helper.ExecuteReader(command);
+                    List<OAIIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

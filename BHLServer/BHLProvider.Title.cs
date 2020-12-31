@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
@@ -16,7 +17,7 @@ namespace MOBOT.BHL.Server
 		/// Select all values from Title.
 		/// </summary>
 		/// <returns>Objects of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAll()
+		public List<Title> TitleSelectAll()
 		{
 			return ( new TitleDAL().TitleSelectAll( null, null ) );
 		}
@@ -30,7 +31,7 @@ namespace MOBOT.BHL.Server
 		/// Select all values from Title.
 		/// </summary>
 		/// <returns>Objects of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAllNonPublished()
+		public List<Title> TitleSelectAllNonPublished()
 		{
 			return ( new TitleDAL().TitleSelectAllNonPublished( null, null ) );
 		}
@@ -39,7 +40,7 @@ namespace MOBOT.BHL.Server
 		/// Select all values from Title.
 		/// </summary>
 		/// <returns>Objects of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectAllPublished()
+		public List<Title> TitleSelectAllPublished()
 		{
 			return ( new TitleDAL().TitleSelectAllPublished( null, null ) );
 		}
@@ -48,7 +49,7 @@ namespace MOBOT.BHL.Server
 		/// Select all values from Title like a particular string.
 		/// </summary>
 		/// <returns>Objects of type Title.</returns>
-		public CustomGenericList<Title> TitleSelectSearchName( string name, string languageCode, int returnCount )
+		public List<Title> TitleSelectSearchName( string name, string languageCode, int returnCount )
 		{
 			return ( new TitleDAL().TitleSelectSearchName( null, null, name, languageCode, returnCount ) );
 		}
@@ -68,7 +69,7 @@ namespace MOBOT.BHL.Server
 			return new TitleDAL().TitleSelectExtended( null, null, titleId );
 		}
 
-        public CustomGenericList<CreatorTitle> TitleSimpleSelectByAuthor(int authorId)
+        public List<CreatorTitle> TitleSimpleSelectByAuthor(int authorId)
         {
             return (new TitleDAL().TitleSimpleSelectByAuthor(null, null, authorId));
         }
@@ -77,22 +78,22 @@ namespace MOBOT.BHL.Server
         /// Select all Titles for the specified Item.
         /// </summary>
         /// <returns>Objects of type Title.</returns>
-        public CustomGenericList<Title> TitleSelectByItem(int itemID)
+        public List<Title> TitleSelectByItem(int itemID)
         {
             return (new TitleDAL().TitleSelectByItem(null, null, itemID));
         }
 
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllTitleCitations()
+        public List<TitleBibTeX> TitleBibTeXSelectAllTitleCitations()
         {
             return (new TitleDAL().TitleBibTeXSelectAllTitleCitations(null, null));
         }
 
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectAllItemCitations()
+        public List<TitleBibTeX> TitleBibTeXSelectAllItemCitations()
         {
             return (new TitleDAL().TitleBibTeXSelectAllItemCitations(null, null));
         }
 
-        public CustomGenericList<TitleBibTeX> TitleBibTeXSelectForTitleID(int titleID)
+        public List<TitleBibTeX> TitleBibTeXSelectForTitleID(int titleID)
         {
             return (new TitleDAL().TitleBibTeXSelectForTitleID(null, null, titleID));
         }
@@ -100,10 +101,10 @@ namespace MOBOT.BHL.Server
         public String TitleBibTeXGetCitationStringForTitleID(int titleID)
         {
             System.Text.StringBuilder bibtexString = new System.Text.StringBuilder("");
-            CustomGenericList<TitleBibTeX> citations = this.TitleBibTeXSelectForTitleID(titleID);
+            List<TitleBibTeX> citations = this.TitleBibTeXSelectForTitleID(titleID);
             foreach (TitleBibTeX citation in citations)
             {
-                CustomGenericList<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);
+                List<TitleNote> titleNotes = this.TitleNoteSelectByTitleID(titleID);
 
                 String volume = citation.Volume;
                 String copyrightStatus = citation.CopyrightStatus;
@@ -135,18 +136,18 @@ namespace MOBOT.BHL.Server
             return bibtexString.ToString();
         }
 
-        public CustomGenericList<RISCitation> TitleSelectAllRISCitations()
+        public List<RISCitation> TitleSelectAllRISCitations()
         {
             return new TitleDAL().TitleSelectAllRISCitations(null, null);
         }
 
         #endregion
 
-        public CustomGenericList<Title> TitleSearchPaging(TitleSearchCriteria criteria)
+        public List<Title> TitleSearchPaging(TitleSearchCriteria criteria)
         {
             if (criteria.ItemSearch)
             {
-                CustomGenericList<Title> titles = new CustomGenericList<Title>();
+                List<Title> titles = new List<Title>();
 
                 if (criteria.ItemID != null)
                 { 
@@ -247,12 +248,12 @@ namespace MOBOT.BHL.Server
             return new TitleDAL().Save( null, null, title, userId );
 		}
 
-        public CustomGenericList<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(String institutionCode, int maxAge)
+        public List<TitleSuspectCharacter> TitleSelectWithSuspectCharacters(String institutionCode, int maxAge)
         {
             return new TitleDAL().TitleSelectWithSuspectCharacters(null, null, institutionCode, maxAge);
         }
 
-        public CustomGenericList<Title> TitleSelectByCollection(int collectionID)
+        public List<Title> TitleSelectByCollection(int collectionID)
         {
             return new TitleDAL().TitleSelectByCollection(null, null, collectionID);
         }

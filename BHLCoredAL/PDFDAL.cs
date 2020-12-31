@@ -69,7 +69,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<PDF> PDFSelectForFileCreation(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<PDF> PDFSelectForFileCreation(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -78,13 +78,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
                 {
-                    CustomGenericList<PDF> list = helper.ExecuteReader(command);
+                    List<PDF> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<PDF> PDFSelectForDeletion(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
+        public List<PDF> PDFSelectForDeletion(SqlConnection sqlConnection, SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -93,13 +93,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
                 {
-                    CustomGenericList<PDF> list = helper.ExecuteReader(command);
+                    List<PDF> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<PDF> PDFSelectDuplicateForPdfID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<PDF> PDFSelectDuplicateForPdfID(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int PdfId)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -110,13 +110,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
                 {
-                    CustomGenericList<PDF> list = helper.ExecuteReader(command);
+                    List<PDF> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
         }
 
-        public CustomGenericList<PDF> PDFSelectForWeekAndStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<PDF> PDFSelectForWeekAndStatus(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int year,
             int week,
             int pdfStatusId)
@@ -131,7 +131,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
                 {
-                    CustomGenericList<PDF> list = helper.ExecuteReader(command);
+                    List<PDF> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -175,7 +175,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PDF> helper = new CustomSqlHelper<PDF>())
                 {
-                    CustomGenericList<PDF> list = helper.ExecuteReader(command);
+                    List<PDF> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         PDF o = list[0];

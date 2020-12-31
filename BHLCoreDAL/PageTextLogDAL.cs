@@ -1,6 +1,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -8,7 +9,7 @@ namespace MOBOT.BHL.DAL
 {
     public partial class PageTextLogDAL
 	{
-        public CustomGenericList<PageTextLog> PageTextLogSelectForItem(
+        public List<PageTextLog> PageTextLogSelectForItem(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int itemID)
@@ -21,7 +22,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
                 {
-                    CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+                    List<PageTextLog> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -46,7 +47,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<PageTextLog> PageTextLogSelectNonOCRForItem(
+        public List<PageTextLog> PageTextLogSelectNonOCRForItem(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int itemID)
@@ -59,7 +60,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<PageTextLog> helper = new CustomSqlHelper<PageTextLog>())
                 {
-                    CustomGenericList<PageTextLog> list = helper.ExecuteReader(command);
+                    List<PageTextLog> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

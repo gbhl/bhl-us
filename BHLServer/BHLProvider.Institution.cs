@@ -1,11 +1,10 @@
-using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
 using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
 		private InstitutionDAL institutionDal = null;
 
@@ -13,7 +12,7 @@ namespace MOBOT.BHL.Server
 		/// Select values from Institution.
 		/// </summary>
 		/// <returns>Object of type Institution.</returns>
-		public CustomGenericList<Institution> InstituationSelectAll()
+		public List<Institution> InstituationSelectAll()
 		{
 			return ( GetInstitutionDalInstance().InstitutionSelectAll( null, null ) );
 		}
@@ -23,32 +22,32 @@ namespace MOBOT.BHL.Server
             return GetInstitutionDalInstance().InstitutionSelectWithGroups(null, null, institutionCode);
         }
 
-        public CustomGenericList<Institution> InstitutionSelectByItemID( int itemID )
+        public List<Institution> InstitutionSelectByItemID( int itemID )
 		{
 			return GetInstitutionDalInstance().InstitutionSelectByItemID( null, null, itemID );
 		}
 
-        public CustomGenericList<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
+        public List<Institution> InstitutionSelectByItemIDAndRole(int itemID, string role)
         {
             return GetInstitutionDalInstance().InstitutionSelectByItemIDAndRole(null, null, itemID, role);
         }
 
-        public CustomGenericList<Institution> InstitutionSelectByTitleID(int titleID)
+        public List<Institution> InstitutionSelectByTitleID(int titleID)
         {
             return GetInstitutionDalInstance().InstitutionSelectByTitleID(null, null, titleID);
         }
 
-        public CustomGenericList<Institution> InstitutionSelectWithPublishedItems(bool onlyMemberLibraries, string institutionRoleName = null)
+        public List<Institution> InstitutionSelectWithPublishedItems(bool onlyMemberLibraries, string institutionRoleName = null)
         {
             return ( GetInstitutionDalInstance().InstitutionSelectWithPublishedItems(null, null, onlyMemberLibraries, institutionRoleName) );
         }
 
-        public CustomGenericList<Institution> InstitutionSelectWithPublishedSegments(bool onlyMemberLibraries, string institutionRoleName = null)
+        public List<Institution> InstitutionSelectWithPublishedSegments(bool onlyMemberLibraries, string institutionRoleName = null)
         {
             return (GetInstitutionDalInstance().InstitutionSelectWithPublishedSegments(null, null, onlyMemberLibraries, institutionRoleName));
         }
 
-        public CustomGenericList<Institution> InstitutionSelectDOIStats(int sortBy, int bhlOnly)
+        public List<Institution> InstitutionSelectDOIStats(int sortBy, int bhlOnly)
         {
             return (GetInstitutionDalInstance().InstitutionSelectDOIStats(null, null, sortBy, bhlOnly));
         }
@@ -63,12 +62,12 @@ namespace MOBOT.BHL.Server
 			return institutionDal;
 		}
 
-        public CustomGenericList<Institution> ItemHoldingInstitutionSelectByItemID(int itemID)
+        public List<Institution> ItemHoldingInstitutionSelectByItemID(int itemID)
         {
             return new InstitutionDAL().InstitutionSelectByItemIDAndRole(null, null, itemID, InstitutionRole.HoldingInstitution);
         }
 
-        public CustomGenericList<Institution> TitleHoldingInstitutionSelectByTitleID(int titleID)
+        public List<Institution> TitleHoldingInstitutionSelectByTitleID(int titleID)
         {
             return new InstitutionDAL().InstitutionSelectByTitleIDAndRole(null, null, titleID, InstitutionRole.HoldingInstitution);
         }
@@ -88,7 +87,7 @@ namespace MOBOT.BHL.Server
             return new InstitutionRoleDAL().InstitutionRoleSelectAuto(null, null, institutionRoleID);
         }
 
-        public CustomGenericList<InstitutionRole> InstitutionRoleSelectAll()
+        public List<InstitutionRole> InstitutionRoleSelectAll()
         {
             return (GetInstitutionDalInstance().InstitutionRoleSelectAll(null, null));
         }

@@ -1,14 +1,13 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class BibliographicLevelDAL
+    public partial class BibliographicLevelDAL
 	{
-        public CustomGenericList<BibliographicLevel> BibliographicLevelSelectAll(SqlConnection sqlConnection, 
+        public List<BibliographicLevel> BibliographicLevelSelectAll(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -20,7 +19,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<BibliographicLevel> helper = new CustomSqlHelper<BibliographicLevel>())
                 {
-                    CustomGenericList<BibliographicLevel> list = helper.ExecuteReader(command);
+                    List<BibliographicLevel> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

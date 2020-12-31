@@ -1,6 +1,7 @@
 ﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -11,12 +12,12 @@ namespace MOBOT.BHL.Server
             return new CollectionDAL().CollectionSelectAuto(null, null, collectionID);
         }
 
-        public CustomGenericList<Collection> CollectionSelectAll()
+        public List<Collection> CollectionSelectAll()
         {
             return new CollectionDAL().SelectAll(null, null);
         }
 
-        public CustomGenericList<Collection> CollectionSelectActive()
+        public List<Collection> CollectionSelectActive()
         {
             return new CollectionDAL().SelectActive(null, null);
         }
@@ -26,29 +27,29 @@ namespace MOBOT.BHL.Server
             return new CollectionDAL().SelectFeatured(null, null);
         }
 
-        public CustomGenericList<Collection> CollectionSelectByContents(int canContainTitles, int canContainItems)
+        public List<Collection> CollectionSelectByContents(int canContainTitles, int canContainItems)
         {
             return new CollectionDAL().SelectByContents(null, null, canContainTitles, canContainItems);
         }
 
-        public CustomGenericList<Collection> CollectionSelectByNameAndAllowedContent(string collectionName,
+        public List<Collection> CollectionSelectByNameAndAllowedContent(string collectionName,
             short canContainTitles, short canContainItems)
         {
             return new CollectionDAL().CollectionSelectByNameAndAllowedContent(null, null, collectionName,
                 canContainTitles, canContainItems);
         }
 
-        public CustomGenericList<Collection> CollectionSelectByUrl(string collectionUrl)
+        public List<Collection> CollectionSelectByUrl(string collectionUrl)
         {
             return new CollectionDAL().CollectionSelectByUrl(null, null, collectionUrl);
         }
 
-        public CustomGenericList<Collection> CollectionSelectByNameLike(string collectionName)
+        public List<Collection> CollectionSelectByNameLike(string collectionName)
         {
             return new CollectionDAL().CollectionSelectByNameLike(null, null, collectionName);
         }
 
-        public CustomGenericList<Collection> CollectionSelectAllForTitle(int titleID)
+        public List<Collection> CollectionSelectAllForTitle(int titleID)
         {
             return new CollectionDAL().CollectionSelectAllForTitle(null, null, titleID);
         }

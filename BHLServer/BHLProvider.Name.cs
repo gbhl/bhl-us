@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using CustomDataAccess;
+﻿using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<Name> NameSelectByNameString(string name)
+        public List<Name> NameSelectByNameString(string name)
         {
             return new NameDAL().NameSelectByNameString(null, null, name);
         }
@@ -18,7 +17,7 @@ namespace MOBOT.BHL.Server
             return new NameDAL().NameSelectByNameID(null, null, nameId);
         }
 
-        public CustomGenericList<CustomDataRow> NameMetadataSelectByItemID(int itemId)
+        public List<CustomDataRow> NameMetadataSelectByItemID(int itemId)
         {
             return new NameDAL().NameMetadataSelectByItemID(null, null, itemId);
         }

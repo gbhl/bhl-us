@@ -1,6 +1,6 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -11,7 +11,7 @@ namespace MOBOT.BHL.Server
             return new AuthorRoleDAL().AuthorRoleSelectAuto(null, null, authorRoleId);
         }
 
-        public CustomGenericList<AuthorRole> AuthorRoleSelectAll()
+        public List<AuthorRole> AuthorRoleSelectAll()
         {
             return new AuthorRoleDAL().AuthorRoleSelectAll(null, null);
         }

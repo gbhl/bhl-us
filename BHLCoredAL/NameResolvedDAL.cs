@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class NameResolvedDAL
+    public partial class NameResolvedDAL
 	{
-        public CustomGenericList<NameResolved> NameResolvedSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
+        public List<NameResolved> NameResolvedSelectByPageID(SqlConnection sqlConnection, SqlTransaction sqlTransaction, int pageID)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
             SqlTransaction transaction = sqlTransaction;
@@ -28,7 +28,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<NameResolved> NameResolvedSelectByNameLike(SqlConnection sqlConnection, 
+        public List<NameResolved> NameResolvedSelectByNameLike(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, string name, int returnCount )
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -56,7 +56,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<NameResolved> helper = new CustomSqlHelper<NameResolved>())
                 {
-                    CustomGenericList<NameResolved> list = helper.ExecuteReader(command);
+                    List<NameResolved> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else
@@ -65,7 +65,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<CustomDataRow> NameResolvedSearchForPages(SqlConnection sqlConnection,
+        public List<CustomDataRow> NameResolvedSearchForPages(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
@@ -80,12 +80,12 @@ namespace MOBOT.BHL.DAL
                 CustomSqlHelper.CreateInputParameter("SortColumn", SqlDbType.NVarChar, 150, false, sortColumn),
                 CustomSqlHelper.CreateInputParameter("SortDirection", SqlDbType.NVarChar, 4, false, sortDirection)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return list;
             }
         }
 
-        public CustomGenericList<CustomDataRow> NameResolvedSearchForPagesDownload(SqlConnection sqlConnection,
+        public List<CustomDataRow> NameResolvedSearchForPagesDownload(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, string name)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(
@@ -95,7 +95,7 @@ namespace MOBOT.BHL.DAL
             using (SqlCommand command = CustomSqlHelper.CreateCommand("NameResolvedSearchForPagesDownload", connection, transaction,
                 CustomSqlHelper.CreateInputParameter("ResolvedNameString", SqlDbType.NVarChar, 100, false, name)))
             {
-                CustomGenericList<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
+                List<CustomDataRow> list = CustomSqlHelper.ExecuteReaderAndReturnRows(command);
                 return list;
             }
         }

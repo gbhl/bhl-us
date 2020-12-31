@@ -1,12 +1,12 @@
-using CustomDataAccess;
 using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
-	public partial class BHLProvider
+    public partial class BHLProvider
 	{
-		public CustomGenericList<Language> LanguageSelectAll()
+		public List<Language> LanguageSelectAll()
 		{
 			return new LanguageDAL().SelectAll( null, null );
 		}
@@ -16,7 +16,7 @@ namespace MOBOT.BHL.Server
 			return ( new LanguageDAL().LanguageSelectAuto( null, null, languageCode ) );
 		}
 
-        public CustomGenericList<Language> LanguageSelectWithPublishedItems()
+        public List<Language> LanguageSelectWithPublishedItems()
         {
             return (new LanguageDAL().LanguageSelectWithPublishedItems(null, null));
         }
