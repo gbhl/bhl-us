@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CustomDataAccess
 {
@@ -8,7 +9,7 @@ namespace CustomDataAccess
     }
 
     [Serializable]
-    public class CustomDataRow : CustomGenericList<CustomDataColumn>
+    public class CustomDataRow : List<CustomDataColumn>
     {
         public CustomDataColumn this[string name]
         {

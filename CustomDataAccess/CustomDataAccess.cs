@@ -2,12 +2,25 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using Microsoft.Win32;
-using System.Collections.Specialized;
-using System.Text;
 
 namespace CustomDataAccess
 {
+    /// <summary>
+    /// Specifies how elements in a list are sorted.
+    /// </summary>
+    [Serializable]
+    public enum SortOrder
+    {
+        /// <summary>
+        /// The elements are sorted in ascending order.
+        /// </summary>
+        Ascending = 0,
+        /// <summary>
+        /// The elements are sorted in descending order.
+        /// </summary>
+        Descending = 1
+    }
+
     /// <summary>
     /// This Sql Helper based upon a named type provides helper functions assisting in the retrieval of the named type from a data base table.
     /// </summary>
