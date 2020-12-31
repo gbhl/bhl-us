@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 #endregion Using
@@ -13,9 +14,9 @@ namespace MOBOT.BHL.DataObjects
 	{
         #region Properties
 
-        private CustomGenericList<TitleAssociation_TitleIdentifier> _titleAssociationIdentifiers = new CustomGenericList<TitleAssociation_TitleIdentifier>();
+        private List<TitleAssociation_TitleIdentifier> _titleAssociationIdentifiers = new List<TitleAssociation_TitleIdentifier>();
 
-        public CustomGenericList<TitleAssociation_TitleIdentifier> TitleAssociationIdentifiers
+        public List<TitleAssociation_TitleIdentifier> TitleAssociationIdentifiers
         {
             get { return _titleAssociationIdentifiers; }
             set { _titleAssociationIdentifiers = value; }

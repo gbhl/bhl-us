@@ -937,7 +937,7 @@ namespace MOBOT.BHL.Server
             {
                 // Check vaults for imported MARC file
                 Title title = this.TitleSelectAuto(id);
-                CustomGenericList<Vault> vaults = this.VaultSelectAll();
+                List<Vault> vaults = this.VaultSelectAll();
                 foreach (Vault vault in vaults)
                 {
                     if (fileAccessProvider.FileExists(String.Format(ConfigurationManager.AppSettings["MARCXmlLocation"], vault.OCRFolderShare, title.MARCBibID, title.MARCBibID)))

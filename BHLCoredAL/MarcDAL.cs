@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -8,7 +9,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class MarcDAL
 	{
-        public CustomGenericList<Marc> MarcSelectPendingImport(
+        public List<Marc> MarcSelectPendingImport(
                 SqlConnection sqlConnection,
                 SqlTransaction sqlTransaction,
                 int batchID)
@@ -22,13 +23,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Marc> helper = new CustomSqlHelper<Marc>())
                 {
-                    CustomGenericList<Marc> list = helper.ExecuteReader(command);
+                    List<Marc> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<vwMarcDataField> MarcSelectFullDetailsForMarcID(
+        public List<vwMarcDataField> MarcSelectFullDetailsForMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcID)
@@ -42,13 +43,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<vwMarcDataField> helper = new CustomSqlHelper<vwMarcDataField>())
                 {
-                    CustomGenericList<vwMarcDataField> list = helper.ExecuteReader(command);
+                    List<vwMarcDataField> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Marc> MarcSelectForImportByBatchID(
+        public List<Marc> MarcSelectForImportByBatchID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int batchID)
@@ -62,7 +63,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Marc> helper = new CustomSqlHelper<Marc>())
                 {
-                    CustomGenericList<Marc> list = helper.ExecuteReader(command);
+                    List<Marc> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -82,7 +83,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Title> helper = new CustomSqlHelper<Title>())
                 {
-                    CustomGenericList<Title> list = helper.ExecuteReader(command);
+                    List<Title> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list[0];
@@ -95,7 +96,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<TitleKeyword> MarcSelectTitleKeywordsByMarcID(
+        public List<TitleKeyword> MarcSelectTitleKeywordsByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -109,13 +110,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleKeyword> helper = new CustomSqlHelper<TitleKeyword>())
                 {
-                    CustomGenericList<TitleKeyword> list = helper.ExecuteReader(command);
+                    List<TitleKeyword> list = helper.ExecuteReader(command);
                         return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleNote> MarcSelectTitleNotesByMarcID(
+        public List<TitleNote> MarcSelectTitleNotesByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -129,13 +130,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleNote> helper = new CustomSqlHelper<TitleNote>())
                 {
-                    CustomGenericList<TitleNote> list = helper.ExecuteReader(command);
+                    List<TitleNote> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleLanguage> MarcSelectTitleLanguagesByMarcID(
+        public List<TitleLanguage> MarcSelectTitleLanguagesByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -149,13 +150,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleLanguage> helper = new CustomSqlHelper<TitleLanguage>())
                 {
-                    CustomGenericList<TitleLanguage> list = helper.ExecuteReader(command);
+                    List<TitleLanguage> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleAuthor> MarcSelectAuthorsByMarcID(
+        public List<TitleAuthor> MarcSelectAuthorsByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -169,13 +170,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleAuthor> helper = new CustomSqlHelper<TitleAuthor>())
                 {
-                    CustomGenericList<TitleAuthor> list = helper.ExecuteReader(command);
+                    List<TitleAuthor> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<Title_Identifier> MarcSelectTitleIdentifiersByMarcID(
+        public List<Title_Identifier> MarcSelectTitleIdentifiersByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -189,13 +190,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<Title_Identifier> helper = new CustomSqlHelper<Title_Identifier>())
                 {
-                    CustomGenericList<Title_Identifier> list = helper.ExecuteReader(command);
+                    List<Title_Identifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleAssociation> MarcSelectAssociationsByMarcID(
+        public List<TitleAssociation> MarcSelectAssociationsByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -209,13 +210,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleAssociation> helper = new CustomSqlHelper<TitleAssociation>())
                 {
-                    CustomGenericList<TitleAssociation> list = helper.ExecuteReader(command);
+                    List<TitleAssociation> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleAssociation_TitleIdentifier> MarcSelectAssociationIdsByMarcDataFieldID(
+        public List<TitleAssociation_TitleIdentifier> MarcSelectAssociationIdsByMarcDataFieldID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcDataFieldId)
@@ -229,13 +230,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleAssociation_TitleIdentifier> helper = new CustomSqlHelper<TitleAssociation_TitleIdentifier>())
                 {
-                    CustomGenericList<TitleAssociation_TitleIdentifier> list = helper.ExecuteReader(command);
+                    List<TitleAssociation_TitleIdentifier> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<TitleVariant> MarcSelectVariantsByMarcID(
+        public List<TitleVariant> MarcSelectVariantsByMarcID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int marcId)
@@ -249,7 +250,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<TitleVariant> helper = new CustomSqlHelper<TitleVariant>())
                 {
-                    CustomGenericList<TitleVariant> list = helper.ExecuteReader(command);
+                    List<TitleVariant> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

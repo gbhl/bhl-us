@@ -1,10 +1,10 @@
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
@@ -12,7 +12,7 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class ImportErrorDAL
     {
-        public CustomGenericList<ImportError> ImportErrorSelectRecent(
+        public List<ImportError> ImportErrorSelectRecent(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int numErrors)

@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class ItemDAL
+    public partial class ItemDAL
 	{
         /// <summary>
         /// Select the new item with the barcode and importSourceID.
@@ -36,7 +36,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<Item> helper = new CustomSqlHelper<Item>())
                 {
-                    CustomGenericList<Item> list = helper.ExecuteReader(command);
+                    List<Item> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

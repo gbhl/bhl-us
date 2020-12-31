@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class IAScandataAltPageTypeDAL
+    public partial class IAScandataAltPageTypeDAL
 	{
         /// <summary>
         /// Delete the ScandataAltPageType entries for the specified Scandata ID.
@@ -50,7 +50,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAScandataAltPageType> helper = new CustomSqlHelper<IAScandataAltPageType>())
                 {
-                    CustomGenericList<IAScandataAltPageType> list = helper.ExecuteReader(command);
+                    List<IAScandataAltPageType> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

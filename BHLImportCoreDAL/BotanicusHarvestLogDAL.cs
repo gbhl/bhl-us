@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -35,7 +36,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(
+        public List<BotanicusHarvestLog> BotanicusHarvestLogSelectRecent(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int numLogs)

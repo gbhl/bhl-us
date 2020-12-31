@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -32,7 +33,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
-                    CustomGenericList<IAItem> list = helper.ExecuteReader(command);
+                    List<IAItem> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -52,7 +53,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<IAItem> IAItemSelectForXMLDownload(
+        public List<IAItem> IAItemSelectForXMLDownload(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             String iaIdentifier)
@@ -65,7 +66,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
-                    CustomGenericList<IAItem> list = helper.ExecuteReader(command);
+                    List<IAItem> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -79,7 +80,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="itemID">Identifier of the item</param>
         /// <param name="minDaysBeforeAllowUnapproved">Age in days that an item must be before publishing is allowed</param>
         /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<IAItem> IAItemSelectOKToPublish(
+        public List<IAItem> IAItemSelectOKToPublish(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID,
@@ -94,7 +95,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
-                    CustomGenericList<IAItem> list = helper.ExecuteReader(command);
+                    List<IAItem> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -106,7 +107,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type Item.</returns>
-        public CustomGenericList<IAItem> IAItemSelectForPublishToImportTables(
+        public List<IAItem> IAItemSelectForPublishToImportTables(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             String iaIdentifier)
@@ -119,7 +120,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
-                    CustomGenericList<IAItem> list = helper.ExecuteReader(command);
+                    List<IAItem> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -191,7 +192,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<IAItem> IAItemSelectPendingApproval(
+        public List<IAItem> IAItemSelectPendingApproval(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int ageInDays)
@@ -221,7 +222,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<IAItem> IAItemSelectByStatus(SqlConnection sqlConnection,
+        public List<IAItem> IAItemSelectByStatus(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemStatusId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
@@ -238,7 +239,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAItem> helper = new CustomSqlHelper<IAItem>())
                 {
-                    CustomGenericList<IAItem> list = helper.ExecuteReader(command);
+                    List<IAItem> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

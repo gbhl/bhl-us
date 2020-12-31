@@ -1,7 +1,5 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using MOBOT.BHL.Utility;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -15,12 +13,12 @@ namespace MOBOT.BHL.Server
             return new ImportRecordStatusDAL().ImportRecordStatusSelectAuto(null, null, importRecordStatusID);
         }
 
-        public CustomGenericList<ImportRecordStatus> ImportRecordStatusSelectAll()
+        public List<ImportRecordStatus> ImportRecordStatusSelectAll()
         {
             return new ImportRecordStatusDAL().SelectAll(null, null);
         }
 
-        public CustomGenericList<ImportRecord> ImportRecordSelectByImportFileID(int importFileID, int numRows, int startRow,
+        public List<ImportRecord> ImportRecordSelectByImportFileID(int importFileID, int numRows, int startRow,
             string sortColumn, string sortDirection, int extended = 0)
         {
             return new ImportRecordDAL().ImportRecordSelectByImportFileID(null, null, importFileID, numRows, startRow,
@@ -35,7 +33,7 @@ namespace MOBOT.BHL.Server
                 // Get production author IDs
                 foreach(ImportRecordCreator author in citation.Authors)
                 {
-                    CustomGenericList<Author> authors = AuthorResolve(author.FullName, author.LastName,
+                    List<Author> authors = AuthorResolve(author.FullName, author.LastName,
                         author.FirstName, author.StartYear, author.EndYear, author.ImportedAuthorID);
                     if (authors.Count == 1) author.ProductionAuthorID = authors[0].AuthorID;
                 }
@@ -222,7 +220,7 @@ namespace MOBOT.BHL.Server
             // If no item is found, this citation is still valid, but incomplete.
             if (citation.ItemID == null && startPageID == -1 && endPageID == -1)
             {
-                CustomGenericList<Item> items = ItemResolve(citation.JournalTitle, citation.ISSN,
+                List<Item> items = ItemResolve(citation.JournalTitle, citation.ISSN,
                     citation.ISBN, citation.OCLC, citation.Volume, citation.Issue, citation.Year);
                 if (items.Count == 1) citation.ItemID = items[0].ItemID;
             }
@@ -231,7 +229,7 @@ namespace MOBOT.BHL.Server
             // If the IDs are not found, this citation is valid, but incomplete.
             if (citation.ItemID != null && startPageID == -1 && !string.IsNullOrWhiteSpace(citation.StartPage))
             {
-                CustomGenericList<Page> startPageIDs = PageSelectByItemAndPageNumber(
+                List<Page> startPageIDs = PageSelectByItemAndPageNumber(
                     (int)citation.ItemID, citation.Volume, citation.Issue, citation.StartPage);
                 if (startPageIDs.Count == 1)
                 {
@@ -242,7 +240,7 @@ namespace MOBOT.BHL.Server
 
             if (citation.ItemID != null && endPageID == -1 && !string.IsNullOrWhiteSpace(citation.EndPage))
             {
-                CustomGenericList<Page> endPageIDs = PageSelectByItemAndPageNumber(
+                List<Page> endPageIDs = PageSelectByItemAndPageNumber(
                     (int)citation.ItemID, citation.Volume, citation.Issue, citation.EndPage);
                 if (endPageIDs.Count == 1)
                 {
@@ -254,7 +252,7 @@ namespace MOBOT.BHL.Server
             if (isValid && startPageID != -1 && endPageID != -1)
             {
                 // Make sure the start page, end page, and item identifiers all belong to the same item.
-                CustomGenericList<Page> pageRange = PageSelectRangeForPagesAndItem(startPageID, endPageID, citation.ItemID);
+                List<Page> pageRange = PageSelectRangeForPagesAndItem(startPageID, endPageID, citation.ItemID);
                 if (pageRange.Count == 0)
                 {
                     citation.Errors.Add(

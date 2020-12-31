@@ -18,13 +18,13 @@ namespace MOBOT.BHL.Server
             return new AnnotationDAL().AnnotationSelectAuto(null, null, annotationId);
         }
 
-        public CustomGenericList<Annotation> AnnotationsSelectByItemID(int itemID)
+        public List<Annotation> AnnotationsSelectByItemID(int itemID)
         {
             AnnotationDAL dal = new AnnotationDAL();
             return dal.AnnotationsSelectByItemID(null, null, itemID);
         }
 
-        public CustomGenericList<CustomDataRow> AnnotationRelationSelectByAnnotationID(int annotationID)
+        public List<CustomDataRow> AnnotationRelationSelectByAnnotationID(int annotationID)
         {
             AnnotationDAL dal = new AnnotationDAL();
             return dal.AnnotationRelationSelectByAnnotationID(null, null, annotationID);
@@ -1287,7 +1287,7 @@ namespace MOBOT.BHL.Server
                 null, null, annotationId);
         }
 
-        public CustomGenericList<AnnotationNote> AnnotationNoteSelectByAnnotationID(int annotationID)
+        public List<AnnotationNote> AnnotationNoteSelectByAnnotationID(int annotationID)
         {
             AnnotationNoteDAL dal = new AnnotationNoteDAL();
             return dal.AnnotationNoteSelectByAnnotationID(null, null, annotationID);
@@ -1354,17 +1354,17 @@ namespace MOBOT.BHL.Server
             return new AnnotationSubjectDAL().AnnotationSubjectDeleteByAnnotationID(null, null, annotationId);
         }
 
-        public CustomGenericList<CustomDataRow> AnnotationSubjectSelectByAnnotationID(int annotationId)
+        public List<CustomDataRow> AnnotationSubjectSelectByAnnotationID(int annotationId)
         {
             return new AnnotationSubjectDAL().AnnotationSubjectSelectByAnnotationID(null, null, annotationId);
         }
 
-        public CustomGenericList<CustomDataRow> Annotation_AnnotationConceptSelectByAnnotationID(int annotationId)
+        public List<CustomDataRow> Annotation_AnnotationConceptSelectByAnnotationID(int annotationId)
         {
             return new Annotation_AnnotationConceptDAL().Annotation_AnnotationConceptSelectByAnnotationID(null, null, annotationId);
         }
 
-        public CustomGenericList<SearchBookResult> SearchPageForAnnotationSubject(int annotationSubjectCategoryID, int subjectID)
+        public List<SearchBookResult> SearchPageForAnnotationSubject(int annotationSubjectCategoryID, int subjectID)
         {
             return new AnnotationDAL().SearchPageForSubject(null, null, annotationSubjectCategoryID, subjectID);
         }
@@ -1374,7 +1374,7 @@ namespace MOBOT.BHL.Server
             return new AnnotationSubjectDAL().AnnotationSubjectSelectAuto(null, null, subjectID);
         }
 
-        public CustomGenericList<AnnotationSubject> AnnotationSubjectSelectBySubjectText(string subjectText, int annotationSourceID)
+        public List<AnnotationSubject> AnnotationSubjectSelectBySubjectText(string subjectText, int annotationSourceID)
         {
             return new AnnotationSubjectDAL().AnnotationSubjectSelectBySubjectText(null, null, subjectText, annotationSourceID);
         }
@@ -1388,12 +1388,12 @@ namespace MOBOT.BHL.Server
             return new AnnotationConceptDAL().AnnotationConceptSelectAuto(null, null, annotationConceptCode);
         }
 
-        public CustomGenericList<AnnotationConcept> AnnotationConceptSelectAll(int annotationSourceID)
+        public List<AnnotationConcept> AnnotationConceptSelectAll(int annotationSourceID)
         {
             return new AnnotationConceptDAL().AnnotationConceptSelectAll(null, null, annotationSourceID);
         }
 
-        public CustomGenericList<AnnotationConcept> AnnotationConceptSelectByConceptText(string conceptText, int annotationSourceID)
+        public List<AnnotationConcept> AnnotationConceptSelectByConceptText(string conceptText, int annotationSourceID)
         {
             return new AnnotationConceptDAL().AnnotationConceptSelectByConceptText(null, null, conceptText, annotationSourceID);
         }
@@ -1403,7 +1403,7 @@ namespace MOBOT.BHL.Server
             return new AnnotationConceptDAL().AnnotationConceptSelectByCode(null, null, annotationConceptCode);
         }
 
-        public CustomGenericList<SearchBookResult> SearchPageForAnnotationConcept(string annotationConceptCode)
+        public List<SearchBookResult> SearchPageForAnnotationConcept(string annotationConceptCode)
         {
             return new AnnotationDAL().SearchPageForConcept(null, null, annotationConceptCode);
         }

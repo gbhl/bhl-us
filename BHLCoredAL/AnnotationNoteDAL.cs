@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class AnnotationNoteDAL
+    public partial class AnnotationNoteDAL
 	{
         public bool AnnotationNoteDeleteByAnnotationID(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int annotationID)
@@ -37,7 +37,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<AnnotationNote> AnnotationNoteSelectByAnnotationID(
+        public List<AnnotationNote> AnnotationNoteSelectByAnnotationID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationID)
@@ -51,7 +51,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationNote> helper = new CustomSqlHelper<AnnotationNote>())
                 {
-                    CustomGenericList<AnnotationNote> list = helper.ExecuteReader(command);
+                    List<AnnotationNote> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

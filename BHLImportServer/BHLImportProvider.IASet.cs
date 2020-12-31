@@ -1,13 +1,13 @@
-using System;
-using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public CustomGenericList<IASet> IASetSelectForDownload()
+        public List<IASet> IASetSelectForDownload()
         {
             return (new IASetDAL().IASetSelectForDownload(null, null));
         }

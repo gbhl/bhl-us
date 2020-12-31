@@ -2,6 +2,7 @@
 #region Using
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -29,7 +30,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotatedTitle> helper = new CustomSqlHelper<AnnotatedTitle>())
                 {
-                    CustomGenericList<AnnotatedTitle> list = helper.ExecuteReader(command);
+                    List<AnnotatedTitle> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

@@ -1,13 +1,12 @@
-﻿using System;
-using CustomDataAccess;
-using MOBOT.BHLImport.DAL;
+﻿using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public CustomGenericList<PageFlickrTag> PageFlickrTagSelectForPageID(int pageID)
+        public List<PageFlickrTag> PageFlickrTagSelectForPageID(int pageID)
         {
             return new PageFlickrTagDAL().PageFlickrTagSelectForPageID(null, null, pageID);
         }

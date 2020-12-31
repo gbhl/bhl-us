@@ -3,7 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
-using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,9 +11,9 @@ using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class ImportRecordDAL
+    public partial class ImportRecordDAL
 	{
-        public CustomGenericList<ImportRecord> ImportRecordSelectByImportFileID(SqlConnection sqlConnection, 
+        public List<ImportRecord> ImportRecordSelectByImportFileID(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, int importFileID, int numRows, int startRow, string sortColumn, string sortDirection,
             int extended = 0)
         {
@@ -30,7 +30,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<ImportRecord> helper = new CustomSqlHelper<ImportRecord>())
                 {
-                    CustomGenericList<ImportRecord> list = helper.ExecuteReader(command);
+                    List<ImportRecord> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

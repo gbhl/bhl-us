@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class AnnotationConceptDAL
+    public partial class AnnotationConceptDAL
 	{
-        public CustomGenericList<AnnotationConcept> AnnotationConceptSelectAll(
+        public List<AnnotationConcept> AnnotationConceptSelectAll(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationSourceID)
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationConcept> helper = new CustomSqlHelper<AnnotationConcept>())
                 {
-                    CustomGenericList<AnnotationConcept> list = helper.ExecuteReader(command);
+                    List<AnnotationConcept> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list;
                     else
@@ -36,7 +36,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<AnnotationConcept> AnnotationConceptSelectByConceptText(
+        public List<AnnotationConcept> AnnotationConceptSelectByConceptText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string conceptText,
@@ -52,7 +52,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationConcept> helper = new CustomSqlHelper<AnnotationConcept>())
                 {
-                    CustomGenericList<AnnotationConcept> list = helper.ExecuteReader(command);
+                    List<AnnotationConcept> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -72,7 +72,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationConcept> helper = new CustomSqlHelper<AnnotationConcept>())
                 {
-                    CustomGenericList<AnnotationConcept> list = helper.ExecuteReader(command);
+                    List<AnnotationConcept> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                         return list[0];
                     else

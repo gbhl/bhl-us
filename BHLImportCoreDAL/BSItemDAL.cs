@@ -1,16 +1,16 @@
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class BSItemDAL
+    public partial class BSItemDAL
 	{
         /// <summary>
         /// Delete all supporting data for the specified item.
@@ -33,7 +33,7 @@ namespace MOBOT.BHLImport.DAL
             }
         }
 
-        public CustomGenericList<BSItem> BSItemSelectByStatus(SqlConnection sqlConnection,
+        public List<BSItem> BSItemSelectByStatus(SqlConnection sqlConnection,
             SqlTransaction sqlTransaction, int itemStatusId, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
@@ -50,7 +50,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<BSItem> helper = new CustomSqlHelper<BSItem>())
                 {
-                    CustomGenericList<BSItem> list = helper.ExecuteReader(command);
+                    List<BSItem> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

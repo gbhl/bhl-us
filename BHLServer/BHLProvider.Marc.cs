@@ -1,7 +1,7 @@
-﻿using System;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
-using CustomDataAccess;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
@@ -14,17 +14,17 @@ namespace MOBOT.BHL.Server
                 marcFileLocation, institutionCode, leader, titleID);
         }
 
-        public CustomGenericList<Marc> MarcSelectPendingImport(int batchID)
+        public List<Marc> MarcSelectPendingImport(int batchID)
         {
             return new MarcDAL().MarcSelectPendingImport(null, null, batchID);
         }
 
-        public CustomGenericList<vwMarcDataField> MarcSelectFullDetailsForMarcID(int marcID)
+        public List<vwMarcDataField> MarcSelectFullDetailsForMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectFullDetailsForMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<Marc> MarcSelectForImportByBatchID(int batchID)
+        public List<Marc> MarcSelectForImportByBatchID(int batchID)
         {
             return new MarcDAL().MarcSelectForImportByBatchID(null, null, batchID);
         }
@@ -39,42 +39,42 @@ namespace MOBOT.BHL.Server
             return new MarcDAL().MarcSelectTitleDetailsByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleKeyword> MarcSelectTitleKeywordsByMarcID(int marcID)
+        public List<TitleKeyword> MarcSelectTitleKeywordsByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectTitleKeywordsByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleNote> MarcSelectTitleNotesByMarcID(int marcID)
+        public List<TitleNote> MarcSelectTitleNotesByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectTitleNotesByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleLanguage> MarcSelectTitleLanguagesByMarcID(int marcID)
+        public List<TitleLanguage> MarcSelectTitleLanguagesByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectTitleLanguagesByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleAuthor> MarcSelectAuthorsByMarcID(int marcID)
+        public List<TitleAuthor> MarcSelectAuthorsByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectAuthorsByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<Title_Identifier> MarcSelectTitleIdentifiersByMarcID(int marcID)
+        public List<Title_Identifier> MarcSelectTitleIdentifiersByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectTitleIdentifiersByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleAssociation> MarcSelectAssociationsByMarcID(int marcID)
+        public List<TitleAssociation> MarcSelectAssociationsByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectAssociationsByMarcID(null, null, marcID);
         }
 
-        public CustomGenericList<TitleAssociation_TitleIdentifier> MarcSelectAssociationIdsByMarcDataFieldID(int marcDataFieldID)
+        public List<TitleAssociation_TitleIdentifier> MarcSelectAssociationIdsByMarcDataFieldID(int marcDataFieldID)
         {
             return new MarcDAL().MarcSelectAssociationIdsByMarcDataFieldID(null, null, marcDataFieldID);
         }
 
-        public CustomGenericList<TitleVariant> MarcSelectVariantsByMarcID(int marcID)
+        public List<TitleVariant> MarcSelectVariantsByMarcID(int marcID)
         {
             return new MarcDAL().MarcSelectVariantsByMarcID(null, null, marcID);
         }

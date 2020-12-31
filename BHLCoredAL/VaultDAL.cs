@@ -1,14 +1,14 @@
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class VaultDAL
+    public partial class VaultDAL
 	{
-		public CustomGenericList<Vault> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
+		public List<Vault> SelectAll( SqlConnection sqlConnection, SqlTransaction sqlTransaction )
 		{
 			SqlConnection connection = CustomSqlHelper.CreateConnection(
 				CustomSqlHelper.GetConnectionStringFromConnectionStrings( "BHL" ), sqlConnection );
@@ -18,7 +18,7 @@ namespace MOBOT.BHL.DAL
 			{
 				using ( CustomSqlHelper<Vault> helper = new CustomSqlHelper<Vault>() )
 				{
-					CustomGenericList<Vault> list = helper.ExecuteReader( command );
+					List<Vault> list = helper.ExecuteReader( command );
 					return ( list );
 				}
 			}
@@ -47,7 +47,7 @@ namespace MOBOT.BHL.DAL
 					{
 						using ( CustomSqlHelper<int> helper = new CustomSqlHelper<int>() )
 						{
-							CustomGenericList<int> list = helper.ExecuteReader( command );
+							List<int> list = helper.ExecuteReader( command );
 							vault.VaultID = list[ 0 ] + 1;
 						}
 					}

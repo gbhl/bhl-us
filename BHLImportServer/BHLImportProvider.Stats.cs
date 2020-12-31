@@ -1,13 +1,12 @@
-using System;
-using CustomDataAccess;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
     public partial class BHLImportProvider
     {
-        public CustomGenericList<Stats> StatsSelectReadyForProductionBySource(int importSourceID)
+        public List<Stats> StatsSelectReadyForProductionBySource(int importSourceID)
         {
             return (new StatsDAL().StatsSelectReadyForProductionBySource(null, null, importSourceID));
         }
@@ -17,17 +16,17 @@ namespace MOBOT.BHLImport.Server
             return (new StatsDAL().StatsCountIAItemPendingApproval(null, null, ageInDays));
         }
 
-        public CustomGenericList<Stats> StatsSelectIAItemGroupByStatus()
+        public List<Stats> StatsSelectIAItemGroupByStatus()
         {
             return (new StatsDAL().StatsSelectIAItemGroupByStatus(null, null));
         }
 
-        public CustomGenericList<Stats> StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays)
+        public List<Stats> StatsSelectIAItemPendingApprovalGroupByAge(int ageInDays)
         {
             return (new StatsDAL().StatsSelectIAItemPendingApprovalGroupByAge(null, null, ageInDays));
         }
 
-        public CustomGenericList<Stats> StatsSelectBSItemGroupByStatus()
+        public List<Stats> StatsSelectBSItemGroupByStatus()
         {
             return (new StatsDAL().StatsSelectBSItemGroupByStatus(null, null));
         }

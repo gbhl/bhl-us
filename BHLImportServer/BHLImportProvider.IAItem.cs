@@ -1,8 +1,8 @@
-using System;
-using CustomDataAccess;
+using MOBOT.BHL.Utility;
 using MOBOT.BHLImport.DAL;
 using MOBOT.BHLImport.DataObjects;
-using MOBOT.BHL.Utility;
+using System;
+using System.Collections.Generic;
 
 namespace MOBOT.BHLImport.Server
 {
@@ -45,12 +45,12 @@ namespace MOBOT.BHLImport.Server
             return (new IAItemDAL().IAItemSelectAuto(null, null, itemID));
         }
 
-        public CustomGenericList<IAItem> IAItemSelectForXMLDownload(String iaIdentifier)
+        public List<IAItem> IAItemSelectForXMLDownload(String iaIdentifier)
         {
             return (new IAItemDAL().IAItemSelectForXMLDownload(null, null, iaIdentifier));
         }
 
-        public CustomGenericList<IAItem> IAItemSelectForPublishToImportTables(String iaIdentifier)
+        public List<IAItem> IAItemSelectForPublishToImportTables(String iaIdentifier)
         {
             return (new IAItemDAL().IAItemSelectForPublishToImportTables(null, null, iaIdentifier));
         }
@@ -143,7 +143,7 @@ namespace MOBOT.BHLImport.Server
         private bool IAItemSelectOKToPublish(int itemID, int minDaysBeforeAllowUnapproved)
         {
             IAItemDAL dal = new IAItemDAL();
-            CustomGenericList<IAItem> items = dal.IAItemSelectOKToPublish(null, null, itemID, minDaysBeforeAllowUnapproved);
+            List<IAItem> items = dal.IAItemSelectOKToPublish(null, null, itemID, minDaysBeforeAllowUnapproved);
             if (items.Count > 0)
                 return true;
             else
@@ -261,7 +261,7 @@ namespace MOBOT.BHLImport.Server
             return savedItem;
         }
 
-        public CustomGenericList<IAItem> IAItemSelectPendingApproval(int ageInDays)
+        public List<IAItem> IAItemSelectPendingApproval(int ageInDays)
         {
             return (new IAItemDAL().IAItemSelectPendingApproval(null, null, ageInDays));
         }
@@ -271,7 +271,7 @@ namespace MOBOT.BHLImport.Server
             new IAItemDAL().IAItemInsertFromIAAnalysis(null, null, localFileFolder);
         }
 
-        public CustomGenericList<IAItem> IAItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
+        public List<IAItem> IAItemSelectByStatus(int itemStatusID, int numberOfRows, int pageNumber,
             string sortColumn, string sortDirection)
         {
             return new IAItemDAL().IAItemSelectByStatus(null, null, itemStatusID, numberOfRows, pageNumber, sortColumn, sortDirection);

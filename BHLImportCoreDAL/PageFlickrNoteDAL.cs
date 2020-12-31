@@ -3,6 +3,7 @@
 
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -12,7 +13,7 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class PageFlickrNoteDAL
 	{
-        public CustomGenericList<PageFlickrNote> PageFlickrNoteSelectForPageID(
+        public List<PageFlickrNote> PageFlickrNoteSelectForPageID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int pageID)
@@ -25,7 +26,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<PageFlickrNote> helper = new CustomSqlHelper<PageFlickrNote>())
                 {
-                    CustomGenericList<PageFlickrNote> list = helper.ExecuteReader(command);
+                    List<PageFlickrNote> list = helper.ExecuteReader(command);
                     return list;
                 }
             }

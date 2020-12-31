@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class PageDAL
+    public partial class PageDAL
 	{
         /// <summary>
         /// Select the new page with the barcode, filenameprefix, sequence order and importSourceID.
@@ -38,7 +38,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<Page> helper = new CustomSqlHelper<Page>())
                 {
-                    CustomGenericList<Page> list = helper.ExecuteReader(command);
+                    List<Page> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

@@ -1,6 +1,7 @@
 
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -18,7 +19,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>Object of type Set.</returns>
-        public CustomGenericList<IASet> IASetSelectForDownload(
+        public List<IASet> IASetSelectForDownload(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction)
         {
@@ -29,7 +30,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IASet> helper = new CustomSqlHelper<IASet>())
                 {
-                    CustomGenericList<IASet> list = helper.ExecuteReader(command);
+                    List<IASet> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -55,7 +56,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IASet> helper = new CustomSqlHelper<IASet>())
                 {
-                    CustomGenericList<IASet> list = helper.ExecuteReader(command);
+                    List<IASet> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

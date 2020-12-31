@@ -14,7 +14,7 @@ namespace MOBOT.BHL.DAL
 {
 	public partial class MonthlyStatsDAL
 	{
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectSummary(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<MonthlyStats> MonthlyStatsSelectSummary(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int year, int month)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -26,13 +26,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectByDateAndInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<MonthlyStats> MonthlyStatsSelectByDateAndInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             int startYear, int startMonth, int endYear, int endMonth, String institutionCode)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -47,13 +47,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectByInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<MonthlyStats> MonthlyStatsSelectByInstitution(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             string institutionCode)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -64,7 +64,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
@@ -85,7 +85,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectDetailed(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<MonthlyStats> MonthlyStatsSelectDetailed(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             bool bhlMemberLibraryOnly)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -96,13 +96,13 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }
         }
 
-        public CustomGenericList<MonthlyStats> MonthlyStatsSelectSummaryStats(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
+        public List<MonthlyStats> MonthlyStatsSelectSummaryStats(SqlConnection sqlConnection, SqlTransaction sqlTransaction,
             bool bhlMemberLibraryOnly)
         {
             SqlConnection connection = CustomSqlHelper.CreateConnection(CustomSqlHelper.GetConnectionStringFromConnectionStrings("BHL"), sqlConnection);
@@ -113,7 +113,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<MonthlyStats> helper = new CustomSqlHelper<MonthlyStats>())
                 {
-                    CustomGenericList<MonthlyStats> list = helper.ExecuteReader(command);
+                    List<MonthlyStats> list = helper.ExecuteReader(command);
                     return (list);
                 }
             }

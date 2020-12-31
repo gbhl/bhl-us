@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHLImport.DAL
 {
-	public partial class IAFileDAL
+    public partial class IAFileDAL
 	{
         /// <summary>
         /// Select the file with the specified RemoteFileName.
@@ -33,7 +33,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
                 {
-                    CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+                    List<IAFile> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -70,7 +70,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
                 {
-                    CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+                    List<IAFile> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {
@@ -91,7 +91,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="remoteFileName">File name for which to look</param>
         /// <returns>List of objects of type File.</returns>
-        public CustomGenericList<IAFile> IAFileSelectForDownload(
+        public List<IAFile> IAFileSelectForDownload(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID)
@@ -104,7 +104,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
                 {
-                    CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+                    List<IAFile> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -117,7 +117,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <param name="itemID">Item identifier for which to retreive data</param>
         /// <returns>List of objects of type File.</returns>
-        public CustomGenericList<IAFile> IAFileSelectByItem(
+        public List<IAFile> IAFileSelectByItem(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int itemID)
@@ -130,7 +130,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
                 {
-                    CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+                    List<IAFile> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
@@ -159,7 +159,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<IAFile> helper = new CustomSqlHelper<IAFile>())
                 {
-                    CustomGenericList<IAFile> list = helper.ExecuteReader(command);
+                    List<IAFile> list = helper.ExecuteReader(command);
 
                     if (list.Count > 0)
                     {

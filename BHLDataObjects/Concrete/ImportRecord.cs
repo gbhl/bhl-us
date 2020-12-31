@@ -3,6 +3,7 @@
 
 using CustomDataAccess;
 using System;
+using System.Collections.Generic;
 
 #endregion Using
 
@@ -23,12 +24,12 @@ namespace MOBOT.BHL.DataObjects
         private string _itemIDString = string.Empty;
         private string _startPageIDString = string.Empty;
         private string _endPageIDString = string.Empty;
-        private CustomGenericList<string> _pageIDs = new CustomGenericList<string>();
-        private CustomGenericList<ImportRecordCreator> _authors = new CustomGenericList<ImportRecordCreator>();
-        private CustomGenericList<ImportRecordKeyword> _keywords = new CustomGenericList<ImportRecordKeyword>();
-        private CustomGenericList<ImportRecordPage> _pages = new CustomGenericList<ImportRecordPage>();
-        private CustomGenericList<ImportRecordErrorLog> _errors = new CustomGenericList<ImportRecordErrorLog>();
-        private CustomGenericList<ImportRecordErrorLog> _warnings = new CustomGenericList<ImportRecordErrorLog>();
+        private List<string> _pageIDs = new List<string>();
+        private List<ImportRecordCreator> _authors = new List<ImportRecordCreator>();
+        private List<ImportRecordKeyword> _keywords = new List<ImportRecordKeyword>();
+        private List<ImportRecordPage> _pages = new List<ImportRecordPage>();
+        private List<ImportRecordErrorLog> _errors = new List<ImportRecordErrorLog>();
+        private List<ImportRecordErrorLog> _warnings = new List<ImportRecordErrorLog>();
 
         public int TotalRecords
         {
@@ -90,37 +91,37 @@ namespace MOBOT.BHL.DataObjects
             set { _endPageIDString = value; }
         }
 
-        public CustomGenericList<string> PageIDs
+        public List<string> PageIDs
         {
             get { return _pageIDs; }
             set { _pageIDs = value; }
         }
 
-        public CustomGenericList<ImportRecordCreator> Authors
+        public List<ImportRecordCreator> Authors
         {
             get { return _authors; }
             set { _authors = value; }
         }
 
-        public CustomGenericList<ImportRecordKeyword> Keywords
+        public List<ImportRecordKeyword> Keywords
         {
             get { return _keywords; }
             set { _keywords = value; }
         }
 
-        public CustomGenericList<ImportRecordPage> Pages
+        public List<ImportRecordPage> Pages
         {
             get { return _pages; }
             set { _pages = value; }
         }
 
-        public CustomGenericList<ImportRecordErrorLog> Errors
+        public List<ImportRecordErrorLog> Errors
         {
             get { return _errors; }
             set { _errors = value; }
         }
 
-        public CustomGenericList<ImportRecordErrorLog> Warnings
+        public List<ImportRecordErrorLog> Warnings
         {
             get { return _warnings; }
             set { _warnings = value; }

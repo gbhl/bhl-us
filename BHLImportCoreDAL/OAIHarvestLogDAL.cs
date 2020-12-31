@@ -5,6 +5,7 @@ using System;
 using System.Data.SqlClient;
 using CustomDataAccess;
 using System.Data;
+using System.Collections.Generic;
 
 #endregion Using
 
@@ -24,7 +25,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<DateTime> helper = new CustomSqlHelper<DateTime>())
                 {
-                    CustomGenericList<DateTime> k = helper.ExecuteReader(command);
+                    List<DateTime> k = helper.ExecuteReader(command);
 
                     return k[0];
                 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SqlClient;
+﻿using CustomDataAccess;
 using MOBOT.BHLImport.DataObjects;
-using CustomDataAccess;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace MOBOT.BHLImport.DAL
 {
@@ -17,7 +14,7 @@ namespace MOBOT.BHLImport.DAL
         /// <param name="sqlConnection">Sql connection or null.</param>
         /// <param name="sqlTransaction">Sql transaction or null.</param>
         /// <returns>List of objects of type vwOAIHarvestSet.</returns>
-        public CustomGenericList<vwOAIHarvestSet> OAIHarvestSetSelectAll(
+        public List<vwOAIHarvestSet> OAIHarvestSetSelectAll(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int onlyActive)
@@ -30,7 +27,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<vwOAIHarvestSet> helper = new CustomSqlHelper<vwOAIHarvestSet>())
                 {
-                    CustomGenericList<vwOAIHarvestSet> list = helper.ExecuteReader(command);
+                    List<vwOAIHarvestSet> list = helper.ExecuteReader(command);
                     return (list.Count > 0 ? list : null);
                 }
             }

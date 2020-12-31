@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CustomDataAccess;
 
 namespace MOBOT.BHL.DataObjects
@@ -21,13 +22,13 @@ namespace MOBOT.BHL.DataObjects
         private DateTime? _scanningDate;
         private string _downloadUrl;
         private short? _itemSequence = null;
-        private CustomGenericList<Institution> _institutions = new CustomGenericList<Institution>();
-		private CustomGenericList<Page> _pages = new CustomGenericList<Page>();
-        private CustomGenericList<Title> _titles = new CustomGenericList<Title>();
-        private CustomGenericList<ItemTitle> _itemTitles = new CustomGenericList<ItemTitle>();
-        private CustomGenericList<ItemLanguage> _itemLanguages = new CustomGenericList<ItemLanguage>();
-        private CustomGenericList<ItemCollection> _itemCollections = new CustomGenericList<ItemCollection>();
-        private CustomGenericList<Segment> _segments = new CustomGenericList<Segment>();
+        private List<Institution> _institutions = new List<Institution>();
+		private List<Page> _pages = new List<Page>();
+        private List<Title> _titles = new List<Title>();
+        private List<ItemTitle> _itemTitles = new List<ItemTitle>();
+        private List<ItemLanguage> _itemLanguages = new List<ItemLanguage>();
+        private List<ItemCollection> _itemCollections = new List<ItemCollection>();
+        private List<Segment> _segments = new List<Segment>();
         private string[] authorStrings = null;
         private string[] tagStrings = null;
         private string[] associationStrings = null;
@@ -53,43 +54,43 @@ namespace MOBOT.BHL.DataObjects
         private string _volume;
         private string _startYear;
 
-        public CustomGenericList<Institution> Institutions
+        public List<Institution> Institutions
         {
             get { return this._institutions; }
             set { this._institutions = value; }
         }
 
-		public CustomGenericList<Page> Pages
+		public List<Page> Pages
 		{
 			get { return this._pages; }
 			set { this._pages = value; }
 		}
 
-        public CustomGenericList<Title> Titles
+        public List<Title> Titles
         {
             get { return this._titles; }
             set { this._titles = value; }
         }
 
-        public CustomGenericList<ItemTitle> ItemTitles
+        public List<ItemTitle> ItemTitles
         {
             get { return this._itemTitles; }
             set { this._itemTitles = value; }
         }
 
-        public CustomGenericList<ItemLanguage> ItemLanguages
+        public List<ItemLanguage> ItemLanguages
         {
             get { return this._itemLanguages; }
             set { this._itemLanguages = value; }
         }
 
-        public CustomGenericList<ItemCollection> ItemCollections
+        public List<ItemCollection> ItemCollections
         {
             get { return this._itemCollections; }
             set { this._itemCollections = value; }
         }
 
-        public CustomGenericList<Segment> Segments
+        public List<Segment> Segments
         {
             get { return this._segments; }
             set { this._segments = value; }

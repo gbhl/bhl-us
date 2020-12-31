@@ -1,19 +1,19 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class AnnotationSubjectDAL
+    public partial class AnnotationSubjectDAL
     {
-        public CustomGenericList<CustomDataRow> AnnotationSubjectSelectByAnnotationID(
+        public List<CustomDataRow> AnnotationSubjectSelectByAnnotationID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int annotationID)
@@ -27,7 +27,7 @@ namespace MOBOT.BHL.DAL
             }
         }
 
-        public CustomGenericList<AnnotationSubject> AnnotationSubjectSelectBySubjectText(
+        public List<AnnotationSubject> AnnotationSubjectSelectBySubjectText(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             string subjectText,
@@ -44,7 +44,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
                 {
-                    CustomGenericList<AnnotationSubject> list = helper.ExecuteReader(command);
+                    List<AnnotationSubject> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         return list;
@@ -97,7 +97,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotationSubject> helper = new CustomSqlHelper<AnnotationSubject>())
                 {
-                    CustomGenericList<AnnotationSubject> list = helper.ExecuteReader(command);
+                    List<AnnotationSubject> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         AnnotationSubject o = list[0];

@@ -1,17 +1,17 @@
 
 #region Using
 
-using System;
-using System.Data;
-using System.Data.SqlClient;
 using CustomDataAccess;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 #endregion Using
 
 namespace MOBOT.BHL.DAL
 {
-	public partial class AnnotatedPageCharacteristicDAL
+    public partial class AnnotatedPageCharacteristicDAL
 	{
         public bool AnnotatedPageCharacteristicDeleteByPageID(SqlConnection sqlConnection, 
             SqlTransaction sqlTransaction, int annotatedPageID)
@@ -51,7 +51,7 @@ namespace MOBOT.BHL.DAL
             {
                 using (CustomSqlHelper<AnnotatedPageCharacteristic> helper = new CustomSqlHelper<AnnotatedPageCharacteristic>())
                 {
-                    CustomGenericList<AnnotatedPageCharacteristic> list = helper.ExecuteReader(command);
+                    List<AnnotatedPageCharacteristic> list = helper.ExecuteReader(command);
                     if (list.Count > 0)
                     {
                         AnnotatedPageCharacteristic o = list[0];

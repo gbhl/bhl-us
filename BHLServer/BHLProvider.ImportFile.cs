@@ -1,12 +1,12 @@
-﻿using CustomDataAccess;
-using MOBOT.BHL.DAL;
+﻿using MOBOT.BHL.DAL;
 using MOBOT.BHL.DataObjects;
+using System.Collections.Generic;
 
 namespace MOBOT.BHL.Server
 {
     public partial class BHLProvider
     {
-        public CustomGenericList<ImportFileStatus> ImportFileStatusSelectAll()
+        public List<ImportFileStatus> ImportFileStatusSelectAll()
         {
             return new ImportFileStatusDAL().SelectAll(null, null);
         }
@@ -46,7 +46,7 @@ namespace MOBOT.BHL.Server
             new ImportFileDAL().ImportFileRejectFile(null, null, importFileID, userID);
         }
 
-        public CustomGenericList<ImportFile> ImportFileSelectDetails(string institutionCode, int fileStatusID, int numberOfDays)
+        public List<ImportFile> ImportFileSelectDetails(string institutionCode, int fileStatusID, int numberOfDays)
         {
             return new ImportFileDAL().ImportFileSelectDetails(null, null, institutionCode, fileStatusID, numberOfDays);
         }

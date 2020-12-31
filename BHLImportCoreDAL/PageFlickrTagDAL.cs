@@ -1,6 +1,7 @@
 
 #region Using
 
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using CustomDataAccess;
@@ -12,7 +13,7 @@ namespace MOBOT.BHLImport.DAL
 {
     public partial class PageFlickrTagDAL
 	{
-        public CustomGenericList<PageFlickrTag> PageFlickrTagSelectForPageID(
+        public List<PageFlickrTag> PageFlickrTagSelectForPageID(
             SqlConnection sqlConnection,
             SqlTransaction sqlTransaction,
             int pageID)
@@ -25,7 +26,7 @@ namespace MOBOT.BHLImport.DAL
             {
                 using (CustomSqlHelper<PageFlickrTag> helper = new CustomSqlHelper<PageFlickrTag>())
                 {
-                    CustomGenericList<PageFlickrTag> list = helper.ExecuteReader(command);
+                    List<PageFlickrTag> list = helper.ExecuteReader(command);
                     return list;
                 }
             }
