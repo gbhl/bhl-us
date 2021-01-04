@@ -167,7 +167,7 @@
     <bindings>
       <basicHttpBinding>
         <binding name="BHLWSSoap" closeTimeout="00:01:00" openTimeout="00:01:00"
-            receiveTimeout="00:30:00" sendTimeout="00:01:00" allowCookies="false"
+            receiveTimeout="00:30:00" sendTimeout="00:05:00" allowCookies="false"
             bypassProxyOnLocal="false" hostNameComparisonMode="StrongWildcard"
             maxBufferSize="536870912" maxBufferPoolSize="524288" maxReceivedMessageSize="536870912"
             messageEncoding="Text" textEncoding="utf-8" transferMode="Buffered"
